@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TravisEmber</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+
+  <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+  <script src="/assets/vendor/handlebars.js?body=1" type="text/javascript"></script>
+  <script src="/assets/vendor/ember.js?body=1" type="text/javascript"></script>
+  <script src="/assets/vendor/ember-data.js?body=1" type="text/javascript"></script>
+
+  <%= javascript_include_tag "travis" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
