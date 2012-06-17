@@ -1,6 +1,6 @@
 <ul>
   {{#each build in content}}
-    <li><a {{action viewBuild href=true}}>Build #{{build.number}}</a></li>
+    <li><a {{action viewBuild href=true context="build"}}>Build #{{build.number}}</a></li>
   {{/each}}
 </ul>
 
