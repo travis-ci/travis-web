@@ -62,14 +62,13 @@ App.Router = Em.Router.extend({
       connectOutlets: function(router, path) {
         var repositories = App.Repository.find();
 
-        router.get('applicationController').connectOutlet({ outletName: 'left', name: 'repositories', context: repositories})
+        router.get('applicationController').connectOutlet({ outletName: 'left', name: 'repositories', context: repositories })
         router.get('applicationController').connectOutlet({ outletName: 'main', name: 'loading' });
 
         if (path === '') {
           // should observe RecordArray.isLoaded instead, but that doesn't seem to exist?
           onReady(repositories, 'length', function() {
-            var repository = repositories.get('firstObject');
-            router.transitionTo('repository', repository);
+            router.transitionTo('index', repositories.get('firstObject'));
           })
         } else {
           // this would be a query for the repo based on `path`
@@ -79,6 +78,25 @@ App.Router = Em.Router.extend({
           })
         }
       }
+    }),
+
+    index: Em.Route.extend({
+      route: '/',
+
+      connectOutlets: function(router, repository) {
+        var build = App.Build.find(1);
+
+        router.setPath('tabsController.repository', repository);
+        router.setPath('tabsController.build', build);
+
+        router.get('applicationController').connectOutlet({ outletName: 'main', name: 'repository', context: repository });
+        router.get('repositoryController').connectOutlet({ outletName: 'tabs', name: 'tabs' });
+        router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'current', context: build});
+      },
+
+      viewCurrent: Ember.Route.transitionTo('root.repository.current'),
+      viewHistory: Ember.Route.transitionTo('root.repository.history'),
+      viewBuild:   Ember.Route.transitionTo('root.repository.build'),
     }),
 
     repository: Em.Route.extend({
@@ -94,7 +112,7 @@ App.Router = Em.Router.extend({
         router.setPath('tabsController.repository', repository);
         router.setPath('tabsController.build', build);
 
-        router.get('applicationController').connectOutlet({ outletName: 'main', name: 'repository', context: repository});
+        router.get('applicationController').connectOutlet({ outletName: 'main', name: 'repository', context: repository });
         router.get('repositoryController').connectOutlet({ outletName: 'tabs', name: 'tabs' });
       },
 
@@ -105,14 +123,14 @@ App.Router = Em.Router.extend({
       current: Em.Route.extend({
         route: '/',
         connectOutlets: function(router, context) {
-          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'current', context: App.store.find(App.Build, 1)});
+          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'current', context: App.Build.find(1)});
         }
       }),
 
       history: Em.Route.extend({
         route: '/builds',
         connectOutlets: function(router, context) {
-          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'history', context: App.store.findAll(App.Build)});
+          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'history', context: App.Build.find()});
         }
       }),
 
@@ -120,7 +138,7 @@ App.Router = Em.Router.extend({
         route: '/builds/:build_id',
         connectOutlets: function(router, context) {
           params = { id: 1 }
-          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'build', context: App.store.find(App.Build, params.id)});
+          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'build', context: App.Build.find(params.id)});
         }
       })
     })
