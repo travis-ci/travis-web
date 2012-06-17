@@ -1,7 +1,7 @@
 <h2>{{content.ownerName}}/{{content.name}}</h2>
 
-{{view App.TabsView controllerBinding="controller.controllers.tabsController"}}
+{{outlet tabs}}
 
 <div class="content">
-  {{outlet}}
+  {{outlet tab}}
 </div>
