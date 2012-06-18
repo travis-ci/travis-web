@@ -5,20 +5,23 @@ App = Em.Application.create();
 App.Store = DS.Store.extend({ revision: 4, adapter: DS.fixtureAdapter });
 
 App.Repository = DS.Model.extend({
+  slug: DS.attr('string'),
   ownerName: DS.attr('string'),
-  name:      DS.attr('string')
+  name: DS.attr('string'),
 });
-App.Repository.FIXTURES = [
-  { id: 1, owner_name: 'travis-ci', name: 'travis-core' },
-  { id: 2, owner_name: 'travis-ci', name: 'travis-assets' },
-  { id: 3, owner_name: 'travis-ci', name: 'travis-hub' }
-];
 
 App.Build = DS.Model.extend({
-  repository_id: DS.attr('number'),
+  repositoryId: DS.attr('number'),
   number: DS.attr('number'),
   repository: DS.belongsTo('App.Repository')
 });
+
+App.Repository.FIXTURES = [
+  { id: 1, slug: 'travis-ci/travis-core',   owner_name: 'travis-ci', name: 'travis-core' },
+  { id: 2, slug: 'travis-ci/travis-assets', owner_name: 'travis-ci', name: 'travis-assets' },
+  { id: 3, slug: 'travis-ci/travis-hub',    owner_name: 'travis-ci', name: 'travis-hub' },
+];
+
 App.Build.FIXTURES = [
   { id: 1, repository_id: 1, number: 1 },
   { id: 2, repository_id: 1, number: 2 },
@@ -46,6 +49,25 @@ App.LoadingView            = Em.View.extend({ templateName: 'loading' });
 
 App.store = App.Store.create();
 
+var onReady = function(object, path, callback) {
+  if(object.getPath(path)) {
+    callback();
+  } else {
+    var observer = function() {
+      object.removeObserver(path, observer);
+      callback()
+    };
+    object.addObserver(path, observer);
+  }
+};
+
+var onRepositoriesLoaded = function(repositories, callback) {
+  // should observe RecordArray.isLoaded instead, but that doesn't seem to exist?
+  onReady(repositories, 'firstObject.isLoaded', function() {
+    callback(repositories.get('firstObject'))
+  });
+}
+
 App.Router = Em.Router.extend({
   enableLogging: true,
   location: 'hash',
@@ -57,15 +79,9 @@ App.Router = Em.Router.extend({
       route: '/',
 
       connectOutlets: function(router) {
-        var repositories = App.Repository.find();
-
-        this.get('applicationController').connectOutlet({ outletName: 'left', name: 'repositories', context: repositories })
-
-        this.setPath('tabsController.repository', repository);
-        this.setPath('tabsController.build', build);
-
-        this.get('applicationController').connectOutlet({ outletName: 'main', name: 'repository', context: repository });
-        this.get('repositoryController').connectOutlet({ outletName: 'tabs', name: 'tabs' });
+        router.connectLayout({}, function(repository) {
+          router.connectCurrent(App.Build.find(1)) // should use repository.lastBuild()
+        });
       },
 
       viewCurrent: Ember.Route.transitionTo('current'),
@@ -73,112 +89,133 @@ App.Router = Em.Router.extend({
       viewBuild:   Ember.Route.transitionTo('build'),
     }),
 
-    // current: Em.Route.extend({
-    //   route: '/:ownerName/:name',
+    current: Em.Route.extend({
+      route: '/:ownerName/:name',
 
-    //   serialize: function(router, repository) {
-    //     return router.serializeRepository(repository);
-    //   },
+      serialize: function(router, repository) {
+        return router.serializeRepository(repository);
+      },
 
-    //   connectOutlets: function(router, repository) {
-    //     params = router.serializeRepository(repository);
-    //     // needs to implement findQuery
-    //     // var repositories = App.Repository.find(params);
-    //     var repositories = App.Repository.find().filter(function(data) {
-    //       return data.get('owner_name') == params.owner_name && data.get('name') == params.name;
-    //     })
+      connectOutlets: function(router, repository) {
+        var params = router.serializeRepository(repository);
+        router.connectLayout(params, function(repository) {
+          router.connectCurrent(App.Build.find(1)) // should use repository.lastBuild()
+        });
+      }
+    }),
+    viewCurrent: Ember.Route.transitionTo('current'),
 
-    //     router.connectLayout(repositories, null, function(repository) {
-    //       // should use repository.lastBuild()
-    //       router.connectCurrent(App.Build.find(1))
-    //     });
-    //   }
-    // }),
-    // viewCurrent: Ember.Route.transitionTo('current'),
+    history: Em.Route.extend({
+      route: '/:ownerName/:name/builds',
 
-    // history: Em.Route.extend({
-    //   route: '/:ownerName/:name/builds',
+      serialize: function(router, repository) {
+        return router.serializeRepository(repository);
+      },
 
-    //   serialize: function(router, repository) {
-    //     return router.serializeRepository(repository);
-    //   },
+      connectOutlets: function(router, repository) {
+        var params = router.serializeRepository(repository);
+        router.connectLayout(params, function(repository) {
+          router.connectHistory(App.Build.find())
+        });
+      }
+    }),
+    viewHistory: Ember.Route.transitionTo('history'),
 
-    //   connectOutlets: function(router, repository) {
-    //     params = router.serializeRepository(repository);
-    //     // needs to implement findQuery
-    //     // var repositories = App.Repository.find(params);
-    //     var repositories = App.Repository.find().filter(function(data) {
-    //       return data.get('owner_name') == params.owner_name && data.get('name') == params.name;
-    //     })
+    build: Em.Route.extend({
+      route: '/:ownerName/:name/builds/:id',
 
-    //     router.connectLayout(repository, null, function(repository) {
-    //       router.connectHistory(App.Build.find())
-    //     });
-    //   }
-    // }),
-    // viewHistory: Ember.Route.transitionTo('history'),
+      serialize: function(router, build) {
+        return router.serializeBuild(build);
+      },
 
-    // build: Em.Route.extend({
-    //   route: '/:ownerName/:name/builds/:id',
-
-    //   serialize: function(router, build) {
-    //     return router.serializeBuild(build);
-    //   },
-
-    //   connectOutlets: function(router, build) {
-    //     params = router.serializeBuild(build);
-    //     // needs to implement findQuery
-    //     // var repositories = App.Repository.find(params);
-    //     var repositories = App.Repository.find().filter(function(data) {
-    //       return data.get('owner_name') == params.owner_name && data.get('name') == params.name;
-    //     })
-    //     var build = App.Build.find(params.id)
-
-    //     router.connectLayout(repositories, build, function(repository) {
-    //       router.connectBuild(build)
-    //     });
-    //   }
-    // }),
-    // viewBuild: Ember.Route.transitionTo('build')
+      connectOutlets: function(router, build) {
+        params = router.serializeBuild(build);
+        router.connectLayout(params, function(repository, build) {
+          router.connectBuild(build)
+        });
+      }
+    }),
+    viewBuild: Ember.Route.transitionTo('build')
   }),
 
-  // serializeRepository: function(repository) {
-  //   return repository.getProperties ? repository.getProperties('ownerName', 'name') : repository;
-  // },
+  serializeRepository: function(repository) {
+    if(repository instanceof DS.Model) {
+      return repository.getProperties('ownerName', 'name');
+    } else {
+      return repository || {};
+    }
+  },
 
-  // serializeBuild: function(build) {
-  //   if(build && build.get) {
-  //     var repository = build.get('repository') || App.Repository.find(build.get('repository_id')); // wat.
-  //     var params = this.serializeRepository(repository);
-  //     return $.extend(params, { id: build.get('id') });
-  //   } else {
-  //     return build;
-  //   }
-  // },
+  serializeBuild: function(build) {
+    if(build instanceof DS.Model) {
+      // var repository = build.get('repository')
+      var repository = App.Repository.find(build.get('repositoryId')); // wat.
+      var params = this.serializeRepository(repository);
+      return $.extend(params, { id: build.get('id') });
+    } else {
+      return build || {};
+    }
+  },
 
-  // connectLeft: function(repositories) {
-  //   this.get('applicationController').connectOutlet({ outletName: 'left', name: 'repositories', context: repositories })
-  // },
+  connectLayout: function(params, callback) {
+    var repositories = App.Repository.find();
+    this.connectLeft(repositories);
+    this.connectMain(repositories, params, callback);
+    this.connectRight();
+  },
 
-  // connectMain: function(repository, build) {
-  //   this.setPath('tabsController.repository', repository);
-  //   this.setPath('tabsController.build', build);
+  connectLeft: function(repositories) {
+    this.get('applicationController').connectOutlet({ outletName: 'left', name: 'repositories', context: repositories })
+  },
 
-  //   this.get('applicationController').connectOutlet({ outletName: 'main', name: 'repository', context: repository });
-  //   this.get('repositoryController').connectOutlet({ outletName: 'tabs', name: 'tabs' });
-  // },
+  connectRight: function() {
+    // this.get('applicationController').connectOutlet({ outletName: 'right', name: 'sidebar' })
+  },
 
-  // connectCurrent: function(build) {
-  //   this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'current', context: build});
-  // },
+  connectLoading: function() {
+    this.get('applicationController').connectOutlet({ outletName: 'main', name: 'loading' });
+  },
 
-  // connectHistory: function(builds) {
-  //   this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'history', context: builds});
-  // },
+  connectMain: function(repositories, params, callback) {
+    this.connectLoading();
 
-  // connectBuild: function(build) {
-  //   this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'build', context: build});
-  // }
+    if(params.ownerName && params.name) {
+      // needs to implement findQuery
+      // var repositories = App.Repository.find(params);
+      repositories = App.Repository.find().filter(function(data) {
+        return data.get('owner_name') == params.owner_name && data.get('name') == params.name;
+      })
+    }
+    var build = params.id ? App.Build.find(params.id) : undefined;
+
+    onRepositoriesLoaded(repositories, function(repository) {
+      this.connectTabs(repository, build);
+      this.connectRepository(repository);
+      callback(repository, build);
+    }.bind(this));
+  },
+
+  connectRepository: function(repository) {
+    this.get('applicationController').connectOutlet({ outletName: 'main', name: 'repository', context: repository });
+  },
+
+  connectTabs: function(repository, build) {
+    this.setPath('tabsController.repository', repository);
+    this.setPath('tabsController.build', build);
+    this.get('repositoryController').connectOutlet({ outletName: 'tabs', name: 'tabs' });
+  },
+
+  connectCurrent: function(build) {
+    this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'current', context: build});
+  },
+
+  connectHistory: function(builds) {
+    this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'history', context: builds});
+  },
+
+  connectBuild: function(build) {
+    this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'build', context: build});
+  }
 });
 
 App.initialize();
