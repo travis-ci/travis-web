@@ -1,5 +1,6 @@
-PATH
-  remote: ~/Development/projects/travis/ember-rails
+GIT
+  remote: git://github.com/svenfuchs/ember-rails.git
+  revision: 8c211e0bba5d5fe8e677a3dc9bd803e6052c8310
   specs:
     ember-rails (0.6.0)
       active_model_serializers
