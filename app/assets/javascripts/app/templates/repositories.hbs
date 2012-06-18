@@ -1,6 +1,6 @@
 <ul>
   {{#each repository in content}}
-    <li><a {{action viewRepository href=true}}>{{repository.ownerName}}/{{repository.name}}</a></li>
+    <li><a {{action viewRepository href=true context="repository"}}>{{repository.ownerName}}/{{repository.name}}</a></li>
   {{/each}}
 </ul>
 
