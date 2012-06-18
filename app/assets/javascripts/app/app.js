@@ -51,6 +51,108 @@ App.Router = Em.Router.extend({
   enableLogging: true,
   location: 'hash',
 
+  root: Em.Route.extend({
+    viewRepository: Ember.Route.transitionTo('repository.current'),
+
+    // why is applicationController undefined here? would like to share connecting the left outlet to repositories
+    // connectOutlets: function(router) {
+    //   router.connectLeft();
+    // },
+
+    serialize: function(router, context) {
+      return router.serialize();
+    },
+
+    index: Em.Route.extend({
+      route: '/',
+
+      serialize: function(router, context) {
+        return router.serialize();
+      },
+
+      connectOutlets: function(router) {
+        router.connectLeft();
+        router.connectLoading();
+
+        var repositories = router.getPath('repositoriesController.content');
+        var build = App.Build.find(1);
+
+        // should observe RecordArray.isLoaded instead, but that doesn't seem to exist?
+        console.log('find repos')
+        onReady(repositories, 'firstObject.isLoaded', function() {
+          console.log('repo loaded')
+          router.connectMain(repositories.get('firstObject'), build)
+          router.connectCurrent(build)
+        });
+      },
+
+      viewCurrent: Ember.Route.transitionTo('repository.current'),
+      viewHistory: Ember.Route.transitionTo('repository.history'),
+      viewBuild:   Ember.Route.transitionTo('repository.build'),
+    }),
+
+    repository: Em.Route.extend({
+      route: '/:ownerName/:name',
+
+      serialize: function(router, context) {
+        return router.serialize();
+      },
+
+      connectOutlets: function(router) {
+        router.connectLeft();
+        router.connectLoading();
+
+        // this would be a query for the repo based on path (how to retrieve the path here?)
+        var repository = App.Repository.find(1);
+        console.log('find repo')
+        onReady(repository, 'isLoaded', function() {
+          console.log('repo loaded')
+          router.connectMain(repository, App.Build.find(1))
+        })
+      },
+
+      current: Em.Route.extend({
+        route: '/',
+
+        serialize: function(router, context) {
+          return router.serialize();
+        },
+
+        connectOutlets: function(router, context) {
+          router.connectCurrent(App.Build.find(1))
+        }
+      }),
+      viewCurrent: Ember.Route.transitionTo('current'),
+
+      history: Em.Route.extend({
+        route: '/builds',
+
+        serialize: function(router, context) {
+          return router.serialize();
+        },
+
+        connectOutlets: function(router, context) {
+          router.connectHistory(App.Build.find())
+        }
+      }),
+      viewHistory: Ember.Route.transitionTo('history'),
+
+      build: Em.Route.extend({
+        route: '/builds/:build_id',
+
+        serialize: function(router, context) {
+          return $.extend(router.serialize(), this._super(router, context));
+        },
+
+        connectOutlets: function(router, context) {
+          params = { id: 1 }
+          router.connectBuild(App.Build.find(params.id))
+        }
+      }),
+      viewBuild: Ember.Route.transitionTo('build')
+    })
+  }),
+
   serialize: function() {
     var ownerName = this.getPath('repositoryController.content.ownerName');
     var name = this.getPath('repositoryController.content.name');
@@ -73,89 +175,17 @@ App.Router = Em.Router.extend({
     this.get('repositoryController').connectOutlet({ outletName: 'tabs', name: 'tabs' });
   },
 
-  root: Em.Route.extend({
-    viewRepository: Ember.Route.transitionTo('repository.current'),
+  connectCurrent: function(build) {
+    this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'current', context: build});
+  },
 
-    // why is applicationController undefined here? would like to share connecting the left outlet to repositories
-    // connectOutlets: function(router) {
-    //   router.connectLeft();
-    // },
+  connectHistory: function(builds) {
+    this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'history', context: builds});
+  },
 
-    index: Em.Route.extend({
-      route: '/',
-
-      connectOutlets: function(router) {
-        router.connectLeft();
-        router.connectLoading();
-
-        var repositories = router.getPath('repositoriesController.content');
-        // should observe RecordArray.isLoaded instead, but that doesn't seem to exist?
-        onReady(repositories, 'firstObject.isLoaded', function() {
-          router.connectMain(repositories.get('firstObject'), App.Build.find(1))
-        });
-      },
-
-      viewCurrent: Ember.Route.transitionTo('repository.current'),
-      viewHistory: Ember.Route.transitionTo('repository.history'),
-      viewBuild:   Ember.Route.transitionTo('repository.build'),
-    }),
-
-    repository: Em.Route.extend({
-      route: '/:ownerName/:name',
-
-      connectOutlets: function(router) {
-        router.connectLeft();
-        router.connectLoading();
-
-        // this would be a query for the repo based on path (how to retrieve the path here?)
-        var repository = App.Repository.find(1);
-        onReady(repository, 'isLoaded', function() {
-          router.connectMain(repository, App.Build.find(1))
-        })
-      },
-
-      viewCurrent: Ember.Route.transitionTo('current'),
-      viewHistory: Ember.Route.transitionTo('history'),
-      viewBuild:   Ember.Route.transitionTo('build'),
-
-      current: Em.Route.extend({
-        route: '/',
-
-        serialize: function(router, context) {
-          return router.serialize();
-        },
-
-        connectOutlets: function(router, context) {
-          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'current', context: App.Build.find(1)});
-        }
-      }),
-
-      history: Em.Route.extend({
-        route: '/builds',
-
-        serialize: function(router, context) {
-          return router.serialize();
-        },
-
-        connectOutlets: function(router, context) {
-          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'history', context: App.Build.find()});
-        }
-      }),
-
-      build: Em.Route.extend({
-        route: '/builds/:build_id',
-
-        serialize: function(router, context) {
-          return $.extend(router.serialize(), this._super(router, context));
-        },
-
-        connectOutlets: function(router, context) {
-          params = { id: 1 }
-          router.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'build', context: App.Build.find(params.id)});
-        }
-      })
-    })
-  })
+  connectBuild: function(build) {
+    this.get('repositoryController').connectOutlet({ outletName: 'tab', name: 'build', context: build});
+  }
 });
 
 App.initialize();

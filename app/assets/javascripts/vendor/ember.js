@@ -15455,7 +15455,7 @@ Ember.Routable = Ember.Mixin.create({
   */
   stashContext: function(manager, context) {
     var serialized = this.serialize(manager, context);
-
+console.log(['stashContext', this.name, serialized && serialized.ownerName])
     manager.setStateMeta(this, 'serialized', serialized);
 
     if (get(this, 'isRoutable') && !get(manager, 'isRouting')) {
@@ -15499,6 +15499,7 @@ Ember.Routable = Ember.Mixin.create({
 
     var matcher = get(this, 'routeMatcher'),
         serialized = manager.getStateMeta(this, 'serialized');
+console.log(['stateMeta', this.name, serialized && serialized.ownerName])
 
     // merge the existing serialized object in with the passed
     // in hash.
