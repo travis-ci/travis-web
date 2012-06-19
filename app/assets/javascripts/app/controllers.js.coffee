@@ -1,0 +1,8 @@
+Travis.ApplicationController  = Em.Controller.extend()
+Travis.RepositoriesController = Em.ArrayController.extend()
+Travis.RepositoryController   = Em.Controller.extend()
+Travis.TabsController         = Em.Controller.extend()
+Travis.CurrentController      = Em.Controller.extend()
+Travis.HistoryController      = Em.ArrayController.extend()
+Travis.BuildController        = Em.Controller.extend()
+Travis.LoadingController      = Em.Controller.extend()
