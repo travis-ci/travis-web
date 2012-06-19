@@ -53,7 +53,7 @@ App.LoadingView            = Em.View.extend({ templateName: 'loading' });
 
 App.store = App.Store.create();
 
-var onReady = function(object, path, callback) {
+var onTrue = function(object, path, callback) {
   if(object.getPath(path)) {
     callback();
   } else {
@@ -65,11 +65,16 @@ var onReady = function(object, path, callback) {
   }
 };
 
-var onRepositoriesLoaded = function(repositories, callback) {
-  // should observe RecordArray.isLoaded instead, but that doesn't seem to exist?
-  onReady(repositories, 'firstObject.isLoaded', function() {
-    callback(repositories.get('firstObject'))
-  });
+var onLoaded = function(object, callback) {
+  if(object) {
+    var path = Ember.isArray(object) ? 'firstObject.isLoaded' : 'isLoaded';
+    // should observe RecordArray.isLoaded instead, but that doesn't seem to exist?
+    onTrue(object, path, function() {
+      callback(Ember.isArray(object) ? object.get('firstObject') : object);
+    });
+  } else {
+    callback(object);
+  }
 }
 
 App.Router = Em.Router.extend({
@@ -119,7 +124,11 @@ App.Router = Em.Router.extend({
       connectOutlets: function(router, repository) {
         var params = router.serializeRepository(repository);
         router.connectLayout(params, function(repository) {
-          router.connectHistory(repository.get('builds'))
+          var builds = repository.get('builds');
+          // why do i have to wait here. is repo.isLoaded true before the hasMany array is loaded?
+          onLoaded(builds, function() {
+            router.connectHistory(builds)
+          })
         });
       }
     }),
@@ -192,10 +201,12 @@ App.Router = Em.Router.extend({
     }
     var build = params.id ? App.Build.find(params.id) : undefined;
 
-    onRepositoriesLoaded(repositories, function(repository) {
-      this.connectTabs(repository, build);
-      this.connectRepository(repository);
-      callback(repository, build);
+    onLoaded(repositories, function(repository) {
+      onLoaded(build, function(build) {
+        this.connectTabs(repository, build);
+        this.connectRepository(repository);
+        callback(repository, build);
+      }.bind(this));
     }.bind(this));
   },
 
