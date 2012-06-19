@@ -1,5 +1,5 @@
 <ul class="tabs">
-  <li><a {{action viewCurrent href=true context="repository"}}>Current</a></li>
-  <li><a {{action viewHistory href=true context="repository"}}>History</a></li>
-  <li><a {{action viewBuild href=true context="build"}}>Build</a></li>
+  <li><a {{action viewCurrent href=true context="repository"}} class="current">Current</a></li>
+  <li><a {{action viewHistory href=true context="repository"}} class="history">History</a></li>
+  <li><a {{action viewBuild href=true context="build"}} class="build">Build #{{build.number}}</a></li>
 </ul>

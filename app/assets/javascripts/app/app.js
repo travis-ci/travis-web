@@ -5,32 +5,36 @@ App = Em.Application.create();
 App.Store = DS.Store.extend({ revision: 4, adapter: DS.fixtureAdapter });
 
 App.Repository = DS.Model.extend({
-  slug: DS.attr('string'),
   ownerName: DS.attr('string'),
   name: DS.attr('string'),
+
+  builds: DS.hasMany('App.Build', { key: 'build_ids' }),
+
+  lastBuild: function() {
+    return this.getPath('builds.firstObject');
+  }.property()
 });
 
 App.Build = DS.Model.extend({
-  repositoryId: DS.attr('number'),
   number: DS.attr('number'),
   repository: DS.belongsTo('App.Repository')
 });
 
-App.Repository.FIXTURES = [
-  { id: 1, slug: 'travis-ci/travis-core',   owner_name: 'travis-ci', name: 'travis-core' },
-  { id: 2, slug: 'travis-ci/travis-assets', owner_name: 'travis-ci', name: 'travis-assets' },
-  { id: 3, slug: 'travis-ci/travis-hub',    owner_name: 'travis-ci', name: 'travis-hub' },
+App.Build.FIXTURES = [
+  { id: 1, repositoryId: 1, repository_id: 1, number: 1 },
+  { id: 2, repositoryId: 1, repository_id: 1, number: 2 },
+  { id: 3, repositoryId: 2, repository_id: 2, number: 3 },
+  { id: 4, repositoryId: 3, repository_id: 3, number: 4 }
 ];
 
-App.Build.FIXTURES = [
-  { id: 1, repository_id: 1, number: 1 },
-  { id: 2, repository_id: 1, number: 2 },
-  { id: 3, repository_id: 2, number: 3 },
-  { id: 4, repository_id: 3, number: 4 }
+App.Repository.FIXTURES = [
+  { id: 1, owner_name: 'travis-ci', name: 'travis-core',   build_ids: [1, 2] },
+  { id: 2, owner_name: 'travis-ci', name: 'travis-assets', build_ids: [3] },
+  { id: 3, owner_name: 'travis-ci', name: 'travis-hub',    build_ids: [4] },
 ];
 
 App.ApplicationController  = Em.Controller.extend();
-App.RepositoriesController = Em.Controller.extend();
+App.RepositoriesController = Em.ArrayController.extend();
 App.RepositoryController   = Em.Controller.extend();
 App.TabsController         = Em.Controller.extend();
 App.CurrentController      = Em.Controller.extend();
@@ -80,7 +84,7 @@ App.Router = Em.Router.extend({
 
       connectOutlets: function(router) {
         router.connectLayout({}, function(repository) {
-          router.connectCurrent(App.Build.find(1)) // should use repository.lastBuild()
+          router.connectCurrent(repository.get('lastBuild'));
         });
       },
 
@@ -99,7 +103,7 @@ App.Router = Em.Router.extend({
       connectOutlets: function(router, repository) {
         var params = router.serializeRepository(repository);
         router.connectLayout(params, function(repository) {
-          router.connectCurrent(App.Build.find(1)) // should use repository.lastBuild()
+          router.connectCurrent(repository.get('lastBuild'));
         });
       }
     }),
@@ -115,7 +119,7 @@ App.Router = Em.Router.extend({
       connectOutlets: function(router, repository) {
         var params = router.serializeRepository(repository);
         router.connectLayout(params, function(repository) {
-          router.connectHistory(App.Build.find())
+          router.connectHistory(repository.get('builds'))
         });
       }
     }),
@@ -148,8 +152,8 @@ App.Router = Em.Router.extend({
 
   serializeBuild: function(build) {
     if(build instanceof DS.Model) {
-      // var repository = build.get('repository')
-      var repository = App.Repository.find(build.get('repositoryId')); // wat.
+      var repository = build.get('repository')
+      // var repository = App.Repository.find(build.get('repositoryId')); // wat.
       var params = this.serializeRepository(repository);
       return $.extend(params, { id: build.get('id') });
     } else {
