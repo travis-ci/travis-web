@@ -33,7 +33,7 @@ body {
 }
 
 #main {
-  width: 400px;
+  width: 800px;
   padding-left: 1em;
 }
 
@@ -56,6 +56,43 @@ li {
 }
 
 .tab {
+  clear: both;
+  padding-top: 20px;
+}
+
+.github-stats {
+  float: right;
+  width: 100px;
+}
+.github-stats li {
+  float: left;
+  margin-left: 20px;
+}
+
+.summary .left,
+.summary .right {
+  float: left;
+  width: 350px;
+}
+
+dt {
+  clear: both;
+  float: left;
+  width: 60px;
+}
+dd {
+  float: left;
+}
+
+.green {
+  border-top: 5px solid lightgreen;
+}
+.red {
+  border-top: 5px solid red;
+}
+
+#jobs,
+.log {
   clear: both;
   padding-top: 20px;
 }

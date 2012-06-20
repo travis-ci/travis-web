@@ -1,0 +1,37 @@
+<div {{bindAttr class="color"}}>
+  <dl class="summary clearfix">
+    <div class="left">
+      <dt>Job</dt>
+      <dd class="number"><a {{bindAttr href="urlJob"}}>{{number}}</a></dd>
+      <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
+      <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</dd>
+      <dt>{{t jobs.duration}}</dt>
+      <dd class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</dd>
+    </div>
+
+    <div class="right">
+      <dt>{{t jobs.commit}}</dt>
+      <dd class="commit-hash"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
+      {{#if commit.compare_url}}
+        <dt>{{t jobs.compare}}</dt>
+        <dd class="compare_view"><a {{bindAttr href="commit.compare_url"}}>{{pathFrom commit.compare_url}}</a></dd>
+      {{/if}}
+      {{#if commit.author_name}}
+        <dt>{{t jobs.author}}</dt>
+        <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.author_name}}</a></dd>
+      {{/if}}
+      {{#if commit.committer_name}}
+        <dt>{{t jobs.committer}}</dt>
+        <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committer_name}}</a></dd>
+      {{/if}}
+    </div>
+
+    <dt>{{t jobs.message}}</dt>
+    <dd class="commit-message">{{formatMessage commit.message}}</dd>
+    <dt>{{t jobs.config}}</dt>
+    <dd class="config">{{formatConfig config}}</dd>
+  </dl>
+
+  {{view Travis.LogView}}
+</div>
+

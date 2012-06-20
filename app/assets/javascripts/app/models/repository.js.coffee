@@ -1,5 +1,4 @@
-@Travis.Repository = Travis.Model.extend # Travis.Helpers,
-  slug:                   DS.attr('string')
+@Travis.Repository = Travis.Model.extend
   name:                   DS.attr('string')
   owner:                  DS.attr('string')
   description:            DS.attr('string')
@@ -9,6 +8,8 @@
   last_build_started_at:  DS.attr('string')
   last_build_finished_at: DS.attr('string')
 
+  lastBuild: DS.belongsTo('Travis.Build')
+
   builds: (->
     Travis.Build.byRepositoryId @get('id'), event_type: 'push'
   ).property()
@@ -17,21 +18,22 @@
     Travis.Build.byRepositoryId @get('id'), event_type: 'pull_request'
   ).property()
 
-  lastBuild: (->
-    Travis.Build.find @get('last_build_id')
-  ).property('last_build_id')
+  slug: (->
+    "#{@get('owner')}/#{@get('name')}"
+  ).property('owner', 'name'),
 
   last_build_duration: (->
     duration = @getPath('data.last_build_duration')
-    duration = @durationFrom(@get('last_build_started_at'), @get('last_build_finished_at')) unless duration
+    duration = Travis.Helpers.durationFrom(@get('last_build_started_at'), @get('last_build_finished_at')) unless duration
     duration
   ).property('data.last_build_duration', 'last_build_started_at', 'last_build_finished_at')
 
   stats: (->
-    return unless Travis.env is 'production'
-    url = 'https://api.github.com/json/repos/show/' + @get('slug')
-    @get('_stats') || $.get(url, (data) => @set('_stats', data)) && undefined
-  ).property('_stats')
+    @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
+      @set('_stats', data)
+      @notifyPropertyChange 'stats'
+    ) && {}
+  ).property('slug')
 
   select: ->
     Travis.Repository.select(self.get('id'))
@@ -59,9 +61,9 @@
       repository.set 'selected', repository.get('id') is id
 
 @Travis.Repository.FIXTURES = [
-  { id: 1, owner: 'travis-ci', name: 'travis-core',   build_ids: [1, 2] },
-  { id: 2, owner: 'travis-ci', name: 'travis-assets', build_ids: [3] },
-  { id: 3, owner: 'travis-ci', name: 'travis-hub',    build_ids: [4] },
+  { id: 1, owner: 'travis-ci', name: 'travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_result: 0 },
+  { id: 2, owner: 'travis-ci', name: 'travis-assets', build_ids: [3]   , last_build_id: 3, last_build_number: 3},
+  { id: 3, owner: 'travis-ci', name: 'travis-hub',    build_ids: [4]   , last_build_id: 4, last_build_number: 4},
 ]
 
 

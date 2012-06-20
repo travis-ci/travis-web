@@ -26,7 +26,6 @@ Travis.Router = Em.Router.extend
           onceLoaded builds, ->
             router.connectCurrent builds.get('firstObject')
 
-    viewCurrent: Ember.Route.transitionTo('current')
     history: Em.Route.extend
       route: '/:owner/:name/builds'
       serialize: (router, repository) ->
@@ -39,18 +38,31 @@ Travis.Router = Em.Router.extend
           onceLoaded builds, ->
             router.connectHistory builds
 
-    viewHistory: Ember.Route.transitionTo('history')
     build: Em.Route.extend
       route: '/:owner/:name/builds/:id'
       serialize: (router, build) ->
-        router.serializeBuild build
+        router.serializeObject build
 
       connectOutlets: (router, build) ->
-        params = router.serializeBuild(build)
+        params = router.serializeObject(build)
         router.connectLayout params, (repository, build) ->
           router.connectBuild build
 
+    job: Em.Route.extend
+      route: '/:owner/:name/jobs/:id'
+      serialize: (router, job) ->
+        console.log job
+        router.serializeObject job
+
+      connectOutlets: (router, job) ->
+        params = router.serializeObject(job)
+        router.connectLayout params, (repository, job) ->
+          router.connectJob job
+
+    viewCurrent: Ember.Route.transitionTo('current')
+    viewHistory: Ember.Route.transitionTo('history')
     viewBuild: Ember.Route.transitionTo('build')
+    viewJob: Ember.Route.transitionTo('job')
 
   serializeRepository: (repository) ->
     if repository instanceof DS.Model
@@ -58,14 +70,14 @@ Travis.Router = Em.Router.extend
     else
       repository or {}
 
-  serializeBuild: (build) ->
-    if build instanceof DS.Model
-      repository = build.get('repository')
+  serializeObject: (object) ->
+    if object instanceof DS.Model
+      repository = object.get('repository')
       params = @serializeRepository(repository)
       $.extend params,
-        id: build.get('id')
+        id: object.get('id')
     else
-      build or {}
+      object or {}
 
   connectLayout: (params, callback) ->
     repositories = Travis.Repository.find()
@@ -130,3 +142,9 @@ Travis.Router = Em.Router.extend
       outletName: 'tab'
       name: 'build'
       context: build
+
+  connectJob: (job) ->
+    @get('repositoryController').connectOutlet
+      outletName: 'tab'
+      name: 'job'
+      context: job
