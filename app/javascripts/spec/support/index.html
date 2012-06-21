@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mocha Test Runner</title>
+  <link rel="stylesheet" href="stylesheets/vendor/mocha.css">
+  <script src="../vendor/mocha.js"></script>
+  <script src="../vendor/expect.js"></script>
+
+  <script>
+      mocha.setup('bdd');
+  </script>
+
+  <script src="../../app/foo.js"></script>
+  <script src="../foo.spec.js"></script>
+</head>
+<body>
+    <div id="mocha"></div>
+    <script>
+        mocha.run();
+    </script>
+</body>
+</html>
