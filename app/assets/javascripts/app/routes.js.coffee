@@ -45,18 +45,20 @@ Travis.Router = Em.Router.extend
 
       connectOutlets: (router, build) ->
         params = router.serializeObject(build)
-        router.connectLayout params, (repository, build) ->
+        build = Travis.Build.find(params.id) unless build instanceof Travis.Build
+        router.connectLayout params, build, (repository, build) ->
           router.connectBuild build
 
     job: Em.Route.extend
       route: '/:owner/:name/jobs/:id'
       serialize: (router, job) ->
-        console.log job
         router.serializeObject job
 
       connectOutlets: (router, job) ->
         params = router.serializeObject(job)
-        router.connectLayout params, (repository, job) ->
+        job = Travis.Job.find(params.id) unless build instanceof Travis.Job
+        build = job.get('build')
+        router.connectLayout params, build, job, (repository, job) ->
           router.connectJob job
 
     viewCurrent: Ember.Route.transitionTo('current')
@@ -79,12 +81,6 @@ Travis.Router = Em.Router.extend
     else
       object or {}
 
-  connectLayout: (params, callback) ->
-    repositories = Travis.Repository.find()
-    @connectLeft repositories
-    @connectMain repositories, params, callback
-    @connectRight()
-
   connectLeft: (repositories) ->
     @get('applicationController').connectOutlet
       outletName: 'left'
@@ -99,17 +95,32 @@ Travis.Router = Em.Router.extend
       outletName: 'main'
       name: 'loading'
 
-  connectMain: (repositories, params, callback) ->
+  connectLayout: (params, callback) ->
+    args = Array.prototype.slice.call(arguments, 1)
+    callback = args.pop()
+    build = args.shift()
+    job = args.shift()
+
+    repositories = Travis.Repository.find()
+    @connectLeft repositories
+    @connectMain repositories, params, build, job, callback
+    @connectRight()
+
+  connectMain: (repositories, params, build, job, callback) ->
     @connectLoading()
     if params.owner and params.name
+      # TODO this might be wrong for /:owner/:name ... when this repo is not contained
+      # in the current list of recent repositories
       repositories = Travis.Repository.find().filter (data) ->
         data.get('owner_name') is params.owner_name and data.get('name') is params.name
-    build = (if params.id then Travis.Build.find(params.id) else `undefined`)
+
+    build = job.get('build') if job && !build
+    # build = (if params.id then Travis.Build.find(params.id) else `undefined`)
 
     onceLoaded repositories, build, =>
       repository = repositories.get('firstObject')
       @connectRepository repository
-      @connectTabs repository, build
+      @connectTabs repository, build, job
       callback repository, build
 
   connectRepository: (repository) ->
@@ -118,9 +129,11 @@ Travis.Router = Em.Router.extend
       name: 'repository'
       context: repository
 
-  connectTabs: (repository, build) ->
+  connectTabs: (repository, build, job) ->
     @setPath 'tabsController.repository', repository
     @setPath 'tabsController.build', build
+    @setPath 'tabsController.job', job
+
     @get('repositoryController').connectOutlet
       outletName: 'tabs'
       name: 'tabs'
