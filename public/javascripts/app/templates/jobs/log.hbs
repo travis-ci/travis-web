@@ -1,0 +1,1 @@
+Ember.TEMPLATES['log']=Ember.Handlebars.compile("{{! ugh ... }}\n{{#with jobs.firstObject}}\n  <pre class=\"log\">{{{formatLog log.body}}}</pre>\n\n  {{#if sponsor.name}}\n    <p class=\"sponsor\">\n    {{t builds.messages.sponsored_by}}\n      <a {{bindAttr href=\"sponsor.url\"}}>{{sponsor.name}}</a>\n    </p>\n  {{/if}}\n{{/with}}\n");

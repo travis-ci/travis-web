@@ -1,0 +1,60 @@
+require 'rake-pipeline-web-filters'
+
+output 'public/javascripts'
+input 'assets/javascripts' do
+  match 'vendor/**/*.js' do
+    files = %w(
+      vendor/minispade.js
+      vendor/jquery.min.js
+      vendor/handlebars.js
+      vendor/ember.js
+      vendor/ember-data.js
+      vendor/ansiparse.js
+      vendor/i18n.js
+      vendor/jquery.timeago.js
+    )
+    concat files, 'vendor.js'
+  end
+
+  match '**/*.coffee' do
+    coffee_script
+  end
+
+  match '**/*.hbs' do
+    handlebars
+  end
+
+  match '{app,config,lib}/**/*.js' do
+    minispade(
+      string: true,
+      rewrite_requires: true,
+      module_id_generator: proc { |input|
+        path = input.path.sub(%r(^(app|config|lib)/), '').sub(/\.js$/, '')
+        # path = input.path.sub(/\\.js$/, '')
+        p path
+        path
+      }
+    )
+    concat 'application.js'
+  end
+end
+
+output 'public/stylesheets'
+input 'assets/stylesheets' do
+  match '**/*.scss' do
+    filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
+      input.sub /\.scss$/, 'css'
+    end
+  end
+
+  match '**/*.css' do
+    copy
+  end
+end
+
+output 'public'
+input 'assets', 'index.html.erb' do
+  filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
+    input.sub /\.erb$/, ''
+  end
+end
