@@ -1,3 +1,5 @@
+require 'travis/model'
+
 @Travis.WorkerGroup = Ember.ArrayProxy.extend
   init: ->
     @set('content', [])

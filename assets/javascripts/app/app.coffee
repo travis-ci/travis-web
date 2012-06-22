@@ -1,13 +1,16 @@
-require 'routes'
-#= require_tree ./helpers
-#= require_tree ./models
-#= require_tree ./templates
-#= require ./controllers.js
-#= require ./views.js
-#= require ./routes.js
-#= require_self
+@Travis = Em.Application.create()
 
-Travis = window.Travis
+require 'ext/jquery'
+require 'locales'
+require 'travis/data_store_adapter'
+require 'helpers'
+require 'models'
+require 'views'
+require 'templates'
+require 'controllers'
+require 'routes'
+
+# Travis = window.Travis
 Travis.store = DS.Store.extend(
   revision: 4
   adapter: Travis.FixtureAdapter.create()

@@ -1,3 +1,5 @@
+require 'travis/model'
+
 @Travis.Build = Travis.Model.extend
   state:           DS.attr('string')
   number:          DS.attr('number')

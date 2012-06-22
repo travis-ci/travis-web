@@ -1,3 +1,5 @@
+require 'travis/model'
+
 @Travis.Repository = Travis.Model.extend
   name:                   DS.attr('string')
   owner:                  DS.attr('string')

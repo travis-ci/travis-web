@@ -1,4 +1,6 @@
-Travis.Router = Em.Router.extend
+require 'hax0rs'
+
+@Travis.Router = Em.Router.extend
   enableLogging: true
   location: 'hash'
 

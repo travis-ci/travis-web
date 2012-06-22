@@ -1,3 +1,5 @@
+require 'travis/model'
+
 @Travis.Job = Travis.Model.extend
   repository_id:   DS.attr('number')
   build_id:        DS.attr('number')

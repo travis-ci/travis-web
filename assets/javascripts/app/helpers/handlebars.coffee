@@ -1,3 +1,5 @@
+require 'ext/ember/bound_helper'
+
 safe = (string) ->
   new Handlebars.SafeString(string)
 

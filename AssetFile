@@ -21,7 +21,12 @@ input 'assets/javascripts' do
   end
 
   match '**/*.hbs' do
-    handlebars
+    handlebars(
+      :key_name_proc => proc { |input|
+        input.path.sub(%r(^app/templates/), '').sub(/\.hbs$/, '')
+      }
+    )
+    concat 'app/templates.js'
   end
 
   match '{app,config,lib}/**/*.js' do
@@ -29,10 +34,7 @@ input 'assets/javascripts' do
       string: true,
       rewrite_requires: true,
       module_id_generator: proc { |input|
-        path = input.path.sub(%r(^(app|config|lib)/), '').sub(/\.js$/, '')
-        # path = input.path.sub(/\\.js$/, '')
-        p path
-        path
+        input.path.sub(%r(^(app|config|lib)/), '').sub(/\.js$/, '')
       }
     )
     concat 'application.js'

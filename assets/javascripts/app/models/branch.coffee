@@ -1,3 +1,5 @@
+require 'travis/model'
+
 @Travis.Branch = Travis.Model.extend Travis.Helpers,
   repository_id: DS.attr('number')
   number:        DS.attr('number')

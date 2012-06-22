@@ -1,3 +1,5 @@
+require 'travis/model'
+
 @Travis.ServiceHook = Travis.Model.extend
   primaryKey: 'slug'
   name:       DS.attr('string')

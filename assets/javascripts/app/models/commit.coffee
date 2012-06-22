@@ -1,3 +1,5 @@
+require 'travis/model'
+
 @Travis.Commit = Travis.Model.extend
   sha:             DS.attr('string')
   branch:          DS.attr('string')
