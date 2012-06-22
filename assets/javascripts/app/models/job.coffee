@@ -54,10 +54,10 @@ require 'travis/model'
     Travis.store.findMany this, ids
 
 @Travis.Job.FIXTURES = [
-  { id: 1, repository_id: 1, build_id: 1, log_id: 1, number: '1.1', config: { rvm: 'rbx' }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 }
-  { id: 2, repository_id: 1, build_id: 1, log_id: 2, number: '1.2', config: { rvm: '1.9.3' } }
-  { id: 3, repository_id: 1, build_id: 2, log_id: 3, number: '2.1' }
-  { id: 4, repository_id: 2, build_id: 3, log_id: 4, number: '3.1' }
-  { id: 5, repository_id: 3, build_id: 5, log_id: 5, number: '4.1' }
+  { id: 1, repository_id: 1, build_id: 1, commit_id: 1, log_id: 1, number: '1.1', config: { rvm: 'rbx' }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 }
+  { id: 2, repository_id: 1, build_id: 1, commit_id: 1, log_id: 2, number: '1.2', config: { rvm: '1.9.3' } }
+  { id: 3, repository_id: 1, build_id: 2, commit_id: 2, log_id: 3, number: '2.1' }
+  { id: 4, repository_id: 2, build_id: 3, commit_id: 3, log_id: 4, number: '3.1' }
+  { id: 5, repository_id: 3, build_id: 4, commit_id: 4, log_id: 5, number: '4.1' }
 ]
 

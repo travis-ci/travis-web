@@ -17,8 +17,8 @@ Travis.store = DS.Store.extend(
 ).create()
 
 # apparently fixtures behave weird unless preloaded :/ should move to mockjax for testing
-Travis.Build.find()
 Travis.Repository.find()
+Travis.Build.find()
 Travis.Commit.find()
 Travis.Job.find()
 Travis.Artifact.find()
