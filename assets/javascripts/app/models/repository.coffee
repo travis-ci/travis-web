@@ -11,8 +11,6 @@ require 'travis/model'
 
   primaryKey: 'slug'
 
-  lastBuild: DS.belongsTo('Travis.Build')
-
   builds: (->
     Travis.Build.byRepositoryId @get('id'), event_type: 'push'
   ).property()
@@ -22,12 +20,21 @@ require 'travis/model'
   ).property()
 
   owner: (->
-    (@get('slug') || '').split('/')[0]
+    (@get('slug') || @_id).split('/')[0]
   ).property('owner', 'name'),
 
   name: (->
-    (@get('slug') || '').split('/')[1]
+    (@get('slug') || @_id).split('/')[1]
   ).property('owner', 'name'),
+
+  # TODO this is used in router#serializeObject for the last_build links in the
+  # repositories list. should be in some item controller i guess, but i'm not
+  # sure how to use one with #each
+  lastBuild: (->
+    owner: @get('owner')
+    name: @get('name')
+    id: @get('last_build_id')
+  ).property('last_build_id')
 
   last_build_duration: (->
     duration = @getPath('data.last_build_duration')
@@ -67,10 +74,7 @@ require 'travis/model'
     @find().forEach (repository) ->
       repository.set 'selected', repository.get('id') is id
 
-@Travis.Repository.FIXTURES = [
-  { id: 1, owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_result: 0 },
-  { id: 2, owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3},
-  { id: 3, owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4},
-]
+  buildURL: (slug) ->
+    if slug then slug else 'repositories'
 
 

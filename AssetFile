@@ -1,3 +1,7 @@
+# TODO add neuter for production
+# https://github.com/wycats/rake-pipeline-web-filters/blob/master/lib/rake-pipeline-web-filters/neuter_filter.rb
+# http://blog.nulayer.com/post/23294069876/building-simple-javascript-libraries-with-rake-pipeline?15bb0420
+
 require 'rake-pipeline-web-filters'
 
 output 'public/javascripts'

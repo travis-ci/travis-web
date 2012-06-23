@@ -1,46 +1,48 @@
-<div {{bindAttr class="classes"}}>
-  <dl class="summary clearfix">
-    <div class="left">
-      <dt>{{t builds.name}}</dt>
-      <dd class="number"><a {{bindAttr href="urlBuild"}}>{{number}}</a></dd>
-      <dt class="finished_at_label">{{t builds.finished_at}}</dt>
-      <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</dd>
-      <dt>{{t builds.duration}}</dt>
-      <dd class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</dd>
-    </div>
+{{#if isLoaded}}
+  <div {{bindAttr class="classes"}}>
+    <dl class="summary clearfix">
+      <div class="left">
+        <dt>{{t builds.name}}</dt>
+        <dd class="number"><a {{bindAttr href="urlBuild"}}>{{number}}</a></dd>
+        <dt class="finished_at_label">{{t builds.finished_at}}</dt>
+        <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</dd>
+        <dt>{{t builds.duration}}</dt>
+        <dd class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</dd>
+      </div>
 
-    <div class="right">
-      <dt>{{t builds.commit}}</dt>
-      <dd class="commit-hash"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
-      {{#if commit.compare_url}}
-        <dt>{{t builds.compare}}</dt>
-        <dd class="compare_view"><a {{bindAttr href="commit.compare_url"}}>{{pathFrom commit.compare_url}}</a></dd>
-      {{/if}}
-      {{#if commit.author_name}}
-        <dt>{{t builds.author}}</dt>
-        <dd class="author"><a {{bindAttr href="view.urlAuthor"}}>{{commit.author_name}}</a></dd>
-      {{/if}}
-      {{#if commit.committer_name}}
-        <dt>{{t builds.committer}}</dt>
-        <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committer_name}}</a></dd>
-      {{/if}}
-    </div>
+      <div class="right">
+        <dt>{{t builds.commit}}</dt>
+        <dd class="commit-hash"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
+        {{#if commit.compare_url}}
+          <dt>{{t builds.compare}}</dt>
+          <dd class="compare_view"><a {{bindAttr href="commit.compare_url"}}>{{pathFrom commit.compare_url}}</a></dd>
+        {{/if}}
+        {{#if commit.author_name}}
+          <dt>{{t builds.author}}</dt>
+          <dd class="author"><a {{bindAttr href="view.urlAuthor"}}>{{commit.author_name}}</a></dd>
+        {{/if}}
+        {{#if commit.committer_name}}
+          <dt>{{t builds.committer}}</dt>
+          <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committer_name}}</a></dd>
+        {{/if}}
+      </div>
 
-    <dt>{{t builds.message}}</dt>
-    <dd class="commit-message">{{{formatMessage commit.message}}}</dd>
+      <dt>{{t builds.message}}</dt>
+      <dd class="commit-message">{{{formatMessage commit.message}}}</dd>
 
-    {{#if isMatrix}}
-    {{else}}
-      <dt>{{t builds.config}}</dt>
-      <dd class="config">{{formatConfig config}}</dd>
+      {{#if isMatrix}}
+      {{else}}
+        <dt>{{t builds.config}}</dt>
+        <dd class="config">{{formatConfig config}}</dd>
+      {{/if}}
+    </dl>
+
+    {{#if isLoaded}}
+      {{#if isMatrix}}
+        {{view Travis.JobsView}}
+      {{else}}
+        {{view Travis.LogView}}
+      {{/if}}
     {{/if}}
-  </dl>
-
-  {{#if isLoaded}}
-    {{#if isMatrix}}
-      {{view Travis.JobsView}}
-    {{else}}
-      {{view Travis.LogView}}
-    {{/if}}
-  {{/if}}
-</div>
+  </div>
+{{/if}}

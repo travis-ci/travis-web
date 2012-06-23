@@ -28,30 +28,30 @@ require 'travis/model'
     @getPath('data.job_ids.length') > 1
   ).property('data.job_ids.length')
 
-  isFailureMatrix: (->
-    @getPath('allowedFailureJobs.length') > 0
-  ).property('allowedFailureJobs.length')
+  # isFailureMatrix: (->
+  #   @getPath('allowedFailureJobs.length') > 0
+  # ).property('allowedFailureJobs.length')
 
-  # TODO why does the hasMany association not work?
-  jobs: (->
-    Travis.Job.findMany(@getPath('data.job_ids'))
-  ).property('data.job_ids.length')
+  # # TODO why does the hasMany association not work?
+  # jobs: (->
+  #   Travis.Job.findMany(@getPath('data.job_ids') || [])
+  # ).property('data.job_ids.length')
 
-  requiredJobs: (->
-    @get('jobs').filter (job) -> job.get('allow_failure') != true
-  ).property('jobs')
+  # requiredJobs: (->
+  #   @get('jobs').filter (job) -> job.get('allow_failure') != true
+  # ).property('jobs')
 
-  allowedFailureJobs: (->
-    @get('jobs').filter (job) -> job.get 'allow_failure'
-  ).property('jobs')
+  # allowedFailureJobs: (->
+  #   @get('jobs').filter (job) -> job.get 'allow_failure'
+  # ).property('jobs')
 
-  configKeys: (->
-    config = @get('config')
-    return [] unless config
-    keys = $.keys($.only(config, 'rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala'))
-    headers = [I18n.t('build.job'), I18n.t('build.duration'), I18n.t('build.finished_at')]
-    $.map(headers.concat(keys), (key) -> return $.camelize(key))
-  ).property('config')
+  # configKeys: (->
+  #   config = @get('config')
+  #   return [] unless config
+  #   keys = $.keys($.only(config, 'rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala'))
+  #   headers = [I18n.t('build.job'), I18n.t('build.duration'), I18n.t('build.finished_at')]
+  #   $.map(headers.concat(keys), (key) -> return $.camelize(key))
+  # ).property('config')
 
   tick: ->
     @notifyPropertyChange 'duration'

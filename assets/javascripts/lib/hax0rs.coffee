@@ -12,7 +12,7 @@ window.onceLoaded = ->
   callback = objects.pop()
 
   # sadly Ember.Enumerable.compact does not remove undefined values
-  objects = (if object then object else null for object in objects).compact()
+  objects = ((object || null) for object in objects).compact()
   object = objects.shift()
 
   if object

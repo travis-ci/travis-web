@@ -1,20 +1,22 @@
-<ul>
-  {{#each content}}
-    <li>
-      <div class="wrapper">
-        <a {{action viewCurrent href=true}} class="slug">{{slug}}</a>
-        <a {{action viewBuild href=true context="lastBuild"}} class="build">#{{last_build_number}}</a>
-      </div>
-      <p class="summary">
-        <span class="duration_label">{{t repositories.duration}}:</span>
-        <abbr class="duration" {{bindAttr title="last_build_started_at"}}>{{formatDuration last_build_duration}}</abbr>,
-        <span class="finished_at_label">{{t repositories.finished_at}}:</span>
-        <abbr class="finished_at timeago" {{bindAttr title="last_build_finished_at"}}>{{formatTime last_build_finished_at}}</abbr>
-      </p>
-      {{#if description}}
-        <p class="description">{{description}}</p>
-      {{/if}}
-      <span class="indicator"></span>
-    </li>
-  {{/each}}
-<ul>
+{{#if content.lastObject.isLoaded}}
+  <ul>
+    {{#each content}}
+      <li>
+        <div class="wrapper">
+          <a {{action viewCurrent href=true}} class="slug">{{slug}}</a>
+          <a {{action viewBuild href=true context="lastBuild"}} class="build">#{{last_build_number}}</a>
+        </div>
+        <p class="summary">
+          <span class="duration_label">{{t repositories.duration}}:</span>
+          <abbr class="duration" {{bindAttr title="last_build_started_at"}}>{{formatDuration last_build_duration}}</abbr>,
+          <span class="finished_at_label">{{t repositories.finished_at}}:</span>
+          <abbr class="finished_at timeago" {{bindAttr title="last_build_finished_at"}}>{{formatTime last_build_finished_at}}</abbr>
+        </p>
+        {{#if description}}
+          <p class="description">{{description}}</p>
+        {{/if}}
+        <span class="indicator"></span>
+      </li>
+    {{/each}}
+  <ul>
+{{/if}}
