@@ -5,31 +5,37 @@ require 'hax0rs'
   location: 'hash'
 
   root: Em.Route.extend
+    # common "layout" state for all states that show a repo list on the left.
+    # there also will be "profile" and "stats" states next to "default" that do
+    # not have a 3-column layout
     default: Em.Route.extend
       route: '/'
 
-      viewCurrent: Ember.Route.transitionTo('current')
-      viewBuilds: Ember.Route.transitionTo('builds')
-      viewBuild: Ember.Route.transitionTo('build')
-      viewJob: Ember.Route.transitionTo('job')
+      viewCurrent: Ember.Route.transitionTo('repository.current')
+      viewBuilds: Ember.Route.transitionTo('repository.builds')
+      viewBuild: Ember.Route.transitionTo('repository.build')
+      viewJob: Ember.Route.transitionTo('repository.job')
 
       connectOutlets: (router) ->
         repositories = Travis.Repository.find()
-        router.connectLeft(repositories)
         router.set('repositories', repositories)
+        router.connectLeft(repositories)
 
       index: Em.Route.extend
         route: '/'
 
+        # on / we show the most recent repository from the repos list, so we
+        # have to wait until it's loaded
         connectOutlets: (router) ->
           repositories = router.get('repositories')
           onceLoaded repositories, =>
             repository = repositories.get('firstObject')
-            router.connectRepository repository
-            router.connectTabs repository
-            router.connectCurrent repository.get('lastBuild')
+            build = Travis.Build.find(repository.get('last_build_id'))
+            router.connectRepository(repository)
+            router.connectTabs(repository)
+            router.connectCurrent(build)
 
-      current: Em.Route.extend
+      repository: Em.Route.extend
         route: '/:owner/:name'
 
         serialize: (router, repository) ->
@@ -39,115 +45,77 @@ require 'hax0rs'
           router.deserializeRepository(params)
 
         connectOutlets: (router, repository) ->
-          router.connectRepository repository
-          router.connectTabs repository
-          router.connectCurrent repository.get('lastBuild')
+          router.set('repository', repository)
+          router.connectRepository(repository)
+          router.connectTabs(repository)
 
-      builds: Em.Route.extend
-        route: '/:owner/:name/builds'
+        current: Em.Route.extend
+          route: '/'
 
-        serialize: (router, repository) ->
-          router.serializeRepository repository
+          connectOutlets: (router, repository) ->
+            console.log(repository)
+            build = Travis.Build.find(repository.get('last_build_id'))
+            router.connectTabs(repository)
+            router.connectCurrent(build)
 
-        deserialize: (router, params) ->
-          router.deserializeRepository(params)
+        builds: Em.Route.extend
+          route: '/builds'
 
-        connectOutlets: (router, repository) ->
-          router.connectRepository repository
-          router.connectTabs repository
-          router.connectBuilds repository.get('builds')
+          connectOutlets: (router, repository) ->
+            router.connectBuilds(repository.get('builds'))
 
-      build: Em.Route.extend
-        route: '/:owner/:name/builds/:id'
+        build: Em.Route.extend
+          route: '/builds/:build_id'
 
-        serialize: (router, build) ->
-          r = router.serializeObject build
-          console.log(r.owner, r.name, r.id)
-          r
-
-        deserialize: (router, params) ->
-          router.deserializeBuild(params)
-
-        connectOutlets: (router, build) ->
-          build = Travis.Build.find(build.id) unless build instanceof Travis.Build
-          onceLoaded build, =>
+          connectOutlets: (router, build) ->
             repository = build.get('repository')
             onceLoaded repository, =>
-              router.connectRepository repository
-              router.connectTabs repository, build
-              router.connectBuild build
+              router.setPath('tabsController.build', build)
+              router.connectBuild(build)
 
-      job: Em.Route.extend
-        route: '/:owner/:name/jobs/:id'
+        job: Em.Route.extend
+          route: '/jobs/:job_id'
 
-        serialize: (router, job) ->
-          router.serializeObject job
-
-        deserialize: (router, params) ->
-          router.deserializeBuild(params)
-
-        connectOutlets: (router, job) ->
-          # repositories = Travis.Repository.find()
-          # job = Travis.Job.find(job.id) unless job instanceof Travis.Job
-          # repository = job.get('repository')
-          # build = job.get('build')
-
-          # router.connectLeft(repositories)
-          # onceLoaded repository, build, =>
-          #   router.connectRepository repository
-          #   router.connectTabs repository, build, job
-          #   router.connectJob job
+          connectOutlets: (router, job) ->
+            build = job.get('build')
+            onceLoaded build, =>
+              router.setPath('tabsController.build', build)
+              router.setPath('tabsController.job', job)
+              router.connectJob(job)
 
 
   connectLeft: (repositories) ->
-    @get('applicationController').connectOutlet outletName: 'left', name: 'repositories', context: repositories
+    @get('applicationController').connectOutlet(outletName: 'left', name: 'repositories', context: repositories)
 
   connectRepository: (repository) ->
-    @get('applicationController').connectOutlet outletName: 'main', name: 'repository', context: repository
+    @get('applicationController').connectOutlet(outletName: 'main', name: 'repository', context: repository)
 
-  connectTabs: (repository, build, job) ->
-    @setPath 'tabsController.repository', repository
-    @setPath 'tabsController.build', build
-    @setPath 'tabsController.job', job
-    @get('repositoryController').connectOutlet outletName: 'tabs', name: 'tabs'
+  connectTabs: (repository) ->
+    @setPath('tabsController.repository', repository)
+    @get('repositoryController').connectOutlet(outletName: 'tabs', name: 'tabs')
 
   connectCurrent: (build) ->
-    @get('repositoryController').connectOutlet outletName: 'tab', name: 'current', context: build
+    @get('repositoryController').connectOutlet(outletName: 'tab', name: 'current', context: build)
 
   connectBuilds: (builds) ->
-    @get('repositoryController').connectOutlet outletName: 'tab', name: 'history', context: builds
+    @get('repositoryController').connectOutlet(outletName: 'tab', name: 'history', context: builds)
 
   connectBuild: (build) ->
-    @get('repositoryController').connectOutlet outletName: 'tab', name: 'build', context: build
+    @get('repositoryController').connectOutlet(outletName: 'tab', name: 'build', context: build)
 
   connectJob: (job) ->
-    @get('repositoryController').connectOutlet outletName: 'tab', name: 'job', context: job
+    @get('repositoryController').connectOutlet(outletName: 'tab', name: 'job', context: job)
 
 
   serializeRepository: (object) ->
-    if object instanceof DS.Model
+    result = if object instanceof DS.Model
       slug = object.get('slug') || object._id # wat.
-      parts = slug.split('/')
-      { owner: parts[0], name: parts[1] }
+      { owner: slug.split('/')[0], name: slug.split[1] }
     else
-      object || {}
-
-  serializeObject: (object) ->
-    if object instanceof DS.Model
-      repository = object.get('repository')
-      params = @serializeRepository(repository)
-      object.get('id') || debugger
-      $.extend params,
-        id: object.get('id')
-    else
-      object or {}
+      object
+    console.log(result)
+    result
 
   deserializeRepository: (params) ->
     Travis.Repository.find("#{params.owner}/#{params.name}")
-
-  deserializeBuild: (params) ->
-    Travis.Build.find(params.id)
-
-  deserializeJob: (params) ->
-    Travis.Job.find(params.id)
 
