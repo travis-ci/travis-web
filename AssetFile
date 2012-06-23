@@ -33,6 +33,10 @@ input 'assets/javascripts' do
     concat 'app/templates.js'
   end
 
+  match 'mocks.js' do
+    concat 'mocks.js'
+  end
+
   match '{app,config,lib}/**/*.js' do
     minispade(
       string: true,

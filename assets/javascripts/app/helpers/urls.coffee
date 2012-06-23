@@ -22,11 +22,11 @@
 
   Commit:
     urlAuthor: (->
-      'mailto:%@'.fmt @getPath('commit.author_email')
+      'mailto:%@'.fmt @getPath('commit.authorEmail')
     ).property('commit')
 
     urlCommitter: (->
-      'mailto:%@'.fmt @getPath('commit.committer_email')
+      'mailto:%@'.fmt @getPath('commit.committerEmail')
     ).property('commit')
 
   Build:

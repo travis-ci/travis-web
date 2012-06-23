@@ -11,6 +11,8 @@ require 'travis/model'
 
   primaryKey: 'slug'
 
+  lastBuild: DS.belongsTo('Travis.Build')
+
   builds: (->
     Travis.Build.byRepositoryId @get('id'), event_type: 'push'
   ).property()
@@ -26,15 +28,6 @@ require 'travis/model'
   name: (->
     (@get('slug') || @_id).split('/')[1]
   ).property('owner', 'name'),
-
-  # TODO this is used in router#serializeObject for the last_build links in the
-  # repositories list. should be in some item controller i guess, but i'm not
-  # sure how to use one with #each
-  lastBuild: (->
-    owner: @get('owner')
-    name: @get('name')
-    id: @get('last_build_id')
-  ).property('last_build_id')
 
   last_build_duration: (->
     duration = @getPath('data.last_build_duration')

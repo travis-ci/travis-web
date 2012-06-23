@@ -96,3 +96,9 @@ dd {
   clear: both;
   padding-top: 20px;
 }
+caption {
+  white-space: nowrap;
+  font-weight: bold;
+  padding-top: 20px;
+  display: block;
+}

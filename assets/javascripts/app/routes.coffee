@@ -52,36 +52,34 @@ require 'hax0rs'
         current: Em.Route.extend
           route: '/'
 
-          connectOutlets: (router, repository) ->
-            console.log(repository)
-            build = Travis.Build.find(repository.get('last_build_id'))
-            router.connectTabs(repository)
-            router.connectCurrent(build)
+          connectOutlets: (router) ->
+            repository = router.get('repository')
+            onceLoaded repository, => # TODO should need to wait here, right?
+              build = repository.get('lastBuild')
+              router.connectTabs(repository)
+              router.connectCurrent(build)
 
         builds: Em.Route.extend
           route: '/builds'
 
-          connectOutlets: (router, repository) ->
+          connectOutlets: (router) ->
+            repository = router.get('repository')
             router.connectBuilds(repository.get('builds'))
 
         build: Em.Route.extend
           route: '/builds/:build_id'
 
           connectOutlets: (router, build) ->
-            repository = build.get('repository')
-            onceLoaded repository, =>
-              router.setPath('tabsController.build', build)
-              router.connectBuild(build)
+            router.setPath('tabsController.build', build)
+            router.connectBuild(build)
 
         job: Em.Route.extend
           route: '/jobs/:job_id'
 
           connectOutlets: (router, job) ->
-            build = job.get('build')
-            onceLoaded build, =>
-              router.setPath('tabsController.build', build)
-              router.setPath('tabsController.job', job)
-              router.connectJob(job)
+            router.setPath('tabsController.build', build)
+            router.setPath('tabsController.job', job)
+            router.connectJob(job)
 
 
   connectLeft: (repositories) ->
@@ -108,13 +106,11 @@ require 'hax0rs'
 
 
   serializeRepository: (object) ->
-    result = if object instanceof DS.Model
+    if object instanceof DS.Model
       slug = object.get('slug') || object._id # wat.
-      { owner: slug.split('/')[0], name: slug.split[1] }
+      { owner: slug.split('/')[0], name: slug.split('/')[1] }
     else
       object
-    console.log(result)
-    result
 
   deserializeRepository: (params) ->
     Travis.Repository.find("#{params.owner}/#{params.name}")

@@ -3,11 +3,18 @@ Travis.RepositoriesView = Em.View.extend templateName: 'repositories/list'
 
 Travis.RepositoriesItemView = Em.View.extend
   classes: (->
-    color   = Travis.Helpers.colorForResult(@getPath('content.last_build_result'))
+    color   = Travis.Helpers.colorForResult(@getPath('context.last_build_result'))
     classes = ['repository', color]
-    classes.push 'selected' if @getPath('content.selected')
+    classes.push 'selected' if @getPath('context.selected')
     classes.join(' ')
-  ).property('content.last_build_result', 'content.selected')
+  ).property('context.last_build_result', 'context.selected')
+
+  lastBuild: (->
+    owner: @getPath('context.owner')
+    name: @getPath('context.name')
+    id: @getPath('context.last_build_id')
+  ).property('context.last_build_id')
+
 
 Travis.RepositoryView = Em.View.extend templateName: 'repositories/show'
 Travis.TabsView       = Em.View.extend templateName: 'repositories/tabs'
