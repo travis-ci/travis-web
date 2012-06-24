@@ -36,10 +36,10 @@ require 'travis/model'
   ).property('data.last_build_duration', 'last_build_started_at', 'last_build_finished_at')
 
   stats: (->
-    @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
-      @set('_stats', data)
-      @notifyPropertyChange 'stats'
-    ) && {}
+    # @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
+    #   @set('_stats', data)
+    #   @notifyPropertyChange 'stats'
+    # ) && {}
   ).property('slug')
 
   select: ->

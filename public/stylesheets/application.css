@@ -69,6 +69,9 @@ li {
   margin-left: 20px;
 }
 
+.summary {
+  display: inline-block;
+}
 .summary .left,
 .summary .right {
   float: left;
@@ -84,21 +87,23 @@ dd {
   float: left;
 }
 
-.green {
-  border-top: 5px solid lightgreen;
-}
-.red {
-  border-top: 5px solid red;
-}
+/* .green { */
+/*   border-top: 5px solid lightgreen; */
+/* } */
+/* .red { */
+/*   border-top: 5px solid red; */
+/* } */
 
 #jobs,
 .log {
   clear: both;
   padding-top: 20px;
 }
+table {
+  clear: both;
+  margin-top: 20px;
+}
 caption {
-  white-space: nowrap;
+  text-align: left;
   font-weight: bold;
-  padding-top: 20px;
-  display: block;
 }

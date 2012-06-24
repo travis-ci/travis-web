@@ -33,7 +33,7 @@ require 'hax0rs'
             build = Travis.Build.find(repository.get('last_build_id'))
             router.connectRepository(repository)
             router.connectTabs(repository)
-            router.connectCurrent(build)
+            router.connectBuild(build)
 
       repository: Em.Route.extend
         route: '/:owner/:name'
@@ -54,22 +54,24 @@ require 'hax0rs'
 
           connectOutlets: (router) ->
             repository = router.get('repository')
-            onceLoaded repository, => # TODO should need to wait here, right?
+            onceLoaded repository, -> # TODO should not need to wait here, right?
               build = repository.get('lastBuild')
               router.connectTabs(repository)
-              router.connectCurrent(build)
+              router.connectBuild(build)
 
         builds: Em.Route.extend
           route: '/builds'
 
           connectOutlets: (router) ->
             repository = router.get('repository')
-            router.connectBuilds(repository.get('builds'))
+            onceLoaded repository, => # TODO hrm, otherwise it gets builds?repository_id=null
+              router.connectBuilds(repository.get('builds'))
 
         build: Em.Route.extend
           route: '/builds/:build_id'
 
           connectOutlets: (router, build) ->
+            build = Travis.Build.find(build.id) unless build instanceof Travis.Build # what?
             router.setPath('tabsController.build', build)
             router.connectBuild(build)
 
@@ -77,7 +79,8 @@ require 'hax0rs'
           route: '/jobs/:job_id'
 
           connectOutlets: (router, job) ->
-            router.setPath('tabsController.build', build)
+            job = Travis.Job.find(job.id) unless job instanceof Travis.Job # what?
+            router.setPath('tabsController.build', job.get('build'))
             router.setPath('tabsController.job', job)
             router.connectJob(job)
 
@@ -91,9 +94,6 @@ require 'hax0rs'
   connectTabs: (repository) ->
     @setPath('tabsController.repository', repository)
     @get('repositoryController').connectOutlet(outletName: 'tabs', name: 'tabs')
-
-  connectCurrent: (build) ->
-    @get('repositoryController').connectOutlet(outletName: 'tab', name: 'current', context: build)
 
   connectBuilds: (builds) ->
     @get('repositoryController').connectOutlet(outletName: 'tab', name: 'history', context: builds)

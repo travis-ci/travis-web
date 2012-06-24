@@ -1,4 +1,5 @@
 require 'ext/ember/bound_helper'
+require 'travis/log'
 
 safe = (string) ->
   new Handlebars.SafeString(string)
@@ -19,9 +20,10 @@ Ember.registerBoundHelper 'formatDuration', (duration, options) ->
   safe Travis.Helpers.timeInWords(duration)
 
 Ember.registerBoundHelper 'formatCommit', (commit, options) ->
-  branch = commit.get('branch') || ''
-  branch = " (#{branch})" if branch
-  safe (commit.get('sha') || '').substr(0, 7) + branch
+  if commit
+    branch = commit.get('branch') || ''
+    branch = " (#{branch})" if branch
+    safe (commit.get('sha') || '').substr(0, 7) + branch
 
 Ember.registerBoundHelper 'formatSha', (sha, options) ->
   safe (sha || '').substr(0, 7)

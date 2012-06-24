@@ -51,7 +51,7 @@
         json: 'application/vnd.travis-ci.2+json'
 
   findQuery: (store, type, query, recordArray) ->
-    url = '/' + type.buildURL(id)
+    url = '/' + type.buildURL()
     console.log "findQuery: #{url} (#{query})"
 
     @ajax url, 'GET',

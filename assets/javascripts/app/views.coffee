@@ -19,15 +19,35 @@ Travis.RepositoriesItemView = Em.View.extend
 Travis.RepositoryView = Em.View.extend templateName: 'repositories/show'
 Travis.TabsView       = Em.View.extend templateName: 'repositories/tabs'
 Travis.HistoryView    = Em.View.extend templateName: 'builds/list'
+Travis.LoadingView    = Em.View.extend templateName: 'loading'
 
 Travis.BuildsItemView = Em.View.extend
   classes: (->
     Travis.Helpers.colorForResult(@getPath('content.result'))
   ).property('content.result')
 
-Travis.CurrentView  = Travis.BuildView = Em.View.extend templateName: 'builds/show'
-Travis.LoadingView  = Em.View.extend templateName: 'loading'
-Travis.JobsView     = Em.View.extend templateName: 'jobs/list'
+Travis.BuildView = Em.View.extend
+  templateName: 'builds/show'
+
+  isMatrix: (->
+    @getPath('context.data.job_ids.length') > 1
+  ).property()
+
+Travis.JobsView = Em.View.extend
+  templateName: 'jobs/list'
+
+  isFailureMatrix: (->
+    @getPath('context.allowedFailureJobs.length') > 0
+  ).property('context.allowedFailureJobs.length')
+
+  requiredJobs: (->
+    @getPath('context.jobs').filter (job) -> job.get('allow_failure') != true
+  ).property('context.jobs')
+
+  allowedFailureJobs: (->
+    @getPath('context.jobs').filter (job) -> job.get('allow_failure')
+  ).property('context.jobs')
+
 Travis.JobView      = Em.View.extend templateName: 'jobs/show'
 Travis.LogView      = Em.View.extend templateName: 'jobs/log'
 

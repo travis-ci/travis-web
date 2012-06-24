@@ -9,15 +9,19 @@
     </tr>
   </thead>
 
-  {{#collection tagName="tbody" contentBinding="content" itemViewClass="Travis.BuildsItemView" itemClassBinding="color"}}
-    {{#with view.content}}
-      <td class="number"><a {{action viewBuild href=true context="content"}}>{{number}}</a></td>
-      <td class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a> {{commit.sha}}</td>
-      <td class="message">{{{formatMessage commit.message short="true"}}}</td>
-      <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
-      <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
-    {{/with}}
-  {{/collection}}
+  <tbody>
+    {{#each build in content}}
+      {{#view Travis.BuildsItemView contextBinding="build"}}
+        <tr>
+          <td class="number"><a {{action viewBuild href=true}}>{{number}}</a></td>
+          <td class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></td>
+          <td class="message">{{{formatMessage commit.message short="true"}}}</td>
+          <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
+          <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
+        </tr>
+      {{/view}}
+    {{/each}}
+  </tbody>
 </table>
 
 <p>

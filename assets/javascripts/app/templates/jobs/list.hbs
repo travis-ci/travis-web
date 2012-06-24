@@ -8,9 +8,9 @@
     </tr>
   </thead>
   <tbody>
-    {{#each requiredJobs}}
+    {{#each view.requiredJobs}}
       <tr {{bindAttr class="color"}}>
-        <td class="number"><a {{action viewJob href=true context=this}}>#{{number}}</a></td>
+        <td class="number"><a {{action viewJob href=true}}>#{{number}}</a></td>
         <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
         <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
         {{#each configValues}}
@@ -21,7 +21,7 @@
   </tbody>
 </table>
 
-{{#if isFailureMatrix}}
+{{#if view.isFailureMatrix}}
   <table id="allow_failure_builds">
     <caption>
       {{t jobs.allowed_failures}}{{whats_this allow_failure_help}}
