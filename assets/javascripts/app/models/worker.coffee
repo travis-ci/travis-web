@@ -12,7 +12,7 @@ require 'travis/model'
   state: DS.attr('string')
   name: DS.attr('string')
   host: DS.attr('string')
-  last_seen_at: DS.attr('string')
+  lastSeenAt: DS.attr('string')
 
   isTesting: (->
     @get('state') == 'working' && !!@getPath('payload.config')

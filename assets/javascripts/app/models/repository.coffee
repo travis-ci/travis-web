@@ -1,13 +1,13 @@
 require 'travis/model'
 
 @Travis.Repository = Travis.Model.extend
-  slug:                   DS.attr('string')
-  description:            DS.attr('string')
-  last_build_id:          DS.attr('number')
-  last_build_number:      DS.attr('string')
-  last_build_result:      DS.attr('number')
-  last_build_started_at:  DS.attr('string')
-  last_build_finished_at: DS.attr('string')
+  slug:                 DS.attr('string')
+  description:          DS.attr('string')
+  lastBuildId:          DS.attr('number')
+  lastBuildNumber:      DS.attr('string')
+  lastBuildResult:      DS.attr('number')
+  lastBuildStarted_at:  DS.attr('string')
+  lastBuildFinished_at: DS.attr('string')
 
   primaryKey: 'slug'
 
@@ -29,11 +29,11 @@ require 'travis/model'
     (@get('slug') || @_id).split('/')[1]
   ).property('owner', 'name'),
 
-  last_build_duration: (->
-    duration = @getPath('data.last_build_duration')
-    duration = Travis.Helpers.durationFrom(@get('last_build_started_at'), @get('last_build_finished_at')) unless duration
+  lastBuildDuration: (->
+    duration = @getPath('data.lastBuildDuration')
+    duration = Travis.Helpers.durationFrom(@get('lastBuildStarted_at'), @get('lastBuildFinished_at')) unless duration
     duration
-  ).property('data.last_build_duration', 'last_build_started_at', 'last_build_finished_at')
+  ).property('data.lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
   stats: (->
     # @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
@@ -46,8 +46,8 @@ require 'travis/model'
     Travis.Repository.select(self.get('id'))
 
   tick: ->
-    @notifyPropertyChange 'last_build_duration'
-    @notifyPropertyChange 'last_build_finished_at'
+    @notifyPropertyChange 'lastBuildDuration'
+    @notifyPropertyChange 'lastBuildFinishedAt'
 
 @Travis.Repository.reopenClass
   recent: ->

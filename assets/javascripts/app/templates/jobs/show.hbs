@@ -1,8 +1,8 @@
-<div {{bindAttr class="color"}}>
+<div {{bindAttr class="classes"}}>
   <dl class="summary clearfix">
     <div class="left">
       <dt>Job</dt>
-      <dd class="number"><a {{bindAttr href="urlJob"}}>{{number}}</a></dd>
+      <dd class="number"><a {{action viewJob href=true}}>{{number}}</a></dd>
       <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
       <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</dd>
       <dt>{{t jobs.duration}}</dt>
@@ -12,17 +12,17 @@
     <div class="right">
       <dt>{{t jobs.commit}}</dt>
       <dd class="commit-hash"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
-      {{#if commit.compare_url}}
+      {{#if commit.compareUrl}}
         <dt>{{t jobs.compare}}</dt>
-        <dd class="compare_view"><a {{bindAttr href="commit.compare_url"}}>{{pathFrom commit.compare_url}}</a></dd>
+        <dd class="compare_view"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
       {{/if}}
-      {{#if commit.author_name}}
+      {{#if commit.authorName}}
         <dt>{{t jobs.author}}</dt>
-        <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.author_name}}</a></dd>
+        <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.authorName}}</a></dd>
       {{/if}}
-      {{#if commit.committer_name}}
+      {{#if commit.committerName}}
         <dt>{{t jobs.committer}}</dt>
-        <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committer_name}}</a></dd>
+        <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committerName}}</a></dd>
       {{/if}}
     </div>
 

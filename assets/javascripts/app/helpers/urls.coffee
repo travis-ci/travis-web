@@ -20,17 +20,17 @@
       '%@.png'.fmt @get('slug')
     ).property('slug')
 
-  Commit:
-    urlAuthor: (->
-      'mailto:%@'.fmt @getPath('commit.authorEmail')
-    ).property('commit')
-
-    urlCommitter: (->
-      'mailto:%@'.fmt @getPath('commit.committerEmail')
-    ).property('commit')
-
   Build:
     githubCommit: (->
       'http://github.com/%@/commit/%@'.fmt @getPath('repository.slug'), @getPath('commit.sha')
     ).property('repository.slug', 'commit.sha')
+
+  Commit:
+    urlAuthor: (->
+      'mailto:%@'.fmt @getPath('commit.authorEmail')
+    ).property()
+
+    urlCommitter: (->
+      'mailto:%@'.fmt @getPath('commit.committerEmail')
+    ).property()
 

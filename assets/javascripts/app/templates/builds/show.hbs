@@ -2,7 +2,7 @@
   <dl class="summary clearfix">
     <div class="left">
       <dt>{{t builds.name}}</dt>
-      <dd class="number"><a {{bindAttr href="urlBuild"}}>{{number}}</a></dd>
+      <dd class="number"><a {{action viewBuild href=true}}>{{number}}</a></dd>
       <dt class="finished_at_label">{{t builds.finished_at}}</dt>
       <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</dd>
       <dt>{{t builds.duration}}</dt>
@@ -18,7 +18,7 @@
       {{/if}}
       {{#if commit.authorName}}
         <dt>{{t builds.author}}</dt>
-        <dd class="author"><a {{bindAttr href="view.urlAuthor"}}>{{commit.authorName}}</a></dd>
+        <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.authorName}}</a></dd>
       {{/if}}
       {{#if commit.committerName}}
         <dt>{{t builds.committer}}</dt>
@@ -37,7 +37,8 @@
 
   {{#if isLoaded}}
     {{#if view.isMatrix}}
-      {{view Travis.JobsView}}
+      {{view Travis.JobsView jobsBinding="view.requiredJobs" required="true"}}
+      {{view Travis.JobsView jobsBinding="view.allowedFailureJobs"}}
     {{else}}
       {{view Travis.LogView contextBinding="jobs.firstObject"}}
     {{/if}}

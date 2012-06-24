@@ -19,6 +19,7 @@ require 'hax0rs'
       connectOutlets: (router) ->
         repositories = Travis.Repository.find()
         router.set('repositories', repositories)
+        router.set('job', undefined)
         router.connectLeft(repositories)
 
       index: Em.Route.extend
@@ -30,9 +31,9 @@ require 'hax0rs'
           repositories = router.get('repositories')
           onceLoaded repositories, =>
             repository = repositories.get('firstObject')
-            build = Travis.Build.find(repository.get('last_build_id'))
+            build = Travis.Build.find(repository.get('lastBuildId'))
             router.connectRepository(repository)
-            router.connectTabs(repository)
+            router.connectTabs()
             router.connectBuild(build)
 
       repository: Em.Route.extend
@@ -45,9 +46,7 @@ require 'hax0rs'
           router.deserializeRepository(params)
 
         connectOutlets: (router, repository) ->
-          router.set('repository', repository)
           router.connectRepository(repository)
-          router.connectTabs(repository)
 
         current: Em.Route.extend
           route: '/'
@@ -56,7 +55,7 @@ require 'hax0rs'
             repository = router.get('repository')
             onceLoaded repository, -> # TODO should not need to wait here, right?
               build = repository.get('lastBuild')
-              router.connectTabs(repository)
+              router.connectTabs()
               router.connectBuild(build)
 
         builds: Em.Route.extend
@@ -65,6 +64,7 @@ require 'hax0rs'
           connectOutlets: (router) ->
             repository = router.get('repository')
             onceLoaded repository, => # TODO hrm, otherwise it gets builds?repository_id=null
+              router.connectTabs()
               router.connectBuilds(repository.get('builds'))
 
         build: Em.Route.extend
@@ -72,7 +72,7 @@ require 'hax0rs'
 
           connectOutlets: (router, build) ->
             build = Travis.Build.find(build.id) unless build instanceof Travis.Build # what?
-            router.setPath('tabsController.build', build)
+            router.connectTabs(build)
             router.connectBuild(build)
 
         job: Em.Route.extend
@@ -80,8 +80,7 @@ require 'hax0rs'
 
           connectOutlets: (router, job) ->
             job = Travis.Job.find(job.id) unless job instanceof Travis.Job # what?
-            router.setPath('tabsController.build', job.get('build'))
-            router.setPath('tabsController.job', job)
+            router.connectTabs(job.get('build'), job)
             router.connectJob(job)
 
 
@@ -89,10 +88,13 @@ require 'hax0rs'
     @get('applicationController').connectOutlet(outletName: 'left', name: 'repositories', context: repositories)
 
   connectRepository: (repository) ->
+    @set('repository', repository)
     @get('applicationController').connectOutlet(outletName: 'main', name: 'repository', context: repository)
 
-  connectTabs: (repository) ->
-    @setPath('tabsController.repository', repository)
+  connectTabs: (build, job) ->
+    @setPath('tabsController.repository', @get('repository'))
+    @setPath('tabsController.build', build)
+    @setPath('tabsController.job', job)
     @get('repositoryController').connectOutlet(outletName: 'tabs', name: 'tabs')
 
   connectBuilds: (builds) ->

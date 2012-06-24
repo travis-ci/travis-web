@@ -3,12 +3,7 @@ Travis.RepositoriesController = Em.ArrayController.extend()
 Travis.RepositoryController   = Em.ObjectController.extend(Travis.Urls.Repository)
 Travis.TabsController         = Em.Controller.extend()
 Travis.HistoryController      = Em.ArrayController.extend()
-Travis.JobController          = Em.ObjectController.extend()
-Travis.LoadingController      = Em.Controller.extend()
-
-Travis.BuildController = Em.ObjectController.extend
-  classes: (->
-    Travis.Helpers.colorForResult(@getPath('content.result'))
-  ).property('content.result')
+Travis.BuildController        = Em.ObjectController.extend(Travis.Urls.Commit)
+Travis.JobController          = Em.ObjectController.extend(Travis.Urls.Commit)
 
 

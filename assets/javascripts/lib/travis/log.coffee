@@ -6,10 +6,10 @@
     exec: /(<p.*?\/a>[\/\w]*.rvm\/rubies\/[\S]*?\/(ruby|rbx|jruby) .*?<\/p>)/g
 
   filter: (log) ->
-    log = @escapeHtml(log)
+    log = @escape(log)
     log = @deansi(log)
     log = log.replace(/\r/g, '')
-    log = @numberLines(log)
+    log = @number(log)
     log = @fold(log)
     log = log.replace(/\n/g, '')
     log
@@ -17,19 +17,18 @@
   stripPaths: (log) ->
     log.replace /\/home\/vagrant\/builds(\/[^\/\n]+){2}\//g, ''
 
-  escapeHtml: (log) ->
+  escape: (log) ->
     Handlebars.Utils.escapeExpression log
 
   escapeRuby: (log) ->
     log.replace /#<(\w+.*?)>/, '#&lt;$1&gt;'
 
-  numberLines: (log) ->
+  number: (log) ->
     result = ''
     $.each log.trim().split('\n'), (ix, line) ->
       number = ix + 1
       path = Travis.Log.location().substr(1).replace(/\/L\d+/, '') + '/L' + number
       result += '<p><a href=\'#%@\' id=\'%@\' name=\'L%@\'>%@</a>%@</p>\n'.fmt(path, path, number, number, line)
-
     result.trim()
 
   deansi: (log) ->
@@ -43,7 +42,6 @@
       part.bold and classes.push('bold')
       part.italic and classes.push('italic')
       text += (if classes.length then ('<span class=\'' + classes.join(' ') + '\'>' + part.text + '</span>') else part.text)
-
     text.replace /\033/g, ''
 
   fold: (log) ->
@@ -52,7 +50,6 @@
       log = log.replace(pattern, ->
         '<div class=\'fold ' + name + '\'>' + arguments[1].trim() + '</div>'
       )
-
     log
 
   unfold: (log) ->

@@ -1,6 +1,17 @@
+require 'travis/log'
+
 @Travis.Helpers =
+  safe: (string) ->
+    new Handlebars.SafeString(string)
+
   colorForResult: (result) ->
     (if result is 0 then 'green' else (if result is 1 then 'red' else null))
+
+  formatCommit: (sha, branch) ->
+    Travis.Helpers.formatSha(sha) + if branch then " (#{branch})" else ''
+
+  formatSha: (sha) ->
+    (sha || '').substr(0, 7)
 
   formatConfig: (config) ->
     config = $.only config, 'rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'scala', 'jdk', 'python', 'perl'
@@ -13,6 +24,12 @@
     message = message or ''
     message = message.split(/\n/)[0]  if options.short
     @_emojize(@_escape(message)).replace /\n/g, '<br/>'
+
+  formatLog: (log) ->
+    Travis.Log.filter(log)
+
+  pathFrom: (url) ->
+    (url || '').split('/').pop()
 
   timeAgoInWords: (date) ->
     $.timeago.distanceInWords date

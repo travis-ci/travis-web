@@ -1,25 +1,31 @@
-Travis.ApplicationView  = Em.View.extend templateName: 'application'
-Travis.RepositoriesView = Em.View.extend templateName: 'repositories/list'
+Travis.ApplicationView = Em.View.extend
+  templateName: 'application'
+
+Travis.RepositoriesView = Em.View.extend
+  templateName: 'repositories/list'
 
 Travis.RepositoriesItemView = Em.View.extend
   classes: (->
-    color   = Travis.Helpers.colorForResult(@getPath('context.last_build_result'))
+    color   = Travis.Helpers.colorForResult(@getPath('repository.lastBuildResult'))
     classes = ['repository', color]
-    classes.push 'selected' if @getPath('context.selected')
+    classes.push 'selected' if @getPath('repository.selected')
     classes.join(' ')
-  ).property('context.last_build_result', 'context.selected')
+  ).property('repository.lastBuildResult', 'repository.selected')
 
   lastBuild: (->
-    owner: @getPath('context.owner')
-    name: @getPath('context.name')
-    id: @getPath('context.last_build_id')
-  ).property('context.last_build_id')
+    owner: @getPath('repository.owner')
+    name: @getPath('repository.name')
+    id: @getPath('repository.lastBuildId')
+  ).property('repository.owner', 'repository.name', 'repository.lastBuildId')
 
+Travis.RepositoryView = Em.View.extend
+  templateName: 'repositories/show'
 
-Travis.RepositoryView = Em.View.extend templateName: 'repositories/show'
-Travis.TabsView       = Em.View.extend templateName: 'repositories/tabs'
-Travis.HistoryView    = Em.View.extend templateName: 'builds/list'
-Travis.LoadingView    = Em.View.extend templateName: 'loading'
+Travis.TabsView = Em.View.extend
+  templateName: 'repositories/tabs'
+
+Travis.HistoryView = Em.View.extend
+  templateName: 'builds/list'
 
 Travis.BuildsItemView = Em.View.extend
   classes: (->
@@ -29,25 +35,32 @@ Travis.BuildsItemView = Em.View.extend
 Travis.BuildView = Em.View.extend
   templateName: 'builds/show'
 
+  classes: (->
+    Travis.Helpers.colorForResult(@get('result'))
+  ).property('result')
+
   isMatrix: (->
     @getPath('context.data.job_ids.length') > 1
+  ).property() # TODO if i bind this to 'context.data.job_ids.length', that breaks the entire view (as if context was always undefined)
+
+  requiredJobs: (->
+    @getPath('context.jobs').filter((job) -> job.get('allow_failure') != true)
+  ).property() # TODO same here with binding to 'context.data.job_ids'
+
+  allowedFailureJobs: (->
+    @getPath('context.jobs').filter((job) -> job.get('allow_failure'))
   ).property()
 
 Travis.JobsView = Em.View.extend
   templateName: 'jobs/list'
 
-  isFailureMatrix: (->
-    @getPath('context.allowedFailureJobs.length') > 0
-  ).property('context.allowedFailureJobs.length')
+Travis.JobView = Em.View.extend
+  templateName: 'jobs/show'
 
-  requiredJobs: (->
-    @getPath('context.jobs').filter (job) -> job.get('allow_failure') != true
-  ).property('context.jobs')
+  classes: (->
+    Travis.Helpers.colorForResult(@get('result'))
+  ).property('result')
 
-  allowedFailureJobs: (->
-    @getPath('context.jobs').filter (job) -> job.get('allow_failure')
-  ).property('context.jobs')
-
-Travis.JobView      = Em.View.extend templateName: 'jobs/show'
-Travis.LogView      = Em.View.extend templateName: 'jobs/log'
+Travis.LogView = Em.View.extend
+  templateName: 'jobs/log'
 
