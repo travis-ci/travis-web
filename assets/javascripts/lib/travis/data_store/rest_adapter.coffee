@@ -14,7 +14,7 @@
 
   find: (store, type, id) ->
     url = '/' + type.buildURL(id)
-    console.log "find: #{url} (#{id})"
+    console.log "find: #{url}"
 
     @ajax url, 'GET',
       success: (json) ->
@@ -26,7 +26,7 @@
 
   findMany: (store, type, ids) ->
     url = '/' + type.buildURL()
-    console.log "findMany: #{url} (#{ids})"
+    console.log "findMany: #{url}"
 
     @ajax url, 'GET',
       data:
