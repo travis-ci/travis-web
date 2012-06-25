@@ -20,7 +20,7 @@ input 'assets/javascripts' do
     concat files, 'vendor.js'
   end
 
-  match '**/*.coffee' do
+  match '{app,config,lib}/**/*.coffee' do
     coffee_script
   end
 
@@ -49,6 +49,23 @@ input 'assets/javascripts' do
   end
 end
 
+# DOH. how to simplify this.
+input 'assets/javascripts/spec' do
+  match 'vendor/*.js' do
+    files = %w(
+      vendor/jasmine.js
+      vendor/jasmine-html.js
+      vendor/jasmine-runner.js
+    )
+    concat files, 'specs/vendor.js'
+  end
+
+  match '**/*.coffee' do
+    coffee_script
+    concat 'specs/specs.js'
+  end
+end
+
 output 'public/stylesheets'
 input 'assets/stylesheets' do
   match '**/*.scss' do
@@ -62,9 +79,9 @@ input 'assets/stylesheets' do
   end
 end
 
-output 'public'
-input 'assets', 'index.html.erb' do
-  filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
-    input.sub /\.erb$/, ''
-  end
-end
+# output 'public'
+# input 'assets', 'index.html.erb' do
+#   filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
+#     input.sub /\\.erb$/, ''
+#   end
+# end

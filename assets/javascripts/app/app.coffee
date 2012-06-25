@@ -14,5 +14,3 @@ Travis.store = DS.Store.extend(
   revision: 4
   adapter: Travis.RestAdapter.create()
 ).create()
-
-Travis.initialize()

@@ -14,7 +14,7 @@
       {{#view Travis.BuildsItemView contextBinding="build"}}
         <tr>
           <td class="number"><a {{action viewBuild href=true}}>{{number}}</a></td>
-          <td class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></td>
+          <td class="commit"><a {{bindAttr href="view.urlGithubCommit"}}>{{formatCommit commit}}</a></td>
           <td class="message">{{{formatMessage commit.message short="true"}}}</td>
           <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
           <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
