@@ -56,6 +56,7 @@ input 'assets/javascripts/spec' do
       vendor/jasmine.js
       vendor/jasmine-html.js
       vendor/jasmine-runner.js
+      vendor/sinon.js
     )
     concat files, 'specs/vendor.js'
   end

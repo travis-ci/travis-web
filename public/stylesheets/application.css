@@ -25,6 +25,7 @@ body {
 
 #left, #main {
   float: left;
+  height: 500px;
 }
 
 #left {

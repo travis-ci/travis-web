@@ -1,10 +1,13 @@
 describe 'Foo', ->
-  it 'bar', ->
-    link = $($('#repositories a.slug')[0])
-    console.log $('body').html()
-    # link.attr('href').should.equal '#/travis-ci/travis-core'
+  beforeEach ->
+    createApp()
+    waitFor repositoriesRendered
 
   it 'bar', ->
-    link = $($('#repositories a.slug')[0])
-    # link.attr('href').should.equal '#/travis-ci/travis-core'
+    href = $('#repositories a.slug').attr('href')
+    expect(href).toEqual '#/travis-ci/travis-core'
+
+  it 'bar', ->
+    href = $('#repositories a.slug').attr('href')
+    expect(href).toEqual '#/travis-ci/travis-core'
 
