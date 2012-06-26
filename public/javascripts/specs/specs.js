@@ -3,16 +3,12 @@
   describe('Foo', function() {
     it('bar', function() {
       var link;
-      console.log('before spec');
       link = $($('#repositories a.slug')[0]);
-      console.log($('body').html().toString());
-      return console.log('after spec');
+      return console.log($('body').html());
     });
     return it('bar', function() {
       var link;
-      console.log('before spec');
-      link = $($('#repositories a.slug')[0]);
-      return console.log('after spec');
+      return link = $($('#repositories a.slug')[0]);
     });
   });
 
@@ -21,8 +17,17 @@
 
   minispade.require('app');
 
-  $('body').append($('<div id="spec_content"></div>'));
+  beforeEach(function() {
+    $('body #content').empty();
+    return Em.run(function() {
+      Travis.app = Travis.App.create();
+      Travis.app.set('rootElement', '#content');
+      return Travis.app.initialize();
+    });
+  });
 
-  Travis.rootElement = '#spec_content';
+  afterEach(function() {
+    return Travis.app.destroy();
+  });
 
 }).call(this);

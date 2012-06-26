@@ -1,11 +1,12 @@
 minispade.require 'app'
 
-$('body').append($('<div id="spec_content"></div>'))
-Travis.rootElement = '#spec_content'
+beforeEach ->
+  $('body #content').empty()
+  Em.run ->
+    Travis.app = Travis.App.create()
+    Travis.app.set('rootElement', '#content')
+    Travis.app.initialize()
 
-# beforeEach ->
-#   $('body #spec_content').empty()
-#   Travis.initialize()
+afterEach ->
+  Travis.app.destroy()
 
-# afterEach ->
-#

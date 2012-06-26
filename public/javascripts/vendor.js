@@ -1952,8 +1952,8 @@ Handlebars.VM = {
 
 Handlebars.template = Handlebars.VM.template;
 ;
-// Version: v0.9.8.1-423-g84e9626
-// Last commit: 84e9626 (2012-06-22 15:45:46 -0700)
+// Version: v0.9.8.1-437-g68d406e
+// Last commit: 68d406e (2012-06-25 14:59:55 -0700)
 
 
 (function() {
@@ -1970,22 +1970,12 @@ if ('undefined' === typeof Ember) {
 /**
   Define an assertion that will throw an exception if the condition is not
   met.  Ember build tools will remove any calls to Ember.assert() when
-  doing a production build.
+  doing a production build. Example:
 
-  ## Examples
-
-      #js:
-
-      // pass a simple Boolean value
-      Ember.assert('must pass a valid object', !!obj);
-
-      // pass a function.  If the function returns false the assertion fails
-      // any other return value (including void) will pass.
-      Ember.assert('a passed record must have a firstName', function() {
-        if (obj instanceof Ember.Record) {
-          return !Ember.empty(obj.firstName);
-        }
-      });
+      // Test for truthiness
+      Ember.assert('Must pass a valid object', obj);
+      // Fail unconditionally
+      Ember.assert('This code path should never be run')
 
   @static
   @function
@@ -1994,12 +1984,10 @@ if ('undefined' === typeof Ember) {
     thrown if the assertion fails.
 
   @param {Boolean} test
-    Must return true for the assertion to pass.  If you pass a function it
-    will be executed.  If the function returns false an exception will be
+    Must be truthy for the assertion to pass. If falsy, an exception will be
     thrown.
 */
 Ember.assert = function(desc, test) {
-  if ('function' === typeof test) test = test()!==false;
   if (!test) throw new Error("assertion failed: "+desc);
 };
 
@@ -2014,12 +2002,9 @@ Ember.assert = function(desc, test) {
     A warning to display.
 
   @param {Boolean} test
-    An optional boolean or function. If the test returns false, the warning
-    will be displayed.
+    An optional boolean. If falsy, the warning will be displayed.
 */
 Ember.warn = function(message, test) {
-  if (arguments.length === 1) { test = false; }
-  if ('function' === typeof test) test = test()!==false;
   if (!test) {
     Ember.Logger.warn("WARNING: "+message);
     if ('trace' in Ember.Logger) Ember.Logger.trace();
@@ -2037,14 +2022,12 @@ Ember.warn = function(message, test) {
     A description of the deprecation.
 
   @param {Boolean} test
-    An optional boolean or function. If the test returns false, the deprecation
-    will be displayed.
+    An optional boolean. If falsy, the deprecation will be displayed.
 */
 Ember.deprecate = function(message, test) {
   if (Ember && Ember.TESTING_DEPRECATION) { return; }
 
   if (arguments.length === 1) { test = false; }
-  if ('function' === typeof test) { test = test()!==false; }
   if (test) { return; }
 
   if (Ember && Ember.ENV.RAISE_ON_DEPRECATION) { throw new Error(message); }
@@ -2107,8 +2090,8 @@ window.ember_deprecateFunc  = Ember.deprecateFunc("ember_deprecateFunc is deprec
 
 })();
 
-// Version: v0.9.8.1-424-g260b1b4
-// Last commit: 260b1b4 (2012-06-23 11:41:18 -0700)
+// Version: v0.9.8.1-437-g68d406e
+// Last commit: 68d406e (2012-06-25 14:59:55 -0700)
 
 
 (function() {
@@ -2957,6 +2940,26 @@ Ember.makeArray = function(obj) {
 var guidFor = Ember.guidFor,
     indexOf = Ember.ArrayPolyfills.indexOf;
 
+var copy = function(obj) {
+  var output = {};
+
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) { output[prop] = obj[prop]; }
+  }
+
+  return output;
+};
+
+var copyMap = function(original, newObject) {
+  var keys = original.keys.copy(),
+      values = copy(original.values);
+
+  newObject.keys = keys;
+  newObject.values = values;
+
+  return newObject;
+};
+
 // This class is used internally by Ember.js and Ember Data.
 // Please do not use it at this time. We plan to clean it up
 // and add many tests soon.
@@ -3013,6 +3016,15 @@ OrderedSet.prototype = {
 
   toArray: function() {
     return this.list.slice();
+  },
+
+  copy: function() {
+    var set = new OrderedSet();
+
+    set.presenceSet = copy(this.presenceSet);
+    set.list = this.list.slice();
+
+    return set;
   }
 };
 
@@ -3128,6 +3140,10 @@ Map.prototype = {
       var guid = guidFor(key);
       callback.call(self, key, values[guid]);
     });
+  },
+
+  copy: function() {
+    return copyMap(this, new Map());
   }
 };
 
@@ -3156,6 +3172,12 @@ MapWithDefault.prototype.get = function(key) {
     this.set(key, defaultValue);
     return defaultValue;
   }
+};
+
+MapWithDefault.prototype.copy = function() {
+  return copyMap(this, new MapWithDefault({
+    defaultValue: this.defaultValue
+  }));
 };
 
 })();
@@ -12092,6 +12114,8 @@ Ember.SortableMixin = Ember.Mixin.create(Ember.MutableEnumerable, {
 // Copyright: ©2011 Strobe Inc. and contributors.
 // License:   Licensed under MIT license (see license.js)
 // ==========================================================================
+var get = Ember.get, set = Ember.set;
+
 /**
   @class
 
@@ -12130,8 +12154,6 @@ Ember.SortableMixin = Ember.Mixin.create(Ember.MutableEnumerable, {
 
   @extends Ember.ArrayProxy
 */
-
-var get = Ember.get, set = Ember.set;
 
 Ember.ArrayController = Ember.ArrayProxy.extend(Ember.ControllerMixin,
   Ember.SortableMixin);
@@ -16667,7 +16689,8 @@ Ember.State = Ember.Object.extend(Ember.Evented,
       }
     }
 
-    set(this, 'routes', {});
+    set(this, 'pathsCache', {});
+    set(this, 'pathsCacheNoContext', {});
   },
 
   /** @private */
@@ -17300,9 +17323,9 @@ Ember.StateManager = Ember.State.extend(
     return possible;
   },
 
-  findStatesByRoute: function(state, route) {
-    if (!route || route === "") { return undefined; }
-    var r = route.split('.'),
+  findStatesByPath: function(state, path) {
+    if (!path || path === "") { return undefined; }
+    var r = path.split('.'),
         ret = [];
 
     for (var i=0, len = r.length; i < len; i++) {
@@ -17324,122 +17347,118 @@ Ember.StateManager = Ember.State.extend(
     return this.transitionTo.apply(this, arguments);
   },
 
-  pathForSegments: function(array) {
-    return Ember.ArrayPolyfills.map.call(array, function(tuple) {
-      Ember.assert("A segment passed to transitionTo must be an Array", Ember.typeOf(tuple) === "array");
-      return tuple[0];
-    }).join(".");
-  },
-
-  transitionTo: function(name, context) {
+  transitionTo: function(path, context) {
     // 1. Normalize arguments
     // 2. Ensure that we are in the correct state
     // 3. Map provided path to context objects and send
     //    appropriate transitionEvent events
 
-    if (Ember.empty(name)) { return; }
+    if (Ember.empty(path)) { return; }
 
-    var segments, explicitSegments;
-
-    if (Ember.typeOf(name) === "array") {
-      segments = [].slice.call(arguments);
-      explicitSegments = true;
-    } else {
-      segments = [[name, context]];
-      explicitSegments = false;
-    }
-
-    var path = this.pathForSegments(segments),
+    var contexts = context ? Array.prototype.slice.call(arguments, 1) : [],
         currentState = get(this, 'currentState') || this,
-        state = currentState,
-        newState,
+        resolveState = currentState,
         exitStates = [],
+        matchedContexts = [],
+        cachedPath,
         enterStates,
-        resolveState,
-        setupContexts = [];
+        state,
+        initialState,
+        stateIdx,
+        useContext;
 
-    if (state.routes[path]) {
-      // cache hit
+    if (!context && (cachedPath = currentState.pathsCacheNoContext[path])) {
+      // fast path
 
-      var route = state.routes[path];
-      exitStates = route.exitStates;
-      enterStates = route.enterStates;
-      state = route.futureState;
-      resolveState = route.resolveState;
+      exitStates = cachedPath.exitStates;
+      enterStates = cachedPath.enterStates;
+      resolveState = cachedPath.resolveState;
     } else {
-      // cache miss
+      // normal path
 
-      newState = this.findStatesByRoute(currentState, path);
+      if ((cachedPath = currentState.pathsCache[path])) {
+        // cache hit
 
-      while (state && !newState) {
-        exitStates.unshift(state);
+        exitStates = cachedPath.exitStates;
+        enterStates = cachedPath.enterStates;
+        resolveState = cachedPath.resolveState;
+      } else {
+        // cache miss
 
-        state = get(state, 'parentState');
-        if (!state) {
-          newState = this.findStatesByRoute(this, path);
-          if (!newState) { return; }
+        enterStates = this.findStatesByPath(currentState, path);
+
+        while (resolveState && !enterStates) {
+          exitStates.unshift(resolveState);
+
+          resolveState = get(resolveState, 'parentState');
+          if (!resolveState) {
+            enterStates = this.findStatesByPath(this, path);
+            if (!enterStates) { return; }
+          }
+          enterStates = this.findStatesByPath(resolveState, path);
         }
-        newState = this.findStatesByRoute(state, path);
+
+        while (enterStates.length > 0 && enterStates[0] === exitStates[0]) {
+          resolveState = enterStates.shift();
+          exitStates.shift();
+        }
+
+        currentState.pathsCache[name] = {
+          exitStates: exitStates,
+          enterStates: enterStates,
+          resolveState: resolveState
+        };
       }
 
-      resolveState = state;
+      stateIdx = enterStates.length-1;
+      while (contexts.length > 0) {
+        if (stateIdx >= 0) {
+          state = enterStates[stateIdx--];
+        } else {
+          state = enterStates[0] ? get(enterStates[0], 'parentState') : resolveState;
+          if (!state) { throw "Cannot match all contexts to states"; }
+          enterStates.unshift(state);
+          exitStates.unshift(state);
+        }
 
-      enterStates = newState.slice(0);
-      exitStates = exitStates.slice(0);
+        useContext = context && (!get(state, 'isRoutable') || get(state, 'isDynamic'));
+        matchedContexts.unshift(useContext ? contexts.pop() : null);
+      }
 
       if (enterStates.length > 0) {
         state = enterStates[enterStates.length - 1];
 
-        var initialState;
-        while(initialState = get(state, 'initialState')) {
+        while(true) {
+          initialState = get(state, 'initialState') || 'start';
           state = getPath(state, 'states.'+initialState);
+          if (!state) { break; }
           enterStates.push(state);
         }
 
         while (enterStates.length > 0) {
           if (enterStates[0] !== exitStates[0]) { break; }
 
-          var newContext;
-          if (explicitSegments) {
-            var segmentIndex = segments.length - enterStates.length;
-            newContext = segments[segmentIndex][1];
-          } else if (enterStates.length === 1) {
-            newContext = context;
+          if (enterStates.length === matchedContexts.length) {
+            if (this.getStateMeta(enterStates[0], 'context') !== matchedContexts[0]) { break; }
+            matchedContexts.shift();
           }
 
-          if (newContext) {
-            if (newContext !== this.getStateMeta(enterStates[0], 'context')) { break; }
-          }
-
-          enterStates.shift();
+          resolveState = enterStates.shift();
           exitStates.shift();
         }
-
-        if (enterStates.length > 0) {
-          setupContexts = Ember.EnumerableUtils.map(enterStates, function(state, index) {
-                            return [state, explicitSegments ? segments[index][1] : context];
-                          });
-        }
       }
-
-      currentState.routes[path] = {
-        exitStates: exitStates,
-        enterStates: enterStates,
-        futureState: state,
-        resolveState: resolveState
-      };
     }
 
-    this.enterState(exitStates, enterStates, state);
-    this.triggerSetupContext(setupContexts);
+    this.enterState(exitStates, enterStates, enterStates[enterStates.length-1] || resolveState);
+    this.triggerSetupContext(enterStates, matchedContexts);
   },
 
-  triggerSetupContext: function(segments) {
-    arrayForEach.call(segments, function(tuple) {
-      var state = tuple[0],
-          context = tuple[1];
+  triggerSetupContext: function(enterStates, contexts) {
+    var offset = enterStates.length - contexts.length;
+    Ember.assert("More contexts provided than states", offset >= 0);
 
-      state.trigger(get(this, 'transitionEvent'), this, context);
+    arrayForEach.call(enterStates, function(state, idx) {
+      state.trigger(get(this, 'transitionEvent'), this, contexts[idx-offset]);
     }, this);
   },
 
@@ -17468,28 +17487,7 @@ Ember.StateManager = Ember.State.extend(
       state.trigger('enter', stateManager);
     });
 
-    var startState = state,
-        enteredState,
-        initialState = get(startState, 'initialState');
-
-    if (!initialState) {
-      initialState = 'start';
-    }
-
-    while (startState = get(get(startState, 'states'), initialState)) {
-      enteredState = startState;
-
-      if (log) { Ember.Logger.log("STATEMANAGER: Entering " + get(startState, 'path')); }
-      startState.trigger('enter', stateManager);
-
-      initialState = get(startState, 'initialState');
-
-      if (!initialState) {
-        initialState = 'start';
-      }
-    }
-
-    set(this, 'currentState', enteredState || state);
+    set(this, 'currentState', state);
   }
 });
 
@@ -17568,6 +17566,7 @@ Ember.Routable = Ember.Mixin.create({
   */
   stashContext: function(manager, context) {
     var serialized = this.serialize(manager, context);
+    Ember.assert('serialize must return a hash', !serialized || typeof serialized === 'object');
 
     manager.setStateMeta(this, 'context', context);
     manager.setStateMeta(this, 'serialized', serialized);
@@ -17645,8 +17644,21 @@ Ember.Routable = Ember.Mixin.create({
     string property.
   */
   routeMatcher: Ember.computed(function() {
-    if (get(this, 'route')) {
-      return Ember._RouteMatcher.create({ route: get(this, 'route') });
+    var route = get(this, 'route');
+    if (route) {
+      return Ember._RouteMatcher.create({ route: route });
+    }
+  }).cacheable(),
+
+  /**
+    @private
+
+    Check whether the route has dynamic segments
+  */
+  isDynamic: Ember.computed(function() {
+    var routeMatcher = get(this, 'routeMatcher');
+    if (routeMatcher) {
+      return routeMatcher.identifiers.length > 0;
     }
   }).cacheable(),
 
@@ -17797,7 +17809,7 @@ Ember.Routable = Ember.Mixin.create({
 
     Ember.assert("Could not find state for path " + path, !!state);
 
-    var object = state.deserialize(manager, match.hash) || {};
+    var object = state.deserialize(manager, match.hash);
     manager.transitionTo(get(state, 'path'), object);
     manager.send('routePath', match.remaining);
   },
@@ -17912,7 +17924,7 @@ Ember._RouteMatcher = Ember.Object.extend({
 
       return {
         remaining: path.substr(match[0].length),
-        hash: hash
+        hash: identifiers.length > 0 ? hash : null
       };
     }
   },
@@ -18025,10 +18037,10 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
           root: Ember.Route.extend({
             aRoute: Ember.Route.extend({
               route: '/',
-              connectOutlets: function(router){
+              enter: function(router) {
                 console.log("entering root.aRoute from", router.getPath('currentState.name'));
               },
-              connectOutlets: function(router){
+              connectOutlets: function(router) {
                 console.log("entered root.aRoute, fully transitioned to", router.getPath('currentState.path'));
               }
             })
@@ -18042,7 +18054,7 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
       'entering root.aRoute from root'
       'entered root.aRoute, fully transitioned to root.aRoute '
 
-  Ember.Route has two additional callbacks for handling URL serializization and deserialization. See
+  Ember.Route has two additional callbacks for handling URL serialization and deserialization. See
   'Serializing/Deserializing URLs'
 
   ## Routes With Dynamic Segments
@@ -18051,8 +18063,8 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
   `deserialize` method of the matching Route (see 'Serializing/Deserializing URLs').
 
   ## Serializing/Deserializing URLs
-  Ember.Route has two callbacks for assocating a particilar object context with a URL: `serialize`
-  for converting an object into a paramaters hash to fill dynamic segments of a URL and `deserialize`
+  Ember.Route has two callbacks for associating a particular object context with a URL: `serialize`
+  for converting an object into a parameters hash to fill dynamic segments of a URL and `deserialize`
   for converting a hash of dynamic segments from the URL into the appropriate object.
 
   ### Deserializing A URL's Dynamic Segments
@@ -18068,7 +18080,7 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
           root: Ember.Route.extend({
             aRoute: Ember.Route.extend({
               route: '/fixed/:dynamicSectionA/anotherFixed/:dynamicSectionB',
-              deserialize: function(router, urlParts){}
+              deserialize: function(router, params) {}
             })
           })
         })
@@ -18085,7 +18097,7 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
 
   Within `deserialize` you should use this information to retrieve or create an appropriate context
   object for the given url (e.g. by loading from a remote API or accessing the browser's
-  `localStorage`). This object must be the the `return` value for `deserialize` and will be
+  `localStorage`). This object must be the `return` value for `deserialize` and will be
   passed to the Route's `connectOutlets` and `serialize` methods.
 
   When an application's state is changed from within the application itself, the context provided for
@@ -18106,8 +18118,8 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
               route: '/'
             }),
             bRoute: Ember.Route.extend({
-              route: '/staticSection/:someDynamicSegment
-              serialize: function(router, context){
+              route: '/staticSection/:someDynamicSegment',
+              serialize: function(router, context) {
                 return {
                   someDynamicSegment: context.get('name')
                 }
@@ -18120,11 +18132,11 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
 
 
   Transitioning to "root.bRoute" with a context of `Object.create({name: 'Yehuda'})` will call
-  the Route's `serialize` method with the context as it second argument and update the URL to
-  '#/staticSection/Yehuda'
+  the Route's `serialize` method with the context as its second argument and update the URL to
+  '#/staticSection/Yehuda'.
 
   ## Transitions Between States
-  Once a routed application has initialized its state based on the entry URL subsequent transitions to other
+  Once a routed application has initialized its state based on the entry URL, subsequent transitions to other
   states will update the URL if the entered Route has a `route` property. Given the following route structure
   loaded at the URL '#/':
 
@@ -18162,8 +18174,8 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
               moveElsewhere: Ember.Route.transitionTo('bRoute')
             }),
             bRoute: Ember.Route.extend({
-              route: '/a/route/:dynamicSection/:anotherDynamicSection'
-              connectOutlets: function(router, context){},
+              route: '/a/route/:dynamicSection/:anotherDynamicSection',
+              connectOutlets: function(router, context) {},
             })
           })
         })
@@ -18180,7 +18192,7 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
   Will transition the application's state to 'root.bRoute' and trigger an update of the URL to
   '#/a/route/42/Life'.
 
-  The context argument will also be passed as the second argument to the `deserialize` method call.
+  The context argument will also be passed as the second argument to the `serialize` method call.
 
   ## Injection of Controller Singletons
   During application initialization Ember will detect properties of the application ending in 'Controller',
@@ -18212,13 +18224,13 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
           root: Ember.Route.extend({
             aRoute: Ember.Route.extend({
               route: '/',
-              anActionOnTheRouter: function(router, context){
+              anActionOnTheRouter: function(router, context) {
                 router.transitionTo('anotherState', context);
               }
             })
             anotherState: Ember.Route.extend({
               route: '/differentUrl',
-              connectOutlets: function(router, context){
+              connectOutlets: function(router, context) {
 
               }
             })
@@ -18265,7 +18277,7 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
           root: Ember.Route.extend({
             aRoute: Ember.Route.extend({
               route: '/',
-              connectOutlets: function(router, context){
+              connectOutlets: function(router, context) {
                 router.get('oneController').connectOutlet('another');
               },
             })
@@ -18279,10 +18291,10 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
   fill it with a rendered instance of `App.AnotherView` whose `context` will be the single instance of
   `App.AnotherController` stored on the router in the `anotherController` property.
 
-  For more information about Outlets see Ember.Handlebars.helpers.outlet. For additional inforamtion on
-  the `connectOutlet` method Controllers, see `Ember.Controller.connectOutlet`, For more information on
-  controller injections see Ember.Application#initialize(). For additional information about view context
-  see Ember.View.
+  For more information about Outlets, see `Ember.Handlebars.helpers.outlet`. For additional information on
+  the `connectOutlet` method, see `Ember.Controller.connectOutlet`. For more information on
+  controller injections, see `Ember.Application#initialize()`. For additional information about view context,
+  see `Ember.View`.
 
   @extends Ember.StateManager
 */
@@ -21929,8 +21941,8 @@ Ember.$(document).ready(
 
 })();
 
-// Version: v0.9.8.1-424-g260b1b4
-// Last commit: 260b1b4 (2012-06-23 11:41:18 -0700)
+// Version: v0.9.8.1-437-g68d406e
+// Last commit: 68d406e (2012-06-25 14:59:55 -0700)
 
 
 (function() {

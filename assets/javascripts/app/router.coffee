@@ -1,7 +1,7 @@
 require 'hax0rs'
 
 @Travis.Router = Em.Router.extend
-  enableLogging: true
+  # enableLogging: true
   location: 'hash'
 
   root: Em.Route.extend
@@ -108,7 +108,7 @@ require 'hax0rs'
 
 
   serializeRepository: (object) ->
-    if object instanceof DS.Model
+    if object instanceof Travis.Repository
       slug = object.get('slug') || object._id # wat.
       { owner: slug.split('/')[0], name: slug.split('/')[1] }
     else

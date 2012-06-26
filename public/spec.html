@@ -5,9 +5,7 @@
     <title>Travis CI - Distributed Continuous Integration Platform for the Open Source Community</title>
     <link rel="stylesheet" href="stylesheets/application.css">
     <link rel="stylesheet" href="stylesheets/jasmine.css">
-    <script>
-      var ENV = 'test'
-    </script>
+
     <script src="javascripts/vendor.js"></script>
     <script src="javascripts/mocks.js"></script>
     <script src="javascripts/application.js"></script>
@@ -15,10 +13,10 @@
     <script src="javascripts/specs/specs.js"></script>
   </head>
   <body>
+    <div id="content"></div>
     <script>
       for(key in minispade.modules)
         if(key.match(/_spec$/))
-          console.log(key)
           minispade.require(key);
 
       var console_reporter = new jasmine.ConsoleReporter()

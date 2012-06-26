@@ -1,9 +1,12 @@
-Travis.ApplicationController  = Em.Controller.extend()
-Travis.RepositoriesController = Em.ArrayController.extend()
-Travis.RepositoryController   = Em.ObjectController.extend(Travis.Urls.Repository)
-Travis.TabsController         = Em.Controller.extend()
-Travis.HistoryController      = Em.ArrayController.extend()
-Travis.BuildController        = Em.ObjectController.extend(Travis.Urls.Commit)
-Travis.JobController          = Em.ObjectController.extend(Travis.Urls.Commit)
+require 'helpers'
+
+Travis.Controllers =
+  ApplicationController:  Em.Controller.extend()
+  RepositoriesController: Em.ArrayController.extend()
+  RepositoryController:   Em.ObjectController.extend(Travis.Urls.Repository)
+  TabsController:         Em.Controller.extend()
+  HistoryController:      Em.ArrayController.extend()
+  BuildController:        Em.ObjectController.extend(Travis.Urls.Commit)
+  JobController:          Em.ObjectController.extend(Travis.Urls.Commit)
 
 

@@ -37,10 +37,10 @@
 
   {{#if isLoaded}}
     {{#if view.isMatrix}}
-      {{view Travis.JobsView jobsBinding="view.requiredJobs" required="true"}}
-      {{view Travis.JobsView jobsBinding="view.allowedFailureJobs"}}
+      {{view Travis.Views.JobsView jobsBinding="view.requiredJobs" required="true"}}
+      {{view Travis.Views.JobsView jobsBinding="view.allowedFailureJobs"}}
     {{else}}
-      {{view Travis.LogView contextBinding="jobs.firstObject"}}
+      {{view Travis.Views.LogView contextBinding="jobs.firstObject"}}
     {{/if}}
   {{/if}}
 </div>

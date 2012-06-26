@@ -11,7 +11,7 @@
 
   <tbody>
     {{#each build in content}}
-      {{#view Travis.BuildsItemView contextBinding="build"}}
+      {{#view Travis.Views.BuildsItemView contextBinding="build"}}
         <tr>
           <td class="number"><a {{action viewBuild href=true}}>{{number}}</a></td>
           <td class="commit"><a {{bindAttr href="view.urlGithubCommit"}}>{{formatCommit commit}}</a></td>

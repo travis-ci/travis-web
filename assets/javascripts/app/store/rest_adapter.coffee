@@ -1,3 +1,5 @@
+require 'models'
+
 @Travis.RestAdapter = DS.RESTAdapter.extend
   init: ->
     @_super()

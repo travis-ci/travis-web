@@ -4,7 +4,7 @@
 
   refresh: ->
     id = @get('id')
-    Travis.store.adapter.find(Travis.store, @constructor, id) if id
+    Travis.app.store.adapter.find(Travis.app.store, @constructor, id) if id
 
   update: (attrs) ->
     $.each attrs, (key, value) =>
@@ -13,7 +13,7 @@
 
 @Travis.Model.reopenClass
   load: (attrs) ->
-    Travis.store.load(this, attrs)
+    Travis.app.store.load(this, attrs)
 
   buildURL: (suffix) ->
     base = @url || @pluralName()
@@ -29,5 +29,5 @@
     name.replace(/([A-Z])/g, '_$1').toLowerCase().slice(1)
 
   pluralName: ->
-    Travis.store.adapter.pluralize(@singularName())
+    Travis.app.store.adapter.pluralize(@singularName())
 

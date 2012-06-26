@@ -1,16 +1,22 @@
-@Travis = Em.Application.create()
+@Travis = Em.Namespace.create
+  App: Em.Application.extend
+    initialize: ->
+      $.extend(this, Travis.Controllers)
+      $.extend(this, Travis.Views)
+      @store = Travis.Store.create()
+      @_super(Travis.Router.create())
+
+  run: ->
+    @app = Travis.App.create()
+    @app.initialize()
+
 
 require 'ext/jquery'
-require 'locales'
-require 'travis/data_store/rest_adapter'
+require 'controllers'
 require 'helpers'
 require 'models'
-require 'views'
+require 'router'
+require 'store'
 require 'templates'
-require 'controllers'
-require 'routes'
-
-Travis.store = DS.Store.extend(
-  revision: 4
-  adapter: Travis.RestAdapter.create()
-).create()
+require 'views'
+require 'locales'
