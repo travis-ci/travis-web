@@ -4,7 +4,7 @@
       {{#view Travis.Views.RepositoriesItemView tagName="li" classBinding="classes" contextBinding="repository"}}
         <div class="wrapper">
           <a {{action viewCurrent href=true}} class="current">{{slug}}</a>
-          <a {{action viewBuild href=true context="lastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
+          <a {{action viewBuild href=true context="view.lastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
         </div>
 
         <p class="summary">
