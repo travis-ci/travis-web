@@ -1,5 +1,5 @@
-// Version: v0.9.8.1-437-g68d406e
-// Last commit: 68d406e (2012-06-25 14:59:55 -0700)
+// Version: v0.9.8.1-451-g50ee26d
+// Last commit: 50ee26d (2012-06-26 18:06:44 -0700)
 
 
 (function() {
@@ -136,8 +136,8 @@ window.ember_deprecateFunc  = Ember.deprecateFunc("ember_deprecateFunc is deprec
 
 })();
 
-// Version: v0.9.8.1-437-g68d406e
-// Last commit: 68d406e (2012-06-25 14:59:55 -0700)
+// Version: v0.9.8.1-451-g50ee26d
+// Last commit: 50ee26d (2012-06-26 18:06:44 -0700)
 
 
 (function() {
@@ -944,7 +944,7 @@ Ember.isArray = function(obj) {
       Ember.makeArray();          => []
       Ember.makeArray(null);      => []
       Ember.makeArray(undefined); => []
-      Ember.makeArray('lindsay'); => ['lindsay']
+      Ember.makeArray('lindsay'); => ['lindsay'] 
       Ember.makeArray([1,2,42]);  => [1,2,42]
 
       var controller = Ember.ArrayProxy.create({ content: [] });
@@ -3646,7 +3646,7 @@ Ember.RunLoop = RunLoop;
   call.
 
       Ember.run(function(){
-        // code to be execute within a RunLoop
+        // code to be execute within a RunLoop 
       });
 
   @name run
@@ -3684,7 +3684,7 @@ var run = Ember.run;
   an lower-level way to use a RunLoop instead of using Ember.run().
 
       Ember.run.begin();
-      // code to be execute within a RunLoop
+      // code to be execute within a RunLoop 
       Ember.run.end();
 
 
@@ -3700,7 +3700,7 @@ Ember.run.begin = function() {
   instead of using Ember.run().
 
       Ember.run.begin();
-      // code to be execute within a RunLoop
+      // code to be execute within a RunLoop 
       Ember.run.end();
 
   @returns {void}
@@ -5448,7 +5448,7 @@ Ember.inspect = function(obj) {
 /**
   Compares two objects, returning true if they are logically equal.  This is
   a deeper comparison than a simple triple equal. For sets it will compare the
-  internal objects.  For any other object that implements `isEqual()` it will
+  internal objects.  For any other object that implements `isEqual()` it will 
   respect that method.
 
       Ember.isEqual('hello', 'hello');  => true
@@ -5630,7 +5630,7 @@ Ember.String = {
         > beta
         > gamma
 
-    @param {String} str
+    @param {String} str 
       The string to split
 
     @returns {String} split string
@@ -5639,7 +5639,7 @@ Ember.String = {
 
   /**
     Converts a camelized string into all lower case separated by underscores.
-
+    
         'innerHTML'.decamelize()         => 'inner_html'
         'action_name'.decamelize()       => 'action_name'
         'css-class-name'.decamelize()    => 'css-class-name'
@@ -5656,7 +5656,7 @@ Ember.String = {
 
   /**
     Replaces underscores or spaces with dashes.
-
+    
         'innerHTML'.dasherize()         => 'inner-html'
         'action_name'.dasherize()       => 'action-name'
         'css-class-name'.dasherize()    => 'css-class-name'
@@ -5823,7 +5823,7 @@ if (Ember.EXTEND_PROTOTYPES) {
 
   /**
     The `property` extension of Javascript's Function prototype is available
-    when Ember.EXTEND_PROTOTYPES is true, which is the default.
+    when Ember.EXTEND_PROTOTYPES is true, which is the default. 
 
     Computed properties allow you to treat a function like a property:
 
@@ -5878,7 +5878,7 @@ if (Ember.EXTEND_PROTOTYPES) {
 
   /**
     The `observes` extension of Javascript's Function prototype is available
-    when Ember.EXTEND_PROTOTYPES is true, which is the default.
+    when Ember.EXTEND_PROTOTYPES is true, which is the default. 
 
     You can observe property changes simply by adding the `observes`
     call to the end of your method declarations in classes that you write.
@@ -5889,7 +5889,7 @@ if (Ember.EXTEND_PROTOTYPES) {
             // Executes whenever the "value" property changes
           }.observes('value')
         });
-
+    
     @see Ember.Observable
   */
   Function.prototype.observes = function() {
@@ -5899,7 +5899,7 @@ if (Ember.EXTEND_PROTOTYPES) {
 
   /**
     The `observesBefore` extension of Javascript's Function prototype is
-    available when Ember.EXTEND_PROTOTYPES is true, which is the default.
+    available when Ember.EXTEND_PROTOTYPES is true, which is the default. 
 
     You can get notified when a property changes is about to happen by
     by adding the `observesBefore` call to the end of your method
@@ -5910,7 +5910,7 @@ if (Ember.EXTEND_PROTOTYPES) {
             // Executes whenever the "value" property is about to change
           }.observesBefore('value')
         });
-
+    
     @see Ember.Observable
   */
   Function.prototype.observesBefore = function() {
@@ -6018,9 +6018,11 @@ function xform(target, method, params) {
   libraries by implementing only methods that mostly correspond to the
   JavaScript 1.8 API.
 
+  @extends Ember.Mixin
   @since Ember 0.9
 */
-Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
+Ember.Enumerable = Ember.Mixin.create(
+  /** @scope Ember.Enumerable.prototype */ {
 
   /** @private - compatibility */
   isEnumerable: true,
@@ -6051,9 +6053,9 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     The default implementation of this method simply looks up the index.
     This works great on any Array-like objects.
 
-    @param index {Number} the current index of the iteration
-    @param previousObject {Object} the value returned by the last call to nextObject.
-    @param context {Object} a context object you can use to maintain state.
+    @param {Number} index the current index of the iteration
+    @param {Object} previousObject the value returned by the last call to nextObject.
+    @param {Object} context a context object you can use to maintain state.
     @returns {Object} the next object in the iteration or undefined
   */
   nextObject: Ember.required(Function),
@@ -6148,7 +6150,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     to give your iterator function access to the current object.
 
     @param {Function} callback The callback to execute
-    @param {Object} target The target object to use
+    @param {Object} [target] The target object to use
     @returns {Object} receiver
   */
   forEach: function(callback, target) {
@@ -6170,7 +6172,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
   /**
     Alias for mapProperty
 
-    @params key {String} name of the property
+    @param {String} key name of the property
     @returns {Array} The mapped array.
   */
   getEach: function(key) {
@@ -6213,7 +6215,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     to give your iterator function access to the current object.
 
     @param {Function} callback The callback to execute
-    @param {Object} target The target object to use
+    @param {Object} [target] The target object to use
     @returns {Array} The mapped array.
   */
   map: function(callback, target) {
@@ -6228,7 +6230,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     Similar to map, this specialized function returns the value of the named
     property on all items in the enumeration.
 
-    @params key {String} name of the property
+    @param {String} key name of the property
     @returns {Array} The mapped array.
   */
   mapProperty: function(key) {
@@ -6258,7 +6260,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     to give your iterator function access to the current object.
 
     @param {Function} callback The callback to execute
-    @param {Object} target The target object to use
+    @param {Object} [target] The target object to use
     @returns {Array} A filtered array.
   */
   filter: function(callback, target) {
@@ -6274,8 +6276,8 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     can pass an optional second argument with the target value.  Otherwise
     this will match any property that evaluates to true.
 
-    @params key {String} the property to test
-    @param value {String} optional value to test against.
+    @param {String} key the property to test
+    @param {String} [value] optional value to test against.
     @returns {Array} filtered array
   */
   filterProperty: function(key, value) {
@@ -6303,7 +6305,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     to give your iterator function access to the current object.
 
     @param {Function} callback The callback to execute
-    @param {Object} target The target object to use
+    @param {Object} [target] The target object to use
     @returns {Object} Found item or null.
   */
   find: function(callback, target) {
@@ -6329,8 +6331,8 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
 
     This method works much like the more generic find() method.
 
-    @params key {String} the property to test
-    @param value {String} optional value to test against.
+    @param {String} key the property to test
+    @param {String} [value] optional value to test against.
     @returns {Object} found item or null
   */
   findProperty: function(key, value) {
@@ -6361,7 +6363,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
           if (people.every(isEngineer)) { Paychecks.addBigBonus(); }
 
     @param {Function} callback The callback to execute
-    @param {Object} target The target object to use
+    @param {Object} [target] The target object to use
     @returns {Boolean}
   */
   every: function(callback, target) {
@@ -6374,8 +6376,8 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     Returns true if the passed property resolves to true for all items in the
     enumerable.  This method is often simpler/faster than using a callback.
 
-    @params key {String} the property to test
-    @param value {String} optional value to test against.
+    @param {String} key the property to test
+    @param {String} [value] optional value to test against.
     @returns {Array} filtered array
   */
   everyProperty: function(key, value) {
@@ -6407,7 +6409,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
           if (people.some(isManager)) { Paychecks.addBiggerBonus(); }
 
     @param {Function} callback The callback to execute
-    @param {Object} target The target object to use
+    @param {Object} [target] The target object to use
     @returns {Array} A filtered array.
   */
   some: function(callback, target) {
@@ -6420,8 +6422,8 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     Returns true if the passed property resolves to true for any item in the
     enumerable.  This method is often simpler/faster than using a callback.
 
-    @params key {String} the property to test
-    @param value {String} optional value to test against.
+    @param {String} key the property to test
+    @param {String} [value] optional value to test against.
     @returns {Boolean} true
   */
   someProperty: function(key, value) {
@@ -6475,8 +6477,8 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
     implements it.  This method corresponds to the implementation in
     Prototype 1.6.
 
-    @param methodName {String} the name of the method
-    @param args {Object...} optional arguments to pass as well.
+    @param {String} methodName the name of the method
+    @param {Object...} args optional arguments to pass as well.
     @returns {Array} return values from calling invoke.
   */
   invoke: function(methodName) {
@@ -6507,9 +6509,9 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
 
   /**
     Returns a copy of the array with all null elements removed.
-
+    
         var arr = ["a", null, "c", null];
-        arr.compact(); => ["a", "c"]
+        arr.compact(); => ["a", "c"] 
 
     @returns {Array} the array without null elements.
   */
@@ -6666,7 +6668,7 @@ Ember.Enumerable = Ember.Mixin.create( /** @lends Ember.Enumerable */ {
       An enumerable of the objects to be removed or the number of items to
       be removed.
 
-    @param {Ember.Enumerable|Numbe} adding
+    @param {Ember.Enumerable|Number} adding
       An enumerable of the objects to be added or the number of items to be
       added.
 
@@ -7125,6 +7127,7 @@ Ember.Array = Ember.Mixin.create(Ember.Enumerable, /** @scope Ember.Array.protot
 
   You should implement the compare() method.
 
+  @extends Ember.Mixin
   @since Ember 0.9
 */
 Ember.Comparable = Ember.Mixin.create( /** @scope Ember.Comparable.prototype */{
@@ -7182,6 +7185,7 @@ var get = Ember.get, set = Ember.set;
 
   Note that frozenCopy() will only work if you also implement Ember.Freezable.
 
+  @extends Ember.Mixin
   @since Ember 0.9
 */
 Ember.Copyable = Ember.Mixin.create(
@@ -7293,6 +7297,7 @@ var get = Ember.get, set = Ember.set;
   Ember.Copyable protocol, which defines a frozenCopy() method that will return
   a frozen object, if the object implements this method as well.
 
+  @extends Ember.Mixin
   @since Ember 0.9
 */
 Ember.Freezable = Ember.Mixin.create(
@@ -7509,7 +7514,7 @@ Ember.MutableArray = Ember.Mixin.create(Ember.Array, Ember.MutableEnumerable,
         colors.clear();  => []
         colors.length(); => 0
 
-    @returns {Ember.Array} An empty Array.
+    @returns {Ember.Array} An empty Array. 
   */
   clear: function () {
     var len = get(this, 'length');
@@ -7703,15 +7708,15 @@ var get = Ember.get, set = Ember.set;
   @class
 
   ## Overview
-
+  
   This mixin provides properties and property observing functionality, core
   features of the Ember object model.
-
+  
   Properties and observers allow one object to observe changes to a
   property on another object. This is one of the fundamental ways that
   models, controllers and views communicate with each other in an Ember
   application.
-
+  
   Any object that has this mixin applied can be used in observer
   operations. That includes Ember.Object and most objects you will
   interact with as you write your Ember application.
@@ -7719,16 +7724,16 @@ var get = Ember.get, set = Ember.set;
   Note that you will not generally apply this mixin to classes yourself,
   but you will use the features provided by this module frequently, so it
   is important to understand how to use it.
-
+  
   ## Using get() and set()
-
+  
   Because of Ember's support for bindings and observers, you will always
   access properties using the get method, and set properties using the
   set method. This allows the observing objects to be notified and
   computed properties to be handled properly.
-
+  
   More documentation about `get` and `set` are below.
-
+  
   ## Observing Property Changes
 
   You typically observe property changes simply by adding the `observes`
@@ -7740,7 +7745,7 @@ var get = Ember.get, set = Ember.set;
           // Executes whenever the "value" property changes
         }.observes('value')
       });
-
+    
   Although this is the most common way to add an observer, this capability
   is actually built into the Ember.Object class on top of two methods
   defined in this mixin: `addObserver` and `removeObserver`. You can use
@@ -7753,12 +7758,12 @@ var get = Ember.get, set = Ember.set;
 
   This will call the `targetAction` method on the `targetObject` to be called
   whenever the value of the `propertyKey` changes.
-
-  Note that if `propertyKey` is a computed property, the observer will be
-  called when any of the property dependencies are changed, even if the
+  
+  Note that if `propertyKey` is a computed property, the observer will be 
+  called when any of the property dependencies are changed, even if the 
   resulting value of the computed property is unchanged. This is necessary
   because computed properties are not computed until `get` is called.
-
+  
   @extends Ember.Mixin
 */
 Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
@@ -7772,7 +7777,7 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
     This method is usually similar to using object[keyName] or object.keyName,
     however it supports both computed properties and the unknownProperty
     handler.
-
+    
     Because `get` unifies the syntax for accessing all these kinds
     of properties, it can make many refactorings easier, such as replacing a
     simple property with a computed property, or vice versa.
@@ -7968,11 +7973,11 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
     Ember.propertyDidChange(this, keyName);
     return this;
   },
-
+  
   /**
     Convenience method to call `propertyWillChange` and `propertyDidChange` in
     succession.
-
+  
     @param {String} keyName The property key to be notified about.
     @returns {Ember.Observable}
   */
@@ -8064,7 +8069,7 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
     This method will be called when a client attempts to get the value of a
     property that has not been defined in one of the typical ways. Override
     this method to create "virtual" properties.
-
+    
     @param {String} key The name of the unknown property that was requested.
     @returns {Object} The property value or undefined. Default is undefined.
   */
@@ -8076,7 +8081,7 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
     This method will be called when a client attempts to set the value of a
     property that has not been defined in one of the typical ways. Override
     this method to create "virtual" properties.
-
+    
     @param {String} key The name of the unknown property to be set.
     @param {Object} value The value the unknown property is to be set to.
   */
@@ -8087,7 +8092,7 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
   /**
     This is like `get`, but allows you to pass in a dot-separated property
     path.
-
+    
         person.getPath('address.zip'); // return the zip
         person.getPath('children.firstObject.age'); // return the first kid's age
 
@@ -8103,7 +8108,7 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
   /**
     This is like `set`, but allows you to specify the property you want to
     set as a dot-separated property path.
-
+    
         person.setPath('address.zip', 10011); // set the zip to 10011
         person.setPath('children.firstObject.age', 6); // set the first kid's age to 6
 
@@ -8121,9 +8126,9 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
   /**
     Retrieves the value of a property, or a default value in the case that the property
     returns undefined.
-
+    
         person.getWithDefault('lastName', 'Doe');
-
+    
     @param {String} keyName The name of the property to retrieve
     @param {Object} defaultValue The value to return if the property value is undefined
     @returns {Object} The property value or the defaultValue.
@@ -8134,10 +8139,10 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
 
   /**
     Set the value of a property to the current value plus some amount.
-
+    
         person.incrementProperty('age');
         team.incrementProperty('score', 2);
-
+    
     @param {String} keyName The name of the property to increment
     @param {Object} increment The amount to increment by. Defaults to 1
     @returns {Object} The new property value
@@ -8147,13 +8152,13 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
     set(this, keyName, (get(this, keyName) || 0)+increment);
     return get(this, keyName);
   },
-
+  
   /**
     Set the value of a property to the current value minus some amount.
-
+    
         player.decrementProperty('lives');
         orc.decrementProperty('health', 5);
-
+    
     @param {String} keyName The name of the property to decrement
     @param {Object} increment The amount to decrement by. Defaults to 1
     @returns {Object} The new property value
@@ -8167,9 +8172,9 @@ Ember.Observable = Ember.Mixin.create(/** @scope Ember.Observable.prototype */ {
   /**
     Set the value of a boolean property to the opposite of it's
     current value.
-
+    
         starship.toggleProperty('warpDriveEnaged');
-
+    
     @param {String} keyName The name of the property to toggle
     @returns {Object} The new property value
   */
@@ -8260,7 +8265,13 @@ function xform(target, method, params) {
   method.apply(target, args);
 }
 
-Ember.Evented = Ember.Mixin.create({
+/**
+ @class
+
+ @extends Ember.Mixin
+ */
+Ember.Evented = Ember.Mixin.create(
+  /** @scope Ember.Evented.prototype */ {
   on: function(name, target, method) {
     if (!method) {
       method = target;
@@ -8483,7 +8494,7 @@ if (Ember.config.overridePrototypeMixin) {
 CoreObject.__super__ = null;
 
 var ClassMixin = Ember.Mixin.create(
-/** @scope Ember.CoreObject */ {
+/** @scope Ember.ClassMixin.prototype */ {
 
   ClassMixin: Ember.required(),
 
@@ -9969,7 +9980,14 @@ Ember.Controller = Ember.Object.extend(Ember.ControllerMixin);
 (function() {
 var get = Ember.get, set = Ember.set, forEach = Ember.EnumerableUtils.forEach;
 
-Ember.SortableMixin = Ember.Mixin.create(Ember.MutableEnumerable, {
+/**
+ @class
+
+ @extends Ember.Mixin
+ @extends Ember.MutableEnumerable
+*/
+Ember.SortableMixin = Ember.Mixin.create(Ember.MutableEnumerable,
+  /** @scope Ember.Observable.prototype */ {
   sortProperties: null,
   sortAscending: true,
 
@@ -10451,7 +10469,7 @@ Ember.Application.registerInjection({
   injection: function(app, router, property) {
     if (!/^[A-Z].*Controller$/.test(property)) { return; }
 
-    var name = property[0].toLowerCase() + property.substr(1),
+    var name = property.charAt(0).toLowerCase() + property.substr(1),
         controller = app[property].create();
 
     router.set(name, controller);
@@ -11585,7 +11603,7 @@ var invokeForState = {
   `Ember.View` is the class in Ember responsible for encapsulating templates of HTML
   content, combining templates with data to render as sections of a page's DOM, and
   registering and responding to user-initiated events.
-
+  
   ## HTML Tag
   The default HTML tag name used for a view's DOM representation is `div`. This can be
   customized by setting the `tagName` property. The following view class:
@@ -11611,7 +11629,7 @@ var invokeForState = {
       <div id="ember1" class="ember-view my-class my-other-class"></div>
 
   `class` attribute values can also be set by providing a `classNameBindings` property
-  set to an array of properties names for the view. The return value of these properties
+  set to an array of properties names for the view. The return value of these properties 
   will be added as part of the value for the view's `class` attribute. These properties
   can be computed properties:
 
@@ -11640,7 +11658,7 @@ var invokeForState = {
 
       <div id="ember1" class="ember-view hovered"></div>
 
-  When using boolean class name bindings you can supply a string value other than the
+  When using boolean class name bindings you can supply a string value other than the 
   property name for use as the `class` HTML attribute by appending the preferred value after
   a ":" character when defining the binding:
 
@@ -11681,11 +11699,11 @@ var invokeForState = {
 
       <div id="ember1" class="ember-view empty"></div>
 
-  Updates to the the value of a class name binding will result in automatic update
+  Updates to the the value of a class name binding will result in automatic update 
   of the  HTML `class` attribute in the view's rendered HTML representation.
   If the value becomes  `false` or `undefined` the class name will be removed.
 
-  Both `classNames` and `classNameBindings` are concatenated properties.
+  Both `classNames` and `classNameBindings` are concatenated properties. 
   See `Ember.Object` documentation for more information about concatenated properties.
 
   ## HTML Attributes
@@ -11731,7 +11749,7 @@ var invokeForState = {
         }.property()
       })
 
-  Updates to the the property of an attribute binding will result in automatic update
+  Updates to the the property of an attribute binding will result in automatic update 
   of the  HTML attribute in the view's rendered HTML representation.
 
   `attributeBindings` is a concatenated property. See `Ember.Object` documentation
@@ -11822,7 +11840,7 @@ var invokeForState = {
   primary templates, layouts can be any function that  accepts an optional context
   parameter and returns a string of HTML that will be inserted inside view's tag. Views whose HTML
   element is self closing (e.g. `<input />`) cannot have a layout and this property will be ignored.
-
+  
   Most typically in Ember a layout will be a compiled Ember.Handlebars template.
 
   A view's layout can be set directly with the `layout` property or reference an
@@ -11847,7 +11865,7 @@ var invokeForState = {
   See `Handlebars.helpers.yield` for more information.
 
   ## Responding to Browser Events
-  Views can respond to user-initiated events in one of three ways: method implementation,
+  Views can respond to user-initiated events in one of three ways: method implementation, 
   through an event manager, and through `{{action}}` helper use in their template or layout.
 
   ### Method Implementation
@@ -11864,8 +11882,8 @@ var invokeForState = {
   ### Event Managers
   Views can define an object as their `eventManager` property. This object can then
   implement methods that match the desired event names. Matching events that occur
-  on the view's rendered HTML or the rendered HTML of any of its DOM descendants
-  will trigger this method.  A `jQuery.Event` object will be passed as the first
+  on the view's rendered HTML or the rendered HTML of any of its DOM descendants 
+  will trigger this method.  A `jQuery.Event` object will be passed as the first 
   argument to the method and an  `Ember.View` object as the second. The `Ember.View`
   will be the view whose rendered HTML was interacted with. This may be the view with
   the `eventManager` property or one of its descendent views.
@@ -11899,7 +11917,7 @@ var invokeForState = {
 
   Similarly a view's event manager will take precedence for events of any views
   rendered as a descendent. A method name that matches an event name will not be called
-  if the view instance was rendered inside the HTML representation of a view that has
+  if the view instance was rendered inside the HTML representation of a view that has 
   an `eventManager` property defined that handles events of the name.  Events not handled
   by the event manager will still trigger method calls on the descendent.
 
@@ -11921,7 +11939,7 @@ var invokeForState = {
           // eventManager doesn't handle click events
         },
         mouseEnter: function(event){
-          // will never be called if rendered inside
+          // will never be called if rendered inside 
           // an OuterView.
         }
       })
@@ -11942,12 +11960,13 @@ var invokeForState = {
   Form events: 'submit', 'change', 'focusIn', 'focusOut', 'input'
 
   HTML5 drag and drop events: 'dragStart', 'drag', 'dragEnter', 'dragLeave', 'drop', 'dragEnd'
-
+  
   ## Handlebars `{{view}}` Helper
   Other `Ember.View` instances can be included as part of a view's template by using the `{{view}}`
   Handlebars helper. See `Handlebars.helpers.view` for additional information.
 
   @extends Ember.Object
+  @extends Ember.Evented
 */
 Ember.View = Ember.Object.extend(Ember.Evented,
 /** @scope Ember.View.prototype */ {
@@ -14319,7 +14338,7 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
   @class
 
   `Ember.CollectionView` is an `Ember.View` descendent responsible for managing a
-  collection (an array or array-like object) by maintaing a child view object and
+  collection (an array or array-like object) by maintaing a child view object and 
   associated DOM representation for each item in the array and ensuring that child
   views and their associated rendered HTML are updated when items in the array
   are added, removed, or replaced.
@@ -14363,7 +14382,7 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
 
   ## Automatic matching of parent/child tagNames
 
-  Setting the `tagName` property of a `CollectionView` to any of
+  Setting the `tagName` property of a `CollectionView` to any of 
   "ul", "ol", "table", "thead", "tbody", "tfoot", "tr", or "select" will result
   in the item views receiving an appropriately matched `tagName` property.
 
@@ -14649,6 +14668,8 @@ var get = Ember.get, set = Ember.set, getPath = Ember.getPath;
 
 /**
   @class
+
+  @extends Ember.Object
 */
 Ember.State = Ember.Object.extend(Ember.Evented,
 /** @scope Ember.State.prototype */{
@@ -14657,7 +14678,7 @@ Ember.State = Ember.Object.extend(Ember.Evented,
   /**
     A reference to the parent state.
 
-    @type {Ember.State}
+    @type Ember.State
   */
   parentState: null,
   start: null,
@@ -15208,15 +15229,15 @@ var arrayForEach = Ember.ArrayPolyfills.forEach;
       robotManager.getPath('currentState.name') // 'rampaging'
 
   Transition actions can also be created using the `transitionTo` method of the Ember.State class. The
-  following example StateManagers are equivalent:
-
+  following example StateManagers are equivalent: 
+  
       aManager = Ember.StateManager.create({
         stateOne: Ember.State.create({
           changeToStateTwo: Ember.State.transitionTo('stateTwo')
         }),
         stateTwo: Ember.State.create({})
       })
-
+      
       bManager = Ember.StateManager.create({
         stateOne: Ember.State.create({
           changeToStateTwo: function(manager, context){
@@ -15297,7 +15318,7 @@ Ember.StateManager = Ember.State.extend(
     @default true
   */
   errorOnUnhandledEvent: true,
-
+  
   send: function(event, context) {
     Ember.assert('Cannot send event "' + event + '" while currentState is ' + get(this, 'currentState'), get(this, 'currentState'));
     if (arguments.length === 1) { context = {}; }
@@ -15631,7 +15652,7 @@ Ember.Routable = Ember.Mixin.create({
     In general, this will update the browser's URL.
   */
   updateRoute: function(manager, location) {
-    if (get(this, 'isLeaf')) {
+    if (get(this, 'isLeafRoute')) {
       var path = this.absoluteRoute(manager);
       location.setURL(path);
     }
@@ -15681,6 +15702,16 @@ Ember.Routable = Ember.Mixin.create({
   */
   isRoutable: Ember.computed(function() {
     return typeof get(this, 'route') === 'string';
+  }).cacheable(),
+
+  /**
+    @private
+
+    Determine if this is the last routeable state
+  */
+  isLeafRoute: Ember.computed(function() {
+    if (get(this, 'isLeaf')) { return true; }
+    return !get(this, 'childStates').findProperty('isRoutable');
   }).cacheable(),
 
   /**
@@ -15825,9 +15856,11 @@ Ember.Routable = Ember.Mixin.create({
     on the state whose path is `/posts` with the path `/2/comments`.
   */
   routePath: function(manager, path) {
-    if (get(this, 'isLeaf')) { return; }
+    if (get(this, 'isLeafRoute')) { return; }
 
     var childStates = get(this, 'childStates'), match;
+
+    childStates = Ember.A(childStates.filterProperty('isRoutable'));
 
     childStates = childStates.sort(function(a, b) {
       var aDynamicSegments = getPath(a, 'routeMatcher.identifiers.length'),
@@ -16142,12 +16175,12 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
       }
 
   Within `deserialize` you should use this information to retrieve or create an appropriate context
-  object for the given url (e.g. by loading from a remote API or accessing the browser's
-  `localStorage`). This object must be the `return` value for `deserialize` and will be
+  object for the given URL (e.g. by loading from a remote API or accessing the browser's
+  `localStorage`). This object must be the `return` value of `deserialize` and will be
   passed to the Route's `connectOutlets` and `serialize` methods.
 
   When an application's state is changed from within the application itself, the context provided for
-  the transiton will be passed and `deserialize` is not called (see 'Transitions Between States').
+  the transition will be passed and `deserialize` is not called (see 'Transitions Between States').
 
   ### Serializing An Object For URLs with Dynamic Segments
   When transitioning into a Route whose `route` property contains dynamic segments the Route's
@@ -16206,7 +16239,7 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
       App.get('router').send('moveElsewhere');
 
   Will transition the application's state to 'root.bRoute' and trigger an update of the URL to
-  '#/someOtherLocation
+  '#/someOtherLocation'.
 
   For URL patterns with dynamic segments a context can be supplied as the second argument to `send`.
   The router will match dynamic segments names to keys on this object and fill in the URL with the
@@ -16244,7 +16277,7 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
   During application initialization Ember will detect properties of the application ending in 'Controller',
   create singleton instances of each class, and assign them as a properties on the router.  The property name
   will be the UpperCamel name converted to lowerCamel format. These controller classes should be subclasses
-  of Ember.ObjectController, Ember.ArrayController, or a custom Ember.Object that includes the
+  of Ember.ObjectController, Ember.ArrayController, Ember.Controller, or a custom Ember.Object that includes the
   Ember.ControllerMixin mixin.
 
       App = Ember.Application.create({
@@ -16377,13 +16410,19 @@ Ember.Router = Ember.StateManager.extend(
   route: function(path) {
     set(this, 'isRouting', true);
 
+    var routableState;
+
     try {
       path = path.replace(/^(?=[^\/])/, "/");
 
       this.send('navigateAway');
       this.send('unroutePath', path);
 
-      var currentURL = get(this, 'currentState').absoluteRoute(this);
+      routableState = get(this, 'currentState');
+      while (routableState && !routableState.get('isRoutable')) {
+        routableState = get(routableState, 'parentState');
+      }
+      var currentURL = routableState ? routableState.absoluteRoute(this) : '';
       var rest = path.substr(currentURL.length);
 
       this.send('routePath', rest);
@@ -16391,13 +16430,21 @@ Ember.Router = Ember.StateManager.extend(
       set(this, 'isRouting', false);
     }
 
-    get(this, 'currentState').updateRoute(this, get(this, 'location'));
+    routableState = get(this, 'currentState');
+    while (routableState && !routableState.get('isRoutable')) {
+      routableState = get(routableState, 'parentState');
+    }
+
+    if (routableState) {
+      routableState.updateRoute(this, get(this, 'location'));
+    }
   },
 
   urlFor: function(path, hash) {
     var currentState = get(this, 'currentState') || this,
         state = this.findStateByPath(currentState, path);
 
+    Ember.assert(Ember.String.fmt("Could not find route with path '%@'", [path]), !!state);
     Ember.assert("To get a URL for a state, it must have a `route` property.", !!get(state, 'routeMatcher'));
 
     var location = get(this, 'location'),
@@ -18349,7 +18396,7 @@ EmberHandlebars.ViewHelper = Ember.Object.create({
   Will result in HTML structure:
 
       <body>
-        <!-- Note: the handlebars template script
+        <!-- Note: the handlebars template script 
              also results in a rendered Ember.View
              which is the outer <div> here -->
 
@@ -18371,7 +18418,7 @@ EmberHandlebars.ViewHelper = Ember.Object.create({
       })
 
       aView.appendTo('body')
-
+    
   Will result in HTML structure:
 
       <div id="ember1" class="ember-view">
@@ -18445,7 +18492,7 @@ EmberHandlebars.ViewHelper = Ember.Object.create({
 Will result in the following HTML:
 
       <div id="ember1" class="ember-view">
-        <div id="ember2" class="ember-view a-custom-view-class-as-property">
+        <div id="ember2" class="ember-view a-custom-view-class-as-property"> 
           hi
         </div>
       </div>
@@ -18605,7 +18652,7 @@ var get = Ember.get, getPath = Ember.Handlebars.getPath, fmt = Ember.String.fmt;
         <p class="ember-view greeting">Howdy Mary</p>
         <p class="ember-view greeting">Howdy Sara</p>
       </div>
-
+  
   @name Handlebars.helpers.collection
   @param {String} path
   @param {Hash} options
@@ -19219,7 +19266,7 @@ var set = Ember.set, get = Ember.get;
 /**
   @class
 
-  Creates an HTML input of type 'checkbox' with HTML related properties
+  Creates an HTML input of type 'checkbox' with HTML related properties 
   applied directly to the input.
 
       {{view Ember.Checkbox classNames="applicaton-specific-checkbox"}}
@@ -19238,7 +19285,7 @@ var set = Ember.set, get = Ember.get;
   through the Ember object or by interacting with its rendered element representation
   via the mouse, keyboard, or touch.  Updating the value of the checkbox via jQuery will
   result in the checked value of the object and its element losing synchronization.
-
+  
   ## Layout and LayoutName properties
   Because HTML `input` elements are self closing `layout` and `layoutName` properties will
   not be applied. See `Ember.View`'s layout section for more information.
@@ -19350,7 +19397,7 @@ var get = Ember.get, set = Ember.set;
   ## Layout and LayoutName properties
   Because HTML `input` elements are self closing `layout` and `layoutName` properties will
   not be applied. See `Ember.View`'s layout section for more information.
-
+  
   @extends Ember.TextSupport
 */
 Ember.TextField = Ember.View.extend(Ember.TextSupport,
@@ -19527,7 +19574,7 @@ var get = Ember.get, set = Ember.set;
 
   ## Layout and LayoutName properties
 
-  Because HTML `textarea` elements do not contain inner HTML the `layout` and `layoutName`
+  Because HTML `textarea` elements do not contain inner HTML the `layout` and `layoutName` 
   properties will not be applied. See `Ember.View`'s layout section for more information.
 
   @extends Ember.TextSupport
@@ -19616,7 +19663,85 @@ var indexOf = Ember.EnumerableUtils.indexOf, indexesOf = Ember.EnumerableUtils.i
   The Ember.Select view class renders a
   [select](https://developer.mozilla.org/en/HTML/Element/select) HTML element,
   allowing the user to choose from a list of options. The selected option(s)
-  are updated live in the `selection` property.
+  are updated live in the `selection` property, while the corresponding value
+  is updated in the `value` property.
+
+  ### Using Strings
+  The simplest version of an Ember.Select takes an array of strings for the options
+  of a select box and a valueBinding to set the value.
+
+  Example:
+
+      App.controller = Ember.Object.create({
+        selected: null,
+        content: [
+          "Yehuda",
+          "Tom"
+        ]
+      })
+
+      {{view Ember.Select
+             contentBinding="App.controller.content"
+             valueBinding="App.controller.selected"
+      }}
+
+  Would result in the following HTML:
+
+      <select class="ember-select">
+        <option value="Yehuda">Yehuda</option>
+        <option value="Tom">Tom</option>
+      </select>
+
+  Selecting Yehuda from the select box will set `App.controller.selected` to "Yehuda"
+
+  ### Using Objects
+  An Ember.Select can also take an array of JS or Ember objects.
+
+  When using objects you need to supply optionLabelPath and optionValuePath parameters
+  which will be used to get the label and value for each of the options.
+
+  Usually you will bind to either the selection or the value attribute of the select.
+
+  Use selectionBinding if you would like to set the whole object as a property on the target.
+  Use valueBinding if you would like to set just the value.
+
+  Example using selectionBinding:
+
+      App.controller = Ember.Object.create({
+        selectedPerson: null,
+        selectedPersonId: null,
+        content: [
+          Ember.Object.create({firstName: "Yehuda", id: 1}),
+          Ember.Object.create({firstName: "Tom",    id: 2})
+        ]
+      })
+
+      {{view Ember.Select
+             contentBinding="App.controller.content"
+             optionLabelPath="content.firstName"
+             optionValuePath="content.id"
+             selectionBinding="App.controller.selectedPerson"
+             prompt="Please Select"}}
+
+      <select class="ember-select">
+        <option value>Please Select</option>
+        <option value="1">Yehuda</option>
+        <option value="2">Tom</option>
+      </select>
+
+  Selecting Yehuda here will set `App.controller.selectedPerson` to
+  the Yehuda object.
+
+  Example using valueBinding:
+
+      {{view Ember.Select
+             contentBinding="App.controller.content"
+             optionLabelPath="content.firstName"
+             optionValuePath="content.id"
+             valueBinding="App.controller.selectedPersonId"
+             prompt="Please Select"}}
+
+  Selecting Yehuda in this case will set `App.controller.selectedPersonId` to 1.
 
   @extends Ember.View
 */
@@ -19987,8 +20112,8 @@ Ember.$(document).ready(
 
 })();
 
-// Version: v0.9.8.1-437-g68d406e
-// Last commit: 68d406e (2012-06-25 14:59:55 -0700)
+// Version: v0.9.8.1-451-g50ee26d
+// Last commit: 50ee26d (2012-06-26 18:06:44 -0700)
 
 
 (function() {
