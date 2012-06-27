@@ -7,17 +7,17 @@ Travis.Views =
 
   RepositoriesItemView: Em.View.extend
     classes: (->
-      color   = Travis.Helpers.colorForResult(@getPath('repository.lastBuildResult'))
+      color   = Travis.Helpers.colorForResult(@getPath('context.lastBuildResult'))
       classes = ['repository', color]
-      classes.push 'selected' if @getPath('repository.selected')
+      classes.push 'selected' if @getPath('context.selected')
       classes.join(' ')
-    ).property('repository.lastBuildResult', 'repository.selected')
+    ).property('context.lastBuildResult', 'context.selected')
 
     lastBuild: (->
-      owner: @getPath('repository.owner')
-      name: @getPath('repository.name')
-      id: @getPath('repository.lastBuildId')
-    ).property('repository.owner', 'repository.name', 'repository.lastBuildId')
+      owner: @getPath('context.owner')
+      name: @getPath('context.name')
+      build_id: @getPath('context.lastBuildId')
+    ).property()
 
   RepositoryView: Em.View.extend
     templateName: 'repositories/show'
@@ -30,8 +30,8 @@ Travis.Views =
 
   BuildsItemView: Em.View.extend
     classes: (->
-      Travis.Helpers.colorForResult(@getPath('content.result'))
-    ).property('content.result')
+      Travis.Helpers.colorForResult(@getPath('context.result'))
+    ).property('context.result')
 
   BuildView: Em.View.extend
     templateName: 'builds/show'
