@@ -29,6 +29,10 @@ require 'travis/model'
     Travis.Job.findMany(@getPath('data.job_ids') || [])
   ).property('data.job_ids.length')
 
+  isMatrix: (->
+    @getPath('data.job_ids.length') > 1
+  ).property('data.job_ids.length')
+
   configKeys: (->
     config = @get('config')
     return [] unless config

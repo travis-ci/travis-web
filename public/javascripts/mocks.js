@@ -63,7 +63,10 @@
       event_type: 'push',
       config: {
         rvm: ['rbx']
-      }
+      },
+      finished_at: '2012-06-20T00:21:20Z',
+      duration: 35,
+      result: 0
     }, {
       id: 4,
       repository_id: 'travis-ci/travis-hub',
@@ -85,7 +88,7 @@
       message: 'commit message 1',
       author_name: 'author name',
       author_email: 'author@email.com',
-      compare_url: 'http://github.com/compare/012345..123456'
+      compare_url: 'http://github.com/compare/0123456..1234567'
     }, {
       id: 2,
       sha: '2345678',
@@ -93,7 +96,7 @@
       message: 'commit message 2',
       author_name: 'author name',
       author_email: 'author@email.com',
-      compare_url: 'http://github.com/compare/012345..123456'
+      compare_url: 'http://github.com/compare/0123456..2345678'
     }, {
       id: 3,
       sha: '3456789',
@@ -101,7 +104,7 @@
       message: 'commit message 3',
       author_name: 'author name',
       author_email: 'author@email.com',
-      compare_url: 'http://github.com/compare/012345..123456'
+      compare_url: 'http://github.com/compare/0123456..3456789'
     }, {
       id: 4,
       sha: '4567890',
@@ -109,7 +112,7 @@
       message: 'commit message 4',
       author_name: 'author name',
       author_email: 'author@email.com',
-      compare_url: 'http://github.com/compare/012345..123456'
+      compare_url: 'http://github.com/compare/0123456..4567890'
     }
   ];
 
@@ -143,21 +146,33 @@
       build_id: 2,
       commit_id: 2,
       log_id: 3,
-      number: '2.1'
+      number: '2.1',
+      config: {
+        rvm: 'rbx'
+      }
     }, {
       id: 4,
       repository_id: 2,
       build_id: 3,
       commit_id: 3,
       log_id: 4,
-      number: '3.1'
+      number: '3.1',
+      config: {
+        rvm: 'rbx'
+      },
+      finished_at: '2012-06-20T00:21:20Z',
+      duration: 35,
+      result: 0
     }, {
       id: 5,
       repository_id: 3,
       build_id: 4,
       commit_id: 4,
       log_id: 5,
-      number: '4.1'
+      number: '4.1',
+      config: {
+        rvm: 'rbx'
+      }
     }
   ];
 

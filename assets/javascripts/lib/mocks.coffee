@@ -7,23 +7,23 @@ repositories = [
 builds = [
   { id: 1, repository_id: 'travis-ci/travis-core',   commit_id: 1, job_ids: [1, 2], number: 1, event_type: 'push', config: { rvm: ['rbx', '1.9.3'] }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 },
   { id: 2, repository_id: 'travis-ci/travis-core',   commit_id: 2, job_ids: [3],    number: 2, event_type: 'push', config: { rvm: ['rbx'] } },
-  { id: 3, repository_id: 'travis-ci/travis-assets', commit_id: 3, job_ids: [4],    number: 3, event_type: 'push', config: { rvm: ['rbx'] } },
+  { id: 3, repository_id: 'travis-ci/travis-assets', commit_id: 3, job_ids: [4],    number: 3, event_type: 'push', config: { rvm: ['rbx'] }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 },
   { id: 4, repository_id: 'travis-ci/travis-hub',    commit_id: 4, job_ids: [5],    number: 4, event_type: 'push', config: { rvm: ['rbx'] } },
 ]
 
 commits = [
-  { id: 1, sha: '1234567', branch: 'master',  message: 'commit message 1', author_name: 'author name', author_email: 'author@email.com', compare_url: 'http://github.com/compare/012345..123456' },
-  { id: 2, sha: '2345678', branch: 'feature', message: 'commit message 2', author_name: 'author name', author_email: 'author@email.com', compare_url: 'http://github.com/compare/012345..123456' },
-  { id: 3, sha: '3456789', branch: 'master',  message: 'commit message 3', author_name: 'author name', author_email: 'author@email.com', compare_url: 'http://github.com/compare/012345..123456' },
-  { id: 4, sha: '4567890', branch: 'master',  message: 'commit message 4', author_name: 'author name', author_email: 'author@email.com', compare_url: 'http://github.com/compare/012345..123456' },
+  { id: 1, sha: '1234567', branch: 'master',  message: 'commit message 1', author_name: 'author name', author_email: 'author@email.com', compare_url: 'http://github.com/compare/0123456..1234567' },
+  { id: 2, sha: '2345678', branch: 'feature', message: 'commit message 2', author_name: 'author name', author_email: 'author@email.com', compare_url: 'http://github.com/compare/0123456..2345678' },
+  { id: 3, sha: '3456789', branch: 'master',  message: 'commit message 3', author_name: 'author name', author_email: 'author@email.com', compare_url: 'http://github.com/compare/0123456..3456789' },
+  { id: 4, sha: '4567890', branch: 'master',  message: 'commit message 4', author_name: 'author name', author_email: 'author@email.com', compare_url: 'http://github.com/compare/0123456..4567890' },
 ]
 
 jobs = [
   { id: 1, repository_id: 1, build_id: 1, commit_id: 1, log_id: 1, number: '1.1', config: { rvm: 'rbx' }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 }
   { id: 2, repository_id: 1, build_id: 1, commit_id: 1, log_id: 2, number: '1.2', config: { rvm: '1.9.3' } }
-  { id: 3, repository_id: 1, build_id: 2, commit_id: 2, log_id: 3, number: '2.1' }
-  { id: 4, repository_id: 2, build_id: 3, commit_id: 3, log_id: 4, number: '3.1' }
-  { id: 5, repository_id: 3, build_id: 4, commit_id: 4, log_id: 5, number: '4.1' }
+  { id: 3, repository_id: 1, build_id: 2, commit_id: 2, log_id: 3, number: '2.1', config: { rvm: 'rbx' } }
+  { id: 4, repository_id: 2, build_id: 3, commit_id: 3, log_id: 4, number: '3.1', config: { rvm: 'rbx' }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 }
+  { id: 5, repository_id: 3, build_id: 4, commit_id: 4, log_id: 5, number: '4.1', config: { rvm: 'rbx' } }
 ]
 
 artifacts = [

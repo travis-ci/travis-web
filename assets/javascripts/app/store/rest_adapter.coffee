@@ -16,7 +16,7 @@ require 'models'
 
   find: (store, type, id) ->
     url = '/' + type.buildURL(id)
-    console.log "find: #{url}"
+    # console.log "find: #{url}"
 
     @ajax url, 'GET',
       success: (json) ->
@@ -28,7 +28,7 @@ require 'models'
 
   findMany: (store, type, ids) ->
     url = '/' + type.buildURL()
-    console.log "findMany: #{url}"
+    # console.log "findMany: #{url}"
 
     @ajax url, 'GET',
       data:
@@ -42,7 +42,7 @@ require 'models'
 
   findAll: (store, type) ->
     url = '/' + type.buildURL()
-    console.log "findAll: #{url}"
+    # console.log "findAll: #{url}"
 
     @ajax url, 'GET',
       success: (json) ->
@@ -54,7 +54,7 @@ require 'models'
 
   findQuery: (store, type, query, recordArray) ->
     url = '/' + type.buildURL()
-    console.log "findQuery: #{url} (#{query})"
+    # console.log "findQuery: #{url} (#{query})"
 
     @ajax url, 'GET',
       data: query,

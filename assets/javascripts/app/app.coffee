@@ -1,10 +1,12 @@
+$.mockjaxSettings.log = false
+
 @Travis = Em.Namespace.create
   App: Em.Application.extend
-    initialize: ->
+    initialize: (router) ->
       $.extend(this, Travis.Controllers)
       $.extend(this, Travis.Views)
       @store = Travis.Store.create()
-      @_super(Travis.Router.create())
+      @_super(router || Travis.Router.create())
 
   run: ->
     @app = Travis.App.create()

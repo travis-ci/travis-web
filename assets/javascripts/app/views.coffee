@@ -40,10 +40,6 @@ Travis.Views =
       Helpers.colorForResult(@get('result'))
     ).property('result')
 
-    isMatrix: (->
-      @getPath('context.data.job_ids.length') > 1
-    ).property() # TODO if i bind this to 'context.data.job_ids.length', that breaks the entire view (as if context was always undefined)
-
     requiredJobs: (->
       @getPath('context.jobs').filter((job) -> job.get('allow_failure') != true)
     ).property() # TODO same here with binding to 'context.data.job_ids'
