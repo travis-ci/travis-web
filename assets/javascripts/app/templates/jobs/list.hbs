@@ -15,15 +15,17 @@
       </tr>
     </thead>
     <tbody>
-      {{#each view.jobs}}
-        <tr {{bindAttr class="color"}}>
-          <td class="number"><a {{action viewJob href=true}}>#{{number}}</a></td>
-          <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
-          <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
-          {{#each configValues}}
-            <td>{{this}}</td>
-          {{/each}}
-        </tr>
+      {{#each job in view.jobs}}
+        {{#view Travis.Views.JobsItemView contextBinding="job"}}
+          <tr {{bindAttr class="color"}}>
+            <td class="number"><a {{bindAttr href="view.urlJob"}}>#{{number}}</a></td>
+            <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
+            <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
+            {{#each configValues}}
+              <td>{{this}}</td>
+            {{/each}}
+          </tr>
+        {{/view}}
       {{/each}}
     </tbody>
   </table>

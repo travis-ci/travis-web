@@ -1,3 +1,5 @@
+responseTime = 0
+
 repositories = [
   { id: 1, owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_result: 0 },
   { id: 2, owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3},
@@ -5,10 +7,10 @@ repositories = [
 ]
 
 builds = [
-  { id: 1, repository_id: 'travis-ci/travis-core',   commit_id: 1, job_ids: [1, 2], number: 1, event_type: 'push', config: { rvm: ['rbx', '1.9.3'] }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 },
-  { id: 2, repository_id: 'travis-ci/travis-core',   commit_id: 2, job_ids: [3],    number: 2, event_type: 'push', config: { rvm: ['rbx'] } },
-  { id: 3, repository_id: 'travis-ci/travis-assets', commit_id: 3, job_ids: [4],    number: 3, event_type: 'push', config: { rvm: ['rbx'] }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 },
-  { id: 4, repository_id: 'travis-ci/travis-hub',    commit_id: 4, job_ids: [5],    number: 4, event_type: 'push', config: { rvm: ['rbx'] } },
+  { id: 1, repository_id: '1', commit_id: 1, job_ids: [1, 2], number: 1, event_type: 'push', config: { rvm: ['rbx', '1.9.3'] }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 },
+  { id: 2, repository_id: '1', commit_id: 2, job_ids: [3],    number: 2, event_type: 'push', config: { rvm: ['rbx'] } },
+  { id: 3, repository_id: '2', commit_id: 3, job_ids: [4],    number: 3, event_type: 'push', config: { rvm: ['rbx'] }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 },
+  { id: 4, repository_id: '3', commit_id: 4, job_ids: [5],    number: 4, event_type: 'push', config: { rvm: ['rbx'] } },
 ]
 
 commits = [
@@ -36,19 +38,19 @@ artifacts = [
 
 $.mockjax
   url: '/repositories'
-  responseTime: 0
+  responseTime: responseTime
   responseText: { repositories: repositories }
 
 for repository in repositories
   $.mockjax
     url: '/' + repository.slug
-    responseTime: 0
+    responseTime: responseTime
     responseText: { repository: repository }
 
 for build in builds
   $.mockjax
     url: '/builds/' + build.id
-    responseTime: 0
+    responseTime: responseTime
     responseText:
       build: build,
       commit: commits[build.commit_id - 1]
@@ -57,8 +59,8 @@ for build in builds
 for repository in repositories
   $.mockjax
     url: '/builds'
-    data: { repository_id: 1, event_type: 'push', orderBy: 'number DESC' }
-    responseTime: 0
+    data: { repository_id: repository.id, event_type: 'push', orderBy: 'number DESC' }
+    responseTime: responseTime
     responseText:
       builds: (builds[id - 1] for id in repository.build_ids)
       commits: (commits[builds[id - 1].commit_id - 1] for id in repository.build_ids)
@@ -66,7 +68,7 @@ for repository in repositories
 for job in jobs
   $.mockjax
     url: '/jobs/' + job.id
-    responseTime: 0
+    responseTime: responseTime
     responseText:
       job: job,
       commit: commits[job.commit_id - 1]
@@ -74,7 +76,7 @@ for job in jobs
 for artifact in artifacts
   $.mockjax
     url: '/artifacts/' + artifact.id
-    responseTime: 0
+    responseTime: responseTime
     responseText:
       artifact: artifact
 

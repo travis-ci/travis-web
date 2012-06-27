@@ -1,5 +1,7 @@
 (function() {
-  var artifact, artifacts, build, builds, commits, id, job, jobs, repositories, repository, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m;
+  var artifact, artifacts, build, builds, commits, id, job, jobs, repositories, repository, responseTime, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m;
+
+  responseTime = 0;
 
   repositories = [
     {
@@ -33,7 +35,7 @@
   builds = [
     {
       id: 1,
-      repository_id: 'travis-ci/travis-core',
+      repository_id: '1',
       commit_id: 1,
       job_ids: [1, 2],
       number: 1,
@@ -46,7 +48,7 @@
       result: 0
     }, {
       id: 2,
-      repository_id: 'travis-ci/travis-core',
+      repository_id: '1',
       commit_id: 2,
       job_ids: [3],
       number: 2,
@@ -56,7 +58,7 @@
       }
     }, {
       id: 3,
-      repository_id: 'travis-ci/travis-assets',
+      repository_id: '2',
       commit_id: 3,
       job_ids: [4],
       number: 3,
@@ -69,7 +71,7 @@
       result: 0
     }, {
       id: 4,
-      repository_id: 'travis-ci/travis-hub',
+      repository_id: '3',
       commit_id: 4,
       job_ids: [5],
       number: 4,
@@ -197,7 +199,7 @@
 
   $.mockjax({
     url: '/repositories',
-    responseTime: 0,
+    responseTime: responseTime,
     responseText: {
       repositories: repositories
     }
@@ -207,7 +209,7 @@
     repository = repositories[_i];
     $.mockjax({
       url: '/' + repository.slug,
-      responseTime: 0,
+      responseTime: responseTime,
       responseText: {
         repository: repository
       }
@@ -218,7 +220,7 @@
     build = builds[_j];
     $.mockjax({
       url: '/builds/' + build.id,
-      responseTime: 0,
+      responseTime: responseTime,
       responseText: {
         build: build,
         commit: commits[build.commit_id - 1],
@@ -241,11 +243,11 @@
     $.mockjax({
       url: '/builds',
       data: {
-        repository_id: 1,
+        repository_id: repository.id,
         event_type: 'push',
         orderBy: 'number DESC'
       },
-      responseTime: 0,
+      responseTime: responseTime,
       responseText: {
         builds: (function() {
           var _l, _len3, _ref, _results;
@@ -275,7 +277,7 @@
     job = jobs[_l];
     $.mockjax({
       url: '/jobs/' + job.id,
-      responseTime: 0,
+      responseTime: responseTime,
       responseText: {
         job: job,
         commit: commits[job.commit_id - 1]
@@ -287,7 +289,7 @@
     artifact = artifacts[_m];
     $.mockjax({
       url: '/artifacts/' + artifact.id,
-      responseTime: 0,
+      responseTime: responseTime,
       responseText: {
         artifact: artifact
       }

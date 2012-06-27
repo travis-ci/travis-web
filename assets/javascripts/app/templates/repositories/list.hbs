@@ -1,10 +1,12 @@
-{{#if content.lastObject.isLoaded}}
+{{#unless content.lastObject.isLoaded}}
+  Loading ...
+{{else}}
   <ul id="repositories">
     {{#each repository in content}}
       {{#view Travis.Views.RepositoriesItemView tagName="li" classBinding="classes" contextBinding="repository"}}
         <div class="wrapper">
-          <a {{action viewCurrent href=true}} class="current">{{slug}}</a>
-          <a {{action viewBuild href=true context="lastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
+          <a {{bindAttr href="view.urlRepository"}} class="current">{{slug}}</a>
+          <a {{bindAttr href="view.urlLastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
         </div>
 
         <p class="summary">
@@ -20,4 +22,4 @@
       {{/view}}
     {{/each}}
   <ul>
-{{/if}}
+{{/unless}}

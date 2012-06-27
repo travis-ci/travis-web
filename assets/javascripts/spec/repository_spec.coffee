@@ -1,6 +1,6 @@
 describe 'The repository view', ->
   beforeEach ->
-    app '/'
+    app ''
     waitFor repositoriesRendered
 
   it 'displays the repository header', ->

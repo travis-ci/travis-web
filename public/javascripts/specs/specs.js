@@ -3,7 +3,7 @@
   describe('The current build tab', function() {
     describe('on the "index" state', function() {
       beforeEach(function() {
-        app('/');
+        app('');
         return waitFor(buildRendered);
       });
       it('displays the build summary', function() {
@@ -23,12 +23,14 @@
             headers: ['Job', 'Duration', 'Finished', 'Rvm'],
             jobs: [
               {
+                id: 1,
                 number: '#1.1',
                 repo: 'travis-ci/travis-core',
                 finishedAt: /\d+ (\w+) ago/,
                 duration: '35 sec',
                 rvm: 'rbx'
               }, {
+                id: 2,
                 number: '#1.2',
                 repo: 'travis-ci/travis-core',
                 finishedAt: '-',
@@ -42,7 +44,7 @@
     });
     return describe('on the "current" state', function() {
       beforeEach(function() {
-        app('/travis-ci/travis-core');
+        app('!/travis-ci/travis-core');
         waitFor(repositoriesRendered);
         return waitFor(buildRendered);
       });
@@ -63,12 +65,14 @@
             headers: ['Job', 'Duration', 'Finished', 'Rvm'],
             jobs: [
               {
+                id: 1,
                 number: '#1.1',
                 repo: 'travis-ci/travis-core',
                 finishedAt: /\d+ (\w+) ago/,
                 duration: '35 sec',
                 rvm: 'rbx'
               }, {
+                id: 2,
                 number: '#1.2',
                 repo: 'travis-ci/travis-core',
                 finishedAt: '-',
@@ -87,18 +91,18 @@
 
   describe('The repositories list', function() {
     beforeEach(function() {
-      app('/');
+      app('');
       return waitFor(repositoriesRendered);
     });
     it('lists repositories', function() {
       var href;
-      href = $('#repositories a.slug').attr('href');
-      return expect(href).toEqual('#/travis-ci/travis-core');
+      href = $('#repositories a.current').attr('href');
+      return expect(href).toEqual('#!/travis-ci/travis-core');
     });
     return it("links to the repository's last build action", function() {
       var href;
       href = $('#repositories a.last_build').attr('href');
-      return expect(href).toEqual('#/travis-ci/travis-core/builds/1');
+      return expect(href).toEqual('#!/travis-ci/travis-core/builds/1');
     });
   });
 
@@ -107,7 +111,7 @@
 
   describe('The repository view', function() {
     beforeEach(function() {
-      app('/');
+      app('');
       return waitFor(repositoriesRendered);
     });
     return it('displays the repository header', function() {
@@ -126,18 +130,16 @@
     if (Travis.app) {
       Travis.app.destroy();
     }
-    return $('body #content').empty();
+    return $('body #content').remove();
   };
 
   this.app = function(url) {
-    var router;
-    router = Travis.Router.create({
-      location: Em.NoneLocation.create()
+    $('body').append('<div id="content"></div>');
+    Travis.app = Travis.App.create({
+      rootElement: '#content'
     });
-    Travis.app = Travis.App.create();
-    Travis.app.set('rootElement', '#content');
-    Travis.app.initialize(router);
-    return router.route(url);
+    Travis.app.initialize();
+    return Em.routes.set('location', url);
   };
 
   beforeEach(function() {
@@ -148,7 +150,7 @@
 (function() {
 
   this.repositoriesRendered = function() {
-    return $('#repositories li').length > 0;
+    return $('#repositories li a.current').text() !== '';
   };
 
   this.buildRendered = function() {
@@ -165,7 +167,7 @@
   this.displaysBuildSummary = function(data) {
     var element;
     element = $('#build .summary .number a');
-    expect(element.attr('href')).toEqual("#/" + data.repo + "/builds/" + data.id);
+    expect(element.attr('href')).toEqual("#!/" + data.repo + "/builds/" + data.id);
     element = $('#build .summary .finished_at');
     expect(element.text()).toMatch(/\d+ (\w+) ago/);
     element = $('#build .summary .duration');
@@ -200,7 +202,7 @@
       element = $("#jobs tr:nth-child(" + ix + ") td.number");
       expect(element.text()).toEqual(job.number);
       element = $("#jobs tr:nth-child(" + ix + ") td.number a");
-      expect(element.attr('href')).toEqual("#/" + job.repo + "/jobs/" + job.id);
+      expect(element.attr('href')).toEqual("#!/" + job.repo + "/jobs/" + job.id);
       element = $("#jobs tr:nth-child(" + ix + ") td.duration");
       expect(element.text()).toEqual(job.duration);
       element = $("#jobs tr:nth-child(" + ix + ") td.finished_at");
@@ -232,6 +234,35 @@
 }).call(this);
 (function() {
 
-
+  describe('The tabs view', function() {
+    describe('on the "index" state', function() {
+      beforeEach(function() {
+        app('');
+        return waitFor(repositoriesRendered);
+      });
+      it('has a "current" tab linking to the current build', function() {
+        var href;
+        href = $('#main .tabs a.current').attr('href');
+        return expect(href).toEqual('#!/travis-ci/travis-core');
+      });
+      return it('has a "history" tab linking to the builds list', function() {
+        var href;
+        href = $('#main .tabs a.history').attr('href');
+        return expect(href).toEqual('#!/travis-ci/travis-core/builds');
+      });
+    });
+    return describe('on the "current" state', function() {
+      beforeEach(function() {
+        app('!/travis-ci/travis-core');
+        waitFor(repositoriesRendered);
+        return waitFor(buildRendered);
+      });
+      return it('has a "current" tab linking to the current build', function() {
+        var href;
+        href = $('#main .tabs a.current').attr('href');
+        return expect(href).toEqual('#!/travis-ci/travis-core');
+      });
+    });
+  });
 
 }).call(this);

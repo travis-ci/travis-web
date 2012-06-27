@@ -1,7 +1,7 @@
 describe 'The current build tab', ->
   describe 'on the "index" state', ->
     beforeEach ->
-      app '/'
+      app ''
       waitFor buildRendered
 
     it 'displays the build summary', ->
@@ -19,13 +19,13 @@ describe 'The current build tab', ->
         displaysBuildMatrix
           headers: ['Job', 'Duration', 'Finished', 'Rvm']
           jobs: [
-            { number: '#1.1', repo: 'travis-ci/travis-core', finishedAt: /\d+ (\w+) ago/, duration: '35 sec', rvm: 'rbx' },
-            { number: '#1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
+            { id: 1, number: '#1.1', repo: 'travis-ci/travis-core', finishedAt: /\d+ (\w+) ago/, duration: '35 sec', rvm: 'rbx' },
+            { id: 2, number: '#1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
           ]
 
   describe 'on the "current" state', ->
     beforeEach ->
-      app '/travis-ci/travis-core'
+      app '!/travis-ci/travis-core'
       waitFor repositoriesRendered
       waitFor buildRendered
 
@@ -44,6 +44,6 @@ describe 'The current build tab', ->
         displaysBuildMatrix
           headers: ['Job', 'Duration', 'Finished', 'Rvm']
           jobs: [
-            { number: '#1.1', repo: 'travis-ci/travis-core', finishedAt: /\d+ (\w+) ago/, duration: '35 sec', rvm: 'rbx' },
-            { number: '#1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
+            { id: 1, number: '#1.1', repo: 'travis-ci/travis-core', finishedAt: /\d+ (\w+) ago/, duration: '35 sec', rvm: 'rbx' },
+            { id: 2, number: '#1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
           ]

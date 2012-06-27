@@ -1,10 +1,10 @@
 <ul class="tabs">
-  <li><a {{action viewCurrent href=true context="repository"}} class="current">Current</a></li>
-  <li><a {{action viewBuilds href=true context="repository"}} class="history">History</a></li>
+  <li><a {{bindAttr href="view.urlRepository"}} class="current">Current</a></li>
+  <li><a {{bindAttr href="view.urlBuilds"}} class="history">History</a></li>
   {{#if build}}
-    <li><a {{action viewBuild href=true context="build"}} class="build">Build #{{build.number}}</a></li>
+    <li><a {{bindAttr href="view.urlBuild"}} class="build">Build #{{build.number}}</a></li>
   {{/if}}
   {{#if job}}
-    <li><a {{action viewJob href=true context="job"}} class="job">Job #{{job.number}}</a></li>
+    <li><a {{bindAttr href="view.urlJob"}} class="job">Job #{{job.number}}</a></li>
   {{/if}}
 </ul>

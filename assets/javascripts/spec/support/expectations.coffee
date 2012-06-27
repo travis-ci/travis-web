@@ -1,6 +1,6 @@
 @displaysBuildSummary = (data) ->
   element = $('#build .summary .number a')
-  expect(element.attr('href')).toEqual "#/#{data.repo}/builds/#{data.id}"
+  expect(element.attr('href')).toEqual "#!/#{data.repo}/builds/#{data.id}"
 
   element = $('#build .summary .finished_at')
   expect(element.text()).toMatch /\d+ (\w+) ago/
@@ -34,7 +34,7 @@
     expect(element.text()).toEqual job.number
 
     element = $("#jobs tr:nth-child(#{ix}) td.number a")
-    expect(element.attr('href')).toEqual "#/#{job.repo}/jobs/#{job.id}"
+    expect(element.attr('href')).toEqual "#!/#{job.repo}/jobs/#{job.id}"
 
     element = $("#jobs tr:nth-child(#{ix}) td.duration")
     expect(element.text()).toEqual job.duration

@@ -16,6 +16,7 @@ input 'assets/javascripts' do
       vendor/ansiparse.js
       vendor/i18n.js
       vendor/jquery.timeago.js
+      vendor/sc-routes.js
     )
     concat files, 'vendor.js'
   end
