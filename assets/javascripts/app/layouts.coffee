@@ -23,4 +23,5 @@ Travis.Layout.instance = (name) ->
     @layout = Travis.Layout[name].create(name: name)
 
 require 'layouts/default'
+require 'layouts/profile'
 
