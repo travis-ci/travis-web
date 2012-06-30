@@ -121,6 +121,10 @@ $.extend
       result[key] = object[key]  if keys.indexOf(key) is -1
     result
 
+  intersect: (array, other) ->
+    array.filter (element) ->
+      other.indexOf(element) != -1
+
   map: (elems, callback, arg) ->
     value = undefined
     key = undefined

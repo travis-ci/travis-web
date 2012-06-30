@@ -1,5 +1,5 @@
 @Travis.Views.reopen
-  HistoryView: Em.View.extend
+  BuildsView: Em.View.extend
     templateName: 'builds/list'
 
   BuildsItemView: Em.View.extend

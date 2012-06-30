@@ -4,6 +4,8 @@ require 'hax0rs'
 # Ember.LOG_BINDINGS = true
 
 @Travis = Em.Namespace.create
+  CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
+
   run: ->
     @app = Travis.App.create(this)
     @app.initialize()
@@ -18,7 +20,7 @@ require 'hax0rs'
 require 'ext/jquery'
 require 'controllers'
 require 'helpers'
-require 'layouts'
+require 'layout'
 require 'models'
 require 'router'
 require 'store'
