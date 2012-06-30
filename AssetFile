@@ -21,7 +21,7 @@ input 'assets/javascripts' do
     concat files, 'vendor.js'
   end
 
-  match '{app,config,lib}/**/*.coffee' do
+  match '{app,config,data,lib}/**/*.coffee' do
     coffee_script
   end
 
@@ -34,12 +34,12 @@ input 'assets/javascripts' do
     concat 'app/templates.js'
   end
 
-  match '{app,config,lib}/**/*.js' do
+  match '{app,config,data,lib}/**/*.js' do
     minispade(
       string: true,
       rewrite_requires: true,
       module_id_generator: proc { |input|
-        input.path.sub(%r(^(app|config|lib)/), '').sub(/\.js$/, '')
+        input.path.sub(%r(^(app|lib)/), '').sub(/\.js$/, '')
       }
     )
     concat 'application.js'
@@ -77,9 +77,18 @@ input 'assets/stylesheets' do
   end
 end
 
-# output 'public'
-# input 'assets', 'index.html.erb' do
-#   filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
-#     input.sub /\\.erb$/, ''
-#   end
-# end
+output 'public/images'
+input 'assets/images' do
+  match '**/*' do
+    copy
+  end
+end
+
+
+output 'public'
+input 'assets/static' do
+  match '**/*' do
+    copy
+  end
+end
+

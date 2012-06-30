@@ -1,20 +1,11 @@
 <div id="right" class="maximized">
   <div class="slider"><div class='icon'></div>&nbsp;</div>
   <div class="inner"><div class='wrapper'>
-    <!--
-    <h4>{{t layouts.application.sponsers}}</h4>
-    <div class="sponsors top"></div>
-    <p class="hint"><a href="https://love.travis-ci.org/sponsors">{{{t layouts.application.sponsors_link}}}</a></p>
-    -->
 
-    {{view Travis.Views.WorkersView groupsBinding="controller.workers" id="workers"}}
-    {{view Travis.Views.QueuesView queuesBinding="controller.queues" id="queues"}}
-
-    <!--
-    <div class="box">
-      <h4>{{t layouts.application.sponsers}}</h4>
-      <div class="sponsors bottom"></div>
-    </div>
+    {{view templateName="sponsors/decks"}}
+    {{view templateName="workers/list" id="workers"}}
+    {{view templateName="queues/list" id="queues"}}
+    {{view templateName="sponsors/links"}}
 
     <div id="alpha_warning" class="box">
       <h4>{{t layouts.about.alpha}}</h4>
@@ -29,12 +20,9 @@
         <li><a href="irc://irc.freenode.net#travis">irc.freenode.net#travis</a></li>
       </ul>
     </div>
-    -->
   </div></div>
 </div>
 
-<!--
 <div id="github">
   <a href="https://github.com/travis-ci" title="Fork me on GitHub">{{t layouts.application.fork_me}}</a>
 </div>
--->

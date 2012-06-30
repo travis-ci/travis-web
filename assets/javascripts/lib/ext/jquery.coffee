@@ -143,5 +143,15 @@ $.extend
         ret[ret.length] = value  if value?
     ret.concat.apply [], ret
 
+  shuffle: (array) ->
+    array = array.slice()
+    top = array.length
+    while top && --top
+      current = Math.floor(Math.random() * (top + 1))
+      tmp = array[current]
+      array[current] = array[top]
+      array[top] = tmp
+    array
+
   truncate: (string, length) ->
     if string.length > length then string.trim().substring(0, length) + '...' else string

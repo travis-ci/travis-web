@@ -8,7 +8,7 @@ Travis.Layout.Base = Em.Object.extend
     $.extend this, Travis.Views
 
     for name in controllers
-      key = "#{name}Controller"
+      key = "#{$.camelize(name, false)}Controller"
       name = $.camelize(key)
       this[key] = Travis.Controllers[name].create(namespace: this, controllers: this)
 

@@ -1,0 +1,13 @@
+<h4>{{t layouts.application.sponsers}}</h4>
+<ul class="sponsors top">
+  {{#each deck in sponsors.decks}}
+    {{#each deck}}
+      <li>
+        <a {{bindAttr href="url"}}>
+          <img {{bindAttr src="image"}}>
+        </a>
+      </li>
+    {{/each}}
+  {{/each}}
+</ul>
+<p class="hint"><a href="https://love.travis-ci.org/sponsors">{{{t layouts.application.sponsors_link}}}</a></p>

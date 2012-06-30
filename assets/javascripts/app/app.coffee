@@ -7,6 +7,8 @@ require 'ext/jquery'
 @Travis = Em.Namespace.create
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
 
+  INTERVALS: { sponsors: -1, times: -1 }
+
   # QUEUES: [
   #   { name: 'common',  display: 'Common' },
   #   { name: 'php',     display: 'PHP, Perl and Python' },
@@ -27,6 +29,7 @@ require 'ext/jquery'
   App: Em.Application.extend
     initialize: (router) ->
       @store = Travis.Store.create()
+      @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
       @routes = Travis.Router.create(app: this)
       @_super(Em.Object.create())
       @routes.start()
@@ -39,4 +42,7 @@ require 'router'
 require 'store'
 require 'templates'
 require 'views'
-require 'locales'
+
+require 'config/locales'
+require 'data/sponsors'
+
