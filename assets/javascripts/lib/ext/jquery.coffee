@@ -40,29 +40,28 @@ $.fn.extend
 $.extend
   keys: (obj) ->
     keys = []
-    $.each obj, (key) ->
-      keys.push key
-
+    $.each obj, (key) -> keys.push key
     keys
 
   values: (obj) ->
     values = []
-    $.each obj, (key, value) ->
-      values.push value
-
+    $.each obj, (key, value) -> values.push value
     values
 
+  underscore: (string) ->
+    string[0].toLowerCase() + string.substring(1).replace /([A-Z])?/g, (match, chr) ->
+      if chr then "_#{chr.toUpperCase()}" else ''
+
   camelize: (string, uppercase) ->
-    string = $.capitalize(string)  if uppercase or typeof uppercase is 'undefined'
+    string = if uppercase == false then $.underscore(string) else $.capitalize(string)
     string.replace /_(.)?/g, (match, chr) ->
-      (if chr then chr.toUpperCase() else '')
+      if chr then chr.toUpperCase() else ''
 
   capitalize: (string) ->
     string[0].toUpperCase() + string.substring(1)
 
   compact: (array) ->
-    $.grep array, (value) ->
-      !!value
+    $.grep array, (value) -> !!value
 
   all: (array, callback) ->
     args = Array::slice.apply(arguments)

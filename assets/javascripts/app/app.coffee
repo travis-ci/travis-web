@@ -22,17 +22,28 @@ require 'ext/jquery'
     { name: 'jvmotp',  display: 'JVM and Erlang' },
   ],
 
+  currentUserId: 1
+
   run: ->
     @app = Travis.App.create(this)
     @app.initialize()
 
   App: Em.Application.extend
     initialize: (router) ->
+      @connect()
       @store = Travis.Store.create()
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
       @routes = Travis.Router.create(app: this)
       @_super(Em.Object.create())
       @routes.start()
+
+    connect: ->
+      @controller = Em.Controller.create()
+      view = Em.View.create
+        template: Em.Handlebars.compile('{{outlet layout}}')
+        controller: @controller
+      view.appendTo(@get('rootElement') || 'body')
+
 
 require 'controllers'
 require 'helpers'

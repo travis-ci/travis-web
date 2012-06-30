@@ -1,10 +1,12 @@
 require 'layout/base'
 
 Travis.Layout.Default = Travis.Layout.Base.extend
+  name: 'default'
+
   init: ->
-    @_super('app', 'repositories', 'repository', 'tabs', 'build', 'job')
+    @_super('repositories', 'repository', 'tabs', 'build', 'job')
     @connectLeft(Travis.Repository.find())
-    Travis.Layout.Sidebar.create(appController: @get('appController'))
+    Travis.Layout.Sidebar.create(defaultController: @get('defaultController'))
 
   viewIndex: (params) ->
     onceLoaded @repositories, =>
@@ -59,11 +61,11 @@ Travis.Layout.Default = Travis.Layout.Base.extend
 
   connectLeft: (repositories) ->
     @repositories = repositories
-    @appController.connectOutlet(outletName: 'left', name: 'repositories', context: repositories)
+    @defaultController.connectOutlet(outletName: 'left', name: 'repositories', context: repositories)
 
   connectRepository: (repository) ->
     @repository = repository
-    @appController.connectOutlet(outletName: 'main', name: 'repository', context: repository)
+    @defaultController.connectOutlet(outletName: 'main', name: 'repository', context: repository)
 
   connectTabs: (build, job) ->
     @tabsController.set('repository', @repository)

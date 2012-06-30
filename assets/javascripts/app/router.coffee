@@ -21,5 +21,5 @@ Travis.Router = Em.Object.extend
       @action(layout, action, params)
 
   action: (layout, action, params) ->
-    layout = Travis.Layout.instance(layout)
+    layout = Travis.Layout.instance(layout, @app.controller)
     layout["view#{$.camelize(action)}"](params)
