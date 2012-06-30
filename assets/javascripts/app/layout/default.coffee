@@ -1,12 +1,14 @@
-Travis.Layout.Default = Travis.Layout.extend
+require 'layout/base'
+
+Travis.Layout.Default = Travis.Layout.Base.extend
   init: ->
-    @_super()
+    @_super('app', 'repositories', 'repository', 'tabs', 'build', 'job')
     @connectLeft(Travis.Repository.find())
+    Travis.Layout.Sidebar.create(appController: @get('appController'))
 
   viewIndex: (params) ->
-    repositories = @get('repositories')
-    onceLoaded repositories, =>
-      repository = repositories.get('firstObject')
+    onceLoaded @repositories, =>
+      repository = @repositories.get('firstObject')
       @connectRepository(repository)
       @connectTabs()
       @connectBuild(repository.get('lastBuild'))
@@ -56,26 +58,26 @@ Travis.Layout.Default = Travis.Layout.extend
 
 
   connectLeft: (repositories) ->
-    @set('repositories', repositories)
-    @get('applicationController').connectOutlet(outletName: 'left', name: 'repositories', context: repositories)
+    @repositories = repositories
+    @appController.connectOutlet(outletName: 'left', name: 'repositories', context: repositories)
 
   connectRepository: (repository) ->
-    @set('repository', repository)
-    @get('applicationController').connectOutlet(outletName: 'main', name: 'repository', context: repository)
+    @repository = repository
+    @appController.connectOutlet(outletName: 'main', name: 'repository', context: repository)
 
   connectTabs: (build, job) ->
-    @setPath('tabsController.repository', @get('repository'))
-    @setPath('tabsController.build', build)
-    @setPath('tabsController.job', job)
-    @get('repositoryController').connectOutlet(outletName: 'tabs', name: 'tabs')
+    @tabsController.set('repository', @repository)
+    @tabsController.set('build', @build)
+    @tabsController.set('job', @job)
+    @repositoryController.connectOutlet(outletName: 'tabs', name: 'tabs')
 
   connectBuilds: (builds) ->
-    @get('repositoryController').connectOutlet(outletName: 'tab', name: 'history', context: builds)
+    @repositoryController.connectOutlet(outletName: 'tab', name: 'builds', context: builds)
 
   connectBuild: (build) ->
-    @get('repositoryController').connectOutlet(outletName: 'tab', name: 'build', context: build)
+    @repositoryController.connectOutlet(outletName: 'tab', name: 'build', context: build)
 
   connectJob: (job) ->
-    @get('repositoryController').connectOutlet(outletName: 'tab', name: 'job', context: job)
+    @repositoryController.connectOutlet(outletName: 'tab', name: 'job', context: job)
 
 

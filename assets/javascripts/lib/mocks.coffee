@@ -1,3 +1,5 @@
+require 'ext/jquery'
+
 responseTime = 0
 
 repositories = [
@@ -26,6 +28,8 @@ jobs = [
   { id: 3, repository_id: 1, build_id: 2, commit_id: 2, log_id: 3, number: '2.1', config: { rvm: 'rbx' } }
   { id: 4, repository_id: 2, build_id: 3, commit_id: 3, log_id: 4, number: '3.1', config: { rvm: 'rbx' }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 }
   { id: 5, repository_id: 3, build_id: 4, commit_id: 4, log_id: 5, number: '4.1', config: { rvm: 'rbx' } }
+  { id: 6, repository_id: 1, build_id: 5, commit_id: 5, log_id: 5, number: '5.1', config: { rvm: 'rbx' }, state: 'created', queue: 'builds.common' }
+  { id: 7, repository_id: 1, build_id: 5, commit_id: 5, log_id: 5, number: '5.2', config: { rvm: 'rbx' }, state: 'created', queue: 'builds.common' }
 ]
 
 artifacts = [
@@ -34,6 +38,11 @@ artifacts = [
   { id: 3, body: 'log 3' }
   { id: 4, body: 'log 4' }
   { id: 5, body: 'log 4' }
+]
+
+workers = [
+  { id: 1, name: 'ruby-1', host: 'worker.travis-ci.org', state: 'ready' }
+  { id: 2, name: 'ruby-2', host: 'worker.travis-ci.org', state: 'ready' }
 ]
 
 $.mockjax
@@ -80,4 +89,13 @@ for artifact in artifacts
     responseText:
       artifact: artifact
 
+$.mockjax
+  url: '/workers'
+  responseTime: responseTime
+  responseText: { workers: workers }
 
+$.mockjax
+  url: '/jobs'
+  responseTime: responseTime
+  responseText:
+    jobs: $.select(jobs, (job) -> job.state == 'created')

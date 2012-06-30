@@ -1,13 +1,5 @@
 require 'travis/model'
 
-@Travis.WorkerGroup = Ember.ArrayProxy.extend
-  init: ->
-    @set('content', [])
-
-  host: (->
-    @getPath 'firstObject.host'
-  ).property()
-
 @Travis.Worker = Travis.Model.extend
   state: DS.attr('string')
   name: DS.attr('string')
@@ -34,5 +26,5 @@ require 'travis/model'
   ).property('state')
 
   urlJob: (->
-    '#!/%@/jobs/%@'.fmt @getPath('payload.repository.slug'), @getPath('payload.build.id')
-  ).property('payload', 'state')
+    "#!/#{@getPath('payload.repository.slug')}/jobs/#{@getPath('payload.build.id')}"
+  ).property('payload')

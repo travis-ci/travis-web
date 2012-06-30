@@ -1,0 +1,15 @@
+{{#each queue in queues}}
+  <h4>{{t queue}}: {{queue.name}}</h4>
+  <ul>
+    {{#each queue}}
+      <li>
+        {{repository.slug}}
+        {{#if number}}
+          #{{number}}
+        {{/if}}
+      </li>
+    {{else}}
+      {{t no_job}}
+    {{/each}}
+  </ul>
+{{/each}}
