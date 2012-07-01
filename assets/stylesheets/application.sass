@@ -49,7 +49,8 @@ pre::-webkit-scrollbar
   height: 10px
   width: 10px
 
-pre::-webkit-scrollbar-button:start:decrement, pre::-webkit-scrollbar-button:end:increment
+pre::-webkit-scrollbar-button:start:decrement,
+pre::-webkit-scrollbar-button:end:increment
   display: none
 
 pre::-webkit-scrollbar-track-piece
@@ -76,11 +77,14 @@ pre::-webkit-scrollbar-thumb:horizontal
   width: 20px
   height: 20px
 
-.whats_this
-  margin-left: 10px
+.help
   display: inline-block
+  height: 19px
   width: 16px
-  background: inline-image('icons/help.png') no-repeat scroll 0 0 transparent
+  margin: -9px 0 0 4px
+  vertical-align: middle
+  background: inline-image('icons/help.png') no-repeat scroll 0 3px transparent
+  cursor: pointer
 
 .context_help_caption
   text-align: left
@@ -97,8 +101,11 @@ pre::-webkit-scrollbar-thumb:horizontal
   line-height: 1.4286
   margin: 1.4286em 0
 
-// .slide-left
-//   position: absolute
-//   top: 150px
-//   right: 0px
-//   background-color: #bcd
+#facebox
+  .content
+    display: block !important
+  .close
+    display: none
+  pre::-webkit-scrollbar
+    height: 0
+    width: 0

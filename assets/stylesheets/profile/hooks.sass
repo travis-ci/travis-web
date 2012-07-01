@@ -1,6 +1,6 @@
 @import "compass"
 
-#hooks ul
+#hooks
   // @include list-base
   margin-top: 10px
 
@@ -10,6 +10,16 @@
     padding: 10px
     white-space: nowrap
     overflow: hidden
+    border-bottom: 1px solid #DDD
+
+    &:nth-child(3)
+      border-top: 1px solid #DDD
+
+    &:nth-child(odd)
+      background-color: #FAFBFC
+
+    &:nth-child(odd) .controls
+      background: #fafbfc
 
     > a
       float: left
@@ -36,26 +46,23 @@
         float: left
         display: block
 
-      .github-admin
-        // Overriding an earlier definition above, which is probably
-        // obsolete. TODO: Remove if so.
-        position: relative
-        height: 20px
-        width: 20px
-        padding-right: 0
-        background: inline-image('icons/github-admin.png') no-repeat 3px 4px
+    .github-admin
+      // Overriding an earlier definition above, which is probably
+      // obsolete. TODO: Remove if so.
+      position: relative
+      height: 20px
+      width: 20px
+      padding-right: 0
+      background: inline-image('icons/github-admin.png') no-repeat 3px 4px
 
-      .switch
-        height: 20px
-        width: 80px
-        margin-left: 10px
-        background: inline-image('ui/off.png') no-repeat
-        cursor: pointer
-        &.active
-          background: inline-image('ui/on.png') no-repeat
-
-    &:nth-child(odd) .controls
-      background: #fafbfc
+    .switch
+      height: 20px
+      width: 80px
+      margin-left: 10px
+      background: inline-image('ui/off.png') no-repeat
+      cursor: pointer
+      &.active
+        background: inline-image('ui/on.png') no-repeat
 
     &:hover
       > a

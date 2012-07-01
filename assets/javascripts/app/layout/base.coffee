@@ -1,7 +1,6 @@
 Travis.Layout.Base = Em.Object.extend
   init: ->
     @parent = @get('parent')
-    @currentUser = Travis.app.currentUser
 
     @setup(Array.prototype.slice.apply(arguments).concat(@get('name')))
     @connect()
@@ -29,7 +28,6 @@ Travis.Layout.Base = Em.Object.extend
 
   connectTop: ->
     @controller.connectOutlet(outletName: 'top', name: 'top')
-    @topController.set('user', @currentUser)
     @topController.set('tab', @get('name'))
 
   activate: (action, params) ->

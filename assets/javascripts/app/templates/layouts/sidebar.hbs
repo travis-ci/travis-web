@@ -1,22 +1,27 @@
-<div class="slider"><div class='icon'></div>&nbsp;</div>
-<div class="inner"><div class='wrapper'>
+<a id="github" href="https://github.com/travis-ci" title="Fork me on GitHub">
+  {{t layouts.application.fork_me}}
+</a>
 
-  {{view templateName="sponsors/decks"}}
-  {{view templateName="workers/list" id="workers"}}
-  {{view templateName="queues/list" id="queues"}}
-  {{view templateName="sponsors/links"}}
+<div id="slider" {{action toggleSidebar}}>
+  <div class='icon'></div>&nbsp;
+</div>
 
-  <div id="alpha_warning" class="box">
-    <h4>{{t layouts.about.alpha}}</h4>
-    <p>{{{t layouts.about.messages.alpha}}}</p>
-  </div>
-  <div id="about" class="box">
-    <h4>{{t layouts.about.join}}</h4>
-    <ul>
-      <li>{{t layouts.about.repository}}: <a href="http://github.com/travis-ci">Github</a></li>
-      <li>{{t layouts.about.twitter}}: <a href="http://twitter.com/travisci">@travisci</a></li>
-      <li>{{t layouts.about.mailing_list}}: <a href="http://groups.google.com/group/travis-ci">travis-ci</a></li>
-      <li><a href="irc://irc.freenode.net#travis">irc.freenode.net#travis</a></li>
-    </ul>
-  </div>
-</div></div>
+{{view templateName="sponsors/decks"}}
+{{view templateName="workers/list" id="workers"}}
+{{view templateName="queues/list" id="queues"}}
+{{view templateName="sponsors/links"}}
+
+<div id="alpha_warning" class="box">
+  <h4>{{t layouts.about.alpha}}</h4>
+  <p>{{{t layouts.about.messages.alpha}}}</p>
+</div>
+
+<div id="about" class="box">
+  <h4>{{t layouts.about.join}}</h4>
+  <ul>
+    <li>{{t layouts.about.repository}}: <a href="http://github.com/travis-ci">Github</a></li>
+    <li>{{t layouts.about.twitter}}: <a href="http://twitter.com/travisci">@travisci</a></li>
+    <li>{{t layouts.about.mailing_list}}: <a href="http://groups.google.com/group/travis-ci">travis-ci</a></li>
+    <li><a href="irc://irc.freenode.net#travis">irc.freenode.net#travis</a></li>
+  </ul>
+</div>

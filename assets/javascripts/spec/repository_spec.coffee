@@ -1,4 +1,4 @@
-describe 'The repository view', ->
+xdescribe 'The repository view', ->
   beforeEach ->
     app ''
     waitFor repositoriesRendered

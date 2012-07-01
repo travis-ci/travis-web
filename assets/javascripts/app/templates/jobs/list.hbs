@@ -4,7 +4,8 @@
       {{#if view.required}}
         {{t jobs.build_matrix}}
       {{else}}
-        {{t jobs.allowed_failures}}{{whats_this allow_failure_help}}
+        {{t jobs.allowed_failures}}
+        <a title="What's this?" class="help" {{action toggleHelp}}></a>
       {{/if}}
     </caption>
     <thead>
@@ -43,11 +44,9 @@
         <p>
           You can define allowed failures in the build matrix as follows:
         </p>
-        <pre>
-      matrix:
-        allow_failures:
-          - rvm: ruby-head
-        </pre>
+        <pre> matrix:
+  allow_failures:
+    - rvm: ruby-head </pre>
       </div>
     </div>
   {{/unless}}

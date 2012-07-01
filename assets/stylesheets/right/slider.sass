@@ -1,58 +1,55 @@
-#right
-  $slider-border-normal: #f2f4f9
-  $slider-border-light: #999
-  $slider-border-hover: #e1e2e6
+$slider-border-normal: #f2f4f9
+$slider-border-light: #999
+$slider-border-hover: #e1e2e6
 
-  .slider
-    border-left: 1px solid #ccc
-    border-bottom: 1px solid #ccc
-    background-color: #f2f4f9
+#slider
+  position: absolute
+  height: 100%
+  top: 0
+  left: -10px
+  width: 10px
+  border-left: 1px solid #ccc
+  border-bottom: 1px solid #ccc
+  background-color: #f2f4f9
+  cursor: pointer
 
-    .icon
-      width: 0
-      height: 0
-      position: absolute
-      top: 15px
-      border-color: $slider-border-normal $slider-border-normal $slider-border-normal $slider-border-light
-      border-width: 5px 0 5px 5px
-      border-style: solid
-      margin-top: -5px
-      margin-left: 3px
-
+  .icon
+    width: 0
+    height: 0
     position: absolute
-    height: 100%
-    left: -10px
-    width: 10px
+    top: 15px
+    border-color: $slider-border-normal $slider-border-normal $slider-border-normal $slider-border-light
+    border-width: 5px 0 5px 5px
+    border-style: solid
+    margin-top: -5px
+    margin-left: 3px
 
   &:hover
-    .slider
-      background: $slider-border-hover
+    background: $slider-border-hover
+    .icon
+      border-color: $slider-border-hover $slider-border-hover $slider-border-hover $slider-border-light
+
+#home.maximized
+  #top .profile
+    margin-right: 10px
+
+  #main
+    padding-right: 40px
+
+  #right
+    width: 0
+    padding: 0
+    *:not(#slider):not(.icon):not(.ember-view)
+      display: none
+
+  #slider
+    left: -20px
+    width: 20px
+    z-index: 50
+    .icon
+      border-color: $slider-border-normal $slider-border-light $slider-border-normal $slider-border-normal
+      border-width: 5px 5px 5px 0
+
+    &:hover
       .icon
-        border-color: $slider-border-hover $slider-border-hover $slider-border-hover $slider-border-light
-
-  .inner
-    .wrapper
-      padding: 20px 20px 20px 10px
-      min-width: 190px
-
-  &.maximized
-    width: 240px
-
-  &.minimized
-    width: 0px
-
-    .slider
-      width: 20px
-      left: -21px
-      z-index: 50
-      .icon
-        border-color: $slider-border-normal $slider-border-light $slider-border-normal $slider-border-normal
-        border-width: 5px 5px 5px 0
-
-      &:hover
-        .icon
-          border-color: $slider-border-hover $slider-border-light $slider-border-hover $slider-border-hover
-
-    .inner
-      .wrapper
-        display: none
+        border-color: $slider-border-hover $slider-border-light $slider-border-hover $slider-border-hover

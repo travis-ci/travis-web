@@ -8,7 +8,11 @@ Travis.Controllers = Em.Namespace.create
   BuildController:        Em.ObjectController.extend(Travis.Urls.Commit)
   JobController:          Em.ObjectController.extend(Travis.Urls.Commit)
   QueuesController:       Em.ArrayController.extend()
+  UserController:         Em.ObjectController.extend()
   HooksController:        Em.ArrayController.extend()
+
+  # TopController: Em.Controller.extend
+  #   userBinding: 'Travis.app.currentUser'
 
 require 'controllers/sponsors'
 require 'controllers/workers'

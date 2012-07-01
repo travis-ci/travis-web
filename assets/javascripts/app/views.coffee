@@ -5,9 +5,17 @@ require 'ext/ember/namespace'
   ProfileLayout: Em.View.extend(templateName: 'layouts/simple')
   StatsLayout:   Em.View.extend(templateName: 'layouts/simple')
 
-  SidebarView:   Em.View.extend(templateName: 'layouts/sidebar')
   StatsView:     Em.View.extend(templateName: 'stats/show')
-  HooksView:     Em.View.extend(templateName: 'hooks/list')
+
+  SidebarView: Em.View.extend
+    templateName: 'layouts/sidebar'
+
+    toggleSidebar: ->
+      $('body').toggleClass('maximized')
+      # TODO gotta force redraw here :/
+      element = $('<span></span>')
+      $('#repository').append(element)
+      Em.run.later (-> element.remove()), 10
 
 require 'views/build'
 require 'views/job'

@@ -2,9 +2,12 @@
   TopView: Em.View.extend
     templateName: 'layouts/top'
 
-    currentUser: (->
-      Travis.app.currentUser
-    ).property('Travis.app.currentUser')
+    # currentUser: (->
+    #   Travis.app.currentUser
+    # ).property('Travis.app.currentUser')
+
+    signInSuccess: (response) ->
+      console.log(response)
 
     gravatarUrl: (->
       "http://www.gravatar.com/avatar/#{@getPath('controller.user.gravatar')}?s=24&d=mm"
@@ -23,4 +26,9 @@
       if @getPath('controller.tab') == 'profile' then 'profile active' else 'profile'
     ).property('controller.tab')
 
+    showProfile: ->
+      $('#top .profile ul').show()
+
+    hideProfile: ->
+      $('#top .profile ul').hide()
 

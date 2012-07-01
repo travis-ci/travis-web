@@ -1,4 +1,4 @@
-describe 'The current build tab', ->
+xdescribe 'The current build tab', ->
   describe 'on the "index" state', ->
     beforeEach ->
       app ''

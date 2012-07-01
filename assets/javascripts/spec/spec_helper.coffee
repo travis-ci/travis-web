@@ -2,14 +2,12 @@ minispade.require 'app'
 
 @reset = ->
   Travis.app.destroy() if Travis.app
-  $('body #content').remove()
+  $('#content').remove()
+  $('body').append('<div id="content"></div>')
 
 @app = (url) ->
-  $('body').append('<div id="content"></div>')
-  Travis.app = Travis.App.create(rootElement: '#content')
-  Travis.app.initialize()
-  Em.routes.set('location', url)
-
-beforeEach ->
   reset()
+  Em.run ->
+    Travis.run(rootElement: $('#content'))
+    Em.routes.set('location', url)
 

@@ -23,9 +23,9 @@
   {{/if}}
 </ul>
 
-<div class="tools">
-  <a href="#"></a>
-  <div class="content">
+<div id="tools">
+  <a href="#" {{action toggleTools}}></a>
+  <div class="pane">
     <p><label>{{t repositories.branch}}:</label><select></select></p>
     <p><label>{{t repositories.image_url}}:</label><input type="text" class="url"></input></p>
     <p><label>{{t repositories.markdown}}:</label><input type="text" class="markdown"></input></p>

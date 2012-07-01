@@ -4,16 +4,15 @@ Travis.Layout.Profile = Travis.Layout.Base.extend
   name: 'profile'
 
   init: ->
-    @_super('top', 'profile', 'hooks')
+    @_super('top', 'user', 'hooks')
 
   viewShow: (params) ->
-    if @currentUser
-      @connectProfile(@currentUser)
-      @connectHooks(Travis.Hook.find())
+    @connectUser(@currentUser)
+    @connectHooks(Travis.Hook.find())
 
-  connectProfile: (user) ->
-    @profileController.connectOutlet(outletName: 'main', name: 'profile', context: user)
+  connectUser: (user) ->
+    @profileController.connectOutlet(outletName: 'main', name: 'user', context: user)
 
   connectHooks: (hooks) ->
-    @profileController.connectOutlet(outletName: 'hooks', name: 'hooks', context: hooks)
+    @userController.connectOutlet(outletName: 'hooks', name: 'hooks', context: hooks) if hooks
 

@@ -11525,6 +11525,7 @@ Ember.ControllerMixin.reopen({
     view = viewClass.create();
     if (controller) { set(view, 'controller', controller); }
 
+    /* console.log(view, view.toString()) */
     set(this, outletName, view);
 
     return view;

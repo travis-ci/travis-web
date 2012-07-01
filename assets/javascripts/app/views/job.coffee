@@ -2,6 +2,9 @@
   JobsView: Em.View.extend
     templateName: 'jobs/list'
 
+    toggleHelp: ->
+      $.facebox(div: '#allow_failure_help')
+
   JobsItemView: Em.View.extend
     color: (->
       Travis.Helpers.colorForResult(@getPath('controller.result'))

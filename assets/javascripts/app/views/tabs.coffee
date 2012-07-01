@@ -2,6 +2,9 @@
   TabsView: Em.View.extend
     templateName: 'repositories/tabs'
 
+    toggleTools: ->
+      $('#tools .pane').toggle()
+
     # hrm. how to parametrize bindAttr?
     classCurrent: (->
       'active' if @getPath('controller.tab') == 'current'

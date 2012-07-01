@@ -1,9 +1,27 @@
 @import "compass"
 
-.profile-avatar
-  @include border-radius(4px)
-
 #profile
+  a
+    text-decoration: underline
+
+  img
+    float: left
+    margin: 3px 15px 0 0
+    @include border-radius(4px)
+
+  dl
+    margin: 0 0 20px 18px
+    color: #666
+    font-size: 13px
+
+  dt
+    display: block
+    float: left
+    width: 50px
+
+  dd
+    clear: right
+
   #welcome
     margin-top: -35px
     margin-bottom: 35px
@@ -14,7 +32,9 @@
   p.notice
     background-color: #a8eb75
     padding: 10px
-
+    @include border-radius(4px)
+    a
+      text-decoration: underline
     small
       font-size: 13px
       display: block
@@ -25,18 +45,3 @@
 
   .highlight
     color: #C7371A
-
-#main
-  .profile-avatar
-    float: left
-
-  .profile
-    margin: 20px 0 30px 60px
-
-  .profile dt
-    display: block
-    float: left
-    width: 50px
-
-  .profile dd
-    clear: right
