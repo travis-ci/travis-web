@@ -1,14 +1,17 @@
 Travis.Layout.Base = Em.Object.extend
   init: ->
     @parent = @get('parent')
-    @setup(Array.prototype.slice.apply(arguments))
+    @currentUser = Travis.app.currentUser
+
+    @setup(Array.prototype.slice.apply(arguments).concat(@get('name')))
     @connect()
 
   setup: (controllers) ->
     $.extend this, Travis.Controllers
     $.extend this, Travis.Views
 
-    for name in controllers.concat(@get('name'))
+    # ember wants this kind of setup for its connectOutlets magic
+    for name in controllers
       key = "#{$.camelize(name, false)}Controller"
       name = $.camelize(key)
       klass = Travis.Controllers[name] || Em.Controller
@@ -17,11 +20,5 @@ Travis.Layout.Base = Em.Object.extend
   connect: ->
     @parent.connectOutlet
       outletName: 'layout'
-      controller: @controller()
-      viewClass: @viewClass()
-
-  controller: ->
-    this["#{$.camelize(@get('name'), false)}Controller"]
-
-  viewClass: ->
-    Travis.Views["#{$.camelize(@get('name'))}Layout"]
+      controller: this["#{$.camelize(@get('name'), false)}Controller"]
+      viewClass: Travis.Views["#{$.camelize(@get('name'))}Layout"]

@@ -45,14 +45,6 @@ workers = [
   { id: 2, name: 'ruby-2', host: 'worker.travis-ci.org', state: 'ready' }
 ]
 
-profile =
-  id: 1
-  login: 'svenfuchs'
-  name: 'Sven Fuchs'
-  email: 'me@svenfuchs.com'
-  token: '1234567890'
-  gravatar_url: 'http://www.gravatar.com/avatar/402602a60e500e85f2f5dc1ff3648ecb?s=48&d=mm'
-
 hooks = [
   { slug: 'travis-ci/travis-core', description: 'description of travis-core', active: true, private: false }
   { slug: 'travis-ci/travis-assets', description: 'description of travis-assets', active: false, private: false }
@@ -114,11 +106,6 @@ $.mockjax
   responseTime: responseTime
   responseText:
     jobs: $.select(jobs, (job) -> job.state == 'created')
-
-$.mockjax
-  url: '/profile'
-  responseTime: responseTime
-  responseText: { profile: profile }
 
 $.mockjax
   url: '/profile/hooks'

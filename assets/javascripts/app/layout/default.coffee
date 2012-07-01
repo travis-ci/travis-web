@@ -4,7 +4,8 @@ Travis.Layout.Default = Travis.Layout.Base.extend
   name: 'default'
 
   init: ->
-    @_super('repositories', 'repository', 'tabs', 'build', 'job')
+    @_super('top', 'repositories', 'repository', 'tabs', 'build', 'job')
+    @connectHead(@currentUser)
     @connectLeft(Travis.Repository.find())
     Travis.Layout.Sidebar.create(defaultController: @get('defaultController'))
 
@@ -58,6 +59,10 @@ Travis.Layout.Default = Travis.Layout.Base.extend
     onceLoaded job, =>
       callback(job)
 
+
+  connectHead: (user)->
+    @defaultController.connectOutlet(outletName: 'top', name: 'top')
+    @topController.set('user', user)
 
   connectLeft: (repositories) ->
     @repositories = repositories

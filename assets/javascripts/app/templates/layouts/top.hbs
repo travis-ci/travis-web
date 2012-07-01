@@ -1,0 +1,27 @@
+<a href="#"><h1>Travis</h1></a>
+
+<ul id="navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/stats">Stats</a></li>
+  <li><a href="http://about.travis-ci.org/blog">Blog</a></li>
+  <li><a href="http://about.travis-ci.org/docs">Docs</a></li>
+</ul>
+
+<div class="profile">
+  {{#if user}}
+    <img {{bindAttr src="user.gravatarUrl"}}>
+    <span class="name">{{user.name}}</span>
+    <ul>
+      <li>
+        <a href="#!/profile">{{t layouts.top.profile}}</a>
+      </li>
+      <li>
+        <a {{action signOut}}>{{t layouts.top.sign_out}}</a>
+      </li>
+    </ul>
+  {{else}}
+    <a {{action signin}}>{{t layouts.top.github_login}}</a>
+  {{/if}}
+</div>
+
+
