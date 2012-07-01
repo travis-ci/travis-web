@@ -1,8 +1,8 @@
 {{#unless isLoaded}}
   Loading ...
 {{else}}
-  <div id="build" {{bindAttr class="classes"}}>
-    <dl class="summary clearfix">
+  <div id="build" {{bindAttr class="view.color"}}>
+    <dl id="summary">
       <div class="left">
         <dt>{{t builds.name}}</dt>
         <dd class="number"><a {{bindAttr href="view.urlBuild"}}>{{number}}</a></dd>

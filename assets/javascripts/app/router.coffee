@@ -1,14 +1,15 @@
 Travis.Router = Em.Object.extend
   ROUTES:
-    '!/profile':                     ['Profile', 'show']
-    '!/:owner/:name/jobs/:id/:line': ['Default', 'job']
-    '!/:owner/:name/jobs/:id':       ['Default', 'job']
-    '!/:owner/:name/builds/:id':     ['Default', 'build']
-    '!/:owner/:name/builds':         ['Default', 'builds']
-    '!/:owner/:name/pull_requests':  ['Default', 'pullRequests']
-    '!/:owner/:name/branch_summary': ['Default', 'branches']
-    '!/:owner/:name':                ['Default', 'current']
-    '':                              ['Default', 'index']
+    '!/profile':                     ['profile', 'show']
+    '!/stats':                       ['stats', 'show']
+    '!/:owner/:name/jobs/:id/:line': ['home', 'job']
+    '!/:owner/:name/jobs/:id':       ['home', 'job']
+    '!/:owner/:name/builds/:id':     ['home', 'build']
+    '!/:owner/:name/builds':         ['home', 'builds']
+    '!/:owner/:name/pull_requests':  ['home', 'pullRequests']
+    '!/:owner/:name/branch_summary': ['home', 'branches']
+    '!/:owner/:name':                ['home', 'current']
+    '':                              ['home', 'index']
 
   init: ->
     @app = @get('app')
@@ -20,6 +21,7 @@ Travis.Router = Em.Object.extend
     Em.routes.add route, (params) =>
       @action(layout, action, params)
 
-  action: (layout, action, params) ->
-    layout = Travis.Layout.instance(layout, @app.controller)
-    layout["view#{$.camelize(action)}"](params)
+  action: (name, action, params) ->
+    layout = Travis.Layout.instance(name, @app.controller)
+    layout.activate(action, params)
+    $('body').attr('id', name)

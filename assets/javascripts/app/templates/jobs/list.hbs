@@ -1,5 +1,5 @@
 {{#if view.jobs.length}}
-  <table id="jobs">
+  <table id="jobs" class="list">
     <caption>
       {{#if view.required}}
         {{t jobs.build_matrix}}
@@ -17,8 +17,8 @@
     <tbody>
       {{#each job in view.jobs}}
         {{#view Travis.Views.JobsItemView contextBinding="job"}}
-          <tr {{bindAttr class="color"}}>
-            <td class="number"><a {{bindAttr href="view.urlJob"}}>#{{number}}</a></td>
+          <tr {{bindAttr class="view.color"}}>
+            <td class="number"><a {{bindAttr href="view.urlJob"}}>{{number}}</a></td>
             <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
             <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
             {{#each configValues}}

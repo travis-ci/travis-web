@@ -1,0 +1,24 @@
+@import "compass"
+
+body#home
+  background: inline-image('ui/background-left.png') repeat-y -27px top
+
+#left
+  position: absolute
+  top: 40px
+  width: 400px
+
+  #search_box
+    height: 90px
+    padding: 30px 20px 0 20px
+    background-color: #e5e8ee
+
+    input[type=text]
+      height: 28px
+      width: 97%
+      padding: 0 0 0 10px
+      font-size: 10pt
+      color: #666
+      border: 1px solid #ddd
+      @include border-radius(4px)
+      background: #fff inline-image('icons/search.png') no-repeat 335px 8px

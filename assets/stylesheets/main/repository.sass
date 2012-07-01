@@ -1,0 +1,107 @@
+@import "compass"
+
+#repository
+  position: relative
+
+  h3
+    margin: 15px 60px 0 0
+    a
+      font-size: 24px
+      line-height: 24px
+
+  a
+    color: #666
+    text-decoration: underline
+
+  .description, .language
+    font-weight: normal
+    font-size: 13px
+    color: #999
+
+  .sync
+    font-weight: normal
+    font-size: 13px
+    color: #999
+    float: left
+    padding-right: 25px
+
+  .language
+    padding-right: 5px
+
+  .github-stats
+    position: absolute
+    top: 0
+    right: 0
+    z-index: 110
+    > *
+      float: left
+    a
+      height: 16px
+      display: block
+      font-size: 12px
+      font-weight: bold
+      text-decoration: none
+      margin-left: 10px
+      padding-left: 20px
+      background: no-repeat 0px 2px
+      color: #999
+      &.watchers
+        background-image: inline-image('icons/github-watchers.png')
+      &.forks
+        background-image: inline-image('icons/github-forks.png')
+
+  .github-admin
+    display: none
+    position: absolute
+    top: 0
+    right: 0
+    width: 0px
+    height: 16px
+    padding-right: 20px
+    font-size: 11px
+    text-decoration: none
+    text-align: right
+    color: #999
+    text-indent: -999px
+    overflow: hidden
+    z-index: 60
+
+    &:hover
+      width: 100px
+      text-indent: 0
+
+  .tools
+    position: relative
+    display: block
+    float: right
+    width: 39px
+    height: 21px
+    margin-top: -27px
+    background: inline-image('ui/tools-button.png') no-repeat
+    cursor: pointer
+
+    .content
+      display: none
+      z-index: 1000
+      position: absolute
+      top: 26px
+      right: 0
+      width: 600px
+      padding: 10px 20px
+      border: 1px solid #CCC
+      background-color: #F2F4F9
+      font-size: 80%
+      color: #666
+      @include border-bottom-radius(4px)
+
+      p
+        margin: 10px 0
+        label
+          width: 80px
+          display: inline-block
+        input
+          border: 1px solid #DDD
+          width: 510px
+          padding: 4px
+          @include border-radius(3px)
+

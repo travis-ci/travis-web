@@ -1,27 +1,40 @@
-<a href="#"><h1>Travis</h1></a>
+<a href="#">
+  <h1>Travis</h1>
+</a>
 
 <ul id="navigation">
-  <li><a href="/">Home</a></li>
-  <li><a href="/stats">Stats</a></li>
-  <li><a href="http://about.travis-ci.org/blog">Blog</a></li>
-  <li><a href="http://about.travis-ci.org/docs">Docs</a></li>
+  <li {{bindAttr class="view.classHome"}}>
+    <a href="#">Home</a>
+  </li>
+  <li {{bindAttr class="view.classStats"}}>
+    <a href="#!/stats">Stats</a>
+  </li>
+  <li>
+    <a href="http://about.travis-ci.org/blog">Blog</a>
+  </li>
+  <li>
+    <a href="http://about.travis-ci.org/docs">Docs</a>
+  </li>
+  <li {{bindAttr class="view.classProfile"}}>
+    {{#if user}}
+      <a href="#" class="name">
+        <img {{bindAttr src="view.gravatarUrl"}}>
+        {{user.name}}
+      </a>
+      <ul>
+        <li>
+          <a href="#!/profile">{{t layouts.top.profile}}</a>
+        </li>
+        <li>
+          <a {{action signOut}}>{{t layouts.top.sign_out}}</a>
+        </li>
+      </ul>
+    {{else}}
+      <a {{action signin}}>{{t layouts.top.github_login}}</a>
+    {{/if}}
+  </li>
 </ul>
 
-<div class="profile">
-  {{#if user}}
-    <img {{bindAttr src="user.gravatarUrl"}}>
-    <span class="name">{{user.name}}</span>
-    <ul>
-      <li>
-        <a href="#!/profile">{{t layouts.top.profile}}</a>
-      </li>
-      <li>
-        <a {{action signOut}}>{{t layouts.top.sign_out}}</a>
-      </li>
-    </ul>
-  {{else}}
-    <a {{action signin}}>{{t layouts.top.github_login}}</a>
-  {{/if}}
+<div id="github">
+  <a href="https://github.com/travis-ci" title="Fork me on GitHub">{{t layouts.application.fork_me}}</a>
 </div>
-
-

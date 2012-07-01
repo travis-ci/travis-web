@@ -32,7 +32,7 @@ require 'ext/jquery'
 
       @store = Travis.Store.create()
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
-      @store.load(Travis.User, { id: 1, login: 'svenfuchs', name: 'Sven Fuchs', email: 'me@svenfuchs.com', token: '1234567890', gravatar_url: 'http://www.gravatar.com/avatar/402602a60e500e85f2f5dc1ff3648ecb?s=48&d=mm' })
+      @store.load(Travis.User, { id: 1, login: 'svenfuchs', name: 'Sven Fuchs', email: 'me@svenfuchs.com', token: '1234567890', gravatar: '402602a60e500e85f2f5dc1ff3648ecb' })
 
       @currentUser = Travis.User.find(1)
 

@@ -2,6 +2,23 @@
   TabsView: Em.View.extend
     templateName: 'repositories/tabs'
 
+    # hrm. how to parametrize bindAttr?
+    classCurrent: (->
+      'active' if @getPath('controller.tab') == 'current'
+    ).property('controller.tab')
+
+    classBuilds: (->
+      'active' if @getPath('controller.tab') == 'builds'
+    ).property('controller.tab')
+
+    classBuild: (->
+      'active' if @getPath('controller.tab') == 'build'
+    ).property('controller.tab')
+
+    classJob: (->
+      'active' if @getPath('controller.tab') == 'job'
+    ).property('controller.tab')
+
     urlRepository: (->
       Travis.Urls.repository(@getPath('controller.repository'))
     ).property('controller.repository.id')

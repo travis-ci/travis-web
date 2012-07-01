@@ -1,0 +1,34 @@
+@import "compass"
+
+#top
+  #github
+    position: absolute
+    z-index: 100
+    top: 0px
+    right: 0px
+    width: 130px
+    height: 140px
+    overflow: hidden
+
+    a
+      z-index: 100
+      display: block
+      width: 250px
+      margin: 40px 0 0 -50px
+      padding: 3px 0
+      border-top: 2px solid #ef9f4c
+      border-bottom: 2px solid #ef9f4c
+      background: #ef7600
+
+      color: white
+      text-align: center
+      text-decoration: none
+      font-size: 13px
+      font-weight: bold
+      line-height: 19px
+      letter-spacing: -1px
+      text-shadow: 0 0 10px #522600
+
+      @include rotate(45deg)
+      @include box-shadow(rgba(black, 0.5) 1px 1px 10px, rgba(black, 0.07) 0 0 3px 1px inset)
+

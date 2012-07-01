@@ -3,7 +3,7 @@
     templateName: 'builds/list'
 
   BuildsItemView: Em.View.extend
-    classes: (->
+    color: (->
       Travis.Helpers.colorForResult(@getPath('context.result'))
     ).property('context.result')
 
@@ -14,17 +14,17 @@
   BuildView: Em.View.extend
     templateName: 'builds/show'
 
-    classes: (->
-      Travis.Helpers.colorForResult(@get('result'))
-    ).property('result')
+    color: (->
+      Travis.Helpers.colorForResult(@getPath('controller.content.result'))
+    ).property('controller.content.result')
 
     requiredJobs: (->
-      @getPath('context.jobs').filter((job) -> job.get('allow_failure') != true)
-    ).property() # TODO same here with binding to 'context.data.job_ids'
+      @getPath('controller.content.jobs').filter((job) -> job.get('allow_failure') != true)
+    ).property('controller.content') # TODO same here with binding to 'context.data.job_ids'
 
     allowedFailureJobs: (->
-      @getPath('context.jobs').filter((job) -> job.get('allow_failure'))
-    ).property()
+      @getPath('controller.content.jobs').filter((job) -> job.get('allow_failure'))
+    ).property('controller.content')
 
     urlBuild: (->
       Travis.Urls.build(@getPath('context.repository'), @get('context'))

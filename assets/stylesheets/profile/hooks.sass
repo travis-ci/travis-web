@@ -1,0 +1,66 @@
+@import "compass"
+
+#hooks ul
+  // @include list-base
+  margin-top: 10px
+
+  li
+    position: relative
+    height: 19px
+    padding: 10px
+    white-space: nowrap
+    overflow: hidden
+
+    > a
+      float: left
+      font-size: 16px
+      color: #666
+      text-decoration: none
+
+    .description
+      display: none
+      margin-left: 10px
+      font-size: 12px
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      color: #999
+
+    .controls
+      position: absolute
+      top: 10px
+      right: 0
+      white-space: nowrap
+      background: #fff
+      a
+        float: left
+        display: block
+
+      .github-admin
+        // Overriding an earlier definition above, which is probably
+        // obsolete. TODO: Remove if so.
+        position: relative
+        height: 20px
+        width: 20px
+        padding-right: 0
+        background: inline-image('icons/github-admin.png') no-repeat 3px 4px
+
+      .switch
+        height: 20px
+        width: 80px
+        margin-left: 10px
+        background: inline-image('ui/off.png') no-repeat
+        cursor: pointer
+        &.active
+          background: inline-image('ui/on.png') no-repeat
+
+    &:nth-child(odd) .controls
+      background: #fafbfc
+
+    &:hover
+      > a
+        color: #c7371a
+
+      .description
+        display: inline
+

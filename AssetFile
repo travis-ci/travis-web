@@ -3,6 +3,9 @@
 # http://blog.nulayer.com/post/23294069876/building-simple-javascript-libraries-with-rake-pipeline?15bb0420
 
 require 'rake-pipeline-web-filters'
+require 'compass'
+
+Compass.configuration.images_path = 'assets/images'
 
 output 'public/javascripts'
 input 'assets/javascripts' do
@@ -66,14 +69,15 @@ end
 
 output 'public/stylesheets'
 input 'assets/stylesheets' do
-  match '**/*.scss' do
-    filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
-      input.sub /\.scss$/, 'css'
-    end
+  match '**/*.{scss,sass}' do
+    # filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
+    #     input.sub /\.scss$/, '.css'
+    #   end
+    filter Rake::Pipeline::Web::Filters::SassFilter
   end
 
   match '**/*.css' do
-    copy
+    concat 'application.css'
   end
 end
 

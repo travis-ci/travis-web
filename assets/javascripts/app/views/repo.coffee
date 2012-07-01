@@ -4,11 +4,16 @@
 
   RepositoriesItemView: Em.View.extend
     classes: (->
-      color   = Travis.Helpers.colorForResult(@getPath('repository.lastBuildResult'))
-      classes = ['repository', color]
-      classes.push 'selected' if @getPath('repository.selected')
-      classes.join(' ')
-    ).property('repository.lastBuildResult', 'repository.selected')
+      $.compact(['repository', @get('color'), @get('selected')]).join(' ')
+    ).property('context.lastBuildResult', 'context.selected')
+
+    color: (->
+      Travis.Helpers.colorForResult(@getPath('context.lastBuildResult'))
+    ).property('context.lastBuildResult')
+
+    selected: (->
+      'selected' if @getPath('context.selected')
+    ).property('context.selected')
 
     urlRepository: (->
       Travis.Urls.repository(@get('context'))

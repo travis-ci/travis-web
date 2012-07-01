@@ -1,0 +1,53 @@
+@import "compass"
+
+#repositories li,
+#summary .number a,
+table.list .number a
+  background-image: inline-image('icons/status.yellow.png')
+  background-repeat: no-repeat
+
+#repositories li.green,
+.green #summary .number a,
+table.list .green .number a
+  background-image: inline-image('icons/status.green.png')
+  color: green
+  background-repeat: no-repeat
+
+#repositories li.red,
+.red #summary .number a,
+table.list .red .number a
+  background-image: inline-image('icons/status.red.png')
+  color: #c00
+  background-repeat: no-repeat
+
+#summary .number a,
+table.list .number a
+  padding-left: 20px
+
+table.list
+  tbody
+    tr.allow-failure
+      background-color: #BDBDBD
+    td
+      cursor: pointer
+      background-color: #fffffa
+    tr:hover td
+      background-color: #ffffe1
+
+  .green
+    td
+      background-color: #fafffa
+    &:hover td
+      background-color: #dcffdc
+    .number a
+      color: green
+
+  .red
+    td
+      background-color: #fffafa
+    &:hover td
+      background-color: #ffdcdc
+    .number a
+      color: #C00
+
+

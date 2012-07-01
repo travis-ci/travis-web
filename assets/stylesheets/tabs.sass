@@ -1,0 +1,51 @@
+@import "compass"
+
+.tabs
+  height: 29px
+  border-bottom: 1px solid #ccc
+
+  li
+    display: inline-block
+    height: 28px
+    margin-right: 10px
+    background-color: #f6f6f6
+    border: 1px solid #ccc
+    white-space: nowrap
+    cursor: pointer
+    @include border-top-radius(4px)
+
+    &:hover
+      background-color: white
+
+  .active
+    background-color: #fff
+    border-bottom-color: #fff
+
+  h5
+    margin: 0
+
+  h5 a
+    display: block
+    padding: 0 10px
+    line-height: 30px
+    font-size: 13px
+    font-weight: normal
+
+#left
+  .tabs
+    margin-top: -29px
+
+    li:first-child
+      margin-left: 20px
+
+  #tab_search:not(.active)
+    display: none
+
+#main
+  .tabs
+    margin-top: 35px
+    a
+      text-decoration: none
+
+  .tab
+    margin-top: 20px

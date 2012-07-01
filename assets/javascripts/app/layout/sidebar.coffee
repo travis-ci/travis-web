@@ -5,7 +5,7 @@ Travis.Layout.Sidebar = Travis.Layout.Base.extend
 
   init: ->
     @_super('sponsors', 'workers', 'queues')
-    @defaultController = @get('defaultController')
+    @homeController = @get('homeController')
 
     @connectSponsors(Travis.Sponsor.decks(), Travis.Sponsor.links())
     @connectWorkers(Travis.Worker.find())
@@ -14,13 +14,13 @@ Travis.Layout.Sidebar = Travis.Layout.Base.extend
     Travis.Ticker.create(target: this, interval: Travis.INTERVALS.sponsors)
 
   connect: ->
-    @defaultController.connectOutlet(outletName: 'right', name: 'sidebar')
+    @homeController.connectOutlet(outletName: 'right', name: 'sidebar')
 
   connectSponsors: (decks, links) ->
     @sponsorsController = Em.Controller.create
       decks: Travis.Controllers.SponsorsController.create(perPage: 1, content: decks)
       links: Travis.Controllers.SponsorsController.create(perPage: 6, content: links)
-    @defaultController.set 'sponsors', @sponsorsController
+    @homeController.set 'sponsors', @sponsorsController
 
   tick: ->
     @sponsorsController.get('decks').next()
@@ -28,7 +28,7 @@ Travis.Layout.Sidebar = Travis.Layout.Base.extend
 
   connectWorkers: (workers) ->
     @workersController.set('content', workers)
-    @defaultController.set('workers', @workersController)
+    @homeController.set('workers', @workersController)
 
   connectQueues: (queues) ->
     queues = for queue in queues
@@ -36,5 +36,5 @@ Travis.Layout.Sidebar = Travis.Layout.Base.extend
         content: Travis.Job.queued(queue.name)
         name: queue.display
     @queuesController.set('content', queues)
-    @defaultController.set('queues', @queuesController)
+    @homeController.set('queues', @queuesController)
 

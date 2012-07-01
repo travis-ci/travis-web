@@ -17,8 +17,21 @@ Travis.Layout.Base = Em.Object.extend
       klass = Travis.Controllers[name] || Em.Controller
       this[key] = klass.create(namespace: this, controllers: this)
 
+    @controller = this["#{$.camelize(@get('name'), false)}Controller"]
+    @viewClass = Travis.Views["#{$.camelize(@get('name'))}Layout"]
+
   connect: ->
     @parent.connectOutlet
       outletName: 'layout'
-      controller: this["#{$.camelize(@get('name'), false)}Controller"]
-      viewClass: Travis.Views["#{$.camelize(@get('name'))}Layout"]
+      controller: @controller
+      viewClass: @viewClass
+    @connectTop()
+
+  connectTop: ->
+    @controller.connectOutlet(outletName: 'top', name: 'top')
+    @topController.set('user', @currentUser)
+    @topController.set('tab', @get('name'))
+
+  activate: (action, params) ->
+    this["view#{$.camelize(action)}"](params)
+
