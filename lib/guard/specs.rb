@@ -4,9 +4,9 @@ require 'guard'
 require 'guard/guard'
 
 module Guard
-  class Assets < Guard
+  class Specs < Guard
     def start
-      UI.info "Guard::Assets is running."
+      UI.info "Guard::Specs is running."
       run
     end
 
@@ -26,7 +26,7 @@ module Guard
     private
 
       def run
-        system 'bundle exec rakep'
+        system './run_jasmine.coffee public/spec.html'
       end
   end
 end
