@@ -1,0 +1,18 @@
+{{#if content.length}}
+  <ul id="hooks">
+  {{#each content}}
+    <li {{bindAttr class="active"}}>
+      <a {{bindAttr href="urlGithub"}} rel="nofollow">{{owner}}/{{name}}</a>
+      <p class="description">{{description}}</p>
+
+      <div class="controls">
+        <a {{bindAttr href="urlGithubAdmin"}} class="github-admin tool-tip" title="Github service hooks admin page"></a>
+        <a {{action toggle}} class="switch"></a>
+      </div>
+    </li>
+  {{/each}}
+  </ul>
+{{else}}
+  <p class="sync">Please wait while we sync with GitHub</p>
+{{/if}}
+

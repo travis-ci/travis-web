@@ -3,9 +3,6 @@ require 'ext/ember/bound_helper'
 safe = (string) ->
   new Handlebars.SafeString(string)
 
-Handlebars.registerHelper 'whats_this', (id) ->
-  safe '<span title="What\'s This?" class="whats_this" onclick="$.facebox({ div: \'#' + id + '\'})">&nbsp;</span>'
-
 Handlebars.registerHelper 'tipsy', (text, tip) ->
   safe '<span class="tool-tip" original-title="' + tip + '">' + text + '</span>'
 

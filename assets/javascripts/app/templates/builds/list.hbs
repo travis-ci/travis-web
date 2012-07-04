@@ -1,4 +1,4 @@
-<table id="builds">
+<table id="builds" class="list">
   <thead>
     <tr>
       <th>{{t builds.name}}</th>
@@ -12,8 +12,8 @@
   <tbody>
     {{#each build in content}}
       {{#view Travis.Views.BuildsItemView contextBinding="build"}}
-        <tr>
-          <td class="number"><a {{action viewBuild href=true}}>{{number}}</a></td>
+        <tr {{bindAttr class="view.color"}}>
+          <td class="number"><a {{bindAttr href="view.urlBuild"}}>{{number}}</a></td>
           <td class="commit"><a {{bindAttr href="view.urlGithubCommit"}}>{{formatCommit commit}}</a></td>
           <td class="message">{{{formatMessage commit.message short="true"}}}</td>
           <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>

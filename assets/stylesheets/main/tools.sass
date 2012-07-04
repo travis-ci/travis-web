@@ -1,0 +1,40 @@
+@import "compass"
+
+#tools
+  position: relative
+  float: right
+  a
+    display: block
+    width: 39px
+    height: 21px
+    margin-top: -27px
+    background: inline-image('ui/tools-button.png') no-repeat
+    cursor: pointer
+
+  .pane
+    display: none
+    position: absolute
+    z-index: 400
+    top: -1px
+    right: 0
+    width: 600px
+    padding: 10px 20px
+    border: 1px solid #CCC
+    background-color: #F2F4F9
+    font-size: 80%
+    color: #666
+    @include border-bottom-radius(4px)
+    @include single-box-shadow(rgba(black, 0.1), 1px, 3px, 5px)
+
+    p
+      margin: 10px 0
+      label
+        width: 80px
+        display: inline-block
+      input
+        border: 1px solid #DDD
+        width: 510px
+        padding: 4px
+        @include border-radius(3px)
+
+

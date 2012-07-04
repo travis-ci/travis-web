@@ -1,11 +1,9 @@
-{{#if content.lastObject.isLoaded}}
-  <ul id="repositories">
-    {{#each repository in content}}
-      {{#view Travis.Views.RepositoriesItemView tagName="li" classBinding="classes" contextBinding="repository"}}
-        <div class="wrapper">
-          <a {{action viewCurrent href=true}} class="current">{{slug}}</a>
-          <a {{action viewBuild href=true context="view.lastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
-        </div>
+<ul id="repositories">
+  {{#each repository in content}}
+    {{#view Travis.Views.RepositoriesItemView contextBinding="repository"}}
+      <li {{bindAttr class="view.classes"}}>
+        <a {{bindAttr href="view.urlRepository"}} class="current">{{slug}}</a>
+        <a {{bindAttr href="view.urlLastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
 
         <p class="summary">
           <span class="duration_label">{{t repositories.duration}}:</span>
@@ -17,7 +15,11 @@
           <p class="description">{{description}}</p>
         {{/if}}
         <span class="indicator"></span>
-      {{/view}}
-    {{/each}}
-  <ul>
-{{/if}}
+      </li>
+    {{/view}}
+  {{else}}
+    <li class="loading">
+      <p>Loading</p>
+    </li>
+  {{/each}}
+<ul>

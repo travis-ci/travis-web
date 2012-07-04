@@ -1,0 +1,78 @@
+@import "compass"
+
+#top
+  color: #ccc
+  width: 100%
+  line-height: 40px
+  font-size: 13px
+  @include background(linear-gradient(#444, #111))
+
+  h1
+    float: left
+    width: 73px
+    height: 30px
+    margin: 4px 40px 0 22px
+    text-indent: -9999px
+    background: inline-image('ui/logo.png') no-repeat
+
+  ul
+    list-style-type: none
+
+  a
+    color: #ccc
+    text-decoration: none
+
+#navigation
+  li
+    display: inline-block
+
+    &.active
+      background-color: black
+      a
+        color: white
+
+    a
+      display: block
+      padding: 0 15px
+      &:hover
+        color: white
+
+  .profile
+    position: relative
+    float: right
+    margin-right: 120px
+
+    img
+      position: absolute
+      top: 7px
+      left: 12px
+      @include border-radius(3px)
+
+    a
+      padding: 0 35px 0 45px
+
+    ul
+      display: none
+      position: absolute
+      z-index: 300
+      top: 40px
+      width: 100%
+      background-color: #444
+      @include border-bottom-radius(6px)
+      @include single-box-shadow(rgba(black, 0.3), 2px, 2px, 10px)
+
+      li
+        display: block
+
+      li:last-child a:hover
+        @include border-bottom-radius(4px)
+
+      a
+        display: block
+        padding: 5px 35px 5px 45px
+        line-height: 24px
+        white-space: nowrap
+        &:hover
+          background-color: #555
+
+

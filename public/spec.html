@@ -7,21 +7,20 @@
     <link rel="stylesheet" href="stylesheets/jasmine.css">
 
     <script src="javascripts/vendor.js"></script>
-    <script src="javascripts/mocks.js"></script>
     <script src="javascripts/application.js"></script>
     <script src="javascripts/specs/vendor.js"></script>
     <script src="javascripts/specs/specs.js"></script>
   </head>
   <body>
-    <div id="content"></div>
     <script>
+      minispade.require('mocks')
+
       for(key in minispade.modules)
         if(key.match(/_spec$/))
           minispade.require(key);
 
       var console_reporter = new jasmine.ConsoleReporter()
       jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-      // jasmine.getEnv().addReporter(console_reporter);
       jasmine.getEnv().execute();
     </script>
   </body>

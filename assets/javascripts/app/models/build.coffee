@@ -34,10 +34,9 @@ require 'travis/model'
   ).property('data.job_ids.length')
 
   configKeys: (->
-    config = @get('config')
-    return [] unless config
-    keys = $.keys($.only(config, 'rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala'))
-    headers = [I18n.t('build.job'), I18n.t('build.duration'), I18n.t('build.finished_at')]
+    return [] unless config = @get('config')
+    keys = $.intersect($.keys(config), Travis.CONFIG_KEYS)
+    headers = (I18n.t(key) for key in ['build.job', 'build.duration', 'build.finished_at'])
     $.map(headers.concat(keys), (key) -> return $.camelize(key))
   ).property('config')
 

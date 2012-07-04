@@ -1,0 +1,33 @@
+@import "compass"
+
+table.list
+  width: 100%
+  margin: 25px 0 0 0
+  border-spacing: 0
+
+  caption
+    margin-left: 12px
+    margin-bottom: 8px
+
+  tr
+    max-height: 20px
+
+  th
+    font-size: 13px
+    color: #666
+    white-space: nowrap
+    border-bottom: 2px solid white
+
+  td
+    white-space: nowrap
+    border-bottom: 2px solid white
+    &.message
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: normal
+
+  td:first-child
+    @include border-left-radius(4px)
+
+  td:last-child
+    @include border-right-radius(4px)

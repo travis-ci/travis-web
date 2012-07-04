@@ -40,29 +40,28 @@ $.fn.extend
 $.extend
   keys: (obj) ->
     keys = []
-    $.each obj, (key) ->
-      keys.push key
-
+    $.each obj, (key) -> keys.push key
     keys
 
   values: (obj) ->
     values = []
-    $.each obj, (key, value) ->
-      values.push value
-
+    $.each obj, (key, value) -> values.push value
     values
 
+  underscore: (string) ->
+    string[0].toLowerCase() + string.substring(1).replace /([A-Z])?/g, (match, chr) ->
+      if chr then "_#{chr.toUpperCase()}" else ''
+
   camelize: (string, uppercase) ->
-    string = $.capitalize(string)  if uppercase or typeof uppercase is 'undefined'
+    string = if uppercase == false then $.underscore(string) else $.capitalize(string)
     string.replace /_(.)?/g, (match, chr) ->
-      (if chr then chr.toUpperCase() else '')
+      if chr then chr.toUpperCase() else ''
 
   capitalize: (string) ->
     string[0].toUpperCase() + string.substring(1)
 
   compact: (array) ->
-    $.grep array, (value) ->
-      !!value
+    $.grep array, (value) -> !!value
 
   all: (array, callback) ->
     args = Array::slice.apply(arguments)
@@ -121,6 +120,10 @@ $.extend
       result[key] = object[key]  if keys.indexOf(key) is -1
     result
 
+  intersect: (array, other) ->
+    array.filter (element) ->
+      other.indexOf(element) != -1
+
   map: (elems, callback, arg) ->
     value = undefined
     key = undefined
@@ -138,6 +141,16 @@ $.extend
         value = callback(elems[key], key, arg)
         ret[ret.length] = value  if value?
     ret.concat.apply [], ret
+
+  shuffle: (array) ->
+    array = array.slice()
+    top = array.length
+    while top && --top
+      current = Math.floor(Math.random() * (top + 1))
+      tmp = array[current]
+      array[current] = array[top]
+      array[top] = tmp
+    array
 
   truncate: (string, length) ->
     if string.length > length then string.trim().substring(0, length) + '...' else string

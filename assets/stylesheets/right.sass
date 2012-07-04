@@ -1,0 +1,48 @@
+@import "compass"
+
+#right
+  position: absolute
+  display: block
+  top: 0
+  right: 0
+  min-height: 100%
+  width: 205px
+  padding: 20px 20px 20px 10px
+  background-color: #f2f4f9
+  border-bottom: 1px solid #ccc
+  font-size: 13px
+  // @include transition(width .1s ease-out)
+
+  h4
+    margin: 25px 0 0 0
+
+  ul
+    margin-top: 10px
+
+  .box
+    margin-top: 25px
+    padding: 15px
+    border: 1px solid #ccc
+    background-color: #fff
+    @include border-radius(4px)
+
+    h4
+      margin: 0
+    a
+      text-decoration: underline
+    li
+      list-style-type: square
+      margin-left: 15px
+
+  #alpha_warning
+    background-color: #ffffda
+
+  #alpha_warning h4
+    padding-left: 20px
+    background: inline-image('icons/construction.png') no-repeat top left
+
+  #alpha_warning p
+    margin-bottom: 0
+    color: #666
+
+

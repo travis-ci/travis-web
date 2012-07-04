@@ -1,0 +1,38 @@
+<a href="#">
+  <h1>Travis</h1>
+</a>
+
+<ul id="navigation">
+  <li {{bindAttr class="view.classHome"}}>
+    <a href="#">Home</a>
+  </li>
+  <li {{bindAttr class="view.classStats"}}>
+    <a href="#!/stats">Stats</a>
+  </li>
+  <li>
+    <a href="http://about.travis-ci.org/blog">Blog</a>
+  </li>
+  <li>
+    <a href="http://about.travis-ci.org/docs">Docs</a>
+  </li>
+  {{#if user}}
+    <li {{bindAttr class="view.classProfile"}} {{action hideProfile on="mouseLeave"}}>
+      <a href="#!/profile" class="name" {{action showProfile on="mouseEnter"}}>
+        <img {{bindAttr src="view.gravatarUrl"}}>
+        {{user.name}}
+      </a>
+      <ul>
+        <li>
+          <a href="#!/profile">{{t layouts.top.profile}}</a>
+        </li>
+        <li>
+          <a {{action signOut}}>{{t layouts.top.sign_out}}</a>
+        </li>
+      </ul>
+    </li>
+  {{else}}
+    <li {{bindAttr class="view.classProfile"}}>
+      <a href="#" {{action signIn}}>{{t layouts.top.github_login}}</a>
+    </li>
+  {{/if}}
+</ul>

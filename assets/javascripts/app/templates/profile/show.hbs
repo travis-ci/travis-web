@@ -1,0 +1,46 @@
+<h2>{{name}}</h2>
+<img {{bindAttr src="view.gravatarUrl"}}>
+
+<dl class="profile">
+  <dt>
+    {{t profiles.show.github}}:
+  </dt>
+  <dd>
+    <a {{bindAttr href="urlGithub"}}>{{login}}</a>
+  </dd>
+  <dt>
+    {{t profiles.show.email}}:
+  </dt>
+  <dd>
+    {{email}}
+  </dd>
+  <dt>
+    {{t profiles.show.token}}:
+  </dt>
+  <dd>
+    {{token}}
+  </dd>
+</dl>
+
+<p class="notice">
+  {{{t profiles.show.messages.notice}}}
+</p>
+
+<h4>{{t profiles.show.your_locale}}</h4>
+<form>
+  <select name="user[locale]">
+  </select>
+  <button name="commit">
+    {{t profiles.show.update_locale}}
+  </button>
+</form>
+
+<h4>{{t profiles.show.your_repos}}</h4>
+<p class="tip">
+  {{{t profiles.show.message.your_repos}}}
+  <a href="http://about.travis-ci.org/docs/user/build-configuration">
+    {{{t profiles.show.message.config}}}
+  </a>
+</p>
+
+{{outlet hooks}}

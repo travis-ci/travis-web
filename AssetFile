@@ -3,6 +3,9 @@
 # http://blog.nulayer.com/post/23294069876/building-simple-javascript-libraries-with-rake-pipeline?15bb0420
 
 require 'rake-pipeline-web-filters'
+require 'compass'
+
+Compass.configuration.images_path = 'assets/images'
 
 output 'public/javascripts'
 input 'assets/javascripts' do
@@ -15,12 +18,14 @@ input 'assets/javascripts' do
       vendor/ember-data.js
       vendor/ansiparse.js
       vendor/i18n.js
+      vendor/facebox.js
       vendor/jquery.timeago.js
+      vendor/sc-routes.js
     )
     concat files, 'vendor.js'
   end
 
-  match '{app,config,lib}/**/*.coffee' do
+  match '{app,config,data,lib}/**/*.coffee' do
     coffee_script
   end
 
@@ -33,16 +38,12 @@ input 'assets/javascripts' do
     concat 'app/templates.js'
   end
 
-  match 'mocks.js' do
-    concat 'mocks.js'
-  end
-
-  match '{app,config,lib}/**/*.js' do
+  match '{app,config,data,lib}/**/*.js' do
     minispade(
       string: true,
       rewrite_requires: true,
       module_id_generator: proc { |input|
-        input.path.sub(%r(^(app|config|lib)/), '').sub(/\.js$/, '')
+        input.path.sub(%r(^(app|lib)/), '').sub(/\.js$/, '')
       }
     )
     concat 'application.js'
@@ -69,20 +70,29 @@ end
 
 output 'public/stylesheets'
 input 'assets/stylesheets' do
-  match '**/*.scss' do
-    filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
-      input.sub /\.scss$/, 'css'
-    end
+  match '**/*.{scss,sass}' do
+    # filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
+    #     input.sub /\.scss$/, '.css'
+    #   end
+    filter Rake::Pipeline::Web::Filters::SassFilter
   end
 
   match '**/*.css' do
+    concat 'application.css'
+  end
+end
+
+output 'public/images'
+input 'assets/images' do
+  match '**/*' do
     copy
   end
 end
 
-# output 'public'
-# input 'assets', 'index.html.erb' do
-#   filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
-#     input.sub /\\.erb$/, ''
-#   end
-# end
+output 'public'
+input 'assets/static' do
+  match '**/*' do
+    copy
+  end
+end
+

@@ -1,12 +1,16 @@
 {{#if view.jobs.length}}
-  <table id="jobs">
-    <caption>
-      {{#if view.required}}
-        {{t jobs.build_matrix}}
-      {{else}}
-        {{t jobs.allowed_failures}}{{whats_this allow_failure_help}}
-      {{/if}}
-    </caption>
+    {{#if view.required}}
+      <table id="jobs" class="list">
+        <caption>
+          {{t jobs.build_matrix}}
+        </caption>
+    {{else}}
+      <table id="allowed_failure_jobs" class="list">
+        <caption>
+          {{t jobs.allowed_failures}}
+          <a title="What's this?" class="help" {{action toggleHelp}}></a>
+        </caption>
+    {{/if}}
     <thead>
       <tr>
         {{#each configKeys}}
@@ -15,15 +19,17 @@
       </tr>
     </thead>
     <tbody>
-      {{#each view.jobs}}
-        <tr {{bindAttr class="color"}}>
-          <td class="number"><a {{action viewJob href=true}}>#{{number}}</a></td>
-          <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
-          <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
-          {{#each configValues}}
-            <td>{{this}}</td>
-          {{/each}}
-        </tr>
+      {{#each job in view.jobs}}
+        {{#view Travis.Views.JobsItemView contextBinding="job"}}
+          <tr {{bindAttr class="view.color"}}>
+            <td class="number"><a {{bindAttr href="view.urlJob"}}>{{number}}</a></td>
+            <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
+            <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
+            {{#each configValues}}
+              <td>{{this}}</td>
+            {{/each}}
+          </tr>
+        {{/view}}
       {{/each}}
     </tbody>
   </table>
@@ -41,11 +47,9 @@
         <p>
           You can define allowed failures in the build matrix as follows:
         </p>
-        <pre>
-      matrix:
-        allow_failures:
-          - rvm: ruby-head
-        </pre>
+        <pre> matrix:
+  allow_failures:
+    - rvm: ruby-head </pre>
       </div>
     </div>
   {{/unless}}

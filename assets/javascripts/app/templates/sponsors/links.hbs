@@ -1,0 +1,18 @@
+<div class="box">
+  <h4>{{t layouts.application.sponsers}}</h4>
+
+  <ul class="sponsors bottom">
+    {{#each sponsors.links}}
+      <li>
+        {{{link}}}
+      </li>
+    {{/each}}
+  </ul>
+
+  <p class="hint">
+    <a href="https://love.travis-ci.org/sponsors">
+      {{{t layouts.application.sponsors_link}}}
+    </a>
+  </p>
+</div>
+

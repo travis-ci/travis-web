@@ -1284,6 +1284,8 @@ DS.Store = Ember.Object.extend({
       return clientIdToId[clientId];
     });
 
+    if (!neededIds.length) { return; }
+
     var adapter = get(this, '_adapter');
     if (adapter && adapter.findMany) { adapter.findMany(this, type, neededIds); }
     else { throw fmt("Adapter is either null or does not implement `findMany` method", this); }
@@ -2204,7 +2206,7 @@ var DirtyState = DS.State.extend({
         t.recordBecameClean(dirtyType, record);
       });
 
-      manager.goToState('loaded');
+      manager.goToState('saved');
     }
   }, Uncommitted),
 
@@ -2234,7 +2236,7 @@ var DirtyState = DS.State.extend({
         t.recordBecameClean('inflight', record);
       });
 
-      manager.goToState('loaded');
+      manager.goToState('saved');
       manager.send('invokeLifecycleCallbacks', dirtyType);
     },
 
@@ -3212,6 +3214,17 @@ DS.Model.reopenClass({
   }
 });
 
+function getAttr(record, options, key) {
+  var data = get(record, 'data');
+  var value = get(data, key);
+
+  if (value === undefined) {
+    value = options.defaultValue;
+  }
+
+  return value;
+}
+
 DS.attr = function(type, options) {
   var transform = DS.attr.transforms[type];
   Ember.assert("Could not find model attribute of type " + type, !!transform);
@@ -3241,14 +3254,12 @@ DS.attr = function(type, options) {
 
     if (arguments.length === 2) {
       value = transformTo(value);
-      this.setProperty(key, value);
-    } else {
-      data = get(this, 'data');
-      value = get(data, key);
 
-      if (value === undefined) {
-        value = options.defaultValue;
+      if (value !== getAttr(this, options, key)) {
+        this.setProperty(key, value);
       }
+    } else {
+      value = getAttr(this, options, key);
     }
 
     return transformFrom(value);

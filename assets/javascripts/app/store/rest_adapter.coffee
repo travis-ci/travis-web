@@ -8,7 +8,6 @@ require 'models'
       builds: Travis.Build,
       commits: Travis.Commit,
       jobs: Travis.Job
-      service_hooks: Travis.ServiceHook
 
   plurals:
     repository: 'repositories',

@@ -2,14 +2,14 @@ require 'travis/model'
 
 @Travis.Repository = Travis.Model.extend
   slug:                 DS.attr('string')
+  owner:                DS.attr('string')
+  name:                 DS.attr('string')
   description:          DS.attr('string')
   lastBuildId:          DS.attr('number')
   lastBuildNumber:      DS.attr('string')
   lastBuildResult:      DS.attr('number')
   lastBuildStarted_at:  DS.attr('string')
   lastBuildFinished_at: DS.attr('string')
-
-  primaryKey: 'slug'
 
   lastBuild: DS.belongsTo('Travis.Build')
 
@@ -20,14 +20,6 @@ require 'travis/model'
   pullRequests: (->
     Travis.Build.byRepositoryId @get('id'), event_type: 'pull_request'
   ).property()
-
-  owner: (->
-    (@get('slug') || @_id).split('/')[0]
-  ).property('owner', 'name'),
-
-  name: (->
-    (@get('slug') || @_id).split('/')[1]
-  ).property('owner', 'name'),
 
   lastBuildDuration: (->
     duration = @getPath('data.lastBuildDuration')
