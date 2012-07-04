@@ -72,15 +72,15 @@ Travis.Layout.Home = Travis.Layout.Base.extend
     @tabsController.set('repository', @repository)
     @tabsController.set('build', build)
     @tabsController.set('job', job)
-    @repositoryController.connectOutlet(outletName: 'tabs', name: 'tabs')
+    @homeController.connectOutlet(outletName: 'tabs', name: 'tabs')
 
   connectBuilds: (builds) ->
-    @repositoryController.connectOutlet(outletName: 'tab', name: 'builds', context: builds)
+    @homeController.connectOutlet(outletName: 'tab', name: 'builds', context: builds)
 
   connectBuild: (build) ->
-    @repositoryController.connectOutlet(outletName: 'tab', name: 'build', context: build)
+    @homeController.connectOutlet(outletName: 'tab', name: 'build', context: build)
 
   connectJob: (job) ->
-    @repositoryController.connectOutlet(outletName: 'tab', name: 'job', context: job)
+    @homeController.connectOutlet(outletName: 'tab', name: 'job', context: job)
 
 
