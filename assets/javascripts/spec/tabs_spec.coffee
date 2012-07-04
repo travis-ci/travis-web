@@ -1,4 +1,4 @@
-xdescribe 'The tabs view', ->
+describe 'The tabs view', ->
   describe 'on the "index" state', ->
     beforeEach ->
       app ''

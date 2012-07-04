@@ -1,13 +1,16 @@
 {{#if view.jobs.length}}
-  <table id="jobs" class="list">
-    <caption>
-      {{#if view.required}}
-        {{t jobs.build_matrix}}
-      {{else}}
-        {{t jobs.allowed_failures}}
-        <a title="What's this?" class="help" {{action toggleHelp}}></a>
-      {{/if}}
-    </caption>
+    {{#if view.required}}
+      <table id="jobs" class="list">
+        <caption>
+          {{t jobs.build_matrix}}
+        </caption>
+    {{else}}
+      <table id="allowed_failure_jobs" class="list">
+        <caption>
+          {{t jobs.allowed_failures}}
+          <a title="What's this?" class="help" {{action toggleHelp}}></a>
+        </caption>
+    {{/if}}
     <thead>
       <tr>
         {{#each configKeys}}

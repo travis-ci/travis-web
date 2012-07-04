@@ -1,4 +1,4 @@
-xdescribe 'The current build tab', ->
+describe 'The current build tab', ->
   describe 'on the "index" state', ->
     beforeEach ->
       app ''
@@ -15,12 +15,20 @@ xdescribe 'The current build tab', ->
         message: 'commit message 1'
 
     describe 'given the current build has a job matrix', ->
-      it 'displays the build matrix table', ->
-        displaysBuildMatrix
+      it 'displays the jobs matrix table', ->
+        displaysJobMatrix
+          element: '#jobs'
           headers: ['Job', 'Duration', 'Finished', 'Rvm']
           jobs: [
-            { id: 1, number: '#1.1', repo: 'travis-ci/travis-core', finishedAt: /\d+ (\w+) ago/, duration: '35 sec', rvm: 'rbx' },
-            { id: 2, number: '#1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
+            { id: 1, number: '1.1', repo: 'travis-ci/travis-core', finishedAt: /\d+ (\w+) ago/, duration: '35 sec', rvm: 'rbx' },
+          ]
+
+      it 'displays the allowed failure jobs matrix table', ->
+        displaysJobMatrix
+          element: '#allowed_failure_jobs'
+          headers: ['Job', 'Duration', 'Finished', 'Rvm']
+          jobs: [
+            { id: 2, number: '1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
           ]
 
   describe 'on the "current" state', ->
@@ -40,10 +48,18 @@ xdescribe 'The current build tab', ->
         message: 'commit message 1'
 
     describe 'given the current build has a job matrix', ->
-      it 'displays the build matrix table', ->
-        displaysBuildMatrix
+      it 'displays the jobs matrix table', ->
+        displaysJobMatrix
+          element: '#jobs'
           headers: ['Job', 'Duration', 'Finished', 'Rvm']
           jobs: [
-            { id: 1, number: '#1.1', repo: 'travis-ci/travis-core', finishedAt: /\d+ (\w+) ago/, duration: '35 sec', rvm: 'rbx' },
-            { id: 2, number: '#1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
+            { id: 1, number: '1.1', repo: 'travis-ci/travis-core', finishedAt: /\d+ (\w+) ago/, duration: '35 sec', rvm: 'rbx' },
+          ]
+
+      it 'displays the allowed failure jobs matrix table', ->
+        displaysJobMatrix
+          element: '#allowed_failure_jobs'
+          headers: ['Job', 'Duration', 'Finished', 'Rvm']
+          jobs: [
+            { id: 2, number: '1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
           ]

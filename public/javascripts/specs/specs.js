@@ -1,6 +1,6 @@
 (function() {
 
-  xdescribe('The current build tab', function() {
+  describe('The current build tab', function() {
     describe('on the "index" state', function() {
       beforeEach(function() {
         app('');
@@ -18,20 +18,30 @@
         });
       });
       return describe('given the current build has a job matrix', function() {
-        return it('displays the build matrix table', function() {
-          return displaysBuildMatrix({
+        it('displays the jobs matrix table', function() {
+          return displaysJobMatrix({
+            element: '#jobs',
             headers: ['Job', 'Duration', 'Finished', 'Rvm'],
             jobs: [
               {
                 id: 1,
-                number: '#1.1',
+                number: '1.1',
                 repo: 'travis-ci/travis-core',
                 finishedAt: /\d+ (\w+) ago/,
                 duration: '35 sec',
                 rvm: 'rbx'
-              }, {
+              }
+            ]
+          });
+        });
+        return it('displays the allowed failure jobs matrix table', function() {
+          return displaysJobMatrix({
+            element: '#allowed_failure_jobs',
+            headers: ['Job', 'Duration', 'Finished', 'Rvm'],
+            jobs: [
+              {
                 id: 2,
-                number: '#1.2',
+                number: '1.2',
                 repo: 'travis-ci/travis-core',
                 finishedAt: '-',
                 duration: '-',
@@ -60,20 +70,30 @@
         });
       });
       return describe('given the current build has a job matrix', function() {
-        return it('displays the build matrix table', function() {
-          return displaysBuildMatrix({
+        it('displays the jobs matrix table', function() {
+          return displaysJobMatrix({
+            element: '#jobs',
             headers: ['Job', 'Duration', 'Finished', 'Rvm'],
             jobs: [
               {
                 id: 1,
-                number: '#1.1',
+                number: '1.1',
                 repo: 'travis-ci/travis-core',
                 finishedAt: /\d+ (\w+) ago/,
                 duration: '35 sec',
                 rvm: 'rbx'
-              }, {
+              }
+            ]
+          });
+        });
+        return it('displays the allowed failure jobs matrix table', function() {
+          return displaysJobMatrix({
+            element: '#allowed_failure_jobs',
+            headers: ['Job', 'Duration', 'Finished', 'Rvm'],
+            jobs: [
+              {
                 id: 2,
-                number: '#1.2',
+                number: '1.2',
                 repo: 'travis-ci/travis-core',
                 finishedAt: '-',
                 duration: '-',
@@ -89,7 +109,7 @@
 }).call(this);
 (function() {
 
-  xdescribe('The repositories list', function() {
+  describe('The repositories list', function() {
     beforeEach(function() {
       app('');
       return waitFor(repositoriesRendered);
@@ -99,7 +119,7 @@
       href = $('#repositories a.current').attr('href');
       return expect(href).toEqual('#!/travis-ci/travis-core');
     });
-    return xit("links to the repository's last build action", function() {
+    return it("links to the repository's last build action", function() {
       var href;
       href = $('#repositories a.last_build').attr('href');
       return expect(href).toEqual('#!/travis-ci/travis-core/builds/1');
@@ -109,7 +129,7 @@
 }).call(this);
 (function() {
 
-  xdescribe('The repository view', function() {
+  describe('The repository view', function() {
     beforeEach(function() {
       app('');
       return waitFor(repositoriesRendered);
@@ -164,29 +184,29 @@
 
   this.displaysBuildSummary = function(data) {
     var element;
-    element = $('#build .summary .number a');
+    element = $('#summary .number a');
     expect(element.attr('href')).toEqual("#!/" + data.repo + "/builds/" + data.id);
-    element = $('#build .summary .finished_at');
+    element = $('#summary .finished_at');
     expect(element.text()).toMatch(/\d+ (\w+) ago/);
-    element = $('#build .summary .duration');
+    element = $('#summary .duration');
     expect(element.text()).toEqual(data.duration);
-    element = $('#build .summary .commit a');
+    element = $('#summary .commit a');
     expect(element.attr('href')).toEqual("http://github.com/" + data.repo + "/commit/" + data.commit);
-    element = $('#build .summary .commit a');
+    element = $('#summary .commit a');
     expect(element.text()).toEqual("" + data.commit + " (" + data.branch + ")");
-    element = $('#build .summary .compare a');
+    element = $('#summary .compare a');
     expect(element.attr('href')).toEqual("http://github.com/compare/" + data.compare);
-    element = $('#build .summary .compare a');
+    element = $('#summary .compare a');
     expect(element.text()).toEqual(data.compare);
-    element = $('#build .summary .message');
+    element = $('#summary .message');
     return expect(element.text()).toEqual(data.message);
   };
 
-  this.displaysBuildMatrix = function(data) {
+  this.displaysJobMatrix = function(data) {
     var element, headers;
     headers = (function() {
       var _i, _len, _ref, _results;
-      _ref = $('#jobs thead th');
+      _ref = $("" + data.element + " thead th");
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         element = _ref[_i];
@@ -197,19 +217,19 @@
     expect(headers).toEqual(data.headers);
     return $.each(data.jobs, function(ix, job) {
       ix = (ix + 1) * 3;
-      element = $("#jobs tr:nth-child(" + ix + ") td.number");
+      element = $("" + data.element + " tr:nth-child(" + ix + ") td.number");
       expect(element.text()).toEqual(job.number);
-      element = $("#jobs tr:nth-child(" + ix + ") td.number a");
+      element = $("" + data.element + " tr:nth-child(" + ix + ") td.number a");
       expect(element.attr('href')).toEqual("#!/" + job.repo + "/jobs/" + job.id);
-      element = $("#jobs tr:nth-child(" + ix + ") td.duration");
+      element = $("" + data.element + " tr:nth-child(" + ix + ") td.duration");
       expect(element.text()).toEqual(job.duration);
-      element = $("#jobs tr:nth-child(" + ix + ") td.finished_at");
+      element = $("" + data.element + " tr:nth-child(" + ix + ") td.finished_at");
       if (job.finishedAt === '-') {
         expect(element.text()).toEqual('-');
       } else {
         expect(element.text()).toMatch(job.finishedAt);
       }
-      element = $("#jobs tr:nth-child(" + ix + ") td:nth-child(6)");
+      element = $("" + data.element + " tr:nth-child(" + ix + ") td:nth-child(6)");
       return expect(element.text()).toEqual(job.rvm);
     });
   };
@@ -232,7 +252,7 @@
 }).call(this);
 (function() {
 
-  xdescribe('The tabs view', function() {
+  describe('The tabs view', function() {
     describe('on the "index" state', function() {
       beforeEach(function() {
         app('');
