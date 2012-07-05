@@ -11,16 +11,20 @@
   <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
     <h5><a {{bindAttr href="view.urlBranches"}}>{{t repositories.tabs.branches}}</a></h5>
   </li>
-  {{#if build}}
-    <li id="tab_build" {{bindAttr class="view.classBuild"}}>
-      <h5><a {{bindAttr href="view.urlBuild"}}>{{t repositories.tabs.build}} #{{build.number}}</a></h5>
-    </li>
-  {{/if}}
-  {{#if job}}
-    <li id="tab_job" {{bindAttr class="view.classJob"}}>
-      <h5><a {{bindAttr href="view.urlJob"}}>{{t repositories.tabs.job}} #{{job.number}}</a></h5>
-    </li>
-  {{/if}}
+  {{#with controller.build}}
+    {{#if isLoaded}}
+      <li id="tab_build" {{bindAttr class="view.classBuild"}}>
+        <h5><a {{bindAttr href="view.urlBuild"}}>{{t repositories.tabs.build}} #{{number}}</a></h5>
+      </li>
+    {{/if}}
+  {{/with}}
+  {{#with controller.job}}
+    {{#if isLoaded}}
+      <li id="tab_job" {{bindAttr class="view.classJob"}}>
+        <h5><a {{bindAttr href="view.urlJob"}}>{{t repositories.tabs.job}} #{{number}}</a></h5>
+      </li>
+    {{/if}}
+  {{/with}}
 </ul>
 
 <div id="tools">

@@ -16,8 +16,8 @@
 
   Repository:
     urlGithub: (->
-      "http://github.com/#{@get('slug')}"
-    ).property('slug'),
+      "http://github.com/#{@getPath('repository.slug')}"
+    ).property('repository.slug'),
 
     urlGithubWatchers: (->
       "http://github.com/#{@get('slug')}/watchers"

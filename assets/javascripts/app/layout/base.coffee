@@ -2,7 +2,7 @@ Travis.Layout.Base = Em.Object.extend
   init: ->
     @parent = @get('parent')
 
-    @setup(Array.prototype.slice.apply(arguments).concat(@get('name')))
+    @setup(Array.prototype.slice.apply(arguments).concat([@get('name'), 'top']))
     @connect()
 
   setup: (controllers) ->
@@ -14,7 +14,7 @@ Travis.Layout.Base = Em.Object.extend
       key = "#{$.camelize(name, false)}Controller"
       name = $.camelize(key)
       klass = Travis.Controllers[name] || Em.Controller
-      this[key] = klass.create(namespace: this, controllers: this)
+      this[key] = klass.create(layout: this, namespace: this, controllers: this)
 
     @controller = this["#{$.camelize(@get('name'), false)}Controller"]
     @viewClass = Travis.Views["#{$.camelize(@get('name'))}Layout"]
@@ -31,5 +31,6 @@ Travis.Layout.Base = Em.Object.extend
     @topController.set('tab', @get('name'))
 
   activate: (action, params) ->
-    this["view#{$.camelize(action)}"](params)
+    @set('params', params)
+    this["view#{$.camelize(action)}"]()
 

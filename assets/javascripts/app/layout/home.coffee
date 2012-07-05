@@ -4,83 +4,67 @@ Travis.Layout.Home = Travis.Layout.Base.extend
   name: 'home'
 
   init: ->
-    @_super('top', 'repositories', 'repository', 'tabs', 'builds', 'build', 'job')
-    @connectLeft(Travis.Repository.find())
-    Travis.Layout.Sidebar.create(homeController: @get('homeController'))
+    @_super('repositories', 'repository', 'tabs', 'builds', 'build', 'job')
+    # Travis.Layout.Sidebar.create(parent: @controller)
 
-  viewIndex: (params) ->
-    onceLoaded @repositories, =>
-      repository = @repositories.get('firstObject')
-      @connectRepository(repository)
-      @connectTabs('current')
-      @connectBuild(repository.get('lastBuild'))
+    @controller.connectOutlet(outletName: 'left', name: 'repositories')
+    @controller.connectOutlet(outletName: 'main', name: 'repository')
+    @controller.connectOutlet(outletName: 'tabs', name: 'tabs')
 
-  viewCurrent: (params) ->
-    @viewRepository params, (repository) =>
-      @connectTabs('current')
-      @connectBuild(repository.get('lastBuild'))
+    @set('repositories', Travis.Repository.find())
 
-  viewBuilds: (params) ->
-    @viewRepository params, (repository) =>
-      @connectTabs('builds')
-      @connectBuilds(repository.get('builds'))
+  activate: (action, params) ->
+    @set('tab', if action == 'index' then 'current' else action)
+    @_super(action, params)
 
-  viewBuild: (params) ->
-    @viewRepository params
-    @buildBy params.id, (build) =>
-      @connectTabs('build', build)
-      @connectBuild(build)
+  viewIndex: ->
+    @bindRepository('repositories.firstObject')
+    @bindBuild('repository.lastBuild')
+    @connectTab('build')
 
-  viewJob: (params) ->
-    @viewRepository params
-    @jobBy params.id, (job) =>
-      @connectTabs('job', job.get('build'), job)
-      @connectJob(job)
+  viewCurrent: ->
+    @bindRepository('repositoryByParams')
+    @bindBuild('repository.lastBuild')
+    @connectTab('build')
 
+  viewBuilds: ->
+    @bind('repository', 'repositoriesByParams.firstObject')
+    @bind('builds', 'repository.builds')
+    @connectTab('builds')
 
-  viewRepository: (params, callback) ->
-    @repositoryBy params, (repository) =>
-      @connectRepository(repository)
-      callback(repository) if callback
+  viewBuild: ->
+    @bindRepository('repositoryByParams')
+    @bindBuild('buildById')
+    @connectTab('build')
 
-  repositoryBy: (params, callback) ->
-    repositories = Travis.Repository.bySlug("#{params.owner}/#{params.name}")
-    onceLoaded repositories, =>
-      callback(repositories.get('firstObject'))
+  viewJob: ->
+    @bindRepository('repositoryByParams')
+    @bindJob('jobById')
+    @connectTab('job')
 
-  buildBy: (id, callback) =>
-    build = Travis.Build.find(id)
-    onceLoaded build, =>
-      callback(build)
+  repositoryByParamsBinding: 'repositoriesByParams.firstObject'
 
-  jobBy: (id, callback) ->
-    job = Travis.Job.find(id)
-    onceLoaded job, =>
-      callback(job)
+  repositoriesByParams: (->
+    console.log('repositoriesByParams', @getPath('params.owner'), @getPath('params.name'))
+    Travis.Repository.bySlug("#{params.owner}/#{params.name}") if params = @get('params')
+  ).property('params')
 
+  buildById: (->
+    console.log('buildByParams', @getPath('params.id'))
+    Travis.Build.find(id) if id = @getPath('params.id')
+  ).property('params.id')
 
-  connectLeft: (repositories) ->
-    @repositories = repositories
-    @homeController.connectOutlet(outletName: 'left', name: 'repositories', context: repositories)
+  jobById: (->
+    console.log('jobByParams', @getPath('params.id'))
+    Travis.Job.find(id) if id = @getPath('params.id')
+  ).property('params.id')
 
-  connectRepository: (repository) ->
-    @repository = repository
-    @homeController.connectOutlet(outletName: 'main', name: 'repository', context: repository)
+  bindRepository: (from) ->
+    Ember.oneWay(this, 'repository', from)
 
-  connectTabs: (tab, build, job) ->
-    @tabsController.set('tab', tab)
-    @tabsController.set('repository', @repository)
-    @tabsController.set('build', build)
-    @tabsController.set('job', job)
-    @homeController.connectOutlet(outletName: 'tabs', name: 'tabs')
+  bindBuild: (from) ->
+    Ember.oneWay(this, 'build', from)
 
-  connectBuilds: (builds) ->
-    @homeController.connectOutlet(outletName: 'tab', name: 'builds', context: builds)
-
-  connectBuild: (build) ->
-    @homeController.connectOutlet(outletName: 'tab', name: 'build', context: build)
-
-  connectJob: (job) ->
-    @homeController.connectOutlet(outletName: 'tab', name: 'job', context: job)
-
+  connectTab: (tab) ->
+    @controller.connectOutlet(outletName: 'tab', name: tab)
 

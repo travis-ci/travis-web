@@ -1,48 +1,50 @@
-{{#unless isLoaded}}
-  Loading ...
-{{else}}
-  <div id="build" {{bindAttr class="view.color"}}>
-    <dl id="summary">
-      <div class="left">
-        <dt>{{t builds.name}}</dt>
-        <dd class="number"><a {{bindAttr href="view.urlBuild"}}>{{number}}</a></dd>
-        <dt class="finished_at_label">{{t builds.finished_at}}</dt>
-        <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</dd>
-        <dt>{{t builds.duration}}</dt>
-        <dd class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</dd>
-      </div>
+{{#with controller.build}}
+  {{#unless isLoaded}}
+    Loading ...
+  {{else}}
+    <div id="build" {{bindAttr class="view.color"}}>
+      <dl id="summary">
+        <div class="left">
+          <dt>{{t builds.name}}</dt>
+          <dd class="number"><a {{bindAttr href="controller.view.urlBuild"}}>{{number}}</a></dd>
+          <dt class="finished_at_label">{{t builds.finished_at}}</dt>
+          <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</dd>
+          <dt>{{t builds.duration}}</dt>
+          <dd class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</dd>
+        </div>
 
-      <div class="right">
-        <dt>{{t builds.commit}}</dt>
-        <dd class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
-        {{#if commit.compareUrl}}
-          <dt>{{t builds.compare}}</dt>
-          <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
-        {{/if}}
-        {{#if commit.authorName}}
-          <dt>{{t builds.author}}</dt>
-          <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.authorName}}</a></dd>
-        {{/if}}
-        {{#if commit.committerName}}
-          <dt>{{t builds.committer}}</dt>
-          <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committerName}}</a></dd>
-        {{/if}}
-      </div>
+        <div class="right">
+          <dt>{{t builds.commit}}</dt>
+          <dd class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
+          {{#if commit.compareUrl}}
+            <dt>{{t builds.compare}}</dt>
+            <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
+          {{/if}}
+          {{#if commit.authorName}}
+            <dt>{{t builds.author}}</dt>
+            <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.authorName}}</a></dd>
+          {{/if}}
+          {{#if commit.committerName}}
+            <dt>{{t builds.committer}}</dt>
+            <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committerName}}</a></dd>
+          {{/if}}
+        </div>
 
-      <dt>{{t builds.message}}</dt>
-      <dd class="message">{{{formatMessage commit.message}}}</dd>
+        <dt>{{t builds.message}}</dt>
+        <dd class="message">{{{formatMessage commit.message}}}</dd>
 
-      {{#unless isMatrix}}
-        <dt>{{t builds.config}}</dt>
-        <dd class="config">{{formatConfig config}}</dd>
-      {{/unless}}
-    </dl>
+        {{#unless isMatrix}}
+          <dt>{{t builds.config}}</dt>
+          <dd class="config">{{formatConfig config}}</dd>
+        {{/unless}}
+      </dl>
 
-    {{#if isMatrix}}
-      {{view Travis.Views.JobsView jobsBinding="view.requiredJobs" required="true"}}
-      {{view Travis.Views.JobsView jobsBinding="view.allowedFailureJobs"}}
-    {{else}}
-      {{view Travis.Views.LogView contextBinding="jobs.firstObject"}}
-    {{/if}}
-  </div>
-{{/unless}}
+      {{#if isMatrix}}
+        {{view Travis.Views.JobsView jobsBinding="view.requiredJobs" required="true"}}
+        {{view Travis.Views.JobsView jobsBinding="view.allowedFailureJobs"}}
+      {{else}}
+        {{view Travis.Views.LogView contextBinding="jobs.firstObject"}}
+      {{/if}}
+    </div>
+  {{/unless}}
+{{/with}}

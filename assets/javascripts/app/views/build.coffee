@@ -15,19 +15,21 @@
     templateName: 'builds/show'
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('controller.content.result'))
-    ).property('controller.content.result')
+      Travis.Helpers.colorForResult(@getPath('controller.build.result'))
+    ).property('controller.build.result')
 
     requiredJobs: (->
-      @getPath('controller.content.jobs').filter((job) -> job.get('allow_failure') != true)
-    ).property('controller.content') # TODO same here with binding to 'context.data.job_ids'
+      jobs = @getPath('controller.build.jobs')
+      jobs.filter((job) -> job.get('allow_failure') != true) if jobs
+    ).property('controller.build.jobs')
 
     allowedFailureJobs: (->
-      @getPath('controller.content.jobs').filter((job) -> job.get('allow_failure'))
-    ).property('controller.content')
+      jobs = @getPath('controller.build.jobs')
+      jobs.filter((job) -> job.get('allow_failure')) if jobs
+    ).property('controller.build.jobs')
 
     urlBuild: (->
       Travis.Urls.build(@getPath('context.repository'), @get('context'))
-    ).property('controller.content.repository.id', 'controller.content.id')
+    ).property('controller.build.repository.id', 'controller.build.id')
 
 

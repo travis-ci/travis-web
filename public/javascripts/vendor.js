@@ -1952,8 +1952,8 @@ Handlebars.VM = {
 
 Handlebars.template = Handlebars.VM.template;
 ;
-// Version: v0.9.8.1-451-g50ee26d
-// Last commit: 50ee26d (2012-06-26 18:06:44 -0700)
+// Version: v0.9.8.1-468-g3097ea8
+// Last commit: 3097ea8 (2012-07-04 14:42:40 -0700)
 
 
 (function() {
@@ -2090,8 +2090,8 @@ window.ember_deprecateFunc  = Ember.deprecateFunc("ember_deprecateFunc is deprec
 
 })();
 
-// Version: v0.9.8.1-451-g50ee26d
-// Last commit: 50ee26d (2012-06-26 18:06:44 -0700)
+// Version: v0.9.8.1-468-g3097ea8
+// Last commit: 3097ea8 (2012-07-04 14:42:40 -0700)
 
 
 (function() {
@@ -3368,11 +3368,6 @@ function normalizeTuple(target, path) {
   return TUPLE_RET;
 }
 
-/** @private */
-Ember.isGlobal = function(path) {
-  return IS_GLOBAL.test(path);
-};
-
 /**
   @private
 
@@ -3436,7 +3431,8 @@ Ember.getPath = function(root, path) {
 Ember.setPath = function(root, path, value, tolerant) {
   var keyName;
 
-  if (typeof root === 'string' && IS_GLOBAL.test(root)) {
+  if (typeof root === 'string') {
+    Ember.assert("Path '" + root + "' must be global if no root is given.", IS_GLOBAL.test(root));
     value = path;
     path = root;
     root = null;
@@ -3490,7 +3486,7 @@ Ember.trySetPath = function(root, path, value) {
   @returns Boolean
 */
 Ember.isGlobalPath = function(path) {
-  return !HAS_THIS.test(path) && IS_GLOBAL.test(path);
+  return IS_GLOBAL.test(path);
 };
 
 })();
@@ -12586,8 +12582,16 @@ var get = Ember.get, set = Ember.set;
 Ember.HistoryLocation = Ember.Object.extend({
   init: function() {
     set(this, 'location', get(this, 'location') || window.location);
+    set(this, '_initialURL', get(this, 'location').pathname);
     set(this, 'callbacks', Ember.A());
   },
+
+  /**
+    @private
+
+    Used to give history a starting reference
+   */
+  _initialURL: null,
 
   /**
     @private
@@ -12604,12 +12608,13 @@ Ember.HistoryLocation = Ember.Object.extend({
     Uses `history.pushState` to update the url without a page reload.
   */
   setURL: function(path) {
-    var state = window.history.state;
+    var state = window.history.state,
+        initialURL = get(this, '_initialURL');
+
     if (path === "") { path = '/'; }
-    // We only want pushState to be executed if we are passing
-    // in a new path, otherwise a new state will be inserted
-    // for the same path.
-    if (!state || (state && state.path !== path)) {
+
+    if ((initialURL && initialURL !== path) || (state && state.path !== path)) {
+      set(this, '_initialURL', null);
       window.history.pushState({ path: path }, null, path);
     }
   },
@@ -13478,8 +13483,6 @@ Ember.ControllerMixin.reopen({
     if (controller && context) { controller.set('content', context); }
     view = viewClass.create();
     if (controller) { set(view, 'controller', controller); }
-
-    /* console.log(view, view.toString()) */
     set(this, outletName, view);
 
     return view;
@@ -13529,6 +13532,17 @@ var childViewsProperty = Ember.computed(function() {
   });
 
   return ret;
+}).property().cacheable();
+
+var controllerProperty = Ember.computed(function(key, value) {
+  var parentView;
+
+  if (arguments.length === 2) {
+    return value;
+  } else {
+    parentView = get(this, 'parentView');
+    return parentView ? get(parentView, 'controller') : null;
+  }
 }).property().cacheable();
 
 var VIEW_PRESERVES_CONTEXT = Ember.VIEW_PRESERVES_CONTEXT;
@@ -13999,17 +14013,7 @@ Ember.View = Ember.Object.extend(Ember.Evented,
 
     @type Object
   */
-  controller: Ember.computed(function(key, value) {
-    var parentView;
-
-    if (arguments.length === 2) {
-      return value;
-    } else {
-      parentView = get(this, 'parentView');
-      return parentView ? get(parentView, 'controller') : null;
-    }
-  }).property().cacheable(),
-
+  controller: controllerProperty,
   /**
     A view may contain a layout. A layout is a regular template but
     supersedes the `template` property during rendering. It is the
@@ -14074,20 +14078,22 @@ Ember.View = Ember.Object.extend(Ember.Evented,
     to be re-rendered.
   */
   _context: Ember.computed(function(key, value) {
-    var parentView, controller;
+    var parentView, context;
 
     if (arguments.length === 2) {
       return value;
     }
 
     if (VIEW_PRESERVES_CONTEXT) {
-      if (controller = get(this, 'controller')) {
-        return controller;
+      if (Ember.meta(this).descs.controller !== controllerProperty) {
+        if (context = get(this, 'controller')) {
+          return context;
+        }
       }
 
       parentView = get(this, '_parentView');
-      if (parentView) {
-        return get(parentView, '_context');
+      if (parentView && (context = get(parentView, '_context'))) {
+        return context;
       }
     }
 
@@ -16758,6 +16764,12 @@ Ember.State = Ember.Object.extend(Ember.Evented,
   }).cacheable(),
 
   /**
+    A boolean value indicating whether the state takes a context.
+    By default we assume all states take contexts.
+  */
+  hasContext: true,
+
+  /**
     This is the default transition event.
 
     @event
@@ -17277,7 +17289,6 @@ Ember.StateManager = Ember.State.extend(
 
   send: function(event, context) {
     Ember.assert('Cannot send event "' + event + '" while currentState is ' + get(this, 'currentState'), get(this, 'currentState'));
-    if (arguments.length === 1) { context = {}; }
     return this.sendRecursively(event, get(this, 'currentState'), context);
   },
 
@@ -17426,7 +17437,7 @@ Ember.StateManager = Ember.State.extend(
           exitStates.shift();
         }
 
-        currentState.pathsCache[name] = {
+        currentState.pathsCache[path] = {
           exitStates: exitStates,
           enterStates: enterStates,
           resolveState: resolveState
@@ -17444,7 +17455,7 @@ Ember.StateManager = Ember.State.extend(
           exitStates.unshift(state);
         }
 
-        useContext = context && (!get(state, 'isRoutable') || get(state, 'isDynamic'));
+        useContext = context && get(state, 'hasContext');
         matchedContexts.unshift(useContext ? contexts.pop() : null);
       }
 
@@ -17456,6 +17467,7 @@ Ember.StateManager = Ember.State.extend(
           state = getPath(state, 'states.'+initialState);
           if (!state) { break; }
           enterStates.push(state);
+          matchedContexts.push(undefined);
         }
 
         while (enterStates.length > 0) {
@@ -17686,9 +17698,10 @@ Ember.Routable = Ember.Mixin.create({
   /**
     @private
 
-    Check whether the route has dynamic segments
+    Check whether the route has dynamic segments and therefore takes
+    a context.
   */
-  isDynamic: Ember.computed(function() {
+  hasContext: Ember.computed(function() {
     var routeMatcher = get(this, 'routeMatcher');
     if (routeMatcher) {
       return routeMatcher.identifiers.length > 0;
@@ -18293,7 +18306,7 @@ var get = Ember.get, getPath = Ember.getPath, set = Ember.set;
         {{/each}}
       </script>
 
-  See Handlebars.helpers.actions for additional usage examples.
+  See Handlebars.helpers.action for additional usage examples.
 
 
   ## Changing View Hierarchy in Response To State Change
@@ -19913,7 +19926,7 @@ EmberHandlebars.registerHelper('with', function(context, options) {
 
     Ember.assert("You must pass a block to the with helper", options.fn && options.fn !== Handlebars.VM.noop);
 
-    if (Ember.isGlobal(path)) {
+    if (Ember.isGlobalPath(path)) {
       Ember.bind(options.data.keywords, keywordName, path);
     } else {
       normalized = normalizePath(this, path, options.data);
@@ -22068,8 +22081,8 @@ Ember.$(document).ready(
 
 })();
 
-// Version: v0.9.8.1-451-g50ee26d
-// Last commit: 50ee26d (2012-06-26 18:06:44 -0700)
+// Version: v0.9.8.1-468-g3097ea8
+// Last commit: 3097ea8 (2012-07-04 14:42:40 -0700)
 
 
 (function() {

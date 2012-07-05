@@ -3,6 +3,7 @@ require 'ext/jquery'
 
 # $.mockjaxSettings.log = false
 # Ember.LOG_BINDINGS = true
+
 @Travis = Em.Namespace.create
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
 

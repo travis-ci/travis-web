@@ -2,11 +2,27 @@ require 'helpers'
 require 'travis/ticker'
 
 Travis.Controllers = Em.Namespace.create
-  RepositoriesController: Em.ArrayController.extend()
-  RepositoryController:   Em.ObjectController.extend(Travis.Urls.Repository)
-  BuildsController:       Em.ArrayController.extend()
-  BuildController:        Em.ObjectController.extend(Travis.Urls.Commit)
-  JobController:          Em.ObjectController.extend(Travis.Urls.Commit)
+  RepositoriesController: Em.ArrayController.extend
+    contentBinding: 'layout.repositories'
+
+  RepositoryController: Em.Controller.extend # Travis.Urls.Repository,
+    repositoryBinding: 'layout.repository'
+
+  TabsController: Em.Controller.extend
+    repositoryBinding: 'layout.repository'
+    buildBinding: 'layout.build'
+    jobBinding: 'layout.job'
+    tabBinding: 'layout.tab'
+
+  BuildsController: Em.ArrayController.extend
+    contentBinding: 'layout.builds'
+
+  BuildController: Em.Controller.extend # Travis.Urls.Commit,
+    buildBinding: 'layout.build'
+
+  JobController: Em.Controller.extend # Travis.Urls.Commit,
+    jobBinding: 'layout.job'
+
   QueuesController:       Em.ArrayController.extend()
   UserController:         Em.ObjectController.extend()
   HooksController:        Em.ArrayController.extend()
