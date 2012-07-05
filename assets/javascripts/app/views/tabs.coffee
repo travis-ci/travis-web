@@ -5,6 +5,15 @@
     toggleTools: ->
       $('#tools .pane').toggle()
 
+    isBuildTab: (->
+      tab = @getPath('controller.tab')
+      (tab == 'build' || tab == 'job') && @getPath('controller.build.isLoaded')
+    ).property('controller.tab', 'controller.build.isLoaded')
+
+    isJobTab: (->
+      @getPath('controller.tab') == 'job' && @getPath('controller.job.isLoaded')
+    ).property('controller.tab', 'controller.job.isLoaded')
+
     # hrm. how to parametrize bindAttr?
     classCurrent: (->
       'active' if @getPath('controller.tab') == 'current'
