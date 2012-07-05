@@ -2,6 +2,7 @@ require 'layout/base'
 
 Travis.Layout.Home = Travis.Layout.Base.extend
   name: 'home'
+  bindings: []
 
   init: ->
     @_super('repositories', 'repository', 'tabs', 'builds', 'build', 'job')
@@ -14,56 +15,54 @@ Travis.Layout.Home = Travis.Layout.Base.extend
     @set('repositories', Travis.Repository.find())
 
   activate: (action, params) ->
+    @_unbind()
     @set('tab', if action == 'index' then 'current' else action)
     @_super(action, params)
 
   viewIndex: ->
-    @bindRepository('repositories.firstObject')
-    @bindBuild('repository.lastBuild')
+    @_bind('repository', 'repositories.firstObject')
+    @_bind('build', 'repository.lastBuild')
     @connectTab('build')
 
   viewCurrent: ->
-    @bindRepository('repositoryByParams')
-    @bindBuild('repository.lastBuild')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('build', 'repository.lastBuild')
     @connectTab('build')
 
   viewBuilds: ->
-    @bind('repository', 'repositoriesByParams.firstObject')
-    @bind('builds', 'repository.builds')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('builds', 'repository.builds')
     @connectTab('builds')
 
   viewBuild: ->
-    @bindRepository('repositoryByParams')
-    @bindBuild('buildById')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('build', 'buildById')
     @connectTab('build')
 
   viewJob: ->
-    @bindRepository('repositoryByParams')
-    @bindJob('jobById')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('build', 'job.build')
+    @_bind('job', 'jobById')
     @connectTab('job')
 
-  repositoryByParamsBinding: 'repositoriesByParams.firstObject'
-
   repositoriesByParams: (->
-    console.log('repositoriesByParams', @getPath('params.owner'), @getPath('params.name'))
     Travis.Repository.bySlug("#{params.owner}/#{params.name}") if params = @get('params')
   ).property('params')
 
   buildById: (->
-    console.log('buildByParams', @getPath('params.id'))
     Travis.Build.find(id) if id = @getPath('params.id')
   ).property('params.id')
 
   jobById: (->
-    console.log('jobByParams', @getPath('params.id'))
     Travis.Job.find(id) if id = @getPath('params.id')
   ).property('params.id')
 
-  bindRepository: (from) ->
-    Ember.oneWay(this, 'repository', from)
+  _bind: (to, from) ->
+    @bindings.push Ember.oneWay(this, to, from)
 
-  bindBuild: (from) ->
-    Ember.oneWay(this, 'build', from)
+  _unbind: ->
+    binding.disconnect(this) for binding in @bindings
+    @bindings.length = 0
 
   connectTab: (tab) ->
     @controller.connectOutlet(outletName: 'tab', name: tab)

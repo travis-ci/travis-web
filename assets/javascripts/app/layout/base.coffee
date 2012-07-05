@@ -31,6 +31,6 @@ Travis.Layout.Base = Em.Object.extend
     @topController.set('tab', @get('name'))
 
   activate: (action, params) ->
-    @set('params', params)
     this["view#{$.camelize(action)}"]()
+    @set('params', params)
 
