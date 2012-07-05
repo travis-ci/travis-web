@@ -1,18 +1,18 @@
-{{#with controller.repository}}
+{{#with view.repository}}
   {{#unless isLoaded}}
     Loading ...
   {{else}}
     <div id="repository">
       <h3>
-        <a {{bindAttr href="controller.urlGithub"}}>{{slug}}</a>
+        <a {{bindAttr href="view.urlGithub"}}>{{slug}}</a>
       </h3>
 
       <p class="description">{{description}}</p>
 
       <ul class="github-stats">
         <li class="language">{{lastBuildLanguage}}</li>
-        <li><a class="watchers" title="Watches" {{bindAttr href="urlGithubWatchers"}}>{{stats.watchers}}</a></li>
-        <li><a class="forks" title="Forks" {{bindAttr href="urlGithubNetwork"}}>{{stats.forks}}</a></li>
+        <li><a class="watchers" title="Watches" {{bindAttr href="view.urlGithubWatchers"}}>{{stats.watchers}}</a></li>
+        <li><a class="forks" title="Forks" {{bindAttr href="view.urlGithubNetwork"}}>{{stats.forks}}</a></li>
       </ul>
     </div>
   {{/unless}}

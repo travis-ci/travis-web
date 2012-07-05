@@ -3,27 +3,29 @@
     templateName: 'repositories/list'
 
   RepositoriesItemView: Em.View.extend
+    repositoryBinding: 'context'
+
     classes: (->
       $.compact(['repository', @get('color'), @get('selected')]).join(' ')
-    ).property('context.lastBuildResult', 'context.selected')
+    ).property('color', 'selected')
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('context.lastBuildResult'))
-    ).property('context.lastBuildResult')
+      Travis.Helpers.colorForResult(@getPath('repository.lastBuildResult'))
+    ).property('repository.lastBuildResult')
 
     selected: (->
-      'selected' if @getPath('context.selected')
-    ).property('context.selected')
+      'selected' if @getPath('repository.selected')
+    ).property('repository.selected')
 
     urlRepository: (->
-      Travis.Urls.repository(@get('context'))
-    ).property('context')
+      Travis.Urls.repository(@getPath('repository.slug'))
+    ).property('repository.slug')
 
     urlLastBuild: (->
-      Travis.Urls.lastBuild(@get('context'))
-    ).property('context')
+      Travis.Urls.build(@getPath('repository.slug'), @getPath('repository.lastBuildId'))
+    ).property('repository.slug', 'repository.lastBuildId')
 
   RepositoryView: Em.View.extend
     templateName: 'repositories/show'
-
+    repositoryBinding: 'controller.repository'
 

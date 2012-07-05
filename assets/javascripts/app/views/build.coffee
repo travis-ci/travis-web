@@ -3,33 +3,39 @@
     templateName: 'builds/list'
 
   BuildsItemView: Em.View.extend
+    buildBinding: 'context'
+    repositoryBinding: 'controller.repository'
+
     color: (->
       Travis.Helpers.colorForResult(@getPath('context.result'))
-    ).property('context.result')
+    ).property('build.result')
 
     urlBuild: (->
-      Travis.Urls.build(@getPath('context.repository'), @get('context'))
-    ).property('context.repository.slug', 'context')
+      Travis.Urls.build(@getPath('repository.slug'), @getPath('build.id'))
+    ).property('repository.slug', 'build.id')
 
   BuildView: Em.View.extend
     templateName: 'builds/show'
 
+    buildBinding: 'controller.build'
+    repositoryBinding: 'controller.repository'
+
     color: (->
-      Travis.Helpers.colorForResult(@getPath('controller.build.result'))
-    ).property('controller.build.result')
-
-    requiredJobs: (->
-      jobs = @getPath('controller.build.jobs')
-      jobs.filter((job) -> job.get('allow_failure') != true) if jobs
-    ).property('controller.build.jobs')
-
-    allowedFailureJobs: (->
-      jobs = @getPath('controller.build.jobs')
-      jobs.filter((job) -> job.get('allow_failure')) if jobs
-    ).property('controller.build.jobs')
+      Travis.Helpers.colorForResult(@getPath('build.result'))
+    ).property('build.result')
 
     urlBuild: (->
-      Travis.Urls.build(@getPath('context.repository'), @get('context'))
-    ).property('controller.build.repository.id', 'controller.build.id')
+      Travis.Urls.build(@getPath('repository.slug'), @getPath('build.id'))
+    ).property('repository.slug', 'build.id')
+
+    requiredJobs: (->
+      jobs = @getPath('build.jobs')
+      jobs.filter((job) -> job.get('allow_failure') != true) if jobs
+    ).property('build.jobs')
+
+    allowedFailureJobs: (->
+      jobs = @getPath('build.jobs')
+      jobs.filter((job) -> job.get('allow_failure')) if jobs
+    ).property('build.jobs')
 
 

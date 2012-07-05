@@ -12,14 +12,14 @@
     <h5><a {{bindAttr href="view.urlBranches"}}>{{t repositories.tabs.branches}}</a></h5>
   </li>
   {{#if view.isBuildTab}}
-    {{#with controller.build}}
+    {{#with view.build}}
       <li id="tab_build" {{bindAttr class="view.classBuild"}}>
         <h5><a {{bindAttr href="view.urlBuild"}}>{{t repositories.tabs.build}} #{{number}}</a></h5>
       </li>
     {{/with}}
   {{/if}}
   {{#if view.isJobTab}}
-    {{#with controller.job}}
+    {{#with view.job}}
       <li id="tab_job" {{bindAttr class="view.classJob"}}>
         <h5><a {{bindAttr href="view.urlJob"}}>{{t repositories.tabs.job}} #{{number}}</a></h5>
       </li>

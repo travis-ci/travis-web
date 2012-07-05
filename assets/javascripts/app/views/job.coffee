@@ -6,24 +6,30 @@
       $.facebox(div: '#allow_failure_help')
 
   JobsItemView: Em.View.extend
+    jobBinding: 'context'
+    repositoryBinding: 'context.repository'
+
     color: (->
-      Travis.Helpers.colorForResult(@getPath('controller.result'))
-    ).property('controller.result')
+      Travis.Helpers.colorForResult(@getPath('job.result'))
+    ).property('job.result')
 
     urlJob: (->
-      Travis.Urls.job(@getPath('context.repository'), @get('context'))
-    ).property('context.repository', 'context')
+      Travis.Urls.job(@getPath('repository.slug'), @getPath('job.id'))
+    ).property('repository.slug', 'job.id')
 
   JobView: Em.View.extend
     templateName: 'jobs/show'
 
+    jobBinding: 'controller.job'
+    repositoryBinding: 'controller.repository'
+
     color: (->
-      Travis.Helpers.colorForResult(@getPath('controller.content.result'))
-    ).property('controller.content.result')
+      Travis.Helpers.colorForResult(@getPath('job.result'))
+    ).property('job.result')
 
     urlJob: (->
-      Travis.Urls.job(@getPath('context.repository'), @get('context'))
-    ).property('controller.content.repository.id', 'controller.content.id')
+      Travis.Urls.job(@getPath('repository.slug'), @get('job.id'))
+    ).property('repository.slug', 'job.id')
 
   LogView: Em.View.extend
     templateName: 'jobs/log'

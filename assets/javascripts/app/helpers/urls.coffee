@@ -1,18 +1,15 @@
 @Travis.Urls =
-  repository: (repository) ->
-    "#!/#{repository.get('slug')}" if repository
+  repository: (slug) ->
+    "#!/#{slug}" if slug
 
-  lastBuild: (repository) ->
-    "#!/#{repository.get('slug')}/builds/#{repository.get('lastBuildId')}" if repository
+  builds: (slug) ->
+    "#!/#{slug}/builds" if slug
 
-  builds: (repository) ->
-    "#!/#{repository.get('slug')}/builds" if repository
+  build: (slug, id) ->
+    "#!/#{slug}/builds/#{id}" if slug && id
 
-  build: (repository, build) ->
-    "#!/#{repository.get('slug')}/builds/#{build.get('id')}" if repository && build
-
-  job: (repository, job) ->
-    "#!/#{repository.get('slug')}/jobs/#{job.get('id')}" if repository && job
+  job: (slug, id) ->
+    "#!/#{slug}/jobs/#{id}" if slug && id
 
   Repository:
     urlGithub: (->
