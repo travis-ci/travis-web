@@ -1,8 +1,10 @@
-<pre id="log">{{{formatLog log.body}}}</pre>
+{{#with job}}
+  <pre id="log">{{{formatLog log.body}}}</pre>
 
-{{#if sponsor.name}}
-  <p class="sponsor">
-  {{t builds.messages.sponsored_by}}
-    <a {{bindAttr href="sponsor.url"}}>{{sponsor.name}}</a>
-  </p>
-{{/if}}
+  {{#if sponsor.name}}
+    <p class="sponsor">
+    {{t builds.messages.sponsored_by}}
+      <a {{bindAttr href="sponsor.url"}}>{{sponsor.name}}</a>
+    </p>
+  {{/if}}
+{{/with}}

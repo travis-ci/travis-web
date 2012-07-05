@@ -12,8 +12,7 @@ require 'ext/ember/namespace'
 
     toggleSidebar: ->
       $('body').toggleClass('maximized')
-      # TODO gotta force redraw here :/
-      element = $('<span></span>')
+      element = $('<span></span>') # TODO gotta force redraw here :/
       $('#repository').append(element)
       Em.run.later (-> element.remove()), 10
 

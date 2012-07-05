@@ -1,4 +1,4 @@
-{{#with controller.builds}}
+{{#with view.builds}}
   <table id="builds" class="list">
     <thead>
       <tr>
@@ -21,8 +21,6 @@
             <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
           </tr>
         {{/view}}
-      {{else}}
-        Loading ...
       {{/each}}
     </tbody>
   </table>

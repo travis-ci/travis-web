@@ -29,3 +29,14 @@
     templateName: 'repositories/show'
     repositoryBinding: 'controller.repository'
 
+    urlGithub: (->
+      Travis.Urls.githubRepository(@getPath('repository.slug'))
+    ).property('repository.slug'),
+
+    urlGithubWatchers: (->
+      Travis.Urls.githubWatchers(@getPath('repository.slug'))
+    ).property('repository.slug'),
+
+    urlGithubNetwork: (->
+      Travis.Urls.githubNetwork(@getPath('repository.slug'))
+    ).property('repository.slug'),

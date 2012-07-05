@@ -1,14 +1,14 @@
-{{#with view.job}}
-  {{#if isLoaded}}
+{{#with view}}
+  {{#if job.isLoaded}}
     <div {{bindAttr class="view.color"}}>
       <dl id="summary">
         <div class="left">
           <dt>Job</dt>
-          <dd class="number"><a {{bindAttr href="view.urlJob"}}>{{number}}</a></dd>
+          <dd class="number"><a {{bindAttr href="view.urlJob"}}>{{job.number}}</a></dd>
           <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
-          <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</dd>
+          <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime job.finished_at}}</dd>
           <dt>{{t jobs.duration}}</dt>
-          <dd class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</dd>
+          <dd class="duration" {{bindAttr title="started_at"}}>{{formatDuration job.duration}}</dd>
         </div>
 
         <div class="right">
@@ -31,7 +31,7 @@
         <dt>{{t jobs.message}}</dt>
         <dd class="commit-message">{{formatMessage commit.message}}</dd>
         <dt>{{t jobs.config}}</dt>
-        <dd class="config">{{formatConfig config}}</dd>
+        <dd class="config">{{formatConfig job.config}}</dd>
       </dl>
 
       {{view Travis.Views.LogView}}

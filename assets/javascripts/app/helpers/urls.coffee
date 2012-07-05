@@ -1,47 +1,27 @@
 @Travis.Urls =
   repository: (slug) ->
-    "#!/#{slug}" if slug
+    "#!/#{slug}"
 
   builds: (slug) ->
-    "#!/#{slug}/builds" if slug
+    "#!/#{slug}/builds"
 
   build: (slug, id) ->
-    "#!/#{slug}/builds/#{id}" if slug && id
+    "#!/#{slug}/builds/#{id}"
 
   job: (slug, id) ->
-    "#!/#{slug}/jobs/#{id}" if slug && id
+    "#!/#{slug}/jobs/#{id}"
 
-  Repository:
-    urlGithub: (->
-      "http://github.com/#{@getPath('repository.slug')}"
-    ).property('repository.slug'),
+  githubCommit: (slug, sha) ->
+    "http://github.com/#{slug}/commit/#{sha}"
 
-    urlGithubWatchers: (->
-      "http://github.com/#{@get('slug')}/watchers"
-    ).property('slug'),
+  githubRepository: (slug) ->
+    "http://github.com/#{slug}"
 
-    urlGithubNetwork: (->
-      "http://github.com/#{@get('slug')}/network"
-    ).property('slug'),
+  githubWatchers: (slug) ->
+    "http://github.com/#{slug}/watchers"
 
-    urlGithubAdmin: (->
-      "http://github.com/#{@get('slug')}/admin/hooks#travis_minibucket"
-    ).property('slug')
+  githubNetwork: (slug) ->
+    "http://github.com/#{slug}/network"
 
-    statusImage: (->
-      "#{@get('slug')}.png"
-    ).property('slug')
-
-  Commit:
-    urlGithubCommit: (->
-      "http://github.com/#{@getPath('repository.slug')}/commit/#{@getPath('commit.sha')}"
-    ).property('repository.slug', 'commit.sha')
-
-    urlAuthor: (->
-      "mailto:#{@getPath('commit.authorEmail')}"
-    ).property('commit.authorEmail')
-
-    urlCommitter: (->
-      "mailto:#{@getPath('commit.committerEmail')}"
-    ).property('commit.committerEmail')
-
+  email: (email) ->
+    "mailto:#{email}"
