@@ -1,15 +1,15 @@
 require 'travis/model'
 
 @Travis.Repository = Travis.Model.extend
-  slug:                 DS.attr('string')
-  owner:                DS.attr('string')
-  name:                 DS.attr('string')
-  description:          DS.attr('string')
-  lastBuildId:          DS.attr('number')
-  lastBuildNumber:      DS.attr('string')
-  lastBuildResult:      DS.attr('number')
-  lastBuildStarted_at:  DS.attr('string')
-  lastBuildFinished_at: DS.attr('string')
+  slug:                DS.attr('string')
+  owner:               DS.attr('string')
+  name:                DS.attr('string')
+  description:         DS.attr('string')
+  lastBuildId:         DS.attr('number')
+  lastBuildNumber:     DS.attr('string')
+  lastBuildResult:     DS.attr('number')
+  lastBuildStartedAt:  DS.attr('string')
+  lastBuildFinishedAt: DS.attr('string')
 
   lastBuild: DS.belongsTo('Travis.Build')
 
@@ -26,6 +26,10 @@ require 'travis/model'
     duration = Travis.Helpers.durationFrom(@get('lastBuildStarted_at'), @get('lastBuildFinished_at')) unless duration
     duration
   ).property('data.lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
+
+  sortOrder: (->
+    @get('lastBuildFinishedAt') || '9999'
+  ).property('lastBuildFinishedAt')
 
   stats: (->
     # @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>

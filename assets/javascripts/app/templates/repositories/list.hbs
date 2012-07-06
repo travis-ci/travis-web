@@ -1,5 +1,5 @@
 <ul id="repositories">
-  {{#each repository in controller.content}}
+  {{#each repository in controller}}
     {{#view Travis.Views.RepositoriesItemView contextBinding="repository"}}
       <li {{bindAttr class="view.classes"}}>
         <a {{bindAttr href="view.urlRepository"}} class="current">{{slug}}</a>
@@ -9,7 +9,7 @@
           <span class="duration_label">{{t repositories.duration}}:</span>
           <abbr class="duration" {{bindAttr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>,
           <span class="finished_at_label">{{t repositories.finished_at}}:</span>
-          <abbr class="finished_at timeago" {{bindAttr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinished_at}}</abbr>
+          <abbr class="finished_at timeago" {{bindAttr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
         </p>
         {{#if description}}
           <p class="description">{{description}}</p>

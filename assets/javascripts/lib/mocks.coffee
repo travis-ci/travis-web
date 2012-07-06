@@ -3,15 +3,15 @@ require 'ext/jquery'
 responseTime = 0
 
 repositories = [
-  { id: 1, owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_result: 0, description: 'Description of travis-core' },
-  { id: 2, owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3, last_build_result: 1, description: 'Description of travis-assets'},
-  { id: 3, owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4, description: 'Description of travis-hub'},
+  { id: 1, owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_result: 0, last_build_finished_at: '2012-07-02T00:00:00Z', description: 'Description of travis-core' },
+  { id: 2, owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3, last_build_result: 1, last_build_finished_at: '2012-07-01T00:01:00Z', description: 'Description of travis-assets'},
+  { id: 3, owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4, last_build_result: undefined, last_build_finished_at: undefined, description: 'Description of travis-hub'},
 ]
 
 builds = [
-  { id: 1, repository_id: '1', commit_id: 1, job_ids: [1, 2], number: 1, event_type: 'push', config: { rvm: ['rbx', '1.9.3'] }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 },
+  { id: 1, repository_id: '1', commit_id: 1, job_ids: [1, 2], number: 1, event_type: 'push', config: { rvm: ['rbx', '1.9.3'] }, finished_at: '2012-07-02T00:00:00Z', duration: 35, result: 0 },
   { id: 2, repository_id: '1', commit_id: 2, job_ids: [3],    number: 2, event_type: 'push', config: { rvm: ['rbx'] } },
-  { id: 3, repository_id: '2', commit_id: 3, job_ids: [4],    number: 3, event_type: 'push', config: { rvm: ['rbx'] }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 1 },
+  { id: 3, repository_id: '2', commit_id: 3, job_ids: [4],    number: 3, event_type: 'push', config: { rvm: ['rbx'] }, finished_at: '2012-07-01T00:01:00Z', duration: 35, result: 1 },
   { id: 4, repository_id: '3', commit_id: 4, job_ids: [5],    number: 4, event_type: 'push', config: { rvm: ['rbx'] } },
 ]
 
@@ -23,10 +23,10 @@ commits = [
 ]
 
 jobs = [
-  { id: 1, repository_id: 1, build_id: 1, commit_id: 1, log_id: 1, number: '1.1', config: { rvm: 'rbx' }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 0 }
+  { id: 1, repository_id: 1, build_id: 1, commit_id: 1, log_id: 1, number: '1.1', config: { rvm: 'rbx' }, finished_at: '2012-07-02T00:00:00Z', duration: 35, result: 0 }
   { id: 2, repository_id: 1, build_id: 1, commit_id: 1, log_id: 2, number: '1.2', config: { rvm: '1.9.3' }, allow_failure: true }
   { id: 3, repository_id: 1, build_id: 2, commit_id: 2, log_id: 3, number: '2.1', config: { rvm: 'rbx' } }
-  { id: 4, repository_id: 2, build_id: 3, commit_id: 3, log_id: 4, number: '3.1', config: { rvm: 'rbx' }, finished_at: '2012-06-20T00:21:20Z', duration: 35, result: 1 }
+  { id: 4, repository_id: 2, build_id: 3, commit_id: 3, log_id: 4, number: '3.1', config: { rvm: 'rbx' }, finished_at: '2012-07-01T00:01:00Z', duration: 35, result: 1 }
   { id: 5, repository_id: 3, build_id: 4, commit_id: 4, log_id: 5, number: '4.1', config: { rvm: 'rbx' } }
   { id: 6, repository_id: 1, build_id: 5, commit_id: 5, log_id: 5, number: '5.1', config: { rvm: 'rbx' }, state: 'created', queue: 'builds.common' }
   { id: 7, repository_id: 1, build_id: 5, commit_id: 5, log_id: 5, number: '5.2', config: { rvm: 'rbx' }, state: 'created', queue: 'builds.common' }
