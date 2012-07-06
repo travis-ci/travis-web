@@ -1,9 +1,5 @@
 {{#with view}}
-  {{#unless build.isLoaded}}
-    <div id="build" class="loading">
-      <span>Loading</span>
-    </div>
-  {{else}}
+  {{#if build.isLoaded}}
     <div id="build" {{bindAttr class="color"}}>
       <dl id="summary">
         <div class="left">
@@ -48,5 +44,9 @@
         {{view Travis.Views.LogView contextBinding="build.jobs.firstObject"}}
       {{/if}}
     </div>
-  {{/unless}}
+  {{else}}
+    <div id="build" class="loading">
+      <span>Loading</span>
+    </div>
+  {{/if}}
 {{/with}}

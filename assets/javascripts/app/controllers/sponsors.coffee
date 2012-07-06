@@ -9,7 +9,7 @@ Travis.Controllers.SponsorsController = Em.ArrayController.extend
     if content = @get('content') then $.shuffle(content) else []
   ).property('content.length')
 
-  next: ->
+  tick: ->
     @set('page', if @isLast() then 0 else @get('page') + 1)
 
   pages: (->

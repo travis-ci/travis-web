@@ -6,10 +6,10 @@
   <div class='icon'></div>&nbsp;
 </div>
 
-{{view templateName="sponsors/decks"}}
-{{view templateName="workers/list" id="workers"}}
-{{view templateName="queues/list" id="queues"}}
-{{view templateName="sponsors/links"}}
+{{outlet decks}}
+{{outlet workers}}
+{{outlet queues}}
+{{outlet links}}
 
 <div id="alpha_warning" class="box">
   <h4>{{t layouts.about.alpha}}</h4>

@@ -12,6 +12,12 @@
         <li><a class="watchers" title="Watches" {{bindAttr href="view.urlGithubWatchers"}}>{{stats.watchers}}</a></li>
         <li><a class="forks" title="Forks" {{bindAttr href="view.urlGithubNetwork"}}>{{stats.forks}}</a></li>
       </ul>
+
+      {{view templateName="repositories/_tabs" contextBinding="view"}}
+    </div>
+
+    <div class="tab">
+      {{outlet pane}}
     </div>
   {{/with}}
 {{else}}

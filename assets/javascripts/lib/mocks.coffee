@@ -1,6 +1,6 @@
 require 'ext/jquery'
 
-responseTime = 10000
+responseTime = 0
 
 repositories = [
   { id: 1, owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_result: 0, last_build_finished_at: '2012-07-02T00:00:00Z', description: 'Description of travis-core' },

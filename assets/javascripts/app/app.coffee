@@ -3,6 +3,7 @@ require 'ext/jquery'
 
 # $.mockjaxSettings.log = false
 # Ember.LOG_BINDINGS = true
+Ember.ENV.RAISE_ON_DEPRECATION = true
 
 @Travis = Em.Namespace.create
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
@@ -36,8 +37,6 @@ require 'ext/jquery'
 
       @routes = Travis.Router.create()
       @routes.start()
-
-      @initialize(Em.Object.create()) # TODO sheesh.
 
     connect: ->
       @controller = Em.Controller.create()

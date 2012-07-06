@@ -3,22 +3,14 @@ require 'travis/ticker'
 
 Travis.Controllers = Em.Namespace.create
   RepositoriesController: Ember.ArrayController.extend
-    contentBinding: 'layout.repositories'
     # sortProperties: ['sortOrder']
     # sortAscending: false
-
-  RepositoryController: Em.Controller.extend
-    repositoryBinding: 'layout.repository'
-
-  TabsController: Em.Controller.extend
-    repositoryBinding: 'layout.repository'
-    buildBinding: 'layout.build'
-    jobBinding: 'layout.job'
-    tabBinding: 'layout.tab'
+    init: ->
+      @set('content', Travis.Repository.find())
 
   BuildsController: Em.ArrayController.extend
-    repositoryBinding: 'layout.repository'
-    contentBinding: 'layout.builds'
+    repositoryBinding: 'parent.repository'
+    contentBinding: 'parent.builds'
 
   BuildController: Em.Controller.extend
     repositoryBinding: 'layout.repository'
@@ -35,5 +27,7 @@ Travis.Controllers = Em.Namespace.create
   # TopController: Em.Controller.extend
   #   userBinding: 'Travis.app.currentUser'
 
+require 'controllers/repository'
+require 'controllers/sidebar'
 require 'controllers/sponsors'
 require 'controllers/workers'

@@ -1,5 +1,5 @@
 <ul id="repositories">
-  {{#each repository in controller}}
+  {{#each repository in controller.arrangedContent}}
     {{#view Travis.Views.RepositoriesItemView contextBinding="repository"}}
       <li {{bindAttr class="view.classes"}}>
         <a {{bindAttr href="view.urlRepository"}} class="current">{{slug}}</a>

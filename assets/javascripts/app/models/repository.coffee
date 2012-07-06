@@ -56,6 +56,7 @@ require 'travis/model'
     @find(search: query, orderBy: 'name')
 
   bySlug: (slug) ->
+    # TODO use filter?
     repo = $.detect(@find().toArray(), (repo) -> repo.get('slug') == slug)
     if repo then Ember.ArrayProxy.create(content: [repo]) else @find(slug: slug)
 

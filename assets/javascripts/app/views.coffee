@@ -20,6 +20,5 @@ require 'views/build'
 require 'views/job'
 require 'views/repo'
 require 'views/profile'
-require 'views/tabs'
 require 'views/top'
 
