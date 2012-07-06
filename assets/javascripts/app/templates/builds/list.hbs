@@ -1,4 +1,4 @@
-{{#with view.builds}}
+{{#with view}}
   <table id="builds" class="list">
     <thead>
       <tr>
@@ -11,7 +11,7 @@
     </thead>
 
     <tbody>
-      {{#each build in content}}
+      {{#each build in builds}}
         {{#view Travis.Views.BuildsItemView contextBinding="build"}}
           <tr {{bindAttr class="view.color"}}>
             <td class="number"><a {{bindAttr href="view.urlBuild"}}>{{number}}</a></td>

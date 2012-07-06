@@ -1,6 +1,6 @@
-{{#with view.jobs}}
-  {{#if length}}
-      {{#if view.required}}
+{{#with view}}
+  {{#if jobs.length}}
+      {{#if required}}
         <table id="jobs" class="list">
           <caption>
             {{t jobs.build_matrix}}
@@ -14,13 +14,13 @@
       {{/if}}
       <thead>
         <tr>
-          {{#each configKeys}}
+          {{#each build.configKeys}}
             <th>{{this}}</th>
           {{/each}}
         </tr>
       </thead>
       <tbody>
-        {{#each job in view.jobs}}
+        {{#each job in jobs}}
           {{#view Travis.Views.JobsItemView contextBinding="job"}}
             <tr {{bindAttr class="view.color"}}>
               <td class="number"><a {{bindAttr href="view.urlJob"}}>{{number}}</a></td>
@@ -35,7 +35,7 @@
       </tbody>
     </table>
 
-    {{#unless view.required}}
+    {{#unless required}}
       <div id="allow_failure_help" class="context_help">
         <div class="context_help_caption">{{t "jobs.allowed_failures"}}</div>
         <div class="context_help_body">

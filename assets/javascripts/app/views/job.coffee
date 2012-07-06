@@ -1,6 +1,7 @@
 @Travis.Views.reopen
   JobsView: Em.View.extend
     templateName: 'jobs/list'
+    buildBinding: 'controller.build'
 
     toggleHelp: ->
       $.facebox(div: '#allow_failure_help')

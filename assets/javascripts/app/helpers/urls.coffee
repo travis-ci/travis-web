@@ -23,5 +23,8 @@
   githubNetwork: (slug) ->
     "http://github.com/#{slug}/network"
 
+  githubAdmin: (slug) ->
+    "http://github.com/#{slug}/admin/hooks#travis_minibucket"
+
   email: (email) ->
     "mailto:#{email}"
