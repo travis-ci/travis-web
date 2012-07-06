@@ -1,7 +1,5 @@
-{{#with view.repository}}
-  {{#unless isLoaded}}
-    Loading ...
-  {{else}}
+{{#if view.repository.isLoaded}}
+  {{#with view.repository}}
     <div id="repository">
       <h3>
         <a {{bindAttr href="view.urlGithub"}}>{{slug}}</a>
@@ -15,5 +13,10 @@
         <li><a class="forks" title="Forks" {{bindAttr href="view.urlGithubNetwork"}}>{{stats.forks}}</a></li>
       </ul>
     </div>
-  {{/unless}}
-{{/with}}
+  {{/with}}
+{{else}}
+  <div id="repository" class="loading">
+    <span>Loading</span>
+  </div>
+{{/if}}
+

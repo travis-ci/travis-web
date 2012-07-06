@@ -1,6 +1,8 @@
 {{#with view}}
   {{#unless build.isLoaded}}
-    Loading ...
+    <div id="build" class="loading">
+      <span>Loading</span>
+    </div>
   {{else}}
     <div id="build" {{bindAttr class="color"}}>
       <dl id="summary">
