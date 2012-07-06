@@ -1,4 +1,4 @@
-@Travis.Views.reopen
+@Travis.reopen
   RepositoriesView: Em.View.extend
     templateName: 'repositories/list'
 

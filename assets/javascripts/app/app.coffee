@@ -45,15 +45,14 @@ Ember.ENV.RAISE_ON_DEPRECATION = true
         controller: @controller
       view.appendTo(@get('rootElement') || 'body')
 
-    layout: (name) ->
-      if @_layout && @_layout.name == name
-        @_layout
-      else
-        @_layout = Travis.Layout[$.camelize(name)].create(parent: @controller)
+    connectLayout: (name) ->
+      layout = Travis["#{$.camelize(name)}Controller"].create(parent: @controller)
+      layout.connect(@controller)
+      layout
+
 
 require 'controllers'
 require 'helpers'
-require 'layout'
 require 'models'
 require 'router'
 require 'store'

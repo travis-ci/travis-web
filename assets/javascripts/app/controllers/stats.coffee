@@ -1,6 +1,6 @@
-require 'layout/base'
+require 'controllers/base'
 
-Travis.Layout.Stats = Travis.Layout.Base.extend
+Travis.StatsController = Travis.Controller.extend
   name: 'stats'
 
   init: ->

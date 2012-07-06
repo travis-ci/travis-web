@@ -1,6 +1,6 @@
 require 'ext/ember/namespace'
 
-@Travis.Views = Em.Namespace.create
+@Travis.reopen
   HomeLayout:    Em.View.extend(templateName: 'layouts/home')
   ProfileLayout: Em.View.extend(templateName: 'layouts/simple')
   StatsLayout:   Em.View.extend(templateName: 'layouts/simple')

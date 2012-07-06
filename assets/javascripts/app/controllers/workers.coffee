@@ -1,4 +1,4 @@
-Travis.Controllers.WorkersController = Em.ArrayController.extend
+Travis.WorkersController = Em.ArrayController.extend
   groups: (->
     groups = {}
     for worker in @get('content').toArray()

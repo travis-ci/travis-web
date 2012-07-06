@@ -1,4 +1,4 @@
-Travis.Controllers.SponsorsController = Em.ArrayController.extend
+Travis.SponsorsController = Em.ArrayController.extend
   page: 0
 
   arrangedContent: (->

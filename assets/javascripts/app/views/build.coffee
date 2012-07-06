@@ -1,4 +1,4 @@
-@Travis.Views.reopen
+@Travis.reopen
   BuildsView: Em.View.extend
     templateName: 'builds/list'
     buildsBinding: 'controller'

@@ -1,4 +1,4 @@
-@Travis.Views.reopen
+@Travis.reopen
   JobsView: Em.View.extend
     templateName: 'jobs/list'
     buildBinding: 'controller.build'

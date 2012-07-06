@@ -38,10 +38,10 @@
       </dl>
 
       {{#if build.isMatrix}}
-        {{view Travis.Views.JobsView jobsBinding="requiredJobs" required="true"}}
-        {{view Travis.Views.JobsView jobsBinding="allowedFailureJobs"}}
+        {{view Travis.JobsView jobsBinding="requiredJobs" required="true"}}
+        {{view Travis.JobsView jobsBinding="allowedFailureJobs"}}
       {{else}}
-        {{view Travis.Views.LogView contextBinding="build.jobs.firstObject"}}
+        {{view Travis.LogView contextBinding="build.jobs.firstObject"}}
       {{/if}}
     </div>
   {{else}}

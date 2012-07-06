@@ -1,4 +1,4 @@
-@Travis.Views.reopen
+@Travis.reopen
   UserView: Em.View.extend
     templateName: 'profile/show'
 

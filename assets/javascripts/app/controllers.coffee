@@ -1,7 +1,7 @@
 require 'helpers'
 require 'travis/ticker'
 
-Travis.Controllers = Em.Namespace.create
+Travis.reopen
   RepositoriesController: Ember.ArrayController.extend
     # sortProperties: ['sortOrder']
     # sortAscending: false
@@ -27,7 +27,11 @@ Travis.Controllers = Em.Namespace.create
   # TopController: Em.Controller.extend
   #   userBinding: 'Travis.app.currentUser'
 
+require 'controllers/base'
+require 'controllers/home'
+require 'controllers/profile'
 require 'controllers/repository'
 require 'controllers/sidebar'
 require 'controllers/sponsors'
+require 'controllers/stats'
 require 'controllers/workers'

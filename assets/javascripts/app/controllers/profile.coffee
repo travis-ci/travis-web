@@ -1,10 +1,14 @@
-require 'layout/base'
+require 'controllers/base'
 
-Travis.Layout.Profile = Travis.Layout.Base.extend
+Travis.ProfileController = Travis.Controller.extend
   name: 'profile'
 
   init: ->
     @_super('top', 'user', 'hooks')
+
+  connect: (parent) ->
+    @_super(parent)
+    @connectTop()
 
   viewShow: (params) ->
     @connectUser(@currentUser)
