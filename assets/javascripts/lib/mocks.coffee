@@ -60,9 +60,16 @@ hooks = [
 
 $.mockjax
   url: '/repositories'
-  data: {}
   responseTime: responseTime
-  responseText: { repositories: repositories }
+  response: (settings) ->
+    if !settings.data
+      this.responseText = { repositories: repositories }
+    else if slug = settings.data.slug
+      this.responseText = { repositories: [$.detect(repositories, (repository) -> repository.slug == slug)] }
+    else if search = settings.data.search
+      this.responseText = { repositories: $.select(repositories, (repository) -> repository.slug.indexOf(search) > -1).toArray() }
+    else
+      raise "don't know this ditty"
 
 for repository in repositories
   $.mockjax

@@ -7,7 +7,7 @@ Travis.reopen
       for name in Array.prototype.slice.apply(arguments)
         name = "#{$.camelize(name, false)}Controller"
         klass = Travis[$.camelize(name)] || Em.Controller
-        this[name] = klass.create(parent: this, namespace: Travis, controllers: this)
+        this[name] = klass.create(parent: this,  namespace: Travis, controllers: this)
 
     connectTop: ->
       @connectOutlet(outletName: 'top', controller: @topController, viewClass: Travis.TopView)
@@ -16,8 +16,29 @@ Travis.reopen
   RepositoriesController: Ember.ArrayController.extend
     # sortProperties: ['sortOrder']
     # sortAscending: false
+
+    searchBox: Ember.TextField.create()
+
     init: ->
       @set('content', Travis.Repository.find())
+      @searchBox.appendTo('#search_box')
+
+    recent: ->
+      @set('content', Travis.Repository.find())
+      # @tabs.activate('recent')
+
+    owned_by: (githubId) ->
+      @set('content', Travis.Repository.owned_by(githubId))
+      # @tabs.activate('my_repositories')
+
+    search: ->
+      @set('content', Travis.Repository.search(@searchBox.value))
+      # @tabs.activate('search')
+
+    searchObserver: (->
+      this[if @searchBox.value then 'search' else 'recent']()
+      # @tabs.setDisplay('search', @searchBox.value)
+    ).observes('searchBox.value'),
 
   BuildsController: Em.ArrayController.extend
     repositoryBinding: 'parent.repository'

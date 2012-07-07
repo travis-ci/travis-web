@@ -1,5 +1,3 @@
-require 'controllers/base'
-
 Travis.HomeController = Travis.Controller.extend
   name: 'home'
   bindings: []

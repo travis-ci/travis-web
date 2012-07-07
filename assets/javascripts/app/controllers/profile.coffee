@@ -1,5 +1,3 @@
-require 'controllers/base'
-
 Travis.ProfileController = Travis.Controller.extend
   name: 'profile'
 
