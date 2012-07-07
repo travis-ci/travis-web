@@ -60,7 +60,6 @@ require 'models'
       success: (json) ->
         root = type.pluralName()
         @sideload(store, type, json, root)
-        console.log json, root
         recordArray.load(json[root])
       accepts:
         json: 'application/vnd.travis-ci.2+json'

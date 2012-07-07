@@ -13,33 +13,6 @@ Travis.reopen
       @connectOutlet(outletName: 'top', controller: @topController, viewClass: Travis.TopView)
       @topController.set('tab', @get('name'))
 
-  RepositoriesController: Ember.ArrayController.extend
-    # sortProperties: ['sortOrder']
-    # sortAscending: false
-
-    searchBox: Ember.TextField.create()
-
-    init: ->
-      @set('content', Travis.Repository.find())
-      @searchBox.appendTo('#search_box')
-
-    recent: ->
-      @set('content', Travis.Repository.find())
-      # @tabs.activate('recent')
-
-    owned_by: (githubId) ->
-      @set('content', Travis.Repository.owned_by(githubId))
-      # @tabs.activate('my_repositories')
-
-    search: ->
-      @set('content', Travis.Repository.search(@searchBox.value))
-      # @tabs.activate('search')
-
-    searchObserver: (->
-      this[if @searchBox.value then 'search' else 'recent']()
-      # @tabs.setDisplay('search', @searchBox.value)
-    ).observes('searchBox.value'),
-
   BuildsController: Em.ArrayController.extend
     repositoryBinding: 'parent.repository'
     contentBinding: 'parent.builds'
@@ -54,6 +27,7 @@ Travis.reopen
 require 'controllers/home'
 require 'controllers/profile'
 require 'controllers/repository'
+require 'controllers/repositories'
 require 'controllers/sidebar'
 require 'controllers/sponsors'
 require 'controllers/stats'

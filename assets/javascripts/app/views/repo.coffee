@@ -1,6 +1,19 @@
 @Travis.reopen
   RepositoriesView: Em.View.extend
     templateName: 'repositories/list'
+    tabBinding: 'controller.tab'
+
+    classRecent: (->
+      'active' if @get('tab') == 'recent'
+    ).property('tab')
+
+    classOwned: (->
+      'active' if @get('tab') == 'owned'
+    ).property('tab')
+
+    classSearch: (->
+      'active' if @get('tab') == 'search'
+    ).property('tab')
 
   RepositoriesItemView: Em.View.extend
     repositoryBinding: 'context'
