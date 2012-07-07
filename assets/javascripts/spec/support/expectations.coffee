@@ -1,9 +1,27 @@
+@displaysRepoList = (repos) ->
+  elements = $('#repositories li').toArray()
+  ix = 0
+  for repo in repos
+    element = elements[ix]
+    expect($('a.current', element).attr('href')).toEqual "#!/#{repo.slug}"
+    expect($('a.last_build', element).attr('href')).toEqual repo.build.url
+    expect($('.duration', element).text()).toEqual repo.build.duration
+    expect($('.finished_at', element).text()).toEqual repo.build.finishedAt
+    ix += 1
+
+@displaysRepository = (repo) ->
+  expect($('#repository h3 a').attr('href')).toEqual (repo.href)
+
+@displaysTabs = (tabs) ->
+  for tab, url in tabs
+    expect($("#tab_#{tab} a").attr('href')).toEqual url
+
 @displaysBuildSummary = (data) ->
   element = $('#summary .number a')
   expect(element.attr('href')).toEqual "#!/#{data.repo}/builds/#{data.id}"
 
   element = $('#summary .finished_at')
-  expect(element.text()).toMatch /\d+ (\w+) ago/
+  expect(element.text()).toEqual data.finishedAt
 
   element = $('#summary .duration')
   expect(element.text()).toEqual data.duration
@@ -40,10 +58,7 @@
     expect(element.text()).toEqual job.duration
 
     element = $("#{data.element} tr:nth-child(#{ix}) td.finished_at")
-    if job.finishedAt == '-'
-      expect(element.text()).toEqual '-'
-    else
-      expect(element.text()).toMatch job.finishedAt
+    expect(element.text()).toEqual job.finishedAt
 
     element = $("#{data.element} tr:nth-child(#{ix}) td:nth-child(6)")
     expect(element.text()).toEqual job.rvm

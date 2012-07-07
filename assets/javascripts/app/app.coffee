@@ -46,9 +46,12 @@ Ember.ENV.RAISE_ON_DEPRECATION = true
       view.appendTo(@get('rootElement') || 'body')
 
     connectLayout: (name) ->
-      layout = Travis["#{$.camelize(name)}Controller"].create(parent: @controller)
-      layout.connect(@controller)
-      layout
+      unless @getPath('layout.name') == name
+        name = $.camelize(name)
+        viewClass = Travis["#{name}Layout"]
+        @layout = Travis["#{name}Controller"].create(parent: @controller)
+        @controller.connectOutlet(outletName: 'layout', controller: @layout, viewClass: viewClass)
+      @layout
 
 
 require 'controllers'

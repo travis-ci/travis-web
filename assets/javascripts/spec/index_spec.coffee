@@ -1,7 +1,6 @@
-describe 'on the "current" state', ->
+describe 'on the "index" state', ->
   beforeEach ->
-    app '!/travis-ci/travis-core'
-    waitFor repositoriesRendered
+    app ''
     waitFor buildRendered
 
   it 'displays the expected stuff', ->
@@ -10,6 +9,9 @@ describe 'on the "current" state', ->
       { slug: 'travis-ci/travis-assets', build: { number: 3, url: '#!/travis-ci/travis-assets/builds/3', duration: '30 sec', finishedAt: 'a day ago' } }
       { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '#!/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }
     ]
+
+    displaysRepository
+      href: 'http://github.com/travis-ci/travis-core'
 
     displaysBuildSummary
       id: 1
@@ -38,3 +40,5 @@ describe 'on the "current" state', ->
       jobs: [
         { id: 2, number: '1.2', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: '1.9.3' }
       ]
+
+

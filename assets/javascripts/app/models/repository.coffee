@@ -22,10 +22,10 @@ require 'travis/model'
   ).property()
 
   lastBuildDuration: (->
-    duration = @getPath('data.lastBuildDuration')
-    duration = Travis.Helpers.durationFrom(@get('lastBuildStarted_at'), @get('lastBuildFinished_at')) unless duration
+    duration = @getPath('data.last_build_duration')
+    duration = Travis.Helpers.durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
     duration
-  ).property('data.lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
+  ).property('data.last_build_duration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
   sortOrder: (->
     @get('lastBuildFinishedAt') || '9999'

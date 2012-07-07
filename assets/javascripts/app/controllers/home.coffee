@@ -7,13 +7,10 @@ Travis.HomeController = Travis.Controller.extend
   init: ->
     @_super('top', 'repositories', 'repository', 'sidebar')
 
+    @connectTop()
     @connectOutlet outletName: 'left', controller: @repositoriesController, viewClass: Travis.RepositoriesView
     @connectOutlet outletName: 'main', controller: @repositoryController, viewClass: Travis.RepositoryView
     @connectOutlet outletName: 'right', controller: @sidebarController, viewClass: Travis.SidebarView
-
-  connect: (parent) ->
-    @_super(parent)
-    @connectTop()
 
   activate: (action, params) ->
     @repositoryController.activate(action, params)

@@ -11,3 +11,7 @@ minispade.require 'app'
     Travis.run(rootElement: $('#content'))
     Em.routes.set('location', url)
 
+_Date = Date
+@Date = (date) ->
+  new _Date(date || '2012-07-02T00:03:00Z')
+@Date.UTC = _Date.UTC
