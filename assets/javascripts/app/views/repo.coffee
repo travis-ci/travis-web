@@ -8,8 +8,11 @@
     ).property('tab')
 
     classOwned: (->
-      'active' if @get('tab') == 'owned'
-    ).property('tab')
+      classes = []
+      classes.push('active')  if @get('tab') == 'owned'
+      classes.push('display') if @get('controller.signedIn')
+      classes.join(' ')
+    ).property('tab', 'controller.signedIn')
 
     classSearch: (->
       'active' if @get('tab') == 'search'
