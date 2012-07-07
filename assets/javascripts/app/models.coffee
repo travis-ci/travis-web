@@ -1,4 +1,5 @@
 require 'models/artifact'
+require 'models/branch'
 require 'models/build'
 require 'models/commit'
 require 'models/hook'

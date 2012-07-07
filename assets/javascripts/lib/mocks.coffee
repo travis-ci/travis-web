@@ -40,6 +40,12 @@ artifacts = [
   { id: 5, body: 'log 4' }
 ]
 
+branches = [
+  { branches: [builds[0], builds[1]], commits: [commits[0], commits[1]] },
+  { branches: [builds[2]], commits: [commits[2]] },
+  { branches: [builds[3]], commits: [commits[3]] },
+]
+
 workers = [
   { id: 1, name: 'ruby-1', host: 'worker.travis-ci.org', state: 'ready' }
   { id: 2, name: 'ruby-2', host: 'worker.travis-ci.org', state: 'ready' }
@@ -88,6 +94,13 @@ for job in jobs
     responseText:
       job: job,
       commit: commits[job.commit_id - 1]
+
+for data in branches
+  $.mockjax
+    url: '/branches'
+    data: { repository_id: data.branches[0].repository_id }
+    responseTime: responseTime
+    responseText: data
 
 for artifact in artifacts
   $.mockjax

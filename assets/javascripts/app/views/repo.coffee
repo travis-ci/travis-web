@@ -29,6 +29,23 @@
     templateName: 'repositories/show'
 
     repositoryBinding: 'controller.repository'
+
+    urlGithub: (->
+      Travis.Urls.githubRepository(@getPath('repository.slug'))
+    ).property('repository.slug'),
+
+    urlGithubWatchers: (->
+      Travis.Urls.githubWatchers(@getPath('repository.slug'))
+    ).property('repository.slug'),
+
+    urlGithubNetwork: (->
+      Travis.Urls.githubNetwork(@getPath('repository.slug'))
+    ).property('repository.slug'),
+
+  TabsView: Em.View.extend
+    templateName: 'repositories/tabs'
+
+    repositoryBinding: 'controller.repository'
     buildBinding: 'controller.build'
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
@@ -73,15 +90,26 @@
       Travis.Urls.job(@getPath('repository.slug'), @getPath('job.id'))
     ).property('repository.slug', 'job.id')
 
-    urlGithub: (->
-      Travis.Urls.githubRepository(@getPath('repository.slug'))
-    ).property('repository.slug'),
+    branches: (->
+      @getPath('repository.branches')
+    ).property('repository.id')
 
-    urlGithubWatchers: (->
-      Travis.Urls.githubWatchers(@getPath('repository.slug'))
-    ).property('repository.slug'),
+    urlStatusImage: (->
+      Travis.Urls.statusImage(@getPath('repository.slug'), @getPath('branch.commit.branch'))
+    ).property('repository.slug', 'branch')
 
-    urlGithubNetwork: (->
-      Travis.Urls.githubNetwork(@getPath('repository.slug'))
-    ).property('repository.slug'),
+    markdownStatusImage: (->
+      "[![Build Status](#{@get('urlStatusImage')})](#{@get('urlRepository')})"
+    ).property('urlStatusImage')
+
+    textileStatusImage: (->
+      "!#{@get('urlStatusImage')}!:#{@get('urlRepository')}"
+    ).property('urlStatusImage')
+
+    rdocStatusImage: (->
+      "{<img src=\"#{@get('urlStatusImage')}\" alt=\"Build Status\" />}[#{@get('urlRepository')}]"
+    ).property('urlStatusImage')
+
+
+
 

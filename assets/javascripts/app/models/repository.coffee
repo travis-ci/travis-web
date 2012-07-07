@@ -21,6 +21,10 @@ require 'travis/model'
     Travis.Build.byRepositoryId @get('id'), event_type: 'pull_request'
   ).property()
 
+  branches: (->
+    Travis.Branch.byRepositoryId @get('id')
+  ).property()
+
   lastBuildDuration: (->
     duration = @getPath('data.last_build_duration')
     duration = Travis.Helpers.durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
