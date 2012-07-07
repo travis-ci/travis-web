@@ -9,7 +9,7 @@
     commitBinding: 'build.commit'
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('context.result'))
+      Travis.Helpers.colorForResult(@getPath('build.result'))
     ).property('build.result')
 
     urlBuild: (->

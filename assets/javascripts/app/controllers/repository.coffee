@@ -1,61 +1,61 @@
 Travis.RepositoryController = Travis.Controller.extend
-    bindings: []
+  bindings: []
 
-    init: ->
-      @_super('builds', 'build', 'job')
+  init: ->
+    @_super('builds', 'build', 'job')
 
-    activate: (action, params) ->
-      @_unbind()
-      @set('params', params)
-      this["view#{$.camelize(action)}"]()
+  activate: (action, params) ->
+    @_unbind()
+    this["view#{$.camelize(action)}"]()
+    @set('params', params)
 
-    viewIndex: ->
-      @_bind('repository', 'controllers.repositoriesController.firstObject')
-      @_bind('build', 'repository.lastBuild')
-      @connectTab('current')
+  viewIndex: ->
+    @connectTab('current')
+    @_bind('repository', 'controllers.repositoriesController.firstObject')
+    @_bind('build', 'repository.lastBuild')
 
-    viewCurrent: ->
-      @_bind('repository', 'repositoriesByParams.firstObject')
-      @_bind('build', 'repository.lastBuild')
-      @connectTab('current')
+  viewCurrent: ->
+    @connectTab('current')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('build', 'repository.lastBuild')
 
-    viewBuilds: ->
-      @_bind('repository', 'repositoriesByParams.firstObject')
-      @_bind('builds', 'repository.builds')
-      @connectTab('builds')
+  viewBuilds: ->
+    @connectTab('builds')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('builds', 'repository.builds')
 
-    viewBuild: ->
-      @_bind('repository', 'repositoriesByParams.firstObject')
-      @_bind('build', 'buildById')
-      @connectTab('build')
+  viewBuild: ->
+    @connectTab('build')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('build', 'buildById')
 
-    viewJob: ->
-      @_bind('repository', 'repositoriesByParams.firstObject')
-      @_bind('build', 'job.build')
-      @_bind('job', 'jobById')
-      @connectTab('job')
+  viewJob: ->
+    @connectTab('job')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('build', 'job.build')
+    @_bind('job', 'jobById')
 
-    repositoriesByParams: (->
-      Travis.Repository.bySlug("#{params.owner}/#{params.name}") if params = @get('params')
-    ).property('params')
+  repositoriesByParams: (->
+    Travis.Repository.bySlug("#{params.owner}/#{params.name}") if params = @get('params')
+  ).property('params')
 
-    buildById: (->
-      Travis.Build.find(id) if id = @getPath('params.id')
-    ).property('params.id')
+  buildById: (->
+    Travis.Build.find(id) if id = @getPath('params.id')
+  ).property('params.id')
 
-    jobById: (->
-      Travis.Job.find(id) if id = @getPath('params.id')
-    ).property('params.id')
+  jobById: (->
+    Travis.Job.find(id) if id = @getPath('params.id')
+  ).property('params.id')
 
-    connectTab: (tab) ->
-      @set('tab', tab)
-      name = if tab == 'current' then 'build' else tab
-      @connectOutlet(outletName: 'pane', name: name)
+  connectTab: (tab) ->
+    @set('tab', tab)
+    name = if tab == 'current' then 'build' else tab
+    @connectOutlet(outletName: 'pane', controller: this, viewClass: Travis["#{$.camelize(name)}View"])
 
-    _bind: (to, from) ->
-      @bindings.push Ember.oneWay(this, to, from)
+  _bind: (to, from) ->
+    @bindings.push Ember.oneWay(this, to, from)
 
-    _unbind: ->
-      binding.disconnect(this) for binding in @bindings
-      @bindings.length = 0
+  _unbind: ->
+    binding.disconnect(this) for binding in @bindings
+    @bindings.length = 0
 

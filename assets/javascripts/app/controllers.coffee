@@ -12,14 +12,6 @@ Travis.reopen
     repositoryBinding: 'parent.repository'
     contentBinding: 'parent.builds'
 
-  BuildController: Em.Controller.extend
-    repositoryBinding: 'layout.repository'
-    buildBinding: 'layout.build'
-
-  JobController: Em.Controller.extend
-    repositoryBinding: 'layout.repository'
-    jobBinding: 'layout.job'
-
   QueuesController: Em.ArrayController.extend()
   UserController: Em.Controller.extend()
   HooksController: Em.ArrayController.extend()

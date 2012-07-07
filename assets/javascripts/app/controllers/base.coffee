@@ -3,7 +3,7 @@ Travis.Controller = Em.Controller.extend
     for name in Array.prototype.slice.apply(arguments)
       name = "#{$.camelize(name, false)}Controller"
       klass = Travis[$.camelize(name)] || Em.Controller
-      this[name] = klass.create(namespace: Travis, controllers: this)
+      this[name] = klass.create(parent: this, namespace: Travis, controllers: this)
 
   connect: (parent) ->
     parent.connectOutlet

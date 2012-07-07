@@ -13474,8 +13474,6 @@ Ember.ControllerMixin.reopen({
 
       var viewClassName = name.charAt(0).toUpperCase() + name.substr(1) + "View";
       viewClass = get(namespace, viewClassName);
-      controller = get(controllers, name + 'Controller');
-
       Ember.assert("The name you supplied " + name + " did not resolve to a view " + viewClassName, !!viewClass);
       Ember.assert("The name you supplied " + name + " did not resolve to a controller " + name + 'Controller', (!!controller && !!context) || !context);
     }

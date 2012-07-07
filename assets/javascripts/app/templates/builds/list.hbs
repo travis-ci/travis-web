@@ -1,37 +1,35 @@
 {{#if builds.isLoaded}}
-  {{#with view}}
-    <table id="builds" class="list">
-      <thead>
-        <tr>
-          <th>{{t builds.name}}</th>
-          <th>{{t builds.commit}}</th>
-          <th>{{t builds.message}}</th>
-          <th>{{t builds.duration}}</th>
-          <th>{{t builds.finished_at}}</th>
-        </tr>
-      </thead>
+  <table id="builds" class="list">
+    <thead>
+      <tr>
+        <th>{{t builds.name}}</th>
+        <th>{{t builds.commit}}</th>
+        <th>{{t builds.message}}</th>
+        <th>{{t builds.duration}}</th>
+        <th>{{t builds.finished_at}}</th>
+      </tr>
+    </thead>
 
-      <tbody>
-        {{#each build in builds}}
-          {{#view Travis.BuildsItemView contextBinding="build"}}
-            <tr {{bindAttr class="view.color"}}>
-              <td class="number"><a {{bindAttr href="view.urlBuild"}}>{{number}}</a></td>
-              <td class="commit"><a {{bindAttr href="view.urlGithubCommit"}}>{{formatCommit commit}}</a></td>
-              <td class="message">{{{formatMessage commit.message short="true"}}}</td>
-              <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
-              <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
-            </tr>
-          {{/view}}
-        {{/each}}
-      </tbody>
-    </table>
+    <tbody>
+      {{#each build in builds}}
+        {{#view Travis.BuildsItemView contextBinding="build"}}
+          <tr {{bindAttr class="view.color"}}>
+            <td class="number"><a {{bindAttr href="view.urlBuild"}}>{{number}}</a></td>
+            <td class="commit"><a {{bindAttr href="view.urlGithubCommit"}}>{{formatCommit commit}}</a></td>
+            <td class="message">{{{formatMessage commit.message short="true"}}}</td>
+            <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
+            <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finishedAt}}</td>
+          </tr>
+        {{/view}}
+      {{/each}}
+    </tbody>
+  </table>
 
-    <p>
-      <button {{action showMore on="click" target="builds" isVisibleBinding="hasMore"}}>
-        {{t builds.show_more}}
-      </button>
-    </p>
-  {{/with}}
+  <p>
+    <button {{action showMore on="click" target="builds" isVisibleBinding="hasMore"}}>
+      {{t builds.show_more}}
+    </button>
+  </p>
 {{else}}
   <div id="builds" class="loading">
     <span>Loading</span>
