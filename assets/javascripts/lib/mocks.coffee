@@ -60,6 +60,7 @@ hooks = [
 
 $.mockjax
   url: '/repositories'
+  data: {}
   responseTime: responseTime
   responseText: { repositories: repositories }
 
@@ -68,6 +69,12 @@ for repository in repositories
     url: '/' + repository.slug
     responseTime: responseTime
     responseText: { repository: repository }
+
+  $.mockjax
+    url: '/repositories'
+    data: { slug: repository.slug }
+    responseTime: responseTime
+    responseText: { repositories: [repository] }
 
 for build in builds
   $.mockjax

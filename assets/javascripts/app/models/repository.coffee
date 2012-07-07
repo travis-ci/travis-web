@@ -60,15 +60,13 @@ require 'travis/model'
     @find(search: query, orderBy: 'name')
 
   bySlug: (slug) ->
-    # TODO use filter?
-    repo = $.detect(@find().toArray(), (repo) -> repo.get('slug') == slug)
-    if repo then Ember.ArrayProxy.create(content: [repo]) else @find(slug: slug)
+    @find(slug: slug)
 
   select: (id) ->
     @find().forEach (repository) ->
       repository.set 'selected', repository.get('id') is id
 
-  buildURL: (slug) ->
-    if slug then slug else 'repositories'
+  # buildURL: (slug) ->
+  #   if slug then slug else 'repositories'
 
 

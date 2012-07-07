@@ -36,5 +36,9 @@
 
       {{view Travis.LogView contextBinding="job"}}}
     </div>
+  {{else}}
+    <div id="job" class="loading">
+      <span>Loading</span>
+    </div>
   {{/if}}
 {{/with}}

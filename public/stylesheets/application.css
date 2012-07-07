@@ -343,7 +343,7 @@ table.list td:last-child {
 }
 
 /* line 8, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log {
+pre#log {
   clear: left;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -360,115 +360,120 @@ table.list td:last-child {
   border-radius: 4px;
 }
 /* line 21, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log p {
+pre#log p {
   position: relative;
   padding: 0 15px 0 50px;
   margin: 0;
   min-height: 16px;
 }
 /* line 26, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log p:hover {
+pre#log p:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
 /* line 28, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log p.highlight {
+pre#log p.highlight {
   background-color: rgba(255, 255, 255, 0.5);
 }
 /* line 30, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log p a {
+pre#log p a {
   position: absolute;
   margin-left: -40px;
   cursor: pointer;
 }
 /* line 35, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .fold {
+pre#log .fold {
   height: 16px;
   overflow: hidden;
   cursor: pointer;
 }
 /* line 39, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .fold.open {
+pre#log .fold.open {
   height: auto;
 }
 /* line 42, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bold {
+pre#log .bold {
   font-weight: bold;
 }
 /* line 44, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .italic {
+pre#log .italic {
   font-style: italic;
 }
 /* line 46, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .underscore {
+pre#log .underscore {
   /* monochrome displays only according to http://ascii-table.com/ansi-escape-sequences.php */
 }
 /* line 49, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .black {
+pre#log .black {
   color: black;
 }
 /* line 51, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .red {
+pre#log .red {
   color: red;
 }
 /* line 53, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .green {
+pre#log .green {
   color: lime;
 }
 /* line 55, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .yellow {
+pre#log .yellow {
   color: yellow;
 }
 /* line 57, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .blue {
+pre#log .blue {
   color: blue;
 }
 /* line 59, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .magenta {
+pre#log .magenta {
   color: magenta;
 }
 /* line 61, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .cyan {
+pre#log .cyan {
   color: cyan;
 }
 /* line 63, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .white {
+pre#log .white {
   color: white;
 }
 /* line 65, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .black.bright {
+pre#log .black.bright {
   color: #999999;
 }
 /* line 68, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bg-black {
+pre#log .bg-black {
   background-color: black;
 }
 /* line 70, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bg-red {
+pre#log .bg-red {
   background-color: red;
 }
 /* line 72, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bg-green {
+pre#log .bg-green {
   background-color: lime;
 }
 /* line 74, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bg-yellow {
+pre#log .bg-yellow {
   background-color: yellow;
 }
 /* line 76, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bg-blue {
+pre#log .bg-blue {
   background-color: blue;
 }
 /* line 78, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bg-magenta {
+pre#log .bg-magenta {
   background-color: magenta;
 }
 /* line 80, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bg-cyan {
+pre#log .bg-cyan {
   background-color: cyan;
 }
 /* line 82, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
-#log .bg-white {
+pre#log .bg-white {
   background-color: white;
+}
+
+/* line 85, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
+#log.loading {
+  padding: 25px 0 0 10px;
 }
 /* line 3, /Volumes/Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
 #repository {
