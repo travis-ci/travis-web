@@ -1,58 +1,56 @@
-{{#with view}}
-  {{#if jobs.length}}
-      {{#if required}}
-        <table id="jobs" class="list">
-          <caption>
-            {{t jobs.build_matrix}}
-          </caption>
-      {{else}}
-        <table id="allowed_failure_jobs" class="list">
-          <caption>
-            {{t jobs.allowed_failures}}
-            <a title="What's this?" class="help" {{action toggleHelp}}></a>
-          </caption>
-      {{/if}}
-      <thead>
-        <tr>
-          {{#each build.configKeys}}
-            <th>{{this}}</th>
-          {{/each}}
-        </tr>
-      </thead>
-      <tbody>
-        {{#each job in jobs}}
-          {{#view Travis.JobsItemView contextBinding="job"}}
-            <tr {{bindAttr class="view.color"}}>
-              <td class="number"><a {{bindAttr href="view.urlJob"}}>{{number}}</a></td>
-              <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
-              <td class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime finished_at}}</td>
-              {{#each configValues}}
-                <td>{{this}}</td>
-              {{/each}}
-            </tr>
-          {{/view}}
+{{#if view.jobs.length}}
+    {{#if view.required}}
+      <table id="jobs" class="list">
+        <caption>
+          {{t jobs.build_matrix}}
+        </caption>
+    {{else}}
+      <table id="allowed_failure_jobs" class="list">
+        <caption>
+          {{t jobs.allowed_failures}}
+          <a title="What's this?" class="help" {{action toggleHelp}}></a>
+        </caption>
+    {{/if}}
+    <thead>
+      <tr>
+        {{#each key in view.build.configKeys}}
+          <th>{{key}}</th>
         {{/each}}
-      </tbody>
-    </table>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each job in view.jobs}}
+        {{#view Travis.JobsItemView contextBinding="job"}}
+          <tr {{bindAttr class="view.color"}}>
+            <td class="number"><a {{bindAttr href="view.urlJob"}}>{{number}}</a></td>
+            <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
+            <td class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime finishedAt}}</td>
+            {{#each value in configValues}}
+              <td>{{value}}</td>
+            {{/each}}
+          </tr>
+        {{/view}}
+      {{/each}}
+    </tbody>
+  </table>
 
-    {{#unless required}}
-      <div id="allow_failure_help" class="context_help">
-        <div class="context_help_caption">{{t "jobs.allowed_failures"}}</div>
-        <div class="context_help_body">
-          <p>
-            Allowed Failures are items in your build matrix that are allowed to
-            fail without causing the entire build to be shown as failed. This lets you add
-            in experimental and preparatory builds to test against versions or
-            configurations that you are not ready to officially support.
-          </p>
-          <p>
-            You can define allowed failures in the build matrix as follows:
-          </p>
-          <pre> matrix:
-    allow_failures:
-      - rvm: ruby-head </pre>
-        </div>
+  {{#unless required}}
+    <div id="allow_failure_help" class="context_help">
+      <div class="context_help_caption">{{t "jobs.allowed_failures"}}</div>
+      <div class="context_help_body">
+        <p>
+          Allowed Failures are items in your build matrix that are allowed to
+          fail without causing the entire build to be shown as failed. This lets you add
+          in experimental and preparatory builds to test against versions or
+          configurations that you are not ready to officially support.
+        </p>
+        <p>
+          You can define allowed failures in the build matrix as follows:
+        </p>
+        <pre> matrix:
+  allow_failures:
+    - rvm: ruby-head </pre>
       </div>
-    {{/unless}}
-  {{/if}}
-{{/with}}
+    </div>
+  {{/unless}}
+{{/if}}

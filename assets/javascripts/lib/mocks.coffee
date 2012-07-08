@@ -9,10 +9,10 @@ repositories = [
 ]
 
 builds = [
-  { id: 1, repository_id: '1', commit_id: 1, job_ids: [1, 2], number: 1, event_type: 'push', config: { rvm: ['rbx', '1.9.3'] }, duration: 30, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:30Z', result: 0 },
-  { id: 2, repository_id: '1', commit_id: 2, job_ids: [3],    number: 2, event_type: 'push', config: { rvm: ['rbx'] } },
-  { id: 3, repository_id: '2', commit_id: 3, job_ids: [4],    number: 3, event_type: 'push', config: { rvm: ['rbx'] }, duration: 30, started_at: '2012-07-02T00:01:00Z', finished_at: '2012-07-01T00:01:30Z', result: 1 },
-  { id: 4, repository_id: '3', commit_id: 4, job_ids: [5],    number: 4, event_type: 'push', config: { rvm: ['rbx'] }, started_at: '2012-07-02T00:02:00Z' },
+  { id: 1, repository_id: '1', commit_id: 1, job_ids: [1, 2, 3], number: 1, event_type: 'push', config: { rvm: ['rbx', '1.9.3', 'jruby'] }, duration: 30, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:30Z', result: 0 },
+  { id: 2, repository_id: '1', commit_id: 2, job_ids: [4],       number: 2, event_type: 'push', config: { rvm: ['rbx'] } },
+  { id: 3, repository_id: '2', commit_id: 3, job_ids: [5],       number: 3, event_type: 'push', config: { rvm: ['rbx'] }, duration: 30, started_at: '2012-07-02T00:01:00Z', finished_at: '2012-07-01T00:01:30Z', result: 1 },
+  { id: 4, repository_id: '3', commit_id: 4, job_ids: [6],       number: 4, event_type: 'push', config: { rvm: ['rbx'] }, started_at: '2012-07-02T00:02:00Z' },
 ]
 
 commits = [
@@ -23,13 +23,14 @@ commits = [
 ]
 
 jobs = [
-  { id: 1, repository_id: 1, build_id: 1, commit_id: 1, log_id: 1, number: '1.1', config: { rvm: 'rbx' }, duration: 30, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:30Z', result: 0 }
-  { id: 2, repository_id: 1, build_id: 1, commit_id: 1, log_id: 2, number: '1.2', config: { rvm: '1.9.3' }, allow_failure: true }
-  { id: 3, repository_id: 1, build_id: 2, commit_id: 2, log_id: 3, number: '2.1', config: { rvm: 'rbx' } }
-  { id: 4, repository_id: 2, build_id: 3, commit_id: 3, log_id: 4, number: '3.1', config: { rvm: 'rbx' }, duration: 30, started_at: '2012-07-02T00:01:00Z', finished_at: '2012-07-02T00:01:30Z', result: 1 }
-  { id: 5, repository_id: 3, build_id: 4, commit_id: 4, log_id: 5, number: '4.1', config: { rvm: 'rbx' }, started_at: '2012-07-02T00:02:00Z' }
-  { id: 6, repository_id: 1, build_id: 5, commit_id: 5, log_id: 5, number: '5.1', config: { rvm: 'rbx' }, state: 'created', queue: 'builds.common' }
-  { id: 7, repository_id: 1, build_id: 5, commit_id: 5, log_id: 5, number: '5.2', config: { rvm: 'rbx' }, state: 'created', queue: 'builds.common' }
+  { id: 1, repository_id: 1, build_id: 1, commit_id: 1, log_id: 1, number: '1.1', config: { rvm: 'rbx' },   duration: 30, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:30Z', result: 0 }
+  { id: 2, repository_id: 1, build_id: 1, commit_id: 1, log_id: 2, number: '1.2', config: { rvm: '1.9.3' }, duration: 40, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:40Z', result: 1 }
+  { id: 3, repository_id: 1, build_id: 1, commit_id: 1, log_id: 3, number: '1.3', config: { rvm: 'jruby' }, allow_failure: true }
+  { id: 4, repository_id: 1, build_id: 2, commit_id: 2, log_id: 4, number: '2.1', config: { rvm: 'rbx' } }
+  { id: 5, repository_id: 2, build_id: 3, commit_id: 3, log_id: 5, number: '3.1', config: { rvm: 'rbx' }, duration: 30, started_at: '2012-07-02T00:01:00Z', finished_at: '2012-07-02T00:01:30Z', result: 1 }
+  { id: 6, repository_id: 3, build_id: 4, commit_id: 4, log_id: 6, number: '4.1', config: { rvm: 'rbx' }, started_at: '2012-07-02T00:02:00Z' }
+  { id: 7, repository_id: 1, build_id: 5, commit_id: 5, log_id: 7, number: '5.1', config: { rvm: 'rbx' }, state: 'created', queue: 'builds.common' }
+  { id: 8, repository_id: 1, build_id: 5, commit_id: 5, log_id: 8, number: '5.2', config: { rvm: 'rbx' }, state: 'created', queue: 'builds.common' }
 ]
 
 artifacts = [
@@ -37,7 +38,10 @@ artifacts = [
   { id: 2, body: 'log 2' }
   { id: 3, body: 'log 3' }
   { id: 4, body: 'log 4' }
-  { id: 5, body: 'log 4' }
+  { id: 5, body: 'log 5' }
+  { id: 6, body: 'log 6' }
+  { id: 7, body: 'log 7' }
+  { id: 8, body: 'log 8' }
 ]
 
 branches = [

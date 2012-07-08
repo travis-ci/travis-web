@@ -13,22 +13,13 @@ Travis.reopen
       @connectOutlet(outletName: 'top', controller: @topController, viewClass: Travis.TopView)
       @topController.set('tab', @get('name'))
 
-  BuildsController: Em.ArrayController.extend
-    repositoryBinding: 'parent.repository'
-    contentBinding: 'parent.builds'
-
-  QueuesController: Em.ArrayController.extend()
-  UserController: Em.Controller.extend()
-  HooksController: Em.ArrayController.extend()
-
   # TopController: Em.Controller.extend
   #   userBinding: 'Travis.app.currentUser'
 
+require 'controllers/builds'
 require 'controllers/home'
 require 'controllers/profile'
-require 'controllers/repository'
 require 'controllers/repositories'
+require 'controllers/repository'
 require 'controllers/sidebar'
-require 'controllers/sponsors'
 require 'controllers/stats'
-require 'controllers/workers'

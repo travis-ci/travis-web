@@ -1,7 +1,9 @@
 minispade.require 'app'
 
 @reset = ->
-  Travis.app.destroy() if Travis.app
+  Em.run ->
+    Travis.app.destroy() if Travis.app
+  waits(500) # TODO not sure what we need to wait for here
   $('#content').remove()
   $('body').append('<div id="content"></div>')
 

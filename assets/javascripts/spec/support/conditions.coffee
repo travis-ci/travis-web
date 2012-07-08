@@ -1,10 +1,12 @@
-@repositoriesRendered = ->
-  $('#repositories li a.current').text() != ''
+@notEmpty = (selector) ->
+  -> $(selector).text().trim() != ''
 
-@buildRendered = ->
-  $('#summary .number').text() != ''
+@hasText = (selector, text) ->
+  -> $(selector).text().trim() == text
 
-@matrixRendered = ->
-  $('#jobs').text() != ''
-
+@reposRendered  = notEmpty('#repositories li a.current')
+@buildRendered  = notEmpty('#summary .number')
+@buildsRendered = notEmpty('#builds .number')
+@matrixRendered = notEmpty('#jobs')
+@jobRendered    = notEmpty('#summary .number')
 

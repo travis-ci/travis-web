@@ -1,141 +1,12 @@
 (function() {
 
-  describe('on the "current" state', function() {
+  describe('on the "build" state', function() {
     beforeEach(function() {
-      app('!/travis-ci/travis-core');
-      waitFor(repositoriesRendered);
+      app('!/travis-ci/travis-core/builds/1');
       return waitFor(buildRendered);
     });
     return it('displays the expected stuff', function() {
-      displaysRepoList([
-        {
-          slug: 'travis-ci/travis-core',
-          build: {
-            number: 1,
-            url: '#!/travis-ci/travis-core/builds/1',
-            duration: '30 sec',
-            finishedAt: '3 minutes ago'
-          }
-        }, {
-          slug: 'travis-ci/travis-assets',
-          build: {
-            number: 3,
-            url: '#!/travis-ci/travis-assets/builds/3',
-            duration: '30 sec',
-            finishedAt: 'a day ago'
-          }
-        }, {
-          slug: 'travis-ci/travis-hub',
-          build: {
-            number: 4,
-            url: '#!/travis-ci/travis-hub/builds/4',
-            duration: '1 min',
-            finishedAt: '-'
-          }
-        }
-      ]);
-      displaysBuildSummary({
-        id: 1,
-        repo: 'travis-ci/travis-core',
-        commit: '1234567',
-        branch: 'master',
-        compare: '0123456..1234567',
-        finishedAt: '3 minutes ago',
-        duration: '30 sec',
-        message: 'commit message 1'
-      });
-      displaysTabs({
-        current: '#!/travis-ci/travis-core',
-        builds: '#!/travis-ci/travis-core/builds'
-      });
-      displaysJobMatrix({
-        element: '#jobs',
-        headers: ['Job', 'Duration', 'Finished', 'Rvm'],
-        jobs: [
-          {
-            id: 1,
-            number: '1.1',
-            repo: 'travis-ci/travis-core',
-            finishedAt: '3 minutes ago',
-            duration: '30 sec',
-            rvm: 'rbx'
-          }
-        ]
-      });
-      return displaysJobMatrix({
-        element: '#allowed_failure_jobs',
-        headers: ['Job', 'Duration', 'Finished', 'Rvm'],
-        jobs: [
-          {
-            id: 2,
-            number: '1.2',
-            repo: 'travis-ci/travis-core',
-            finishedAt: '-',
-            duration: '-',
-            rvm: '1.9.3'
-          }
-        ]
-      });
-    });
-  });
-
-}).call(this);
-(function() {
-
-  describe('events', function() {
-    beforeEach(function() {
-      app;
-      return waitFor(buildRendered);
-    });
-    return it('foo', function() {
-      return Travis.app.receive('build:started', {
-        repository: {
-          id: 10,
-          owner: 'travis-ci',
-          name: 'travis-support',
-          slug: 'travis-ci/travis-support',
-          build_ids: [10],
-          last_build_id: 10,
-          last_build_number: 10,
-          last_build_started_at: '2012-07-02T00:02:00Z',
-          description: 'Description of travis-hub'
-        },
-        build: {
-          id: 10,
-          repository_id: 1,
-          commit_id: 10,
-          job_ids: [10],
-          number: 10,
-          event_type: 'push',
-          config: {
-            rvm: ['rbx']
-          }
-        },
-        commit: {
-          id: 10,
-          sha: '1234567',
-          branch: 'master',
-          message: 'commit message 1',
-          author_name: 'author name',
-          author_email: 'author@email.com',
-          committer_name: 'committer name',
-          committer_email: 'committer@email.com',
-          compare_url: 'http://github.com/compare/0123456..1234567'
-        }
-      });
-    });
-  });
-
-}).call(this);
-(function() {
-
-  describe('on the "index" state', function() {
-    beforeEach(function() {
-      app('');
-      return waitFor(buildRendered);
-    });
-    return it('displays the expected stuff', function() {
-      displaysRepoList([
+      displaysReposList([
         {
           slug: 'travis-ci/travis-core',
           build: {
@@ -165,7 +36,8 @@
       displaysRepository({
         href: 'http://github.com/travis-ci/travis-core'
       });
-      displaysBuildSummary({
+      displaysSummary({
+        type: 'build',
         id: 1,
         repo: 'travis-ci/travis-core',
         commit: '1234567',
@@ -176,8 +48,19 @@
         message: 'commit message 1'
       });
       displaysTabs({
-        current: '#!/travis-ci/travis-core',
-        builds: '#!/travis-ci/travis-core/builds'
+        current: {
+          href: '#!/travis-ci/travis-core'
+        },
+        builds: {
+          href: '#!/travis-ci/travis-core/builds'
+        },
+        build: {
+          href: '#!/travis-ci/travis-core/builds/1',
+          active: true
+        },
+        job: {
+          hidden: true
+        }
       });
       displaysJobMatrix({
         element: '#jobs',
@@ -190,6 +73,13 @@
             finishedAt: '3 minutes ago',
             duration: '30 sec',
             rvm: 'rbx'
+          }, {
+            id: 2,
+            number: '1.2',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '2 minutes ago',
+            duration: '40 sec',
+            rvm: '1.9.3'
           }
         ]
       });
@@ -198,15 +88,301 @@
         headers: ['Job', 'Duration', 'Finished', 'Rvm'],
         jobs: [
           {
-            id: 2,
-            number: '1.2',
+            id: 3,
+            number: '1.3',
             repo: 'travis-ci/travis-core',
             finishedAt: '-',
             duration: '-',
+            rvm: 'jruby'
+          }
+        ]
+      });
+    });
+  });
+
+}).call(this);
+(function() {
+
+
+
+}).call(this);
+(function() {
+
+  describe('on the "current" state', function() {
+    beforeEach(function() {
+      app('!/travis-ci/travis-core');
+      return waitFor(buildRendered);
+    });
+    return it('displays the expected stuff', function() {
+      displaysReposList([
+        {
+          slug: 'travis-ci/travis-core',
+          build: {
+            number: 1,
+            url: '#!/travis-ci/travis-core/builds/1',
+            duration: '30 sec',
+            finishedAt: '3 minutes ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-assets',
+          build: {
+            number: 3,
+            url: '#!/travis-ci/travis-assets/builds/3',
+            duration: '30 sec',
+            finishedAt: 'a day ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-hub',
+          build: {
+            number: 4,
+            url: '#!/travis-ci/travis-hub/builds/4',
+            duration: '1 min',
+            finishedAt: '-'
+          }
+        }
+      ]);
+      displaysRepository({
+        href: 'http://github.com/travis-ci/travis-core'
+      });
+      displaysSummary({
+        type: 'build',
+        id: 1,
+        repo: 'travis-ci/travis-core',
+        commit: '1234567',
+        branch: 'master',
+        compare: '0123456..1234567',
+        finishedAt: '3 minutes ago',
+        duration: '30 sec',
+        message: 'commit message 1'
+      });
+      displaysTabs({
+        current: {
+          href: '#!/travis-ci/travis-core',
+          active: true
+        },
+        builds: {
+          href: '#!/travis-ci/travis-core/builds'
+        },
+        build: {
+          hidden: true
+        },
+        job: {
+          hidden: true
+        }
+      });
+      displaysJobMatrix({
+        element: '#jobs',
+        headers: ['Job', 'Duration', 'Finished', 'Rvm'],
+        jobs: [
+          {
+            id: 1,
+            number: '1.1',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '3 minutes ago',
+            duration: '30 sec',
+            rvm: 'rbx'
+          }, {
+            id: 2,
+            number: '1.2',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '2 minutes ago',
+            duration: '40 sec',
             rvm: '1.9.3'
           }
         ]
       });
+      return displaysJobMatrix({
+        element: '#allowed_failure_jobs',
+        headers: ['Job', 'Duration', 'Finished', 'Rvm'],
+        jobs: [
+          {
+            id: 3,
+            number: '1.3',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '-',
+            duration: '-',
+            rvm: 'jruby'
+          }
+        ]
+      });
+    });
+  });
+
+}).call(this);
+(function() {
+
+
+
+}).call(this);
+(function() {
+
+  describe('on the "index" state', function() {
+    beforeEach(function() {
+      app('');
+      return waitFor(buildRendered);
+    });
+    return it('displays the expected stuff', function() {
+      displaysReposList([
+        {
+          slug: 'travis-ci/travis-core',
+          build: {
+            number: 1,
+            url: '#!/travis-ci/travis-core/builds/1',
+            duration: '30 sec',
+            finishedAt: '3 minutes ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-assets',
+          build: {
+            number: 3,
+            url: '#!/travis-ci/travis-assets/builds/3',
+            duration: '30 sec',
+            finishedAt: 'a day ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-hub',
+          build: {
+            number: 4,
+            url: '#!/travis-ci/travis-hub/builds/4',
+            duration: '1 min',
+            finishedAt: '-'
+          }
+        }
+      ]);
+      displaysRepository({
+        href: 'http://github.com/travis-ci/travis-core'
+      });
+      displaysSummary({
+        type: 'build',
+        id: 1,
+        repo: 'travis-ci/travis-core',
+        commit: '1234567',
+        branch: 'master',
+        compare: '0123456..1234567',
+        finishedAt: '3 minutes ago',
+        duration: '30 sec',
+        message: 'commit message 1'
+      });
+      displaysTabs({
+        current: {
+          href: '#!/travis-ci/travis-core',
+          active: true
+        },
+        builds: {
+          href: '#!/travis-ci/travis-core/builds'
+        },
+        build: {
+          hidden: true
+        },
+        job: {
+          hidden: true
+        }
+      });
+      displaysJobMatrix({
+        element: '#jobs',
+        headers: ['Job', 'Duration', 'Finished', 'Rvm'],
+        jobs: [
+          {
+            id: 1,
+            number: '1.1',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '3 minutes ago',
+            duration: '30 sec',
+            rvm: 'rbx'
+          }, {
+            id: 2,
+            number: '1.2',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '2 minutes ago',
+            duration: '40 sec',
+            rvm: '1.9.3'
+          }
+        ]
+      });
+      return displaysJobMatrix({
+        element: '#allowed_failure_jobs',
+        headers: ['Job', 'Duration', 'Finished', 'Rvm'],
+        jobs: [
+          {
+            id: 3,
+            number: '1.3',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '-',
+            duration: '-',
+            rvm: 'jruby'
+          }
+        ]
+      });
+    });
+  });
+
+}).call(this);
+(function() {
+
+  describe('on the "job" state', function() {
+    beforeEach(function() {
+      app('!/travis-ci/travis-core/jobs/1');
+      waitFor(jobRendered);
+      return waitFor(hasText('#tab_build', 'Build #1'));
+    });
+    return it('displays the expected stuff', function() {
+      displaysReposList([
+        {
+          slug: 'travis-ci/travis-core',
+          build: {
+            number: 1,
+            url: '#!/travis-ci/travis-core/builds/1',
+            duration: '30 sec',
+            finishedAt: '3 minutes ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-assets',
+          build: {
+            number: 3,
+            url: '#!/travis-ci/travis-assets/builds/3',
+            duration: '30 sec',
+            finishedAt: 'a day ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-hub',
+          build: {
+            number: 4,
+            url: '#!/travis-ci/travis-hub/builds/4',
+            duration: '1 min',
+            finishedAt: '-'
+          }
+        }
+      ]);
+      displaysRepository({
+        href: 'http://github.com/travis-ci/travis-core'
+      });
+      displaysSummary({
+        id: 1,
+        type: 'job',
+        repo: 'travis-ci/travis-core',
+        commit: '1234567',
+        branch: 'master',
+        compare: '0123456..1234567',
+        finishedAt: '3 minutes ago',
+        duration: '30 sec',
+        message: 'commit message 1'
+      });
+      displaysTabs({
+        current: {
+          href: '#!/travis-ci/travis-core'
+        },
+        builds: {
+          href: '#!/travis-ci/travis-core/builds'
+        },
+        build: {
+          href: '#!/travis-ci/travis-core/builds/1'
+        },
+        job: {
+          href: '#!/travis-ci/travis-core/jobs/1',
+          active: true
+        }
+      });
+      return displaysLog(['log 1']);
     });
   });
 
@@ -217,9 +393,12 @@
   minispade.require('app');
 
   this.reset = function() {
-    if (Travis.app) {
-      Travis.app.destroy();
-    }
+    Em.run(function() {
+      if (Travis.app) {
+        return Travis.app.destroy();
+      }
+    });
+    waits(500);
     $('#content').remove();
     return $('body').append('<div id="content"></div>');
   };
@@ -245,22 +424,32 @@
 }).call(this);
 (function() {
 
-  this.repositoriesRendered = function() {
-    return $('#repositories li a.current').text() !== '';
+  this.notEmpty = function(selector) {
+    return function() {
+      return $(selector).text().trim() !== '';
+    };
   };
 
-  this.buildRendered = function() {
-    return $('#summary .number').text() !== '';
+  this.hasText = function(selector, text) {
+    return function() {
+      return $(selector).text().trim() === text;
+    };
   };
 
-  this.matrixRendered = function() {
-    return $('#jobs').text() !== '';
-  };
+  this.reposRendered = notEmpty('#repositories li a.current');
+
+  this.buildRendered = notEmpty('#summary .number');
+
+  this.buildsRendered = notEmpty('#builds .number');
+
+  this.matrixRendered = notEmpty('#jobs');
+
+  this.jobRendered = notEmpty('#summary .number');
 
 }).call(this);
 (function() {
 
-  this.displaysRepoList = function(repos) {
+  this.displaysReposList = function(repos) {
     var element, elements, ix, repo, _i, _len, _results;
     elements = $('#repositories li').toArray();
     ix = 0;
@@ -282,19 +471,29 @@
   };
 
   this.displaysTabs = function(tabs) {
-    var tab, url, _i, _len, _results;
+    var name, tab, _results;
     _results = [];
-    for (url = _i = 0, _len = tabs.length; _i < _len; url = ++_i) {
-      tab = tabs[url];
-      _results.push(expect($("#tab_" + tab + " a").attr('href')).toEqual(url));
+    for (name in tabs) {
+      tab = tabs[name];
+      if (!tab.hidden) {
+        expect($("#tab_" + name + " a").attr('href')).toEqual(tab.href);
+      }
+      expect($("#tab_" + name).hasClass('active')).toEqual(!!tab.active);
+      if (name === 'build' || name === 'job') {
+        _results.push(expect($("#tab_" + name).hasClass('display')).toEqual(!tab.hidden));
+      } else {
+        _results.push(void 0);
+      }
     }
     return _results;
   };
 
-  this.displaysBuildSummary = function(data) {
+  this.displaysSummary = function(data) {
     var element;
+    element = $('#summary .left:first-child dt:first-child');
+    expect(element.text()).toEqual($.camelize(data.type));
     element = $('#summary .number a');
-    expect(element.attr('href')).toEqual("#!/" + data.repo + "/builds/" + data.id);
+    expect(element.attr('href')).toEqual("#!/" + data.repo + "/" + data.type + "s/" + data.id);
     element = $('#summary .finished_at');
     expect(element.text()).toEqual(data.finishedAt);
     element = $('#summary .duration');
@@ -337,6 +536,34 @@
       element = $("" + data.element + " tr:nth-child(" + ix + ") td:nth-child(6)");
       return expect(element.text()).toEqual(job.rvm);
     });
+  };
+
+  this.displaysBuildsList = function(builds) {
+    var build, ix, row, rows, _i, _len, _results;
+    rows = $('#builds tbody tr').toArray();
+    ix = 0;
+    _results = [];
+    for (_i = 0, _len = builds.length; _i < _len; _i++) {
+      build = builds[_i];
+      row = rows[ix];
+      expect($('.number a', row).attr('href')).toEqual("#!/" + build.slug + "/builds/" + build.id);
+      expect($('.number a', row).text()).toEqual(build.number);
+      expect($('.message', row).text()).toEqual(build.message);
+      expect($('.duration', row).text()).toEqual(build.duration);
+      expect($('.finished_at', row).text()).toEqual(build.finishedAt);
+      _results.push(ix += 1);
+    }
+    return _results;
+  };
+
+  this.displaysLog = function(lines) {
+    var ix, log;
+    ix = 0;
+    log = $.map(lines, function(line) {
+      ix += 1;
+      return "" + ix + line;
+    }).join("\n");
+    return expect($('#log').text().trim()).toEqual(log);
   };
 
 }).call(this);

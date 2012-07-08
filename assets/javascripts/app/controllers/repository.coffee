@@ -8,7 +8,6 @@ Travis.RepositoryController = Travis.Controller.extend
   activate: (action, params) ->
     @_unbind()
     @setParams(params)
-    # console.log "view#{$.camelize(action)}"
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
@@ -17,14 +16,14 @@ Travis.RepositoryController = Travis.Controller.extend
     @connectTab('current')
 
   viewCurrent: ->
+    @connectTab('current')
     @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('build', 'repository.lastBuild')
-    @connectTab('current')
 
   viewBuilds: ->
+    @connectTab('builds')
     @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('builds', 'repository.builds')
-    @connectTab('builds')
 
   viewBuild: ->
     @_bind('repository', 'repositoriesByParams.firstObject')

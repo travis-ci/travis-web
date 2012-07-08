@@ -1,7 +1,8 @@
-describe 'on the "current" state', ->
+describe 'on the "job" state', ->
   beforeEach ->
-    app '!/travis-ci/travis-core'
-    waitFor buildRendered
+    app '!/travis-ci/travis-core/jobs/1'
+    waitFor jobRendered
+    waitFor hasText('#tab_build', 'Build #1')
 
   it 'displays the expected stuff', ->
     displaysReposList [
@@ -14,8 +15,8 @@ describe 'on the "current" state', ->
       href: 'http://github.com/travis-ci/travis-core'
 
     displaysSummary
-      type: 'build'
       id: 1
+      type: 'job'
       repo: 'travis-ci/travis-core'
       commit: '1234567'
       branch: 'master'
@@ -25,22 +26,11 @@ describe 'on the "current" state', ->
       message: 'commit message 1'
 
     displaysTabs
-      current: { href: '#!/travis-ci/travis-core', active: true }
+      current: { href: '#!/travis-ci/travis-core' }
       builds:  { href: '#!/travis-ci/travis-core/builds' }
-      build:   { hidden: true }
-      job:     { hidden: true }
+      build:   { href: '#!/travis-ci/travis-core/builds/1' }
+      job:     { href: '#!/travis-ci/travis-core/jobs/1', active: true }
 
-    displaysJobMatrix
-      element: '#jobs'
-      headers: ['Job', 'Duration', 'Finished', 'Rvm']
-      jobs: [
-        { id: 1, number: '1.1', repo: 'travis-ci/travis-core', finishedAt: '3 minutes ago', duration: '30 sec', rvm: 'rbx' }
-        { id: 2, number: '1.2', repo: 'travis-ci/travis-core', finishedAt: '2 minutes ago', duration: '40 sec', rvm: '1.9.3' }
-      ]
-
-    displaysJobMatrix
-      element: '#allowed_failure_jobs'
-      headers: ['Job', 'Duration', 'Finished', 'Rvm']
-      jobs: [
-        { id: 3, number: '1.3', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: 'jruby' }
-      ]
+    displaysLog [
+      'log 1'
+    ]

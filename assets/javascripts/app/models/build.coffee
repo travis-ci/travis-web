@@ -1,35 +1,33 @@
 require 'travis/model'
 
 @Travis.Build = Travis.Model.extend
+  eventType:       DS.attr('string')
   repositoryId:    DS.attr('number')
   commitId:        DS.attr('number')
+
   state:           DS.attr('string')
   number:          DS.attr('number')
   branch:          DS.attr('string')
   message:         DS.attr('string')
   result:          DS.attr('number')
   duration:        DS.attr('number')
-  started_at:      DS.attr('string')
-  finished_at:     DS.attr('string')
-  committed_at:    DS.attr('string')
-  committer_name:  DS.attr('string')
-  committer_email: DS.attr('string')
-  author_name:     DS.attr('string')
-  author_email:    DS.attr('string')
-  compare_url:     DS.attr('string')
+  startedAt:       DS.attr('string')
+  finishedAt:      DS.attr('string')
+
+  # committedAt:     DS.attr('string')
+  # committerName:   DS.attr('string')
+  # committerEmail:  DS.attr('string')
+  # authorName:      DS.attr('string')
+  # authorEmail:     DS.attr('string')
+  # compareUrl:      DS.attr('string')
 
   repository: DS.belongsTo('Travis.Repository', key: 'repository_id')
   commit:     DS.belongsTo('Travis.Commit')
-  # jobs:       DS.hasMany('Travis.Job')
+  jobs:       DS.hasMany('Travis.Job', key: 'job_ids')
 
   config: (->
     @getPath 'data.config'
   ).property('data.config')
-
-  # TODO why does the hasMany association not work?
-  jobs: (->
-    Travis.Job.findMany(@getPath('data.job_ids') || [])
-  ).property('data.job_ids.length')
 
   isMatrix: (->
     @getPath('data.job_ids.length') > 1

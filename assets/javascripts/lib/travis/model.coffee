@@ -12,6 +12,9 @@
     this
 
 @Travis.Model.reopenClass
+  filter: (callback) ->
+    Travis.app.store.filter(this, callback)
+
   load: (attrs) ->
     Travis.app.store.load(this, attrs)
 

@@ -1,4 +1,4 @@
-@displaysRepoList = (repos) ->
+@displaysReposList = (repos) ->
   elements = $('#repositories li').toArray()
   ix = 0
   for repo in repos
@@ -13,12 +13,18 @@
   expect($('#repository h3 a').attr('href')).toEqual (repo.href)
 
 @displaysTabs = (tabs) ->
-  for tab, url in tabs
-    expect($("#tab_#{tab} a").attr('href')).toEqual url
+  for name, tab of tabs
+    expect($("#tab_#{name} a").attr('href')).toEqual tab.href unless tab.hidden
+    expect($("#tab_#{name}").hasClass('active')).toEqual !!tab.active
+    expect($("#tab_#{name}").hasClass('display')).toEqual !tab.hidden if name in ['build', 'job']
 
-@displaysBuildSummary = (data) ->
+
+@displaysSummary = (data) ->
+  element = $('#summary .left:first-child dt:first-child')
+  expect(element.text()).toEqual $.camelize(data.type)
+
   element = $('#summary .number a')
-  expect(element.attr('href')).toEqual "#!/#{data.repo}/builds/#{data.id}"
+  expect(element.attr('href')).toEqual "#!/#{data.repo}/#{data.type}s/#{data.id}"
 
   element = $('#summary .finished_at')
   expect(element.text()).toEqual data.finishedAt
@@ -62,6 +68,23 @@
 
     element = $("#{data.element} tr:nth-child(#{ix}) td:nth-child(6)")
     expect(element.text()).toEqual job.rvm
+
+@displaysBuildsList = (builds) ->
+  rows = $('#builds tbody tr').toArray()
+  ix = 0
+  for build in builds
+    row = rows[ix]
+    expect($('.number a', row).attr('href')).toEqual "#!/#{build.slug}/builds/#{build.id}"
+    expect($('.number a', row).text()).toEqual build.number
+    expect($('.message', row).text()).toEqual build.message
+    expect($('.duration', row).text()).toEqual build.duration
+    expect($('.finished_at', row).text()).toEqual build.finishedAt
+    ix += 1
+
+@displaysLog = (lines) ->
+  ix = 0
+  log = $.map(lines, (line) -> ix += 1; "#{ix}#{line}").join("\n")
+  expect($('#log').text().trim()).toEqual log
 
 
 
