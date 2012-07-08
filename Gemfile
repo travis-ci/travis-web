@@ -5,8 +5,7 @@ gem 'sinatra'
 
 group :assets do
   gem 'rake-pipeline', github: 'livingsocial/rake-pipeline'
-  gem 'rake-pipeline-web-filters', github: 'wycats/rake-pipeline-web-filters'
-
+  gem 'rake-pipeline-web-filters', path: '~/rake-pipeline-web-filters' #github: 'wycats/rake-pipeline-web-filters'
   gem 'coffee-script'
   gem 'compass'
   gem 'tilt'

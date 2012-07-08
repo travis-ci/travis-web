@@ -6,9 +6,8 @@ GIT
       rake (~> 0.9.0)
       thor
 
-GIT
-  remote: git://github.com/wycats/rake-pipeline-web-filters.git
-  revision: 81a22fb0808dfdeab8ed92d5d8c898ad198b9938
+PATH
+  remote: ~/rake-pipeline-web-filters
   specs:
     rake-pipeline-web-filters (0.6.0)
       rack
