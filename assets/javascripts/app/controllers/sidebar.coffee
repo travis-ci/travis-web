@@ -25,6 +25,7 @@ Travis.reopen
       queues = for queue in queues
         Em.ArrayController.create
           content: Travis.Job.queued(queue.name)
+          id: "queue_#{queue.name}"
           name: queue.display
       controller = Travis.QueuesController.create(content: queues)
       viewClass = Em.View.extend(templateName: 'queues/list')

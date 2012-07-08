@@ -1,55 +1,100 @@
-# describe 'events', ->
-#   beforeEach ->
-#     app
-#     waitFor buildRendered
-#
-#   it 'foo', ->
-    # Travis.app.receive 'job:created',
-    #   job:
-    #     id: 10
-    #     repository_id: 1
-    #     build_id: 10
-    #     commit_id: 10
-    #     log_id: 10
-    #     number: '10.1'
-    #   commit:
-    #     id: 10
-    #     sha: '1234567'
-    #     branch: 'master'
-    #     message: 'commit message 1'
-    #     author_name: 'author name'
-    #     author_email: 'author@email.com'
-    #     committer_name: 'committer name'
-    #     committer_email: 'committer@email.com'
-    #     compare_url: 'http://github.com/compare/0123456..1234567'
+describe 'events', ->
+  # describe 'an event adding a repository', ->
+  #   beforeEach ->
+  #     app ''
+  #     waitFor jobsRendered
 
+  #   it 'adds a repository to the list', ->
+  #     app ''
+  #     waitFor reposRendered
+  #
+  #     Em.run ->
+  #       Travis.app.receive 'build:created',
+  #         repository:
+  #           id: 10
+  #           slug: 'travis-ci/travis-support'
+  #           last_build_id: 10
+  #           last_build_number: 10
+  #           last_build_started_at: '2012-07-02T00:02:00Z'
+  #         build:
+  #           id: 10
+  #           repository_id: 10
 
-    # Travis.app.receive 'build:started',
-    #   repository:
-    #     id: 10
-    #     owner: 'travis-ci'
-    #     name: 'travis-support'
-    #     slug: 'travis-ci/travis-support'
-    #     build_ids: [10]
-    #     last_build_id: 10
-    #     last_build_number: 10
-    #     last_build_started_at: '2012-07-02T00:02:00Z'
-    #     description: 'Description of travis-hub'
-    #   build:
-    #     id: 10
-    #     repository_id: 1
-    #     commit_id: 10
-    #     job_ids: [10]
-    #     number: 10
-    #     event_type: 'push'
-    #     config: { rvm: ['rbx'] }
-    #   commit:
-    #     id: 10
-    #     sha: '1234567'
-    #     branch: 'master'
-    #     message: 'commit message 1'
-    #     author_name: 'author name'
-    #     author_email: 'author@email.com'
-    #     committer_name: 'committer name'
-    #     committer_email: 'committer@email.com'
-    #     compare_url: 'http://github.com/compare/0123456..1234567'
+  #     listsRepo
+  #       row: 4
+  #       item: { slug: 'travis-ci/travis-support',  build: { number: 4, url: '#!/travis-ci/travis-support/builds/10', duration: '1 min', finishedAt: '-' } }
+
+  # describe 'an event adding a build', ->
+  #   beforeEach ->
+  #     app '#!/travis-ci/travis-core/builds'
+  #     waitFor buildsRendered
+
+  #   it 'adds a build to the builds list', ->
+  #     Em.run ->
+  #       Travis.app.receive 'build:finished',
+  #         build:
+  #           id: 10
+  #           repository_id: 1
+  #           commit_id: 10
+  #           number: '3'
+  #           duration: 55
+  #           started_at: '2012-07-02T00:02:00Z'
+  #           finished_at: '2012-07-02T00:02:55Z'
+  #           event_type: 'push'
+  #           result: 1
+  #         commit:
+  #           id: 10
+  #           sha: '1234567'
+  #           branch: 'master'
+  #           message: 'commit message 3'
+
+  #     listsBuild
+  #       row: 3
+  #       item: { id: 10, slug: 'travis-ci/travis-core', number: '3', sha: '1234567', branch: 'master', message: 'commit message 3', finishedAt: 'less than a minute ago', duration: '55 sec', color: 'red' }
+
+  # describe 'an event adding a job', ->
+  #   beforeEach ->
+  #     app ''
+  #     waitFor jobsRendered
+  #     waitFor queuesRendered
+
+  #   it 'adds a job to the jobs matrix', ->
+  #     Em.run ->
+  #       Travis.app.receive 'job:created',
+  #         job:
+  #           id: 10
+  #           repository_id: 1
+  #           build_id: 1
+  #           commit_id: 1
+  #           log_id: 1
+  #           number: '1.4'
+  #           duration: 55
+  #           started_at: '2012-07-02T00:02:00Z'
+  #           finished_at: '2012-07-02T00:02:55Z'
+  #           config: { rvm: 'jruby' }
+
+  #     listsJob
+  #       table: '#jobs'
+  #       row: 3
+  #       item: { id: 10, number: '1.4', repo: 'travis-ci/travis-core', finishedAt: 'less than a minute ago', duration: '55 sec', rvm: 'jruby' }
+
+  describe 'an event adding a job', ->
+    beforeEach ->
+      app ''
+      waitFor jobsRendered
+      waitFor queuesRendered
+
+    it 'adds a job to the jobs queue', ->
+      Em.run ->
+        Travis.app.receive 'job:created',
+          job:
+            id: 10
+            repository_id: 1
+            number: '1.4'
+            queue: 'common'
+
+      listsQueuedJob
+        name: 'common'
+        row: 3
+        item: { number: '1.4', repo: 'travis-ci/travis-core' }
+

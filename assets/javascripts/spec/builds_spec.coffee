@@ -4,7 +4,7 @@
 #     waitFor buildsRendered
 #
 #   it 'displays the expected stuff', ->
-#     displaysReposList [
+#     listsRepos [
 #       { slug: 'travis-ci/travis-core',   build: { number: 1, url: '#!/travis-ci/travis-core/builds/1',   duration: '30 sec', finishedAt: '3 minutes ago' } }
 #       { slug: 'travis-ci/travis-assets', build: { number: 3, url: '#!/travis-ci/travis-assets/builds/3', duration: '30 sec', finishedAt: 'a day ago' } }
 #       { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '#!/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }
@@ -19,9 +19,7 @@
 #       build:   { hidden: true }
 #       job:     { hidden: true }
 #
-#     displaysBuildsList [
-#       { id: 1, slug: 'travis-ci/travis-core', number: '1', sha: '1234567', branch: 'master', message: 'commit message 1', duration: '30 sec', finishedAt: '3 minutes ago' }
-#       { id: 2, slug: 'travis-ci/travis-core', number: '2', sha: '2345678', branch: 'feature', message: 'commit message 2', duration: '-', finishedAt: '-' }
+#     listsBuilds [
+#       { id: 1, slug: 'travis-ci/travis-core', number: '1', sha: '1234567', branch: 'master', message: 'commit message 1', duration: '30 sec', finishedAt: '3 minutes ago', color: 'green' }
+#       { id: 2, slug: 'travis-ci/travis-core', number: '2', sha: '2345678', branch: 'feature', message: 'commit message 2', duration: '-', finishedAt: '-', color: '' }
 #     ]
-#
-#

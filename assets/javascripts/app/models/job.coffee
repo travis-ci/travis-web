@@ -51,7 +51,7 @@ require 'travis/model'
 @Travis.Job.reopenClass
   queued: (queue) ->
     @find()
-    Travis.app.store.filter this, (job) -> job.get('queue') == 'builds.' + queue
+    Travis.app.store.filter this, (job) -> job.get('queue') == queue
 
   findMany: (ids) ->
     Travis.app.store.findMany this, ids

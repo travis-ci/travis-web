@@ -21,7 +21,7 @@ require 'travis/model'
   # authorEmail:     DS.attr('string')
   # compareUrl:      DS.attr('string')
 
-  repository: DS.belongsTo('Travis.Repository', key: 'repository_id')
+  repository: DS.belongsTo('Travis.Repository')
   commit:     DS.belongsTo('Travis.Commit')
   jobs:       DS.hasMany('Travis.Job', key: 'job_ids')
 
@@ -32,6 +32,16 @@ require 'travis/model'
   isMatrix: (->
     @getPath('data.job_ids.length') > 1
   ).property('data.job_ids.length')
+
+  requiredJobs: (->
+    id = @get('id')
+    Travis.Job.filter (data) -> (parseInt(data.get('build_id')) == id) && !data.get('allow_failure')
+  ).property()
+
+  allowedFailureJobs: (->
+    id = @get('id')
+    Travis.Job.filter (data) -> (parseInt(data.get('build_id')) == id) && data.get('allow_failure')
+  ).property()
 
   configKeys: (->
     return [] unless config = @get('config')

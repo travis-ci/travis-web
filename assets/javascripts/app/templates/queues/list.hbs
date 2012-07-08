@@ -1,6 +1,6 @@
 {{#each queue in controller}}
   <h4>{{t queue}}: {{queue.name}}</h4>
-  <ul>
+  <ul {{bindAttr id="queue.id"}}>
     {{#each queue}}
       <li>
         {{repository.slug}}

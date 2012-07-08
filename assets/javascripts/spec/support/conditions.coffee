@@ -7,6 +7,7 @@
 @reposRendered  = notEmpty('#repositories li a.current')
 @buildRendered  = notEmpty('#summary .number')
 @buildsRendered = notEmpty('#builds .number')
-@matrixRendered = notEmpty('#jobs')
 @jobRendered    = notEmpty('#summary .number')
+@jobsRendered   = notEmpty('#jobs .number')
+@queuesRendered = notEmpty('#queue_common li')
 

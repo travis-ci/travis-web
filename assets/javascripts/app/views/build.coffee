@@ -47,12 +47,3 @@
       Travis.Urls.email(@getPath('commit.committerEmail'))
     ).property('commit.committerEmail')
 
-    requiredJobs: (->
-      jobs = @getPath('build.jobs')
-      jobs.filter((job) -> job.get('allowFailure') != true) if jobs
-    ).property('build.jobs')
-
-    allowedFailureJobs: (->
-      jobs = @getPath('build.jobs')
-      jobs.filter((job) -> job.get('allowFailure')) if jobs
-    ).property('build.jobs')

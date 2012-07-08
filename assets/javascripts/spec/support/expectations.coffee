@@ -1,14 +1,3 @@
-@displaysReposList = (repos) ->
-  elements = $('#repositories li').toArray()
-  ix = 0
-  for repo in repos
-    element = elements[ix]
-    expect($('a.current', element).attr('href')).toEqual "#!/#{repo.slug}"
-    expect($('a.last_build', element).attr('href')).toEqual repo.build.url
-    expect($('.duration', element).text()).toEqual repo.build.duration
-    expect($('.finished_at', element).text()).toEqual repo.build.finishedAt
-    ix += 1
-
 @displaysRepository = (repo) ->
   expect($('#repository h3 a').attr('href')).toEqual (repo.href)
 
@@ -17,7 +6,6 @@
     expect($("#tab_#{name} a").attr('href')).toEqual tab.href unless tab.hidden
     expect($("#tab_#{name}").hasClass('active')).toEqual !!tab.active
     expect($("#tab_#{name}").hasClass('display')).toEqual !tab.hidden if name in ['build', 'job']
-
 
 @displaysSummary = (data) ->
   element = $('#summary .left:first-child dt:first-child')
@@ -47,44 +35,80 @@
   element = $('#summary .message')
   expect(element.text()).toEqual data.message
 
-@displaysJobMatrix = (data) ->
-  headers = ($(element).text() for element in $("#{data.element} thead th"))
-  expect(headers).toEqual(data.headers)
-
-  $.each data.jobs, (ix, job) ->
-    ix = (ix + 1) * 3  # cuz metamorph is adding two script elements
-
-    element = $("#{data.element} tr:nth-child(#{ix}) td.number")
-    expect(element.text()).toEqual job.number
-
-    element = $("#{data.element} tr:nth-child(#{ix}) td.number a")
-    expect(element.attr('href')).toEqual "#!/#{job.repo}/jobs/#{job.id}"
-
-    element = $("#{data.element} tr:nth-child(#{ix}) td.duration")
-    expect(element.text()).toEqual job.duration
-
-    element = $("#{data.element} tr:nth-child(#{ix}) td.finished_at")
-    expect(element.text()).toEqual job.finishedAt
-
-    element = $("#{data.element} tr:nth-child(#{ix}) td:nth-child(6)")
-    expect(element.text()).toEqual job.rvm
-
-@displaysBuildsList = (builds) ->
-  rows = $('#builds tbody tr').toArray()
-  ix = 0
-  for build in builds
-    row = rows[ix]
-    expect($('.number a', row).attr('href')).toEqual "#!/#{build.slug}/builds/#{build.id}"
-    expect($('.number a', row).text()).toEqual build.number
-    expect($('.message', row).text()).toEqual build.message
-    expect($('.duration', row).text()).toEqual build.duration
-    expect($('.finished_at', row).text()).toEqual build.finishedAt
-    ix += 1
-
 @displaysLog = (lines) ->
   ix = 0
   log = $.map(lines, (line) -> ix += 1; "#{ix}#{line}").join("\n")
   expect($('#log').text().trim()).toEqual log
+
+@listsRepos = (items) ->
+  listsItems('repo', items)
+
+@listsRepo = (data) ->
+  repo = data.repo
+  row = $('#repositories li')[data.row - 1]
+
+  expect($('a.current', row).attr('href')).toEqual "#!/#{repo.slug}"
+  expect($('a.last_build', row).attr('href')).toEqual repo.build.url
+  expect($('.duration', row).text()).toEqual repo.build.duration
+  expect($('.finished_at', row).text()).toEqual repo.build.finishedAt
+
+@listsJobs = (data) ->
+  table = $(data.table)
+  headers = ($(element).text() for element in $("thead th", table))
+  expect(headers).toEqual(data.headers)
+
+  $.each data.jobs, (row, job) -> listsJob(table: data.table, row: row + 1, job: job)
+
+@listsJob = (data) ->
+  row = $('tbody tr', data.table)[data.row - 1]
+  job = data.job
+
+  element = $(row)
+  expect(element.attr('class')).toEqual job.color
+
+  element = $("td.number", row)
+  expect(element.text()).toEqual job.number
+
+  element = $("td.number a", row)
+  expect(element.attr('href')).toEqual "#!/#{job.repo}/jobs/#{job.id}"
+
+  element = $("td.duration", row)
+  expect(element.text()).toEqual job.duration
+
+  element = $("td.finished_at", row)
+  expect(element.text()).toEqual job.finishedAt
+
+  element = $("td:nth-child(6)", row)
+  expect(element.text()).toEqual job.rvm
+
+@listsBuilds = (builds) ->
+  listsItems('build', jobs)
+
+@listsBuild = (data) ->
+  row = $('#builds tbody tr')[data.row - 1]
+  build = data.item
+
+  expect($('.number a', row).attr('href')).toEqual "#!/#{build.slug}/builds/#{build.id}"
+  expect($('.number a', row).text()).toEqual build.number
+  expect($('.message', row).text()).toEqual build.message
+  expect($('.duration', row).text()).toEqual build.duration
+  expect($('.finished_at', row).text()).toEqual build.finishedAt
+  expect($(row).attr('class')).toEqual build.color
+
+@listsQueuedJobs = (jobs) ->
+  listsItems('queuedJob', jobs)
+
+@listsQueuedJob = (data) ->
+  console.log data
+  job = data.item
+  text = $($("#queue_#{data.name} li")[data.row - 1]).text()
+  expect(text).toContain job.repo
+  expect(text).toContain "##{job.number}"
+
+@listsItems = (type, items) ->
+  console.log items
+  $.each items, (item, row) ->
+    this["lists#{$.camelize(type)}"](item: item, row: row + 1)
 
 
 
