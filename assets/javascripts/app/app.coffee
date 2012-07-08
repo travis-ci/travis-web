@@ -38,6 +38,9 @@ Ember.ENV.RAISE_ON_DEPRECATION = true
       @routes = Travis.Router.create()
       @routes.start()
 
+    receive: (event, data) ->
+      Travis.app.store.loadData(event, data)
+
     connect: ->
       @controller = Em.Controller.create()
       view = Em.View.create

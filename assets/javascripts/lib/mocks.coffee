@@ -83,6 +83,12 @@ for repository in repositories
     responseTime: responseTime
     responseText: { repositories: [repository] }
 
+  $.mockjax
+    url: '/builds'
+    data: { ids: repository.build_ids }
+    responseTime: responseTime
+    responseText: { builds: $.select(builds, (build) -> repository.build_ids.indexOf(build.id) != -1) }
+
 for build in builds
   $.mockjax
     url: '/builds/' + build.id

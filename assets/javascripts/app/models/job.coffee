@@ -1,22 +1,23 @@
 require 'travis/model'
 
 @Travis.Job = Travis.Model.extend
-  repository_id:   DS.attr('number')
-  build_id:        DS.attr('number')
-  log_id:          DS.attr('number')
-  queue:           DS.attr('string')
-  state:           DS.attr('string')
-  number:          DS.attr('string')
-  result:          DS.attr('number')
-  duration:        DS.attr('number')
-  started_at:      DS.attr('string')
-  finished_at:     DS.attr('string')
-  allow_failure:   DS.attr('boolean')
+  repositoryId:   DS.attr('number')
+  commitId:       DS.attr('number')
+  buildId:        DS.attr('number')
+  logId:          DS.attr('number')
+  queue:          DS.attr('string')
+  state:          DS.attr('string')
+  number:         DS.attr('string')
+  result:         DS.attr('number')
+  duration:       DS.attr('number')
+  started_at:     DS.attr('string')
+  finished_at:    DS.attr('string')
+  allow_failure:  DS.attr('boolean')
 
   repository: DS.belongsTo('Travis.Repository')
-  commit: DS.belongsTo('Travis.Commit')
-  build: DS.belongsTo('Travis.Build')
-  log: DS.belongsTo('Travis.Artifact')
+  commit:     DS.belongsTo('Travis.Commit')
+  build:      DS.belongsTo('Travis.Build')
+  log:        DS.belongsTo('Travis.Artifact')
 
   config: (->
     @getPath 'data.config'

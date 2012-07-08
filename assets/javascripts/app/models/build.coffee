@@ -1,6 +1,8 @@
 require 'travis/model'
 
 @Travis.Build = Travis.Model.extend
+  repositoryId:    DS.attr('number')
+  commitId:        DS.attr('number')
   state:           DS.attr('string')
   number:          DS.attr('number')
   branch:          DS.attr('string')
@@ -16,7 +18,7 @@ require 'travis/model'
   author_email:    DS.attr('string')
   compare_url:     DS.attr('string')
 
-  repository: DS.belongsTo('Travis.Repository')
+  repository: DS.belongsTo('Travis.Repository', key: 'repository_id')
   commit:     DS.belongsTo('Travis.Commit')
   # jobs:       DS.hasMany('Travis.Job')
 
