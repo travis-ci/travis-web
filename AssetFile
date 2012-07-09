@@ -12,6 +12,7 @@ input 'locales' do
   match '**/*.yml' do
     ember_i18n :use_i18n_js => true
   end
+  concat 'localizations.js'
 end
 
 output 'public/javascripts'
