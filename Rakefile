@@ -14,12 +14,9 @@ namespace :ember do
   end
 end
 
-# TODO create a rake task that pulls the localization yml down from
-# localeapp
 desc "update all locale files from localeapp"
 task :update_locales do
   require 'localeapp'
-
-  # hmmmmm
+  system 'localeapp pull'
 end
 
