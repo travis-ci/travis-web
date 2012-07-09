@@ -7,7 +7,11 @@ require 'compass'
 
 Compass.configuration.images_path = 'assets/images'
 
-output 'assets/javascripts/vendor/ember_i18n'
+# output 'assets/javascripts/vendor/ember_i18n'
+# output 'public/javascripts'
+
+output 'public/javascripts'
+
 input 'locales' do
   match '**/*.yml' do
     ember_i18n :use_i18n_js => true
@@ -15,7 +19,6 @@ input 'locales' do
   concat 'localizations.js'
 end
 
-output 'public/javascripts'
 input 'assets/javascripts' do
 
   match 'vendor/**/*.js' do
@@ -34,7 +37,7 @@ input 'assets/javascripts' do
     concat files, 'vendor.js'
   end
 
-  match '{app,config,data,lib}/**/*.coffee' do
+  match '{app,data,lib}/**/*.coffee' do
     coffee_script
   end
 
@@ -47,7 +50,7 @@ input 'assets/javascripts' do
     concat 'app/templates.js'
   end
 
-  match '{app,config,data,lib}/**/*.js' do
+  match '{app,data,lib}/**/*.js' do
     minispade(
       string: true,
       rewrite_requires: true,
