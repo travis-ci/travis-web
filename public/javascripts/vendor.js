@@ -27852,6 +27852,12 @@ function popState(event) {
   routes._skipRoute = false;
 }
 
+I18n.translations = I18n.translations || {};
+I18n.translations['en'] = {"home":"Woot!"};
+
+I18n.translations = I18n.translations || {};
+I18n.translations['ja'] = {"home":"ホーム"};
+
 /*!
  * MockJax - jQuery Plugin to Mock Ajax requests
  *

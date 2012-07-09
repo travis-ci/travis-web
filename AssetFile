@@ -7,8 +7,16 @@ require 'compass'
 
 Compass.configuration.images_path = 'assets/images'
 
+output 'assets/javascripts/vendor/ember_i18n'
+input 'config/locales' do
+  match '**/*.yml' do
+    ember_i18n :use_i18n_js => true
+  end
+end
+
 output 'public/javascripts'
 input 'assets/javascripts' do
+
   match 'vendor/**/*.js' do
     files = %w(
       vendor/minispade.js

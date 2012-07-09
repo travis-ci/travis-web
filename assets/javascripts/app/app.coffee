@@ -61,6 +61,5 @@ require 'store'
 require 'templates'
 require 'views'
 
-require 'config/locales'
 require 'data/sponsors'
 

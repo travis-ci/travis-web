@@ -13,3 +13,13 @@ namespace :ember do
     system 'cp tmp/ember.js/dist/ember.js assets/javascripts/vendor/ember.js'
   end
 end
+
+# TODO create a rake task that pulls the localization yml down from
+# localeapp
+desc "update all locale files from localeapp"
+task :update_locales do
+  require 'localeapp'
+
+  # hmmmmm
+end
+
