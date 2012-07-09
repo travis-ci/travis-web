@@ -8,7 +8,7 @@ require 'compass'
 Compass.configuration.images_path = 'assets/images'
 
 output 'assets/javascripts/vendor/ember_i18n'
-input 'config/locales' do
+input 'locales' do
   match '**/*.yml' do
     ember_i18n :use_i18n_js => true
   end

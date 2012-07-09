@@ -3,3 +3,4 @@
 /log/*.log
 /tmp
 /.sass-cache
+.localeapp
