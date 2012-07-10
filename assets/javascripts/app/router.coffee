@@ -22,6 +22,6 @@ Travis.Router = Em.Object.extend
 
   action: (name, action, params) ->
     # this needs to be a global reference because Em.routes is global
-    layout = Travis.app.layout(name)
-    layout.activate(action, params)
+    layout = Travis.app.connectLayout(name)
+    layout.activate(action, params || {})
     $('body').attr('id', name)

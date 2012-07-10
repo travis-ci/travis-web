@@ -1,37 +1,25 @@
 require 'helpers'
 require 'travis/ticker'
 
-Travis.Controllers = Em.Namespace.create
-  RepositoriesController: Em.ArrayController.extend
-    contentBinding: 'layout.repositories'
+Travis.reopen
+  Controller: Em.Controller.extend
+    init: ->
+      for name in Array.prototype.slice.apply(arguments)
+        name = "#{$.camelize(name, false)}Controller"
+        klass = Travis[$.camelize(name)] || Em.Controller
+        this[name] = klass.create(parent: this,  namespace: Travis, controllers: this)
 
-  RepositoryController: Em.Controller.extend # Travis.Urls.Repository,
-    repositoryBinding: 'layout.repository'
-
-  TabsController: Em.Controller.extend
-    repositoryBinding: 'layout.repository'
-    buildBinding: 'layout.build'
-    jobBinding: 'layout.job'
-    tabBinding: 'layout.tab'
-
-  BuildsController: Em.ArrayController.extend
-    repositoryBinding: 'layout.repository'
-    contentBinding: 'layout.builds'
-
-  BuildController: Em.Controller.extend # Travis.Urls.Commit,
-    repositoryBinding: 'layout.repository'
-    buildBinding: 'layout.build'
-
-  JobController: Em.Controller.extend # Travis.Urls.Commit,
-    repositoryBinding: 'layout.repository'
-    jobBinding: 'layout.job'
-
-  QueuesController: Em.ArrayController.extend()
-  UserController: Em.Controller.extend()
-  HooksController: Em.ArrayController.extend()
+    connectTop: ->
+      @connectOutlet(outletName: 'top', controller: @topController, viewClass: Travis.TopView)
+      @topController.set('tab', @get('name'))
 
   # TopController: Em.Controller.extend
   #   userBinding: 'Travis.app.currentUser'
 
-require 'controllers/sponsors'
-require 'controllers/workers'
+require 'controllers/builds'
+require 'controllers/home'
+require 'controllers/profile'
+require 'controllers/repositories'
+require 'controllers/repository'
+require 'controllers/sidebar'
+require 'controllers/stats'

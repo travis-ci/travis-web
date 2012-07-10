@@ -3,6 +3,7 @@ require 'ext/jquery'
 
 # $.mockjaxSettings.log = false
 # Ember.LOG_BINDINGS = true
+Ember.ENV.RAISE_ON_DEPRECATION = true
 
 @Travis = Em.Namespace.create
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
@@ -37,7 +38,8 @@ require 'ext/jquery'
       @routes = Travis.Router.create()
       @routes.start()
 
-      @initialize(Em.Object.create()) # TODO sheesh.
+    receive: (event, data) ->
+      Travis.app.store.loadData(event, data)
 
     connect: ->
       @controller = Em.Controller.create()
@@ -46,15 +48,17 @@ require 'ext/jquery'
         controller: @controller
       view.appendTo(@get('rootElement') || 'body')
 
-    layout: (name) ->
-      if @_layout && @_layout.name == name
-        @_layout
-      else
-        @_layout = Travis.Layout[$.camelize(name)].create(parent: @controller)
+    connectLayout: (name) ->
+      unless @getPath('layout.name') == name
+        name = $.camelize(name)
+        viewClass = Travis["#{name}Layout"]
+        @layout = Travis["#{name}Controller"].create(parent: @controller)
+        @controller.connectOutlet(outletName: 'layout', controller: @layout, viewClass: viewClass)
+      @layout
+
 
 require 'controllers'
 require 'helpers'
-require 'layout'
 require 'models'
 require 'router'
 require 'store'

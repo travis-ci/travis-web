@@ -1,6 +1,6 @@
-describe 'on the "current" state', ->
+describe 'on the "build" state', ->
   beforeEach ->
-    app '!/travis-ci/travis-core'
+    app '!/travis-ci/travis-core/builds/1'
     waitFor buildRendered
 
   it 'displays the expected stuff', ->
@@ -25,9 +25,9 @@ describe 'on the "current" state', ->
       message: 'commit message 1'
 
     displaysTabs
-      current: { href: '#!/travis-ci/travis-core', active: true }
+      current: { href: '#!/travis-ci/travis-core' }
       builds:  { href: '#!/travis-ci/travis-core/builds' }
-      build:   { hidden: true }
+      build:   { href: '#!/travis-ci/travis-core/builds/1', active: true }
       job:     { hidden: true }
 
     displaysJobMatrix

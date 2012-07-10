@@ -1,4 +1,4 @@
-@Travis.Views.reopen
+@Travis.reopen
   TopView: Em.View.extend
     templateName: 'layouts/top'
 

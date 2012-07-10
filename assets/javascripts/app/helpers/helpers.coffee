@@ -21,7 +21,7 @@ require 'travis/log'
     if values.length == 0 then '-' else values.join(', ')
 
   formatMessage: (message, options) ->
-    message = message or ''
+    message = message || ''
     message = message.split(/\n/)[0]  if options.short
     @_emojize(@_escape(message)).replace /\n/g, '<br/>'
 

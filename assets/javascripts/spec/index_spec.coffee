@@ -1,6 +1,6 @@
-describe 'on the "current" state', ->
+describe 'on the "index" state', ->
   beforeEach ->
-    app '!/travis-ci/travis-core'
+    app ''
     waitFor buildRendered
 
   it 'displays the expected stuff', ->

@@ -130,7 +130,13 @@
 	function logMock( mockHandler, requestSettings ) {
 		var c = $.extend({}, $.mockjaxSettings, mockHandler);
 		if ( c.log && $.isFunction(c.log) ) {
-			c.log('MOCK ' + requestSettings.type.toUpperCase() + ': ' + requestSettings.url, $.extend({}, requestSettings));
+      var url = requestSettings.url
+      if(requestSettings.data) {
+        params = []
+        for(key in requestSettings.data) params.push(key + '=' + requestSettings.data[key])
+        url = url + '?' + params.join('&')
+      }
+			c.log('MOCK ' + requestSettings.type.toUpperCase() + ': ' + url, $.extend({}, requestSettings));
 		}
 	}
 

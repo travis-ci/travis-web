@@ -11,29 +11,36 @@
   <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
     <h5><a {{bindAttr href="view.urlBranches"}}>{{t repositories.tabs.branches}}</a></h5>
   </li>
-  {{#if view.isBuildTab}}
-    {{#with view.build}}
-      <li id="tab_build" {{bindAttr class="view.classBuild"}}>
-        <h5><a {{bindAttr href="view.urlBuild"}}>{{t repositories.tabs.build}} #{{number}}</a></h5>
-      </li>
-    {{/with}}
-  {{/if}}
-  {{#if view.isJobTab}}
-    {{#with view.job}}
-      <li id="tab_job" {{bindAttr class="view.classJob"}}>
-        <h5><a {{bindAttr href="view.urlJob"}}>{{t repositories.tabs.job}} #{{number}}</a></h5>
-      </li>
-    {{/with}}
-  {{/if}}
+  <li id="tab_build" {{bindAttr class="view.classBuild"}}>
+    <h5><a {{bindAttr href="view.urlBuild"}}>{{t repositories.tabs.build}} #{{view.build.number}}</a></h5>
+  </li>
+  <li id="tab_job" {{bindAttr class="view.classJob"}}>
+    <h5><a {{bindAttr href="view.urlJob"}}>{{t repositories.tabs.job}} #{{view.job.number}}</a></h5>
+  </li>
 </ul>
 
 <div id="tools">
   <a href="#" {{action toggleTools}}></a>
   <div class="pane">
-    <p><label>{{t repositories.branch}}:</label><select></select></p>
-    <p><label>{{t repositories.image_url}}:</label><input type="text" class="url"></input></p>
-    <p><label>{{t repositories.markdown}}:</label><input type="text" class="markdown"></input></p>
-    <p><label>{{t repositories.textile}}:</label><input type="text" class="textile"></input></p>
-    <p><label>{{t repositories.rdoc}}:</label><input type="text" class="rdoc"></input></p>
+    <p>
+      <label>{{t repositories.branch}}:</label>
+      {{view Ember.Select contentBinding="view.branches" selectionBinding="view.branch" optionLabelPath="content.commit.branch" optionValuePath="content.commit.branch"}}
+    </p>
+    <p>
+      <label>{{t repositories.image_url}}:</label>
+      <input type="text" class="url" {{bindAttr value="view.urlStatusImage"}}></input>
+    </p>
+    <p>
+      <label>{{t repositories.markdown}}:</label>
+      <input type="text" class="markdown" {{bindAttr value="view.markdownStatusImage"}}></input>
+    </p>
+    <p>
+      <label>{{t repositories.textile}}:</label>
+      <input type="text" class="textile" {{bindAttr value="view.textileStatusImage"}}></input>
+    </p>
+    <p>
+      <label>{{t repositories.rdoc}}:</label>
+      <input type="text" class="rdoc" {{bindAttr value="view.rdocStatusImage"}}></input>
+    </p>
   </div>
 </div>

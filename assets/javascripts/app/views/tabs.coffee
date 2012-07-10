@@ -1,4 +1,4 @@
-@Travis.Views.reopen
+@Travis.reopen
   TabsView: Em.View.extend
     templateName: 'repositories/tabs'
 
@@ -10,30 +10,25 @@
     toggleTools: ->
       $('#tools .pane').toggle()
 
-    isBuildTab: (->
-      tab = @getPath('tab')
-      (tab == 'build' || tab == 'job') && @getPath('build.isLoaded')
-    ).property('tab', 'build.isLoaded')
-
-    isJobTab: (->
-      @getPath('tab') == 'job' && @getPath('job.isLoaded')
-    ).property('tab', 'job.isLoaded')
-
     # hrm. how to parametrize bindAttr?
     classCurrent: (->
-      'active' if @getPath('tab') == 'current'
+      'active' if @get('tab') == 'current'
     ).property('tab')
 
     classBuilds: (->
-      'active' if @getPath('tab') == 'builds'
+      'active' if @get('tab') == 'builds'
     ).property('tab')
 
     classBuild: (->
-      'active' if @getPath('tab') == 'build'
+      tab = @get('tab')
+      classes = []
+      classes.push('active') if tab == 'build'
+      classes.push('display') if tab == 'build' || tab == 'job'
+      classes.join(' ')
     ).property('tab')
 
     classJob: (->
-      'active' if @getPath('tab') == 'job'
+      'active display' if @get('tab') == 'job'
     ).property('tab')
 
     urlRepository: (->
@@ -51,5 +46,29 @@
     urlJob: (->
       Travis.Urls.job(@getPath('repository.slug'), @getPath('job.id'))
     ).property('repository.slug', 'job.id')
+
+    branches: (->
+      @getPath('repository.branches')
+    ).property('repository.id')
+
+    urlStatusImage: (->
+      Travis.Urls.statusImage(@getPath('repository.slug'), @getPath('branch.commit.branch'))
+    ).property('repository.slug', 'branch')
+
+    markdownStatusImage: (->
+      "[![Build Status](#{@get('urlStatusImage')})](#{@get('urlRepository')})"
+    ).property('urlStatusImage')
+
+    textileStatusImage: (->
+      "!#{@get('urlStatusImage')}!:#{@get('urlRepository')}"
+    ).property('urlStatusImage')
+
+    rdocStatusImage: (->
+      "{<img src=\"#{@get('urlStatusImage')}\" alt=\"Build Status\" />}[#{@get('urlRepository')}]"
+    ).property('urlStatusImage')
+
+
+
+
 
 

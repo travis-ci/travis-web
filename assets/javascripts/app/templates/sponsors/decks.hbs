@@ -1,7 +1,7 @@
 <h4>{{t layouts.application.sponsers}}</h4>
 
 <ul class="sponsors top">
-  {{#each deck in sponsors.decks}}
+  {{#each deck in controller}}
     {{#each deck}}
       <li {{bindAttr class="type"}}>
         <a {{bindAttr href="url"}}>

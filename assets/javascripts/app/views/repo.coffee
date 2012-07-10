@@ -1,6 +1,22 @@
-@Travis.Views.reopen
+@Travis.reopen
   RepositoriesView: Em.View.extend
     templateName: 'repositories/list'
+    tabBinding: 'controller.tab'
+
+    classRecent: (->
+      'active' if @get('tab') == 'recent'
+    ).property('tab')
+
+    classOwned: (->
+      classes = []
+      classes.push('active')  if @get('tab') == 'owned'
+      classes.push('display') if Em.getPath('Travis.currentUser')
+      classes.join(' ')
+    ).property('tab', 'Travis.currentUser')
+
+    classSearch: (->
+      'active' if @get('tab') == 'search'
+    ).property('tab')
 
   RepositoriesItemView: Em.View.extend
     repositoryBinding: 'context'
@@ -27,6 +43,7 @@
 
   RepositoryView: Em.View.extend
     templateName: 'repositories/show'
+
     repositoryBinding: 'controller.repository'
 
     urlGithub: (->

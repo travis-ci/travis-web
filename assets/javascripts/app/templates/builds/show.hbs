@@ -1,14 +1,12 @@
 {{#with view}}
-  {{#unless build.isLoaded}}
-    Loading ...
-  {{else}}
+  {{#if build.isLoaded}}
     <div id="build" {{bindAttr class="color"}}>
       <dl id="summary">
         <div class="left">
           <dt>{{t builds.name}}</dt>
           <dd class="number"><a {{bindAttr href="urlBuild"}}>{{build.number}}</a></dd>
           <dt class="finished_at_label">{{t builds.finished_at}}</dt>
-          <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime build.finished_at}}</dd>
+          <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime build.finishedAt}}</dd>
           <dt>{{t builds.duration}}</dt>
           <dd class="duration" {{bindAttr title="started_at"}}>{{formatDuration build.duration}}</dd>
         </div>
@@ -40,11 +38,15 @@
       </dl>
 
       {{#if build.isMatrix}}
-        {{view Travis.Views.JobsView jobsBinding="requiredJobs" required="true"}}
-        {{view Travis.Views.JobsView jobsBinding="allowedFailureJobs"}}
+        {{view Travis.JobsView jobsBinding="requiredJobs" required="true"}}
+        {{view Travis.JobsView jobsBinding="allowedFailureJobs"}}
       {{else}}
-        {{view Travis.Views.LogView contextBinding="build.jobs.firstObject"}}
+        {{view Travis.LogView contextBinding="build.jobs.firstObject"}}
       {{/if}}
     </div>
-  {{/unless}}
+  {{else}}
+    <div id="build" class="loading">
+      <span>Loading</span>
+    </div>
+  {{/if}}
 {{/with}}

@@ -1,25 +1,43 @@
-<ul id="repositories">
-  {{#each repository in controller.content}}
-    {{#view Travis.Views.RepositoriesItemView contextBinding="repository"}}
-      <li {{bindAttr class="view.classes"}}>
-        <a {{bindAttr href="view.urlRepository"}} class="current">{{slug}}</a>
-        <a {{bindAttr href="view.urlLastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
+<div id="search_box">
+  {{view Ember.TextField valueBinding="controller.search"}}
+</div>
 
-        <p class="summary">
-          <span class="duration_label">{{t repositories.duration}}:</span>
-          <abbr class="duration" {{bindAttr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>,
-          <span class="finished_at_label">{{t repositories.finished_at}}:</span>
-          <abbr class="finished_at timeago" {{bindAttr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinished_at}}</abbr>
-        </p>
-        {{#if description}}
-          <p class="description">{{description}}</p>
-        {{/if}}
-        <span class="indicator"></span>
-      </li>
-    {{/view}}
-  {{else}}
-    <li class="loading">
-      <p>Loading</p>
-    </li>
-  {{/each}}
-<ul>
+<ul class="tabs">
+  <li id="tab_recent" {{bindAttr class="view.classRecent"}}>
+    <h5><a href="#">{{t layouts.application.recent}}</a></h5>
+  </li>
+  <li id="tab_owned" {{bindAttr class="view.classOwned"}}>
+    <h5><a href="#">{{t layouts.application.my_repositories}}</a></h5>
+  </li>
+  <li id="tab_search" {{bindAttr class="view.classSearch"}}>
+    <h5><a href="#">{{t layouts.application.search}}</a></h5>
+  </li>
+</ul>
+
+<div class="tab">
+  <ul id="repositories">
+    {{#each repository in controller.arrangedContent}}
+      {{#view Travis.RepositoriesItemView contextBinding="repository"}}
+        <li {{bindAttr class="view.classes"}}>
+          <a {{bindAttr href="view.urlRepository"}} class="current">{{slug}}</a>
+          <a {{bindAttr href="view.urlLastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
+
+          <p class="summary">
+            <span class="duration_label">{{t repositories.duration}}:</span>
+            <abbr class="duration" {{bindAttr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>,
+            <span class="finished_at_label">{{t repositories.finished_at}}:</span>
+            <abbr class="finished_at timeago" {{bindAttr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
+          </p>
+          {{#if description}}
+            <p class="description">{{description}}</p>
+          {{/if}}
+          <span class="indicator"></span>
+        </li>
+      {{/view}}
+    {{else}}
+      <div class="loading">
+        <span>Loading</span>
+      </div>
+    {{/each}}
+  <ul>
+</div>

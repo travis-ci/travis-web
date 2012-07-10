@@ -1,77 +1,87 @@
 require 'models'
 
 @Travis.RestAdapter = DS.RESTAdapter.extend
-  init: ->
-    @_super()
-    # TODO should be able to specify these as strings
-    @set 'mappings',
-      builds: Travis.Build,
-      commits: Travis.Commit,
-      jobs: Travis.Job
+  DEFAULT_OPTIONS:
+    accepts:
+      json: 'application/vnd.travis-ci.2+json'
+
+  mappings:
+    repositories: Travis.Repository
+    builds: Travis.Build
+    commits: Travis.Commit
+    jobs: Travis.Job
 
   plurals:
     repository: 'repositories',
+    build: 'builds'
     branch: 'branches'
+    job: 'jobs'
+    worker: 'workers'
 
-  find: (store, type, id) ->
-    url = '/' + type.buildURL(id)
-    # console.log "find: #{url}"
+  ajax: (url, method, options) ->
+    @_super(url, method, $.extend(options, @DEFAULT_OPTIONS))
 
-    @ajax url, 'GET',
-      success: (json) ->
-        root = type.singularName()
-        @sideload(store, type, json, root)
-        store.load(type, json[root])
-      accepts:
-        json: 'application/vnd.travis-ci.2+json'
+  # init: ->
+  #   @_super()
 
-  findMany: (store, type, ids) ->
-    url = '/' + type.buildURL()
-    # console.log "findMany: #{url}"
+  # find: (store, type, id) ->
+  #   url = '/' + type.buildURL(id)
+  #   # console.log "find: #{url}"
+  #   @ajax url, 'GET',
+  #     success: (json) =>
+  #       @loadOne(store, type, json)
 
-    @ajax url, 'GET',
-      data:
-        ids: ids
-      success: (json) ->
-        root = type.pluralName()
-        @sideload(store, type, json, root)
-        store.loadMany(type, json[root])
-      accepts:
-        json: 'application/vnd.travis-ci.2+json'
+  # findMany: (store, type, ids) ->
+  #   url = '/' + type.buildURL()
+  #   query = { ids: ids }
+  #   # console.log "findMany: #{url}"
+  #   @ajax url, 'GET',
+  #     data: query
+  #     success: (json) =>
+  #       @loadMany(store, type, json)
 
-  findAll: (store, type) ->
-    url = '/' + type.buildURL()
-    # console.log "findAll: #{url}"
+  # findAll: (store, type) ->
+  #   url = '/' + type.buildURL()
+  #   # console.log "findAll: #{url}"
+  #   @ajax url, 'GET',
+  #     success: (json) =>
+  #       @loadMany(store, type, json)
 
-    @ajax url, 'GET',
-      success: (json) ->
-        root = type.pluralName()
-        @sideload(store, type, json, root)
-        store.loadMany(type, json[root])
-      accepts:
-        json: 'application/vnd.travis-ci.2+json'
+  # findQuery: (store, type, query, recordArray) ->
+  #   url = '/' + type.buildURL()
+  #   # console.log "findQuery: #{url} (#{query})"
+  #   @ajax url, 'GET',
+  #     data: query,
+  #     success: (json) =>
+  #       @loadQuery(store, type, json, recordArray)
 
-  findQuery: (store, type, query, recordArray) ->
-    url = '/' + type.buildURL()
-    # console.log "findQuery: #{url} (#{query})"
+  # updateRecord: (store, type, record) ->
+  #   id = get(record, record.get('primaryKey') || 'id')
+  #   url = '/' + type.buildURL(id)
+  #   data = { root: record.toJSON() }
+  #   @ajax url, 'PUT',
+  #     data: data
+  #     success: (json) =>
+  #       loadUpdatedRecord(store, type, record)
 
-    @ajax url, 'GET',
-      data: query,
-      success: (json) ->
-        root = type.pluralName()
-        @sideload(store, type, json, root)
-        recordArray.load(json[root])
-      accepts:
-        json: 'application/vnd.travis-ci.2+json'
+  # loadOne: (store, type, json) ->
+  #   root = type.singularName()
+  #   @sideload(store, type, json, root)
+  #   store.load(type, json[root])
 
-  updateRecord: (store, type, record) ->
-    id = get(record, record.get('primaryKey') || 'id')
-    url = '/' + type.buildURL(id)
-    data = root: record.toJSON()
+  # loadMany: (store, type, json) ->
+  #   root = type.pluralName()
+  #   @sideload(store, type, json, root)
+  #   store.loadMany(type, json[root])
 
-    @ajax url, 'PUT',
-      data: data
-      success: (json) ->
-        root = type.singularName()
-        @sideload(store, type, json, root)
-        store.didUpdateRecord(record, json && json[root])
+  # loadQuery: (store, type, json, recordArray) ->
+  #   root = type.pluralName()
+  #   @sideload(store, type, json, root)
+  #   recordArray.load(json[root])
+
+  # loadUpdatedRecord: (store, type, json) ->
+  #   root = type.singularName()
+  #   @sideload(store, type, json, root)
+  #   store.didUpdateRecord(record, json && json[root])
+
+

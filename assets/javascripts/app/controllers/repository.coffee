@@ -1,38 +1,29 @@
-require 'layout/base'
-
-Travis.Layout.Home = Travis.Layout.Base.extend
-  name: 'home'
+Travis.RepositoryController = Travis.Controller.extend
   bindings: []
+  params: {}
 
   init: ->
-    @_super('repositories', 'repository', 'tabs', 'builds', 'build', 'job')
-    # Travis.Layout.Sidebar.create(parent: @controller)
-
-    @controller.connectOutlet(outletName: 'left', name: 'repositories')
-    @controller.connectOutlet(outletName: 'main', name: 'repository')
-    @controller.connectOutlet(outletName: 'tabs', name: 'tabs')
-
-    @set('repositories', Travis.Repository.find())
+    @_super('builds', 'build', 'job')
 
   activate: (action, params) ->
     @_unbind()
-    @set('tab', if action == 'index' then 'current' else action)
-    @_super(action, params)
+    @setParams(params)
+    this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
-    @_bind('repository', 'repositories.firstObject')
+    @_bind('repository', 'controllers.repositoriesController.firstObject')
     @_bind('build', 'repository.lastBuild')
-    @connectTab('build')
+    @connectTab('current')
 
   viewCurrent: ->
+    @connectTab('current')
     @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('build', 'repository.lastBuild')
-    @connectTab('build')
 
   viewBuilds: ->
+    @connectTab('builds')
     @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('builds', 'repository.builds')
-    @connectTab('builds')
 
   viewBuild: ->
     @_bind('repository', 'repositoriesByParams.firstObject')
@@ -46,8 +37,8 @@ Travis.Layout.Home = Travis.Layout.Base.extend
     @connectTab('job')
 
   repositoriesByParams: (->
-    Travis.Repository.bySlug("#{params.owner}/#{params.name}") if params = @get('params')
-  ).property('params')
+    Travis.Repository.bySlug("#{@getPath('params.owner')}/#{@getPath('params.name')}")
+  ).property('params.owner', 'params.name')
 
   buildById: (->
     Travis.Build.find(id) if id = @getPath('params.id')
@@ -57,13 +48,20 @@ Travis.Layout.Home = Travis.Layout.Base.extend
     Travis.Job.find(id) if id = @getPath('params.id')
   ).property('params.id')
 
+  connectTab: (tab) ->
+    unless tab == @get('tab')
+      @set('tab', tab)
+      name = if tab == 'current' then 'build' else tab
+      @connectOutlet(outletName: 'pane', controller: this, viewClass: Travis["#{$.camelize(name)}View"])
+
+  setParams: (params) ->
+    # TODO if we just @set('params', params) it will update the repositoriesByParams property
+    @setPath("params.#{key}", params[key]) for key, value of params
+
   _bind: (to, from) ->
     @bindings.push Ember.oneWay(this, to, from)
 
   _unbind: ->
     binding.disconnect(this) for binding in @bindings
     @bindings.length = 0
-
-  connectTab: (tab) ->
-    @controller.connectOutlet(outletName: 'tab', name: tab)
 

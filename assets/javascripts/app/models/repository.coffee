@@ -1,31 +1,43 @@
 require 'travis/model'
 
 @Travis.Repository = Travis.Model.extend
-  slug:                 DS.attr('string')
-  owner:                DS.attr('string')
-  name:                 DS.attr('string')
-  description:          DS.attr('string')
-  lastBuildId:          DS.attr('number')
-  lastBuildNumber:      DS.attr('string')
-  lastBuildResult:      DS.attr('number')
-  lastBuildStarted_at:  DS.attr('string')
-  lastBuildFinished_at: DS.attr('string')
+  slug:                DS.attr('string')
+  owner:               DS.attr('string')
+  name:                DS.attr('string')
+  description:         DS.attr('string')
+  lastBuildId:         DS.attr('number')
+  lastBuildNumber:     DS.attr('string')
+  lastBuildResult:     DS.attr('number')
+  lastBuildStartedAt:  DS.attr('string')
+  lastBuildFinishedAt: DS.attr('string')
 
   lastBuild: DS.belongsTo('Travis.Build')
 
   builds: (->
-    Travis.Build.byRepositoryId @get('id'), event_type: 'push'
+    id = @get('id')
+    Travis.Build.byRepositoryId id, event_type: 'push'
+    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && data.get('event_type') == 'push'
   ).property()
 
   pullRequests: (->
-    Travis.Build.byRepositoryId @get('id'), event_type: 'pull_request'
+    id = @get('id')
+    Travis.Build.byRepositoryId id, event_type: 'pull_request'
+    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && data.get('event_type') == 'pull_request'
+  ).property()
+
+  branches: (->
+    Travis.Branch.byRepositoryId @get('id')
   ).property()
 
   lastBuildDuration: (->
-    duration = @getPath('data.lastBuildDuration')
-    duration = Travis.Helpers.durationFrom(@get('lastBuildStarted_at'), @get('lastBuildFinished_at')) unless duration
+    duration = @getPath('data.last_build_duration')
+    duration = Travis.Helpers.durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
     duration
-  ).property('data.lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
+  ).property('data.last_build_duration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
+
+  sortOrder: (->
+    @get('lastBuildFinishedAt') || '9999'
+  ).property('lastBuildFinishedAt')
 
   stats: (->
     # @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
@@ -52,14 +64,13 @@ require 'travis/model'
     @find(search: query, orderBy: 'name')
 
   bySlug: (slug) ->
-    repo = $.detect(@find().toArray(), (repo) -> repo.get('slug') == slug)
-    if repo then Ember.ArrayProxy.create(content: [repo]) else @find(slug: slug)
+    @find(slug: slug)
 
   select: (id) ->
     @find().forEach (repository) ->
       repository.set 'selected', repository.get('id') is id
 
-  buildURL: (slug) ->
-    if slug then slug else 'repositories'
+  # buildURL: (slug) ->
+  #   if slug then slug else 'repositories'
 
 

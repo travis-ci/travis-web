@@ -1,4 +1,4 @@
-@Travis.Views.reopen
+@Travis.reopen
   BuildsView: Em.View.extend
     templateName: 'builds/list'
     buildsBinding: 'controller'
@@ -9,7 +9,7 @@
     commitBinding: 'build.commit'
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('context.result'))
+      Travis.Helpers.colorForResult(@getPath('build.result'))
     ).property('build.result')
 
     urlBuild: (->
@@ -49,10 +49,10 @@
 
     requiredJobs: (->
       jobs = @getPath('build.jobs')
-      jobs.filter((job) -> job.get('allow_failure') != true) if jobs
+      jobs.filter((job) -> job.get('allowFailure') != true) if jobs
     ).property('build.jobs')
 
     allowedFailureJobs: (->
       jobs = @getPath('build.jobs')
-      jobs.filter((job) -> job.get('allow_failure')) if jobs
+      jobs.filter((job) -> job.get('allowFailure')) if jobs
     ).property('build.jobs')
