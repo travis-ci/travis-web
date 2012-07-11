@@ -7,9 +7,6 @@ require 'compass'
 
 Compass.configuration.images_path = 'assets/images'
 
-# output 'assets/javascripts/vendor/ember_i18n'
-# output 'public/javascripts'
-
 output 'public/javascripts'
 
 input 'locales' do
@@ -83,10 +80,7 @@ end
 output 'public/stylesheets'
 input 'assets/stylesheets' do
   match '**/*.{scss,sass}' do
-    # filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
-    #     input.sub /\.scss$/, '.css'
-    #   end
-    filter Rake::Pipeline::Web::Filters::SassFilter
+    sass :line_numbers => false, :line_comments => false
   end
 
   match '**/*.css' do
