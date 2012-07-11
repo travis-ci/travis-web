@@ -4,11 +4,98 @@
 
 require 'rake-pipeline-web-filters'
 require 'compass'
+# quick hack to stop pushing out comments with the full path so that multiple devs dont end up with huge commits for updating a single style.
+# sass wants to push out the full path e.g. Users/randym/travis-ember/app/stylesheets/whatver... 
+class Sass::Tree::Visitors::ToCss < Sass::Tree::Visitors::Base
+  def visit_rule(node)
+    with_tabs(@tabs + node.tabs) do
+      rule_separator = node.style == :compressed ? ',' : ', '
+      line_separator =
+        case node.style
+          when :nested, :expanded; "\n"
+          when :compressed; ""
+          else; " "
+        end
+      rule_indent = '  ' * @tabs
+      per_rule_indent, total_indent = [:nested, :expanded].include?(node.style) ? [rule_indent, ''] : ['', rule_indent]
 
+      joined_rules = node.resolved_rules.members.map do |seq|
+        rule_part = seq.to_a.join
+        if node.style == :compressed
+          rule_part.gsub!(/([^,])\s*\n\s*/m, '\1 ')
+          rule_part.gsub!(/\s*([,+>])\s*/m, '\1')
+          rule_part.strip!
+        end
+        rule_part
+      end.join(rule_separator)
+
+      joined_rules.sub!(/\A\s*/, per_rule_indent)
+      joined_rules.gsub!(/\s*\n\s*/, "#{line_separator}#{per_rule_indent}")
+      total_rule = total_indent << joined_rules
+
+      to_return = ''
+      old_spaces = '  ' * @tabs
+      spaces = '  ' * (@tabs + 1)
+      if node.style != :compressed
+        if node.options[:debug_info] && !@in_directive
+          to_return << visit(debug_info_rule(node.debug_info, node.options)) << "\n"
+        elsif node.options[:trace_selectors]
+          to_return << "#{old_spaces}/* "
+          to_return << node.stack_trace.join("\n   #{old_spaces}")
+          to_return << " */\n"
+        elsif node.options[:line_comments]
+          to_return << "#{old_spaces}/* line #{node.line}"
+
+          if node.filename
+            relative_filename = if node.options[:css_filename]
+              begin
+                Pathname.new(node.filename).relative_path_from(
+                  Pathname.new(File.dirname(node.options[:css_filename]))).to_s
+              rescue ArgumentError
+                nil
+              end
+            end
+            relative_filename = if node.options[:basename_comments]
+              Pathname.new(relative_filename || node.filename).relative_path_from(
+                  Pathname.new(File.dirname(__FILE__))).to_s
+            else
+              relative_filename || node.filename
+            end
+            to_return << ", #{relative_filename}"
+          end
+          to_return << " */\n"
+        end
+      end
+
+      if node.style == :compact
+        properties = with_tabs(0) {node.children.map {|a| visit(a)}.join(' ')}
+        to_return << "#{total_rule} { #{properties} }#{"\n" if node.group_end}"
+      elsif node.style == :compressed
+        properties = with_tabs(0) {node.children.map {|a| visit(a)}.join(';')}
+        to_return << "#{total_rule}{#{properties}}"
+      else
+        properties = with_tabs(@tabs + 1) {node.children.map {|a| visit(a)}.join("\n")}
+        end_props = (node.style == :expanded ? "\n" + old_spaces : ' ')
+        to_return << "#{total_rule} {\n#{properties}#{end_props}}#{"\n" if node.group_end}"
+      end
+
+      to_return
+    end
+  end
+end
 Compass.configuration.images_path = 'assets/images'
 
 output 'public/javascripts'
+
+input 'locales' do
+  match '**/*.yml' do
+    ember_i18n :use_i18n_js => true
+  end
+  concat 'localizations.js'
+end
+
 input 'assets/javascripts' do
+
   match 'vendor/**/*.js' do
     files = %w(
       vendor/minispade.js
@@ -25,7 +112,7 @@ input 'assets/javascripts' do
     concat files, 'vendor.js'
   end
 
-  match '{app,config,data,lib}/**/*.coffee' do
+  match '{app,data,lib}/**/*.coffee' do
     coffee_script
   end
 
@@ -38,7 +125,7 @@ input 'assets/javascripts' do
     concat 'app/templates.js'
   end
 
-  match '{app,config,data,lib}/**/*.js' do
+  match '{app,data,lib}/**/*.js' do
     minispade(
       string: true,
       rewrite_requires: true,
@@ -71,10 +158,7 @@ end
 output 'public/stylesheets'
 input 'assets/stylesheets' do
   match '**/*.{scss,sass}' do
-    # filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
-    #     input.sub /\.scss$/, '.css'
-    #   end
-    filter Rake::Pipeline::Web::Filters::SassFilter
+    sass :basename_comments => true, :line_comments => true
   end
 
   match '**/*.css' do

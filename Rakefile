@@ -13,3 +13,10 @@ namespace :ember do
     system 'cp tmp/ember.js/dist/ember.js assets/javascripts/vendor/ember.js'
   end
 end
+
+desc "update all locale files from localeapp"
+task :update_locales do
+  require 'localeapp'
+  system 'localeapp pull'
+end
+
