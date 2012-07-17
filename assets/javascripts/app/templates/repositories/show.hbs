@@ -1,6 +1,6 @@
-{{#if view.repository.isLoaded}}
-  {{#with view.repository}}
-    <div id="repository">
+<div id="repository" {{bindAttr class="view.class"}}>
+  {{#if view.repository.isLoaded}}
+    {{#with view.repository}}
       <h3>
         <a {{bindAttr href="view.urlGithub"}}>{{slug}}</a>
       </h3>
@@ -14,15 +14,13 @@
       </ul>
 
       {{view Travis.TabsView}}
-    </div>
-
-    <div class="tab">
-      {{outlet pane}}
-    </div>
-  {{/with}}
-{{else}}
-  <div id="repository" class="loading">
+    {{/with}}
+  {{else}}
     <span>Loading</span>
+  {{/if}}
+
+  <div class="tab">
+    {{outlet pane}}
   </div>
-{{/if}}
+</div>
 

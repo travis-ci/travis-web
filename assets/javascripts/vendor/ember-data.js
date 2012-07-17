@@ -4007,6 +4007,7 @@ DS.RESTAdapter = DS.Adapter.extend({
       data: { ids: ids },
       success: function(json) {
         this.sideload(store, type, json, plural);
+        console.log(type, json, plural)
         store.loadMany(type, json[plural]);
       }
     });

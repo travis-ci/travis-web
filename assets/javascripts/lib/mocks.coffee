@@ -93,6 +93,14 @@ for repository in repositories
     responseTime: responseTime
     responseText: { builds: $.select(builds, (build) -> repository.build_ids.indexOf(build.id) != -1) }
 
+  $.mockjax
+    url: '/builds'
+    data: { repository_id: repository.id, event_type: 'push', orderBy: 'number DESC' }
+    responseTime: responseTime
+    responseText:
+      builds: (builds[id - 1] for id in repository.build_ids)
+      commits: (commits[builds[id - 1].commit_id - 1] for id in repository.build_ids)
+
 for build in builds
   $.mockjax
     url: '/builds/' + build.id
@@ -102,14 +110,11 @@ for build in builds
       commit: commits[build.commit_id - 1]
       jobs: (jobs[id - 1] for id in build.job_ids)
 
-for repository in repositories
-  $.mockjax
-    url: '/builds'
-    data: { repository_id: repository.id, event_type: 'push', orderBy: 'number DESC' }
-    responseTime: responseTime
-    responseText:
-      builds: (builds[id - 1] for id in repository.build_ids)
-      commits: (commits[builds[id - 1].commit_id - 1] for id in repository.build_ids)
+  # $.mockjax
+  #   url: '/jobs'
+  #   data: { ids: build.job_ids.join(',') }
+  #   responseTime: responseTime
+  #   responseText: { jobs: $.select(jobs, (job) -> build.job_ids.indexOf(job.id) != -1) }
 
 for job in jobs
   $.mockjax
@@ -118,6 +123,12 @@ for job in jobs
     responseText:
       job: job,
       commit: commits[job.commit_id - 1]
+
+$.mockjax
+  url: '/jobs'
+  responseTime: responseTime
+  responseText:
+    jobs: $.select(jobs, (job) -> job.state == 'created')
 
 for data in branches
   $.mockjax
@@ -137,12 +148,6 @@ $.mockjax
   url: '/workers'
   responseTime: responseTime
   responseText: { workers: workers }
-
-$.mockjax
-  url: '/jobs'
-  responseTime: responseTime
-  responseText:
-    jobs: $.select(jobs, (job) -> job.state == 'created')
 
 $.mockjax
   url: '/profile/hooks'

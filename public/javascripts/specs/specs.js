@@ -16,34 +16,34 @@
 (function() {
 
   describe('events', function() {
-    return describe('an event adding a job', function() {
+    return describe('an event adding a worker', function() {
       beforeEach(function() {
         app('');
-        waitFor(jobsRendered);
-        return waitFor(queuesRendered);
+        return waitFor(workersRendered);
       });
-      return it('adds a job to the jobs queue', function() {
+      return it('adds a worker to the workers list', function() {
         Em.run(function() {
-          return Travis.app.receive('job:created', {
-            job: {
-              id: 10,
-              repository_id: 1,
-              number: '1.4',
-              queue: 'common'
+          return Travis.app.receive('worker:added', {
+            worker: {
+              id: 10
             }
           });
         });
-        return listsQueuedJob({
-          name: 'common',
+        return listsWorker({
+          group: 'workers.travis-ci.org',
           row: 3,
           item: {
-            number: '1.4',
-            repo: 'travis-ci/travis-core'
+            'ruby-3': 'ruby-3'
           }
         });
       });
     });
   });
+
+}).call(this);
+(function() {
+
+
 
 }).call(this);
 (function() {
@@ -117,6 +117,8 @@
 
   this.queuesRendered = notEmpty('#queue_common li');
 
+  this.workersRendered = notEmpty('.worker');
+
 }).call(this);
 (function() {
 
@@ -180,12 +182,28 @@
 
   this.listsRepo = function(data) {
     var repo, row;
-    repo = data.repo;
     row = $('#repositories li')[data.row - 1];
+    repo = data.item;
     expect($('a.current', row).attr('href')).toEqual("#!/" + repo.slug);
     expect($('a.last_build', row).attr('href')).toEqual(repo.build.url);
     expect($('.duration', row).text()).toEqual(repo.build.duration);
     return expect($('.finished_at', row).text()).toEqual(repo.build.finishedAt);
+  };
+
+  this.listsBuilds = function(builds) {
+    return listsItems('build', builds);
+  };
+
+  this.listsBuild = function(data) {
+    var build, row;
+    row = $('#builds tbody tr')[data.row - 1];
+    build = data.item;
+    expect($('.number a', row).attr('href')).toEqual("#!/" + build.slug + "/builds/" + build.id);
+    expect($('.number a', row).text()).toEqual(build.number);
+    expect($('.message', row).text()).toEqual(build.message);
+    expect($('.duration', row).text()).toEqual(build.duration);
+    expect($('.finished_at', row).text()).toEqual(build.finishedAt);
+    return expect($(row).attr('class')).toEqual(build.color);
   };
 
   this.listsJobs = function(data) {
@@ -206,7 +224,7 @@
       return listsJob({
         table: data.table,
         row: row + 1,
-        job: job
+        item: job
       });
     });
   };
@@ -214,7 +232,7 @@
   this.listsJob = function(data) {
     var element, job, row;
     row = $('tbody tr', data.table)[data.row - 1];
-    job = data.job;
+    job = data.item;
     element = $(row);
     expect(element.attr('class')).toEqual(job.color);
     element = $("td.number", row);
@@ -227,22 +245,6 @@
     expect(element.text()).toEqual(job.finishedAt);
     element = $("td:nth-child(6)", row);
     return expect(element.text()).toEqual(job.rvm);
-  };
-
-  this.listsBuilds = function(builds) {
-    return listsItems('build', jobs);
-  };
-
-  this.listsBuild = function(data) {
-    var build, row;
-    row = $('#builds tbody tr')[data.row - 1];
-    build = data.item;
-    expect($('.number a', row).attr('href')).toEqual("#!/" + build.slug + "/builds/" + build.id);
-    expect($('.number a', row).text()).toEqual(build.number);
-    expect($('.message', row).text()).toEqual(build.message);
-    expect($('.duration', row).text()).toEqual(build.duration);
-    expect($('.finished_at', row).text()).toEqual(build.finishedAt);
-    return expect($(row).attr('class')).toEqual(build.color);
   };
 
   this.listsQueuedJobs = function(jobs) {
@@ -259,9 +261,9 @@
   };
 
   this.listsItems = function(type, items) {
-    console.log(items);
-    return $.each(items, function(item, row) {
-      return this["lists" + ($.camelize(type))]({
+    var _this = this;
+    return $.each(items, function(row, item) {
+      return _this["lists" + ($.camelize(type))]({
         item: item,
         row: row + 1
       });

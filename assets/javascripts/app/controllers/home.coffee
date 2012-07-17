@@ -1,6 +1,5 @@
 Travis.HomeController = Travis.Controller.extend
   name: 'home'
-  bindings: []
 
   init: ->
     @_super('top', 'repositories', 'repository', 'sidebar')

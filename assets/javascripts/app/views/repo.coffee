@@ -46,6 +46,10 @@
 
     repositoryBinding: 'controller.repository'
 
+    class: (->
+      'loading' unless @getPath('repository.isLoaded')
+    ).property('repository.isLoaded')
+
     urlGithub: (->
       Travis.Urls.githubRepository(@getPath('repository.slug'))
     ).property('repository.slug'),

@@ -78,23 +78,33 @@ describe 'events', ->
   #       row: 3
   #       item: { id: 10, number: '1.4', repo: 'travis-ci/travis-core', finishedAt: 'less than a minute ago', duration: '55 sec', rvm: 'jruby' }
 
-  describe 'an event adding a job', ->
+  #   it 'adds a job to the jobs queue', ->
+  #     Em.run ->
+  #       Travis.app.receive 'job:created',
+  #         job:
+  #           id: 10
+  #           repository_id: 1
+  #           number: '1.4'
+  #           queue: 'common'
+
+  #     listsQueuedJob
+  #       name: 'common'
+  #       row: 3
+  #       item: { number: '1.4', repo: 'travis-ci/travis-core' }
+
+  describe 'an event adding a worker', ->
     beforeEach ->
       app ''
-      waitFor jobsRendered
-      waitFor queuesRendered
+      waitFor workersRendered
 
-    it 'adds a job to the jobs queue', ->
+    it 'adds a worker to the workers list', ->
       Em.run ->
-        Travis.app.receive 'job:created',
-          job:
+        Travis.app.receive 'worker:added',
+          worker:
             id: 10
-            repository_id: 1
-            number: '1.4'
-            queue: 'common'
 
-      listsQueuedJob
-        name: 'common'
+      listsWorker
+        group: 'workers.travis-ci.org'
         row: 3
-        item: { number: '1.4', repo: 'travis-ci/travis-core' }
+        item: { 'ruby-3' }
 

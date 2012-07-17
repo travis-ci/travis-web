@@ -44,24 +44,38 @@
   listsItems('repo', items)
 
 @listsRepo = (data) ->
-  repo = data.repo
   row = $('#repositories li')[data.row - 1]
+  repo = data.item
 
   expect($('a.current', row).attr('href')).toEqual "#!/#{repo.slug}"
   expect($('a.last_build', row).attr('href')).toEqual repo.build.url
   expect($('.duration', row).text()).toEqual repo.build.duration
   expect($('.finished_at', row).text()).toEqual repo.build.finishedAt
 
+@listsBuilds = (builds) ->
+  listsItems('build', builds)
+
+@listsBuild = (data) ->
+  row = $('#builds tbody tr')[data.row - 1]
+  build = data.item
+
+  expect($('.number a', row).attr('href')).toEqual "#!/#{build.slug}/builds/#{build.id}"
+  expect($('.number a', row).text()).toEqual build.number
+  expect($('.message', row).text()).toEqual build.message
+  expect($('.duration', row).text()).toEqual build.duration
+  expect($('.finished_at', row).text()).toEqual build.finishedAt
+  expect($(row).attr('class')).toEqual build.color
+
 @listsJobs = (data) ->
   table = $(data.table)
   headers = ($(element).text() for element in $("thead th", table))
   expect(headers).toEqual(data.headers)
 
-  $.each data.jobs, (row, job) -> listsJob(table: data.table, row: row + 1, job: job)
+  $.each data.jobs, (row, job) -> listsJob(table: data.table, row: row + 1, item: job)
 
 @listsJob = (data) ->
   row = $('tbody tr', data.table)[data.row - 1]
-  job = data.job
+  job = data.item
 
   element = $(row)
   expect(element.attr('class')).toEqual job.color
@@ -81,20 +95,6 @@
   element = $("td:nth-child(6)", row)
   expect(element.text()).toEqual job.rvm
 
-@listsBuilds = (builds) ->
-  listsItems('build', jobs)
-
-@listsBuild = (data) ->
-  row = $('#builds tbody tr')[data.row - 1]
-  build = data.item
-
-  expect($('.number a', row).attr('href')).toEqual "#!/#{build.slug}/builds/#{build.id}"
-  expect($('.number a', row).text()).toEqual build.number
-  expect($('.message', row).text()).toEqual build.message
-  expect($('.duration', row).text()).toEqual build.duration
-  expect($('.finished_at', row).text()).toEqual build.finishedAt
-  expect($(row).attr('class')).toEqual build.color
-
 @listsQueuedJobs = (jobs) ->
   listsItems('queuedJob', jobs)
 
@@ -106,8 +106,7 @@
   expect(text).toContain "##{job.number}"
 
 @listsItems = (type, items) ->
-  console.log items
-  $.each items, (item, row) ->
+  $.each items, (row, item) =>
     this["lists#{$.camelize(type)}"](item: item, row: row + 1)
 
 

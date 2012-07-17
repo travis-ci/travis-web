@@ -49,10 +49,9 @@ Travis.RepositoryController = Travis.Controller.extend
   ).property('params.id')
 
   connectTab: (tab) ->
-    unless tab == @get('tab')
-      @set('tab', tab)
-      name = if tab == 'current' then 'build' else tab
-      @connectOutlet(outletName: 'pane', controller: this, viewClass: Travis["#{$.camelize(name)}View"])
+    @set('tab', tab)
+    name = if tab == 'current' then 'build' else tab
+    @connectOutlet(outletName: 'pane', controller: this, viewClass: Travis["#{$.camelize(name)}View"])
 
   setParams: (params) ->
     # TODO if we just @set('params', params) it will update the repositoriesByParams property

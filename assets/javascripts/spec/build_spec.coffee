@@ -1,6 +1,7 @@
 # describe 'on the "build" state', ->
 #   beforeEach ->
 #     app '!/travis-ci/travis-core/builds/1'
+#     waitFor reposRendered
 #     waitFor buildRendered
 #
 #   it 'displays the expected stuff', ->
