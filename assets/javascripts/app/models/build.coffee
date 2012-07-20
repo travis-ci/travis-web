@@ -14,13 +14,6 @@ require 'travis/model'
   startedAt:       DS.attr('string')
   finishedAt:      DS.attr('string')
 
-  # committedAt:     DS.attr('string')
-  # committerName:   DS.attr('string')
-  # committerEmail:  DS.attr('string')
-  # authorName:      DS.attr('string')
-  # authorEmail:     DS.attr('string')
-  # compareUrl:      DS.attr('string')
-
   repository: DS.belongsTo('Travis.Repository')
   commit:     DS.belongsTo('Travis.Commit')
   jobs:       DS.hasMany('Travis.Job', key: 'job_ids')

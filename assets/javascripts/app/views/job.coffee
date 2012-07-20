@@ -48,3 +48,6 @@
   LogView: Em.View.extend
     templateName: 'jobs/log'
 
+    click: (event) ->
+      $(event.target).closest('.fold').toggleClass('open')
+

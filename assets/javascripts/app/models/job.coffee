@@ -21,9 +21,7 @@ require 'travis/model'
   log:        DS.belongsTo('Travis.Artifact',   key: 'log_id')
 
   config: (->
-    config = {}
-    (config[key] = value unless $.isEmpty(value)) for key, value of @getPath('data.config') || {}
-    config
+    Travis.Helpers.compact(@getPath('data.config'))
   ).property('data.config')
 
   sponsor: (->
