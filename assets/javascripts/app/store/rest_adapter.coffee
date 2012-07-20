@@ -1,7 +1,11 @@
 require 'models'
 
+jQuery.support.cors = true
+
 @Travis.RestAdapter = DS.RESTAdapter.extend
-  API_DOMAIN: 'http://localhost:9292'
+  # API_DOMAIN: 'http://localhost:9292'
+  # API_DOMAIN: 'http://travis.local:9292'
+  API_DOMAIN: ''
 
   DEFAULT_OPTIONS:
     accepts:
@@ -9,9 +13,13 @@ require 'models'
 
   mappings:
     repositories: Travis.Repository
-    builds: Travis.Build
-    commits: Travis.Commit
-    jobs: Travis.Job
+    repository:   Travis.Repository
+    builds:       Travis.Build
+    build:        Travis.Build
+    commits:      Travis.Commit
+    commit:       Travis.Commit
+    jobs:         Travis.Job
+    job:          Travis.Job
 
   plurals:
     repository: 'repositories',

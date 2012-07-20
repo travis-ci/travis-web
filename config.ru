@@ -1,8 +1,11 @@
 $: << 'lib'
 
 require 'sinatra'
+require 'travis/api/app'
 
 class App < Sinatra::Base
+  use Travis::Api::App
+
   disable :protection
 
   set :root, File.dirname(__FILE__)

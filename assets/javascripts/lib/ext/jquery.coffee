@@ -38,6 +38,18 @@ $.fn.extend
     Utils.updateGithubStats repository, $(this)
 
 $.extend
+  isEmpty: (obj) ->
+    if $.isArray(obj)
+      !obj.length
+    else if $.isObject(obj)
+      !$.keys(obj).length
+    else
+      !obj
+
+  isObject: (obj) ->
+    # does this work as expected?
+    Object.prototype.toString.call(obj) == '[object Object]'
+
   keys: (obj) ->
     keys = []
     $.each obj, (key) -> keys.push key
@@ -60,8 +72,8 @@ $.extend
   capitalize: (string) ->
     string[0].toUpperCase() + string.substring(1)
 
-  compact: (array) ->
-    $.grep array, (value) -> !!value
+  compact: (object) ->
+    $.grep(object, (value) -> !!value)
 
   all: (array, callback) ->
     args = Array::slice.apply(arguments)

@@ -9,10 +9,10 @@ repositories = [
 ]
 
 builds = [
-  { id: 1, repository_id: '1', commit_id: 1, job_ids: [1, 2, 3], number: 1, event_type: 'push', config: { rvm: ['rbx', '1.9.3', 'jruby'] }, duration: 30, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:30Z', result: 0 },
-  { id: 2, repository_id: '1', commit_id: 2, job_ids: [4],       number: 2, event_type: 'push', config: { rvm: ['rbx'] } },
-  { id: 3, repository_id: '2', commit_id: 3, job_ids: [5],       number: 3, event_type: 'push', config: { rvm: ['rbx'] }, duration: 30, started_at: '2012-07-02T00:01:00Z', finished_at: '2012-07-01T00:01:30Z', result: 1 },
-  { id: 4, repository_id: '3', commit_id: 4, job_ids: [6],       number: 4, event_type: 'push', config: { rvm: ['rbx'] }, started_at: '2012-07-02T00:02:00Z' },
+  { id: 1, repository_id: '1', commit_id: 1, job_ids: [1, 2, 3], number: 1, pull_request: false, config: { rvm: ['rbx', '1.9.3', 'jruby'] }, duration: 30, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:30Z', result: 0 },
+  { id: 2, repository_id: '1', commit_id: 2, job_ids: [4],       number: 2, pull_request: false, config: { rvm: ['rbx'] } },
+  { id: 3, repository_id: '2', commit_id: 3, job_ids: [5],       number: 3, pull_request: false, config: { rvm: ['rbx'] }, duration: 30, started_at: '2012-07-02T00:01:00Z', finished_at: '2012-07-01T00:01:30Z', result: 1 },
+  { id: 4, repository_id: '3', commit_id: 4, job_ids: [6],       number: 4, pull_request: false, config: { rvm: ['rbx'] }, started_at: '2012-07-02T00:02:00Z' },
 ]
 
 commits = [

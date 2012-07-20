@@ -26,7 +26,7 @@ require 'travis/model'
   jobs:       DS.hasMany('Travis.Job', key: 'job_ids')
 
   config: (->
-    @getPath 'data.config'
+    Travis.Helpers.compact(@getPath('data.config'))
   ).property('data.config')
 
   isMatrix: (->

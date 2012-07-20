@@ -1,6 +1,12 @@
 require 'travis/log'
+require 'emoij'
 
 @Travis.Helpers =
+  compact: (object) ->
+    result = {}
+    (result[key] = value unless $.isEmpty(value)) for key, value of object || {}
+    result
+
   safe: (string) ->
     new Handlebars.SafeString(string)
 
@@ -73,7 +79,7 @@ require 'travis/log'
       $.each emojis.uniq(), (ix, emoji) ->
         strippedEmoji = emoji.substring(1, emoji.length - 1)
         unless EmojiDictionary.indexOf(strippedEmoji) is -1
-          image = '<img class=\'emoji\' title=\'' + emoji + '\' alt=\'' + emoji + '\' src=\'' + Travis.assets.host + '/' + Travis.assets.version + '/images/emoji/' + strippedEmoji + '.png\'/>'
+          image = '<img class=\'emoji\' title=\'' + emoji + '\' alt=\'' + emoji + '\' src=\'' + '/images/emoji/' + strippedEmoji + '.png\'/>'
           text = text.replace(new RegExp(emoji, 'g'), image)
     text
 

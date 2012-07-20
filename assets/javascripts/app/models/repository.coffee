@@ -16,13 +16,13 @@ require 'travis/model'
   builds: (->
     id = @get('id')
     Travis.Build.byRepositoryId id, event_type: 'push'
-    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && data.get('event_type') == 'push'
+    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && data.get('pull_request') == false
   ).property()
 
   pullRequests: (->
     id = @get('id')
     Travis.Build.byRepositoryId id, event_type: 'pull_request'
-    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && data.get('event_type') == 'pull_request'
+    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && data.get('pull_request') == true
   ).property()
 
   branches: (->

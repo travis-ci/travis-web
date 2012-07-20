@@ -21,7 +21,9 @@ require 'travis/model'
   log:        DS.belongsTo('Travis.Artifact',   key: 'log_id')
 
   config: (->
-    @getPath 'data.config'
+    config = {}
+    (config[key] = value unless $.isEmpty(value)) for key, value of @getPath('data.config') || {}
+    config
   ).property('data.config')
 
   sponsor: (->
@@ -29,19 +31,20 @@ require 'travis/model'
   ).property('data.sponsor')
 
   configValues: (->
-    config = @get('config')
-    return [] unless config
-    $.values($.only(config, 'rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'scala', 'jdk', 'python', 'perl'))
+    if config = @get('config')
+      $.values($.only.apply(config, Travis.CONFIG_KEYS))
+    else
+      []
   ).property('config')
 
   appendLog: (log) ->
-    @set 'log', @get('log') + log
+    @set('log', @get('log') + log)
 
   subscribe: ->
-    Travis.app.subscribe 'job-' + @get('id')
+    # Travis.app.subscribe 'job-' + @get('id')
 
   onStateChange: (->
-    Travis.app.unsubscribe 'job-' + @get('id') if @get('state') == 'finished'
+    # Travis.app.unsubscribe 'job-' + @get('id') if @get('state') == 'finished'
   ).observes('state')
 
   tick: ->
