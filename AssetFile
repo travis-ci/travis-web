@@ -26,7 +26,7 @@ input 'assets/javascripts' do
     concat files, 'vendor.js'
   end
 
-  match '{app,config,data,lib}/**/*.coffee' do
+  match %r(^(travis|(app|config|data|lib)/.*)\.coffee$) do
     coffee_script
   end
 
@@ -39,7 +39,7 @@ input 'assets/javascripts' do
     concat 'app/templates.js'
   end
 
-  match '{app,config,data,lib}/**/*.js' do
+  match %r(^(travis|(app|config|data|lib)/.*)\.js$) do
     minispade(
       string: true,
       rewrite_requires: true,
