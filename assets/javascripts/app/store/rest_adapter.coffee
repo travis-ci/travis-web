@@ -20,6 +20,8 @@ jQuery.support.cors = true
     commit:       Travis.Commit
     jobs:         Travis.Job
     job:          Travis.Job
+    worker:       Travis.Worker
+    workers:      Travis.Worker
 
   plurals:
     repository: 'repositories',

@@ -4,42 +4,37 @@ require 'ext/jquery'
 # $.mockjaxSettings.log = false
 # Ember.LOG_BINDINGS = true
 Ember.ENV.RAISE_ON_DEPRECATION = true
+# Pusher.log = -> console.log(arguments)
 
 @Travis = Em.Namespace.create
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
 
   INTERVALS: { sponsors: -1, times: -1 }
 
-  # QUEUES: [
-  #   { name: 'common',  display: 'Common' },
-  #   { name: 'php',     display: 'PHP, Perl and Python' },
-  #   { name: 'node_js', display: 'Node.js' },
-  #   { name: 'jvmotp',  display: 'JVM and Erlang' },
-  #   { name: 'rails',   display: 'Rails' },
-  #   { name: 'spree',   display: 'Spree' },
-  # ],
-
   QUEUES: [
-    { name: 'common',  display: 'Common' },
-    { name: 'jvmotp',  display: 'JVM and Erlang' },
-  ],
+    { name: 'common',  display: 'Common' }
+    { name: 'php',     display: 'PHP, Perl and Python' }
+    { name: 'node_js', display: 'Node.js' }
+    { name: 'jvmotp',  display: 'JVM and Erlang' }
+    { name: 'rails',   display: 'Rails' }
+    { name: 'spree',   display: 'Spree' }
+  ]
 
   run: (attrs) ->
     @app = Travis.App.create(attrs || {})
 
   App: Em.Application.extend
-    init: () ->
+    init: ->
       @_super()
       @connect()
 
       @store = Travis.Store.create()
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
-      @routes = Travis.Router.create()
+      @routes = Travis.Routes.create()
       @routes.start()
 
-    receive: (event, data) ->
-      Travis.app.store.loadData(event, data)
+      @pusher = new Travis.Pusher()
 
     connect: ->
       @controller = Em.Controller.create()
@@ -56,11 +51,11 @@ Ember.ENV.RAISE_ON_DEPRECATION = true
         @controller.connectOutlet(outletName: 'layout', controller: @layout, viewClass: viewClass)
       @layout
 
-
 require 'controllers'
 require 'helpers'
 require 'models'
-require 'router'
+require 'pusher'
+require 'routes'
 require 'store'
 require 'templates'
 require 'views'

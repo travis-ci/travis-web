@@ -25,6 +25,16 @@ Travis.RepositoryController = Travis.Controller.extend
     @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('builds', 'repository.builds')
 
+  viewPullRequests: ->
+    @connectTab('pull_requests')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('builds', 'repository.pullRequests')
+
+  viewBranches: ->
+    @connectTab('branches')
+    @_bind('repository', 'repositoriesByParams.firstObject')
+    @_bind('builds', 'repository.branches')
+
   viewBuild: ->
     @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('build', 'buildById')
@@ -49,9 +59,14 @@ Travis.RepositoryController = Travis.Controller.extend
   ).property('params.id')
 
   connectTab: (tab) ->
-    @set('tab', tab)
     name = if tab == 'current' then 'build' else tab
-    @connectOutlet(outletName: 'pane', controller: this, viewClass: Travis["#{$.camelize(name)}View"])
+    viewClass = if name in ['builds', 'branches', 'pull_requests']
+      Travis.BuildsView
+    else
+      Travis["#{$.camelize(name)}View"]
+
+    @set('tab', tab)
+    @connectOutlet(outletName: 'pane', controller: this, viewClass: viewClass)
 
   setParams: (params) ->
     # TODO if we just @set('params', params) it will update the repositoriesByParams property

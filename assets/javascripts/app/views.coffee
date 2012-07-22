@@ -16,6 +16,10 @@ require 'ext/ember/namespace'
       $('#repository').append(element)
       Em.run.later (-> element.remove()), 10
 
+  WorkersView: Em.View.extend
+    toggle: (event) ->
+      $(event.target).closest('li').toggleClass('open')
+
 require 'views/build'
 require 'views/job'
 require 'views/repo'

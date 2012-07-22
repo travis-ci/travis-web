@@ -19,6 +19,14 @@
       'active' if @get('tab') == 'builds'
     ).property('tab')
 
+    classPullRequests: (->
+      'active' if @get('tab') == 'pull_requests'
+    ).property('tab')
+
+    classBranches: (->
+      'active' if @get('tab') == 'branches'
+    ).property('tab')
+
     classBuild: (->
       tab = @get('tab')
       classes = []
@@ -39,6 +47,14 @@
       Travis.Urls.builds(@getPath('repository.slug'))
     ).property('repository.slug')
 
+    urlPullRequests: (->
+      Travis.Urls.pullRequests(@getPath('repository.slug'))
+    ).property('repository.slug')
+
+    urlBranches: (->
+      Travis.Urls.branches(@getPath('repository.slug'))
+    ).property('repository.slug')
+
     urlBuild: (->
       Travis.Urls.build(@getPath('repository.slug'), @getPath('build.id'))
     ).property('repository.slug', 'build.id')
@@ -46,10 +62,6 @@
     urlJob: (->
       Travis.Urls.job(@getPath('repository.slug'), @getPath('job.id'))
     ).property('repository.slug', 'job.id')
-
-    branches: (->
-      @getPath('repository.branches')
-    ).property('repository.id')
 
     urlStatusImage: (->
       Travis.Urls.statusImage(@getPath('repository.slug'), @getPath('branch.commit.branch'))

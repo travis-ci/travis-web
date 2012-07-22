@@ -6,9 +6,9 @@ require 'travis/model'
   host: DS.attr('string')
   lastSeenAt: DS.attr('string')
 
-  isTesting: (->
-    @get('state') == 'working' && !!@getPath('payload.config')
-  ).property('state', 'config')
+  payload: (->
+    @getPath('data.payload')
+  ).property('data.payload')
 
   number: (->
     @get('name').match(/\d+$/)[0]
@@ -26,5 +26,13 @@ require 'travis/model'
   ).property('state')
 
   urlJob: (->
-    "#!/#{@getPath('payload.repository.slug')}/jobs/#{@getPath('payload.build.id')}"
-  ).property('payload')
+    "#!/#{@get('repository')}/jobs/#{@get('job_id')}" if @get('state') == 'working'
+  ).property('repository', 'job_id', 'state')
+
+  repository: (->
+    @getPath('payload.repository.slug')
+  ).property('payload.repository.slug')
+
+  job_id: (->
+    @getPath('payload.job.id')
+  ).property('payload.job.id')

@@ -7,13 +7,14 @@ Travis.Store = DS.Store.extend
   loadData: (event, data) ->
     mappings = @adapter.get('mappings')
     name = event.split(':').shift()
+    type = mappings[name]
 
-    if type = mappings[name]
-      @_loadMany(this, type, data)
-    else if type = mappings[@adapter.pluralize(name)]
+    if data[type.singularName()]
       @_loadOne(this, type, data)
+    else if data[type.pluralName()]
+      @_loadMany(this, type, data)
     else
-      throw "can't find type for #{name}" unless type
+      throw "can't load data for #{name}" unless type
 
   _loadOne: (store, type, json) ->
     root = type.singularName()
@@ -21,10 +22,10 @@ Travis.Store = DS.Store.extend
     type.load(json[root])
     @_updateAssociations(type, name, json[root])
 
-  # _loadMany: (store, type, json) ->
-  #   root = type.pluralName()
-  #   @adapter.sideload(store, type, json, root)
-  #   @loadMany(type, json[root])
+  _loadMany: (store, type, json) ->
+    root = type.pluralName()
+    @adapter.sideload(store, type, json, root)
+    @loadMany(type, json[root])
 
   # _updateAssociations: (type, name, data) ->
   #   Em.get(type, 'associationsByName').forEach (key, meta) =>

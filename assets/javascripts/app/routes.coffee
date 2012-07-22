@@ -1,4 +1,4 @@
-Travis.Router = Em.Object.extend
+Travis.Routes = Em.Object.extend
   ROUTES:
     '!/profile':                     ['profile', 'show']
     '!/stats':                       ['stats', 'show']
@@ -7,7 +7,7 @@ Travis.Router = Em.Object.extend
     '!/:owner/:name/builds/:id':     ['home', 'build']
     '!/:owner/:name/builds':         ['home', 'builds']
     '!/:owner/:name/pull_requests':  ['home', 'pullRequests']
-    '!/:owner/:name/branch_summary': ['home', 'branches']
+    '!/:owner/:name/branches':       ['home', 'branches']
     '!/:owner/:name':                ['home', 'current']
     '':                              ['home', 'index']
 

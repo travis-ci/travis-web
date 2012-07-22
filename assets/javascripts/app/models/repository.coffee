@@ -2,8 +2,6 @@ require 'travis/model'
 
 @Travis.Repository = Travis.Model.extend
   slug:                DS.attr('string')
-  owner:               DS.attr('string')
-  name:                DS.attr('string')
   description:         DS.attr('string')
   lastBuildId:         DS.attr('number')
   lastBuildNumber:     DS.attr('string')
@@ -29,6 +27,14 @@ require 'travis/model'
     Travis.Branch.byRepositoryId @get('id')
   ).property()
 
+  owner: (->
+    (@get('slug') || '').split('/')[0]
+  ).property('slug')
+
+  name: (->
+    (@get('slug') || '').split('/')[1]
+  ).property('slug')
+
   lastBuildDuration: (->
     duration = @getPath('data.last_build_duration')
     duration = Travis.Helpers.durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
@@ -40,11 +46,11 @@ require 'travis/model'
   ).property('lastBuildFinishedAt')
 
   stats: (->
-    # @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
-    #   @set('_stats', data)
-    #   @notifyPropertyChange 'stats'
-    # ) && {}
-  ).property('slug')
+    @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
+      @set('_stats', data)
+      @notifyPropertyChange 'stats'
+    ) && {}
+  ).property()
 
   select: ->
     Travis.Repository.select(self.get('id'))

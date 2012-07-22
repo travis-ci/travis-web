@@ -5,6 +5,12 @@
   builds: (slug) ->
     "#!/#{slug}/builds"
 
+  pullRequests: (slug) ->
+    "#!/#{slug}/pull_requests"
+
+  branches: (slug) ->
+    "#!/#{slug}/branches"
+
   build: (slug, id) ->
     "#!/#{slug}/builds/#{id}"
 
