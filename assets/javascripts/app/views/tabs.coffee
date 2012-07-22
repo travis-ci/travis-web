@@ -40,31 +40,31 @@
     ).property('tab')
 
     urlRepository: (->
-      Travis.Urls.repository(@getPath('repository.slug'))
+      Travis.Urls.repository(@get('repository.slug'))
     ).property('repository.slug')
 
     urlBuilds: (->
-      Travis.Urls.builds(@getPath('repository.slug'))
+      Travis.Urls.builds(@get('repository.slug'))
     ).property('repository.slug')
 
     urlPullRequests: (->
-      Travis.Urls.pullRequests(@getPath('repository.slug'))
+      Travis.Urls.pullRequests(@get('repository.slug'))
     ).property('repository.slug')
 
     urlBranches: (->
-      Travis.Urls.branches(@getPath('repository.slug'))
+      Travis.Urls.branches(@get('repository.slug'))
     ).property('repository.slug')
 
     urlBuild: (->
-      Travis.Urls.build(@getPath('repository.slug'), @getPath('build.id'))
+      Travis.Urls.build(@get('repository.slug'), @get('build.id'))
     ).property('repository.slug', 'build.id')
 
     urlJob: (->
-      Travis.Urls.job(@getPath('repository.slug'), @getPath('job.id'))
+      Travis.Urls.job(@get('repository.slug'), @get('job.id'))
     ).property('repository.slug', 'job.id')
 
     urlStatusImage: (->
-      Travis.Urls.statusImage(@getPath('repository.slug'), @getPath('branch.commit.branch'))
+      Travis.Urls.statusImage(@get('repository.slug'), @get('branch.commit.branch'))
     ).property('repository.slug', 'branch')
 
     markdownStatusImage: (->

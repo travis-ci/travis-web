@@ -6,7 +6,7 @@ require 'travis/model'
   link:  DS.attr('string')
 
   image: (->
-    "images/sponsors/#{@getPath('data.image')}"
+    "images/sponsors/#{@get('data.image')}"
   ).property('data.image')
 
 Travis.Sponsor.reopenClass

@@ -1,5 +1,5 @@
 window.onTrue = (object, path, callback) ->
-  if object.getPath(path)
+  if object.get(path)
     callback()
   else
     observer = ->

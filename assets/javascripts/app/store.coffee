@@ -30,8 +30,8 @@ Travis.Store = DS.Store.extend
   # _updateAssociations: (type, name, data) ->
   #   Em.get(type, 'associationsByName').forEach (key, meta) =>
   #     if meta.kind == 'belongsTo' && id = data["#{key}_id"]
-  #       parent = type.find(data.id).getPath("#{key}.data")
-  #       ids = parent.getPath("data.#{name}_ids")
+  #       parent = type.find(data.id).get("#{key}.data")
+  #       ids = parent.get("data.#{name}_ids")
   #       parent.set("data.#{name}_ids", ids.concat(data.id)) # if ids && !(data.id in ids)
 
   # _updateAssociations: (type, name, data) ->

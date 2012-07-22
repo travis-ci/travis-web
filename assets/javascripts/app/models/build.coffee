@@ -19,11 +19,11 @@ require 'travis/model'
   jobs:       DS.hasMany('Travis.Job', key: 'job_ids')
 
   config: (->
-    Travis.Helpers.compact(@getPath('data.config'))
+    Travis.Helpers.compact(@get('data.config'))
   ).property('data.config')
 
   isMatrix: (->
-    @getPath('data.job_ids.length') > 1
+    @get('data.job_ids.length') > 1
   ).property('data.job_ids.length')
 
   requiredJobs: (->

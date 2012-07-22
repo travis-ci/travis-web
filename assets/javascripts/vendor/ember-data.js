@@ -102,7 +102,7 @@ DS.AdapterPopulatedRecordArray = DS.RecordArray.extend({
 
 
 (function() {
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath, guidFor = Ember.guidFor;
+var get = Ember.get, set = Ember.set, guidFor = Ember.guidFor;
 
 var Set = function() {
   this.hash = {};
@@ -229,7 +229,7 @@ DS.ManyArrayStateManager = Ember.StateManager.extend({
   init: function() {
     this._super();
     this.dirty = new Set();
-    this.counter = getPath(this, 'manyArray.length');
+    this.counter = get(this, 'manyArray.length');
   },
 
   decrement: function(count) {
@@ -248,7 +248,7 @@ DS.ManyArrayStateManager = Ember.StateManager.extend({
 
 
 (function() {
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath, setPath = Ember.setPath;
+var get = Ember.get, set = Ember.set, set = Ember.set;
 
 DS.ManyArray = DS.RecordArray.extend({
   init: function() {
@@ -260,11 +260,11 @@ DS.ManyArray = DS.RecordArray.extend({
   parentRecord: null,
 
   isDirty: Ember.computed(function() {
-    return getPath(this, 'stateManager.currentState.isDirty');
+    return get(this, 'stateManager.currentState.isDirty');
   }).property('stateManager.currentState').cacheable(),
 
   isLoaded: Ember.computed(function() {
-    return getPath(this, 'stateManager.currentState.isLoaded');
+    return get(this, 'stateManager.currentState.isLoaded');
   }).property('stateManager.currentState').cacheable(),
 
   send: function(event, context) {
@@ -381,7 +381,7 @@ DS.ManyArray = DS.RecordArray.extend({
 
 
 (function() {
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath, fmt = Ember.String.fmt,
+var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt,
     removeObject = Ember.EnumerableUtils.removeObject;
 
 /**
@@ -513,7 +513,7 @@ DS.Transaction = Ember.Object.extend({
     Ember.assert("Once a record has changed, you cannot move it into a different transaction", !get(record, 'isDirty'));
 
     var recordTransaction = get(record, 'transaction'),
-        defaultTransaction = getPath(this, 'store.defaultTransaction');
+        defaultTransaction = get(this, 'store.defaultTransaction');
 
     Ember.assert("Models cannot belong to more than one transaction at a time.", recordTransaction === defaultTransaction);
 
@@ -625,7 +625,7 @@ DS.Transaction = Ember.Object.extend({
     @param {DS.Model} record
   */
   remove: function(record) {
-    var defaultTransaction = getPath(this, 'store.defaultTransaction');
+    var defaultTransaction = get(this, 'store.defaultTransaction');
     defaultTransaction.adoptRecord(record);
   },
 
@@ -879,7 +879,7 @@ DS.Transaction = Ember.Object.extend({
 
 (function() {
 /*globals Ember*/
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath, fmt = Ember.String.fmt;
+var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
 
 var DATA_PROXY = {
   get: function(name) {
@@ -1012,7 +1012,7 @@ DS.Store = Ember.Object.extend({
   _adapter: Ember.computed(function() {
     var adapter = get(this, 'adapter');
     if (typeof adapter === 'string') {
-      return getPath(this, adapter, false) || getPath(window, adapter);
+      return get(this, adapter, false) || get(window, adapter);
     }
     return adapter;
   }).property('adapter').cacheable(),
@@ -1834,7 +1834,7 @@ DS.Store = Ember.Object.extend({
 
 
 (function() {
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath, guidFor = Ember.guidFor;
+var get = Ember.get, set = Ember.set, guidFor = Ember.guidFor;
 
 /**
   This file encapsulates the various states that a record can transition
@@ -1863,7 +1863,7 @@ var get = Ember.get, set = Ember.set, getPath = Ember.getPath, guidFor = Ember.g
   string. You can determine a record's current state by getting its manager's
   current state path:
 
-        record.getPath('stateManager.currentState.path');
+        record.get('stateManager.currentState.path');
         //=> "created.uncommitted"
 
   The `DS.Model` states are themselves stateless. What we mean is that,
@@ -1949,7 +1949,7 @@ var get = Ember.get, set = Ember.set, getPath = Ember.getPath, guidFor = Ember.g
   state in a more user-friendly way than examining its state path. For example,
   instead of doing this:
 
-      var statePath = record.getPath('stateManager.currentState.path');
+      var statePath = record.get('stateManager.currentState.path');
       if (statePath === 'created.inFlight') {
         doSomething();
       }
@@ -2836,10 +2836,10 @@ DataProxy.prototype = {
 
 
 (function() {
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath, none = Ember.none;
+var get = Ember.get, set = Ember.set, none = Ember.none;
 
 var retrieveFromCurrentState = Ember.computed(function(key) {
-  return get(getPath(this, 'stateManager.currentState'), key);
+  return get(get(this, 'stateManager.currentState'), key);
 }).property('stateManager.currentState').cacheable();
 
 DS.Model = Ember.Object.extend(Ember.Evented, {
@@ -3194,7 +3194,7 @@ DS.Model.reopenClass({
 
 
 (function() {
-var get = Ember.get, getPath = Ember.getPath;
+var get = Ember.get;
 DS.Model.reopenClass({
   attributes: Ember.computed(function() {
     var map = Ember.Map.create();
@@ -3365,7 +3365,7 @@ DS.attr.transforms = {
 
 
 (function() {
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath,
+var get = Ember.get, set = Ember.set,
     none = Ember.none;
 
 var embeddedFindRecord = function(store, type, data, key, one) {
@@ -3390,7 +3390,7 @@ var hasAssociation = function(type, options, one) {
         store = get(this, 'store');
 
     if (typeof type === 'string') {
-      type = getPath(this, type, false) || getPath(window, type);
+      type = get(this, type, false) || get(window, type);
     }
 
     if (arguments.length === 2) {
@@ -3428,7 +3428,7 @@ DS.belongsTo = function(type, options) {
 
 
 (function() {
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath;
+var get = Ember.get, set = Ember.set;
 var embeddedFindRecord = function(store, type, data, key) {
   var association = get(data, key);
   return association ? store.loadMany(type, association).ids : [];
@@ -3452,7 +3452,7 @@ var hasAssociation = function(type, options) {
         ids, id, association;
 
     if (typeof type === 'string') {
-      type = getPath(this, type, false) || getPath(window, type);
+      type = get(this, type, false) || get(window, type);
     }
 
     key = options.key || get(this, 'namingConvention').keyToJSONKey(key);
@@ -3474,7 +3474,7 @@ DS.hasMany = function(type, options) {
 
 
 (function() {
-var get = Ember.get, getPath = Ember.getPath;
+var get = Ember.get;
 
 DS.Model.reopenClass({
   typeForAssociation: function(name) {
@@ -3491,7 +3491,7 @@ DS.Model.reopenClass({
             typeList = map.get(type);
 
         if (typeof type === 'string') {
-          type = getPath(this, type, false) || getPath(window, type);
+          type = get(this, type, false) || get(window, type);
           meta.type = type;
         }
 
@@ -3516,7 +3516,7 @@ DS.Model.reopenClass({
         type = meta.type;
 
         if (typeof type === 'string') {
-          type = getPath(this, type, false) || getPath(window, type);
+          type = get(this, type, false) || get(window, type);
           meta.type = type;
         }
 
@@ -3837,7 +3837,7 @@ DS.fixtureAdapter = DS.FixtureAdapter.create();
 (function() {
 /*global jQuery*/
 
-var get = Ember.get, set = Ember.set, getPath = Ember.getPath;
+var get = Ember.get, set = Ember.set;
 
 DS.RESTAdapter = DS.Adapter.extend({
   bulkCommit: false,
@@ -4007,7 +4007,6 @@ DS.RESTAdapter = DS.Adapter.extend({
       data: { ids: ids },
       success: function(json) {
         this.sideload(store, type, json, plural);
-        console.log(type, json, plural)
         store.loadMany(type, json[plural]);
       }
     });
@@ -4087,7 +4086,7 @@ DS.RESTAdapter = DS.Adapter.extend({
         sideloadedType = get(mappings, prop);
 
         if (typeof sideloadedType === 'string') {
-          sideloadedType = getPath(window, sideloadedType);
+          sideloadedType = get(window, sideloadedType);
         }
 
         Ember.assert("Your server returned a hash with the key " + prop + " but you have no mapping for it", !!sideloadedType);

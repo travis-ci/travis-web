@@ -9,15 +9,15 @@
     commitBinding: 'build.commit'
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('build.result'))
+      Travis.Helpers.colorForResult(@get('build.result'))
     ).property('build.result')
 
     urlBuild: (->
-      Travis.Urls.build(@getPath('repository.slug'), @getPath('build.id'))
+      Travis.Urls.build(@get('repository.slug'), @get('build.id'))
     ).property('repository.slug', 'build.id')
 
     urlGithubCommit: (->
-      Travis.Urls.githubCommit(@getPath('repository.slug'), @getPath('commit.sha'))
+      Travis.Urls.githubCommit(@get('repository.slug'), @get('commit.sha'))
     ).property('repository.slug', 'commit.sha')
 
   BuildView: Em.View.extend
@@ -28,22 +28,22 @@
     commitBinding: 'build.commit'
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('build.result'))
+      Travis.Helpers.colorForResult(@get('build.result'))
     ).property('build.result')
 
     urlBuild: (->
-      Travis.Urls.build(@getPath('repository.slug'), @getPath('build.id'))
+      Travis.Urls.build(@get('repository.slug'), @get('build.id'))
     ).property('repository.slug', 'build.id')
 
     urlGithubCommit: (->
-      Travis.Urls.githubCommit(@getPath('repository.slug'), @getPath('commit.sha'))
+      Travis.Urls.githubCommit(@get('repository.slug'), @get('commit.sha'))
     ).property('repository.slug', 'commit.sha')
 
     urlAuthor: (->
-      Travis.Urls.email(@getPath('commit.authorEmail'))
+      Travis.Urls.email(@get('commit.authorEmail'))
     ).property('commit.authorEmail')
 
     urlCommitter: (->
-      Travis.Urls.email(@getPath('commit.committerEmail'))
+      Travis.Urls.email(@get('commit.committerEmail'))
     ).property('commit.committerEmail')
 

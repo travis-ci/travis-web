@@ -11,11 +11,11 @@
     jobBinding: 'context'
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('job.result'))
+      Travis.Helpers.colorForResult(@get('job.result'))
     ).property('job.result')
 
     urlJob: (->
-      Travis.Urls.job(@getPath('repository.slug'), @getPath('job.id'))
+      Travis.Urls.job(@get('repository.slug'), @get('job.id'))
     ).property('repository.slug', 'job.id')
 
   JobView: Em.View.extend
@@ -26,23 +26,23 @@
     commitBinding: 'job.commit'
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('job.result'))
+      Travis.Helpers.colorForResult(@get('job.result'))
     ).property('job.result')
 
     urlJob: (->
-      Travis.Urls.job(@getPath('repository.slug'), @getPath('job.id'))
+      Travis.Urls.job(@get('repository.slug'), @get('job.id'))
     ).property('repository.slug', 'job.id')
 
     urlGithubCommit: (->
-      Travis.Urls.githubCommit(@getPath('repository.slug'), @getPath('commit.sha'))
+      Travis.Urls.githubCommit(@get('repository.slug'), @get('commit.sha'))
     ).property('repository.slug', 'commit.sha')
 
     urlAuthor: (->
-      Travis.Urls.email(@getPath('commit.authorEmail'))
+      Travis.Urls.email(@get('commit.authorEmail'))
     ).property('commit.authorEmail')
 
     urlCommitter: (->
-      Travis.Urls.email(@getPath('commit.committerEmail'))
+      Travis.Urls.email(@get('commit.committerEmail'))
     ).property('commit.committerEmail')
 
   LogView: Em.View.extend

@@ -21,11 +21,11 @@ require 'travis/model'
   log:        DS.belongsTo('Travis.Artifact',   key: 'log_id')
 
   config: (->
-    Travis.Helpers.compact(@getPath('data.config'))
+    Travis.Helpers.compact(@get('data.config'))
   ).property('data.config')
 
   sponsor: (->
-    @getPath('data.sponsor')
+    @get('data.sponsor')
   ).property('data.sponsor')
 
   configValues: (->

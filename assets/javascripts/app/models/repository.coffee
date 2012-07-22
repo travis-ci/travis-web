@@ -36,7 +36,7 @@ require 'travis/model'
   ).property('slug')
 
   lastBuildDuration: (->
-    duration = @getPath('data.last_build_duration')
+    duration = @get('data.last_build_duration')
     duration = Travis.Helpers.durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
     duration
   ).property('data.last_build_duration', 'lastBuildStartedAt', 'lastBuildFinishedAt')

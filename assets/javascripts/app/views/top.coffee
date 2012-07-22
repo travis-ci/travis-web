@@ -10,7 +10,7 @@
     # ).property('Travis.app.currentUser')
 
     gravatarUrl: (->
-      "http://www.gravatar.com/avatar/#{@getPath('user.gravatar')}?s=24&d=mm"
+      "http://www.gravatar.com/avatar/#{@get('user.gravatar')}?s=24&d=mm"
     ).property('user.gravatar')
 
     # hrm. how to parametrize bindAttr?
@@ -19,11 +19,11 @@
     ).property('tab')
 
     classStats: (->
-      'active' if @getPath('tab') == 'stats'
+      'active' if @get('tab') == 'stats'
     ).property('tab')
 
     classProfile: (->
-      if @getPath('tab') == 'profile' then 'profile active' else 'profile'
+      if @get('tab') == 'profile' then 'profile active' else 'profile'
     ).property('tab')
 
     showProfile: ->

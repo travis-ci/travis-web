@@ -11,7 +11,7 @@ var BoundHelperView = Ember.View.extend(Ember._Metamorph, {
   value: Ember.K,
 
   valueForRender: function() {
-    var value = this.value(Ember.getPath(this.context, this.property), this.options);
+    var value = this.value(Ember.get(this.context, this.property), this.options);
     if (this.options.escaped) { value = Handlebars.Utils.escapeExpression(value); }
     return value;
   },

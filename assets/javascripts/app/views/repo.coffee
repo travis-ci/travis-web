@@ -10,7 +10,7 @@
     classOwned: (->
       classes = []
       classes.push('active')  if @get('tab') == 'owned'
-      classes.push('display') if Em.getPath('Travis.currentUser')
+      classes.push('display') if Em.get('Travis.currentUser')
       classes.join(' ')
     ).property('tab', 'Travis.currentUser')
 
@@ -26,19 +26,19 @@
     ).property('color', 'selected')
 
     color: (->
-      Travis.Helpers.colorForResult(@getPath('repository.lastBuildResult'))
+      Travis.Helpers.colorForResult(@get('repository.lastBuildResult'))
     ).property('repository.lastBuildResult')
 
     selected: (->
-      'selected' if @getPath('repository.selected')
+      'selected' if @get('repository.selected')
     ).property('repository.selected')
 
     urlRepository: (->
-      Travis.Urls.repository(@getPath('repository.slug'))
+      Travis.Urls.repository(@get('repository.slug'))
     ).property('repository.slug')
 
     urlLastBuild: (->
-      Travis.Urls.build(@getPath('repository.slug'), @getPath('repository.lastBuildId'))
+      Travis.Urls.build(@get('repository.slug'), @get('repository.lastBuildId'))
     ).property('repository.slug', 'repository.lastBuildId')
 
   RepositoryView: Em.View.extend
@@ -47,17 +47,17 @@
     repositoryBinding: 'controller.repository'
 
     class: (->
-      'loading' unless @getPath('repository.isLoaded')
+      'loading' unless @get('repository.isLoaded')
     ).property('repository.isLoaded')
 
     urlGithub: (->
-      Travis.Urls.githubRepository(@getPath('repository.slug'))
+      Travis.Urls.githubRepository(@get('repository.slug'))
     ).property('repository.slug'),
 
     urlGithubWatchers: (->
-      Travis.Urls.githubWatchers(@getPath('repository.slug'))
+      Travis.Urls.githubWatchers(@get('repository.slug'))
     ).property('repository.slug'),
 
     urlGithubNetwork: (->
-      Travis.Urls.githubNetwork(@getPath('repository.slug'))
+      Travis.Urls.githubNetwork(@get('repository.slug'))
     ).property('repository.slug'),

@@ -7,7 +7,7 @@ require 'travis/model'
   lastSeenAt: DS.attr('string')
 
   payload: (->
-    @getPath('data.payload')
+    @get('data.payload')
   ).property('data.payload')
 
   number: (->
@@ -30,9 +30,9 @@ require 'travis/model'
   ).property('repository', 'job_id', 'state')
 
   repository: (->
-    @getPath('payload.repository.slug')
+    @get('payload.repository.slug')
   ).property('payload.repository.slug')
 
   job_id: (->
-    @getPath('payload.job.id')
+    @get('payload.job.id')
   ).property('payload.job.id')

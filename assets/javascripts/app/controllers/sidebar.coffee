@@ -61,7 +61,7 @@ Travis.reopen
       @set('page', if @isLast() then 0 else @get('page') + 1)
 
     pages: (->
-      length = @getPath('content.length')
+      length = @get('content.length')
       if length then parseInt(length / @get('perPage') + 1) else 1
     ).property('length')
 

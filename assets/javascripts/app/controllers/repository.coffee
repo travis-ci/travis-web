@@ -47,15 +47,15 @@ Travis.RepositoryController = Travis.Controller.extend
     @connectTab('job')
 
   repositoriesByParams: (->
-    Travis.Repository.bySlug("#{@getPath('params.owner')}/#{@getPath('params.name')}")
+    Travis.Repository.bySlug("#{@get('params.owner')}/#{@get('params.name')}")
   ).property('params.owner', 'params.name')
 
   buildById: (->
-    Travis.Build.find(id) if id = @getPath('params.id')
+    Travis.Build.find(id) if id = @get('params.id')
   ).property('params.id')
 
   jobById: (->
-    Travis.Job.find(id) if id = @getPath('params.id')
+    Travis.Job.find(id) if id = @get('params.id')
   ).property('params.id')
 
   connectTab: (tab) ->
@@ -70,7 +70,7 @@ Travis.RepositoryController = Travis.Controller.extend
 
   setParams: (params) ->
     # TODO if we just @set('params', params) it will update the repositoriesByParams property
-    @setPath("params.#{key}", params[key]) for key, value of params
+    @set("params.#{key}", params[key]) for key, value of params
 
   _bind: (to, from) ->
     @bindings.push Ember.oneWay(this, to, from)
