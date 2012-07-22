@@ -1,5 +1,5 @@
 Travis.RepositoriesController = Ember.ArrayController.extend
-  # sortProperties: ['sortOrder']
+  sortProperties: ['sortOrder']
   # sortAscending: false
 
   init: ->
