@@ -1,9 +1,9 @@
 @Travis.reopen
-  BuildsView: Em.View.extend
+  BuildsView: Travis.View.extend
     templateName: 'builds/list'
     buildsBinding: 'controller'
 
-  BuildsItemView: Em.View.extend
+  BuildsItemView: Travis.View.extend
     repositoryBinding: 'controller.repository'
     buildBinding: 'context'
     commitBinding: 'build.commit'
@@ -20,7 +20,7 @@
       Travis.Urls.githubCommit(@get('repository.slug'), @get('commit.sha'))
     ).property('repository.slug', 'commit.sha')
 
-  BuildView: Em.View.extend
+  BuildView: Travis.View.extend
     templateName: 'builds/show'
 
     repositoryBinding: 'controller.repository'

@@ -4,7 +4,7 @@
       <dl id="summary">
         <div class="left">
           <dt>Job</dt>
-          <dd class="number"><a {{bindAttr href="view.urlJob"}}>{{job.number}}</a></dd>
+          <dd class="number"><a {{bindAttr href="view.urlJob"}} {{action route}}>{{job.number}}</a></dd>
           <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
           <dd class="finished_at timeago" {{bindAttr title="finished_at"}}>{{formatTime job.finishedAt}}</dd>
           <dt>{{t jobs.duration}}</dt>

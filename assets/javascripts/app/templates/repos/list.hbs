@@ -4,13 +4,13 @@
 
 <ul class="tabs">
   <li id="tab_recent" {{bindAttr class="view.classRecent"}}>
-    <h5><a href="#">{{t layouts.application.recent}}</a></h5>
+    <h5><a href="/" {{action route}}>{{t layouts.application.recent}}</a></h5>
   </li>
   <li id="tab_owned" {{bindAttr class="view.classOwned"}}>
-    <h5><a href="#">{{t layouts.application.my_repositories}}</a></h5>
+    <h5><a href="/" {{action route}}>{{t layouts.application.my_repositories}}</a></h5>
   </li>
   <li id="tab_search" {{bindAttr class="view.classSearch"}}>
-    <h5><a href="#">{{t layouts.application.search}}</a></h5>
+    <h5><a href="/" {{action route}}>{{t layouts.application.search}}</a></h5>
   </li>
 </ul>
 
@@ -19,8 +19,8 @@
     {{#each repository in controller.arrangedContent}}
       {{#view Travis.RepositoriesItemView contextBinding="repository"}}
         <li {{bindAttr class="view.classes"}}>
-          <a {{bindAttr href="view.urlRepository"}} class="current">{{slug}}</a>
-          <a {{bindAttr href="view.urlLastBuild"}} class="last_build">#{{lastBuildNumber}}</a>
+          <a {{bindAttr href="view.urlRepository"}} {{action route}} class="current">{{slug}}</a>
+          <a {{bindAttr href="view.urlLastBuild"}} {{action route}} class="last_build">#{{lastBuildNumber}}</a>
 
           <p class="summary">
             <span class="duration_label">{{t repositories.duration}}:</span>

@@ -1,21 +1,21 @@
 @Travis.Urls =
   repository: (slug) ->
-    "#!/#{slug}"
+    "/#{slug}"
 
   builds: (slug) ->
-    "#!/#{slug}/builds"
+    "/#{slug}/builds"
 
   pullRequests: (slug) ->
-    "#!/#{slug}/pull_requests"
+    "/#{slug}/pull_requests"
 
   branches: (slug) ->
-    "#!/#{slug}/branches"
+    "/#{slug}/branches"
 
   build: (slug, id) ->
-    "#!/#{slug}/builds/#{id}"
+    "/#{slug}/builds/#{id}"
 
   job: (slug, id) ->
-    "#!/#{slug}/jobs/#{id}"
+    "/#{slug}/jobs/#{id}"
 
   githubCommit: (slug, sha) ->
     "http://github.com/#{slug}/commit/#{sha}"

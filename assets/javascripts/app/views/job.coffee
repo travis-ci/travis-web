@@ -1,12 +1,12 @@
 @Travis.reopen
-  JobsView: Em.View.extend
+  JobsView: Travis.View.extend
     templateName: 'jobs/list'
     buildBinding: 'controller.build'
 
     toggleHelp: ->
       $.facebox(div: '#allow_failure_help')
 
-  JobsItemView: Em.View.extend
+  JobsItemView: Travis.View.extend
     repositoryBinding: 'context.repository'
     jobBinding: 'context'
 
@@ -18,7 +18,7 @@
       Travis.Urls.job(@get('repository.slug'), @get('job.id'))
     ).property('repository.slug', 'job.id')
 
-  JobView: Em.View.extend
+  JobView: Travis.View.extend
     templateName: 'jobs/show'
 
     repositoryBinding: 'controller.repository'
@@ -45,7 +45,7 @@
       Travis.Urls.email(@get('commit.committerEmail'))
     ).property('commit.committerEmail')
 
-  LogView: Em.View.extend
+  LogView: Travis.View.extend
     templateName: 'jobs/log'
 
     click: (event) ->

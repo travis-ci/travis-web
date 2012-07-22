@@ -1,5 +1,5 @@
 @Travis.reopen
-  TopView: Em.View.extend
+  TopView: Travis.View.extend
     templateName: 'layouts/top'
 
     tabBinding: 'controller.tab'

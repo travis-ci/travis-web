@@ -1,21 +1,45 @@
 <ul class="tabs">
   <li id="tab_current" {{bindAttr class="view.classCurrent"}}>
-    <h5><a {{bindAttr href="view.urlRepository"}}>{{t repositories.tabs.current}}</a></h5>
+    <h5>
+      <a {{bindAttr href="view.urlRepository"}} {{action route}}>
+        {{t repositories.tabs.current}}
+      </a>
+    </h5>
   </li>
   <li id="tab_builds" {{bindAttr class="view.classBuilds"}}>
-    <h5><a {{bindAttr href="view.urlBuilds"}}>{{t repositories.tabs.build_history}}</a></h5>
+    <h5>
+      <a {{bindAttr href="view.urlBuilds"}} {{action route}}>
+        {{t repositories.tabs.build_history}}
+      </a>
+    </h5>
   </li>
   <li id="tab_pull_requests" {{bindAttr class="view.classPullRequests"}}>
-    <h5><a {{bindAttr href="view.urlPullRequests"}}>{{t repositories.tabs.pull_requests}}</a></h5>
+    <h5>
+      <a {{bindAttr href="view.urlPullRequests"}} {{action route}}>
+        {{t repositories.tabs.pull_requests}}
+      </a>
+    </h5>
   </li>
   <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
-    <h5><a {{bindAttr href="view.urlBranches"}}>{{t repositories.tabs.branches}}</a></h5>
+    <h5>
+      <a {{bindAttr href="view.urlBranches"}} {{action route}}>
+        {{t repositories.tabs.branches}}
+      </a>
+    </h5>
   </li>
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
-    <h5><a {{bindAttr href="view.urlBuild"}}>{{t repositories.tabs.build}} #{{view.build.number}}</a></h5>
+    <h5>
+      <a {{bindAttr href="view.urlBuild"}} {{action route}}>
+        {{t repositories.tabs.build}} #{{view.build.number}}
+      </a>
+    </h5>
   </li>
   <li id="tab_job" {{bindAttr class="view.classJob"}}>
-    <h5><a {{bindAttr href="view.urlJob"}}>{{t repositories.tabs.job}} #{{view.job.number}}</a></h5>
+    <h5>
+      <a {{bindAttr href="view.urlJob"}} {{action route}}>
+        {{t repositories.tabs.job}} #{{view.job.number}}
+      </a>
+    </h5>
   </li>
 </ul>
 

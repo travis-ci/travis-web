@@ -1,6 +1,6 @@
 @Travis.reopen
-  TabsView: Em.View.extend
-    templateName: 'repositories/tabs'
+  TabsView: Travis.View.extend
+    templateName: 'repos/tabs'
 
     repositoryBinding: 'controller.repository'
     buildBinding: 'controller.build'

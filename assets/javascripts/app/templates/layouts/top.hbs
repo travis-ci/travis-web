@@ -1,13 +1,13 @@
-<a href="#">
+<a href="#" {{action route}}>
   <h1>Travis</h1>
 </a>
 
 <ul id="navigation">
   <li {{bindAttr class="view.classHome"}}>
-    <a href="#">Home</a>
+    <a href="/" {{action route}}>Home</a>
   </li>
   <li {{bindAttr class="view.classStats"}}>
-    <a href="#!/stats">Stats</a>
+    <a href="/stats" {{action route}}>Stats</a>
   </li>
   <li>
     <a href="http://about.travis-ci.org/blog">Blog</a>
@@ -17,13 +17,13 @@
   </li>
   {{#if user}}
     <li {{bindAttr class="view.classProfile"}} {{action hideProfile on="mouseLeave"}}>
-      <a href="#!/profile" class="name" {{action showProfile on="mouseEnter"}}>
+      <a href="#" class="name" {{action showProfile on="mouseEnter"}}>
         <img {{bindAttr src="view.gravatarUrl"}}>
         {{user.name}}
       </a>
       <ul>
         <li>
-          <a href="#!/profile">{{t layouts.top.profile}}</a>
+          <a href="/profile" {{action route}}>{{t layouts.top.profile}}</a>
         </li>
         <li>
           <a {{action signOut}}>{{t layouts.top.sign_out}}</a>

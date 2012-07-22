@@ -12,6 +12,12 @@ class App < Sinatra::Base
   set :public_folder, lambda { "#{root}/public" }
   set :static_cache_control, :public
 
+  provides :html
+
+  get '*' do
+    File.new('public/index.html').readlines
+  end
+
   not_found do
     'Not found.'
   end

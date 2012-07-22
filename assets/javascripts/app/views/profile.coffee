@@ -1,5 +1,5 @@
 @Travis.reopen
-  UserView: Em.View.extend
+  UserView: Travis.View.extend
     templateName: 'profile/show'
 
     userBinding: 'controller.user'
@@ -8,7 +8,7 @@
       "http://www.gravatar.com/avatar/#{@get('user.gravatar')}?s=48&d=mm"
     ).property('user.gravatar')
 
-  HooksView: Em.View.extend
+  HooksView: Travis.View.extend
     templateName: 'profile/hooks'
 
     urlGithubAdmin: (->

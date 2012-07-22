@@ -1,6 +1,6 @@
 @Travis.reopen
-  RepositoriesView: Em.View.extend
-    templateName: 'repositories/list'
+  RepositoriesView: Travis.View.extend
+    templateName: 'repos/list'
     tabBinding: 'controller.tab'
 
     classRecent: (->
@@ -18,7 +18,7 @@
       'active' if @get('tab') == 'search'
     ).property('tab')
 
-  RepositoriesItemView: Em.View.extend
+  RepositoriesItemView: Travis.View.extend
     repositoryBinding: 'context'
 
     classes: (->
@@ -41,8 +41,8 @@
       Travis.Urls.build(@get('repository.slug'), @get('repository.lastBuildId'))
     ).property('repository.slug', 'repository.lastBuildId')
 
-  RepositoryView: Em.View.extend
-    templateName: 'repositories/show'
+  RepositoryView: Travis.View.extend
+    templateName: 'repos/show'
 
     repositoryBinding: 'controller.repository'
 
