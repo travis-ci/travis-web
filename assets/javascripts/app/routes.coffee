@@ -1,5 +1,5 @@
 Travis.Routes = Em.Object.extend
-  BASE_URI: 'http://localhost:9292'
+  BASE_URI: "#{document.location.protocol}//#{document.location.host}"
 
   ROUTES:
     'profile':                     ['profile', 'show']

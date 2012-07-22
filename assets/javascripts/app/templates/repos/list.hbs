@@ -16,7 +16,7 @@
 
 <div class="tab">
   <ul id="repositories">
-    {{#each repository in controller.arrangedContent}}
+    {{#each repository in controller}}
       {{#view Travis.RepositoriesItemView contextBinding="repository"}}
         <li {{bindAttr class="view.classes"}}>
           <a {{bindAttr href="view.urlRepository"}} {{action route}} class="current">{{slug}}</a>
