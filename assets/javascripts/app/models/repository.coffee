@@ -42,7 +42,7 @@ require 'travis/model'
   ).property('data.last_build_duration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
   sortOrder: (->
-    - new Date(@get('lastBuildFinishedAt') || '9999').getTime()
+    - new Date(@get('lastBuildFinishedAt') || '9999').getTime() # cuz sortAscending seems buggy when set to false
   ).property('lastBuildFinishedAt')
 
   stats: (->

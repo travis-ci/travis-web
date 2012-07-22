@@ -31,10 +31,8 @@ Ember.ENV.RAISE_ON_DEPRECATION = true
       @store = Travis.Store.create()
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
-      @routes = Travis.Routes.create()
-      @routes.start()
-
-      @pusher = new Travis.Pusher()
+      @routes = new Travis.Routes()
+      # @pusher = new Travis.Pusher()
 
     connect: ->
       @controller = Em.Controller.create()

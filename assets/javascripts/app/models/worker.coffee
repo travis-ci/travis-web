@@ -26,7 +26,7 @@ require 'travis/model'
   ).property('state')
 
   urlJob: (->
-    "#!/#{@get('repository')}/jobs/#{@get('job_id')}" if @get('state') == 'working'
+    "/#{@get('repository')}/jobs/#{@get('job_id')}" if @get('state') == 'working'
   ).property('repository', 'job_id', 'state')
 
   repository: (->
