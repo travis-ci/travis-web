@@ -3,10 +3,6 @@ require 'models'
 jQuery.support.cors = true
 
 @Travis.RestAdapter = DS.RESTAdapter.extend
-  # API_DOMAIN: 'http://localhost:9292'
-  # API_DOMAIN: 'http://travis.local:9292'
-  API_DOMAIN: ''
-
   DEFAULT_OPTIONS:
     accepts:
       json: 'application/vnd.travis-ci.2+json'
@@ -31,4 +27,4 @@ jQuery.support.cors = true
     worker: 'workers'
 
   ajax: (url, method, options) ->
-    @_super("#{@API_DOMAIN}#{url}", method, $.extend(options, @DEFAULT_OPTIONS))
+    @_super("#{Travis.config.api_endpoint}#{url}", method, $.extend(options, @DEFAULT_OPTIONS))
