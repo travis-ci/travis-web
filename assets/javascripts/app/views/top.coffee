@@ -1,3 +1,5 @@
+require 'travis/auth'
+
 @Travis.reopen
   TopView: Travis.View.extend
     templateName: 'layouts/top'
@@ -31,4 +33,7 @@
 
     hideProfile: ->
       $('#top .profile ul').hide()
+
+    signIn: ->
+      Travis.Auth.signIn()
 
