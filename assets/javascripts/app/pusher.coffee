@@ -27,8 +27,7 @@ $.extend Travis.Pusher.prototype,
 
   receive: (event, data) ->
     data = @normalize(event, data) if data.id
-    # console.log(event, data)
-    Travis.app.store.loadData(event, data)
+    Travis.app.store.receive(event.split(':')[0], data)
 
   normalize: (event, data) ->
     switch event

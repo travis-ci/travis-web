@@ -4,9 +4,8 @@ Travis.Store = DS.Store.extend
   revision: 4
   adapter: Travis.RestAdapter.create()
 
-  loadData: (event, data) ->
+  receive: (name, data) ->
     mappings = @adapter.get('mappings')
-    name = event.split(':').shift()
     type = mappings[name]
 
     if data[type.singularName()]
@@ -46,15 +45,15 @@ Travis.Store = DS.Store.extend
   #             ids.pushObject(data.id) unless data.id in ids
   #             parent.send('didChangeData');
 
-  _updateAssociations: (type, name, data) ->
-    clientId = @typeMapFor(Travis.Repository).idToCid[data['repository_id']]
+  # _updateAssociations: (type, name, data) ->
+  #   clientId = @typeMapFor(Travis.Repository).idToCid[data['repository_id']]
 
-    # associations = Em.get(type, 'associationsByName')
-    #   console.log [type, meta.type, meta.kind, meta.kind == 'belongsTo']
-    #   if meta.kind == 'belongsTo'
-    #     id = data["#{key}_id"]
-    #       if parent = this.findByClientId(meta.type, clientId, id)
-    #         data = parent.get('data')
-    #         if ids = data.get("#{name}_ids")
-    #           ids.pushObject(data.id) unless data.id in ids
-    #           parent.send('didChangeData')
+  #   associations = Em.get(type, 'associationsByName')
+  #     console.log [type, meta.type, meta.kind, meta.kind == 'belongsTo']
+  #     if meta.kind == 'belongsTo'
+  #       id = data["#{key}_id"]
+  #         if parent = this.findByClientId(meta.type, clientId, id)
+  #           data = parent.get('data')
+  #           if ids = data.get("#{name}_ids")
+  #             ids.pushObject(data.id) unless data.id in ids
+  #             parent.send('didChangeData')
