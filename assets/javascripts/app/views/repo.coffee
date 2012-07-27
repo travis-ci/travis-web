@@ -18,28 +18,31 @@
       'active' if @get('tab') == 'search'
     ).property('tab')
 
-  RepositoriesItemView: Travis.View.extend
-    repositoryBinding: 'context'
+  RepositoriesListView: Em.CollectionView.extend
+    elementId: 'repositories'
+    repositoryBinding: 'content'
+    tagName: 'ul'
 
-    classes: (->
-      $.compact(['repository', @get('color'), @get('selected')]).join(' ')
-    ).property('color', 'selected')
+    emptyView: Ember.View.extend
+      template: Ember.Handlebars.compile('<div class="loading"><span>Loading</span></div>')
 
-    color: (->
-      Travis.Helpers.colorForResult(@get('repository.lastBuildResult'))
-    ).property('repository.lastBuildResult')
+    itemViewClass: Travis.View.extend
+      repositoryBinding: 'content'
+      classNames: ['repository']
+      classNameBindings: ['color', 'selected']
+      selectedBinding: 'repository.selected'
 
-    selected: (->
-      'selected' if @get('repository.selected')
-    ).property('repository.selected')
+      color: (->
+        Travis.Helpers.colorForResult(@get('repository.lastBuildResult'))
+      ).property('repository.lastBuildResult')
 
-    urlRepository: (->
-      Travis.Urls.repository(@get('repository.slug'))
-    ).property('repository.slug')
+      urlRepository: (->
+        Travis.Urls.repository(@get('repository.slug'))
+      ).property('repository.slug')
 
-    urlLastBuild: (->
-      Travis.Urls.build(@get('repository.slug'), @get('repository.lastBuildId'))
-    ).property('repository.slug', 'repository.lastBuildId')
+      urlLastBuild: (->
+        Travis.Urls.build(@get('repository.slug'), @get('repository.lastBuildId'))
+      ).property('repository.slug', 'repository.lastBuildId')
 
   RepositoryView: Travis.View.extend
     templateName: 'repos/show'
