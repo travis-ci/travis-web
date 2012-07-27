@@ -15,13 +15,13 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: cca12ce0c961d95fcc05fac23926c6dc0a5fd49f
+  revision: f67e72602bf7e4b531117f206e4b36d6e0b5efe9
   specs:
     travis-api (0.0.1)
 
 GIT
   remote: git://github.com/travis-ci/travis-core.git
-  revision: 2aba2d8e9ea8bf04b7d4bbbd960e6201c73a68a1
+  revision: 9eeffa06422f035468c27c1a7b4ead61b19ae181
   specs:
     travis-core (0.0.1)
       actionmailer (~> 3.2.3)
@@ -42,7 +42,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-support.git
-  revision: 44a2e3cfa76b619962f14fe72c2cca9d683c684c
+  revision: 7b98636b18fa84487b568478ad364aea23e4c2ed
   specs:
     travis-support (0.0.1)
 
@@ -57,35 +57,35 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    actionmailer (3.2.6)
-      actionpack (= 3.2.6)
+    actionmailer (3.2.7)
+      actionpack (= 3.2.7)
       mail (~> 2.4.4)
-    actionpack (3.2.6)
-      activemodel (= 3.2.6)
-      activesupport (= 3.2.6)
+    actionpack (3.2.7)
+      activemodel (= 3.2.7)
+      activesupport (= 3.2.7)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
-      journey (~> 1.0.1)
+      journey (~> 1.0.4)
       rack (~> 1.4.0)
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.1.3)
-    activemodel (3.2.6)
-      activesupport (= 3.2.6)
+    activemodel (3.2.7)
+      activesupport (= 3.2.7)
       builder (~> 3.0.0)
-    activerecord (3.2.6)
-      activemodel (= 3.2.6)
-      activesupport (= 3.2.6)
+    activerecord (3.2.7)
+      activemodel (= 3.2.7)
+      activesupport (= 3.2.7)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activesupport (3.2.6)
+    activesupport (3.2.7)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    addressable (2.2.8)
+    addressable (2.3.2)
     arel (3.0.2)
     atomic (1.0.1)
     avl_tree (1.1.3)
-    backports (2.6.1)
+    backports (2.6.2)
     builder (3.0.0)
     chunky_png (1.2.5)
     coffee-script (2.2.0)
@@ -163,9 +163,9 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
-    railties (3.2.6)
-      actionpack (= 3.2.6)
-      activesupport (= 3.2.6)
+    railties (3.2.7)
+      actionpack (= 3.2.7)
+      activesupport (= 3.2.7)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
