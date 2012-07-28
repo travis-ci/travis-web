@@ -7,6 +7,8 @@
       $.facebox(div: '#allow_failure_help')
 
   JobsItemView: Travis.View.extend
+    tagName: 'tr'
+    classNameBindings: ['color']
     repositoryBinding: 'context.repository'
     jobBinding: 'context'
 

@@ -21,14 +21,12 @@
     <tbody>
       {{#each job in view.jobs}}
         {{#view Travis.JobsItemView contextBinding="job"}}
-          <tr {{bindAttr class="view.color"}}>
-            <td class="number"><a {{bindAttr href="view.urlJob"}} {{action route}}>{{number}}</a></td>
-            <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
-            <td class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime finishedAt}}</td>
-            {{#each value in configValues}}
-              <td>{{value}}</td>
-            {{/each}}
-          </tr>
+          <td class="number"><a {{bindAttr href="view.urlJob"}} {{action route}}>{{number}}</a></td>
+          <td class="duration" {{bindAttr title="started_at"}}>{{formatDuration duration}}</td>
+          <td class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime finishedAt}}</td>
+          {{#each value in configValues}}
+            <td>{{value}}</td>
+          {{/each}}
         {{/view}}
       {{/each}}
     </tbody>

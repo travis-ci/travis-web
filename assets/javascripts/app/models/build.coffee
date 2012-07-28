@@ -27,14 +27,12 @@ require 'travis/model'
   ).property('data.job_ids.length')
 
   requiredJobs: (->
-    id = @get('id')
-    Travis.Job.filter (data) -> (parseInt(data.get('build_id')) == id) && !data.get('allow_failure')
-  ).property()
+    @get('jobs').filter (data) -> !data.get('allow_failure')
+  ).property('jobs.@each.allow_failure')
 
   allowedFailureJobs: (->
-    id = @get('id')
-    Travis.Job.filter (data) -> (parseInt(data.get('build_id')) == id) && data.get('allow_failure')
-  ).property()
+    @get('jobs').filter (data) -> data.get('allow_failure')
+  ).property('jobs.@each.allow_failure')
 
   configKeys: (->
     return [] unless config = @get('config')
