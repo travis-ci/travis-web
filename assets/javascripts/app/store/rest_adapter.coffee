@@ -27,4 +27,5 @@ jQuery.support.cors = true
     worker: 'workers'
 
   ajax: (url, method, options) ->
-    @_super("#{Travis.config.api_endpoint}#{url}", method, $.extend(options, @DEFAULT_OPTIONS))
+    endpoint = Travis.config.api_endpoint || ''
+    @_super("#{endpoint}#{url}", method, $.extend(options, @DEFAULT_OPTIONS))
