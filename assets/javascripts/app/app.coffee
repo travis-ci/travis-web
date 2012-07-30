@@ -26,7 +26,7 @@ Travis.reopen
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
       @routes = new Travis.Routes()
-      # @pusher = new Travis.Pusher()
+      @pusher = new Travis.Pusher()
 
     connect: ->
       @controller = Em.Controller.create()
@@ -34,6 +34,9 @@ Travis.reopen
         template: Em.Handlebars.compile('{{outlet layout}}')
         controller: @controller
       view.appendTo(@get('rootElement') || 'body')
+
+    receive: ->
+      @store.receive.apply(@store, arguments)
 
     connectLayout: (name) ->
       unless @get('layout.name') == name

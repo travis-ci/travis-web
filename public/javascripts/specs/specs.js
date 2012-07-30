@@ -304,7 +304,180 @@
 }).call(this);
 (function() {
 
-  describe('events', function() {});
+  describe('events', function() {
+    afterEach(function() {
+      return window.history.pushState({}, null, '/spec.html');
+    });
+    describe('an event adding a repository', function() {
+      beforeEach(function() {
+        app('travis-ci/travis-core');
+        return waitFor(jobsRendered);
+      });
+      return it('adds a repository to the list', function() {
+        waitFor(reposRendered);
+        return runs(function() {
+          Em.run(function() {
+            return Travis.app.receive('build', {
+              repository: {
+                id: 10,
+                slug: 'travis-ci/travis-support',
+                last_build_id: 10,
+                last_build_number: 10,
+                last_build_started_at: '2012-07-02T00:01:00Z',
+                last_build_finished_at: '2012-07-02T00:02:30Z'
+              },
+              build: {
+                id: 10,
+                repository_id: 10
+              }
+            });
+          });
+          return listsRepo({
+            row: 2,
+            item: {
+              slug: 'travis-ci/travis-support',
+              build: {
+                number: 4,
+                url: '/travis-ci/travis-support/builds/10',
+                duration: '1 min 30 sec',
+                finishedAt: 'less than a minute ago'
+              }
+            }
+          });
+        });
+      });
+    });
+    describe('an event adding a build', function() {
+      beforeEach(function() {
+        app('travis-ci/travis-core/builds');
+        return waitFor(buildsRendered);
+      });
+      return it('adds a build to the builds list', function() {
+        Em.run(function() {
+          return Travis.app.receive('build', {
+            build: {
+              id: 10,
+              repository_id: 1,
+              commit_id: 10,
+              number: '3',
+              duration: 55,
+              started_at: '2012-07-02T00:02:00Z',
+              finished_at: '2012-07-02T00:02:55Z',
+              event_type: 'push',
+              result: 1
+            },
+            commit: {
+              id: 10,
+              sha: '1234567',
+              branch: 'master',
+              message: 'commit message 3'
+            }
+          });
+        });
+        return listsBuild({
+          row: 3,
+          item: {
+            id: 10,
+            slug: 'travis-ci/travis-core',
+            number: '3',
+            sha: '1234567',
+            branch: 'master',
+            message: 'commit message 3',
+            finishedAt: 'less than a minute ago',
+            duration: '55 sec',
+            color: 'red'
+          }
+        });
+      });
+    });
+    describe('an event adding a job', function() {
+      beforeEach(function() {
+        app('travis-ci/travis-core');
+        waitFor(jobsRendered);
+        return runs(function() {
+          return waitFor(queuesRendered);
+        });
+      });
+      it('adds a job to the jobs matrix', function() {
+        Em.run(function() {
+          return Travis.app.receive('job', {
+            job: {
+              id: 10,
+              repository_id: 1,
+              build_id: 1,
+              commit_id: 1,
+              log_id: 1,
+              number: '1.4',
+              duration: 55,
+              started_at: '2012-07-02T00:02:00Z',
+              finished_at: '2012-07-02T00:02:55Z',
+              config: {
+                rvm: 'jruby'
+              }
+            }
+          });
+        });
+        return listsJob({
+          table: $('#jobs'),
+          row: 3,
+          item: {
+            id: 10,
+            number: '1.4',
+            repo: 'travis-ci/travis-core',
+            finishedAt: 'less than a minute ago',
+            duration: '55 sec',
+            rvm: 'jruby'
+          }
+        });
+      });
+      return it('adds a job to the jobs queue', function() {
+        Em.run(function() {
+          return Travis.app.receive('job', {
+            job: {
+              id: 10,
+              repository_id: 1,
+              number: '1.4',
+              queue: 'common'
+            }
+          });
+        });
+        return listsQueuedJob({
+          name: 'common',
+          row: 3,
+          item: {
+            number: '1.4',
+            repo: 'travis-ci/travis-core'
+          }
+        });
+      });
+    });
+    return describe('an event adding a worker', function() {
+      beforeEach(function() {
+        app('');
+        return waitFor(workersRendered);
+      });
+      return it('adds a worker to the workers list', function() {
+        Em.run(function() {
+          return Travis.app.receive('worker', {
+            worker: {
+              host: 'worker.travis-ci.org',
+              name: 'ruby-3',
+              state: 'ready',
+              id: 10
+            }
+          });
+        });
+        return listsWorker({
+          group: 'worker.travis-ci.org',
+          row: 3,
+          item: {
+            name: 'ruby-3',
+            state: 'ready'
+          }
+        });
+      });
+    });
+  });
 
 }).call(this);
 (function() {
@@ -730,7 +903,6 @@
 
   this.listsQueuedJob = function(data) {
     var job, text;
-    console.log(data);
     job = data.item;
     text = $($("#queue_" + data.name + " li")[data.row - 1]).text();
     expect(text).toContain(job.repo);
@@ -758,6 +930,15 @@
 
   this.listsQueues = function(queues) {
     return listsItems('queue', queues);
+  };
+
+  this.listsWorker = function(data) {
+    var element, group, worker;
+    group = $("#workers li:contains('" + data.group + "')");
+    element = $($('ul li', group)[data.row - 1]);
+    worker = data.item;
+    expect(element.text()).toContain(worker.name);
+    return expect(element.text()).toContain(worker.state);
   };
 
 }).call(this);

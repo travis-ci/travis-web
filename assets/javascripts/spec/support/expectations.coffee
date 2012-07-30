@@ -99,7 +99,6 @@
   listsItems('queuedJob', jobs)
 
 @listsQueuedJob = (data) ->
-  console.log data
   job = data.item
   text = $($("#queue_#{data.name} li")[data.row - 1]).text()
   expect(text).toContain job.repo
@@ -119,3 +118,10 @@
 @listsQueues = (queues) ->
   listsItems('queue', queues)
 
+@listsWorker = (data) ->
+  group = $("#workers li:contains('#{data.group}')")
+  element = $($('ul li', group)[data.row - 1])
+  worker = data.item
+
+  expect(element.text()).toContain worker.name
+  expect(element.text()).toContain worker.state

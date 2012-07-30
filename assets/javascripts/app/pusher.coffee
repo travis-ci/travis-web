@@ -26,7 +26,9 @@ $.extend Travis.Pusher.prototype,
     "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"
 
   receive: (event, data) ->
-    data = @normalize(event, data) if data.id
+    if data.id
+      data = @normalize(event, data)
+      console.log(event, data)
     Travis.app.store.receive(event.split(':')[0], data)
 
   normalize: (event, data) ->
