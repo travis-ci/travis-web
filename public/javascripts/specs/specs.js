@@ -200,6 +200,9 @@
       app('travis-ci/travis-core');
       return waitFor(buildRendered);
     });
+    afterEach(function() {
+      return window.history.pushState({}, null, '/spec.html');
+    });
     return it('displays the expected stuff', function() {
       listsRepos([
         {
@@ -415,12 +418,110 @@
 }).call(this);
 (function() {
 
-
+  describe('on the "job" state', function() {
+    beforeEach(function() {
+      app('travis-ci/travis-core/jobs/1');
+      waitFor(jobRendered);
+      return runs(function() {
+        return waitFor(hasText('#tab_build', 'Build #1'));
+      });
+    });
+    afterEach(function() {
+      return window.history.pushState({}, null, '/spec.html');
+    });
+    return it('displays the expected stuff', function() {
+      listsRepos([
+        {
+          slug: 'travis-ci/travis-hub',
+          build: {
+            number: 4,
+            url: '/travis-ci/travis-hub/builds/4',
+            duration: '1 min',
+            finishedAt: '-'
+          }
+        }, {
+          slug: 'travis-ci/travis-core',
+          build: {
+            number: 1,
+            url: '/travis-ci/travis-core/builds/1',
+            duration: '30 sec',
+            finishedAt: '3 minutes ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-assets',
+          build: {
+            number: 3,
+            url: '/travis-ci/travis-assets/builds/3',
+            duration: '30 sec',
+            finishedAt: 'a day ago'
+          }
+        }
+      ]);
+      displaysRepository({
+        href: 'http://github.com/travis-ci/travis-core'
+      });
+      displaysSummary({
+        id: 1,
+        type: 'job',
+        repo: 'travis-ci/travis-core',
+        commit: '1234567',
+        branch: 'master',
+        compare: '0123456..1234567',
+        finishedAt: '3 minutes ago',
+        duration: '30 sec',
+        message: 'commit message 1'
+      });
+      displaysTabs({
+        current: {
+          href: '/travis-ci/travis-core'
+        },
+        builds: {
+          href: '/travis-ci/travis-core/builds'
+        },
+        build: {
+          href: '/travis-ci/travis-core/builds/1'
+        },
+        job: {
+          href: '/travis-ci/travis-core/jobs/1',
+          active: true
+        }
+      });
+      return displaysLog(['log 1']);
+    });
+  });
 
 }).call(this);
 (function() {
 
-
+  describe('the sidebar', function() {
+    beforeEach(function() {
+      app('travis-ci/travis-core/jobs/1');
+      waitFor(jobRendered);
+      return runs(function() {
+        return waitFor(hasText('#tab_build', 'Build #1'));
+      });
+    });
+    afterEach(function() {
+      return window.history.pushState({}, null, '/spec.html');
+    });
+    return it('displays the expected stuff', function() {
+      return listsQueues([
+        {
+          name: 'common',
+          item: {
+            number: '5.1',
+            repo: 'travis-ci/travis-core'
+          }
+        }, {
+          name: 'common',
+          item: {
+            number: '5.2',
+            repo: 'travis-ci/travis-core'
+          }
+        }
+      ]);
+    });
+  });
 
 }).call(this);
 (function() {
@@ -636,6 +737,15 @@
     return expect(text).toContain("#" + job.number);
   };
 
+  this.listsQueue = function(data) {
+    var job, name, text;
+    name = data.item.name;
+    job = data.item.item;
+    text = $($("#queue_" + name + " li")[data.row - 1]).text();
+    expect(text).toContain(job.repo);
+    return expect(text).toContain("#" + job.number);
+  };
+
   this.listsItems = function(type, items) {
     var _this = this;
     return $.each(items, function(row, item) {
@@ -644,6 +754,10 @@
         row: row + 1
       });
     });
+  };
+
+  this.listsQueues = function(queues) {
+    return listsItems('queue', queues);
   };
 
 }).call(this);

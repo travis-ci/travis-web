@@ -105,9 +105,17 @@
   expect(text).toContain job.repo
   expect(text).toContain "##{job.number}"
 
+@listsQueue = (data) ->
+  name = data.item.name
+  job  = data.item.item
+  text = $($("#queue_#{name} li")[data.row - 1]).text()
+  expect(text).toContain job.repo
+  expect(text).toContain "##{job.number}"
+
 @listsItems = (type, items) ->
   $.each items, (row, item) =>
     this["lists#{$.camelize(type)}"](item: item, row: row + 1)
 
-
+@listsQueues = (queues) ->
+  listsItems('queue', queues)
 
