@@ -2,7 +2,8 @@ describe 'on the "build" state', ->
   beforeEach ->
     app 'travis-ci/travis-core/builds/1'
     waitFor reposRendered
-    waitFor buildRendered
+    runs ->
+      waitFor buildRendered
 
   afterEach ->
     window.history.pushState({}, null, '/spec.html')

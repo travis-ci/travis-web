@@ -4,7 +4,9 @@
     beforeEach(function() {
       app('travis-ci/travis-core/builds/1');
       waitFor(reposRendered);
-      return waitFor(buildRendered);
+      return runs(function() {
+        return waitFor(buildRendered);
+      });
     });
     afterEach(function() {
       return window.history.pushState({}, null, '/spec.html');
