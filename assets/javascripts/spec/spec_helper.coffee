@@ -2,7 +2,13 @@ minispade.require 'app'
 
 @reset = ->
   Em.run ->
-    Travis.app.destroy() if Travis.app
+    if Travis.app
+      if Travis.app.store
+        Travis.app.store.destroy()
+      if views = Travis.app.get('_connectedOutletViews')
+        views.forEach (v) -> v.destroy()
+      Travis.app.destroy()
+
   waits(500) # TODO not sure what we need to wait for here
   $('#content').remove()
   $('body').append('<div id="content"></div>')

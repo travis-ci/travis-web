@@ -13,6 +13,19 @@ Travis.reopen
       @connectOutlet(outletName: 'top', controller: @topController, viewClass: Travis.TopView)
       @topController.set('tab', @get('name'))
 
+    connectOutlet: ->
+      view = @_super.apply(this, arguments)
+
+      if view
+        _connectedOutletViews = Travis.app.get('_connectedOutletViews')
+        unless _connectedOutletViews
+          _connectedOutletViews = []
+
+        _connectedOutletViews.pushObject(view)
+        Travis.app.set('_connectedOutletViews', _connectedOutletViews)
+
+      view
+
   # TopController: Em.Controller.extend
   #   userBinding: 'Travis.app.currentUser'
 
