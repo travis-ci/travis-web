@@ -112,12 +112,191 @@
 }).call(this);
 (function() {
 
-
+  describe('on the "builds" state', function() {
+    beforeEach(function() {
+      app('travis-ci/travis-core/builds');
+      return waitFor(buildsRendered);
+    });
+    afterEach(function() {
+      return window.history.pushState({}, null, '/spec.html');
+    });
+    return it('displays the expected stuff', function() {
+      listsRepos([
+        {
+          slug: 'travis-ci/travis-hub',
+          build: {
+            number: 4,
+            url: '/travis-ci/travis-hub/builds/4',
+            duration: '1 min',
+            finishedAt: '-'
+          }
+        }, {
+          slug: 'travis-ci/travis-core',
+          build: {
+            number: 1,
+            url: '/travis-ci/travis-core/builds/1',
+            duration: '30 sec',
+            finishedAt: '3 minutes ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-assets',
+          build: {
+            number: 3,
+            url: '/travis-ci/travis-assets/builds/3',
+            duration: '30 sec',
+            finishedAt: 'a day ago'
+          }
+        }
+      ]);
+      displaysRepository({
+        href: 'http://github.com/travis-ci/travis-core'
+      });
+      displaysTabs({
+        current: {
+          href: '/travis-ci/travis-core'
+        },
+        builds: {
+          href: '/travis-ci/travis-core/builds',
+          active: true
+        },
+        build: {
+          hidden: true
+        },
+        job: {
+          hidden: true
+        }
+      });
+      return listsBuilds([
+        {
+          id: 1,
+          slug: 'travis-ci/travis-core',
+          number: '1',
+          sha: '1234567',
+          branch: 'master',
+          message: 'commit message 1',
+          duration: '30 sec',
+          finishedAt: '3 minutes ago',
+          color: 'green'
+        }, {
+          id: 2,
+          slug: 'travis-ci/travis-core',
+          number: '2',
+          sha: '2345678',
+          branch: 'feature',
+          message: 'commit message 2',
+          duration: '-',
+          finishedAt: '-',
+          color: ''
+        }
+      ]);
+    });
+  });
 
 }).call(this);
 (function() {
 
-
+  describe('on the "current" state', function() {
+    beforeEach(function() {
+      app('travis-ci/travis-core');
+      return waitFor(buildRendered);
+    });
+    return it('displays the expected stuff', function() {
+      listsRepos([
+        {
+          slug: 'travis-ci/travis-hub',
+          build: {
+            number: 4,
+            url: '/travis-ci/travis-hub/builds/4',
+            duration: '1 min',
+            finishedAt: '-'
+          }
+        }, {
+          slug: 'travis-ci/travis-core',
+          build: {
+            number: 1,
+            url: '/travis-ci/travis-core/builds/1',
+            duration: '30 sec',
+            finishedAt: '3 minutes ago'
+          }
+        }, {
+          slug: 'travis-ci/travis-assets',
+          build: {
+            number: 3,
+            url: '/travis-ci/travis-assets/builds/3',
+            duration: '30 sec',
+            finishedAt: 'a day ago'
+          }
+        }
+      ]);
+      displaysRepository({
+        href: 'http://github.com/travis-ci/travis-core'
+      });
+      displaysSummary({
+        type: 'build',
+        id: 1,
+        repo: 'travis-ci/travis-core',
+        commit: '1234567',
+        branch: 'master',
+        compare: '0123456..1234567',
+        finishedAt: '3 minutes ago',
+        duration: '30 sec',
+        message: 'commit message 1'
+      });
+      displaysTabs({
+        current: {
+          href: '/travis-ci/travis-core',
+          active: true
+        },
+        builds: {
+          href: '/travis-ci/travis-core/builds'
+        },
+        build: {
+          hidden: true
+        },
+        job: {
+          hidden: true
+        }
+      });
+      listsJobs({
+        table: '#jobs',
+        headers: ['Job', 'Duration', 'Finished', 'Rvm'],
+        jobs: [
+          {
+            id: 1,
+            color: 'green',
+            number: '1.1',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '3 minutes ago',
+            duration: '30 sec',
+            rvm: 'rbx'
+          }, {
+            id: 2,
+            color: 'red',
+            number: '1.2',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '2 minutes ago',
+            duration: '40 sec',
+            rvm: '1.9.3'
+          }
+        ]
+      });
+      return listsJobs({
+        table: '#allowed_failure_jobs',
+        headers: ['Job', 'Duration', 'Finished', 'Rvm'],
+        jobs: [
+          {
+            id: 3,
+            color: '',
+            number: '1.3',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '-',
+            duration: '-',
+            rvm: 'jruby'
+          }
+        ]
+      });
+    });
+  });
 
 }).call(this);
 (function() {
@@ -251,7 +430,16 @@
 
   this.reset = function() {
     Em.run(function() {
+      var views;
       if (Travis.app) {
+        if (Travis.app.store) {
+          Travis.app.store.destroy();
+        }
+        if (views = Travis.app.get('_connectedOutletViews')) {
+          views.forEach(function(v) {
+            return v.destroy();
+          });
+        }
         return Travis.app.destroy();
       }
     });
@@ -387,10 +575,10 @@
     row = $('#builds tbody tr')[data.row - 1];
     build = data.item;
     expect($('.number a', row).attr('href')).toEqual("/" + build.slug + "/builds/" + build.id);
-    expect($('.number a', row).text()).toEqual(build.number);
-    expect($('.message', row).text()).toEqual(build.message);
-    expect($('.duration', row).text()).toEqual(build.duration);
-    expect($('.finished_at', row).text()).toEqual(build.finishedAt);
+    expect($('.number a', row).text().trim()).toEqual(build.number);
+    expect($('.message', row).text().trim()).toEqual(build.message);
+    expect($('.duration', row).text().trim()).toEqual(build.duration);
+    expect($('.finished_at', row).text().trim()).toEqual(build.finishedAt);
     return expect($(row).attr('class')).toMatch(build.color);
   };
 

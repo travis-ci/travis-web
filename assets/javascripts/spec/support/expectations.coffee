@@ -60,10 +60,10 @@
   build = data.item
 
   expect($('.number a', row).attr('href')).toEqual "/#{build.slug}/builds/#{build.id}"
-  expect($('.number a', row).text()).toEqual build.number
-  expect($('.message', row).text()).toEqual build.message
-  expect($('.duration', row).text()).toEqual build.duration
-  expect($('.finished_at', row).text()).toEqual build.finishedAt
+  expect($('.number a', row).text().trim()).toEqual build.number
+  expect($('.message', row).text().trim()).toEqual build.message
+  expect($('.duration', row).text().trim()).toEqual build.duration
+  expect($('.finished_at', row).text().trim()).toEqual build.finishedAt
   expect($(row).attr('class')).toMatch build.color
 
 @listsJobs = (data) ->
