@@ -12,7 +12,7 @@
   expect(element.text()).toEqual $.camelize(data.type)
 
   element = $('#summary .number a')
-  expect(element.attr('href')).toEqual "#!/#{data.repo}/#{data.type}s/#{data.id}"
+  expect(element.attr('href')).toEqual "/#{data.repo}/#{data.type}s/#{data.id}"
 
   element = $('#summary .finished_at')
   expect(element.text()).toEqual data.finishedAt
@@ -47,7 +47,7 @@
   row = $('#repositories li')[data.row - 1]
   repo = data.item
 
-  expect($('a.current', row).attr('href')).toEqual "#!/#{repo.slug}"
+  expect($('a.current', row).attr('href')).toEqual "/#{repo.slug}"
   expect($('a.last_build', row).attr('href')).toEqual repo.build.url
   expect($('.duration', row).text()).toEqual repo.build.duration
   expect($('.finished_at', row).text()).toEqual repo.build.finishedAt
@@ -59,12 +59,12 @@
   row = $('#builds tbody tr')[data.row - 1]
   build = data.item
 
-  expect($('.number a', row).attr('href')).toEqual "#!/#{build.slug}/builds/#{build.id}"
+  expect($('.number a', row).attr('href')).toEqual "/#{build.slug}/builds/#{build.id}"
   expect($('.number a', row).text()).toEqual build.number
   expect($('.message', row).text()).toEqual build.message
   expect($('.duration', row).text()).toEqual build.duration
   expect($('.finished_at', row).text()).toEqual build.finishedAt
-  expect($(row).attr('class')).toEqual build.color
+  expect($(row).attr('class')).toMatch build.color
 
 @listsJobs = (data) ->
   table = $(data.table)
@@ -78,13 +78,13 @@
   job = data.item
 
   element = $(row)
-  expect(element.attr('class')).toEqual job.color
+  expect(element.attr('class')).toMatch job.color
 
   element = $("td.number", row)
   expect(element.text()).toEqual job.number
 
   element = $("td.number a", row)
-  expect(element.attr('href')).toEqual "#!/#{job.repo}/jobs/#{job.id}"
+  expect(element.attr('href')).toEqual "/#{job.repo}/jobs/#{job.id}"
 
   element = $("td.duration", row)
   expect(element.text()).toEqual job.duration

@@ -13,7 +13,7 @@ require 'travis/model'
   duration:       DS.attr('number')
   startedAt:      DS.attr('string')
   finishedAt:     DS.attr('string')
-  allowFailure:   DS.attr('boolean')
+  allowFailure:   DS.attr('boolean', key: 'allow_failure')
 
   repository: DS.belongsTo('Travis.Repository', key: 'repository_id')
   build:      DS.belongsTo('Travis.Build',      key: 'build_id')

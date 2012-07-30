@@ -92,19 +92,19 @@ describe 'events', ->
   #       row: 3
   #       item: { number: '1.4', repo: 'travis-ci/travis-core' }
 
-  describe 'an event adding a worker', ->
-    beforeEach ->
-      app ''
-      waitFor workersRendered
+  # describe 'an event adding a worker', ->
+  #   beforeEach ->
+  #     app ''
+  #     waitFor workersRendered
 
-    it 'adds a worker to the workers list', ->
-      Em.run ->
-        Travis.app.receive 'worker:added',
-          worker:
-            id: 10
+  #   it 'adds a worker to the workers list', ->
+  #     Em.run ->
+  #       Travis.app.receive 'worker:added',
+  #         worker:
+  #           id: 10
 
-      listsWorker
-        group: 'workers.travis-ci.org'
-        row: 3
-        item: { 'ruby-3' }
+  #     listsWorker
+  #       group: 'workers.travis-ci.org'
+  #       row: 3
+  #       item: { 'ruby-3' }
 
