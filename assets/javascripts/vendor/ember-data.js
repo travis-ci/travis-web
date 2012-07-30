@@ -248,7 +248,7 @@ DS.ManyArrayStateManager = Ember.StateManager.extend({
 
 
 (function() {
-var get = Ember.get, set = Ember.set, set = Ember.set;
+var get = Ember.get, set = Ember.set;
 
 DS.ManyArray = DS.RecordArray.extend({
   init: function() {
@@ -3743,19 +3743,23 @@ DS.FixtureAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
     var fixtures = this.fixturesForType(type);
 
+    Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
+
     if (fixtures) {
       fixtures = fixtures.findProperty('id', id);
     }
 
-    Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
-
-    this.simulateRemoteCall(function() {
-      store.load(type, fixtures);
-    }, store, type);
+    if (fixtures) {
+      this.simulateRemoteCall(function() {
+        store.load(type, fixtures);
+      }, store, type);
+    }
   },
 
   findMany: function(store, type, ids) {
     var fixtures = this.fixturesForType(type);
+
+    Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
 
     if (fixtures) {
       fixtures = fixtures.filter(function(item) {
@@ -3763,11 +3767,11 @@ DS.FixtureAdapter = DS.Adapter.extend({
       });
     }
 
-    Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
-
-    this.simulateRemoteCall(function() {
-      store.loadMany(type, fixtures);
-    }, store, type);
+    if (fixtures) {
+      this.simulateRemoteCall(function() {
+        store.loadMany(type, fixtures);
+      }, store, type);
+    }
   },
 
   findAll: function(store, type) {
@@ -3783,13 +3787,15 @@ DS.FixtureAdapter = DS.Adapter.extend({
   findQuery: function(store, type, query, array) {
     var fixtures = this.fixturesForType(type);
 
-    fixtures = this.queryFixtures(fixtures, query);
-
     Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
 
-    this.simulateRemoteCall(function() {
-      array.load(fixtures);
-    }, store, type);
+    fixtures = this.queryFixtures(fixtures, query);
+
+    if (fixtures) {
+      this.simulateRemoteCall(function() {
+        array.load(fixtures);
+      }, store, type);
+    }
   },
 
   createRecord: function(store, type, record) {
@@ -4030,7 +4036,9 @@ DS.RESTAdapter = DS.Adapter.extend({
       data: query,
       success: function(json) {
         this.sideload(store, type, json, plural);
-        recordArray.load(json[plural]);
+        setTimeout(function() {
+          recordArray.load(json[plural]);
+        }, 10);
       }
     });
   },
