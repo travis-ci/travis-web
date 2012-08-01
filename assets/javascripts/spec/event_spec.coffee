@@ -97,6 +97,18 @@ describe 'events', ->
         row: 3
         item: { number: '1.4', repo: 'travis-ci/travis-core' }
 
+    it 'updates only keys that are available', ->
+      Em.run ->
+        Travis.app.receive 'job',
+          job:
+            id: 1
+            build_id: 1
+
+      listsJob
+        table: $('#jobs')
+        row: 1
+        item: { id: 1, number: '1.1', repo: 'travis-ci/travis-core', finishedAt: '3 minutes ago', duration: '30 sec', rvm: 'rbx' }
+
   describe 'an event adding a worker', ->
     beforeEach ->
       app ''

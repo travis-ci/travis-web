@@ -430,7 +430,7 @@
           }
         });
       });
-      return it('adds a job to the jobs queue', function() {
+      it('adds a job to the jobs queue', function() {
         Em.run(function() {
           return Travis.app.receive('job', {
             job: {
@@ -447,6 +447,28 @@
           item: {
             number: '1.4',
             repo: 'travis-ci/travis-core'
+          }
+        });
+      });
+      return it('updates only keys that are available', function() {
+        Em.run(function() {
+          return Travis.app.receive('job', {
+            job: {
+              id: 1,
+              build_id: 1
+            }
+          });
+        });
+        return listsJob({
+          table: $('#jobs'),
+          row: 1,
+          item: {
+            id: 1,
+            number: '1.1',
+            repo: 'travis-ci/travis-core',
+            finishedAt: '3 minutes ago',
+            duration: '30 sec',
+            rvm: 'rbx'
           }
         });
       });
