@@ -35,14 +35,16 @@ require 'travis/model'
       []
   ).property('config')
 
-  appendLog: (log) ->
-    @set('log', @get('log') + log)
+  appendLog: (text) ->
+    if log = @get('log')
+      log.append(text)
 
   subscribe: ->
-    # Travis.app.subscribe 'job-' + @get('id')
+    if id = @get('id')
+      Travis.app.pusher.subscribe "job-#{id}"
 
   onStateChange: (->
-    # Travis.app.unsubscribe 'job-' + @get('id') if @get('state') == 'finished'
+    Travis.app.pusher.unsubscribe "job-#{@get('id')}" if @get('state') == 'finished'
   ).observes('state')
 
   tick: ->

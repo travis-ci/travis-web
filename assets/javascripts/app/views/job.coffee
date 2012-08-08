@@ -49,7 +49,19 @@
 
   LogView: Travis.View.extend
     templateName: 'jobs/log'
+    logBinding: 'job.log'
 
     click: (event) ->
       $(event.target).closest('.fold').toggleClass('open')
 
+    jobBinding: 'context'
+
+    logSubscriber: (->
+      # for some reason observing context does not work,
+      # TODO: find out why
+      job   = @get('job')
+      state = @get('job.state')
+      if job && state != 'finished'
+        job.subscribe()
+      null
+    ).property('job', 'job.state')

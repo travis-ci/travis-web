@@ -28,13 +28,13 @@ $.extend Travis.Pusher.prototype,
   receive: (event, data) ->
     if data.id
       data = @normalize(event, data)
-    Travis.app.store.receive(event.split(':')[0], data)
+    Travis.app.store.receive(event, data)
 
   normalize: (event, data) ->
     switch event
       when 'build:started', 'build:finished'
         data
-      when 'job:created', 'job:started', 'job:finished'
+      when 'job:created', 'job:started', 'job:finished', 'job:log'
         data.queue = data.queue.replace('builds.', '') if data.queue
         { job: data }
       when 'worker:added', 'worker:updated', 'worker:removed'

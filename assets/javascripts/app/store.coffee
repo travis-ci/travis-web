@@ -36,11 +36,16 @@ Travis.Store = DS.Store.extend
 
     { id: id, clientId: clientId }
 
-  receive: (name, data) ->
+  receive: (event, data) ->
+    [name, type] = event.split(':')
+
     mappings = @adapter.get('mappings')
     type = mappings[name]
 
-    if data[type.singularName()]
+    if event == 'job:log'
+      if job = @find(Travis.Job, data['job']['id'])
+        job.appendLog(data['job']['_log'])
+    else if data[type.singularName()]
       @_loadOne(this, type, data)
     else if data[type.pluralName()]
       @_loadMany(this, type, data)
