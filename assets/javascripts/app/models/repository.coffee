@@ -59,9 +59,8 @@ require 'travis/model'
   select: ->
     Travis.Repository.select(self.get('id'))
 
-  tick: ->
+  updateTimes: ->
     @notifyPropertyChange 'lastBuildDuration'
-    @notifyPropertyChange 'lastBuildFinishedAt'
 
 @Travis.Repository.reopenClass
   recent: ->

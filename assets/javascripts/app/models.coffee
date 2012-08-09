@@ -1,3 +1,4 @@
+require 'models/extensions'
 require 'models/artifact'
 require 'models/branch'
 require 'models/build'

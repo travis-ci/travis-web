@@ -1,6 +1,6 @@
 require 'travis/model'
 
-@Travis.Job = Travis.Model.extend
+@Travis.Job = Travis.Model.extend Travis.DurationCalculations,
   repositoryId:   DS.attr('number')
   buildId:        DS.attr('number')
   commitId:       DS.attr('number')
@@ -10,7 +10,7 @@ require 'travis/model'
   state:          DS.attr('string')
   number:         DS.attr('string')
   result:         DS.attr('number')
-  duration:       DS.attr('number')
+  _duration:      DS.attr('number', key: 'duration')
   startedAt:      DS.attr('string')
   finishedAt:     DS.attr('string')
   allowFailure:   DS.attr('boolean', key: 'allow_failure')
@@ -46,10 +46,6 @@ require 'travis/model'
   onStateChange: (->
     Travis.app.pusher.unsubscribe "job-#{@get('id')}" if @get('state') == 'finished'
   ).observes('state')
-
-  tick: ->
-    @notifyPropertyChange 'duration'
-    @notifyPropertyChange 'finished_at'
 
 @Travis.Job.reopenClass
   queued: (queue) ->

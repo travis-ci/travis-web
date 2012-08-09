@@ -3,6 +3,13 @@ Travis.RepositoriesController = Ember.ArrayController.extend
 
   init: ->
     @activate('recent')
+    Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
+
+  updateTimes: ->
+    if content = @get('content')
+      content.forEach (r) -> r.updateTimes()
+
+    Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   activate: (tab, params) ->
     @set('tab', tab)

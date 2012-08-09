@@ -1,6 +1,6 @@
 require 'travis/model'
 
-@Travis.Build = Travis.Model.extend
+@Travis.Build = Travis.Model.extend Travis.DurationCalculations,
   eventType:       DS.attr('string')
   repositoryId:    DS.attr('number')
   commitId:        DS.attr('number')
@@ -10,9 +10,9 @@ require 'travis/model'
   branch:          DS.attr('string')
   message:         DS.attr('string')
   result:          DS.attr('number')
-  duration:        DS.attr('number')
-  startedAt:       DS.attr('string')
-  finishedAt:      DS.attr('string')
+  _duration:       DS.attr('number', key: 'duration')
+  startedAt:       DS.attr('string', key: 'started_at')
+  finishedAt:      DS.attr('string', key: 'finished_at')
 
   repository: DS.belongsTo('Travis.Repository')
   commit:     DS.belongsTo('Travis.Commit')
@@ -40,10 +40,6 @@ require 'travis/model'
     headers = (I18n.t(key) for key in ['build.job', 'build.duration', 'build.finished_at'])
     $.map(headers.concat(keys), (key) -> return $.camelize(key))
   ).property('config')
-
-  tick: ->
-    @notifyPropertyChange 'duration'
-    @notifyPropertyChange 'finished_at'
 
 @Travis.Build.reopenClass
   byRepositoryId: (id, parameters) ->

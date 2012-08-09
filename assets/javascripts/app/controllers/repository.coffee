@@ -4,6 +4,17 @@ Travis.RepositoryController = Travis.Controller.extend
 
   init: ->
     @_super('builds', 'build', 'job')
+    Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
+
+  updateTimes: ->
+    if builds = @get('builds')
+      builds.forEach (b) -> b.updateTimes()
+
+    if build = @get('build')
+      build.updateTimes()
+      build.get('jobs').forEach (j) -> j.updateTimes()
+
+    Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   activate: (action, params) ->
     @_unbind()
