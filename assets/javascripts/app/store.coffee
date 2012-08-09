@@ -29,7 +29,11 @@ Travis.Store = DS.Store.extend
       if record = recordCache[clientId]
         record.send('didChangeData')
     else
-      clientId = @pushHash(hash, id, type)
+      # that's nasty, but will do for now
+      # if event is triggered for a record
+      # that's not yet available, just use find
+      # to make a request to fetch it
+      @find(type, id)
 
     DATA_PROXY.savedData = hash
     @updateRecordArrays(type, clientId, DATA_PROXY)
