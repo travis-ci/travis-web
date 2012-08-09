@@ -28,7 +28,7 @@ require 'ext/ember/namespace'
     { name: 'spree',   display: 'Spree' }
   ]
 
-  INTERVALS: { sponsors: -1, times: -1, updateTimes: 5000 }
+  INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
 
   run: (attrs) ->
     @app = Travis.App.create(attrs || {})
