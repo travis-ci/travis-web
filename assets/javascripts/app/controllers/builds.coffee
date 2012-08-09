@@ -3,5 +3,3 @@ Travis.BuildsController = Em.ArrayController.extend
 
   repositoryBinding: 'parent.repository'
   contentBinding: 'parent.builds'
-
-

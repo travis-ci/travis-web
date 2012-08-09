@@ -46,4 +46,4 @@ require 'travis/model'
     @find($.extend(parameters || {}, repository_id: id, orderBy: 'number DESC'))
 
   olderThanNumber: (id, build_number) ->
-    @find(url: '/repositories/' + id + '/builds.json?bare=true&after_number=' + build_number, repository_id: id, orderBy: 'number DESC')
+    @find(url: "/builds", repository_id: id, after: build_number)

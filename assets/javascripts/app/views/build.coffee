@@ -3,6 +3,11 @@
     templateName: 'builds/list'
     buildsBinding: 'controller'
 
+    showMore: ->
+      id = @get('controller.repository.id')
+      number = @get('controller.builds.lastObject.number')
+      Travis.Build.olderThanNumber(id, number)
+
   BuildsItemView: Travis.View.extend
     repositoryBinding: 'controller.repository'
     buildBinding: 'context'
