@@ -22,5 +22,5 @@ class App < Sinatra::Base
 end
 
 use Rack::Deflater
-run Rack::Cascade.new([App, Travis::Api::App])
+run Rack::Cascade.new([App, Travis::Api::App.new])
 
