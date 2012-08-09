@@ -4,8 +4,6 @@ require 'sinatra'
 require 'travis/api/app'
 
 class App < Sinatra::Base
-  use Travis::Api::App
-
   disable :protection
 
   set :root, File.dirname(__FILE__)
@@ -24,5 +22,5 @@ class App < Sinatra::Base
 end
 
 use Rack::Deflater
-run App
+run Rack::Cascade.new([App, Travis::Api::App])
 
