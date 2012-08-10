@@ -1,6 +1,7 @@
 source :rubygems
 
 gem 'travis-api',     github: 'travis-ci/travis-api'
+gem 'yard-sinatra',   github: 'rkh/yard-sinatra'
 gem 'travis-core',    github: 'travis-ci/travis-core'
 gem 'travis-support', github: 'travis-ci/travis-support'
 
