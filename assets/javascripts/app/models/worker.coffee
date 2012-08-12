@@ -15,15 +15,17 @@ require 'travis/model'
   ).property('name')
 
   display: (->
-    name    = @get('name').replace('travis-', '')
+    name    = @get('name')
     state   = @get('state')
     payload = @get('payload')
-    if state == 'working' && payload != undefined
-      repo   = if payload.repository then $.truncate(payload.repository.slug, 18) else undefined
-      number = if payload.build and payload.build.number then ' #' + payload.build.number else ''
-      state  = if repo then repo + number else state
-    name + ': ' + state
-  ).property('state')
+    if name
+      name = name.replace('travis-', '')
+      if state == 'working' && payload != undefined
+        repo   = if payload.repository then $.truncate(payload.repository.slug, 18) else undefined
+        number = if payload.build and payload.build.number then ' #' + payload.build.number else ''
+        state  = if repo then repo + number else state
+      name + ': ' + state
+  ).property('state', 'name', 'payload')
 
   urlJob: (->
     "/#{@get('repository')}/jobs/#{@get('job_id')}" if @get('state') == 'working'

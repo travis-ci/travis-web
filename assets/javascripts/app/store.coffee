@@ -33,12 +33,13 @@ Travis.Store = DS.Store.extend
       # if event is triggered for a record
       # that's not yet available, just use find
       # to make a request to fetch it
-      @find(type, id)
+      clientId = @find(type, id).get('clientId')
 
-    DATA_PROXY.savedData = hash
-    @updateRecordArrays(type, clientId, DATA_PROXY)
+    if clientId
+      DATA_PROXY.savedData = hash
+      @updateRecordArrays(type, clientId, DATA_PROXY)
 
-    { id: id, clientId: clientId }
+      { id: id, clientId: clientId }
 
   receive: (event, data) ->
     [name, type] = event.split(':')

@@ -316,33 +316,47 @@
       return it('adds a repository to the list', function() {
         waitFor(reposRendered);
         return runs(function() {
+          var payload;
+          payload = {
+            repository: {
+              id: 10,
+              slug: 'travis-ci/travis-support',
+              last_build_id: 10,
+              last_build_number: 10,
+              last_build_started_at: '2012-07-02T00:01:00Z',
+              last_build_finished_at: '2012-07-02T00:02:30Z'
+            },
+            build: {
+              id: 10,
+              repository_id: 10
+            }
+          };
+          $.mockjax({
+            url: '/builds/10',
+            responseTime: 0,
+            responseText: payload
+          });
           Em.run(function() {
-            return Travis.app.receive('build', {
-              repository: {
-                id: 10,
-                slug: 'travis-ci/travis-support',
-                last_build_id: 10,
-                last_build_number: 10,
-                last_build_started_at: '2012-07-02T00:01:00Z',
-                last_build_finished_at: '2012-07-02T00:02:30Z'
-              },
+            return Travis.app.receive('build:started', {
               build: {
-                id: 10,
-                repository_id: 10
+                id: 10
               }
             });
           });
-          return listsRepo({
-            row: 2,
-            item: {
-              slug: 'travis-ci/travis-support',
-              build: {
-                number: 4,
-                url: '/travis-ci/travis-support/builds/10',
-                duration: '1 min 30 sec',
-                finishedAt: 'less than a minute ago'
+          waits(100);
+          return runs(function() {
+            return listsRepo({
+              row: 2,
+              item: {
+                slug: 'travis-ci/travis-support',
+                build: {
+                  number: 4,
+                  url: '/travis-ci/travis-support/builds/10',
+                  duration: '1 min 30 sec',
+                  finishedAt: 'less than a minute ago'
+                }
               }
-            }
+            });
           });
         });
       });
@@ -353,40 +367,54 @@
         return waitFor(buildsRendered);
       });
       return it('adds a build to the builds list', function() {
+        var payload;
+        payload = {
+          build: {
+            id: 11,
+            repository_id: 1,
+            commit_id: 11,
+            number: '3',
+            duration: 55,
+            started_at: '2012-07-02T00:02:00Z',
+            finished_at: '2012-07-02T00:02:55Z',
+            event_type: 'push',
+            result: 1
+          },
+          commit: {
+            id: 11,
+            sha: '1234567',
+            branch: 'master',
+            message: 'commit message 3'
+          }
+        };
+        $.mockjax({
+          url: '/builds/11',
+          responseTime: 0,
+          responseText: payload
+        });
         Em.run(function() {
-          return Travis.app.receive('build', {
+          return Travis.app.receive('build:started', {
             build: {
-              id: 10,
-              repository_id: 1,
-              commit_id: 10,
-              number: '3',
-              duration: 55,
-              started_at: '2012-07-02T00:02:00Z',
-              finished_at: '2012-07-02T00:02:55Z',
-              event_type: 'push',
-              result: 1
-            },
-            commit: {
-              id: 10,
-              sha: '1234567',
-              branch: 'master',
-              message: 'commit message 3'
+              id: 11
             }
           });
         });
-        return listsBuild({
-          row: 3,
-          item: {
-            id: 10,
-            slug: 'travis-ci/travis-core',
-            number: '3',
-            sha: '1234567',
-            branch: 'master',
-            message: 'commit message 3',
-            finishedAt: 'less than a minute ago',
-            duration: '55 sec',
-            color: 'red'
-          }
+        waits(100);
+        return runs(function() {
+          return listsBuild({
+            row: 3,
+            item: {
+              id: 11,
+              slug: 'travis-ci/travis-core',
+              number: '3',
+              sha: '1234567',
+              branch: 'master',
+              message: 'commit message 3',
+              finishedAt: 'less than a minute ago',
+              duration: '55 sec',
+              color: 'red'
+            }
+          });
         });
       });
     });
@@ -399,77 +427,109 @@
         });
       });
       it('adds a job to the jobs matrix', function() {
+        var payload;
+        payload = {
+          job: {
+            id: 15,
+            repository_id: 1,
+            build_id: 1,
+            commit_id: 1,
+            log_id: 1,
+            number: '1.4',
+            duration: 55,
+            started_at: '2012-07-02T00:02:00Z',
+            finished_at: '2012-07-02T00:02:55Z',
+            config: {
+              rvm: 'jruby'
+            }
+          }
+        };
+        $.mockjax({
+          url: '/jobs/15',
+          responseTime: 0,
+          responseText: payload
+        });
         Em.run(function() {
-          return Travis.app.receive('job', {
+          return Travis.app.receive('job:started', {
             job: {
-              id: 10,
-              repository_id: 1,
-              build_id: 1,
-              commit_id: 1,
-              log_id: 1,
-              number: '1.4',
-              duration: 55,
-              started_at: '2012-07-02T00:02:00Z',
-              finished_at: '2012-07-02T00:02:55Z',
-              config: {
-                rvm: 'jruby'
-              }
+              id: 15,
+              build_id: 1
             }
           });
         });
-        return listsJob({
-          table: $('#jobs'),
-          row: 3,
-          item: {
-            id: 10,
-            number: '1.4',
-            repo: 'travis-ci/travis-core',
-            finishedAt: 'less than a minute ago',
-            duration: '55 sec',
-            rvm: 'jruby'
-          }
+        waits(100);
+        return runs(function() {
+          return listsJob({
+            table: $('#jobs'),
+            row: 3,
+            item: {
+              id: 15,
+              number: '1.4',
+              repo: 'travis-ci/travis-core',
+              finishedAt: 'less than a minute ago',
+              duration: '55 sec',
+              rvm: 'jruby'
+            }
+          });
         });
       });
       it('adds a job to the jobs queue', function() {
+        var payload;
+        payload = {
+          job: {
+            id: 12,
+            repository_id: 1,
+            number: '1.4',
+            queue: 'common'
+          }
+        };
+        $.mockjax({
+          url: '/jobs/12',
+          responseTime: 0,
+          responseText: payload
+        });
         Em.run(function() {
-          return Travis.app.receive('job', {
+          return Travis.app.receive('job:started', {
             job: {
-              id: 10,
-              repository_id: 1,
-              number: '1.4',
-              queue: 'common'
+              id: 12
             }
           });
         });
-        return listsQueuedJob({
-          name: 'common',
-          row: 3,
-          item: {
-            number: '1.4',
-            repo: 'travis-ci/travis-core'
-          }
+        waits(100);
+        return runs(function() {
+          return listsQueuedJob({
+            name: 'common',
+            row: 3,
+            item: {
+              number: '1.4',
+              repo: 'travis-ci/travis-core'
+            }
+          });
         });
       });
       return it('updates only keys that are available', function() {
         Em.run(function() {
-          return Travis.app.receive('job', {
+          return Travis.app.receive('job:started', {
             job: {
               id: 1,
               build_id: 1
             }
           });
         });
-        return listsJob({
-          table: $('#jobs'),
-          row: 1,
-          item: {
-            id: 1,
-            number: '1.1',
-            repo: 'travis-ci/travis-core',
-            finishedAt: '3 minutes ago',
-            duration: '30 sec',
-            rvm: 'rbx'
-          }
+        waits(100);
+        return runs(function() {
+          return listsJob({
+            table: $('#jobs'),
+            row: 1,
+            item: {
+              id: 1,
+              number: '1.1',
+              repo: 'travis-ci/travis-core',
+              finishedAt: '3 minutes ago',
+              duration: '30 sec',
+              rvm: 'rbx'
+            }
+          });
         });
       });
     });
@@ -479,23 +539,40 @@
         return waitFor(workersRendered);
       });
       return it('adds a worker to the workers list', function() {
-        Em.run(function() {
-          return Travis.app.receive('worker', {
-            worker: {
-              host: 'worker.travis-ci.org',
-              name: 'ruby-3',
-              state: 'ready',
-              id: 10
-            }
-          });
-        });
-        return listsWorker({
-          group: 'worker.travis-ci.org',
-          row: 3,
-          item: {
+        var payload;
+        payload = {
+          worker: {
+            id: 10,
+            host: 'worker.travis-ci.org',
             name: 'ruby-3',
             state: 'ready'
           }
+        };
+        $.mockjax({
+          url: '/workers/10',
+          responseTime: 0,
+          responseText: payload
+        });
+        Em.run(function() {
+          return Travis.app.receive('worker:created', {
+            worker: {
+              id: 10,
+              name: 'ruby-3',
+              host: 'worker.travis-ci.org',
+              state: 'ready'
+            }
+          });
+        });
+        waits(100);
+        return runs(function() {
+          return listsWorker({
+            group: 'worker.travis-ci.org',
+            row: 3,
+            item: {
+              name: 'ruby-3',
+              state: 'ready'
+            }
+          });
         });
       });
     });
