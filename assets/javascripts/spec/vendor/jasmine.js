@@ -712,8 +712,36 @@ jasmine.Env = function() {
   this.updateInterval = jasmine.DEFAULT_UPDATE_INTERVAL;
   this.defaultTimeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
   this.lastUpdate = 0;
-  this.specFilter = function() {
-    return true;
+
+  function focusedSpecName() {
+    var specName;
+
+    (function memoizeFocusedSpec() {
+      if (specName) {
+        return;
+      }
+
+      var paramMap = [];
+      var params = window.cachedSearch.substring(1).split('&');
+
+      for (var i = 0; i < params.length; i++) {
+        var p = params[i].split('=');
+        paramMap[decodeURIComponent(p[0])] = decodeURIComponent(p[1]);
+      }
+
+      specName = paramMap.spec;
+    })();
+
+    if(specName)
+      specName = specName.replace(/%20/g, ' ');
+
+    return specName;
+  }
+
+  this.specFilter = function(spec) {
+    if(!focusedSpecName()) return true;
+
+    return spec.getFullName().indexOf(focusedSpecName()) === 0;
   };
 
   this.nextSpecId_ = 0;

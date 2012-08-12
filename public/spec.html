@@ -13,6 +13,7 @@
   </head>
   <body>
     <script>
+      window.cachedSearch = window.location.search;
       minispade.require('mocks')
 
       for(key in minispade.modules)
@@ -20,7 +21,7 @@
           minispade.require(key);
 
       var console_reporter = new jasmine.ConsoleReporter()
-      jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+      jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
       /* jasmine.getEnv().addReporter(console_reporter); */
       jasmine.getEnv().execute();
     </script>
