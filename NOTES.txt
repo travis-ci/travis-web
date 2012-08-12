@@ -33,11 +33,3 @@
   helper (does it need to be quoted or not? what's the namespace and current
   scope there?) I might get a controller or model instance. When I use the
   back/forward button I get a plain object?
-
-# Stuff
-
-* I'm sure joining get and getPath was considered, right? I keep forgetting
-  to change `get` to `getPath` when I move stuff around and now need to
-  look up a path instead of a single key. What's the reason for separate
-  methods? Performance?
-
