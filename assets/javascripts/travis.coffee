@@ -3,7 +3,7 @@ require 'ext/ember/namespace'
 
 @Travis = Em.Namespace.create
   config:
-    api_endpoint: $('meta[name="travis.api_endpoint"]').attr('content')
+    api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('content')
 
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
 
