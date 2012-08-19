@@ -146,8 +146,8 @@ pre::-webkit-scrollbar-thumb:horizontal {
 /* line 107, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .context_help_body {
   font-size: 1em;
-  line-height: 1.429;
-  margin: 1.429em 0;
+  line-height: 1.4286;
+  margin: 1.4286em 0;
 }
 
 /* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
@@ -1169,7 +1169,7 @@ table.list .green .number a {
 }
 /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list .red td {
-  background-color: #fffafa;
+  background-color: snow;
 }
 /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list .red:hover td {

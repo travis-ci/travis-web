@@ -9,13 +9,13 @@ require 'ext/ember/namespace'
   HomeLayout:    Travis.View.extend(templateName: 'layouts/home')
   ProfileLayout: Travis.View.extend(templateName: 'layouts/simple')
   StatsLayout:   Travis.View.extend(templateName: 'layouts/simple')
-  StatsView:     Travis.View.extend(templateName: 'stats/show')
 
 require 'views/build'
 require 'views/job'
 require 'views/repo'
 require 'views/profile'
 require 'views/sidebar'
+require 'views/stats'
 require 'views/tabs'
 require 'views/top'
 
