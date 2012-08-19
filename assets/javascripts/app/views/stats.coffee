@@ -7,7 +7,7 @@
     renderChart: (config) ->
       chart = new Highcharts.Chart(config)
       @fetch config.source, (data) ->
-        stats = ([Date.parse(stats.date), stats.total_growth] for stats in data.stats)
+        stats = (config.map(stats) for stats in data.stats)
         chart.series[0].setData(stats)
 
     fetch: (url, callback) ->
@@ -20,6 +20,8 @@
     CHARTS:
       repos:
         source: '/stats/repos'
+        map: (data) ->
+          [Date.parse(data.date), data.total_growth]
         chart:
           renderTo: "repos_stats"
         title:
@@ -43,6 +45,8 @@
 
       builds:
         source: '/stats/tests'
+        map: (data) ->
+          [Date.parse(data.date), data.run_on_date]
         chart:
           renderTo: "tests_stats"
           type: "column"
