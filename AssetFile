@@ -72,9 +72,6 @@ end
 output 'public/stylesheets'
 input 'assets/stylesheets' do
   match '**/*.{scss,sass}' do
-    # filter(Rake::Pipeline::Web::Filters::TiltFilter) do |input|
-    #     input.sub /\.scss$/, '.css'
-    #   end
     filter Rake::Pipeline::Web::Filters::SassFilter
   end
 
