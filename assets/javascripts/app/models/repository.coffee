@@ -46,7 +46,7 @@ require 'travis/model'
     if lastBuildFinishedAt = @get('lastBuildFinishedAt')
       - new Date(lastBuildFinishedAt).getTime()
     else
-      - new Date('9999').getTime() + parseInt(@get('id'))
+      - new Date('9999').getTime() - parseInt(@get('id'))
   ).property('lastBuildFinishedAt')
 
   stats: (->
