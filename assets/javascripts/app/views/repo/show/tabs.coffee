@@ -1,6 +1,6 @@
 @Travis.reopen
-  TabsView: Travis.View.extend
-    templateName: 'repos/tabs'
+  RepoShowTabsView: Travis.View.extend
+    templateName: 'repos/show/tabs'
 
     repositoryBinding: 'controller.repository'
     buildBinding: 'controller.build'
@@ -78,9 +78,4 @@
     rdocStatusImage: (->
       "{<img src=\"#{@get('urlStatusImage')}\" alt=\"Build Status\" />}[#{@get('urlRepository')}]"
     ).property('urlStatusImage')
-
-
-
-
-
 

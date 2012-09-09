@@ -1,8 +1,9 @@
 Travis.RepositoriesController = Ember.ArrayController.extend
+  defaultTab: 'recent'
   sortProperties: ['sortOrder']
 
   init: ->
-    @activate('recent')
+    @activate(@defaultTab)
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   updateTimes: ->
@@ -18,8 +19,8 @@ Travis.RepositoriesController = Ember.ArrayController.extend
   viewRecent: ->
     @set('content', Travis.Repository.find())
 
-  viewOwned: (params) ->
-    @set('content', Travis.Repository.owned_by(params.login))
+  viewOwned: ->
+    @set('content', Travis.Repository.ownedBy(Travis.get('currentUser.login')))
 
   viewSearch: (params) ->
     @set('content', Travis.Repository.search(params.search))

@@ -26,8 +26,8 @@ Travis.reopen
 
       view
 
-  # TopController: Em.Controller.extend
-  #   userBinding: 'Travis.app.currentUser'
+  TopController: Em.Controller.extend
+    userBinding: 'Travis.currentUser'
 
 require 'controllers/builds'
 require 'controllers/home'

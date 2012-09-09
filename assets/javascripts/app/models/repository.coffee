@@ -66,8 +66,8 @@ require 'travis/model'
   recent: ->
     @find()
 
-  ownedBy: (owner) ->
-    @find(owner: owner, orderBy: 'name')
+  ownedBy: (login) ->
+    @find(owner: login, orderBy: 'name')
 
   search: (query) ->
     @find(search: query, orderBy: 'name')

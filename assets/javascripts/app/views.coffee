@@ -16,6 +16,5 @@ require 'views/repo'
 require 'views/profile'
 require 'views/sidebar'
 require 'views/stats'
-require 'views/tabs'
 require 'views/top'
 

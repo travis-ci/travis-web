@@ -18,8 +18,14 @@ $.extend Travis.Routes.prototype,
     Em.routes.set('location', event.target.href.replace("#{@base_uri}/", ''))
 
   action: (name, action, params) ->
+    @render(name, action, params) if @before(name, action, params)
+
+  render: (name, action, params) ->
+    console.log [name, action, params]
     # this needs to be a global reference because Em.routes is global
     layout = Travis.app.connectLayout(name)
     layout.activate(action, params || {})
     $('body').attr('id', name)
 
+  before: (name, action, params) ->
+    true
