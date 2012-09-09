@@ -16,6 +16,8 @@ jQuery.support.cors = true
     commit:       Travis.Commit
     jobs:         Travis.Job
     job:          Travis.Job
+    owner:        Travis.Owner
+    owners:       Travis.Owner
     worker:       Travis.Worker
     workers:      Travis.Worker
 

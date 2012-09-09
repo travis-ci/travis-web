@@ -7,10 +7,6 @@ require 'travis/auth'
     tabBinding: 'controller.tab'
     userBinding: 'controller.user'
 
-    # currentUser: (->
-    #   Travis.app.currentUser
-    # ).property('Travis.app.currentUser')
-
     gravatarUrl: (->
       "http://www.gravatar.com/avatar/#{@get('user.gravatar')}?s=24&d=mm"
     ).property('user.gravatar')
@@ -33,7 +29,4 @@ require 'travis/auth'
 
     hideProfile: ->
       $('#top .profile ul').hide()
-
-    signIn: ->
-      Travis.Auth.signIn()
 

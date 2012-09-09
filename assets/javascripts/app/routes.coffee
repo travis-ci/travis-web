@@ -18,14 +18,22 @@ $.extend Travis.Routes.prototype,
     Em.routes.set('location', event.target.href.replace("#{@base_uri}/", ''))
 
   action: (name, action, params) ->
-    @render(name, action, params) if @before(name, action, params)
-
-  render: (name, action, params) ->
-    console.log [name, action, params]
     # this needs to be a global reference because Em.routes is global
-    layout = Travis.app.connectLayout(name)
-    layout.activate(action, params || {})
-    $('body').attr('id', name)
+    Travis.app.render(name, action, params) if @before(name, action, params)
 
   before: (name, action, params) ->
-    true
+    if @requiresAuth(name, action, params)
+      true
+    else
+      @requireAuth(name, action, params)
+
+  signedIn: ->
+    !!Travis.app.get('currentUser')
+
+  requiresAuth: (name, action, params) ->
+    name != 'profile' || @signedIn()
+
+  requireAuth: (name, action, params) ->
+    Travis.app.set('returnTo', [name, action, params])
+    Travis.app.render('auth', 'show')
+    false

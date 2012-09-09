@@ -1,7 +1,8 @@
 #main
   position: relative
 
-#home
+#home,
+#profile
   #main
     min-height: 1000px
     padding: 20px 270px 30px 430px
@@ -12,17 +13,17 @@
     &.maximized
       padding: 60px 100px 30px 440px
 
-  .tabs
-    #tab_build,
-    #tab_job
-      display: none
+    .tabs
+      #tab_build,
+      #tab_job
+        display: none
 
-  .tabs
-    #tab_build.display,
-    #tab_job.display
-      display: inline-block
-#stats,
-#profile
+    .tabs
+      #tab_build.display,
+      #tab_job.display
+        display: inline-block
+
+#stats
   #main
     width: 600px
     padding: 20px 0 0 0

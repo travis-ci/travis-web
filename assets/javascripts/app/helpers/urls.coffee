@@ -37,3 +37,7 @@
 
   email: (email) ->
     "mailto:#{email}"
+
+  owner: (login) ->
+    "/profile/#{login}"
+

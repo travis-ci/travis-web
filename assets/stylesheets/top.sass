@@ -2,9 +2,9 @@
 
 #top
   color: #ccc
-  width: 100%
   line-height: 40px
   font-size: 13px
+  padding-right: 30px
   @include background(linear-gradient(#444, #111))
 
   h1
@@ -22,6 +22,10 @@
     color: #ccc
     text-decoration: none
 
+#home:not(.maximized)
+  #top
+    padding-right: 140px
+
 #navigation
   li
     display: inline-block
@@ -37,19 +41,23 @@
       &:hover
         color: white
 
-  .profile
+  li.profile
     position: relative
     float: right
-    margin-right: 120px
 
     img
       position: absolute
       top: 7px
-      left: 12px
+      left: 15px
+      width: 24px
+      height: 24px
       @include border-radius(3px)
 
-    a
-      padding: 0 35px 0 45px
+    & > a
+      padding: 0 15px 0 54px
+
+    &:hover > ul
+      display: block
 
     ul
       display: none
@@ -69,10 +77,9 @@
 
       a
         display: block
-        padding: 5px 35px 5px 45px
+        padding: 5px 0 5px 54px
         line-height: 24px
         white-space: nowrap
         &:hover
           background-color: #555
-
 

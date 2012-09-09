@@ -1,0 +1,10 @@
+<ul class="tabs">
+  <li id="tab_hooks" {{bindAttr class="view.classHooks"}}>
+    <h5><a name="hooks" {{action activate}}>Repositories</a></h5>
+  </li>
+  {{#if view.displayUser}}
+    <li id="tab_user" {{bindAttr class="view.classUser"}}>
+      <h5><a name="user" {{action activate}}>Profile</a></h5>
+    </li>
+  {{/if}}
+</ul>

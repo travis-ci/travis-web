@@ -1,0 +1,18 @@
+<div id="search_box">
+</div>
+
+<ul class="tabs">
+  <li id="tab_accounts" {{bindAttr class="view.classAccounts"}}>
+    <h5><a name="accounts" href="">Accounts</a></h5>
+  </li>
+</ul>
+
+<div class="tab">
+  {{#collection Travis.OwnersListView contentBinding="controller"}}
+    <a {{bindAttr href="view.urlOwner"}} {{action route}} class="name">{{view.name}}</a>
+    <p class="summary">
+      <span class="repos_label">Repositories:</span>
+      <abbr class="repos">{{view.content.reposCount}}</abbr>
+    </p>
+  {{/collection}}
+</div>

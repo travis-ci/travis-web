@@ -1,0 +1,23 @@
+<p class="tip">
+  {{{t profiles.show.message.your_repos}}}
+</p>
+
+{{#if hooks.length}}
+  <ul id="hooks">
+  {{#each hook in hooks}}
+    <li {{bindAttr class="active"}}>
+      <a {{bindAttr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+      <p class="description">{{hook.description}}</p>
+
+      <div class="controls">
+        <a {{bindAttr href="hook.urlGithubAdmin"}} class="github-admin tool-tip" title="Github service hooks admin page"></a>
+        <a {{action toggle target="hook"}} class="switch"></a>
+      </div>
+    </li>
+  {{/each}}
+  </ul>
+{{else}}
+  <p class="sync">Please wait while we sync with GitHub</p>
+{{/if}}
+
+

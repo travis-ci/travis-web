@@ -1,0 +1,36 @@
+<img {{bindAttr src="view.gravatarUrl"}}>
+
+<dl class="profile">
+  <dt>
+    {{t profiles.show.github}}:
+  </dt>
+  <dd>
+    <a {{bindAttr href="urlGithub"}}>{{user.login}}</a>
+  </dd>
+  <dt>
+    {{t profiles.show.email}}:
+  </dt>
+  <dd>
+    {{user.email}}
+  </dd>
+  <dt>
+    {{t profiles.show.token}}:
+  </dt>
+  <dd>
+    {{user.token}}
+  </dd>
+</dl>
+
+<form>
+  {{view Ember.Select
+     contentBinding="view.locales"
+     selectionBinding="user.locale"
+     optionLabelPath="content.name"
+     optionValuePath="content.key"}}
+
+  <button name="commit" {{action saveLocale}}>
+    {{t profiles.show.update_locale}}
+  </button>
+</form>
+
+

@@ -20,6 +20,7 @@ input 'assets/javascripts' do
       vendor/i18n.js
       vendor/facebox.js
       vendor/pusher.js
+      vendor/jquery.cookie.js
       vendor/jquery.timeago.js
       vendor/sc-routes.js
     )

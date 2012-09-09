@@ -24357,7 +24357,6 @@ DS.Store = Ember.Object.extend({
 
   loadMany: function(type, ids, hashes) {
     var clientIds = Ember.A([]);
-
     if (hashes === undefined) {
       hashes = ids;
       ids = [];
@@ -25741,8 +25740,8 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
         if (cachedValue) {
           var key = association.options.key || get(this, 'namingConvention').keyToJSONKey(name),
               ids = data.get(key) || [];
-          
-          var clientIds;   
+
+          var clientIds;
           if(association.options.embedded) {
             clientIds = store.loadMany(association.type, ids).clientIds;
           } else {
@@ -25750,7 +25749,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
               return store.clientIdForId(association.type, id);
             });
           }
-          
+
           set(cachedValue, 'content', Ember.A(clientIds));
           cachedValue.fetch();
         }
@@ -26375,7 +26374,7 @@ DS.FixtureAdapter = DS.Adapter.extend({
         return ids.indexOf(item.id) !== -1;
       });
     }
-  
+
     if (fixtures) {
       this.simulateRemoteCall(function() {
         store.loadMany(type, fixtures);
@@ -26395,7 +26394,7 @@ DS.FixtureAdapter = DS.Adapter.extend({
 
   findQuery: function(store, type, query, array) {
     var fixtures = this.fixturesForType(type);
-    
+
     Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
 
     fixtures = this.queryFixtures(fixtures, query);
@@ -26456,7 +26455,7 @@ var get = Ember.get, set = Ember.set;
 
 DS.RESTAdapter = DS.Adapter.extend({
   bulkCommit: false,
-	
+
   createRecord: function(store, type, record) {
     var root = this.rootForType(type);
 
@@ -27816,6 +27815,46 @@ Pusher.Channel.factory=function(a){var b=new Pusher.Channel(a);if(a.indexOf(Push
 var _require=function(){var a;a=document.addEventListener?function(b,c){b.addEventListener("load",c,false)}:function(b,c){b.attachEvent("onreadystatechange",function(){b.readyState=="loaded"&&c()})};return function(b,c){function d(j,f){f=f||function(){};var k=document.getElementsByTagName("head")[0],e=document.createElement("script");e.setAttribute("src",j+".js");e.setAttribute("type","text/javascript");e.setAttribute("async",true);a(e,function(){var l=f;h++;i==h&&setTimeout(l,0)});k.appendChild(e)}
 for(var h=0,i=b.length,g=0;g<i;g++)d(b[g],c)}}();(function(){var a=[],b=function(){Pusher.ready()};window.JSON==undefined&&a.push("http://js.pusherapp.com/1.6.4/json2");if(window.WebSocket==undefined){window.WEB_SOCKET_DISABLE_AUTO_INITIALIZATION=true;a.push("http://js.pusherapp.com/1.6.4/flashfallback");b=function(){FABridge.addInitializationCallback("webSocket",function(){Pusher.ready()});WebSocket.__initialize()}}a.length>0?_require(a,b):b()})();
 
+
+/**
+ * jQuery Cookie plugin
+ *
+ * Copyright (c) 2010 Klaus Hartl (stilbuero.de)
+ * Dual licensed under the MIT and GPL licenses:
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ */
+jQuery.cookie = function (key, value, options) {
+    // key and at least value given, set cookie...
+    if (arguments.length > 1 && String(value) !== "[object Object]") {
+        options = jQuery.extend({}, options);
+
+        if (value === null || value === undefined) {
+            options.expires = -1;
+        }
+
+        if (typeof options.expires === 'number') {
+            var days = options.expires, t = options.expires = new Date();
+            t.setDate(t.getDate() + days);
+        }
+
+        value = String(value);
+        return (document.cookie = [
+            encodeURIComponent(key), '=',
+            options.raw ? value : encodeURIComponent(value),
+            options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+            options.path ? '; path=' + options.path : '',
+            options.domain ? '; domain=' + options.domain : '',
+            options.secure ? '; secure' : ''
+        ].join(''));
+    }
+
+    // key and possibly options given, get cookie...
+    options = value || {};
+    var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
+    return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
+};
 
 /*
  * timeago: a jQuery plugin, version: 0.9.2 (2010-09-14)

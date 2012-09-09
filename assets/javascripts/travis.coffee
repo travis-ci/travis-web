@@ -8,7 +8,9 @@ require 'ext/ember/namespace'
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
 
   ROUTES:
-    'profile':                     ['profile', 'show']
+    'profile':                     ['profile', 'hooks']
+    'profile/:login':              ['profile', 'hooks']
+    'profile/:login/profile':      ['profile', 'user']
     'stats':                       ['stats', 'show']
     ':owner/:name/jobs/:id/:line': ['home', 'job']
     ':owner/:name/jobs/:id':       ['home', 'job']

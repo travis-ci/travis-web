@@ -1,7 +1,6 @@
 require 'travis/model'
 
 @Travis.Hook = Travis.Model.extend
-  primaryKey: 'slug'
   slug:        DS.attr('string')
   description: DS.attr('string')
   active:      DS.attr('boolean')
@@ -11,7 +10,7 @@ require 'travis/model'
   ).property('slug')
 
   name: (->
-    @get('slug').split('/')[1]
+    @get('slug').split('/')[1] if @get('isLoaded')
   ).property('slug')
 
   urlGithub: (->
@@ -25,8 +24,3 @@ require 'travis/model'
   toggle: ->
     @set 'active', !@get('active')
     Travis.app.store.commit()
-
-@Travis.Hook.reopenClass
-  url: 'profile/hooks'
-
-

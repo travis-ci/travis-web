@@ -29,27 +29,26 @@ $slider-border-hover: #e1e2e6
     .icon
       border-color: $slider-border-hover $slider-border-hover $slider-border-hover $slider-border-light
 
-#home.maximized
-  #top .profile
-    margin-right: 10px
+#home,
+#profile
+  &.maximized
+    #main
+      padding-right: 40px
 
-  #main
-    padding-right: 40px
+    #right
+      width: 0
+      padding: 0
+      *:not(#slider):not(.icon):not(.ember-view)
+        display: none
 
-  #right
-    width: 0
-    padding: 0
-    *:not(#slider):not(.icon):not(.ember-view)
-      display: none
-
-  #slider
-    left: -20px
-    width: 20px
-    z-index: 50
-    .icon
-      border-color: $slider-border-normal $slider-border-light $slider-border-normal $slider-border-normal
-      border-width: 5px 5px 5px 0
-
-    &:hover
+    #slider
+      left: -20px
+      width: 20px
+      z-index: 50
       .icon
-        border-color: $slider-border-hover $slider-border-light $slider-border-hover $slider-border-hover
+        border-color: $slider-border-normal $slider-border-light $slider-border-normal $slider-border-normal
+        border-width: 5px 5px 5px 0
+
+      &:hover
+        .icon
+          border-color: $slider-border-hover $slider-border-light $slider-border-hover $slider-border-hover

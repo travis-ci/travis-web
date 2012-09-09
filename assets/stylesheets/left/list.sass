@@ -1,0 +1,62 @@
+@import "compass"
+
+#owners,
+#repositories
+  li
+    position: relative
+    font-size: 16px
+    overflow: visible
+    padding: 15px 25px 15px 45px
+    border-bottom: 1px solid #ccc
+    background-position: 24px 16px
+    background-repeat: no-repeat
+
+    &:nth-child(odd)
+      background-color: #fff
+    &:nth-child(even)
+      background-color: #f6f6f6
+
+    &.green a
+      color: green
+    &.red a
+      color: #c00
+
+    .last_build
+      float: right
+
+    .summary
+      margin: 5px 0 0 0
+      font-size: 13px
+      color: #666
+
+    .description
+      margin: 5px 0 0 0
+      font-size: 13px
+      color: #666
+      display: none
+
+    .indicator
+      display: none
+
+    &.selected .indicator
+      display: block
+      position: absolute
+      top: 0px
+      right: -17px
+      width: 17px
+      height: 100%
+      background: no-repeat center left
+
+  .loading
+    padding: 15px 25px 15px 30px
+    background-color: #fff
+
+#owners
+  li
+    margin-left: -4px
+    padding-left: 52px
+    &.user
+      background-image: inline-image('icons/user.small.png')
+      background-position: 29px 17px
+    &.org
+      background-image: inline-image('icons/org.small.png')
