@@ -3,7 +3,7 @@ require 'ext/ember/namespace'
 
 @Travis = Em.Namespace.create
   config:
-    api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('content')
+    api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
 
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
 
@@ -33,6 +33,7 @@ require 'ext/ember/namespace'
   INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
 
   run: (attrs) ->
+    console.log "Connecting to #{Travis.config.api_endpoint}"
     @app = Travis.App.create(attrs || {})
 
 
