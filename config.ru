@@ -1,38 +1,65 @@
-require 'sinatra/base'
+require 'travis'
+require 'travis/api/app'
 
-app = Sinatra.new do
-  configure do
-    disable :protection
-    set :root, File.dirname(__FILE__)
-    set :public_folder, lambda { "#{root}/public" }
-    set :static_cache_control, :public
-  end
+env, api_endpoint, client_endpoint, run_api, watch = ENV.values_at('RACK_ENV', 'API_ENDPOINT', 'CLIENT_ENDPOINT', 'RUN_API', 'WATCH', 'DEFLATE')
 
-  configure :test, :development do
-    set :endpoint, '/api'
-  end
+env             ||= "development"
+endpoint        ||= "https://api.#{Travis.config.host}" if env == "production"
+run_api         ||= ["development", "test"].include? env
+api_endpoint    ||= "/api" if run_api and run_api != '0'
+client_endpoint ||= "/"
+watch           ||= false #env == "development"
+deflate         ||= env == "production"
 
-  configure :production do
-    require 'travis'
-    set :endpoint, "https://api.#{Travis.config.host}"
-  end
-
-  get '*', provides: :html do
-    cache_control settings.static_cache_control
-    File.read('public/index.html').gsub('https://api.travis-ci.org', settings.endpoint)
-  end
-
-  not_found do
-    'Not found.'
+c = proc do |value|
+  case value
+  when nil, false, '0' then "\e[31m0\e[0m"
+  when true, '1'       then "\e[32m1\e[0m"
+  else "\e[33m\"#{value}\"\e[0m"
   end
 end
 
-use Rack::Deflater
+$stderr.puts "RACK_ENV         = #{c[env]}",
+  "API_ENDPOINT     = #{c[api_endpoint]}",
+  "CLIENT_ENDPOINT  = #{c[client_endpoint]}",
+  "RUN_API          = #{c[run_api]}",
+  "WATCH            = #{c[watch]}",
+  "DEFLATE          = #{c[deflate]}"
 
-if app.development?
-  require 'travis/api/app'
-  map(app.endpoint) { run Travis::Api::App.new }
-  map('/') { run app.new }
-else
-  run app.new
+class EndpointSetter < Struct.new(:app, :endpoint)
+  DEFAULT_ENDPOINT = 'https://api.travis-ci.org'
+
+  def call(env)
+    status, headers, body = app.call(env)
+    if endpoint != DEFAULT_ENDPOINT and headers.any? { |k,v| k.downcase == 'content-type' and v.start_with? 'text/html' }
+      headers.delete 'Content-Length'
+      body, old = [], body
+      old.each { |s| body << s.gsub(DEFAULT_ENDPOINT, endpoint) }
+      old.close if old.respond_to? :close
+    end
+    [status, headers, body]
+  end
+end
+
+
+use Rack::Deflater if deflate and deflate != '0'
+
+if run_api and run_api != '0'
+  map api_endpoint.gsub(/:\d+/, '') do
+    run Travis::Api::App.new
+  end
+end
+
+map client_endpoint do
+  use EndpointSetter, api_endpoint
+
+  if watch and watch != '0'
+    require 'rake-pipeline'
+    require 'rake-pipeline/middleware'
+    use Rake::Pipeline::Middleware, 'AssetFile'
+  else
+    use Rack::Static, urls: [""], root: 'public', index: 'index.html'
+  end
+
+  run proc { |e| Rack::File.new(nil).tap { |f| f.path = 'public/index.html' }.serving(env) }
 end
