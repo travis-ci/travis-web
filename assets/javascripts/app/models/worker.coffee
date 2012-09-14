@@ -18,10 +18,6 @@ require 'travis/model'
     @get('state') == 'working'
   ).property('state')
 
-  urlJob: (->
-    "/#{@get('repository')}/jobs/#{@get('job_id')}" if @get('state') == 'working'
-  ).property('repository', 'job_id', 'state')
-
   repository: (->
     @get('payload.repository.slug')
   ).property('payload.repository.slug')
@@ -29,3 +25,7 @@ require 'travis/model'
   job_id: (->
     @get('payload.job.id')
   ).property('payload.job.id')
+
+  job: (->
+    Travis.Job.find @get('job_id')
+  ).property('job_id')

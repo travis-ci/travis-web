@@ -1,44 +1,56 @@
 <ul class="tabs">
   <li id="tab_current" {{bindAttr class="view.classCurrent"}}>
     <h5>
-      <a {{bindAttr href="view.urlRepository"}} {{action route}}>
+      {{#if view.repository.slug}}
+      <a {{action showRepository view.repository href=true}}>
         {{t repositories.tabs.current}}
       </a>
+      {{/if}}
     </h5>
   </li>
   <li id="tab_builds" {{bindAttr class="view.classBuilds"}}>
     <h5>
-      <a {{bindAttr href="view.urlBuilds"}} {{action route}}>
+      {{#if view.repository.slug}}
+      <a {{action showBuilds view.repository href=true}}>
         {{t repositories.tabs.build_history}}
       </a>
+      {{/if}}
     </h5>
   </li>
   <li id="tab_pull_requests" {{bindAttr class="view.classPullRequests"}}>
     <h5>
-      <a {{bindAttr href="view.urlPullRequests"}} {{action route}}>
+      {{#if view.repository.slug}}
+      <a {{action showPullRequests view.repository href=true}}>
         {{t repositories.tabs.pull_requests}}
       </a>
+      {{/if}}
     </h5>
   </li>
   <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
     <h5>
-      <a {{bindAttr href="view.urlBranches"}} {{action route}}>
+      {{#if view.repository.slug}}
+      <a {{action showBranches view.repository href=true}}>
         {{t repositories.tabs.branches}}
       </a>
+      {{/if}}
     </h5>
   </li>
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
     <h5>
-      <a {{bindAttr href="view.urlBuild"}} {{action route}}>
-        {{t repositories.tabs.build}} {{view.build.number}}
+      {{#if view.build.id}}
+      <a {{action showBuild view.build href=true}}>
+        {{t repositories.tabs.build}} #{{view.build.number}}
       </a>
+      {{/if}}
     </h5>
   </li>
   <li id="tab_job" {{bindAttr class="view.classJob"}}>
     <h5>
-      <a {{bindAttr href="view.urlJob"}} {{action route}}>
-        {{t repositories.tabs.job}} {{view.job.number}}
+      {{#if view.job.id}}
+      <a {{action showBuild view.job href=true}}>
+        {{t repositories.tabs.job}} #{{view.job.number}}
       </a>
+      {{/if}}
     </h5>
   </li>
 </ul>

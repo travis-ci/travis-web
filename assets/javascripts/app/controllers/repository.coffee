@@ -3,7 +3,7 @@ Travis.RepositoryController = Travis.Controller.extend
   params: {}
 
   init: ->
-    @_super('builds', 'build', 'job')
+    @_super.apply this, arguments
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   updateTimes: ->

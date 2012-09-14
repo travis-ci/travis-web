@@ -7,7 +7,7 @@
     {{#each group in controller.groups}}
       {{#view Travis.WorkersListView}}
         <li class="group">
-          <h5 {{action toggle}}>
+          <h5 {{action toggle target="view"}}>
             {{group.firstObject.host}}
           </h5>
           <ul>
@@ -16,9 +16,11 @@
               <li class="worker">
                 <div class="status"></div>
                 {{#if worker.isWorking}}
-                  <a {{bindAttr href="worker.urlJob"}} {{bindAttr title="worker.lastSeenAt"}} {{action route}}>
-                    {{view.display}}
-                  </a>
+                  {{#if view.job.id}}
+                    <a {{bindAttr title="worker.lastSeenAt"}} {{action showJob view.job href=true}}>
+                      {{view.display}}
+                    </a>
+                  {{/if}}
                 {{else}}
                   {{view.display}}
                 {{/if}}

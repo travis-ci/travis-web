@@ -3,11 +3,12 @@ Travis.ProfileController = Travis.Controller.extend
   userBinding: 'Travis.app.currentUser'
 
   init: ->
-    @_super('top', 'accounts')
-    @connectTop()
-    @connectOutlet outletName: 'left', controller: @accountsController, viewClass: Travis.AccountsView
-    @connectOutlet(outletName: 'main', controller: this, viewClass: Travis.ProfileView)
-    @accounts = @accountsController.get('content')
+    @_super()
+    #    @_super('top', 'accounts')
+    #    @connectTop()
+    #    @connectOutlet outletName: 'left', controller: @accountsController, viewClass: Travis.AccountsView
+    #    @connectOutlet(outletName: 'main', controller: this, viewClass: Travis.ProfileView)
+    #    @accounts = @accountsController.get('content')
 
   account: (->
     login = @get('params.login') || Travis.app.get('currentUser.login')

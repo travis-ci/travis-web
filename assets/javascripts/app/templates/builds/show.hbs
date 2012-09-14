@@ -6,9 +6,9 @@
           <dt>{{t builds.name}}</dt>
           <dd class="number">
             <span class="status"></span>
-            <a {{bindAttr href="urlBuild"}} {{action route}}>
-              {{build.number}}
-            </a>
+            {{#if build.id}}
+              <a {{action showBuild build href=true}}>{{build.number}}</a>
+            {{/if}}
           </dd>
           <dt class="finished_at_label">{{t builds.finished_at}}</dt>
           <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime build.finishedAt}}</dd>

@@ -1,13 +1,13 @@
-<a href="/" {{action route}}>
+<a {{action goToRoot href=true}}>
   <h1>Travis</h1>
 </a>
 
 <ul id="navigation">
   <li {{bindAttr class="view.classHome"}}>
-    <a href="/" {{action route}}>Home</a>
+    <a {{action goToRoot href=true}}>Home</a>
   </li>
   <li {{bindAttr class="view.classStats"}}>
-    <a href="/stats" {{action route}}>Stats</a>
+    <a {{action goToStats href=true}}>Stats</a>
   </li>
   <li>
     <a href="http://about.travis-ci.org/blog">Blog</a>

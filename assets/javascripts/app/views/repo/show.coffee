@@ -57,30 +57,6 @@
       'active display' if @get('tab') == 'job'
     ).property('tab')
 
-    urlRepository: (->
-      Travis.Urls.repository(@get('repository.slug'))
-    ).property('repository.slug')
-
-    urlBuilds: (->
-      Travis.Urls.builds(@get('repository.slug'))
-    ).property('repository.slug')
-
-    urlPullRequests: (->
-      Travis.Urls.pullRequests(@get('repository.slug'))
-    ).property('repository.slug')
-
-    urlBranches: (->
-      Travis.Urls.branches(@get('repository.slug'))
-    ).property('repository.slug')
-
-    urlBuild: (->
-      Travis.Urls.build(@get('repository.slug'), @get('build.id'))
-    ).property('repository.slug', 'build.id')
-
-    urlJob: (->
-      Travis.Urls.job(@get('repository.slug'), @get('job.id'))
-    ).property('repository.slug', 'job.id')
-
   RepoShowToolsView: Travis.View.extend
     templateName: 'repos/show/tools'
 

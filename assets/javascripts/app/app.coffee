@@ -26,8 +26,7 @@ Travis.reopen
     authStateBinding: 'auth.state'
 
     init: ->
-      @_super()
-      @connect()
+      @_super.apply this, arguments
 
       @store = Travis.Store.create()
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
@@ -35,7 +34,7 @@ Travis.reopen
       @set('auth', Travis.Auth.create(store: @store, endpoint: Travis.config.api_endpoint))
 
       @slider = new Travis.Slider()
-      @routes = new Travis.Routes()
+
       @pusher = new Travis.Pusher()
       @tailing = new Travis.Tailing()
 
@@ -54,18 +53,13 @@ Travis.reopen
     receive: ->
       @store.receive.apply(@store, arguments)
 
-    connectLayout: (name) ->
-      unless @get('layout.name') == name
-        name = $.camelize(name)
-        viewClass = Travis["#{name}Layout"]
-        @layout = Travis["#{name}Controller"].create(parent: @controller)
-        @controller.connectOutlet(outletName: 'layout', controller: @layout, viewClass: viewClass)
-      @layout
-
-    connect: ->
-      @controller = Em.Controller.create()
-      view = Em.View.create
-        template: Em.Handlebars.compile('{{outlet layout}}')
-        controller: @controller
-      view.appendTo(@get('rootElement') || 'body')
+    toggleSidebar: ->
+      $('body').toggleClass('maximized')
+      # TODO gotta force redraws here :/
+      element = $('<span></span>')
+      $('#top .profile').append(element)
+      Em.run.later (-> element.remove()), 10
+      element = $('<span></span>')
+      $('#repository').append(element)
+      Em.run.later (-> element.remove()), 10
 

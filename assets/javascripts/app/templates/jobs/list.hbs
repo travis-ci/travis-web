@@ -8,7 +8,7 @@
     <table id="allowed_failure_jobs" class="list">
       <caption>
         {{t jobs.allowed_failures}}
-        <a title="What's this?" class="help" name="help-allowed_failures" {{action popup}}></a>
+        <a title="What's this?" class="help" name="help-allowed_failures" {{action toggleHelp target="view"}}></a>
       </caption>
   {{/if}}
     <thead>
@@ -23,9 +23,9 @@
         {{#view Travis.JobsItemView contextBinding="job"}}
           <td class="number">
             <span class="status"></span>
-            <a {{bindAttr href="view.urlJob"}} {{action route}}>
-              {{number}}
-            </a>
+            {{#if job.id}}
+              <a {{action showJob repository job href=true}}>{{number}}</a>
+            {{/if}}
           </td>
           <td class="duration" {{bindAttr title="startedAt"}}>
             {{formatDuration duration}}
