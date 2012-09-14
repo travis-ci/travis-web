@@ -13,8 +13,12 @@
 
     &:nth-child(odd)
       background-color: #fff
+      .indicator
+        background-image: inline-image('ui/current-repository-indicator-odd.png')
     &:nth-child(even)
       background-color: #f6f6f6
+      .indicator
+        background-image: inline-image('ui/current-repository-indicator-even.png')
 
     &.green a
       color: green
@@ -25,7 +29,7 @@
       float: right
 
     .summary
-      margin: 5px 0 0 0
+      margin: 5px -5px 0 0
       font-size: 13px
       color: #666
 
@@ -45,7 +49,8 @@
       right: -17px
       width: 17px
       height: 100%
-      background: no-repeat center left
+      background-repeat: no-repeat
+      background-position: center left
 
   .loading
     padding: 15px 25px 15px 30px

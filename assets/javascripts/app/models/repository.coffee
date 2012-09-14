@@ -57,7 +57,8 @@ require 'travis/model'
   ).property()
 
   select: ->
-    Travis.Repository.select(self.get('id'))
+    console.log(@get('id'))
+    Travis.Repository.select(@get('id'))
 
   updateTimes: ->
     @notifyPropertyChange 'lastBuildDuration'
@@ -77,7 +78,7 @@ require 'travis/model'
 
   select: (id) ->
     @find().forEach (repository) ->
-      repository.set 'selected', repository.get('id') is id
+      repository.set('selected', repository.get('id') == id)
 
   # buildURL: (slug) ->
   #   if slug then slug else 'repositories'

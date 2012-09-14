@@ -69,6 +69,11 @@ Travis.RepositoryController = Travis.Controller.extend
     Travis.Job.find(id) if id = @get('params.id')
   ).property('params.id')
 
+  repositoryObserver: (->
+    repository = @get('repository')
+    repository.select() if repository
+  ).observes('repository.id')
+
   connectTab: (tab) ->
     name = if tab == 'current' then 'build' else tab
     viewClass = if name in ['builds', 'branches', 'pull_requests']
