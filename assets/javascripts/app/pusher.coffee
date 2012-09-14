@@ -2,7 +2,7 @@ Travis.Pusher = ->
   @active_channels = []
   if Travis.Pusher.KEY
     @pusher = new Pusher(Travis.Pusher.KEY)
-    # @subscribe(channel) for channel in Travis.Pusher.CHANNELS
+    @subscribe(channel) for channel in Travis.Pusher.CHANNELS
   this
 
 $.extend Travis.Pusher,
