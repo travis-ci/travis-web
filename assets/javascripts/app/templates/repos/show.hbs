@@ -2,7 +2,7 @@
   {{#if view.repository.isLoaded}}
     {{#with view.repository}}
       <h3>
-        <a {{bindAttr href="view.urlGithub"}} {{action route}}>{{slug}}</a>
+        <a {{bindAttr href="view.urlGithub"}}>{{slug}}</a>
       </h3>
 
       <p class="description">{{description}}</p>
@@ -12,12 +12,12 @@
           {{lastBuildLanguage}}
         </li>
         <li>
-          <a class="watchers" title="Watchers" {{bindAttr href="view.urlGithubWatchers"}} {{action route}}>
+          <a class="watchers" title="Watchers" {{bindAttr href="view.urlGithubWatchers"}}>
             {{stats.watchers}}
           </a>
         </li>
         <li>
-          <a class="forks" title="Forks" {{bindAttr href="view.urlGithubNetwork"}} {{action route}}>
+          <a class="forks" title="Forks" {{bindAttr href="view.urlGithubNetwork"}}>
             {{stats.forks}}
           </a>
         </li>
