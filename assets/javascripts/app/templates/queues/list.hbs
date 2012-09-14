@@ -1,15 +1,23 @@
+<ul id="queues">
 {{#each queue in controller}}
-  <h4>{{t queue}}: {{queue.name}}</h4>
-  <ul {{bindAttr id="queue.id"}}>
-    {{#each queue}}
-      <li>
-        {{repository.slug}}
-        {{#if number}}
-          #{{number}}
-        {{/if}}
-      </li>
-    {{else}}
-      {{t no_job}}
-    {{/each}}
-  </ul>
+  <li class="queue">
+    <h4>{{t queue}}: {{queue.name}}</h4>
+    <ul {{bindAttr id="queue.id"}}>
+      {{#each job in queue}}
+        {{#view Travis.QueueItemView jobBinding="job"}}
+          <li>
+            <a {{bindAttr href="view.urlJob"}} {{action route}}>
+              <span class="slug">
+                {{job.repository.slug}}
+              </span>
+              #{{job.number}}
+            </a>
+          </li>
+        {{/view}}
+      {{else}}
+        {{t no_job}}
+      {{/each}}
+    </ul>
+  </li>
 {{/each}}
+</ul>

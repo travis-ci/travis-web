@@ -15,7 +15,7 @@ $.extend Travis.Routes.prototype,
       @action(layout, action, params)
 
   route: (event) ->
-    Em.routes.set('location', event.target.href.replace("#{@base_uri}/", ''))
+    Em.routes.set('location', $(event.target).closest('a')[0].href.replace("#{@base_uri}/", ''))
 
   action: (name, action, params) ->
     # this needs to be a global reference because Em.routes is global

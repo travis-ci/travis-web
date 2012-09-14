@@ -1,42 +1,55 @@
-#workers li,
-#queues li
-  color: #666
-  white-space: nowrap
-  overflow: hidden
-  margin: 0
-  list-style-type: none
+#right
+  #queues
+    margin-top: 0
 
-  h5
-    font-size: 13px
-    font-weight: normal
-    margin: 0px
-    cursor: pointer
-
-  ul
-    margin-top: 2px
-    margin-bottom: 5px
-    padding-left: 1px
+  #workers li ul
     display: none
 
-  &.open ul
-    display: block
+  #workers li,
+  #queues ul li
+    overflow: hidden
+    white-space: nowrap
+    margin: 0
+    list-style-type: none
+    color: #666
 
-  .icon
-    clear: left
-    float: left
-    width: 8px
-    height: 8px
-    margin: 6px 6px 0 0
-    -moz-border-radius: 8px
-    -webkit-border-radius: 8px
-    background: inline-image('icons/status.square.green.png')
+    h5
+      font-size: 13px
+      font-weight: normal
+      margin: 0px
+      cursor: pointer
 
-  &.waiting .icon
-    background: inline-image('icons/status.square.green.png')
+    ul
+      margin-top: 8px
+      margin-bottom: 5px
+      padding-left: 1px
 
-  &.errored .icon
-    background: inline-image('icons/status.square.red.png')
+    .slug
+      display: inline-block
+      overflow: hidden
+      max-width: 150px
+      white-space: nowrap
+      text-overflow: ellipsis
 
-  &.stopped .icon
-    background: inline-image('icons/status.square.gray.png')
+    &.open ul
+      display: block
+
+    .icon
+      clear: left
+      float: left
+      width: 8px
+      height: 8px
+      margin: 6px 6px 0 0
+      -moz-border-radius: 8px
+      -webkit-border-radius: 8px
+      background: inline-image('icons/status.square.green.png')
+
+    &.waiting .icon
+      background: inline-image('icons/status.square.green.png')
+
+    &.errored .icon
+      background: inline-image('icons/status.square.red.png')
+
+    &.stopped .icon
+      background: inline-image('icons/status.square.gray.png')
 
