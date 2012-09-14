@@ -57,7 +57,6 @@ require 'travis/model'
   ).property()
 
   select: ->
-    console.log(@get('id'))
     Travis.Repository.select(@get('id'))
 
   updateTimes: ->
@@ -74,7 +73,8 @@ require 'travis/model'
     @find(search: query, orderBy: 'name')
 
   bySlug: (slug) ->
-    @find(slug: slug)
+    repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
+    repo || @find(slug: slug)
 
   select: (id) ->
     @find().forEach (repository) ->
