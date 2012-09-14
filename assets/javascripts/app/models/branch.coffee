@@ -8,8 +8,8 @@ require 'travis/model'
   message:      DS.attr('string')
   result:       DS.attr('number')
   duration:     DS.attr('number')
-  started_at:   DS.attr('string')
-  finished_at:  DS.attr('string')
+  startedAt:    DS.attr('string')
+  finishedAt:   DS.attr('string')
 
   commit: DS.belongsTo('Travis.Commit')
 

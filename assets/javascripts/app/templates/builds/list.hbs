@@ -26,10 +26,10 @@
           <td class="message">
             {{{formatMessage commit.message short="true"}}}
           </td>
-          <td class="duration" {{bindAttr title="started_at"}}>
+          <td class="duration" {{bindAttr title="duration"}}>
             {{formatDuration duration}}
           </td>
-          <td class="finished_at timeago" {{bindAttr title="finished_at"}}>
+          <td class="finished_at timeago" {{bindAttr title="finishedAt"}}>
             {{formatTime finishedAt}}
           </td>
         </tr>
