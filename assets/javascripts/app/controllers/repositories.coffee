@@ -20,7 +20,7 @@ Travis.RepositoriesController = Ember.ArrayController.extend
     @set('content', Travis.Repository.find())
 
   viewOwned: ->
-    @set('content', Travis.Repository.ownedBy(Travis.get('currentUser.login')))
+    @set('content', Travis.Repository.ownedBy(Travis.app.get('currentUser.login')))
 
   viewSearch: (params) ->
     @set('content', Travis.Repository.search(params.search))

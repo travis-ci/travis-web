@@ -67,7 +67,7 @@ require 'travis/model'
     @find()
 
   ownedBy: (login) ->
-    @find(owner: login, orderBy: 'name')
+    @find(owner_name: login, orderBy: 'name')
 
   search: (query) ->
     @find(search: query, orderBy: 'name')
