@@ -4,7 +4,6 @@
 
   RepositoriesListView: Em.CollectionView.extend
     elementId: 'repositories'
-    repositoryBinding: 'content'
     tagName: 'ul'
 
     emptyView: Ember.View.extend

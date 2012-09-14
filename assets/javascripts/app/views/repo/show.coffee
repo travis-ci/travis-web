@@ -28,9 +28,6 @@
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
 
-    toggleTools: ->
-      $('#tools .pane').toggle()
-
     # hrm. how to parametrize bindAttr?
     classCurrent: (->
       'active' if @get('tab') == 'current'
@@ -83,6 +80,26 @@
     urlJob: (->
       Travis.Urls.job(@get('repository.slug'), @get('job.id'))
     ).property('repository.slug', 'job.id')
+
+  RepoShowToolsView: Travis.View.extend
+    templateName: 'repos/show/tools'
+
+    repositoryBinding: 'controller.repository'
+    buildBinding: 'controller.build'
+    jobBinding: 'controller.job'
+    tabBinding: 'controller.tab'
+
+    toggle: ->
+      @set('active', !@get('active'))
+      $('#tools .pane').toggle()
+
+    branches: (->
+      @get('repository.branches') if @get('active')
+    ).property('active', 'repository.branches')
+
+    urlRepository: (->
+      'https://' + location.host + Travis.Urls.repository(@get('repository.slug'))
+    ).property('repository.slug')
 
     urlStatusImage: (->
       Travis.Urls.statusImage(@get('repository.slug'), @get('branch.commit.branch'))

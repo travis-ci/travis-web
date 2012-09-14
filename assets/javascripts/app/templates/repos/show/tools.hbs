@@ -1,0 +1,29 @@
+<div id="tools">
+  <a href="#" {{action toggle}}></a>
+  <div class="pane">
+    <p>
+      <label>{{t repositories.branch}}:</label>
+      {{#if view.branches.isLoaded}}
+        {{view Ember.Select contentBinding="view.branches" selectionBinding="view.branch" optionLabelPath="content.commit.branch" optionValuePath="content.commit.branch"}}
+      {{else}}
+        <span class="loading"></span>
+      {{/if}}
+    </p>
+    <p>
+      <label>{{t repositories.image_url}}:</label>
+      <input type="text" class="url" {{bindAttr value="view.urlStatusImage"}}></input>
+    </p>
+    <p>
+      <label>{{t repositories.markdown}}:</label>
+      <input type="text" class="markdown" {{bindAttr value="view.markdownStatusImage"}}></input>
+    </p>
+    <p>
+      <label>{{t repositories.textile}}:</label>
+      <input type="text" class="textile" {{bindAttr value="view.textileStatusImage"}}></input>
+    </p>
+    <p>
+      <label>{{t repositories.rdoc}}:</label>
+      <input type="text" class="rdoc" {{bindAttr value="view.rdocStatusImage"}}></input>
+    </p>
+  </div>
+</div>
