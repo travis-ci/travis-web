@@ -4083,9 +4083,9 @@ function flushPendingChains() {
 
   Ember.warn('Watching an undefined global, Ember expects watched globals to be setup by the time the run loop is flushed, check for typos', pendingQueue.length === 0);
 
-  if(pendingQueue.length > 0) {
-    console.log(pendingQueue)
-  }
+  // if(pendingQueue.length > 0) {
+  //   console.log(pendingQueue)
+  // }
 }
 
 /** @private */

@@ -28,7 +28,8 @@ $.extend Travis.Pusher.prototype,
   receive: (event, data) ->
     if data.id
       data = @normalize(event, data)
-    Travis.app.store.receive(event, data)
+    Ember.run.next ->
+      Travis.app.store.receive(event, data)
 
   normalize: (event, data) ->
     switch event
