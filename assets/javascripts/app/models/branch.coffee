@@ -17,9 +17,10 @@ require 'travis/model'
     Travis.Repository.find @get('repositoryId')  if @get('repositoryId')
   ).property('repositoryId')
 
-  tick: ->
+  updateTimes: ->
     @notifyPropertyChange 'started_at'
     @notifyPropertyChange 'finished_at'
+
 
 @Travis.Branch.reopenClass
   byRepositoryId: (id) ->
