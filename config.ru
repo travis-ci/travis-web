@@ -44,6 +44,10 @@ end
 
 use Rack::Deflater if deflate and deflate != '0'
 
+app = proc do |env|
+  Rack::File.new(nil).tap { |f| f.path = 'public/index.html' }.serving(env)
+end
+
 if run_api and run_api != '0'
   map api_endpoint.gsub(/:\d+/, '') do
     run Travis::Api::App.new
@@ -57,9 +61,8 @@ map client_endpoint do
     require 'rake-pipeline'
     require 'rake-pipeline/middleware'
     use Rake::Pipeline::Middleware, 'AssetFile'
+    run app
   else
-    use Rack::Static, urls: [""], root: 'public', index: 'index.html'
+    run Rack::Cascade.new([Rack::File.new('public'), app])
   end
-
-  run proc { |e| Rack::File.new(nil).tap { |f| f.path = 'public/index.html' }.serving(env) }
 end
