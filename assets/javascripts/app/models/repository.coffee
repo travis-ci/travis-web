@@ -12,15 +12,11 @@ require 'travis/model'
   lastBuild: DS.belongsTo('Travis.Build')
 
   builds: (->
-    id = @get('id')
-    Travis.Build.byRepositoryId id, event_type: 'push'
-    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && !data.get('pull_request')
+    Travis.Build.byRepositoryId @get('id'), event_type: 'push'
   ).property()
 
   pullRequests: (->
-    id = @get('id')
-    Travis.Build.byRepositoryId id, event_type: 'pull_request'
-    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && data.get('pull_request')
+    Travis.Build.byRepositoryId @get('id'), event_type: 'pull_request'
   ).property()
 
   branches: (->
