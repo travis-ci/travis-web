@@ -19,7 +19,7 @@
 
     CHARTS:
       repos:
-        source: '/stats/repos'
+        source: '/api/stats/repos'
         map: (data) ->
           [Date.parse(data.date), data.total_growth]
         chart:
@@ -44,7 +44,7 @@
         ]
 
       builds:
-        source: '/stats/tests'
+        source: '/api/stats/tests'
         map: (data) ->
           [Date.parse(data.date), data.run_on_date]
         chart:
