@@ -1,4 +1,4 @@
-Travis.OwnersController = Ember.ArrayController.extend
+Travis.AccountsController = Ember.ArrayController.extend
   defaultTab: 'accounts'
 
   init: ->
@@ -9,4 +9,4 @@ Travis.OwnersController = Ember.ArrayController.extend
     this["view#{$.camelize(tab)}"](params)
 
   viewAccounts: ->
-    @set('content', Travis.Owner.find())
+    @set('content', Travis.app.get('currentUser.accounts'))

@@ -1,34 +1,34 @@
 @Travis.reopen
-  OwnersView: Travis.View.extend
+  AccountsView: Travis.View.extend
     tabBinding: 'controller.tab'
-    templateName: 'profile/owners'
+    templateName: 'profile/accounts'
     classAccounts: (->
       'active' if @get('tab') == 'accounts'
     ).property('tab')
 
-  OwnersListView: Em.CollectionView.extend
-    elementId: 'owners'
-    ownerBinding: 'content'
+  AccountsListView: Em.CollectionView.extend
+    elementId: 'accounts'
+    accountBinding: 'content'
     tagName: 'ul'
 
     emptyView: Ember.View.extend
       template: Ember.Handlebars.compile('<div class="loading"><span>Loading</span></div>')
 
     itemViewClass: Travis.View.extend
-      ownerBinding: 'content'
+      accountBinding: 'content'
       typeBinding: 'content.type'
-      selectedBinding: 'owner.selected'
+      selectedBinding: 'account.selected'
 
-      classNames: ['owner']
+      classNames: ['account']
       classNameBindings: ['type', 'selected']
 
       name: (->
         @get('content.name') || @get('content.login')
       ).property('content.login', 'content.name')
 
-      urlOwner: (->
-        Travis.Urls.owner(@get('owner.login'))
-      ).property('owner.login')
+      urlAccount: (->
+        Travis.Urls.account(@get('account.login'))
+      ).property('account.login')
 
   ProfileView: Travis.View.extend
     templateName: 'profile/show'
@@ -49,11 +49,12 @@
     ).property('tab')
 
     displayUser: (->
-      @get('controller.owner.login') == @get('controller.user.login')
-    ).property('controller.owner.login', 'controller.user.login')
+      @get('controller.account.login') == @get('controller.user.login')
+    ).property('controller.account.login', 'controller.user.login')
 
   HooksView: Travis.View.extend
     templateName: 'profile/tabs/hooks'
+    userBinding: 'controller.user'
 
     urlGithubAdmin: (->
       Travis.Urls.githubAdmin(@get('hook.slug'))

@@ -8,8 +8,8 @@
 </ul>
 
 <div class="tab">
-  {{#collection Travis.OwnersListView contentBinding="controller"}}
-    <a {{bindAttr href="view.urlOwner"}} {{action route}} class="name">{{view.name}}</a>
+  {{#collection Travis.AccountsListView contentBinding="controller"}}
+    <a {{bindAttr href="view.urlAccount"}} {{action route}} class="name">{{view.name}}</a>
     <p class="summary">
       <span class="repos_label">Repositories:</span>
       <abbr class="repos">{{view.content.reposCount}}</abbr>

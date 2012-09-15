@@ -2,7 +2,7 @@
   StatsView: Travis.View.extend
     templateName: 'stats/show'
     didInsertElement: ->
-      @renderChart(config) for name, config of @CHARTS
+      # @renderChart(config) for name, config of @CHARTS
 
     renderChart: (config) ->
       chart = new Highcharts.Chart(config)

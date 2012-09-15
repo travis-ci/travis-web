@@ -18,6 +18,10 @@ require 'data/sponsors'
 
 Travis.reopen
   App: Em.Application.extend
+    USER_PAYLOAD:
+      user: { id: 1, login: 'svenfuchs', name: 'Sven Fuchs', email: 'me@svenfuchs.com', token: '1234567890', gravatar: '402602a60e500e85f2f5dc1ff3648ecb', locale: 'en', repo_count: 2, synced_at: '2012-09-15T20:53:14Z' }
+      accounts: [{ login: 'travis-ci', name: 'Travis CI', type: 'org', repoCounts: 1 }]
+
     init: ->
       @_super()
       @connect()
@@ -32,17 +36,19 @@ Travis.reopen
 
     signIn: ->
       # Travis.Auth.signIn()
-      @setCurrentUser({ id: 1, login: 'svenfuchs', name: 'Sven Fuchs', email: 'me@svenfuchs.com', token: '1234567890', gravatar: '402602a60e500e85f2f5dc1ff3648ecb', locale: 'en' })
+      @setCurrentUser(@USER_PAYLOAD)
       @render.apply(this, @get('returnTo') || ['home', 'index'])
 
     signOut: ->
       @setCurrentUser()
 
-    setCurrentUser: (user) ->
-      user = JSON.parse(user) if typeof user == 'string'
-      $.cookie('user', JSON.stringify(user))
-      @store.load(Travis.User, user) if user
-      @set('currentUser', if user then Travis.User.find(user.id) else undefined)
+    setCurrentUser: (data) ->
+      data = JSON.parse(data) if typeof data == 'string'
+      $.cookie('user', JSON.stringify(data))
+      if data
+        @store.load(Travis.User, data.user)
+        @store.loadMany(Travis.Account, data.accounts)
+      @set('currentUser', if data then Travis.User.find(data.user.id) else undefined)
 
     render: (name, action, params) ->
       layout = @connectLayout(name)

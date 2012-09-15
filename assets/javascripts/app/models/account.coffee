@@ -1,6 +1,6 @@
 require 'travis/model'
 
-@Travis.Owner = Travis.Model.extend
+@Travis.Account = Travis.Model.extend
   primaryKey: 'login'
   login:       DS.attr('string')
   name:        DS.attr('string')

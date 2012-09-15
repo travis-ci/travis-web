@@ -38,6 +38,6 @@
   email: (email) ->
     "mailto:#{email}"
 
-  owner: (login) ->
+  account: (login) ->
     "/profile/#{login}"
 

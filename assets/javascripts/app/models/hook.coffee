@@ -1,17 +1,18 @@
 require 'travis/model'
 
 @Travis.Hook = Travis.Model.extend
-  slug:        DS.attr('string')
+  name:        DS.attr('string')
+  ownerName:   DS.attr('string')
   description: DS.attr('string')
   active:      DS.attr('boolean')
 
-  owner: (->
+  account: (->
     @get('slug').split('/')[0]
   ).property('slug')
 
-  name: (->
-    @get('slug').split('/')[1] if @get('isLoaded')
-  ).property('slug')
+  slug: (->
+    "#{@get('ownerName')}/#{@get('name')}"
+  ).property('ownerName', 'name')
 
   urlGithub: (->
     "http://github.com/#{@get('slug')}"

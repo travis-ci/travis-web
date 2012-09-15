@@ -29,10 +29,10 @@ Travis.reopen
   TopController: Em.Controller.extend
     userBinding: 'Travis.app.currentUser'
 
+require 'controllers/accounts'
 require 'controllers/auth'
 require 'controllers/builds'
 require 'controllers/home'
-require 'controllers/owners'
 require 'controllers/profile'
 require 'controllers/repositories'
 require 'controllers/repository'

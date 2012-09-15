@@ -213,7 +213,7 @@ body#profile {
   display: inline-block;
 }
 /* line 5, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li,
+#accounts li,
 #repositories li {
   position: relative;
   font-size: 16px;
@@ -224,49 +224,49 @@ body#profile {
   background-repeat: no-repeat;
 }
 /* line 14, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li:nth-child(odd),
+#accounts li:nth-child(odd),
 #repositories li:nth-child(odd) {
   background-color: white;
 }
 /* line 16, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li:nth-child(odd) .indicator,
+#accounts li:nth-child(odd) .indicator,
 #repositories li:nth-child(odd) .indicator {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAdCAIAAADDzRDWAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkElEQVQ4EY3U247BQBjA8TVKaLXEI7hwiAu8/72EkDhc4GI9g1VpiWL/7cgo25nu3Kh2fvkO/aaF8Xhs247nubVazXGccrkshCgk60uzxHA4DMPgdDpdLpfr9Xq/3x+PB0SzP74tqtXqYDA4Jut8PitmMjyDjUajn2SFYQi73W5E0zEhH9i2TTTJcqM9DRLW7/cPhwPSzAofOZDbZrNpNpv1ep2cS6WSbGM6Tyv9h2v29Xq97Xar7v9ln0aybre72+10LMNI1ul0dCzbmNmrbyoTdUFtRJOdDJPXLRtmMioa3fePR4YriiKGK8dI1m63fd8PggBDqHwjWavVAkRRPFP/Muz93u8tyyoW4/35BrBerzlbtATGWOQYwGq1Yo5c161UKhiOlslI0Gg0MEywGiKt+QDqzGvrMYBsYwYZBrBcLilA1pBOid1yvdUDWCwWFM2i6EwAexnAfD43R3iLw7dmOp0qoNr6zOb9J45DhMlk4nmeTMkM2C8As9mM14xhOnQ1pCMJAEOBARDB/KWW8hcJOPb3fiZrUQAAAABJRU5ErkJggg==');
 }
 /* line 18, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li:nth-child(even),
+#accounts li:nth-child(even),
 #repositories li:nth-child(even) {
   background-color: #f6f6f6;
 }
 /* line 20, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li:nth-child(even) .indicator,
+#accounts li:nth-child(even) .indicator,
 #repositories li:nth-child(even) .indicator {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAdCAIAAADDzRDWAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAABn0lEQVQ4EY2UzW6CUBBGK6Lgf/dutMYYff9ncG+iMWpideEaLKaogPbgUCoULs6CwOUevplv5lKaTqf1er3dbjebzUajUa1WNU0rPeItJ7TxeOy67ul0ulwunucFQXC/33M2R8uaYRij0egrDOd8Pvu+D6PGNFjTNCeTiW1bx+MRzev1qsZCRjCShCFQA7vdbnlqESPYcDi0bVswasvD9IdMdKG2wWCw3W5j3yqVitj4vO1PR1bB+v0Py7IQJMlMtTQDaZpGr9dXYBlMIZbNqLGEB1JSfJUkd7tPLJHRYLJ4q2Jitf1+B8YU4qGu67m5JdV6juN8f7tMFk0rZoBpQLfb9X3P9wMeX2IY9sPhUC6XOSUvMQCbzYajxTGTsSjQAViv151Oh0PJ+GNAaEZc6/8bAd4fUavVEAFQ5ZYC6AyARLaOAsjWUQMZDMBqtaJoqqCG55TighO5ASyXSzWQ0AFYLBbiEq3IVBCpSIdBms1mKBDSu1+TQnNTETIoCIBI3GxhUrvlUQOYz+etVotOS9HF/14AhgIGQEYj89vPiz8hmBME75QEJwAAAABJRU5ErkJggg==');
 }
 /* line 23, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li.green a,
+#accounts li.green a,
 #repositories li.green a {
   color: green;
 }
 /* line 25, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li.red a,
+#accounts li.red a,
 #repositories li.red a {
   color: #cc0000;
 }
 /* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li .last_build,
+#accounts li .last_build,
 #repositories li .last_build {
   float: right;
 }
 /* line 31, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li .summary,
+#accounts li .summary,
 #repositories li .summary {
   margin: 5px -5px 0 0;
   font-size: 13px;
   color: #666666;
 }
 /* line 36, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li .description,
+#accounts li .description,
 #repositories li .description {
   margin: 5px 0 0 0;
   font-size: 13px;
@@ -274,12 +274,12 @@ body#profile {
   display: none;
 }
 /* line 42, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li .indicator,
+#accounts li .indicator,
 #repositories li .indicator {
   display: none;
 }
 /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li.selected .indicator,
+#accounts li.selected .indicator,
 #repositories li.selected .indicator {
   display: block;
   position: absolute;
@@ -291,7 +291,7 @@ body#profile {
   background-position: center left;
 }
 /* line 55, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners .loading,
+#accounts .loading,
 #repositories .loading {
   padding: 15px 25px 15px 30px;
   background-color: white;
@@ -299,17 +299,17 @@ body#profile {
 }
 
 /* line 61, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li {
+#accounts li {
   margin-left: -4px;
   padding-left: 52px;
 }
 /* line 64, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li.user {
+#accounts li.user {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAMAAACOacfrAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjNGNDlENDhGMkU2MTFFMUE0MzM5QThDQUQ3MDI4RTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjNGNDlENDlGMkU2MTFFMUE0MzM5QThDQUQ3MDI4RTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGM0Y0OUQ0NkYyRTYxMUUxQTQzMzlBOENBRDcwMjhFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGM0Y0OUQ0N0YyRTYxMUUxQTQzMzlBOENBRDcwMjhFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgMNNIUAAABLUExURX9/f4eHh4WFhZCQkPLy8oiIiNra2vDw8LGxsf7+/sLCwvb29oCAgI+Pj5mZmdXV1ba2toODg52dnfPz87i4uN3d3aGhod/f3////yHAc80AAAAZdFJOU////////////////////////////////wABNAq3AAAAV0lEQVR42lTM2Q6AIAxE0YGCsuMu//+llqREvckkPS9F42pec+0HeJEAUBQZzdJGNP+lWHYXtYV1jC8tsILIT4VVJt91Xwm9tJ0NDm8O9iML0mqk6RFgAMVgBry2iJEPAAAAAElFTkSuQmCC');
   background-position: 29px 17px;
 }
 /* line 67, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#owners li.org {
+#accounts li.org {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAOCAMAAAAc7xz/AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6N0FEOEI1NUVGMkFDMTFFMTk0NjlDMDYzRjA5MDk2N0MiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6N0FEOEI1NUZGMkFDMTFFMTk0NjlDMDYzRjA5MDk2N0MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3QUQ4QjU1Q0YyQUMxMUUxOTQ2OUMwNjNGMDkwOTY3QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3QUQ4QjU1REYyQUMxMUUxOTQ2OUMwNjNGMDkwOTY3QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsEVpaAAAACiUExURX9/f4WFhZaWluLi4vDw8IqKisfHx8/Pz/7+/pOTk8jIyOXl5aysrL6+voaGhsPDw7W1tfHx8fb29uTk5L29vdjY2KWlpfn5+f39/cXFxbi4uKioqJCQkKOjo4+Pj93d3ZycnNDQ0N7e3oCAgJ+fn5GRkZqamtnZ2dvb29fX18vLy+7u7piYmKKiop2dnZubm9HR0eDg4KGhoe3t7aSkpP///9cCsuEAAAA2dFJOU///////////////////////////////////////////////////////////////////////AKGPTjEAAACtSURBVHjaVM7nFoIwDAXgi0W2gsoW3HuvvP+rmUjx6P3RnHxtTwLSGaSGkQ7aDnKYpkMBOAE5ptlyDJTkCrtUArHmCuhSR7hDXaDSPGF21s1r5onmGXCilfBDPl00L4At7YSntAfuDWce0BsehZ/DHmBlzLktw85+KBz69ZIH2znG3G3mnztZ5XC7chFElLzwTZ1EUrzCUn38pK+swpNNFP6i9IIj4y8jprcAAwCY3RhR7P84QQAAAABJRU5ErkJggg==');
 }
 /* line 1, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
@@ -576,28 +576,20 @@ pre#log .bg-white {
   color: #999999;
 }
 /* line 21, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
-#repository .sync {
-  font-weight: normal;
-  font-size: 13px;
-  color: #999999;
-  float: left;
-  padding-right: 25px;
-}
-/* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
 #repository .language {
   padding-right: 5px;
 }
-/* line 31, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
+/* line 24, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
 #repository .github-stats {
   position: absolute;
   top: 0;
   right: 0;
 }
-/* line 35, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
+/* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
 #repository .github-stats > * {
   float: left;
 }
-/* line 37, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
+/* line 30, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
 #repository .github-stats a {
   height: 16px;
   display: block;
@@ -609,11 +601,11 @@ pre#log .bg-white {
   background: no-repeat 0px 2px;
   color: #999999;
 }
-/* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
+/* line 40, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
 #repository .github-stats a.watchers {
   background-image: url('data:image/png;base64,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');
 }
-/* line 49, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
+/* line 42, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
 #repository .github-stats a.forks {
   background-image: url('data:image/png;base64,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');
 }
@@ -735,6 +727,8 @@ pre#log .bg-white {
 /* line 15, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
 #profile #main img {
   float: left;
+  width: 48px;
+  height: 48px;
   margin: 3px 15px 0 0;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -742,57 +736,43 @@ pre#log .bg-white {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 20, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
+/* line 22, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
 #profile #main dl {
   margin: 0 0 20px 18px;
   color: #666666;
   font-size: 13px;
 }
-/* line 25, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
+/* line 27, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
 #profile #main dt {
   display: block;
   float: left;
   width: 50px;
 }
-/* line 30, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
+/* line 32, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
 #profile #main dd {
   clear: right;
 }
-/* line 33, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
-#profile #main #welcome {
-  margin-top: -35px;
-  margin-bottom: 35px;
+/* line 35, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
+#profile #main .tip {
+  margin-top: -5px;
   font-size: 13px;
-}
-/* line 37, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
-#profile #main #welcome h4, #profile #main #welcome p {
-  margin-bottom: 4px;
+  color: #999999;
 }
 /* line 40, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
-#profile #main p.notice {
-  background-color: #a8eb75;
-  padding: 10px;
+#profile #main .message {
+  margin-top: 20px;
+  padding: 13px 20px;
+  color: #999999;
+  font-weight: normal;
+  font-size: 13px;
+  border: 1px solid #dddddd;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
-#profile #main p.notice a {
-  text-decoration: underline;
-}
-/* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
-#profile #main p.notice small {
-  font-size: 13px;
-  display: block;
-}
-/* line 50, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
-#profile #main p.tip {
-  font-size: 13px;
-  margin-top: -10px;
-}
-/* line 54, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
+/* line 49, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
 #profile #main .highlight {
   color: #c7371a;
 }
