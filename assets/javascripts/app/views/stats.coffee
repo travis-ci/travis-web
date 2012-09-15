@@ -20,8 +20,9 @@
     CHARTS:
       repos:
         source: '/api/stats/repos'
+        total: 0
         map: (data) ->
-          [Date.parse(data.date), data.total_growth]
+          [Date.parse(data.date), @total += parseInt(data.count)]
         chart:
           renderTo: "repos_stats"
         title:
@@ -46,7 +47,7 @@
       builds:
         source: '/api/stats/tests'
         map: (data) ->
-          [Date.parse(data.date), data.run_on_date]
+          [Date.parse(data.date), parseInt(data.count)]
         chart:
           renderTo: "tests_stats"
           type: "column"
