@@ -70,7 +70,7 @@ require 'travis/model'
 
   bySlug: (slug) ->
     repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
-    repo || @find(slug: slug)
+    if repo.length > 0 then repo else @find(slug: slug)
 
   select: (id) ->
     @find().forEach (repository) ->
