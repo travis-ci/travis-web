@@ -648,8 +648,9 @@ pre#log .bg-white {
 /* line 23, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/summary.sass */
 #summary dd {
   width: 150px;
+  white-space: nowrap;
 }
-/* line 25, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/summary.sass */
+/* line 26, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/summary.sass */
 #summary > dd {
   width: 80%;
   min-width: 315px;
@@ -657,7 +658,7 @@ pre#log .bg-white {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 32, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/summary.sass */
+/* line 33, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/summary.sass */
 #summary .message {
   white-space: normal;
   min-width: 0;
