@@ -4,6 +4,8 @@
 
 {{view Travis.ReposListTabsView}}
 
+<a {{action toggleInfo}} class="toggle-info"></a>
+
 <div class="tab">
   {{#collection Travis.RepositoriesListView contentBinding="controller"}}
     {{#with view.repository}}
@@ -16,10 +18,14 @@
         <span class="finished_at_label">{{t repositories.finished_at}}:</span>
         <abbr class="finished_at timeago" {{bindAttr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
       </p>
-      {{#if description}}
-        <p class="description">{{description}}</p>
-      {{/if}}
+
       <span class="indicator"></span>
+
+      {{#if description}}
+        <div class="info">
+          <p class="description">{{description}}</p>
+        </div>
+      {{/if}}
     {{/with}}
   {{/collection}}
 </div>

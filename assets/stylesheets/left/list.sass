@@ -2,10 +2,12 @@
 
 #accounts,
 #repositories
+  &.open li .info
+    display: block
+
   li
     position: relative
     font-size: 16px
-    overflow: visible
     padding: 15px 25px 15px 45px
     border-bottom: 1px solid #ccc
     background-position: 24px 16px
@@ -27,7 +29,7 @@
 
     .current
       display: inline-block
-      max-width: 280px
+      max-width: 265px
       white-space: nowrap
       overflow: hidden
       text-overflow: ellipsis
@@ -40,11 +42,17 @@
       font-size: 13px
       color: #666
 
-    .description
-      margin: 5px 0 0 0
+    .info
+      overflow: hidden
+      margin: 12px -25px -15px -45px
       font-size: 13px
-      color: #666
+      background-color: #fffcf4
+      color: #7f7f75
       display: none
+      p
+        margin: 0 -10px 0 -10px
+        padding: 12px 35px 12px 55px
+        @include box-shadow(#bab9a7 0 1px 8px 0 inset)
 
     .indicator
       display: none
@@ -57,7 +65,7 @@
       width: 17px
       height: 100%
       background-repeat: no-repeat
-      background-position: center left
+      background-position: center 21px
 
   .loading
     padding: 15px 25px 15px 30px

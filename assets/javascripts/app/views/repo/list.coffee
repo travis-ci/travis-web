@@ -2,6 +2,9 @@
   RepositoriesView: Travis.View.extend
     templateName: 'repos/list'
 
+    toggleInfo: (event) ->
+      $('#repositories').toggleClass('open')
+
   RepositoriesListView: Em.CollectionView.extend
     elementId: 'repositories'
     tagName: 'ul'
