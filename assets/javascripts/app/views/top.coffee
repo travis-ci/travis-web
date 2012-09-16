@@ -8,7 +8,7 @@ require 'travis/auth'
     userBinding: 'controller.user'
 
     gravatarUrl: (->
-      "http://www.gravatar.com/avatar/#{@get('user.gravatar')}?s=24&d=mm"
+      "https://www.gravatar.com/avatar/#{@get('user.gravatar')}?s=24&d=mm"
     ).property('user.gravatar')
 
     # hrm. how to parametrize bindAttr?

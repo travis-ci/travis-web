@@ -16,7 +16,7 @@ require 'travis/model'
     @._super()
 
   urlGithub: (->
-    "http://github.com/#{@get('login')}"
+    "https://github.com/#{@get('login')}"
   ).property()
 
   updateLocale: (locale) ->
