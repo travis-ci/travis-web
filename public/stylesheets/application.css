@@ -773,6 +773,10 @@ pre#log .bg-white {
   border-radius: 4px;
 }
 /* line 49, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
+#profile #main .message button.sync_now {
+  float: right;
+}
+/* line 52, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/profile.sass */
 #profile #main .highlight {
   color: #c7371a;
 }
