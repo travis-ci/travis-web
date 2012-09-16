@@ -20,7 +20,7 @@ Travis.ProfileController = Travis.Controller.extend
 
   viewHooks: ->
     @connectTab('hooks')
-    @set('hooks', Travis.Hook.find(login: @get('params.login') || Travis.app.get('currentUser.login')))
+    @set('hooks', Travis.Hook.find(owner_name: @get('params.login') || Travis.app.get('currentUser.login')))
 
   viewUser: ->
     @connectTab('user')
