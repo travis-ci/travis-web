@@ -27,6 +27,10 @@ require 'travis/model'
       name + ': ' + state
   ).property('state', 'name', 'payload')
 
+  isWorking: (->
+    @get('state') == 'working'
+  ).property('state')
+
   urlJob: (->
     "/#{@get('repository')}/jobs/#{@get('job_id')}" if @get('state') == 'working'
   ).property('repository', 'job_id', 'state')

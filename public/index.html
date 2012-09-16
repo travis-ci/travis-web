@@ -11,8 +11,13 @@
       // minispade.require('mocks')
       minispade.require('app')
 
-      Travis.Pusher.KEY = '23ed642e81512118260e'
-      Travis.run()
+      if(location.hostname != 'localhost') {
+        Travis.Pusher.KEY = '23ed642e81512118260e'
+      }
+
+      $(function() {
+        Travis.run()
+      });
     </script>
   </head>
   <body>

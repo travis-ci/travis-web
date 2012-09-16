@@ -10,7 +10,11 @@
         {{#each worker in group}}
           <li class="worker">
             <div class="icon"></div>
-            <a {{bindAttr href="worker.urlJob"}} {{bindAttr title="worker.lastSeenAt"}} {{action route}}>{{worker.display}}</a>
+            {{#if worker.isWorking}}
+              <a {{bindAttr href="worker.urlJob"}} {{bindAttr title="worker.lastSeenAt"}} {{action route}}>{{worker.display}}</a>
+            {{else}}
+              {{worker.display}}
+            {{/if}}
           </li>
         {{/each}}
         </ul>

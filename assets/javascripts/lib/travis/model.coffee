@@ -12,6 +12,12 @@
     this
 
 @Travis.Model.reopenClass
+  find: ->
+    if arguments.length == 0
+      Travis.app.store.findAll(this)
+    else
+      @_super.apply(this, arguments)
+
   filter: (callback) ->
     Travis.app.store.filter(this, callback)
 
