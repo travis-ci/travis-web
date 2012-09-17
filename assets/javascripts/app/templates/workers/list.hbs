@@ -1,31 +1,35 @@
-<h4>{{t workers}}</h4>
-<ul id="workers">
-  {{#each group in controller.groups}}
-    {{#view Travis.WorkersListView contextBinding="repository"}}
-      <li class="group">
-        <h5 {{action toggle}}>
-          {{group.firstObject.host}}
-        </h5>
-        <ul>
-        {{#each worker in group}}
-          {{#view Travis.WorkersItemView workerBinding="worker"}}
-            <li class="worker">
-              <div class="icon"></div>
-              {{#if worker.isWorking}}
-                <a {{bindAttr href="worker.urlJob"}} {{bindAttr title="worker.lastSeenAt"}} {{action route}}>
+{{#view Travis.WorkersView}}
+  <h4>
+    {{t workers}}
+    <a id="toggle-workers" {{action toggleWorkers target="parentView.parentView"}}></a>
+  </h4>
+  <ul id="workers">
+    {{#each group in controller.groups}}
+      {{#view Travis.WorkersListView}}
+        <li class="group">
+          <h5 {{action toggle}}>
+            {{group.firstObject.host}}
+          </h5>
+          <ul>
+          {{#each worker in group}}
+            {{#view Travis.WorkersItemView workerBinding="worker"}}
+              <li class="worker">
+                <div class="icon"></div>
+                {{#if worker.isWorking}}
+                  <a {{bindAttr href="worker.urlJob"}} {{bindAttr title="worker.lastSeenAt"}} {{action route}}>
+                    {{view.display}}
+                  </a>
+                {{else}}
                   {{view.display}}
-                </a>
-              {{else}}
-                {{view.display}}
-              {{/if}}
-            </li>
-          {{/view}}
-        {{/each}}
-        </ul>
-      </li>
-    {{/view}}
-  {{else}}
-    No workers
-  {{/each}}
-</ul>
-
+                {{/if}}
+              </li>
+            {{/view}}
+          {{/each}}
+          </ul>
+        </li>
+      {{/view}}
+    {{else}}
+      No workers
+    {{/each}}
+  </ul>
+{{/view}}

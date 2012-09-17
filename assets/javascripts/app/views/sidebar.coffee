@@ -2,6 +2,14 @@
   SidebarView: Travis.View.extend
     templateName: 'layouts/sidebar'
 
+  WorkersView: Travis.View.extend
+    toggleWorkers: (event) ->
+      handle = $(event.target).toggleClass('open')
+      if handle.hasClass('open')
+        $('#workers li').addClass('open')
+      else
+        $('#workers li').removeClass('open')
+
   WorkersListView: Travis.View.extend
     toggle: (event) ->
       $(event.target).closest('li').toggleClass('open')
