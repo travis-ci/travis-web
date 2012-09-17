@@ -26,6 +26,10 @@
             <a {{action toggle target="hook"}} class="switch"></a>
           </div>
         </li>
+      {{else}}
+        <li>
+          You do not seem to have any repositories that we could sync.
+        </li>
       {{/each}}
     </ul>
   {{/if}}

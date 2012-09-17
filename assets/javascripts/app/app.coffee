@@ -5,6 +5,7 @@ require 'models'
 require 'pusher'
 require 'routes'
 require 'store'
+require 'tailing'
 require 'templates'
 require 'views'
 
@@ -31,6 +32,7 @@ Travis.reopen
 
       @routes = new Travis.Routes()
       @pusher = new Travis.Pusher()
+      @tailing = new Travis.Tailing()
 
       @setCurrentUser(JSON.parse($.cookie('user')))
 

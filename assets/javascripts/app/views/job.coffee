@@ -56,6 +56,10 @@
 
     jobBinding: 'context'
 
+    toggleTailing: (event) ->
+      Travis.app.tailing.toggle()
+      event.preventDefault()
+
     logSubscriber: (->
       # for some reason observing context does not work,
       # TODO: find out why
