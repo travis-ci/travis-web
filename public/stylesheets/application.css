@@ -599,22 +599,22 @@ pre#log .bg-white {
   top: 0;
   right: 0;
   margin: 10px 10px 0 0;
-  padding: 1px 4px 1px 6px;
+  padding: 0 2px 0 3px;
   color: #666666;
   text-shadow: 1px 1px 0px white;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 11px;
-  line-height: 17px;
+  line-height: 14px;
   text-decoration: none;
   white-space: nowrap;
   border: 1px solid #bbbbbb;
   border-top-color: #dddddd;
   border-bottom-color: #bbbbbb;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  -ms-border-radius: 12px;
-  -o-border-radius: 12px;
-  border-radius: 12px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  border-radius: 8px;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e0e0e0));
   background: -webkit-linear-gradient(#ffffff, #e0e0e0);
   background: -moz-linear-gradient(#ffffff, #e0e0e0);
@@ -627,10 +627,14 @@ pre#log .bg-white {
   cursor: pointer;
 }
 /* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
+#log #tail:hover {
+  padding: 1px 4px 1px 6px;
+}
+/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
 #log #tail:hover label {
   display: inline;
 }
-/* line 122, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
+/* line 124, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
 #log #tail .status {
   display: inline-block;
   margin-right: 1px;
@@ -646,9 +650,9 @@ pre#log .bg-white {
   -moz-box-shadow: white 1px 1px 2px;
   box-shadow: white 1px 1px 2px;
 }
-/* line 131, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
+/* line 133, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
 #log #tail.active .status {
-  background-color: #66cc00;
+  background-color: #66bb00;
 }
 /* line 3, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/repository.sass */
 #repository {
