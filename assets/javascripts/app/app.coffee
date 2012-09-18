@@ -20,10 +20,6 @@ require 'travis/auth'
 
 Travis.reopen
   App: Em.Application.extend
-    USER_PAYLOAD:
-      user: { id: 1, login: 'svenfuchs', name: 'Sven Fuchs', email: 'me@svenfuchs.com', token: '1234567890', gravatar: '402602a60e500e85f2f5dc1ff3648ecb', locale: 'en', repo_count: 2, synced_at: '2012-09-15T20:53:14Z' }
-      accounts: [{ login: 'travis-ci', name: 'Travis CI', type: 'org', repoCounts: 1 }]
-
     init: ->
       @_super()
       @connect()
@@ -35,23 +31,24 @@ Travis.reopen
       @pusher = new Travis.Pusher()
       @tailing = new Travis.Tailing()
 
-      @setCurrentUser(JSON.parse($.cookie('user')))
+      #@setCurrentUser(JSON.parse($.cookie('user')))
 
     signIn: ->
-      # user = Travis.Auth.signIn()
-      # console.log(user)
-      @setCurrentUser(@USER_PAYLOAD)
+      Travis.Auth.signIn()
+      # TODO: this has to mov, no?
       @render.apply(this, @get('returnTo') || ['home', 'index'])
 
     signOut: ->
+      Travis.config.access_token = null
       @setCurrentUser()
 
     setCurrentUser: (data) ->
       data = JSON.parse(data) if typeof data == 'string'
-      $.cookie('user', JSON.stringify(data))
+      #$.cookie('user', JSON.stringify(data))
       if data
         @store.load(Travis.User, data.user)
-        @store.loadMany(Travis.Account, data.accounts)
+        # TODO: this throws an error
+        #@store.loadMany(Travis.Account, data.accounts)
       @set('currentUser', if data then Travis.User.find(data.user.id) else undefined)
 
     render: (name, action, params) ->
