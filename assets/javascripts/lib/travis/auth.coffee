@@ -25,11 +25,10 @@ $.extend Travis.Auth.prototype,
     else
       Travis.config.access_token = event.data.token
       Travis.app.setCurrentUser(event.data.user)
-      alert event.data.user.login
+      console.log('sign in!')
 
   trySignIn: ->
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
-    console.log('sign in!')
 
   signIn: ->
     @trySignIn()

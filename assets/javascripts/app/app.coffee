@@ -51,7 +51,8 @@ Travis.reopen
       #$.cookie('user', JSON.stringify(data))
       if data
         @store.load(Travis.User, data.user)
-        @store.loadMany(Travis.Account, data.accounts)
+        # TODO: this throws an error
+        #@store.loadMany(Travis.Account, data.accounts)
       @set('currentUser', if data then Travis.User.find(data.user.id) else undefined)
 
     render: (name, action, params) ->
