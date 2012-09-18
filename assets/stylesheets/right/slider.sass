@@ -12,41 +12,32 @@
   cursor: pointer
 
   .icon
-    width: 0
-    height: 0
+    width: 5px
+    height: 10px
     position: absolute
     top: 15px
-    border-color: $color-border-slider-normal $color-border-slider-normal $color-border-slider-normal $color-border-slider-light
-    border-width: 5px 0 5px 5px
-    border-style: solid
     margin-top: -5px
     margin-left: 3px
+    background-image: inline-image('ui/slider-closed.png')
 
   &:hover
     background: $color-border-slider-hover
+
+.maximized
+  // #main
+  //   padding-right: 40px
+
+  #right
+    width: 0
+    padding: 0
+    *:not(#slider):not(.icon):not(.ember-view)
+      display: none
+
+  #slider
+    left: -20px
+    width: 20px
+    z-index: 50
     .icon
-      border-color: $color-border-slider-hover $color-border-slider-hover $color-border-slider-hover $color-border-slider-light
+      background-image: inline-image('ui/slider-open.png')
+      border-width: 5px 5px 5px 0
 
-#home,
-#profile
-  &.maximized
-    #main
-      padding-right: 40px
-
-    #right
-      width: 0
-      padding: 0
-      *:not(#slider):not(.icon):not(.ember-view)
-        display: none
-
-    #slider
-      left: -20px
-      width: 20px
-      z-index: 50
-      .icon
-        border-color: $color-border-slider-normal $color-border-slider-light $color-border-slider-normal $color-border-slider-normal
-        border-width: 5px 5px 5px 0
-
-      &:hover
-        .icon
-          border-color: $color-border-slider-hover $color-border-slider-light $color-border-slider-hover $color-border-slider-hover

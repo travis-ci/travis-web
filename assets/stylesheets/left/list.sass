@@ -21,15 +21,20 @@
       .indicator
         background-image: inline-image('ui/current-repository-indicator-even.png')
 
-    .current
-      display: inline-block
-      max-width: 265px
+    .heading
+      display: table
+      width: 100%
+
+    .slug
+      display: table-cell
       white-space: nowrap
       overflow: hidden
       text-overflow: ellipsis
+      max-width: 150px
 
     .last_build
-      float: right
+      display: table-cell
+      text-align: right
       font-size: $font-size-big
 
     .summary

@@ -1,18 +1,11 @@
 @import "_mixins/all.sass"
 
-body#home,
-body#profile
-  background: inline-image('ui/background-left.png') repeat-y -47px top
-
 #left
-  position: absolute
-  z-index: 10
-  width: 380px
-
   #search_box
-    height: 90px
+    height: 87px
     padding: 30px 20px 0 20px
-    background-color: $color-bg-dark
+    margin-top: -10px
+    // background-color: $color-bg-dark
 
     input[type=text]
       height: 28px
@@ -22,7 +15,7 @@ body#profile
       font-size: $font-size-small
       border: 1px solid $color-border-light
       @include border-radius(4px)
-      background: $color-bg-input inline-image('icons/search.png') no-repeat 315px 8px
+      background: $color-bg-input inline-image('ui/bg_search.png') no-repeat right 8px
 
   .tabs
     #tab_owned
@@ -34,7 +27,7 @@ body#profile
 
   .toggle-info
     position: absolute
-    right: 24px
+    right: 28px
     margin-top: -22px
     display: block
     width: 14px
