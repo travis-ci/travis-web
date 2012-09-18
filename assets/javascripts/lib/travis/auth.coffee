@@ -30,6 +30,13 @@ $.extend Travis.Auth.prototype,
   trySignIn: ->
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
 
+  newUser: ->
+    url = "#{Travis.config.api_endpoint}/auth/handshake?redirect_uri=#{window.location}"
+    window.location = url
+
+  checkUser: ->
+    @newUser() unless Travis.config.access_token?
+
   signIn: ->
     @trySignIn()
-    # TODO: timeout for redirect goes here
+    window.setTimeout((=> @checkUser()), 15000)
