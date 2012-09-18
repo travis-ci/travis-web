@@ -1,10 +1,17 @@
-class @Travis.Auth
-  constructor: ->
-    @iframe = $('<iframe />')
-    @iframe.hide()
+@Travis.Auth = ->
+  $ => @iframe.appendTo('body')
+  this
+
+$.extend Travis.Auth,
+  instance: new Travis.Auth()
 
   signIn: ->
-    alert 'sign in not implemented'
+    @instance.signIn()
 
-  @instance: new @
-  @signIn: -> @instance.signIn()
+$.extend Travis.Auth.prototype,
+  iframe: $('<iframe id="auth-frame" />').hide()
+
+  signIn: ->
+    @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
+    @iframe.show()
+    console.log('sign in!')

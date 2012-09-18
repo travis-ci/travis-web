@@ -11,6 +11,7 @@ require 'views'
 
 require 'config/locales'
 require 'data/sponsors'
+require 'travis/auth'
 
 # $.mockjaxSettings.log = false
 # Ember.LOG_BINDINGS = true
@@ -37,9 +38,10 @@ Travis.reopen
       @setCurrentUser(JSON.parse($.cookie('user')))
 
     signIn: ->
-      # Travis.Auth.signIn()
-      @setCurrentUser(@USER_PAYLOAD)
-      @render.apply(this, @get('returnTo') || ['home', 'index'])
+      user = Travis.Auth.signIn()
+      console.log(user)
+      # @setCurrentUser(@USER_PAYLOAD)
+      # @render.apply(this, @get('returnTo') || ['home', 'index'])
 
     signOut: ->
       @setCurrentUser()

@@ -1,10 +1,10 @@
-/* line 1, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 3, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 html {
   margin: 0;
   padding: 0;
 }
 
-/* line 5, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 7, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 body {
   overflow-x: hidden;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -14,25 +14,25 @@ body {
   width: 100%;
 }
 
-/* line 13, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 15, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 a {
   color: #333333;
   text-decoration: none;
 }
 
-/* line 17, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 19, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 ul {
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
 
-/* line 22, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 24, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 li {
   padding: 0;
 }
 
-/* line 25, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 27, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 td, th {
   text-align: left;
   font-size: 80%;
@@ -40,7 +40,7 @@ td, th {
   vertical-align: top;
 }
 
-/* line 31, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 33, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 caption {
   text-align: left;
   font-size: 16px;
@@ -48,7 +48,7 @@ caption {
   color: #666666;
 }
 
-/* line 37, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 39, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 pre {
   background: none repeat scroll 0 0 #fafafa;
   border: 1px solid #dddddd;
@@ -61,32 +61,53 @@ pre {
   padding: 1em 1.5em;
 }
 
-/* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 50, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 pre::-webkit-scrollbar {
   height: 10px;
   width: 10px;
 }
 
-/* line 52, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 54, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 pre::-webkit-scrollbar-button:start:decrement,
 pre::-webkit-scrollbar-button:end:increment {
   display: none;
 }
 
-/* line 56, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 58, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 pre::-webkit-scrollbar-track-piece {
   background: #444444;
   -webkit-border-radius: 4px;
 }
 
-/* line 60, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 62, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 pre::-webkit-scrollbar-thumb:horizontal {
   background: -webkit-gradient(linear, left top, left bottom, from(#85888e), to(#55585e));
   -webkit-border-radius: 4px;
   width: 25px;
 }
 
-/* line 65, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 67, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+#auth-frame {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 300px;
+  margin: -200px 0 0 -150px;
+  background-color: white;
+  border: 10px solid rgba(0, 0, 0, 0.5);
+  -webkit-background-clip: padding;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* line 81, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 #flash-messages {
   position: absolute;
   left: 400px;
@@ -95,23 +116,23 @@ pre::-webkit-scrollbar-thumb:horizontal {
   color: white;
 }
 
-/* line 72, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 88, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .loading {
   padding: 15px 25px 0 0;
 }
-/* line 74, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 90, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .loading span {
   padding-right: 25px;
   font-size: 13px;
   color: #aaaaaa;
   background: url('data:image/gif;base64,R0lGODlhEAAIAPMHAP///+vr66CgoN7e3rW1tYuLi/X19Wtra3t7e87OzsbGxqGhodfX142NjZaWlqurqyH/C05FVFNDQVBFMi4wAwEAAAAh/hoiQ3JlYXRlZCB3aXRoIENoaW1wbHkuY29tIgAh+QQACgD/ACwAAAAAEAAIAAADKXiq0P7glHmglRSMPUDgBlZUQ/B5ZhBOo2Z2qSqSL2qumaEbwK7PFkgCACH5BAAKAP8ALAAAAAAQAAgAAAQwsKCJwLkH6F2Er0dRZJvWfZaYBUNrnAKoAkEdvF6cjrSNoyGe7QaT8QxIpISyI5UiACH5BAAKAP8ALAAAAAAQAAgAAAQvcIkpALoInL0F+Y41ZUdhHh4oCqRZoB8RIqPmwirN2mcqr61ebFYrnSQUC4b3igAAIfkEAAoA/wAsAAAAABAACAAABDAQyCmqACijQpYnQEMQDWZxSgqKpFmhajiWyEmkyjq7ApzLrdqr8wHSThOKBaMpRAAAIfkEAAoA/wAsAAAAABAACAAABDMQyEmBuGKxxBl4y/IADmEKzKAmwMItpEmg6sC6CVye6dq+MV7tBtzNNp1PaGQUVJ6YTAQAIfkEAAoA/wAsAAAAABAACAAABC8QyEmrBSknQJYnxiAGgCIqnKKCQUuaA0qoCuuWZ7oa7pvPO4PQgNFwPAvCZQmIAAAh+QQACgD/ACwAAAAAEAAIAAAEKRDISau1LGlmhg+A5wGJyAUoOKADaRqpyrremYZzWRs8D/QGQGZzKQIiACH5BAAKAP8ALAAAAAAQAAgAAAMhCLrc/iyMGcCcQNLAueVD1o3eAIpk90koZ7wvABvyDEEJADs=') no-repeat right 4px;
 }
-/* line 80, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 96, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .loading .loading {
   display: none;
 }
 
-/* line 83, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 99, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 span.loading {
   padding: 0 25px 0 0;
   font-size: 13px;
@@ -119,14 +140,14 @@ span.loading {
   background: url('data:image/gif;base64,R0lGODlhEAAIAPMHAP///+vr66CgoN7e3rW1tYuLi/X19Wtra3t7e87OzsbGxqGhodfX142NjZaWlqurqyH/C05FVFNDQVBFMi4wAwEAAAAh/hoiQ3JlYXRlZCB3aXRoIENoaW1wbHkuY29tIgAh+QQACgD/ACwAAAAAEAAIAAADKXiq0P7glHmglRSMPUDgBlZUQ/B5ZhBOo2Z2qSqSL2qumaEbwK7PFkgCACH5BAAKAP8ALAAAAAAQAAgAAAQwsKCJwLkH6F2Er0dRZJvWfZaYBUNrnAKoAkEdvF6cjrSNoyGe7QaT8QxIpISyI5UiACH5BAAKAP8ALAAAAAAQAAgAAAQvcIkpALoInL0F+Y41ZUdhHh4oCqRZoB8RIqPmwirN2mcqr61ebFYrnSQUC4b3igAAIfkEAAoA/wAsAAAAABAACAAABDAQyCmqACijQpYnQEMQDWZxSgqKpFmhajiWyEmkyjq7ApzLrdqr8wHSThOKBaMpRAAAIfkEAAoA/wAsAAAAABAACAAABDMQyEmBuGKxxBl4y/IADmEKzKAmwMItpEmg6sC6CVye6dq+MV7tBtzNNp1PaGQUVJ6YTAQAIfkEAAoA/wAsAAAAABAACAAABC8QyEmrBSknQJYnxiAGgCIqnKKCQUuaA0qoCuuWZ7oa7pvPO4PQgNFwPAvCZQmIAAAh+QQACgD/ACwAAAAAEAAIAAAEKRDISau1LGlmhg+A5wGJyAUoOKADaRqpyrremYZzWRs8D/QGQGZzKQIiACH5BAAKAP8ALAAAAAAQAAgAAAMhCLrc/iyMGcCcQNLAueVD1o3eAIpk90koZ7wvABvyDEEJADs=') no-repeat right 4px;
 }
 
-/* line 89, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 105, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .emoji {
   vertical-align: middle;
   width: 20px;
   height: 20px;
 }
 
-/* line 94, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 110, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .help {
   display: inline-block;
   height: 19px;
@@ -137,7 +158,7 @@ span.loading {
   cursor: pointer;
 }
 
-/* line 103, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .context_help_caption {
   text-align: left;
   font-size: 16px;
@@ -146,27 +167,27 @@ span.loading {
   border-bottom: 1px solid #cccccc;
 }
 
-/* line 110, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 126, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .context_help {
   display: none;
 }
 
-/* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 129, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 .context_help_body {
   font-size: 1em;
   line-height: 1.4286;
   margin: 1.4286em 0;
 }
 
-/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 135, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 #facebox .content {
   display: block !important;
 }
-/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 137, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 #facebox .close {
   display: none;
 }
-/* line 123, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
+/* line 139, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/application.sass */
 #facebox pre::-webkit-scrollbar {
   height: 0;
   width: 0;
@@ -347,35 +368,35 @@ body#profile {
 #accounts li.org {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAOCAMAAAAc7xz/AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6N0FEOEI1NUVGMkFDMTFFMTk0NjlDMDYzRjA5MDk2N0MiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6N0FEOEI1NUZGMkFDMTFFMTk0NjlDMDYzRjA5MDk2N0MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3QUQ4QjU1Q0YyQUMxMUUxOTQ2OUMwNjNGMDkwOTY3QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3QUQ4QjU1REYyQUMxMUUxOTQ2OUMwNjNGMDkwOTY3QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsEVpaAAAACiUExURX9/f4WFhZaWluLi4vDw8IqKisfHx8/Pz/7+/pOTk8jIyOXl5aysrL6+voaGhsPDw7W1tfHx8fb29uTk5L29vdjY2KWlpfn5+f39/cXFxbi4uKioqJCQkKOjo4+Pj93d3ZycnNDQ0N7e3oCAgJ+fn5GRkZqamtnZ2dvb29fX18vLy+7u7piYmKKiop2dnZubm9HR0eDg4KGhoe3t7aSkpP///9cCsuEAAAA2dFJOU///////////////////////////////////////////////////////////////////////AKGPTjEAAACtSURBVHjaVM7nFoIwDAXgi0W2gsoW3HuvvP+rmUjx6P3RnHxtTwLSGaSGkQ7aDnKYpkMBOAE5ptlyDJTkCrtUArHmCuhSR7hDXaDSPGF21s1r5onmGXCilfBDPl00L4At7YSntAfuDWce0BsehZ/DHmBlzLktw85+KBz69ZIH2znG3G3mnztZ5XC7chFElLzwTZ1EUrzCUn38pK+swpNNFP6i9IIj4y8jprcAAwCY3RhR7P84QQAAAABJRU5ErkJggg==');
 }
-/* line 1, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
+/* line 3, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
 #main {
   position: relative;
 }
 
-/* line 6, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
+/* line 8, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
 #home #main,
 #profile #main {
   min-height: 1000px;
   padding: 20px 280px 30px 450px;
 }
-/* line 10, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
+/* line 12, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
 #home #main.loading,
 #profile #main.loading {
   opacity: 0.1;
 }
-/* line 13, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
+/* line 15, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
 #home #main.maximized,
 #profile #main.maximized {
   padding: 60px 100px 30px 440px;
 }
-/* line 17, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
+/* line 19, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
 #home #main .tabs #tab_build,
 #home #main .tabs #tab_job,
 #profile #main .tabs #tab_build,
 #profile #main .tabs #tab_job {
   display: none;
 }
-/* line 22, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
+/* line 24, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
 #home #main .tabs #tab_build.display,
 #home #main .tabs #tab_job.display,
 #profile #main .tabs #tab_build.display,
@@ -383,7 +404,7 @@ body#profile {
   display: inline-block;
 }
 
-/* line 27, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
+/* line 29, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main.sass */
 #stats #main {
   width: 600px;
   padding: 20px 0 0 0;
@@ -1054,11 +1075,11 @@ pre#log .bg-white {
   -moz-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 10px, rgba(0, 0, 0, 0.07) 0 0 3px 1px inset;
   box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 10px, rgba(0, 0, 0, 0.07) 0 0 3px 1px inset;
 }
-/* line 2, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 4, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #queues {
   margin-top: 0;
 }
-/* line 5, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 7, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #toggle-workers {
   display: inline-block;
   float: right;
@@ -1067,15 +1088,15 @@ pre#log .bg-white {
   cursor: pointer;
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAICAMAAAAY5vW6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDBGOEZFMDdGOEQ1MTFFMTkxODM5REVDNUNEQzEzNUEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDBGOEZFMDhGOEQ1MTFFMTkxODM5REVDNUNEQzEzNUEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpEMEY4RkUwNUY4RDUxMUUxOTE4MzlERUM1Q0RDMTM1QSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpEMEY4RkUwNkY4RDUxMUUxOTE4MzlERUM1Q0RDMTM1QSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuASzm8AAAAkUExURaysrPn5+cvLy6qqqv///7KysrOzs8rKyre3t8TExKenp////4JviEYAAAAMdFJOU///////////////ABLfzs4AAAA+SURBVHjaHMlBAsAwCAJBMMa05f//LeTkLKKrWlIODuDogrVXwlwbHMdjDiHm45WCbnhVLM4XXotvqF+AAQBCXgG332awgwAAAABJRU5ErkJggg==') no-repeat left 5px;
 }
-/* line 12, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 14, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #toggle-workers.open {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAICAMAAAAY5vW6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDBGOEZFMDNGOEQ1MTFFMTkxODM5REVDNUNEQzEzNUEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDBGOEZFMDRGOEQ1MTFFMTkxODM5REVDNUNEQzEzNUEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpEMEY4RkUwMUY4RDUxMUUxOTE4MzlERUM1Q0RDMTM1QSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpEMEY4RkUwMkY4RDUxMUUxOTE4MzlERUM1Q0RDMTM1QSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pg8mKGoAAAAkUExURaysrPn5+cvLy6qqqv///7KysrOzs8rKyre3t8TExKenp////4JviEYAAAAMdFJOU///////////////ABLfzs4AAAA9SURBVHjaJMlBAoAwCAPBDbRU5f//lSiXTAg9p1sOzHpKv7WTdOEj5FajGl54wd9Y4YVjtsthxbDb8QowAGKeAbdsJtvfAAAAAElFTkSuQmCC');
 }
-/* line 15, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 17, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li ul {
   display: none;
 }
-/* line 18, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 20, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li,
 #right #queues ul li {
   overflow: hidden;
@@ -1084,7 +1105,7 @@ pre#log .bg-white {
   list-style-type: none;
   color: #666666;
 }
-/* line 26, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li h5,
 #right #queues ul li h5 {
   font-size: 13px;
@@ -1092,14 +1113,14 @@ pre#log .bg-white {
   margin: 0px;
   cursor: pointer;
 }
-/* line 32, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 34, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li ul,
 #right #queues ul li ul {
   margin-top: 8px;
   margin-bottom: 5px;
   padding-left: 1px;
 }
-/* line 37, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 39, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li .name,
 #right #workers li .slug,
 #right #queues ul li .name,
@@ -1109,22 +1130,22 @@ pre#log .bg-white {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-/* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li .name,
 #right #queues ul li .name {
   max-width: 140px;
 }
-/* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 49, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li .slug,
 #right #queues ul li .slug {
   max-width: 150px;
 }
-/* line 50, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 52, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li.open ul,
 #right #queues ul li.open ul {
   display: block;
 }
-/* line 53, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 55, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li .icon,
 #right #queues ul li .icon {
   clear: left;
@@ -1136,22 +1157,22 @@ pre#log .bg-white {
   -webkit-border-radius: 8px;
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAMAAADarb8dAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUNCRkI5RUU0MzQzMTFFMEIyNjY5REVFMEM3Qjc3NUUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUNCRkI5RUY0MzQzMTFFMEIyNjY5REVFMEM3Qjc3NUUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5MURBN0Q0RDQzNDMxMUUwQjI2NjlERUUwQzdCNzc1RSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5MURBN0Q0RTQzNDMxMUUwQjI2NjlERUUwQzdCNzc1RSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PiEmX8AAAAFTUExURXvfR3DXP2vUOGfSNYPjT1zJKm/XPIfnVWfRNXfcRIHiTnneRmjSNX7gSWzUOG/WO2jSNm/XPnTZQYDhTGTPMYbmVGbRNHHYQIXlUYXjUHjeRoPjUG/WPIHiT3/hTGjTNmHNLoTjT3bcRH/hSn/hS4XlU1vIKV3KK4TkUITkUYroV2zUOmbRNXfdRWPNMHvfSGrUN3PZQGzVOXzeR1nGJl7KK23VOmbRM2rTN4fmVVzIKV3LLGXPMXHYP3XZQWDLLHneR3veRlrHJ1zHKGrTNnXbQ4XkU4blVGfRNGXQMnXaQWDMLWbQM3PYQGLNLl7LLGrSN27WPGXQNHbaQnzgSWXPMnjcRIHjT2vTOF7KLG7XO2DLLWHMLXHXP33hSXjdRXndRXjdRnfbQ2fSNGjRNVrHKGHMLmLNL27WO4DhTWPOMITlU33hSnbbQ3PZQWTPMmzUOVaNkeEAAADwSURBVHjaDIxTdwNhFADv2sg6bpzaRmrbdtf4/v9T93XOzIBrWFP++vE9tPQqWSR58DJCvrJvSlKbH44OnCIMZSIqpIkQB6RjMstRbqiITrmtOCh3mBGmA+dHvzloCrFORiZjRnnygyv23pdUq/b3I6cPrjGG+9jGOMT6Q7nR4MENry9H8+vHZFwLgqANA2+NzRUt+YTbVvwuQc8NLRVV3rSEE2ZhswTUhZexuzPPWKol31wzgZXeSZixdeTT2Nl0mtqwQ8274d2h+rjgK5UCrcB2l3p6nTBO2foSLiMkw9xfl1p98cJs0SJEkSD+BRgAO8wzFCijcvMAAAAASUVORK5CYII=');
 }
-/* line 63, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 65, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li.waiting .icon,
 #right #queues ul li.waiting .icon {
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAMAAADarb8dAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUNCRkI5RUU0MzQzMTFFMEIyNjY5REVFMEM3Qjc3NUUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUNCRkI5RUY0MzQzMTFFMEIyNjY5REVFMEM3Qjc3NUUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5MURBN0Q0RDQzNDMxMUUwQjI2NjlERUUwQzdCNzc1RSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5MURBN0Q0RTQzNDMxMUUwQjI2NjlERUUwQzdCNzc1RSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PiEmX8AAAAFTUExURXvfR3DXP2vUOGfSNYPjT1zJKm/XPIfnVWfRNXfcRIHiTnneRmjSNX7gSWzUOG/WO2jSNm/XPnTZQYDhTGTPMYbmVGbRNHHYQIXlUYXjUHjeRoPjUG/WPIHiT3/hTGjTNmHNLoTjT3bcRH/hSn/hS4XlU1vIKV3KK4TkUITkUYroV2zUOmbRNXfdRWPNMHvfSGrUN3PZQGzVOXzeR1nGJl7KK23VOmbRM2rTN4fmVVzIKV3LLGXPMXHYP3XZQWDLLHneR3veRlrHJ1zHKGrTNnXbQ4XkU4blVGfRNGXQMnXaQWDMLWbQM3PYQGLNLl7LLGrSN27WPGXQNHbaQnzgSWXPMnjcRIHjT2vTOF7KLG7XO2DLLWHMLXHXP33hSXjdRXndRXjdRnfbQ2fSNGjRNVrHKGHMLmLNL27WO4DhTWPOMITlU33hSnbbQ3PZQWTPMmzUOVaNkeEAAADwSURBVHjaDIxTdwNhFADv2sg6bpzaRmrbdtf4/v9T93XOzIBrWFP++vE9tPQqWSR58DJCvrJvSlKbH44OnCIMZSIqpIkQB6RjMstRbqiITrmtOCh3mBGmA+dHvzloCrFORiZjRnnygyv23pdUq/b3I6cPrjGG+9jGOMT6Q7nR4MENry9H8+vHZFwLgqANA2+NzRUt+YTbVvwuQc8NLRVV3rSEE2ZhswTUhZexuzPPWKol31wzgZXeSZixdeTT2Nl0mtqwQ8274d2h+rjgK5UCrcB2l3p6nTBO2foSLiMkw9xfl1p98cJs0SJEkSD+BRgAO8wzFCijcvMAAAAASUVORK5CYII=');
 }
-/* line 66, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 68, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li.errored .icon,
 #right #queues ul li.errored .icon {
   background: url('data:image/png;base64,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');
 }
-/* line 69, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
+/* line 71, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li.stopped .icon,
 #right #queues ul li.stopped .icon {
   background: url('data:image/png;base64,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');
 }
-/* line 5, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 7, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #slider {
   position: absolute;
   height: 100%;
@@ -1163,7 +1184,7 @@ pre#log .bg-white {
   background-color: #f2f4f9;
   cursor: pointer;
 }
-/* line 16, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 18, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #slider .icon {
   width: 0;
   height: 0;
@@ -1175,45 +1196,45 @@ pre#log .bg-white {
   margin-top: -5px;
   margin-left: 3px;
 }
-/* line 27, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 29, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #slider:hover {
   background: #e1e2e6;
 }
-/* line 29, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 31, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #slider:hover .icon {
   border-color: #e1e2e6 #e1e2e6 #e1e2e6 #999999;
 }
 
-/* line 35, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 37, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #home.maximized #main,
 #profile.maximized #main {
   padding-right: 40px;
 }
-/* line 38, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 40, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #home.maximized #right,
 #profile.maximized #right {
   width: 0;
   padding: 0;
 }
-/* line 41, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #home.maximized #right *:not(#slider):not(.icon):not(.ember-view),
 #profile.maximized #right *:not(#slider):not(.icon):not(.ember-view) {
   display: none;
 }
-/* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #home.maximized #slider,
 #profile.maximized #slider {
   left: -20px;
   width: 20px;
   z-index: 50;
 }
-/* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 50, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #home.maximized #slider .icon,
 #profile.maximized #slider .icon {
   border-color: #f2f4f9 #999999 #f2f4f9 #f2f4f9;
   border-width: 5px 5px 5px 0;
 }
-/* line 53, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+/* line 55, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 #home.maximized #slider:hover .icon,
 #profile.maximized #slider:hover .icon {
   border-color: #e1e2e6 #999999 #e1e2e6 #e1e2e6;
@@ -1293,7 +1314,7 @@ pre#log .bg-white {
   font-size: 10px;
   text-align: left;
 }
-/* line 1, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/stats.sass */
+/* line 3, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/stats.sass */
 #repo_count_container,
 #build_count_container {
   width: 100%;
