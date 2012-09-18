@@ -13,12 +13,18 @@ table.list .green .number a
   color: $color-text-status-passed
   background-repeat: no-repeat
 
+#repositories li.green a
+  color: $color-text-status-passed
+
 #repositories li.red,
 .red #summary .number a,
 table.list .red .number a
   background-image: inline-image('icons/status.red.png')
   color: $color-text-status-failed
   background-repeat: no-repeat
+
+#repositories li.red a
+  color: $color-text-status-failed
 
 #summary .number a,
 table.list .number a
