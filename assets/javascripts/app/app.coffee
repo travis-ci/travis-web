@@ -44,6 +44,7 @@ Travis.reopen
       @render.apply(this, @get('returnTo') || ['home', 'index'])
 
     signOut: ->
+      Travis.config.access_token = null
       @setCurrentUser()
 
     setCurrentUser: (data) ->
