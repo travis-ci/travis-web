@@ -1,5 +1,7 @@
 @Travis.Auth = ->
-  $ => @iframe.appendTo('body')
+  $ =>
+    @iframe.appendTo('body')
+    window.addEventListener("message", @receiveMessage)
   this
 
 $.extend Travis.Auth,
@@ -11,7 +13,21 @@ $.extend Travis.Auth,
 $.extend Travis.Auth.prototype,
   iframe: $('<iframe id="auth-frame" />').hide()
 
-  signIn: ->
+  expectedOrigin: ->
+    if Travis.config.api_endpoint[0] == '/'
+      window.location.protocol + "://" + window.location.host
+    else
+      Travis.config.api_endpoint
+
+  receiveMessage: (event) ->
+    if event.origin != @expectedOrigin()
+      console.log("unexpected message #{event.origin}: #{event.data}")
+    else
+      Travis.config.access_token = event.data
+
+  trySignIn: ->
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
-    @iframe.show()
     console.log('sign in!')
+
+  signIn: ->
+    @trySignIn()
