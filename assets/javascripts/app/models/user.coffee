@@ -27,10 +27,6 @@ require 'travis/model'
     'user'
   ).property()
 
-  accounts: (->
-    [this].concat Travis.Account.filter().toArray()
-  ).property()
-
   sync: ->
     $.post('/api/profile/sync')
     @set('isSyncing', true)

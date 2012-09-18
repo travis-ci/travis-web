@@ -9,4 +9,4 @@ Travis.AccountsController = Ember.ArrayController.extend
     this["view#{$.camelize(tab)}"](params)
 
   viewAccounts: ->
-    @set('content', Travis.app.get('currentUser.accounts'))
+    @set('content', Travis.Account.filter())
