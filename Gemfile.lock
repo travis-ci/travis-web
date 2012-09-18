@@ -22,7 +22,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: 1a7a9daf4643abf6c954bf26c63816783ded9bda
+  revision: d7095ea0305aedd918fc55faa0f1516c5ffcd349
   branch: sf-use-services
   specs:
     travis-api (0.0.1)
@@ -144,7 +144,7 @@ GEM
     journey (1.0.4)
     json (1.6.7)
     kgio (2.7.4)
-    listen (0.5.0)
+    listen (0.5.1)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
