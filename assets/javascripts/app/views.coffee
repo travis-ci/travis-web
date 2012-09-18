@@ -5,6 +5,9 @@ require 'ext/ember/namespace'
     route: (event) ->
       Travis.app.routes.route(event)
 
+    popup: (event) ->
+      $("##{event.target.name}").remove().appendTo('body').toggle()
+
 @Travis.reopen
   HomeLayout:    Travis.View.extend(templateName: 'layouts/home')
   ProfileLayout: Travis.View.extend(templateName: 'layouts/profile')

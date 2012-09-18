@@ -1,8 +1,4 @@
-@import "_common"
-
-$slider-border-normal: #f2f4f9
-$slider-border-light: #999
-$slider-border-hover: #e1e2e6
+@import "_mixins/all"
 
 #slider
   position: absolute
@@ -10,9 +6,9 @@ $slider-border-hover: #e1e2e6
   top: 0
   left: -10px
   width: 10px
-  border-left: 1px solid #ccc
-  border-bottom: 1px solid #ccc
-  background-color: #f2f4f9
+  border-left: 1px solid $color-border-normal
+  border-bottom: 1px solid $color-border-normal
+  background-color: $color-bg-slider
   cursor: pointer
 
   .icon
@@ -20,16 +16,16 @@ $slider-border-hover: #e1e2e6
     height: 0
     position: absolute
     top: 15px
-    border-color: $slider-border-normal $slider-border-normal $slider-border-normal $slider-border-light
+    border-color: $color-border-slider-normal $color-border-slider-normal $color-border-slider-normal $color-border-slider-light
     border-width: 5px 0 5px 5px
     border-style: solid
     margin-top: -5px
     margin-left: 3px
 
   &:hover
-    background: $slider-border-hover
+    background: $color-border-slider-hover
     .icon
-      border-color: $slider-border-hover $slider-border-hover $slider-border-hover $slider-border-light
+      border-color: $color-border-slider-hover $color-border-slider-hover $color-border-slider-hover $color-border-slider-light
 
 #home,
 #profile
@@ -48,9 +44,9 @@ $slider-border-hover: #e1e2e6
       width: 20px
       z-index: 50
       .icon
-        border-color: $slider-border-normal $slider-border-light $slider-border-normal $slider-border-normal
+        border-color: $color-border-slider-normal $color-border-slider-light $color-border-slider-normal $color-border-slider-normal
         border-width: 5px 5px 5px 0
 
       &:hover
         .icon
-          border-color: $slider-border-hover $slider-border-light $slider-border-hover $slider-border-hover
+          border-color: $color-border-slider-hover $color-border-slider-light $color-border-slider-hover $color-border-slider-hover

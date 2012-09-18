@@ -1,7 +1,7 @@
 {{view.logSubscriber}}
 
 {{#if log.isLoaded}}
-  <pre id="log"><a href="#" id="tail" {{action toggleTailing}}>
+  <pre id="log" class="ansi"><a href="#" id="tail" {{action toggleTailing}}>
     <span class="status"></span>
     <label>Follow logs</label>
   </a>{{{formatLog log.body}}}</pre>

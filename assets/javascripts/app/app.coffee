@@ -38,10 +38,10 @@ Travis.reopen
       @setCurrentUser(JSON.parse($.cookie('user')))
 
     signIn: ->
-      user = Travis.Auth.signIn()
-      console.log(user)
-      # @setCurrentUser(@USER_PAYLOAD)
-      # @render.apply(this, @get('returnTo') || ['home', 'index'])
+      # user = Travis.Auth.signIn()
+      # console.log(user)
+      @setCurrentUser(@USER_PAYLOAD)
+      @render.apply(this, @get('returnTo') || ['home', 'index'])
 
     signOut: ->
       @setCurrentUser()

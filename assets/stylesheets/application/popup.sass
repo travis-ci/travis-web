@@ -1,0 +1,34 @@
+@import "_mixins/all"
+
+.help
+  display: inline-block
+  height: 19px
+  width: 16px
+  margin: -9px 0 0 4px
+  vertical-align: middle
+  background: inline-image('icons/help.png') no-repeat scroll 0 3px transparent
+  cursor: pointer
+
+.popup
+  top: 50%
+  left: 50%
+  width: 400px
+  margin: -230px 0 0 -200px
+  padding: 20px
+  @include popup
+
+  h4
+    margin-top: 0
+    font-size: 18px
+    font-weight: bold
+    color: $color-text
+
+  p
+    font-size: $font-size-normal
+
+  pre
+    background-color: $color-bg-pre
+    margin: 0
+    padding: 10px 20px
+    @include border-radius(4px)
+

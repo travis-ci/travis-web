@@ -1,0 +1,19 @@
+@import "_mixins/all"
+
+.loading
+  padding: 15px 25px 0 0
+  span
+    padding-right: 25px
+    font-size: $font-size-small
+    color: $color-text-lighter
+    background: inline-image('spinner.gif') no-repeat right 4px
+
+  .loading
+    display: none
+
+span.loading
+  padding: 0 25px 0 0
+  font-size: $font-size-small
+  color: $color-text-lighter
+  background: inline-image('spinner.gif') no-repeat right 4px
+

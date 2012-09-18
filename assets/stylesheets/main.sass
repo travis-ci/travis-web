@@ -1,16 +1,19 @@
-@import "_common"
+@import "_mixins/all"
 
 #main
   position: relative
+
+  h3
+    margin: 15px 60px 0 0
+    font-size: $font-size-huge
+    a
+      text-decoration: underline
 
 #home,
 #profile
   #main
     min-height: 1000px
     padding: 20px 280px 30px 450px
-
-    &.loading
-      opacity: .1
 
     &.maximized
       padding: 60px 100px 30px 440px

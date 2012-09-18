@@ -1,4 +1,4 @@
-@import "_common"
+@import "_mixins/all"
 
 .tabs
   height: 29px
@@ -8,28 +8,28 @@
     display: inline-block
     height: 28px
     margin-right: 10px
-    background-color: #f6f6f6
-    border: 1px solid #ccc
+    background-color: $color-bg-tab
+    border: 1px solid $color-border-light
     white-space: nowrap
     cursor: pointer
     @include border-top-radius(4px)
 
     &:hover
-      background-color: white
+      background-color: $color-bg-tab-hover
 
   .active
-    background-color: #fff
-    border-bottom-color: #fff
+    background-color: $color-bg-tab-active
+    border-bottom-color: $color-bg-tab-active
 
   h5
     margin: 0
-
-  h5 a
-    display: block
-    padding: 0 10px
-    line-height: 30px
-    font-size: 13px
+    font-size: $font-size-small
     font-weight: normal
+    line-height: 30px
+
+    a
+      display: block
+      padding: 0 10px
 
 #left
   .tabs

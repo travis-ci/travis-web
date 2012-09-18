@@ -1,36 +1,32 @@
-@import "_common"
-
-#main
-  .sponsor
-    float: left
-    margin-top: 1px
-    font-size: 13px
-    color: #999
+@import "_mixins/all"
 
 pre#log
   position: relative
   clear: left
   min-height: 12px
+  margin-top: 25px
+  margin-top: 1em
+  padding: 15px 0
+  color: $color-text-log
+  font-family: monospace
+  font-size: $font-size-log
+  line-height: $line-height-log
   white-space: pre-wrap
   word-wrap: break-word
-  line-height: 140%
-  font-size: 90%
-  margin-top: 25px
-  padding: 15px 0
-  color: white
-  background-color: #333
+  background-color: $color-bg-log
+  border: 1px solid $color-border-log
   @include border-radius(4px)
+  overflow-x: scroll
 
-  // deansi styles, see javascripts/lib/deansi.js
   p
     position: relative
     padding: 0 15px 0 50px
     margin: 0
     min-height: 16px
     &:hover
-      background-color: rgba(255, 255, 255, 0.05)
+      background-color: $color-bg-log-highlight
     &.highlight
-      background-color: rgba(255, 255, 255, 0.5)
+      background-color: $color-bg-log-highlight
     a
       position: absolute
       margin-left: -40px
@@ -39,70 +35,44 @@ pre#log
   .fold
     height: 16px
     overflow: hidden
-    background: #444 inline-image('icons/log.fold.closed.2.png') no-repeat 99.5% 2px
+    background: $color-bg-log-fold inline-image('icons/log.fold.closed.2.png') no-repeat 99.5% 2px
     cursor: pointer
     &.open
       height: auto
       background-image: inline-image('icons/log.fold.open.2.png')
 
-  .bold
-    font-weight: bold
-  .italic
-    font-style: italic
-  .underscore
-    /* monochrome displays only according to http://ascii-table.com/ansi-escape-sequences.php
-
-  .black
-    color: black
-  .red
-    color: red
-  .green
-    color: lime
-  .yellow
-    color: yellow
-  .blue
-    color: blue
-  .magenta
-    color: magenta
-  .cyan
-    color: cyan
-  .white
-    color: white
-  .black.bright
-    color: #999
-
-  .bg-black
-    background-color: black
-  .bg-red
-    background-color: red
-  .bg-green
-    background-color: lime
-  .bg-yellow
-    background-color: yellow
-  .bg-blue
-    background-color: blue
-  .bg-magenta
-    background-color: magenta
-  .bg-cyan
-    background-color: cyan
-  .bg-white
-    background-color: white
-
 #log.loading
   padding: 25px 0 0 10px
+
+#log::-webkit-scrollbar
+  height: 10px
+  width: 10px
+
+#log::-webkit-scrollbar-button:start:decrement,
+#log::-webkit-scrollbar-button:end:increment
+  display: none
+
+#log::-webkit-scrollbar-track-piece
+  background: #444
+  -webkit-border-radius: 4px
+
+#log::-webkit-scrollbar-thumb:horizontal
+  background: -webkit-gradient(linear, left top, left bottom, from(#85888E), to(#55585E))
+  -webkit-border-radius: 4px
+  width: 25px
 
 #log #tail
   z-index: 99
   position: absolute
   display: block
   top: 0
-  right: 0
-  margin: 10px 10px 0 0
+  right: 2px
+  margin: 13px 10px 0 0
   padding: 0 2px 0 3px
   color: #666
   text-shadow: 1px 1px 0px #fff
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
-  font-size: 11px
+  font-size: $font-size-tiny
   line-height: 14px
   text-decoration: none
   white-space: nowrap
@@ -132,4 +102,10 @@ pre#log
 
   &.active .status
     background-color: #6b0
+
+#main
+  .sponsor
+    float: left
+    margin-top: 1px
+    color: #999
 

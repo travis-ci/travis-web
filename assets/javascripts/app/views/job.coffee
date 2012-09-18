@@ -3,9 +3,6 @@
     templateName: 'jobs/list'
     buildBinding: 'controller.build'
 
-    toggleHelp: ->
-      $.facebox(div: '#allow_failure_help')
-
   JobsItemView: Travis.View.extend
     tagName: 'tr'
     classNameBindings: ['color']

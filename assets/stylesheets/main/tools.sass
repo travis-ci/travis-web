@@ -1,4 +1,4 @@
-@import "_common"
+@import "_mixins/all"
 
 #tools
   position: relative
@@ -19,10 +19,8 @@
     right: 0
     width: 600px
     padding: 10px 20px
-    border: 1px solid #CCC
-    background-color: #F2F4F9
-    font-size: 80%
-    color: #666
+    border: 1px solid $color-border-light
+    background-color: $color-bg-tools-pane
     @include border-bottom-radius(4px)
     @include single-box-shadow(rgba(black, 0.1), 1px, 3px, 5px)
 
@@ -32,7 +30,7 @@
         width: 80px
         display: inline-block
       input
-        border: 1px solid #DDD
+        border: 1px solid $color-border-light
         width: 505px
         padding: 4px
         @include border-radius(3px)

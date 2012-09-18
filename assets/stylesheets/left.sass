@@ -1,4 +1,4 @@
-@import "_common"
+@import "_mixins/all.sass"
 
 body#home,
 body#profile
@@ -12,17 +12,17 @@ body#profile
   #search_box
     height: 90px
     padding: 30px 20px 0 20px
-    background-color: #e5e8ee
+    background-color: $color-bg-dark
 
     input[type=text]
       height: 28px
       width: 97%
       padding: 0 0 0 10px
-      font-size: 10pt
-      color: #666
-      border: 1px solid #ddd
+      color: $color-text
+      font-size: $font-size-small
+      border: 1px solid $color-border-light
       @include border-radius(4px)
-      background: #fff inline-image('icons/search.png') no-repeat 335px 8px
+      background: $color-bg-input inline-image('icons/search.png') no-repeat 335px 8px
 
   .tabs
     #tab_owned

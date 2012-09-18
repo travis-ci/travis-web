@@ -1,28 +1,17 @@
-@import "_common"
+@import "_mixins/all"
 
 #profile
   #main
-    h3
-      margin: 15px 60px 0 0
-      font-size: 24px
-      line-height: 24px
-      color: #666
-
-    h4
-      font-size: 15px
-      color: #666
-
     img
       float: left
       width: 48px
       height: 48px
       margin: 3px 15px 0 0
       @include border-radius(4px)
+      background-color: $color-bg-light
 
     dl
       margin: 0 0 20px 18px
-      color: #666
-      font-size: 13px
 
     dt
       display: block
@@ -34,21 +23,14 @@
 
     .tip
       margin-top: -5px
-      font-size: 13px
-      color: #999
+      color: $color-text-light
 
     .message
       margin-top: 20px
       padding: 13px 20px
-      color: #999
-      font-weight: normal
-      font-size: 13px
+      color: $color-text-light
       border: 1px solid #DDD
       @include border-radius(4px)
 
       button.sync_now
         float: right
-
-    .highlight
-      color: #C7371A
-

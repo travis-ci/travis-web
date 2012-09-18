@@ -1,0 +1,20 @@
+@import "compass"
+@import "_mixins/ansi"
+@import "_mixins/colors"
+@import "_mixins/fonts"
+
+@mixin popup
+  display: none
+  position: absolute
+  z-index: 100
+  background-color: #fff
+  border: 10px solid rgba(0, 0, 0, .5)
+  @include background-clip(padding-box)
+  @include border-radius(10px)
+
+
+
+
+
+
+

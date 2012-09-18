@@ -1,4 +1,4 @@
-@import "_common"
+@import "_mixins/all"
 
 #right
   .sponsors
@@ -9,7 +9,7 @@
         overflow: hidden
         width: 205px
         margin: 0 0 8px 0
-        border: 1px solid #ddd
+        border: 1px solid $color-border-light
         @include border-radius(8px)
         list-style-type: none
 
@@ -35,7 +35,6 @@
     .silver
       h5
         margin: 0
-        font-size: 13px
       p
         margin: 0
 
@@ -45,13 +44,13 @@
       margin-left: 0
       padding-bottom: 12px
     a
-      color: #575c7c
+      color: $color-link-sponsor
       font-weight: bold
       text-decoration: none
 
   .hint
     margin: 0 0 0 2px
-    font-size: 10px
+    font-size: $font-size-tiniest
     text-align: left
 
 

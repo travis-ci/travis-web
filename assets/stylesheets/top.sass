@@ -1,9 +1,7 @@
-@import "_common"
+@import "_mixins/all"
 
 #top
-  color: #ccc
   line-height: 40px
-  font-size: 13px
   padding-right: 30px
   @include background(linear-gradient(#444, #111))
 
@@ -19,67 +17,66 @@
     list-style-type: none
 
   a
-    color: #ccc
+    color: $color-link-top
     text-decoration: none
 
-#home:not(.maximized)
-  #top
-    padding-right: 140px
-
-#navigation
   li
     display: inline-block
 
     &.active
-      background-color: black
+      background-color: $color-bg-link-top
       a
-        color: white
+        color: $color-link-top-highlight
 
     a
       display: block
       padding: 0 15px
       &:hover
-        color: white
+        color: $color-link-top-highlight
 
-  li.profile
-    position: relative
-    float: right
+    &.profile
+      position: relative
+      float: right
 
-    img
-      position: absolute
-      top: 7px
-      left: 15px
-      width: 24px
-      height: 24px
-      @include border-radius(3px)
+      img
+        position: absolute
+        top: 7px
+        left: 15px
+        width: 24px
+        height: 24px
+        @include border-radius(3px)
 
-    & > a
-      padding: 0 15px 0 54px
+      & > a
+        padding: 0 15px 0 54px
 
-    &:hover > ul
-      display: block
-
-    ul
-      display: none
-      position: absolute
-      z-index: 300
-      top: 40px
-      width: 100%
-      background-color: #444
-      @include border-bottom-radius(6px)
-      @include single-box-shadow(rgba(black, 0.3), 2px, 2px, 10px)
-
-      li
+      &:hover > ul
         display: block
 
-      li:last-child a:hover
-        @include border-bottom-radius(4px)
+      ul
+        display: none
+        position: absolute
+        z-index: 300
+        top: 40px
+        width: 100%
+        background-color: $color-bg-dropdown
+        @include border-bottom-radius(6px)
+        @include single-box-shadow(rgba(black, 0.3), 2px, 2px, 10px)
 
-      a
-        display: block
-        padding: 5px 0 5px 54px
-        line-height: 24px
-        white-space: nowrap
-        &:hover
-          background-color: #555
+        li
+          display: block
+
+        li:last-child a:hover
+          @include border-bottom-radius(4px)
+
+        a
+          display: block
+          padding: 5px 0 5px 54px
+          line-height: 24px
+          white-space: nowrap
+          &:hover
+            background-color: $color-bg-dropdown-highlight
+
+#home:not(.maximized)
+  #top
+    padding-right: 140px
 

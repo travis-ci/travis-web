@@ -1,22 +1,11 @@
-@import "_common"
+@import "_mixins/all"
 
 #repository
   position: relative
 
-  h3
-    margin: 15px 60px 0 0
-    a
-      font-size: 24px
-      line-height: 24px
-
-  a
-    color: #666
-    text-decoration: underline
-
   .description, .language
     font-weight: normal
-    font-size: 13px
-    color: #999
+    color: $color-text-light
 
   .language
     padding-right: 5px
@@ -30,13 +19,13 @@
     a
       height: 16px
       display: block
-      font-size: 12px
+      font-size: $font-size-smaller
       font-weight: bold
       text-decoration: none
       margin-left: 10px
       padding-left: 20px
       background: no-repeat 0px 2px
-      color: #999
+      color: $color-text-light
       &.watchers
         background-image: inline-image('icons/github-watchers.png')
       &.forks

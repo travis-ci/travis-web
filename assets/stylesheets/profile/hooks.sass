@@ -1,4 +1,4 @@
-@import "_common"
+@import "_mixins/all"
 
 #hooks
   // @include list-base
@@ -10,38 +10,40 @@
     padding: 10px
     white-space: nowrap
     overflow: hidden
-    border-bottom: 1px solid #DDD
+    border-bottom: 1px solid $color-border-light
 
     &:nth-child(3)
-      border-top: 1px solid #DDD
+      border-top: 1px solid $color-border-light
 
     &:nth-child(odd)
-      background-color: #FAFBFC
+      background-color: $color-bg-hooks-odd
+      .controls
+        background: $color-bg-hooks-odd
 
-    &:nth-child(odd) .controls
-      background: #fafbfc
+    &:nth-child(even)
+      background-color: $color-bg-hooks-even
+      .controls
+        background: $color-bg-hooks-even
 
     > a
       float: left
-      font-size: 16px
-      color: #666
+      font-size: $font-size-big
       text-decoration: none
 
     .description
       display: none
       margin-left: 10px
-      font-size: 12px
+      font-size: $font-size-smaller
       white-space: nowrap
       overflow: hidden
       text-overflow: ellipsis
-      color: #999
+      color: $color-text-light
 
     .controls
       position: absolute
       top: 10px
       right: 0
       white-space: nowrap
-      background: #fff
       a
         float: left
         display: block
@@ -66,7 +68,7 @@
 
     &:hover
       > a
-        color: #c7371a
+        color: $color-link-highlight
 
       .description
         display: inline
