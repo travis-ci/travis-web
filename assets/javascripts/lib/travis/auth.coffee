@@ -33,3 +33,4 @@ $.extend Travis.Auth.prototype,
 
   signIn: ->
     @trySignIn()
+    # TODO: timeout for redirect goes here
