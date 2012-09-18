@@ -1,7 +1,7 @@
 @Travis.Auth = ->
   $ =>
     @iframe.appendTo('body')
-    window.addEventListener("message", @receiveMessage)
+    window.addEventListener "message", (e) => @receiveMessage(e)
   this
 
 $.extend Travis.Auth,
@@ -24,6 +24,7 @@ $.extend Travis.Auth.prototype,
       console.log("unexpected message #{event.origin}: #{event.data}")
     else
       Travis.config.access_token = event.data
+      alert Travis.config.access_token
 
   trySignIn: ->
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
