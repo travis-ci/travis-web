@@ -22,7 +22,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: 759ad4d1139eb05629ac0c4d1d3b353644ccb0c4
+  revision: 3a64c87a7f76021dfd8021c3e63c13dae0371cfd
   branch: sf-use-services
   specs:
     travis-api (0.0.1)

@@ -23,8 +23,9 @@ $.extend Travis.Auth.prototype,
     if event.origin != @expectedOrigin()
       console.log("unexpected message #{event.origin}: #{event.data}")
     else
-      Travis.config.access_token = event.data
-      alert Travis.config.access_token
+      Travis.config.access_token = event.data.token
+      Travis.app.setCurrentUser(event.data.user)
+      alert event.data.user.login
 
   trySignIn: ->
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")

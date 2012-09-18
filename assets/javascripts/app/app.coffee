@@ -35,7 +35,7 @@ Travis.reopen
       @pusher = new Travis.Pusher()
       @tailing = new Travis.Tailing()
 
-      @setCurrentUser(JSON.parse($.cookie('user')))
+      #@setCurrentUser(JSON.parse($.cookie('user')))
 
     signIn: ->
       user = Travis.Auth.signIn()
@@ -48,7 +48,7 @@ Travis.reopen
 
     setCurrentUser: (data) ->
       data = JSON.parse(data) if typeof data == 'string'
-      $.cookie('user', JSON.stringify(data))
+      #$.cookie('user', JSON.stringify(data))
       if data
         @store.load(Travis.User, data.user)
         @store.loadMany(Travis.Account, data.accounts)
