@@ -8,9 +8,8 @@
   li
     position: relative
     font-size: $font-size-big
-    padding: 15px 25px 15px 45px
+    padding: 15px 20px 15px 0
     border-bottom: 1px solid $color-border-light
-    background-position: 24px 16px
     background-repeat: no-repeat
 
     &:nth-child(odd)
@@ -31,6 +30,7 @@
 
     .last_build
       float: right
+      font-size: $font-size-big
 
     .summary
       margin: 5px -5px 0 0
@@ -39,7 +39,7 @@
 
     .info
       overflow: hidden
-      margin: 12px -25px -15px -45px
+      margin: 12px -20px -15px -45px
       font-size: $font-size-small
       background-color: $color-bg-list-info
       color: $color-text-list-info
@@ -55,12 +55,12 @@
     &.selected .indicator
       display: block
       position: absolute
-      top: 0px
-      right: -17px
-      width: 17px
-      height: 100%
+      top: 25px
+      right: -15px
+      width: 15px
+      height: 25px
       background-repeat: no-repeat
-      background-position: center 21px
+      background-position: -2px -2px
 
   .loading
     padding: 15px 25px 15px 30px

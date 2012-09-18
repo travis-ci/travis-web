@@ -341,7 +341,7 @@ html {
 body {
   overflow-x: hidden;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 19px;
   margin: 0;
   padding: 0;
@@ -633,7 +633,7 @@ li {
 /* line 5, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/application/loading.sass */
 .loading span {
   padding-right: 25px;
-  font-size: 13px;
+  font-size: 12px;
   color: #aaaaaa;
   background: url('data:image/gif;base64,R0lGODlhEAAIAPMHAP///+vr66CgoN7e3rW1tYuLi/X19Wtra3t7e87OzsbGxqGhodfX142NjZaWlqurqyH/C05FVFNDQVBFMi4wAwEAAAAh/hoiQ3JlYXRlZCB3aXRoIENoaW1wbHkuY29tIgAh+QQACgD/ACwAAAAAEAAIAAADKXiq0P7glHmglRSMPUDgBlZUQ/B5ZhBOo2Z2qSqSL2qumaEbwK7PFkgCACH5BAAKAP8ALAAAAAAQAAgAAAQwsKCJwLkH6F2Er0dRZJvWfZaYBUNrnAKoAkEdvF6cjrSNoyGe7QaT8QxIpISyI5UiACH5BAAKAP8ALAAAAAAQAAgAAAQvcIkpALoInL0F+Y41ZUdhHh4oCqRZoB8RIqPmwirN2mcqr61ebFYrnSQUC4b3igAAIfkEAAoA/wAsAAAAABAACAAABDAQyCmqACijQpYnQEMQDWZxSgqKpFmhajiWyEmkyjq7ApzLrdqr8wHSThOKBaMpRAAAIfkEAAoA/wAsAAAAABAACAAABDMQyEmBuGKxxBl4y/IADmEKzKAmwMItpEmg6sC6CVye6dq+MV7tBtzNNp1PaGQUVJ6YTAQAIfkEAAoA/wAsAAAAABAACAAABC8QyEmrBSknQJYnxiAGgCIqnKKCQUuaA0qoCuuWZ7oa7pvPO4PQgNFwPAvCZQmIAAAh+QQACgD/ACwAAAAAEAAIAAAEKRDISau1LGlmhg+A5wGJyAUoOKADaRqpyrremYZzWRs8D/QGQGZzKQIiACH5BAAKAP8ALAAAAAAQAAgAAAMhCLrc/iyMGcCcQNLAueVD1o3eAIpk90koZ7wvABvyDEEJADs=') no-repeat right 4px;
 }
@@ -645,7 +645,7 @@ li {
 /* line 14, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/application/loading.sass */
 span.loading {
   padding: 0 25px 0 0;
-  font-size: 13px;
+  font-size: 12px;
   color: #aaaaaa;
   background: url('data:image/gif;base64,R0lGODlhEAAIAPMHAP///+vr66CgoN7e3rW1tYuLi/X19Wtra3t7e87OzsbGxqGhodfX142NjZaWlqurqyH/C05FVFNDQVBFMi4wAwEAAAAh/hoiQ3JlYXRlZCB3aXRoIENoaW1wbHkuY29tIgAh+QQACgD/ACwAAAAAEAAIAAADKXiq0P7glHmglRSMPUDgBlZUQ/B5ZhBOo2Z2qSqSL2qumaEbwK7PFkgCACH5BAAKAP8ALAAAAAAQAAgAAAQwsKCJwLkH6F2Er0dRZJvWfZaYBUNrnAKoAkEdvF6cjrSNoyGe7QaT8QxIpISyI5UiACH5BAAKAP8ALAAAAAAQAAgAAAQvcIkpALoInL0F+Y41ZUdhHh4oCqRZoB8RIqPmwirN2mcqr61ebFYrnSQUC4b3igAAIfkEAAoA/wAsAAAAABAACAAABDAQyCmqACijQpYnQEMQDWZxSgqKpFmhajiWyEmkyjq7ApzLrdqr8wHSThOKBaMpRAAAIfkEAAoA/wAsAAAAABAACAAABDMQyEmBuGKxxBl4y/IADmEKzKAmwMItpEmg6sC6CVye6dq+MV7tBtzNNp1PaGQUVJ6YTAQAIfkEAAoA/wAsAAAAABAACAAABC8QyEmrBSknQJYnxiAGgCIqnKKCQUuaA0qoCuuWZ7oa7pvPO4PQgNFwPAvCZQmIAAAh+QQACgD/ACwAAAAAEAAIAAAEKRDISau1LGlmhg+A5wGJyAUoOKADaRqpyrremYZzWRs8D/QGQGZzKQIiACH5BAAKAP8ALAAAAAAQAAgAAAMhCLrc/iyMGcCcQNLAueVD1o3eAIpk90koZ7wvABvyDEEJADs=') no-repeat right 4px;
 }
@@ -943,14 +943,14 @@ span.loading {
 /* line 3, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left.sass */
 body#home,
 body#profile {
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbQAAAAFCAIAAACit451AAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAXUlEQVRYCe3UsQ0AMQhD0csJCdEg9p+LWahTpWYAf7eueEg+M/MRBBBAQFKgu6sqMyPC3c3svPySIByNAAIILAKM4wJEjQACmgKMo+bfuRoBBBYBxnEBokYAAU2BCx/IBgej7Rj6AAAAAElFTkSuQmCC') repeat-y -27px top;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbQAAAAFCAIAAACit451AAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAXUlEQVRYCe3UsQ0AMQhD0csJCdEg9p+LWahTpWYAf7eueEg+M/MRBBBAQFKgu6sqMyPC3c3svPySIByNAAIILAKM4wJEjQACmgKMo+bfuRoBBBYBxnEBokYAAU2BCx/IBgej7Rj6AAAAAElFTkSuQmCC') repeat-y -47px top;
 }
 
 /* line 7, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left.sass */
 #left {
   position: absolute;
   z-index: 10;
-  width: 400px;
+  width: 380px;
 }
 /* line 12, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left.sass */
 #left #search_box {
@@ -964,14 +964,14 @@ body#profile {
   width: 97%;
   padding: 0 0 0 10px;
   color: #666666;
-  font-size: 13px;
+  font-size: 12px;
   border: 1px solid #dddddd;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: white url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAIAAAASSxgVAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAABTUlEQVQYGU2Qy8qCUBSF/2NWJiE4KO0CRg0MRNEwfI3eIJ8o38VniFRqVKMmXYiIwAYNxKKL/5Lscgae5drfWWfvQ5Ik+Xuv0+k0nU7n8/l2u5UkSVVVy7J4nicfKAxD13V9338fSXdAg8GAfllAgyAA0Wq1TNNst9ur1Wo2m8EURfELLRYLQgiO9vv9QqFQqVRyudxms4FPfZJ2ux3yNE1jWZZhmHK5DI0q/C/UbDZhLZdLmk7jEQMNAT+D8NPpdPAdj8ee58VxPJlMoOF0u92spyiKcDes9XqNliFeq9frGYaRQufzeTQaHY/HarWqKAq4/X7faDRkWdZ1vVar0SAcxzkcDhh1OBxyHPd4PO73ez6fLxaLpVIJk9KXy+V6vQqCYNt2vV5H7fW8eA6KSjuGIIDSISkKsZgcTtbOz0aez+ftdkMNGT/+VwL4ByFknYU4StqkAAAAAElFTkSuQmCC') no-repeat 335px 8px;
+  background: white url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAIAAAASSxgVAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAABTUlEQVQYGU2Qy8qCUBSF/2NWJiE4KO0CRg0MRNEwfI3eIJ8o38VniFRqVKMmXYiIwAYNxKKL/5Lscgae5drfWWfvQ5Ik+Xuv0+k0nU7n8/l2u5UkSVVVy7J4nicfKAxD13V9338fSXdAg8GAfllAgyAA0Wq1TNNst9ur1Wo2m8EURfELLRYLQgiO9vv9QqFQqVRyudxms4FPfZJ2ux3yNE1jWZZhmHK5DI0q/C/UbDZhLZdLmk7jEQMNAT+D8NPpdPAdj8ee58VxPJlMoOF0u92spyiKcDes9XqNliFeq9frGYaRQufzeTQaHY/HarWqKAq4/X7faDRkWdZ1vVar0SAcxzkcDhh1OBxyHPd4PO73ez6fLxaLpVIJk9KXy+V6vQqCYNt2vV5H7fW8eA6KSjuGIIDSISkKsZgcTtbOz0aez+ftdkMNGT/+VwL4ByFknYU4StqkAAAAAElFTkSuQmCC') no-repeat 315px 8px;
 }
 /* line 28, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left.sass */
 #left .tabs #tab_owned {
@@ -1183,33 +1183,36 @@ body#profile {
 #accounts li,
 #repositories li {
   position: relative;
-  font-size: 16px;
-  padding: 15px 25px 15px 45px;
+  font-size: 15px;
+  padding: 15px 20px 15px 0;
   border-bottom: 1px solid #dddddd;
-  background-position: 24px 16px;
   background-repeat: no-repeat;
 }
-/* line 16, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
+/* line 15, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li:nth-child(odd),
 #repositories li:nth-child(odd) {
   background-color: white;
 }
-/* line 18, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
+/* line 17, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li:nth-child(odd) .indicator,
 #repositories li:nth-child(odd) .indicator {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAdCAIAAADDzRDWAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkElEQVQ4EY3U247BQBjA8TVKaLXEI7hwiAu8/72EkDhc4GI9g1VpiWL/7cgo25nu3Kh2fvkO/aaF8Xhs247nubVazXGccrkshCgk60uzxHA4DMPgdDpdLpfr9Xq/3x+PB0SzP74tqtXqYDA4Jut8PitmMjyDjUajn2SFYQi73W5E0zEhH9i2TTTJcqM9DRLW7/cPhwPSzAofOZDbZrNpNpv1ep2cS6WSbGM6Tyv9h2v29Xq97Xar7v9ln0aybre72+10LMNI1ul0dCzbmNmrbyoTdUFtRJOdDJPXLRtmMioa3fePR4YriiKGK8dI1m63fd8PggBDqHwjWavVAkRRPFP/Muz93u8tyyoW4/35BrBerzlbtATGWOQYwGq1Yo5c161UKhiOlslI0Gg0MEywGiKt+QDqzGvrMYBsYwYZBrBcLilA1pBOid1yvdUDWCwWFM2i6EwAexnAfD43R3iLw7dmOp0qoNr6zOb9J45DhMlk4nmeTMkM2C8As9mM14xhOnQ1pCMJAEOBARDB/KWW8hcJOPb3fiZrUQAAAABJRU5ErkJggg==');
 }
-/* line 20, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
+/* line 19, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li:nth-child(even),
 #repositories li:nth-child(even) {
   background-color: #f6f6f6;
 }
-/* line 22, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
+/* line 21, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li:nth-child(even) .indicator,
 #repositories li:nth-child(even) .indicator {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAdCAIAAADDzRDWAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAABn0lEQVQ4EY2UzW6CUBBGK6Lgf/dutMYYff9ncG+iMWpideEaLKaogPbgUCoULs6CwOUevplv5lKaTqf1er3dbjebzUajUa1WNU0rPeItJ7TxeOy67ul0ulwunucFQXC/33M2R8uaYRij0egrDOd8Pvu+D6PGNFjTNCeTiW1bx+MRzev1qsZCRjCShCFQA7vdbnlqESPYcDi0bVswasvD9IdMdKG2wWCw3W5j3yqVitj4vO1PR1bB+v0Py7IQJMlMtTQDaZpGr9dXYBlMIZbNqLGEB1JSfJUkd7tPLJHRYLJ4q2Jitf1+B8YU4qGu67m5JdV6juN8f7tMFk0rZoBpQLfb9X3P9wMeX2IY9sPhUC6XOSUvMQCbzYajxTGTsSjQAViv151Oh0PJ+GNAaEZc6/8bAd4fUavVEAFQ5ZYC6AyARLaOAsjWUQMZDMBqtaJoqqCG55TighO5ASyXSzWQ0AFYLBbiEq3IVBCpSIdBms1mKBDSu1+TQnNTETIoCIBI3GxhUrvlUQOYz+etVotOS9HF/14AhgIGQEYj89vPiz8hmBME75QEJwAAAABJRU5ErkJggg==');
 }
+<<<<<<< HEAD
 /* line 25, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
+=======
+/* line 24, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+>>>>>>> tweak colors and font-sizes
 #accounts li .current,
 #repositories li .current {
   display: inline-block;
@@ -1218,24 +1221,29 @@ body#profile {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+<<<<<<< HEAD
 /* line 32, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
+=======
+/* line 31, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+>>>>>>> tweak colors and font-sizes
 #accounts li .last_build,
 #repositories li .last_build {
   float: right;
+  font-size: 15px;
 }
 /* line 35, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .summary,
 #repositories li .summary {
   margin: 5px -5px 0 0;
   color: #999999;
-  font-size: 13px;
+  font-size: 12px;
 }
 /* line 40, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .info,
 #repositories li .info {
   overflow: hidden;
-  margin: 12px -25px -15px -45px;
-  font-size: 13px;
+  margin: 12px -20px -15px -45px;
+  font-size: 12px;
   background-color: #fffcf4;
   color: #7f7f75;
   display: none;
@@ -1259,12 +1267,12 @@ body#profile {
 #repositories li.selected .indicator {
   display: block;
   position: absolute;
-  top: 0px;
-  right: -17px;
-  width: 17px;
-  height: 100%;
+  top: 25px;
+  right: -15px;
+  width: 15px;
+  height: 25px;
   background-repeat: no-repeat;
-  background-position: center 21px;
+  background-position: -2px -2px;
 }
 /* line 65, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/left/list.sass */
 #accounts .loading,
@@ -1383,7 +1391,7 @@ body#profile {
 #home #main,
 #profile #main {
   min-height: 1000px;
-  padding: 20px 280px 30px 450px;
+  padding: 20px 280px 30px 420px;
 }
 /* line 18, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/main.sass */
 #home #main.maximized,
@@ -1505,13 +1513,13 @@ table.list caption {
   margin-bottom: 8px;
   text-align: left;
   color: #666666;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
 }
 /* line 19, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/main/list.sass */
 table.list td, table.list th {
   text-align: left;
-  font-size: 13px;
+  font-size: 12px;
   padding: 5px 10px;
   vertical-align: top;
 }
@@ -2400,7 +2408,7 @@ pre#log .fold.open {
 /* line 28, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/profile/hooks.sass */
 #hooks li > a {
   float: left;
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: none;
 }
 /* line 33, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/profile/hooks.sass */
@@ -2789,7 +2797,7 @@ pre#log .fold.open {
 /* line 27, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/right/lists.sass */
 #right #workers li h5,
 #right #queues ul li h5 {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: normal;
   margin: 0px;
   cursor: pointer;
@@ -3309,6 +3317,7 @@ pre#log .fold.open {
   background-color: white;
 }
 
+<<<<<<< HEAD
 /* line 89, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .black {
   background-color: black;
@@ -3410,41 +3419,170 @@ pre#log .fold.open {
   background-color: #7f7f75;
 }
 /* line 142, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/_mixins/colors.sass */
+=======
+/* line 89, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .black {
+  background-color: black;
+}
+/* line 91, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .white {
+  background-color: white;
+}
+/* line 94, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .green {
+  background-color: #108100;
+}
+/* line 96, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .green-light-1 {
+  background-color: #dcffdc;
+}
+/* line 98, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .green-light-3 {
+  background-color: #fafffa;
+}
+/* line 100, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .red {
+  background-color: #cc0000;
+}
+/* line 102, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .red-medium-1 {
+  background-color: #c7371a;
+}
+/* line 104, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .red-light-1 {
+  background-color: #ffdcdc;
+}
+/* line 106, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .red-light-3 {
+  background-color: snow;
+}
+/* line 108, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .yellow-light-1 {
+  background-color: #ffffe1;
+}
+/* line 110, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .yellow-light-2 {
+  background-color: #fffcf4;
+}
+/* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-dark-1 {
+  background-color: #333333;
+}
+/* line 115, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-dark-2 {
+  background-color: #444444;
+}
+/* line 117, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-dark-3 {
+  background-color: #666666;
+}
+/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-medium-1 {
+  background-color: #999999;
+}
+/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-medium-2 {
+  background-color: #aaaaaa;
+}
+/* line 123, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-medium-3 {
+  background-color: #cccccc;
+}
+/* line 125, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-light-1 {
+  background-color: #dddddd;
+}
+/* line 127, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-light-2 {
+  background-color: #efefef;
+}
+/* line 129, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .gray-light-3 {
+  background-color: #f6f6f6;
+}
+/* line 132, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .slate-blue-1 {
+  background-color: #e1e2e6;
+}
+/* line 134, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .slate-blue-2 {
+  background-color: #e5e8ee;
+}
+/* line 136, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .slate-blue-3 {
+  background-color: #f2f4f9;
+}
+/* line 138, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .slate-blue-4 {
+  background-color: #fafbfc;
+}
+/* line 140, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+#colors .slate-yellow-1 {
+  background-color: #7f7f75;
+}
+/* line 142, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+>>>>>>> tweak colors and font-sizes
 #colors .slate-yellow-2 {
   background-color: #bab9a7;
 }
 
+<<<<<<< HEAD
 /* line 3, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/status.sass */
+=======
+/* line 3, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+#repositories li {
+  padding-left: 39px;
+  background-position: 21px 19px;
+}
+
+/* line 7, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+#summary .number a,
+table.list .number a {
+  padding-left: 18px;
+  background-position: 1px 1px;
+}
+
+/* line 12, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+>>>>>>> tweak colors and font-sizes
 #repositories li,
 #summary .number a,
 table.list .number a {
-  background-image: url('data:image/png;base64,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');
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAMAAACecocUAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUYwMDUzQUZGOUNBMTFFMTlBODBGRThGNzUyODQ3MjciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUYwMDUzQjBGOUNBMTFFMTlBODBGRThGNzUyODQ3MjciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpFRjAwNTNBREY5Q0ExMUUxOUE4MEZFOEY3NTI4NDcyNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpFRjAwNTNBRUY5Q0ExMUUxOUE4MEZFOEY3NTI4NDcyNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Puc5H50AAAAYUExURefRAO/gVe7eSvjxsP788enTDPz53v///1nZIfYAAAAIdFJOU/////////8A3oO9WQAAADlJREFUeNpUjVsKACAQAt2n979xRbSYX6OIgsywskgSbMeRN5EXt0kEngI2bKjh+nLt647uy+8SYAA2JADRzTgR5AAAAABJRU5ErkJggg==');
   background-repeat: no-repeat;
 }
 
-/* line 9, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/status.sass */
+/* line 18, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories li.green,
 .green #summary .number a,
 table.list .green .number a {
-  background-image: url('data:image/png;base64,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');
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAMAAACecocUAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUYwMDUzQUJGOUNBMTFFMTlBODBGRThGNzUyODQ3MjciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUYwMDUzQUNGOUNBMTFFMTlBODBGRThGNzUyODQ3MjciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpFRjAwNTNBOUY5Q0ExMUUxOUE4MEZFOEY3NTI4NDcyNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpFRjAwNTNBQUY5Q0ExMUUxOUE4MEZFOEY3NTI4NDcyNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pig+8PsAAAAYUExURWe8AJrSVdDqsPf78ZPPSuv23m6/DP///3Vie0kAAAAIdFJOU/////////8A3oO9WQAAADlJREFUeNpUjVsKACAQAt2n979xRbSYX6OIggy3Ng8SrMRRFhEXtwk4nhw2bOjh/nLt647uy+8SYAA2JADR/pbYRAAAAABJRU5ErkJggg==');
   color: #108100;
   background-repeat: no-repeat;
 }
 
+<<<<<<< HEAD
 /* line 16, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/status.sass */
+=======
+/* line 25, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+>>>>>>> tweak colors and font-sizes
 #repositories li.green a {
   color: #108100;
 }
 
+<<<<<<< HEAD
 /* line 19, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/status.sass */
+=======
+/* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+>>>>>>> tweak colors and font-sizes
 #repositories li.red,
 .red #summary .number a,
 table.list .red .number a {
-  background-image: url('data:image/png;base64,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');
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAMAAACecocUAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjExRDkxNjZGOUNCMTFFMTlBODBGRThGNzUyODQ3MjciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjExRDkxNjdGOUNCMTFFMTlBODBGRThGNzUyODQ3MjciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyMTFEOTE2NEY5Q0IxMUUxOUE4MEZFOEY3NTI4NDcyNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyMTFEOTE2NUY5Q0IxMUUxOUE4MEZFOEY3NTI4NDcyNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjjTDloAAAAYUExURdZBEeSBYfLEteF4Vv308thJHPrm4P///8zlufIAAAAIdFJOU/////////8A3oO9WQAAADlJREFUeNpUjVsKACAQAt2n979xRbSYX6OIgky3Mk8S7MBRNJEXt0k4nhw2bKjh+nLt647uy+8SYAA2JADRGsoSUQAAAABJRU5ErkJggg==');
   color: #cc0000;
   background-repeat: no-repeat;
 }
 
+<<<<<<< HEAD
 /* line 26, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/status.sass */
 #repositories li.red a {
   color: #cc0000;
@@ -3457,10 +3595,19 @@ table.list .number a {
 }
 
 /* line 35, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/status.sass */
+=======
+/* line 35, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+#repositories li.red a {
+  color: #cc0000;
+}
+
+/* line 40, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+>>>>>>> tweak colors and font-sizes
 table.list tbody td {
   cursor: pointer;
   background-color: #fffcf4;
 }
+<<<<<<< HEAD
 /* line 38, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/status.sass */
 table.list tbody tr:hover td {
   background-color: #ffffe1;
@@ -3486,6 +3633,33 @@ table.list .red:hover td {
   background-color: #ffdcdc;
 }
 /* line 54, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/status.sass */
+=======
+/* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+table.list tbody tr:hover td {
+  background-color: #ffffe1;
+}
+/* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+table.list .green td {
+  background-color: #fafffa;
+}
+/* line 49, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+table.list .green:hover td {
+  background-color: #dcffdc;
+}
+/* line 51, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+table.list .green .number a {
+  color: #108100;
+}
+/* line 55, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+table.list .red td {
+  background-color: snow;
+}
+/* line 57, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+table.list .red:hover td {
+  background-color: #ffdcdc;
+}
+/* line 59, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+>>>>>>> tweak colors and font-sizes
 table.list .red .number a {
   color: #cc0000;
 }
@@ -3599,7 +3773,7 @@ table.list .red .number a {
 /* line 24, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/tabs.sass */
 .tabs h5 {
   margin: 0;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: normal;
   line-height: 30px;
 }
@@ -3725,8 +3899,9 @@ table.list .red .number a {
   background: -moz-linear-gradient(#444444, #111111);
   background: -o-linear-gradient(#444444, #111111);
   background: linear-gradient(#444444, #111111);
+  font-size: 14px;
 }
-/* line 8, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 9, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top h1 {
   float: left;
   width: 73px;
@@ -3735,42 +3910,42 @@ table.list .red .number a {
   text-indent: -9999px;
   background: url('data:image/png;base64,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') no-repeat;
 }
-/* line 16, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 17, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top ul {
   list-style-type: none;
 }
-/* line 19, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 20, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top a {
   color: #cccccc;
   text-decoration: none;
 }
-/* line 23, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 24, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li {
   display: inline-block;
 }
-/* line 26, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 27, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.active {
   background-color: black;
 }
-/* line 28, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 29, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.active a {
   color: white;
 }
-/* line 31, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 32, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li a {
   display: block;
   padding: 0 15px;
 }
-/* line 34, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 35, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li a:hover {
   color: white;
 }
-/* line 37, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 38, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile {
   position: relative;
   float: right;
 }
-/* line 41, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 42, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile img {
   position: absolute;
   top: 7px;
@@ -3783,15 +3958,15 @@ table.list .red .number a {
   -o-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 49, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 50, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile > a {
   padding: 0 15px 0 54px;
 }
-/* line 52, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 53, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile:hover > ul {
   display: block;
 }
-/* line 55, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 56, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile ul {
   display: none;
   position: absolute;
@@ -3809,11 +3984,11 @@ table.list .red .number a {
   -moz-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
-/* line 65, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 66, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile ul li {
   display: block;
 }
-/* line 68, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 69, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile ul li:last-child a:hover {
   -moz-border-radius-bottomleft: 4px;
   -webkit-border-bottom-left-radius: 4px;
@@ -3822,19 +3997,19 @@ table.list .red .number a {
   -webkit-border-bottom-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-/* line 71, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 72, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile ul a {
   display: block;
   padding: 5px 0 5px 54px;
   line-height: 24px;
   white-space: nowrap;
 }
-/* line 76, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 77, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #top li.profile ul a:hover {
   background-color: #666666;
 }
 
-/* line 80, /Users/konstantin/Workspace/travis-ember/assets/stylesheets/top.sass */
+/* line 81, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
 #home:not(.maximized) #top {
   padding-right: 140px;
 }
