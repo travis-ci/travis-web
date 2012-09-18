@@ -65,8 +65,8 @@
     userBinding: 'controller.user'
 
     gravatarUrl: (->
-      "http://www.gravatar.com/avatar/#{@get('user.gravatar')}?s=48&d=mm"
-    ).property('user.gravatar')
+      "http://www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
+    ).property('user.gravatarId')
 
     locales: (->
       [

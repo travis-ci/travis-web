@@ -15,7 +15,7 @@ $.extend Travis.Auth.prototype,
 
   expectedOrigin: ->
     if Travis.config.api_endpoint[0] == '/'
-      window.location.protocol + "://" + window.location.host
+      window.location.protocol + "//" + window.location.host
     else
       Travis.config.api_endpoint
 
@@ -24,8 +24,8 @@ $.extend Travis.Auth.prototype,
       console.log("unexpected message #{event.origin}: #{event.data}")
     else
       Travis.config.access_token = event.data.token
-      Travis.app.setCurrentUser(event.data.user)
-      console.log('sign in!')
+      Travis.app.setCurrentUser(event.data)
+      console.log("signed in as #{event.data.user.login}")
 
   trySignIn: ->
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
