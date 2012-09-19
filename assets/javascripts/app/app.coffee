@@ -53,9 +53,9 @@ Travis.reopen
 
     setCurrentUser: (data) ->
       data = JSON.parse(data) if typeof data == 'string'
-      localStorage?.setItem("travisTrySignIn", "true")
-      sessionStorage?.setItem("travisUser", JSON.stringify(data))
       if data
+        localStorage?.setItem("travisTrySignIn", "true")
+        sessionStorage?.setItem("travisUser", JSON.stringify(data))
         @store.load(Travis.User, data.user)
         @store.loadMany(Travis.Account, data.accounts)
       @set('currentUser', if data then Travis.User.find(data.user.id) else undefined)
