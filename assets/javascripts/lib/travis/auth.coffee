@@ -15,6 +15,7 @@ $.extend Travis.Auth,
 
 $.extend Travis.Auth.prototype,
   iframe: $('<iframe id="auth-frame" />').hide()
+  timeout: 10000
 
   expectedOrigin: ->
     if Travis.config.api_endpoint[0] == '/'
@@ -33,6 +34,12 @@ $.extend Travis.Auth.prototype,
   trySignIn: ->
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
 
+    # TODO: use views
+    link = $("#navigation .profile")
+    html = link.html()
+    link.html("Signing in with GitHub...")
+    window.setTimeout((-> link.html(html)), @timeout)
+
   newUser: ->
     localStorage?.setItem("travisTrySignIn", "true")
     url = "#{Travis.config.api_endpoint}/auth/handshake?redirect_uri=#{window.location}"
@@ -43,4 +50,4 @@ $.extend Travis.Auth.prototype,
 
   signIn: ->
     @trySignIn()
-    window.setTimeout((=> @checkUser()), 10000)
+    window.setTimeout((=> @checkUser()), @timeout)
