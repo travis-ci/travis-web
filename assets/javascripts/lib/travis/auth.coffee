@@ -34,11 +34,11 @@ $.extend Travis.Auth.prototype,
   trySignIn: ->
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
 
-    # TODO: use views
-    link = $("#navigation .profile")
-    html = link.html()
-    link.html("Signing in with GitHub...")
-    window.setTimeout((-> link.html(html)), @timeout)
+    # # TODO: use views
+    # link = $("#navigation .profile")
+    # html = link.html()
+    # link.html("Signing in with GitHub...")
+    # window.setTimeout((-> link.html(html)), @timeout)
 
   newUser: ->
     localStorage?.setItem("travisTrySignIn", "true")

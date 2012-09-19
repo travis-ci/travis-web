@@ -21,8 +21,16 @@ require 'travis/auth'
     ).property('tab')
 
     classProfile: (->
-      if @get('tab') == 'profile' then 'profile active' else 'profile'
-    ).property('tab')
+      classes = ['profile']
+      classes.push('active') if @get('tab') == 'profile'
+      if Travis.app.get('currentUser')
+        classes.push('signed-in')
+      else if Travis.app.get('signingIn')
+        classes.push('signing-in')
+      else
+        classes.push('sign-in')
+      classes.join(' ')
+    ).property('tab', 'Travis.app.currentUser', 'Travis.app.signingIn')
 
     showProfile: ->
       $('#top .profile ul').show()

@@ -41,6 +41,7 @@ Travis.reopen
         Travis.Auth.trySignIn()
 
     signIn: ->
+      @set('signingIn', true)
       Travis.Auth.signIn()
       # TODO: this has to mov, no?
       @render.apply(this, @get('returnTo') || ['home', 'index'])
@@ -59,6 +60,7 @@ Travis.reopen
         @store.load(Travis.User, data.user)
         @store.loadMany(Travis.Account, data.accounts)
       @set('currentUser', if data then Travis.User.find(data.user.id) else undefined)
+      @set('signingIn', false)
 
     render: (name, action, params) ->
       layout = @connectLayout(name)

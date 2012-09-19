@@ -17,7 +17,7 @@
   ul
     list-style-type: none
 
-  a
+  a, span
     color: $color-link-top
     text-decoration: none
 
@@ -29,53 +29,72 @@
       a
         color: $color-link-top-highlight
 
-    a
+    a, span
       display: block
       padding: 0 15px
       &:hover
         color: $color-link-top-highlight
 
-    &.profile
-      position: relative
-      float: right
+  .profile
+    position: relative
+    float: right
+    width: 150px
 
-      img
-        position: absolute
-        top: 7px
-        left: 15px
-        width: 24px
-        height: 24px
-        @include border-radius(3px)
+    .handle
+      margin: 0
 
-      & > a
-        padding: 0 15px 0 54px
+    .signed-in, .signing-in, .sign-in
+      display: none
+    &.signed-in .signed-in
+      display: block
+    &.signing-in .signing-in
+      display: inline-block
+    &.sign-in .sign-in
+      display: block
 
-      &:hover > ul
+    .signed-in
+      padding-left: 54px
+    .signing-in
+      padding-right: 25px
+      background: inline-image('spinner.gif') no-repeat right 16px
+
+    img
+      position: absolute
+      top: 7px
+      left: 15px
+      width: 24px
+      height: 24px
+      @include border-radius(3px)
+
+    &.signed-in:hover > ul
+      display: block
+
+    ul
+      display: none
+      position: absolute
+      z-index: 300
+      top: 40px
+      width: 100%
+      background-color: $color-bg-dropdown
+      @include border-bottom-radius(6px)
+      @include single-box-shadow(rgba(black, 0.3), 2px, 2px, 10px)
+
+      li
         display: block
+        float: left
+        clear: left
 
-      ul
-        display: none
-        position: absolute
-        z-index: 300
-        top: 40px
-        width: 100%
-        background-color: $color-bg-dropdown
-        @include border-bottom-radius(6px)
-        @include single-box-shadow(rgba(black, 0.3), 2px, 2px, 10px)
+      li:last-child a:hover
+        @include border-bottom-radius(4px)
 
-        li
-          display: block
-
-        li:last-child a:hover
-          @include border-bottom-radius(4px)
-
-        a
-          display: block
-          padding: 5px 0 5px 54px
-          line-height: 24px
-          white-space: nowrap
-          &:hover
-            background-color: $color-bg-dropdown-highlight
+      a
+        display: block
+        width: 96px
+        padding: 5px 0 5px 54px
+        line-height: 24px
+        white-space: nowrap
+        &:hover
+          background-color: $color-bg-dropdown-highlight
 
 #home:not(.maximized)
   #top

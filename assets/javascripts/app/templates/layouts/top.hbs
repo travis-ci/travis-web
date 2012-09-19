@@ -15,24 +15,19 @@
   <li>
     <a href="http://about.travis-ci.org/docs">Docs</a>
   </li>
-  {{#if user}}
-    <li {{bindAttr class="view.classProfile"}}>
-      <a href="#" class="name">
-        <img {{bindAttr src="view.gravatarUrl"}}>
-        {{user.name}}
-      </a>
-      <ul>
-        <li>
-          <a href="/profile" class="profile" {{action route}}>{{t layouts.top.profile}}</a>
-        </li>
-        <li>
-          <a href="/" class="signout" {{action signOut target="Travis.app"}}>{{t layouts.top.sign_out}}</a>
-        </li>
-      </ul>
-    </li>
-  {{else}}
-    <li {{bindAttr class="view.classProfile"}}>
-      <a href="#" {{action signIn target="Travis.app"}}>{{t layouts.top.github_login}}</a>
-    </li>
-  {{/if}}
+  <li {{bindAttr class="view.classProfile"}}>
+    <p class="handle">
+      <a class="signed-in" href="#" class="name"><img {{bindAttr src="view.gravatarUrl"}}>{{user.name}}</a>
+      <a class="sign-in" href="#" {{action signIn target="Travis.app"}}>{{t layouts.top.github_login}}</a>
+      <span class="signing-in">Signing in</span>
+    </p>
+    <ul>
+      <li>
+        <a href="/profile" class="profile" {{action route}}>{{t layouts.top.profile}}</a>
+      </li>
+      <li>
+        <a href="/" class="signout" {{action signOut target="Travis.app"}}>{{t layouts.top.sign_out}}</a>
+      </li>
+    </ul>
+  </li>
 </ul>
