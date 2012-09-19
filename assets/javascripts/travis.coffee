@@ -20,6 +20,7 @@ require 'ext/ember/namespace'
     ':owner/:name/branches':       ['home', 'branches']
     ':owner/:name':                ['home', 'current']
     '':                            ['home', 'index']
+    '#':                           ['home', 'index']
 
   QUEUES: [
     { name: 'common',  display: 'Common' }
