@@ -43,4 +43,4 @@ $.extend Travis.Auth.prototype,
 
   signIn: ->
     @trySignIn()
-    window.setTimeout((=> @checkUser()), 15000)
+    window.setTimeout((=> @checkUser()), 10000)
