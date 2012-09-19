@@ -51,22 +51,10 @@
     &.open ul
       display: block
 
-    .icon
-      clear: left
-      float: left
+    .status
+      display: inline-block
       width: 8px
       height: 8px
-      margin: 6px 6px 0 0
-      -moz-border-radius: 8px
-      -webkit-border-radius: 8px
-      background: inline-image('icons/status.square.green.png')
-
-    &.waiting .icon
-      background: inline-image('icons/status.square.green.png')
-
-    &.errored .icon
-      background: inline-image('icons/status.square.red.png')
-
-    &.stopped .icon
-      background: inline-image('icons/status.square.gray.png')
+      margin-right: 3px
+      @include border-radius(4px)
 

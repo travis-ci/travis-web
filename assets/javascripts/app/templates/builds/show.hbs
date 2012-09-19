@@ -5,8 +5,8 @@
         <div class="left">
           <dt>{{t builds.name}}</dt>
           <dd class="number">
+            <span class="status"></span>
             <a {{bindAttr href="urlBuild"}} {{action route}}>
-              <span class="status"></span>
               {{build.number}}
             </a>
           </dd>
