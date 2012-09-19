@@ -14,7 +14,7 @@
           {{#each worker in group}}
             {{#view Travis.WorkersItemView workerBinding="worker"}}
               <li class="worker">
-                <div class="icon"></div>
+                <div class="status"></div>
                 {{#if worker.isWorking}}
                   <a {{bindAttr href="worker.urlJob"}} {{bindAttr title="worker.lastSeenAt"}} {{action route}}>
                     {{view.display}}
