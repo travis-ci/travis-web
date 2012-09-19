@@ -31,7 +31,14 @@ Travis.reopen
       @pusher = new Travis.Pusher()
       @tailing = new Travis.Tailing()
 
-      # @setCurrentUser(JSON.parse($.cookie('user')))
+      @loadUser()
+
+    loadUser: ->
+      user = sessionStorage?.getItem("travisUser")
+      if user
+        @setCurrentUser JSON.parse(user)
+      else if localStorage?.getItem("travisTrySignIn")
+        Travis.Auth.trySignIn()
 
     signIn: ->
       Travis.Auth.signIn()
@@ -40,11 +47,14 @@ Travis.reopen
 
     signOut: ->
       Travis.config.access_token = null
+      localStorage?.clear()
+      sessionStorage?.clear()
       @setCurrentUser()
 
     setCurrentUser: (data) ->
       data = JSON.parse(data) if typeof data == 'string'
-      # $.cookie('user', JSON.stringify(data))
+      localStorage?.setItem("travisTrySignIn", "true")
+      sessionStorage?.setItem("travisUser", JSON.stringify(data))
       if data
         @store.load(Travis.User, data.user)
         @store.loadMany(Travis.Account, data.accounts)

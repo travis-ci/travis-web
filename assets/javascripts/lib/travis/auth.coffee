@@ -10,6 +10,9 @@ $.extend Travis.Auth,
   signIn: ->
     @instance.signIn()
 
+  trySignIn: ->
+    @instance.trySignIn()
+
 $.extend Travis.Auth.prototype,
   iframe: $('<iframe id="auth-frame" />').hide()
 
@@ -31,6 +34,7 @@ $.extend Travis.Auth.prototype,
     @iframe.attr('src', "#{Travis.config.api_endpoint}/auth/post_message")
 
   newUser: ->
+    localStorage?.setItem("travisTrySignIn", "true")
     url = "#{Travis.config.api_endpoint}/auth/handshake?redirect_uri=#{window.location}"
     window.location = url
 
