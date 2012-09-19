@@ -7,23 +7,26 @@
   margin-right: 2px
   @include border-radius(5px)
 
-#repositories a,
-.number a
-  color: $color-text-status-pending
+#repositories,
+.number
   .status
     background-color: $color-bg-status-pending
+  a
+    color: $color-text-status-pending
 
-#repositories .green a,
-.green .number a
-  color: $color-text-status-passed
+#repositories .green,
+.green .number
   .status
     background-color: $color-bg-status-passed
+  a
+    color: $color-text-status-passed
 
-#repositories .red a,
-.red .number a
-  color: $color-text-status-failed
+#repositories .red,
+.red .number
   .status
     background-color: $color-bg-status-failed
+  a
+    color: $color-text-status-failed
 
 table.list
   tbody

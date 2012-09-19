@@ -15,6 +15,7 @@
         {{#view Travis.BuildsItemView contextBinding="build"}}
           <tr {{bindAttr class="view.color"}}>
             <td class="number">
+              <span class="status"></span>
               <a {{bindAttr href="view.urlBuild"}} {{action route}}>
                 {{number}}
               </a>
