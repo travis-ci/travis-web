@@ -1,0 +1,44 @@
+@import "_mixins/all"
+
+body > div
+  display: table
+  width: 100%
+  height: 100%
+  overflow: hidden
+
+#left, #main, #right
+  display: table-cell
+  position: relative
+
+#left
+  width: 30%
+  padding-right: 10px
+  background: inline-image('ui/background-left.png') repeat-y right top
+
+#main
+  padding: 20px 48px 40px 32px
+  width: 70%
+  &.maximized
+    padding: 60px 100px 30px 440px
+
+#right
+  width: 205px
+  padding: 20px 20px 20px 10px
+  background-color: $color-bg-sidebar
+  border-bottom: 1px solid $color-border-light
+  // @include transition(width .1s ease-out)
+
+
+.duration_label
+  display: inline-block
+  width: 12px
+  height: 11px
+  text-indent: -200px
+  overflow: hidden
+  background: inline-image('icons/clock.png') no-repeat 1px 2px
+
+@media screen and (min-width: 1440px)
+  .duration_label
+    display: inline
+    background: none
+

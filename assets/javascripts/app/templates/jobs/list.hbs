@@ -22,8 +22,10 @@
       {{#each job in view.jobs}}
         {{#view Travis.JobsItemView contextBinding="job"}}
           <td class="number">
-            <span class="status"></span>
-            <a {{bindAttr href="view.urlJob"}} {{action route}}>{{number}}</a>
+            <a {{bindAttr href="view.urlJob"}} {{action route}}>
+              <span class="status"></span>
+              {{number}}
+            </a>
           </td>
           <td class="duration" {{bindAttr title="startedAt"}}>
             {{formatDuration duration}}

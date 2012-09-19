@@ -1,39 +1,29 @@
 @import "_mixins/all"
 
-#repositories li
-  padding-left: 39px
-  background-position: 21px 19px
+.status
+  display: inline-block
+  width: 10px
+  height: 10px
+  margin-right: 2px
+  @include border-radius(5px)
 
-#summary .number a,
-table.list .number a
-  padding-left: 18px
-  background-position: 1px 1px
+#repositories a,
+.number a
+  color: $color-text-status-pending
+  .status
+    background-color: $color-bg-status-pending
 
-#repositories li,
-#summary .number a,
-table.list .number a
-  background-image: inline-image('icons/status.yellow.png')
-  background-repeat: no-repeat
-
-#repositories li.green,
-.green #summary .number a,
-table.list .green .number a
-  background-image: inline-image('icons/status.green.png')
+#repositories .green a,
+.green .number a
   color: $color-text-status-passed
-  background-repeat: no-repeat
+  .status
+    background-color: $color-bg-status-passed
 
-#repositories li.green a
-  color: $color-text-status-passed
-
-#repositories li.red,
-.red #summary .number a,
-table.list .red .number a
-  background-image: inline-image('icons/status.red.png')
+#repositories .red a,
+.red .number a
   color: $color-text-status-failed
-  background-repeat: no-repeat
-
-#repositories li.red a
-  color: $color-text-status-failed
+  .status
+    background-color: $color-bg-status-failed
 
 table.list
   tbody

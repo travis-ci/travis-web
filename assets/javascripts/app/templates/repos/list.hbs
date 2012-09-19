@@ -10,8 +10,10 @@
   {{#collection Travis.RepositoriesListView contentBinding="controller"}}
     {{#with view.repository}}
       <div class="heading">
-        <span class="status"></span>
-        <a {{bindAttr href="view.urlRepository"}} {{action route}} class="slug">{{slug}}</a>
+        <a {{bindAttr href="view.urlRepository"}} {{action route}} class="slug">
+          <span class="status"></span>
+          {{slug}}
+        </a>
         <a {{bindAttr href="view.urlLastBuild"}} {{action route}} class="last_build">{{lastBuildNumber}}</a>
       </div>
 
