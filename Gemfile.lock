@@ -22,7 +22,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: 3ddb2da33b29542aa093bcf0d28b324e6b38dcd4
+  revision: 8954eaa081b7b3c4a6449343eaf10d7c8d3c5c46
   branch: sf-use-services
   specs:
     travis-api (0.0.1)
@@ -30,6 +30,7 @@ GIT
       hubble (~> 0.1)
       newrelic_rpm (~> 3.3.0)
       pg (~> 0.13.2)
+      rack-contrib (~> 1.1)
       rack-ssl (~> 1.3)
       redcarpet (~> 2.1)
       sinatra (~> 1.3)
@@ -174,6 +175,8 @@ GEM
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-protection (1.2.0)
       rack
     rack-ssl (1.3.2)

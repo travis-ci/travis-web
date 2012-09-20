@@ -41,7 +41,7 @@ class EndpointSetter < Struct.new(:app, :endpoint)
   end
 end
 
-
+use Rack::SSL      if env == 'production'
 use Rack::Deflater if deflate and deflate != '0'
 
 app = proc do |env|
