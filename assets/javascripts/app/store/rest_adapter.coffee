@@ -30,7 +30,7 @@ jQuery.support.cors = true
 
   ajax: (url, method, options) ->
     endpoint = Travis.config.api_endpoint || ''
-    if Travis.config.access_token
+    if access_token = Travis.app.get('accessToken')
       options.headers ||= {}
-      options.headers['Authorization'] ||= "token #{Travis.config.access_token}"
+      options.headers['Authorization'] ||= "token #{access_token}"
     @_super("#{endpoint}#{url}", method, $.extend(options, @DEFAULT_OPTIONS))

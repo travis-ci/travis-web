@@ -1,5 +1,3 @@
-require 'travis/auth'
-
 @Travis.reopen
   TopView: Travis.View.extend
     templateName: 'layouts/top'
@@ -23,14 +21,9 @@ require 'travis/auth'
     classProfile: (->
       classes = ['profile']
       classes.push('active') if @get('tab') == 'profile'
-      if Travis.app.get('currentUser')
-        classes.push('signed-in')
-      else if Travis.app.get('signingIn')
-        classes.push('signing-in')
-      else
-        classes.push('sign-in')
+      classes.push(Travis.app.get('authState'))
       classes.join(' ')
-    ).property('tab', 'Travis.app.currentUser', 'Travis.app.signingIn')
+    ).property('tab', 'Travis.app.authState')
 
     showProfile: ->
       $('#top .profile ul').show()

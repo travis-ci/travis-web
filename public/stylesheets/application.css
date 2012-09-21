@@ -6628,11 +6628,11 @@ table.list .red .number a {
   margin: 0;
 }
 /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
-#top .profile .signed-in, #top .profile .signing-in, #top .profile .sign-in {
+#top .profile .signed-out, #top .profile .signing-in, #top .profile .signed-in {
   display: none;
 }
 /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
-#top .profile.signed-in .signed-in {
+#top .profile.signed-out .signed-out {
   display: block;
 }
 /* line 50, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
@@ -6640,7 +6640,7 @@ table.list .red .number a {
   display: inline-block;
 }
 /* line 52, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
-#top .profile.sign-in .sign-in {
+#top .profile.signed-in .signed-in {
   display: block;
 }
 /* line 55, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/top.sass */
