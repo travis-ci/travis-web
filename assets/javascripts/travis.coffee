@@ -37,5 +37,3 @@ require 'ext/ember/namespace'
     console.log "Connecting to #{Travis.config.api_endpoint}"
     @app = Travis.App.create(attrs || {})
 
-
-

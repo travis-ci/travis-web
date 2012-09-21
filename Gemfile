@@ -9,6 +9,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'yard-sinatra',   github: 'rkh/yard-sinatra'
 
+gem 'bunny'
 gem 'pg',             '~> 0.13.2'
 gem 'newrelic_rpm',   '~> 3.3.0'
 gem 'hubble',         git: 'git://github.com/roidrage/hubble'

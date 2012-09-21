@@ -15,14 +15,15 @@ GIT
 
 GIT
   remote: git://github.com/roidrage/hubble
-  revision: 5220415d5542a2868d54f7be9f35fc1d66126b8e
+  revision: 8972b940a4f927927d2a4bdb250b3c98c04692a6
   specs:
     hubble (0.1.2)
+      faraday
       json (~> 1.6.5)
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: 5d908480c7170a84aebb80b0d0a0398295a207f2
+  revision: d887f01e0b27bb2936bcfd929258eec92b76a9b2
   branch: sf-use-services
   specs:
     travis-api (0.0.1)
@@ -63,7 +64,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-support.git
-  revision: 268dc0ff74b5a559e06f637e0814af983e60919e
+  revision: 06844d2db558d88be775ca1cf9cfff8ec36120fb
   specs:
     travis-support (0.0.1)
 
@@ -108,6 +109,7 @@ GEM
     avl_tree (1.1.3)
     backports (2.6.4)
     builder (3.0.3)
+    bunny (0.8.0)
     chunky_png (1.2.6)
     coffee-script (2.2.0)
       coffee-script-source
@@ -237,6 +239,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bunny
   coffee-script
   compass
   guard

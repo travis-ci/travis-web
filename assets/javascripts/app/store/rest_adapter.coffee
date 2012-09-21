@@ -1,12 +1,7 @@
+require 'travis/ajax'
 require 'models'
 
-jQuery.support.cors = true
-
-@Travis.RestAdapter = DS.RESTAdapter.extend
-  DEFAULT_OPTIONS:
-    accepts:
-      json: 'application/vnd.travis-ci.2+json'
-
+@Travis.RestAdapter = DS.RESTAdapter.extend Travis.Ajax,
   mappings:
     repositories: Travis.Repository
     repository:   Travis.Repository
@@ -27,10 +22,3 @@ jQuery.support.cors = true
     branch: 'branches'
     job: 'jobs'
     worker: 'workers'
-
-  ajax: (url, method, options) ->
-    endpoint = Travis.config.api_endpoint || ''
-    if Travis.config.access_token
-      options.headers ||= {}
-      options.headers['Authorization'] ||= "token #{Travis.config.access_token}"
-    @_super("#{endpoint}#{url}", method, $.extend(options, @DEFAULT_OPTIONS))

@@ -43,13 +43,13 @@
     .handle
       margin: 0
 
-    .signed-in, .signing-in, .sign-in
+    .signed-out, .signing-in, .signed-in
       display: none
-    &.signed-in .signed-in
+    &.signed-out .signed-out
       display: block
     &.signing-in .signing-in
       display: inline-block
-    &.sign-in .sign-in
+    &.signed-in .signed-in
       display: block
 
     .signed-in

@@ -1,4 +1,5 @@
 require 'travis' # hrm.
+require 'auth'
 require 'controllers'
 require 'helpers'
 require 'models'
@@ -11,7 +12,6 @@ require 'views'
 
 require 'config/locales'
 require 'data/sponsors'
-require 'travis/auth'
 
 # $.mockjaxSettings.log = false
 # Ember.LOG_BINDINGS = true
@@ -20,6 +20,10 @@ require 'travis/auth'
 
 Travis.reopen
   App: Em.Application.extend
+    currentUserBinding: 'auth.user'
+    accessTokenBinding: 'auth.user.accessToken'
+    authStateBinding: 'auth.state'
+
     init: ->
       @_super()
       @connect()
@@ -27,40 +31,18 @@ Travis.reopen
       @store = Travis.Store.create()
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
+      @set('auth', Travis.Auth.create(store: @store, endpoint: Travis.config.api_endpoint))
+
       @routes = new Travis.Routes()
       @pusher = new Travis.Pusher()
       @tailing = new Travis.Tailing()
 
-      @loadUser()
-
-    loadUser: ->
-      user = sessionStorage?.getItem("travisUser")
-      if user
-        @setCurrentUser JSON.parse(user)
-      else if localStorage?.getItem("travisTrySignIn")
-        Travis.Auth.trySignIn()
-
     signIn: ->
-      @set('signingIn', true)
-      Travis.Auth.signIn()
-      # TODO: this has to mov, no?
-      @render.apply(this, @get('returnTo') || ['home', 'index'])
+      @get('auth').signIn()
 
     signOut: ->
-      Travis.config.access_token = null
-      localStorage?.clear()
-      sessionStorage?.clear()
-      @setCurrentUser()
-
-    setCurrentUser: (data) ->
-      data = JSON.parse(data) if typeof data == 'string'
-      if data
-        localStorage?.setItem("travisTrySignIn", "true")
-        sessionStorage?.setItem("travisUser", JSON.stringify(data))
-        @store.load(Travis.User, data.user)
-        @store.loadMany(Travis.Account, data.accounts)
-      @set('currentUser', if data then Travis.User.find(data.user.id) else undefined)
-      @set('signingIn', false)
+      @get('auth').signOut()
+      @routes.route('')
 
     render: (name, action, params) ->
       layout = @connectLayout(name)
