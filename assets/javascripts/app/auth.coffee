@@ -2,6 +2,7 @@
   iframe: $('<iframe id="auth-frame" />').hide()
   timeout: 5000
   state: 'signed-out'
+  receivingEnd: "#{location.protocol}//#{location.host}"
 
   init: ->
     @iframe.appendTo('body')
@@ -18,12 +19,12 @@
 
   # try signing in, but check later in case we have a timeout
   signIn: ->
-    @set('state', 'signing-in')
     @trySignIn()
     Ember.run.later(this, @checkSignIn.bind(this), @timeout)
 
   trySignIn: ->
-    @iframe.attr('src', "#{@endpoint}/auth/post_message")
+    @set('state', 'signing-in')
+    @iframe.attr('src', "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}")
 
   checkSignIn: ->
     @forceSignIn() if @get('state') == 'signing-in'
@@ -60,4 +61,4 @@
       console.log("unexpected message #{event.origin}: #{event.data}")
 
   expectedOrigin: ->
-    if @endpoint[0] == '/' then "#{location.protocol}//#{location.host}" else @endpoint
+    if @endpoint[0] == '/' then @receivingEnd else @endpoint

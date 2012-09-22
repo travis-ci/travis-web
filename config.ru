@@ -1,10 +1,10 @@
 require 'travis'
 require 'travis/api/app'
 
-env, api_endpoint, client_endpoint, run_api, watch = ENV.values_at('RACK_ENV', 'API_ENDPOINT', 'CLIENT_ENDPOINT', 'RUN_API', 'WATCH', 'DEFLATE')
+env, api_endpoint, client_endpoint, run_api, watch, deflate = ENV.values_at('RACK_ENV', 'API_ENDPOINT', 'CLIENT_ENDPOINT', 'RUN_API', 'WATCH', 'DEFLATE')
 
 env             ||= "development"
-endpoint        ||= "https://api.#{Travis.config.host}" if env == "production"
+api_endpoint    ||= "https://api.#{Travis.config.host}" if env == "production"
 run_api         ||= ["development", "test"].include? env
 api_endpoint    ||= "/api" if run_api and run_api != '0'
 client_endpoint ||= "/"
