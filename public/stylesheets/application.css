@@ -1983,6 +1983,22 @@ body > div {
     margin-left: 410px;
   }
 }
+@media screen and (min-width: 1444px) {
+  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  body {
+    background-position-x: -408px;
+  }
+
+  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  #left {
+    width: 382px;
+  }
+
+  /* line 49, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  #main {
+    margin-left: 422px;
+  }
+}
 @media screen and (max-width: 1400px) {
   /* line 53, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left .duration_label {

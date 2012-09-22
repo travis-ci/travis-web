@@ -1,5 +1,6 @@
 @Travis.Tailing = ->
-  $(window).scroll(@positionButton.bind(this))
+  @position = $(window).scrollTop()
+  $(window).scroll(@onScroll.bind(this))
   this
 
 $.extend Travis.Tailing.prototype,
@@ -8,6 +9,7 @@ $.extend Travis.Tailing.prototype,
 
   run: ->
     @autoScroll()
+    @positionButton()
     Ember.run.later(@run.bind(this), @options.timeout) if @active()
 
   toggle: (event) ->
@@ -30,6 +32,12 @@ $.extend Travis.Tailing.prototype,
     logBottom = log.offset().top + log.outerHeight() + 40
     winBottom = win.scrollTop() + win.height()
     win.scrollTop(logBottom - win.height()) if logBottom - winBottom > 0
+
+  onScroll: ->
+    @positionButton()
+    position = $(window).scrollTop()
+    @stop() if position < @position
+    @position = position
 
   positionButton: ->
     tail = $('#tail')
