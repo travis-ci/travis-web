@@ -38,7 +38,6 @@
   .profile
     position: relative
     float: right
-    width: 150px
 
     .handle
       margin: 0
@@ -70,7 +69,6 @@
       display: block
 
     ul
-      display: none
       position: absolute
       z-index: 300
       top: 40px
@@ -81,15 +79,12 @@
 
       li
         display: block
-        float: left
-        clear: left
-
-      li:last-child a:hover
-        @include border-bottom-radius(4px)
+        &:last-child a:hover
+          @include border-bottom-radius(4px)
 
       a
         display: block
-        width: 96px
+        float: none
         padding: 5px 0 5px 54px
         line-height: 24px
         white-space: nowrap
