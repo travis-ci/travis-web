@@ -3342,8 +3342,16 @@ pre#log .fold.open {
 /* line 107, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
 #main .sponsor {
   float: left;
-  margin-top: 1px;
+  margin-top: 0;
   color: #999999;
+}
+/* line 111, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/main/log.sass */
+#main .to-top {
+  float: right;
+  margin-right: 2px;
+  padding-right: 16px;
+  color: #999999;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAFCAMAAABLuo1aAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDU5NUQ3RTBGQTE0MTFFMUEzNzhDNjZGM0QyMzVGNUIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDU5NUQ3RTFGQTE0MTFFMUEzNzhDNjZGM0QyMzVGNUIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NTk1RDdERUZBMTQxMUUxQTM3OEM2NkYzRDIzNUY1QiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NTk1RDdERkZBMTQxMUUxQTM3OEM2NkYzRDIzNUY1QiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgZMSV4AAAAGUExURcLCwv///7ZovVQAAAACdFJOU/8A5bcwSgAAACBJREFUeNpiYAQCBgYwCWaB2QwQFojNAGUxIBhAABBgAAM5ABUYaN+yAAAAAElFTkSuQmCC') no-repeat right 6px;
 }
 /* line 3, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/ansi.sass */
 .ansi .bold {

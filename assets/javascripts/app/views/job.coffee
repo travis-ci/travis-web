@@ -51,6 +51,9 @@
     click: (event) ->
       $(event.target).closest('.fold').toggleClass('open')
 
+    toTop: () ->
+      $(window).scrollTop(0)
+
     jobBinding: 'context'
 
     toggleTailing: (event) ->
