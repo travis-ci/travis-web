@@ -1,11 +1,17 @@
 @import "_mixins/all"
 
 body > div
+  overflow-x: hidden
+
+// ouch ...
+#ember360, #ember393, #ember490, #ember860
+  height: 100%
+
+#page
   display: table
   table-layout: fixed
   width: 100%
   height: 100%
-  overflow: hidden
 
 #left, #main, #right
   display: table-cell

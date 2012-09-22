@@ -2,32 +2,34 @@
   {{outlet top}}
 </div>
 
-<div id="left">
-  {{outlet left}}
-</div>
-
-<div id="main">
-  {{outlet main}}
-</div>
-
-<div id="right">
-  <div id="slider" {{action toggleSidebar target="Travis.app"}}>
-    <div class='icon'></div>&nbsp;
+<div id="page">
+  <div id="left">
+    {{outlet left}}
   </div>
 
-  <div class="box">
-    <h4>Getting started?</h4>
-    <p>
-      Please read our <a href="http://about.travis-ci.org/docs/user/getting-started">guide</a>.
-      It will only take a few minutes :)
-    </p>
-    <p>
-      You can find detailled docs on our <a href="http://about.travis-ci.org/">about</a> site.
-    </p>
-    <p>
-      If you need help please don't hesitate to join
-      <a href="irc://irc.freenode.net#travis">#travis</a> on irc.freenode.net
-      or our <a href="http://groups.google.com/group/travis-ci">mailinglist</a>.
-    </p>
+  <div id="main">
+    {{outlet main}}
+  </div>
+
+  <div id="right">
+    <div id="slider" {{action toggleSidebar target="Travis.app"}}>
+      <div class='icon'></div>&nbsp;
+    </div>
+
+    <div class="box">
+      <h4>Getting started?</h4>
+      <p>
+        Please read our <a href="http://about.travis-ci.org/docs/user/getting-started">guide</a>.
+        It will only take a few minutes :)
+      </p>
+      <p>
+        You can find detailled docs on our <a href="http://about.travis-ci.org/">about</a> site.
+      </p>
+      <p>
+        If you need help please don't hesitate to join
+        <a href="irc://irc.freenode.net#travis">#travis</a> on irc.freenode.net
+        or our <a href="http://groups.google.com/group/travis-ci">mailinglist</a>.
+      </p>
+    </div>
   </div>
 </div>
