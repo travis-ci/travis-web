@@ -1813,6 +1813,7 @@ body > div {
 /* line 30, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
 #right {
   position: absolute;
+  z-index: 100;
   top: 40px;
   right: 0;
   width: 205px;
@@ -1823,321 +1824,321 @@ body > div {
 }
 
 @media screen and (min-width: 1350px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -485px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 305px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 345px;
   }
 }
 @media screen and (min-width: 1360px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -480px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 310px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 350px;
   }
 }
 @media screen and (min-width: 1370px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -475px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 315px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 355px;
   }
 }
 @media screen and (min-width: 1380px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -470px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 320px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 360px;
   }
 }
 @media screen and (min-width: 1390px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -465px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 325px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 365px;
   }
 }
 @media screen and (min-width: 1400px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -460px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 330px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 370px;
   }
 }
 @media screen and (min-width: 1410px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -455px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 335px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 375px;
   }
 }
 @media screen and (min-width: 1420px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -450px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 340px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 380px;
   }
 }
 @media screen and (min-width: 1430px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -445px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 345px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 385px;
   }
 }
 @media screen and (min-width: 1440px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -440px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 350px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 390px;
   }
 }
 @media screen and (min-width: 1450px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -435px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 355px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 395px;
   }
 }
 @media screen and (min-width: 1460px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -430px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 360px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 400px;
   }
 }
 @media screen and (min-width: 1470px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -425px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 365px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 405px;
   }
 }
 @media screen and (min-width: 1480px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -420px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 370px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 410px;
   }
 }
 @media screen and (min-width: 1490px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -415px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 375px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 415px;
   }
 }
 @media screen and (min-width: 1500px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -410px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 380px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 420px;
   }
 }
 @media screen and (min-width: 1510px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -405px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 385px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 425px;
   }
 }
 @media screen and (min-width: 1520px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -400px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 390px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 430px;
   }
 }
 @media screen and (min-width: 1530px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -395px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 395px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 435px;
   }
 }
 @media screen and (min-width: 1540px) {
-  /* line 43, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   body {
     background-position-x: -390px;
   }
 
-  /* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left {
     width: 400px;
   }
 
-  /* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #main {
     margin-left: 440px;
   }
@@ -5567,6 +5568,10 @@ pre#log .fold.open {
   background: #e1e2e6;
 }
 
+/* line 27, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
+.maximized #main {
+  margin-right: 55px;
+}
 /* line 30, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/right/slider.sass */
 .maximized #right {
   width: 0;
