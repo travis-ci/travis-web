@@ -19,11 +19,11 @@
 
   # try signing in, but check later in case we have a timeout
   signIn: ->
+    @set('state', 'signing-in')
     @trySignIn()
     Ember.run.later(this, @checkSignIn.bind(this), @timeout)
 
   trySignIn: ->
-    @set('state', 'signing-in')
     @iframe.attr('src', "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}")
 
   checkSignIn: ->
