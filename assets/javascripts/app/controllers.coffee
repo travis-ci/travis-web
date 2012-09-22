@@ -30,7 +30,6 @@ Travis.reopen
     userBinding: 'Travis.app.currentUser'
 
 require 'controllers/accounts'
-require 'controllers/auth'
 require 'controllers/builds'
 require 'controllers/home'
 require 'controllers/profile'
