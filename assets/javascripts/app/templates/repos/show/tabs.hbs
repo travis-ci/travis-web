@@ -30,14 +30,14 @@
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
     <h5>
       <a {{bindAttr href="view.urlBuild"}} {{action route}}>
-        {{t repositories.tabs.build}} #{{view.build.number}}
+        {{t repositories.tabs.build}} {{view.build.number}}
       </a>
     </h5>
   </li>
   <li id="tab_job" {{bindAttr class="view.classJob"}}>
     <h5>
       <a {{bindAttr href="view.urlJob"}} {{action route}}>
-        {{t repositories.tabs.job}} #{{view.job.number}}
+        {{t repositories.tabs.job}} {{view.job.number}}
       </a>
     </h5>
   </li>

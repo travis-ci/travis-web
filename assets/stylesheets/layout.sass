@@ -1,6 +1,6 @@
 @import "_mixins/all"
 
-$left-width: 300px
+$left-width: 250px
 
 body
   background: inline-image('ui/background-left.png') repeat-y ($left-width - 790px) top
@@ -22,7 +22,7 @@ body > div
 #main
   position: relative
   overflow: hidden
-  min-width: 650px
+  min-width: 630px
   margin: 20px 275px 40px ($left-width + 40px)
   &.maximized
     padding: 60px 100px 30px 440px
@@ -39,19 +39,28 @@ body > div
   border-bottom: 1px solid $color-border-light
   // @include transition(width .1s ease-out)
 
-@for $i from 1 through 20
-  @media screen and (min-width: (1340 + $i * 10px))
+$step: 12px
+@for $i from 1 through 10
+  @media screen and (min-width: (1180px + $i * $step * 2))
     body
-      background-position-x: ($left-width + $i * 5px - 790px)
+      background-position-x: ($left-width + $i * $step - 790px)
     #left
-      width: ($left-width + $i * 5px)
+      width: ($left-width + $i * $step)
     #main
-      margin-left: ($left-width + $i * 5px + 40px)
+      margin-left: ($left-width + $i * $step + 40px)
 
-@media screen and (min-width: 1400px)
-  #left #repositories li .duration_label
-    width: auto
-    height: auto
-    text-indent: 0
-    background: none
+@media screen and (max-width: 1400px)
+  #left .duration_label
+    display: inline-block
+    width: 11px
+    height: 14px
+    margin-right: 1px
+    text-indent: -200px
+    overflow: hidden
+    background: inline-image('icons/clock.png') no-repeat 0px 3px
+
+@media screen and (max-width: 1280px)
+  #left .finished_at_label
+    display: none
+
 
