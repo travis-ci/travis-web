@@ -1,40 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!--style>
+    <!-- link rel="stylesheet" href="/stylesheets/application.css" -->
+    <style>
       html, body {
         width: 100%;
         height: 100%;
         margin: 0;
         padding: 0;
       }
-
-      body > div {
-        display: table;
-        width: 100%;
-        height: 100%;
-      }
       #top {
-        display: table-row;
-      }
-      #left, #main, #right {
-        display: table-cell;
-        height: 100%;
-        border: 1px solid #ddd;
+        height: 40px;
+        background-color: #ccc;
       }
       #left, #right {
-        width: 400px;
-        background-color: #eee;
+        z-index: 99;
+        position: absolute;
+        top: 0;
+        bottom:0;
+        margin-top: 40px;
+        width: 200px;
+        min-height: -webkit-calc(100% - 40px);
+        background-color: yellow;
       }
-    </style-->
-    <link rel="stylesheet" href="/stylesheets/application.css">
+      #left {
+        left: 0;
+      }
+      #main {
+        position: relative;
+        margin-left: 201px;
+        margin-right: 201px;
+        padding: 20px;
+      }
+      #main > div {
+        width: 100%;
+        overflow: hidden;
+      }
+      #right {
+        right: 0;
+      }
+    </style>
   </head>
   <body>
-    <div>
-      <div id="top">top</div>
-      <div id="left">left</div>
-      <div id="main">main</div>
-      <div id="right">right</div>
+    <div id="top">
+      top
+    </div>
+    <div id="left">
+      left
+    </div>
+    <div id="main">
+      <div>
+        ...........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+        content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content
+        content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content
+        content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content
+        content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content
+        content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content
+        content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content
+        content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content
+      </div>
+    </div>
+    <div id="right">
+      right
     </div>
   </body>
 </html>

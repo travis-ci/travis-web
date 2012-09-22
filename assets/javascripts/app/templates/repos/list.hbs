@@ -9,13 +9,11 @@
 <div class="tab">
   {{#collection Travis.RepositoriesListView contentBinding="controller"}}
     {{#with view.repository}}
-      <div class="heading">
-        <div class="slug-and-status">
-          <span class="status"></span>
-          <a {{bindAttr href="view.urlRepository"}} {{action route}} class="slug">{{slug}}</a>
-        </div>
-        <a {{bindAttr href="view.urlLastBuild"}} {{action route}} class="last_build">{{lastBuildNumber}}</a>
+      <div class="slug-and-status">
+        <span class="status"></span>
+        <a {{bindAttr href="view.urlRepository"}} {{action route}} class="slug">{{slug}}</a>
       </div>
+      <a {{bindAttr href="view.urlLastBuild"}} {{action route}} class="last_build">{{lastBuildNumber}}</a>
 
       <p class="summary">
         <span class="duration_label">{{t repositories.duration}}:</span>
