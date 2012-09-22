@@ -2,6 +2,7 @@
   iframe: $('<iframe id="auth-frame" />').hide()
   timeout: 5000
   state: 'signed-out'
+  receivingEnd: "#{location.protocol}//#{location.host}"
 
   init: ->
     @iframe.appendTo('body')
@@ -23,7 +24,7 @@
 
   trySignIn: ->
     @set('state', 'signing-in')
-    @iframe.attr('src', "#{@endpoint}/auth/post_message")
+    @iframe.attr('src', "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}")
 
   checkSignIn: ->
     @forceSignIn() if @get('state') == 'signing-in'
@@ -61,4 +62,4 @@
       console.log("unexpected message #{event.origin}: #{event.data}")
 
   expectedOrigin: ->
-    if @endpoint[0] == '/' then "#{location.protocol}//#{location.host}" else @endpoint
+    if @endpoint[0] == '/' then @receivingEnd else @endpoint
