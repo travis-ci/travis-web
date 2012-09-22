@@ -44,6 +44,9 @@
 
     .signed-out, .signing-in, .signed-in
       display: none
+      padding: 0 15px 0 45px
+    .signed-out, .signing-in
+      min-width: 110px
     &.signed-out .signed-out
       display: block
     &.signing-in .signing-in
@@ -51,24 +54,22 @@
     &.signed-in .signed-in
       display: block
 
-    .signed-in
-      padding-left: 54px
     .signing-in
-      padding-right: 25px
-      background: inline-image('spinner.gif') no-repeat right 16px
+      background: inline-image('spinner.gif') no-repeat 110px 16px
 
     img
       position: absolute
       top: 7px
       left: 15px
-      width: 24px
-      height: 24px
+      width: 22px
+      height: 22px
       @include border-radius(3px)
 
     &.signed-in:hover > ul
       display: block
 
     ul
+      display: none
       position: absolute
       z-index: 300
       top: 40px
@@ -85,7 +86,7 @@
       a
         display: block
         float: none
-        padding: 5px 0 5px 54px
+        padding: 5px 25px 5px 45px
         line-height: 24px
         white-space: nowrap
         &:hover
