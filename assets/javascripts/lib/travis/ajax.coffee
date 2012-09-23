@@ -8,11 +8,14 @@ jQuery.support.cors = true
   post: (url, data, callback) ->
     @ajax(url, 'post', data: data, success: callback)
 
+  get: (url, callback) ->
+    @ajax(url, 'get', success: callback)
+
   ajax: (url, method, options) ->
     endpoint = Travis.config.api_endpoint || ''
     options = options || {}
 
-    if access_token = Travis.app.get('accessToken')
+    if access_token = Travis.app?.get('accessToken')
       options.headers ||= {}
       options.headers['Authorization'] ||= "token #{access_token}"
 
@@ -22,7 +25,19 @@ jQuery.support.cors = true
     options.contentType = 'application/json; charset=utf-8'
     options.context = this
 
-    if options.data && method != 'GET'
+    if options.data && method != 'GET' && method != 'get'
       options.data = JSON.stringify(options.data)
 
     $.ajax($.extend(options, @DEFAULT_OPTIONS))
+
+@Travis.Ajax.instance = Em.Object.create(@Travis.Ajax)
+
+$.extend @Travis,
+  get: (url, callback) ->
+    @Ajax.instance.get(url, callback)
+
+  post: (url, data, callback) ->
+    @Ajax.instance.post(url, data, callback)
+
+  ajax: (url, method, options) ->
+    @Ajax.instance.ajax(url, method, options)
