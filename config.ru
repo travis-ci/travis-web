@@ -4,7 +4,7 @@ require 'travis/api/app'
 env, api_endpoint, client_endpoint, run_api, watch, deflate = ENV.values_at('RACK_ENV', 'API_ENDPOINT', 'CLIENT_ENDPOINT', 'RUN_API', 'WATCH', 'DEFLATE')
 
 env             ||= "development"
-api_endpoint    ||= "https://api.#{Travis.config.host}" unless run_api
+api_endpoint    ||= "https://api.#{Travis.config.host}" unless run_api and run_api != '0'
 run_api         ||= api_endpoint.to_s.start_with? '/'
 api_endpoint    ||= "/api" if run_api and run_api != '0'
 client_endpoint ||= "/"
