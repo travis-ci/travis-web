@@ -17,7 +17,7 @@
 
     <ul id="hooks">
       {{#each hook in hooks}}
-        <li {{bindAttr class="active"}}>
+        <li {{bindAttr class="hook.active:active"}}>
           <a {{bindAttr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
           <p class="description">{{hook.description}}</p>
 
