@@ -41,8 +41,10 @@ body > div, body > div > div, body > div > div > div
   min-width: 250px
   max-width: 380px
   width: -webkit-calc(100% - 1000px)
-  padding: 0 10px 110px 0
-  background: inline-image('ui/background-left.png') repeat-y right top
+  padding: 0 0 110px 0
+  background-color: $color-bg-left
+  border-right: 1px solid $color-border-normal
+  @include box-shadow(transparent 0 0 0 0, $color-border-normal 0 1px 8px 0, transparent 0 0 0 0, transparent 0 0 0 0)
 
 #main
   @include box-flex(4)
@@ -54,7 +56,7 @@ body > div, body > div > div, body > div > div > div
 #right
   width: 205px
   padding: 11px 20px 80px 20px
-  background-color: $color-bg-sidebar
+  background-color: $color-bg-right
   border-left: 1px solid $color-border-normal
 
 @media screen and (max-width: 1400px)

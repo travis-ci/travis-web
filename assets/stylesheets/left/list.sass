@@ -12,14 +12,12 @@
     border-bottom: 1px solid $color-border-light
     background-repeat: no-repeat
 
-    &:nth-child(odd)
+    &:nth-child(odd),
+    &:nth-child(odd) .indicator span
       background-color: $color-bg-list-odd
-      .indicator
-        background-image: inline-image('ui/current-repository-indicator-odd.png')
-    &:nth-child(even)
+    &:nth-child(even),
+    &:nth-child(even) .indicator span
       background-color: $color-bg-list-even
-      .indicator
-        background-image: inline-image('ui/current-repository-indicator-even.png')
 
     .slug-and-status
       white-space: nowrap
@@ -58,18 +56,27 @@
 
     .indicator
       display: none
+      position: absolute
+      top: 0
+      right: -20px
+      width: 20px
+      height: 100%
+      overflow: hidden
+
+      span
+        position: relative
+        display: block
+        top: 50%
+        left: -15px
+        width: 20px
+        height: 20px
+        margin-top: -11px
+        border: 1px solid $color-border-normal
+        @include rotate(45deg)
+        @include box-shadow($color-border-normal 0 1px 8px 0)
 
     &.selected .indicator
       display: block
-      position: absolute
-      top: 50%
-      right: -14px
-      width: 14px
-      height: 19px
-      margin-top: -11px
-      background-repeat: no-repeat
-      background-position: -4px -5px
-      background-repeat: no-repeat
 
   .loading
     padding: 15px 25px 15px 30px

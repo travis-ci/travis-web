@@ -255,107 +255,107 @@
 .ansi .bg-white {
   background-color: white;
 }
-/* line 104, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 106, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .black {
   background-color: black;
 }
-/* line 106, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 108, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .white {
   background-color: white;
 }
-/* line 109, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 111, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green {
   background-color: #108100;
 }
-/* line 111, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green-light-1 {
   background-color: #dcffdc;
 }
-/* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 115, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green-light-3 {
   background-color: #fafffa;
 }
-/* line 115, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 117, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red {
   background-color: #cc0000;
 }
-/* line 117, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-medium-1 {
   background-color: #c7371a;
 }
-/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-light-1 {
   background-color: #ffdcdc;
 }
-/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 123, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-light-3 {
   background-color: snow;
 }
-/* line 123, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 125, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .yellow-light-1 {
   background-color: #ffffe1;
 }
-/* line 125, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 127, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .yellow-light-2 {
   background-color: #fffcf4;
 }
-/* line 128, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 130, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-1 {
   background-color: #333333;
 }
-/* line 130, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 132, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-2 {
   background-color: #444444;
 }
-/* line 132, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 134, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-3 {
   background-color: #666666;
 }
-/* line 134, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 136, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-1 {
   background-color: #999999;
 }
-/* line 136, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 138, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-2 {
   background-color: #aaaaaa;
 }
-/* line 138, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 140, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-3 {
   background-color: #cccccc;
 }
-/* line 140, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 142, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-1 {
   background-color: #dddddd;
 }
-/* line 142, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 144, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-2 {
   background-color: #efefef;
 }
-/* line 144, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 146, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-3 {
   background-color: #f6f6f6;
 }
-/* line 147, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 149, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-1 {
   background-color: #e1e2e6;
 }
-/* line 149, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 151, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-2 {
   background-color: #e5e8ee;
 }
-/* line 151, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 153, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-3 {
   background-color: #f2f4f9;
 }
-/* line 153, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 155, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-4 {
   background-color: #fafbfc;
 }
-/* line 155, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 157, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-yellow-1 {
   background-color: #7f7f75;
 }
-/* line 157, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 159, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-yellow-2 {
   background-color: #bab9a7;
 }
@@ -1883,107 +1883,107 @@ span.loading {
   background-color: white;
 }
 
-/* line 104, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 106, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .black {
   background-color: black;
 }
-/* line 106, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 108, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .white {
   background-color: white;
 }
-/* line 109, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 111, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green {
   background-color: #108100;
 }
-/* line 111, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green-light-1 {
   background-color: #dcffdc;
 }
-/* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 115, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green-light-3 {
   background-color: #fafffa;
 }
-/* line 115, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 117, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red {
   background-color: #cc0000;
 }
-/* line 117, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-medium-1 {
   background-color: #c7371a;
 }
-/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-light-1 {
   background-color: #ffdcdc;
 }
-/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 123, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-light-3 {
   background-color: snow;
 }
-/* line 123, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 125, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .yellow-light-1 {
   background-color: #ffffe1;
 }
-/* line 125, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 127, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .yellow-light-2 {
   background-color: #fffcf4;
 }
-/* line 128, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 130, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-1 {
   background-color: #333333;
 }
-/* line 130, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 132, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-2 {
   background-color: #444444;
 }
-/* line 132, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 134, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-3 {
   background-color: #666666;
 }
-/* line 134, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 136, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-1 {
   background-color: #999999;
 }
-/* line 136, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 138, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-2 {
   background-color: #aaaaaa;
 }
-/* line 138, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 140, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-3 {
   background-color: #cccccc;
 }
-/* line 140, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 142, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-1 {
   background-color: #dddddd;
 }
-/* line 142, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 144, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-2 {
   background-color: #efefef;
 }
-/* line 144, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 146, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-3 {
   background-color: #f6f6f6;
 }
-/* line 147, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 149, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-1 {
   background-color: #e1e2e6;
 }
-/* line 149, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 151, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-2 {
   background-color: #e5e8ee;
 }
-/* line 151, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 153, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-3 {
   background-color: #f2f4f9;
 }
-/* line 153, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 155, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-4 {
   background-color: #fafbfc;
 }
-/* line 155, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 157, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-yellow-1 {
   background-color: #7f7f75;
 }
-/* line 157, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 159, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-yellow-2 {
   background-color: #bab9a7;
 }
@@ -2057,11 +2057,15 @@ body > div, body > div > div, body > div > div > div {
   min-width: 250px;
   max-width: 380px;
   width: -webkit-calc(100% - 1000px);
-  padding: 0 10px 110px 0;
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAAFCAMAAACKJ3hCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RTQ1RTZENjVGRDIwMTFFMTk4NTc5RDc4RTE0NDE5QzQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RTQ1RTZENjZGRDIwMTFFMTk4NTc5RDc4RTE0NDE5QzQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpFNDVFNkQ2M0ZEMjAxMUUxOTg1NzlENzhFMTQ0MTlDNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpFNDVFNkQ2NEZEMjAxMUUxOTg1NzlENzhFMTQ0MTlDNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmuzigoAAAMAUExUReXo7v////7+/vj4+Nra2srKyvHx8f39/ejo6Pz8/AoKCgsLCwwMDA0NDQ4ODg8PDxAQEBERERISEhMTExQUFBUVFRYWFhcXFxgYGBkZGRoaGhsbGxwcHB0dHR4eHh8fHyAgICEhISIiIiMjIyQkJCUlJSYmJicnJygoKCkpKSoqKisrKywsLC0tLS4uLi8vLzAwMDExMTIyMjMzMzQ0NDU1NTY2Njc3Nzg4ODk5OTo6Ojs7Ozw8PD09PT4+Pj8/P0BAQEFBQUJCQkNDQ0REREVFRUZGRkdHR0hISElJSUpKSktLS0xMTE1NTU5OTk9PT1BQUFFRUVJSUlNTU1RUVFVVVVZWVldXV1hYWFlZWVpaWltbW1xcXF1dXV5eXl9fX2BgYGFhYWJiYmNjY2RkZGVlZWZmZmdnZ2hoaGlpaWpqamtra2xsbG1tbW5ubm9vb3BwcHFxcXJycnNzc3R0dHV1dXZ2dnd3d3h4eHl5eXp6ent7e3x8fH19fX5+fn9/f4CAgIGBgYKCgoODg4SEhIWFhYaGhoeHh4iIiImJiYqKiouLi4yMjI2NjY6Ojo+Pj5CQkJGRkZKSkpOTk5SUlJWVlZaWlpeXl5iYmJmZmZqampubm5ycnJ2dnZ6enp+fn6CgoKGhoaKioqOjo6SkpKWlpaampqenp6ioqKmpqaqqqqurq6ysrK2tra6urq+vr7CwsLGxsbKysrOzs7S0tLW1tba2tre3t7i4uLm5ubq6uru7u7y8vL29vb6+vr+/v8DAwMHBwcLCwsPDw8TExMXFxcbGxsfHx8jIyMnJycrKysvLy8zMzM3Nzc7Ozs/Pz9DQ0NHR0dLS0tPT09TU1NXV1dbW1tfX19jY2NnZ2dra2tvb29zc3N3d3d7e3t/f3+Dg4OHh4eLi4uPj4+Tk5OXl5ebm5ufn5+jo6Onp6erq6uvr6+zs7O3t7e7u7u/v7/Dw8PHx8fLy8vPz8/T09PX19fb29vf39/j4+Pn5+fr6+vv7+/z8/P39/f7+/v///yjQzNcAAAA3SURBVHja7NOxEQAQEADB7780JahAKjECvFwBot0SbuZiAI9SW59rn8wQAwwCBgGDwMdBrgADAJxIA6gGyzzdAAAAAElFTkSuQmCC') repeat-y right top;
+  padding: 0 0 110px 0;
+  background-color: #fdfdfd;
+  border-right: 1px solid #cccccc;
+  -webkit-box-shadow: transparent 0 0 0 0, #cccccc 0 1px 8px 0, transparent 0 0 0 0, transparent 0 0 0 0;
+  -moz-box-shadow: transparent 0 0 0 0, #cccccc 0 1px 8px 0, transparent 0 0 0 0, transparent 0 0 0 0;
+  box-shadow: transparent 0 0 0 0, #cccccc 0 1px 8px 0, transparent 0 0 0 0, transparent 0 0 0 0;
 }
 
-/* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+/* line 49, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
 #main {
   -webkit-box-flex: 4;
   -moz-box-flex: 4;
@@ -2073,7 +2077,7 @@ body > div, body > div > div, body > div > div > div {
   padding: 20px 40px 80px 30px;
 }
 
-/* line 54, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+/* line 56, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
 #right {
   width: 205px;
   padding: 11px 20px 80px 20px;
@@ -2082,7 +2086,7 @@ body > div, body > div > div, body > div > div > div {
 }
 
 @media screen and (max-width: 1400px) {
-  /* line 61, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 63, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left .duration_label {
     display: inline-block;
     width: 11px;
@@ -2094,7 +2098,7 @@ body > div, body > div > div, body > div > div > div {
   }
 }
 @media screen and (max-width: 1310px) {
-  /* line 71, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
+  /* line 73, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/layout.sass */
   #left .finished_at_label {
     display: none;
   }
@@ -2399,107 +2403,107 @@ body > div, body > div > div, body > div > div > div {
   background-color: white;
 }
 
-/* line 104, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 106, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .black {
   background-color: black;
 }
-/* line 106, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 108, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .white {
   background-color: white;
 }
-/* line 109, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 111, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green {
   background-color: #108100;
 }
-/* line 111, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green-light-1 {
   background-color: #dcffdc;
 }
-/* line 113, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 115, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .green-light-3 {
   background-color: #fafffa;
 }
-/* line 115, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 117, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red {
   background-color: #cc0000;
 }
-/* line 117, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-medium-1 {
   background-color: #c7371a;
 }
-/* line 119, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-light-1 {
   background-color: #ffdcdc;
 }
-/* line 121, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 123, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .red-light-3 {
   background-color: snow;
 }
-/* line 123, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 125, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .yellow-light-1 {
   background-color: #ffffe1;
 }
-/* line 125, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 127, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .yellow-light-2 {
   background-color: #fffcf4;
 }
-/* line 128, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 130, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-1 {
   background-color: #333333;
 }
-/* line 130, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 132, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-2 {
   background-color: #444444;
 }
-/* line 132, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 134, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-dark-3 {
   background-color: #666666;
 }
-/* line 134, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 136, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-1 {
   background-color: #999999;
 }
-/* line 136, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 138, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-2 {
   background-color: #aaaaaa;
 }
-/* line 138, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 140, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-medium-3 {
   background-color: #cccccc;
 }
-/* line 140, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 142, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-1 {
   background-color: #dddddd;
 }
-/* line 142, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 144, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-2 {
   background-color: #efefef;
 }
-/* line 144, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 146, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .gray-light-3 {
   background-color: #f6f6f6;
 }
-/* line 147, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 149, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-1 {
   background-color: #e1e2e6;
 }
-/* line 149, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 151, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-2 {
   background-color: #e5e8ee;
 }
-/* line 151, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 153, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-3 {
   background-color: #f2f4f9;
 }
-/* line 153, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 155, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-blue-4 {
   background-color: #fafbfc;
 }
-/* line 155, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 157, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-yellow-1 {
   background-color: #7f7f75;
 }
-/* line 157, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
+/* line 159, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/_mixins/colors.sass */
 #colors .slate-yellow-2 {
   background-color: #bab9a7;
 }
@@ -2519,26 +2523,18 @@ body > div, body > div > div, body > div > div > div {
   background-repeat: no-repeat;
 }
 /* line 15, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#accounts li:nth-child(odd),
-#repositories li:nth-child(odd) {
+#accounts li:nth-child(odd), #accounts li:nth-child(odd) .indicator span,
+#repositories li:nth-child(odd),
+#repositories li:nth-child(odd) .indicator span {
   background-color: white;
 }
-/* line 17, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#accounts li:nth-child(odd) .indicator,
-#repositories li:nth-child(odd) .indicator {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAdCAIAAADDzRDWAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkElEQVQ4EY3U247BQBjA8TVKaLXEI7hwiAu8/72EkDhc4GI9g1VpiWL/7cgo25nu3Kh2fvkO/aaF8Xhs247nubVazXGccrkshCgk60uzxHA4DMPgdDpdLpfr9Xq/3x+PB0SzP74tqtXqYDA4Jut8PitmMjyDjUajn2SFYQi73W5E0zEhH9i2TTTJcqM9DRLW7/cPhwPSzAofOZDbZrNpNpv1ep2cS6WSbGM6Tyv9h2v29Xq97Xar7v9ln0aybre72+10LMNI1ul0dCzbmNmrbyoTdUFtRJOdDJPXLRtmMioa3fePR4YriiKGK8dI1m63fd8PggBDqHwjWavVAkRRPFP/Muz93u8tyyoW4/35BrBerzlbtATGWOQYwGq1Yo5c161UKhiOlslI0Gg0MEywGiKt+QDqzGvrMYBsYwYZBrBcLilA1pBOid1yvdUDWCwWFM2i6EwAexnAfD43R3iLw7dmOp0qoNr6zOb9J45DhMlk4nmeTMkM2C8As9mM14xhOnQ1pCMJAEOBARDB/KWW8hcJOPb3fiZrUQAAAABJRU5ErkJggg==');
-}
-/* line 19, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#accounts li:nth-child(even),
-#repositories li:nth-child(even) {
+/* line 18, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+#accounts li:nth-child(even), #accounts li:nth-child(even) .indicator span,
+#repositories li:nth-child(even),
+#repositories li:nth-child(even) .indicator span {
   background-color: #f6f6f6;
 }
-/* line 21, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
-#accounts li:nth-child(even) .indicator,
-#repositories li:nth-child(even) .indicator {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAdCAIAAADDzRDWAAAC7mlDQ1BJQ0MgUHJvZmlsZQAAeAGFVM9rE0EU/jZuqdAiCFprDrJ4kCJJWatoRdQ2/RFiawzbH7ZFkGQzSdZuNuvuJrWliOTi0SreRe2hB/+AHnrwZC9KhVpFKN6rKGKhFy3xzW5MtqXqwM5+8943731vdt8ADXLSNPWABOQNx1KiEWlsfEJq/IgAjqIJQTQlVdvsTiQGQYNz+Xvn2HoPgVtWw3v7d7J3rZrStpoHhP1A4Eea2Sqw7xdxClkSAog836Epx3QI3+PY8uyPOU55eMG1Dys9xFkifEA1Lc5/TbhTzSXTQINIOJT1cVI+nNeLlNcdB2luZsbIEL1PkKa7zO6rYqGcTvYOkL2d9H5Os94+wiHCCxmtP0a4jZ71jNU/4mHhpObEhj0cGDX0+GAVtxqp+DXCFF8QTSeiVHHZLg3xmK79VvJKgnCQOMpkYYBzWkhP10xu+LqHBX0m1xOv4ndWUeF5jxNn3tTd70XaAq8wDh0MGgyaDUhQEEUEYZiwUECGPBoxNLJyPyOrBhuTezJ1JGq7dGJEsUF7Ntw9t1Gk3Tz+KCJxlEO1CJL8Qf4qr8lP5Xn5y1yw2Fb3lK2bmrry4DvF5Zm5Gh7X08jjc01efJXUdpNXR5aseXq8muwaP+xXlzHmgjWPxHOw+/EtX5XMlymMFMXjVfPqS4R1WjE3359sfzs94i7PLrXWc62JizdWm5dn/WpI++6qvJPmVflPXvXx/GfNxGPiKTEmdornIYmXxS7xkthLqwviYG3HCJ2VhinSbZH6JNVgYJq89S9dP1t4vUZ/DPVRlBnM0lSJ93/CKmQ0nbkOb/qP28f8F+T3iuefKAIvbODImbptU3HvEKFlpW5zrgIXv9F98LZua6N+OPwEWDyrFq1SNZ8gvAEcdod6HugpmNOWls05Uocsn5O66cpiUsxQ20NSUtcl12VLFrOZVWLpdtiZ0x1uHKE5QvfEp0plk/qv8RGw/bBS+fmsUtl+ThrWgZf6b8C8/UXAeIuJAAAACXBIWXMAAAsTAAALEwEAmpwYAAABn0lEQVQ4EY2UzW6CUBBGK6Lgf/dutMYYff9ncG+iMWpideEaLKaogPbgUCoULs6CwOUevplv5lKaTqf1er3dbjebzUajUa1WNU0rPeItJ7TxeOy67ul0ulwunucFQXC/33M2R8uaYRij0egrDOd8Pvu+D6PGNFjTNCeTiW1bx+MRzev1qsZCRjCShCFQA7vdbnlqESPYcDi0bVswasvD9IdMdKG2wWCw3W5j3yqVitj4vO1PR1bB+v0Py7IQJMlMtTQDaZpGr9dXYBlMIZbNqLGEB1JSfJUkd7tPLJHRYLJ4q2Jitf1+B8YU4qGu67m5JdV6juN8f7tMFk0rZoBpQLfb9X3P9wMeX2IY9sPhUC6XOSUvMQCbzYajxTGTsSjQAViv151Oh0PJ+GNAaEZc6/8bAd4fUavVEAFQ5ZYC6AyARLaOAsjWUQMZDMBqtaJoqqCG55TighO5ASyXSzWQ0AFYLBbiEq3IVBCpSIdBms1mKBDSu1+TQnNTETIoCIBI3GxhUrvlUQOYz+etVotOS9HF/14AhgIGQEYj89vPiz8hmBME75QEJwAAAABJRU5ErkJggg==');
-}
-/* line 24, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 22, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .slug-and-status,
 #repositories li .slug-and-status {
   white-space: nowrap;
@@ -2546,7 +2542,7 @@ body > div, body > div > div, body > div > div > div {
   text-overflow: ellipsis;
   padding-right: 35px;
 }
-/* line 30, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .last_build,
 #repositories li .last_build {
   position: absolute;
@@ -2554,7 +2550,7 @@ body > div, body > div > div, body > div > div > div {
   right: 20px;
   text-align: right;
 }
-/* line 39, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 37, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .summary,
 #repositories li .summary {
   margin: 5px 0 0 15px;
@@ -2564,7 +2560,7 @@ body > div, body > div > div, body > div > div > div {
   color: #999999;
   font-size: 12px;
 }
-/* line 47, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 45, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .info,
 #repositories li .info {
   overflow: hidden;
@@ -2574,7 +2570,7 @@ body > div, body > div > div, body > div > div > div {
   color: #7f7f75;
   display: none;
 }
-/* line 54, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 52, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .info p,
 #repositories li .info p {
   margin: 0 -10px 0 -10px;
@@ -2583,26 +2579,43 @@ body > div, body > div > div, body > div > div > div {
   -moz-box-shadow: #bab9a7 0 1px 8px 0 inset;
   box-shadow: #bab9a7 0 1px 8px 0 inset;
 }
-/* line 59, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 57, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .indicator,
 #repositories li .indicator {
   display: none;
+  position: absolute;
+  top: 0;
+  right: -20px;
+  width: 20px;
+  height: 100%;
+  overflow: hidden;
 }
-/* line 62, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 66, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+#accounts li .indicator span,
+#repositories li .indicator span {
+  position: relative;
+  display: block;
+  top: 50%;
+  left: -15px;
+  width: 20px;
+  height: 20px;
+  margin-top: -11px;
+  border: 1px solid #cccccc;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-box-shadow: #cccccc 0 1px 8px 0;
+  -moz-box-shadow: #cccccc 0 1px 8px 0;
+  box-shadow: #cccccc 0 1px 8px 0;
+}
+/* line 78, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li.selected .indicator,
 #repositories li.selected .indicator {
   display: block;
-  position: absolute;
-  top: 50%;
-  right: -14px;
-  width: 14px;
-  height: 19px;
-  margin-top: -11px;
-  background-repeat: no-repeat;
-  background-position: -4px -5px;
-  background-repeat: no-repeat;
 }
-/* line 74, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 81, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts .loading,
 #repositories .loading {
   padding: 15px 25px 15px 30px;
@@ -2610,22 +2623,22 @@ body > div, body > div > div, body > div > div > div {
   background-image: none;
 }
 
-/* line 80, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 87, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li {
   margin-left: -4px;
   padding-left: 52px;
 }
-/* line 83, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 90, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li.user {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAMAAACOacfrAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjNGNDlENDhGMkU2MTFFMUE0MzM5QThDQUQ3MDI4RTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjNGNDlENDlGMkU2MTFFMUE0MzM5QThDQUQ3MDI4RTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGM0Y0OUQ0NkYyRTYxMUUxQTQzMzlBOENBRDcwMjhFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGM0Y0OUQ0N0YyRTYxMUUxQTQzMzlBOENBRDcwMjhFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgMNNIUAAABLUExURX9/f4eHh4WFhZCQkPLy8oiIiNra2vDw8LGxsf7+/sLCwvb29oCAgI+Pj5mZmdXV1ba2toODg52dnfPz87i4uN3d3aGhod/f3////yHAc80AAAAZdFJOU////////////////////////////////wABNAq3AAAAV0lEQVR42lTM2Q6AIAxE0YGCsuMu//+llqREvckkPS9F42pec+0HeJEAUBQZzdJGNP+lWHYXtYV1jC8tsILIT4VVJt91Xwm9tJ0NDm8O9iML0mqk6RFgAMVgBry2iJEPAAAAAElFTkSuQmCC');
   background-position: 29px 18px;
 }
-/* line 86, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 93, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li.org {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAMCAMAAAC3DnawAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDUzNzg1NjlGREI1MTFFMUI4MkQ4NUY4OTU1RTlFRTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDUzNzg1NkFGREI1MTFFMUI4MkQ4NUY4OTU1RTlFRTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NTM3ODU2N0ZEQjUxMUUxQjgyRDg1Rjg5NTVFOUVFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NTM3ODU2OEZEQjUxMUUxQjgyRDg1Rjg5NTVFOUVFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pve6BUEAAAMAUExURX9/f4eHh5ubm5SUlIuLi/j4+NPT07Ozs9HR0ampqd7e3tnZ2aampqqqqsLCwoyMjMrKyrKysuXl5ezs7IKCgpKSkqKiotzc3IGBgenp6ZaWloCAgOHh4ZeXl8DAwNDQ0IiIiI+Pj42NjfT09ImJia+vr5CQkPPz8/f3993d3Y6OjvX19ZqamqioqPn5+dTU1P///zExMTIyMjMzMzQ0NDU1NTY2Njc3Nzg4ODk5OTo6Ojs7Ozw8PD09PT4+Pj8/P0BAQEFBQUJCQkNDQ0REREVFRUZGRkdHR0hISElJSUpKSktLS0xMTE1NTU5OTk9PT1BQUFFRUVJSUlNTU1RUVFVVVVZWVldXV1hYWFlZWVpaWltbW1xcXF1dXV5eXl9fX2BgYGFhYWJiYmNjY2RkZGVlZWZmZmdnZ2hoaGlpaWpqamtra2xsbG1tbW5ubm9vb3BwcHFxcXJycnNzc3R0dHV1dXZ2dnd3d3h4eHl5eXp6ent7e3x8fH19fX5+fn9/f4CAgIGBgYKCgoODg4SEhIWFhYaGhoeHh4iIiImJiYqKiouLi4yMjI2NjY6Ojo+Pj5CQkJGRkZKSkpOTk5SUlJWVlZaWlpeXl5iYmJmZmZqampubm5ycnJ2dnZ6enp+fn6CgoKGhoaKioqOjo6SkpKWlpaampqenp6ioqKmpqaqqqqurq6ysrK2tra6urq+vr7CwsLGxsbKysrOzs7S0tLW1tba2tre3t7i4uLm5ubq6uru7u7y8vL29vb6+vr+/v8DAwMHBwcLCwsPDw8TExMXFxcbGxsfHx8jIyMnJycrKysvLy8zMzM3Nzc7Ozs/Pz9DQ0NHR0dLS0tPT09TU1NXV1dbW1tfX19jY2NnZ2dra2tvb29zc3N3d3d7e3t/f3+Dg4OHh4eLi4uPj4+Tk5OXl5ebm5ufn5+jo6Onp6erq6uvr6+zs7O3t7e7u7u/v7/Dw8PHx8fLy8vPz8/T09PX19fb29vf39/j4+Pn5+fr6+vv7+/z8/P39/f7+/v///7LCbooAAAAxdFJOU////////////////////////////////////////////////////////////////wAfmk4hAAAArUlEQVR42kTNvQqDMBwE8DxS3vDUJS2xH0hQaDYHqS4FfYHS0aliF8EKDg6CW1tqt/41lh4kJL/hjnGTWglVL29GpykGrgAoPhSNsQ7wP5JMjj7QzVYB4uGSuS8BVLPdLWyfO7L9ewOrMX0HXPiZbLq16Ws9HMcbWTnG8FqyPraxysqQLCyzNey4Z1SbXDMHU5xTkdAg00GaS/wi8zTQ04bGP8sGj8Q/Ef2/AgwAsd1yuVMCKyAAAAAASUVORK5CYII=');
   background-position: 24px 18px;
 }
-/* line 89, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
+/* line 96, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/left/list.sass */
 #accounts li .summary {
   margin-left: 0;
 }
