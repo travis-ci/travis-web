@@ -33,6 +33,11 @@ require 'ext/ember/namespace'
 
   INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
 
+  loadConfig: (callback) ->
+    Travis.get '/config', (data) ->
+      $.extend Travis.config, data.config
+      callback()
+
   run: (attrs) ->
     console.log "Connecting to #{Travis.config.api_endpoint}"
     @app = Travis.App.create(attrs || {})

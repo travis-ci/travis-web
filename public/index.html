@@ -10,13 +10,10 @@
     <script>
       // minispade.require('mocks')
       minispade.require('app')
-
-      if(location.hostname != 'localhost') {
-        Travis.Pusher.KEY = '23ed642e81512118260e'
-      }
-
       $(function() {
-        Travis.run()
+        Travis.loadConfig(function() {
+          Travis.run()
+        });
       });
     </script>
   </head>

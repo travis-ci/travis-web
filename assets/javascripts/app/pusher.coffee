@@ -1,14 +1,13 @@
 Travis.Pusher = ->
   @active_channels = []
-  if Travis.Pusher.KEY
-    @pusher = new Pusher(Travis.Pusher.KEY)
+  if Travis.config.pusher?.key?
+    @pusher = new Pusher(Travis.config.pusher.key)
     @subscribe(channel) for channel in Travis.Pusher.CHANNELS
   this
 
 $.extend Travis.Pusher,
   CHANNELS: ['common']
   CHANNEL_PREFIX: ''
-  KEY: ''
 
 $.extend Travis.Pusher.prototype,
   subscribe: (channel) ->
