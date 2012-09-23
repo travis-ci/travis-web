@@ -33,6 +33,7 @@
     .description
       display: none
       margin-left: 10px
+      line-height: 22px
       font-size: $font-size-smaller
       white-space: nowrap
       overflow: hidden
@@ -63,8 +64,8 @@
       margin-left: 10px
       background: inline-image('ui/off.png') no-repeat
       cursor: pointer
-      &.active
-        background: inline-image('ui/on.png') no-repeat
+    &.active .switch
+      background: inline-image('ui/on.png') no-repeat
 
     &:hover
       > a
