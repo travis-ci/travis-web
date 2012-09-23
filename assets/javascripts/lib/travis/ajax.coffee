@@ -8,9 +8,6 @@ jQuery.support.cors = true
   post: (url, data, callback) ->
     @ajax(url, 'post', data: data, success: callback)
 
-  get: (url, callback) ->
-    @ajax(url, 'get', success: callback)
-
   ajax: (url, method, options) ->
     endpoint = Travis.config.api_endpoint || ''
     options = options || {}
@@ -34,7 +31,7 @@ jQuery.support.cors = true
 
 $.extend @Travis,
   get: (url, callback) ->
-    @Ajax.instance.get(url, callback)
+    @ajax(url, 'get', success: callback)
 
   post: (url, data, callback) ->
     @Ajax.instance.post(url, data, callback)
