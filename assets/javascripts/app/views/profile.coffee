@@ -32,6 +32,11 @@
 
   ProfileView: Travis.View.extend
     templateName: 'profile/show'
+    accountBinding: 'controller.account'
+
+    name: (->
+      @get('account.name') || @get('account.login')
+    ).property('account.name', 'account.login')
 
   ProfileTabsView: Travis.View.extend
     templateName: 'profile/tabs'

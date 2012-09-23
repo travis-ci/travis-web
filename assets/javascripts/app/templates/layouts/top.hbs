@@ -1,4 +1,4 @@
-<a href="#" {{action route}}>
+<a href="/" {{action route}}>
   <h1>Travis</h1>
 </a>
 
@@ -18,7 +18,7 @@
   <li {{bindAttr class="view.classProfile"}}>
     <p class="handle">
       <a class="signed-out" href="#" {{action signIn target="Travis.app"}}>{{t layouts.top.github_login}}</a>
-      <a class="signed-in"  href="#" class="name"><img {{bindAttr src="view.gravatarUrl"}}>{{user.name}}</a>
+      <a class="signed-in"  href="/profile" {{action route}}><img {{bindAttr src="view.gravatarUrl"}}>{{user.name}}</a>
       <span class="signing-in">Signing in</span>
     </p>
     <ul>

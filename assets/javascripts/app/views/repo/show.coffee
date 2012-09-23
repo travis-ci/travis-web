@@ -90,8 +90,8 @@
     tabBinding: 'controller.tab'
 
     toggle: ->
-      @set('active', !@get('active'))
-      $('#tools .pane').toggle()
+      element = $('#tools .pane').toggleClass('display')
+      @set('active', element.hasClass('display'))
 
     branches: (->
       @get('repository.branches') if @get('active')
