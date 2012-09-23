@@ -8,10 +8,11 @@
 
     input[type=text]
       height: 28px
-      width: 97%
+      width: 100%
       padding: 0 0 0 10px
       color: $color-text
       font-size: $font-size-small
+      box-sizing: border-box
       border: 1px solid $color-border-light
       @include border-radius(4px)
       background: $color-bg-input inline-image('ui/bg_search.png') no-repeat right 8px
@@ -26,7 +27,7 @@
 
   .toggle-info
     position: absolute
-    right: 28px
+    right: 30px
     margin-top: -22px
     display: block
     width: 14px

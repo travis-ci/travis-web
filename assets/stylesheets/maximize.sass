@@ -1,0 +1,23 @@
+@import "_mixins/all"
+
+.maximized
+  #right
+    width: 0
+    padding: 0
+    *:not(#slider):not(.icon):not(.ember-view)
+      display: none
+
+  #slider
+    left: -20px
+    width: 20px
+    height: 20px
+    background-image: inline-image('ui/slider-open.png')
+    background-position: 6px 5px
+    @include border-bottom-left-radius(4px)
+
+#top .profile
+  margin-right: 140px
+
+#profile #top .profile,
+.maximized #top .profile
+  margin-right: 30px

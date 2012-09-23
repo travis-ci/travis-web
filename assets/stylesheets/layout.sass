@@ -2,52 +2,59 @@
 
 $left-width: 250px
 
-body
-  background: inline-image('ui/background-left.png') repeat-y ($left-width - 790px) top
+html, body
+  height: 100%
 
 body > div
   width: 100%
-  overflow-x: hidden
+  overflow: hidden
 
-#left, #main, #right
+// ouch. ember injects additional divs that somehow don't inherit the actual dimensions
+body > div, body > div > div, body > div > div > div
+  width: 100%
+  min-height: 100%
+  @include display-box
+  @include box-flex(0)
+
+#top
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 40px
+
+#page
+  position: relative
+  @include display-box
+  @include box-orient(horizontal)
+  @include box-align(stretch)
+  width: 100%
+  min-height: 100%
+  top: 40px
+
+#left, #right
+  @include box-flex(0)
+  position: relative
   min-height: 100%
 
 #left
-  position: absolute
-  top: 40px
-  bottom: 0
-  width: $left-width
+  min-width: 250px
+  max-width: 380px
+  width: -webkit-calc(100% - 1000px)
   padding-right: 10px
+  background: inline-image('ui/background-left.png') repeat-y right top
 
 #main
+  @include box-flex(4)
   position: relative
   overflow: hidden
   min-width: 630px
-  margin: 20px 275px 40px ($left-width + 40px)
-  &.maximized
-    padding: 60px 100px 30px 440px
+  padding: 20px 40px 40px 30px
 
 #right
-  position: absolute
-  z-index: 100
-  top: 40px
-  right: 0
   width: 205px
-  min-width: 205px
-  padding: 20px 20px 20px 10px
+  padding: 11px 20px 20px 20px
   background-color: $color-bg-sidebar
-  border-bottom: 1px solid $color-border-light
-  // @include transition(width .1s ease-out)
-
-$step: 12px
-@for $i from 1 through 11
-  @media screen and (min-width: (1180px + $i * $step * 2))
-    body
-      background-position-x: ($left-width + $i * $step - 790px)
-    #left
-      width: ($left-width + $i * $step)
-    #main
-      margin-left: ($left-width + $i * $step + 40px)
 
 @media screen and (max-width: 1400px)
   #left .duration_label
@@ -62,5 +69,4 @@ $step: 12px
 @media screen and (max-width: 1280px)
   #left .finished_at_label
     display: none
-
 
