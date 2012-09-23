@@ -4,11 +4,27 @@ Travis.reopen
       @tickables = []
       Travis.Ticker.create(target: this, interval: Travis.INTERVALS.sponsors)
 
+      @toggle() if localStorage?.getItem('travis.maximized')
+
       @connectWorkers(Travis.Worker.find())
       @connectQueues(Travis.QUEUES)
 
       @connectSponsors('decks', Travis.Sponsor.decks(), 1)
       @connectSponsors('links', Travis.Sponsor.links(), 6)
+
+    persist: ->
+      localStorage?.setItem('travis.maximized', @isMinimized())
+
+    isMinimized: ->
+      return $('body').hasClass('maximized');
+
+    toggle: ->
+      $('body').toggleClass('maximized')
+      @persist()
+      # TODO gotta force redraws here :/
+      element = $('<span></span>')
+      $('#top .profile').append(element)
+      Em.run.later (-> element.remove()), 10
 
     connectSponsors: (name, sponsors, perPage) ->
       controller = Travis.SponsorsController.create(perPage: perPage, content: sponsors)

@@ -12,6 +12,8 @@
       <a {{bindAttr href="sponsor.url"}}>{{sponsor.name}}</a>
     </p>
   {{/if}}
+
+  <a href='#' class="to-top" {{action toTop}}>To top</a>
 {{else}}
   <div id="log" class="loading">
     <span>Loading</span>

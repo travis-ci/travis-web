@@ -27564,46 +27564,6 @@ var _require=function(){var a;a=document.addEventListener?function(b,c){b.addEve
 for(var h=0,i=b.length,g=0;g<i;g++)d(b[g],c)}}();(function(){var a=[],b=function(){Pusher.ready()};window.JSON==undefined&&a.push("http://js.pusherapp.com/1.6.4/json2");if(window.WebSocket==undefined){window.WEB_SOCKET_DISABLE_AUTO_INITIALIZATION=true;a.push("http://js.pusherapp.com/1.6.4/flashfallback");b=function(){FABridge.addInitializationCallback("webSocket",function(){Pusher.ready()});WebSocket.__initialize()}}a.length>0?_require(a,b):b()})();
 
 
-/**
- * jQuery Cookie plugin
- *
- * Copyright (c) 2010 Klaus Hartl (stilbuero.de)
- * Dual licensed under the MIT and GPL licenses:
- * http://www.opensource.org/licenses/mit-license.php
- * http://www.gnu.org/licenses/gpl.html
- *
- */
-jQuery.cookie = function (key, value, options) {
-    // key and at least value given, set cookie...
-    if (arguments.length > 1 && String(value) !== "[object Object]") {
-        options = jQuery.extend({}, options);
-
-        if (value === null || value === undefined) {
-            options.expires = -1;
-        }
-
-        if (typeof options.expires === 'number') {
-            var days = options.expires, t = options.expires = new Date();
-            t.setDate(t.getDate() + days);
-        }
-
-        value = String(value);
-        return (document.cookie = [
-            encodeURIComponent(key), '=',
-            options.raw ? value : encodeURIComponent(value),
-            options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-            options.path ? '; path=' + options.path : '',
-            options.domain ? '; domain=' + options.domain : '',
-            options.secure ? '; secure' : ''
-        ].join(''));
-    }
-
-    // key and possibly options given, get cookie...
-    options = value || {};
-    var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
-    return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
-};
-
 /*
  * timeago: a jQuery plugin, version: 0.9.2 (2010-09-14)
  * @requires jQuery v1.2.3 or later

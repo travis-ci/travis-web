@@ -67,13 +67,3 @@ Travis.reopen
         controller: @controller
       view.appendTo(@get('rootElement') || 'body')
 
-    toggleSidebar: ->
-      $('body').toggleClass('maximized')
-      # TODO gotta force redraws here :/
-      element = $('<span></span>')
-      $('#top .profile').append(element)
-      Em.run.later (-> element.remove()), 10
-      element = $('<span></span>')
-      $('#repository').append(element)
-      Em.run.later (-> element.remove()), 10
-
