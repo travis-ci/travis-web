@@ -6,7 +6,7 @@
     userBinding: 'controller.user'
 
     gravatarUrl: (->
-      "https://www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=24&d=mm"
+      "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=24&d=mm"
     ).property('user.gravatarId')
 
     # hrm. how to parametrize bindAttr?

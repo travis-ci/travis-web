@@ -41,3 +41,6 @@
   account: (login) ->
     "/profile/#{login}"
 
+  user: (login) ->
+    "/profile/#{login}/me"
+
