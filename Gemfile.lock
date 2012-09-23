@@ -151,7 +151,7 @@ GEM
     journey (1.0.4)
     json (1.6.7)
     kgio (2.7.4)
-    listen (0.5.1)
+    listen (0.5.2)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
