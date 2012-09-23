@@ -5,6 +5,7 @@ require 'helpers'
 require 'models'
 require 'pusher'
 require 'routes'
+require 'slider'
 require 'store'
 require 'tailing'
 require 'templates'
@@ -33,6 +34,7 @@ Travis.reopen
 
       @set('auth', Travis.Auth.create(store: @store, endpoint: Travis.config.api_endpoint))
 
+      @slider = new Travis.Slider()
       @routes = new Travis.Routes()
       @pusher = new Travis.Pusher()
       @tailing = new Travis.Tailing()
