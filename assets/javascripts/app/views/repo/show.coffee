@@ -49,12 +49,12 @@
       tab = @get('tab')
       classes = []
       classes.push('active') if tab == 'build'
-      classes.push('display') if tab == 'build' || tab == 'job'
+      classes.push('display-inline') if tab == 'build' || tab == 'job'
       classes.join(' ')
     ).property('tab')
 
     classJob: (->
-      'active display' if @get('tab') == 'job'
+      'active display-inline' if @get('tab') == 'job'
     ).property('tab')
 
     urlRepository: (->
@@ -90,8 +90,8 @@
     tabBinding: 'controller.tab'
 
     toggle: ->
-      element = $('#tools .pane').toggleClass('display')
-      @set('active', element.hasClass('display'))
+      element = $('#tools .pane').toggleClass('display-inline')
+      @set('active', element.hasClass('display-inline'))
 
     branches: (->
       @get('repository.branches') if @get('active')

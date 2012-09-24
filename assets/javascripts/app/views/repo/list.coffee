@@ -44,7 +44,7 @@
     classOwned: (->
       classes = []
       classes.push('active')  if @get('tab') == 'owned'
-      classes.push('display') if Travis.app.get('currentUser')
+      classes.push('display-inline') if Travis.app.get('currentUser')
       classes.join(' ')
     ).property('tab', 'Travis.app.currentUser')
 
