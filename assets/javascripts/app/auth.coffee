@@ -38,7 +38,6 @@
     sessionStorage?.clear()
     @setUser()
 
-
   setUser: (data) ->
     data = JSON.parse(data) if typeof data == 'string'
     user = @storeUser(data) if data
