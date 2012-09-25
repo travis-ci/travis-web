@@ -38,7 +38,6 @@
     sessionStorage?.clear()
     @setUser()
 
-
   setUser: (data) ->
     data = JSON.parse(data) if typeof data == 'string'
     user = @storeUser(data) if data
@@ -46,9 +45,9 @@
     @set('user',  if user then user else undefined)
 
   storeUser: (data) ->
+    data.user.access_token ||= data.token # TODO why's the access_token not set on the user?
     localStorage?.setItem('travis.auto_signin', 'true')
     sessionStorage?.setItem('travis.user', JSON.stringify(data))
-    data.user.access_token = data.token # TODO why's the access_token not set on the user?
     @store.load(Travis.User, data.user)
     @store.loadMany(Travis.Account, data.accounts)
     Travis.User.find(data.user.id)
