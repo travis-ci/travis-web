@@ -2,6 +2,53 @@
   SidebarView: Travis.View.extend
     templateName: 'layouts/sidebar'
 
+    DecksView: Em.View.extend
+      templateName: "sponsors/decks"
+      controller: Travis.SponsorsController.create
+        perPage: 1
+
+      didInsertElement: ->
+        controller = @get 'controller'
+        unless controller.get('content')
+          Travis.app.get('router.sidebarController').tickables.push(controller)
+          controller.set 'content', Travis.Sponsor.decks()
+        @_super.apply this, arguments
+
+    LinksView: Em.View.extend
+      templateName: "sponsors/links"
+      controller: Travis.SponsorsController.create
+        perPage: 6
+
+      didInsertElement: ->
+        controller = @get 'controller'
+        unless controller.get('content')
+          controller.set 'content', Travis.Sponsor.links()
+          Travis.app.get('router.sidebarController').tickables.push(controller)
+        @_super.apply this, arguments
+
+    WorkersView: Em.View.extend
+      templateName: 'workers/list'
+      controller: Travis.WorkersController.create()
+
+      didInsertElement: ->
+        @set 'controller.content', Travis.Worker.find()
+        @_super.apply this, arguments
+
+    QueuesView: Em.View.extend
+      templateName: 'queues/list'
+      controller: Travis.QueuesController.create()
+
+      didInsertElement: ->
+        queues = for queue in Travis.QUEUES
+          Em.ArrayController.create
+            content: Travis.Job.queued(queue.name)
+            id: "queue_#{queue.name}"
+            name: queue.display
+
+        @set 'controller.content', queues
+
+        @_super.apply this, arguments
+
   WorkersView: Travis.View.extend
     toggleWorkers: (event) ->
       handle = $(event.target).toggleClass('open')
