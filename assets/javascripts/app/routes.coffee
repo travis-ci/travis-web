@@ -68,7 +68,6 @@ Travis.Router = Ember.Router.extend
         router.get('statsLayoutController').connectOutlet 'main', 'stats'
 
     profile: Ember.Route.extend
-      initialState: 'index'
       route: '/profile'
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'profileLayout'
@@ -83,7 +82,6 @@ Travis.Router = Ember.Router.extend
           router.get('profileController').activate 'hooks'
 
       account: Ember.Route.extend
-        initialState: 'index'
         route: '/:login'
 
         connectOutlets: (router, account) ->
@@ -114,7 +112,6 @@ Travis.Router = Ember.Router.extend
             router.get('profileController').activate 'user'
 
     home: Ember.Route.extend
-      initialState: 'show'
       route: '/'
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'home'
@@ -130,7 +127,6 @@ Travis.Router = Ember.Router.extend
           router.get('repositoryController').activate('index')
 
       repository: Ember.Route.extend
-        initialState: 'show'
         route: '/:owner/:name'
 
         connectOutlets: (router, repository) ->
@@ -168,7 +164,6 @@ Travis.Router = Ember.Router.extend
 
         builds: Ember.Route.extend
           route: '/builds'
-          initialState: 'index'
 
           index: Ember.Route.extend
             route: '/'
