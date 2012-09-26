@@ -1,5 +1,5 @@
 Travis.Router = Ember.Router.extend
-  location: 'hash'
+  location: 'history'
   enableLogging: true
   initialState: 'loading'
 
