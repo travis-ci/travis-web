@@ -6334,13 +6334,8 @@ table.list .red .number a {
 #main #tab_job {
   display: none;
 }
-/* line 56, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/tabs.sass */
-#main #tab_build.display,
-#main #tab_job.display {
-  display: inline-block !important;
-}
 
-/* line 61, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/tabs.sass */
+/* line 59, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/tabs.sass */
 #profile #main .tab {
   margin: 30px 0 0 12px;
 }

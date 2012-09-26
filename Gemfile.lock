@@ -263,6 +263,7 @@ DEPENDENCIES
   bunny
   coffee-script
   compass
+  debugger
   foreman
   gh!
   guard
