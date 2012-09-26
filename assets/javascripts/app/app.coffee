@@ -21,6 +21,7 @@ require 'data/sponsors'
 
 Travis.reopen
   App: Em.Application.extend
+    autoinit: false
     currentUserBinding: 'auth.user'
     accessTokenBinding: 'auth.user.accessToken'
     authStateBinding: 'auth.state'
