@@ -46,4 +46,5 @@ require 'travis/model'
     @find($.extend(parameters || {}, repository_id: id, orderBy: 'number DESC'))
 
   olderThanNumber: (id, build_number) ->
-    @find(url: "/builds", repository_id: id, after: build_number)
+    # TODO fix this api and use some kind of pagination scheme
+    @find(url: "/builds", repository_id: id, after_number: build_number)
