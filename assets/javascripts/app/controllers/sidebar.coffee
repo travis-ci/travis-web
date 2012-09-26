@@ -4,11 +4,12 @@ Travis.reopen
       @tickables = []
       Travis.Ticker.create(target: this, interval: Travis.INTERVALS.sponsors)
 
-      @connectWorkers(Travis.Worker.find())
-      @connectQueues(Travis.QUEUES)
+      Ember.run.next this, ->
+        @connectWorkers(Travis.Worker.find())
+        @connectQueues(Travis.QUEUES)
 
-      @connectSponsors('decks', Travis.Sponsor.decks(), 1)
-      @connectSponsors('links', Travis.Sponsor.links(), 6)
+        @connectSponsors('decks', Travis.Sponsor.decks(), 1)
+        @connectSponsors('links', Travis.Sponsor.links(), 6)
 
     connectSponsors: (name, sponsors, perPage) ->
       controller = Travis.SponsorsController.create(perPage: perPage, content: sponsors)
