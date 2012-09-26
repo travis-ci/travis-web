@@ -3,7 +3,7 @@ require 'ext/ember/namespace'
 @Travis.reopen
   View: Em.View.extend
     popup: (event) ->
-      $("##{event.target.name}").remove().appendTo('body').toggle()
+      $("##{event.target.name}").toggleClass('display')
 
 @Travis.reopen
   HomeView:    Travis.View.extend(templateName: 'layouts/home')
