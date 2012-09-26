@@ -24,3 +24,8 @@ group :assets do
   gem 'tilt'
   gem 'guard'
 end
+
+group :development do
+  gem 'foreman'
+  gem 'rerun'
+end
