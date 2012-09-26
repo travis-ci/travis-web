@@ -13,7 +13,7 @@ $.extend Travis.Pusher.prototype,
   subscribe: (channel) ->
     if @pusher && @active_channels.indexOf(channel) == -1
       @active_channels.push(channel)
-      @pusher.subscribe(@prefix(channel)).bind_all(event, data) => @receive(event, data)
+      @pusher.subscribe(@prefix(channel)).bind_all((event, data) => @receive(event, data))
 
   unsubscribe: (channel) ->
     ix = @active_channels.indexOf(channel)
