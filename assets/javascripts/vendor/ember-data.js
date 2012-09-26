@@ -1748,6 +1748,7 @@ DS.Store = Ember.Object.extend({
 
   loadMany: function(type, ids, hashes) {
     var clientIds = Ember.A([]);
+
     if (hashes === undefined) {
       hashes = ids;
       ids = [];
@@ -3131,8 +3132,8 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
         if (cachedValue) {
           var key = association.options.key || get(this, 'namingConvention').keyToJSONKey(name),
               ids = data.get(key) || [];
-
-          var clientIds;
+          
+          var clientIds;   
           if(association.options.embedded) {
             clientIds = store.loadMany(association.type, ids).clientIds;
           } else {
@@ -3140,7 +3141,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
               return store.clientIdForId(association.type, id);
             });
           }
-
+          
           set(cachedValue, 'content', Ember.A(clientIds));
           cachedValue.fetch();
         }
@@ -3155,7 +3156,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
     also call methods with the given name.
   */
   trigger: function(name) {
-    this[name].apply(this, [].slice.call(arguments, 1));
+    Ember.tryInvoke(this, name, [].slice.call(arguments, 1));
     this._super.apply(this, arguments);
   }
 });
@@ -3671,8 +3672,8 @@ DS.Adapter = Ember.Object.extend({
 (function() {
 var set = Ember.set;
 
-Ember.onLoad('application', function(app) {
-  app.registerInjection({
+Ember.onLoad('Ember.Application', function(Application) {
+  Application.registerInjection({
     name: "store",
     before: "controllers",
 
@@ -3683,11 +3684,11 @@ Ember.onLoad('application', function(app) {
     }
   });
 
-  app.registerInjection({
+  Application.registerInjection({
     name: "giveStoreToControllers",
 
     injection: function(app, stateManager, property) {
-      if (property.match(/Controller$/)) {
+      if (/^[A-Z].*Controller$/.test(property)) {
         var controllerName = property.charAt(0).toLowerCase() + property.substr(1);
         var store = stateManager.get('store');
         var controller = stateManager.get(controllerName);
@@ -3765,7 +3766,7 @@ DS.FixtureAdapter = DS.Adapter.extend({
         return ids.indexOf(item.id) !== -1;
       });
     }
-
+  
     if (fixtures) {
       this.simulateRemoteCall(function() {
         store.loadMany(type, fixtures);
@@ -3785,7 +3786,7 @@ DS.FixtureAdapter = DS.Adapter.extend({
 
   findQuery: function(store, type, query, array) {
     var fixtures = this.fixturesForType(type);
-
+    
     Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
 
     fixtures = this.queryFixtures(fixtures, query);
@@ -3846,7 +3847,7 @@ var get = Ember.get, set = Ember.set;
 
 DS.RESTAdapter = DS.Adapter.extend({
   bulkCommit: false,
-
+	
   createRecord: function(store, type, record) {
     var root = this.rootForType(type);
 
