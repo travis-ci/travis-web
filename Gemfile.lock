@@ -7,6 +7,13 @@ GIT
       thor
 
 GIT
+  remote: git://github.com/rack/rack-contrib.git
+  revision: b7e7c38fd02c3b5da91aa57af78b3f571c6ebcd0
+  specs:
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
+
+GIT
   remote: git://github.com/rkh/gh.git
   revision: affde20a4fecb1023f2e7031734b9386a76d22c2
   specs:
@@ -35,7 +42,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: f09cb3cac0290dcb745ae6a913b73188c375199b
+  revision: 6dc28f0c49cef93dd24ee980b018719af02180df
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)
@@ -53,7 +60,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-core.git
-  revision: ea7a1678a0388e586ac4778a9b6ee56a11dfb0aa
+  revision: a4b1446e3746a5ff59a5438a34f7b2471e33a731
   branch: sf-more-services
   specs:
     travis-core (0.0.1)
@@ -126,6 +133,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
+    columnize (0.3.6)
     compass (0.12.2)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -134,6 +142,13 @@ GEM
     data_migrations (0.0.1)
       activerecord
       rake
+    debugger (1.2.0)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.1.1)
+      debugger-ruby_core_source (~> 1.1.3)
+    debugger-linecache (1.1.2)
+      debugger-ruby_core_source (>= 1.1.1)
+    debugger-ruby_core_source (1.1.3)
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (1.4.0)
@@ -181,8 +196,6 @@ GEM
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
-    rack-contrib (1.1.0)
-      rack (>= 0.9.1)
     rack-protection (1.2.0)
       rack
     rack-ssl (1.3.2)
@@ -246,11 +259,13 @@ DEPENDENCIES
   bunny
   coffee-script
   compass
+  debugger
   gh!
   guard
   hubble!
   newrelic_rpm (~> 3.3.0)
   pg (~> 0.13.2)
+  rack-contrib!
   rake-pipeline!
   rake-pipeline-web-filters!
   sinatra

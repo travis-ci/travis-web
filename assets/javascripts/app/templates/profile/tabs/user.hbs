@@ -22,9 +22,9 @@
 </dl>
 
 <form>
-  {{view Ember.Select
+  {{view Ember.Select id="locale"
      contentBinding="view.locales"
-     selectionBinding="user.locale"
+     valueBinding="Travis.app.currentUser.locale"
      optionLabelPath="content.name"
      optionValuePath="content.key"}}
 

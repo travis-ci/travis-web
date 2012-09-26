@@ -22,7 +22,7 @@ require 'travis/model'
   ).property()
 
   updateLocale: (locale) ->
-    @set('locale', locale)
+    @setWithSession('locale', locale)
     Travis.app.store.commit()
 
   type: (->
@@ -38,7 +38,19 @@ require 'travis/model'
     @ajax '/profile', 'get', success: (data) =>
       if data.user.is_syncing
         Ember.run.later(this, this.poll.bind(this), 3000)
-      else if this.get('isSyncing')
-        # TODO this doesn't seem to work properly
-        Travis.app.store.load(Travis.User, data.user)
-        Travis.app.store.loadMany(Travis.Account, data.accounts)
+      else
+        @set('isSyncing', false)
+        @setWithSession('syncedAt', data.user.synced_at)
+
+        # # TODO this doesn't work properly
+        # Travis.app.store.loadMany(Travis.Account, data.accounts)
+
+  setWithSession: (name, value) ->
+    @set(name, value)
+    data = JSON.parse(sessionStorage?.getItem('travis.user'))
+    data.user[$.underscore(name)] = @get(name)
+    sessionStorage?.setItem('travis.user', JSON.stringify(data))
+
+
+@Travis.User.reopenClass
+  url: 'profile'

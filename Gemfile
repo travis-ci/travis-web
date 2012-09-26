@@ -1,5 +1,7 @@
 source :rubygems
 
+gem 'debugger'
+
 gem 'travis-api',     github: 'travis-ci/travis-api'
 gem 'travis-core',    github: 'travis-ci/travis-core', branch: 'sf-more-services'
 gem 'travis-support', github: 'travis-ci/travis-support'
@@ -8,6 +10,7 @@ gem 'gh',             github: 'rkh/gh'
 gem 'unicorn'
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'rack-contrib',   github: 'rack/rack-contrib'
 gem 'yard-sinatra',   github: 'rkh/yard-sinatra'
 
 gem 'bunny'

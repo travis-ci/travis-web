@@ -81,8 +81,13 @@
       "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
     ).property('user.gravatarId')
 
+    # locale: (->
+    #   @get('user.locale')
+    # ).property('user.locale')
+
     locales: (->
       [
+        { key: null, name: '' }
         { key: 'en', name: 'English' }
         { key: 'ca', name: 'Catalan' }
         { key: 'cs', name: 'Čeština' }
