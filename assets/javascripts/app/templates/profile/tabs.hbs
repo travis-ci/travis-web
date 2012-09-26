@@ -1,13 +1,13 @@
 <ul class="tabs">
   <li id="tab_hooks" {{bindAttr class="view.classHooks"}}>
     <h5>
-      <a {{bindAttr href="view.urlAccount"}} {{action route}}>Repositories</a>
+      <a {{action showAccount view.account href=true}}>Repositories</a>
     </h5>
   </li>
   {{#if view.displayUser}}
     <li id="tab_user" {{bindAttr class="view.classUser"}}>
       <h5>
-        <a {{bindAttr href="view.urlUser"}} {{action route}}>Profile</a>
+        <a {{action showUserProfile view.account href=true}}>Profile</a>
       </h5>
     </li>
   {{/if}}

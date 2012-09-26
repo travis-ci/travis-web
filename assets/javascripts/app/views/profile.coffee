@@ -53,13 +53,7 @@
       'active' if @get('tab') == 'user'
     ).property('tab')
 
-    urlAccount: (->
-      Travis.Urls.account(@get('controller.account.login'))
-    ).property('controller.account.login')
-
-    urlUser: (->
-      Travis.Urls.user(@get('controller.user.login'))
-    ).property('controller.user.login')
+    accountBinding: 'controller.account'
 
     displayUser: (->
       @get('controller.account.login') == @get('controller.user.login')

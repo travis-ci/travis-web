@@ -40,5 +40,14 @@ require 'ext/ember/namespace'
 
   run: (attrs) ->
     console.log "Connecting to #{Travis.config.api_endpoint}"
-    @app = Travis.App.create(attrs || {})
+    app = Travis.App.create(attrs || {})
+    # TODO: router expects the classes for controllers on main namespace, so
+    #       if we want to keep app at Travis.app, we need to copy that, it would
+    #       be ideal to send a patch to ember and get rid of this
+    $.each Travis, (key, value) ->
+      app[key] = value if value && value.isClass && key != 'constructor'
 
+    @app   = app
+    @store = app.store
+
+    app.initialize()

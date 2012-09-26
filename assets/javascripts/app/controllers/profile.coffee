@@ -1,17 +1,11 @@
 Travis.ProfileController = Travis.Controller.extend
   name: 'profile'
   userBinding: 'Travis.app.currentUser'
-
-  init: ->
-    @_super('top', 'accounts')
-    @connectTop()
-    @connectOutlet outletName: 'left', controller: @accountsController, viewClass: Travis.AccountsView
-    @connectOutlet(outletName: 'main', controller: this, viewClass: Travis.ProfileView)
-    @accounts = @accountsController.get('content')
+  accountsBinding: 'Travis.app.router.accountsController'
 
   account: (->
     login = @get('params.login') || Travis.app.get('currentUser.login')
-    @accounts.toArray().filter((account) -> account if account.get('login') == login)[0]
+    @get('accounts').filter((account) -> account if account.get('login') == login)[0]
   ).property('accounts.length', 'params.login')
 
   activate: (action, params) ->

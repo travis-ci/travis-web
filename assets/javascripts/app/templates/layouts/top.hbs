@@ -1,13 +1,13 @@
-<a href="/" {{action route}}>
+<a {{action goToRoot href=true}}>
   <h1>Travis</h1>
 </a>
 
 <ul id="navigation">
   <li {{bindAttr class="view.classHome"}}>
-    <a href="/" {{action route}}>Home</a>
+    <a {{action goToRoot href=true}}>Home</a>
   </li>
   <li {{bindAttr class="view.classStats"}}>
-    <a href="/stats" {{action route}}>Stats</a>
+    <a {{action goToStats href=true}}>Stats</a>
   </li>
   <li>
     <a href="http://about.travis-ci.org/blog">Blog</a>
@@ -18,12 +18,12 @@
   <li {{bindAttr class="view.classProfile"}}>
     <p class="handle">
       <a class="signed-out" href="#" {{action signIn target="Travis.app"}}>{{t layouts.top.github_login}}</a>
-      <a class="signed-in"  href="/profile" {{action route}}><img {{bindAttr src="view.gravatarUrl"}}>{{user.name}}</a>
+      <a class="signed-in" {{action showProfile href=true}}><img {{bindAttr src="view.gravatarUrl"}}>{{user.name}}</a>
       <span class="signing-in">Signing in</span>
     </p>
     <ul>
       <li>
-        <a href="/profile" {{action route}}>{{t layouts.top.profile}}</a>
+        <a {{action showProfile href=true}}>{{t layouts.top.profile}}</a>
       </li>
       <li>
         <a href="/" {{action signOut target="Travis.app"}}>{{t layouts.top.sign_out}}</a>

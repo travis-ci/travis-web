@@ -2,16 +2,14 @@ require 'ext/ember/namespace'
 
 @Travis.reopen
   View: Em.View.extend
-    route: (event) ->
-      Travis.app.routes.route(event)
-
     popup: (event) ->
       $("##{event.target.name}").remove().appendTo('body').toggle()
 
 @Travis.reopen
-  HomeLayout:    Travis.View.extend(templateName: 'layouts/home')
-  ProfileLayout: Travis.View.extend(templateName: 'layouts/profile')
-  StatsLayout:   Travis.View.extend(templateName: 'layouts/simple')
+  HomeView:    Travis.View.extend(templateName: 'layouts/home')
+  ProfileLayoutView: Travis.View.extend(templateName: 'layouts/profile')
+  StatsLayoutView:   Travis.View.extend(templateName: 'layouts/simple')
+  ApplicationView: Travis.View.extend(templateName: 'application')
 
 require 'views/build'
 require 'views/job'
