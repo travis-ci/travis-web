@@ -43,12 +43,6 @@ Travis.reopen
 
     signOut: ->
       @get('auth').signOut()
-      @routes.route('')
-
-    render: (name, action, params) ->
-      layout = @connectLayout(name)
-      layout.activate(action, params || {})
-      $('body').attr('id', name)
 
     receive: ->
       @store.receive.apply(@store, arguments)

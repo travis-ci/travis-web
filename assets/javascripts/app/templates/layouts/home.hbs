@@ -1,21 +1,17 @@
-{{! TODO apparently styles assume that there is more divs here...
-         I should fix that later }}
-<div><div>
-  <div id="top">
-    {{outlet top}}
+<div id="top">
+  {{outlet top}}
+</div>
+
+<div id="page">
+  <div id="left">
+    {{outlet left}}
   </div>
 
-  <div id="page">
-    <div id="left">
-      {{outlet left}}
-    </div>
-
-    <div id="main">
-      {{outlet main}}
-    </div>
-
-    <div id="right">
-      {{outlet right}}
-    </div>
+  <div id="main">
+    {{outlet main}}
   </div>
-</div></div>
+
+  <div id="right">
+    {{outlet right}}
+  </div>
+</div>

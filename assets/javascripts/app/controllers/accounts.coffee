@@ -2,6 +2,7 @@ Travis.AccountsController = Ember.ArrayController.extend
   defaultTab: 'accounts'
 
   init: ->
+    @_super()
     @activate(@defaultTab)
 
   activate: (tab, params) ->
@@ -10,3 +11,6 @@ Travis.AccountsController = Ember.ArrayController.extend
 
   viewAccounts: ->
     @set('content', Travis.Account.filter())
+
+  findByLogin: (login) ->
+    @find (account) -> account.get('login') == 'login'

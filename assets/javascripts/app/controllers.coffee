@@ -19,6 +19,9 @@ Travis.reopen
   TopController: Em.Controller.extend
     userBinding: 'Travis.app.currentUser'
   ApplicationController: Em.Controller.extend()
+  MainController: Em.Controller.extend()
+  StatsLayoutController: Em.Controller.extend()
+  ProfileLayoutController: Em.Controller.extend()
 
 require 'controllers/accounts'
 require 'controllers/builds'

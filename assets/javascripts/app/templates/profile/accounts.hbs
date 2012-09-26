@@ -9,7 +9,7 @@
 
 <div class="tab">
   {{#collection Travis.AccountsListView contentBinding="controller"}}
-    <a {{bindAttr href="view.urlAccount"}} {{action route}} class="name">{{view.name}}</a>
+    <a {{action showAccount view.account href=true}} class="name">{{view.name}}</a>
     <p class="summary">
       <span class="repos_label">Repositories:</span>
       <abbr class="repos">{{view.content.reposCount}}</abbr>

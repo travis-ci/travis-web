@@ -4,13 +4,16 @@ Travis.Router = Ember.Router.extend
   initialState: 'loading'
 
   goToRoot: Ember.Route.transitionTo('root.home.show')
-  goToStats: Ember.Route.transitionTo('root.home.stats')
+  goToStats: Ember.Route.transitionTo('root.stats')
   showRepository: Ember.Route.transitionTo('root.home.repository.show')
   showBuilds: Ember.Route.transitionTo('root.home.repository.builds.index')
   showBuild: Ember.Route.transitionTo('root.home.repository.builds.show')
   showPullRequests: Ember.Route.transitionTo('root.home.repository.pullRequests')
   showBranches: Ember.Route.transitionTo('root.home.repository.branches')
   showJob: Ember.Route.transitionTo('root.home.repository.job')
+  showProfile: Ember.Route.transitionTo('root.profile')
+  showAccount: Ember.Route.transitionTo('root.profile.account')
+  showUserProfile: Ember.Route.transitionTo('root.profile.account.profile')
 
   signedIn: ->
     !!Travis.app.get('currentUser')
@@ -56,24 +59,75 @@ Travis.Router = Ember.Router.extend
     initialState: 'home'
     loading: Ember.State.extend()
 
+    stats: Ember.Route.extend
+      route: '/stats'
+      connectOutlets: (router) ->
+        router.get('applicationController').connectOutlet 'statsLayout'
+        $('body').attr('id', 'stats')
+        router.get('statsLayoutController').connectOutlet 'top', 'top'
+        router.get('statsLayoutController').connectOutlet 'main', 'stats'
+
+    profile: Ember.Route.extend
+      initialState: 'index'
+      route: '/profile'
+      connectOutlets: (router) ->
+        router.get('applicationController').connectOutlet 'profileLayout'
+        $('body').attr('id', 'profile')
+        router.get('profileLayoutController').connectOutlet 'top', 'top'
+        router.get('profileLayoutController').connectOutlet 'left', 'accounts'
+
+      index: Ember.Route.extend
+        route: '/'
+        connectOutlets: (router) ->
+          router.get('profileLayoutController').connectOutlet 'main', 'profile'
+          router.get('profileController').activate 'hooks'
+
+      account: Ember.Route.extend
+        initialState: 'index'
+        route: '/:login'
+
+        connectOutlets: (router, account) ->
+          if account
+            params = { login: account.get('login') }
+            router.get('profileController').setParams(params)
+          else
+            router.send 'showProfile'
+
+        deserialize: (router, params) ->
+          router.get('accountsController').findByLogin(params.login)
+
+        serialize: (router, account) ->
+          if account
+            { login: account.get('login') }
+          else
+            {}
+
+        index: Ember.Route.extend
+          route: '/'
+          connectOutlets: (router) ->
+            router.get('profileController').activate 'hooks'
+
+        profile: Ember.Route.extend
+          route: '/profile'
+
+          connectOutlets: (router) ->
+            router.get('profileController').activate 'user'
+
     home: Ember.Route.extend
       initialState: 'show'
       route: '/'
       connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet 'left', 'repositories'
-        router.get('applicationController').connectOutlet 'right', 'sidebar'
-        router.get('applicationController').connectOutlet 'top', 'top'
-        router.get('applicationController').connectOutlet 'main', 'repository'
+        router.get('applicationController').connectOutlet 'home'
+        $('body').attr('id', 'home')
+        router.get('homeController').connectOutlet 'left', 'repositories'
+        router.get('homeController').connectOutlet 'right', 'sidebar'
+        router.get('homeController').connectOutlet 'top', 'top'
+        router.get('homeController').connectOutlet 'main', 'repository'
 
       show: Ember.Route.extend
         route: '/'
         connectOutlets: (router) ->
           router.get('repositoryController').activate('index')
-
-      stats: Ember.Route.extend
-        route: '/stats'
-        connectOutlets: (router) ->
-          router.get('applicationController').connectOutlet 'main', 'stats'
 
       repository: Ember.Route.extend
         initialState: 'show'

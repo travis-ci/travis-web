@@ -6,10 +6,10 @@ require 'ext/ember/namespace'
       $("##{event.target.name}").remove().appendTo('body').toggle()
 
 @Travis.reopen
-  HomeLayout:    Travis.View.extend(templateName: 'layouts/home')
-  ProfileLayout: Travis.View.extend(templateName: 'layouts/profile')
-  StatsLayout:   Travis.View.extend(templateName: 'layouts/simple')
-  ApplicationView: Travis.View.extend(templateName: 'layouts/home')
+  HomeView:    Travis.View.extend(templateName: 'layouts/home')
+  ProfileLayoutView: Travis.View.extend(templateName: 'layouts/profile')
+  StatsLayoutView:   Travis.View.extend(templateName: 'layouts/simple')
+  ApplicationView: Travis.View.extend(templateName: 'application')
 
 require 'views/build'
 require 'views/job'
