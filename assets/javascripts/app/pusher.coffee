@@ -1,6 +1,7 @@
 Travis.Pusher = ->
   @active_channels = []
   if Travis.config.pusher?.key?
+    Pusher.warn = @warn
     @pusher = new Pusher(Travis.config.pusher.key)
     @subscribe(channel) for channel in Travis.Pusher.CHANNELS
   this
@@ -19,9 +20,7 @@ $.extend Travis.Pusher.prototype,
     ix = @active_channels.indexOf(channel)
     if @pusher && ix == -1
       @active_channels.splice(ix, 1)
-      try
-        @pusher.unsubscribe(@prefix(channel))
-      catch e
+      @pusher.unsubscribe(@prefix(channel))
 
   prefix: (channel) ->
     "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"
@@ -42,3 +41,5 @@ $.extend Travis.Pusher.prototype,
       when 'worker:added', 'worker:updated', 'worker:removed'
         { worker: data }
 
+  warn: (type, error) ->
+    console.warn(error) unless error.data?.message && error.data.message.indexOf('No current subscription') > -1
