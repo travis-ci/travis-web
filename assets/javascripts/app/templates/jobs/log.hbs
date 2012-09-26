@@ -1,7 +1,7 @@
 {{view.logSubscriber}}
 
 {{#if log.isLoaded}}
-  <pre id="log" class="ansi"><a href="#" id="tail" {{action toggleTailing}}>
+  <pre id="log" class="ansi"><a href="#" id="tail" {{action toggleTailing target="view"}}>
     <span class="status"></span>
     <label>Follow logs</label>
   </a>{{{formatLog log.body}}}</pre>
@@ -13,7 +13,7 @@
     </p>
   {{/if}}
 
-  <a href='#' class="to-top" {{action toTop}}>To top</a>
+  <a href='#' class="to-top" {{action toTop target="view"}}>To top</a>
 {{else}}
   <div id="log" class="loading">
     <span>Loading</span>

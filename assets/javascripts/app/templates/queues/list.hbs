@@ -6,7 +6,7 @@
       {{#each job in queue}}
         {{#view Travis.QueueItemView jobBinding="job"}}
           <li>
-            <a {{bindAttr href="view.urlJob"}} {{action route}}>
+            <a {{action showJob job.repository job href=true}}>
               <span class="slug">
                 {{job.repository.slug}}
               </span>
