@@ -5,6 +5,7 @@
         <div class="left">
           <dt>Job</dt>
           <dd class="number">
+            <span class="status"></span>
             {{#if job.id}}
               <a {{action showJob repository job href=true}}>{{job.number}}</a>
             {{/if}}
