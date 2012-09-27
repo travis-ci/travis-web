@@ -11,7 +11,6 @@ require 'travis/model'
   isSyncing:   DS.attr('boolean')
   syncedAt:    DS.attr('string')
   repoCount:   DS.attr('number')
-  accessToken: DS.attr('string')
 
   init: ->
     @poll() if @get('isSyncing')
@@ -30,12 +29,12 @@ require 'travis/model'
   ).property()
 
   sync: ->
-    @post('/profile/sync')
+    @post('/user/sync')
     @set('isSyncing', true)
     @poll()
 
   poll: ->
-    @ajax '/profile', 'get', success: (data) =>
+    @ajax '/user', 'get', success: (data) =>
       if data.user.is_syncing
         Ember.run.later(this, this.poll.bind(this), 3000)
       else
@@ -47,10 +46,6 @@ require 'travis/model'
 
   setWithSession: (name, value) ->
     @set(name, value)
-    data = JSON.parse(sessionStorage?.getItem('travis.user'))
-    data.user[$.underscore(name)] = @get(name)
-    sessionStorage?.setItem('travis.user', JSON.stringify(data))
-
-
-@Travis.User.reopenClass
-  url: 'profile'
+    user = JSON.parse(sessionStorage?.getItem('travis.user'))
+    user[$.underscore(name)] = @get(name)
+    sessionStorage?.setItem('travis.user', JSON.stringify(user))

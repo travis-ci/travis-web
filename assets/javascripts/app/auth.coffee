@@ -9,6 +9,10 @@
     window.addEventListener('message', (e) => @receiveMessage(e))
     Ember.run.next(this, @loadUser)
 
+  accessToken: (->
+    sessionStorage.getItem('travis.token')
+  ).property()
+
   # if the user is in the session storage, we're using it. if we have a flag
   # for auto signin then we're trying to sign in.
   loadUser: ->
@@ -45,11 +49,11 @@
     @set('user',  if user then user else undefined)
 
   storeUser: (data) ->
-    data.user.access_token ||= data.token # TODO why's the access_token not set on the user?
     localStorage?.setItem('travis.auto_signin', 'true')
     sessionStorage?.setItem('travis.user', JSON.stringify(data))
+    sessionStorage?.setItem('travis.token', data.token)
+    @notifyPropertyChange('accessToken')
     @store.load(Travis.User, data.user)
-    @store.loadMany(Travis.Account, data.accounts)
     Travis.User.find(data.user.id)
 
   receiveMessage: (event) ->

@@ -3132,8 +3132,8 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
         if (cachedValue) {
           var key = association.options.key || get(this, 'namingConvention').keyToJSONKey(name),
               ids = data.get(key) || [];
-          
-          var clientIds;   
+
+          var clientIds;
           if(association.options.embedded) {
             clientIds = store.loadMany(association.type, ids).clientIds;
           } else {
@@ -3141,7 +3141,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
               return store.clientIdForId(association.type, id);
             });
           }
-          
+
           set(cachedValue, 'content', Ember.A(clientIds));
           cachedValue.fetch();
         }
@@ -3766,7 +3766,7 @@ DS.FixtureAdapter = DS.Adapter.extend({
         return ids.indexOf(item.id) !== -1;
       });
     }
-  
+
     if (fixtures) {
       this.simulateRemoteCall(function() {
         store.loadMany(type, fixtures);
@@ -3786,7 +3786,7 @@ DS.FixtureAdapter = DS.Adapter.extend({
 
   findQuery: function(store, type, query, array) {
     var fixtures = this.fixturesForType(type);
-    
+
     Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
 
     fixtures = this.queryFixtures(fixtures, query);
@@ -3847,7 +3847,7 @@ var get = Ember.get, set = Ember.set;
 
 DS.RESTAdapter = DS.Adapter.extend({
   bulkCommit: false,
-	
+
   createRecord: function(store, type, record) {
     var root = this.rootForType(type);
 
