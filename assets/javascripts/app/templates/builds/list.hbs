@@ -13,30 +13,28 @@
     <tbody>
       {{#each build in builds}}
         {{#view Travis.BuildsItemView contextBinding="build"}}
-          <tr {{bindAttr class="view.color"}}>
-            <td class="number">
-              <span class="status"></span>
-              {{#if id}}
-                <a {{action showBuild this href=true}}>
-                  {{number}}
-                </a>
-              {{/if}}
-            </td>
-            <td class="commit">
-              <a {{bindAttr href="view.urlGithubCommit"}}>
-                {{formatCommit commit}}
+          <td class="number">
+            <span class="status"></span>
+            {{#if id}}
+              <a {{action showBuild this href=true}}>
+                {{number}}
               </a>
-            </td>
-            <td class="message">
-              {{{formatMessage commit.message short="true"}}}
-            </td>
-            <td class="duration" {{bindAttr title="duration"}}>
-              {{formatDuration duration}}
-            </td>
-            <td class="finished_at timeago" {{bindAttr title="finishedAt"}}>
-              {{formatTime finishedAt}}
-            </td>
-          </tr>
+            {{/if}}
+          </td>
+          <td class="commit">
+            <a {{bindAttr href="view.urlGithubCommit"}}>
+              {{formatCommit commit}}
+            </a>
+          </td>
+          <td class="message">
+            {{{formatMessage commit.message short="true"}}}
+          </td>
+          <td class="duration" {{bindAttr title="duration"}}>
+            {{formatDuration duration}}
+          </td>
+          <td class="finished_at timeago" {{bindAttr title="finishedAt"}}>
+            {{formatTime finishedAt}}
+          </td>
         {{/view}}
       {{/each}}
     </tbody>

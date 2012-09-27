@@ -9,6 +9,8 @@
       Travis.Build.olderThanNumber(id, number)
 
   BuildsItemView: Travis.View.extend
+    tagName: 'tr'
+    classNameBindings: ['color']
     repositoryBinding: 'controller.repository'
     buildBinding: 'context'
     commitBinding: 'build.commit'
@@ -27,10 +29,16 @@
 
   BuildView: Travis.View.extend
     templateName: 'builds/show'
+    elementId: 'build'
+    classNameBindings: ['color', 'loading']
 
     repositoryBinding: 'controller.repository'
     buildBinding: 'controller.build'
     commitBinding: 'build.commit'
+
+    loading: (->
+      !@get('build.isLoaded')
+    ).property('build.isLoaded')
 
     color: (->
       Travis.Helpers.colorForResult(@get('build.result'))
