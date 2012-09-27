@@ -20,6 +20,7 @@ Travis.RepositoryController = Travis.Controller.extend
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
+    @_bind('repository', 'controllers.repositoriesController.firstObject')
     @_bind('build', 'repository.lastBuild')
     @connectTab('current')
 
