@@ -11,6 +11,7 @@ require 'ext/ember/namespace'
   StatsLayoutView:   Travis.View.extend(templateName: 'layouts/simple')
   ApplicationView: Travis.View.extend(templateName: 'application')
 
+require 'views/accounts'
 require 'views/build'
 require 'views/job'
 require 'views/repo'

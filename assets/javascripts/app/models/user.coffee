@@ -46,6 +46,6 @@ require 'travis/model'
 
   setWithSession: (name, value) ->
     @set(name, value)
-    data = JSON.parse(sessionStorage?.getItem('travis.user'))
-    data.user[$.underscore(name)] = @get(name)
-    sessionStorage?.setItem('travis.user', JSON.stringify(data))
+    user = JSON.parse(sessionStorage?.getItem('travis.user'))
+    user[$.underscore(name)] = @get(name)
+    sessionStorage?.setItem('travis.user', JSON.stringify(user))

@@ -4,9 +4,9 @@ Travis.AccountsController = Ember.ArrayController.extend
   init: ->
     @_super()
 
-  content: (->
-    Travis.Account.find()
-  ).property()
+  # content: (->
+  #   Travis.Account.find()
+  # ).property()
 
   findByLogin: (login) ->
     @find (account) -> account.get('login') == 'login'

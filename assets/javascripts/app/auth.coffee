@@ -17,7 +17,7 @@
   # for auto signin then we're trying to sign in.
   loadUser: ->
     if user = sessionStorage?.getItem('travis.user')
-      @setUser(user)
+      @setData(user: JSON.parse(user))
     else if localStorage?.getItem('travis.auto_signin')
       @trySignIn()
 
@@ -40,25 +40,28 @@
   signOut: ->
     localStorage?.clear()
     sessionStorage?.clear()
-    @setUser()
+    @setData()
 
-  setUser: (data) ->
+  setData: (data) ->
     data = JSON.parse(data) if typeof data == 'string'
-    user = @storeUser(data) if data
+    @storeToken(data.token) if data?.token
+    user = @storeUser(data.user) if data?.user
     @set('state', if user then 'signed-in' else 'signed-out')
     @set('user',  if user then user else undefined)
 
-  storeUser: (data) ->
-    localStorage?.setItem('travis.auto_signin', 'true')
-    sessionStorage?.setItem('travis.user', JSON.stringify(data))
-    sessionStorage?.setItem('travis.token', data.token)
+  storeToken: (token) ->
+    sessionStorage?.setItem('travis.token', token)
     @notifyPropertyChange('accessToken')
-    @store.load(Travis.User, data.user)
-    Travis.User.find(data.user.id)
+
+  storeUser: (user) ->
+    localStorage?.setItem('travis.auto_signin', 'true')
+    sessionStorage?.setItem('travis.user', JSON.stringify(user))
+    @store.load(Travis.User, user)
+    Travis.User.find(user.id)
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()
-      @setUser(event.data)
+      @setData(event.data)
       console.log("signed in as #{event.data.user.login}")
     else
       console.log("unexpected message #{event.origin}: #{event.data}")

@@ -70,9 +70,11 @@ Travis.Router = Ember.Router.extend
     profile: Ember.Route.extend
       initialState: 'index'
       route: '/profile'
+
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'profileLayout'
         $('body').attr('id', 'profile')
+        router.get('accountsController').set('content', Travis.Account.find())
         router.get('profileLayoutController').connectOutlet 'top', 'top'
         router.get('profileLayoutController').connectOutlet 'left', 'accounts'
 
