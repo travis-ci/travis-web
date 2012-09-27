@@ -28,11 +28,11 @@ require 'travis/model'
 
   requiredJobs: (->
     @get('jobs').filter (data) -> !data.get('allowFailure')
-  ).property('jobs.@each.allowFailure')
+  ).property()
 
   allowedFailureJobs: (->
     @get('jobs').filter (data) -> data.get('allowFailure')
-  ).property('jobs.@each.allowFailure')
+  ).property()
 
   configKeys: (->
     return [] unless config = @get('config')

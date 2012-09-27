@@ -48,7 +48,7 @@ Travis.RepositoryController = Travis.Controller.extend
 
   viewBuild: ->
     @_bind('repository', 'repositoriesByParams.firstObject')
-    @_bind('build', 'buildById')
+    @_bind('build', 'params.build')
     @connectTab('build')
 
   viewJob: ->
@@ -60,10 +60,6 @@ Travis.RepositoryController = Travis.Controller.extend
   repositoriesByParams: (->
     Travis.Repository.bySlug("#{@get('params.owner')}/#{@get('params.name')}")
   ).property('params.owner', 'params.name')
-
-  buildById: (->
-    Travis.Build.find(id) if id = @get('params.id')
-  ).property('params.id')
 
   jobById: (->
     Travis.Job.find(id) if id = @get('params.id')

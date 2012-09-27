@@ -178,7 +178,7 @@ Travis.Router = Ember.Router.extend
           show: Ember.Route.extend
             route: '/:build_id'
             connectOutlets: (router, build) ->
-              router.get('repositoryController').activate 'build', id: build.get('id')
+              router.get('repositoryController').activate 'build', build: build
 
             deserialize: (router, params) ->
               # Something is wrong here. If I don't use deferred, id is not
