@@ -6007,75 +6007,79 @@ pre#log .fold.open {
   color: #666666;
 }
 
-/* line 19, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 20, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories .green .status,
-.green .number .status {
+.summary .green .number .status,
+.list .green .number .status {
   background-color: #368c2a;
 }
-/* line 21, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 22, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories .green a,
-.green .number a {
+.summary .green .number a,
+.list .green .number a {
   color: #038035;
 }
 
-/* line 26, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories .red .status,
-.red .number .status {
+.summary .red .number .status,
+.list .red .number .status {
   background-color: #cc3d3d;
 }
-/* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 30, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories .red a,
-.red .number a {
+.summary .red .number a,
+.list .red .number a {
   color: #cc0000;
 }
 
-/* line 33, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 35, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list tbody td {
   cursor: pointer;
   background-color: #fffcf4;
 }
-/* line 36, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 38, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list tbody tr:hover td {
   background-color: #ffffe1;
 }
-/* line 40, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 42, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list .green td {
   background-color: #fafffa;
 }
-/* line 42, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list .green:hover td {
   background-color: #dcffdc;
 }
-/* line 44, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 46, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list .green .number a {
   color: #038035;
 }
-/* line 48, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 50, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list .red td {
   background-color: snow;
 }
-/* line 50, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 52, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list .red:hover td {
   background-color: #ffdcdc;
 }
-/* line 52, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 54, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 table.list .red .number a {
   color: #cc0000;
 }
 
-/* line 56, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 58, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #workers .status {
   background-color: #368c2a;
 }
-/* line 59, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 61, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #workers .waiting .status {
   background-color: #368c2a;
 }
-/* line 62, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 64, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #workers .errored .status {
   background-color: #cc3d3d;
 }
-/* line 65, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
+/* line 67, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #workers .stopped .status {
   background-color: #999999;
 }

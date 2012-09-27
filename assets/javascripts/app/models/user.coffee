@@ -29,12 +29,12 @@ require 'travis/model'
   ).property()
 
   sync: ->
-    @post('/user/sync')
-    @set('isSyncing', true)
+    @post('/users/sync')
+    @setWithSession('isSyncing', true)
     @poll()
 
   poll: ->
-    @ajax '/user', 'get', success: (data) =>
+    @ajax '/users', 'get', success: (data) =>
       if data.user.is_syncing
         Ember.run.later(this, this.poll.bind(this), 3000)
       else
@@ -46,6 +46,6 @@ require 'travis/model'
 
   setWithSession: (name, value) ->
     @set(name, value)
-    user = JSON.parse(sessionStorage?.getItem('travis.user'))
-    user[$.underscore(name)] = @get(name)
-    sessionStorage?.setItem('travis.user', JSON.stringify(user))
+    data = JSON.parse(sessionStorage?.getItem('travis.user'))
+    data.user[$.underscore(name)] = @get(name)
+    sessionStorage?.setItem('travis.user', JSON.stringify(data))

@@ -1,16 +1,12 @@
 Travis.AccountsController = Ember.ArrayController.extend
-  defaultTab: 'accounts'
+  tab: 'accounts'
 
   init: ->
     @_super()
-    @activate(@defaultTab)
 
-  activate: (tab, params) ->
-    @set('tab', tab)
-    this["view#{$.camelize(tab)}"](params)
-
-  viewAccounts: ->
-    @set('content', Travis.Account.find())
+  content: (->
+    Travis.Account.find()
+  ).property()
 
   findByLogin: (login) ->
     @find (account) -> account.get('login') == 'login'
