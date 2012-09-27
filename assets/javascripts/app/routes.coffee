@@ -134,12 +134,7 @@ Travis.Router = Ember.Router.extend
         route: '/:owner/:name'
 
         connectOutlets: (router, repository) ->
-          params = { owner: repository.get('owner'), name: repository.get('name') }
-
-          # TODO: we can just pass objects instead of params now, I'm leaving this
-          #       to not have to rewrite too much, but it would be nice to fix this
-          #       later
-          router.get('repositoryController').setParams(params)
+          router.get('repositoryController').set 'repository', repository
 
         deserialize: (router, params) ->
           slug = "#{params.owner}/#{params.name}"
@@ -178,7 +173,8 @@ Travis.Router = Ember.Router.extend
           show: Ember.Route.extend
             route: '/:build_id'
             connectOutlets: (router, build) ->
-              router.get('repositoryController').activate 'build', id: build.get('id')
+              router.get('repositoryController').set 'build', build
+              router.get('repositoryController').activate 'build'
 
             deserialize: (router, params) ->
               # Something is wrong here. If I don't use deferred, id is not
@@ -211,7 +207,8 @@ Travis.Router = Ember.Router.extend
         job: Ember.Route.extend
           route: '/jobs/:job_id'
           connectOutlets: (router, job) ->
-            router.get('repositoryController').activate 'job', id: job.get('id')
+            router.get('repositoryController').set 'job', job
+            router.get('repositoryController').activate 'job'
 
           deserialize: (router, params) ->
             job = Travis.Job.find params.job_id

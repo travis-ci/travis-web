@@ -1,6 +1,5 @@
 Travis.RepositoryController = Travis.Controller.extend
   bindings: []
-  params: {}
 
   init: ->
     @_super.apply this, arguments
@@ -16,9 +15,8 @@ Travis.RepositoryController = Travis.Controller.extend
 
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
-  activate: (action, params) ->
+  activate: (action) ->
     @_unbind()
-    @setParams(params)
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
@@ -28,46 +26,26 @@ Travis.RepositoryController = Travis.Controller.extend
 
   viewCurrent: ->
     @connectTab('current')
-    @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('build', 'repository.lastBuild')
 
   viewBuilds: ->
     @connectTab('builds')
-    @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('builds', 'repository.builds')
 
   viewPullRequests: ->
     @connectTab('pull_requests')
-    @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('builds', 'repository.pullRequests')
 
   viewBranches: ->
     @connectTab('branches')
-    @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('builds', 'repository.branches')
 
   viewBuild: ->
-    @_bind('repository', 'repositoriesByParams.firstObject')
-    @_bind('build', 'buildById')
     @connectTab('build')
 
   viewJob: ->
-    @_bind('repository', 'repositoriesByParams.firstObject')
     @_bind('build', 'job.build')
-    @_bind('job', 'jobById')
     @connectTab('job')
-
-  repositoriesByParams: (->
-    Travis.Repository.bySlug("#{@get('params.owner')}/#{@get('params.name')}")
-  ).property('params.owner', 'params.name')
-
-  buildById: (->
-    Travis.Build.find(id) if id = @get('params.id')
-  ).property('params.id')
-
-  jobById: (->
-    Travis.Job.find(id) if id = @get('params.id')
-  ).property('params.id')
 
   repositoryObserver: (->
     repository = @get('repository')
@@ -83,10 +61,6 @@ Travis.RepositoryController = Travis.Controller.extend
 
     @set('tab', tab)
     @connectOutlet(outletName: 'pane', controller: this, viewClass: viewClass)
-
-  setParams: (params) ->
-    # TODO if we just @set('params', params) it will update the repositoriesByParams property
-    @set("params.#{key}", params[key]) for key, value of params
 
   _bind: (to, from) ->
     @bindings.push Ember.oneWay(this, to, from)

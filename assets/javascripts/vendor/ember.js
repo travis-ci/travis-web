@@ -1,5 +1,5 @@
-// Version: v1.0.pre-157-g896f794
-// Last commit: 896f794 (2012-09-26 21:30:45 +0200)
+// Version: v1.0.pre-161-g4255d0a
+// Last commit: 4255d0a (2012-09-27 14:32:08 +0200)
 
 
 (function() {
@@ -140,8 +140,8 @@ window.ember_deprecateFunc  = Ember.deprecateFunc("ember_deprecateFunc is deprec
 
 })();
 
-// Version: v1.0.pre-157-g896f794
-// Last commit: 896f794 (2012-09-26 21:30:45 +0200)
+// Version: v1.0.pre-161-g4255d0a
+// Last commit: 4255d0a (2012-09-27 14:32:08 +0200)
 
 
 (function() {
@@ -3096,32 +3096,33 @@ ComputedPropertyPrototype.set = function(obj, keyName, value) {
       hadCachedValue = false,
       ret;
   this._suspended = obj;
+  try {
+    ret = this.func.call(obj, keyName, value);
 
-  if (cacheable && keyName in meta.cache) {
-    if (meta.cache[keyName] === value) {
-      return;
+    if (cacheable && keyName in meta.cache) {
+      if (meta.cache[keyName] === ret) {
+        return;
+      }
+      hadCachedValue = true;
     }
-    hadCachedValue = true;
-  }
 
-  if (watched) { Ember.propertyWillChange(obj, keyName); }
+    if (watched) { Ember.propertyWillChange(obj, keyName); }
 
-  if (cacheable && hadCachedValue) {
-    delete meta.cache[keyName];
-  }
-
-  ret = this.func.call(obj, keyName, value);
-
-  if (cacheable) {
-    if (!watched && !hadCachedValue) {
-      addDependentKeys(this, obj, keyName, meta);
+    if (cacheable && hadCachedValue) {
+      delete meta.cache[keyName];
     }
-    meta.cache[keyName] = ret;
+
+    if (cacheable) {
+      if (!watched && !hadCachedValue) {
+        addDependentKeys(this, obj, keyName, meta);
+      }
+      meta.cache[keyName] = ret;
+    }
+
+    if (watched) { Ember.propertyDidChange(obj, keyName); }
+  } finally {
+    this._suspended = oldSuspended;
   }
-
-  if (watched) { Ember.propertyDidChange(obj, keyName); }
-
-  this._suspended = oldSuspended;
   return ret;
 };
 
@@ -3790,7 +3791,7 @@ Ember.RunLoop = RunLoop;
   call.
 
       Ember.run(function(){
-        // code to be execute within a RunLoop
+        // code to be execute within a RunLoop 
       });
 
   @class run
@@ -3824,7 +3825,7 @@ var run = Ember.run;
   an lower-level way to use a RunLoop instead of using Ember.run().
 
       Ember.run.begin();
-      // code to be execute within a RunLoop
+      // code to be execute within a RunLoop 
       Ember.run.end();
 
   @method begin
@@ -3840,7 +3841,7 @@ Ember.run.begin = function() {
   instead of using Ember.run().
 
       Ember.run.begin();
-      // code to be execute within a RunLoop
+      // code to be execute within a RunLoop 
       Ember.run.end();
 
   @method end
@@ -5645,7 +5646,7 @@ Ember.inspect = function(obj) {
 /**
   Compares two objects, returning true if they are logically equal.  This is
   a deeper comparison than a simple triple equal. For sets it will compare the
-  internal objects.  For any other object that implements `isEqual()` it will
+  internal objects.  For any other object that implements `isEqual()` it will 
   respect that method.
 
       Ember.isEqual('hello', 'hello');  => true
@@ -5841,7 +5842,7 @@ Ember.String = {
 
   /**
     Converts a camelized string into all lower case separated by underscores.
-
+    
         'innerHTML'.decamelize()         => 'inner_html'
         'action_name'.decamelize()       => 'action_name'
         'css-class-name'.decamelize()    => 'css-class-name'
@@ -5857,7 +5858,7 @@ Ember.String = {
 
   /**
     Replaces underscores or spaces with dashes.
-
+    
         'innerHTML'.dasherize()         => 'inner-html'
         'action_name'.dasherize()       => 'action-name'
         'css-class-name'.dasherize()    => 'css-class-name'
@@ -7737,7 +7738,7 @@ Ember.MutableArray = Ember.Mixin.create(Ember.Array, Ember.MutableEnumerable,
         colors.length(); => 0
 
     @method clear
-    @return {Ember.Array} An empty Array.
+    @return {Ember.Array} An empty Array. 
   */
   clear: function () {
     var len = get(this, 'length');
@@ -9518,7 +9519,7 @@ Ember.ArrayProxy = Ember.Object.extend(Ember.MutableArray,
    The array that the proxy pretends to be. In the default `ArrayProxy`
    implementation, this and `content` are the same. Subclasses of `ArrayProxy`
    can override this property to provide things like sorting and filtering.
-
+   
    @property arrangedContent
   */
   arrangedContent: Ember.computed('content', function() {
@@ -12186,9 +12187,9 @@ Ember.ControllerMixin.reopen({
     }
 
     outletName = outletName || 'view';
-
+    
     Ember.assert("The viewClass is either missing or the one provided did not resolve to a view", !!name || (!name && !!viewClass));
-
+    
     Ember.assert("You must supply a name or a viewClass to connectOutlet, but not both", (!!name && !viewClass && !controller) || (!name && !!viewClass));
 
     if (name) {
@@ -12325,7 +12326,7 @@ var invokeForState = {
   `Ember.View` is the class in Ember responsible for encapsulating templates of HTML
   content, combining templates with data to render as sections of a page's DOM, and
   registering and responding to user-initiated events.
-
+  
   ## HTML Tag
   The default HTML tag name used for a view's DOM representation is `div`. This can be
   customized by setting the `tagName` property. The following view class:
@@ -12359,7 +12360,7 @@ var invokeForState = {
   ```
 
   `class` attribute values can also be set by providing a `classNameBindings` property
-  set to an array of properties names for the view. The return value of these properties
+  set to an array of properties names for the view. The return value of these properties 
   will be added as part of the value for the view's `class` attribute. These properties
   can be computed properties:
 
@@ -12396,7 +12397,7 @@ var invokeForState = {
   <div id="ember1" class="ember-view hovered"></div>
   ```
 
-  When using boolean class name bindings you can supply a string value other than the
+  When using boolean class name bindings you can supply a string value other than the 
   property name for use as the `class` HTML attribute by appending the preferred value after
   a ":" character when defining the binding:
 
@@ -12466,7 +12467,7 @@ var invokeForState = {
 
   ``` html
   <div id="ember1" class="ember-view enabled"></div>
-  ```
+  ``` 
 
   When isEnabled is `false`, the resulting HTML reprensentation looks like this:
 
@@ -12497,11 +12498,11 @@ var invokeForState = {
   <div id="ember1" class="ember-view disabled"></div>
   ```
 
-  Updates to the the value of a class name binding will result in automatic update
+  Updates to the the value of a class name binding will result in automatic update 
   of the  HTML `class` attribute in the view's rendered HTML representation.
   If the value becomes  `false` or `undefined` the class name will be removed.
 
-  Both `classNames` and `classNameBindings` are concatenated properties.
+  Both `classNames` and `classNameBindings` are concatenated properties. 
   See `Ember.Object` documentation for more information about concatenated properties.
 
   ## HTML Attributes
@@ -12558,7 +12559,7 @@ var invokeForState = {
   });
   ```
 
-  Updates to the the property of an attribute binding will result in automatic update
+  Updates to the the property of an attribute binding will result in automatic update 
   of the  HTML attribute in the view's rendered HTML representation.
 
   `attributeBindings` is a concatenated property. See `Ember.Object` documentation
@@ -12580,7 +12581,7 @@ var invokeForState = {
 
   ``` html
   <div id="ember1" class="ember-view">I am the template</div>
-  ```
+  ``` 
 
   The default context of the compiled template will be the view instance itself:
 
@@ -12670,7 +12671,7 @@ var invokeForState = {
   primary templates, layouts can be any function that  accepts an optional context
   parameter and returns a string of HTML that will be inserted inside view's tag. Views whose HTML
   element is self closing (e.g. `<input />`) cannot have a layout and this property will be ignored.
-
+  
   Most typically in Ember a layout will be a compiled Ember.Handlebars template.
 
   A view's layout can be set directly with the `layout` property or reference an
@@ -12700,7 +12701,7 @@ var invokeForState = {
 
   ## Responding to Browser Events
 
-  Views can respond to user-initiated events in one of three ways: method implementation,
+  Views can respond to user-initiated events in one of three ways: method implementation, 
   through an event manager, and through `{{action}}` helper use in their template or layout.
 
   ### Method Implementation
@@ -12721,8 +12722,8 @@ var invokeForState = {
 
   Views can define an object as their `eventManager` property. This object can then
   implement methods that match the desired event names. Matching events that occur
-  on the view's rendered HTML or the rendered HTML of any of its DOM descendants
-  will trigger this method.  A `jQuery.Event` object will be passed as the first
+  on the view's rendered HTML or the rendered HTML of any of its DOM descendants 
+  will trigger this method.  A `jQuery.Event` object will be passed as the first 
   argument to the method and an  `Ember.View` object as the second. The `Ember.View`
   will be the view whose rendered HTML was interacted with. This may be the view with
   the `eventManager` property or one of its descendent views.
@@ -12759,7 +12760,7 @@ var invokeForState = {
 
   Similarly a view's event manager will take precedence for events of any views
   rendered as a descendent. A method name that matches an event name will not be called
-  if the view instance was rendered inside the HTML representation of a view that has
+  if the view instance was rendered inside the HTML representation of a view that has 
   an `eventManager` property defined that handles events of the name.  Events not handled
   by the event manager will still trigger method calls on the descendent.
 
@@ -12782,7 +12783,7 @@ var invokeForState = {
       // eventManager doesn't handle click events
     },
     mouseEnter: function(event){
-      // will never be called if rendered inside
+      // will never be called if rendered inside 
       // an OuterView.
     }
   });
@@ -12806,9 +12807,9 @@ var invokeForState = {
   Form events: 'submit', 'change', 'focusIn', 'focusOut', 'input'
 
   HTML5 drag and drop events: 'dragStart', 'drag', 'dragEnter', 'dragLeave', 'drop', 'dragEnd'
-
+  
   ## Handlebars `{{view}}` Helper
-
+  
   Other `Ember.View` instances can be included as part of a view's template by using the `{{view}}`
   Handlebars helper. See `Handlebars.helpers.view` for additional information.
 
@@ -14985,7 +14986,7 @@ var childViewsProperty = Ember.computed(function() {
   });
 
   aContainer.appendTo('body');
-  ```
+  ``` 
 
   Results in the HTML
 
@@ -15398,7 +15399,7 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
 
 /**
   `Ember.CollectionView` is an `Ember.View` descendent responsible for managing a
-  collection (an array or array-like object) by maintaing a child view object and
+  collection (an array or array-like object) by maintaing a child view object and 
   associated DOM representation for each item in the array and ensuring that child
   views and their associated rendered HTML are updated when items in the array
   are added, removed, or replaced.
@@ -15423,7 +15424,7 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
 
   Given an empty `<body>` and the following code:
 
-  ``` javascript
+  ``` javascript 
   someItemsView = Ember.CollectionView.create({
     classNames: ['a-collection'],
     content: ['A','B','C'],
@@ -15447,7 +15448,7 @@ var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
 
   ## Automatic matching of parent/child tagNames
 
-  Setting the `tagName` property of a `CollectionView` to any of
+  Setting the `tagName` property of a `CollectionView` to any of 
   "ul", "ol", "table", "thead", "tbody", "tfoot", "tr", or "select" will result
   in the item views receiving an appropriately matched `tagName` property.
 
@@ -20170,7 +20171,7 @@ EmberHandlebars.ViewHelper = Ember.Object.create({
 
   ``` html
   <body>
-    <!-- Note: the handlebars template script
+    <!-- Note: the handlebars template script 
          also results in a rendered Ember.View
          which is the outer <div> here -->
 
@@ -20195,7 +20196,7 @@ EmberHandlebars.ViewHelper = Ember.Object.create({
 
   aView.appendTo('body');
   ```
-
+    
   Will result in HTML structure:
 
   ``` html
@@ -20285,7 +20286,7 @@ EmberHandlebars.ViewHelper = Ember.Object.create({
 
   ``` html
   <div id="ember1" class="ember-view">
-    <div id="ember2" class="ember-view a-custom-view-class-as-property">
+    <div id="ember2" class="ember-view a-custom-view-class-as-property"> 
       hi
     </div>
   </div>
@@ -20722,7 +20723,7 @@ Ember.Handlebars.EachView = Ember.CollectionView.extend(Ember._Metamorph, {
   ``` handlebars
   <script type="text/x-handlebars">
     {{#view App.MyView }}
-      {{each view.items itemViewClass="App.AnItemView"}}
+      {{each view.items itemViewClass="App.AnItemView"}} 
     {{/view}}
   </script>
   ```
@@ -20743,10 +20744,10 @@ Ember.Handlebars.EachView = Ember.CollectionView.extend(Ember._Metamorph, {
   App.AnItemView = Ember.View.extend({
     template: Ember.Handlebars.compile("Greetings {{name}}")
   });
-
+      
   App.initialize();
   ```
-
+      
   Will result in the HTML structure below
 
   ``` html
@@ -20905,7 +20906,7 @@ ActionHelper.registerAction = function(actionName, options) {
   The `{{action}}` helper registers an HTML element within a template for
   DOM event handling and forwards that interaction to the Application's router,
   the template's `Ember.View` instance, or supplied `target` option (see 'Specifying a Target').
-
+  
   User interaction with that element will invoke the supplied action name on
   the appropriate target.
 
@@ -20956,7 +20957,7 @@ ActionHelper.registerAction = function(actionName, options) {
   If you need the default handler to trigger you should either register your
   own event handler, or use event methods on your view class. See Ember.View
   'Responding to Browser Events' for more information.
-
+  
   ### Specifying DOM event type
 
   By default the `{{action}}` helper registers for DOM `click` events. You can
@@ -20978,23 +20979,23 @@ ActionHelper.registerAction = function(actionName, options) {
   `Ember.EventDispatcher` instance will be created when a new
   `Ember.Application` is created. Having an instance of `Ember.Application`
   will satisfy this requirement.
-
-
+  
+  
   ### Specifying a Target
   There are several possible target objects for `{{action}}` helpers:
-
+  
   In a typical `Ember.Router`-backed Application where views are managed
   through use of the `{{outlet}}` helper, actions will be forwarded to the
   current state of the Applications's Router. See Ember.Router 'Responding
   to User-initiated Events' for more information.
-
+  
   If you manually set the `target` property on the controller of a template's
   `Ember.View` instance, the specifed `controller.target` will become the target
   for any actions. Likely custom values for a controller's `target` are the
   controller itself or a StateManager other than the Application's Router.
-
+  
   If the templates's view lacks a controller property the view itself is the target.
-
+  
   Finally, a `target` option can be provided to the helper to change which object
   will receive the method call. This option must be a string representing a
   path to an object:
@@ -21057,7 +21058,7 @@ ActionHelper.registerAction = function(actionName, options) {
 
   Will throw `Uncaught TypeError: Cannot call method 'call' of undefined` when
   "click me" is clicked.
-
+  
   ### Specifying a context
 
   By default the `{{action}}` helper passes the current Handlebars context
@@ -21286,7 +21287,7 @@ Ember.Handlebars.registerHelper('outlet', function(property, options) {
 var set = Ember.set, get = Ember.get;
 
 /**
-  The `Ember.Checkbox` view class renders a checkbox [input](https://developer.mozilla.org/en/HTML/Element/Input)
+  The `Ember.Checkbox` view class renders a checkbox [input](https://developer.mozilla.org/en/HTML/Element/Input) 
   element. It allows for binding an Ember property (`checked`) to the status of the checkbox.
 
   Example:
@@ -21298,7 +21299,7 @@ var set = Ember.set, get = Ember.get;
   You can add a `label` tag yourself in the template where the Ember.Checkbox is being used.
 
   ``` html
-  <label>
+  <label>        
     {{view Ember.Checkbox classNames="applicaton-specific-checkbox"}}
     Some Title
   </label>
@@ -21615,7 +21616,7 @@ var get = Ember.get, set = Ember.set;
 
   ## Layout and LayoutName properties
 
-  Because HTML `textarea` elements do not contain inner HTML the `layout` and `layoutName`
+  Because HTML `textarea` elements do not contain inner HTML the `layout` and `layoutName` 
   properties will not be applied. See `Ember.View`'s layout section for more information.
 
   @class TextArea
@@ -21760,7 +21761,7 @@ var indexOf = Ember.EnumerableUtils.indexOf, indexesOf = Ember.EnumerableUtils.i
 /**
   The Ember.Select view class renders a
   [select](https://developer.mozilla.org/en/HTML/Element/select) HTML element,
-  allowing the user to choose from a list of options.
+  allowing the user to choose from a list of options. 
 
   The text and `value` property of each `<option>` element within the `<select>` element
   are populated from the objects in the Element.Select's `content` property. The
@@ -21818,7 +21819,7 @@ var indexOf = Ember.EnumerableUtils.indexOf, indexesOf = Ember.EnumerableUtils.i
   ```
 
   A user interacting with the rendered `<select>` to choose "Yehuda" would update
-  the value of `App.controller.selected` to "Yehuda".
+  the value of `App.controller.selected` to "Yehuda". 
 
   ### `content` as an Array of Objects
   An Ember.Select can also take an array of JavaScript or Ember objects
@@ -21829,8 +21830,8 @@ var indexOf = Ember.EnumerableUtils.indexOf, indexesOf = Ember.EnumerableUtils.i
   and which property should be used to supply the element text.
 
   The `optionValuePath` option is used to specify the path on each object to
-  the desired property for the `value` attribute.  The `optionLabelPath`
-  specifies the path on each object to the desired property for the
+  the desired property for the `value` attribute.  The `optionLabelPath` 
+  specifies the path on each object to the desired property for the 
   element's text. Both paths must reference each object itself as 'content':
 
   ``` javascript
@@ -21899,7 +21900,7 @@ var indexOf = Ember.EnumerableUtils.indexOf, indexesOf = Ember.EnumerableUtils.i
   used to render each object providing a `selectionBinding`. When the selected
   `<option>` is changed, the property path provided to `selectionBinding`
   will be updated to match the content object of the rendered `<option>`
-  element:
+  element: 
 
   ``` javascript
   App.controller = Ember.Object.create({
@@ -21933,7 +21934,7 @@ var indexOf = Ember.EnumerableUtils.indexOf, indexesOf = Ember.EnumerableUtils.i
   Interacting with the rendered element by selecting the first option
   ('Yehuda') will update the `selectedPerson` value of `App.controller`
   to match the content object of the newly selected `<option>`. In this
-  case it is the first object in the `App.content.content`
+  case it is the first object in the `App.content.content` 
 
   ### Supplying a Prompt
 
@@ -22354,8 +22355,8 @@ Ember Handlebars
 
 })();
 
-// Version: v1.0.pre-157-g896f794
-// Last commit: 896f794 (2012-09-26 21:30:45 +0200)
+// Version: v1.0.pre-161-g4255d0a
+// Last commit: 4255d0a (2012-09-27 14:32:08 +0200)
 
 
 (function() {

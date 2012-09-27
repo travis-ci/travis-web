@@ -31,4 +31,5 @@ end
 group :development do
   gem 'foreman'
   gem 'rerun'
+  gem 'rb-fsevent', '~> 0.9.1'
 end
