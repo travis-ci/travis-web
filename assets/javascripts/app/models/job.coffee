@@ -21,7 +21,8 @@ require 'travis/model'
   log:        DS.belongsTo('Travis.Artifact',   key: 'log_id')
 
   isQueued: (->
-    console.log(@get('state'))
+    # wat.
+    # console.log(@get('state'))
   ).property('state')
 
   config: (->

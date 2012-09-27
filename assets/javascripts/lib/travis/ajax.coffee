@@ -9,7 +9,6 @@ jQuery.support.cors = true
     @ajax(url, 'post', data: data, success: callback)
 
   ajax: (url, method, options) ->
-    console.log(url)
     endpoint = Travis.config.api_endpoint || ''
     options = options || {}
 

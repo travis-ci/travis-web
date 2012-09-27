@@ -64,7 +64,6 @@ Travis.Store = DS.Store.extend
     @_updateAssociations(type, root, json[root])
 
   _loadMany: (store, type, json) ->
-    console.log('loadMany')
     root = type.pluralName()
     @adapter.sideload(store, type, json, root)
     @loadMany(type, json[root])
