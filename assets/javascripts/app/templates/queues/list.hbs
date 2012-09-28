@@ -5,14 +5,12 @@
     <ul {{bindAttr id="queue.id"}}>
       {{#each job in queue}}
         {{#view Travis.QueueItemView jobBinding="job"}}
-          <li>
-            <a {{action showJob job.repository job href=true}}>
-              <span class="slug">
-                {{job.repository.slug}}
-              </span>
-              #{{job.number}}
-            </a>
-          </li>
+          <a {{action showJob job.repository job target="Travis.app.router" href=true}}>
+            <span class="slug">
+              {{job.repository.slug}}
+            </span>
+            #{{job.number}}
+          </a>
         {{/view}}
       {{else}}
         {{t no_job}}

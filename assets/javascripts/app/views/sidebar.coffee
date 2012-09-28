@@ -77,6 +77,7 @@
 
 
   QueueItemView: Travis.View.extend
+    tagName: 'li'
     urlJob: (->
       Travis.Urls.job(@get('job.repository.slug'), @get('job.id'))
     ).property('job.repository.slug', 'job.id')
