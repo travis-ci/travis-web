@@ -16,6 +16,10 @@ require 'travis/model'
     @poll() if @get('isSyncing')
     @_super()
 
+    Ember.run.next this, ->
+      transaction = @get('store').transaction()
+      transaction.add this
+
   urlGithub: (->
     "https://github.com/#{@get('login')}"
   ).property()
@@ -25,6 +29,15 @@ require 'travis/model'
 
     transaction = @get('transaction')
     transaction.commit()
+
+    self = this
+    observer = ->
+      unless self.get('isSaving')
+        self.removeObserver 'isSaving', observer
+        transaction = self.get('store').transaction()
+        transaction.add self
+
+    @addObserver 'isSaving', observer
 
   type: (->
     'user'
