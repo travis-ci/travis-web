@@ -172,6 +172,10 @@ Travis.Router = Ember.Router.extend
           show: Ember.Route.extend
             route: '/:build_id'
             connectOutlets: (router, build) ->
+              unless build.get
+                # TODO: apparently when I use id in url, it will pass it
+                #       here, why doesn't it use deserialize?
+                build = Travis.Build.find(build)
               router.get('repositoryController').set 'build', build
               router.get('repositoryController').activate 'build'
 

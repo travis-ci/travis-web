@@ -42,7 +42,6 @@
 
     text = ''
     ansi.forEach (part) ->
-      console.log(part)
       classes = []
       part.foreground and classes.push(part.foreground)
       part.background and classes.push('bg-' + part.background)
