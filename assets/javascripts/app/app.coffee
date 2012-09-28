@@ -43,6 +43,7 @@ Travis.reopen
 
     signOut: ->
       @get('auth').signOut()
+      @get('router').send('showAuthenticated')
 
     receive: ->
       @store.receive.apply(@store, arguments)
