@@ -177,11 +177,12 @@ Travis.Router = Ember.Router.extend
 
             serialize: (router, build) ->
               if build.get
-                { id: build.get('id') }
+                { build_id: build.get('id') }
               else
-                { id: build }
+                { build_id: build }
 
             deserialize: (router, params) ->
+              console.log 'BUILD'
               # Something is wrong here. If I don't use deferred, id is not
               # initialized and url ends up being /jobs/null
               # This should not be needed, as id should be immediately set on the
