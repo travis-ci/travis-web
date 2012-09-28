@@ -23,5 +23,9 @@ require 'travis/model'
   ).property()
 
   toggle: ->
+    transaction = @get('store').transaction()
+    transaction.add this
+
     @set 'active', !@get('active')
-    Travis.app.store.commit()
+
+    transaction.commit()

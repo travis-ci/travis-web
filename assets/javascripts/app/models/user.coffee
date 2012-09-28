@@ -14,7 +14,7 @@ require 'travis/model'
 
   init: ->
     @poll() if @get('isSyncing')
-    @._super()
+    @_super()
 
   urlGithub: (->
     "https://github.com/#{@get('login')}"
@@ -22,7 +22,9 @@ require 'travis/model'
 
   updateLocale: (locale) ->
     @setWithSession('locale', locale)
-    Travis.app.store.commit()
+
+    transaction = @get('transaction')
+    transaction.commit()
 
   type: (->
     'user'
