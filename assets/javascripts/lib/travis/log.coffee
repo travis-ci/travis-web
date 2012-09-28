@@ -32,10 +32,17 @@
     result.trim()
 
   deansi: (log) ->
-    log = log.replace(/\r\r/g, '\r').replace(/\033\[K\r/g, '\r').replace(/^.*\r(?!$)/g, '').replace(/\[2K/g, '').replace(/\033\(B/g, '')
+    log = log.replace(/\r\r/g, '\r')
+             .replace(/\033\[K\r/g, '\r')
+             .replace(/^.*\r(?!$)/gm, '')
+             .replace(/\[2K/g, '')
+             .replace(/\033\(B/g, "")
+
     ansi = ansiparse(log)
+
     text = ''
     ansi.forEach (part) ->
+      console.log(part)
       classes = []
       part.foreground and classes.push(part.foreground)
       part.background and classes.push('bg-' + part.background)
