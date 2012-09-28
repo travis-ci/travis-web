@@ -39,6 +39,8 @@ require 'ext/ember/namespace'
       callback()
 
   run: (attrs) ->
+    @redirectOnHashbang()
+
     console.log "Connecting to #{Travis.config.api_endpoint}"
     app = Travis.App.create(attrs || {})
     # TODO: router expects the classes for controllers on main namespace, so
@@ -51,3 +53,6 @@ require 'ext/ember/namespace'
     @store = app.store
 
     app.initialize()
+
+  redirectOnHashbang: ->
+    location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
