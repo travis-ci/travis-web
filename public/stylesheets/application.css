@@ -6009,26 +6009,26 @@ pre#log .fold.open {
 
 /* line 20, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories .green .status,
-.summary .green .number .status,
+.green .summary .number .status,
 .list .green .number .status {
   background-color: #368c2a;
 }
 /* line 22, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories .green a,
-.summary .green .number a,
+.green .summary .number a,
 .list .green .number a {
   color: #038035;
 }
 
 /* line 28, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories .red .status,
-.summary .red .number .status,
+.red .summary .number .status,
 .list .red .number .status {
   background-color: #cc3d3d;
 }
 /* line 30, /Users/sven/Development/projects/travis/travis-ember/assets/stylesheets/status.sass */
 #repositories .red a,
-.summary .red .number a,
+.red .summary .number a,
 .list .red .number a {
   color: #cc0000;
 }
