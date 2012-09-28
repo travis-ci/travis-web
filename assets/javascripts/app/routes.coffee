@@ -182,7 +182,6 @@ Travis.Router = Ember.Router.extend
                 { build_id: build }
 
             deserialize: (router, params) ->
-              console.log 'BUILD'
               # Something is wrong here. If I don't use deferred, id is not
               # initialized and url ends up being /jobs/null
               # This should not be needed, as id should be immediately set on the
