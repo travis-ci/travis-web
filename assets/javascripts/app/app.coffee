@@ -34,8 +34,7 @@ Travis.reopen
       @set('auth', Travis.Auth.create(store: @store, endpoint: Travis.config.api_endpoint))
 
       @slider = new Travis.Slider()
-
-      @pusher = new Travis.Pusher()
+      @pusher = new Travis.Pusher(Travis.config.pusher)
       @tailing = new Travis.Tailing()
 
     signIn: ->

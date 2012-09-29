@@ -1,9 +1,5 @@
-Travis.Pusher = ->
-  @active_channels = []
-  if Travis.config.pusher?.key?
-    Pusher.warn = @warn.bind(this)
-    @pusher = new Pusher(Travis.config.pusher.key)
-    @subscribe(channel) for channel in Travis.Pusher.CHANNELS
+Travis.Pusher = (config) ->
+  @init(config) if config
   this
 
 $.extend Travis.Pusher,
@@ -11,6 +7,13 @@ $.extend Travis.Pusher,
   CHANNEL_PREFIX: ''
 
 $.extend Travis.Pusher.prototype,
+  active_channels: []
+
+  init: (config) ->
+    Pusher.warn = @warn.bind(this)
+    @pusher = new Pusher(config.key)
+    @subscribe(channel) for channel in Travis.Pusher.CHANNELS
+
   subscribe: (channel) ->
     if @pusher && @active_channels.indexOf(channel) == -1
       @active_channels.push(channel)
@@ -42,8 +45,8 @@ $.extend Travis.Pusher.prototype,
         { worker: data }
 
   warn: (type, warning) ->
-    # console.warn(warning) unless @ignoreWarning(warning)
+    console.warn(warning) unless @ignoreWarning(warning)
 
-  # ignoreWarning: (warning) ->
-  #   if message = warning.data?.message
-  #     message.indexOf('Existing subscription') == 0 || message.indexOf('No current subscription') == 0
+  ignoreWarning: (warning) ->
+    if message = warning.data?.message
+      message.indexOf('Existing subscription') == 0 or message.indexOf('No current subscription') == 0
