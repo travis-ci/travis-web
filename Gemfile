@@ -28,8 +28,19 @@ group :assets do
   gem 'guard'
 end
 
+group :development, :test do
+  gem 'rake', '~> 0.9.2'
+end
+
 group :development do
   gem 'foreman'
   gem 'rerun'
   gem 'rb-fsevent', '~> 0.9.1'
 end
+
+group :test do
+  gem 'rspec',        '~> 2.11'
+  gem 'factory_girl', '~> 2.4.0'
+  gem 'mocha',        '~> 0.12'
+end
+
