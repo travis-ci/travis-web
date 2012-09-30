@@ -1,5 +1,7 @@
 class Travis::Web::App
   class Version
+    include Helpers
+
     attr_reader :app, :config
 
     def initialize(app, config)
@@ -12,9 +14,9 @@ class Travis::Web::App
       if pass?(path)
         app.call(env)
       elsif versioned?(path)
-        app.call(env.merge('PATH_INFO' => strip_version(path)))
+        app.call(map_env(env, config.version))
       else
-       [404, { 'Content-Type' => 'text/html', 'Content-Length' => '9' }, ['not found']]
+        not_found
       end
     end
 
@@ -28,8 +30,8 @@ class Travis::Web::App
         path.starts_with?("/#{config.version}/")
       end
 
-      def strip_version(path)
-        path.sub(%r(/#{config.version}/), '')
+      def not_found
+        [404, { 'Content-Type' => 'text/html', 'Content-Length' => '9', 'X-Cascade' => 'pass' }, ['not found']]
       end
   end
 end

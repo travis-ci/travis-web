@@ -9,7 +9,11 @@ class Travis::Web::App::Filter
     end
 
     def apply(string)
-      string.gsub(DEFAULT_ENDPOINT, config.api_endpoint)
+      apply? ? string.gsub(DEFAULT_ENDPOINT, config.api_endpoint) : string
+    end
+
+    def apply?
+      config.api_endpoint != DEFAULT_ENDPOINT
     end
   end
 end

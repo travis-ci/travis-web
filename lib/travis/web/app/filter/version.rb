@@ -13,4 +13,3 @@ class Travis::Web::App::Filter
     end
   end
 end
-
