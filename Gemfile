@@ -1,22 +1,14 @@
 source :rubygems
 
-gem 'debugger'
-
-gem 'travis-api',     github: 'travis-ci/travis-api'
-gem 'travis-core',    github: 'travis-ci/travis-core', branch: 'sf-travis-api'
-gem 'travis-support', github: 'travis-ci/travis-support'
-gem 'gh',             github: 'rkh/gh'
-
 gem 'unicorn'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'rack-contrib',   github: 'rack/rack-contrib'
 gem 'yard-sinatra',   github: 'rkh/yard-sinatra'
 
-gem 'bunny'
-gem 'pg',             '~> 0.13.2'
-gem 'newrelic_rpm',   '~> 3.3.0'
-gem 'hubble',         git: 'git://github.com/roidrage/hubble'
+group :assets, :development, :test do
+  gem 'rake', '~> 0.9.2'
+end
 
 group :assets do
   gem 'rake-pipeline', github: 'livingsocial/rake-pipeline'
@@ -25,14 +17,23 @@ group :assets do
   gem 'coffee-script'
   gem 'compass'
   gem 'tilt'
+  gem 'uglifier'
+
   gem 'guard'
 end
 
-group :development, :test do
-  gem 'rake', '~> 0.9.2'
-end
-
 group :development do
+  gem 'travis-api',     github: 'travis-ci/travis-api'
+  gem 'travis-core',    github: 'travis-ci/travis-core', branch: 'sf-travis-api'
+  gem 'travis-support', github: 'travis-ci/travis-support'
+  gem 'gh',             github: 'rkh/gh'
+
+  gem 'bunny'
+  gem 'pg',             '~> 0.13.2'
+  gem 'newrelic_rpm',   '~> 3.3.0'
+  gem 'hubble',         git: 'git://github.com/roidrage/hubble'
+
+  gem 'debugger'
   gem 'foreman'
   gem 'rerun'
   gem 'rb-fsevent', '~> 0.9.1'

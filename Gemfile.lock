@@ -265,6 +265,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
+    uglifier (1.0.4)
+      execjs (>= 0.3.0)
+      multi_json (>= 1.0.2)
     unicorn (4.3.1)
       kgio (~> 2.6)
       rack
@@ -300,5 +303,6 @@ DEPENDENCIES
   travis-api!
   travis-core!
   travis-support!
+  uglifier
   unicorn
   yard-sinatra!

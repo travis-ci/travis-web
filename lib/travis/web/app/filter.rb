@@ -1,14 +1,14 @@
 class Travis::Web::App
   class Filter
     autoload :Endpoint, 'travis/web/app/filter/endpoint'
-    autoload :Version,  'travis/web/app/filter/version'
+    autoload :Assets,   'travis/web/app/filter/assets'
 
     attr_reader :app, :config, :filters
 
     def initialize(app, config)
       @app = app
       @config = config
-      @filters = [Endpoint.new(config), Version.new(config)]
+      @filters = [Endpoint.new(config), Assets.new(config)]
     end
 
     def call(env)

@@ -43,7 +43,7 @@ if (!Array.prototype.indexOf) {
 }
 
 // Instantiate the object
-var I18n = I18n || {};
+window.I18n = {};
 
 // Set default locale to english
 I18n.defaultLocale = "en";

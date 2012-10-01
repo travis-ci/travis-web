@@ -1,8 +1,7 @@
-# TODO add neuter for production
-# https://github.com/wycats/rake-pipeline-web-filters/blob/master/lib/rake-pipeline-web-filters/neuter_filter.rb
-# http://blog.nulayer.com/post/23294069876/building-simple-javascript-libraries-with-rake-pipeline?15bb0420
+$: << 'lib'
 
 require 'rake-pipeline-web-filters'
+require 'rake-pipeline/travis'
 require 'compass'
 
 Compass.configuration.images_path = 'assets/images'
@@ -10,62 +9,36 @@ Compass.configuration.add_import_path File.expand_path('../assets/stylesheets', 
 
 output 'public/javascripts'
 input 'assets/javascripts' do
-  match 'vendor/**/*.js' do
-    files = %w(
-      vendor/minispade.js
-      vendor/jquery.min.js
-      vendor/handlebars.js
-      vendor/ember.js
-      vendor/ember-data.js
-      vendor/ansiparse.js
-      vendor/i18n.js
-      vendor/pusher.js
-      vendor/jquery.timeago.js
-      vendor/sc-routes.js
-    )
-    concat files, 'vendor.js'
-  end
-
-  match %r(^(travis|(app|config|data|lib)/.*)\.coffee$) do
-    coffee_script
-  end
-
-  match '**/*.hbs' do
-    handlebars(
-      :key_name_proc => proc { |input|
-        input.path.sub(%r(^app/templates/), '').sub(/\.hbs$/, '')
-      }
-    )
+  match 'app/templates/**/*.hbs' do
+    filter Travis::HandlebarsFilter
     concat 'app/templates.js'
   end
 
-  match %r(^(travis|(app|config|data|lib)/.*)\.js$) do
-    minispade(
-      string: true,
-      rewrite_requires: true,
-      module_id_generator: proc { |input|
-        input.path.sub(%r(^(app|lib)/), '').sub(/\.js$/, '')
-      }
-    )
-    concat 'application.js'
-  end
-end
-
-# DOH. how to simplify this.
-input 'assets/javascripts/spec' do
-  match 'vendor/*.js' do
-    files = %w(
-      vendor/jasmine.js
-      vendor/jasmine-html.js
-      vendor/jasmine-runner.js
-      vendor/sinon.js
-    )
-    concat files, 'specs/vendor.js'
-  end
-
-  match '**/*.coffee' do
+  match %r(\.coffee$) do
     coffee_script
-    concat 'specs/specs.js'
+  end
+
+  match %r(^(travis|(app|config|data|lib)/.*)\.js$) do
+    modules = proc { |input| input.path.gsub(%r((^app/|^lib/|\.js$)), '') }
+    minispade(string: true, rewrite_requires: true, module_id_generator: modules)
+    concat [], ['dev/app.js', 'min/app.js']
+  end
+
+  match 'vendor/**/*.js' do
+    precedence = %w(jquery.min minispade handlebars ember).map { |name| "vendor/#{name}.js" }
+    concat precedence, ['dev/vendor.js', 'min/vendor.js']
+  end
+
+  match 'min/**/*.js' do
+    filter Travis::ProductionFilter
+    uglify max_line_length: 50, squeeze: true
+    filter Travis::SafeConcatFilter do
+      'application.min.js'
+    end
+  end
+
+  match 'dev/**/*.js' do
+    concat 'application.js'
   end
 end
 
@@ -73,10 +46,7 @@ output 'public/stylesheets'
 input 'assets/stylesheets' do
   match '**/*.{scss,sass}' do
     filter Rake::Pipeline::Web::Filters::SassFilter
-  end
-
-  match '**/*.css' do
-    concat 'application.css'
+    concat [], 'application.css'
   end
 end
 
@@ -94,3 +64,20 @@ input 'assets/static' do
   end
 end
 
+# # DOH. how to simplify this.
+# input 'assets/javascripts/spec' do
+#   match 'vendor/*.js' do
+#     files = %w(
+#       vendor/jasmine.js
+#       vendor/jasmine-html.js
+#       vendor/jasmine-runner.js
+#       vendor/sinon.js
+#     )
+#     concat files, 'specs/vendor.js'
+#   end
+#
+#   match '**/*.coffee' do
+#     coffee_script
+#     concat 'specs/specs.js'
+#   end
+# end
