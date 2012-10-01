@@ -7,6 +7,8 @@ require 'compass'
 Compass.configuration.images_path = 'assets/images'
 Compass.configuration.add_import_path File.expand_path('../assets/stylesheets', __FILE__)
 
+Travis::Version.update
+
 output 'public/javascripts'
 input 'assets/javascripts' do
   match 'app/templates/**/*.hbs' do
