@@ -33,7 +33,7 @@ GIT
       yard (~> 0.7)
 
 GIT
-  remote: git://github.com/roidrage/hubble
+  remote: git://github.com/roidrage/hubble.git
   revision: f5e6301ac24eabeebaf8f4485d71cdcf93b2f3f8
   specs:
     hubble (0.1.2)

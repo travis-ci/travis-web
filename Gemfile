@@ -6,20 +6,8 @@ gem 'sinatra-contrib'
 gem 'rack-contrib',   github: 'rack/rack-contrib'
 gem 'yard-sinatra',   github: 'rkh/yard-sinatra'
 
-group :assets, :development, :test do
+group :development, :test do
   gem 'rake', '~> 0.9.2'
-end
-
-group :assets do
-  gem 'rake-pipeline', github: 'livingsocial/rake-pipeline'
-  gem 'rake-pipeline-web-filters', github: 'wycats/rake-pipeline-web-filters'
-
-  gem 'coffee-script'
-  gem 'compass'
-  gem 'tilt'
-  gem 'uglifier'
-
-  gem 'guard'
 end
 
 group :development do
@@ -31,12 +19,22 @@ group :development do
   gem 'bunny'
   gem 'pg',             '~> 0.13.2'
   gem 'newrelic_rpm',   '~> 3.3.0'
-  gem 'hubble',         git: 'git://github.com/roidrage/hubble'
+  gem 'hubble',         github: 'roidrage/hubble'
+
+  gem 'rake-pipeline',  github: 'livingsocial/rake-pipeline'
+  gem 'rake-pipeline-web-filters', github: 'wycats/rake-pipeline-web-filters'
+
+  gem 'coffee-script'
+  gem 'compass'
+  gem 'tilt'
+  gem 'uglifier'
 
   gem 'debugger'
   gem 'foreman'
   gem 'rerun'
   gem 'rb-fsevent', '~> 0.9.1'
+
+  gem 'guard'
 end
 
 group :test do
