@@ -16,8 +16,8 @@
               <li class="worker">
                 <div class="status"></div>
                 {{#if worker.isWorking}}
-                  {{#if view.job.id}}
-                    <a {{bindAttr title="worker.lastSeenAt"}} {{action showJob view.job href=true}}>
+                  {{#if worker.job_id}}
+                    <a {{action showJob worker.repository worker.job_id target="Travis.app.router" href=true}} {{bindAttr title="worker.lastSeenAt"}}>
                       {{view.display}}
                     </a>
                   {{/if}}

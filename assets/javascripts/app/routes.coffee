@@ -214,10 +214,20 @@ Travis.Router = Ember.Router.extend
             router.get('repositoryController').activate 'branches'
 
         job: Ember.Route.extend
+
           route: '/jobs/:job_id'
           connectOutlets: (router, job) ->
+            unless job.get
+              # In case I use id
+              job = Travis.Job.find(job)
             router.get('repositoryController').set 'job', job
             router.get('repositoryController').activate 'job'
+
+          serialize: (router, job) ->
+            if job.get
+              { job_id: job.get('id') }
+            else
+              { job_id: job }
 
           deserialize: (router, params) ->
             job = Travis.Job.find params.job_id
