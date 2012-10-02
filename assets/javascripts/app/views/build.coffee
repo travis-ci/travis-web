@@ -1,12 +1,28 @@
 @Travis.reopen
   BuildsView: Travis.View.extend
     templateName: 'builds/list'
-    buildsBinding: 'controller'
+    buildsBinding: 'controller.builds'
 
     showMore: ->
       id = @get('controller.repository.id')
-      number = @get('controller.builds.lastObject.number')
-      Travis.Build.olderThanNumber(id, number)
+      number = @get('builds.lastObject.number')
+      @get('builds').load Travis.Build.olderThanNumber(id, number)
+
+    ShowMoreButton: Em.View.extend
+      tagName: 'button'
+      classNameBindings: ['isLoading']
+      attributeBindings: ['disabled']
+      isLoadingBinding: 'controller.builds.isLoading'
+      template: Em.Handlebars.compile('{{view.label}}')
+
+      disabledBinding: 'isLoading'
+
+      label: (->
+        if @get('isLoading') then 'Loading' else 'Show more'
+      ).property('isLoading')
+
+      click: ->
+        @get('parentView').showMore()
 
   BuildsItemView: Travis.View.extend
     tagName: 'tr'

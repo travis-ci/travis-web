@@ -40,9 +40,7 @@
     </tbody>
   </table>
   <p>
-    <button {{action showMore on="click" target="this" isVisibleBinding="hasMore"}}>
-      {{t builds.show_more}}
-    </button>
+    {{view view.ShowMoreButton}}
   </p>
 {{else}}
   <div class="loading"><span>Loading</span></div>

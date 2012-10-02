@@ -1,3 +1,4 @@
+require 'travis/expandable_record_array'
 require 'travis/model'
 
 @Travis.Repository = Travis.Model.extend
@@ -13,14 +14,28 @@ require 'travis/model'
 
   builds: (->
     id = @get('id')
-    Travis.Build.byRepositoryId id, event_type: 'push'
-    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && !data.get('pull_request')
+    builds = Travis.Build.byRepositoryId id, event_type: 'push'
+    array  = Travis.ExpandableRecordArray.create
+      type: Travis.Build
+      content: Ember.A([])
+      store: @get('store')
+
+    array.load(builds)
+
+    array
   ).property()
 
   pullRequests: (->
     id = @get('id')
-    Travis.Build.byRepositoryId id, event_type: 'pull_request'
-    Travis.Build.filter (data) -> parseInt(data.get('repository_id')) == id && data.get('pull_request')
+    builds = Travis.Build.byRepositoryId id, event_type: 'pull_request'
+    array  = Travis.ExpandableRecordArray.create
+      type: Travis.Build
+      content: Ember.A([])
+      store: @get('store')
+
+    array.load(builds)
+
+    array
   ).property()
 
   branches: (->
