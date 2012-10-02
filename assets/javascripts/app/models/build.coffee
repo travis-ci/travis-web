@@ -43,7 +43,7 @@ require 'travis/model'
 
 @Travis.Build.reopenClass
   byRepositoryId: (id, parameters) ->
-    @find($.extend(parameters || {}, repository_id: id, orderBy: 'number DESC'))
+    @find($.extend(parameters || {}, repository_id: id))
 
   olderThanNumber: (id, build_number) ->
     # TODO fix this api and use some kind of pagination scheme
