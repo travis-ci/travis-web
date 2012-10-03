@@ -6,10 +6,10 @@ require 'ext/ember/namespace'
       $("##{event.target.name}").toggleClass('display')
 
 @Travis.reopen
-  HomeView:    Travis.View.extend(templateName: 'layouts/home')
+  HomeView:          Travis.View.extend(templateName: 'layouts/home')
   ProfileLayoutView: Travis.View.extend(templateName: 'layouts/profile')
   StatsLayoutView:   Travis.View.extend(templateName: 'layouts/simple')
-  ApplicationView: Travis.View.extend(templateName: 'application')
+  ApplicationView:   Travis.View.extend(templateName: 'application')
 
 require 'views/accounts'
 require 'views/build'

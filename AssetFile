@@ -4,10 +4,10 @@ require 'rake-pipeline-web-filters'
 require 'rake-pipeline/travis'
 require 'compass'
 
-roots ||= [Pathname.new(File.expand_path('.'))]
+ROOTS ||= [Pathname.new(File.expand_path('.'))]
 
 paths = %w(styles scripts images static vendor).inject({}) do |paths, type|
-  paths.merge(type.to_sym => roots.map { |root| root.join("assets/#{type}").to_s })
+  paths.merge(type.to_sym => ROOTS.map { |root| root.join("assets/#{type}").to_s })
 end
 
 Compass.configuration.images_path = paths[:images].first
