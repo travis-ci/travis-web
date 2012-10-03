@@ -3,12 +3,11 @@ class Travis::Web::App
     autoload :Endpoint, 'travis/web/app/filter/endpoint'
     autoload :Assets,   'travis/web/app/filter/assets'
 
-    attr_reader :app, :config, :filters
+    attr_reader :app, :config
 
     def initialize(app, config)
       @app = app
       @config = config
-      @filters = [Endpoint.new(config), Assets.new(config)]
     end
 
     def call(env)
@@ -25,6 +24,10 @@ class Travis::Web::App
         body.each { |s| filtered << filters.inject(s) { |s, filter| filter.apply(s) } }
         body.close if body.respond_to?(:close)
         [headers, filtered]
+      end
+
+      def filters
+        @filters ||= Filter.constants.map { |name| Filter.const_get(name).new(config) }
       end
 
       def content_type?(headers, type)
