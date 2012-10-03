@@ -42,7 +42,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: 5a6f34005c906c012dba8b54f6130f4d13e5e60d
+  revision: f6957636fba447ed61565e16a466eed8325900a5
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)
@@ -265,9 +265,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
-    uglifier (1.0.4)
+    uglifier (1.3.0)
       execjs (>= 0.3.0)
-      multi_json (>= 1.0.2)
+      multi_json (~> 1.0, >= 1.0.2)
     unicorn (4.3.1)
       kgio (~> 2.6)
       rack
