@@ -6,7 +6,7 @@ require 'compass'
 
 roots ||= [Pathname.new(File.expand_path('.'))]
 
-paths = %w(styles scripts images static).inject({}) do |paths, type|
+paths = %w(styles scripts images static vendor).inject({}) do |paths, type|
   paths.merge(type.to_sym => roots.map { |root| root.join("assets/#{type}").to_s })
 end
 
@@ -22,11 +22,11 @@ input paths[:scripts] do
     concat 'app/templates.js'
   end
 
-  match %r(\.coffee$) do
+  match '**/*.coffee' do
     coffee_script
   end
 
-  match %r(^(travis|(app|config|data|lib)/.*)\.js$) do
+  match %r(^(?!vendor\/).*\.js) do
     modules = proc { |input| input.path.gsub(%r((^app/|^lib/|\.js$)), '') }
     minispade(string: true, rewrite_requires: true, module_id_generator: modules)
     concat [], ['dev/app.js', 'min/app.js']
@@ -41,12 +41,12 @@ input paths[:scripts] do
     filter Travis::ProductionFilter
     uglify max_line_length: 32 * 1024, squeeze: true
     filter Travis::SafeConcatFilter do
-      'application.min.js'
+      'app.min.js'
     end
   end
 
   match 'dev/**/*.js' do
-    concat 'application.js'
+    concat 'app.js'
   end
 end
 
@@ -54,7 +54,7 @@ output 'public/styles'
 input paths[:styles] do
   match '**/*.{scss,sass}' do
     filter Rake::Pipeline::Web::Filters::SassFilter
-    concat [], 'application.css'
+    concat [], 'app.css'
   end
 end
 
