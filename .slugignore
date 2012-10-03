@@ -1,0 +1,6 @@
+assets
+spec
+tmp
+*.sql
+*.psd
+*.pdf
