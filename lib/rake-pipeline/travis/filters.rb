@@ -9,8 +9,8 @@ module Travis
       def source
         [
           File.read(root.join('lib/rake-pipeline/ember-headless.js')),
-          File.read(root.join('assets/javascripts/vendor/handlebars.js')),
-          File.read(root.join('assets/javascripts/vendor/ember.js'))
+          File.read(root.join('assets/scripts/vendor/handlebars.js')),
+          File.read(root.join('assets/scripts/vendor/ember.js'))
         ].join("\n")
       end
 
