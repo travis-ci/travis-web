@@ -1,6 +1,4 @@
-## Goals
-
-See https://gist.github.com/e4728d00bfd1d6559f4a
+## Travis CI ember web client
 
 ### Running the app
 
@@ -25,10 +23,8 @@ Run locally, one on `ci.dev` and one on `api.dev`:
 
 ### Compiling assets manually
 
-    bundle install
     bundle exec rakep
 
 ### Compiling assets on change
 
-    bundle install
     bundle exec guard
