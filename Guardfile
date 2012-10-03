@@ -1,7 +1,7 @@
 $: << 'lib'
 
 guard 'assets' do
-  watch(%r(^AssetFile))
+  watch(%r(^Assetfile))
   watch(%r(^assets))
 end
 

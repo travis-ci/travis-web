@@ -1,16 +1,21 @@
 require 'rake-pipeline'
 require 'execjs'
 require 'uglifier'
+require 'pathname'
 
 module Travis
   class HandlebarsFilter < Rake::Pipeline::Filter
     class << self
       def source
         [
-          File.read('lib/rake-pipeline/ember-headless.js'),
-          File.read('assets/javascripts/vendor/handlebars.js'),
-          File.read('assets/javascripts/vendor/ember.js')
+          File.read(root.join('lib/rake-pipeline/ember-headless.js')),
+          File.read(root.join('assets/javascripts/vendor/handlebars.js')),
+          File.read(root.join('assets/javascripts/vendor/ember.js'))
         ].join("\n")
+      end
+
+      def root
+        @root ||= Pathname.new(File.expand_path('../../../../', __FILE__))
       end
 
       def context

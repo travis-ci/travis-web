@@ -4,13 +4,15 @@ require 'rake-pipeline-web-filters'
 require 'rake-pipeline/travis'
 require 'compass'
 
+roots ||= [Pathname.new(File.expand_path('.'))]
+
 Compass.configuration.images_path = 'assets/images'
 Compass.configuration.add_import_path File.expand_path('../assets/stylesheets', __FILE__)
 
 Travis::Version.update
 
 output 'public/javascripts'
-input 'assets/javascripts' do
+input roots.map { |root| root.join('assets/javascripts').to_s } do
   match 'app/templates/**/*.hbs' do
     filter Travis::HandlebarsFilter
     concat 'app/templates.js'
@@ -33,7 +35,7 @@ input 'assets/javascripts' do
 
   match 'min/**/*.js' do
     filter Travis::ProductionFilter
-    uglify max_line_length: 50, squeeze: true
+    uglify max_line_length: 32 * 1024, squeeze: true
     filter Travis::SafeConcatFilter do
       'application.min.js'
     end
@@ -45,7 +47,7 @@ input 'assets/javascripts' do
 end
 
 output 'public/stylesheets'
-input 'assets/stylesheets' do
+input roots.map { |root| root.join('assets/stylesheets').to_s } do
   match '**/*.{scss,sass}' do
     filter Rake::Pipeline::Web::Filters::SassFilter
     concat [], 'application.css'
@@ -53,33 +55,15 @@ input 'assets/stylesheets' do
 end
 
 output 'public/images'
-input 'assets/images' do
+input roots.map { |root| root.join('assets/images').to_s } do
   match '**/*' do
     copy
   end
 end
 
 output 'public'
-input 'assets/static' do
+input roots.map { |root| root.join('assets/public').to_s } do
   match '**/*' do
     copy
   end
 end
-
-# # DOH. how to simplify this.
-# input 'assets/javascripts/spec' do
-#   match 'vendor/*.js' do
-#     files = %w(
-#       vendor/jasmine.js
-#       vendor/jasmine-html.js
-#       vendor/jasmine-runner.js
-#       vendor/sinon.js
-#     )
-#     concat files, 'specs/vendor.js'
-#   end
-#
-#   match '**/*.coffee' do
-#     coffee_script
-#     concat 'specs/specs.js'
-#   end
-# end
