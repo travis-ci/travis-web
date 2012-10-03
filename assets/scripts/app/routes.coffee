@@ -1,6 +1,6 @@
 Travis.Router = Ember.Router.extend
   location: 'history'
-  enableLogging: true
+  enableLogging: false
   initialState: 'loading'
 
   goToRoot: Ember.Route.transitionTo('root.home.show')

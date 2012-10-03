@@ -40,7 +40,7 @@ module Travis
     end
 
     def name(path)
-      path.sub(%r(^app/templates/), '').sub(/\.hbs$/, '')
+      path.gsub(%r(app/|templates/|.hbs), '')
     end
   end
 

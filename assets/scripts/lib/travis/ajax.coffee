@@ -27,14 +27,7 @@ jQuery.support.cors = true
 
     $.ajax($.extend(options, @DEFAULT_OPTIONS))
 
-@Travis.Ajax.instance = Em.Object.create(@Travis.Ajax)
-
-$.extend @Travis,
+@Travis.ajax = Em.Object.create @Travis.Ajax,
   get: (url, callback) ->
     @ajax(url, 'get', success: callback)
 
-  post: (url, data, callback) ->
-    @Ajax.instance.post(url, data, callback)
-
-  ajax: (url, method, options) ->
-    @Ajax.instance.ajax(url, method, options)

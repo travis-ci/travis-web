@@ -1,4 +1,3 @@
-require 'travis' # hrm.
 require 'auth'
 require 'controllers'
 require 'helpers'
@@ -56,4 +55,3 @@ Travis.reopen
       element = $('<span></span>')
       $('#repository').append(element)
       Em.run.later (-> element.remove()), 10
-

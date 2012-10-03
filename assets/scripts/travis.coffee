@@ -34,26 +34,27 @@ require 'ext/ember/namespace'
   INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
 
   run: (attrs) ->
-    $ =>
-      @redirectOnHashbang()
-      @loadConfig (config) =>
-        app = Travis.App.create(attrs || {})
-        # TODO: router expects the classes for controllers on main namespace, so
-        #       if we want to keep app at Travis.app, we need to copy that, it would
-        #       be ideal to send a patch to ember and get rid of this
-        $.each Travis, (key, value) ->
-          app[key] = value if value && value.isClass && key != 'constructor'
-
-        @app   = app
-        @store = app.store
-
-        app.initialize()
-
-  redirectOnHashbang: ->
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
 
+    @loadConfig (config) =>
+      app = Travis.App.create(attrs || {})
+      # TODO: router expects the classes for controllers on main namespace, so
+      #       if we want to keep app at Travis.app, we need to copy that, it would
+      #       be ideal to send a patch to ember and get rid of this
+      $.each Travis, (key, value) ->
+        app[key] = value if value && value.isClass && key != 'constructor'
+
+      @app   = app
+      @store = app.store
+
+      $ =>
+        app.initialize()
+
   loadConfig: (callback) ->
-    @get '/config', (data) =>
+    @ajax.get '/config', (data) =>
       $.extend @config, data.config
       console.log "Connecting to #{data.config.api_endpoint}"
       callback(data.config)
+
+require 'travis/ajax'
+require 'app'
