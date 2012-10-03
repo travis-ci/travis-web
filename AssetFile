@@ -17,7 +17,7 @@ Travis::Version.update
 
 output 'public/scripts'
 input paths[:scripts] do
-  match 'app/templates/**/*.hbs' do
+  match '**/*.hbs' do
     filter Travis::HandlebarsFilter
     concat 'app/templates.js'
   end
@@ -26,7 +26,7 @@ input paths[:scripts] do
     coffee_script
   end
 
-  match %r(^(?!vendor\/).*\.js) do
+  match %r(^(?!vendor\/).*\.js$) do
     modules = proc { |input| input.path.gsub(%r((^app/|^lib/|\.js$)), '') }
     minispade(string: true, rewrite_requires: true, module_id_generator: modules)
     concat [], ['dev/app.js', 'min/app.js']
