@@ -18,7 +18,7 @@ Travis::Version.update
 output 'public/scripts'
 input paths[:scripts] do
   match '**/*.hbs' do
-    filter Travis::HandlebarsFilter
+    travis_handlebars
     concat 'app/templates.js'
   end
 
@@ -26,40 +26,48 @@ input paths[:scripts] do
     coffee_script
   end
 
-  match %r(^(?!vendor\/).*\.js$) do
-    modules = proc { |input| input.path.gsub(%r((^app/|^lib/|\.js$)), '') }
-    minispade(string: true, rewrite_requires: true, module_id_generator: modules)
-    concat [], ['dev/app.js', 'min/app.js']
-  end
-
   match 'vendor/**/*.js' do
     precedence = %w(jquery.min minispade handlebars ember).map { |name| "vendor/#{name}.js" }
-    concat precedence, ['dev/vendor.js', 'min/vendor.js']
+    safe_concat precedence, 'vendor.js'
   end
 
-  match 'min/**/*.js' do
-    filter Travis::ProductionFilter
-    uglify max_line_length: 32 * 1024, squeeze: true
-    filter Travis::SafeConcatFilter do
-      'app.min.js'
-    end
+  match '**/*.js' do
+    copy { |path| ["dev/#{path}", "min/#{path}"]  }
+  end
+
+  match %r(^dev/(?!vendor).*\.js$) do
+    modules = proc { |input| input.path.gsub(%r((^dev/|app/|lib/|\.js$)), '') }
+    minispade(string: true, rewrite_requires: true, module_id_generator: modules)
   end
 
   match 'dev/**/*.js' do
-    concat 'app.js'
+    concat ['dev/vendor.js'], 'app.js'
+  end
+
+  match %r(^min/(?!vendor).*\.js$) do
+    modules = proc { |input| input.path.gsub(%r((^min/|app/|lib/|\.js$)), '') }
+    minispade(string: false, rewrite_requires: true, module_id_generator: modules)
+  end
+
+  match 'min/**/*.js' do
+    concat ['min/vendor.js'], 'min/app.js'
+    strip_debug
+    uglify squeeze: true, max_line_length: 200
+    copy 'app.min.js'
   end
 end
 
 output 'public/styles'
 input paths[:styles] do
   match '**/*.{scss,sass}' do
-    filter Rake::Pipeline::Web::Filters::SassFilter
+    sass
     concat [], 'app.css'
   end
 end
 
 output 'public/images'
 input paths[:images] do
+  skip %r(^ui/)
   match '**/*' do
     copy
   end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'lib/spec_helper'
 
 describe Travis::Web::App::Config do
   let(:config) { Travis::Web::App::Config.new }

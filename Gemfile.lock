@@ -1,8 +1,9 @@
 GIT
   remote: git://github.com/livingsocial/rake-pipeline.git
-  revision: 3465e0e3e134bf52ddf5d138e8c8262412080095
+  revision: 3914452278165b7eb3a79071d3b63b46fee59a2f
   specs:
     rake-pipeline (0.6.0)
+      json
       rake (~> 0.9.0)
       thor
 
@@ -42,7 +43,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: c9c9dc61d8e2f24b331fd0e1b1549aff32178b29
+  revision: f7c522278eb7fdc9ccbf96af711fe38fa4fb4674
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)
@@ -88,7 +89,7 @@ GIT
 
 GIT
   remote: git://github.com/wycats/rake-pipeline-web-filters.git
-  revision: e14e78ae70d0d25b1668c5273e80cd05a4ee52e6
+  revision: f28f5809d6a3e580401a0c589d54e6ad28f34a26
   specs:
     rake-pipeline-web-filters (0.6.0)
       rack
@@ -223,7 +224,7 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     redcarpet (2.1.1)
-    redis (3.0.1)
+    redis (3.0.2)
     rerun (0.7.1)
       listen
     rollout (1.1.0)

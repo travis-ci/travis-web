@@ -1,6 +1,9 @@
-module Travis
-  autoload :HandlebarsFilter, 'rake-pipeline/travis/filters'
-  autoload :SafeConcatFilter, 'rake-pipeline/travis/filters'
-  autoload :ProductionFilter, 'rake-pipeline/travis/filters'
-  autoload :Version,          'rake-pipeline/travis/version'
+require 'rake-pipeline'
+
+module Rake::Pipeline::Travis
+  autoload :Filters, 'rake-pipeline/travis/filters'
+  autoload :Helpers, 'rake-pipeline/travis/helpers'
+  autoload :Version, 'rake-pipeline/travis/version'
 end
+
+Rake::Pipeline::DSL::PipelineDSL.send(:include, Rake::Pipeline::Travis::Helpers)

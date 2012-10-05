@@ -1,7 +1,7 @@
 require 'pathname'
 require 'digest/md5'
 
-module Travis
+module Rake::Pipeline::Travis
   class Version
     FILE_NAME = 'public/version'
     SOURCES = %w(AssetFile Gemfile.lock assets)
