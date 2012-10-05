@@ -16,9 +16,9 @@
   # if the user is in the session storage, we're using it. if we have a flag
   # for auto signin then we're trying to sign in.
   loadUser: ->
-    if user = sessionStorage?.getItem('travis.user')
+    if user = sessionStorage.getItem('travis.user')
       @setData(user: JSON.parse(user))
-    else if localStorage?.getItem('travis.auto_signin')
+    else if localStorage.getItem('travis.auto_signin')
       @trySignIn()
 
   # try signing in, but check later in case we have a timeout
@@ -34,7 +34,7 @@
     @forceSignIn() if @get('state') == 'signing-in'
 
   forceSignIn: ->
-    localStorage?.setItem('travis.auto_signin', 'true')
+    localStorage.setItem('travis.auto_signin', 'true')
     window.location = "#{@endpoint}/auth/handshake?redirect_uri=#{location}"
 
   signOut: ->
@@ -48,16 +48,18 @@
     user = @storeUser(data.user) if data?.user
     @set('state', if user then 'signed-in' else 'signed-out')
     @set('user',  if user then user else undefined)
+    @app.get('router').transitionTo('authenticated') if @app.get('router')
+    # Travis.app.get('router').route(@get('returnTo'))
 
   storeToken: (token) ->
-    sessionStorage?.setItem('travis.token', token)
+    sessionStorage.setItem('travis.token', token)
     @notifyPropertyChange('accessToken')
 
   storeUser: (user) ->
-    localStorage?.setItem('travis.auto_signin', 'true')
-    sessionStorage?.setItem('travis.user', JSON.stringify(user))
-    @store.load(Travis.User, user)
-    @store.find(Travis.User, user.id)
+    localStorage.setItem('travis.auto_signin', 'true')
+    sessionStorage.setItem('travis.user', JSON.stringify(user))
+    @app.store.load(Travis.User, user)
+    @app.store.find(Travis.User, user.id)
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()

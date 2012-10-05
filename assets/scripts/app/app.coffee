@@ -30,7 +30,7 @@ Travis.reopen
       @store = Travis.Store.create()
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
-      @set('auth', Travis.Auth.create(store: @store, endpoint: Travis.config.api_endpoint))
+      @set('auth', Travis.Auth.create(app: this, endpoint: Travis.config.api_endpoint))
 
       @slider = new Travis.Slider()
       @pusher = new Travis.Pusher(Travis.config.pusher)
@@ -41,7 +41,7 @@ Travis.reopen
 
     signOut: ->
       @get('auth').signOut()
-      @get('router').send('showAuthenticated')
+      @get('router').send('goToRoot')
 
     receive: ->
       @store.receive.apply(@store, arguments)

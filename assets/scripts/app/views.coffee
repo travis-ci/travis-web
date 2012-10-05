@@ -7,6 +7,7 @@ require 'ext/ember/namespace'
 
 @Travis.reopen
   HomeView:          Travis.View.extend(templateName: 'layouts/home')
+  AuthLayoutView:    Travis.View.extend(templateName: 'layouts/simple')
   ProfileLayoutView: Travis.View.extend(templateName: 'layouts/profile')
   StatsLayoutView:   Travis.View.extend(templateName: 'layouts/simple')
   ApplicationView:   Travis.View.extend(templateName: 'application')
@@ -18,5 +19,5 @@ require 'views/repo'
 require 'views/profile'
 require 'views/sidebar'
 require 'views/stats'
+require 'views/signin'
 require 'views/top'
-

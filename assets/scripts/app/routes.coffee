@@ -1,16 +1,18 @@
 Travis.Router = Ember.Router.extend
   location: 'history'
-  enableLogging: false
+  enableLogging: true
   initialState: 'loading'
 
   goToRoot: Ember.Route.transitionTo('root.home.show')
   goToStats: Ember.Route.transitionTo('root.stats')
+
   showRepository: Ember.Route.transitionTo('root.home.repository.show')
   showBuilds: Ember.Route.transitionTo('root.home.repository.builds.index')
   showBuild: Ember.Route.transitionTo('root.home.repository.builds.show')
   showPullRequests: Ember.Route.transitionTo('root.home.repository.pullRequests')
   showBranches: Ember.Route.transitionTo('root.home.repository.branches')
   showJob: Ember.Route.transitionTo('root.home.repository.job')
+
   showProfile: Ember.Route.transitionTo('root.profile')
   showAccount: Ember.Route.transitionTo('root.profile.account')
   showUserProfile: Ember.Route.transitionTo('root.profile.account.profile')
@@ -18,43 +20,36 @@ Travis.Router = Ember.Router.extend
   signedIn: ->
     !!Travis.app.get('auth.user')
 
-  requiresAuth: (path) ->
-    path == '/profile' && !@signedIn()
+  needsAuth: (path) ->
+    path.indexOf('/profile') == 0 && !@signedIn()
 
   loading: Ember.Route.extend
     routePath: (router, path) ->
-      router.set('lastAttemptedPath', path)
-      if router.requiresAuth(path)
-        router.send 'showUnauthenticated'
+      sessionStorage.setItem('travis.path', path)
+      if router.needsAuth(path)
+        router.transitionTo('root.auth')
+        Travis.app.signIn()
       else
-        router.send 'showAuthenticated'
-
-  # showUnauthenticated: Ember.State.transitionTo('unauthenticated.index')
-  showUnauthenticated: Ember.State.transitionTo('root.home.show')
-  showAuthenticated: Ember.State.transitionTo('authenticated.index')
-
-  # unauthenticated: Ember.Route.extend
-  #   index: Ember.Route.extend
-  #     route: '/'
-  #     connectOutlets: (router) ->
-  #       router.transitionTo('login')
-  #   login: Ember.Route.extend
-  #     route: '/login'
-  #     connectOutlets: (router) ->
-  #       router.get('applicationController').connectOutlet('login')
+        router.transitionTo('authenticated')
 
   authenticated: Ember.Route.extend
-    index: Ember.Route.extend
-      connectOutlets: (router) ->
-        router.transitionTo('root')
-
-        path = router.get('lastAttemptedPath')
-        if path && path != '/'
-          router.route(path)
+    connectOutlets: (router) ->
+      path = sessionStorage.getItem('travis.path')
+      sessionStorage.removeItem('travis.path')
+      router.transitionTo('root')
+      router.route(path) if path
 
   root: Ember.Route.extend
     initialState: 'home'
     loading: Ember.State.extend()
+
+    auth: Ember.Route.extend
+      route: '/auth'
+      connectOutlets: (router) ->
+        router.get('applicationController').connectOutlet('authLayout')
+        $('body').attr('id', 'auth')
+        router.get('authLayoutController').connectOutlet('top', 'top')
+        router.get('authLayoutController').connectOutlet('main', 'signin')
 
     stats: Ember.Route.extend
       route: '/stats'

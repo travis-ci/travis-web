@@ -1,0 +1,13 @@
+{{#if view.signingIn}}
+  <h1>Signing in</h1>
+  <p>
+    Trying to authenticate with GitHub.
+  </p>
+{{else}}
+  <h1>Sign in</h1>
+  <p>
+    <a href="#" {{action signIn target="Travis.app"}}>Sign in with GitHub</a>
+  </p>
+{{/if}}
+
+
