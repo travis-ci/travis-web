@@ -34,8 +34,8 @@ $.fn.extend
     $(this).each ->
       $(this).text Utils.timeInWords(parseInt($(this).attr('title')))
 
-  updateGithubStats: (repository) ->
-    Utils.updateGithubStats repository, $(this)
+  updateGithubStats: (repo) ->
+    Utils.updateGithubStats repo, $(this)
 
 $.extend
   isEmpty: (obj) ->

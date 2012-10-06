@@ -2,7 +2,7 @@ require 'travis/model'
 
 @Travis.Build = Travis.Model.extend Travis.DurationCalculations,
   eventType:       DS.attr('string')
-  repositoryId:    DS.attr('number')
+  repoId:    DS.attr('number')
   commitId:        DS.attr('number')
 
   state:           DS.attr('string')
@@ -14,7 +14,7 @@ require 'travis/model'
   startedAt:       DS.attr('string', key: 'started_at')
   finishedAt:      DS.attr('string', key: 'finished_at')
 
-  repository: DS.belongsTo('Travis.Repository')
+  repo: DS.belongsTo('Travis.Repo')
   commit:     DS.belongsTo('Travis.Commit')
   jobs:       DS.hasMany('Travis.Job', key: 'job_ids')
 
@@ -42,7 +42,7 @@ require 'travis/model'
   ).property('config')
 
 @Travis.Build.reopenClass
-  byRepositoryId: (id, parameters) ->
+  byRepoId: (id, parameters) ->
     @find($.extend(parameters || {}, repository_id: id))
 
   olderThanNumber: (id, build_number) ->

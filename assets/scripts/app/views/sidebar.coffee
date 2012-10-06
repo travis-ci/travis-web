@@ -68,7 +68,7 @@
       payload = @get('worker.payload')
 
       if state == 'working' && payload != undefined
-        repo = payload.repository.slug
+        repo = payload.repo.slug
         number = ' #' + payload.build.number
         "<span class='name'>#{name}: #{repo}</span> #{number}".htmlSafe()
       else
@@ -79,6 +79,6 @@
   QueueItemView: Travis.View.extend
     tagName: 'li'
     urlJob: (->
-      Travis.Urls.job(@get('job.repository.slug'), @get('job.id'))
-    ).property('job.repository.slug', 'job.id')
+      Travis.Urls.job(@get('job.repo.slug'), @get('job.id'))
+    ).property('job.repo.slug', 'job.id')
 

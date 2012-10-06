@@ -1,4 +1,4 @@
-Travis.RepositoriesController = Ember.ArrayController.extend
+Travis.ReposController = Ember.ArrayController.extend
   defaultTab: 'recent'
   sortProperties: ['sortOrder']
 
@@ -17,13 +17,13 @@ Travis.RepositoriesController = Ember.ArrayController.extend
     this["view#{$.camelize(tab)}"](params)
 
   viewRecent: ->
-    @set('content', Travis.Repository.find())
+    @set('content', Travis.Repo.find())
 
   viewOwned: ->
-    @set('content', Travis.Repository.ownedBy(Travis.app.get('currentUser.login')))
+    @set('content', Travis.Repo.ownedBy(Travis.app.get('currentUser.login')))
 
   viewSearch: (params) ->
-    @set('content', Travis.Repository.search(params.search))
+    @set('content', Travis.Repo.search(params.search))
 
   searchObserver: (->
     search = @get('search')

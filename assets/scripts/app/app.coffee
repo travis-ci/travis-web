@@ -53,5 +53,5 @@ Travis.reopen
       $('#top .profile').append(element)
       Em.run.later (-> element.remove()), 10
       element = $('<span></span>')
-      $('#repository').append(element)
+      $('#repo').append(element)
       Em.run.later (-> element.remove()), 10

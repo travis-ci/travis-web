@@ -1,8 +1,8 @@
 <ul class="tabs">
   <li id="tab_current" {{bindAttr class="view.classCurrent"}}>
     <h5>
-      {{#if view.repository.slug}}
-      <a {{action showRepository view.repository href=true}}>
+      {{#if view.repo.slug}}
+      <a {{action showRepo view.repo href=true}}>
         {{t repositories.tabs.current}}
       </a>
       {{/if}}
@@ -10,8 +10,8 @@
   </li>
   <li id="tab_builds" {{bindAttr class="view.classBuilds"}}>
     <h5>
-      {{#if view.repository.slug}}
-      <a {{action showBuilds view.repository href=true}}>
+      {{#if view.repo.slug}}
+      <a {{action showBuilds view.repo href=true}}>
         {{t repositories.tabs.build_history}}
       </a>
       {{/if}}
@@ -19,8 +19,8 @@
   </li>
   <li id="tab_pull_requests" {{bindAttr class="view.classPullRequests"}}>
     <h5>
-      {{#if view.repository.slug}}
-      <a {{action showPullRequests view.repository href=true}}>
+      {{#if view.repo.slug}}
+      <a {{action showPullRequests view.repo href=true}}>
         {{t repositories.tabs.pull_requests}}
       </a>
       {{/if}}
@@ -28,8 +28,8 @@
   </li>
   <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
     <h5>
-      {{#if view.repository.slug}}
-      <a {{action showBranches view.repository href=true}}>
+      {{#if view.repo.slug}}
+      <a {{action showBranches view.repo href=true}}>
         {{t repositories.tabs.branches}}
       </a>
       {{/if}}

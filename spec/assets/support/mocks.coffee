@@ -2,7 +2,7 @@ require 'ext/jquery'
 
 responseTime = 0
 
-repositories = [
+repos = [
   { id: 1, owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_result: 0, last_build_duration: 30, last_build_started_at: '2012-07-02T00:00:00Z', last_build_finished_at: '2012-07-02T00:00:30Z', description: 'Description of travis-core' },
   { id: 2, owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3, last_build_result: 1, last_build_duration: 30, last_build_started_at: '2012-07-02T00:01:00Z', last_build_finished_at: '2012-07-01T00:01:30Z', description: 'Description of travis-assets'},
   { id: 3, owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4, last_build_result: undefined, last_build_duration: undefined, last_build_started_at: '2012-07-02T00:02:00Z', last_build_finished_at: undefined, description: 'Description of travis-hub'},
@@ -63,29 +63,29 @@ hooks = [
 
 
 $.mockjax
-  url: '/repositories'
+  url: '/repos'
   responseTime: responseTime
   response: (settings) ->
     if !settings.data
-      this.responseText = { repositories: repositories }
+      this.responseText = { repos: repos }
     else if slug = settings.data.slug
-      this.responseText = { repositories: [$.detect(repositories, (repository) -> repository.slug == slug)] }
+      this.responseText = { repos: [$.detect(repos, (repository) -> repository.slug == slug)] }
     else if search = settings.data.search
-      this.responseText = { repositories: $.select(repositories, (repository) -> repository.slug.indexOf(search) > -1).toArray() }
+      this.responseText = { repos: $.select(repos, (repository) -> repository.slug.indexOf(search) > -1).toArray() }
     else
       raise "don't know this ditty"
 
-for repository in repositories
+for repository in repos
   $.mockjax
     url: '/' + repository.slug
     responseTime: responseTime
     responseText: { repository: repository }
 
   $.mockjax
-    url: '/repositories'
+    url: '/repos'
     data: { slug: repository.slug }
     responseTime: responseTime
-    responseText: { repositories: [repository] }
+    responseText: { repos: [repository] }
 
   $.mockjax
     url: '/builds'

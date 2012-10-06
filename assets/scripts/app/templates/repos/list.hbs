@@ -7,12 +7,12 @@
 <a {{action toggleInfo target="view"}} class="toggle-info"></a>
 
 <div class="tab">
-  {{#collection Travis.RepositoriesListView contentBinding="controller"}}
-    {{#with view.repository}}
+  {{#collection Travis.ReposListView contentBinding="controller"}}
+    {{#with view.repo}}
       <div class="slug-and-status">
         <span class="status"></span>
         {{#if slug}}
-          <a {{action showRepository this href=true}} class="slug">{{slug}}</a>
+          <a {{action showRepo this href=true}} class="slug">{{slug}}</a>
         {{/if}}
       </div>
       {{#if lastBuildId}}

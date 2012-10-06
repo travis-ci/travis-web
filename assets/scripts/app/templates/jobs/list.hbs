@@ -24,7 +24,7 @@
           <td class="number">
             <span class="status"></span>
             {{#if job.id}}
-              <a {{action showJob repository job href=true}}>{{number}}</a>
+              <a {{action showJob repo job href=true}}>{{number}}</a>
             {{/if}}
           </td>
           <td class="duration" {{bindAttr title="startedAt"}}>

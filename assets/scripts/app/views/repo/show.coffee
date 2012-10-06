@@ -1,29 +1,29 @@
 @Travis.reopen
-  RepositoryView: Travis.View.extend
+  RepoView: Travis.View.extend
     templateName: 'repos/show'
 
-    repositoryBinding: 'controller.repository'
+    repoBinding: 'controller.repo'
 
     class: (->
-      'loading' unless @get('repository.isLoaded')
-    ).property('repository.isLoaded')
+      'loading' unless @get('repo.isLoaded')
+    ).property('repo.isLoaded')
 
     urlGithub: (->
-      Travis.Urls.githubRepository(@get('repository.slug'))
-    ).property('repository.slug'),
+      Travis.Urls.githubRepo(@get('repo.slug'))
+    ).property('repo.slug'),
 
     urlGithubWatchers: (->
-      Travis.Urls.githubWatchers(@get('repository.slug'))
-    ).property('repository.slug'),
+      Travis.Urls.githubWatchers(@get('repo.slug'))
+    ).property('repo.slug'),
 
     urlGithubNetwork: (->
-      Travis.Urls.githubNetwork(@get('repository.slug'))
-    ).property('repository.slug'),
+      Travis.Urls.githubNetwork(@get('repo.slug'))
+    ).property('repo.slug'),
 
   RepoShowTabsView: Travis.View.extend
     templateName: 'repos/show/tabs'
 
-    repositoryBinding: 'controller.repository'
+    repoBinding: 'controller.repo'
     buildBinding: 'controller.build'
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
@@ -60,7 +60,7 @@
   RepoShowToolsView: Travis.View.extend
     templateName: 'repos/show/tools'
 
-    repositoryBinding: 'controller.repository'
+    repoBinding: 'controller.repo'
     buildBinding: 'controller.build'
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
@@ -70,26 +70,26 @@
       @set('active', element.hasClass('display-inline'))
 
     branches: (->
-      @get('repository.branches') if @get('active')
-    ).property('active', 'repository.branches')
+      @get('repo.branches') if @get('active')
+    ).property('active', 'repo.branches')
 
-    urlRepository: (->
-      'https://' + location.host + Travis.Urls.repository(@get('repository.slug'))
-    ).property('repository.slug')
+    urlRepo: (->
+      'https://' + location.host + Travis.Urls.repo(@get('repo.slug'))
+    ).property('repo.slug')
 
     urlStatusImage: (->
-      Travis.Urls.statusImage(@get('repository.slug'), @get('branch.commit.branch'))
-    ).property('repository.slug', 'branch')
+      Travis.Urls.statusImage(@get('repo.slug'), @get('branch.commit.branch'))
+    ).property('repo.slug', 'branch')
 
     markdownStatusImage: (->
-      "[![Build Status](#{@get('urlStatusImage')})](#{@get('urlRepository')})"
+      "[![Build Status](#{@get('urlStatusImage')})](#{@get('urlRepo')})"
     ).property('urlStatusImage')
 
     textileStatusImage: (->
-      "!#{@get('urlStatusImage')}!:#{@get('urlRepository')}"
+      "!#{@get('urlStatusImage')}!:#{@get('urlRepo')}"
     ).property('urlStatusImage')
 
     rdocStatusImage: (->
-      "{<img src=\"#{@get('urlStatusImage')}\" alt=\"Build Status\" />}[#{@get('urlRepository')}]"
+      "{<img src=\"#{@get('urlStatusImage')}\" alt=\"Build Status\" />}[#{@get('urlRepo')}]"
     ).property('urlStatusImage')
 

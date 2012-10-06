@@ -5,9 +5,9 @@
     <ul {{bindAttr id="queue.id"}}>
       {{#each job in queue}}
         {{#view Travis.QueueItemView jobBinding="job"}}
-          <a {{action showJob job.repository job target="Travis.app.router" href=true}}>
+          <a {{action showJob job.repo job target="Travis.app.router" href=true}}>
             <span class="slug">
-              {{job.repository.slug}}
+              {{job.repo.slug}}
             </span>
             #{{job.number}}
           </a>

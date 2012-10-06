@@ -1,4 +1,4 @@
-Travis.RepositoryController = Travis.Controller.extend
+Travis.RepoController = Travis.Controller.extend
   bindings: []
 
   init: ->
@@ -20,25 +20,25 @@ Travis.RepositoryController = Travis.Controller.extend
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
-    @_bind('repository', 'controllers.repositoriesController.firstObject')
-    @_bind('build', 'repository.lastBuild')
+    @_bind('repo', 'controllers.reposController.firstObject')
+    @_bind('build', 'repo.lastBuild')
     @connectTab('current')
 
   viewCurrent: ->
     @connectTab('current')
-    @_bind('build', 'repository.lastBuild')
+    @_bind('build', 'repo.lastBuild')
 
   viewBuilds: ->
     @connectTab('builds')
-    @_bind('builds', 'repository.builds')
+    @_bind('builds', 'repo.builds')
 
   viewPullRequests: ->
     @connectTab('pull_requests')
-    @_bind('builds', 'repository.pullRequests')
+    @_bind('builds', 'repo.pullRequests')
 
   viewBranches: ->
     @connectTab('branches')
-    @_bind('builds', 'repository.branches')
+    @_bind('builds', 'repo.branches')
 
   viewBuild: ->
     @connectTab('build')
@@ -47,10 +47,10 @@ Travis.RepositoryController = Travis.Controller.extend
     @_bind('build', 'job.build')
     @connectTab('job')
 
-  repositoryObserver: (->
-    repository = @get('repository')
-    repository.select() if repository
-  ).observes('repository.id')
+  repoObserver: (->
+    repo = @get('repo')
+    repo.select() if repo
+  ).observes('repo.id')
 
   connectTab: (tab) ->
     name = if tab == 'current' then 'build' else tab
@@ -68,4 +68,3 @@ Travis.RepositoryController = Travis.Controller.extend
   _unbind: ->
     binding.disconnect(this) for binding in @bindings
     @bindings.length = 0
-

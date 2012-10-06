@@ -6,7 +6,7 @@
   JobsItemView: Travis.View.extend
     tagName: 'tr'
     classNameBindings: ['color']
-    repositoryBinding: 'context.repository'
+    repoBinding: 'context.repo'
     jobBinding: 'context'
 
     color: (->
@@ -14,13 +14,13 @@
     ).property('job.result')
 
     urlJob: (->
-      Travis.Urls.job(@get('repository.slug'), @get('job.id'))
-    ).property('repository.slug', 'job.id')
+      Travis.Urls.job(@get('repo.slug'), @get('job.id'))
+    ).property('repo.slug', 'job.id')
 
   JobView: Travis.View.extend
     templateName: 'jobs/show'
 
-    repositoryBinding: 'controller.repository'
+    repoBinding: 'controller.repo'
     jobBinding: 'controller.job'
     commitBinding: 'job.commit'
 
@@ -29,12 +29,12 @@
     ).property('job.result')
 
     urlJob: (->
-      Travis.Urls.job(@get('repository.slug'), @get('job.id'))
-    ).property('repository.slug', 'job.id')
+      Travis.Urls.job(@get('repo.slug'), @get('job.id'))
+    ).property('repo.slug', 'job.id')
 
     urlGithubCommit: (->
-      Travis.Urls.githubCommit(@get('repository.slug'), @get('commit.sha'))
-    ).property('repository.slug', 'commit.sha')
+      Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
+    ).property('repo.slug', 'commit.sha')
 
     urlAuthor: (->
       Travis.Urls.email(@get('commit.authorEmail'))

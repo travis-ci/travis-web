@@ -1,34 +1,34 @@
 @Travis.reopen
-  RepositoriesView: Travis.View.extend
+  ReposView: Travis.View.extend
     templateName: 'repos/list'
 
     toggleInfo: (event) ->
-      $('#repositories').toggleClass('open')
+      $('#repos').toggleClass('open')
 
-  RepositoriesListView: Em.CollectionView.extend
-    elementId: 'repositories'
+  ReposListView: Em.CollectionView.extend
+    elementId: 'repos'
     tagName: 'ul'
 
     emptyView: Ember.View.extend
       template: Ember.Handlebars.compile('<div class="loading"><span>Loading</span></div>')
 
     itemViewClass: Travis.View.extend
-      repositoryBinding: 'content'
-      classNames: ['repository']
+      repoBinding: 'content'
+      classNames: ['repo']
       classNameBindings: ['color', 'selected']
-      selectedBinding: 'repository.selected'
+      selectedBinding: 'repo.selected'
 
       color: (->
-        Travis.Helpers.colorForResult(@get('repository.lastBuildResult'))
-      ).property('repository.lastBuildResult')
+        Travis.Helpers.colorForResult(@get('repo.lastBuildResult'))
+      ).property('repo.lastBuildResult')
 
-      urlRepository: (->
-        Travis.Urls.repository(@get('repository.slug'))
-      ).property('repository.slug')
+      urlRepo: (->
+        Travis.Urls.repo(@get('repo.slug'))
+      ).property('repo.slug')
 
       urlLastBuild: (->
-        Travis.Urls.build(@get('repository.slug'), @get('repository.lastBuildId'))
-      ).property('repository.slug', 'repository.lastBuildId')
+        Travis.Urls.build(@get('repo.slug'), @get('repo.lastBuildId'))
+      ).property('repo.slug', 'repo.lastBuildId')
 
   ReposListTabsView: Travis.View.extend
     templateName: 'repos/list/tabs'

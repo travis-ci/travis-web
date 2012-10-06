@@ -1,7 +1,7 @@
 require 'travis/expandable_record_array'
 require 'travis/model'
 
-@Travis.Repository = Travis.Model.extend
+@Travis.Repo = Travis.Model.extend
   slug:                DS.attr('string')
   description:         DS.attr('string')
   lastBuildId:         DS.attr('number')
@@ -14,7 +14,7 @@ require 'travis/model'
 
   builds: (->
     id = @get('id')
-    builds = Travis.Build.byRepositoryId id, event_type: 'push'
+    builds = Travis.Build.byRepoId id, event_type: 'push'
     array  = Travis.ExpandableRecordArray.create
       type: Travis.Build
       content: Ember.A([])
@@ -27,7 +27,7 @@ require 'travis/model'
 
   pullRequests: (->
     id = @get('id')
-    builds = Travis.Build.byRepositoryId id, event_type: 'pull_request'
+    builds = Travis.Build.byRepoId id, event_type: 'pull_request'
     array  = Travis.ExpandableRecordArray.create
       type: Travis.Build
       content: Ember.A([])
@@ -39,7 +39,7 @@ require 'travis/model'
   ).property()
 
   branches: (->
-    Travis.Branch.byRepositoryId @get('id')
+    Travis.Branch.byRepoId @get('id')
   ).property()
 
   owner: (->
@@ -72,12 +72,14 @@ require 'travis/model'
   ).property()
 
   select: ->
-    Travis.Repository.select(@get('id'))
+    Travis.Repo.select(@get('id'))
 
   updateTimes: ->
     @notifyPropertyChange 'lastBuildDuration'
 
-@Travis.Repository.reopenClass
+@Travis.Repo.reopenClass
+  url: 'repositories'
+
   recent: ->
     @find()
 
@@ -92,10 +94,10 @@ require 'travis/model'
     if repo.length > 0 then repo else @find(slug: slug)
 
   select: (id) ->
-    @find().forEach (repository) ->
-      repository.set('selected', repository.get('id') == id)
+    @find().forEach (repo) ->
+      repo.set('selected', repo.get('id') == id)
 
   # buildURL: (slug) ->
-  #   if slug then slug else 'repositories'
+  #   if slug then slug else 'repos'
 
 

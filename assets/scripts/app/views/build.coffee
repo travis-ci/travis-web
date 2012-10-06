@@ -4,7 +4,7 @@
     buildsBinding: 'controller.builds'
 
     showMore: ->
-      id = @get('controller.repository.id')
+      id = @get('controller.repo.id')
       number = @get('builds.lastObject.number')
       @get('builds').load Travis.Build.olderThanNumber(id, number)
 
@@ -27,7 +27,7 @@
   BuildsItemView: Travis.View.extend
     tagName: 'tr'
     classNameBindings: ['color']
-    repositoryBinding: 'controller.repository'
+    repoBinding: 'controller.repo'
     buildBinding: 'context'
     commitBinding: 'build.commit'
 
@@ -36,19 +36,19 @@
     ).property('build.result')
 
     urlBuild: (->
-      Travis.Urls.build(@get('repository.slug'), @get('build.id'))
-    ).property('repository.slug', 'build.id')
+      Travis.Urls.build(@get('repo.slug'), @get('build.id'))
+    ).property('repo.slug', 'build.id')
 
     urlGithubCommit: (->
-      Travis.Urls.githubCommit(@get('repository.slug'), @get('commit.sha'))
-    ).property('repository.slug', 'commit.sha')
+      Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
+    ).property('repo.slug', 'commit.sha')
 
   BuildView: Travis.View.extend
     templateName: 'builds/show'
     elementId: 'build'
     classNameBindings: ['color', 'loading']
 
-    repositoryBinding: 'controller.repository'
+    repoBinding: 'controller.repo'
     buildBinding: 'controller.build'
     commitBinding: 'build.commit'
 
@@ -61,12 +61,12 @@
     ).property('build.result')
 
     urlBuild: (->
-      Travis.Urls.build(@get('repository.slug'), @get('build.id'))
-    ).property('repository.slug', 'build.id')
+      Travis.Urls.build(@get('repo.slug'), @get('build.id'))
+    ).property('repo.slug', 'build.id')
 
     urlGithubCommit: (->
-      Travis.Urls.githubCommit(@get('repository.slug'), @get('commit.sha'))
-    ).property('repository.slug', 'commit.sha')
+      Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
+    ).property('repo.slug', 'commit.sha')
 
     urlAuthor: (->
       Travis.Urls.email(@get('commit.authorEmail'))

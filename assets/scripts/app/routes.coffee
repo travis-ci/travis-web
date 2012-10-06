@@ -6,12 +6,12 @@ Travis.Router = Ember.Router.extend
   showRoot:         Ember.Route.transitionTo('root.home.show')
   showStats:        Ember.Route.transitionTo('root.stats')
 
-  showRepository:   Ember.Route.transitionTo('root.home.repository.show')
-  showBuilds:       Ember.Route.transitionTo('root.home.repository.builds.index')
-  showBuild:        Ember.Route.transitionTo('root.home.repository.builds.show')
-  showPullRequests: Ember.Route.transitionTo('root.home.repository.pullRequests')
-  showBranches:     Ember.Route.transitionTo('root.home.repository.branches')
-  showJob:          Ember.Route.transitionTo('root.home.repository.job')
+  showRepo:   Ember.Route.transitionTo('root.home.repo.show')
+  showBuilds:       Ember.Route.transitionTo('root.home.repo.builds.index')
+  showBuild:        Ember.Route.transitionTo('root.home.repo.builds.show')
+  showPullRequests: Ember.Route.transitionTo('root.home.repo.pullRequests')
+  showBranches:     Ember.Route.transitionTo('root.home.repo.branches')
+  showJob:          Ember.Route.transitionTo('root.home.repo.job')
 
   showProfile:      Ember.Route.transitionTo('root.profile')
   showAccount:      Ember.Route.transitionTo('root.profile.account')
@@ -113,26 +113,26 @@ Travis.Router = Ember.Router.extend
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'home'
         $('body').attr('id', 'home')
-        router.get('homeController').connectOutlet 'left', 'repositories'
+        router.get('homeController').connectOutlet 'left', 'repos'
         router.get('homeController').connectOutlet 'right', 'sidebar'
         router.get('homeController').connectOutlet 'top', 'top'
-        router.get('homeController').connectOutlet 'main', 'repository'
+        router.get('homeController').connectOutlet 'main', 'repo'
 
       show: Ember.Route.extend
         route: '/'
         connectOutlets: (router) ->
-          router.get('repositoryController').activate('index')
+          router.get('repoController').activate('index')
 
-      repository: Ember.Route.extend
+      repo: Ember.Route.extend
         initialState: 'show'
         route: '/:owner/:name'
 
-        connectOutlets: (router, repository) ->
-          router.get('repositoryController').set 'repository', repository
+        connectOutlets: (router, repo) ->
+          router.get('repoController').set 'repo', repo
 
         deserialize: (router, params) ->
           slug = "#{params.owner}/#{params.name}"
-          repos = Travis.Repository.bySlug(slug)
+          repos = Travis.Repo.bySlug(slug)
           deferred = $.Deferred()
 
           observer = ->
@@ -144,16 +144,16 @@ Travis.Router = Ember.Router.extend
 
           deferred.promise()
 
-        serialize: (router, repository) ->
-          if repository
-            { owner: repository.get('owner'), name: repository.get('name') }
+        serialize: (router, repo) ->
+          if repo
+            { owner: repo.get('owner'), name: repo.get('name') }
           else
             {}
 
         show: Ember.Route.extend
           route: '/'
           connectOutlets: (router) ->
-            router.get('repositoryController').activate('current')
+            router.get('repoController').activate('current')
 
         builds: Ember.Route.extend
           route: '/builds'
@@ -161,8 +161,8 @@ Travis.Router = Ember.Router.extend
 
           index: Ember.Route.extend
             route: '/'
-            connectOutlets: (router, repository) ->
-              router.get('repositoryController').activate 'builds'
+            connectOutlets: (router, repo) ->
+              router.get('repoController').activate 'builds'
 
           show: Ember.Route.extend
             route: '/:build_id'
@@ -171,8 +171,8 @@ Travis.Router = Ember.Router.extend
                 # TODO: apparently when I use id in url, it will pass it
                 #       here, why doesn't it use deserialize?
                 build = Travis.Build.find(build)
-              router.get('repositoryController').set 'build', build
-              router.get('repositoryController').activate 'build'
+              router.get('repoController').set 'build', build
+              router.get('repoController').activate 'build'
 
             serialize: (router, build) ->
               if build.get
@@ -200,13 +200,13 @@ Travis.Router = Ember.Router.extend
 
         pullRequests: Ember.Route.extend
           route: '/pull_requests'
-          connectOutlets: (router, repository) ->
-            router.get('repositoryController').activate 'pull_requests'
+          connectOutlets: (router, repo) ->
+            router.get('repoController').activate 'pull_requests'
 
         branches: Ember.Route.extend
           route: '/branches'
-          connectOutlets: (router, repository) ->
-            router.get('repositoryController').activate 'branches'
+          connectOutlets: (router, repo) ->
+            router.get('repoController').activate 'branches'
 
         job: Ember.Route.extend
 
@@ -215,8 +215,8 @@ Travis.Router = Ember.Router.extend
             unless job.get
               # In case I use id
               job = Travis.Job.find(job)
-            router.get('repositoryController').set 'job', job
-            router.get('repositoryController').activate 'job'
+            router.get('repoController').set 'job', job
+            router.get('repoController').activate 'job'
 
           serialize: (router, job) ->
             if job.get

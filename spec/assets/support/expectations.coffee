@@ -44,7 +44,7 @@
   listsItems('repo', items)
 
 @listsRepo = (data) ->
-  row = $('#repositories li')[data.row - 1]
+  row = $('#repos li')[data.row - 1]
   repo = data.item
 
   expect($('a.current', row).attr('href')).toEqual "/#{repo.slug}"

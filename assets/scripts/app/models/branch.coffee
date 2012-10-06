@@ -1,7 +1,7 @@
 require 'travis/model'
 
 @Travis.Branch = Travis.Model.extend Travis.Helpers,
-  repositoryId: DS.attr('number')
+  repoId:       DS.attr('number', key: 'repository_id')
   commitId:     DS.attr('number')
   number:       DS.attr('number')
   branch:       DS.attr('string')
@@ -13,9 +13,9 @@ require 'travis/model'
 
   commit: DS.belongsTo('Travis.Commit')
 
-  repository: (->
-    Travis.Repository.find @get('repositoryId')  if @get('repositoryId')
-  ).property('repositoryId')
+  repo: (->
+    Travis.Repo.find @get('repoId')  if @get('repoId')
+  ).property('repoId')
 
   updateTimes: ->
     @notifyPropertyChange 'started_at'
@@ -23,6 +23,6 @@ require 'travis/model'
 
 
 @Travis.Branch.reopenClass
-  byRepositoryId: (id) ->
+  byRepoId: (id) ->
     @find repository_id: id
 

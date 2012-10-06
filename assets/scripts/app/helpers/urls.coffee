@@ -1,5 +1,5 @@
 @Travis.Urls =
-  repository: (slug) ->
+  repo: (slug) ->
     "/#{slug}"
 
   builds: (slug) ->
@@ -20,7 +20,7 @@
   githubCommit: (slug, sha) ->
     "http://github.com/#{slug}/commit/#{sha}"
 
-  githubRepository: (slug) ->
+  githubRepo: (slug) ->
     "http://github.com/#{slug}"
 
   githubWatchers: (slug) ->
