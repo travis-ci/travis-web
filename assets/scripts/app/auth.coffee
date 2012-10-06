@@ -59,7 +59,9 @@
     localStorage.setItem('travis.auto_signin', 'true')
     sessionStorage.setItem('travis.user', JSON.stringify(user))
     @app.store.load(Travis.User, user)
-    @app.store.find(Travis.User, user.id)
+    user = @app.store.find(Travis.User, user.id)
+    user.get('permissions')
+    user
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()

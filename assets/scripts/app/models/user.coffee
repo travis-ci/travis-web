@@ -24,6 +24,13 @@ require 'travis/model'
     "https://github.com/#{@get('login')}"
   ).property()
 
+  permissions: (->
+    unless @permissions
+      @permissions = Ember.ArrayProxy.create()
+      @ajax '/users/permissions', 'get', success: (data) => @permissions.set('content', data).permissions
+    @permissions
+  ).property()
+
   updateLocale: (locale) ->
     @setWithSession('locale', locale)
 
