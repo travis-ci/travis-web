@@ -1,9 +1,9 @@
 require 'rake-pipeline/dsl'
 
-class Rake::Pipeline
-  module Travis
+module Travis
+  class Assets
     module Helpers
-      def travis_handlebars(*args, &block)
+      def handlebars(*args, &block)
         filter(Filters::Handlebars, *args, &block)
       end
 

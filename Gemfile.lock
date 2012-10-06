@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/livingsocial/rake-pipeline.git
-  revision: 3914452278165b7eb3a79071d3b63b46fee59a2f
+  revision: 3465e0e3e134bf52ddf5d138e8c8262412080095
+  ref: 3465e0e3e1
   specs:
     rake-pipeline (0.6.0)
-      json
       rake (~> 0.9.0)
       thor
 

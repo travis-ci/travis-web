@@ -1,25 +1,18 @@
 $: << 'lib'
 
 require 'rake-pipeline-web-filters'
-require 'rake-pipeline/travis'
+require 'travis/assets'
 require 'compass'
 
-ROOTS ||= [Pathname.new(File.expand_path('.'))]
-
-paths = %w(styles scripts images static vendor).inject({}) do |paths, type|
-  paths.merge(type.to_sym => ROOTS.map { |root| root.join("assets/#{type}").to_s })
-end
-
-Compass.configuration.images_path = paths[:images].first
-Compass.configuration.add_import_path paths[:styles].first
-
-Travis::Version.update
+assets ||= Travis::Assets.new
+assets.setup_compass
+assets.update_version
 
 output 'public/scripts'
-input paths[:scripts] do
+input assets.scripts do
   match '**/*.hbs' do
-    travis_handlebars
-    concat 'app/templates.js'
+    handlebars :precompile => assets.production?
+    concat 'templates.js'
   end
 
   match '**/*.coffee' do
@@ -27,38 +20,29 @@ input paths[:scripts] do
   end
 
   match 'vendor/**/*.js' do
-    precedence = %w(jquery.min minispade handlebars ember).map { |name| "vendor/#{name}.js" }
-    safe_concat precedence, 'vendor.js'
+    safe_concat assets.vendor_order, 'vendor.js'
+  end
+
+  match %r(^(?!vendor).*\.js$) do
+    modules = proc { |input| input.path.gsub(%r((^app/|lib/|\.js$)), '') }
+    minispade(string: assets.development?, rewrite_requires: true, module_id_generator: modules)
   end
 
   match '**/*.js' do
-    copy { |path| ["dev/#{path}", "min/#{path}"]  }
+    concat ['vendor.js'], ['app.js', 'min/app.js']
   end
 
-  match %r(^dev/(?!vendor).*\.js$) do
-    modules = proc { |input| input.path.gsub(%r((^dev/|app/|lib/|\.js$)), '') }
-    minispade(string: true, rewrite_requires: true, module_id_generator: modules)
-  end
-
-  match 'dev/**/*.js' do
-    concat ['dev/vendor.js'], 'app.js'
-  end
-
-  match %r(^min/(?!vendor).*\.js$) do
-    modules = proc { |input| input.path.gsub(%r((^min/|app/|lib/|\.js$)), '') }
-    minispade(string: false, rewrite_requires: true, module_id_generator: modules)
-  end
-
-  match 'min/**/*.js' do
-    concat ['min/vendor.js'], 'min/app.js'
-    strip_debug
-    uglify squeeze: true, max_line_length: 200
-    copy 'app.min.js'
+  if assets.production?
+    match 'min/app.js' do
+      strip_debug
+      uglify squeeze: true
+      concat 'app.min.js'
+    end
   end
 end
 
 output 'public/styles'
-input paths[:styles] do
+input assets.styles do
   match '**/*.{scss,sass}' do
     sass
     concat [], 'app.css'
@@ -66,7 +50,7 @@ input paths[:styles] do
 end
 
 output 'public/images'
-input paths[:images] do
+input assets.images do
   skip %r(^ui/)
   match '**/*' do
     copy
@@ -74,7 +58,7 @@ input paths[:images] do
 end
 
 output 'public'
-input paths[:static] do
+input assets.static do
   match '**/*' do
     copy
   end

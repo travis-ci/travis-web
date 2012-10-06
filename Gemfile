@@ -21,7 +21,7 @@ group :development do
   gem 'newrelic_rpm',   '~> 3.3.0'
   gem 'hubble',         github: 'roidrage/hubble'
 
-  gem 'rake-pipeline',  github: 'livingsocial/rake-pipeline'
+  gem 'rake-pipeline',  github: 'livingsocial/rake-pipeline', ref: '3465e0e3e1'
   gem 'rake-pipeline-web-filters', github: 'wycats/rake-pipeline-web-filters'
 
   gem 'coffee-script'

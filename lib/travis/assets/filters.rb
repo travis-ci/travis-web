@@ -1,19 +1,18 @@
 require 'rake-pipeline'
-
 require 'execjs'
 require 'uglifier'
 require 'pathname'
 
-class Rake::Pipeline
-  module Travis
+module Travis
+  class Assets
     module Filters
-      class Drop < Matcher
+      class Drop < Rake::Pipeline::Matcher
         def output_files
           input_files.reject { |f| f.path =~ @pattern }
         end
       end
 
-      class Handlebars < Filter
+      class Handlebars < Rake::Pipeline::Filter
         class << self
           def source
             [
@@ -30,22 +29,35 @@ class Rake::Pipeline
           def context
             @@context ||= ExecJS.compile(source)
           end
+        end
 
-          def compile(source)
-            context.call('compileHandlebarsTemplate', source + "\n")
-          end
+        attr_reader :options
+
+        def initialize(*args, &block)
+          @options = args.last.is_a?(Hash) ? args.pop : {}
+          super
         end
 
         def generate_output(inputs, output)
           inputs.each do |input|
-            source = self.class.compile(input.read)
+            source = input.read
+            source = options[:precompile] ? compile(source) : escape(source)
             source = wrap(name(input.path), source)
             output.write source
           end
         end
 
+        def compile(source)
+          self.class.context.call('compileHandlebarsTemplate', source + "\n")
+        end
+
+        def escape(source)
+          source.to_json
+        end
+
         def wrap(name, source)
-          "\nEmber.TEMPLATES['#{name}'] = Ember.Handlebars.template(#{source});\n"
+          method = options[:precompile] ? 'template' : 'compile'
+          "\nEmber.TEMPLATES['#{name}'] = Ember.Handlebars.#{method}(#{source});\n"
         end
 
         def name(path)
@@ -53,7 +65,7 @@ class Rake::Pipeline
         end
       end
 
-      class SafeConcat < ConcatFilter
+      class SafeConcat < Rake::Pipeline::ConcatFilter
         def generate_output(inputs, output)
           inputs.each do |input|
             output.write File.read(input.fullpath) + ";"
@@ -76,7 +88,7 @@ class Rake::Pipeline
         end
       end
 
-      class StripDebug < Filter
+      class StripDebug < Rake::Pipeline::Filter
         def generate_output(inputs, output)
           inputs.each do |input|
             source = File.read(input.fullpath)

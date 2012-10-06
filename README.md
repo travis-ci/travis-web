@@ -10,7 +10,7 @@ This is a static html/js app so you shouldn't need to install anything.
 
 Running locally with a local API server:
 
-    bundle exec rackup
+    RUN_API=1 bundle exec rackup -p 3000
 
 Running against existing API endpoint:
 
@@ -24,6 +24,7 @@ Run locally, one on `ci.dev` and one on `api.dev`:
 ### Compiling assets manually
 
     bundle exec rakep
+    ENV=production bundle exec rakep
 
 ### Compiling assets on change
 

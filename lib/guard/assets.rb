@@ -26,7 +26,10 @@ module Guard
     private
 
       def run
+        started = Time.now
+        print 'Compiling ... '
         system 'bundle exec rakep'
+        puts "done (#{(Time.now - started).round(2)}s)."
       end
   end
 end
