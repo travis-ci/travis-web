@@ -3,19 +3,19 @@ Travis.Router = Ember.Router.extend
   enableLogging: true
   initialState: 'loading'
 
-  goToRoot: Ember.Route.transitionTo('root.home.show')
-  goToStats: Ember.Route.transitionTo('root.stats')
+  showRoot:         Ember.Route.transitionTo('root.home.show')
+  showStats:        Ember.Route.transitionTo('root.stats')
 
-  showRepository: Ember.Route.transitionTo('root.home.repository.show')
-  showBuilds: Ember.Route.transitionTo('root.home.repository.builds.index')
-  showBuild: Ember.Route.transitionTo('root.home.repository.builds.show')
+  showRepository:   Ember.Route.transitionTo('root.home.repository.show')
+  showBuilds:       Ember.Route.transitionTo('root.home.repository.builds.index')
+  showBuild:        Ember.Route.transitionTo('root.home.repository.builds.show')
   showPullRequests: Ember.Route.transitionTo('root.home.repository.pullRequests')
-  showBranches: Ember.Route.transitionTo('root.home.repository.branches')
-  showJob: Ember.Route.transitionTo('root.home.repository.job')
+  showBranches:     Ember.Route.transitionTo('root.home.repository.branches')
+  showJob:          Ember.Route.transitionTo('root.home.repository.job')
 
-  showProfile: Ember.Route.transitionTo('root.profile')
-  showAccount: Ember.Route.transitionTo('root.profile.account')
-  showUserProfile: Ember.Route.transitionTo('root.profile.account.profile')
+  showProfile:      Ember.Route.transitionTo('root.profile')
+  showAccount:      Ember.Route.transitionTo('root.profile.account')
+  showUserProfile:  Ember.Route.transitionTo('root.profile.account.profile')
 
   signedIn: ->
     !!Travis.app.get('auth.user')

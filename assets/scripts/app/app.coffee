@@ -41,7 +41,7 @@ Travis.reopen
 
     signOut: ->
       @get('auth').signOut()
-      @get('router').send('goToRoot')
+      @get('router').send('showRoot')
 
     receive: ->
       @store.receive.apply(@store, arguments)
