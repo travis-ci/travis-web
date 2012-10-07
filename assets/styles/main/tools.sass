@@ -3,7 +3,8 @@
 #tools
   position: relative
   float: right
-  a
+  top: 2px
+  & > a
     display: block
     width: 39px
     height: 21px
@@ -11,28 +12,20 @@
     background: inline-image('ui/tools-button.png') no-repeat
     cursor: pointer
 
-  .pane
+  .menu
     display: none
     position: absolute
-    z-index: 400
-    top: -1px
     right: 0
-    width: 600px
-    padding: 10px 20px
+    top: -3px
+    width: 130px
+    background-color: $color-bg-menu
     border: 1px solid $color-border-light
-    background-color: $color-bg-tools-pane
     @include border-bottom-radius(4px)
-    @include single-box-shadow(rgba(black, 0.1), 1px, 3px, 5px)
-
-    p
-      margin: 10px 0
-      label
-        width: 80px
-        display: inline-block
-      input
-        border: 1px solid $color-border-light
-        width: 505px
-        padding: 4px
-        @include border-radius(3px)
-
-
+    @include single-box-shadow(rgba(black, 0.1), 3px, 3px, 8px)
+    a
+      display: block
+      padding: 5px 25px 5px 25px
+      &:hover
+        background-color: $color-bg-menu-hover
+      &:last-child
+        @include border-bottom-radius(4px)

@@ -17,6 +17,15 @@
   padding: 20px
   @include popup
 
+  .close
+    position: absolute
+    display: block
+    right: 10px
+    top: 10px
+    width: 16px
+    height: 16px
+    background: inline-image('ui/close.png') no-repeat 0 0
+
   h4
     margin-top: 0
     font-size: 18px
@@ -31,4 +40,23 @@
     margin: 0
     padding: 10px 20px
     @include border-radius(4px)
+
+#status-images
+  display: none
+  position: absolute
+  width: 600px
+  height: 190px
+  margin: -145px 0 0 -300px
+
+  p
+    margin: 10px 0
+    label
+      width: 80px
+      display: inline-block
+    input
+      border: 1px solid $color-border-light
+      width: 505px
+      padding: 4px
+      @include border-radius(3px)
+
 

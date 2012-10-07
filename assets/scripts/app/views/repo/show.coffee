@@ -65,9 +65,33 @@
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
 
-    toggle: ->
-      element = $('#tools .pane').toggleClass('display-inline')
-      @set('active', element.hasClass('display-inline'))
+    closeMenu: ->
+      $('.menu').removeClass('display')
+
+    menu: ->
+      @popupCloseAll()
+      element = $('#tools .menu').toggleClass('display')
+
+    requeue: ->
+      @closeMenu()
+      @get('build').requeue()
+
+    statusImages: (event) ->
+      @set('active', true)
+      @closeMenu()
+      @popup(event)
+
+    canPush: (->
+      @get('isBuildTab') && @get('build.isFinished') && @get('hasPushPermissions')
+    ).property('build.isFinished', 'hasPushPermissions', 'isBuildTab')
+
+    isBuildTab: (->
+      ['current', 'build', 'job'].indexOf(@get('tab')) > -1
+    ).property('tab')
+
+    hasPushPermissions: (->
+      Travis.app.get('currentUser.permissions').indexOf(@get('repo.id')) > -1
+    ).property('Travis.app.currentUser.permissions.length', 'repo.id')
 
     branches: (->
       @get('repo.branches') if @get('active')

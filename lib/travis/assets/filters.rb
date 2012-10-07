@@ -2,6 +2,7 @@ require 'rake-pipeline'
 require 'execjs'
 require 'uglifier'
 require 'pathname'
+require 'json'
 
 module Travis
   class Assets

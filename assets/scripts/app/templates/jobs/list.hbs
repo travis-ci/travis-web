@@ -43,6 +43,7 @@
 
   {{#unless view.required}}
     <div id="help-allowed_failures" class="popup">
+      <a href="#" class="close" {{action popupClose target="view"}}></a>
       <h4>{{t "jobs.allowed_failures"}}</h4>
       <p>
         Allowed Failures are items in your build matrix that are allowed to

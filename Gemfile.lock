@@ -43,7 +43,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: 8abc3309372e8a9c4e3506cbf45362c49e91b24d
+  revision: 2b290b9571db627cd796b4d11d5c6153b8d649c1
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)
@@ -61,7 +61,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-core.git
-  revision: 94dbbf2fea57b56383e26152ae3a4cece02d2df0
+  revision: 05ea6a6696b3be32839afcaa126afaf3f2522536
   branch: sf-travis-api
   specs:
     travis-core (0.0.1)

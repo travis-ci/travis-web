@@ -1,6 +1,6 @@
 require 'travis/model'
 
-@Travis.Build = Travis.Model.extend Travis.DurationCalculations,
+@Travis.Build = Travis.Model.extend Travis.DurationCalculations, Travis.Ajax,
   eventType:       DS.attr('string')
   repoId:    DS.attr('number')
   commitId:        DS.attr('number')
@@ -26,6 +26,10 @@ require 'travis/model'
     @get('data.job_ids.length') > 1
   ).property('data.job_ids.length')
 
+  isFinished: (->
+    @get('state') == 'finished'
+  ).property('state')
+
   requiredJobs: (->
     @get('jobs').filter (data) -> !data.get('allowFailure')
   ).property('jobs.@each.allowFailure')
@@ -40,6 +44,10 @@ require 'travis/model'
     headers = (I18n.t(key) for key in ['build.job', 'build.duration', 'build.finished_at'])
     $.map(headers.concat(keys), (key) -> return $.camelize(key))
   ).property('config')
+
+  requeue: (->
+    @post '/requests', build_id: @get('id')
+  )
 
 @Travis.Build.reopenClass
   byRepoId: (id, parameters) ->
