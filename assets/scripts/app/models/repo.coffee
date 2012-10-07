@@ -73,7 +73,7 @@ require 'travis/model'
     @notifyPropertyChange 'lastBuildDuration'
 
 @Travis.Repo.reopenClass
-  url: 'repositories'
+  url: 'repository'
 
   recent: ->
     @find()
