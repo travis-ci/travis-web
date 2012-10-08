@@ -27,9 +27,9 @@ module Travis::Web
       @app = Rack::Builder.app do
         use Rack::SSL if config.production?
         use Rack::Protection::PathTraversal
-        use Rack::Deflater if config.deflate?
 
         use Travis::Web::App::Api, config if config.run_api?
+        use Rack::Deflater if config.deflate?
         use Travis::Web::App::Assets, config
         use Travis::Web::App::Filter, config
         run Travis::Web::App::Files.new

@@ -26,7 +26,7 @@ require 'travis/model'
 
   permissions: (->
     unless @permissions
-      @permissions = Ember.ArrayProxy.create()
+      @permissions = Ember.ArrayProxy.create(content: [])
       @ajax '/users/permissions', 'get', success: (data) => @permissions.set('content', data.permissions)
     @permissions
   ).property()
