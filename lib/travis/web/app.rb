@@ -3,7 +3,7 @@ require 'rack/protection/path_traversal'
 
 module Travis::Web
   class App
-    ASSET_DIRS = %r(/(stylesheets|javascripts)/)
+    ASSET_DIRS = %r(/(styles|scripts)/)
 
     autoload :Api,      'travis/web/app/api'
     autoload :Assets,   'travis/web/app/assets'
