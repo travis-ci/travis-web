@@ -1,10 +1,13 @@
+ruby '1.9.3' rescue nil
+
 source :rubygems
 
 gem 'unicorn'
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'rack-contrib',   github: 'rack/rack-contrib'
 gem 'yard-sinatra',   github: 'rkh/yard-sinatra'
+gem 'rack-contrib',   github: 'rack/rack-contrib'
+gem 'rack-ssl', '~> 1.3'
 
 group :development, :test do
   gem 'rake', '~> 0.9.2'
