@@ -1,9 +1,37 @@
 @import "_mixins/all"
 
-#flash-messages
-  position: absolute
-  left: 400px
-  top: 10px
-  font-size: 25px
-  color: #FFFFFF
+#flash
+  display: none
+  margin: -20px -40px 20px -30px
+  padding: 15px 40px 15px 30px
+  color: gray
+  font-weight: bold
+  border-bottom: 1px solid $color-border-light
+  @include box-shadow(transparent 0 0 0 0, $color-border-normal 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0)
+
+  &.success, &.notice, &.error
+    display: block
+
+  &.success
+    background-color: #ebfcc2
+
+  &.notice
+    background-color: lightGoldenrodYellow
+
+  &.error
+    background-color: #f5d7d3
+
+  p
+    margin: 0
+
+  .close
+    display: block
+    position: absolute
+    top: 17px
+    right: 40px
+    width: 16px
+    height: 16px
+    background: inline-image('ui/close.png') no-repeat 0 0
+    opacity: 0.5
+    cursor: pointer
 

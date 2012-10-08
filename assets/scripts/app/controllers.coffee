@@ -27,6 +27,7 @@ Travis.reopen
 
 require 'controllers/accounts'
 require 'controllers/builds'
+require 'controllers/flash'
 require 'controllers/home'
 require 'controllers/profile'
 require 'controllers/repos'

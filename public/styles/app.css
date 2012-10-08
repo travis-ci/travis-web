@@ -955,12 +955,48 @@ li {
 }
 
 /* line 3, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
-#flash-messages {
+#flash {
+  display: none;
+  margin: -20px -40px 20px -30px;
+  padding: 15px 40px 15px 30px;
+  color: gray;
+  font-weight: bold;
+  border-bottom: 1px solid #dddddd;
+  -webkit-box-shadow: transparent 0 0 0 0, #cccccc 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0;
+  -moz-box-shadow: transparent 0 0 0 0, #cccccc 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0;
+  box-shadow: transparent 0 0 0 0, #cccccc 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0;
+}
+/* line 12, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+#flash.success, #flash.notice, #flash.error {
+  display: block;
+}
+/* line 15, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+#flash.success {
+  background-color: #ebfcc2;
+}
+/* line 18, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+#flash.notice {
+  background-color: lightgoldenrodyellow;
+}
+/* line 21, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+#flash.error {
+  background-color: #f5d7d3;
+}
+/* line 24, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+#flash p {
+  margin: 0;
+}
+/* line 27, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+#flash .close {
+  display: block;
   position: absolute;
-  left: 400px;
-  top: 10px;
-  font-size: 25px;
-  color: white;
+  top: 17px;
+  right: 40px;
+  width: 16px;
+  height: 16px;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QjVFRDU4MEMwODk3MTFFMjkwNjNBMkQ0RTBDREI5REYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QjVFRDU4MEQwODk3MTFFMjkwNjNBMkQ0RTBDREI5REYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpCNUVENTgwQTA4OTcxMUUyOTA2M0EyRDRFMENEQjlERiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCNUVENTgwQjA4OTcxMUUyOTA2M0EyRDRFMENEQjlERiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgjNJDMAAABaUExURX9/f4GBgaCgoM7OzsnJycXFxby8vOPj44eHh5+fn9DQ0OLi4tzc3IKCgv39/d/f3+Dg4Ofn597e3ra2toWFheXl5bW1tZqamvj4+JmZmbu7u8bGxre3t////656HTcAAAAedFJOU///////////////////////////////////////AOwYHF4AAAB5SURBVHjaZE9HDgNBCDNM2d57Ev//m5nZnLJYQgILsA1mDCHGMNwtUjUqSBBtfkRdArrvCpR1JooV15aXtwtrQfQVjrN1pGvPA1WPUWSaO3iPbp5ERgQoHW44ahojFtInGfHkgteT+DxP3vapkTXGrHUb7j/+V4ABAB63DW3bAMwKAAAAAElFTkSuQmCC') no-repeat 0 0;
+  opacity: 0.5;
+  cursor: pointer;
 }
 /* line 3, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
 .ansi .bold {

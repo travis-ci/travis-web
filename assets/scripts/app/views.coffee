@@ -20,6 +20,7 @@ require 'ext/ember/namespace'
 
 require 'views/accounts'
 require 'views/build'
+require 'views/flash'
 require 'views/job'
 require 'views/repo'
 require 'views/profile'

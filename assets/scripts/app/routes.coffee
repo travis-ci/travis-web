@@ -6,7 +6,7 @@ Travis.Router = Ember.Router.extend
   showRoot:         Ember.Route.transitionTo('root.home.show')
   showStats:        Ember.Route.transitionTo('root.stats')
 
-  showRepo:   Ember.Route.transitionTo('root.home.repo.show')
+  showRepo:         Ember.Route.transitionTo('root.home.repo.show')
   showBuilds:       Ember.Route.transitionTo('root.home.repo.builds.index')
   showBuild:        Ember.Route.transitionTo('root.home.repo.builds.show')
   showPullRequests: Ember.Route.transitionTo('root.home.repo.pullRequests')
@@ -117,6 +117,7 @@ Travis.Router = Ember.Router.extend
         router.get('homeController').connectOutlet 'right', 'sidebar'
         router.get('homeController').connectOutlet 'top', 'top'
         router.get('homeController').connectOutlet 'main', 'repo'
+        router.get('homeController').connectOutlet 'flash', 'flash'
 
       show: Ember.Route.extend
         route: '/'
