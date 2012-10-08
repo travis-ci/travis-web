@@ -30,8 +30,8 @@ require 'travis/model'
   ).property('data.config')
 
   sponsor: (->
-    @get('data.sponsor')
-  ).property('data.sponsor')
+    Travis.WORKERS[@get('log.workerName')]
+  ).property('log.workerName')
 
   configValues: (->
     if config = @get('config')
