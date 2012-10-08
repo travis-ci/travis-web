@@ -33,7 +33,7 @@ require 'travis/model'
     worker = @get('log.workerName')
     if worker && worker.length
       Travis.WORKERS[worker] || {
-        name: "Travis CI"
+        name: "Travis Pro"
         url: "http://travis-ci.com"
       }
   ).property('log.workerName')

@@ -43,7 +43,7 @@
 
 @Travis.WORKERS = {
   "jvm-otp1.worker.travis-ci.org":
-    name: "Travis CI"
+    name: "Travis Pro"
     url: "http://travis-ci.com"
   "jvm-otp2.worker.travis-ci.org":
     name: "Transloadit"
