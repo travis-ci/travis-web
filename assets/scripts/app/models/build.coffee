@@ -1,6 +1,6 @@
 require 'travis/model'
 
-@Travis.Build = Travis.Model.extend Travis.DurationCalculations, Travis.Ajax,
+@Travis.Build = Travis.Model.extend Travis.DurationCalculations,
   eventType:       DS.attr('string')
   repoId:    DS.attr('number')
   commitId:        DS.attr('number')
@@ -46,7 +46,7 @@ require 'travis/model'
   ).property('config')
 
   requeue: (->
-    @post '/requests', build_id: @get('id')
+    Travis.ajax.post '/requests', build_id: @get('id')
   )
 
 @Travis.Build.reopenClass

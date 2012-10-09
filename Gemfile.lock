@@ -43,7 +43,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: fa4c5db39b94234e9a3a87da0b4ccca466e034e2
+  revision: 5d9c867142162b20d8471530f7447bd4af93c0e4
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)
@@ -61,7 +61,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-core.git
-  revision: 7c84635b5c180a716150c4300bff3ea8f381248c
+  revision: adaa3d48f48a2a002827a2f15078323e53be1d10
   branch: sf-travis-api
   specs:
     travis-core (0.0.1)
@@ -159,7 +159,7 @@ GEM
       activesupport
     faraday (0.8.4)
       multipart-post (~> 1.1)
-    foreman (0.60.0)
+    foreman (0.60.2)
       thor (>= 0.13.6)
     fssm (0.2.9)
     guard (1.4.0)

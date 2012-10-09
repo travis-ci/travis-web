@@ -1,7 +1,7 @@
 require 'travis/ajax'
 require 'models'
 
-@Travis.RestAdapter = DS.RESTAdapter.extend Travis.Ajax,
+@Travis.RestAdapter = DS.RESTAdapter.extend
   mappings:
     repositories: Travis.Repo
     repository:   Travis.Repo
@@ -28,3 +28,6 @@ require 'models'
     job:        'jobs'
     worker:     'workers'
     profile:    'profile'
+
+  ajax: ->
+    Travis.ajax.ajax.apply(this, arguments)

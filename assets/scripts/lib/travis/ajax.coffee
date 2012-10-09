@@ -1,9 +1,12 @@
 jQuery.support.cors = true
 
-@Travis.Ajax = Ember.Mixin.create
+@Travis.ajax = Em.Object.create
   DEFAULT_OPTIONS:
     accepts:
       json: 'application/vnd.travis-ci.2+json'
+
+  get: (url, callback) ->
+    @ajax(url, 'get', success: callback)
 
   post: (url, data, callback) ->
     @ajax(url, 'post', data: data, success: callback)
@@ -25,9 +28,16 @@ jQuery.support.cors = true
     if options.data && method != 'GET' && method != 'get'
       options.data = JSON.stringify(options.data)
 
-    $.ajax($.extend(options, @DEFAULT_OPTIONS))
+    if options.success
+      success = options.success
+      options.success = (data) =>
+        if Travis.app?.router && data.flash
+          console.log(data.flash)
+          Travis.app.router.flashController.pushObject(data.flash)
+        delete data.flash
+        success.call(this, data)
 
-@Travis.ajax = Em.Object.create @Travis.Ajax,
-  get: (url, callback) ->
-    @ajax(url, 'get', success: callback)
+    options.error = (data) =>
+      Travis.app.router.flashController.pushObject(data.flash) if data.flash
 
+    $.ajax($.extend(options, Travis.ajax.DEFAULT_OPTIONS))

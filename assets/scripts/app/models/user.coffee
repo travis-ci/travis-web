@@ -1,7 +1,7 @@
 require 'travis/ajax'
 require 'travis/model'
 
-@Travis.User = Travis.Model.extend Travis.Ajax,
+@Travis.User = Travis.Model.extend
   name:        DS.attr('string')
   email:       DS.attr('string')
   login:       DS.attr('string')
@@ -27,7 +27,7 @@ require 'travis/model'
   permissions: (->
     unless @permissions
       @permissions = Ember.ArrayProxy.create(content: [])
-      @ajax '/users/permissions', 'get', success: (data) => @permissions.set('content', data.permissions)
+      Travis.ajax.get('/users/permissions', (data) => @permissions.set('content', data.permissions))
     @permissions
   ).property()
 
@@ -51,12 +51,12 @@ require 'travis/model'
   ).property()
 
   sync: ->
-    @post('/users/sync')
+    Travis.ajax.post('/users/sync')
     @setWithSession('isSyncing', true)
     @poll()
 
   poll: ->
-    @ajax '/users', 'get', success: (data) =>
+    Travis.ajax.get '/users', (data) =>
       if data.user.is_syncing
         Ember.run.later(this, this.poll.bind(this), 3000)
       else
