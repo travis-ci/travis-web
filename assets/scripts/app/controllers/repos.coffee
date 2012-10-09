@@ -1,3 +1,5 @@
+require 'travis/limited_array'
+
 Travis.ReposController = Ember.ArrayController.extend
   defaultTab: 'recent'
   sortProperties: ['sortOrder']
@@ -17,7 +19,11 @@ Travis.ReposController = Ember.ArrayController.extend
     this["view#{$.camelize(tab)}"](params)
 
   viewRecent: ->
-    @set('content', Travis.Repo.find())
+    content = Travis.LimitedArray.create
+      content: Travis.Repo.find()
+      limit: 30
+
+    @set('content', content)
 
   viewOwned: ->
     @set('content', Travis.Repo.ownedBy(Travis.app.get('currentUser.login')))
