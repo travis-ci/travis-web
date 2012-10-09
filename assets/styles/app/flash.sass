@@ -3,22 +3,22 @@
 #flash
   display: none
   margin: -20px -40px 20px -30px
-  padding: 15px 40px 15px 30px
   color: gray
   font-weight: bold
   border-bottom: 1px solid $color-border-light
   @include box-shadow(transparent 0 0 0 0, $color-border-normal 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0)
 
-  &.success, &.notice, &.error
-    display: block
+  li
+    position: relative
+    padding: 15px 40px 15px 30px
 
-  &.success
+  .success
     background-color: #ebfcc2
 
-  &.notice
+  .notice
     background-color: lightGoldenrodYellow
 
-  &.error
+  .error
     background-color: #f5d7d3
 
   p

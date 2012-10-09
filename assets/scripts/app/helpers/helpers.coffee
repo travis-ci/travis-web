@@ -1,5 +1,5 @@
 require 'travis/log'
-require 'emoij'
+require 'config/emoij'
 
 @Travis.Helpers =
   compact: (object) ->

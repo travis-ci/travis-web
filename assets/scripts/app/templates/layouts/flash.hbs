@@ -1,2 +1,6 @@
-<p>{{view.message}}</p>
-<a class="close" {{action close target="view"}}></a>
+{{#each flash in controller}}
+  {{#view Travis.FlashItemView flashBinding="flash"}}
+    <p>{{view.message}}</p>
+    <a class="close" {{action close target="view"}}></a>
+  {{/view}}
+{{/each}}

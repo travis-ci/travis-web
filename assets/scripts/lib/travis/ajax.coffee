@@ -28,14 +28,11 @@ jQuery.support.cors = true
     if options.data && method != 'GET' && method != 'get'
       options.data = JSON.stringify(options.data)
 
-    if options.success
-      success = options.success
-      options.success = (data) =>
-        if Travis.app?.router && data.flash
-          console.log(data.flash)
-          Travis.app.router.flashController.pushObject(data.flash)
-        delete data.flash
-        success.call(this, data)
+    success = options.success || (->)
+    options.success = (data) =>
+      Travis.app.router.flashController.pushObjects(data.flash) if Travis.app?.router && data.flash
+      delete data.flash
+      success.call(this, data)
 
     options.error = (data) =>
       Travis.app.router.flashController.pushObject(data.flash) if data.flash

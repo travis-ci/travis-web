@@ -958,7 +958,6 @@ li {
 #flash {
   display: none;
   margin: -20px -40px 20px -30px;
-  padding: 15px 40px 15px 30px;
   color: gray;
   font-weight: bold;
   border-bottom: 1px solid #dddddd;
@@ -966,20 +965,21 @@ li {
   -moz-box-shadow: transparent 0 0 0 0, #cccccc 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0;
   box-shadow: transparent 0 0 0 0, #cccccc 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0;
 }
-/* line 12, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
-#flash.success, #flash.notice, #flash.error {
-  display: block;
+/* line 11, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+#flash li {
+  position: relative;
+  padding: 15px 40px 15px 30px;
 }
 /* line 15, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
-#flash.success {
+#flash .success {
   background-color: #ebfcc2;
 }
 /* line 18, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
-#flash.notice {
+#flash .notice {
   background-color: lightgoldenrodyellow;
 }
 /* line 21, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
-#flash.error {
+#flash .error {
   background-color: #f5d7d3;
 }
 /* line 24, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */

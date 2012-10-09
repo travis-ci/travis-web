@@ -49,12 +49,13 @@ require 'ext/ember/namespace'
 
       $ =>
         app.initialize()
+        app.router.flashController.pushObject({ error: 'error!' })
 
   loadConfig: (callback) ->
     @ajax.get '/config', (data) =>
       $.extend @config, data.config
-      console.log "Connecting to #{data.config.api_endpoint}"
       callback(data.config)
 
 require 'travis/ajax'
 require 'app'
+
