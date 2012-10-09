@@ -223,7 +223,6 @@ Travis.Router = Ember.Router.extend
             router.get('profileController').activate 'user'
 
     home: Ember.Route.extend
-      initialState: 'show'
       route: '/'
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'home'
@@ -250,7 +249,6 @@ Travis.Router = Ember.Router.extend
           router.get('repoController').activate('index')
 
       repo: Ember.Route.extend
-        initialState: 'show'
         route: '/:owner/:name'
         routeMatcher: nonHashRouteMatcher
 
@@ -289,7 +287,6 @@ Travis.Router = Ember.Router.extend
 
         builds: Ember.Route.extend
           route: '/builds'
-          initialState: 'index'
 
           index: Ember.Route.extend
             route: '/'
