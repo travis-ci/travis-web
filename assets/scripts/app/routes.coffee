@@ -1,5 +1,116 @@
+require 'travis/location'
+
+defaultRoute = Ember.Route.extend
+  route: '/'
+  index: 1000
+
+lineNumberRoute = Ember.Route.extend
+  route: '#L:number'
+  index: 1
+  routeMatcher: Ember.computed(->
+    if route = @get 'route'
+      Ember._RouteMatcher.create
+        route: route
+        # TODO: overriding such things is not cool, I need to check what's the status of
+        #       router rewrite and make sure we can do such stuff without overriding anything
+        init: ->
+          escapeForRegex = (text) ->
+            text.replace(/[\-\[\]{}()*+?.,\\\^\$|#\s]/g, "\\$&")
+
+          route = @route
+          identifiers = []
+          count = 1
+
+          if route.charAt(0) == '/'
+            route = @route = route.substr(1)
+
+          escaped = escapeForRegex(route)
+
+          regex = escaped.replace /:([a-z_]+)(?=$|\/)/gi, (match, id) ->
+            identifiers[count++] = id
+            "([0-9]+)"
+
+          @identifiers = identifiers
+          @regex = new RegExp(regex)
+  ).cacheable()
+
+
+nonHashRouteMatcher = Ember.computed(->
+  if route = @get 'route'
+    Ember._RouteMatcher.create
+      route: route
+      # TODO: overriding such things is not cool, I need to check what's the status of
+      #       router rewrite and make sure we can do such stuff without overriding anything
+      init: ->
+        escapeForRegex = (text) ->
+          text.replace(/[\-\[\]{}()*+?.,\\\^\$|#\s]/g, "\\$&")
+
+        route = @route
+        identifiers = []
+        count = 1
+
+        if route.charAt(0) == '/'
+          route = @route = route.substr(1)
+
+        escaped = escapeForRegex(route)
+
+        regex = escaped.replace /:([a-z_]+)(?=$|\/)/gi, (match, id) ->
+          identifiers[count++] = id
+          "([^/#]+)"
+
+        @identifiers = identifiers
+        @regex = new RegExp("^/?" + regex)
+).cacheable()
+
+resolvePath = (manager, path) ->
+  if @get('isLeafRoute')
+    return Ember.A()
+
+  childStates = @get('childStates')
+
+  childStates = Ember.A(childStates.filterProperty('isRoutable'))
+
+  childStates = childStates.sort (a, b) ->
+    aDynamicSegments = a.get('routeMatcher.identifiers.length')
+    bDynamicSegments = b.get('routeMatcher.identifiers.length')
+    aRoute = a.get('route')
+    bRoute = b.get('route')
+    aIndex = a.get('index')
+    bIndex = b.get('index')
+
+    if aIndex && bIndex
+      return aIndex - bIndex
+
+    if aRoute.indexOf(bRoute) == 0
+      return -1
+    else if bRoute.indexOf(aRoute) == 0
+      return 1
+
+    if aDynamicSegments != bDynamicSegments
+      return aDynamicSegments - bDynamicSegments
+
+    return b.get('route.length') - a.get('route.length')
+
+  match = null
+  console.log(childStates.map( (s) -> s.get('route')))
+  state = childStates.find (state) ->
+    matcher = state.get('routeMatcher')
+    if match = matcher.match(path)
+      match
+
+  Ember.assert("Could not find state for path " + path, !!state)
+
+  resolvedState = Ember._ResolvedState.create
+    manager: manager
+    state: state
+    match: match
+
+  states = state.resolvePath(manager, match.remaining)
+
+  Ember.A([resolvedState]).pushObjects(states)
+
 Travis.Router = Ember.Router.extend
-  location: 'history'
+  location: 'travis'
   enableLogging: true
   initialState: 'loading'
 
@@ -25,6 +136,10 @@ Travis.Router = Ember.Router.extend
 
   loading: Ember.Route.extend
     routePath: (router, path) ->
+      if match = path.match(/#.*$/)
+        router.set 'lineNumberHash', match[0]
+
+
       sessionStorage.setItem('travis.path', path)
       if router.needsAuth(path)
         router.transitionTo('root.auth')
@@ -37,10 +152,12 @@ Travis.Router = Ember.Router.extend
       path = sessionStorage.getItem('travis.path')
       sessionStorage.removeItem('travis.path')
       router.transitionTo('root')
-      router.route(path) if path
+      if path
+        router.route(path)
+      else
+        router.route('/')
 
   root: Ember.Route.extend
-    initialState: 'home'
     loading: Ember.State.extend()
 
     auth: Ember.Route.extend
@@ -108,7 +225,6 @@ Travis.Router = Ember.Router.extend
             router.get('profileController').activate 'user'
 
     home: Ember.Route.extend
-      initialState: 'show'
       route: '/'
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'home'
@@ -124,9 +240,19 @@ Travis.Router = Ember.Router.extend
         connectOutlets: (router) ->
           router.get('repoController').activate('index')
 
+        initialState: 'default'
+        default: defaultRoute
+        lineNumber: lineNumberRoute
+        resolvePath: resolvePath
+
+      showWithLineNumber: Ember.Route.extend
+        route: '/#/L:number'
+        connectOutlets: (router) ->
+          router.get('repoController').activate('index')
+
       repo: Ember.Route.extend
-        initialState: 'show'
         route: '/:owner/:name'
+        routeMatcher: nonHashRouteMatcher
 
         connectOutlets: (router, repo) ->
           router.get('repoController').set 'repo', repo
@@ -156,9 +282,13 @@ Travis.Router = Ember.Router.extend
           connectOutlets: (router) ->
             router.get('repoController').activate('current')
 
+          initialState: 'default'
+          default: defaultRoute
+          lineNumber: lineNumberRoute
+          resolvePath: resolvePath
+
         builds: Ember.Route.extend
           route: '/builds'
-          initialState: 'index'
 
           index: Ember.Route.extend
             route: '/'
@@ -199,6 +329,14 @@ Travis.Router = Ember.Router.extend
 
               deferred.promise()
 
+            # TODO: this is not dry, but for some weird
+            #       reason Mixins don't play nice with Ember.Route
+            initialState: 'default'
+            default: defaultRoute
+            lineNumber: lineNumberRoute
+            routeMatcher: nonHashRouteMatcher
+            resolvePath: resolvePath
+
         pullRequests: Ember.Route.extend
           route: '/pull_requests'
           connectOutlets: (router, repo) ->
@@ -210,7 +348,6 @@ Travis.Router = Ember.Router.extend
             router.get('repoController').activate 'branches'
 
         job: Ember.Route.extend
-
           route: '/jobs/:job_id'
           connectOutlets: (router, job) ->
             unless job.get
@@ -235,3 +372,9 @@ Travis.Router = Ember.Router.extend
                 deferred.resolve job
             job.addObserver 'id', observer
             deferred.promise()
+
+          initialState: 'default'
+          default: defaultRoute
+          lineNumber: lineNumberRoute
+          routeMatcher: nonHashRouteMatcher
+          resolvePath: resolvePath

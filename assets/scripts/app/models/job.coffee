@@ -30,8 +30,13 @@ require 'travis/model'
   ).property('data.config')
 
   sponsor: (->
-    @get('data.sponsor')
-  ).property('data.sponsor')
+    worker = @get('log.workerName')
+    if worker && worker.length
+      Travis.WORKERS[worker] || {
+        name: "Travis Pro"
+        url: "http://travis-ci.com"
+      }
+  ).property('log.workerName')
 
   configValues: (->
     if config = @get('config')

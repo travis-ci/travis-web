@@ -41,4 +41,41 @@
   { type: 'silver', link: "<a href=\"http://tupalo.com\">Tupalo</a><span>: Discover, review &amp; share local businesses.</span>" }
 ]
 
-
+@Travis.WORKERS = {
+  "jvm-otp1.worker.travis-ci.org":
+    name: "Travis Pro"
+    url: "http://travis-ci.com"
+  "jvm-otp2.worker.travis-ci.org":
+    name: "Transloadit"
+    url: "http://transloadit.com"
+  "ppp1.worker.travis-ci.org":
+    name: "Travis Pro"
+    url: "http://beta.travis-ci.com"
+  "ppp2.worker.travis-ci.org":
+    name: "EnterpriseRails"
+    url: "http://www.enterprise-rails.com"
+  "ppp3.worker.travis-ci.org":
+    name: "Alchemy CMS"
+    url: "http://alchemy-cms.com/"
+  "rails1.worker.travis-ci.org":
+    name: "EnterpriseRails"
+    url: "http://www.enterprise-rails.com"
+  "ruby1.worker.travis-ci.org":
+    name: "Engine Yard"
+    url: "http://www.engineyard.com"
+  "ruby2.worker.travis-ci.org":
+    name: "EnterpriseRails"
+    url: "http://www.enterprise-rails.com"
+  "ruby3.worker.travis-ci.org":
+    name: "Railslove"
+    url: "http://railslove.de"
+  "ruby4.worker.travis-ci.org":
+    name: "Engine Yard"
+    url: "http://www.engineyard.com"
+  "spree.worker.travis-ci.org":
+    name: "Spree"
+    url: "http://spreecommerce.com"
+  "staging.worker.travis-ci.org":
+    name: "EnterpriseRails"
+    url: "http://www.enterprise-rails.com"
+}

@@ -90,7 +90,8 @@
     ).property('tab')
 
     hasPushPermissions: (->
-      Travis.app.get('currentUser.permissions').indexOf(@get('repo.id')) > -1
+      if permissions = Travis.app.get('currentUser.permissions')
+        permissions.indexOf(@get('repo.id')) > -1
     ).property('Travis.app.currentUser.permissions.length', 'repo.id')
 
     branches: (->

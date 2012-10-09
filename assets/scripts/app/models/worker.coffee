@@ -19,8 +19,8 @@ require 'travis/model'
   ).property('state')
 
   repo: (->
-    Travis.Repo.find(@get('payload.repo.id'))
-  ).property('payload.repo.id')
+    Travis.Repo.find(@get('payload.repository.id') || @get('payload.repo.id'))
+  ).property('payload.repository.id', 'payload.repo.id')
 
   job_id: (->
     @get('payload.job.id')
