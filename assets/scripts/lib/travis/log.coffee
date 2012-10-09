@@ -27,7 +27,7 @@
     result = ''
     $.each log.trim().split('\n'), (ix, line) ->
       number = ix + 1
-      path = Travis.Log.location().substr(1).replace(/\/L\d+/, '') + '/L' + number
+      path = Travis.Log.location().substr(1).replace(/L\d+/, '') + 'L' + number
       result += '<p><a href=\'#%@\' id=\'%@\' name=\'L%@\'>%@</a>%@</p>\n'.fmt(path, path, number, number, line)
     result.trim()
 

@@ -48,6 +48,26 @@
     templateName: 'jobs/log'
     logBinding: 'job.log'
 
+    scrollTo: (hash) ->
+      $('body').scrollTop $(hash).offset().top
+      Travis.app.router.set 'lineNumberHash', null
+
+    didInsertElement: ->
+      @_super.apply this, arguments
+
+      if hash = Travis.app.router.get 'lineNumberHash'
+        self = this
+
+        checker = ->
+          return if self.get('isDestroyed')
+
+          if $(hash).length
+            self.scrollTo(hash)
+          else
+            setTimeout checker, 100
+
+        checker()
+
     click: (event) ->
       $(event.target).closest('.fold').toggleClass('open')
 
