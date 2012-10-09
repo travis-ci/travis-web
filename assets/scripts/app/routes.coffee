@@ -152,10 +152,12 @@ Travis.Router = Ember.Router.extend
       path = sessionStorage.getItem('travis.path')
       sessionStorage.removeItem('travis.path')
       router.transitionTo('root')
-      router.route(path) if path
+      if path
+        router.route(path)
+      else
+        router.route('/')
 
   root: Ember.Route.extend
-    initialState: 'home'
     loading: Ember.State.extend()
 
     auth: Ember.Route.extend
