@@ -150,18 +150,18 @@ Travis.Router = Ember.Router.extend
         router.transitionTo('authenticated')
 
   authenticated: Ember.Route.extend
-    authenticate: Ember.K
+    authenticate: (->)
     connectOutlets: (router) ->
       path = sessionStorage.getItem('travis.path')
       sessionStorage.removeItem('travis.path')
       router.transitionTo('root')
       if path
         router.route(path)
-      else
+       else
         router.route('/')
 
   root: Ember.Route.extend
-    authenticate: Ember.K
+    authenticate: (->)
     loading: Ember.State.extend()
 
     auth: Ember.Route.extend
