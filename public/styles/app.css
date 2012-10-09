@@ -956,37 +956,36 @@ li {
 
 /* line 3, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
 #flash {
-  display: none;
-  margin: -20px -40px 20px -30px;
   color: gray;
   font-weight: bold;
-  border-bottom: 1px solid #dddddd;
+}
+/* line 7, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+#flash li {
+  position: relative;
+  margin: -20px -40px 20px -30px;
+  padding: 15px 40px 15px 30px;
   -webkit-box-shadow: transparent 0 0 0 0, #cccccc 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0;
   -moz-box-shadow: transparent 0 0 0 0, #cccccc 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0;
   box-shadow: transparent 0 0 0 0, #cccccc 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0;
+  border-bottom: 1px solid #dddddd;
 }
-/* line 11, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
-#flash li {
-  position: relative;
-  padding: 15px 40px 15px 30px;
-}
-/* line 15, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+/* line 14, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
 #flash .success {
   background-color: #ebfcc2;
 }
-/* line 18, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+/* line 17, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
 #flash .notice {
   background-color: lightgoldenrodyellow;
 }
-/* line 21, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+/* line 20, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
 #flash .error {
   background-color: #f5d7d3;
 }
-/* line 24, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+/* line 23, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
 #flash p {
   margin: 0;
 }
-/* line 27, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
+/* line 26, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
 #flash .close {
   display: block;
   position: absolute;

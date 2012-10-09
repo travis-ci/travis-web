@@ -3,11 +3,6 @@
     elementId: 'flash'
     tagName: 'ul'
     templateName: 'layouts/flash'
-    countBinding: 'controller.length'
-
-    display: (->
-      @set('classNames', if @get('count') == 0 then [] else ['display'])
-    ).observes('count')
 
   FlashItemView: Travis.View.extend
     tagName: 'li'
