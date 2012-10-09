@@ -67,8 +67,8 @@
       state = @get('worker.state')
       payload = @get('worker.payload')
 
-      if state == 'working' && payload?.repo && payload?.build
-        repo = payload.repo.slug
+      if state == 'working' && payload?.repository && payload?.build
+        repo = payload.repository.slug
         number = ' #' + payload.build.number
         "<span class='name'>#{name}: #{repo}</span> #{number}".htmlSafe()
       else
@@ -78,7 +78,3 @@
 
   QueueItemView: Travis.View.extend
     tagName: 'li'
-    urlJob: (->
-      Travis.Urls.job(@get('job.repo.slug'), @get('job.id'))
-    ).property('job.repo.slug', 'job.id')
-
