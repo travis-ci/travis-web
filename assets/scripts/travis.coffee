@@ -49,7 +49,6 @@ require 'ext/ember/namespace'
 
       $ =>
         app.initialize()
-        app.router.flashController.pushObject({ error: 'error!' })
 
   loadConfig: (callback) ->
     @ajax.get '/config', (data) =>
