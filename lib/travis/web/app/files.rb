@@ -10,7 +10,9 @@ class Travis::Web::App
 
     def index
       proc do |env|
-        Rack::File.new(nil).tap { |f| f.path = 'public/index.html' }.serving(env)
+        status, headers, body = Rack::File.new(nil).tap { |f| f.path = 'public/index.html' }.serving(env)
+        headers.delete 'Last-Modified'
+        [status, headers, body]
       end
     end
   end
