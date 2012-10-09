@@ -43,7 +43,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: 5d9c867142162b20d8471530f7447bd4af93c0e4
+  revision: 1624742cfd4bb1704ef916684e8962bf25219de3
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)

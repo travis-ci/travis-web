@@ -134,11 +134,13 @@ Travis.Router = Ember.Router.extend
   needsAuth: (path) ->
     path.indexOf('/profile') == 0 && !@signedIn()
 
+  authenticate: ->
+    @app.get('router').transitionTo('authenticated')
+
   loading: Ember.Route.extend
     routePath: (router, path) ->
       if match = path.match(/#.*$/)
         router.set 'lineNumberHash', match[0]
-
 
       sessionStorage.setItem('travis.path', path)
       if router.needsAuth(path)
@@ -148,6 +150,7 @@ Travis.Router = Ember.Router.extend
         router.transitionTo('authenticated')
 
   authenticated: Ember.Route.extend
+    authenticate: Ember.K
     connectOutlets: (router) ->
       path = sessionStorage.getItem('travis.path')
       sessionStorage.removeItem('travis.path')
@@ -158,6 +161,7 @@ Travis.Router = Ember.Router.extend
         router.route('/')
 
   root: Ember.Route.extend
+    authenticate: Ember.K
     loading: Ember.State.extend()
 
     auth: Ember.Route.extend
