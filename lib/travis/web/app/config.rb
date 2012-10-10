@@ -29,7 +29,7 @@ class Travis::Web::App
     end
 
     def api_endpoint
-      config.fetch(:api_endpoint, run_api? ? '/api' : DEFAULT_API_ENDPOINT).gsub(/:\d+/, '')
+      config.fetch(:api_endpoint, run_api? ? '/api' : DEFAULT_ENDPOINT).gsub(/:\d+/, '')
     end
 
     def client_endpoint

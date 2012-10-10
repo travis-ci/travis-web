@@ -21,8 +21,8 @@ require 'models'
   plurals:
     repositories: 'repositories',
     repository: 'repositories',
-    repo:       'repositories',
-    repos:      'repositories',
+    repo:       'repos',
+    repos:      'repos',
     build:      'builds'
     branch:     'branches'
     job:        'jobs'
