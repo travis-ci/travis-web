@@ -214,7 +214,25 @@ Travis.Router = Ember.Router.extend
             router.send 'showProfile'
 
         deserialize: (router, params) ->
-          router.get('accountsController').findByLogin(params.login)
+          controller = router.get('accountsController')
+
+          unless controller.get 'content'
+            controller.set('content', Travis.Account.find())
+
+          account    = controller.findByLogin(params.login)
+
+          if account
+            account
+          else
+            deferred = $.Deferred()
+
+            observer = ->
+              if account = controller.findByLogin(params.login)
+                controller.removeObserver 'content.length', observer
+                deferred.resolve account
+            controller.addObserver 'content.length', observer
+
+            deferred.promise()
 
         serialize: (router, account) ->
           if account
