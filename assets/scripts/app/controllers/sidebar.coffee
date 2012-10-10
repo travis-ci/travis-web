@@ -11,14 +11,38 @@ Travis.reopen
 
   WorkersController: Em.ArrayController.extend
     groups: (->
-      if content = @get 'content'
+      if content = @get 'arrangedContent'
         groups = {}
         for worker in content.toArray()
           host = worker.get('host')
           groups[host] = Em.ArrayProxy.create(content: []) unless groups[host]
           groups[host].pushObject(worker)
+
+        prepareForSort = (str) ->
+          match = str.match /(.*?)-(\d+)/
+          name = match[1]
+          id   = match[2].toString()
+          if id.length < 2
+            id = "00#{id}"
+          else if id.length < 3
+            id = "0#{id}"
+
+          "#{name}-#{id}"
+
+        for own host, workers of groups
+          groups[host] = workers.toArray().sort (a, b) ->
+            a = prepareForSort a.get('name')
+            b = prepareForSort b.get('name')
+
+            if a < b
+              -1
+            else if b < a
+              1
+            else
+              0
+
         $.values(groups)
-    ).property('content.length')
+    ).property('length')
 
   SponsorsController: Em.ArrayController.extend
     page: 0
