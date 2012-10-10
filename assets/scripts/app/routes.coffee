@@ -92,7 +92,6 @@ resolvePath = (manager, path) ->
     return b.get('route.length') - a.get('route.length')
 
   match = null
-  console.log(childStates.map( (s) -> s.get('route')))
   state = childStates.find (state) ->
     matcher = state.get('routeMatcher')
     if match = matcher.match(path)
@@ -161,6 +160,7 @@ Travis.Router = Ember.Router.extend
         router.route('/')
 
   root: Ember.Route.extend
+    route: '/'
     authenticate: (->)
     loading: Ember.State.extend()
 
@@ -271,7 +271,10 @@ Travis.Router = Ember.Router.extend
               repos.removeObserver 'isLoaded', observer
               deferred.resolve repos.objectAt(0)
 
-          repos.addObserver 'isLoaded', observer
+          if repos.length
+            deferred.resolve repos[0]
+          else
+            repos.addObserver 'isLoaded', observer
 
           deferred.promise()
 
