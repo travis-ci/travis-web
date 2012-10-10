@@ -1,7 +1,7 @@
 class Travis::Web::App
   class Filter
-    autoload :Endpoint, 'travis/web/app/filter/endpoint'
-    autoload :Assets,   'travis/web/app/filter/assets'
+    autoload :Config, 'travis/web/app/filter/config'
+    autoload :Assets, 'travis/web/app/filter/assets'
 
     attr_reader :app, :config
 
@@ -21,9 +21,15 @@ class Travis::Web::App
       def filter(headers, body)
         headers.delete 'Content-Length' # why don't we just set this to the new length?
         filtered = []
-        body.each { |s| filtered << filters.inject(s) { |s, filter| filter.apply(s) } }
+        body.each { |chunk| filtered << filter_chunk(chunk) }
         body.close if body.respond_to?(:close)
         [headers, filtered]
+      end
+
+      def filter_chunk(string)
+        filters.inject(string) do |string, filter|
+          filter.apply? ? filter.apply(string) : string
+        end
       end
 
       def filters

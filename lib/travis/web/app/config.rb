@@ -1,6 +1,10 @@
 class Travis::Web::App
   class Config
-    OPTIONS = %w(ENV API_ENDPOINT CLIENT_ENDPOINT RUN_API WATCH DEFLATE)
+    OPTIONS = %w(ENV API_ENDPOINT CLIENT_ENDPOINT PUSHER_KEY RUN_API WATCH DEFLATE)
+
+    def [](key)
+      send(key)
+    end
 
     def keys
       @keys ||= OPTIONS.map(&:downcase)
@@ -25,11 +29,15 @@ class Travis::Web::App
     end
 
     def api_endpoint
-      config.fetch(:api_endpoint, run_api? ? '/api' : "https://api.travis-ci.org").gsub(/:\d+/, '')
+      config.fetch(:api_endpoint, run_api? ? '/api' : DEFAULT_API_ENDPOINT).gsub(/:\d+/, '')
     end
 
     def client_endpoint
       config.fetch(:client_endpoint, '/')
+    end
+
+    def pusher_key
+      config.fetch(:pusher_key, DEFAULT_PUSHER_KEY)
     end
 
     def deflate?
