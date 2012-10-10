@@ -18,6 +18,11 @@ require 'ext/ember/namespace'
   StatsLayoutView:   Travis.View.extend(templateName: 'layouts/simple')
   ApplicationView:   Travis.View.extend
     templateName: 'application'
+    localeDidChange: (->
+      if locale = Travis.app.get('auth.user.locale')
+        Travis.setLocale(locale)
+        Travis.app.get('router').reload()
+    ).observes('Travis.app.auth.user.locale')
     click: (event) ->
       # TODO: this solves the case of closing menus and popups,
       #       but I would like to rewrite it later, not sure how

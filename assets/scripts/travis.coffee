@@ -34,8 +34,16 @@ require 'ext/ember/namespace'
 
   INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
 
+  setLocale: (locale) ->
+    return unless locale
+
+    I18n.locale = locale
+    @cookie.set('locale', locale, 365)
+
   run: (attrs) ->
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
+
+    @setLocale @cookie.get('locale')
 
     Ember.run.next this, ->
       app = Travis.App.create(attrs || {})
@@ -50,5 +58,6 @@ require 'ext/ember/namespace'
       $ => app.initialize()
 
 require 'travis/ajax'
+require 'travis/cookie'
 require 'app'
 

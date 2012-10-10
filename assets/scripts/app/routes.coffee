@@ -127,6 +127,11 @@ Travis.Router = Ember.Router.extend
   showAccount:      Ember.Route.transitionTo('root.profile.account')
   showUserProfile:  Ember.Route.transitionTo('root.profile.account.profile')
 
+  reload: ->
+    url = @get('location').getURL()
+    @transitionTo 'loading'
+    @route(url)
+
   signedIn: ->
     !!Travis.app.get('auth.user')
 
