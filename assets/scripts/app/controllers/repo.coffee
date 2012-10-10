@@ -12,7 +12,7 @@ Travis.RepoController = Travis.Controller.extend
     if build = @get('build')
       build.updateTimes()
 
-    if jobs = build.get('jobs')
+    if build && jobs = build.get('jobs')
       jobs.forEach (j) -> j.updateTimes()
 
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
