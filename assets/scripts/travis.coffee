@@ -4,6 +4,7 @@ require 'ext/ember/namespace'
 @Travis = Em.Namespace.create
   config:
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
+    pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
 
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala']
 
@@ -36,24 +37,16 @@ require 'ext/ember/namespace'
   run: (attrs) ->
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
 
-    @loadConfig (config) =>
-      app = Travis.App.create(attrs || {})
-      # TODO: router expects the classes for controllers on main namespace, so
-      #       if we want to keep app at Travis.app, we need to copy that, it would
-      #       be ideal to send a patch to ember and get rid of this
-      $.each Travis, (key, value) ->
-        app[key] = value if value && value.isClass && key != 'constructor'
+    app = Travis.App.create(attrs || {})
+    # TODO: router expects the classes for controllers on main namespace, so
+    #       if we want to keep app at Travis.app, we need to copy that, it would
+    #       be ideal to send a patch to ember and get rid of this
+    $.each Travis, (key, value) ->
+      app[key] = value if value && value.isClass && key != 'constructor'
 
-      @app   = app
-      @store = app.store
-
-      $ =>
-        app.initialize()
-
-  loadConfig: (callback) ->
-    @ajax.get '/config', (data) =>
-      $.extend @config, data.config
-      callback(data.config)
+    @app   = app
+    @store = app.store
+    $ => app.initialize()
 
 require 'travis/ajax'
 require 'app'
