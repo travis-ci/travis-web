@@ -37,16 +37,17 @@ require 'ext/ember/namespace'
   run: (attrs) ->
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
 
-    app = Travis.App.create(attrs || {})
-    # TODO: router expects the classes for controllers on main namespace, so
-    #       if we want to keep app at Travis.app, we need to copy that, it would
-    #       be ideal to send a patch to ember and get rid of this
-    $.each Travis, (key, value) ->
-      app[key] = value if value && value.isClass && key != 'constructor'
+    Ember.run.next this, ->
+      app = Travis.App.create(attrs || {})
+      # TODO: router expects the classes for controllers on main namespace, so
+      #       if we want to keep app at Travis.app, we need to copy that, it would
+      #       be ideal to send a patch to ember and get rid of this
+      $.each Travis, (key, value) ->
+        app[key] = value if value && value.isClass && key != 'constructor'
 
-    @app   = app
-    @store = app.store
-    $ => app.initialize()
+      @app   = app
+      @store = app.store
+      $ => app.initialize()
 
 require 'travis/ajax'
 require 'app'
