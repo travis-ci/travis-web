@@ -1,5 +1,6 @@
 require 'rack'
 require 'rack/protection/path_traversal'
+require 'rack/cache'
 
 class Travis::Web::App
   ASSET_DIRS = %r(/(styles|scripts)/)
@@ -31,7 +32,10 @@ class Travis::Web::App
       use Rack::Protection::PathTraversal
 
       use Travis::Web::App::Api, config if config.run_api?
+
+      use Rack::Cache, verbose: true, metastore: 'heap:/', entitystore: 'heap:/' if config.production?
       use Rack::Deflater if config.deflate?
+
       use Travis::Web::App::Assets, config
       use Travis::Web::App::Filter, config
       run Travis::Web::App::Files.new

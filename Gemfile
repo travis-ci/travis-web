@@ -8,6 +8,7 @@ gem 'sinatra-contrib'
 gem 'yard-sinatra',   github: 'rkh/yard-sinatra'
 gem 'rack-contrib',   github: 'rack/rack-contrib'
 gem 'rack-ssl', '~> 1.3'
+gem 'rack-cache'
 
 group :development, :test do
   gem 'rake', '~> 0.9.2'
