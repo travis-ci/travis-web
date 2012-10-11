@@ -37,7 +37,7 @@ class Travis::Web::App
     end
 
     def pusher_key
-      config.fetch(:pusher_key, DEFAULT_PUSHER_KEY)
+      config.fetch(:pusher_key, run_api? ? '' : DEFAULT_PUSHER_KEY)
     end
 
     def deflate?

@@ -1,5 +1,5 @@
-Travis.Pusher = (config) ->
-  @init(config) if config
+Travis.Pusher = (key) ->
+  @init(key) if key
   this
 
 $.extend Travis.Pusher,
@@ -9,9 +9,9 @@ $.extend Travis.Pusher,
 $.extend Travis.Pusher.prototype,
   active_channels: []
 
-  init: (config) ->
+  init: (key) ->
     Pusher.warn = @warn.bind(this)
-    @pusher = new Pusher(config.key)
+    @pusher = new Pusher(key)
     @subscribe(channel) for channel in Travis.Pusher.CHANNELS
 
   subscribe: (channel) ->
