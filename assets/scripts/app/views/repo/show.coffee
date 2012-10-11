@@ -68,9 +68,10 @@
     closeMenu: ->
       $('.menu').removeClass('display')
 
-    menu: ->
+    menu: (event) ->
       @popupCloseAll()
       element = $('#tools .menu').toggleClass('display')
+      event.stopPropagation()
 
     requeue: ->
       @closeMenu()
@@ -80,6 +81,7 @@
       @set('active', true)
       @closeMenu()
       @popup(event)
+      event.stopPropagation()
 
     canPush: (->
       @get('isBuildTab') && @get('build.isFinished') && @get('hasPushPermissions')

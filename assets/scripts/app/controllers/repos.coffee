@@ -33,8 +33,15 @@ Travis.ReposController = Ember.ArrayController.extend
 
   searchObserver: (->
     search = @get('search')
-    tab = if search then 'search' else 'recent'
-    @activate(tab, search: search)
+    if search
+      @searchFor search
+    else
+      @activate 'recent'
+      'recent'
   ).observes('search')
 
-
+  searchFor: (phrase) ->
+    Ember.run.cancel(@searchLater) if @searchLater
+    @searchLater = Ember.run.later(this, (->
+      @activate 'search', search: phrase
+    ), 500)

@@ -34,8 +34,16 @@ require 'ext/ember/namespace'
 
   INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
 
+  setLocale: (locale) ->
+    return unless locale
+
+    I18n.locale = locale
+    localStorage.setItem('travis.config.locale', locale)
+
   run: (attrs) ->
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
+
+    @setLocale localStorage.getItem('travis.config.locale')
 
     Ember.run.next this, ->
       app = Travis.App.create(attrs || {})

@@ -92,7 +92,6 @@ resolvePath = (manager, path) ->
     return b.get('route.length') - a.get('route.length')
 
   match = null
-  console.log(childStates.map( (s) -> s.get('route')))
   state = childStates.find (state) ->
     matcher = state.get('routeMatcher')
     if match = matcher.match(path)
@@ -128,6 +127,11 @@ Travis.Router = Ember.Router.extend
   showAccount:      Ember.Route.transitionTo('root.profile.account')
   showUserProfile:  Ember.Route.transitionTo('root.profile.account.profile')
 
+  reload: ->
+    url = @get('location').getURL()
+    @transitionTo 'loading'
+    @route(url)
+
   signedIn: ->
     !!Travis.app.get('auth.user')
 
@@ -161,6 +165,7 @@ Travis.Router = Ember.Router.extend
         router.route('/')
 
   root: Ember.Route.extend
+    route: '/'
     authenticate: (->)
     loading: Ember.State.extend()
 
@@ -209,7 +214,25 @@ Travis.Router = Ember.Router.extend
             router.send 'showProfile'
 
         deserialize: (router, params) ->
-          router.get('accountsController').findByLogin(params.login)
+          controller = router.get('accountsController')
+
+          unless controller.get 'content'
+            controller.set('content', Travis.Account.find())
+
+          account    = controller.findByLogin(params.login)
+
+          if account
+            account
+          else
+            deferred = $.Deferred()
+
+            observer = ->
+              if account = controller.findByLogin(params.login)
+                controller.removeObserver 'content.length', observer
+                deferred.resolve account
+            controller.addObserver 'content.length', observer
+
+            deferred.promise()
 
         serialize: (router, account) ->
           if account
@@ -271,7 +294,10 @@ Travis.Router = Ember.Router.extend
               repos.removeObserver 'isLoaded', observer
               deferred.resolve repos.objectAt(0)
 
-          repos.addObserver 'isLoaded', observer
+          if repos.length
+            deferred.resolve repos[0]
+          else
+            repos.addObserver 'isLoaded', observer
 
           deferred.promise()
 
