@@ -33,7 +33,8 @@ class Travis::Web::App
 
       use Travis::Web::App::Api, config if config.run_api?
 
-      use Rack::Cache, verbose: true, metastore: 'heap:/', entitystore: 'heap:/' if config.production?
+      # TODO breaks with wrong content length
+      # use Rack::Cache, verbose: true, metastore: 'heap:/', entitystore: 'heap:/' if config.production?
       use Rack::Deflater if config.deflate?
 
       use Travis::Web::App::Assets, config
