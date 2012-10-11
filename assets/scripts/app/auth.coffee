@@ -7,7 +7,7 @@
   init: ->
     @iframe.appendTo('body')
     window.addEventListener('message', (e) => @receiveMessage(e))
-    # @loadUser()
+    @loadUser()
 
   accessToken: (->
     sessionStorage.getItem('travis.token')

@@ -43,7 +43,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: e6b44ff1ebf6a10b059ec7f8ecfb2e2e1b473469
+  revision: 02f5eea4fcbea7be5331b86bb60ed84ce2872ceb
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)
@@ -61,7 +61,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-core.git
-  revision: 773b8830d11315fd3311df9575fdfb0c692a6ad4
+  revision: 1448d4b1505b38014d3083f45500d371c8ec999f
   branch: sf-travis-api
   specs:
     travis-core (0.0.1)
@@ -269,7 +269,7 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    unicorn (4.3.1)
+    unicorn (4.4.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
