@@ -79,6 +79,9 @@ require 'travis/model'
   ownedBy: (login) ->
     @find(owner_name: login, orderBy: 'name')
 
+  accessibleBy: (login) ->
+    @find(member: login, orderBy: 'name')
+
   search: (query) ->
     @find(search: query, orderBy: 'name')
 
