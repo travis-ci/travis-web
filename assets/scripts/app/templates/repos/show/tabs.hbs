@@ -38,7 +38,7 @@
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
     <h5>
       {{#if view.build.id}}
-      <a {{action showBuild view.build href=true}}>
+      <a {{action showBuild view.repo view.build href=true}}>
         {{t repositories.tabs.build}} #{{view.build.number}}
       </a>
       {{/if}}
@@ -47,7 +47,7 @@
   <li id="tab_job" {{bindAttr class="view.classJob"}}>
     <h5>
       {{#if view.job.id}}
-      <a {{action showBuild view.job href=true}}>
+      <a {{action showJob view.repo view.job href=true}}>
         {{t repositories.tabs.job}} #{{view.job.number}}
       </a>
       {{/if}}
