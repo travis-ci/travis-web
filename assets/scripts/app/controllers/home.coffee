@@ -1,1 +1,1 @@
-Travis.HomeController = Travis.Controller.extend()
+Travis.HomeLayoutController = Travis.Controller.extend()
