@@ -29,3 +29,17 @@ require 'travis/model'
   job: (->
     Travis.Job.find @get('job_id')
   ).property('job_id')
+
+  nameForSort: (->
+    if name = @get('name')
+      match = name.match /(.*?)-(\d+)/
+      if match
+        name = match[1]
+        id   = match[2].toString()
+        if id.length < 2
+          id = "00#{id}"
+        else if id.length < 3
+          id = "0#{id}"
+
+        "#{name}-#{id}"
+  ).property('name')

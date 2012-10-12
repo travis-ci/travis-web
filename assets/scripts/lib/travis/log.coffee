@@ -5,11 +5,11 @@
     bundle: /(<p.*?\/a>\$ bundle install.*<\/p>\n(<p.*?\/a>(Updating|Using|Installing|Fetching|remote:|Receiving|Resolving).*?<\/p>\n|<p.*?\/a><\/p>\n)*)/g
     exec: /(<p.*?\/a>[\/\w]*.rvm\/rubies\/[\S]*?\/(ruby|rbx|jruby) .*?<\/p>)/g
 
-  filter: (log) ->
+  filter: (log, path) ->
     log = @escape(log)
     log = @deansi(log)
     log = log.replace(/\r/g, '')
-    log = @number(log)
+    log = @number(log, path)
     log = @fold(log)
     log = log.replace(/\n/g, '')
     log
@@ -23,12 +23,13 @@
   escapeRuby: (log) ->
     log.replace /#<(\w+.*?)>/, '#&lt;$1&gt;'
 
-  number: (log) ->
+  number: (log, path) ->
+    path = "#{path}/"
     result = ''
     $.each log.trim().split('\n'), (ix, line) ->
       number = ix + 1
-      path = Travis.Log.location().substr(1).replace(/L\d+/, '') + 'L' + number
-      result += '<p><a href=\'#%@\' id=\'%@\' name=\'L%@\'>%@</a>%@</p>\n'.fmt(path, path, number, number, line)
+      pathWithNumber = "#{path}#L#{number}"
+      result += '<p><a href="%@" id="L%@" class="log-line-number" name="L%@">%@</a>%@</p>\n'.fmt(pathWithNumber, number, number, number, line)
     result.trim()
 
   deansi: (log) ->

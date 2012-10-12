@@ -2,7 +2,7 @@ require 'travis/model'
 
 @Travis.Build = Travis.Model.extend Travis.DurationCalculations,
   eventType:       DS.attr('string')
-  repoId:    DS.attr('number')
+  repoId:          DS.attr('number', key: 'repository_id')
   commitId:        DS.attr('number')
 
   state:           DS.attr('string')
@@ -14,7 +14,7 @@ require 'travis/model'
   startedAt:       DS.attr('string', key: 'started_at')
   finishedAt:      DS.attr('string', key: 'finished_at')
 
-  repo: DS.belongsTo('Travis.Repo')
+  repo:       DS.belongsTo('Travis.Repo', key: 'repository_id')
   commit:     DS.belongsTo('Travis.Commit')
   jobs:       DS.hasMany('Travis.Job', key: 'job_ids')
 

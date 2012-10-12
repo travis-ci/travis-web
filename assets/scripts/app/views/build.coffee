@@ -52,6 +52,8 @@
     buildBinding: 'controller.build'
     commitBinding: 'build.commit'
 
+    currentItemBinding: 'build'
+
     loading: (->
       !@get('build.isLoaded')
     ).property('build.isLoaded')

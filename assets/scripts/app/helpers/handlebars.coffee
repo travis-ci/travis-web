@@ -31,5 +31,8 @@ Ember.registerBoundHelper 'formatConfig', (config, options) ->
   safe Travis.Helpers.formatConfig(config)
 
 Ember.registerBoundHelper 'formatLog', (log, options) ->
-  Travis.Helpers.formatLog(log) || ''
+  parentView =  @get 'parentView'
+  repo = parentView.get(options.repo)
+  item = parentView.get(options.item)
+  Travis.Helpers.formatLog(log, repo, item) || ''
 

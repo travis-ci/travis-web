@@ -7,6 +7,9 @@ defaultRoute = Ember.Route.extend
 lineNumberRoute = Ember.Route.extend
   route: '#L:number'
   index: 1
+  connectOutlets: (router) ->
+    router.saveLineNumberHash()
+
   routeMatcher: Ember.computed(->
     if route = @get 'route'
       Ember._RouteMatcher.create
@@ -127,6 +130,12 @@ Travis.Router = Ember.Router.extend
   showAccount:      Ember.Route.transitionTo('root.profile.account')
   showUserProfile:  Ember.Route.transitionTo('root.profile.account.profile')
 
+  saveLineNumberHash: (path) ->
+    Ember.run.next this, ->
+      path = path || @get('location').getURL()
+      if match = path.match(/#L\d+$/)
+        @set 'repoController.lineNumberHash', match[0]
+
   reload: ->
     url = @get('location').getURL()
     @transitionTo 'loading'
@@ -143,8 +152,7 @@ Travis.Router = Ember.Router.extend
 
   loading: Ember.Route.extend
     routePath: (router, path) ->
-      if match = path.match(/#.*$/)
-        router.set 'lineNumberHash', match[0]
+      router.saveLineNumberHash(path)
 
       sessionStorage.setItem('travis.path', path)
       if router.needsAuth(path)
@@ -348,16 +356,20 @@ Travis.Router = Ember.Router.extend
               # record.
               # TODO: find out why it happens
               build = Travis.Build.find params.build_id
-              deferred = $.Deferred()
 
-              observer = ->
-                if build.get 'id'
-                  build.removeObserver 'id', observer
-                  deferred.resolve build
+              if build.get 'id'
+                build
+              else
+                deferred = $.Deferred()
 
-              build.addObserver 'id', observer
+                observer = ->
+                  if build.get 'id'
+                    build.removeObserver 'id', observer
+                    deferred.resolve build
 
-              deferred.promise()
+                build.addObserver 'id', observer
+
+                deferred.promise()
 
             # TODO: this is not dry, but for some weird
             #       reason Mixins don't play nice with Ember.Route
@@ -394,14 +406,18 @@ Travis.Router = Ember.Router.extend
 
           deserialize: (router, params) ->
             job = Travis.Job.find params.job_id
-            deferred = $.Deferred()
 
-            observer = ->
-              if job.get 'id'
-                job.removeObserver 'id', observer
-                deferred.resolve job
-            job.addObserver 'id', observer
-            deferred.promise()
+            if job.get 'id'
+              job
+            else
+              deferred = $.Deferred()
+
+              observer = ->
+                if job.get 'id'
+                  job.removeObserver 'id', observer
+                  deferred.resolve job
+              job.addObserver 'id', observer
+              deferred.promise()
 
           initialState: 'default'
           default: defaultRoute
