@@ -356,16 +356,20 @@ Travis.Router = Ember.Router.extend
               # record.
               # TODO: find out why it happens
               build = Travis.Build.find params.build_id
-              deferred = $.Deferred()
 
-              observer = ->
-                if build.get 'id'
-                  build.removeObserver 'id', observer
-                  deferred.resolve build
+              if build.get 'id'
+                build
+              else
+                deferred = $.Deferred()
 
-              build.addObserver 'id', observer
+                observer = ->
+                  if build.get 'id'
+                    build.removeObserver 'id', observer
+                    deferred.resolve build
 
-              deferred.promise()
+                build.addObserver 'id', observer
+
+                deferred.promise()
 
             # TODO: this is not dry, but for some weird
             #       reason Mixins don't play nice with Ember.Route
@@ -402,14 +406,18 @@ Travis.Router = Ember.Router.extend
 
           deserialize: (router, params) ->
             job = Travis.Job.find params.job_id
-            deferred = $.Deferred()
 
-            observer = ->
-              if job.get 'id'
-                job.removeObserver 'id', observer
-                deferred.resolve job
-            job.addObserver 'id', observer
-            deferred.promise()
+            if job.get 'id'
+              job
+            else
+              deferred = $.Deferred()
+
+              observer = ->
+                if job.get 'id'
+                  job.removeObserver 'id', observer
+                  deferred.resolve job
+              job.addObserver 'id', observer
+              deferred.promise()
 
           initialState: 'default'
           default: defaultRoute

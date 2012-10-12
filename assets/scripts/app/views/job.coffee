@@ -81,6 +81,7 @@
       target = $(event.target)
 
       target.closest('.fold').toggleClass('open')
+
       if target.is('.log-line-number')
         path = target.attr 'href'
         Travis.app.get('router').route(path)
