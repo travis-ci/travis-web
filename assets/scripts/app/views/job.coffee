@@ -24,6 +24,8 @@
     jobBinding: 'controller.job'
     commitBinding: 'job.commit'
 
+    currentItemBinding: 'job'
+
     color: (->
       Travis.Helpers.colorForResult(@get('job.result'))
     ).property('job.result')
@@ -50,12 +52,14 @@
 
     scrollTo: (hash) ->
       $('body').scrollTop $(hash).offset().top
-      Travis.app.router.set 'lineNumberHash', null
+      @set 'controller.lineNumberHash', null
 
-    didInsertElement: ->
-      @_super.apply this, arguments
+    lineNumberHashDidChange: (->
+      @tryScrollingToHashLineNumber()
+    ).observes('controller.lineNumberHash')
 
-      if hash = Travis.app.router.get 'lineNumberHash'
+    tryScrollingToHashLineNumber: ->
+      if hash = @get 'controller.lineNumberHash'
         self = this
 
         checker = ->
@@ -68,8 +72,20 @@
 
         checker()
 
+    didInsertElement: ->
+      @_super.apply this, arguments
+
+      @tryScrollingToHashLineNumber()
+
     click: (event) ->
-      $(event.target).closest('.fold').toggleClass('open')
+      target = $(event.target)
+
+      target.closest('.fold').toggleClass('open')
+      if target.is('.log-line-number')
+        path = target.attr 'href'
+        Travis.app.get('router').route(path)
+        event.stopPropagation()
+        return false
 
     toTop: () ->
       $(window).scrollTop(0)

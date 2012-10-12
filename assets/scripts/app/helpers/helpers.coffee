@@ -31,8 +31,15 @@ require 'config/emoij'
     message = message.split(/\n/)[0]  if options.short
     @_emojize(@_escape(message)).replace /\n/g, '<br/>'
 
-  formatLog: (log) ->
-    Travis.Log.filter(log)
+  formatLog: (log, repo, item) ->
+    event = if item.constructor == Travis.Build
+      'showBuild'
+    else
+      'showJob'
+
+    url = Travis.app.get('router').urlForEvent(event, repo, item)
+
+    Travis.Log.filter(log, url)
 
   pathFrom: (url) ->
     (url || '').split('/').pop()

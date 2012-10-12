@@ -4,7 +4,7 @@
   <pre id="log" class="ansi"><a href="#" id="tail" {{action toggleTailing target="view"}}>
     <span class="status"></span>
     <label>Follow logs</label>
-  </a>{{{formatLog log.body}}}</pre>
+  </a>{{{formatLog log.body repo="repository" item="parentView.currentItem"}}}</pre>
 
   {{#if sponsor.name}}
     <p class="sponsor">
