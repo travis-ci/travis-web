@@ -3,7 +3,7 @@ require 'rake-pipeline/dsl'
 module Travis
   class Assets
     module Helpers
-      def handlebars(*args, &block)
+      def travis_handlebars(*args, &block)
         filter(Filters::Handlebars, *args, &block)
       end
 

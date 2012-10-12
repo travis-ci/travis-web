@@ -11,7 +11,7 @@ assets.update_version
 output 'public/scripts'
 input assets.scripts do
   match '**/*.hbs' do
-    handlebars :precompile => assets.production?
+    travis_handlebars :precompile => assets.production?
     concat 'templates.js'
   end
 
