@@ -11,6 +11,9 @@
       @set(key, value) unless key is 'id'
     this
 
+  select: ->
+    @constructor.select(@get('id'))
+
 @Travis.Model.reopenClass
   find: ->
     if arguments.length == 0
@@ -23,6 +26,10 @@
 
   load: (attrs) ->
     Travis.app.store.load(this, attrs)
+
+  select: (id) ->
+    @find().forEach (record) ->
+      record.set('selected', record.get('id') == id)
 
   buildURL: (suffix) ->
     base = @url || @pluralName()

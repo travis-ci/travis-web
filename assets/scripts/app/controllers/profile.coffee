@@ -5,7 +5,9 @@ Travis.ProfileController = Travis.Controller.extend
 
   account: (->
     login = @get('params.login') || Travis.app.get('currentUser.login')
-    @get('accounts').filter((account) -> account if account.get('login') == login)[0]
+    account = @get('accounts').filter((account) -> account if account.get('login') == login)[0]
+    account.select() if account
+    account
   ).property('accounts.length', 'params.login')
 
   activate: (action, params) ->

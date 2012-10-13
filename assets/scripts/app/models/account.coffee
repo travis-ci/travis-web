@@ -10,4 +10,3 @@ require 'travis/model'
   urlGithub: (->
     "http://github.com/#{@get('login')}"
   ).property()
-

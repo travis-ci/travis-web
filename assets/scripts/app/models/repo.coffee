@@ -66,9 +66,6 @@ require 'travis/model'
     ) && {}
   ).property()
 
-  select: ->
-    Travis.Repo.select(@get('id'))
-
   updateTimes: ->
     @notifyPropertyChange 'lastBuildDuration'
 
@@ -88,10 +85,6 @@ require 'travis/model'
   bySlug: (slug) ->
     repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
     if repo.length > 0 then repo else @find(slug: slug)
-
-  select: (id) ->
-    @find().forEach (repo) ->
-      repo.set('selected', repo.get('id') == id)
 
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'
