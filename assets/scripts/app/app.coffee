@@ -39,6 +39,9 @@ Travis.reopen
     signIn: ->
       @get('auth').signIn()
 
+    autoSignIn: ->
+      @get('auth').autoSignIn()
+
     signOut: ->
       @get('auth').signOut()
       @get('router').send('afterSignOut')

@@ -148,24 +148,27 @@ Travis.Router = Ember.Router.extend
     path.indexOf('/profile') == 0
 
   afterSignIn: ->
-    after_signin_path = sessionStorage.getItem('travis.after_signin_path')
+    path = sessionStorage.getItem('travis.after_signin_path')
     sessionStorage.removeItem('travis.after_signin_path')
     @transitionTo('root')
-    @route(after_signin_path || '/')
+    @route(path || '/')
 
   afterSignOut: ->
-    @transitionTo('loading')
+    @authorize('/')
+
+  authorize: (path) ->
+    if !@signedIn() && @needsAuth(path)
+      sessionStorage.setItem('travis.after_signin_path', path)
+      @transitionTo('root.auth')
+      Travis.app.autoSignIn()
+    else
+      @transitionTo('root')
+      @route(path)
 
   loading: Ember.Route.extend
     routePath: (router, path) ->
       router.saveLineNumberHash(path)
-      if !router.signedIn() && router.needsAuth(path)
-        sessionStorage.setItem('travis.after_signin_path', path)
-        router.transitionTo('root.auth')
-        Travis.app.signIn()
-      else
-        router.transitionTo('root')
-        router.route(path)
+      router.authorize(path)
 
   root: Ember.Route.extend
     route: '/'

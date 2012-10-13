@@ -18,14 +18,22 @@
   loadUser: ->
     if user = sessionStorage.getItem('travis.user')
       @setData(user: JSON.parse(user))
-    else if localStorage.getItem('travis.auto_signin')
-      @trySignIn()
+    else
+      @autoSignIn()
 
   # try signing in, but check later in case we have a timeout
   signIn: ->
     @set('state', 'signing-in')
     @trySignIn()
     Ember.run.later(this, @checkSignIn.bind(this), @timeout)
+
+  autoSignIn: ->
+    @signIn() if localStorage.getItem('travis.auto_signin')
+
+  signOut: ->
+    localStorage.clear()
+    sessionStorage.clear()
+    @setData()
 
   trySignIn: ->
     @iframe.attr('src', "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}")
@@ -36,11 +44,6 @@
   forceSignIn: ->
     localStorage.setItem('travis.auto_signin', 'true')
     window.location = "#{@endpoint}/auth/handshake?redirect_uri=#{location}"
-
-  signOut: ->
-    localStorage?.clear()
-    sessionStorage?.clear()
-    @setData()
 
   setData: (data) ->
     data = JSON.parse(data) if typeof data == 'string'
