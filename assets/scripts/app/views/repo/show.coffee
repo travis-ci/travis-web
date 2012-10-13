@@ -2,7 +2,7 @@
   RepoView: Travis.View.extend
     templateName: 'repos/show'
 
-    reposBinding: 'Travis.app.router.reposController' # TODO ugh :/
+    # reposBinding: 'Travis.app.router.reposController' # TODO ugh :/
     repoBinding: 'controller.repo'
 
     class: (->
