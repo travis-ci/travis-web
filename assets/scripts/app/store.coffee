@@ -8,6 +8,22 @@ Travis.Store = DS.Store.extend
   revision: 4
   adapter: Travis.RestAdapter.create()
 
+  load: (type, id, hash) ->
+    result = @_super.apply this, arguments
+
+    if result && result.clientId
+      # I assume that everything that goes through load is complete record
+      # representation, incomplete hashes from pusher go through merge()
+      record = @findByClientId type, result.clientId
+      record.set 'incomplete', false
+      record.set 'complete', true
+      # setting both incomplete and complete may be weird, but it's easier to
+      # work with both values. I need to check if record has already been completed
+      # and in order to do that, without having 'complete', I would need to check
+      # for incomplete == false, which looks worse
+
+    result
+
   merge: (type, id, hash) ->
     if hash == undefined
       hash = id
@@ -29,11 +45,7 @@ Travis.Store = DS.Store.extend
       if record = recordCache[clientId]
         record.send('didChangeData')
     else
-      # that's nasty, but will do for now
-      # if event is triggered for a record
-      # that's not yet available, just use find
-      # to make a request to fetch it
-      clientId = @find(type, id).get('clientId')
+      clientId = @pushHash(hash, id, type)
 
     if clientId
       DATA_PROXY.savedData = hash
@@ -59,9 +71,23 @@ Travis.Store = DS.Store.extend
 
   _loadOne: (store, type, json) ->
     root = type.singularName()
-    @adapter.sideload(store, type, json, root)
-    @merge(type, json[root])
-    @_updateAssociations(type, root, json[root])
+    # we get other types of records only on build, it comes with repository
+    # attached. I don't want to use store.sideload here as it will not use merge,
+    # if we need sideload becasue we have side records with other events it needs to
+    # be revised
+    if type == Travis.Build && json.repository
+      result = @_loadIncomplete(Travis.Repo, 'repository', json.repository)
+    @_loadIncomplete(type, root, json[root])
+
+  _loadIncomplete: (type, root, hash) ->
+    result = @merge(type, hash)
+
+    if result && result.clientId
+      record = @findByClientId(type, result.clientId)
+      unless record.get('complete')
+        record.set 'incomplete', true
+
+      @_updateAssociations(type, root, hash)
 
   _loadMany: (store, type, json) ->
     root = type.pluralName()
