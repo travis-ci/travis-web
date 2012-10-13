@@ -2,11 +2,16 @@
   RepoView: Travis.View.extend
     templateName: 'repos/show'
 
+    reposBinding: 'Travis.app.router.reposController' # TODO ugh :/
     repoBinding: 'controller.repo'
 
     class: (->
-      'loading' unless @get('repo.isLoaded')
+      'loading' if !@get('repo.isLoaded') && !@get('isEmpty')
     ).property('repo.isLoaded')
+
+    isEmpty: (->
+      @get('repos.length') == 0
+    ).property('repos.length')
 
     urlGithub: (->
       Travis.Urls.githubRepo(@get('repo.slug'))
@@ -19,6 +24,9 @@
     urlGithubNetwork: (->
       Travis.Urls.githubNetwork(@get('repo.slug'))
     ).property('repo.slug'),
+
+  ReposEmptyView: Travis.View.extend
+    template: ''
 
   RepoShowTabsView: Travis.View.extend
     templateName: 'repos/show/tabs'
