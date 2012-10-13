@@ -3,5 +3,5 @@
     templateName: 'auth/signin'
 
     signingIn: (->
-      Travis.app.get('authState')
+      Travis.app.get('authState') == 'signing-in'
     ).property('Travis.app.authState')

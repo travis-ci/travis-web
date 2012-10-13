@@ -57,9 +57,9 @@ input assets.images do
   end
 end
 
-output 'public'
-input assets.static do
-  match '**/*' do
-    copy
-  end
-end
+# output 'public'
+# input assets.static do
+#   match '**/*' do
+#     copy
+#   end
+# end

@@ -2067,6 +2067,219 @@ span.loading {
   background-color: #bab9a7;
 }
 
+/* line 4, /Users/sven/Development/projects/travis/travis-web/assets/styles/auth.sass */
+#auth #page {
+  display: block;
+}
+/* line 7, /Users/sven/Development/projects/travis/travis-web/assets/styles/auth.sass */
+#auth #main {
+  top: 200px;
+  margin: 0 auto 0 auto;
+  padding: 25px 50px;
+  width: 300px;
+  min-width: auto;
+  border: 10px solid #bbbbbb;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  border-radius: 8px;
+}
+/* line 17, /Users/sven/Development/projects/travis/travis-web/assets/styles/auth.sass */
+#auth #main h1 {
+  margin-bottom: 1em;
+  color: #333333;
+}
+/* line 21, /Users/sven/Development/projects/travis/travis-web/assets/styles/auth.sass */
+#auth #main p {
+  color: #333333;
+}
+/* line 24, /Users/sven/Development/projects/travis/travis-web/assets/styles/auth.sass */
+#auth #main a:hover {
+  text-decoration: underline;
+}
+/* line 3, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bold {
+  font-weight: bold;
+}
+/* line 5, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .italic {
+  font-style: italic;
+}
+/* line 9, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .black {
+  color: black;
+}
+/* line 11, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .red {
+  color: red;
+}
+/* line 13, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .green {
+  color: lime;
+}
+/* line 15, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .yellow {
+  color: yellow;
+}
+/* line 17, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .blue {
+  color: blue;
+}
+/* line 19, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .magenta {
+  color: magenta;
+}
+/* line 21, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .cyan {
+  color: cyan;
+}
+/* line 23, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .white {
+  color: white;
+}
+/* line 25, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .black.bright {
+  color: #999999;
+}
+/* line 27, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-black {
+  background-color: black;
+}
+/* line 29, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-red {
+  background-color: red;
+}
+/* line 31, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-green {
+  background-color: lime;
+}
+/* line 33, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-yellow {
+  background-color: yellow;
+}
+/* line 35, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-blue {
+  background-color: blue;
+}
+/* line 37, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-magenta {
+  background-color: magenta;
+}
+/* line 39, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-cyan {
+  background-color: cyan;
+}
+/* line 41, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-white {
+  background-color: white;
+}
+
+/* line 108, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .black {
+  background-color: black;
+}
+/* line 110, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .white {
+  background-color: white;
+}
+/* line 113, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green {
+  background-color: #038035;
+}
+/* line 115, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green-light-1 {
+  background-color: #dcffdc;
+}
+/* line 117, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green-light-3 {
+  background-color: #fafffa;
+}
+/* line 119, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red {
+  background-color: #cc0000;
+}
+/* line 121, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-medium-1 {
+  background-color: #c7371a;
+}
+/* line 123, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-light-1 {
+  background-color: #ffdcdc;
+}
+/* line 125, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-light-3 {
+  background-color: snow;
+}
+/* line 127, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .yellow-light-1 {
+  background-color: #ffffe1;
+}
+/* line 129, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .yellow-light-2 {
+  background-color: #fffcf4;
+}
+/* line 132, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-1 {
+  background-color: #333333;
+}
+/* line 134, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-2 {
+  background-color: #444444;
+}
+/* line 136, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-3 {
+  background-color: #666666;
+}
+/* line 138, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-1 {
+  background-color: #999999;
+}
+/* line 140, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-2 {
+  background-color: #aaaaaa;
+}
+/* line 142, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-3 {
+  background-color: #cccccc;
+}
+/* line 144, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-1 {
+  background-color: #dddddd;
+}
+/* line 146, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-2 {
+  background-color: #efefef;
+}
+/* line 148, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-3 {
+  background-color: #f6f6f6;
+}
+/* line 151, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-1 {
+  background-color: #e1e2e6;
+}
+/* line 153, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-2 {
+  background-color: #e5e8ee;
+}
+/* line 155, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-3 {
+  background-color: #f2f4f9;
+}
+/* line 157, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-4 {
+  background-color: #fafbfc;
+}
+/* line 159, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-yellow-1 {
+  background-color: #7f7f75;
+}
+/* line 161, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-yellow-2 {
+  background-color: #bab9a7;
+}
+
 /* line 5, /Users/sven/Development/projects/travis/travis-web/assets/styles/layout.sass */
 html, body {
   height: 100%;

@@ -145,7 +145,7 @@ Travis.Router = Ember.Router.extend
     !!Travis.app.get('auth.user')
 
   needsAuth: (path) ->
-    path.indexOf('/profile') == 0 && !@signedIn()
+    path.indexOf('/profile') == 0
 
   authenticate: ->
     @app.get('router').transitionTo('authenticated')
@@ -155,7 +155,7 @@ Travis.Router = Ember.Router.extend
       router.saveLineNumberHash(path)
 
       sessionStorage.setItem('travis.path', path)
-      if router.needsAuth(path)
+      if !router.signedIn() && router.needsAuth(path)
         router.transitionTo('root.auth')
         Travis.app.signIn()
       else
