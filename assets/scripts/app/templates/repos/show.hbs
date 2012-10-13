@@ -2,7 +2,7 @@
   {{#if view.isEmpty}}
     {{view Travis.ReposEmptyView}}
   {{else}}
-    {{#if view.repo.isLoaded}}
+    {{#if view.repo.isComplete}}
       {{#with view.repo}}
         <h3>
           <a {{bindAttr href="view.urlGithub"}}>{{slug}}</a>

@@ -6,8 +6,8 @@
     repoBinding: 'controller.repo'
 
     class: (->
-      'loading' if !@get('repo.isLoaded') && !@get('isEmpty')
-    ).property('repo.isLoaded')
+      'loading' if !@get('repo.isComplete') && !@get('isEmpty')
+    ).property('repo.isComplete')
 
     isEmpty: (->
       @get('repos.length') == 0

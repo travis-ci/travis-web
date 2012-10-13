@@ -3,13 +3,29 @@
   id: DS.attr('number')
 
   refresh: ->
-    id = @get('id')
-    Travis.app.store.adapter.find(Travis.app.store, @constructor, id) if id
+    if id = @get('id')
+      store = @get('store')
+      store.adapter.find store, @constructor, id
 
   update: (attrs) ->
     $.each attrs, (key, value) =>
       @set(key, value) unless key is 'id'
     this
+
+  isComplete: (->
+    if @get 'incomplete'
+      @loadTheRest()
+      false
+    else
+      @set 'isCompleting', false
+      @get 'isLoaded'
+  ).property('incomplete', 'isLoaded')
+
+  loadTheRest: ->
+    return if @get('isCompleting')
+    @set 'isCompleting', true
+
+    @refresh()
 
 @Travis.Model.reopenClass
   find: ->
