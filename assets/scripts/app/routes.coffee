@@ -184,6 +184,7 @@ Travis.Router = Ember.Router.extend
 
     stats: Ember.Route.extend
       route: '/stats'
+      afterSignIn: (-> )
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'statsLayout'
         $('body').attr('id', 'stats')
@@ -192,6 +193,7 @@ Travis.Router = Ember.Router.extend
 
     profile: Ember.Route.extend
       initialState: 'index'
+      afterSignIn: (-> )
       route: '/profile'
 
       connectOutlets: (router) ->
@@ -258,6 +260,7 @@ Travis.Router = Ember.Router.extend
 
     home: Ember.Route.extend
       route: '/'
+      afterSignIn: (-> )
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'homeLayout'
         $('body').attr('id', 'home')
