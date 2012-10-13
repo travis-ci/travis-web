@@ -48,8 +48,7 @@
     user = @storeUser(data.user) if data?.user
     @set('state', if user then 'signed-in' else 'signed-out')
     @set('user',  if user then user else undefined)
-    if Travis.app && (router = Travis.app.get('router'))
-      router.send('after_signin')
+    router.send('afterSignIn') if router = Travis.app?.get('router')
 
   storeToken: (token) ->
     sessionStorage.setItem('travis.token', token)

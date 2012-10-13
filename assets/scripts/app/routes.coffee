@@ -147,11 +147,14 @@ Travis.Router = Ember.Router.extend
   needsAuth: (path) ->
     path.indexOf('/profile') == 0
 
-  after_signin: ->
+  afterSignIn: ->
     after_signin_path = sessionStorage.getItem('travis.after_signin_path')
     sessionStorage.removeItem('travis.after_signin_path')
     @transitionTo('root')
     @route(after_signin_path || '/')
+
+  afterSignOut: ->
+    @route('/')
 
   loading: Ember.Route.extend
     routePath: (router, path) ->
