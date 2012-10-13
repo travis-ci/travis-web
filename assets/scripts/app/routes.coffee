@@ -138,7 +138,7 @@ Travis.Router = Ember.Router.extend
 
   reload: ->
     url = @get('location').getURL()
-    @transitionTo 'loading'
+    @transitionTo('loading')
     @route(url)
 
   signedIn: ->
@@ -154,7 +154,7 @@ Travis.Router = Ember.Router.extend
     @route(after_signin_path || '/')
 
   afterSignOut: ->
-    @route('/')
+    @transitionTo('loading')
 
   loading: Ember.Route.extend
     routePath: (router, path) ->
