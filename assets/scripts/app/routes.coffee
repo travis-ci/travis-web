@@ -269,6 +269,7 @@ Travis.Router = Ember.Router.extend
         router.get('homeLayoutController').connectOutlet 'top', 'top'
         router.get('homeLayoutController').connectOutlet 'main', 'repo'
         router.get('homeLayoutController').connectOutlet 'flash', 'flash'
+        router.get('repoController').set('repos', router.get('reposController'))
 
       show: Ember.Route.extend
         route: '/'

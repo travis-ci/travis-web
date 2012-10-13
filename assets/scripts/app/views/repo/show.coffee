@@ -2,10 +2,12 @@
   RepoView: Travis.View.extend
     templateName: 'repos/show'
 
-    # reposBinding: 'Travis.app.router.reposController' # TODO ugh :/
-    repoBinding: 'controller.repo'
+    reposBinding: 'controller.repos'
+    repoBinding:  'controller.repo'
 
     class: (->
+      @get('repos.length')
+      @get('repos.length') == 0
       'loading' if !@get('repo.isComplete') && !@get('isEmpty')
     ).property('repo.isComplete')
 
