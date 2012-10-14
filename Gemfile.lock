@@ -43,7 +43,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: dd2c469443014798a45b9308654e45ae4db7139f
+  revision: 602bd4d30db7b41520615947556d5e77d6fae0a4
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)
@@ -61,7 +61,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-core.git
-  revision: db8effd212dd008248ba972f5da7818f39dd4255
+  revision: 310d93a0c6dec233a15264172168fc58fb243f3b
   branch: sf-travis-api
   specs:
     travis-core (0.0.1)
@@ -223,7 +223,7 @@ GEM
     rb-fsevent (0.9.2)
     rdoc (3.12)
       json (~> 1.4)
-    redcarpet (2.1.1)
+    redcarpet (2.2.1)
     redis (3.0.2)
     rerun (0.7.1)
       listen
