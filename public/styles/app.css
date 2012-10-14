@@ -954,6 +954,246 @@ li {
   background-color: #bab9a7;
 }
 
+/* line 3, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/button.sass */
+.button {
+  position: relative;
+  overflow: visible;
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid #d4d4d4;
+  margin: 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #ececec;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f4f4f4), color-stop(100%, #ececec));
+  background: -webkit-linear-gradient(#f4f4f4, #ececec);
+  background: -moz-linear-gradient(#f4f4f4, #ececec);
+  background: -o-linear-gradient(#f4f4f4, #ececec);
+  background: linear-gradient(#f4f4f4, #ececec);
+  background-clip: padding-box;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  text-align: center;
+  font: 11px/normal sans-serif;
+  color: #666666;
+  white-space: nowrap;
+}
+
+/* line 22, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/button.sass */
+.button:hover,
+.button:focus,
+.button:active,
+.button.active {
+  border-color: #2356c4;
+  border-bottom-color: #2a65a0;
+  background-color: #4a80f3;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6699fa), color-stop(100%, #4a80f3));
+  background: -webkit-linear-gradient(#6699fa, #4a80f3);
+  background: -moz-linear-gradient(#6699fa, #4a80f3);
+  background: -o-linear-gradient(#6699fa, #4a80f3);
+  background: linear-gradient(#6699fa, #4a80f3);
+  text-decoration: none;
+  color: white;
+}
+
+/* line 33, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/button.sass */
+.button:active,
+.button.active {
+  border-color: #2a65a0;
+  border-bottom-color: #2356c4;
+  background-color: #4a80f3;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4a80f3), color-stop(100%, #6699fa));
+  background: -webkit-linear-gradient(#4a80f3, #6699fa);
+  background: -moz-linear-gradient(#4a80f3, #6699fa);
+  background: -o-linear-gradient(#4a80f3, #6699fa);
+  background: linear-gradient(#4a80f3, #6699fa);
+}
+/* line 3, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bold {
+  font-weight: bold;
+}
+/* line 5, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .italic {
+  font-style: italic;
+}
+/* line 9, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .black {
+  color: black;
+}
+/* line 11, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .red {
+  color: red;
+}
+/* line 13, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .green {
+  color: lime;
+}
+/* line 15, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .yellow {
+  color: yellow;
+}
+/* line 17, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .blue {
+  color: blue;
+}
+/* line 19, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .magenta {
+  color: magenta;
+}
+/* line 21, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .cyan {
+  color: cyan;
+}
+/* line 23, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .white {
+  color: white;
+}
+/* line 25, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .black.bright {
+  color: #999999;
+}
+/* line 27, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-black {
+  background-color: black;
+}
+/* line 29, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-red {
+  background-color: red;
+}
+/* line 31, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-green {
+  background-color: lime;
+}
+/* line 33, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-yellow {
+  background-color: yellow;
+}
+/* line 35, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-blue {
+  background-color: blue;
+}
+/* line 37, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-magenta {
+  background-color: magenta;
+}
+/* line 39, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-cyan {
+  background-color: cyan;
+}
+/* line 41, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-white {
+  background-color: white;
+}
+
+/* line 108, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .black {
+  background-color: black;
+}
+/* line 110, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .white {
+  background-color: white;
+}
+/* line 113, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green {
+  background-color: #038035;
+}
+/* line 115, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green-light-1 {
+  background-color: #dcffdc;
+}
+/* line 117, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green-light-3 {
+  background-color: #fafffa;
+}
+/* line 119, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red {
+  background-color: #cc0000;
+}
+/* line 121, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-medium-1 {
+  background-color: #c7371a;
+}
+/* line 123, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-light-1 {
+  background-color: #ffdcdc;
+}
+/* line 125, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-light-3 {
+  background-color: snow;
+}
+/* line 127, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .yellow-light-1 {
+  background-color: #ffffe1;
+}
+/* line 129, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .yellow-light-2 {
+  background-color: #fffcf4;
+}
+/* line 132, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-1 {
+  background-color: #333333;
+}
+/* line 134, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-2 {
+  background-color: #444444;
+}
+/* line 136, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-3 {
+  background-color: #666666;
+}
+/* line 138, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-1 {
+  background-color: #999999;
+}
+/* line 140, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-2 {
+  background-color: #aaaaaa;
+}
+/* line 142, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-3 {
+  background-color: #cccccc;
+}
+/* line 144, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-1 {
+  background-color: #dddddd;
+}
+/* line 146, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-2 {
+  background-color: #efefef;
+}
+/* line 148, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-3 {
+  background-color: #f6f6f6;
+}
+/* line 151, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-1 {
+  background-color: #e1e2e6;
+}
+/* line 153, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-2 {
+  background-color: #e5e8ee;
+}
+/* line 155, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-3 {
+  background-color: #f2f4f9;
+}
+/* line 157, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-4 {
+  background-color: #fafbfc;
+}
+/* line 159, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-yellow-1 {
+  background-color: #7f7f75;
+}
+/* line 161, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-yellow-2 {
+  background-color: #bab9a7;
+}
+
 /* line 3, /Users/sven/Development/projects/travis/travis-web/assets/styles/app/flash.sass */
 #flash {
   color: gray;
@@ -4852,7 +5092,7 @@ pre#log .fold.open {
 /* line 34, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main .message {
   margin-top: 20px;
-  padding: 13px 20px;
+  padding: 10px 10px;
   color: #999999;
   border: 1px solid #dddddd;
   -webkit-border-radius: 4px;
@@ -4862,8 +5102,9 @@ pre#log .fold.open {
   border-radius: 4px;
 }
 /* line 41, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
-#profile #main .message button.sync_now {
+#profile #main .message .sync_now {
   float: right;
+  margin-top: -3px;
 }
 /* line 3, /Users/sven/Development/projects/travis/travis-web/assets/styles/_mixins/ansi.sass */
 .ansi .bold {
@@ -5119,21 +5360,81 @@ pre#log .fold.open {
 }
 /* line 61, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
 #hooks li .switch {
-  height: 20px;
-  width: 80px;
-  margin-left: 10px;
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAUCAYAAAAwaEt4AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sGEwoDBFgWWZEAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAEcUlEQVRYw81YTUvrTBR+ZjJp2lhjFaF+LESpXKQUxYW4UHBRUBF3gguX/in/hEtXIhQRRANWlIILFXTR+oWKpm1Kkpl38TIhkURvudd6D5TQfMyc88xznnNmSL1eF0dHR3AcB4ZhQAiBdowQEnk/OA4hBEIIOI6DSqWCRqOBVCrV9lzBcSmlkXO1a9J/QgharRbGxsZQLBZB9vb2RCaTgWEY8DwP32mUUiQSCZTLZVBKkU6n/yio7zDLssAYA3t5ecHIyMi3gwIAnHO0Wi3kcjlUq1UMDg7iXzNKKcrlMpiqqiCEgFIKIURsavztyRlj0HX9nwJFCAHGGLq7u8Gko50CRc4nwYnLe86578/HdJOaFbx+fBYM9mNccbEKIaAoClRVBZNOdjLX5ZxBAY1yUAZAKfUD4Zz71+D9YLoGFzoOgCCwQVMU5f9FC6ZRp0w6rChKLDCEELiui+vra5imidfXV2iahkKhgEKhgGQyCdd1cXJygvf39xDDVFXF7OwsTNOEbduhcT3Pw8LCApLJZCSTfDZTSmMd/C6TqxK1YsESenh4CNM00dPTg4mJCTw/P6NUKuHm5gbr6+totVq4urrC09OT32oQQpBIJAAAFxcXsG0buq77i+84DjzP8+eXDJTzhoChlIZe6ARb4mgu7f39HWdnZ+jt7cXm5qafIqVSCaZp4vz8HL9+/YKqqqCUYmNjA4lEwgcnmUxCVVUoioK1tTUYhhHSpDh9kuD4qdQp1ki6BhurKEbd3t6i0WigWCyCMQbOOYQQmJycRKVSQaVSQT6f94Or1Wo+U1KpFIaHhyGEAOcc9/f3aDab4JwjnU4jk8lECnUwxX8klTjn0DQN6XQ6llWO40AIgaGhIaRSKZ/RrutC13VYloV0Ou0L+Pb2ti/sk5OTGB8fB6UU9XodOzs74JzD8zzMz89jaWkpMkM452CMQdO0n6lKkhVR5VpWpO7ubhBC8Pr6itHR0RAwjUYD2Ww2xLzNzU1/vFQq5YOk6zpWVlZ8DZJ6E1cRpV8/UpUURYnVGCmIY2Nj0HUdBwcHGB8fh2EYcF0Xp6ensCwLi4uLvs9CCAwPD/vMkvelLg0MDKC/vz/0flyay1Rnn5XN79SYz5wkhCCTyWB6ehpHR0fY2tpCX18f6vU67u/vkcvlMDU1Bdd1Q0LqeV5k88Y5DwH2VWEIVaWfYkxcZaKUYnV1FV1dXTg+PkatVgMATE1NYXl5GYwxuK4LRVGgaVrkrlvTNP+dr6pgsH+ilILs7++LmZmZjmwipTWbTVSrVeTz+S+PF2QHbFkWEomED4L8SbbLChTcRshnv9uKyG8uLi5+po8JBvOVeZ4HQgi6urpC/+W3ckGj9lXtLnaQdazZbH6q0t8BjOd5fvf7JwdLv3to1i4wjUYDzLZtPDw8IJvNdgQYx3FweXmJfD7fsd18O6Dbto23tzcQ27bF7u4uent7I0/UPtv6f3acGaX2nufh8fERQ0NDMAzjr6xy3H6r3e9lz3R3d4e5uTn8B4YdbMcCfa97AAAAAElFTkSuQmCC') no-repeat;
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 18px;
+  margin: 0 10px 0 15px;
+  padding: 0 10px 0 0;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeeeee), color-stop(100%, #ffffff));
+  background: -webkit-linear-gradient(#eeeeee, #ffffff);
+  background: -moz-linear-gradient(#eeeeee, #ffffff);
+  background: -o-linear-gradient(#eeeeee, #ffffff);
+  background: linear-gradient(#eeeeee, #ffffff);
+  -webkit-box-shadow: #cccccc 0px 2px 3px 0px inset;
+  -moz-box-shadow: #cccccc 0px 2px 3px 0px inset;
+  box-shadow: #cccccc 0px 2px 3px 0px inset;
+  border: 1px solid #bdbdbd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  line-height: 21px;
+  font-size: 11px;
+  color: #999999;
   cursor: pointer;
+  text-align: right;
 }
-/* line 67, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
+/* line 77, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
+#hooks li .switch:before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 28px;
+  height: 18px;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #dddddd), color-stop(100%, #ffffff));
+  background: -webkit-linear-gradient(#dddddd, #ffffff);
+  background: -moz-linear-gradient(#dddddd, #ffffff);
+  background: -o-linear-gradient(#dddddd, #ffffff);
+  background: linear-gradient(#dddddd, #ffffff);
+  -webkit-box-shadow: white 0px 1px 3px 0px inset;
+  -moz-box-shadow: white 0px 1px 3px 0px inset;
+  box-shadow: white 0px 1px 3px 0px inset;
+  border: 1px solid #bdbdbd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 89, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
 #hooks li.active .switch {
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAUCAIAAAC/CtwvAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sGEwoEM6/qalkAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAFD0lEQVRYw71Xa4+dUxR+nrX2+75nzpw5bV1myrTaaolqiioZSlGtS1IiGpdIRAiCfyA+8EEI0YiEL+IagiC0aVqkbpXekGipuNUoU21ppy3nTM+c27v38uF0BnHOBD3tyv603/0+e69nrfXstfl7sfTI06ufW9F/wBIcGTOE4BLsu+Lc7usWnjRhXAd8gPD/A5JmLJVKkYv6+s7ivY+/+9jb1Xw+QxwpMwtDe++4vHrzFedUTX09JcRghwZKFanV/cDAgHv143TKrLM1NWMAeGQ8yg1/eencznLdmaUAD9kfAOaDj2OX1lOH5Ni4YzytDs+WHjV2bGxNwgAYCBgb8zSCZkZgZNpa8mMhqJfIZSgQaBvJEmGcOKdKEdKUHINXmFgIkYsiAQCkwRCGSUcLwYlYHNKyowQYKSZqviqQpmhB4ERSERG2ITx/qykB6CAEzQLJVsRaKnRMpLxz+ycv14q/WHbcpJnXZLpPNV9Kg68OfFGpHpgwbUGwYCLV37aV9n0zYfL5SMah6ZENMJAQEZi1NUoiIk5IM46FbRALfsd702TNI3cvnjq5d3D/78+/sWLdtm8y065OWLzq1N2d7sDyr1dXJl4qFub07J97yr6Vu4b2Y/wYURCKqloI7XWJpKMKBAhjpABR2X3bItx5w/17Sty4Ncya2vPEw6e9uWrNPSu/nzZ98u23LDlugutZvv7RjQXJjJvXN+v2hfPWLh0YLJo2S70AGCFCpZqyrS5pI1CCYHYwHZoMECfkh266su/X3/yVDxUfXOavf5KrPh9asvii83p31oLU6sHMX3PZnInlt+Ain9qoojQHbPAkDU7baQ1EEVEzgwHGpkcIhjOn57K5jqUry2V0eaaactmnrm7+xksm1WoeMG/4sZA8cOuc4R8/oro/ZbIFT2YmVFXRdhtJ15llR95oJOtN5SEYpvZ2Abpzz56e8bEAQEqtDBX9ib3H5bMUgQ/hxbWVB689864F7xT29gNnZLN2tKTKJukcQojqKiqiysMhD7nYZzMePqXETQUqGINlAJnI/qrrFUm9hVy6I+Om7PSZXFIkBXCfDXDL9uqt187/cOMmAJ2OuUSUoZlLQFyhNs5gbZcHITMqqs6petXwz+Gc/26QQFhyXs8vm1/YvnXDvi2rZuV+znbmP+j3mUhpwQATfWp9zTRz+YL5gIlaK0BVi+AEVCfttYOJ5xKJHBAEbEnYjoKs+6E6v2/2s13Jtz/9OvX42XNOP+mrXfVN/cjFCU28IRv5XQV9ZcPwLRd2ARabRirSDNMICp0kbU+8Rjm5SBkJII0+hy1aGHtmDQsH/MUzZ544Y0ZKt/Z7e2n9MBKRTL3scrk0VZV8HK3dxrkzhmf3Rq77mHgQ0qy/DoQXQExEDkstOYfIEcHQon8BALFAe/1TXb65lOuIa7VyscIoiiKxciVz32s1I4/KCX1qKktXmbd6HLvYNb9GA8WUB0Xc2nsvCUinURyLmHoEGfONA2YMSCpVEFFXZjTYiLMjPzoAiDo4wk6LHi/AK9Wg6sz7tvZ4AOEkrURqdVL/wyPskKgNgarZUK+QoEg7a0mkUqm57tqXwza508VAGO27/3T6sLyXpJrrfn/T1psnHes6j0Ljoj/kJyBgQ0OlYqHAvfsLj768brc/Gdl8QyHMwl96dTu4/J8A/31m9ItPFcO7pucHF80eHyVQ0kaKiiNE2r9QjtHFwVitVguF4gXz5/0BdY9rLIx0cN8AAAAASUVORK5CYII=') no-repeat;
+  width: 56px;
+  padding: 0 0 0 14px;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3a78f9), color-stop(100%, #93bafc));
+  background: -webkit-linear-gradient(#3a78f9, #93bafc);
+  background: -moz-linear-gradient(#3a78f9, #93bafc);
+  background: -o-linear-gradient(#3a78f9, #93bafc);
+  background: linear-gradient(#3a78f9, #93bafc);
+  -webkit-box-shadow: #2153be 0px 2px 3px 0px inset;
+  -moz-box-shadow: #2153be 0px 2px 3px 0px inset;
+  box-shadow: #2153be 0px 2px 3px 0px inset;
+  border: 1px solid #4b7cde;
+  color: white;
+  text-align: left;
 }
-/* line 71, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
+/* line 97, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
+#hooks li.active .switch:before {
+  left: auto;
+  right: -1px;
+}
+/* line 103, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
 #hooks li:hover > a {
   color: #c7371a;
 }
-/* line 74, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
+/* line 106, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile/hooks.sass */
 #hooks li:hover .description {
   display: inline;
 }

@@ -20,11 +20,6 @@ require 'travis/model'
   commit:     DS.belongsTo('Travis.Commit',     key: 'commit_id')
   log:        DS.belongsTo('Travis.Artifact',   key: 'log_id')
 
-  isQueued: (->
-    # wat.
-    # console.log(@get('state'))
-  ).property('state')
-
   config: (->
     Travis.Helpers.compact(@get('data.config'))
   ).property('data.config')
@@ -62,7 +57,7 @@ require 'travis/model'
     @find()
     Travis.app.store.filter this, (job) ->
       queued = ['created', 'queued'].indexOf(job.get('state')) != -1
-      queued && job.get('queue') == "builds.#{queue}"
+      queued && (!queue || job.get('queue') == "builds.#{queue}")
 
   findMany: (ids) ->
     Travis.app.store.findMany this, ids

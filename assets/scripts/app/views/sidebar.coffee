@@ -36,7 +36,7 @@
 
     QueuesView: Em.View.extend
       templateName: 'queues/list'
-      controller: Travis.QueuesController.create()
+      controller: Em.ArrayController.create()
 
       didInsertElement: ->
         queues = for queue in Travis.QUEUES
@@ -44,9 +44,7 @@
             content: Travis.Job.queued(queue.name)
             id: "queue_#{queue.name}"
             name: queue.display
-
         @set 'controller.content', queues
-
         @_super.apply this, arguments
 
   WorkersView: Travis.View.extend
