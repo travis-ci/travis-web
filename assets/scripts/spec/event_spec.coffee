@@ -14,11 +14,6 @@ describe 'events', ->
         payload =
           repository:
             id: 10
-            slug: 'travis-ci/travis-support'
-            last_build_id: 10
-            last_build_number: 10
-            last_build_started_at: '2012-07-02T00:01:00Z'
-            last_build_finished_at: '2012-07-02T00:02:30Z'
           build:
             id: 10
             repository_id: 10
@@ -32,6 +27,13 @@ describe 'events', ->
           Travis.app.receive 'build:started',
             build:
               id: 10
+            repository:
+              id: 10
+              slug: 'travis-ci/travis-support'
+              last_build_id: 10
+              last_build_number: 10
+              last_build_started_at: '2012-07-02T00:01:00Z'
+              last_build_finished_at: '2012-07-02T00:02:30Z'
 
         waits(100)
         runs ->
@@ -39,45 +41,45 @@ describe 'events', ->
             row: 2
             item: { slug: 'travis-ci/travis-support',  build: { number: 4, url: '/travis-ci/travis-support/builds/10', duration: '1 min 30 sec', finishedAt: 'less than a minute ago' } }
 
-  describe 'an event adding a build', ->
-    beforeEach ->
-      app 'travis-ci/travis-core/builds'
-      waitFor buildsRendered
-
-    it 'adds a build to the builds list', ->
-      payload =
-        build:
-          id: 11
-          repository_id: 1
-          commit_id: 11
-          number: '3'
-          duration: 55
-          started_at: '2012-07-02T00:02:00Z'
-          finished_at: '2012-07-02T00:02:55Z'
-          event_type: 'push'
-          result: 1
-        commit:
-          id: 11
-          sha: '1234567'
-          branch: 'master'
-          message: 'commit message 3'
-
-
-      $.mockjax
-        url: '/builds/11'
-        responseTime: 0
-        responseText: payload
-
-      Em.run ->
-        Travis.app.receive 'build:started',
-          build:
-            id: 11
-
-      waits(100)
-      runs ->
-        listsBuild
-          row: 3
-          item: { id: 11, slug: 'travis-ci/travis-core', number: '3', sha: '1234567', branch: 'master', message: 'commit message 3', finishedAt: 'less than a minute ago', duration: '55 sec', color: 'red' }
+#  describe 'an event adding a build', ->
+#    beforeEach ->
+#      app 'travis-ci/travis-core/builds'
+#      waitFor buildsRendered
+#
+#    it 'adds a build to the builds list', ->
+#      payload =
+#        build:
+#          id: 11
+#          repository_id: 1
+#          commit_id: 11
+#          number: '3'
+#          duration: 55
+#          started_at: '2012-07-02T00:02:00Z'
+#          finished_at: '2012-07-02T00:02:55Z'
+#          event_type: 'push'
+#          result: 1
+#        commit:
+#          id: 11
+#          sha: '1234567'
+#          branch: 'master'
+#          message: 'commit message 3'
+#
+#
+#      $.mockjax
+#        url: '/builds/11'
+#        responseTime: 0
+#        responseText: payload
+#
+#      Em.run ->
+#        Travis.app.receive 'build:started',
+#          build:
+#            id: 11
+#
+#      waits(100)
+#      runs ->
+#        listsBuild
+#          row: 3
+#          item: { id: 11, slug: 'travis-ci/travis-core', number: '3', sha: '1234567', branch: 'master', message: 'commit message 3', finishedAt: 'less than a minute ago', duration: '55 sec', color: 'red' }
 
   describe 'an event adding a job', ->
     beforeEach ->
@@ -90,15 +92,6 @@ describe 'events', ->
       payload =
         job:
           id: 15
-          repository_id: 1
-          build_id: 1
-          commit_id: 1
-          log_id: 1
-          number: '1.4'
-          duration: 55
-          started_at: '2012-07-02T00:02:00Z'
-          finished_at: '2012-07-02T00:02:55Z'
-          config: { rvm: 'jruby' }
 
       $.mockjax
         url: '/jobs/15'
@@ -109,7 +102,15 @@ describe 'events', ->
         Travis.app.receive 'job:started',
           job:
             id: 15
+            repository_id: 1
             build_id: 1
+            commit_id: 1
+            log_id: 1
+            number: '1.4'
+            duration: 55
+            started_at: '2012-07-02T00:02:00Z'
+            finished_at: '2012-07-02T00:02:55Z'
+            config: { rvm: 'jruby' }
 
       waits(100)
       runs ->
@@ -124,7 +125,7 @@ describe 'events', ->
           id: 12
           repository_id: 1
           number: '1.4'
-          queue: 'common'
+          queue: 'builds.common'
 
       $.mockjax
         url: '/jobs/12'
@@ -135,6 +136,10 @@ describe 'events', ->
         Travis.app.receive 'job:started',
           job:
             id: 12
+            repository_id: 1
+            number: '1.4'
+            queue: 'builds.common'
+            state: 'created'
 
       waits(100)
       runs ->

@@ -7,19 +7,18 @@ class Travis::Web::App
     end
 
     def initialize
-      super([public_dir, index, spec])
+      super([public_dir, index])
+    end
+
+    def call(env)
+      status, headers, body = super(env)
+      # TODO: temporary hack to make specs work, remove this later properly
+      headers.delete 'Last-Modified' if env['PATH_INFO'] == '/spec.html'
+      [status, headers, body]
     end
 
     def public_dir
       Rack::File.new('public')
-    end
-
-    def spec
-      proc do |env|
-        status, headers, body = Rack::File.new(nil).tap { |f| f.path = 'public/spec.html' }.serving(env)
-        headers.merge!(cache_headers(env['PATH_INFO']))
-        [status, headers, body]
-      end
     end
 
     def index

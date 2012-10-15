@@ -1,6 +1,7 @@
 @Travis.reopen
   ApplicationView: Travis.View.extend
     templateName: 'application'
+    classNames: ['application']
 
     localeDidChange: (->
       if locale = Travis.app.get('auth.user.locale')

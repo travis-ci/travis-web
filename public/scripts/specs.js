@@ -6830,7 +6830,529 @@ if (typeof module == "object" && typeof require == "function") {
 }(typeof sinon == "object" && sinon || null, typeof window != "undefined" ? window : global));
 
 return sinon;}.call(typeof window != 'undefined' && window || {}));
-(function() {
+/*!
+ * MockJax - jQuery Plugin to Mock Ajax requests
+ *
+ * Version:  1.5.1
+ * Released:
+ * Home:   http://github.com/appendto/jquery-mockjax
+ * Author:   Jonathan Sharp (http://jdsharp.com)
+ * License:  MIT,GPL
+ *
+ * Copyright (c) 2011 appendTo LLC.
+ * Dual licensed under the MIT or GPL licenses.
+ * http://appendto.com/open-source-licenses
+ */
+(function($) {
+	var _ajax = $.ajax,
+		mockHandlers = [],
+		CALLBACK_REGEX = /=\?(&|$)/, 
+		jsc = (new Date()).getTime();
+
+	
+	// Parse the given XML string. 
+	function parseXML(xml) {
+		if ( window['DOMParser'] == undefined && window.ActiveXObject ) {
+			DOMParser = function() { };
+			DOMParser.prototype.parseFromString = function( xmlString ) {
+				var doc = new ActiveXObject('Microsoft.XMLDOM');
+				doc.async = 'false';
+				doc.loadXML( xmlString );
+				return doc;
+			};
+		}
+
+		try {
+			var xmlDoc 	= ( new DOMParser() ).parseFromString( xml, 'text/xml' );
+			if ( $.isXMLDoc( xmlDoc ) ) {
+				var err = $('parsererror', xmlDoc);
+				if ( err.length == 1 ) {
+					throw('Error: ' + $(xmlDoc).text() );
+				}
+			} else {
+				throw('Unable to parse XML');
+			}
+		} catch( e ) {
+			var msg = ( e.name == undefined ? e : e.name + ': ' + e.message );
+			$(document).trigger('xmlParseError', [ msg ]);
+			return undefined;
+		}
+		return xmlDoc;
+	}
+
+	// Trigger a jQuery event
+	function trigger(s, type, args) {
+		(s.context ? $(s.context) : $.event).trigger(type, args);
+	}
+
+	// Check if the data field on the mock handler and the request match. This 
+	// can be used to restrict a mock handler to being used only when a certain
+	// set of data is passed to it.
+	function isMockDataEqual( mock, live ) {
+		var identical = false;
+		// Test for situations where the data is a querystring (not an object)
+		if (typeof live === 'string') {
+			// Querystring may be a regex
+			return $.isFunction( mock.test ) ? mock.test(live) : mock == live;
+		}
+		$.each(mock, function(k, v) {
+			if ( live[k] === undefined ) {
+				identical = false;
+				return identical;
+			} else {
+				identical = true;
+				if ( typeof live[k] == 'object' ) {
+					return isMockDataEqual(mock[k], live[k]);
+				} else {
+					if ( $.isFunction( mock[k].test ) ) {
+						identical = mock[k].test(live[k]);
+					} else {
+						identical = ( mock[k] == live[k] );
+					}
+					return identical;
+				}
+			}
+		});
+
+		return identical;
+	}
+
+	// Check the given handler should mock the given request
+	function getMockForRequest( handler, requestSettings ) {
+		// If the mock was registered with a function, let the function decide if we
+		// want to mock this request
+		if ( $.isFunction(handler) ) {
+			return handler( requestSettings );
+		}
+
+		// Inspect the URL of the request and check if the mock handler's url
+		// matches the url for this ajax request
+		if ( $.isFunction(handler.url.test) ) {
+			// The user provided a regex for the url, test it
+			if ( !handler.url.test( requestSettings.url ) ) {
+				return null;
+			}
+		} else {
+			// Look for a simple wildcard '*' or a direct URL match
+			var star = handler.url.indexOf('*');
+			if (handler.url !== requestSettings.url && star === -1 || 
+					!new RegExp(handler.url.replace(/[-[\]{}()+?.,\\^$|#\s]/g, "\\$&").replace('*', '.+')).test(requestSettings.url)) {
+				return null;
+			}
+		}
+
+		// Inspect the data submitted in the request (either POST body or GET query string)
+		if ( handler.data && requestSettings.data ) {
+			if ( !isMockDataEqual(handler.data, requestSettings.data) ) {
+				// They're not identical, do not mock this request
+				return null;
+			}
+		}
+		// Inspect the request type
+		if ( handler && handler.type && 
+				 handler.type.toLowerCase() != requestSettings.type.toLowerCase() ) {
+			// The request type doesn't match (GET vs. POST)
+			return null;
+		}
+
+		return handler;
+	}
+
+	// If logging is enabled, log the mock to the console
+	function logMock( mockHandler, requestSettings ) {
+		var c = $.extend({}, $.mockjaxSettings, mockHandler);
+		if ( c.log && $.isFunction(c.log) ) {
+			c.log('MOCK ' + requestSettings.type.toUpperCase() + ': ' + requestSettings.url, $.extend({}, requestSettings));
+		}
+	}
+
+	// Process the xhr objects send operation
+	function _xhrSend(mockHandler, requestSettings, origSettings) {
+
+		// This is a substitute for < 1.4 which lacks $.proxy
+		var process = (function(that) {
+			return function() {
+				return (function() {
+					// The request has returned
+					this.status 		= mockHandler.status;
+					this.statusText		= mockHandler.statusText;
+					this.readyState 	= 4;
+
+					// We have an executable function, call it to give
+					// the mock handler a chance to update it's data
+					if ( $.isFunction(mockHandler.response) ) {
+						mockHandler.response(origSettings);
+					}
+					// Copy over our mock to our xhr object before passing control back to
+					// jQuery's onreadystatechange callback
+					if ( requestSettings.dataType == 'json' && ( typeof mockHandler.responseText == 'object' ) ) {
+						this.responseText = JSON.stringify(mockHandler.responseText);
+					} else if ( requestSettings.dataType == 'xml' ) {
+						if ( typeof mockHandler.responseXML == 'string' ) {
+							this.responseXML = parseXML(mockHandler.responseXML);
+						} else {
+							this.responseXML = mockHandler.responseXML;
+						}
+					} else {
+						this.responseText = mockHandler.responseText;
+					}
+					if( typeof mockHandler.status == 'number' || typeof mockHandler.status == 'string' ) {
+						this.status = mockHandler.status;
+					}
+					if( typeof mockHandler.statusText === "string") {
+						this.statusText = mockHandler.statusText;
+					}
+					// jQuery < 1.4 doesn't have onreadystate change for xhr
+					if ( $.isFunction(this.onreadystatechange) ) {
+						if( mockHandler.isTimeout) {
+							this.status = -1;
+						}
+						this.onreadystatechange( mockHandler.isTimeout ? 'timeout' : undefined );
+					} else if ( mockHandler.isTimeout ) {
+						// Fix for 1.3.2 timeout to keep success from firing.
+						this.status = -1;
+					}
+				}).apply(that);
+			};
+		})(this);
+
+		if ( mockHandler.proxy ) {
+			// We're proxying this request and loading in an external file instead
+			_ajax({
+				global: false,
+				url: mockHandler.proxy,
+				type: mockHandler.proxyType,
+				data: mockHandler.data,
+				dataType: requestSettings.dataType === "script" ? "text/plain" : requestSettings.dataType,
+				complete: function(xhr, txt) {
+					mockHandler.responseXML = xhr.responseXML;
+					mockHandler.responseText = xhr.responseText;
+					mockHandler.status = xhr.status;
+					mockHandler.statusText = xhr.statusText;
+					this.responseTimer = setTimeout(process, mockHandler.responseTime || 0);
+				}
+			});
+		} else {
+			// type == 'POST' || 'GET' || 'DELETE'
+			if ( requestSettings.async === false ) {
+				// TODO: Blocking delay
+				process();
+			} else {
+				this.responseTimer = setTimeout(process, mockHandler.responseTime || 50);
+			}
+		}
+	}
+
+	// Construct a mocked XHR Object
+	function xhr(mockHandler, requestSettings, origSettings, origHandler) {
+		// Extend with our default mockjax settings
+		mockHandler = $.extend({}, $.mockjaxSettings, mockHandler);
+
+		if (typeof mockHandler.headers === 'undefined') {
+			mockHandler.headers = {};
+		}
+		if ( mockHandler.contentType ) {
+			mockHandler.headers['content-type'] = mockHandler.contentType;
+		}
+
+		return {
+			status: mockHandler.status,
+			statusText: mockHandler.statusText,
+			readyState: 1,
+			open: function() { },
+			send: function() {
+				origHandler.fired = true;
+				_xhrSend.call(this, mockHandler, requestSettings, origSettings);
+			},
+			abort: function() {
+				clearTimeout(this.responseTimer);
+			},
+			setRequestHeader: function(header, value) {
+				mockHandler.headers[header] = value;
+			},
+			getResponseHeader: function(header) {
+				// 'Last-modified', 'Etag', 'content-type' are all checked by jQuery
+				if ( mockHandler.headers && mockHandler.headers[header] ) {
+					// Return arbitrary headers
+					return mockHandler.headers[header];
+				} else if ( header.toLowerCase() == 'last-modified' ) {
+					return mockHandler.lastModified || (new Date()).toString();
+				} else if ( header.toLowerCase() == 'etag' ) {
+					return mockHandler.etag || '';
+				} else if ( header.toLowerCase() == 'content-type' ) {
+					return mockHandler.contentType || 'text/plain';
+				}
+			},
+			getAllResponseHeaders: function() {
+				var headers = '';
+				$.each(mockHandler.headers, function(k, v) {
+					headers += k + ': ' + v + "\n";
+				});
+				return headers;
+			}
+		};
+	}
+
+	// Process a JSONP mock request.
+	function processJsonpMock( requestSettings, mockHandler, origSettings ) {
+		// Handle JSONP Parameter Callbacks, we need to replicate some of the jQuery core here
+		// because there isn't an easy hook for the cross domain script tag of jsonp
+
+		processJsonpUrl( requestSettings );
+
+		requestSettings.dataType = "json";
+		if(requestSettings.data && CALLBACK_REGEX.test(requestSettings.data) || CALLBACK_REGEX.test(requestSettings.url)) {
+			createJsonpCallback(requestSettings, mockHandler);
+
+			// We need to make sure
+			// that a JSONP style response is executed properly
+
+			var rurl = /^(\w+:)?\/\/([^\/?#]+)/,
+				parts = rurl.exec( requestSettings.url ),
+				remote = parts && (parts[1] && parts[1] !== location.protocol || parts[2] !== location.host);
+
+			requestSettings.dataType = "script";
+			if(requestSettings.type.toUpperCase() === "GET" && remote ) {
+				var newMockReturn = processJsonpRequest( requestSettings, mockHandler, origSettings );
+
+				// Check if we are supposed to return a Deferred back to the mock call, or just 
+				// signal success
+				if(newMockReturn) {
+					return newMockReturn;
+				} else {
+					return true;
+				}
+			}
+		}
+		return null;
+	}
+
+	// Append the required callback parameter to the end of the request URL, for a JSONP request
+	function processJsonpUrl( requestSettings ) {
+		if ( requestSettings.type.toUpperCase() === "GET" ) {
+			if ( !CALLBACK_REGEX.test( requestSettings.url ) ) {
+				requestSettings.url += (/\?/.test( requestSettings.url ) ? "&" : "?") + 
+					(requestSettings.jsonp || "callback") + "=?";
+			}
+		} else if ( !requestSettings.data || !CALLBACK_REGEX.test(requestSettings.data) ) {
+			requestSettings.data = (requestSettings.data ? requestSettings.data + "&" : "") + (requestSettings.jsonp || "callback") + "=?";
+		}
+	}
+	
+	// Process a JSONP request by evaluating the mocked response text
+	function processJsonpRequest( requestSettings, mockHandler, origSettings ) {
+		// Synthesize the mock request for adding a script tag
+		var callbackContext = origSettings && origSettings.context || requestSettings,
+			newMock = null;
+
+
+		// If the response handler on the moock is a function, call it
+		if ( mockHandler.response && $.isFunction(mockHandler.response) ) {
+			mockHandler.response(origSettings);
+		} else {
+
+			// Evaluate the responseText javascript in a global context
+			if( typeof mockHandler.responseText === 'object' ) {
+				$.globalEval( '(' + JSON.stringify( mockHandler.responseText ) + ')');
+			} else {
+				$.globalEval( '(' + mockHandler.responseText + ')');
+			}
+		}
+
+		// Successful response
+		jsonpSuccess( requestSettings, mockHandler );
+		jsonpComplete( requestSettings, mockHandler );
+
+		// If we are running under jQuery 1.5+, return a deferred object
+		if($.Deferred){
+			newMock = new $.Deferred();
+			if(typeof mockHandler.responseText == "object"){
+				newMock.resolveWith( callbackContext, [mockHandler.responseText] );
+			}
+			else{
+				newMock.resolveWith( callbackContext, [$.parseJSON( mockHandler.responseText )] );
+			}
+		}
+		return newMock;
+	}
+
+
+	// Create the required JSONP callback function for the request
+	function createJsonpCallback( requestSettings, mockHandler ) {
+		jsonp = requestSettings.jsonpCallback || ("jsonp" + jsc++);
+
+		// Replace the =? sequence both in the query string and the data
+		if ( requestSettings.data ) {
+			requestSettings.data = (requestSettings.data + "").replace(CALLBACK_REGEX, "=" + jsonp + "$1");
+		}
+
+		requestSettings.url = requestSettings.url.replace(CALLBACK_REGEX, "=" + jsonp + "$1");
+
+
+		// Handle JSONP-style loading
+		window[ jsonp ] = window[ jsonp ] || function( tmp ) {
+			data = tmp;
+			jsonpSuccess( requestSettings, mockHandler );
+			jsonpComplete( requestSettings, mockHandler );
+			// Garbage collect
+			window[ jsonp ] = undefined;
+
+			try {
+				delete window[ jsonp ];
+			} catch(e) {}
+
+			if ( head ) {
+				head.removeChild( script );
+			}
+		};
+	}
+
+	// The JSONP request was successful
+	function jsonpSuccess(requestSettings, mockHandler) {
+		// If a local callback was specified, fire it and pass it the data
+		if ( requestSettings.success ) {
+			requestSettings.success.call( callbackContext, ( mockHandler.response ? mockHandler.response.toString() : mockHandler.responseText || ''), status, {} );
+		}
+
+		// Fire the global callback
+		if ( requestSettings.global ) {
+			trigger(requestSettings, "ajaxSuccess", [{}, requestSettings] );
+		}
+	}
+
+	// The JSONP request was completed
+	function jsonpComplete(requestSettings, mockHandler) {
+		// Process result
+		if ( requestSettings.complete ) {
+			requestSettings.complete.call( callbackContext, {} , status );
+		}
+
+		// The request was completed
+		if ( requestSettings.global ) {
+			trigger( "ajaxComplete", [{}, requestSettings] );
+		}
+
+		// Handle the global AJAX counter
+		if ( requestSettings.global && ! --$.active ) {
+			$.event.trigger( "ajaxStop" );
+		}
+	}
+
+
+	// The core $.ajax replacement.  
+	function handleAjax( url, origSettings ) {
+		var mockRequest, requestSettings, mockHandler;
+
+		// If url is an object, simulate pre-1.5 signature
+		if ( typeof url === "object" ) {
+			origSettings = url;
+			url = undefined;
+		} else {
+			// work around to support 1.5 signature
+			origSettings.url = url;
+		}
+		
+		// Extend the original settings for the request
+		requestSettings = $.extend(true, {}, $.ajaxSettings, origSettings);
+
+		// Iterate over our mock handlers (in registration order) until we find
+		// one that is willing to intercept the request
+		for(var k = 0; k < mockHandlers.length; k++) {
+			if ( !mockHandlers[k] ) {
+				continue;
+			}
+			
+			mockHandler = getMockForRequest( mockHandlers[k], requestSettings );
+			if(!mockHandler) {
+				// No valid mock found for this request
+				continue;
+			}
+
+			// Handle console logging
+			logMock( mockHandler, requestSettings );
+
+
+			if ( requestSettings.dataType === "jsonp" ) {
+				if ((mockRequest = processJsonpMock( requestSettings, mockHandler, origSettings ))) {
+					// This mock will handle the JSONP request
+					return mockRequest;
+				}
+			}
+
+
+			// Removed to fix #54 - keep the mocking data object intact
+			//mockHandler.data = requestSettings.data;
+
+			mockHandler.cache = requestSettings.cache;
+			mockHandler.timeout = requestSettings.timeout;
+			mockHandler.global = requestSettings.global;
+
+			(function(mockHandler, requestSettings, origSettings, origHandler) {
+				mockRequest = _ajax.call($, $.extend(true, {}, origSettings, {
+					// Mock the XHR object
+					xhr: function() { return xhr( mockHandler, requestSettings, origSettings, origHandler ) }
+				}));
+			})(mockHandler, requestSettings, origSettings, mockHandlers[k]);
+
+			return mockRequest;
+		}
+
+		// We don't have a mock request, trigger a normal request
+		return _ajax.apply($, [origSettings]);
+	}
+
+
+	// Public
+
+	$.extend({
+		ajax: handleAjax
+	});
+
+	$.mockjaxSettings = {
+		//url:        null,
+		//type:       'GET',
+		log:          function( msg ) {
+			if ( window[ 'console' ] && window.console.log ) {
+				window.console.log.apply( console, arguments );
+			}
+		},
+		status:       200,
+		statusText:   "OK",
+		responseTime: 500,
+		isTimeout:    false,
+		contentType:  'text/plain',
+		response:     '',
+		responseText: '',
+		responseXML:  '',
+		proxy:        '',
+		proxyType:    'GET',
+
+		lastModified: null,
+		etag:         '',
+		headers: {
+			etag: 'IJF@H#@923uf8023hFO@I#H#',
+			'content-type' : 'text/plain'
+		}
+	};
+
+	$.mockjax = function(settings) {
+		var i = mockHandlers.length;
+		mockHandlers[i] = settings;
+		return i;
+	};
+	$.mockjaxClear = function(i) {
+		if ( arguments.length == 1 ) {
+			mockHandlers[i] = null;
+		} else {
+			mockHandlers = [];
+		}
+	};
+	$.mockjax.handler = function(i) {
+	  if ( arguments.length == 1 ) {
+			return mockHandlers[i];
+		}
+	};
+})(jQuery);(function() {
 
   this.notEmpty = function(selector) {
     return function() {
@@ -6844,7 +7366,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
     };
   };
 
-  this.reposRendered = notEmpty('#repositories li a.current');
+  this.reposRendered = notEmpty('#repos li.selected');
 
   this.buildRendered = notEmpty('#summary .number');
 
@@ -6862,7 +7384,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
 (function() {
 
   this.displaysRepository = function(repo) {
-    return expect($('#repository h3 a').attr('href')).toEqual(repo.href);
+    return expect($('#repo h3 a').attr('href')).toEqual(repo.href);
   };
 
   this.displaysTabs = function(tabs) {
@@ -6875,7 +7397,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
       }
       expect($("#tab_" + name).hasClass('active')).toEqual(!!tab.active);
       if (name === 'build' || name === 'job') {
-        _results.push(expect($("#tab_" + name).hasClass('display')).toEqual(!tab.hidden));
+        _results.push(expect($("#tab_" + name).hasClass('display-inline')).toEqual(!tab.hidden));
       } else {
         _results.push(void 0);
       }
@@ -6912,7 +7434,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
       ix += 1;
       return "" + ix + line;
     }).join("\n");
-    return expect($('#log').text().trim()).toEqual(log);
+    return expect($('#log p').text().trim()).toEqual(log);
   };
 
   this.listsRepos = function(items) {
@@ -6921,9 +7443,9 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
 
   this.listsRepo = function(data) {
     var repo, row;
-    row = $('#repositories li')[data.row - 1];
+    row = $('#repos li')[data.row - 1];
     repo = data.item;
-    expect($('a.current', row).attr('href')).toEqual("/" + repo.slug);
+    expect($('a.slug', row).attr('href')).toEqual("/" + repo.slug);
     expect($('a.last_build', row).attr('href')).toEqual(repo.build.url);
     expect($('.duration', row).text()).toEqual(repo.build.duration);
     return expect($('.finished_at', row).text()).toEqual(repo.build.finishedAt);
@@ -6975,15 +7497,15 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
     element = $(row);
     expect(element.attr('class')).toMatch(job.color);
     element = $("td.number", row);
-    expect(element.text()).toEqual(job.number);
+    expect(element.text().trim()).toEqual(job.number);
     element = $("td.number a", row);
     expect(element.attr('href')).toEqual("/" + job.repo + "/jobs/" + job.id);
     element = $("td.duration", row);
-    expect(element.text()).toEqual(job.duration);
+    expect(element.text().trim()).toEqual(job.duration);
     element = $("td.finished_at", row);
-    expect(element.text()).toEqual(job.finishedAt);
+    expect(element.text().trim()).toEqual(job.finishedAt);
     element = $("td:nth-child(6)", row);
-    return expect(element.text()).toEqual(job.rvm);
+    return expect(element.text().trim()).toEqual(job.rvm);
   };
 
   this.listsQueuedJobs = function(jobs) {
@@ -7044,6 +7566,503 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
   };
 
   this.waitFor = waitsFor;
+
+}).call(this);
+(function() {
+  var artifact, artifacts, branches, build, builds, commits, data, hooks, id, job, jobs, repos, repository, responseTime, workers, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m;
+
+  responseTime = 0;
+
+  repos = [
+    {
+      id: 1,
+      owner: 'travis-ci',
+      name: 'travis-core',
+      slug: 'travis-ci/travis-core',
+      build_ids: [1, 2],
+      last_build_id: 1,
+      last_build_number: 1,
+      last_build_result: 0,
+      last_build_duration: 30,
+      last_build_started_at: '2012-07-02T00:00:00Z',
+      last_build_finished_at: '2012-07-02T00:00:30Z',
+      description: 'Description of travis-core'
+    }, {
+      id: 2,
+      owner: 'travis-ci',
+      name: 'travis-assets',
+      slug: 'travis-ci/travis-assets',
+      build_ids: [3],
+      last_build_id: 3,
+      last_build_number: 3,
+      last_build_result: 1,
+      last_build_duration: 30,
+      last_build_started_at: '2012-07-02T00:01:00Z',
+      last_build_finished_at: '2012-07-01T00:01:30Z',
+      description: 'Description of travis-assets'
+    }, {
+      id: 3,
+      owner: 'travis-ci',
+      name: 'travis-hub',
+      slug: 'travis-ci/travis-hub',
+      build_ids: [4],
+      last_build_id: 4,
+      last_build_number: 4,
+      last_build_result: void 0,
+      last_build_duration: void 0,
+      last_build_started_at: '2012-07-02T00:02:00Z',
+      last_build_finished_at: void 0,
+      description: 'Description of travis-hub'
+    }
+  ];
+
+  builds = [
+    {
+      id: 1,
+      repository_id: '1',
+      commit_id: 1,
+      job_ids: [1, 2, 3],
+      number: 1,
+      pull_request: false,
+      config: {
+        rvm: ['rbx', '1.9.3', 'jruby']
+      },
+      duration: 30,
+      started_at: '2012-07-02T00:00:00Z',
+      finished_at: '2012-07-02T00:00:30Z',
+      result: 0
+    }, {
+      id: 2,
+      repository_id: '1',
+      commit_id: 2,
+      job_ids: [4],
+      number: 2,
+      pull_request: false,
+      config: {
+        rvm: ['rbx']
+      }
+    }, {
+      id: 3,
+      repository_id: '2',
+      commit_id: 3,
+      job_ids: [5],
+      number: 3,
+      pull_request: false,
+      config: {
+        rvm: ['rbx']
+      },
+      duration: 30,
+      started_at: '2012-07-02T00:01:00Z',
+      finished_at: '2012-07-01T00:01:30Z',
+      result: 1
+    }, {
+      id: 4,
+      repository_id: '3',
+      commit_id: 4,
+      job_ids: [6],
+      number: 4,
+      pull_request: false,
+      config: {
+        rvm: ['rbx']
+      },
+      started_at: '2012-07-02T00:02:00Z'
+    }
+  ];
+
+  commits = [
+    {
+      id: 1,
+      sha: '1234567',
+      branch: 'master',
+      message: 'commit message 1',
+      author_name: 'author name',
+      author_email: 'author@email.com',
+      committer_name: 'committer name',
+      committer_email: 'committer@email.com',
+      compare_url: 'http://github.com/compare/0123456..1234567'
+    }, {
+      id: 2,
+      sha: '2345678',
+      branch: 'feature',
+      message: 'commit message 2',
+      author_name: 'author name',
+      author_email: 'author@email.com',
+      committer_name: 'committer name',
+      committer_email: 'committer@email.com',
+      compare_url: 'http://github.com/compare/0123456..2345678'
+    }, {
+      id: 3,
+      sha: '3456789',
+      branch: 'master',
+      message: 'commit message 3',
+      author_name: 'author name',
+      author_email: 'author@email.com',
+      committer_name: 'committer name',
+      committer_email: 'committer@email.com',
+      compare_url: 'http://github.com/compare/0123456..3456789'
+    }, {
+      id: 4,
+      sha: '4567890',
+      branch: 'master',
+      message: 'commit message 4',
+      author_name: 'author name',
+      author_email: 'author@email.com',
+      committer_name: 'committer name',
+      committer_email: 'committer@email.com',
+      compare_url: 'http://github.com/compare/0123456..4567890'
+    }
+  ];
+
+  jobs = [
+    {
+      id: 1,
+      repository_id: 1,
+      build_id: 1,
+      commit_id: 1,
+      log_id: 1,
+      number: '1.1',
+      config: {
+        rvm: 'rbx'
+      },
+      duration: 30,
+      started_at: '2012-07-02T00:00:00Z',
+      finished_at: '2012-07-02T00:00:30Z',
+      result: 0
+    }, {
+      id: 2,
+      repository_id: 1,
+      build_id: 1,
+      commit_id: 1,
+      log_id: 2,
+      number: '1.2',
+      config: {
+        rvm: '1.9.3'
+      },
+      duration: 40,
+      started_at: '2012-07-02T00:00:00Z',
+      finished_at: '2012-07-02T00:00:40Z',
+      result: 1
+    }, {
+      id: 3,
+      repository_id: 1,
+      build_id: 1,
+      commit_id: 1,
+      log_id: 3,
+      number: '1.3',
+      config: {
+        rvm: 'jruby'
+      },
+      allow_failure: true
+    }, {
+      id: 4,
+      repository_id: 1,
+      build_id: 2,
+      commit_id: 2,
+      log_id: 4,
+      number: '2.1',
+      config: {
+        rvm: 'rbx'
+      }
+    }, {
+      id: 5,
+      repository_id: 2,
+      build_id: 3,
+      commit_id: 3,
+      log_id: 5,
+      number: '3.1',
+      config: {
+        rvm: 'rbx'
+      },
+      duration: 30,
+      started_at: '2012-07-02T00:01:00Z',
+      finished_at: '2012-07-02T00:01:30Z',
+      result: 1
+    }, {
+      id: 6,
+      repository_id: 3,
+      build_id: 4,
+      commit_id: 4,
+      log_id: 6,
+      number: '4.1',
+      config: {
+        rvm: 'rbx'
+      },
+      started_at: '2012-07-02T00:02:00Z'
+    }, {
+      id: 7,
+      repository_id: 1,
+      build_id: 5,
+      commit_id: 5,
+      log_id: 7,
+      number: '5.1',
+      config: {
+        rvm: 'rbx'
+      },
+      state: 'created',
+      queue: 'builds.common'
+    }, {
+      id: 8,
+      repository_id: 1,
+      build_id: 5,
+      commit_id: 5,
+      log_id: 8,
+      number: '5.2',
+      config: {
+        rvm: 'rbx'
+      },
+      state: 'created',
+      queue: 'builds.common'
+    }
+  ];
+
+  artifacts = [
+    {
+      id: 1,
+      body: 'log 1'
+    }, {
+      id: 2,
+      body: 'log 2'
+    }, {
+      id: 3,
+      body: 'log 3'
+    }, {
+      id: 4,
+      body: 'log 4'
+    }, {
+      id: 5,
+      body: 'log 5'
+    }, {
+      id: 6,
+      body: 'log 6'
+    }, {
+      id: 7,
+      body: 'log 7'
+    }, {
+      id: 8,
+      body: 'log 8'
+    }
+  ];
+
+  branches = [
+    {
+      branches: [builds[0], builds[1]],
+      commits: [commits[0], commits[1]]
+    }, {
+      branches: [builds[2]],
+      commits: [commits[2]]
+    }, {
+      branches: [builds[3]],
+      commits: [commits[3]]
+    }
+  ];
+
+  workers = [
+    {
+      id: 1,
+      name: 'ruby-1',
+      host: 'worker.travis-ci.org',
+      state: 'ready'
+    }, {
+      id: 2,
+      name: 'ruby-2',
+      host: 'worker.travis-ci.org',
+      state: 'ready'
+    }
+  ];
+
+  hooks = [
+    {
+      slug: 'travis-ci/travis-core',
+      description: 'description of travis-core',
+      active: true,
+      "private": false
+    }, {
+      slug: 'travis-ci/travis-assets',
+      description: 'description of travis-assets',
+      active: false,
+      "private": false
+    }, {
+      slug: 'svenfuchs/minimal',
+      description: 'description of minimal',
+      active: true,
+      "private": false
+    }
+  ];
+
+  $.mockjax({
+    url: '/repos',
+    responseTime: responseTime,
+    response: function(settings) {
+      var search, slug;
+      if (!settings.data) {
+        return this.responseText = {
+          repos: repos
+        };
+      } else if (slug = settings.data.slug) {
+        return this.responseText = {
+          repos: [
+            $.detect(repos, function(repository) {
+              return repository.slug === slug;
+            })
+          ]
+        };
+      } else if (search = settings.data.search) {
+        return this.responseText = {
+          repos: $.select(repos, function(repository) {
+            return repository.slug.indexOf(search) > -1;
+          }).toArray()
+        };
+      } else {
+        return raise("don't know this ditty");
+      }
+    }
+  });
+
+  for (_i = 0, _len = repos.length; _i < _len; _i++) {
+    repository = repos[_i];
+    $.mockjax({
+      url: '/' + repository.slug,
+      responseTime: responseTime,
+      responseText: {
+        repository: repository
+      }
+    });
+    $.mockjax({
+      url: '/repos',
+      data: {
+        slug: repository.slug
+      },
+      responseTime: responseTime,
+      responseText: {
+        repos: [repository]
+      }
+    });
+    $.mockjax({
+      url: '/builds',
+      data: {
+        ids: repository.build_ids
+      },
+      responseTime: responseTime,
+      responseText: {
+        builds: $.select(builds, function(build) {
+          return repository.build_ids.indexOf(build.id) !== -1;
+        })
+      }
+    });
+    $.mockjax({
+      url: '/builds',
+      data: {
+        repository_id: repository.id,
+        event_type: 'push'
+      },
+      responseTime: responseTime,
+      responseText: {
+        builds: (function() {
+          var _j, _len1, _ref, _results;
+          _ref = repository.build_ids;
+          _results = [];
+          for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+            id = _ref[_j];
+            _results.push(builds[id - 1]);
+          }
+          return _results;
+        })(),
+        commits: (function() {
+          var _j, _len1, _ref, _results;
+          _ref = repository.build_ids;
+          _results = [];
+          for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+            id = _ref[_j];
+            _results.push(commits[builds[id - 1].commit_id - 1]);
+          }
+          return _results;
+        })()
+      }
+    });
+  }
+
+  for (_j = 0, _len1 = builds.length; _j < _len1; _j++) {
+    build = builds[_j];
+    $.mockjax({
+      url: '/builds/' + build.id,
+      responseTime: responseTime,
+      responseText: {
+        build: build,
+        commit: commits[build.commit_id - 1],
+        jobs: (function() {
+          var _k, _len2, _ref, _results;
+          _ref = build.job_ids;
+          _results = [];
+          for (_k = 0, _len2 = _ref.length; _k < _len2; _k++) {
+            id = _ref[_k];
+            _results.push(jobs[id - 1]);
+          }
+          return _results;
+        })()
+      }
+    });
+  }
+
+  for (_k = 0, _len2 = jobs.length; _k < _len2; _k++) {
+    job = jobs[_k];
+    $.mockjax({
+      url: '/jobs/' + job.id,
+      responseTime: responseTime,
+      responseText: {
+        job: job,
+        commit: commits[job.commit_id - 1]
+      }
+    });
+  }
+
+  $.mockjax({
+    url: '/jobs',
+    responseTime: responseTime,
+    responseText: {
+      jobs: $.select(jobs, function(job) {
+        return job.state === 'created';
+      })
+    }
+  });
+
+  for (_l = 0, _len3 = branches.length; _l < _len3; _l++) {
+    data = branches[_l];
+    $.mockjax({
+      url: '/branches',
+      data: {
+        repository_id: data.branches[0].repository_id
+      },
+      responseTime: responseTime,
+      responseText: data
+    });
+  }
+
+  for (_m = 0, _len4 = artifacts.length; _m < _len4; _m++) {
+    artifact = artifacts[_m];
+    $.mockjax({
+      url: '/artifacts/' + artifact.id,
+      responseTime: responseTime,
+      responseText: {
+        artifact: artifact
+      }
+    });
+  }
+
+  $.mockjax({
+    url: '/workers',
+    responseTime: responseTime,
+    responseText: {
+      workers: workers
+    }
+  });
+
+  $.mockjax({
+    url: '/profile/hooks',
+    responseTime: responseTime,
+    responseText: {
+      hooks: hooks
+    }
+  });
 
 }).call(this);
 (function() {
@@ -7367,12 +8386,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
           var payload;
           payload = {
             repository: {
-              id: 10,
-              slug: 'travis-ci/travis-support',
-              last_build_id: 10,
-              last_build_number: 10,
-              last_build_started_at: '2012-07-02T00:01:00Z',
-              last_build_finished_at: '2012-07-02T00:02:30Z'
+              id: 10
             },
             build: {
               id: 10,
@@ -7388,6 +8402,14 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
             return Travis.app.receive('build:started', {
               build: {
                 id: 10
+              },
+              repository: {
+                id: 10,
+                slug: 'travis-ci/travis-support',
+                last_build_id: 10,
+                last_build_number: 10,
+                last_build_started_at: '2012-07-02T00:01:00Z',
+                last_build_finished_at: '2012-07-02T00:02:30Z'
               }
             });
           });
@@ -7409,63 +8431,6 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
         });
       });
     });
-    describe('an event adding a build', function() {
-      beforeEach(function() {
-        app('travis-ci/travis-core/builds');
-        return waitFor(buildsRendered);
-      });
-      return it('adds a build to the builds list', function() {
-        var payload;
-        payload = {
-          build: {
-            id: 11,
-            repository_id: 1,
-            commit_id: 11,
-            number: '3',
-            duration: 55,
-            started_at: '2012-07-02T00:02:00Z',
-            finished_at: '2012-07-02T00:02:55Z',
-            event_type: 'push',
-            result: 1
-          },
-          commit: {
-            id: 11,
-            sha: '1234567',
-            branch: 'master',
-            message: 'commit message 3'
-          }
-        };
-        $.mockjax({
-          url: '/builds/11',
-          responseTime: 0,
-          responseText: payload
-        });
-        Em.run(function() {
-          return Travis.app.receive('build:started', {
-            build: {
-              id: 11
-            }
-          });
-        });
-        waits(100);
-        return runs(function() {
-          return listsBuild({
-            row: 3,
-            item: {
-              id: 11,
-              slug: 'travis-ci/travis-core',
-              number: '3',
-              sha: '1234567',
-              branch: 'master',
-              message: 'commit message 3',
-              finishedAt: 'less than a minute ago',
-              duration: '55 sec',
-              color: 'red'
-            }
-          });
-        });
-      });
-    });
     describe('an event adding a job', function() {
       beforeEach(function() {
         app('travis-ci/travis-core');
@@ -7478,18 +8443,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
         var payload;
         payload = {
           job: {
-            id: 15,
-            repository_id: 1,
-            build_id: 1,
-            commit_id: 1,
-            log_id: 1,
-            number: '1.4',
-            duration: 55,
-            started_at: '2012-07-02T00:02:00Z',
-            finished_at: '2012-07-02T00:02:55Z',
-            config: {
-              rvm: 'jruby'
-            }
+            id: 15
           }
         };
         $.mockjax({
@@ -7501,7 +8455,17 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
           return Travis.app.receive('job:started', {
             job: {
               id: 15,
-              build_id: 1
+              repository_id: 1,
+              build_id: 1,
+              commit_id: 1,
+              log_id: 1,
+              number: '1.4',
+              duration: 55,
+              started_at: '2012-07-02T00:02:00Z',
+              finished_at: '2012-07-02T00:02:55Z',
+              config: {
+                rvm: 'jruby'
+              }
             }
           });
         });
@@ -7528,7 +8492,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
             id: 12,
             repository_id: 1,
             number: '1.4',
-            queue: 'common'
+            queue: 'builds.common'
           }
         };
         $.mockjax({
@@ -7539,7 +8503,11 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
         Em.run(function() {
           return Travis.app.receive('job:started', {
             job: {
-              id: 12
+              id: 12,
+              repository_id: 1,
+              number: '1.4',
+              queue: 'builds.common',
+              state: 'created'
             }
           });
         });
@@ -7851,28 +8819,40 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
 
   this.reset = function() {
     Em.run(function() {
-      var views;
       if (Travis.app) {
         if (Travis.app.store) {
           Travis.app.store.destroy();
         }
-        if (views = Travis.app.get('_connectedOutletViews')) {
-          views.forEach(function(v) {
-            return v.destroy();
-          });
-        }
-        return Travis.app.destroy();
+        Travis.app.destroy();
+        delete Travis.app;
+        return delete Travis.store;
       }
     });
     waits(500);
-    $('#content').remove();
-    return $('body').append('<div id="content"></div>');
+    $('#application').remove();
+    return $('body').append($('<div id="application"></div>'));
   };
 
   this.app = function(url) {
     reset();
     return Em.run(function() {
-      return Em.routes.set('location', url);
+      Travis.run({
+        rootElement: $('#application')
+      });
+      waitFor(function() {
+        return Travis.app;
+      });
+      return runs(function() {
+        if (url && !url.match(/^\//)) {
+          url = "/" + url;
+        }
+        Travis.app.router.route(url);
+        waits(100);
+        return runs(function() {
+          var foo;
+          return foo = 'bar';
+        });
+      });
     });
   };
 

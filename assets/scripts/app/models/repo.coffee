@@ -15,7 +15,11 @@ require 'travis/model'
   builds: (->
     id = @get('id')
     builds = Travis.Build.byRepoId id, event_type: 'push'
-    array  = Travis.ExpandableRecordArray.create(type: Travis.Build, content: Ember.A([]), store: @get('store'))
+    array  = Travis.ExpandableRecordArray.create
+      type: Travis.Build
+      content: Ember.A([])
+      store: @get('store')
+
     array.load(builds)
     array
   ).property()

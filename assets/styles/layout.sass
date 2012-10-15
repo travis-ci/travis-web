@@ -5,12 +5,12 @@ $left-width: 250px
 html, body
   height: 100%
 
-body > div
+.application
   width: 100%
   overflow: hidden
 
 // ouch. ember injects additional divs that somehow don't inherit the actual dimensions
-body > div, body > div > div
+.application, .application > div
   width: 100%
   min-height: 100%
   @include display-box

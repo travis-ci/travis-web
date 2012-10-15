@@ -1,11 +1,11 @@
 @displaysRepository = (repo) ->
-  expect($('#repository h3 a').attr('href')).toEqual (repo.href)
+  expect($('#repo h3 a').attr('href')).toEqual (repo.href)
 
 @displaysTabs = (tabs) ->
   for name, tab of tabs
     expect($("#tab_#{name} a").attr('href')).toEqual tab.href unless tab.hidden
     expect($("#tab_#{name}").hasClass('active')).toEqual !!tab.active
-    expect($("#tab_#{name}").hasClass('display')).toEqual !tab.hidden if name in ['build', 'job']
+    expect($("#tab_#{name}").hasClass('display-inline')).toEqual !tab.hidden if name in ['build', 'job']
 
 @displaysSummary = (data) ->
   element = $('#summary .left:first-child dt:first-child')
@@ -38,7 +38,7 @@
 @displaysLog = (lines) ->
   ix = 0
   log = $.map(lines, (line) -> ix += 1; "#{ix}#{line}").join("\n")
-  expect($('#log').text().trim()).toEqual log
+  expect($('#log p').text().trim()).toEqual log
 
 @listsRepos = (items) ->
   listsItems('repo', items)
@@ -47,7 +47,7 @@
   row = $('#repos li')[data.row - 1]
   repo = data.item
 
-  expect($('a.current', row).attr('href')).toEqual "/#{repo.slug}"
+  expect($('a.slug', row).attr('href')).toEqual "/#{repo.slug}"
   expect($('a.last_build', row).attr('href')).toEqual repo.build.url
   expect($('.duration', row).text()).toEqual repo.build.duration
   expect($('.finished_at', row).text()).toEqual repo.build.finishedAt
@@ -81,19 +81,19 @@
   expect(element.attr('class')).toMatch job.color
 
   element = $("td.number", row)
-  expect(element.text()).toEqual job.number
+  expect(element.text().trim()).toEqual job.number
 
   element = $("td.number a", row)
   expect(element.attr('href')).toEqual "/#{job.repo}/jobs/#{job.id}"
 
   element = $("td.duration", row)
-  expect(element.text()).toEqual job.duration
+  expect(element.text().trim()).toEqual job.duration
 
   element = $("td.finished_at", row)
-  expect(element.text()).toEqual job.finishedAt
+  expect(element.text().trim()).toEqual job.finishedAt
 
   element = $("td:nth-child(6)", row)
-  expect(element.text()).toEqual job.rvm
+  expect(element.text().trim()).toEqual job.rvm
 
 @listsQueuedJobs = (jobs) ->
   listsItems('queuedJob', jobs)
