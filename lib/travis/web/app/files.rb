@@ -7,11 +7,19 @@ class Travis::Web::App
     end
 
     def initialize
-      super([public_dir, index])
+      super([public_dir, index, spec])
     end
 
     def public_dir
       Rack::File.new('public')
+    end
+
+    def spec
+      proc do |env|
+        status, headers, body = Rack::File.new(nil).tap { |f| f.path = 'public/spec.html' }.serving(env)
+        headers.merge!(cache_headers(env['PATH_INFO']))
+        [status, headers, body]
+      end
     end
 
     def index

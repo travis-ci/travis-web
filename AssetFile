@@ -23,10 +23,20 @@ input assets.scripts do
     safe_concat assets.vendor_order, 'vendor.js'
   end
 
-  unless assets.production?
-    match 'spec/**/*.{js,coffee}' do
-      concat 'spec.js'
-    end
+  match 'spec/*.js' do
+    concat 'spec/specs.js'
+  end
+
+  match 'spec/support/*.js' do
+    concat 'spec/support.js'
+  end
+
+  match 'spec/vendor/*.js' do
+    concat assets.spec_vendor_order, 'spec/vendor.js'
+  end
+
+  match 'spec/{vendor,support,specs}.js' do
+    concat ['spec/vendor.js', 'spec/support.js', 'spec/specs.js'], 'specs.js'
   end
 
   match %r(^(?!vendor|spec).*\.js$) do
