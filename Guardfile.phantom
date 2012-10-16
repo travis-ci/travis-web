@@ -1,0 +1,6 @@
+$: << 'lib'
+
+guard 'specs' do
+  watch(%r(^public))
+end
+
