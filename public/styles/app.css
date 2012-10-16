@@ -2608,7 +2608,13 @@ html, body {
   box-shadow: transparent 0 0 0 0, #cccccc 0 1px 8px 0, transparent 0 0 0 0, transparent 0 0 0 0;
 }
 
-/* line 51, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+@media screen and (max-width: 980px) {
+  /* line 52, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+  #left {
+    max-width: 300px;
+  }
+}
+/* line 55, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
 #main {
   -webkit-box-flex: 4;
   -moz-box-flex: 4;
@@ -2620,7 +2626,7 @@ html, body {
   padding: 20px 40px 80px 30px;
 }
 
-/* line 58, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+/* line 62, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
 #right {
   width: 205px;
   padding: 11px 20px 80px 20px;
@@ -2629,7 +2635,7 @@ html, body {
 }
 
 @media screen and (max-width: 1400px) {
-  /* line 65, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+  /* line 69, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
   #left .duration_label {
     display: inline-block;
     width: 11px;
@@ -2641,7 +2647,7 @@ html, body {
   }
 }
 @media screen and (max-width: 1310px) {
-  /* line 75, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+  /* line 79, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
   #left .finished_at_label {
     display: none;
   }
