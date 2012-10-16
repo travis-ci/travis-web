@@ -4,7 +4,6 @@ source :rubygems
 
 gem 'unicorn'
 gem 'rack-ssl', '~> 1.3'
-gem 'rack-cache'
 
 group :development, :test do
   gem 'rake', '~> 0.9.2'
