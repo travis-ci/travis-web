@@ -92,6 +92,15 @@ describe 'events', ->
       payload =
         job:
           id: 15
+          repository_id: 1
+          build_id: 1
+          commit_id: 1
+          log_id: 1
+          number: '1.4'
+          duration: 55
+          started_at: '2012-07-02T00:02:00Z'
+          finished_at: '2012-07-02T00:02:55Z'
+          config: { rvm: 'jruby' }
 
       $.mockjax
         url: '/jobs/15'
@@ -105,12 +114,6 @@ describe 'events', ->
             repository_id: 1
             build_id: 1
             commit_id: 1
-            log_id: 1
-            number: '1.4'
-            duration: 55
-            started_at: '2012-07-02T00:02:00Z'
-            finished_at: '2012-07-02T00:02:55Z'
-            config: { rvm: 'jruby' }
 
       waits(100)
       runs ->
