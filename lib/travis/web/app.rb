@@ -46,7 +46,7 @@ class Travis::Web::App
       set_config(content) if index? file
 
       headers = {
-        'Content-Length'   => content.bytesize,
+        'Content-Length'   => content.bytesize.to_s,
         'Content-Location' => route_for(file),
         'Cache-Control'    => cache_control(file),
         'Content-Location' => route_for(file),
