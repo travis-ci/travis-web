@@ -21,8 +21,6 @@ require 'travis/model'
     @notifyPropertyChange 'started_at'
     @notifyPropertyChange 'finished_at'
 
-
 @Travis.Branch.reopenClass
   byRepoId: (id) ->
     @find repository_id: id
-

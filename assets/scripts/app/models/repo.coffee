@@ -37,6 +37,10 @@ require 'travis/model'
     Travis.Branch.byRepoId @get('id')
   ).property()
 
+  events: (->
+    Travis.Event.byRepoId @get('id')
+  ).property()
+
   owner: (->
     (@get('slug') || '').split('/')[0]
   ).property('slug')

@@ -124,6 +124,7 @@ Travis.Router = Ember.Router.extend
   showBuild:        Ember.Route.transitionTo('root.home.repo.builds.show')
   showPullRequests: Ember.Route.transitionTo('root.home.repo.pullRequests')
   showBranches:     Ember.Route.transitionTo('root.home.repo.branches')
+  showEvents:       Ember.Route.transitionTo('root.home.repo.events')
   showJob:          Ember.Route.transitionTo('root.home.repo.job')
 
   showProfile:      Ember.Route.transitionTo('root.profile')
@@ -389,6 +390,11 @@ Travis.Router = Ember.Router.extend
           route: '/branches'
           connectOutlets: (router, repo) ->
             router.get('repoController').activate 'branches'
+
+        events: Ember.Route.extend
+          route: '/events'
+          connectOutlets: (router, repo) ->
+            router.get('repoController').activate 'events'
 
         job: Ember.Route.extend
           route: '/jobs/:job_id'

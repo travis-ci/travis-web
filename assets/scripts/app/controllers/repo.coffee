@@ -42,6 +42,10 @@ Travis.RepoController = Travis.Controller.extend
     @connectTab('branches')
     @_bind('builds', 'repo.branches')
 
+  viewEvents: ->
+    @connectTab('events')
+    @_bind('events', 'repo.events')
+
   viewBuild: ->
     @connectTab('build')
 

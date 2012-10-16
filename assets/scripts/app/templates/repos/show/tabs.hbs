@@ -35,6 +35,15 @@
       {{/if}}
     </h5>
   </li>
+  <li id="tab_events" {{bindAttr class="view.classEvents"}}>
+    <h5>
+      {{#if view.repo.slug}}
+      <a {{action showEvents view.repo href=true}}>
+        Events
+      </a>
+      {{/if}}
+    </h5>
+  </li>
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
     <h5>
       {{#if view.build.id}}
