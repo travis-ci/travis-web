@@ -76,18 +76,21 @@ Travis.Store = DS.Store.extend
     # if we need sideload becasue we have side records with other events it needs to
     # be revised
     if type == Travis.Build && json.repository
-      result = @_loadIncomplete(Travis.Repo, 'repository', json.repository)
-    @_loadIncomplete(type, root, json[root])
+      result = @loadIncomplete(Travis.Repo, json.repository)
+    @loadIncomplete(type, json[root])
 
-  _loadIncomplete: (type, root, hash) ->
+  loadIncomplete: (type, hash) ->
     result = @merge(type, hash)
 
     if result && result.clientId
       record = @findByClientId(type, result.clientId)
       unless record.get('complete')
         record.set 'incomplete', true
+        record.loadedAttributes = Object.keys hash
 
-      @_updateAssociations(type, root, hash)
+      @_updateAssociations(type, type.singularName(), hash)
+
+      record
 
   _loadMany: (store, type, json) ->
     root = type.pluralName()

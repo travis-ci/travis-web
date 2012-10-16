@@ -2,6 +2,16 @@
   primaryKey: 'id'
   id: DS.attr('number')
 
+  init: ->
+    @loadedAttributes = []
+    @_super.apply this, arguments
+
+  get: (name) ->
+    if @constructor.isAttribute(name) && @get('incomplete') && !@isAttributeLoaded(name)
+      @loadTheRest()
+
+    @_super.apply this, arguments
+
   refresh: ->
     if id = @get('id')
       store = @get('store')
@@ -11,6 +21,9 @@
     $.each attrs, (key, value) =>
       @set(key, value) unless key is 'id'
     this
+
+  isAttributeLoaded: (name) ->
+    @loadedAttributes.contains(name)
 
   isComplete: (->
     if @get 'incomplete'
@@ -63,3 +76,16 @@
   pluralName: ->
     Travis.app.store.adapter.pluralize(@singularName())
 
+  isAttribute: (name) ->
+    unless @attributesSaved
+      @_saveAttributes()
+    @cachedAttributes.contains(name)
+
+  _saveAttributes: ->
+    @attributesSaved = true
+
+    cachedAttributes = []
+    @eachComputedProperty (name, meta) ->
+      cachedAttributes.pushObject name if meta.isAttribute
+
+    @cachedAttributes = cachedAttributes

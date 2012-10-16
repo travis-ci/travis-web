@@ -1,9 +1,20 @@
 @import "_mixins/all"
 
+#github-wrapper
+  position: absolute
+  z-index: 1001
+  top: -40px
+  right: 0px
+  width: 135px
+  height: 135px
+  overflow: hidden
+  pointer-events: none
+
 #github
   display: block
   position: absolute
-  top: 0
+  z-index: 1001
+  top: 40px
   right: -70px
   width: 250px
   padding: 3px 0
@@ -19,6 +30,8 @@
   line-height: 19px
   letter-spacing: -1px
   text-shadow: 0 0 10px #522600
+
+  pointer-events: auto
 
   @include rotate(45deg)
   @include box-shadow(rgba(black, 0.5) 1px 1px 10px, rgba(black, 0.07) 0 0 3px 1px inset)

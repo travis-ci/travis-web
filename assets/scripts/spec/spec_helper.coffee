@@ -22,7 +22,7 @@ minispade.require 'app'
     runs ->
       url = "/#{url}" if url && !url.match(/^\//)
       Travis.app.router.route(url)
-      waits 100
+      waits 500
       runs ->
         foo = 'bar'
 

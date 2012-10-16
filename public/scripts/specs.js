@@ -8443,7 +8443,18 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
         var payload;
         payload = {
           job: {
-            id: 15
+            id: 15,
+            repository_id: 1,
+            build_id: 1,
+            commit_id: 1,
+            log_id: 1,
+            number: '1.4',
+            duration: 55,
+            started_at: '2012-07-02T00:02:00Z',
+            finished_at: '2012-07-02T00:02:55Z',
+            config: {
+              rvm: 'jruby'
+            }
           }
         };
         $.mockjax({
@@ -8457,15 +8468,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
               id: 15,
               repository_id: 1,
               build_id: 1,
-              commit_id: 1,
-              log_id: 1,
-              number: '1.4',
-              duration: 55,
-              started_at: '2012-07-02T00:02:00Z',
-              finished_at: '2012-07-02T00:02:55Z',
-              config: {
-                rvm: 'jruby'
-              }
+              commit_id: 1
             }
           });
         });
@@ -8847,7 +8850,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
           url = "/" + url;
         }
         Travis.app.router.route(url);
-        waits(100);
+        waits(500);
         return runs(function() {
           var foo;
           return foo = 'bar';
@@ -8863,5 +8866,101 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
   };
 
   this.Date.UTC = _Date.UTC;
+
+}).call(this);
+(function() {
+  var record, store;
+
+  Travis.Foo = Travis.Model.extend({
+    name: DS.attr('string'),
+    description: DS.attr('string')
+  });
+
+  record = null;
+
+  store = null;
+
+  $.mockjax({
+    url: '/foos/1',
+    responseTime: 10,
+    responseText: {
+      foo: {
+        id: 1,
+        name: 'foo',
+        description: 'bar'
+      }
+    }
+  });
+
+  describe('Travis.Model', function() {
+    beforeEach(function() {
+      return store = Travis.Store.create();
+    });
+    afterEach(function() {
+      return store.destroy();
+    });
+    describe('with incomplete record', function() {
+      beforeEach(function() {
+        var attrs;
+        attrs = {
+          id: 1,
+          name: 'foo'
+        };
+        return record = store.loadIncomplete(Travis.Foo, attrs);
+      });
+      it('shows if attribute is loaded', function() {
+        expect(record.isAttributeLoaded('name')).toBeTruthy();
+        return expect(record.isAttributeLoaded('description')).toBeFalsy();
+      });
+      it('does not trigger a request when getting known attribute', function() {
+        expect(record.get('name')).toEqual('foo');
+        waits(50);
+        return runs(function() {
+          return expect(record.get('complete')).toBeFalsy();
+        });
+      });
+      it('loads missing data on try to get it', function() {
+        expect(record.get('name')).toEqual('foo');
+        expect(record.get('description')).toBeNull();
+        waits(50);
+        return runs(function() {
+          expect(record.get('description')).toEqual('bar');
+          expect(record.get('complete')).toBeTruthy();
+          return expect(record.get('isComplete')).toBeTruthy();
+        });
+      });
+      return it('does not set incomplete on the record twice', function() {
+        record.get('description');
+        waits(50);
+        return runs(function() {
+          store.loadIncomplete(Travis.Foo, {
+            id: 1
+          });
+          return expect(record.get('incomplete')).toBeFalsy();
+        });
+      });
+    });
+    return describe('with complete record', function() {
+      beforeEach(function() {
+        var attrs, id;
+        id = 5;
+        attrs = {
+          id: id,
+          name: 'foo'
+        };
+        store.load(Travis.Foo, id, attrs);
+        return record = Travis.Foo.find(id);
+      });
+      it('is marked as completed', function() {
+        return expect(record.get('complete')).toBeTruthy();
+      });
+      it('allows to get regular attribute', function() {
+        return expect(record.get('name')).toEqual('foo');
+      });
+      return it('allows to check attribute state', function() {
+        return expect(record.isAttributeLoaded('name')).toBeFalsy();
+      });
+    });
+  });
 
 }).call(this);

@@ -51,7 +51,15 @@
     logBinding: 'job.log'
 
     scrollTo: (hash) ->
-      $('body').scrollTop $(hash).offset().top
+      # and this is even more weird, when changing hash in URL in firefox
+      # to other value, for example #L10, it actually scrolls just #main
+      # element... this is probably some CSS issue, I don't have time to
+      # investigate at the moment
+      # TODO: fix this
+      $('#main').scrollTop 0
+
+      # weird, html works in chrome, body in firefox
+      $('html,body').scrollTop $(hash).offset().top
       @set 'controller.lineNumberHash', null
 
     lineNumberHashDidChange: (->
