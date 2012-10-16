@@ -3,6 +3,8 @@
     <thead>
       <tr>
         <th>Time</th>
+        <th>Event</th>
+        <th>Result</th>
         <th>Message</th>
       </tr>
     </thead>
@@ -12,6 +14,12 @@
         {{#view Travis.EventsItemView contextBinding="event"}}
           <td class="created_at">
             {{formatTime createdAt}}
+          </td>
+          <td class="event">
+            {{event.event_}}
+          </td>
+          <td class="result">
+            {{event.result}}
           </td>
           <td class="message">
             {{event.message}}
