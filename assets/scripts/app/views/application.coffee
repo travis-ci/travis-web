@@ -3,6 +3,8 @@
     templateName: 'application'
     classNames: ['application']
 
+    popup: (event) ->
+      console.log event
     localeDidChange: (->
       if locale = Travis.app.get('auth.user.locale')
         Travis.setLocale(locale)
@@ -13,8 +15,9 @@
       # TODO: this solves the case of closing menus and popups,
       #       but I would like to rewrite it later, not sure how
       #       yet, but this does not seem optimal
-      if ! $(event.target).parents().andSelf().hasClass('popup')
+      targetAndParents = $(event.target).parents().andSelf()
+      if ! ( targetAndParents.hasClass('open-popup') || targetAndParents.hasClass('popup') )
         @popupCloseAll()
-      if ! $(event.target).parents().andSelf().hasClass('menu')
+      if ! targetAndParents.hasClass('menu')
         $('.menu').removeClass('display')
 
