@@ -2,6 +2,10 @@
   primaryKey: 'id'
   id: DS.attr('number')
 
+  init: ->
+    @loadedAttributes = []
+    @_super.apply this, arguments
+
   get: (name) ->
     if @constructor.isAttribute(name) && @get('incomplete') && !@isAttributeLoaded(name)
       @loadTheRest()

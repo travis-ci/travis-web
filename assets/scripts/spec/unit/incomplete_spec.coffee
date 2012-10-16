@@ -11,10 +11,14 @@ $.mockjax
   responseText: { foo: { id: 1, name: 'foo', description: 'bar' } }
 
 describe 'Travis.Model', ->
+  beforeEach ->
+    store = Travis.Store.create()
+
+  afterEach ->
+    store.destroy()
+
   describe 'with incomplete record', ->
     beforeEach ->
-      store = Travis.Store.create()
-
       attrs = {
         id: 1
         name: 'foo'
@@ -46,3 +50,23 @@ describe 'Travis.Model', ->
       runs ->
         store.loadIncomplete(Travis.Foo, id: 1)
         expect( record.get('incomplete') ).toBeFalsy()
+
+  describe 'with complete record', ->
+    beforeEach ->
+      id = 5
+      attrs = {
+        id: id
+        name: 'foo'
+      }
+
+      store.load(Travis.Foo, id, attrs)
+      record = Travis.Foo.find(id)
+
+    it 'is marked as completed', ->
+      expect( record.get('complete') ).toBeTruthy()
+
+    it 'allows to get regular attribute', ->
+      expect( record.get('name') ).toEqual 'foo'
+
+    it 'allows to check attribute state', ->
+      expect( record.isAttributeLoaded('name') ).toBeFalsy()

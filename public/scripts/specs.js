@@ -8893,10 +8893,15 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
   });
 
   describe('Travis.Model', function() {
-    return describe('with incomplete record', function() {
+    beforeEach(function() {
+      return store = Travis.Store.create();
+    });
+    afterEach(function() {
+      return store.destroy();
+    });
+    describe('with incomplete record', function() {
       beforeEach(function() {
         var attrs;
-        store = Travis.Store.create();
         attrs = {
           id: 1,
           name: 'foo'
@@ -8933,6 +8938,27 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
           });
           return expect(record.get('incomplete')).toBeFalsy();
         });
+      });
+    });
+    return describe('with complete record', function() {
+      beforeEach(function() {
+        var attrs, id;
+        id = 5;
+        attrs = {
+          id: id,
+          name: 'foo'
+        };
+        store.load(Travis.Foo, id, attrs);
+        return record = Travis.Foo.find(id);
+      });
+      it('is marked as completed', function() {
+        return expect(record.get('complete')).toBeTruthy();
+      });
+      it('allows to get regular attribute', function() {
+        return expect(record.get('name')).toEqual('foo');
+      });
+      return it('allows to check attribute state', function() {
+        return expect(record.isAttributeLoaded('name')).toBeFalsy();
       });
     });
   });
