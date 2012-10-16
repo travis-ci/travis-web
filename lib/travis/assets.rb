@@ -8,6 +8,7 @@ module Travis
 
     TYPES = [:styles, :scripts, :images, :static, :vendor]
     VENDOR_ORDER = %w(jquery.min minispade handlebars ember)
+    SPEC_VENDOR_ORDER = %w(jasmine jasmine-html jasmine-runner sinon)
 
     attr_reader :roots, :env
 
@@ -26,6 +27,10 @@ module Travis
 
     def vendor_order
       VENDOR_ORDER.map { |name| "vendor/#{name}.js" }
+    end
+
+    def spec_vendor_order
+      SPEC_VENDOR_ORDER.map { |name| "spec/vendor/#{name}.js" }
     end
 
     def setup_compass

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta rel="travis.api_endpoint" href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travis CI - Distributed Continuous Integration Platform for the Open Source Community</title>
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <link rel="stylesheet" href="/styles/app.css">
+    <link rel="stylesheet" href="/styles/jasmine.css">
+    <link rel="stylesheet" href="/styles/jasmine-ext.css">
+    <script src="/scripts/app.js"></script>
+    <script>
+      minispade.require('travis')
+    </script>
+
+    <script src="/scripts/specs.js"></script>
+  </head>
+  <body>
+    <script>
+      window.cachedSearch = window.location.search;
+      //for(key in minispade.modules)
+      //  if(key.match(/_spec$/))
+      //    minispade.require(key);
+
+      var console_reporter = new jasmine.ConsoleReporter();
+      jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
+      jasmine.getEnv().addReporter(console_reporter);
+      jasmine.getEnv().execute();
+    </script>
+
+    <div id="application">
+    </div>
+  </body>
+</html>

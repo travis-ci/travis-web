@@ -2526,13 +2526,13 @@ html, body {
 }
 
 /* line 8, /Users/sven/Development/projects/travis/travis-web/assets/styles/layout.sass */
-body > div {
+.application {
   width: 100%;
   overflow: hidden;
 }
 
 /* line 13, /Users/sven/Development/projects/travis/travis-web/assets/styles/layout.sass */
-body > div, body > div > div {
+.application, .application > div {
   width: 100%;
   min-height: 100%;
   display: -webkit-box;

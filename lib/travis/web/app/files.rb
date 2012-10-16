@@ -10,6 +10,13 @@ class Travis::Web::App
       super([public_dir, index])
     end
 
+    def call(env)
+      status, headers, body = super(env)
+      # TODO: temporary hack to make specs work, remove this later properly
+      headers.delete 'Last-Modified' if env['PATH_INFO'] == '/spec.html'
+      [status, headers, body]
+    end
+
     def public_dir
       Rack::File.new('public')
     end

@@ -1,0 +1,26 @@
+{{#if view.events.isLoaded}}
+  <table id="events" class="list">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each event in view.events}}
+        {{#view Travis.EventsItemView contextBinding="event"}}
+          <td class="created_at">
+            {{formatTime createdAt}}
+          </td>
+          <td class="message">
+            {{event.message}}
+          </td>
+        {{/view}}
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <div class="loading"><span>Loading</span></div>
+{{/if}}
+

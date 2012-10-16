@@ -43,7 +43,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-api.git
-  revision: 6b02ffabacd4476e1a0b4d7f150d0733cfbb57d9
+  revision: 816ebc66c8b65c44d6144e721b1b4f048e86d7df
   specs:
     travis-api (0.0.1)
       backports (~> 2.5)
@@ -61,7 +61,7 @@ GIT
 
 GIT
   remote: git://github.com/travis-ci/travis-core.git
-  revision: 310d93a0c6dec233a15264172168fc58fb243f3b
+  revision: 56ca16046cba99cc0b4cd0c520c6bb13ace9932a
   branch: sf-travis-api
   specs:
     travis-core (0.0.1)
@@ -143,13 +143,13 @@ GEM
     data_migrations (0.0.1)
       activerecord
       rake
-    debugger (1.2.0)
+    debugger (1.2.1)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
-      debugger-ruby_core_source (~> 1.1.3)
+      debugger-ruby_core_source (~> 1.1.4)
     debugger-linecache (1.1.2)
       debugger-ruby_core_source (>= 1.1.1)
-    debugger-ruby_core_source (1.1.3)
+    debugger-ruby_core_source (1.1.4)
     diff-lcs (1.1.3)
     erubis (2.7.0)
     eventmachine (1.0.0)
@@ -273,7 +273,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    yard (0.8.2.1)
+    yard (0.8.3)
 
 PLATFORMS
   ruby
