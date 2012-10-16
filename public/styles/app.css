@@ -2534,17 +2534,9 @@ html, body {
 .application, .application > div {
   width: 100%;
   min-height: 100%;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-box;
-  display: box;
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  -ms-box-flex: 0;
-  box-flex: 0;
 }
 
-/* line 19, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+/* line 17, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
 #top {
   position: absolute;
   top: 0;
@@ -2553,7 +2545,7 @@ html, body {
   height: 40px;
 }
 
-/* line 26, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+/* line 24, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
 #page {
   position: relative;
   display: -webkit-box;
@@ -2570,10 +2562,10 @@ html, body {
   box-align: stretch;
   width: 100%;
   min-height: 100%;
-  top: 40px;
+  margin-top: 40px;
 }
 
-/* line 35, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+/* line 33, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
 #left, #right {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -2583,7 +2575,7 @@ html, body {
   min-height: 100%;
 }
 
-/* line 40, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+/* line 38, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
 #left {
   min-width: 250px;
   max-width: 380px;
@@ -2596,7 +2588,7 @@ html, body {
   box-shadow: transparent 0 0 0 0, #cccccc 0 1px 8px 0, transparent 0 0 0 0, transparent 0 0 0 0;
 }
 
-/* line 49, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+/* line 47, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
 #main {
   -webkit-box-flex: 4;
   -moz-box-flex: 4;
@@ -2608,7 +2600,7 @@ html, body {
   padding: 20px 40px 80px 30px;
 }
 
-/* line 56, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+/* line 54, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
 #right {
   width: 205px;
   padding: 11px 20px 80px 20px;
@@ -2617,7 +2609,7 @@ html, body {
 }
 
 @media screen and (max-width: 1400px) {
-  /* line 63, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+  /* line 61, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
   #left .duration_label {
     display: inline-block;
     width: 11px;
@@ -2629,7 +2621,7 @@ html, body {
   }
 }
 @media screen and (max-width: 1310px) {
-  /* line 73, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
+  /* line 71, /Users/drogus/code/travis/travis-ember/assets/styles/layout.sass */
   #left .finished_at_label {
     display: none;
   }

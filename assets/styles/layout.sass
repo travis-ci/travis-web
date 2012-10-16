@@ -13,8 +13,6 @@ html, body
 .application, .application > div
   width: 100%
   min-height: 100%
-  @include display-box
-  @include box-flex(0)
 
 #top
   position: absolute
@@ -30,7 +28,7 @@ html, body
   @include box-align(stretch)
   width: 100%
   min-height: 100%
-  top: 40px
+  margin-top: 40px
 
 #left, #right
   @include box-flex(0)
