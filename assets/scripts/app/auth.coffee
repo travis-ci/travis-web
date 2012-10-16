@@ -67,6 +67,7 @@
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()
+      event.data.user.token = event.data.token if event.data.token
       @setData(event.data)
       console.log("signed in as #{event.data.user.login}")
     else
