@@ -1,3 +1,3 @@
-web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
-guard: bundle exec guard
-rerun: rerun -p 'assets/**/*' 'bundle exec rakep'
+web: script/server
+assets: rerun -x -p 'assets/**/*' 'bundle exec rakep'
+#specs: rerun -x -p 'public/**/*' './run_jasmine.coffee public/spec.html'
