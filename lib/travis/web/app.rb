@@ -1,5 +1,6 @@
 require 'rack'
 require 'rack/ssl'
+require 'rack/cache'
 require 'delegate'
 require 'time'
 
@@ -105,6 +106,7 @@ class Travis::Web::App
     def builder
       builder = Rack::Builder.new
       builder.use Rack::SSL if environment == 'production'
+      builder.use Rack::Cache
       builder.use Rack::Deflater
       builder.use Rack::Head
       builder.use Rack::ConditionalGet
