@@ -54,7 +54,7 @@ class Travis::Web::App
         'ETag'             => version,
         'Last-Modified'    => last_modified.httpdate,
         'Expires'          => (last_modified + age).httpdate,
-        'Vary'             => 'If-None-Match'
+        'Vary'             => ''
       }
 
       [ 200, headers, [ content ] ]
