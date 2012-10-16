@@ -23,7 +23,7 @@ input assets.scripts do
     safe_concat assets.vendor_order, 'vendor.js'
   end
 
-  match 'spec/*.js' do
+  match '{spec,spec/unit}/*.js' do
     concat 'spec/specs.js'
   end
 

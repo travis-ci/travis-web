@@ -8865,3 +8865,73 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
   this.Date.UTC = _Date.UTC;
 
 }).call(this);
+(function() {
+  var record, store;
+
+  Travis.Foo = Travis.Model.extend({
+    name: DS.attr('string'),
+    description: DS.attr('string')
+  });
+
+  record = null;
+
+  store = null;
+
+  $.mockjax({
+    url: '/foos/1',
+    responseTime: 10,
+    responseText: {
+      foo: {
+        id: 1,
+        name: 'foo',
+        description: 'bar'
+      }
+    }
+  });
+
+  describe('Travis.Model', function() {
+    return describe('with incomplete record', function() {
+      beforeEach(function() {
+        var attrs;
+        store = Travis.Store.create();
+        attrs = {
+          id: 1,
+          name: 'foo'
+        };
+        return record = store.loadIncomplete(Travis.Foo, attrs);
+      });
+      it('shows if attribute is loaded', function() {
+        expect(record.isAttributeLoaded('name')).toBeTruthy();
+        return expect(record.isAttributeLoaded('description')).toBeFalsy();
+      });
+      it('does not trigger a request when getting known attribute', function() {
+        expect(record.get('name')).toEqual('foo');
+        waits(50);
+        return runs(function() {
+          return expect(record.get('complete')).toBeFalsy();
+        });
+      });
+      it('loads missing data on try to get it', function() {
+        expect(record.get('name')).toEqual('foo');
+        expect(record.get('description')).toBeNull();
+        waits(50);
+        return runs(function() {
+          expect(record.get('description')).toEqual('bar');
+          expect(record.get('complete')).toBeTruthy();
+          return expect(record.get('isComplete')).toBeTruthy();
+        });
+      });
+      return it('does not set incomplete on the record twice', function() {
+        record.get('description');
+        waits(50);
+        return runs(function() {
+          store.loadIncomplete(Travis.Foo, {
+            id: 1
+          });
+          return expect(record.get('incomplete')).toBeFalsy();
+        });
+      });
+    });
+  });
+
+}).call(this);
