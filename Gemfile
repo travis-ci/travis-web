@@ -20,4 +20,6 @@ group :development do
   gem 'debugger'
   gem 'foreman'
   gem 'rerun'
+  gem 'guard'
+  gem 'rb-fsevent', '~> 0.9.1'
 end
