@@ -148,12 +148,6 @@ Travis.Router = Ember.Router.extend
   needsAuth: (path) ->
     path.indexOf('/profile') == 0
 
-  afterSignIn: ->
-    path = sessionStorage.getItem('travis.after_signin_path')
-    sessionStorage.removeItem('travis.after_signin_path')
-    @transitionTo('root')
-    @route(path || '/')
-
   afterSignOut: ->
     @authorize('/')
 
@@ -174,6 +168,7 @@ Travis.Router = Ember.Router.extend
   root: Ember.Route.extend
     route: '/'
     loading: Ember.State.extend()
+    afterSignIn: (-> )
 
     auth: Ember.Route.extend
       route: '/auth'
@@ -183,9 +178,14 @@ Travis.Router = Ember.Router.extend
         router.get('authLayoutController').connectOutlet('top', 'top')
         router.get('authLayoutController').connectOutlet('main', 'signin')
 
+      afterSignIn: (router) ->
+        path = sessionStorage.getItem('travis.after_signin_path')
+        sessionStorage.removeItem('travis.after_signin_path')
+        router.transitionTo('root')
+        router.route(path || '/')
+
     stats: Ember.Route.extend
       route: '/stats'
-      afterSignIn: (-> )
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'statsLayout'
         $('body').attr('id', 'stats')
@@ -194,7 +194,6 @@ Travis.Router = Ember.Router.extend
 
     profile: Ember.Route.extend
       initialState: 'index'
-      afterSignIn: (-> )
       route: '/profile'
 
       connectOutlets: (router) ->
@@ -261,7 +260,6 @@ Travis.Router = Ember.Router.extend
 
     home: Ember.Route.extend
       route: '/'
-      afterSignIn: (-> )
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'homeLayout'
         $('body').attr('id', 'home')
