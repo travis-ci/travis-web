@@ -181,7 +181,6 @@ Travis.Router = Ember.Router.extend
       afterSignIn: (router) ->
         path = sessionStorage.getItem('travis.after_signin_path')
         sessionStorage.removeItem('travis.after_signin_path')
-        router.transitionTo('root')
         router.route(path || '/')
 
     stats: Ember.Route.extend
