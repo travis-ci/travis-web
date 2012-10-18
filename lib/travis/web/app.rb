@@ -49,7 +49,7 @@ class Travis::Web::App
 
     def response_for(file)
       content = File.read(file)
-      set_config(content) if index? file
+      set_config(content) if config_needed? file
 
       headers = {
         'Content-Length'   => content.bytesize.to_s,
@@ -73,6 +73,10 @@ class Travis::Web::App
 
     def prefix?(file)
       file =~ /^(styles|scripts)\//
+    end
+
+    def config_needed?(file)
+      index?(file) || file.end_with?('spec.html')
     end
 
     def index?(file)
