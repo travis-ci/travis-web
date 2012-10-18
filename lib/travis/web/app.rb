@@ -17,6 +17,11 @@ class Travis::Web::App
     end
   end
 
+  def self.new(options = {})
+    return super unless options[:environment] == 'development'
+    proc { |e| super.call(e) } # poor man's reloader
+  end
+
   attr_reader :app, :router, :environment, :version, :last_modified, :age, :options, :root
 
   def initialize(options = {})
@@ -62,9 +67,8 @@ class Travis::Web::App
     end
 
     def each_file
-      Dir.chdir(root) do
-        Dir.glob('**/*') { |f| yield f if File.file? f }
-      end
+      pattern = File.join(root, '**/*')
+      Dir.glob(pattern) { |f| yield f if File.file? f }
     end
 
     def prefix?(file)
@@ -72,19 +76,20 @@ class Travis::Web::App
     end
 
     def index?(file)
-       file == "index.html"
+      file.end_with? 'index.html'
     end
 
     def route_for(file)
+      file = file.sub("#{root}/", '')
       file = File.join(version, file) if prefix? file
       file = "" if index? file
       "/#{file}"
     end
 
     def cache_control(file)
-      case file
-      when 'index.html' then "public, must-revalidate"
-      when 'version'    then "no-cache"
+      case route_for(file)
+      when '/'       then "public, must-revalidate"
+      when 'version' then "no-cache"
       else "public, max-age=#{age}"
       end
     end
@@ -105,8 +110,10 @@ class Travis::Web::App
 
     def builder
       builder = Rack::Builder.new
-      builder.use Rack::SSL if environment == 'production'
-      builder.use Rack::Cache
+      if environment == 'production'
+        builder.use Rack::SSL
+        builder.use Rack::Cache
+      end
       builder.use Rack::Deflater
       builder.use Rack::Head
       builder.use Rack::ConditionalGet

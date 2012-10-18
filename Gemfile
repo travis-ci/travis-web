@@ -2,7 +2,7 @@ ruby '1.9.3' rescue nil
 
 source :rubygems
 
-gem 'unicorn'
+gem 'puma'
 gem 'rack-ssl', '~> 1.3'
 gem 'rack-cache'
 
