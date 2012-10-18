@@ -6,15 +6,7 @@
 
   FlashItemView: Travis.View.extend
     tagName: 'li'
-    classNameBindings: ['type']
-
-    type: (->
-      @get('flash') && Ember.keys(@get('flash'))[0]
-    ).property('flash')
-
-    message: (->
-      @get('flash') && @get('flash')[@get('type')]
-    ).property('flash')
+    classNameBindings: ['flash.type']
 
     close: (event) ->
-      @get('controller').removeObject(@get('flash'))
+      @get('controller').close(@get('flash'))

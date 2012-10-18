@@ -3,8 +3,9 @@
     templateName: 'application'
     classNames: ['application']
 
-    popup: (event) ->
-      console.log event
+    # popup: (event) ->
+    #   console.log event
+
     localeDidChange: (->
       if locale = Travis.app.get('auth.user.locale')
         Travis.setLocale(locale)

@@ -4,5 +4,5 @@ cd "$(dirname "$0")/.."
 [ $RACK_ENV ] || RACK_ENV=development
 
 cmd="ruby -I lib -S bundle exec ruby -I lib -S unicorn -p $PORT -c ./config/unicorn.rb"
-[[ $RACK_ENV == "development" ]] && exec rerun "$cmd -o 127.0.0.1"
+[[ $RACK_ENV == "development" ]] && exec rerun "$cmd -o 127.0.0.1" -p '{lib,public}/**/*'
 exec $cmd

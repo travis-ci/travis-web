@@ -11,14 +11,20 @@
     @include box-shadow(transparent 0 0 0 0, $color-border-normal 0 1px 6px 0, transparent 0 0 0 0, transparent 0 0 0 0)
     border-bottom: 1px solid $color-border-light
 
+    a
+      text-decoration: underline
+
   .success
-    background-color: #ebfcc2
+    background-color: $color-bg-flash-success
 
   .notice
-    background-color: lightGoldenrodYellow
+    background-color: $color-bg-flash-notice
 
   .error
-    background-color: #f5d7d3
+    background-color:  $color-bg-flash-error
+
+  .broadcast
+    background-color:  $color-bg-flash-broadcast
 
   p
     margin: 0

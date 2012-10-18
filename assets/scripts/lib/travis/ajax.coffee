@@ -30,7 +30,7 @@ jQuery.support.cors = true
 
     success = options.success || (->)
     options.success = (data) =>
-      Travis.app.router.flashController.pushObjects(data.flash) if Travis.app?.router && data.flash
+      Travis.app.router.flashController.loadFlashes(data.flash) if Travis.app?.router && data.flash
       delete data.flash
       success.call(this, data)
 

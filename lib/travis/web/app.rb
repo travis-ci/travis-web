@@ -94,8 +94,8 @@ class Travis::Web::App
     end
 
     def set_config(string)
-      string.gsub! %r(<meta (rel|name)="(travis\.[^"]*)" (href|value)="([^"]*)"[^>]*>) do
-        %(<meta #{$1}="#{$2}" #{$3}="#{options[$2.to_sym] || $4}">)
+      string.gsub! %r(<meta (rel|name)="travis\.([^"]*)" (href|value)="([^"]*)"[^>]*>) do
+        %(<meta #{$1}="travis.#{$2}" #{$3}="#{options[$2.to_sym] || $4}">)
       end
 
       string.gsub! %r{(src|href)="(\/?)((styles|scripts)\/[^"]*)"} do

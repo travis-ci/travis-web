@@ -1,6 +1,7 @@
 require 'models/extensions'
 require 'models/account'
 require 'models/artifact'
+require 'models/broadcast'
 require 'models/branch'
 require 'models/build'
 require 'models/commit'

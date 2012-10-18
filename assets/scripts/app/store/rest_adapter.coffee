@@ -3,6 +3,7 @@ require 'models'
 
 @Travis.RestAdapter = DS.RESTAdapter.extend
   mappings:
+    broadcasts:   Travis.Broadcast
     repositories: Travis.Repo
     repository:   Travis.Repo
     repos:        Travis.Repo
