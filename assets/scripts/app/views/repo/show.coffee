@@ -10,7 +10,7 @@
     ).property('repo.isComplete')
 
     isEmpty: (->
-      @get('repos.length') == 0
+      @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.length')
 
     urlGithub: (->
