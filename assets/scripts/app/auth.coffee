@@ -15,8 +15,6 @@
   # if the user is in the session storage, we're using it. if we have a flag
   # for auto signin then we're trying to sign in.
   autoSignIn: (path) ->
-    console.log(path)
-    @storeAfterSignInPath(path)
     if user = sessionStorage.getItem('travis.user')
       @setData(user: JSON.parse(user))
     else if localStorage.getItem('travis.auto_signin')
