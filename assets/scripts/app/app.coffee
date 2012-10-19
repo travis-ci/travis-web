@@ -30,17 +30,22 @@ Travis.reopen
       @store = Travis.Store.create()
       @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
-      @set('auth', Travis.Auth.create(app: this, endpoint: Travis.config.api_endpoint))
+      # @set('auth', Travis.Auth.create(app: this, endpoint: Travis.config.api_endpoint))
 
       @slider = new Travis.Slider()
       @pusher = new Travis.Pusher(Travis.config.pusher_key)
       @tailing = new Travis.Tailing()
 
+    initAuth: (router, path) ->
+      auth = Travis.Auth.create(app: this, router: router, endpoint: Travis.config.api_endpoint)
+      @set('auth', auth)
+      auth.loadUser(path)
+
     signIn: ->
       @get('auth').signIn()
 
-    autoSignIn: ->
-      @get('auth').autoSignIn()
+    # autoSignIn: ->
+    #   @get('auth').autoSignIn()
 
     signOut: ->
       @get('auth').signOut()
