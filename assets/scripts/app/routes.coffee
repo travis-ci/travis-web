@@ -155,10 +155,11 @@ Travis.Router = Ember.Router.extend
     routePath: (router, path) ->
       router.saveLineNumberHash(path)
       router.authorize(path)
-      router.auth = Travis.app.initAuth(router, path)
+      Travis.app.autoSignIn() unless router.signedIn()
 
   authorize: (path) ->
     if !@signedIn() && @needsAuth(path)
+      Travis.app.storeAfterSignInPath(path)
       @transitionTo('root.auth')
     else
       @transitionTo('root')

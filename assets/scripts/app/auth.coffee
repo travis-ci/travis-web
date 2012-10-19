@@ -7,7 +7,6 @@
   init: ->
     @iframe.appendTo('body')
     window.addEventListener('message', (e) => @receiveMessage(e))
-    # @loadUser()
 
   accessToken: (->
     sessionStorage.getItem('travis.token')
@@ -15,21 +14,19 @@
 
   # if the user is in the session storage, we're using it. if we have a flag
   # for auto signin then we're trying to sign in.
-  loadUser: (path)->
+  autoSignIn: (path) ->
+    console.log(path)
     @storeAfterSignInPath(path)
     if user = sessionStorage.getItem('travis.user')
       @setData(user: JSON.parse(user))
-    else
-      @autoSignIn()
+    else if localStorage.getItem('travis.auto_signin')
+      @signIn()
 
   # try signing in, but check later in case we have a timeout
-  signIn: (path) ->
+  signIn: () ->
     @set('state', 'signing-in')
     @trySignIn()
     Ember.run.later(this, @checkSignIn.bind(this), @timeout)
-
-  autoSignIn: (path) ->
-    @signIn(path) if localStorage.getItem('travis.auto_signin')
 
   signOut: ->
     localStorage.removeItem('travis.auto_signin')
@@ -56,7 +53,7 @@
     @afterSignIn()
 
   afterSignIn: ->
-    @get('router').send('afterSignIn', @readAfterSignInPath())
+    @get('app.router').send('afterSignIn', @readAfterSignInPath())
 
   storeToken: (token) ->
     sessionStorage.setItem('travis.token', token)

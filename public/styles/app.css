@@ -5082,6 +5082,11 @@ pre#log .fold.open {
 }
 
 /* line 5, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
+#profile #main h3 {
+  height: 19px;
+  line-height: 19px;
+}
+/* line 9, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main img {
   float: left;
   width: 48px;
@@ -5094,33 +5099,33 @@ pre#log .fold.open {
   border-radius: 4px;
   background-color: #dddddd;
 }
-/* line 13, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
+/* line 17, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main dl {
   float: left;
   margin: 0 0 20px 0;
 }
-/* line 17, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
+/* line 21, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main dt {
   display: block;
   clear: left;
   float: left;
   width: 50px;
 }
-/* line 23, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
+/* line 27, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main dd {
   float: left;
   margin-left: 0;
 }
-/* line 27, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
+/* line 31, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main form {
   clear: left;
 }
-/* line 30, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
+/* line 34, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main .tip {
   margin-top: -5px;
   color: #999999;
 }
-/* line 34, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
+/* line 38, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main .message {
   margin-top: 20px;
   padding: 10px 10px;
@@ -5132,7 +5137,7 @@ pre#log .fold.open {
   -o-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 41, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
+/* line 45, /Users/sven/Development/projects/travis/travis-web/assets/styles/profile.sass */
 #profile #main .message .sync_now {
   float: right;
   margin-top: -3px;
