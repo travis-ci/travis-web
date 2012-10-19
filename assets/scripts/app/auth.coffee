@@ -31,7 +31,8 @@
     @signIn() if localStorage.getItem('travis.auto_signin')
 
   signOut: ->
-    localStorage.clear()
+    localStorage.removeItem('travis.auto_signin')
+    localStorage.removeItem('travis.locale')
     sessionStorage.clear()
     @setData()
 

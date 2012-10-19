@@ -2,37 +2,32 @@ Travis.FlashController = Ember.ArrayController.extend
   broadcastBinding: 'Travis.app.currentUser.broadcasts'
 
   init: ->
+    @set('flashes', Ember.A())
     @_super.apply this, arguments
-    @set('content', Ember.A())
+
+  content: (->
+    @get('unseenBroadcasts').concat(@get('flashes'))
+  ).property('unseenBroadcasts.length', 'flashes.length')
+
+  unseenBroadcasts: (->
+    @get('broadcasts').filterProperty('isSeen', false)
+  ).property('broadcasts.isLoaded', 'broadcasts.length')
 
   broadcasts: (->
-    Travis.Broadcast.find() if Travis.app.get('currentUser')
+    if Travis.app.get('currentUser') then Travis.Broadcast.find() else Ember.A()
   ).property('Travis.app.currentUser')
-
-  broadcastsObserver: (->
-    if broadcasts = @get('broadcasts')
-      broadcasts.forEach (msg) => @pushObject(msg.toObject()) unless @isSeenBroadcast(msg)
-  ).observes('broadcasts.length')
 
   loadFlashes: (msgs) ->
     for msg in msgs
       type = Ember.keys(msg)[0]
       msg = { type: type, message: msg[type] }
-      @pushObject(msg)
-      Ember.run.later(this, (-> @removeObject(msg)), 15000)
+      @get('flashes').pushObject(msg)
+      Ember.run.later(this, (-> @get('flashes').removeObject(msg)), 15000)
 
   close: (msg) ->
-    @storeSeenBroadcast(msg) if msg.type == 'broadcast'
-    @removeObject(msg)
+    if msg instanceof Travis.Broadcast
+      msg.setSeen()
+      @notifyPropertyChange('unseenBroadcasts')
+    else
+      @get('flashes').removeObject(msg)
 
-  isSeenBroadcast: (msg) ->
-    msg.get('id') in @seenBroadcasts()
-
-  seenBroadcasts: ->
-    seen = localStorage.getItem('travis.seen_broadcasts')
-    if seen then JSON.parse(seen) else []
-
-  storeSeenBroadcast: (msg) ->
-    seen = @seenBroadcasts()
-    seen.push(msg.id)
-    localStorage.setItem('travis.seen_broadcasts', JSON.stringify(seen))
