@@ -10,106 +10,7 @@ lineNumberRoute = Ember.Route.extend
   connectOutlets: (router) ->
     router.saveLineNumberHash()
 
-  routeMatcher: Ember.computed(->
-    if route = @get 'route'
-      Ember._RouteMatcher.create
-        route: route
-        # TODO: overriding such things is not cool, I need to check what's the status of
-        #       router rewrite and make sure we can do such stuff without overriding anything
-        init: ->
-          escapeForRegex = (text) ->
-            text.replace(/[\-\[\]{}()*+?.,\\\^\$|#\s]/g, "\\$&")
-
-          route = @route
-          identifiers = []
-          count = 1
-
-          if route.charAt(0) == '/'
-            route = @route = route.substr(1)
-
-          escaped = escapeForRegex(route)
-
-          regex = escaped.replace /:([a-z_]+)(?=$|\/)/gi, (match, id) ->
-            identifiers[count++] = id
-            "([0-9]+)"
-
-          @identifiers = identifiers
-          @regex = new RegExp(regex)
-  ).cacheable()
-
-
-nonHashRouteMatcher = Ember.computed(->
-  if route = @get 'route'
-    Ember._RouteMatcher.create
-      route: route
-      # TODO: overriding such things is not cool, I need to check what's the status of
-      #       router rewrite and make sure we can do such stuff without overriding anything
-      init: ->
-        escapeForRegex = (text) ->
-          text.replace(/[\-\[\]{}()*+?.,\\\^\$|#\s]/g, "\\$&")
-
-        route = @route
-        identifiers = []
-        count = 1
-
-        if route.charAt(0) == '/'
-          route = @route = route.substr(1)
-
-        escaped = escapeForRegex(route)
-
-        regex = escaped.replace /:([a-z_]+)(?=$|\/)/gi, (match, id) ->
-          identifiers[count++] = id
-          "([^/#]+)"
-
-        @identifiers = identifiers
-        @regex = new RegExp("^/?" + regex)
-).cacheable()
-
-resolvePath = (manager, path) ->
-  if @get('isLeafRoute')
-    return Ember.A()
-
-  childStates = @get('childStates')
-
-  childStates = Ember.A(childStates.filterProperty('isRoutable'))
-
-  childStates = childStates.sort (a, b) ->
-    aDynamicSegments = a.get('routeMatcher.identifiers.length')
-    bDynamicSegments = b.get('routeMatcher.identifiers.length')
-    aRoute = a.get('route')
-    bRoute = b.get('route')
-    aIndex = a.get('index')
-    bIndex = b.get('index')
-
-    if aIndex && bIndex
-      return aIndex - bIndex
-
-    if aRoute.indexOf(bRoute) == 0
-      return -1
-    else if bRoute.indexOf(aRoute) == 0
-      return 1
-
-    if aDynamicSegments != bDynamicSegments
-      return aDynamicSegments - bDynamicSegments
-
-    return b.get('route.length') - a.get('route.length')
-
-  match = null
-  state = childStates.find (state) ->
-    matcher = state.get('routeMatcher')
-    if match = matcher.match(path)
-      match
-
-  Ember.assert("Could not find state for path " + path, !!state)
-
-  resolvedState = Ember._ResolvedState.create
-    manager: manager
-    state: state
-    match: match
-
-  states = state.resolvePath(manager, match.remaining)
-
-  Ember.A([resolvedState]).pushObjects(states)
+  dynamicSegmentPattern: "([0-9]+)"
 
 Travis.Router = Ember.Router.extend
   location: 'travis'
@@ -275,7 +176,6 @@ Travis.Router = Ember.Router.extend
         initialState: 'default'
         default: defaultRoute
         lineNumber: lineNumberRoute
-        resolvePath: resolvePath
 
       showWithLineNumber: Ember.Route.extend
         route: '/#/L:number'
@@ -284,7 +184,7 @@ Travis.Router = Ember.Router.extend
 
       repo: Ember.Route.extend
         route: '/:owner/:name'
-        routeMatcher: nonHashRouteMatcher
+        dynamicSegmentPattern: "([^/#]+)"
 
         connectOutlets: (router, repo) ->
           router.get('repoController').set 'repo', repo
@@ -320,7 +220,6 @@ Travis.Router = Ember.Router.extend
           initialState: 'default'
           default: defaultRoute
           lineNumber: lineNumberRoute
-          resolvePath: resolvePath
 
         builds: Ember.Route.extend
           route: '/builds'
@@ -373,8 +272,7 @@ Travis.Router = Ember.Router.extend
             initialState: 'default'
             default: defaultRoute
             lineNumber: lineNumberRoute
-            routeMatcher: nonHashRouteMatcher
-            resolvePath: resolvePath
+            dynamicSegmentPattern: "([^/#]+)"
 
         pullRequests: Ember.Route.extend
           route: '/pull_requests'
@@ -393,6 +291,7 @@ Travis.Router = Ember.Router.extend
 
         job: Ember.Route.extend
           route: '/jobs/:job_id'
+          dynamicSegmentPattern: "([^/#]+)"
           connectOutlets: (router, job) ->
             unless job.get
               # In case I use id
@@ -424,5 +323,3 @@ Travis.Router = Ember.Router.extend
           initialState: 'default'
           default: defaultRoute
           lineNumber: lineNumberRoute
-          routeMatcher: nonHashRouteMatcher
-          resolvePath: resolvePath
