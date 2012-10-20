@@ -58,8 +58,8 @@
       # TODO: fix this
       $('#main').scrollTop 0
 
-      # weird, html works in chrome, body in firefox
-      $('html,body').scrollTop $(hash).offset().top
+      currentScroll = $('.application > div').scrollTop()
+      $('.application > div').scrollTop $(hash).offset().top + currentScroll - 40
       @set 'controller.lineNumberHash', null
 
     lineNumberHashDidChange: (->
