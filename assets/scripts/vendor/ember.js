@@ -1,5 +1,5 @@
-// Version: v1.0.pre-206-g50de50e
-// Last commit: 50de50e (2012-10-18 15:43:34 -0400)
+// Version: v1.0.pre-215-g866ae36
+// Last commit: 866ae36 (2012-10-20 16:17:08 +0200)
 
 
 (function() {
@@ -140,8 +140,8 @@ window.ember_deprecateFunc  = Ember.deprecateFunc("ember_deprecateFunc is deprec
 
 })();
 
-// Version: v1.0.pre-206-g50de50e
-// Last commit: 50de50e (2012-10-18 15:43:34 -0400)
+// Version: v1.0.pre-215-g866ae36
+// Last commit: 866ae36 (2012-10-20 16:17:08 +0200)
 
 
 (function() {
@@ -496,22 +496,23 @@ Ember.Instrumentation.instrument = function(name, payload, callback, binding) {
 };
 
 Ember.Instrumentation.subscribe = function(pattern, object) {
-  var paths = pattern.split("."), path, regex = "^";
+  var paths = pattern.split("."), path, regex = [];
 
   for (var i=0, l=paths.length; i<l; i++) {
     path = paths[i];
     if (path === "*") {
-      regex = regex + "[^\\.]*";
+      regex.push("[^\\.]*");
     } else {
-      regex = regex + path;
+      regex.push(path);
     }
   }
 
+  regex = regex.join("\\.");
   regex = regex + "(\\..*)?";
 
   var subscriber = {
     pattern: pattern,
-    regex: new RegExp(regex + "$"),
+    regex: new RegExp("^" + regex + "$"),
     object: object
   };
 
@@ -9986,6 +9987,7 @@ Ember.ArrayProxy = Ember.Object.extend(Ember.MutableArray,
   }).property().cacheable(),
 
   replace: function(idx, amt, objects) {
+    Ember.assert('The content property of '+ this.constructor + ' should be set before modifying it', this.get('content'));
     if (get(this, 'content')) this.replaceContent(idx, amt, objects);
     return this;
   },
@@ -12642,6 +12644,187 @@ var invokeForState = {
   destroyed: {}
 };
 
+Ember.CoreView = Ember.Object.extend(Ember.Evented, {
+  init: function() {
+    this._super();
+
+    // Register the view for event handling. This hash is used by
+    // Ember.EventDispatcher to dispatch incoming events.
+    if (!this.isVirtual) Ember.View.views[get(this, 'elementId')] = this;
+  },
+
+  /**
+    If the view is currently inserted into the DOM of a parent view, this
+    property will point to the parent of the view.
+
+    @property parentView
+    @type Ember.View
+    @default null
+  */
+  parentView: Ember.computed(function() {
+    var parent = get(this, '_parentView');
+
+    if (parent && parent.isVirtual) {
+      return get(parent, 'parentView');
+    } else {
+      return parent;
+    }
+  }).property('_parentView').volatile(),
+
+  state: 'preRender',
+
+  _parentView: null,
+
+  // return the current view, not including virtual views
+  concreteView: Ember.computed(function() {
+    if (!this.isVirtual) { return this; }
+    else { return get(this, 'parentView'); }
+  }).property('_parentView').volatile(),
+
+  /**
+    Creates a new renderBuffer with the passed tagName. You can override this
+    method to provide further customization to the buffer if needed. Normally
+    you will not need to call or override this method.
+
+    @method renderBuffer
+    @param [tagName] {String}
+    @return {Ember.RenderBuffer}
+  */
+  renderBuffer: function(tagName) {
+    tagName = tagName || get(this, 'tagName');
+
+    // Explicitly check for null or undefined, as tagName
+    // may be an empty string, which would evaluate to false.
+    if (tagName === null || tagName === undefined) {
+      tagName = 'div';
+    }
+
+    return Ember.RenderBuffer(tagName);
+  },
+
+  instrumentName: 'render.core_view',
+
+  instrumentDetails: function(hash) {
+    hash.type = this.constructor.toString();
+  },
+
+  /**
+    @private
+
+    Invoked by the view system when this view needs to produce an HTML
+    representation. This method will create a new render buffer, if needed,
+    then apply any default attributes, such as class names and visibility.
+    Finally, the `render()` method is invoked, which is responsible for
+    doing the bulk of the rendering.
+
+    You should not need to override this method; instead, implement the
+    `template` property, or if you need more control, override the `render`
+    method.
+
+    @method renderToBuffer
+    @param {Ember.RenderBuffer} buffer the render buffer. If no buffer is
+      passed, a default buffer, using the current view's `tagName`, will
+      be used.
+  */
+  renderToBuffer: function(parentBuffer, bufferOperation) {
+    var name = get(this, 'instrumentName'),
+        details = {};
+
+    this.instrumentDetails(details);
+
+    return Ember.instrument(name, details, function() {
+      return this._renderToBuffer(parentBuffer, bufferOperation);
+    }, this);
+  },
+
+  _renderToBuffer: function(parentBuffer, bufferOperation) {
+    var buffer;
+
+    Ember.run.sync();
+
+    // Determine where in the parent buffer to start the new buffer.
+    // By default, a new buffer will be appended to the parent buffer.
+    // The buffer operation may be changed if the child views array is
+    // mutated by Ember.ContainerView.
+    bufferOperation = bufferOperation || 'begin';
+
+    // If this is the top-most view, start a new buffer. Otherwise,
+    // create a new buffer relative to the original using the
+    // provided buffer operation (for example, `insertAfter` will
+    // insert a new buffer after the "parent buffer").
+    if (parentBuffer) {
+      var tagName = get(this, 'tagName');
+      if (tagName === null || tagName === undefined) {
+        tagName = 'div';
+      }
+
+      buffer = parentBuffer[bufferOperation](tagName);
+    } else {
+      buffer = this.renderBuffer();
+    }
+
+    this.buffer = buffer;
+    this.transitionTo('inBuffer', false);
+
+    this.beforeRender(buffer);
+    this.render(buffer);
+    this.afterRender(buffer);
+
+    return buffer;
+  },
+
+  /**
+    @private
+
+    Override the default event firing from Ember.Evented to
+    also call methods with the given name.
+
+    @method trigger
+    @param name {String}
+  */
+  trigger: function(name) {
+    this._super.apply(this, arguments);
+    var method = this[name];
+    if (method) {
+      var args = [], i, l;
+      for (i = 1, l = arguments.length; i < l; i++) {
+        args.push(arguments[i]);
+      }
+      return method.apply(this, args);
+    }
+  },
+
+  has: function(name) {
+    return Ember.typeOf(this[name]) === 'function' || this._super(name);
+  },
+
+  willDestroy: function() {
+    var parent = get(this, '_parentView');
+
+    // destroy the element -- this will avoid each child view destroying
+    // the element over and over again...
+    if (!this.removedFromDOM) { this.destroyElement(); }
+
+    // remove from parent if found. Don't call removeFromParent,
+    // as removeFromParent will try to remove the element from
+    // the DOM again.
+    if (parent) { parent.removeChild(this); }
+
+    this.state = 'destroyed';
+
+    // next remove view from global hash
+    if (!this.isVirtual) delete Ember.View.views[get(this, 'elementId')];
+  },
+
+  clearRenderedChildren: Ember.K,
+  invokeRecursively: Ember.K,
+  invalidateRecursively: Ember.K,
+  transitionTo: Ember.K,
+  destroyElement: Ember.K,
+  _notifyWillInsertElement: Ember.K,
+  _notifyDidInsertElement: Ember.K
+});
+
 /**
   `Ember.View` is the class in Ember responsible for encapsulating templates of HTML
   content, combining templates with data to render as sections of a page's DOM, and
@@ -13138,7 +13321,7 @@ var invokeForState = {
   @extends Ember.Object
   @uses Ember.Evented
 */
-Ember.View = Ember.Object.extend(Ember.Evented,
+Ember.View = Ember.CoreView.extend(
 /** @scope Ember.View.prototype */ {
 
   concatenatedProperties: ['classNames', 'classNameBindings', 'attributeBindings'],
@@ -13336,32 +13519,6 @@ Ember.View = Ember.Object.extend(Ember.Evented,
   _displayPropertyDidChange: Ember.observer(function() {
     this.rerender();
   }, 'context', 'controller'),
-
-  /**
-    If the view is currently inserted into the DOM of a parent view, this
-    property will point to the parent of the view.
-
-    @property parentView
-    @type Ember.View
-    @default null
-  */
-  parentView: Ember.computed(function() {
-    var parent = get(this, '_parentView');
-
-    if (parent && parent.isVirtual) {
-      return get(parent, 'parentView');
-    } else {
-      return parent;
-    }
-  }).property('_parentView').volatile(),
-
-  _parentView: null,
-
-  // return the current view, not including virtual views
-  concreteView: Ember.computed(function() {
-    if (!this.isVirtual) { return this; }
-    else { return get(this, 'parentView'); }
-  }).property('_parentView').volatile(),
 
   /**
     If false, the view will appear hidden in DOM.
@@ -13715,7 +13872,7 @@ Ember.View = Ember.Object.extend(Ember.Evented,
 
       addObserver(this, parsedPath.path, observer);
 
-      this.one('willRerender', function() {
+      this.one('willClearRender', function() {
         removeObserver(this, parsedPath.path, observer);
       });
     }, this);
@@ -13754,7 +13911,7 @@ Ember.View = Ember.Object.extend(Ember.Evented,
 
       addObserver(this, property, observer);
 
-      this.one('willRerender', function() {
+      this.one('willClearRender', function() {
         removeObserver(this, property, observer);
       });
 
@@ -14008,27 +14165,6 @@ Ember.View = Ember.Object.extend(Ember.Evented,
   },
 
   /**
-    Creates a new renderBuffer with the passed tagName. You can override this
-    method to provide further customization to the buffer if needed. Normally
-    you will not need to call or override this method.
-
-    @method renderBuffer
-    @param [tagName] {String}
-    @return {Ember.RenderBuffer}
-  */
-  renderBuffer: function(tagName) {
-    tagName = tagName || get(this, 'tagName');
-
-    // Explicitly check for null or undefined, as tagName
-    // may be an empty string, which would evaluate to false.
-    if (tagName === null || tagName === undefined) {
-      tagName = 'div';
-    }
-
-    return Ember.RenderBuffer(tagName);
-  },
-
-  /**
     Creates a DOM representation of the view and all of its
     child views by recursively calling the `render()` method.
 
@@ -14068,9 +14204,9 @@ Ember.View = Ember.Object.extend(Ember.Evented,
     been torn down. This is a good opportunity to tear down any manual
     observers you have installed based on the DOM state
 
-    @event willRerender
+    @event willClearRender
   */
-  willRerender: Ember.K,
+  willClearRender: Ember.K,
 
   /**
     @private
@@ -14133,14 +14269,14 @@ Ember.View = Ember.Object.extend(Ember.Evented,
   /**
     @private
 
-    Invokes the receiver's willRerender() method if it exists and then
-    invokes the same on all child views.
+    Triggers the `willClearRender` event (which invokes the `willClearRender()`
+    method if it exists) on this view and all child views.
 
-    @method _notifyWillRerender
+    @method _notifyWillClearRender
   */
-  _notifyWillRerender: function() {
+  _notifyWillClearRender: function() {
     this.invokeRecursively(function(view) {
-      view.trigger('willRerender');
+      view.trigger('willClearRender');
     });
   },
 
@@ -14178,11 +14314,17 @@ Ember.View = Ember.Object.extend(Ember.Evented,
   /**
     @private
 
-    Invokes the `willDestroyElement` callback on the view and child views.
+    Triggers the `willDestroyElement` event (which invokes the `willDestroyElement()`
+    method if it exists) on this view and all child views.
+
+    Before triggering `willDestroyElement`, it first triggers the `willClearRender`
+    event recursively.
 
     @method _notifyWillDestroyElement
   */
   _notifyWillDestroyElement: function() {
+    this._notifyWillClearRender();
+
     this.invokeRecursively(function(view) {
       view.trigger('willDestroyElement');
     });
@@ -14216,77 +14358,16 @@ Ember.View = Ember.Object.extend(Ember.Evented,
   */
   parentViewDidChange: Ember.K,
 
-  /**
-    @private
-
-    Invoked by the view system when this view needs to produce an HTML
-    representation. This method will create a new render buffer, if needed,
-    then apply any default attributes, such as class names and visibility.
-    Finally, the `render()` method is invoked, which is responsible for
-    doing the bulk of the rendering.
-
-    You should not need to override this method; instead, implement the
-    `template` property, or if you need more control, override the `render`
-    method.
-
-    @method renderToBuffer
-    @param {Ember.RenderBuffer} buffer the render buffer. If no buffer is
-      passed, a default buffer, using the current view's `tagName`, will
-      be used.
-  */
-  renderToBuffer: function(parentBuffer, bufferOperation) {
-    var name = get(this, 'instrumentName'),
-        details = {};
-
-    this.instrumentDetails(details);
-
-    return Ember.instrument(name, details, function() {
-      return this._renderToBuffer(parentBuffer, bufferOperation);
-    }, this);
-  },
-
   instrumentName: 'render.view',
 
   instrumentDetails: function(hash) {
     hash.template = get(this, 'templateName');
-    hash.type = this.constructor.toString();
+    this._super(hash);
   },
 
   _renderToBuffer: function(parentBuffer, bufferOperation) {
-    var buffer;
-
-    Ember.run.sync();
-
-    // Determine where in the parent buffer to start the new buffer.
-    // By default, a new buffer will be appended to the parent buffer.
-    // The buffer operation may be changed if the child views array is
-    // mutated by Ember.ContainerView.
-    bufferOperation = bufferOperation || 'begin';
-
-    // If this is the top-most view, start a new buffer. Otherwise,
-    // create a new buffer relative to the original using the
-    // provided buffer operation (for example, `insertAfter` will
-    // insert a new buffer after the "parent buffer").
-    if (parentBuffer) {
-      var tagName = get(this, 'tagName');
-      if (tagName === null || tagName === undefined) {
-        tagName = 'div';
-      }
-
-      buffer = parentBuffer[bufferOperation](tagName);
-    } else {
-      buffer = this.renderBuffer();
-    }
-
-    this.buffer = buffer;
-    this.transitionTo('inBuffer', false);
-
     this.lengthBeforeRender = this._childViews.length;
-
-    this.beforeRender(buffer);
-    this.render(buffer);
-    this.afterRender(buffer);
-
+    var buffer = this._super(parentBuffer, bufferOperation);
     this.lengthAfterRender = this._childViews.length;
 
     return buffer;
@@ -14433,8 +14514,6 @@ Ember.View = Ember.Object.extend(Ember.Evented,
   */
   attributeBindings: [],
 
-  state: 'preRender',
-
   // .......................................................
   // CORE DISPLAY METHODS
   //
@@ -14451,10 +14530,6 @@ Ember.View = Ember.Object.extend(Ember.Evented,
   */
   init: function() {
     this._super();
-
-    // Register the view for event handling. This hash is used by
-    // Ember.EventDispatcher to dispatch incoming events.
-    if (!this.isVirtual) Ember.View.views[get(this, 'elementId')] = this;
 
     // setup child views. be sure to clone the child views array first
     this._childViews = this._childViews.slice();
@@ -14596,7 +14671,7 @@ Ember.View = Ember.Object.extend(Ember.Evented,
     @return {Ember.View} new instance
   */
   createChildView: function(view, attrs) {
-    if (Ember.View.detect(view)) {
+    if (Ember.CoreView.detect(view)) {
       attrs = attrs || {};
       attrs._parentView = this;
       attrs.templateData = attrs.templateData || get(this, 'templateData');
@@ -14607,7 +14682,7 @@ Ember.View = Ember.Object.extend(Ember.Evented,
       // consumers of the view API
       if (view.viewName) { set(get(this, 'concreteView'), view.viewName, view); }
     } else {
-      Ember.assert('You must pass instance or subclass of View', view instanceof Ember.View);
+      Ember.assert('You must pass instance or subclass of View', view instanceof Ember.CoreView);
       Ember.assert("You can only pass attributes when a class is provided", !attrs);
 
       if (!get(view, 'templateData')) {
@@ -14697,31 +14772,6 @@ Ember.View = Ember.Object.extend(Ember.Evented,
         view.transitionTo(state);
       });
     }
-  },
-
-  /**
-    @private
-
-    Override the default event firing from Ember.Evented to
-    also call methods with the given name.
-
-    @method trigger
-    @param name {String}
-  */
-  trigger: function(name) {
-    this._super.apply(this, arguments);
-    var method = this[name];
-    if (method) {
-      var args = [], i, l;
-      for (i = 1, l = arguments.length; i < l; i++) {
-        args.push(arguments[i]);
-      }
-      return method.apply(this, args);
-    }
-  },
-
-  has: function(name) {
-    return Ember.typeOf(this[name]) === 'function' || this._super(name);
   },
 
   // .......................................................
@@ -15054,7 +15104,7 @@ Ember.View.states.inBuffer = {
   rerender: function(view) {
     Ember.deprecate("Something you did caused a view to re-render after it rendered but before it was inserted into the DOM. Because this is avoidable and the cause of significant performance issues in applications, this behavior is deprecated. If you want to use the debugger to find out what caused this, you can set ENV.RAISE_ON_DEPRECATION to true.");
 
-    view._notifyWillRerender();
+    view._notifyWillClearRender();
 
     view.clearRenderedChildren();
     view.renderToBuffer(view.buffer, 'replaceWith');
@@ -15154,7 +15204,7 @@ Ember.View.states.hasElement = {
   // once the view has been inserted into the DOM, rerendering is
   // deferred to allow bindings to synchronize.
   rerender: function(view) {
-    view._notifyWillRerender();
+    view._notifyWillClearRender();
 
     view.clearRenderedChildren();
 
@@ -17606,7 +17656,11 @@ Ember.Routable = Ember.Mixin.create({
   routeMatcher: Ember.computed(function() {
     var route = get(this, 'route');
     if (route) {
-      return Ember._RouteMatcher.create({ route: route });
+      return Ember._RouteMatcher.create({
+        route: route,
+        dynamicSegmentPattern: get(this, 'dynamicSegmentPattern'),
+        dynamicSegmentTerminators: get(this, 'dynamicSegmentTerminators')
+      });
     }
   }).cacheable(),
 
@@ -17764,7 +17818,14 @@ Ember.Routable = Ember.Mixin.create({
       var aDynamicSegments = get(a, 'routeMatcher.identifiers.length'),
           bDynamicSegments = get(b, 'routeMatcher.identifiers.length'),
           aRoute = get(a, 'route'),
-          bRoute = get(b, 'route');
+          bRoute = get(b, 'route'),
+          aIndex = a.get('index'),
+          bIndex = b.get('index');
+
+      if( (aIndex || aIndex == 0) && (bIndex || bIndex == 0) ) {
+        return aIndex - bIndex
+      }
+
 
       if (aRoute.indexOf(bRoute) === 0) {
         return -1;
@@ -17987,9 +18048,12 @@ Ember._RouteMatcher = Ember.Object.extend({
 
   init: function() {
     var route = this.route,
+        dynamicSegmentPattern = this.dynamicSegmentPattern || "([^/]+)",
+        terminators = this.dynamicSegmentTerminators || [],
         identifiers = [],
         count = 1,
-        escaped;
+        escaped,
+        segmentRegexp;
 
     // Strip off leading slash if present
     if (route.charAt(0) === '/') {
@@ -17998,9 +18062,12 @@ Ember._RouteMatcher = Ember.Object.extend({
 
     escaped = escapeForRegex(route);
 
-    var regex = escaped.replace(/:([a-z_]+)(?=$|\/)/gi, function(match, id) {
+    terminators.push('$|/');
+    str = ':([a-z_]+)(?=' + terminators.join('|') + ')'
+    segmentRegexp = new RegExp(str, 'gi');
+    var regex = escaped.replace(segmentRegexp, function(match, id) {
       identifiers[count++] = id;
-      return "([^/]+)";
+      return dynamicSegmentPattern;
     });
 
     this.identifiers = identifiers;
@@ -18008,6 +18075,7 @@ Ember._RouteMatcher = Ember.Object.extend({
   },
 
   match: function(path) {
+    console.log('match', path, this.regex);
     var match = path.match(this.regex);
 
     if (match) {
@@ -19783,6 +19851,8 @@ Ember._Metamorph = Ember.Mixin.create({
   isVirtual: true,
   tagName: '',
 
+  instrumentName: 'render.metamorph',
+
   init: function() {
     this._super();
     this.morph = Metamorph();
@@ -19814,6 +19884,15 @@ Ember._Metamorph = Ember.Mixin.create({
 */
 Ember._MetamorphView = Ember.View.extend(Ember._Metamorph);
 
+/**
+  @class _SimpleMetamorphView
+  @namespace Ember
+  @extends Ember.View
+  @uses Ember._Metamorph
+  @private
+*/
+Ember._SimpleMetamorphView = Ember.CoreView.extend(Ember._Metamorph);
+
 
 })();
 
@@ -19828,6 +19907,66 @@ Ember._MetamorphView = Ember.View.extend(Ember._Metamorph);
 */
 
 var get = Ember.get, set = Ember.set, getPath = Ember.Handlebars.getPath;
+Ember._SimpleHandlebarsView = Ember._SimpleMetamorphView.extend({
+  instrumentName: 'render.simpleHandlebars',
+
+  normalizedValue: Ember.computed(function() {
+    var path = get(this, 'path'),
+        pathRoot  = get(this, 'pathRoot'),
+        result, templateData;
+
+    // Use the pathRoot as the result if no path is provided. This
+    // happens if the path is `this`, which gets normalized into
+    // a `pathRoot` of the current Handlebars context and a path
+    // of `''`.
+    if (path === '') {
+      result = pathRoot;
+    } else {
+      templateData = get(this, 'templateData');
+      result = getPath(pathRoot, path, { data: templateData });
+    }
+
+    return result;
+  }).property('path', 'pathRoot').volatile(),
+
+  render: function(buffer) {
+    // If not invoked via a triple-mustache ({{{foo}}}), escape
+    // the content of the template.
+    var escape = get(this, 'isEscaped');
+    var result = get(this, 'normalizedValue');
+
+    if (result === null || result === undefined) {
+      result = "";
+    } else if (!(result instanceof Handlebars.SafeString)) {
+      result = String(result);
+    }
+
+    if (escape) { result = Handlebars.Utils.escapeExpression(result); }
+    buffer.push(result);
+    return;
+  },
+
+  rerender: function() {
+    switch(this.state) {
+      case 'preRender':
+      case 'destroyed':
+        break;
+      case 'inBuffer':
+        throw new Error("Something you did tried to replace an {{expression}} before it was inserted into the DOM.");
+      case 'hasElement':
+      case 'inDOM':
+        this.domManager.replace(this);
+        break;
+    }
+
+    return this;
+  },
+
+  transitionTo: function(state) {
+    this.state = state;
+  }
+});
+
 /**
   Ember._HandlebarsBoundView is a private view created by the Handlebars `{{bind}}`
   helpers that is used to keep track of bound properties.
@@ -20089,7 +20228,53 @@ function bind(property, options, preserveContext, shouldDisplay, valueNormalizer
     if (path !== '') {
       Ember.addObserver(pathRoot, path, observer);
 
-      view.one('willRerender', function() {
+      view.one('willClearRender', function() {
+        Ember.removeObserver(pathRoot, path, observer);
+      });
+    }
+  } else {
+    // The object is not observable, so just render it out and
+    // be done with it.
+    data.buffer.push(getPath(pathRoot, path, options));
+  }
+}
+
+function simpleBind(property, options) {
+  var data = options.data,
+      view = data.view,
+      currentContext = this,
+      pathRoot, path, normalized;
+
+  normalized = normalizePath(currentContext, property, data);
+
+  pathRoot = normalized.root;
+  path = normalized.path;
+
+  // Set up observers for observable objects
+  if ('object' === typeof this) {
+    var bindView = Ember._SimpleHandlebarsView.create().setProperties({
+      path: path,
+      pathRoot: pathRoot,
+      isEscaped: !options.hash.unescaped,
+      previousContext: currentContext,
+      templateData: options.data
+    });
+
+    view.createChildView(bindView);
+    view.appendChild(bindView);
+
+    var observer = function() {
+      Ember.run.scheduleOnce('render', bindView, 'rerender');
+    };
+
+    // Observes the given property on the context and
+    // tells the Ember._HandlebarsBoundView to re-render. If property
+    // is an empty string, we are printing the current context
+    // object ({{this}}) so updating it is not our responsibility.
+    if (path !== '') {
+      Ember.addObserver(pathRoot, path, observer);
+
+      view.one('willClearRender', function() {
         Ember.removeObserver(pathRoot, path, observer);
       });
     }
@@ -20150,12 +20335,16 @@ EmberHandlebars.registerHelper('_triageMustache', function(property, fn) {
   @param {Function} fn Context to provide for rendering
   @return {String} HTML string
 */
-EmberHandlebars.registerHelper('bind', function(property, fn) {
+EmberHandlebars.registerHelper('bind', function(property, options) {
   Ember.assert("You cannot pass more than one argument to the bind helper", arguments.length <= 2);
 
-  var context = (fn.contexts && fn.contexts[0]) || this;
+  var context = (options.contexts && options.contexts[0]) || this;
 
-  return bind.call(context, property, fn, false, function(result) {
+  if (!options.fn) {
+    return simpleBind.call(context, property, options);
+  }
+
+  return bind.call(context, property, options, false, function(result) {
     return !Ember.none(result);
   });
 });
@@ -20357,7 +20546,7 @@ EmberHandlebars.registerHelper('bindAttr', function(options) {
     if (path !== 'this') {
       Ember.addObserver(pathRoot, path, invoker);
 
-      view.one('willRerender', function() {
+      view.one('willClearRender', function() {
         Ember.removeObserver(pathRoot, path, invoker);
       });
     }
@@ -20478,7 +20667,7 @@ EmberHandlebars.bindClasses = function(context, classBindings, view, bindAttrId,
     if (path !== '' && path !== 'this') {
       Ember.addObserver(pathRoot, path, invoker);
 
-      view.one('willRerender', function() {
+      view.one('willClearRender', function() {
         Ember.removeObserver(pathRoot, path, invoker);
       });
     }
@@ -21399,7 +21588,7 @@ ActionHelper.registerAction = function(actionName, options) {
     }
   };
 
-  options.view.on('willRerender', function() {
+  options.view.on('willClearRender', function() {
     delete ActionHelper.registeredActions[actionId];
   });
 
@@ -22876,8 +23065,8 @@ Ember Handlebars
 
 })();
 
-// Version: v1.0.pre-206-g50de50e
-// Last commit: 50de50e (2012-10-18 15:43:34 -0400)
+// Version: v1.0.pre-215-g866ae36
+// Last commit: 866ae36 (2012-10-20 16:17:08 +0200)
 
 
 (function() {
