@@ -34,8 +34,11 @@ require 'travis/model'
   ).property('log.workerName')
 
   configValues: (->
-    if config = @get('config')
-      $.values($.only.apply(config, Travis.CONFIG_KEYS))
+    config      = @get('config')
+    buildConfig = @get('build.config')
+    if config && buildConfig
+      keys = $.intersect($.keys(buildConfig), Travis.CONFIG_KEYS)
+      keys.map (key) -> config[key]
     else
       []
   ).property('config')
