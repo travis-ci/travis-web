@@ -1,6 +1,6 @@
 @Travis.Tailing = ->
   @position = $(window).scrollTop()
-  $(window).scroll(@onScroll.bind(this))
+  $(window).scroll( $.throttle( 200, @onScroll.bind(this) ) )
   this
 
 $.extend Travis.Tailing.prototype,
@@ -42,7 +42,7 @@ $.extend Travis.Tailing.prototype,
   positionButton: ->
     tail = $('#tail')
     return if tail.length is 0
-    offset = $(window).scrollTop() - $('#log').offset().top
+    offset = $(window).scrollTop() - $('#log').offset().top + $('#top').height()
     max = $('#log').height() - $('#tail').height() + 5
     offset = max if offset > max
     if offset > 0
