@@ -23,7 +23,9 @@
     this
 
   isAttributeLoaded: (name) ->
-    @loadedAttributes.contains(name)
+    if meta = Ember.get(this.constructor, 'attributes').get(name)
+      name = meta.key(this.constructor)
+      @get('store').isDataLoadedFor(this.constructor, @get('clientId'), name)
 
   isComplete: (->
     if @get 'incomplete'
@@ -42,6 +44,9 @@
 
   select: ->
     @constructor.select(@get('id'))
+
+  loadedAsIncomplete: () ->
+    @set 'incomplete', true
 
 @Travis.Model.reopenClass
   find: ->
@@ -77,15 +82,4 @@
     Travis.app.store.adapter.pluralize(@singularName())
 
   isAttribute: (name) ->
-    unless @attributesSaved
-      @_saveAttributes()
-    @cachedAttributes.contains(name)
-
-  _saveAttributes: ->
-    @attributesSaved = true
-
-    cachedAttributes = []
-    @eachComputedProperty (name, meta) ->
-      cachedAttributes.pushObject name if meta.isAttribute
-
-    @cachedAttributes = cachedAttributes
+    Ember.get(this, 'attributes').has(name)

@@ -8873,7 +8873,8 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
 
   Travis.Foo = Travis.Model.extend({
     name: DS.attr('string'),
-    description: DS.attr('string')
+    description: DS.attr('string'),
+    lastName: DS.attr('string')
   });
 
   record = null;
@@ -8904,7 +8905,8 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
         var attrs;
         attrs = {
           id: 1,
-          name: 'foo'
+          name: 'foo',
+          last_name: 'foobar'
         };
         return record = store.loadIncomplete(Travis.Foo, attrs);
       });
@@ -8929,7 +8931,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
           return expect(record.get('isComplete')).toBeTruthy();
         });
       });
-      return it('does not set incomplete on the record twice', function() {
+      it('does not set incomplete on the record twice', function() {
         record.get('description');
         waits(50);
         return runs(function() {
@@ -8937,6 +8939,31 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
             id: 1
           });
           return expect(record.get('incomplete')).toBeFalsy();
+        });
+      });
+      it('does not load data on non attribute', function() {
+        record.get('foobarbaz');
+        waits(50);
+        return runs(function() {
+          return expect(record.get('incomplete')).toBeTruthy();
+        });
+      });
+      it('works with camel case values', function() {
+        expect(record.get('lastName')).toEqual('foobar');
+        waits(50);
+        return runs(function() {
+          return expect(record.get('complete')).toBeFalsy();
+        });
+      });
+      return it('adds takes into account additional data loaded as incomplete', function() {
+        record = store.loadIncomplete(Travis.Foo, {
+          id: 1,
+          description: 'baz'
+        });
+        expect(record.get('description')).toEqual('baz');
+        waits(50);
+        return runs(function() {
+          return expect(record.get('complete')).toBeFalsy();
         });
       });
     });

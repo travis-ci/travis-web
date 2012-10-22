@@ -1,6 +1,7 @@
 Travis.Foo = Travis.Model.extend
   name:        DS.attr('string')
   description: DS.attr('string')
+  lastName:    DS.attr('string')
 
 record = null
 store = null
@@ -22,6 +23,7 @@ describe 'Travis.Model', ->
       attrs = {
         id: 1
         name: 'foo'
+        last_name: 'foobar'
       }
       record = store.loadIncomplete(Travis.Foo, attrs)
 
@@ -50,6 +52,25 @@ describe 'Travis.Model', ->
       runs ->
         store.loadIncomplete(Travis.Foo, id: 1)
         expect( record.get('incomplete') ).toBeFalsy()
+
+    it 'does not load data on non attribute', ->
+      record.get('foobarbaz')
+      waits 50
+      runs ->
+        expect( record.get('incomplete') ).toBeTruthy()
+
+    it 'works with camel case values', ->
+      expect( record.get('lastName') ).toEqual 'foobar'
+      waits 50
+      runs ->
+        expect( record.get('complete') ).toBeFalsy()
+
+    it 'adds takes into account additional data loaded as incomplete', ->
+      record = store.loadIncomplete(Travis.Foo, { id: 1, description: 'baz' })
+      expect( record.get('description') ).toEqual 'baz'
+      waits 50
+      runs ->
+        expect( record.get('complete') ).toBeFalsy()
 
   describe 'with complete record', ->
     beforeEach ->

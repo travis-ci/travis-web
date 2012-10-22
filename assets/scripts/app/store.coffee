@@ -8,6 +8,10 @@ Travis.Store = DS.Store.extend
   revision: 4
   adapter: Travis.RestAdapter.create()
 
+  init: ->
+    @_super.apply this, arguments
+    @_loadedData = {}
+
   load: (type, id, hash) ->
     result = @_super.apply this, arguments
 
@@ -75,18 +79,30 @@ Travis.Store = DS.Store.extend
     # attached. I don't want to use store.sideload here as it will not use merge,
     # if we need sideload becasue we have side records with other events it needs to
     # be revised
-    if type == Travis.Build && json.repository
-      result = @loadIncomplete(Travis.Repo, json.repository)
+    if type == Travis.Build && (json.repository || json.repo)
+      result = @loadIncomplete(Travis.Repo, json.repository || json.repo)
     @loadIncomplete(type, json[root])
+
+  addLoadedData: (type, clientId, hash) ->
+    id = hash.id
+    @_loadedData[type.toString()] ||= {}
+    loadedData = (@_loadedData[type][clientId] ||= [])
+    for key of hash
+      loadedData.pushObject key unless loadedData.contains(key)
+
+  isDataLoadedFor: (type, clientId, key) ->
+    if recordsData = @_loadedData[type.toString()]
+      if data = recordsData[clientId]
+        data.contains(key)
 
   loadIncomplete: (type, hash) ->
     result = @merge(type, hash)
 
     if result && result.clientId
+      @addLoadedData(type, result.clientId, hash)
       record = @findByClientId(type, result.clientId)
       unless record.get('complete')
-        record.set 'incomplete', true
-        record.loadedAttributes = Object.keys hash
+        record.loadedAsIncomplete()
 
       @_updateAssociations(type, type.singularName(), hash)
 
