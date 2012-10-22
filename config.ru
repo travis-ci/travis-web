@@ -5,6 +5,7 @@ ENV['RAILS_ENV']  = ENV['RACK_ENV']
 $: << 'lib'
 require 'travis/web'
 
+use Travis::Web::Allow
 use Travis::Web::ApiRedirect do |config|
   config.api_endpoint = ENV['API_ENDPOINT'] if ENV['API_ENDPOINT']
 end
