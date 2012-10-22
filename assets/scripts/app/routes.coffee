@@ -39,6 +39,7 @@ Travis.Router = Ember.Router.extend
         @set 'repoController.lineNumberHash', match[0]
 
   reload: ->
+    console.log 'Triggering reload'
     url = @get('location').getURL()
     @transitionTo('loading')
     # Without ember next @route sometimes hit the place where HistoryLocation

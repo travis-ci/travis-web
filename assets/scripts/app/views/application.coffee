@@ -8,8 +8,9 @@
 
     localeDidChange: (->
       if locale = Travis.app.get('auth.user.locale')
-        Travis.setLocale(locale)
-        Travis.app.get('router').reload()
+        if Travis.needsLocaleChange(locale)
+          Travis.setLocale(locale)
+          Travis.app.get('router').reload()
     ).observes('Travis.app.auth.user.locale')
 
     click: (event) ->

@@ -40,6 +40,9 @@ require 'ext/ember/namespace'
     I18n.locale = locale
     localStorage.setItem('travis.locale', locale)
 
+  needsLocaleChange: (locale) ->
+    I18n.locale != locale
+
   run: (attrs) ->
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
 
