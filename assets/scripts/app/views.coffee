@@ -10,13 +10,6 @@ require 'ext/ember/namespace'
     popupCloseAll: ->
       $('.popup').removeClass('display')
 
-
-@Travis.reopen
-  HomeLayoutView:    Travis.View.extend(templateName: 'layouts/home')
-  AuthLayoutView:    Travis.View.extend(templateName: 'layouts/simple')
-  ProfileLayoutView: Travis.View.extend(templateName: 'layouts/profile')
-  StatsLayoutView:   Travis.View.extend(templateName: 'layouts/simple')
-
 require 'views/accounts'
 require 'views/application'
 require 'views/build'

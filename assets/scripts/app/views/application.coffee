@@ -1,7 +1,13 @@
 @Travis.reopen
   ApplicationView: Travis.View.extend
-    templateName: 'application'
+    templateName: 'layouts/home'
     classNames: ['application']
+
+    connectLayout: (name) ->
+      name = "layouts/#{name}"
+      if @get('templateName') != name
+        @set('templateName', name)
+        @rerender()
 
     # popup: (event) ->
     #   console.log event

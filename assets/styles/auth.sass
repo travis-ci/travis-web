@@ -1,18 +1,16 @@
 @import "_mixins/all"
 
 #auth
-  #page
-    display: block
-    min-height: 500px
-
   #main
     top: 200px
-    margin: 0 auto 0 auto
+    margin: 0 auto
     padding: 25px 50px
+    height: 100px
 
     width: 300px
     min-width: auto
     border: 10px solid #bbb
+    max-height: 400px
     @include border-radius(8px)
 
     h1
@@ -24,5 +22,3 @@
 
     a:hover
       text-decoration: underline
-
-

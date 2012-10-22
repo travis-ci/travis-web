@@ -2,19 +2,7 @@ require 'helpers'
 require 'travis/ticker'
 
 Travis.reopen
-  Controller: Em.Controller.extend
-    connectOutlet: ->
-      view = @_super.apply(this, arguments)
-
-      if view
-        _connectedOutletViews = Travis.app.get('_connectedOutletViews')
-        unless _connectedOutletViews
-          _connectedOutletViews = []
-
-        _connectedOutletViews.pushObject(view)
-        Travis.app.set('_connectedOutletViews', _connectedOutletViews)
-
-      view
+  Controller: Em.Controller.extend()
 
   TopController: Em.Controller.extend
     userBinding: 'Travis.app.currentUser'

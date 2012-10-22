@@ -78,10 +78,10 @@ Travis.Router = Ember.Router.extend
     auth: Ember.Route.extend
       route: '/auth'
       connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet('authLayout')
+        router.get('applicationView').connectLayout 'simple'
         $('body').attr('id', 'auth')
-        router.get('authLayoutController').connectOutlet('top', 'top')
-        router.get('authLayoutController').connectOutlet('main', 'signin')
+        router.get('applicationController').connectOutlet('top', 'top')
+        router.get('applicationController').connectOutlet('main', 'signin')
 
       afterSignIn: (router, path) ->
         router.route(path || '/')
@@ -89,26 +89,26 @@ Travis.Router = Ember.Router.extend
     stats: Ember.Route.extend
       route: '/stats'
       connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet 'statsLayout'
+        router.get('applicationView').connectLayout 'simple'
         $('body').attr('id', 'stats')
-        router.get('statsLayoutController').connectOutlet 'top', 'top'
-        router.get('statsLayoutController').connectOutlet 'main', 'stats'
+        router.get('applicationController').connectOutlet 'top', 'top'
+        router.get('applicationController').connectOutlet 'main', 'stats'
 
     profile: Ember.Route.extend
       initialState: 'index'
       route: '/profile'
 
       connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet 'profileLayout'
+        router.get('applicationView').connectLayout 'profile'
         $('body').attr('id', 'profile')
         router.get('accountsController').set('content', Travis.Account.find())
-        router.get('profileLayoutController').connectOutlet 'top', 'top'
-        router.get('profileLayoutController').connectOutlet 'left', 'accounts'
+        router.get('applicationController').connectOutlet 'top', 'top'
+        router.get('applicationController').connectOutlet 'left', 'accounts'
 
       index: Ember.Route.extend
         route: '/'
         connectOutlets: (router) ->
-          router.get('profileLayoutController').connectOutlet 'main', 'profile'
+          router.get('applicationController').connectOutlet 'main', 'profile'
           router.get('profileController').activate 'hooks'
 
       account: Ember.Route.extend
@@ -163,13 +163,13 @@ Travis.Router = Ember.Router.extend
     home: Ember.Route.extend
       route: '/'
       connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet 'homeLayout'
+        router.get('applicationView').connectLayout 'home'
         $('body').attr('id', 'home')
-        router.get('homeLayoutController').connectOutlet 'left', 'repos'
-        router.get('homeLayoutController').connectOutlet 'right', 'sidebar'
-        router.get('homeLayoutController').connectOutlet 'top', 'top'
-        router.get('homeLayoutController').connectOutlet 'main', 'repo'
-        router.get('homeLayoutController').connectOutlet 'flash', 'flash'
+        router.get('applicationController').connectOutlet 'left', 'repos'
+        router.get('applicationController').connectOutlet 'right', 'sidebar'
+        router.get('applicationController').connectOutlet 'top', 'top'
+        router.get('applicationController').connectOutlet 'main', 'repo'
+        router.get('applicationController').connectOutlet 'flash', 'flash'
         router.get('repoController').set('repos', router.get('reposController'))
 
       show: Ember.Route.extend

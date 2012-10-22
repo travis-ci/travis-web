@@ -59,7 +59,7 @@
       $('#main').scrollTop 0
 
       # weird, html works in chrome, body in firefox
-      $('html,body').scrollTop $(hash).offset().top - $('#top').height()
+      $('html,body').scrollTop $(hash).offset().top
 
       @set 'controller.lineNumberHash', null
 

@@ -3,36 +3,23 @@
 $left-width: 250px
 
 html, body
-  min-height: 100%
+  height: 100%
 
 .application
   width: 100%
-  overflow: hidden
-
-// ouch. ember injects additional divs that somehow don't inherit the actual dimensions
-.application, .application > div
-  width: 100%
   min-height: 100%
-
-.application > div
-  overflow-x: auto
+  @include display-box
+  @include box-orient(horizontal)
+  @include box-align(stretch)
+  margin-top: 40px
 
 #top
-  position: fixed
+  position: absolute
   top: 0
   left: 0
   width: 100%
   height: 40px
   z-index: 1000
-
-#page
-  position: relative
-  @include display-box
-  @include box-orient(horizontal)
-  @include box-align(stretch)
-  width: 100%
-  min-height: 100%
-  margin-top: 40px
 
 #left, #right
   @include box-flex(0)

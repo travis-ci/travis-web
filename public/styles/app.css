@@ -2329,34 +2329,31 @@ span.loading {
 }
 
 /* line 4, /Users/drogus/code/travis/travis-web/assets/styles/auth.sass */
-#auth #page {
-  display: block;
-  min-height: 500px;
-}
-/* line 8, /Users/drogus/code/travis/travis-web/assets/styles/auth.sass */
 #auth #main {
   top: 200px;
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
   padding: 25px 50px;
+  height: 100px;
   width: 300px;
   min-width: auto;
   border: 10px solid #bbbbbb;
+  max-height: 400px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
   border-radius: 8px;
 }
-/* line 18, /Users/drogus/code/travis/travis-web/assets/styles/auth.sass */
+/* line 16, /Users/drogus/code/travis/travis-web/assets/styles/auth.sass */
 #auth #main h1 {
   margin-bottom: 1em;
   color: #333333;
 }
-/* line 22, /Users/drogus/code/travis/travis-web/assets/styles/auth.sass */
+/* line 20, /Users/drogus/code/travis/travis-web/assets/styles/auth.sass */
 #auth #main p {
   color: #333333;
 }
-/* line 25, /Users/drogus/code/travis/travis-web/assets/styles/auth.sass */
+/* line 23, /Users/drogus/code/travis/travis-web/assets/styles/auth.sass */
 #auth #main a:hover {
   text-decoration: underline;
 }
@@ -2544,39 +2541,13 @@ span.loading {
 
 /* line 5, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
 html, body {
-  min-height: 100%;
+  height: 100%;
 }
 
 /* line 8, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
 .application {
   width: 100%;
-  overflow: hidden;
-}
-
-/* line 13, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
-.application, .application > div {
-  width: 100%;
   min-height: 100%;
-}
-
-/* line 17, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
-.application > div {
-  overflow-x: auto;
-}
-
-/* line 20, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
-#top {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  z-index: 1000;
-}
-
-/* line 28, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
-#page {
-  position: relative;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-box;
@@ -2589,12 +2560,20 @@ html, body {
   -moz-box-align: stretch;
   -ms-box-align: stretch;
   box-align: stretch;
-  width: 100%;
-  min-height: 100%;
   margin-top: 40px;
 }
 
-/* line 37, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
+/* line 16, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
+#top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  z-index: 1000;
+}
+
+/* line 24, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
 #left, #right {
   -webkit-box-flex: 0;
   -moz-box-flex: 0;
@@ -2604,7 +2583,7 @@ html, body {
   min-height: 100%;
 }
 
-/* line 42, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
+/* line 29, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
 #left {
   min-width: 250px;
   max-width: 380px;
@@ -2618,12 +2597,12 @@ html, body {
 }
 
 @media screen and (max-width: 980px) {
-  /* line 52, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
+  /* line 39, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
   #left {
     max-width: 300px;
   }
 }
-/* line 55, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
+/* line 42, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
 #main {
   -webkit-box-flex: 4;
   -moz-box-flex: 4;
@@ -2635,7 +2614,7 @@ html, body {
   padding: 20px 40px 80px 30px;
 }
 
-/* line 62, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
+/* line 49, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
 #right {
   width: 205px;
   padding: 11px 20px 80px 20px;
@@ -2644,7 +2623,7 @@ html, body {
 }
 
 @media screen and (max-width: 1400px) {
-  /* line 69, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
+  /* line 56, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
   #left .duration_label {
     display: inline-block;
     width: 11px;
@@ -2656,7 +2635,7 @@ html, body {
   }
 }
 @media screen and (max-width: 1310px) {
-  /* line 79, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
+  /* line 66, /Users/drogus/code/travis/travis-web/assets/styles/layout.sass */
   #left .finished_at_label {
     display: none;
   }

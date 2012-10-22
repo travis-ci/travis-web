@@ -2,41 +2,39 @@
   {{outlet top}}
 </div>
 
-<div id="page">
-  <div id="left">
-    {{outlet left}}
+<div id="left">
+  {{outlet left}}
+</div>
+
+<div id="main">
+  {{outlet flash}}
+  {{outlet main}}
+</div>
+
+<div id="right">
+  <div id="github-wrapper">
+    <a id="github" href="https://github.com/travis-ci" title="Fork me on GitHub">
+      {{t layouts.application.fork_me}}
+    </a>
   </div>
 
-  <div id="main">
-    {{outlet flash}}
-    {{outlet main}}
+  <div id="slider" {{action toggle target="Travis.app.slider"}}>
+    <div class='icon'></div>&nbsp;
   </div>
 
-  <div id="right">
-    <div id="github-wrapper">
-      <a id="github" href="https://github.com/travis-ci" title="Fork me on GitHub">
-        {{t layouts.application.fork_me}}
-      </a>
-    </div>
-
-    <div id="slider" {{action toggle target="Travis.app.slider"}}>
-      <div class='icon'></div>&nbsp;
-    </div>
-
-    <div class="box">
-      <h4>Getting started?</h4>
-      <p>
-        Please read our <a href="http://about.travis-ci.org/docs/user/getting-started">guide</a>.
-        It will only take a few minutes :)
-      </p>
-      <p>
-        You can find detailled docs on our <a href="http://about.travis-ci.org/">about</a> site.
-      </p>
-      <p>
-        If you need help please don&rsquo;t hesitate to join
-        <a href="irc://irc.freenode.net#travis">#travis</a> on irc.freenode.net
-        or our <a href="http://groups.google.com/group/travis-ci">mailinglist</a>.
-      </p>
-    </div>
+  <div class="box">
+    <h4>Getting started?</h4>
+    <p>
+      Please read our <a href="http://about.travis-ci.org/docs/user/getting-started">guide</a>.
+      It will only take a few minutes :)
+    </p>
+    <p>
+      You can find detailled docs on our <a href="http://about.travis-ci.org/">about</a> site.
+    </p>
+    <p>
+      If you need help please don&rsquo;t hesitate to join
+      <a href="irc://irc.freenode.net#travis">#travis</a> on irc.freenode.net
+      or our <a href="http://groups.google.com/group/travis-ci">mailinglist</a>.
+    </p>
   </div>
 </div>
