@@ -9,4 +9,8 @@ Travis.Location = Ember.HistoryLocation.extend
     location = @get('location')
     location.pathname + location.hash
 
+  initState: ->
+    @replaceState(@getURL());
+    Ember.set(this, 'history', window.history)
+
 Ember.Location.implementations['travis'] = Travis.Location
