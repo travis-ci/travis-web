@@ -41,7 +41,10 @@ Travis.Router = Ember.Router.extend
   reload: ->
     url = @get('location').getURL()
     @transitionTo('loading')
-    @route(url)
+    # Without ember next @route sometimes hit the place where HistoryLocation
+    # does not have any state set up yet, so it's best to defer it a little bit.
+    Ember.run.next this, ->
+      @route(url)
 
   signedIn: ->
     !!Travis.app.get('auth.user')
