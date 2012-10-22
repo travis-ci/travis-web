@@ -5,6 +5,7 @@ source :rubygems
 gem 'puma'
 gem 'rack-ssl', '~> 1.3'
 gem 'rack-cache'
+gem 'sinatra'
 
 group :development, :test do
   gem 'rake', '~> 0.9.2'
@@ -22,4 +23,9 @@ group :development do
   gem 'rerun'
   gem 'guard'
   gem 'rb-fsevent', '~> 0.9.1'
+end
+
+group :test do
+  gem 'rspec', '~> 2.11'
+  gem 'sinatra-contrib'
 end

@@ -1,5 +1,6 @@
 module Travis
   module Web
-    autoload :App, 'travis/web/app'
+    autoload :ApiRedirect, 'travis/web/api_redirect'
+    autoload :App,         'travis/web/app'
   end
 end
