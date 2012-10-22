@@ -60,7 +60,7 @@ class Travis::Web::App
         'ETag'             => version,
         'Last-Modified'    => last_modified.httpdate,
         'Expires'          => (last_modified + age).httpdate,
-        'Vary'             => ''
+        'Vary'             => vary_for(file)
       }
 
       [ 200, headers, [ content ] ]
@@ -92,9 +92,17 @@ class Travis::Web::App
 
     def cache_control(file)
       case route_for(file)
-      when '/'       then "public, must-revalidate"
-      when 'version' then "no-cache"
+      when '/'        then "public, must-revalidate"
+      when '/version' then "no-cache"
       else "public, max-age=#{age}"
+      end
+    end
+
+    def vary_for(file)
+      case route_for(file)
+      when '/'         then 'Accept'
+      when '/version'  then '*'
+      else ''
       end
     end
 
