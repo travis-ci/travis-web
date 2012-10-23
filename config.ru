@@ -6,8 +6,8 @@ $: << 'lib'
 require 'travis/web'
 
 use Travis::Web::Allow
-use Travis::Web::ApiRedirect do |config|
-  config.api_endpoint = ENV['API_ENDPOINT'] if ENV['API_ENDPOINT']
+use Travis::Web::ApiRedirect do |app|
+  app.settings.api_endpoint = ENV['API_ENDPOINT'] if ENV['API_ENDPOINT']
 end
 
 run Travis::Web::App.new(
