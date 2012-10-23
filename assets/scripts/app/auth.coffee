@@ -1,6 +1,6 @@
 @Travis.Auth = Ember.Object.extend
   iframe: $('<iframe id="auth-frame" />').hide()
-  timeout: 5000
+  timeout: 10000
   state: 'signed-out'
   receivingEnd: "#{location.protocol}//#{location.host}"
 
