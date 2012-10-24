@@ -18,17 +18,21 @@ require 'travis/model'
     @get('state') == 'working'
   ).property('state')
 
-  repo: (->
-    Travis.Repo.find(@get('payload.repository.id') || @get('payload.repo.id'))
-  ).property('payload.repository.id', 'payload.repo.id')
-
-  job_id: (->
+  jobId: (->
     @get('payload.job.id')
   ).property('payload.job.id')
 
   job: (->
     Travis.Job.find @get('job_id')
-  ).property('job_id')
+  ).property('jobId')
+
+  repo: (->
+    Travis.Repo.find(@get('payload.repository.id') || @get('payload.repo.id'))
+  ).property('payload.repository.id', 'payload.repo.id')
+
+  repoSlug: (->
+    @get('payload.repo.slug') || @get('payload.repository.slug')
+  ).property('payload.repo.slug', 'payload.repository.slug')
 
   nameForSort: (->
     if name = @get('name')

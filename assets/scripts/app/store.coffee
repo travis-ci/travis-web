@@ -42,6 +42,8 @@ Travis.Store = DS.Store.extend
 
     if clientId != undefined
       if data = dataCache[clientId]
+        # trying to set id here fails, TODO: talk with ember core team to create merge-like function
+        delete hash.id
         $.extend(data, hash)
       else
         dataCache[clientId] = hash
@@ -80,7 +82,12 @@ Travis.Store = DS.Store.extend
     # if we need sideload becasue we have side records with other events it needs to
     # be revised
     if type == Travis.Build && (json.repository || json.repo)
-      result = @loadIncomplete(Travis.Repo, json.repository || json.repo)
+      @loadIncomplete(Travis.Repo, json.repository || json.repo)
+    else if type == Travis.Worker && json.worker.payload
+      if repo = (json.worker.payload.repo || json.worker.payload.repository)
+        @loadIncomplete(Travis.Repo, repo)
+      if job = json.worker.payload.job
+        @loadIncomplete(Travis.Job, job)
     @loadIncomplete(type, json[root])
 
   addLoadedData: (type, clientId, hash) ->

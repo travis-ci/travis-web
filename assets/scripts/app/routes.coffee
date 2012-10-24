@@ -211,9 +211,13 @@ Travis.Router = Ember.Router.extend
           deferred.promise()
 
         serialize: (router, repo) ->
-          if repo
+          if typeof repo == 'string'
+            [owner, name] = repo.split '/'
+            { owner: owner, name: name }
+          else if repo
             { owner: repo.get('owner'), name: repo.get('name') }
           else
+            # TODO: it would be nice to handle 404 somehow
             {}
 
         show: Ember.Route.extend

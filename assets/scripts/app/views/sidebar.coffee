@@ -66,7 +66,7 @@
       payload = @get('worker.payload')
 
       if state == 'working' && payload?.repository && payload?.build
-        repo = payload.repository.slug
+        repo = @get('worker.repoSlug')
         number = ' #' + payload.build.number
         "<span class='name'>#{name}: #{repo}</span> #{number}".htmlSafe()
       else
