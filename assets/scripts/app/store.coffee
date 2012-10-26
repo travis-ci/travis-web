@@ -85,7 +85,7 @@ Travis.Store = DS.Store.extend
       @loadIncomplete(Travis.Repo, json.repository || json.repo)
     else if type == Travis.Worker && json.worker.payload
       if repo = (json.worker.payload.repo || json.worker.payload.repository)
-        @loadIncomplete(Travis.Repo, repo)
+        @loadIncomplete(Travis.Repo, repo, skipIfExists: true)
       if job = json.worker.payload.job
         @loadIncomplete(Travis.Job, job)
     @loadIncomplete(type, json[root])

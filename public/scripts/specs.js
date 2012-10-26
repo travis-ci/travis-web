@@ -8431,6 +8431,50 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
         });
       });
     });
+    describe('an event adding a build', function() {
+      beforeEach(function() {
+        app('travis-ci/travis-core/builds');
+        return waitFor(buildsRendered);
+      });
+      return it('adds a build to the builds list', function() {
+        var payload;
+        payload = {
+          build: {
+            id: 11,
+            repository_id: 1,
+            commit_id: 1,
+            number: '3',
+            duration: 55,
+            started_at: '2012-07-02T00:02:00Z',
+            finished_at: '2012-07-02T00:02:55Z',
+            event_type: 'push',
+            result: 1,
+            commit_message: 'commit message 3',
+            commit: '1234567'
+          }
+        };
+        Em.run(function() {
+          return Travis.app.receive('build:started', payload);
+        });
+        waits(100);
+        return runs(function() {
+          return listsBuild({
+            row: 3,
+            item: {
+              id: 11,
+              slug: 'travis-ci/travis-core',
+              number: '3',
+              sha: '1234567',
+              branch: 'master',
+              message: 'commit message 1',
+              finishedAt: 'less than a minute ago',
+              duration: '55 sec',
+              color: 'red'
+            }
+          });
+        });
+      });
+    });
     describe('an event adding a job', function() {
       beforeEach(function() {
         app('travis-ci/travis-core');
