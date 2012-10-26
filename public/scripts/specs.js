@@ -7405,6 +7405,13 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
     return _results;
   };
 
+  this.displaysSummaryBuildLink = function(link, number) {
+    var element;
+    element = $('#summary .number a');
+    expect(element.attr('href')).toEqual(link);
+    return expect(element.text().trim()).toEqual("" + number);
+  };
+
   this.displaysSummary = function(data) {
     var element;
     element = $('#summary .left:first-child dt:first-child');
@@ -8172,6 +8179,50 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
             rvm: 'jruby'
           }
         ]
+      });
+    });
+  });
+
+  describe('on the "current" state', function() {
+    beforeEach(function() {
+      app('travis-ci/travis-core');
+      waitFor(reposRendered);
+      return runs(function() {
+        return waitFor(buildRendered);
+      });
+    });
+    afterEach(function() {
+      return window.history.pushState({}, null, '/spec.html');
+    });
+    return it('correctly updates values on pusher build:started event', function() {
+      var payload;
+      payload = {
+        build: {
+          id: 11,
+          repository_id: 1,
+          commit_id: 1,
+          number: '3',
+          duration: 55,
+          started_at: '2012-07-02T00:02:00Z',
+          finished_at: '2012-07-02T00:02:55Z',
+          event_type: 'push',
+          result: 1,
+          commit_message: 'commit message 3',
+          commit: '1234567',
+          state: 'started'
+        },
+        repository: {
+          id: 1,
+          last_build_number: '3',
+          last_build_id: 11
+        }
+      };
+      Em.run(function() {
+        return Travis.app.receive('build:started', payload);
+      });
+      waits(100);
+      return runs(function() {
+        return displaysSummaryBuildLink('/travis-ci/travis-core/builds/11', '3');
       });
     });
   });

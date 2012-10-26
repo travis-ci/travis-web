@@ -7,9 +7,9 @@
         <dt>{{t builds.name}}</dt>
         <dd class="number">
           <span class="status"></span>
-          {{#if build.id}}
-            <a {{action showBuild repo build href=true}}>{{build.number}}</a>
-          {{/if}}
+          {{#with build}}
+            <a {{action showBuild repo this href=true}}>{{number}}</a>
+          {{/with}}
         </dd>
         <dt class="finished_at_label">{{t builds.finished_at}}</dt>
         <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime build.finishedAt}}</dd>

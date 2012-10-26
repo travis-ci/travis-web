@@ -49,3 +49,42 @@ describe 'on the "build" state', ->
       jobs: [
         { color: '', id: 3, number: '1.3', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: 'jruby' }
       ]
+
+describe 'on the "current" state', ->
+  beforeEach ->
+    app 'travis-ci/travis-core'
+    waitFor reposRendered
+    runs ->
+      waitFor buildRendered
+
+  afterEach ->
+    window.history.pushState({}, null, '/spec.html')
+
+  it 'correctly updates values on pusher build:started event', ->
+    payload =
+      build:
+        id: 11
+        repository_id: 1
+        commit_id: 1
+        number: '3'
+        duration: 55
+        started_at: '2012-07-02T00:02:00Z'
+        finished_at: '2012-07-02T00:02:55Z'
+        event_type: 'push'
+        result: 1
+        commit_message: 'commit message 3'
+        commit: '1234567'
+        state: 'started'
+      repository:
+        id: 1
+        last_build_number: '3'
+        last_build_id: 11
+
+    Em.run ->
+      Travis.app.receive 'build:started', payload
+
+    waits(100)
+    runs ->
+      displaysSummaryBuildLink '/travis-ci/travis-core/builds/11', '3'
+
+

@@ -7,6 +7,11 @@
     expect($("#tab_#{name}").hasClass('active')).toEqual !!tab.active
     expect($("#tab_#{name}").hasClass('display-inline')).toEqual !tab.hidden if name in ['build', 'job']
 
+@displaysSummaryBuildLink = (link, number) ->
+  element = $('#summary .number a')
+  expect( element.attr('href') ).toEqual link
+  expect( element.text().trim() ).toEqual "#{number}"
+
 @displaysSummary = (data) ->
   element = $('#summary .left:first-child dt:first-child')
   expect(element.text()).toEqual $.camelize(data.type)
