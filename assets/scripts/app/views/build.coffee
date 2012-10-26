@@ -55,8 +55,8 @@
     currentItemBinding: 'build'
 
     loading: (->
-      !@get('build.isComplete')
-    ).property('build.isComplete')
+      !@get('build.isLoaded')
+    ).property('build.isLoaded')
 
     color: (->
       Travis.Helpers.colorForResult(@get('build.result'))
