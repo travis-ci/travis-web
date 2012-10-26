@@ -22,6 +22,10 @@ require 'travis/model'
     Travis.Helpers.compact(@get('data.config'))
   ).property('data.config')
 
+  isPullRequest: (->
+    @get('eventType') == 'pull_request'
+  ).property('eventType')
+
   isMatrix: (->
     @get('data.job_ids.length') > 1
   ).property('data.job_ids.length')
