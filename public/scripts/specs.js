@@ -9011,8 +9011,15 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
   Travis.Foo = Travis.Model.extend({
     name: DS.attr('string'),
     description: DS.attr('string'),
-    lastName: DS.attr('string')
+    lastName: DS.attr('string'),
+    bar: DS.belongsTo('Travis.Bar'),
+    niceBar: DS.belongsTo('Travis.Bar'),
+    veryNiceBar: DS.belongsTo('Travis.Bar', {
+      key: 'very_nice_bar_indeed_id'
+    })
   });
+
+  Travis.Bar = Travis.Model.extend();
 
   record = null;
 
@@ -9036,6 +9043,66 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
     });
     afterEach(function() {
       return store.destroy();
+    });
+    describe('with incomplete record with loaded associations', function() {
+      beforeEach(function() {
+        var attrs;
+        attrs = {
+          id: 1,
+          bar_id: 2,
+          nice_bar_id: 3,
+          very_nice_bar_indeed_id: 4
+        };
+        record = store.loadIncomplete(Travis.Foo, attrs);
+        store.load(Travis.Bar, {
+          id: 2
+        });
+        store.load(Travis.Bar, {
+          id: 3
+        });
+        return store.load(Travis.Bar, {
+          id: 4
+        });
+      });
+      return it('does not load record on association access', function() {
+        expect(record.get('bar.id')).toEqual(2);
+        expect(record.get('niceBar.id')).toEqual(3);
+        expect(record.get('veryNiceBar.id')).toEqual(4);
+        waits(50);
+        return runs(function() {
+          return expect(record.get('complete')).toBeFalsy();
+        });
+      });
+    });
+    describe('with incomplete record without loaded associations', function() {
+      beforeEach(function() {
+        var attrs;
+        attrs = {
+          id: 1
+        };
+        return record = store.loadIncomplete(Travis.Foo, attrs);
+      });
+      it('loads record based on regular association key', function() {
+        record.get('bar');
+        waits(50);
+        return runs(function() {
+          return expect(record.get('complete')).toBeTruthy();
+        });
+      });
+      it('loads record based on camel case association key', function() {
+        record.get('niceBar');
+        waits(50);
+        return runs(function() {
+          return expect(record.get('complete')).toBeTruthy();
+        });
+      });
+      return it('loads record based on ssociation with explicit key', function() {
+        record.get('veryNiceBar');
+        waits(50);
+        return runs(function() {
+          return expect(record.get('complete')).toBeTruthy();
+        });
+      });
     });
     describe('with incomplete record', function() {
       beforeEach(function() {
