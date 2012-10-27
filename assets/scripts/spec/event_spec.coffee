@@ -187,3 +187,33 @@ describe 'events', ->
           row: 3
           item: { name: 'ruby-3', state: 'ready' }
 
+
+  describe 'an event updating a worker', ->
+    beforeEach ->
+      app '/travis-ci/travis-core'
+      waitFor workersRendered
+
+    it 'does not update repository if it\'s already in store', ->
+      payload =
+        worker:
+          id: 1
+          host: 'worker.travis-ci.org'
+          name: 'ruby-2'
+          state: 'working'
+          payload:
+            repository:
+              id: 1
+              last_build_id: 999
+              last_build_number: '999'
+
+      Em.run ->
+        Travis.app.receive 'worker:updated', payload
+
+      waits(100)
+      runs ->
+        listsRepo
+          row: 2
+          item: { slug: 'travis-ci/travis-core',  build: { number: 1, url: '/travis-ci/travis-core/builds/1', duration: '30 sec', finishedAt: '3 minutes ago' } }
+
+
+
