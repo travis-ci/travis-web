@@ -42,9 +42,11 @@ Travis.Store = DS.Store.extend
 
     if clientId != undefined
       if data = dataCache[clientId]
-        # trying to set id here fails, TODO: talk with ember core team to create merge-like function
-        delete hash.id
-        $.extend(data, hash)
+        for key, value of hash
+          if ( descriptor = Object.getOwnPropertyDescriptor(data, key) ) && descriptor.set
+            Ember.set(data, key, value)
+          else
+            data[key] = value
       else
         dataCache[clientId] = hash
 
