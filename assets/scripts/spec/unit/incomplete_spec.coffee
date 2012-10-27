@@ -3,6 +3,12 @@ Travis.Foo = Travis.Model.extend
   description: DS.attr('string')
   lastName:    DS.attr('string')
 
+  bar:         DS.belongsTo('Travis.Bar')
+  niceBar:     DS.belongsTo('Travis.Bar')
+  veryNiceBar: DS.belongsTo('Travis.Bar', key: 'very_nice_bar_indeed_id')
+
+Travis.Bar = Travis.Model.extend()
+
 record = null
 store = null
 
@@ -17,6 +23,52 @@ describe 'Travis.Model', ->
 
   afterEach ->
     store.destroy()
+
+  describe 'with incomplete record with loaded associations', ->
+    beforeEach ->
+      attrs = {
+        id: 1
+        bar_id: 2
+        nice_bar_id: 3
+        very_nice_bar_indeed_id: 4
+      }
+      record = store.loadIncomplete(Travis.Foo, attrs)
+      store.load(Travis.Bar, id: 2)
+      store.load(Travis.Bar, id: 3)
+      store.load(Travis.Bar, id: 4)
+
+    it 'does not load record on association access', ->
+      expect( record.get('bar.id') ).toEqual 2
+      expect( record.get('niceBar.id') ).toEqual 3
+      expect( record.get('veryNiceBar.id') ).toEqual 4
+      waits 50
+      runs ->
+        expect( record.get('complete') ).toBeFalsy()
+
+  describe 'with incomplete record without loaded associations', ->
+    beforeEach ->
+      attrs = {
+        id: 1
+      }
+      record = store.loadIncomplete(Travis.Foo, attrs)
+
+    it 'loads record based on regular association key', ->
+      record.get('bar')
+      waits 50
+      runs ->
+        expect( record.get('complete') ).toBeTruthy()
+
+    it 'loads record based on camel case association key', ->
+      record.get('niceBar')
+      waits 50
+      runs ->
+        expect( record.get('complete') ).toBeTruthy()
+
+    it 'loads record based on ssociation with explicit key', ->
+      record.get('veryNiceBar')
+      waits 50
+      runs ->
+        expect( record.get('complete') ).toBeTruthy()
 
   describe 'with incomplete record', ->
     beforeEach ->

@@ -8,6 +8,7 @@
 
   get: (name) ->
     if @constructor.isAttribute(name) && @get('incomplete') && !@isAttributeLoaded(name)
+      console.log 'Loading rest of', @constructor, @get('clientId'), 'for key: ', name
       @loadTheRest()
 
     @_super.apply this, arguments
@@ -23,9 +24,14 @@
     this
 
   isAttributeLoaded: (name) ->
+    key = null
     if meta = Ember.get(this.constructor, 'attributes').get(name)
-      name = meta.key(this.constructor)
-      @get('store').isDataLoadedFor(this.constructor, @get('clientId'), name)
+      key = meta.key(this.constructor)
+    else if meta = Ember.get(this.constructor, 'associationsByName').get(name)
+      key = meta.options.key || @get('namingConvention').foreignKey(name)
+
+    if key
+      @get('store').isDataLoadedFor(this.constructor, @get('clientId'), key)
 
   isComplete: (->
     if @get 'incomplete'
@@ -82,4 +88,5 @@
     Travis.app.store.adapter.pluralize(@singularName())
 
   isAttribute: (name) ->
-    Ember.get(this, 'attributes').has(name)
+    Ember.get(this, 'attributes').has(name) ||
+      Ember.get(this, 'associationsByName').has(name)
