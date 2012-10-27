@@ -8647,7 +8647,7 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
         });
       });
     });
-    return describe('an event adding a worker', function() {
+    describe('an event adding a worker', function() {
       beforeEach(function() {
         app('');
         return waitFor(workersRendered);
@@ -8685,6 +8685,48 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
             item: {
               name: 'ruby-3',
               state: 'ready'
+            }
+          });
+        });
+      });
+    });
+    return describe('an event updating a worker', function() {
+      beforeEach(function() {
+        app('/travis-ci/travis-core');
+        return waitFor(workersRendered);
+      });
+      return it('does not update repository if it\'s already in store', function() {
+        var payload;
+        payload = {
+          worker: {
+            id: 1,
+            host: 'worker.travis-ci.org',
+            name: 'ruby-2',
+            state: 'working',
+            payload: {
+              repository: {
+                id: 1,
+                last_build_id: 999,
+                last_build_number: '999'
+              }
+            }
+          }
+        };
+        Em.run(function() {
+          return Travis.app.receive('worker:updated', payload);
+        });
+        waits(100);
+        return runs(function() {
+          return listsRepo({
+            row: 2,
+            item: {
+              slug: 'travis-ci/travis-core',
+              build: {
+                number: 1,
+                url: '/travis-ci/travis-core/builds/1',
+                duration: '30 sec',
+                finishedAt: '3 minutes ago'
+              }
             }
           });
         });

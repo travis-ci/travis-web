@@ -77,14 +77,16 @@ Travis.Store = DS.Store.extend
 
   _loadOne: (store, type, json) ->
     root = type.singularName()
-    # we get other types of records only on build, it comes with repository
-    # attached. I don't want to use store.sideload here as it will not use merge,
-    # if we need sideload becasue we have side records with other events it needs to
-    # be revised
+    # we get other types of records only in a few situations and
+    # it's not always needed to update data, so I'm specyfing which
+    # things I want to update here:
     if type == Travis.Build && (json.repository || json.repo)
       @loadIncomplete(Travis.Repo, json.repository || json.repo)
     else if type == Travis.Worker && json.worker.payload
       if repo = (json.worker.payload.repo || json.worker.payload.repository)
+        # I use skipIfExists here, cause worker payload is usually outdated
+        # If there is no info on repo yet, it's worth to add it, but if it already
+        # exists, we will most likely end up with inconsistent situation
         @loadIncomplete(Travis.Repo, repo, skipIfExists: true)
       if job = json.worker.payload.job
         @loadIncomplete(Travis.Job, job)
@@ -102,7 +104,18 @@ Travis.Store = DS.Store.extend
       if data = recordsData[clientId]
         data.contains(key)
 
-  loadIncomplete: (type, hash) ->
+  loadIncomplete: (type, hash, options) ->
+    options ?= {}
+
+    id = hash.id
+
+    typeMap     = @typeMapFor(type)
+    dataCache   = typeMap.cidToHash
+    clientId    = typeMap.idToCid[id]
+
+    if dataCache[clientId] && options.skipIfExists
+      return
+
     result = @merge(type, hash)
 
     if result && result.clientId
