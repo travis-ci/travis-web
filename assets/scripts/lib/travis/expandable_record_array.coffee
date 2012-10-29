@@ -29,7 +29,6 @@ Travis.ExpandableRecordArray = DS.RecordArray.extend
   observedArraydidChange: (array, index, removedCount, addedCount) ->
     addedObjects = array.slice index, index + addedCount
     for object in addedObjects
-      console.log 'observedArraydidChange', object, object.toString(), object.get('repo.id'), object.get('id'), object.get('number')
       if @get('filterWith').call this, object
         @pushObject object
 
