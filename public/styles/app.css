@@ -5058,6 +5058,249 @@ pre#log .fold.open {
   background-color: #bab9a7;
 }
 
+/* line 5, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main h3 {
+  height: 19px;
+  line-height: 19px;
+}
+/* line 9, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main img {
+  float: left;
+  width: 48px;
+  height: 48px;
+  margin: 3px 20px 0 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #dddddd;
+}
+/* line 17, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main dl {
+  float: left;
+  margin: 0 0 20px 0;
+}
+/* line 21, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main dt {
+  display: block;
+  clear: left;
+  float: left;
+  width: 50px;
+}
+/* line 27, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main dd {
+  float: left;
+  margin-left: 0;
+}
+/* line 31, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main form {
+  clear: left;
+}
+/* line 34, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main .tip {
+  margin-top: -5px;
+  color: #999999;
+}
+/* line 38, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main .message {
+  margin-top: 20px;
+  padding: 10px 10px;
+  color: #999999;
+  border: 1px solid #dddddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 45, /Volumes/travis/travis-web/assets/styles/profile.sass */
+#profile #main .message .sync_now {
+  float: right;
+  margin-top: -3px;
+}
+/* line 3, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bold {
+  font-weight: bold;
+}
+/* line 5, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .italic {
+  font-style: italic;
+}
+/* line 9, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .black {
+  color: black;
+}
+/* line 11, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .red {
+  color: red;
+}
+/* line 13, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .green {
+  color: lime;
+}
+/* line 15, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .yellow {
+  color: yellow;
+}
+/* line 17, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .blue {
+  color: blue;
+}
+/* line 19, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .magenta {
+  color: magenta;
+}
+/* line 21, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .cyan {
+  color: cyan;
+}
+/* line 23, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .white {
+  color: white;
+}
+/* line 25, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .black.bright {
+  color: #999999;
+}
+/* line 27, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-black {
+  background-color: black;
+}
+/* line 29, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-red {
+  background-color: red;
+}
+/* line 31, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-green {
+  background-color: lime;
+}
+/* line 33, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-yellow {
+  background-color: yellow;
+}
+/* line 35, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-blue {
+  background-color: blue;
+}
+/* line 37, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-magenta {
+  background-color: magenta;
+}
+/* line 39, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-cyan {
+  background-color: cyan;
+}
+/* line 41, /Volumes/travis/travis-web/assets/styles/_mixins/ansi.sass */
+.ansi .bg-white {
+  background-color: white;
+}
+
+/* line 113, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .black {
+  background-color: black;
+}
+/* line 115, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .white {
+  background-color: white;
+}
+/* line 118, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green {
+  background-color: #038035;
+}
+/* line 120, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green-light-1 {
+  background-color: #dcffdc;
+}
+/* line 122, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .green-light-3 {
+  background-color: #fafffa;
+}
+/* line 124, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red {
+  background-color: #cc0000;
+}
+/* line 126, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-medium-1 {
+  background-color: #c7371a;
+}
+/* line 128, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-light-1 {
+  background-color: #ffdcdc;
+}
+/* line 130, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .red-light-3 {
+  background-color: snow;
+}
+/* line 132, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .yellow-light-1 {
+  background-color: #ffffe1;
+}
+/* line 134, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .yellow-light-2 {
+  background-color: #fffcf4;
+}
+/* line 137, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-1 {
+  background-color: #333333;
+}
+/* line 139, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-2 {
+  background-color: #444444;
+}
+/* line 141, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-dark-3 {
+  background-color: #666666;
+}
+/* line 143, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-1 {
+  background-color: #999999;
+}
+/* line 145, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-2 {
+  background-color: #aaaaaa;
+}
+/* line 147, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-medium-3 {
+  background-color: #cccccc;
+}
+/* line 149, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-1 {
+  background-color: #dddddd;
+}
+/* line 151, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-2 {
+  background-color: #efefef;
+}
+/* line 153, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .gray-light-3 {
+  background-color: #f6f6f6;
+}
+/* line 156, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-1 {
+  background-color: #e1e2e6;
+}
+/* line 158, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-2 {
+  background-color: #e5e8ee;
+}
+/* line 160, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-3 {
+  background-color: #f2f4f9;
+}
+/* line 162, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-blue-4 {
+  background-color: #fafbfc;
+}
+/* line 164, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-yellow-1 {
+  background-color: #7f7f75;
+}
+/* line 166, /Volumes/travis/travis-web/assets/styles/_mixins/colors.sass */
+#colors .slate-yellow-2 {
+  background-color: #bab9a7;
+}
+
 /* line 3, /Volumes/travis/travis-web/assets/styles/profile/hooks.sass */
 #hooks {
   margin-top: 10px;
