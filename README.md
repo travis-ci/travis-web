@@ -4,8 +4,8 @@
 
 This is a static html/js app so you shouldn't need to install anything.
 
-    git clone git://github.com/svenfuchs/travis-ember.git
-    cd travis-ember
+    git clone git://github.com/travis-ci/travis-web.git
+    cd travis-web
     open public/index.html
 
 Running locally with a local API server:
