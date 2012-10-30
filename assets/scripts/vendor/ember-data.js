@@ -3255,6 +3255,12 @@ DS.attr = function(type, options) {
   return Ember.computed(function(key, value) {
     var data;
 
+    if(arguments.length === 1 && this.constructor.isAttribute(key) && get(this, 'incomplete') && !this.isAttributeLoaded(key)) {
+      if(this.loadTheRest) {
+        this.loadTheRest(key);
+      }
+    }
+
     key = meta.key(this.constructor);
 
     if (arguments.length === 2) {
@@ -3389,6 +3395,12 @@ var hasAssociation = function(type, options, one) {
     var data = get(this, 'data'), ids, id, association,
         store = get(this, 'store');
 
+    if(arguments.length === 1 && this.constructor.isAttribute(key) && get(this, 'incomplete') && !this.isAttributeLoaded(key)) {
+      if(this.loadTheRest) {
+        this.loadTheRest(key);
+      }
+    }
+
     if (typeof type === 'string') {
       type = get(this, type, false) || get(window, type);
     }
@@ -3450,6 +3462,12 @@ var hasAssociation = function(type, options) {
     var data = get(this, 'data'),
         store = get(this, 'store'),
         ids, id, association;
+
+    if(arguments.length === 1 && this.constructor.isAttribute(key) && get(this, 'incomplete') && !this.isAttributeLoaded(key)) {
+      if(this.loadTheRest) {
+        this.loadTheRest(key);
+      }
+    }
 
     if (typeof type === 'string') {
       type = get(this, type, false) || get(window, type);

@@ -6,13 +6,6 @@
     @loadedAttributes = []
     @_super.apply this, arguments
 
-  get: (name) ->
-    if @constructor.isAttribute(name) && @get('incomplete') && !@isAttributeLoaded(name)
-      console.log 'Loading rest of', @constructor, @get('clientId'), 'for key: ', name
-      @loadTheRest()
-
-    @_super.apply this, arguments
-
   refresh: ->
     if id = @get('id')
       store = @get('store')

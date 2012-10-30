@@ -89,6 +89,15 @@ describe 'Travis.Model', ->
       runs ->
         expect( record.get('complete') ).toBeFalsy()
 
+    it 'loads missing data if getPath is used', ->
+      other = Em.Object.create(record: record)
+      expect( other.get('record.description') ).toBeNull()
+
+      waits 50
+      runs ->
+        expect( other.get('record.description') ).toEqual 'bar'
+        expect( record.get('isComplete') ).toBeTruthy()
+
     it 'loads missing data on try to get it', ->
       expect( record.get('name') ).toEqual 'foo'
       expect( record.get('description') ).toBeNull()
