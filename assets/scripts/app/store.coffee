@@ -41,7 +41,7 @@ Travis.Store = DS.Store.extend
     recordCache = @get('recordCache')
 
     if clientId != undefined
-      if data = dataCache[clientId]
+      if (data = dataCache[clientId]) && (typeof data == 'object')
         for key, value of hash
           if ( descriptor = Object.getOwnPropertyDescriptor(data, key) ) && descriptor.set
             Ember.set(data, key, value)
