@@ -7,17 +7,20 @@ gem 'rack-ssl', '~> 1.3'
 gem 'rack-cache'
 gem 'sinatra'
 
-group :development, :test do
-  gem 'rake', '~> 0.9.2'
-end
-
-group :development do
+group :assets do
   gem 'rake-pipeline',  github: 'livingsocial/rake-pipeline', ref: '3465e0e3e1'
   gem 'rake-pipeline-web-filters', github: 'wycats/rake-pipeline-web-filters'
   gem 'coffee-script'
   gem 'compass'
   gem 'tilt'
   gem 'uglifier'
+end
+
+group :development, :test do
+  gem 'rake', '~> 0.9.2'
+end
+
+group :development do
   gem 'debugger'
   gem 'foreman'
   gem 'rerun'
