@@ -1,3 +1,5 @@
 /.bundle
 /config/travis.yml
 /tmp
+/public/scripts
+/public/styles
