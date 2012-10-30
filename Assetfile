@@ -4,6 +4,9 @@ require 'rake-pipeline-web-filters'
 require 'travis/assets'
 require 'compass'
 
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
 assets ||= Travis::Assets.new
 assets.setup_compass
 assets.update_version
