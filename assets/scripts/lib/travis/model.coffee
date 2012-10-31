@@ -35,7 +35,8 @@
       @get 'isLoaded'
   ).property('incomplete', 'isLoaded')
 
-  loadTheRest: ->
+  loadTheRest: (key) ->
+    console.log 'Load missing fields for', @constructor, "because of missing key '#{key}'"
     return if @get('isCompleting')
     @set 'isCompleting', true
 
