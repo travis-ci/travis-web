@@ -52,8 +52,19 @@ require 'travis/model'
       Travis.app.pusher.subscribe "job-#{id}"
 
   onStateChange: (->
-    Travis.app.pusher.unsubscribe "job-#{@get('id')}" if @get('state') == 'finished'
+    if @get('state') == 'finished' && Travis.app
+      Travis.app.pusher.unsubscribe "job-#{@get('id')}"
   ).observes('state')
+
+  isAttributeLoaded: (key) ->
+    if ['_duration', 'finishedAt', 'result'].contains(key) && !@get('finished')
+      return true
+    else
+      @_super(key)
+
+  finished: (->
+    @get('state') == 'finished'
+  ).property('state')
 
 @Travis.Job.reopenClass
   queued: (queue) ->

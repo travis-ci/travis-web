@@ -53,6 +53,17 @@ require 'travis/model'
     Travis.ajax.post '/requests', build_id: @get('id')
   )
 
+  isAttributeLoaded: (key) ->
+    if ['_duration', 'finishedAt', 'result'].contains(key) && !@get('finished')
+      return true
+    else
+      @_super(key)
+
+  finished: (->
+    @get('state') == 'finished'
+  ).property('state')
+
+
 @Travis.Build.reopenClass
   byRepoId: (id, parameters) ->
     @find($.extend(parameters || {}, repository_id: id))
