@@ -39,6 +39,10 @@ pre#log
     &.open
       height: auto
       background-image: inline-image('ui/log.fold.open.2.png')
+    &.show-first-line:not(.open)
+      height: 36px
+      p:not(:first-child):not(:last-child)
+        display: none
 
 #log.loading
   padding: 25px 0 0 10px

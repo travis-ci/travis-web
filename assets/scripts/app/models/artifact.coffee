@@ -5,6 +5,7 @@ require 'travis/model'
   init: ->
     @_super.apply this, arguments
     @set 'queue', Ember.A([])
+    @set 'parts', Ember.ArrayProxy.create(content: [])
 
     @addObserver 'body', @fetchWorker
     @fetchWorker()
@@ -13,20 +14,26 @@ require 'travis/model'
     @set('body', '')
 
   append: (body) ->
-    if @get('isLoaded')
+    if @get('isInitialized')
+      @get('parts').pushObject body
       @set('body', @get('body') + body)
     else
       @get('queue').pushObject(body)
 
   recordDidLoad: (->
     if @get('isLoaded')
+      if (body = @get 'body') && @get('parts.length') == 0
+        @get('parts').pushObject body
+
+      @set 'isInitialized', true
+
       queue = @get('queue')
       if queue.get('length') > 0
         @append queue.toArray().join('')
   ).observes('isLoaded')
 
   fetchWorker: ->
-    if body = @get('body')
+    if !@get('workerName') && (body = @get('body'))
       line = body.split("\n")[0]
       if line && (match = line.match /Using worker: (.*)/)
         if worker = match[1]
