@@ -2,16 +2,23 @@
 
 $left-width: 250px
 
+@mixin display-flex
+  display: -webkit-flex
+  display: flex
+
+@mixin flex($grow, $shrink, $size)
+  -webkit-flex: $grow $shrink $size
+  flex:         $grow $shrink $size
+
 html, body
   height: 100%
 
 .application
   width: 100%
   min-height: 100%
-  @include display-box
-  @include box-orient(horizontal)
-  @include box-align(stretch)
   margin-top: 40px
+  @include display-flex
+  display: -moz-box
 
 #top
   position: absolute
@@ -22,11 +29,12 @@ html, body
   z-index: 1000
 
 #left, #right
-  @include box-flex(0)
   position: relative
   min-height: 100%
+  -moz-box-flex: 0
 
 #left
+  @include flex(1, 1, 30%)
   min-width: 250px
   max-width: 380px
   width: -webkit-calc(100% - 1000px)
@@ -40,13 +48,15 @@ html, body
     max-width: 300px
 
 #main
-  @include box-flex(4)
+  @include flex(1, 1, 70%)
+  -moz-box-flex: 4
   position: relative
   overflow: hidden
   min-width: 630px
   padding: 20px 40px 80px 30px
 
 #right
+  @include flex(1, 1, 0)
   width: 205px
   padding: 11px 20px 80px 20px
   background-color: $color-bg-right
