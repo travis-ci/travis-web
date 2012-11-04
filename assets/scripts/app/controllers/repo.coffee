@@ -4,6 +4,12 @@ Travis.RepoController = Travis.Controller.extend
   init: ->
     @_super.apply this, arguments
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
+    @set 'builds', Em.ArrayProxy.create(Em.SortableMixin,
+      isLoadedBinding: 'content.isLoaded'
+      sortProperties: ['number']
+      sortAscending: false
+      content: []
+    )
 
   updateTimes: ->
     if builds = @get('builds')
@@ -32,15 +38,15 @@ Travis.RepoController = Travis.Controller.extend
 
   viewBuilds: ->
     @connectTab('builds')
-    @_bind('builds', 'repo.builds')
+    @_bind('builds.content', 'repo.builds')
 
   viewPullRequests: ->
     @connectTab('pull_requests')
-    @_bind('builds', 'repo.pullRequests')
+    @_bind('builds.content', 'repo.pullRequests')
 
   viewBranches: ->
     @connectTab('branches')
-    @_bind('builds', 'repo.branches')
+    @_bind('builds.content', 'repo.branches')
 
   viewEvents: ->
     @connectTab('events')
@@ -73,4 +79,4 @@ Travis.RepoController = Travis.Controller.extend
 
   _unbind: ->
     binding.disconnect(this) for binding in @bindings
-    @bindings.length = 0
+    @bindings.clear()
