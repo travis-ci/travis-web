@@ -17,6 +17,7 @@ html, body
   width: 100%
   min-height: 100%
   margin-top: 40px
+  display: -webkit-box
   @include display-flex
   display: -moz-box
 
@@ -32,6 +33,7 @@ html, body
   position: relative
   min-height: 100%
   -moz-box-flex: 0
+  -webkit-box-flex: 0
 
 #left
   @include flex(1, 1, 30%)
@@ -50,6 +52,7 @@ html, body
 #main
   @include flex(1, 1, 70%)
   -moz-box-flex: 4
+  -webkit-box-flex: 4
   position: relative
   overflow: hidden
   min-width: 630px
