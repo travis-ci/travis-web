@@ -62,10 +62,17 @@ Travis.Store = DS.Store.extend
       { id: id, clientId: clientId }
 
   receive: (event, data) ->
+    console.log event, data
     [name, type] = event.split(':')
 
     mappings = @adapter.get('mappings')
     type = mappings[name]
+
+    # TODO: we should definitely handle such things in some kind of adapters
+    # when we get 'commit' value, ember thinks that this is actually a commit object
+    # that it should sideload, let's just delete it for now
+    if event == 'build:started' && data.build.commit
+      delete(data.build.commit)
 
     if event == 'job:log'
       if job = @find(Travis.Job, data['job']['id'])
