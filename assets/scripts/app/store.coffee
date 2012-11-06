@@ -67,11 +67,24 @@ Travis.Store = DS.Store.extend
     mappings = @adapter.get('mappings')
     type = mappings[name]
 
-    # TODO: we should definitely handle such things in some kind of adapters
-    # when we get 'commit' value, ember thinks that this is actually a commit object
-    # that it should sideload, let's just delete it for now
     if event == 'build:started' && data.build.commit
+      # TODO: commit should be a sideload record on build, not mixed with it
+      build = data.build
+      commit = {
+        id:              build.commit_id
+        author_email:    build.author_email
+        author_name:     build.author_name
+        branch:          build.branch
+        committed_at:    build.committed_at
+        committer_email: build.committer_email
+        committer_name:  build.committer_name
+        compare_url:     build.compare_url
+        message:         build.message
+        sha:             build.commit
+      }
       delete(data.build.commit)
+      @loadIncomplete(Travis.Commit, commit)
+
 
     if event == 'job:log'
       if job = @find(Travis.Job, data['job']['id'])
