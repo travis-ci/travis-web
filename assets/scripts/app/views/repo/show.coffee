@@ -6,12 +6,8 @@
     repoBinding:  'controller.repo'
 
     class: (->
-      'loading' if !@get('repo.isComplete') && !@get('isEmpty')
-    ).property('repo.isComplete')
-
-    isEmpty: (->
-      @get('repos.isLoaded') && @get('repos.length') == 0
-    ).property('repos.length')
+      'loading' unless @get('repo.isLoaded')
+    ).property('repo.isLoaded')
 
     urlGithub: (->
       Travis.Urls.githubRepo(@get('repo.slug'))
