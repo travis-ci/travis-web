@@ -36,7 +36,14 @@
   ).property('incomplete', 'isLoaded')
 
   loadTheRest: (key) ->
-    console.log 'Load missing fields for', @constructor, "because of missing key '#{key}'"
+    # for some weird reason key comes changed to a string and for some weird reason it even is called with
+    # undefined key
+    return if !key || key == 'undefined'
+
+    message = "Load missing fields for #{@constructor.toString()} because of missing key '#{key}', cid: #{@get('clientId')}"
+    if @constructor.isAttribute('state') && key != 'state'
+      message += ", in state: #{@get('state')}"
+    console.log message
     return if @get('isCompleting')
     @set 'isCompleting', true
 
