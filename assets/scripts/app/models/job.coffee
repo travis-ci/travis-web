@@ -58,6 +58,8 @@ require 'travis/model'
   isAttributeLoaded: (key) ->
     if ['finishedAt', 'result'].contains(key) && !@get('finished')
       return true
+    else if key == 'startedAt' && @get('state') == 'created'
+      return true
     else
       @_super(key)
 
