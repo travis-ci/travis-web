@@ -24,6 +24,6 @@ describe 'on the "builds" state', ->
 
 
     listsBuilds [
-      { id: 1, slug: 'travis-ci/travis-core', number: '1', sha: '1234567', branch: 'master', message: 'commit message 1', duration: '30 sec', finishedAt: '3 minutes ago', color: 'green' }
       { id: 2, slug: 'travis-ci/travis-core', number: '2', sha: '2345678', branch: 'feature', message: 'commit message 2', duration: '-', finishedAt: '-', color: '' }
+      { id: 1, slug: 'travis-ci/travis-core', number: '1', sha: '1234567', branch: 'master', message: 'commit message 1', duration: '30 sec', finishedAt: '3 minutes ago', color: 'green' }
     ]

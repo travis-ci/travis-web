@@ -58,8 +58,9 @@ describe 'events', ->
           finished_at: '2012-07-02T00:02:55Z'
           event_type: 'push'
           result: 1
-          commit_message: 'commit message 3'
+          message: 'commit message 3'
           commit: '1234567'
+          state: 'started'
 
       Em.run ->
         Travis.app.receive 'build:started', payload
@@ -67,8 +68,8 @@ describe 'events', ->
       waits(100)
       runs ->
         listsBuild
-          row: 3
-          item: { id: 11, slug: 'travis-ci/travis-core', number: '3', sha: '1234567', branch: 'master', message: 'commit message 1', finishedAt: 'less than a minute ago', duration: '55 sec', color: 'red' }
+          row: 1
+          item: { id: 11, slug: 'travis-ci/travis-core', number: '3', sha: '1234567', branch: 'master', message: 'commit message 3', finishedAt: 'less than a minute ago', duration: '55 sec', color: 'red' }
 
   describe 'an event adding a job', ->
     beforeEach ->
