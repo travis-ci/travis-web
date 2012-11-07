@@ -1,7 +1,16 @@
 language: ruby
 rvm:
   - 1.9.3
-script: "bundle exec rspec spec"
+before_install:
+  - wget http://phantomjs.googlecode.com/files/phantomjs-1.7.0-linux-i686.tar.bz2
+  - tar -xf phantomjs-1.7.0-linux-i686.tar.bz2
+  - sudo rm -rf /usr/local/phantomjs
+  - sudo mv phantomjs-1.7.0-linux-i686 /usr/local/phantomjs
+before_script:
+  - bundle exec rakep
+  - bundle exec rackup -s puma -p 5000 -D
+  - sleep 3
+script: "bundle exec rspec spec && ./run_jasmine.coffee http://localhost:5000/spec.html"
 notifications:
   irc: "irc.freenode.org#travis"
   campfire:
