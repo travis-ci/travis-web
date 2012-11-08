@@ -20,6 +20,10 @@ class Travis::Web::ApiRedirect < Sinatra::Base
     redirect!
   end
 
+  get '/:owner_name/:name/cc.xml' do
+    redirect!
+  end
+
   after do
     redirect! if catch_all? and api_call?
   end
