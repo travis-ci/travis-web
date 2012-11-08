@@ -32,3 +32,9 @@ require 'models'
 
   ajax: ->
     Travis.ajax.ajax.apply(this, arguments)
+
+  sideload: (store, type, json, root) ->
+    if json && json.result
+      return
+    else
+      @_super.apply this, arguments
