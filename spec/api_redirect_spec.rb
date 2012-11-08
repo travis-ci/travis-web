@@ -16,7 +16,7 @@ describe Travis::Web::ApiRedirect do
   end
 
   it 'does not redirect catch-all with generic Accept header' do
-    get('/foo/bar', {}, 'HTTP_ACCEPT' => '*/*').should_not be_redirect
+    get('/foo/bar', {}, 'HTTP_ACCEPT' => '*/*').should be_redirect
   end
 
   it 'redirects catch-all without Accept header' do

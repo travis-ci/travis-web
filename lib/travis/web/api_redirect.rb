@@ -20,6 +20,10 @@ class Travis::Web::ApiRedirect < Sinatra::Base
     redirect!
   end
 
+  get '/:owner_name/:name/cc.xml' do
+    redirect!
+  end
+
   after do
     redirect! if catch_all? and api_call?
   end
@@ -31,7 +35,7 @@ class Travis::Web::ApiRedirect < Sinatra::Base
     end
 
     def api_call?
-      return true if request.accept.empty?
+      return true if request.accept.empty? or env['HTTP_ACCEPT'] == '*/*'
       preferred = request.preferred_type(*settings.frontend_types, *settings.api_types)
       settings.api_types.include? preferred
     end
