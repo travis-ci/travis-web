@@ -31,7 +31,7 @@ class Travis::Web::ApiRedirect < Sinatra::Base
     end
 
     def api_call?
-      return true if request.accept.empty?
+      return true if request.accept.empty? or env['HTTP_ACCEPT'] == '*/*'
       preferred = request.preferred_type(*settings.frontend_types, *settings.api_types)
       settings.api_types.include? preferred
     end
