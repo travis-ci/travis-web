@@ -30,4 +30,10 @@ describe Travis::Web::ApiRedirect do
   it 'does not redirect asset requests' do
     get('/version').should_not be_redirect
   end
+
+  it 'redirects /:owner_name/:name/builds.json' do
+    response = get('/foo/bar/builds.json')
+    response.should be_redirect
+    response.headers['Location'].should == 'https://api.travis-ci.org/repos/foo/bar/builds.json'
+  end
 end

@@ -24,6 +24,10 @@ class Travis::Web::ApiRedirect < Sinatra::Base
     redirect!
   end
 
+  get '/:owner_name/:name/builds.json' do
+    redirect! "/repos#{request.fullpath}"
+  end
+
   after do
     redirect! if catch_all? and api_call?
   end
@@ -40,8 +44,8 @@ class Travis::Web::ApiRedirect < Sinatra::Base
       settings.api_types.include? preferred
     end
 
-    def redirect!
-      path = File.join(settings.api_endpoint, request.fullpath)
+    def redirect!(path = nil)
+      path = File.join(settings.api_endpoint, path || request.fullpath)
       redirect(path, 301)
     end
 end
