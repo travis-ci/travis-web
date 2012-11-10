@@ -4,7 +4,7 @@
     buildsBinding: 'controller.builds'
 
     showMore: ->
-      id = @get('controller.repo.id')
+      id     = @get('controller.repo.id')
       number = @get('builds.lastObject.number')
       @get('builds').load Travis.Build.olderThanNumber(id, number)
 

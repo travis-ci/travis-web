@@ -9,6 +9,11 @@ Travis.RepoController = Travis.Controller.extend
       sortProperties: ['number']
       sortAscending: false
       content: []
+      isLoadingBinding: 'content.isLoading'
+      load: (records) ->
+        content = @get('content')
+        if content && content.load
+          content.load(records)
     )
 
   updateTimes: ->
