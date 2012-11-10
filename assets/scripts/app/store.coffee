@@ -28,6 +28,12 @@ Travis.Store = DS.Store.extend
 
     result
 
+  # TODO use isUpdating once we've upgraded ember-data
+  loadMany: (type, ids, hashes) ->
+    result = @_super.apply this, arguments
+    array.set('isLoaded', true) for array in @typeMapFor(type).recordArrays
+    result
+
   merge: (type, id, hash) ->
     if hash == undefined
       hash = id

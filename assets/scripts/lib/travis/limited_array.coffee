@@ -1,5 +1,6 @@
 Travis.LimitedArray = Em.ArrayProxy.extend
   limit: 10
+  isLoadedBinding: 'content.isLoaded'
 
   init: ->
     @_super.apply this, arguments
@@ -11,7 +12,6 @@ Travis.LimitedArray = Em.ArrayProxy.extend
 
   contentArrayDidChange: (array, index, removedCount, addedCount) ->
     @_super.apply this, arguments
-
     if addedCount > 0
       addedObjects = array.slice(index, index + addedCount)
       arrangedContent = @get('arrangedContent')

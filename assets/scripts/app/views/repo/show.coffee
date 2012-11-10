@@ -9,6 +9,10 @@
       'loading' unless @get('repo.isLoaded')
     ).property('repo.isLoaded')
 
+    isEmpty: (->
+      @get('repos.isLoaded') && @get('repos.length') == 0
+    ).property('repos.length')
+
     urlGithub: (->
       Travis.Urls.githubRepo(@get('repo.slug'))
     ).property('repo.slug'),
