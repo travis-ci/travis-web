@@ -1,6 +1,8 @@
 language: ruby
 rvm:
   - 1.9.3
+before_script:
+  - bundle exec rakep
 script: "bundle exec rspec spec"
 notifications:
   irc: "irc.freenode.org#travis"
