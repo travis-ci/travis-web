@@ -19,7 +19,7 @@
     ).property('tab')
 
     classProfile: (->
-      classes = ['profile']
+      classes = ['profile menu']
       classes.push('active') if @get('tab') == 'profile'
       classes.push(Travis.app.get('authState'))
       classes.join(' ')
