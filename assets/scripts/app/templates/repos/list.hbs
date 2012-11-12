@@ -4,8 +4,6 @@
 
 {{view Travis.ReposListTabsView}}
 
-<a {{action toggleInfo target="view"}} class="toggle-info"></a>
-
 <div class="tab">
   {{#collection Travis.ReposListView contentBinding="controller"}}
     {{#with view.repo}}
