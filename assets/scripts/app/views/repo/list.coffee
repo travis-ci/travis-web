@@ -2,9 +2,6 @@
   ReposView: Travis.View.extend
     templateName: 'repos/list'
 
-    toggleInfo: (event) ->
-      $('#repos').toggleClass('open')
-
   ReposListView: Em.CollectionView.extend
     elementId: 'repos'
     tagName: 'ul'
@@ -51,3 +48,6 @@
     classSearch: (->
       'active' if @get('tab') == 'search'
     ).property('tab')
+
+    toggleInfo: (event) ->
+      $('#repos').toggleClass('open')
