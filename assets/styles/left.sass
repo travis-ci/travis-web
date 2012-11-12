@@ -12,7 +12,7 @@
       padding: 0 0 0 10px
       color: $color-text
       font-size: $font-size-small
-      box-sizing: border-box
+      @include box-sizing(border-box)
       border: 1px solid $color-border-light
       @include border-radius(4px)
       background: $color-bg-input inline-image('ui/search.png') no-repeat right 8px
@@ -26,10 +26,9 @@
       display: inline-block
 
   .toggle-info
-    position: absolute
-    right: 20px
-    margin-top: -22px
-    display: block
+    margin: 8px 20px 0 20px
+    display: inline-block
+    float: right
     width: 14px
     height: 14px
     background-image: inline-image('ui/info.png')
