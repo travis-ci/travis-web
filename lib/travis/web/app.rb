@@ -5,6 +5,8 @@ require 'delegate'
 require 'time'
 
 class Travis::Web::App
+  autoload :MobileRedirect, 'travis/web/app/mobile_redirect'
+
   # Simple Rack router that behaves like a hash.
   # Key is the path, value the response.
   class Router < DelegateClass(Hash)
@@ -129,6 +131,7 @@ class Travis::Web::App
       builder.use Rack::Deflater
       builder.use Rack::Head
       builder.use Rack::ConditionalGet
+      builder.use MobileRedirect
       builder.run router
       builder
     end
