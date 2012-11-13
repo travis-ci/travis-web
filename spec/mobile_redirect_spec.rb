@@ -6,7 +6,7 @@ describe Travis::Web::App::MobileRedirect do
     let(:agent) { 'blah blah Mobile blablah' }
 
     it 'redirects to secure.travis-ci.org' do
-      get('/foo/bar?baz', {}, 'HTTP_AGENT' => agent).should be_redirect
+      get('/foo/bar?baz', {}, 'HTTP_USER_AGENT' => agent).should be_redirect
       last_response.headers['Location'].should == 'https://secure.travis-ci.org/foo/bar?baz'
     end
   end
