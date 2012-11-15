@@ -163,14 +163,15 @@ Travis.Router = Ember.Router.extend
     home: Ember.Route.extend
       route: '/'
       connectOutlets: (router) ->
-        router.get('applicationView').connectLayout 'home'
-        $('body').attr('id', 'home')
-        router.get('applicationController').connectOutlet 'left', 'repos'
-        router.get('applicationController').connectOutlet 'right', 'sidebar'
-        router.get('applicationController').connectOutlet 'top', 'top'
-        router.get('applicationController').connectOutlet 'main', 'repo'
-        router.get('applicationController').connectOutlet 'flash', 'flash'
-        router.get('repoController').set('repos', router.get('reposController'))
+          router.get('applicationView').connectLayout 'home'
+          $('body').attr('id', 'home')
+          router.get('applicationController').connectOutlet 'left', 'repos'
+          router.get('applicationController').connectOutlet 'right', 'sidebar'
+          router.get('applicationController').connectOutlet 'top', 'top'
+          router.get('applicationController').connectOutlet 'main', 'repo'
+          router.get('applicationController').connectOutlet 'flash', 'flash'
+          router.get('reposController').activate()
+          router.get('repoController').set('repos', router.get('reposController'))
 
       show: Ember.Route.extend
         route: '/'

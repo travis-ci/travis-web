@@ -10,22 +10,7 @@
 
         <p class="description">{{description}}</p>
 
-        <ul class="github-stats">
-          <li class="language">
-            {{lastBuildLanguage}}
-          </li>
-          <li>
-            <a class="watchers" title="Watchers" {{bindAttr href="view.urlGithubWatchers"}}>
-              {{stats.watchers}}
-            </a>
-          </li>
-          <li>
-            <a class="forks" title="Forks" {{bindAttr href="view.urlGithubNetwork"}}>
-              {{stats.forks}}
-            </a>
-          </li>
-        </ul>
-
+        {{view Travis.RepoShowStatsView}}
         {{view Travis.RepoShowTabsView}}
         {{view Travis.RepoShowToolsView}}
       {{/with}}

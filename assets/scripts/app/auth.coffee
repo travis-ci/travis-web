@@ -48,7 +48,7 @@
     user = @storeUser(data.user) if data?.user
     @set('state', if user then 'signed-in' else 'signed-out')
     @set('user',  if user then user else undefined)
-    @afterSignIn()
+    @afterSignIn(user) if data
 
   afterSignIn: ->
     @get('app.router').send('afterSignIn', @readAfterSignInPath())

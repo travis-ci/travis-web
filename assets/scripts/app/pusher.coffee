@@ -1,29 +1,35 @@
 Travis.Pusher = (key) ->
-  @init(key) if key
+  @init(key) # if key
   this
 
 $.extend Travis.Pusher,
   CHANNELS: ['common']
   CHANNEL_PREFIX: ''
+  ENCRYPTED: false
 
 $.extend Travis.Pusher.prototype,
   active_channels: []
 
   init: (key) ->
     Pusher.warn = @warn.bind(this)
-    @pusher = new Pusher(key)
-    @subscribe(channel) for channel in Travis.Pusher.CHANNELS
+    @pusher = new Pusher(key, encrypted: Travis.Pusher.ENCRYPTED)
+    @subscribeAll(Travis.Pusher.CHANNELS) if Travis.Pusher.CHANNELS
+
+  subscribeAll: (channels) ->
+    for channel in channels
+      name = @prefix(channel)
+      unless @pusher.channels.find(name)
+        channel = @pusher.channels.add(name, this)
+        channel.bind_all((event, data) => @receive(event, data))
+    @pusher.subscribeAll()
 
   subscribe: (channel) ->
-    if @pusher && @active_channels.indexOf(channel) == -1
-      @active_channels.push(channel)
-      @pusher.subscribe(@prefix(channel)).bind_all((event, data) => @receive(event, data))
+    channel = @prefix(channel)
+    @pusher.subscribe(channel).bind_all((event, data) => @receive(event, data)) unless @pusher?.channel(channel)
 
   unsubscribe: (channel) ->
-    ix = @active_channels.indexOf(channel)
-    if @pusher && ix == -1
-      @active_channels.splice(ix, 1)
-      @pusher.unsubscribe(@prefix(channel))
+    channel = @prefix(channel)
+    @pusher.unsubscribe(channel) if @pusher?.channel(channel)
 
   prefix: (channel) ->
     "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"

@@ -5,6 +5,10 @@
     tabBinding: 'controller.tab'
     userBinding: 'controller.user'
 
+    userName: (->
+      @get('user.name') || @get('user.login')
+    ).property('user.login', 'user.name')
+
     gravatarUrl: (->
       "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=24&d=mm"
     ).property('user.gravatarId')

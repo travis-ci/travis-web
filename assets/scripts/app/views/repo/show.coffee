@@ -11,11 +11,16 @@
 
     isEmpty: (->
       @get('repos.isLoaded') && @get('repos.length') == 0
-    ).property('repos.length')
+    ).property('repos.isLoaded', 'repos.length')
 
     urlGithub: (->
       Travis.Urls.githubRepo(@get('repo.slug'))
     ).property('repo.slug'),
+
+  RepoShowStatsView: Travis.View.extend
+    templateName: 'repos/show/stats'
+    repoBinding:  'parentView.repo'
+    statsBinding: 'repo.stats'
 
     urlGithubWatchers: (->
       Travis.Urls.githubWatchers(@get('repo.slug'))

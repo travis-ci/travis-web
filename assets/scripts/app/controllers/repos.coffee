@@ -6,7 +6,6 @@ Travis.ReposController = Ember.ArrayController.extend
   isLoadedBinding: 'content.isLoaded'
 
   init: ->
-    @activate(@defaultTab)
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   updateTimes: ->
@@ -16,6 +15,7 @@ Travis.ReposController = Ember.ArrayController.extend
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   activate: (tab, params) ->
+    tab ||= @defaultTab
     @set('tab', tab)
     this["view#{$.camelize(tab)}"](params)
 
