@@ -62,6 +62,7 @@ require 'travis/model'
       else
         @set('isSyncing', false)
         @setWithSession('syncedAt', data.user.synced_at)
+        Travis.trigger('user:synced', data.user)
 
         # # TODO this doesn't work properly
         # Travis.app.store.loadMany(Travis.Account, data.accounts)

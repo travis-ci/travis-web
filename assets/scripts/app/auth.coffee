@@ -42,15 +42,17 @@
     localStorage.setItem('travis.auto_signin', 'true')
     window.location = "#{@endpoint}/auth/handshake?redirect_uri=#{location}"
 
+  # TODO should have clearData() to clean this up
   setData: (data) ->
     data = JSON.parse(data) if typeof data == 'string'
     @storeToken(data.token) if data?.token
     user = @storeUser(data.user) if data?.user
     @set('state', if user then 'signed-in' else 'signed-out')
     @set('user',  if user then user else undefined)
-    @afterSignIn(user) if data
+    @afterSignIn(data.user) if data?.user
 
-  afterSignIn: ->
+  afterSignIn: (user) ->
+    Travis.trigger('user:signed_in', user)
     @get('app.router').send('afterSignIn', @readAfterSignInPath())
 
   storeToken: (token) ->

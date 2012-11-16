@@ -1,7 +1,7 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
 
-@Travis = Em.Namespace.create
+@Travis = Em.Namespace.create Ember.Evented,
   config:
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')

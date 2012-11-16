@@ -10681,7 +10681,6 @@ var loaded = {};
 */
 Ember.onLoad = function(name, callback) {
   var object;
-
   loadHooks[name] = loadHooks[name] || Ember.A();
   loadHooks[name].pushObject(callback);
 
