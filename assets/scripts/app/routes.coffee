@@ -77,6 +77,7 @@ Travis.Router = Ember.Router.extend
 
     auth: Ember.Route.extend
       route: '/auth'
+      customRegexp: /^\/?auth($|\/)/
       connectOutlets: (router) ->
         router.get('applicationView').connectLayout 'simple'
         $('body').attr('id', 'auth')
@@ -88,6 +89,7 @@ Travis.Router = Ember.Router.extend
 
     stats: Ember.Route.extend
       route: '/stats'
+      customRegexp: /^\/?stats($|\/)/
       connectOutlets: (router) ->
         router.get('applicationView').connectLayout 'simple'
         $('body').attr('id', 'stats')
