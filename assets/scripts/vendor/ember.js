@@ -18196,7 +18196,6 @@ Ember._RouteMatcher = Ember.Object.extend({
   },
 
   match: function(path) {
-    console.log(path, this.regex);
     var match = path.match(this.regex);
 
     if (match) {
