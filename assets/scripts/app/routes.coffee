@@ -195,7 +195,7 @@ Travis.Router = Ember.Router.extend
           router.get('repoController').set 'repo', repo
 
         deserialize: (router, params) ->
-          slug = "#{params.owner}/#{params.name}".toLowerCase()
+          slug = "#{params.owner}/#{params.name}"
           repos = Travis.Repo.bySlug(slug)
           deferred = $.Deferred()
 
