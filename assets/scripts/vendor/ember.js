@@ -17773,7 +17773,8 @@ Ember.Routable = Ember.Mixin.create({
       return Ember._RouteMatcher.create({
         route: route,
         dynamicSegmentPattern: get(this, 'dynamicSegmentPattern'),
-        dynamicSegmentTerminators: get(this, 'dynamicSegmentTerminators')
+        dynamicSegmentTerminators: get(this, 'dynamicSegmentTerminators'),
+        customRegexp: get(this, 'customRegexp')
       });
     }
   }),
@@ -18161,34 +18162,42 @@ Ember._RouteMatcher = Ember.Object.extend({
   state: null,
 
   init: function() {
-    var route = this.route,
-        dynamicSegmentPattern = this.dynamicSegmentPattern || "([^/]+)",
-        terminators = this.dynamicSegmentTerminators || [],
-        identifiers = [],
-        count = 1,
-        escaped,
-        segmentRegexp;
+    var route = this.route;
 
     // Strip off leading slash if present
     if (route.charAt(0) === '/') {
       route = this.route = route.substr(1);
     }
 
-    escaped = escapeForRegex(route);
+    if(this.customRegexp) {
+      this.identifiers = [];
+      this.regex = this.customRegexp;
+    } else {
+      var dynamicSegmentPattern = this.dynamicSegmentPattern || "([^/]+)",
+          terminators = this.dynamicSegmentTerminators || [],
+          identifiers = [],
+          count = 1,
+          escaped,
+          segmentRegexp;
 
-    terminators.push('$|/');
-    str = ':([a-z_]+)(?=' + terminators.join('|') + ')'
-    segmentRegexp = new RegExp(str, 'gi');
-    var regex = escaped.replace(segmentRegexp, function(match, id) {
-      identifiers[count++] = id;
-      return dynamicSegmentPattern;
-    });
 
-    this.identifiers = identifiers;
-    this.regex = new RegExp("^/?" + regex);
+      escaped = escapeForRegex(route);
+
+      terminators.push('$|/');
+      str = ':([a-z_]+)(?=' + terminators.join('|') + ')'
+      segmentRegexp = new RegExp(str, 'gi');
+      var regex = escaped.replace(segmentRegexp, function(match, id) {
+        identifiers[count++] = id;
+        return dynamicSegmentPattern;
+      });
+
+      this.identifiers = identifiers;
+      this.regex = new RegExp("^/?" + regex);
+    }
   },
 
   match: function(path) {
+    console.log(path, this.regex);
     var match = path.match(this.regex);
 
     if (match) {
