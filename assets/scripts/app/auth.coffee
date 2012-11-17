@@ -15,13 +15,16 @@
   # if the user is in the session storage, we're using it. if we have a flag
   # for auto signin then we're trying to sign in.
   autoSignIn: (path) ->
+    console.log 'autoSignIn'
     if user = sessionStorage.getItem('travis.user')
       @setData(user: JSON.parse(user))
     else if localStorage.getItem('travis.auto_signin')
+      console.log 'travis.auto_signin', localStorage.getItem('travis.auto_signin')
       @signIn()
 
   # try signing in, but check later in case we have a timeout
   signIn: () ->
+    console.log 'set state, signing-in'
     @set('state', 'signing-in')
     @trySignIn()
     Ember.run.later(this, @checkSignIn.bind(this), @timeout)
@@ -33,12 +36,14 @@
     @setData()
 
   trySignIn: ->
+    console.log 'trySignIn', "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}"
     @iframe.attr('src', "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}")
 
   checkSignIn: ->
     @forceSignIn() if @get('state') == 'signing-in'
 
   forceSignIn: ->
+    console.log 'forceSignIn'
     localStorage.setItem('travis.auto_signin', 'true')
     window.location = "#{@endpoint}/auth/handshake?redirect_uri=#{location}"
 
@@ -46,6 +51,7 @@
   setData: (data) ->
     data = JSON.parse(data) if typeof data == 'string'
     @storeToken(data.token) if data?.token
+    console.log 'setData', data.user if data?.user
     user = @storeUser(data.user) if data?.user
     @set('state', if user then 'signed-in' else 'signed-out')
     @set('user',  if user then user else undefined)
