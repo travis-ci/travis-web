@@ -1,5 +1,13 @@
 require 'travis/location'
 
+Ember.Route.reopen
+  enter: (router) ->
+    @_super(router)
+    if @get('isLeafRoute')
+      path = @absoluteRoute(router)
+      if window.location.origin == 'https://travis-ci.org'
+        _gaq.push(['_trackPageview', path]);
+
 defaultRoute = Ember.Route.extend
   route: '/'
   index: 1000
