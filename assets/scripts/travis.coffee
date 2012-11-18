@@ -1,6 +1,18 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
 
+if window.history.state == undefined
+  window.history.state = {}
+  oldPushState = window.history.pushState
+  window.history.pushState = (state, title, href) ->
+    window.history.state = state
+    oldPushState.apply this, arguments
+
+  oldReplaceState = window.history.replaceState
+  window.history.replaceState = (state, title, href) ->
+    window.history.state = state
+    oldReplaceState.apply this, arguments
+
 @Travis = Em.Namespace.create Ember.Evented,
   config:
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
