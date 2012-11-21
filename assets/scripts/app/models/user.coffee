@@ -64,8 +64,8 @@ require 'travis/model'
         @setWithSession('syncedAt', data.user.synced_at)
         Travis.trigger('user:synced', data.user)
 
-        # # TODO this doesn't work properly
-        # Travis.app.store.loadMany(Travis.Account, data.accounts)
+        # need to pass any param to trigger findQuery
+        Travis.Account.find(foo: '')
 
   setWithSession: (name, value) ->
     @set(name, value)
