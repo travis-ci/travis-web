@@ -1,58 +1,4 @@
 nl:
-  admin:
-    actions:
-      create: aanmaken
-      created: aangemaakt
-      delete: verwijderen
-      deleted: verwijderd
-      update: bijwerken
-      updated: bijgewerkt
-    credentials:
-      log_out: Afmelden
-    dashboard:
-      add_new: Nieuwe toevoegen
-      ago: geleden
-      last_used: Laatst gebruikt
-      model_name: Model naam
-      modify: Wijzigen
-      name: 
-      pagename: Site administratie
-      records: Gegevens
-      show: Laten zien
-    delete:
-      confirmation: Ja, ik ben zeker
-      flash_confirmation: ! '%{name} is vernietigd'
-    flash:
-      error: ! '%{name} kon niet worden %{action}'
-      noaction: Er zijn geen acties genomen
-      successful: ! '%{name} is %{action}'
-    history:
-      name: Geschiedenis
-      no_activity: Geen activiteit
-      page_name: Geschiedenis van %{name}
-    list:
-      add_new: Nieuwe toevoegen
-      delete_action: Verwijderen
-      delete_selected: Verwijder geselecteerden
-      edit_action: Bewerken
-      search: Zoeken
-      select: Selecteer %{name} om te bewerken
-      select_action: Selecteer
-      show_all: Laat allen zien
-    new:
-      basic_info: Basisinfo
-      cancel: Annuleren
-      chose_all: Kies allen
-      chosen: ! '%{name} gekozen'
-      clear_all: Deselecteer allen
-      many_chars: tekens of minder.
-      one_char: teken.
-      optional: Optioneel
-      required: Vereist
-      save: Opslaan
-      save_and_add_another: Opslaan en een nieuwe toevoegen
-      save_and_edit: Opslaan en bewerken
-      select_choice: Selecteer uw keuzes en klik
   build:
     duration: Duur
     finished_at: Voltooid
@@ -84,40 +30,6 @@ nl:
       seconds_exact:
         one: ! '%{count} seconde'
         other: ! '%{count} seconden'
-  devise:
-    confirmations:
-      confirmed: Uw account is bevestigd. U wordt nu ingelogd.
-      send_instructions: Binnen enkele minuten zal u een email ontvangen met instructies om uw account te bevestigen.
-    failure:
-      inactive: Uw account is nog niet geactiveerd.
-      invalid: Ongeldig email adres of wachtwoord.
-      invalid_token: Ongeldig authenticatie token.
-      locked: Uw account is vergrendeld.
-      timeout: Uw sessie is verlopen, gelieve opnieuw in te loggen om verder te gaan.
-      unauthenticated: U moet inloggen of u registeren voordat u verder gaat.
-      unconfirmed: U moet uw account bevestigen voordat u verder gaat.
-    mailer:
-      confirmation_instructions:
-        subject: Bevestigings-instructies
-      reset_password_instructions:
-        subject: Wachtwoord herstel instructies
-      unlock_instructions:
-        subject: Ontgrendel-instructies
-    omniauth_callbacks:
-      success: 
-    passwords:
-      send_instructions: Binnen enkele minuten zal u een email krijgen met instructies om uw wachtwoord opnieuw in te stellen.
-      updated: Uw wachtwoord is veranderd. U wordt nu ingelogd.
-    registrations:
-      destroyed: Dag! Uw account is geannuleerd. We hopen u vlug terug te zien.
-      signed_up: Uw registratie is voltooid. Als het ingeschakeld is wordt een bevestiging naar uw email adres verzonden.
-      updated: Het bijwerken van uw account is gelukt.
-    sessions:
-      signed_in: Inloggen gelukt.
-      signed_out: Uitloggen gelukt.
-    unlocks:
-      send_instructions: Binnen enkele minuten zal u een email krijgen met instructies om uw account te ontgrendelen.
-      unlocked: Uw account is ontgrendeld. U wordt nu ingelogd.
   errors:
     messages:
       already_confirmed: was al bevestigd
@@ -236,7 +148,6 @@ nl:
       repo_growth: Repository groei
       total_builds: Bouw totaal
       total_projects: Projecten/Repository totaal
-  test: 
   user:
     failure: 
     signed_out: 

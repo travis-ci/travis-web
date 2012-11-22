@@ -4,9 +4,14 @@ namespace :localeapp do
   task :update do
   require 'localeapp'
   system 'localeapp pull'
+  end
+
+  task :report do
+    require 'localeapp'
+    system 'localeapp push locales/en.yml'
+  end
 end
 
-end
 namespace :ember do
   desc 'update ember'
   task :update do
