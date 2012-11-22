@@ -1,0 +1,235 @@
+ja:
+  admin:
+    actions:
+      create: 
+      created: 
+      delete: 
+      deleted: 
+      update: 
+      updated: 
+    credentials:
+      log_out: 
+    dashboard:
+      add_new: 
+      ago: 
+      last_used: 
+      model_name: 
+      modify: 
+      name: 
+      pagename: 
+      records: 
+      show: 
+    delete:
+      confirmation: 
+      flash_confirmation: 
+    flash:
+      error: 
+      noaction: 
+      successful: 
+    history:
+      name: 
+      no_activity: 
+      page_name: 
+    list:
+      add_new: 
+      delete_action: 
+      delete_selected: 
+      edit_action: 
+      search: 
+      select: 
+      select_action: 
+      show_all: 
+    new:
+      basic_info: 
+      cancel: 
+      chose_all: 
+      chosen: 
+      clear_all: 
+      many_chars: 
+      one_char: 
+      optional: 
+      required: 
+      save: 
+      save_and_add_another: 
+      save_and_edit: 
+      select_choice: 
+  build:
+    duration: 処理時間
+    finished_at: 終了時刻
+    job: ジョブ
+  builds:
+    allowed_failures: 失敗許容範囲内
+    author: 制作者
+    branch: ブランチ
+    build_matrix: 失敗許容範囲外
+    commit: コミット
+    committer: コミット者
+    compare: 比較
+    config: 設定
+    duration: 処理時間
+    finished_at: 終了時刻
+    message: メッセージ
+    messages:
+      sponsored_by: このテストは以下のスポンサーの協力で行いました。
+    name: ビルド
+    started_at: 開始時刻
+  datetime:
+    distance_in_words:
+      hours_exact: 
+      minutes_exact: 
+      seconds_exact: 
+  devise:
+    confirmations:
+      confirmed: 
+      send_instructions: 
+    failure:
+      inactive: 
+      invalid: 
+      invalid_token: 
+      locked: 
+      timeout: 
+      unauthenticated: 
+      unconfirmed: 
+    mailer:
+      confirmation_instructions:
+        subject: 
+      reset_password_instructions:
+        subject: 
+      unlock_instructions:
+        subject: 
+    omniauth_callbacks:
+      success: 
+    passwords:
+      send_instructions: 
+      updated: 
+    registrations:
+      destroyed: 
+      signed_up: 
+      updated: 
+    sessions:
+      signed_in: 
+      signed_out: 
+    unlocks:
+      send_instructions: 
+      unlocked: 
+  errors:
+    messages:
+      already_confirmed: 
+      not_found: 
+      not_locked: 
+  home:
+    name: 
+  jobs:
+    allowed_failures: 失敗許容範囲内
+    author: 制作者
+    branch: ブランチ
+    build_matrix: ビルドマトリクス
+    commit: コミット
+    committer: コミット者
+    compare: 比較
+    config: 設定
+    duration: 処理時間
+    finished_at: 終了時刻
+    message: メッセージ
+    messages:
+      sponsored_by: このテストは以下のスポンサーの協力で行いました。
+    sponsored_by: 
+    started_at: 開始時刻
+  layouts:
+    about:
+      alpha: まだアルファですよ！
+      join: 参加してみよう！
+      mailing_list: メールリスト
+      messages:
+        alpha: Travis-ciは安定したサービスまで後一歩！詳しくは<a href='https://github.com/travis-ci'>こちら</a>
+      repository: リポジトリ
+      twitter: ツイッター
+    application:
+      fork_me: Githubでフォークしよう
+      my_repositories: マイリポジトリ
+      recent: 最近
+      search: 検索
+      sponsers: スポンサー
+      sponsors_link: スポンサーをもっと見る &rarr;
+    mobile:
+      author: 制作者
+      build: ビルド
+      build_matrix: ビルドマトリクス
+      commit: コミット
+      committer: コミット者
+      compare: 比較
+      config: 設定
+      duration: 処理時間
+      finished_at: 終了時刻
+      job: ジョブ
+      log: ログ
+    top:
+      admin: 管理
+      blog: ブログ
+      docs: Travisとは？
+      github_login: Githubでログイン
+      home: ホーム
+      profile: プロフィール
+      sign_out: ログアウト
+      stats: 統計
+  locales:
+    ca: 
+    en: English
+    es: Español
+    fr: Français
+    ja: 日本語
+    nb: Norsk Bokmål
+    nl: Nederlands
+    pl: Polski
+    pt-BR: português brasileiro
+    ru: Русский
+  no_job: ジョブはありません
+  profiles:
+    show:
+      email: メール
+      github: Github
+      message:
+        config: 詳細設定
+        your_repos: 以下のスイッチを設定し、Travis-ciを有効にします。Githubへプッシュしたらビルドは自動的に開始します。複数バーションや細かい設定はこちらへ：
+      messages:
+        notice: まずは<a href="http://about.travis-ci.org/docs/user/getting-started/">Travisのはじめ方</a>を参照してください。
+      token: トークン
+      update: 更新
+      update_locale: 更新
+      your_locale: 言語設定
+      your_repos: リポジトリ
+  queue: キュー
+  repositories:
+    branch: ブランチ
+    commit: コミット
+    duration: 処理時間
+    finished_at: 終了時刻
+    image_url: 画像URL
+    markdown: .md
+    message: メッセージ
+    rdoc: .rdoc
+    started_at: 開始時刻
+    tabs:
+      branches: ブランチまとめ
+      build: ビルド
+      build_history: ビルド履歴
+      current: 最新
+      job: ジョブ
+      pull_requests: プルリクエスト
+    test: 
+    textile: .textile
+  repository:
+    duration: 時間
+  statistics:
+    index:
+      build_count: ビルド数
+      count: 数
+      last_month: 先月
+      repo_growth: リポジトリ
+      total_builds: 合計ビルド数
+      total_projects: 合計リポジトリ
+  test: 
+  user:
+    failure: 
+    signed_out: 
+  workers: ワーカー

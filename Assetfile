@@ -11,6 +11,14 @@ assets ||= Travis::Assets.new
 assets.setup_compass
 assets.update_version
 
+output 'assets/scripts/config'
+input 'locales' do
+  match '**/*.yml' do
+    ember_i18n :use_i18n_js => true
+  end
+  concat 'locales.js'
+end
+
 output 'public/scripts'
 input assets.scripts do
   match '**/*.hbs' do
