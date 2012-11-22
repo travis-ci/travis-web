@@ -64,6 +64,10 @@ $.extend
     string[0].toLowerCase() + string.substring(1).replace /([A-Z])?/g, (match, chr) ->
       if chr then "_#{chr.toUpperCase()}" else ''
 
+  titleize: (string) ->
+    $.capitalize(string).replace /_(.)?/g, (match, chr) ->
+      if chr then ' ' + chr.toUpperCase() else ''
+
   camelize: (string, uppercase) ->
     string = if uppercase == false then $.underscore(string) else $.capitalize(string)
     string.replace /_(.)?/g, (match, chr) ->

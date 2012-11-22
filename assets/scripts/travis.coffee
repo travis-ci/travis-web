@@ -71,6 +71,7 @@ if window.history.state == undefined
       @store = app.store
       $ => app.initialize()
 
+require 'ext/i18n'
 require 'travis/ajax'
 require 'app'
 

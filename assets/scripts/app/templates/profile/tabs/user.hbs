@@ -1,24 +1,30 @@
 <img {{bindAttr src="view.gravatarUrl"}}>
 
 <dl class="profile">
-  <dt>
-    {{t profiles.show.github}}:
-  </dt>
-  <dd>
-    <a {{bindAttr href="urlGithub"}}>{{user.login}}</a>
-  </dd>
-  <dt>
-    {{t profiles.show.email}}:
-  </dt>
-  <dd>
-    {{user.email}}
-  </dd>
-  <dt>
-    {{t profiles.show.token}}:
-  </dt>
-  <dd>
-    {{user.token}}
-  </dd>
+  <div>
+    <dt>
+      {{t profiles.show.github}}:
+    </dt>
+    <dd>
+      <a {{bindAttr href="urlGithub"}}>{{user.login}}</a>
+    </dd>
+  </div>
+  <div>
+    <dt>
+      {{t profiles.show.email}}:
+    </dt>
+    <dd>
+      {{user.email}}
+    </dd>
+  </div>
+  <div>
+    <dt>
+      {{t profiles.show.token}}:
+    </dt>
+    <dd>
+      {{user.token}}
+    </dd>
+  </div>
 </dl>
 
 <form>
