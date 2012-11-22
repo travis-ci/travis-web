@@ -1,5 +1,12 @@
 $: << 'lib'
+namespace :localeapp do
+  desc "update all locale files from localeapp"
+  task :update do
+  require 'localeapp'
+  system 'localeapp pull'
+end
 
+end
 namespace :ember do
   desc 'update ember'
   task :update do
