@@ -4,3 +4,5 @@
 /public/scripts
 /public/styles
 /public/version
+.sass-cache
+.localeapp/key
