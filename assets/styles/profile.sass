@@ -14,19 +14,16 @@
       @include border-radius(4px)
       background-color: $color-bg-light
 
-    dl
-      float: left
+    dl.profile
+      display: table
       margin: 0 0 20px 0
-
-    dt
-      display: block
-      clear: left
-      float: left
-      width: 50px
-
-    dd
-      float: left
-      margin-left: 0
+      div
+        display: table-row
+      dt
+        display: table-cell
+        padding-right: 20px
+      dd
+        margin-left: 0
 
     form
       clear: left
