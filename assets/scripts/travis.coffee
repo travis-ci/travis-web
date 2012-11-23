@@ -47,7 +47,6 @@ if window.history.state == undefined
 
   setLocale: (locale) ->
     return unless locale
-
     I18n.locale = locale
     localStorage.setItem('travis.locale', locale)
 
@@ -57,6 +56,7 @@ if window.history.state == undefined
   run: (attrs) ->
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
 
+    I18n.fallbacks = true
     @setLocale localStorage.getItem('travis.locale') || 'en'
 
     Ember.run.next this, ->

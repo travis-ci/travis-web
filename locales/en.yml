@@ -147,6 +147,6 @@ en:
       total_builds: Total Builds
       total_projects: Total Projects/Repositories
   user:
-    failure: 
-    signed_out: 
+    failure:
+    signed_out:
   workers: Workers
