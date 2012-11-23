@@ -1,58 +1,4 @@
 es:
-  admin:
-    actions:
-      create: crear
-      created: creado
-      delete: borrar
-      deleted: borrado
-      update: actualizar
-      updated: actualizado
-    credentials:
-      log_out: Salir
-    dashboard:
-      add_new: Añadir Nuevo
-      ago: Hace
-      last_used: Usado por última vez
-      model_name: Nombre del modelo
-      modify: Modificar
-      name: Panel
-      pagename: Administración del Sitio
-      records: Registros
-      show: Mostrar
-    delete:
-      confirmation: Si, estoy seguro
-      flash_confirmation: ! '%{name} ha sido borrado'
-    flash:
-      error: no se ha podido %{action} %{name}
-      noaction: No se efectuaron acciones
-      successful: ! '%{name} a sido correctamente %{action}'
-    history:
-      name: Histórico
-      no_activity: Sin actividad
-      page_name: Histórico de %{name}
-    list:
-      add_new: Añadir nuevo
-      delete_action: Borrar
-      delete_selected: Borrar seleccionado
-      edit_action: Editar
-      search: Buscar
-      select: Seleccionar %{name} para editar
-      select_action: Seleccionar
-      show_all: Mostrar todos
-    new:
-      basic_info: Información Basica
-      cancel: Cancelar
-      chose_all: Escoger todo
-      chosen: Escogido %{name}
-      clear_all: Limpiar todo
-      many_chars: carácteres o menos.
-      one_char: carácter.
-      optional: Opcional
-      required: Requerido
-      save: Guardar
-      save_and_add_another: Guardar y añadir otro
-      save_and_edit: Guardar y editar
-      select_choice: Escoge tu selección y haz clic
   build:
     duration: Duración
     finished_at: Finalizado
@@ -84,40 +30,6 @@ es:
       seconds_exact:
         one: ! '%{count} segundo'
         other: ! '%{count} segundos'
-  devise:
-    confirmations:
-      confirmed: Tu cuenta ha sido confirmada correctamente. Ahora puedes iniciar sesión.
-      send_instructions: En unos minutos recibirás un email con instrucciones de como confirmar tu cuenta.
-    failure:
-      inactive: Tu cuenta no ha sido activada aún.
-      invalid: Email o contraseña incorrecta.
-      invalid_token: Token de autenticación inválido.
-      locked: Tu cuenta está bloqueada
-      timeout: Tu sesión ha finalizado, por favor inicia sesión otra vez para continuar.
-      unauthenticated: Necesitas iniciar sesión antes de continuar.
-      unconfirmed: Tienes que confirmar tu cuenta para poder continuar.
-    mailer:
-      confirmation_instructions:
-        subject: Instrucciones de confirmación
-      reset_password_instructions:
-        subject: Instrucciones para un resetear tu password
-      unlock_instructions:
-        subject: Instrucciones de desbloqueo
-    omniauth_callbacks:
-      success: 
-    passwords:
-      send_instructions: En unos minutos recibirás un correo con instrucciones de como resetear tu password.
-      updated: Tu password ha sido cambiado correctamente. Ha hora puedes iniciar sesión.
-    registrations:
-      destroyed: ¡Adios! Su cuenta a sido cancelada correctamente. Esperamos verte pronto otra vez,
-      signed_up: Ha iniciado sesión correctamente. Si esta activo, una confirmación habrá sido enviada a su email.
-      updated: Ha actualizado su cuenta correctamente.
-    sessions:
-      signed_in: Ha iniciado sesión correctamente.
-      signed_out: Ha desconectado correctamente
-    unlocks:
-      send_instructions: ! ' En unos minutos recibirá un email con instrucciones de como desbloquear su cuenta.'
-      unlocked: Su cuenta ha sido correctamente desbloqueada. Ahora ya puede iniciar sesión.
   errors:
     messages:
       already_confirmed: ya ha sido confirmado
@@ -234,7 +146,6 @@ es:
       repo_growth: Crecimiento de Repositorios
       total_builds: Total de Builds
       total_projects: Total de Proyectos/Repositorios
-  test: 
   user:
     failure: 
     signed_out: 

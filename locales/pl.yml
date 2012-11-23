@@ -1,58 +1,4 @@
 pl:
-  admin:
-    actions:
-      create: utwórz
-      created: utworzono
-      delete: usuń
-      deleted: usunięto
-      update: nadpisz
-      updated: nadpisano
-    credentials:
-      log_out: Wyloguj się
-    dashboard:
-      add_new: Dodaj nowy
-      ago: temu
-      last_used: Ostatnio używane
-      model_name: Nazwa modelu
-      modify: Zmień
-      name: Kokpit
-      pagename: Administracja stroną
-      records: Rekordy
-      show: Pokaż
-    delete:
-      confirmation: Tak, jestem pewien
-      flash_confirmation: ! '%{name} zostało usunięty'
-    flash:
-      error: ! '%{name} nie zostało %{action}'
-      noaction: 
-      successful: 
-    history:
-      name: 
-      no_activity: 
-      page_name: 
-    list:
-      add_new: 
-      delete_action: 
-      delete_selected: 
-      edit_action: 
-      search: 
-      select: 
-      select_action: 
-      show_all: 
-    new:
-      basic_info: 
-      cancel: 
-      chose_all: 
-      chosen: 
-      clear_all: 
-      many_chars: 
-      one_char: 
-      optional: 
-      required: 
-      save: 
-      save_and_add_another: 
-      save_and_edit: 
-      select_choice: 
   build:
     duration: Czas trwania
     finished_at: Zakończono
@@ -84,40 +30,6 @@ pl:
       seconds_exact:
         one: ! '%{count} sekunda'
         other: ! '%{count} sekundy'
-  devise:
-    confirmations:
-      confirmed: 
-      send_instructions: 
-    failure:
-      inactive: 
-      invalid: 
-      invalid_token: 
-      locked: 
-      timeout: 
-      unauthenticated: 
-      unconfirmed: 
-    mailer:
-      confirmation_instructions:
-        subject: 
-      reset_password_instructions:
-        subject: 
-      unlock_instructions:
-        subject: 
-    omniauth_callbacks:
-      success: 
-    passwords:
-      send_instructions: 
-      updated: 
-    registrations:
-      destroyed: 
-      signed_up: 
-      updated: 
-    sessions:
-      signed_in: 
-      signed_out: 
-    unlocks:
-      send_instructions: 
-      unlocked: 
   errors:
     messages:
       already_confirmed: 
@@ -234,7 +146,6 @@ pl:
       repo_growth: Przyrost repozytoriów
       total_builds: Łącznie Buildów
       total_projects: Łącznie projektów/repozytoriów
-  test: 
   user:
     failure: 
     signed_out: 
