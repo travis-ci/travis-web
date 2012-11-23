@@ -23,7 +23,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'debugger'
+  # gem 'debugger'
   gem 'foreman'
   gem 'rerun'
   gem 'guard'
