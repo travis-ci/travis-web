@@ -2,10 +2,11 @@ $: << 'lib'
 namespace :localeapp do
   desc "update all locale files from localeapp"
   task :update do
-  require 'localeapp'
-  system 'localeapp pull'
+    require 'localeapp'
+    system 'localeapp pull'
   end
 
+  desc "push changes to en.yml up to localeapp"
   task :report do
     require 'localeapp'
     system 'localeapp push locales/en.yml'
