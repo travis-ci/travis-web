@@ -17,7 +17,6 @@ input 'locales' do
   match '**/*.yml' do
     i18n_js { 'locales.js' }
   end
-  #concat 'locales.js'
 end
 
 output 'public/scripts'
