@@ -1,58 +1,4 @@
 ja:
-  admin:
-    actions:
-      create: 
-      created: 
-      delete: 
-      deleted: 
-      update: 
-      updated: 
-    credentials:
-      log_out: 
-    dashboard:
-      add_new: 
-      ago: 
-      last_used: 
-      model_name: 
-      modify: 
-      name: 
-      pagename: 
-      records: 
-      show: 
-    delete:
-      confirmation: 
-      flash_confirmation: 
-    flash:
-      error: 
-      noaction: 
-      successful: 
-    history:
-      name: 
-      no_activity: 
-      page_name: 
-    list:
-      add_new: 
-      delete_action: 
-      delete_selected: 
-      edit_action: 
-      search: 
-      select: 
-      select_action: 
-      show_all: 
-    new:
-      basic_info: 
-      cancel: 
-      chose_all: 
-      chosen: 
-      clear_all: 
-      many_chars: 
-      one_char: 
-      optional: 
-      required: 
-      save: 
-      save_and_add_another: 
-      save_and_edit: 
-      select_choice: 
   build:
     duration: 処理時間
     finished_at: 終了時刻
@@ -78,40 +24,6 @@ ja:
       hours_exact: 
       minutes_exact: 
       seconds_exact: 
-  devise:
-    confirmations:
-      confirmed: 
-      send_instructions: 
-    failure:
-      inactive: 
-      invalid: 
-      invalid_token: 
-      locked: 
-      timeout: 
-      unauthenticated: 
-      unconfirmed: 
-    mailer:
-      confirmation_instructions:
-        subject: 
-      reset_password_instructions:
-        subject: 
-      unlock_instructions:
-        subject: 
-    omniauth_callbacks:
-      success: 
-    passwords:
-      send_instructions: 
-      updated: 
-    registrations:
-      destroyed: 
-      signed_up: 
-      updated: 
-    sessions:
-      signed_in: 
-      signed_out: 
-    unlocks:
-      send_instructions: 
-      unlocked: 
   errors:
     messages:
       already_confirmed: 
@@ -228,7 +140,6 @@ ja:
       repo_growth: リポジトリ
       total_builds: 合計ビルド数
       total_projects: 合計リポジトリ
-  test: 
   user:
     failure: 
     signed_out: 

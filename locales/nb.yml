@@ -1,58 +1,4 @@
 nb:
-  admin:
-    actions:
-      create: opprett
-      created: opprettet
-      delete: slett
-      deleted: slettet
-      update: oppdater
-      updated: oppdatert
-    credentials:
-      log_out: Logg ut
-    dashboard:
-      add_new: Legg til ny
-      ago: siden
-      last_used: Sist brukt
-      model_name: Modell
-      modify: Rediger
-      name: Dashbord
-      pagename: Nettstedsadministrasjon
-      records: Oppføringer
-      show: Vis
-    delete:
-      confirmation: Ja, jeg er sikker
-      flash_confirmation: ! '%{name} ble slettet'
-    flash:
-      error: ! '%{name} kunne ikke bli %{action}'
-      noaction: Ingen handlinger ble utført
-      successful: ! '%{name} ble %{action}'
-    history:
-      name: Logg
-      no_activity: Ingen aktivitet
-      page_name: Logg for %{name}
-    list:
-      add_new: Legg til ny
-      delete_action: Slett
-      delete_selected: Slett valgte
-      edit_action: Rediger
-      search: Søk
-      select: Velg %{name} for å redigere
-      select_action: Velg
-      show_all: ! 'Vis alle '
-    new:
-      basic_info: Basisinformasjon
-      cancel: Avbryt
-      chose_all: Velg alle
-      chosen: Valgt %{name}
-      clear_all: Fjern alle
-      many_chars: eller færre tegn.
-      one_char: tegn.
-      optional: Valgfri
-      required: Påkrevd
-      save: Lagre
-      save_and_add_another: Lagre og legg til ny
-      save_and_edit: Lagre og rediger
-      select_choice: Kryss av for dine valg og klikk
   build:
     duration: Varighet
     finished_at: Fullført
@@ -84,40 +30,6 @@ nb:
       seconds_exact:
         one: ! '%{count} sekund'
         other: ! '%{count} sekunder'
-  devise:
-    confirmations:
-      confirmed: Din konto er aktivert og du er nå innlogget.
-      send_instructions: Om noen få minutter så vil du få en e-post med informasjon om hvordan du bekrefter kontoen din.
-    failure:
-      inactive: Kontoen din har ikke blitt aktivert enda.
-      invalid: Ugyldig e-post eller passord.
-      invalid_token: Ugyldig autentiseringskode.
-      locked: Kontoen din er låst.
-      timeout: Du ble logget ut siden på grunn av mangel på aktivitet, vennligst logg inn på nytt.
-      unauthenticated: Du må logge inn eller registrere deg for å fortsette.
-      unconfirmed: Du må bekrefte kontoen din før du kan fortsette.
-    mailer:
-      confirmation_instructions:
-        subject: Bekreftelsesinformasjon
-      reset_password_instructions:
-        subject: Instruksjoner for å få nytt passord
-      unlock_instructions:
-        subject: Opplåsningsinstruksjoner
-    omniauth_callbacks:
-      success: 
-    passwords:
-      send_instructions: Om noen få minutter så vil du få en epost med informasjon om hvordan du kan få et nytt passord.
-      updated: Passordet ditt ble endret, og du er logget inn.
-    registrations:
-      destroyed: Adjø! Kontoen din ble kansellert. Vi håper vi ser deg igjen snart.
-      signed_up: Du er nå registrert.
-      updated: Kontoen din ble oppdatert.
-    sessions:
-      signed_in: Du er nå logget inn.
-      signed_out: Du er nå logget ut.
-    unlocks:
-      send_instructions: Om noen få minutter så kommer du til å få en e-post med informasjon om hvordan du kan låse opp kontoen din.
-      unlocked: Kontoen din ble låst opp, og du er nå logget inn igjen.
   errors:
     messages:
       already_confirmed: har allerede blitt bekreftet
@@ -234,7 +146,6 @@ nb:
       repo_growth: Vekst i kodelager
       total_builds: Totale jobber
       total_projects: Antall prosjekter/kodelagre
-  test: 
   user:
     failure: 
     signed_out: 
