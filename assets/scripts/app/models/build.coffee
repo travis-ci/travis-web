@@ -14,9 +14,9 @@ require 'travis/model'
   startedAt:       DS.attr('string', key: 'started_at')
   finishedAt:      DS.attr('string', key: 'finished_at')
 
-  repo:       DS.belongsTo('Travis.Repo', key: 'repository_id')
-  commit:     DS.belongsTo('Travis.Commit')
-  jobs:       DS.hasMany('Travis.Job', key: 'job_ids')
+  repo:   DS.belongsTo('Travis.Repo', key: 'repository_id')
+  commit: DS.belongsTo('Travis.Commit')
+  jobs:   DS.hasMany('Travis.Job', key: 'job_ids')
 
   config: (->
     Travis.Helpers.compact(@get('data.config'))
@@ -48,6 +48,14 @@ require 'travis/model'
     headers = (I18n.t(key) for key in ['build.job', 'build.duration', 'build.finished_at'])
     $.map(headers.concat(keys), (key) -> return $.camelize(key))
   ).property('config')
+
+  canCancel: (->
+    @get('state') == 'created' # TODO
+  ).property('state')
+
+  cancel: (->
+    Travis.ajax.post "/builds/#{@get('id')}", _method: 'delete'
+  )
 
   requeue: ->
     Travis.ajax.post '/requests', build_id: @get('id')

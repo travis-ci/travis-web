@@ -4,6 +4,16 @@
     <li>
       <a href="#" name="status-images" class="open-popup" {{action statusImages target="view"}}>Status Images</a>
     </li>
+    {{#if view.canCancelBuild}}
+      <li>
+        <a href="#" {{action cancelBuild target="view"}}>Cancel Build</a>
+      </li>
+    {{/if}}
+    {{#if view.canCancelJob}}
+      <li>
+        <a href="#" {{action cancelJob target="view"}}>Cancel Job</a>
+      </li>
+    {{/if}}
     {{#if view.canRequeueBuild}}
       <li>
         <a href="#" {{action requeueBuild target="view"}}>Rebuild</a>

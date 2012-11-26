@@ -90,6 +90,18 @@
       element = $('#tools .menu').toggleClass('display')
       event.stopPropagation()
 
+    requeue: ->
+      @closeMenu()
+      @get('build').requeue()
+
+    cancelBuild: ->
+      @closeMenu()
+      @get('build').cancel()
+
+    cancelJob: ->
+      @closeMenu()
+      @get('job').cancel()
+
     statusImages: (event) ->
       @set('active', true)
       @closeMenu()
@@ -128,20 +140,30 @@
       @get('isJobTab') && @get('job.isFinished') && @get('hasPermissions')
     ).property('isJobTab', 'job.isFinished', 'hasPermissions')
 
+    canCancelBuild: (->
+      @get('isBuildTab') && @get('build.canCancel') && @get('hasPermission')
+    ).property('build.state', 'hasPushPermissions', 'tab')
+
     canRegenerateKey: (->
       @get('hasPermissions')
     ).property('hasPermissions')
 
-    isBuildTab: (->
-      # ['current', 'build', 'job'].indexOf(@get('tab')) > -1
-      @get('tab') in ['current', 'build']
-    ).property('tab')
+    canCancelJob: (->
+      console.log @get('isJobTab')
+      console.log @get('job.canCancel')
+      console.log @get('hasPermission')
+      @get('isJobTab') && @get('job.canCancel') && @get('hasPermission')
+    ).property('job.state', 'hasPushPermissions', 'tab')
 
     isJobTab: (->
       @get('tab') == 'job'
     ).property('tab')
 
-    hasPermissions: (->
+    isBuildTab: (->
+      ['current', 'build'].indexOf(@get('tab')) > -1
+    ).property('tab')
+
+    hasPermission: (->
       if permissions = Travis.app.get('currentUser.permissions')
         permissions.indexOf(@get('repo.id')) > -1
     ).property('Travis.app.currentUser.permissions.length', 'repo.id')

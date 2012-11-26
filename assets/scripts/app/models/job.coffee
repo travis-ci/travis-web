@@ -15,11 +15,10 @@ require 'travis/model'
   allowFailure:   DS.attr('boolean', key: 'allow_failure')
 
   repositorySlug: DS.attr('string')
-
-  repo: DS.belongsTo('Travis.Repo', key: 'repository_id')
-  build:      DS.belongsTo('Travis.Build',      key: 'build_id')
-  commit:     DS.belongsTo('Travis.Commit',     key: 'commit_id')
-  log:        DS.belongsTo('Travis.Artifact',   key: 'log_id')
+  repo:   DS.belongsTo('Travis.Repo',     key: 'repository_id')
+  build:  DS.belongsTo('Travis.Build',    key: 'build_id')
+  commit: DS.belongsTo('Travis.Commit',   key: 'commit_id')
+  log:    DS.belongsTo('Travis.Artifact', key: 'log_id')
 
   repoSlug: (->
     @get('repositorySlug')
@@ -58,6 +57,14 @@ require 'travis/model'
     else
       []
   ).property('config')
+
+  canCancel: (->
+    @get('state') == 'created' || @get('state') == 'queued' # TODO
+  ).property('state')
+
+  cancel: (->
+    Travis.ajax.post "/jobs/#{@get('id')}", _method: 'delete'
+  )
 
   requeue: ->
     Travis.ajax.post '/requests', job_id: @get('id')
