@@ -6,7 +6,7 @@ require 'travis/model'
   description:         DS.attr('string')
   lastBuildId:         DS.attr('number')
   lastBuildNumber:     DS.attr('string')
-  lastBuildResult:     DS.attr('number')
+  lastBuildState:      DS.attr('string')
   lastBuildStartedAt:  DS.attr('string')
   lastBuildFinishedAt: DS.attr('string')
 

@@ -11,6 +11,8 @@
             <a {{action showBuild repo this href=true}}>{{number}}</a>
           {{/with}}
         </dd>
+        <dt>{{t builds.state}}</dt>
+        <dd class="state">{{capitalize build.state}}</dd>
         <dt class="finished_at_label">{{t builds.finished_at}}</dt>
         <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime build.finishedAt}}</dd>
         <dt>{{t builds.duration}}</dt>

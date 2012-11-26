@@ -32,8 +32,8 @@
     commitBinding: 'build.commit'
 
     color: (->
-      Travis.Helpers.colorForResult(@get('build.result'))
-    ).property('build.result')
+      Travis.Helpers.colorForState(@get('build.state'))
+    ).property('build.state')
 
     urlBuild: (->
       Travis.Urls.build(@get('repo.slug'), @get('build.id'))
@@ -59,8 +59,8 @@
     ).property('build.isLoaded')
 
     color: (->
-      Travis.Helpers.colorForResult(@get('build.result'))
-    ).property('build.result')
+      Travis.Helpers.colorForState(@get('build.state'))
+    ).property('build.state')
 
     urlBuild: (->
       Travis.Urls.build(@get('repo.slug'), @get('build.id'))

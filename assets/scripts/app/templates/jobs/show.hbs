@@ -10,6 +10,8 @@
               <a {{action showJob repo job href=true}}>{{job.number}}</a>
             {{/if}}
           </dd>
+          <dt>{{t jobs.state}}</dt>
+          <dd class="state">{{capitalize job.state}}</dd>
           <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
           <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime job.finishedAt}}</dd>
           <dt>{{t jobs.duration}}</dt>

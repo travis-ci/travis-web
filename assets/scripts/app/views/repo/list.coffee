@@ -16,8 +16,8 @@
       selectedBinding: 'repo.selected'
 
       color: (->
-        Travis.Helpers.colorForResult(@get('repo.lastBuildResult'))
-      ).property('repo.lastBuildResult')
+        Travis.Helpers.colorForState(@get('repo.lastBuildState'))
+      ).property('repo.lastBuildState')
 
       urlRepo: (->
         Travis.Urls.repo(@get('repo.slug'))

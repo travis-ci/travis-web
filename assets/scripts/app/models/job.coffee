@@ -9,7 +9,6 @@ require 'travis/model'
   queue:          DS.attr('string')
   state:          DS.attr('string')
   number:         DS.attr('string')
-  result:         DS.attr('number')
   startedAt:      DS.attr('string')
   finishedAt:     DS.attr('string')
   allowFailure:   DS.attr('boolean', key: 'allow_failure')
@@ -83,7 +82,7 @@ require 'travis/model'
   ).observes('state')
 
   isAttributeLoaded: (key) ->
-    if ['finishedAt', 'result'].contains(key) && !@get('finished')
+    if ['finishedAt', 'state'].contains(key) && !@get('finished')
       return true
     else if key == 'startedAt' && @get('state') == 'created'
       return true

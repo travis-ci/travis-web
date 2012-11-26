@@ -11,9 +11,9 @@ require 'travis/model'
     @get('event')
   ).property('event')
 
-  result: (->
-    @get('data.data.result')
-  ).property('data.data.result')
+  state: (->
+    @get('data.data.state')
+  ).property('data.data.state')
 
   message: (->
     @get('data.data.message')

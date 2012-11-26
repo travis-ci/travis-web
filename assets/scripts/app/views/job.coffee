@@ -10,8 +10,8 @@
     jobBinding: 'context'
 
     color: (->
-      Travis.Helpers.colorForResult(@get('job.result'))
-    ).property('job.result')
+      Travis.Helpers.colorForState(@get('job.state'))
+    ).property('job.state')
 
     urlJob: (->
       Travis.Urls.job(@get('repo.slug'), @get('job.id'))
@@ -27,8 +27,8 @@
     currentItemBinding: 'job'
 
     color: (->
-      Travis.Helpers.colorForResult(@get('job.result'))
-    ).property('job.result')
+      Travis.Helpers.colorForState(@get('job.state'))
+    ).property('job.state')
 
     urlJob: (->
       Travis.Urls.job(@get('repo.slug'), @get('job.id'))

@@ -30,6 +30,14 @@
   a
     color: $color-text-status-failed
 
+#repos .gray,
+.gray #summary .number,
+.list .gray .number
+  .status
+    background-color: $color-bg-status-gray
+  a
+    color: $color-text-status-gray
+
 table.list
   tbody
     td
@@ -53,6 +61,14 @@ table.list
       background-color: $color-bg-job-failed-highlight
     .number a
       color: $color-text-status-failed
+
+  .gray
+    td
+      background-color: $color-bg-job-gray
+    &:hover td
+      background-color: $color-bg-job-gray-highlight
+    .number a
+      color: $color-text-status-gray
 
 #workers
   .status

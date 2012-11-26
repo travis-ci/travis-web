@@ -149,9 +149,6 @@
     ).property('hasPermissions')
 
     canCancelJob: (->
-      console.log @get('isJobTab')
-      console.log @get('job.canCancel')
-      console.log @get('hasPermission')
       @get('isJobTab') && @get('job.canCancel') && @get('hasPermission')
     ).property('job.state', 'hasPushPermissions', 'tab')
 

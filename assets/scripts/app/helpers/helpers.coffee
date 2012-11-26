@@ -2,6 +2,13 @@ require 'travis/log'
 require 'config/emoij'
 
 @Travis.Helpers =
+  COLORS:
+    default:  'yellow'
+    passed:   'green'
+    failed:   'red'
+    errored:  'gray'
+    canceled: 'gray'
+
   compact: (object) ->
     result = {}
     (result[key] = value unless $.isEmpty(value)) for key, value of object || {}
@@ -10,8 +17,8 @@ require 'config/emoij'
   safe: (string) ->
     new Handlebars.SafeString(string)
 
-  colorForResult: (result) ->
-    (if result is 0 then 'green' else (if result is 1 then 'red' else null))
+  colorForState: (state) ->
+    Travis.Helpers.COLORS[state] || Travis.Helpers.COLORS['default']
 
   formatCommit: (sha, branch) ->
     Travis.Helpers.formatSha(sha) + if branch then " (#{branch})" else ''

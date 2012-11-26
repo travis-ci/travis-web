@@ -9,6 +9,9 @@ Handlebars.registerHelper 'tipsy', (text, tip) ->
 Handlebars.registerHelper 't', (key) ->
   safe I18n.t(key)
 
+Ember.registerBoundHelper 'capitalize', (value, options) ->
+  safe $.capitalize(value)
+
 Ember.registerBoundHelper 'formatTime', (value, options) ->
   safe Travis.Helpers.timeAgoInWords(value) || '-'
 

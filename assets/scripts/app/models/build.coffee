@@ -9,7 +9,6 @@ require 'travis/model'
   number:          DS.attr('number')
   branch:          DS.attr('string')
   message:         DS.attr('string')
-  result:          DS.attr('number')
   _duration:       DS.attr('number', key: 'duration')
   startedAt:       DS.attr('string', key: 'started_at')
   finishedAt:      DS.attr('string', key: 'finished_at')
@@ -61,7 +60,7 @@ require 'travis/model'
     Travis.ajax.post '/requests', build_id: @get('id')
 
   isAttributeLoaded: (key) ->
-    if ['_duration', 'finishedAt', 'result'].contains(key) && !@get('finished')
+    if ['_duration', 'finishedAt', 'state'].contains(key) && !@get('finished')
       return true
     else
       @_super(key)
