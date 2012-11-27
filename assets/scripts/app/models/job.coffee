@@ -14,10 +14,20 @@ require 'travis/model'
   finishedAt:     DS.attr('string')
   allowFailure:   DS.attr('boolean', key: 'allow_failure')
 
+  repositorySlug: DS.attr('string')
+
   repo: DS.belongsTo('Travis.Repo', key: 'repository_id')
   build:      DS.belongsTo('Travis.Build',      key: 'build_id')
   commit:     DS.belongsTo('Travis.Commit',     key: 'commit_id')
   log:        DS.belongsTo('Travis.Artifact',   key: 'log_id')
+
+  repoSlug: (->
+    @get('repositorySlug')
+  ).property('repositorySlug')
+
+  repoData: (->
+    { id: @get('repoId'), slug: @get('repoSlug') }
+  ).property('repoSlug', 'repoId')
 
   config: (->
     Travis.Helpers.compact(@get('data.config'))

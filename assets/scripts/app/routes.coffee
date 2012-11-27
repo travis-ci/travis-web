@@ -202,6 +202,8 @@ Travis.Router = Ember.Router.extend
         dynamicSegmentPattern: "([^/#]+)"
 
         connectOutlets: (router, repo) ->
+          unless repo.constructor == Travis.Repo
+            repo = Travis.Repo.find(repo.id)
           router.get('repoController').set 'repo', repo
 
         deserialize: (router, params) ->
@@ -225,8 +227,11 @@ Travis.Router = Ember.Router.extend
           if typeof repo == 'string'
             [owner, name] = repo.split '/'
             { owner: owner, name: name }
-          else if repo
+          else if repo && repo.constructor == Travis.Repo
             { owner: repo.get('owner'), name: repo.get('name') }
+          else if repo && repo.id && repo.slug
+            [owner, name] = repo.slug.split '/'
+            { owner: owner, name: name }
           else
             # TODO: it would be nice to handle 404 somehow
             {}

@@ -26,6 +26,10 @@ require 'travis/model'
     Travis.Job.find @get('job_id')
   ).property('jobId')
 
+  repoData: (->
+    { id: @get('repoId'), slug: @get('repoSlug') }
+  ).property('repoSlug', 'repoId')
+
   repo: (->
     Travis.Repo.find(@get('payload.repository.id') || @get('payload.repo.id'))
   ).property('payload.repository.id', 'payload.repo.id')
@@ -33,6 +37,10 @@ require 'travis/model'
   repoSlug: (->
     @get('payload.repo.slug') || @get('payload.repository.slug')
   ).property('payload.repo.slug', 'payload.repository.slug')
+
+  repoId: (->
+    @get('payload.repo.id') || @get('payload.repository.id')
+  ).property('payload.repo.id', 'payload.repository.id')
 
   nameForSort: (->
     if name = @get('name')

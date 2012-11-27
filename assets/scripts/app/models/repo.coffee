@@ -84,11 +84,12 @@ require 'travis/model'
   ).property('lastBuildFinishedAt', 'lastBuildId')
 
   stats: (->
-    @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
-      @set('_stats', data)
-      @notifyPropertyChange 'stats'
-    ) && {}
-  ).property()
+    if @get('slug')
+      @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>
+        @set('_stats', data)
+        @notifyPropertyChange 'stats'
+      ) && {}
+  ).property('slug')
 
   updateTimes: ->
     @notifyPropertyChange 'lastBuildDuration'
