@@ -38,10 +38,14 @@
       templateName: 'queues/list'
       controller: Em.ArrayController.create()
 
+      loadMoreJobs: (event) ->
+        queue = event.context
+        queue.incrementProperty('limit', 20)
+
       didInsertElement: ->
         queues = for queue in Travis.QUEUES
-          Em.ArrayController.create
-            content: Travis.Job.queued(queue.name)
+          Travis.LimitedArray.create
+            content: Travis.Job.queued(queue.name), limit: 15
             id: "queue_#{queue.name}"
             name: queue.display
         @set 'controller.content', queues
