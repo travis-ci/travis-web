@@ -38,12 +38,9 @@
       templateName: 'queues/list'
       controller: Em.ArrayController.create()
 
-      loadMoreJobs: (event) ->
+      showAll: (event) ->
         queue = event.context
-        # nasty hack to not have to implement showAll for
-        # limitedArray
-        # TODO: implement it properly later
-        queue.incrementProperty('limit', 1000000)
+        queue.showAll()
 
       didInsertElement: ->
         queues = for queue in Travis.QUEUES

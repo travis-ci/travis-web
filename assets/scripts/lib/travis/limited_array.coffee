@@ -6,9 +6,12 @@ Travis.LimitedArray = Em.ArrayProxy.extend
     @_super.apply this, arguments
 
   arrangedContent: (->
-    if content = @get('content')
+    content = @get('content')
+    if @get('disable')
+      content
+    else if content
       content.slice(0, @get('limit'))
-  ).property('content', 'limit')
+  ).property('content', 'limit', 'disable')
 
   totalLength: (->
     @get('content.length')
@@ -27,8 +30,14 @@ Travis.LimitedArray = Em.ArrayProxy.extend
     @get('leftLength') > 0
   ).property('leftLength')
 
+  showAll: ->
+    @set 'limit', 1000000000
+    @set 'disable', true
+
   contentArrayDidChange: (array, index, removedCount, addedCount) ->
     @_super.apply this, arguments
+
+    return if @get('disable')
 
     limit  = @get 'limit'
     arrangedContent = @get('arrangedContent')
