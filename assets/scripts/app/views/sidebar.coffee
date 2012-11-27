@@ -40,7 +40,10 @@
 
       loadMoreJobs: (event) ->
         queue = event.context
-        queue.incrementProperty('limit', 20)
+        # nasty hack to not have to implement showAll for
+        # limitedArray
+        # TODO: implement it properly later
+        queue.incrementProperty('limit', 1000000)
 
       didInsertElement: ->
         queues = for queue in Travis.QUEUES
