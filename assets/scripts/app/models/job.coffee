@@ -82,7 +82,8 @@ require 'travis/model'
     @find()
     Travis.app.store.filter this, (job) ->
       queued = ['created', 'queued'].indexOf(job.get('state')) != -1
-      queued && (!queue || job.get('queue') == "builds.#{queue}")
+      # TODO: why queue is sometimes just common instead of build.common?
+      queued && (!queue || job.get('queue') == "builds.#{queue}" || job.get('queue') == queue)
 
   findMany: (ids) ->
     Travis.app.store.findMany this, ids
