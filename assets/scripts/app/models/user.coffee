@@ -51,9 +51,11 @@ require 'travis/model'
   ).property()
 
   sync: ->
-    Travis.ajax.post('/users/sync')
-    @setWithSession('isSyncing', true)
-    @poll()
+    self = this
+    Travis.ajax.post('/users/sync', {}, ->
+      self.setWithSession('isSyncing', true)
+      self.poll()
+    )
 
   poll: ->
     Travis.ajax.get '/users', (data) =>
