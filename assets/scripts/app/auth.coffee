@@ -49,7 +49,13 @@
 
   # TODO should have clearData() to clean this up
   setData: (data) ->
-    data = JSON.parse(data) if typeof data == 'string'
+    if typeof data == 'string'
+      # TODO: I sometimes see plain text response "done" when authenticating
+      #       we should track down why is that happening and fix the API
+      if data == 'done'
+        data = {}
+      else
+        data = JSON.parse(data)
     @storeToken(data.token) if data?.token
     console.log 'setData', data.user if data?.user
     user = @storeUser(data.user) if data?.user
