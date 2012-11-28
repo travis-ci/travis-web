@@ -3,6 +3,12 @@ Travis.ProfileController = Travis.Controller.extend
   userBinding: 'Travis.app.currentUser'
   accountsBinding: 'Travis.app.router.accountsController'
 
+  init: ->
+    self = this
+    Travis.on("user:synced", (->
+      self.reloadHooks()
+    ))
+
   account: (->
     login = @get('params.login') || Travis.app.get('currentUser.login')
     account = @get('accounts').filter((account) -> account if account.get('login') == login)[0]
@@ -16,6 +22,9 @@ Travis.ProfileController = Travis.Controller.extend
 
   viewHooks: ->
     @connectTab('hooks')
+    @reloadHooks()
+
+  reloadHooks: ->
     @set('hooks', Travis.Hook.find(owner_name: @get('params.login') || Travis.app.get('currentUser.login')))
 
   viewUser: ->
