@@ -23,6 +23,7 @@ require 'travis/model'
   ).property()
 
   toggle: ->
+    return if @get('isSaving')
     transaction = @get('store').transaction()
     transaction.add this
 

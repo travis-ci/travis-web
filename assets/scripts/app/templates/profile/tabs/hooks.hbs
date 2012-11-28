@@ -19,6 +19,7 @@
       {{#each hook in hooks}}
         <li {{bindAttr class="hook.active:active"}}>
           <a {{bindAttr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+          {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
           <p class="description">{{hook.description}}</p>
 
           <div class="controls">
