@@ -37,7 +37,8 @@
              .replace(/\033\[K\r/g, '\r')
              .replace(/^.*\r(?!$)/gm, '')
              .replace(/\[2K/g, '')
-             .replace(/\033\(B/g, "")
+             .replace(/\033\(B/g, '')
+             .replace(/\033\[\d+G/, '')
 
     ansi = ansiparse(log)
 
