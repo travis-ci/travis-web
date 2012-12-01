@@ -37,6 +37,11 @@ $.extend Travis.Pusher.prototype,
   receive: (event, data) ->
     return if event.substr(0, 6) == 'pusher'
     data = @normalize(event, data) if data.id
+
+    if event == 'job:requeued'
+      job = Travis.Job.find(data.job.id)
+      job.clearLog() if job
+
     Ember.run.next ->
       Travis.app.store.receive(event, data)
 

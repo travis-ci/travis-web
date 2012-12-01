@@ -37,6 +37,9 @@ require 'travis/model'
     @get('state') == 'finished'
   ).property('state')
 
+  clearLog: ->
+    @get('log').clear() if @get('log.isLoaded')
+
   sponsor: (->
     worker = @get('log.workerName')
     if worker && worker.length

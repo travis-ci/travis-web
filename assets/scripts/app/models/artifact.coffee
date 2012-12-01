@@ -9,6 +9,9 @@ require 'travis/model'
     @addObserver 'body', @fetchWorker
     @fetchWorker()
 
+  clear: ->
+    @set('body', '')
+
   append: (body) ->
     if @get('isLoaded')
       @set('body', @get('body') + body)
