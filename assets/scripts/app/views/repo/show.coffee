@@ -90,25 +90,38 @@
       element = $('#tools .menu').toggleClass('display')
       event.stopPropagation()
 
-    requeue: ->
-      @closeMenu()
-      @get('build').requeue()
-
     statusImages: (event) ->
       @set('active', true)
       @closeMenu()
       @popup(event)
       event.stopPropagation()
 
-    canPush: (->
-      @get('isBuildTab') && @get('build.isFinished') && @get('hasPushPermissions')
-    ).property('build.isFinished', 'hasPushPermissions', 'isBuildTab')
+    requeueBuild: ->
+      @closeMenu()
+      @get('build').requeue()
+
+    requeueJob: ->
+      @closeMenu()
+      @get('job').requeue()
+
+    canRequeueBuild: (->
+      @get('isBuildTab') && @get('build.isFinished') && @get('hasPermissions')
+    ).property('isBuildTab', 'build.isFinished', 'hasPermissions')
+
+    canRequeueJob: (->
+      @get('isJobTab') && @get('job.isFinished') && @get('hasPermissions')
+    ).property('isJobTab', 'job.isFinished', 'hasPermissions')
 
     isBuildTab: (->
-      ['current', 'build', 'job'].indexOf(@get('tab')) > -1
+      # ['current', 'build', 'job'].indexOf(@get('tab')) > -1
+      @get('tab') in ['current', 'build']
     ).property('tab')
 
-    hasPushPermissions: (->
+    isJobTab: (->
+      @get('tab') == 'job'
+    ).property('tab')
+
+    hasPermissions: (->
       if permissions = Travis.app.get('currentUser.permissions')
         permissions.indexOf(@get('repo.id')) > -1
     ).property('Travis.app.currentUser.permissions.length', 'repo.id')

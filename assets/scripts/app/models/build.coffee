@@ -49,9 +49,8 @@ require 'travis/model'
     $.map(headers.concat(keys), (key) -> return $.camelize(key))
   ).property('config')
 
-  requeue: (->
+  requeue: ->
     Travis.ajax.post '/requests', build_id: @get('id')
-  )
 
   isAttributeLoaded: (key) ->
     if ['_duration', 'finishedAt', 'result'].contains(key) && !@get('finished')

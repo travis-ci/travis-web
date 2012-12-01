@@ -33,6 +33,10 @@ require 'travis/model'
     Travis.Helpers.compact(@get('data.config'))
   ).property('data.config')
 
+  isFinished: (->
+    @get('state') == 'finished'
+  ).property('state')
+
   sponsor: (->
     worker = @get('log.workerName')
     if worker && worker.length
@@ -51,6 +55,9 @@ require 'travis/model'
     else
       []
   ).property('config')
+
+  requeue: ->
+    Travis.ajax.post '/requests', job_id: @get('id')
 
   appendLog: (text) ->
     if log = @get('log')
