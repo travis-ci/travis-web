@@ -20,6 +20,7 @@ end
 group :development, :test do
   gem 'rake', '~> 0.9.2'
   gem 'localeapp'
+  gem 'handlebars'
 end
 
 group :development do
