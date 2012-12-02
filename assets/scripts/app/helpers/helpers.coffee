@@ -20,7 +20,7 @@ require 'config/emoij'
     (sha || '').substr(0, 7)
 
   formatConfig: (config) ->
-    config = $.only config, 'rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'scala', 'jdk', 'python', 'perl'
+    config = $.only config, 'rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'scala', 'jdk', 'python', 'perl', 'compiler'
     values = $.map config, (value, key) ->
       value = (if value && value.join then value.join(', ') else value) || ''
       '%@: %@'.fmt $.camelize(key), value
