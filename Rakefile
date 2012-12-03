@@ -1,15 +1,16 @@
 $: << 'lib'
 namespace :localeapp do
-  desc "update all locale files from localeapp"
+  desc "syncs localeapp, yaml and handlebars"
   task :update do
-    require 'localeapp'
-    system 'localeapp pull'
-  end
-
-  desc "push changes to en.yml up to localeapp"
-  task :report do
-    require 'localeapp'
-    system 'localeapp push locales/en.yml'
+    require 'localeapp-handlebars_i18n'
+    Localeapp::HandlebarsI18n.configure($stdout) do |config|
+      config.hbs_load_path = Dir[File.expand_path '../assets/scripts/app/templates/**/*.hbs', __FILE__]
+      config.yml_load_path = File.expand_path '../locales/', __FILE__
+      config.localeapp_api_key = ENV['LOCALEAPP_API_KEY']
+    end
+    system "localeapp push locales/#{Localeapp::HandlebarsI18n.default_locale}.yml"
+    Localeapp::HandlebarsI18n.send_missing_translations
+    system "localeapp pull"
   end
 end
 

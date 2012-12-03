@@ -15,6 +15,12 @@ GIT
       rack
       rake-pipeline (~> 0.6)
 
+PATH
+  remote: ~/localeapp-handlebars_i18n
+  specs:
+    localeapp-handlebars_i18n (0.0.1)
+      localeapp
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -121,6 +127,7 @@ DEPENDENCIES
   guard
   handlebars
   localeapp
+  localeapp-handlebars_i18n!
   puma
   rack-cache
   rack-ssl (~> 1.3)
