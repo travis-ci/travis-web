@@ -3,6 +3,7 @@ require 'travis/model'
 @Travis.Branch = Travis.Model.extend Travis.Helpers,
   repoId:       DS.attr('number', key: 'repository_id')
   commitId:     DS.attr('number')
+  state:        DS.attr('string')
   number:       DS.attr('number')
   branch:       DS.attr('string')
   message:      DS.attr('string')
