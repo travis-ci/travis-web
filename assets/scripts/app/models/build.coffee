@@ -30,7 +30,7 @@ require 'travis/model'
   ).property('data.job_ids.length')
 
   isFinished: (->
-    @get('state') == 'finished'
+    @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')
 
   requiredJobs: (->
@@ -60,14 +60,10 @@ require 'travis/model'
     Travis.ajax.post '/requests', build_id: @get('id')
 
   isAttributeLoaded: (key) ->
-    if ['_duration', 'finishedAt', 'state'].contains(key) && !@get('finished')
+    if ['_duration', 'finishedAt', 'state'].contains(key) && !@get('isFinished')
       return true
     else
       @_super(key)
-
-  finished: (->
-    @get('state') == 'finished'
-  ).property('state')
 
 
 @Travis.Build.reopenClass

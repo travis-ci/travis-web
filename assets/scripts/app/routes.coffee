@@ -22,7 +22,8 @@ lineNumberRoute = Ember.Route.extend
 
 Travis.Router = Ember.Router.extend
   location: 'travis'
-  enableLogging: true
+  # enableLogging: true
+  enableLogging: false
   initialState: 'loading'
 
   showRoot:         Ember.Route.transitionTo('root.home.show')

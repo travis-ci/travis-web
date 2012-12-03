@@ -32,7 +32,7 @@ require 'travis/model'
   ).property('data.config')
 
   isFinished: (->
-    @get('state') == 'finished'
+    @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')
 
   clearLog: ->
@@ -82,15 +82,15 @@ require 'travis/model'
   ).observes('state')
 
   isAttributeLoaded: (key) ->
-    if ['finishedAt', 'state'].contains(key) && !@get('finished')
+    if ['finishedAt', 'state'].contains(key) && !@get('isFinished')
       return true
     else if key == 'startedAt' && @get('state') == 'created'
       return true
     else
       @_super(key)
 
-  finished: (->
-    @get('state') == 'finished'
+  isFinished: (->
+    @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')
 
 @Travis.Job.reopenClass

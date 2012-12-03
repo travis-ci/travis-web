@@ -104,10 +104,8 @@
     logSubscriber: (->
       # for some reason observing context does not work,
       # TODO: find out why
-      job   = @get('job')
-      state = @get('job.state')
-      if job && state != 'finished'
-        job.subscribe()
+      job = @get('job')
+      job.subscribe() if job && !job.get('isFinished')
       null
     ).property('job', 'job.state')
 

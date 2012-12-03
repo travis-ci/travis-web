@@ -133,16 +133,16 @@
           Travis.app.router.flashController.loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 
     canRequeueBuild: (->
-      @get('isBuildTab') && @get('build.isFinished') && @get('hasPermissions')
+      @get('isBuildTab') && @get('build.isFinished') && @get('hasPermission')
     ).property('isBuildTab', 'build.isFinished', 'hasPermissions')
 
     canRequeueJob: (->
-      @get('isJobTab') && @get('job.isFinished') && @get('hasPermissions')
+      @get('isJobTab') && @get('job.isFinished') && @get('hasPermission')
     ).property('isJobTab', 'job.isFinished', 'hasPermissions')
 
     canCancelBuild: (->
       @get('isBuildTab') && @get('build.canCancel') && @get('hasPermission')
-    ).property('build.state', 'hasPushPermissions', 'tab')
+    ).property('build.state', 'hasPermission', 'tab')
 
     canRegenerateKey: (->
       @get('hasPermissions')
@@ -150,7 +150,8 @@
 
     canCancelJob: (->
       @get('isJobTab') && @get('job.canCancel') && @get('hasPermission')
-    ).property('job.state', 'hasPushPermissions', 'tab')
+    ).property('job.state', 'hasPermission', 'tab')
+
 
     isJobTab: (->
       @get('tab') == 'job'
@@ -164,6 +165,7 @@
       if permissions = Travis.app.get('currentUser.permissions')
         permissions.indexOf(@get('repo.id')) > -1
     ).property('Travis.app.currentUser.permissions.length', 'repo.id')
+
 
     branches: (->
       @get('repo.branches') if @get('active')
