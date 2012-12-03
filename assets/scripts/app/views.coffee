@@ -4,7 +4,8 @@ require 'ext/ember/namespace'
   View: Em.View.extend
     popup: (event) ->
       @popupCloseAll()
-      $("##{event.target.name}").toggleClass('display')
+      name = if event.target then event.target.name else event
+      $("##{name}").toggleClass('display')
     popupClose: (event) ->
       $(event.target).closest('.popup').removeClass('display')
     popupCloseAll: ->

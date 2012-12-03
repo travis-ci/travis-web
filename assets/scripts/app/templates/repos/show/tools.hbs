@@ -14,6 +14,11 @@
         <a href="#" {{action requeueJob target="view"}}>Rebuild</a>
       </li>
     {{/if}}
+    {{#if view.canRegenerateKey}}
+      <li>
+        <a href="#" name="regenerate-key" class="open-popup" {{action regenerateKeyPopup target="view"}}>Regenerate Key</a>
+      </li>
+    {{/if}}
   </ul>
 </div>
 
@@ -42,5 +47,33 @@
   <p>
     <label>{{t repositories.rdoc}}:</label>
     <input type="text" class="rdoc" {{bindAttr value="view.rdocStatusImage"}}></input>
+  </p>
+</div>
+
+<div id="regenerate-key" class="popup">
+  <a href="#" class="close" {{action popupClose target="view"}}></a>
+  <p>
+    Do you really want to regenerate ssl keys for this repository? Please note that
+    any data, which is encrypted, such as notification services credentials or secure
+    environment variables will not be accessible during the builds until you re-encrypt
+    it with the new key.
+  </p>
+
+  <p>
+    <a class="sync_now button" {{action regenerateKey target="view"}}>Yes! Do it!</a>
+    <span class="or">or</span>
+    <a href="#" class="cancel" {{action popupClose target="view"}}>Cancel</a>
+  </p>
+</div>
+
+<div id="regeneration-success" class="popup">
+  <a href="#" class="close" {{action popupClose target="view"}}></a>
+  <p>
+    Key for this repository has been regenerated. If you used previous key
+    for encryption, you will need encrypt your data again with the new key.
+  </p>
+
+  <p>
+    You can read more about encryption keys <a href="http://about.travis-ci.org/docs/user/encryption-keys/">in Travis documentation</a>
   </p>
 </div>

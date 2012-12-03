@@ -58,4 +58,27 @@
       padding: 4px
       @include border-radius(3px)
 
+#regenerate-key
+  .cancel
+    text-decoration: underline
+  p
+    text-align: center
+  .or
+    display: inline-block
+    margin: 20px 10px 0 10px
+  p:last-of-type
+    margin-bottom: 5px
+  a.button
+    font-size: 13px
 
+#status-images, #regenerate-key
+  input
+    border: 1px solid $color-border-light
+    width: 505px
+    padding: 4px
+    @include border-radius(3px)
+
+#regenerate-key, #regeneration-success
+  display: none
+  width: 400px
+  margin: -95px 0 0 -300px
