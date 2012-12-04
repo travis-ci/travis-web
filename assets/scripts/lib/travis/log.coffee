@@ -70,6 +70,14 @@ FOLDS = [
         else if payload.number != 1
           payload.append = true
 
+        if payload.foldContinuation && payload.content.match(/Done. Build script exited with:/)
+          # script ended, but fold is still closed, which most probably means
+          # error, end the fold and open it.
+          # TODO: we need log marks to make it easier
+          payload.foldContinuation = null
+          payload.openFold = payload.fold
+          payload.fold = null
+
         result.pushObject payload
 
         if currentFold
@@ -93,6 +101,9 @@ FOLDS = [
   split: (log) ->
     log = log.replace /\r\n/g, '\n'
     lines = log.split(/(\n)/)
+
+    if lines.slice(-1)[0] == ''
+      lines.popObject()
 
     result = []
     for line in lines

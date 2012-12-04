@@ -191,6 +191,11 @@
           else
             this.$('#log').append(line)
 
+          if payload.openFold
+            this.$("#log .fold.#{payload.openFold}:last").
+              removeClass('show-first-line').
+              addClass('open')
+
           if payload.foldEnd
             this.$("#log .fold.#{payload.fold}:last").removeClass('show-first-line')
 
