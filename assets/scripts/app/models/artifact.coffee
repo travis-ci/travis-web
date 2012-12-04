@@ -1,6 +1,7 @@
 require 'travis/model'
 
 @Travis.Artifact = Travis.Model.extend
+  version: 1 # used to refresh log on requeue
   body: DS.attr('string')
   init: ->
     @_super.apply this, arguments
@@ -12,6 +13,7 @@ require 'travis/model'
 
   clear: ->
     @set('body', '')
+    @incrementProperty('version')
 
   append: (body) ->
     if @get('isInitialized')

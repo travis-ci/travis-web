@@ -146,6 +146,10 @@
           didChange: 'logContentsDidChange'
           willChange: 'logContentsWillChange'
 
+      version: (->
+        @rerender()
+      ).observes('log.version')
+
       logDidChange: (->
         if @get('log.isInitialized') && @state == 'inDOM'
           @attachLogObservers()
