@@ -69,8 +69,9 @@ FOLDS = [
         else if @get 'newline'
           @set 'newline', false
         else if !@initial
-          @initial = false
           payload.append = true
+
+        @initial = false
 
         if payload.foldContinuation && payload.content.match(/Done. Build script exited with:/)
           # script ended, but fold is still closed, which most probably means
