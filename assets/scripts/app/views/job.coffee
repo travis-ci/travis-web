@@ -148,6 +148,7 @@
 
       version: (->
         @rerender()
+        @set 'logManager', Travis.Log.create(target: this)
       ).observes('log.version')
 
       logDidChange: (->
