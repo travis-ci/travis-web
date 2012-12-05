@@ -16,12 +16,12 @@
     {{/if}}
     {{#if view.canRequeueBuild}}
       <li>
-        <a href="#" {{action requeueBuild target="view"}}>Rebuild</a>
+        <a href="#" {{action requeueBuild target="view"}}>Restart Build</a>
       </li>
     {{/if}}
     {{#if view.canRequeueJob}}
       <li>
-        <a href="#" {{action requeueJob target="view"}}>Rebuild</a>
+        <a href="#" {{action requeueJob target="view"}}>Restart Job</a>
       </li>
     {{/if}}
     {{#if view.canRegenerateKey}}

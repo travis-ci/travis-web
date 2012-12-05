@@ -1,40 +1,65 @@
 @import "_mixins/all"
 
+// .status
+//   display: inline-block
+//   width: 10px
+//   height: 10px
+//   margin-right: 2px
+//   @include border-radius(5px)
+
 .status
   display: inline-block
-  width: 10px
-  height: 10px
+  width: 12px
+  height: 12px
   margin-right: 2px
-  @include border-radius(5px)
 
-#repos,
-.number
+.status:before
+  -webkit-font-smoothing: antialiased !important
+  position: absolute
+  display: inline-block
+  width: 12px
+  height: 12px
+  font: 12px 'Glyphicons Halflings'
+  font-style: normal
+
+#repos .yellow,
+.yellow #summary .number,
+.list .yellow .number,
   .status
     background-color: $color-bg-status-pending
+    width: 10px
+    height: 10px
+    margin-top: 1px
+    margin-left: 1px
+    @include border-radius(5px)
   a
     color: $color-text-status-pending
 
 #repos .green,
 .green #summary .number,
 .list .green .number
-  .status
-    background-color: $color-bg-status-passed
+  .status:before
+    content: "\e084"
+    color: $color-bg-status-passed
   a
     color: $color-text-status-passed
 
 #repos .red,
 .red #summary .number,
 .list .red .number
-  .status
-    background-color: $color-bg-status-failed
+  .status:before
+    content: "\e081"
+    color: $color-bg-status-failed
+    @include rotate(45deg)
   a
     color: $color-text-status-failed
 
 #repos .gray,
 .gray #summary .number,
 .list .gray .number
-  .status
-    background-color: $color-bg-status-gray
+  .status:before
+    content: "\e101"
+    color: $color-bg-status-gray
   a
     color: $color-text-status-gray
 
