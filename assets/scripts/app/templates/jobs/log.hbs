@@ -1,10 +1,18 @@
 {{view.logSubscriber}}
 
 {{#if view.job.log.isLoaded}}
-  <pre id="log" class="ansi"><a href="#" id="tail" {{action toggleTailing target="view"}}>
-    <span class="status"></span>
-    <label>Follow logs</label>
-  </a>{{{formatLog log.body repo="repository" item="parentView.currentItem"}}}</pre>
+  {{! this #with + #if is needed because I want to rerender 'pre' when log changes to properly clean it up,
+      this should probably be refactored to use container view}}
+  {{#with view.job.log}}
+    {{#if id}}
+      {{#view view.PreView logBinding="view.context.log" logUrlBinding="view.logUrl"}}
+        <pre id="log" class="ansi"><a href="#" id="tail" {{action toggleTailing target="view"}}>
+          <span class="status"></span>
+          <label>Follow logs</label>
+        </a></pre>
+      {{/view}}
+    {{/if}}
+  {{/with}}
 
   {{#if sponsor.name}}
     <p class="sponsor">

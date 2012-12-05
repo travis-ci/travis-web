@@ -96,6 +96,12 @@
       @popup(event)
       event.stopPropagation()
 
+    regenerateKeyPopup: (event) ->
+      @set('active', true)
+      @closeMenu()
+      @popup(event)
+      event.stopPropagation()
+
     requeueBuild: ->
       @closeMenu()
       @get('build').requeue()
@@ -104,6 +110,16 @@
       @closeMenu()
       @get('job').requeue()
 
+    regenerateKey: ->
+      @popupCloseAll()
+      self = this
+
+      @get('repo').regenerateKey
+        success: ->
+          self.popup('regeneration-success')
+        error: ->
+          Travis.app.router.flashController.loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
+
     canRequeueBuild: (->
       @get('isBuildTab') && @get('build.isFinished') && @get('hasPermissions')
     ).property('isBuildTab', 'build.isFinished', 'hasPermissions')
@@ -111,6 +127,10 @@
     canRequeueJob: (->
       @get('isJobTab') && @get('job.isFinished') && @get('hasPermissions')
     ).property('isJobTab', 'job.isFinished', 'hasPermissions')
+
+    canRegenerateKey: (->
+      @get('hasPermissions')
+    ).property('hasPermissions')
 
     isBuildTab: (->
       # ['current', 'build', 'job'].indexOf(@get('tab')) > -1

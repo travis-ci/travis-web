@@ -94,6 +94,9 @@ require 'travis/model'
   updateTimes: ->
     @notifyPropertyChange 'lastBuildDuration'
 
+  regenerateKey: (options) ->
+    Travis.ajax.ajax '/repos/' + @get('id') + '/key', 'post', options
+
 @Travis.Repo.reopenClass
   recent: ->
     @find()

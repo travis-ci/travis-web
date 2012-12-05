@@ -50,6 +50,10 @@
     templateName: 'jobs/log'
     logBinding: 'job.log'
 
+    didInsertElement: ->
+      @_super.apply this, arguments
+      @tryScrollingToHashLineNumber()
+
     scrollTo: (hash) ->
       # and this is even more weird, when changing hash in URL in firefox
       # to other value, for example #L10, it actually scrolls just #main
@@ -81,11 +85,6 @@
 
         checker()
 
-    didInsertElement: ->
-      @_super.apply this, arguments
-
-      @tryScrollingToHashLineNumber()
-
     click: (event) ->
       target = $(event.target)
 
@@ -115,3 +114,93 @@
         job.subscribe()
       null
     ).property('job', 'job.state')
+
+    logUrl: (->
+      repo = @get('job.repo')
+      item = @get('parentView.currentItem')
+
+      if repo && item
+        event = if item.constructor == Travis.Build
+          'showBuild'
+        else
+          'showJob'
+
+        Travis.app.get('router').urlForEvent(event, repo, item)
+    ).property('job.repo', 'parentView.currentItem')
+
+    PreView: Em.View.extend
+      init: ->
+        @_super.apply this, arguments
+        @set 'logManager', Travis.Log.create(target: this)
+
+      didInsertElement: ->
+        @_super.apply this, arguments
+
+        Ember.run.next this, ->
+          if @get 'log.isInitialized'
+            @logDidChange()
+
+      willDestroy: ->
+        @get('logManager').destroy()
+        @get('log.parts').removeArrayObserver this,
+          didChange: 'logContentsDidChange'
+          willChange: 'logContentsWillChange'
+
+      version: (->
+        @rerender()
+        @set 'logManager', Travis.Log.create(target: this)
+      ).observes('log.version')
+
+      logDidChange: (->
+        if @get('log.isInitialized') && @state == 'inDOM'
+          @attachLogObservers()
+      ).observes('log', 'log.isInitialized')
+
+      attachLogObservers: ->
+        return if @get('logPartsObserversAttached') == Ember.guidFor(@get('log'))
+        @set 'logPartsObserversAttached', Ember.guidFor(@get('log'))
+
+        Ember.run.next this, ->
+          @get('logManager').append @get('log.parts')
+
+          @get('log.parts').addArrayObserver this,
+            didChange: 'logContentsDidChange'
+            willChange: 'logContentsWillChange'
+
+      logContentsDidChange: (lines, index, removedCount, addedCount) ->
+        addedLines = lines.slice(index, index + addedCount)
+        @get('logManager').append addedLines
+
+      logContentsWillChange: (-> )
+
+      appendLog: (payloads) ->
+        url = @get('logUrl')
+
+        for payload in payloads
+          line   = payload.content
+          number = payload.number
+
+          unless payload.append
+            pathWithNumber = "#{url}#L#{number}"
+            line = '<p><a href="%@" id="L%@" class="log-line-number" name="L%@">%@</a>%@</p>'.fmt(pathWithNumber, number, number, number, line)
+
+          if payload.fold && !payload.foldContinuation
+            line = "<div class='fold #{payload.fold} show-first-line'>#{line}</div>"
+
+          if payload.replace
+            this.$("#log #L#{number}").parent().replaceWith line
+          else if payload.append
+            this.$("#log #L#{number}").parent().append line
+          else if payload.foldContinuation
+            this.$("#log .fold.#{payload.fold}:last").append line
+          else
+            this.$('#log').append(line)
+
+          if payload.openFold
+            this.$("#log .fold.#{payload.openFold}:last").
+              removeClass('show-first-line').
+              addClass('open')
+
+          if payload.foldEnd
+            this.$("#log .fold.#{payload.fold}:last").removeClass('show-first-line')
+
