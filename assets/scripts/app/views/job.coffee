@@ -128,79 +128,111 @@
         Travis.app.get('router').urlForEvent(event, repo, item)
     ).property('job.repo', 'parentView.currentItem')
 
-    PreView: Em.View.extend
-      init: ->
-        @_super.apply this, arguments
-        @set 'logManager', Travis.Log.create(target: this)
+  PreView: Em.View.extend
+    templateName: 'jobs/pre'
+    init: ->
+      @_super.apply this, arguments
+      @set 'logManager', Travis.Log.create(target: this)
 
-      didInsertElement: ->
-        @_super.apply this, arguments
+    didInsertElement: ->
+      @_super.apply this, arguments
 
-        Ember.run.next this, ->
-          if @get 'log.isInitialized'
-            @logDidChange()
+      Ember.run.next this, ->
+        if @get 'log.isInitialized'
+          @logDidChange()
 
-      willDestroy: ->
-        @get('logManager').destroy()
-        @get('log.parts').removeArrayObserver this,
+    willDestroy: ->
+      @get('logManager').destroy()
+      @get('log.parts').removeArrayObserver this,
+        didChange: 'logContentsDidChange'
+        willChange: 'logContentsWillChange'
+
+    version: (->
+      @rerender()
+      @set 'logManager', Travis.Log.create(target: this)
+    ).observes('log.version')
+
+    logDidChange: (->
+      if @get('log.isInitialized') && @state == 'inDOM'
+        @attachLogObservers()
+    ).observes('log', 'log.isInitialized')
+
+    attachLogObservers: ->
+      return if @get('logPartsObserversAttached') == Ember.guidFor(@get('log'))
+      @set 'logPartsObserversAttached', Ember.guidFor(@get('log'))
+
+      Ember.run.next this, ->
+        @get('logManager').append @get('log.parts')
+
+        @get('log.parts').addArrayObserver this,
           didChange: 'logContentsDidChange'
           willChange: 'logContentsWillChange'
 
-      version: (->
-        @rerender()
-        @set 'logManager', Travis.Log.create(target: this)
-      ).observes('log.version')
+    logContentsDidChange: (lines, index, removedCount, addedCount) ->
+      addedLines = lines.slice(index, index + addedCount)
+      @get('logManager').append addedLines
 
-      logDidChange: (->
-        if @get('log.isInitialized') && @state == 'inDOM'
-          @attachLogObservers()
-      ).observes('log', 'log.isInitialized')
+    logContentsWillChange: (-> )
 
-      attachLogObservers: ->
-        return if @get('logPartsObserversAttached') == Ember.guidFor(@get('log'))
-        @set 'logPartsObserversAttached', Ember.guidFor(@get('log'))
+    appendLog: (payloads) ->
+      url = @get('logUrl')
 
-        Ember.run.next this, ->
-          @get('logManager').append @get('log.parts')
+      leftOut  = []
+      fragment = document.createDocumentFragment()
 
-          @get('log.parts').addArrayObserver this,
-            didChange: 'logContentsDidChange'
-            willChange: 'logContentsWillChange'
+      # TODO: refactor this loop, it's getting messy
+      for payload in payloads
+        line   = payload.content
+        number = payload.number
 
-      logContentsDidChange: (lines, index, removedCount, addedCount) ->
-        addedLines = lines.slice(index, index + addedCount)
-        @get('logManager').append addedLines
+        unless payload.append
+          pathWithNumber = "#{url}#L#{number}"
+          p = document.createElement('p')
+          p.innerHTML = '<a href="%@" id="L%@" class="log-line-number" name="L%@">%@</a>%@'.fmt(pathWithNumber, number, number, number, line)
+          line = p
 
-      logContentsWillChange: (-> )
+        if payload.fold && !payload.foldContinuation
+          div = document.createElement('div')
+          div.appendChild line
+          div.className = "fold #{payload.fold} show-first-line"
+          line = div
 
-      appendLog: (payloads) ->
-        url = @get('logUrl')
-
-        for payload in payloads
-          line   = payload.content
-          number = payload.number
-
-          unless payload.append
-            pathWithNumber = "#{url}#L#{number}"
-            line = '<p><a href="%@" id="L%@" class="log-line-number" name="L%@">%@</a>%@</p>'.fmt(pathWithNumber, number, number, number, line)
-
-          if payload.fold && !payload.foldContinuation
-            line = "<div class='fold #{payload.fold} show-first-line'>#{line}</div>"
-
-          if payload.replace
-            this.$("#log #L#{number}").parent().replaceWith line
-          else if payload.append
-            this.$("#log #L#{number}").parent().append line
-          else if payload.foldContinuation
-            this.$("#log .fold.#{payload.fold}:last").append line
+        if payload.replace
+          if link = fragment.querySelector("#L#{number}")
+            link.parentElement.innerHTML = line.innerHTML
           else
-            this.$('#log').append(line)
+            this.$("#L#{number}").parent().replaceWith line
+        else if payload.append
+          if link = fragment.querySelector("#L#{number}")
+            link.parentElement.innerHTML += line
+          else
+            this.$("#L#{number}").parent().append line
+        else if payload.foldContinuation
+          folds = fragment.querySelectorAll(".fold.#{payload.fold}")
+          if fold = folds[folds.length - 1]
+            fold.appendChild line
+          else
+            this.$("#log .fold.#{payload.fold}:last").append line
+        else
+          fragment.appendChild(line)
 
-          if payload.openFold
-            this.$("#log .fold.#{payload.openFold}:last").
-              removeClass('show-first-line').
-              addClass('open')
+        if payload.openFold
+          folds = fragment.querySelectorAll(".fold.#{payload.fold}")
+          if fold = folds[folds.length - 1]
+            fold = $(fold)
+          else
+            fold = this.$(".fold.#{payload.fold}:last")
 
-          if payload.foldEnd
-            this.$("#log .fold.#{payload.fold}:last").removeClass('show-first-line')
+          fold.removeClass('show-first-line').addClass('open')
+
+        if payload.foldEnd
+          folds = fragment.querySelectorAll(".fold.#{payload.fold}")
+          if fold = folds[folds.length - 1]
+            fold = $(fold)
+          else
+            fold = this.$(".fold.#{payload.fold}:last")
+
+          fold.removeClass('show-first-line')
+
+      this.$('#log')[0].appendChild fragment
 

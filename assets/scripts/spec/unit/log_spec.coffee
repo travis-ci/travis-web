@@ -76,8 +76,8 @@ describe 'Travis.Log', ->
       { number: 8, fold: 'qux', foldContinuation: true },
       { number: 9, fold: 'qux', foldContinuation: true, foldEnd: true }]
 
-    expect( lines[4] ).toEqual ['$ end', '']
-    expect( options[4]).toEqual [{ number: 10 }, { number: 11 }]
+    expect( lines[4] ).toEqual ['$ end']
+    expect( options[4]).toEqual [{ number: 10 }]
 
   it 'works properly when log is started with fold', ->
     fold = Em.Object.create name: 'foo', startPattern: /^\$ foo/, endPattern: /^\$/
@@ -97,8 +97,8 @@ describe 'Travis.Log', ->
       { number: 1, fold: 'foo' },
       { number: 2, fold: 'foo', foldContinuation: true, foldEnd: true }]
 
-    expect( lines[1] ).toEqual ['$ bar', '']
-    expect( options[1]).toEqual [{ number: 3 }, { number: 4 }]
+    expect( lines[1] ).toEqual ['$ bar']
+    expect( options[1]).toEqual [{ number: 3 }]
 
   it 'works properly for 2 consecutive folds', ->
     fold = Em.Object.create name: 'foo', startPattern: /^\$ foo/, endPattern: /^\$/
@@ -124,8 +124,8 @@ describe 'Travis.Log', ->
       { number: 3, fold: 'foo' },
       { number: 4, fold: 'foo', foldContinuation: true, foldEnd: true }]
 
-    expect( lines[2] ).toEqual ['$ bar', '']
-    expect( options[2]).toEqual [{ number: 5 }, { number: 6 }]
+    expect( lines[2] ).toEqual ['$ bar']
+    expect( options[2]).toEqual [{ number: 5 }]
 
   it 'works fine with not finalized fold', ->
     fold = Em.Object.create name: 'foo', startPattern: /^\$ foo/, endPattern: /^\$/
@@ -139,11 +139,10 @@ describe 'Travis.Log', ->
     lines   = target.get('calls').map (call) -> call.lines
     options = target.get('calls').map (call) -> call.options
 
-    expect( lines[0] ).toEqual ['$ foo --foo', '1', '']
+    expect( lines[0] ).toEqual ['$ foo --foo', '1']
     expect( options[0]).toEqual  [
       { fold: 'foo', number: 1 },
-      { fold: 'foo', number: 2, foldContinuation: true },
-      { fold: 'foo', number: 3, foldContinuation: true }]
+      { fold: 'foo', number: 2, foldContinuation: true }]
 
   it 'allows to continue fold', ->
     fold = Em.Object.create name: 'foo', startPattern: /^\$ foo/, endPattern: /^\$/
@@ -164,25 +163,23 @@ describe 'Travis.Log', ->
     lines   = target.get('calls').map (call) -> call.lines
     options = target.get('calls').map (call) -> call.options
 
-    expect( lines[0] ).toEqual ['$ foo --foo', '1', '']
+    expect( lines[0] ).toEqual ['$ foo --foo', '1']
     expect( options[0]).toEqual  [
       { fold: 'foo', number: 1 },
-      { fold: 'foo', number: 2, foldContinuation: true },
-      { fold: 'foo', number: 3, foldContinuation: true }]
+      { fold: 'foo', number: 2, foldContinuation: true }]
 
-    expect( lines[1] ).toEqual ['2', '']
+    expect( lines[1] ).toEqual ['2']
     expect( options[1]).toEqual [
-      { fold: 'foo', number: 3, foldContinuation: true, append: true }
-      { fold: 'foo', number: 4, foldContinuation: true }
+      { fold: 'foo', number: 3, foldContinuation: true }
     ]
 
     expect( lines[2] ).toEqual ['3']
     expect( options[2]).toEqual [
-      { fold: 'foo', number: 4, foldContinuation: true, append: true, foldEnd: true }
+      { fold: 'foo', number: 4, foldContinuation: true, foldEnd: true }
     ]
 
-    expect( lines[3] ).toEqual ['$ bar', '']
-    expect( options[3]).toEqual [{ number: 5 }, { number: 6 }]
+    expect( lines[3] ).toEqual ['$ bar']
+    expect( options[3]).toEqual [{ number: 5 }]
 
   it 'notifies that the line should be appended', ->
     log.append '$ foo\n.'
@@ -201,8 +198,8 @@ describe 'Travis.Log', ->
     expect( lines[1] ).toEqual ['...']
     expect( options[1]).toEqual [{ append: true, number: 2 }]
 
-    expect( lines[2] ).toEqual ['..', '$ bar', '']
-    expect( options[2]).toEqual [{ append: true, number: 2 }, { number: 3 }, { number: 4 }]
+    expect( lines[2] ).toEqual ['..', '$ bar']
+    expect( options[2]).toEqual [{ append: true, number: 2 }, { number: 3 }]
 
   it 'notifies that the line should be replaced', ->
     log.append '$ foo\n'
@@ -216,17 +213,17 @@ describe 'Travis.Log', ->
     lines   = target.get('calls').map (call) -> call.lines
     options = target.get('calls').map (call) -> call.options
 
-    expect( lines[0] ).toEqual ['$ foo', '']
-    expect( options[0]).toEqual  [{ number: 1 }, { number: 2 }]
+    expect( lines[0] ).toEqual ['$ foo']
+    expect( options[0]).toEqual  [{ number: 1 }]
 
     expect( lines[1] ).toEqual ['', 'Downloading 50%']
-    expect( options[1]).toEqual [{ number: 2, append: true }, { number: 2, replace: true }]
+    expect( options[1]).toEqual [{ number: 2 }, { number: 2, replace: true }]
 
-    expect( lines[2] ).toEqual ['', 'Downloading 100%', '']
-    expect( options[2]).toEqual [{ number: 2, append: true }, { number: 2, replace: true }, { number: 3 }]
+    expect( lines[2] ).toEqual ['', 'Downloading 100%']
+    expect( options[2]).toEqual [{ number: 2, append: true }, { number: 2, replace: true }]
 
-    expect( lines[3] ).toEqual ['$ bar', '']
-    expect( options[3]).toEqual [{ number: 3, append: true }, { number: 4 }]
+    expect( lines[3] ).toEqual ['$ bar']
+    expect( options[3]).toEqual [{ number: 3 }]
 
   it 'notifies that the line should be replaced even if carriage return is in the middle', ->
 
