@@ -9,6 +9,7 @@ FOLDS = [
   init: ->
     @set 'folds', []
     @set 'line', 1
+    @initial = true
 
     for fold in FOLDS
       @addFold fold
@@ -67,7 +68,8 @@ FOLDS = [
           payload.replace = true
         else if @get 'newline'
           @set 'newline', false
-        else if payload.number != 1
+        else if !@initial
+          @initial = false
           payload.append = true
 
         if payload.foldContinuation && payload.content.match(/Done. Build script exited with:/)
