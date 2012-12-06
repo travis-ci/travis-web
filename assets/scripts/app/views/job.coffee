@@ -101,10 +101,6 @@
 
     jobBinding: 'context'
 
-    toggleTailing: (event) ->
-      Travis.app.tailing.toggle()
-      event.preventDefault()
-
     logSubscriber: (->
       # for some reason observing context does not work,
       # TODO: find out why
@@ -133,6 +129,10 @@
     init: ->
       @_super.apply this, arguments
       @set 'logManager', Travis.Log.create(target: this)
+
+    toggleTailing: (event) ->
+      Travis.app.tailing.toggle()
+      event.preventDefault()
 
     didInsertElement: ->
       @_super.apply this, arguments
