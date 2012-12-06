@@ -5,12 +5,7 @@
       this should probably be refactored to use container view}}
   {{#with view.job.log}}
     {{#if id}}
-      {{#view view.PreView logBinding="view.context.log" logUrlBinding="view.logUrl"}}
-        <pre id="log" class="ansi"><a href="#" id="tail" {{action toggleTailing target="view"}}>
-          <span class="status"></span>
-          <label>Follow logs</label>
-        </a></pre>
-      {{/view}}
+      {{view Travis.PreView logBinding="view.context.log" logUrlBinding="view.logUrl"}}
     {{/if}}
   {{/with}}
 
