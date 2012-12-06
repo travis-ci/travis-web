@@ -20,7 +20,7 @@ module Travis
         request = Rack::Request.new(env)
         token, user, storage = request.params.values_at('token', 'user', 'storage')
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
-          storage = 'sessionStorage' if storage.to_s.empty?
+          storage = 'sessionStorage' if storage != 'localStorage'
           [storage, token, user, request.fullpath]
         end
       end
