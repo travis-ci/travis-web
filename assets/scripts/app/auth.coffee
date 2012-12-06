@@ -17,7 +17,9 @@
   autoSignIn: (path) ->
     console.log 'autoSignIn'
     if user = sessionStorage.getItem('travis.user')
-      @setData(user: JSON.parse(user))
+      data = JSON.parse(user)
+      data = { user: data } unless data.user?
+      @setData(data)
     else if localStorage.getItem('travis.auto_signin')
       console.log 'travis.auto_signin', localStorage.getItem('travis.auto_signin')
       @signIn()
