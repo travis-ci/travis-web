@@ -22,8 +22,6 @@ module Travis
           storage = 'sessionStorage' if storage != 'localStorage'
           info = [storage, token, user, request.fullpath]
           Rack::Response.new(template % info).finish
-        else
-          [200, {'Content-Type' => 'text/plain'}, [request.params.inspect]]
         end
       end
     end
