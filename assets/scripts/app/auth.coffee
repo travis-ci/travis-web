@@ -16,7 +16,11 @@
   # for auto signin then we're trying to sign in.
   autoSignIn: (path) ->
     console.log 'autoSignIn'
-    if user = sessionStorage.getItem('travis.user')
+    global  = localStorage.getItem('travis.user')
+    session = sessionStorage.getItem('travis.user')
+    user    = session || global
+    if user
+      localStorage.setItem('travis.user', user) unless global
       data = JSON.parse(user)
       data = { user: data } unless data.user?
       @setData(data)
@@ -34,6 +38,7 @@
   signOut: ->
     localStorage.removeItem('travis.auto_signin')
     localStorage.removeItem('travis.locale')
+    localStorage.removeItem('travis.user')
     sessionStorage.clear()
     @setData()
 
