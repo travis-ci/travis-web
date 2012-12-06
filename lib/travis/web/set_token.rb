@@ -11,17 +11,19 @@ module Travis
       end
 
       def call(env)
-        return app.call(env) unless info = info_for(env)
-        Rack::Response.new(template % info).finish
+        set_info(env) || app.call(env)
       end
 
-      def info_for(env)
+      def set_info(env)
         return unless env['REQUEST_METHOD'] == 'POST'
         request = Rack::Request.new(env)
         token, user, storage = request.params.values_at('token', 'user', 'storage')
         if token =~ /\A[a-zA-Z\-_\d]+\Z/
           storage = 'sessionStorage' if storage != 'localStorage'
-          [storage, token, user, request.fullpath]
+          info = [storage, token, user, request.fullpath]
+          Rack::Response.new(template % info).finish
+        else
+          [200, {'Content-Type' => 'text/plain'}, [request.params.inspect]]
         end
       end
     end
