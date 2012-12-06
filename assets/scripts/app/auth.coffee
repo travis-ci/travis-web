@@ -16,8 +16,14 @@
   # for auto signin then we're trying to sign in.
   autoSignIn: (path) ->
     console.log 'autoSignIn'
-    if user = sessionStorage.getItem('travis.user')
-      @setData(user: JSON.parse(user))
+    global  = localStorage.getItem('travis.user')
+    session = sessionStorage.getItem('travis.user')
+    user    = session || global
+    if user
+      localStorage.setItem('travis.user', user) unless global
+      data = JSON.parse(user)
+      data = { user: data } unless data.user?
+      @setData(data)
     else if localStorage.getItem('travis.auto_signin')
       console.log 'travis.auto_signin', localStorage.getItem('travis.auto_signin')
       @signIn()
@@ -32,6 +38,7 @@
   signOut: ->
     localStorage.removeItem('travis.auto_signin')
     localStorage.removeItem('travis.locale')
+    localStorage.removeItem('travis.user')
     sessionStorage.clear()
     @setData()
 
@@ -49,13 +56,7 @@
 
   # TODO should have clearData() to clean this up
   setData: (data) ->
-    if typeof data == 'string'
-      # TODO: I sometimes see plain text response "done" when authenticating
-      #       we should track down why is that happening and fix the API
-      if data == 'done'
-        data = {}
-      else
-        data = JSON.parse(data)
+    data = JSON.parse(data) if typeof data == 'string'
     @storeToken(data.token) if data?.token
     console.log 'setData', data.user if data?.user
     user = @storeUser(data.user) if data?.user
@@ -89,9 +90,12 @@
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()
-      event.data.user.token = event.data.travis_token if event.data.travis_token
-      @setData(event.data)
-      console.log("signed in as #{event.data.user.login}")
+      if event.data == 'redirect'
+        @forceSignIn()
+      else if event.data.user?
+        event.data.user.token = event.data.travis_token if event.data.travis_token
+        @setData(event.data)
+        console.log("signed in as #{event.data.user.login}")
     else
       console.log("unexpected message #{event.origin}: #{event.data}")
 

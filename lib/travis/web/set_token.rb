@@ -11,14 +11,18 @@ module Travis
       end
 
       def call(env)
-        return app.call(env) unless info = info_for(env)
-        Rack::Response.new(template % info).finish
+        set_info(env) || app.call(env)
       end
 
-      def info_for(env)
+      def set_info(env)
         return unless env['REQUEST_METHOD'] == 'POST'
-        info = Rack::Request.new(env).params.values_at('token', 'user')
-        info if info.first =~ /\A[a-zA-Z\-_\d]+\Z/
+        request = Rack::Request.new(env)
+        token, user, storage = request.params.values_at('token', 'user', 'storage')
+        if token =~ /\A[a-zA-Z\-_\d]+\Z/
+          storage = 'sessionStorage' if storage != 'localStorage'
+          info = [storage, token, user, request.fullpath]
+          Rack::Response.new(template % info).finish
+        end
       end
     end
   end
@@ -26,7 +30,8 @@ end
 
 __END__
 <script>
-sessionStorage.setItem('travis.token', %p);
-sessionStorage.setItem('travis.user',  %p);
-window.location = '/';
+var storage = %s;
+storage.setItem('travis.token', %p);
+storage.setItem('travis.user',  %p);
+window.location = %p;
 </script>
