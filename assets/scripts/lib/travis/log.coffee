@@ -1,8 +1,8 @@
 # TODO: revisit those patterns
 FOLDS = [
-  Em.Object.create(name: 'schema',  startPattern: /^\$ (?:bundle exec )?rake( db:create)? db:schema:load/, endPattern: /^\$/)
-  Em.Object.create(name: 'migrate', startPattern: /^\$ (?:bundle exec )?rake( db:create)? db:migrate/, endPattern: /^\$/)
-  Em.Object.create(name: 'bundle',  startPattern: /^\$ bundle install/, endPattern: /^\$/)
+  Em.Object.create(name: 'schema',  startPattern: /^\$ (?:bundle exec )?rake( db:create)? db:schema:load/, endPattern: /^(<\/span>)?\$/)
+  Em.Object.create(name: 'migrate', startPattern: /^\$ (?:bundle exec )?rake( db:create)? db:migrate/, endPattern: /^(<\/span>)?\$/)
+  Em.Object.create(name: 'bundle',  startPattern: /^\$ bundle install/, endPattern: /^(<\/span>)?\$/)
 ]
 
 @Travis.Log = Em.Object.extend
