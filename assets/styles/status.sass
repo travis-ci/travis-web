@@ -1,65 +1,42 @@
 @import "_mixins/all"
 
-// .status
-//   display: inline-block
-//   width: 10px
-//   height: 10px
-//   margin-right: 2px
-//   @include border-radius(5px)
-
 .status
   display: inline-block
   width: 12px
   height: 12px
-  margin-right: 2px
-
-.status:before
-  -webkit-font-smoothing: antialiased !important
-  position: absolute
-  display: inline-block
-  width: 12px
-  height: 12px
-  font: 12px 'Glyphicons Halflings'
-  font-style: normal
+  margin-right: 3px
+  background-size: auto auto
+  background-position: 0px 0px
 
 #repos .yellow,
 .yellow #summary .number,
 .list .yellow .number,
   .status
-    background-color: $color-bg-status-pending
-    width: 10px
-    height: 10px
-    margin-top: 1px
-    margin-left: 1px
-    @include border-radius(5px)
+    background-image: inline-image('icons/state-pending.svg')
   a
     color: $color-text-status-pending
 
 #repos .green,
 .green #summary .number,
 .list .green .number
-  .status:before
-    content: "\e084"
-    color: $color-bg-status-passed
+  .status
+    background-image: inline-image('icons/state-passed.svg')
   a
     color: $color-text-status-passed
 
 #repos .red,
 .red #summary .number,
 .list .red .number
-  .status:before
-    content: "\e081"
-    color: $color-bg-status-failed
-    @include rotate(45deg)
+  .status
+    background-image: inline-image('icons/state-failed.svg')
   a
     color: $color-text-status-failed
 
 #repos .gray,
 .gray #summary .number,
 .list .gray .number
-  .status:before
-    content: "\e101"
-    color: $color-bg-status-gray
+  .status
+    background-image: inline-image('icons/state-errored.svg')
   a
     color: $color-text-status-gray
 
