@@ -82,7 +82,7 @@ require 'travis/model'
   ).observes('state')
 
   isAttributeLoaded: (key) ->
-    if ['finishedAt', 'state'].contains(key) && !@get('isFinished')
+    if ['finishedAt'].contains(key) && !@get('isFinished')
       return true
     else if key == 'startedAt' && @get('state') == 'created'
       return true
