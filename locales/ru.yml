@@ -144,6 +144,7 @@ ru:
       pull_requests: Запросы на Pull
     test: 
     textile: Textile
+    asciidoc: AsciiDoc
   repository:
     duration: Длительность
   statistics:

@@ -136,6 +136,7 @@ pt-BR:
       pull_requests: 
     test: 
     textile: Textile
+    asciidoc: AsciiDoc
   repository:
     duration: Duração
   statistics:

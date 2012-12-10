@@ -130,6 +130,7 @@ ja:
       pull_requests: プルリクエスト
     test: 
     textile: .textile
+    asciidoc: .asciidoc
   repository:
     duration: 時間
   statistics:
