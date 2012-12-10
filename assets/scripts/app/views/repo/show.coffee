@@ -145,8 +145,8 @@
     ).property('build.state', 'hasPermission', 'tab')
 
     canRegenerateKey: (->
-      @get('hasPermissions')
-    ).property('hasPermissions')
+      @get('hasPermission')
+    ).property('hasPermission')
 
     canCancelJob: (->
       @get('isJobTab') && @get('job.canCancel') && @get('hasPermission')
@@ -163,7 +163,7 @@
 
     hasPermission: (->
       if permissions = Travis.app.get('currentUser.permissions')
-        permissions.indexOf(@get('repo.id')) > -1
+        permissions.contains @get('repo.id')
     ).property('Travis.app.currentUser.permissions.length', 'repo.id')
 
 
