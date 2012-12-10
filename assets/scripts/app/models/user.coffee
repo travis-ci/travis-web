@@ -32,6 +32,7 @@ require 'travis/model'
   ).property()
 
   updateLocale: (locale) ->
+    Travis.set 'locale', locale
     @setWithSession('locale', locale)
 
     transaction = @get('transaction')
