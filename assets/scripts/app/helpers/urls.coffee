@@ -33,7 +33,7 @@
     "http://github.com/#{slug}/admin/hooks#travis_minibucket"
 
   statusImage: (slug, branch) ->
-    "https://secure.travis-ci.org/#{slug}.png" + if branch then "?branch=#{branch}" else ''
+    "#{location.protocol}//#{location.host}/#{slug}.png" + if branch then "?branch=#{branch}" else ''
 
   email: (email) ->
     "mailto:#{email}"
