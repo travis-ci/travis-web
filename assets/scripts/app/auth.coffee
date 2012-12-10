@@ -19,7 +19,7 @@
     global  = localStorage.getItem('travis.user')
     session = sessionStorage.getItem('travis.user')
     user    = session || global
-    if user
+    if user && localStorage.getItem('travis.token')
       localStorage.setItem('travis.user', user) unless global
       data = JSON.parse(user)
       data = { user: data } unless data.user?
