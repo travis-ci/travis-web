@@ -141,16 +141,18 @@
     ).property('isJobTab', 'job.isFinished', 'hasPermissions')
 
     canCancelBuild: (->
-      @get('isBuildTab') && @get('build.canCancel') && @get('hasPermission')
+      # @get('isBuildTab') && @get('build.canCancel') && @get('hasPermission')
+      false
     ).property('build.state', 'hasPermission', 'tab')
+
+    canCancelJob: (->
+      # @get('isJobTab') && @get('job.canCancel') && @get('hasPermission')
+      false
+    ).property('job.state', 'hasPermission', 'tab')
 
     canRegenerateKey: (->
       @get('hasPermission')
     ).property('hasPermission')
-
-    canCancelJob: (->
-      @get('isJobTab') && @get('job.canCancel') && @get('hasPermission')
-    ).property('job.state', 'hasPermission', 'tab')
 
 
     isJobTab: (->
