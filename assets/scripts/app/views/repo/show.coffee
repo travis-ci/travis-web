@@ -191,3 +191,6 @@
       "{<img src=\"#{@get('urlStatusImage')}\" alt=\"Build Status\" />}[#{@get('urlRepo')}]"
     ).property('urlStatusImage')
 
+    asciidocStatusImage: (->
+      "image:#{@get('urlStatusImage')}[\"Build Status\", link=\"#{@get('urlRepo')}\"]"
+    ).property('urlStatusImage')
