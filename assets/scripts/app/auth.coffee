@@ -39,6 +39,7 @@
     localStorage.removeItem('travis.auto_signin')
     localStorage.removeItem('travis.locale')
     localStorage.removeItem('travis.user')
+    localStorage.removeItem('travis.token')
     sessionStorage.clear()
     @setData()
 
@@ -57,8 +58,7 @@
   # TODO should have clearData() to clean this up
   setData: (data) ->
     data = JSON.parse(data) if typeof data == 'string'
-    @storeToken(data.token) if data?.token
-    console.log 'setData', data.user if data?.user
+    @storeToken(data?.token)
     user = @storeUser(data.user) if data?.user
     @set('state', if user then 'signed-in' else 'signed-out')
     @set('user',  if user then user else undefined)
@@ -69,8 +69,11 @@
     @get('app.router').send('afterSignIn', @readAfterSignInPath())
 
   storeToken: (token) ->
-    sessionStorage.setItem('travis.token', token)
-    @notifyPropertyChange('accessToken')
+    token = token || localStorage.getItem('travis.token')
+    if token
+      localStorage.setItem('travis.token', token)
+      sessionStorage.setItem('travis.token', token)
+      @notifyPropertyChange('accessToken')
 
   storeUser: (user) ->
     localStorage.setItem('travis.auto_signin', 'true')
