@@ -12,11 +12,15 @@ require 'travis/model'
 
   setSeen: ->
     Travis.Broadcast.seen.pushObject(@get('id'))
-    localStorage.setItem('travis.seen_broadcasts', JSON.stringify(Travis.Broadcast.seen))
+    Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(Travis.Broadcast.seen))
     @notifyPropertyChange('isSeen')
 
 @Travis.Broadcast.reopenClass
-  seen: Ember.A(JSON.parse(localStorage.getItem('travis.seen_broadcasts')) || [])
+  seen: (->
+    seenBroadcasts = Travis.storage.getItem('travis.seen_broadcasts')
+    seenBroadcasts = JSON.parse(seenBroadcasts) if seenBroadcasts?
+    Ember.A(seenBroadcasts || [])
+  )()
 
   # TODO fix or monkey-patch the adapter's url and key lookup/generation crap
   # url: 'users/broadcasts'

@@ -9,23 +9,23 @@
     window.addEventListener('message', (e) => @receiveMessage(e))
 
   accessToken: (->
-    sessionStorage.getItem('travis.token')
+    Travis.sessionStorage.getItem('travis.token')
   ).property()
 
   # if the user is in the session storage, we're using it. if we have a flag
   # for auto signin then we're trying to sign in.
   autoSignIn: (path) ->
     console.log 'autoSignIn'
-    global  = localStorage.getItem('travis.user')
-    session = sessionStorage.getItem('travis.user')
+    global  = Travis.storage.getItem('travis.user')
+    session = Travis.sessionStorage.getItem('travis.user')
     user    = session || global
     if user
-      localStorage.setItem('travis.user', user) unless global
+      Travis.storage.setItem('travis.user', user) unless global
       data = JSON.parse(user)
       data = { user: data } unless data.user?
       @setData(data)
-    else if localStorage.getItem('travis.auto_signin')
-      console.log 'travis.auto_signin', localStorage.getItem('travis.auto_signin')
+    else if Travis.storage.getItem('travis.auto_signin')
+      console.log 'travis.auto_signin', Travis.storage.getItem('travis.auto_signin')
       @signIn()
 
   # try signing in, but check later in case we have a timeout
@@ -36,11 +36,11 @@
     Ember.run.later(this, @checkSignIn.bind(this), @timeout)
 
   signOut: ->
-    localStorage.removeItem('travis.auto_signin')
-    localStorage.removeItem('travis.locale')
-    localStorage.removeItem('travis.user')
-    localStorage.removeItem('travis.token')
-    sessionStorage.clear()
+    Travis.storage.removeItem('travis.auto_signin')
+    Travis.storage.removeItem('travis.locale')
+    Travis.storage.removeItem('travis.user')
+    Travis.storage.removeItem('travis.token')
+    Travis.sessionStorage.clear()
     @setData()
 
   trySignIn: ->
@@ -52,7 +52,7 @@
 
   forceSignIn: ->
     console.log 'forceSignIn'
-    localStorage.setItem('travis.auto_signin', 'true')
+    Travis.storage.setItem('travis.auto_signin', 'true')
     window.location = "#{@endpoint}/auth/handshake?redirect_uri=#{location}"
 
   # TODO should have clearData() to clean this up
@@ -69,26 +69,26 @@
     @get('app.router').send('afterSignIn', @readAfterSignInPath())
 
   storeToken: (token) ->
-    token = token || localStorage.getItem('travis.token')
+    token = token || Travis.storage.getItem('travis.token')
     if token
-      localStorage.setItem('travis.token', token)
-      sessionStorage.setItem('travis.token', token)
+      Travis.storage.setItem('travis.token', token)
+      Travis.sessionStorage.setItem('travis.token', token)
       @notifyPropertyChange('accessToken')
 
   storeUser: (user) ->
-    localStorage.setItem('travis.auto_signin', 'true')
-    sessionStorage.setItem('travis.user', JSON.stringify(user))
+    Travis.storage.setItem('travis.auto_signin', 'true')
+    Travis.sessionStorage.setItem('travis.user', JSON.stringify(user))
     @app.store.load(Travis.User, user)
     user = @app.store.find(Travis.User, user.id)
     user.get('permissions')
     user
 
   storeAfterSignInPath: (path) ->
-    sessionStorage.setItem('travis.after_signin_path', path)
+    Travis.sessionStorage.setItem('travis.after_signin_path', path)
 
   readAfterSignInPath: ->
-    path = sessionStorage.getItem('travis.after_signin_path')
-    sessionStorage.removeItem('travis.after_signin_path')
+    path = Travis.sessionStorage.getItem('travis.after_signin_path')
+    Travis.sessionStorage.removeItem('travis.after_signin_path')
     path
 
   receiveMessage: (event) ->

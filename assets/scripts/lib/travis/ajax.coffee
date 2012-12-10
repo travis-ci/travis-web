@@ -15,7 +15,7 @@ jQuery.support.cors = true
     endpoint = Travis.config.api_endpoint || ''
     options = options || {}
 
-    if token = sessionStorage.getItem('travis.token')
+    if token = Travis.sessionStorage.getItem('travis.token')
       options.headers ||= {}
       options.headers['Authorization'] ||= "token #{token}"
 

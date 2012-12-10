@@ -1,10 +1,10 @@
 @Travis.Slider = ->
-  @minimize() if localStorage?.getItem('travis.maximized') == 'true'
+  @minimize() if Travis.storage.getItem('travis.maximized') == 'true'
   this
 
 $.extend Travis.Slider.prototype,
   persist: ->
-    localStorage?.setItem('travis.maximized', @isMinimized())
+    Travis.storage.setItem('travis.maximized', @isMinimized())
 
   isMinimized: ->
     return $('body').hasClass('maximized');

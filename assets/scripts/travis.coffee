@@ -13,6 +13,22 @@ if window.history.state == undefined
     window.history.state = state
     oldReplaceState.apply this, arguments
 
+# TODO: how can I put it in Travis namespace and use immediately?
+Storage = Em.Object.extend
+  init: ->
+    @set('storage', {})
+  key: (key) ->
+    "__#{key.replace('.', '__')}"
+  getItem: (k) ->
+    return @get("storage.#{@key(k)}")
+  setItem: (k,v) ->
+    @set("storage.#{@key(k)}", v)
+  removeItem: (k) ->
+    @setItem(k, null)
+  clear: ->
+    @set('storage', {})
+
+
 @Travis = Em.Namespace.create Ember.Evented,
   config:
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
@@ -48,16 +64,39 @@ if window.history.state == undefined
   setLocale: (locale) ->
     return unless locale
     I18n.locale = locale
-    localStorage.setItem('travis.locale', locale)
+    @storage.setItem('travis.locale', locale)
 
   needsLocaleChange: (locale) ->
     I18n.locale != locale
+
+  storage: (->
+    storage = null
+    try
+      storage = window.localStorage || throw('no storage')
+    catch err
+      storage = Storage.create()
+
+    storage
+  )()
+
+  sessionStorage: (->
+    storage = null
+    try
+      # firefox will not throw error on access for sessionStorage var,
+      # you need to actually get something from session
+      sessionStorage.getItem('foo')
+      storage = sessionStorage
+    catch err
+      storage = Storage.create()
+
+    storage
+  )()
 
   run: (attrs) ->
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
 
     I18n.fallbacks = true
-    @setLocale localStorage.getItem('travis.locale') || 'en'
+    @setLocale @storage.getItem('travis.locale') || 'en'
 
     Ember.run.next this, ->
       app = Travis.App.create(attrs || {})
