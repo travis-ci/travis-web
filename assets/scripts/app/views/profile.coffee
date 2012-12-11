@@ -52,8 +52,8 @@
       [
         { key: null, name: '' }
         { key: 'en', name: 'English' }
-        { key: 'ca', name: 'Catalan' }
-        { key: 'cs', name: 'Čeština' }
+        #{ key: 'ca', name: 'Catalan' }
+        #{ key: 'cs', name: 'Čeština' }
         { key: 'es', name: 'Español' }
         { key: 'fr', name: 'Français' }
         { key: 'ja', name: '日本語' }
