@@ -19,6 +19,7 @@ pt-BR:
       sponsored_by: Esta série de testes foi executada em uma caixa de processos patrocinada por
     name: Build
     started_at: Iniciou em
+    state: 
   datetime:
     distance_in_words:
       hours_exact:
@@ -53,6 +54,7 @@ pt-BR:
       sponsored_by: Esta série de testes foi executada em uma caixa de processos patrocinada por
     sponsored_by: 
     started_at: Iniciou em
+    state: 
   layouts:
     about:
       alpha: Isto é um alpha.
@@ -82,6 +84,7 @@ pt-BR:
       job: Trabalho
       log: Log
     top:
+      accounts: 
       admin: Admin
       blog: Blog
       docs: Documentação
@@ -89,6 +92,7 @@ pt-BR:
       home: Home
       profile: Perfil
       sign_out: Sair
+      signing_in: 
       stats: Estatísticas
   locales:
     ca: 
@@ -106,6 +110,7 @@ pt-BR:
     show:
       email: Email
       github: Github
+      locale: 
       message:
         config: como configurar opções de build
         your_repos: Use os botões abaixo para ligar ou desligar o hook de serviço do Travis para seus projetos, e então, faça um push para o Github.<br />Para testar com múltiplas versões do Ruby, leia
@@ -118,6 +123,7 @@ pt-BR:
       your_repos: Seus Repositórios
   queue: Fila
   repositories:
+    asciidoc: 
     branch: Branch
     commit: Commit
     duration: Duração
@@ -136,7 +142,6 @@ pt-BR:
       pull_requests: 
     test: 
     textile: Textile
-    asciidoc: AsciiDoc
   repository:
     duration: Duração
   statistics:

@@ -19,6 +19,7 @@ ja:
       sponsored_by: このテストは以下のスポンサーの協力で行いました。
     name: ビルド
     started_at: 開始時刻
+    state: 
   datetime:
     distance_in_words:
       hours_exact: 
@@ -47,6 +48,7 @@ ja:
       sponsored_by: このテストは以下のスポンサーの協力で行いました。
     sponsored_by: 
     started_at: 開始時刻
+    state: 
   layouts:
     about:
       alpha: まだアルファですよ！
@@ -76,6 +78,7 @@ ja:
       job: ジョブ
       log: ログ
     top:
+      accounts: 
       admin: 管理
       blog: ブログ
       docs: Travisとは？
@@ -83,6 +86,7 @@ ja:
       home: ホーム
       profile: プロフィール
       sign_out: ログアウト
+      signing_in: 
       stats: 統計
   locales:
     ca: 
@@ -100,6 +104,7 @@ ja:
     show:
       email: メール
       github: Github
+      locale: 言語
       message:
         config: 詳細設定
         your_repos: 以下のスイッチを設定し、Travis-ciを有効にします。Githubへプッシュしたらビルドは自動的に開始します。複数バーションや細かい設定はこちらへ：
@@ -112,6 +117,7 @@ ja:
       your_repos: リポジトリ
   queue: キュー
   repositories:
+    asciidoc: 
     branch: ブランチ
     commit: コミット
     duration: 処理時間
@@ -130,7 +136,6 @@ ja:
       pull_requests: プルリクエスト
     test: 
     textile: .textile
-    asciidoc: .asciidoc
   repository:
     duration: 時間
   statistics:

@@ -19,6 +19,7 @@ ru:
       sponsored_by: Эта серия тестов была запущена на машине, спонсируемой
     name: Билд
     started_at: Начало
+    state: 
   datetime:
     distance_in_words:
       hours_exact:
@@ -59,6 +60,7 @@ ru:
       sponsored_by: Эта серия тестов была запущена на машине спонсируемой
     sponsored_by: 
     started_at: Начало
+    state: 
   layouts:
     about:
       alpha: Это альфа-версия
@@ -88,6 +90,7 @@ ru:
       job: Задача
       log: Журнал
     top:
+      accounts: 
       admin: Управление
       blog: Блог
       docs: Документация
@@ -95,6 +98,7 @@ ru:
       home: Главная
       profile: Профиль
       sign_out: Выход
+      signing_in: 
       stats: Статистика
   locales:
     ca: 
@@ -112,6 +116,7 @@ ru:
     show:
       email: Электронная почта
       github: Github
+      locale: 
       message:
         config: как настроить специальные опции билда
         your_repos: ! 'Используйте переключатели, чтобы включить Travis service hook для вашего проекта, а потом отправьте код на GitHub.<br />
@@ -126,6 +131,7 @@ ru:
       your_repos: Ваши репозитории
   queue: Очередь
   repositories:
+    asciidoc: 
     branch: Ветка
     commit: Коммит
     duration: Длительность
@@ -144,7 +150,6 @@ ru:
       pull_requests: Запросы на Pull
     test: 
     textile: Textile
-    asciidoc: AsciiDoc
   repository:
     duration: Длительность
   statistics:

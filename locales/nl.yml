@@ -19,6 +19,7 @@ nl:
       sponsored_by: Deze tests zijn gedraaid op een machine gesponsord door
     name: Bouw
     started_at: Gestart
+    state: 
   datetime:
     distance_in_words:
       hours_exact:
@@ -53,6 +54,7 @@ nl:
       sponsored_by: Deze testen zijn uitgevoerd op een machine gesponsord door
     sponsored_by: 
     started_at: Gestart
+    state: 
   layouts:
     about:
       alpha: Dit is in alfa-stadium.
@@ -82,6 +84,7 @@ nl:
       job: Taak
       log: Logboek
     top:
+      accounts: 
       admin: Administratie
       blog: Blog
       docs: Documentatie
@@ -89,6 +92,7 @@ nl:
       home: Home
       profile: Profiel
       sign_out: Uitloggen
+      signing_in: 
       stats: Statistieken
   locales:
     ca: 
@@ -106,6 +110,7 @@ nl:
     show:
       email: Email adres
       github: Github
+      locale: 
       message:
         config: hoe eigen bouw-opties in te stellen
         your_repos: ! 'Zet de schakelaars hieronder aan om de Travis hook voor uw projecten te activeren en push daarna naar Github<br />
@@ -120,6 +125,7 @@ nl:
       your_repos: Uw repositories
   queue: Wachtrij
   repositories:
+    asciidoc: 
     branch: Tak
     commit: Commit
     duration: Duur
@@ -138,7 +144,6 @@ nl:
       pull_requests: 
     test: 
     textile: Textile
-    asciidoc: AsciiDoc
   repository:
     duration: Duur
   statistics:

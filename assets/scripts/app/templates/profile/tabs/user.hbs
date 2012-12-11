@@ -25,18 +25,16 @@
       {{user.token}}
     </dd>
   </div>
+  <div>
+    <dt>
+      {{t profiles.show.locale}}:
+    </dt>
+    <dd>
+      {{view Ember.Select id="locale"
+        contentBinding="view.locales"
+        valueBinding="Travis.app.currentUser.locale"
+        optionLabelPath="content.name"
+        optionValuePath="content.key"}}
+    </dd>
+  </div>
 </dl>
-
-<form>
-  {{view Ember.Select id="locale"
-     contentBinding="view.locales"
-     valueBinding="Travis.app.currentUser.locale"
-     optionLabelPath="content.name"
-     optionValuePath="content.key"}}
-
-  <button name="commit" {{action saveLocale target="view"}}>
-    {{t profiles.show.update_locale}}
-  </button>
-</form>
-
-
