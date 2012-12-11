@@ -41,6 +41,7 @@
     Travis.storage.removeItem('travis.user')
     Travis.storage.removeItem('travis.token')
     Travis.sessionStorage.clear()
+    Travis.setLocale Travis.default_locale
     @setData()
 
   trySignIn: ->
@@ -65,6 +66,7 @@
     @afterSignIn(data.user) if data?.user
 
   afterSignIn: (user) ->
+    Travis.setLocale user.locale || Travis.default_locale
     Travis.trigger('user:signed_in', user)
     @get('app.router').send('afterSignIn', @readAfterSignInPath())
 
