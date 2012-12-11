@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$TEST_SUITE" == "spec" ]; then
+  bundle exec rspec spec
+elif [ "$TEST_SUITE" == "ember" ]; then
+  bundle exec rackup -s puma -p 5000 -D
+  sleep 3
+  ./run_jasmine.coffee http://localhost:5000/spec.html
+fi
