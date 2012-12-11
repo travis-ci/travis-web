@@ -28,7 +28,7 @@ Travis.LimitedArray = Em.ArrayProxy.extend
   ).property('totalLength', 'limit')
 
   isMore: (->
-    @get('leftLength') > 0
+    !@get('disabled') && @get('leftLength') > 0
   ).property('leftLength')
 
   showAll: ->
