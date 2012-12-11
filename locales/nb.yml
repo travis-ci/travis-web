@@ -19,6 +19,7 @@ nb:
       sponsored_by: Denne testen ble kjørt på en maskin sponset av
     name: Jobb
     started_at: Startet
+    state: 
   datetime:
     distance_in_words:
       hours_exact:
@@ -53,6 +54,7 @@ nb:
       sponsored_by: Denne testserien ble kjørt på en maskin sponset av
     sponsored_by: 
     started_at: Startet
+    state: 
   layouts:
     about:
       alpha: Dette er alfa-greier.
@@ -82,6 +84,7 @@ nb:
       job: Jobb
       log: Logg
     top:
+      accounts: 
       admin: Administrator
       blog: Blogg
       docs: Dokumentasjon
@@ -89,6 +92,7 @@ nb:
       home: Hjem
       profile: Profil
       sign_out: Logg ut
+      signing_in: 
       stats: Statistikk
   locales:
     ca: 
@@ -106,6 +110,7 @@ nb:
     show:
       email: E-post
       github: Github
+      locale: 
       message:
         config: hvordan sette opp egne jobbinnstillinger
         your_repos: ! "Slå\x10 på Travis for prosjektene dine ved å dra i bryterne under, og send koden til Github.<br />\nFor å teste mot flere versjoner av ruby, se "
@@ -118,6 +123,7 @@ nb:
       your_repos: Dine kodelagre
   queue: Kø
   repositories:
+    asciidoc: 
     branch: Gren
     commit: Innsender
     duration: Varighet
@@ -136,7 +142,6 @@ nb:
       pull_requests: 
     test: 
     textile: Textile
-    asciidoc: AsciiDoc
   repository:
     duration: Varighet
   statistics:

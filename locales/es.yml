@@ -19,6 +19,7 @@ es:
       sponsored_by: Esta serie de tests han sido ejecutados en una caja de Proceso patrocinada por
     name: Build
     started_at: Iniciado
+    state: 
   datetime:
     distance_in_words:
       hours_exact:
@@ -53,6 +54,7 @@ es:
       sponsored_by: Esta serie de tests han sido ejecutados en una caja de Proceso patrocinada por
     sponsored_by: Patrocinado por
     started_at: Iniciado
+    state: 
   layouts:
     about:
       alpha: Esto es alpha.
@@ -82,6 +84,7 @@ es:
       job: Trabajo
       log: Registro
     top:
+      accounts: 
       admin: Admin
       blog: Blog
       docs: Documentación
@@ -89,6 +92,7 @@ es:
       home: Inicio
       profile: Perfil
       sign_out: Desconectar
+      signing_in: 
       stats: Estadísticas
   locales:
     ca: 
@@ -106,6 +110,7 @@ es:
     show:
       email: email
       github: Github
+      locale: 
       message:
         config: como configurar tus propias opciones para el Build
         your_repos: ! "  Activa los interruptores para inicial el  Travis service hook para tus proyectos, y haz un Push en GitHub.<br />\n  Para probar varias versiones de ruby, mira"
@@ -118,6 +123,7 @@ es:
       your_repos: Tus repositorios
   queue: Cola
   repositories:
+    asciidoc: 
     branch: Rama
     commit: Commit
     duration: Duración
@@ -136,7 +142,6 @@ es:
       pull_requests: 
     test: 
     textile: Textile
-    asciidoc: AsciiDoc
   repository:
     duration: Duración
   statistics:
