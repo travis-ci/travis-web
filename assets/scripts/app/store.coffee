@@ -68,7 +68,6 @@ Travis.Store = DS.Store.extend
       { id: id, clientId: clientId }
 
   receive: (event, data) ->
-    console.log event, data
     [name, type] = event.split(':')
 
     mappings = @adapter.get('mappings')

@@ -8,11 +8,11 @@ Travis.LimitedArray = Em.ArrayProxy.extend
 
   arrangedContent: (->
     content = @get('content')
-    if @get('disable')
+    if @get('disabled')
       content
     else if content
       content.slice(0, @get('limit'))
-  ).property('content', 'limit', 'disable')
+  ).property('content', 'limit', 'disabled')
 
   totalLength: (->
     @get('content.length')
@@ -33,31 +33,41 @@ Travis.LimitedArray = Em.ArrayProxy.extend
 
   showAll: ->
     @set 'limit', 1000000000
-    @set 'disable', true
+    @set 'disabled', true
+
+
+  contentArrayWillChange: (array, index, removedCount, addedCount) ->
+    @_super.apply this, arguments
+
+    return if @get('disabled')
+
+    if removedCount
+      arrangedContent = @get 'arrangedContent'
+      removedObjects = array.slice(index, index + removedCount);
+      console.log 'willChange', @get('name'), index, removedCount, addedCount, arrangedContent.map( (j) -> "#{j.get('repoSlug')}-#{j.get('number')}" ), removedObjects.map( (j) -> "#{j.get('repoSlug')}-#{j.get('number')}" )
+      arrangedContent.removeObjects(removedObjects)
 
   contentArrayDidChange: (array, index, removedCount, addedCount) ->
     @_super.apply this, arguments
 
-    return if @get('disable')
+    return if @get('disabled')
 
-    limit  = @get 'limit'
-    arrangedContent = @get('arrangedContent')
-    length = arrangedContent.get 'length'
-
-    if addedCount > 0
+    if addedCount
+      arrangedContent = @get('arrangedContent')
       addedObjects = array.slice(index, index + addedCount)
       for object in addedObjects
-        if @get('insertAtTheBeginning')
+        if @get 'insertAtTheBeginning'
           arrangedContent.unshiftObject(object)
         else
           arrangedContent.pushObject(object)
 
-    if removedCount
-      removedObjects = array.slice(index, index + removedCount);
-      arrangedContent.removeObjects(removedObjects)
+    @balanceArray()
 
+  balanceArray: ->
+    limit  = @get 'limit'
+    arrangedContent = @get 'arrangedContent'
     length = arrangedContent.get 'length'
-    content = @get('content')
+    content = @get 'content'
 
     if length > limit
       arrangedContent.replace(limit, length - limit)
@@ -66,7 +76,7 @@ Travis.LimitedArray = Em.ArrayProxy.extend
       while count > 0
         if next = content.find( (object) -> !arrangedContent.contains(object) )
           if @get('insertAtTheBeginning')
-            arrangedContent.unshiftObject(object)
+            arrangedContent.unshiftObject(next)
           else
-            arrangedContent.pushObject(object)
+            arrangedContent.pushObject(next)
         count -= 1
