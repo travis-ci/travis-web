@@ -8,9 +8,10 @@ env:
   - "TEST_SUITE=ember"
 script: "script/ci"
 
-allow_failures:
-  - env: "TEST_SUITE=ember"
-    rvm: "1.9.3"
+matrix:
+  allow_failures:
+    - env: "TEST_SUITE=ember"
+      rvm: "1.9.3"
 
 notifications:
   irc: "irc.freenode.org#travis"
