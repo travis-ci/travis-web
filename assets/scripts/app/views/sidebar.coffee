@@ -45,7 +45,7 @@
       didInsertElement: ->
         queues = for queue in Travis.QUEUES
           Travis.LimitedArray.create
-            debug: true
+            insertAtTheBeginning: false
             content: Travis.Job.queued(queue.name), limit: 20
             id: "queue_#{queue.name}"
             name: queue.display

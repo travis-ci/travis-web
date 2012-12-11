@@ -1,6 +1,7 @@
 Travis.LimitedArray = Em.ArrayProxy.extend
   limit: 10
   isLoadedBinding: 'content.isLoaded'
+  insertAtTheBeginning: true
 
   init: ->
     @_super.apply this, arguments
@@ -46,7 +47,10 @@ Travis.LimitedArray = Em.ArrayProxy.extend
     if addedCount > 0
       addedObjects = array.slice(index, index + addedCount)
       for object in addedObjects
-        arrangedContent.unshiftObject(object)
+        if @get('insertAtTheBeginning')
+          arrangedContent.unshiftObject(object)
+        else
+          arrangedContent.pushObject(object)
 
     if removedCount
       removedObjects = array.slice(index, index + removedCount);
@@ -61,5 +65,8 @@ Travis.LimitedArray = Em.ArrayProxy.extend
       count = limit - length
       while count > 0
         if next = content.find( (object) -> !arrangedContent.contains(object) )
-          arrangedContent.unshiftObject(next)
+          if @get('insertAtTheBeginning')
+            arrangedContent.unshiftObject(object)
+          else
+            arrangedContent.pushObject(object)
         count -= 1
