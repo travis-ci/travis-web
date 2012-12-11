@@ -44,7 +44,6 @@ Travis.LimitedArray = Em.ArrayProxy.extend
     if removedCount
       arrangedContent = @get 'arrangedContent'
       removedObjects = array.slice(index, index + removedCount);
-      console.log 'willChange', @get('name'), index, removedCount, addedCount, arrangedContent.map( (j) -> "#{j.get('repoSlug')}-#{j.get('number')}" ), removedObjects.map( (j) -> "#{j.get('repoSlug')}-#{j.get('number')}" )
       arrangedContent.removeObjects(removedObjects)
 
   contentArrayDidChange: (array, index, removedCount, addedCount) ->
