@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$TEST_SUITE" == "spec" ]; then
   bundle exec rspec spec
