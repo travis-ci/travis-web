@@ -115,6 +115,7 @@ Travis.Router = Ember.Router.extend
         router.get('accountsController').set('content', Travis.Account.find())
         router.get('applicationController').connectOutlet 'top', 'top'
         router.get('applicationController').connectOutlet 'left', 'accounts'
+        router.get('applicationController').connectOutlet 'flash', 'flash'
 
       index: Ember.Route.extend
         route: '/'

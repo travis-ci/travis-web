@@ -19,6 +19,7 @@ pl:
       sponsored_by: Te testy zostały uruchomione na maszynie sponsorowanej przez
     name: Build
     started_at: Rozpoczęto
+    state: 
   datetime:
     distance_in_words:
       hours_exact:
@@ -53,6 +54,7 @@ pl:
       sponsored_by: Te testy zostały uruchomione na maszynie sponsorowanej przez
     sponsored_by: Te testy zostały uruchomione na maszynie sponsorowanej przez
     started_at: Rozpoczęto
+    state: 
   layouts:
     about:
       alpha: To wciąż jest wersja alpha.
@@ -82,6 +84,7 @@ pl:
       job: Zadanie
       log: Log
     top:
+      accounts: 
       admin: 
       blog: Blog
       docs: Dokumentacja
@@ -89,6 +92,7 @@ pl:
       home: Start
       profile: Profil
       sign_out: Wyloguj się
+      signing_in: 
       stats: Statystki
   locales:
     ca: 
@@ -106,6 +110,7 @@ pl:
     show:
       email: Email
       github: Github
+      locale: 
       message:
         config: jak skonfigurować niestandardowe opcje builda
         your_repos: ! "  Przesuń suwak poniżej, aby włączyć Travisa, dla twoich projektów, a następnie umieść swój kod na GitHubie.<br />\n Aby testować swój kod przy użyciu wielu wersji Rubiego, zobacz"
@@ -118,6 +123,7 @@ pl:
       your_repos: Twoje repozytoria
   queue: Kolejka
   repositories:
+    asciidoc: 
     branch: Gałąź
     commit: Commit
     duration: Czas trwania
@@ -136,7 +142,6 @@ pl:
       pull_requests: 
     test: 
     textile: Textile
-    asciidoc: AsciiDoc
   repository:
     duration: 
   statistics:
