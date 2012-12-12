@@ -13,9 +13,11 @@
           <a {{action showRepo this href=true}} class="slug">{{slug}}</a>
         {{/if}}
       </div>
-      {{#if lastBuildId}}
-        <a {{action showBuild this lastBuildId href=true}} class="last_build">{{lastBuildNumber}}</a>
-      {{/if}}
+      {{#with lastBuildHash}}
+        {{#if id}}
+          <a {{action showBuild repo id href=true}} class="last_build">{{number}}</a>
+        {{/if}}
+      {{/with}}
 
       <p class="summary">
         <span class="duration_label">{{t repositories.duration}}:</span>
