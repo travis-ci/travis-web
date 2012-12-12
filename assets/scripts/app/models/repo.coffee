@@ -12,6 +12,14 @@ require 'travis/model'
 
   lastBuild: DS.belongsTo('Travis.Build')
 
+  lastBuildHash: (->
+    {
+      id: @get('lastBuildId')
+      number: @get('lastBuildNumber')
+      repo: this
+    }
+  ).property('lastBuildId', 'lastBuildNumber')
+
   allBuilds: (->
     allBuilds = DS.RecordArray.create
       type: Travis.Build
