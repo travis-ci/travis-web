@@ -131,7 +131,7 @@ class Travis::Web::App
       end
       builder.use Rack::Deflater
       builder.use Rack::Head
-      builder.use Rack::Protection::XssHeader
+      builder.use Rack::Protection::XSSHeader
       builder.use Rack::Protection::FrameOptions
       builder.use Rack::Protection::PathTraversal
       builder.use Rack::ConditionalGet
