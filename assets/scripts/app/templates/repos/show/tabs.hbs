@@ -38,18 +38,22 @@
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
     <h5>
       {{#with view.build}}
-      <a {{action showBuild repo this href=true}}>
-        {{t repositories.tabs.build}} #{{number}}
-      </a>
+        {{#if id}}
+          <a {{action showBuild repo this href=true}}>
+            {{t repositories.tabs.build}} #{{number}}
+          </a>
+        {{/if}}
       {{/with}}
     </h5>
   </li>
   <li id="tab_job" {{bindAttr class="view.classJob"}}>
     <h5>
       {{#with view.job}}
-      <a {{action showJob repo this href=true}}>
-        {{t repositories.tabs.job}} #{{number}}
-      </a>
+        {{#if id}}
+          <a {{action showJob repo this href=true}}>
+            {{t repositories.tabs.job}} #{{number}}
+          </a>
+        {{/if}}
       {{/with}}
     </h5>
   </li>
