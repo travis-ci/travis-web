@@ -2,7 +2,6 @@ require 'travis/limited_array'
 
 Travis.ReposController = Ember.ArrayController.extend
   defaultTab: 'recent'
-  sortProperties: ['sortOrder']
   isLoadedBinding: 'content.isLoaded'
 
   init: ->
@@ -21,7 +20,10 @@ Travis.ReposController = Ember.ArrayController.extend
 
   viewRecent: ->
     content = Travis.LimitedArray.create
-      content: Travis.Repo.find()
+      content: Em.ArrayProxy.extend(Em.SortableMixin).create(
+        sortProperties: ['sortOrder']
+        content: Travis.Repo.find()
+      )
       limit: 30
     @set('content', content)
     # @set('content', Travis.Repo.find())

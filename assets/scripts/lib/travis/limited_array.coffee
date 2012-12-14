@@ -1,7 +1,6 @@
 Travis.LimitedArray = Em.ArrayProxy.extend
   limit: 10
   isLoadedBinding: 'content.isLoaded'
-  insertAtTheBeginning: true
 
   init: ->
     @_super.apply this, arguments
@@ -21,20 +20,19 @@ Travis.LimitedArray = Em.ArrayProxy.extend
   leftLength: (->
     totalLength = @get('totalLength')
     limit       = @get('limit')
-    if totalLength > limit
-      totalLength - limit
-    else
+
+    if @get('disabled') || totalLength <= limit
       0
-  ).property('totalLength', 'limit')
+    else
+      totalLength - limit
+  ).property('totalLength', 'limit', 'disabled')
 
   isMore: (->
     !@get('disabled') && @get('leftLength') > 0
   ).property('leftLength')
 
   showAll: ->
-    @set 'limit', 1000000000
     @set 'disabled', true
-
 
   contentArrayWillChange: (array, index, removedCount, addedCount) ->
     @_super.apply this, arguments
@@ -51,14 +49,12 @@ Travis.LimitedArray = Em.ArrayProxy.extend
 
     return if @get('disabled')
 
+    limit = @get('limit')
+
     if addedCount
-      arrangedContent = @get('arrangedContent')
-      addedObjects = array.slice(index, index + addedCount)
-      for object in addedObjects
-        if @get 'insertAtTheBeginning'
-          arrangedContent.unshiftObject(object)
-        else
-          arrangedContent.pushObject(object)
+      if index < limit
+        addedObjects = array.slice(index, index + addedCount)
+        @replaceContent(index, 0, addedObjects)
 
     @balanceArray()
 
@@ -74,8 +70,5 @@ Travis.LimitedArray = Em.ArrayProxy.extend
       count = limit - length
       while count > 0
         if next = content.find( (object) -> !arrangedContent.contains(object) )
-          if @get('insertAtTheBeginning')
-            arrangedContent.unshiftObject(next)
-          else
-            arrangedContent.pushObject(next)
+          arrangedContent.pushObject(next)
         count -= 1
