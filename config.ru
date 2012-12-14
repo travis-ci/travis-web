@@ -7,8 +7,9 @@ require 'travis/web'
 
 class RedirectSubdomain < Struct.new(:app, :from)
   def call(env)
-    if Rack::Request.new(env).host == from
-      [301, { 'Location' => 'https://travis-ci.org', 'Content-Type' => 'text/html' }, []]
+    request = Rack::Request.new(env)
+    if request.host == from
+      [301, { 'Location' => "https://travis-ci.org/#{request.fullpath}", 'Content-Type' => 'text/html' }, []]
     else
       app.call(env)
     end
