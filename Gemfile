@@ -5,6 +5,7 @@ source :rubygems
 gem 'puma'
 gem 'rack-ssl', '~> 1.3'
 gem 'rack-cache'
+gem 'rack-mobile-detect'
 gem 'sinatra'
 
 group :assets do

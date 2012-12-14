@@ -5,6 +5,8 @@ ENV['RAILS_ENV']  = ENV['RACK_ENV']
 $: << 'lib'
 require 'travis/web'
 
+use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
+
 use Travis::Web::SetToken
 use Travis::Web::Allow
 use Travis::Web::ApiRedirect do |app|
