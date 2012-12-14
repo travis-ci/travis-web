@@ -135,7 +135,6 @@ class Travis::Web::App
       builder.use Rack::Protection::FrameOptions
       builder.use Rack::Protection::PathTraversal
       builder.use Rack::ConditionalGet
-      builder.use MobileRedirect
       builder.run router
       builder
     end

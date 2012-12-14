@@ -1,3 +1,4 @@
+# not used, doesn't seem to work
 class Travis::Web::App::MobileRedirect < Struct.new(:app)
   def call(env)
     request = Rack::Request.new env
