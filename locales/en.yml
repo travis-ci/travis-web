@@ -19,6 +19,7 @@ en:
       sponsored_by: This test series was run on a worker box sponsored by
     name: Build
     started_at: Started
+    state: state
   datetime:
     distance_in_words:
       hours_exact:
@@ -53,6 +54,7 @@ en:
       sponsored_by: This test series was run on a worker box sponsored by
     sponsored_by: 
     started_at: Started
+    state: state
   layouts:
     about:
       alpha: This stuff is alpha.
@@ -82,6 +84,7 @@ en:
       job: Job
       log: Log
     top:
+      accounts: accounts
       admin: Admin
       blog: Blog
       docs: Docs
@@ -89,6 +92,7 @@ en:
       home: Home
       profile: Profile
       sign_out: Sign Out
+      signing_in: signing_in
       stats: Stats
   locales:
     ca: 
@@ -106,6 +110,7 @@ en:
     show:
       email: Email
       github: Github
+      locale: locale
       message:
         config: how to configure custom build options
         your_repos: ! "  Flick the switches below to turn on the Travis service hook for your projects, then push to GitHub.<br />\n  To test against multiple rubies, see"
@@ -118,6 +123,7 @@ en:
       your_repos: Your Repositories
   queue: Queue
   repositories:
+    asciidoc: AsciiDoc
     branch: Branch
     commit: Commit
     duration: Duration
@@ -136,7 +142,6 @@ en:
       pull_requests: Pull Requests
     test: 
     textile: Textile
-    asciidoc: AsciiDoc
   repository:
     duration: Duration
   statistics:

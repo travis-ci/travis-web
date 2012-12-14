@@ -6,11 +6,11 @@ safe = (string) ->
 Handlebars.registerHelper 'tipsy', (text, tip) ->
   safe '<span class="tool-tip" original-title="' + tip + '">' + text + '</span>'
 
-Handlebars.registerHelper 't', (key) ->
-  safe I18n.t(key)
-
 Ember.registerBoundHelper 'capitalize', (value, options) ->
-  safe $.capitalize(value)
+  if value?
+    safe $.capitalize(value)
+  else
+    ''
 
 Ember.registerBoundHelper 'formatTime', (value, options) ->
   safe Travis.Helpers.timeAgoInWords(value) || '-'

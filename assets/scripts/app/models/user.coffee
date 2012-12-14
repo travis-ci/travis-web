@@ -19,7 +19,7 @@ require 'travis/model'
     Ember.run.next this, ->
       transaction = @get('store').transaction()
       transaction.add this
-
+    
   urlGithub: (->
     "https://github.com/#{@get('login')}"
   ).property()
@@ -32,8 +32,7 @@ require 'travis/model'
   ).property()
 
   updateLocale: (locale) ->
-    @setWithSession('locale', locale)
-
+    
     transaction = @get('transaction')
     transaction.commit()
 
@@ -45,6 +44,7 @@ require 'travis/model'
         transaction.add self
 
     @addObserver 'isSaving', observer
+    Travis.setLocale(locale)
 
   type: (->
     'user'
@@ -71,6 +71,6 @@ require 'travis/model'
 
   setWithSession: (name, value) ->
     @set(name, value)
-    user = JSON.parse(sessionStorage?.getItem('travis.user'))
+    user = JSON.parse(Travis.sessionStorage.getItem('travis.user'))
     user[$.underscore(name)] = @get(name)
-    sessionStorage?.setItem('travis.user', JSON.stringify(user))
+    Travis.sessionStorage.setItem('travis.user', JSON.stringify(user))

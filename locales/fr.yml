@@ -19,6 +19,7 @@ fr:
       sponsored_by: Cette série de tests a été exécutée sur une machine sponsorisée par
     name: Version
     started_at: Commencé
+    state: 
   datetime:
     distance_in_words:
       hours_exact:
@@ -53,6 +54,7 @@ fr:
       sponsored_by: Cette série de tests a été exécutée sur une machine sponsorisée par
     sponsored_by: Cette série de tests a été exécutée sur une machine sponsorisée par
     started_at: Commencé
+    state: 
   layouts:
     about:
       alpha: Ceci est en alpha.
@@ -82,6 +84,7 @@ fr:
       job: Tâche
       log: Journal
     top:
+      accounts: 
       admin: Admin
       blog: Blog
       docs: Documentation
@@ -89,6 +92,7 @@ fr:
       home: Accueil
       profile: Profil
       sign_out: Déconnexion
+      signing_in: 
       stats: Statistiques
   locales:
     ca: 
@@ -106,6 +110,7 @@ fr:
     show:
       email: Courriel
       github: Github
+      locale: 
       message:
         config: comment configurer des options de version personnalisées
         your_repos: ! 'Utilisez les boutons ci-dessous pour activer Travis sur vos projets puis déployez sur GitHub.<br />
@@ -120,6 +125,7 @@ fr:
       your_repos: Vos dépôts
   queue: File
   repositories:
+    asciidoc: 
     branch: Branche
     commit: Commit
     duration: Durée
@@ -138,7 +144,6 @@ fr:
       pull_requests: 
     test: 
     textile: Textile
-    asciidoc: AsciiDoc
   repository:
     duration: Durée
   statistics:

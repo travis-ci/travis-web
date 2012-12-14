@@ -1,6 +1,7 @@
 require 'rack'
 require 'rack/ssl'
 require 'rack/cache'
+require 'rack/protection'
 require 'delegate'
 require 'time'
 
@@ -130,6 +131,9 @@ class Travis::Web::App
       end
       builder.use Rack::Deflater
       builder.use Rack::Head
+      builder.use Rack::Protection::XSSHeader
+      builder.use Rack::Protection::FrameOptions
+      builder.use Rack::Protection::PathTraversal
       builder.use Rack::ConditionalGet
       builder.use MobileRedirect
       builder.run router

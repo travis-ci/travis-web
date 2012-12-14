@@ -7,11 +7,11 @@ Travis.LimitedArray = Em.ArrayProxy.extend
 
   arrangedContent: (->
     content = @get('content')
-    if @get('disable')
+    if @get('disabled')
       content
     else if content
       content.slice(0, @get('limit'))
-  ).property('content', 'limit', 'disable')
+  ).property('content', 'limit', 'disabled')
 
   totalLength: (->
     @get('content.length')
@@ -20,40 +20,49 @@ Travis.LimitedArray = Em.ArrayProxy.extend
   leftLength: (->
     totalLength = @get('totalLength')
     limit       = @get('limit')
-    if totalLength > limit
-      totalLength - limit
-    else
+
+    if @get('disabled') || totalLength <= limit
       0
-  ).property('totalLength', 'limit')
+    else
+      totalLength - limit
+  ).property('totalLength', 'limit', 'disabled')
 
   isMore: (->
-    @get('leftLength') > 0
+    !@get('disabled') && @get('leftLength') > 0
   ).property('leftLength')
 
   showAll: ->
-    @set 'limit', 1000000000
-    @set 'disable', true
+    @set 'disabled', true
+
+  contentArrayWillChange: (array, index, removedCount, addedCount) ->
+    @_super.apply this, arguments
+
+    return if @get('disabled')
+
+    if removedCount
+      arrangedContent = @get 'arrangedContent'
+      removedObjects = array.slice(index, index + removedCount);
+      arrangedContent.removeObjects(removedObjects)
 
   contentArrayDidChange: (array, index, removedCount, addedCount) ->
     @_super.apply this, arguments
 
-    return if @get('disable')
+    return if @get('disabled')
 
+    limit = @get('limit')
+
+    if addedCount
+      if index < limit
+        addedObjects = array.slice(index, index + addedCount)
+        @replaceContent(index, 0, addedObjects)
+
+    @balanceArray()
+
+  balanceArray: ->
     limit  = @get 'limit'
-    arrangedContent = @get('arrangedContent')
+    arrangedContent = @get 'arrangedContent'
     length = arrangedContent.get 'length'
-
-    if addedCount > 0
-      addedObjects = array.slice(index, index + addedCount)
-      for object in addedObjects
-        arrangedContent.unshiftObject(object)
-
-    if removedCount
-      removedObjects = array.slice(index, index + removedCount);
-      arrangedContent.removeObjects(removedObjects)
-
-    length = arrangedContent.get 'length'
-    content = @get('content')
+    content = @get 'content'
 
     if length > limit
       arrangedContent.replace(limit, length - limit)
@@ -61,5 +70,5 @@ Travis.LimitedArray = Em.ArrayProxy.extend
       count = limit - length
       while count > 0
         if next = content.find( (object) -> !arrangedContent.contains(object) )
-          arrangedContent.unshiftObject(next)
+          arrangedContent.pushObject(next)
         count -= 1
