@@ -5,6 +5,17 @@ ENV['RAILS_ENV']  = ENV['RACK_ENV']
 $: << 'lib'
 require 'travis/web'
 
+class RedirectSubdomain < Struct.new(:app, :from)
+  def call(env)
+    if Rack::Request.new(env).host == from
+      [301, { 'Location' => 'https://travis-ci.org', 'Content-Type' => 'text/html' }, []]
+    else
+      app.call(env)
+    end
+  end
+end
+
+use RedirectSubdomain, 'secure.travis-ci.org'
 use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
 use Travis::Web::SetToken
