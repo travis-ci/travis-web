@@ -26,6 +26,7 @@
       @setData(data)
     else if Travis.storage.getItem('travis.auto_signin')
       console.log 'travis.auto_signin', Travis.storage.getItem('travis.auto_signin')
+      Travis.storage.setItem('travis.auto_signin', false)
       @signIn()
 
   validateUser: (user) ->
