@@ -19,7 +19,7 @@
     global  = Travis.storage.getItem('travis.user')
     session = Travis.sessionStorage.getItem('travis.user')
     user    = session || global
-    if user
+    if @validateUser(user)
       Travis.storage.setItem('travis.user', user) unless global
       data = JSON.parse(user)
       data = { user: data } unless data.user?
@@ -27,6 +27,11 @@
     else if Travis.storage.getItem('travis.auto_signin')
       console.log 'travis.auto_signin', Travis.storage.getItem('travis.auto_signin')
       @signIn()
+
+  validateUser: (user) ->
+    return false unless typeof user == 'string'
+    user = JSON.parse(user)
+    user.id && user.login && user.token
 
   # try signing in, but check later in case we have a timeout
   signIn: () ->
