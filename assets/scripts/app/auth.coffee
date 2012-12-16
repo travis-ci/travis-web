@@ -47,7 +47,7 @@
 
   storeData: (data, storage) ->
     storage.setItem('travis.token', data.token)
-    storage.setItem('travis.user', JSON.stringify(user))
+    storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
     @app.store.load(Travis.User, user)
