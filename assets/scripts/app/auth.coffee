@@ -35,7 +35,14 @@
       null
 
   validateUser: (user) ->
-    user.id && user.login && user.token
+    @validateHas('id', user) && @validateHas('login', user) && @validateHas('token', user)
+
+  validateHas: (field, user) ->
+    if user.field?
+      true
+    else
+      console.log("discarding user data, lacks #{field}")
+      false
 
   setData: (data) ->
     @storeData(data, Travis.sessionStorage)
