@@ -25,6 +25,7 @@
 
   userDataFrom: (storage) ->
     user  = JSON.parse storage.getItem('travis.user')
+    user  = user.user is user.user
     token = storage.getItem('travis.token')
     if user && token && @validateUser(user)
       { user: user, token: token }
