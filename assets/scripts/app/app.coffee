@@ -40,7 +40,7 @@ Travis.reopen
       @get('auth').storeAfterSignInPath(path)
 
     autoSignIn: (path) ->
-      @get('auth').autoSignIn(path)
+      @get('auth').autoSignIn()
 
     signIn: ->
       @get('auth').signIn()

@@ -17,12 +17,16 @@ module Travis
       @env = ENV['ENV']
     end
 
+    def staging?
+      ENV['API_ENDPOINT'] =~ /staging/ unless development?
+    end
+
     def production?
-      env == 'production'
+      !staging? and !development?
     end
 
     def development?
-      !production?
+      env != 'production'
     end
 
     def vendor_order
