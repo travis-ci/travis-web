@@ -26,7 +26,7 @@
   userDataFrom: (storage) ->
     user  = JSON.parse storage.getItem('travis.user')
     token = storage.getItem('travis.token')
-    if user && token && validateUser(user)
+    if user && token && @validateUser(user)
       { user: user, token: token }
     else
       storage.removeItem('travis.user')
