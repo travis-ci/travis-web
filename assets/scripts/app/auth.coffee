@@ -38,7 +38,7 @@
     @validateHas('id', user) && @validateHas('login', user) && @validateHas('token', user)
 
   validateHas: (field, user) ->
-    if user.field?
+    if user[field]
       true
     else
       console.log("discarding user data, lacks #{field}")
