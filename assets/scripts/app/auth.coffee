@@ -72,6 +72,7 @@
     path
 
   receiveMessage: (event) ->
+    console.log(event)
     if event.origin == @expectedOrigin()
       if event.data == 'redirect'
         window.location = "#{@endpoint}/auth/handshake?redirect_uri=#{location}"
