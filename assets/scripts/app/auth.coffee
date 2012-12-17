@@ -6,7 +6,6 @@
     window.addEventListener('message', (e) => @receiveMessage(e))
 
   signOut: ->
-    console.log('auth.signOut')
     Travis.storage.removeItem('travis.locale')
     Travis.storage.removeItem('travis.user')
     Travis.storage.removeItem('travis.token')
@@ -16,13 +15,11 @@
     @set('user', undefined)
 
   signIn: ->
-    console.log('auth.signIn')
     @set('state', 'signing-in')
     url = "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}"
     $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url)
 
   autoSignIn: ->
-    console.log('auth.autoSignIn')
     data = @userDataFrom(Travis.sessionStorage) || @userDataFrom(Travis.storage)
     @setData(data) if data
 
@@ -49,7 +46,6 @@
       false
 
   setData: (data) ->
-    console.log('auth.setData')
     @storeData(data, Travis.sessionStorage)
     @storeData(data, Travis.storage) unless @userDataFrom(Travis.storage)
     @set('user', @loadUser(data.user))
@@ -77,7 +73,6 @@
     path
 
   receiveMessage: (event) ->
-    console.log('auth.receiveMessage')
     if event.origin == @expectedOrigin()
       if event.data == 'redirect'
         window.location = "#{@endpoint}/auth/handshake?redirect_uri=#{location}"
