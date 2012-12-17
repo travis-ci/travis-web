@@ -33,7 +33,7 @@
     if user && token && @validateUser(user)
       { user: user, token: token }
     else
-      console.log('dropping user, not token') unless token?
+      console.log('dropping user, no token') unless token?
       storage.removeItem('travis.user')
       storage.removeItem('travis.token')
       null
