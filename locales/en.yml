@@ -110,7 +110,7 @@ en:
     show:
       email: Email
       github: Github
-      locale: locale
+      locale: Locale
       message:
         config: how to configure custom build options
         your_repos: ! "  Flick the switches below to turn on the Travis service hook for your projects, then push to GitHub.<br />\n  To test against multiple rubies, see"
@@ -123,7 +123,7 @@ en:
       your_repos: Your Repositories
   queue: Queue
   repositories:
-    asciidoc: AsciiDoc
+    asciidoc: asciidoc
     branch: Branch
     commit: Commit
     duration: Duration
