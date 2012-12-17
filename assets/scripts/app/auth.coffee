@@ -35,7 +35,7 @@
       null
 
   validateUser: (user) ->
-    @validateHas('id', user) && @validateHas('login', user) #&& @validateHas('token', user)
+    @validateHas('id', user) && @validateHas('login', user) && @validateHas('token', user)
 
   validateHas: (field, user) ->
     if user[field]
