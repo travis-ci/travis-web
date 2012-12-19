@@ -122,7 +122,7 @@ FOLDS = [
              .replace(/\033\[K\r/g, '\r')
              .replace(/\[2K/g, '')
              .replace(/\033\(B/g, '')
-             .replace(/\033\[\d+G/, '')
+             .replace(/\033\[\d+G/g, '')
 
     ansi = ansiparse(log)
 
