@@ -93,7 +93,7 @@ Storage = Em.Object.extend
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
 
     I18n.fallbacks = true
-    Travis.setLocale 'locale', @defualt_locale
+    Travis.setLocale 'locale', @default_locale
 
     Ember.run.next this, ->
       app = Travis.App.create(attrs || {})
