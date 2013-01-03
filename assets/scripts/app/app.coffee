@@ -13,6 +13,7 @@ require 'views'
 require 'config/locales'
 require 'data/sponsors'
 
+require 'travis/instrumentation'
 # $.mockjaxSettings.log = false
 # Ember.LOG_BINDINGS = true
 # Ember.ENV.RAISE_ON_DEPRECATION = true
