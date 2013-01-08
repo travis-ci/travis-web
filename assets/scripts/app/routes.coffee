@@ -204,7 +204,7 @@ Travis.Router = Ember.Router.extend
         dynamicSegmentPattern: "([^/#]+)"
 
         connectOutlets: (router, repo) ->
-          unless repo.constructor == Travis.Repo
+          if repo && repo.constructor != Travis.Repo
             repo = Travis.Repo.find(repo.id)
           router.get('repoController').set 'repo', repo
 
