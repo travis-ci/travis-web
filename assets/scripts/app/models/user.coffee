@@ -2,7 +2,7 @@ require 'travis/ajax'
 require 'travis/model'
 
 @Travis.User = Travis.Model.extend
-  name:        DS.attr('string')
+  _name:       DS.attr('string', key: 'name')
   email:       DS.attr('string')
   login:       DS.attr('string')
   token:       DS.attr('string')
@@ -12,6 +12,15 @@ require 'travis/model'
   syncedAt:    DS.attr('string')
   repoCount:   DS.attr('number')
 
+  # This is the only way I found to override the attribue created with DS.attr
+  name: Ember.computed( (key, value) ->
+    if arguments.length == 1
+      @get('_name') || @get('login')
+    else
+      @set('_name', value)
+      value
+  ).property('login', '_name')
+
   init: ->
     @poll() if @get('isSyncing')
     @_super()
@@ -19,7 +28,7 @@ require 'travis/model'
     Ember.run.next this, ->
       transaction = @get('store').transaction()
       transaction.add this
-    
+
   urlGithub: (->
     "https://github.com/#{@get('login')}"
   ).property()
@@ -32,7 +41,7 @@ require 'travis/model'
   ).property()
 
   updateLocale: (locale) ->
-    
+
     transaction = @get('transaction')
     transaction.commit()
 
