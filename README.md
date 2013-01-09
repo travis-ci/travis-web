@@ -8,10 +8,6 @@ This is a static html/js app so you shouldn't need to install anything.
     cd travis-web
     open public/index.html
 
-Running locally with a local API server:
-
-    RUN_API=1 bundle exec rackup -p 3000
-
 Running against existing API endpoint:
 
     API_ENDPOINT="https://api.travis-ci.org/" RUN_API=0 bundle exec rackup
