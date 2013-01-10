@@ -15,6 +15,8 @@ FOLDS = [
       @addFold fold
 
   append: (lines) ->
+    return unless lines
+
     log   = @join lines
     log   = @escape log
     log   = @deansi log
