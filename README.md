@@ -2,26 +2,26 @@
 
 ### Running the app
 
-This is a static html/js app so you shouldn't need to install anything.
+In order to run the app you need to install dependencies with:
 
-    git clone git://github.com/travis-ci/travis-web.git
-    cd travis-web
-    open public/index.html
+    bundle install
 
-Running against existing API endpoint:
+Then you have to run the server, the easiest way to do this is to
+use foreman:
 
-    API_ENDPOINT="https://api.travis-ci.org/" RUN_API=0 bundle exec rackup
+    bundle exec foreman start
 
-Run locally, one on `ci.dev` and one on `api.dev`:
+Now you can open [localhost:5000](http://localhost:5000)
 
-    . dev.env
-    bundle exec rackup
+By default it uses official API at `https://api.travis-ci.org`, but you
+can set your own enpoint using:
+
+
+    API_ENDPOINT="http://localhost:300/" bundle exec foreman start
+
+This will run against API run locally.
 
 ### Compiling assets manually
 
     bundle exec rakep
     ENV=production bundle exec rakep
-
-### Compiling assets on change
-
-    bundle exec guard
