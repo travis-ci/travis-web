@@ -173,6 +173,13 @@
       @get('repo.branches') if @get('active')
     ).property('active', 'repo.branches')
 
+    setSelectedBranch: (->
+      if @get('repo.branches.isLoaded')
+        @set('branch', @get('repo.branches').findProperty('commit.branch', @get('build.commit.branch')))
+      else
+        @set('branch', null)
+    ).observes('repo.branches', 'repo.branches.isLoaded', 'build.commit.branch')
+
     urlRepo: (->
       'https://' + location.host + Travis.Urls.repo(@get('repo.slug'))
     ).property('repo.slug')
