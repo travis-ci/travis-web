@@ -19,7 +19,7 @@ en:
       sponsored_by: This test series was run on a worker box sponsored by
     name: Build
     started_at: Started
-    state: state
+    state: State
   datetime:
     distance_in_words:
       hours_exact:
@@ -54,7 +54,7 @@ en:
       sponsored_by: This test series was run on a worker box sponsored by
     sponsored_by: Sponsored by
     started_at: Started
-    state: state
+    state: State
   layouts:
     about:
       alpha: This stuff is alpha.
