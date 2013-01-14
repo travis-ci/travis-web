@@ -17,6 +17,9 @@
   job: (slug, id) ->
     "/#{slug}/jobs/#{id}"
 
+  githubPullRequest: (slug, pullRequestNumber) ->
+    "http://github.com/#{slug}/pull/#{pullRequestNumber}"
+
   githubCommit: (slug, sha) ->
     "http://github.com/#{slug}/commit/#{sha}"
 

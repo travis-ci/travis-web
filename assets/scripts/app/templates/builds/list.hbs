@@ -4,7 +4,14 @@
       <tr>
         <th>{{t builds.name}}</th>
         <th>{{t builds.message}}</th>
-        <th>{{t builds.commit}}</th>
+        <th>
+          {{t builds.commit}}
+        </th>
+        {{#if view.isPullRequestsList}}
+          <th>
+            {{t builds.pr}}
+          </th>
+        {{/if}}
         <th>{{t builds.duration}}</th>
         <th>{{t builds.finished_at}}</th>
       </tr>
@@ -29,6 +36,13 @@
               {{formatCommit commit}}
             </a>
           </td>
+          {{#if commit.pullRequestNumber}}
+            <td>
+              <a {{bindAttr href="view.urlGithubPullRequest"}}>
+                #{{commit.pullRequestNumber}}
+              </a>
+            </td>
+          {{/if}}
           <td class="duration" {{bindAttr title="duration"}}>
             {{formatDuration duration}}
           </td>
