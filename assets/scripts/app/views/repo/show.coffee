@@ -184,22 +184,22 @@
       'https://' + location.host + Travis.Urls.repo(@get('repo.slug'))
     ).property('repo.slug')
 
-    urlStatusImage: (->
+    statusImageUrl: (->
       Travis.Urls.statusImage(@get('repo.slug'), @get('statusImageBranch.commit.branch'))
     ).property('repo.slug', 'statusImageBranch')
 
     markdownStatusImage: (->
-      "[![Build Status](#{@get('urlStatusImage')})](#{@get('urlRepo')})"
-    ).property('urlStatusImage')
+      "[![Build Status](#{@get('statusImageUrl')})](#{@get('urlRepo')})"
+    ).property('statusImageUrl')
 
     textileStatusImage: (->
-      "!#{@get('urlStatusImage')}!:#{@get('urlRepo')}"
-    ).property('urlStatusImage')
+      "!#{@get('statusImageUrl')}!:#{@get('urlRepo')}"
+    ).property('statusImageUrl')
 
     rdocStatusImage: (->
-      "{<img src=\"#{@get('urlStatusImage')}\" alt=\"Build Status\" />}[#{@get('urlRepo')}]"
-    ).property('urlStatusImage')
+      "{<img src=\"#{@get('statusImageUrl')}\" alt=\"Build Status\" />}[#{@get('urlRepo')}]"
+    ).property('statusImageUrl')
 
     asciidocStatusImage: (->
-      "image:#{@get('urlStatusImage')}[\"Build Status\", link=\"#{@get('urlRepo')}\"]"
-    ).property('urlStatusImage')
+      "image:#{@get('statusImageUrl')}[\"Build Status\", link=\"#{@get('urlRepo')}\"]"
+    ).property('statusImageUrl')
