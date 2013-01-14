@@ -185,8 +185,8 @@
     ).property('repo.slug')
 
     urlStatusImage: (->
-      Travis.Urls.statusImage(@get('repo.slug'), @get('branch.commit.branch'))
-    ).property('repo.slug', 'branch')
+      Travis.Urls.statusImage(@get('repo.slug'), @get('statusImageBranch.commit.branch'))
+    ).property('repo.slug', 'statusImageBranch')
 
     markdownStatusImage: (->
       "[![Build Status](#{@get('urlStatusImage')})](#{@get('urlRepo')})"
