@@ -18,6 +18,7 @@ en:
     messages:
       sponsored_by: This test series was run on a worker box sponsored by
     name: Build
+    pr: PR
     started_at: Started
     state: State
   datetime:

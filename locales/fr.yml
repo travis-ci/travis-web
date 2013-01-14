@@ -18,6 +18,7 @@ fr:
     messages:
       sponsored_by: Cette série de tests a été exécutée sur une machine sponsorisée par
     name: Version
+    pr: 
     started_at: Commencé
     state: 
   datetime:

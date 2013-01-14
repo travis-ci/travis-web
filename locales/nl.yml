@@ -18,6 +18,7 @@ nl:
     messages:
       sponsored_by: Deze tests zijn gedraaid op een machine gesponsord door
     name: Bouw
+    pr: 
     started_at: Gestart
     state: 
   datetime:

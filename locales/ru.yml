@@ -18,6 +18,7 @@ ru:
     messages:
       sponsored_by: Эта серия тестов была запущена на машине, спонсируемой
     name: Билд
+    pr: 
     started_at: Начало
     state: состояние
   datetime:
