@@ -13,10 +13,6 @@
       Travis.Helpers.colorForState(@get('job.state'))
     ).property('job.state')
 
-    urlJob: (->
-      Travis.Urls.job(@get('repo.slug'), @get('job.id'))
-    ).property('repo.slug', 'job.id')
-
   JobView: Travis.View.extend
     templateName: 'jobs/show'
 
@@ -29,10 +25,6 @@
     color: (->
       Travis.Helpers.colorForState(@get('job.state'))
     ).property('job.state')
-
-    urlJob: (->
-      Travis.Urls.job(@get('repo.slug'), @get('job.id'))
-    ).property('repo.slug', 'job.id')
 
     urlGithubCommit: (->
       Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))

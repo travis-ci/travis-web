@@ -40,10 +40,6 @@
       Travis.Helpers.colorForState(@get('build.state'))
     ).property('build.state')
 
-    urlBuild: (->
-      Travis.Urls.build(@get('repo.slug'), @get('build.id'))
-    ).property('repo.slug', 'build.id')
-
     urlGithubCommit: (->
       Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
     ).property('repo.slug', 'commit.sha')
@@ -70,10 +66,6 @@
     color: (->
       Travis.Helpers.colorForState(@get('build.state'))
     ).property('build.state')
-
-    urlBuild: (->
-      Travis.Urls.build(@get('repo.slug'), @get('build.id'))
-    ).property('repo.slug', 'build.id')
 
     urlGithubCommit: (->
       Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))

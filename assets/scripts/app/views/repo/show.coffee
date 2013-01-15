@@ -180,10 +180,6 @@
         @set('statusImageBranch', null)
     ).observes('repo.branches', 'repo.branches.isLoaded', 'build.commit.branch')
 
-    urlRepo: (->
-      'https://' + location.host + Travis.Urls.repo(@get('repo.slug'))
-    ).property('repo.slug')
-
     statusImageUrl: (->
       Travis.Urls.statusImage(@get('repo.slug'), @get('statusImageBranch.commit.branch'))
     ).property('repo.slug', 'statusImageBranch')

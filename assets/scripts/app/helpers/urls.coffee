@@ -1,21 +1,4 @@
 @Travis.Urls =
-  repo: (slug) ->
-    "/#{slug}"
-
-  builds: (slug) ->
-    "/#{slug}/builds"
-
-  pullRequests: (slug) ->
-    "/#{slug}/pull_requests"
-
-  branches: (slug) ->
-    "/#{slug}/branches"
-
-  build: (slug, id) ->
-    "/#{slug}/builds/#{id}"
-
-  job: (slug, id) ->
-    "/#{slug}/jobs/#{id}"
 
   githubPullRequest: (slug, pullRequestNumber) ->
     "http://github.com/#{slug}/pull/#{pullRequestNumber}"
@@ -40,10 +23,3 @@
 
   email: (email) ->
     "mailto:#{email}"
-
-  account: (login) ->
-    "/profile/#{login}"
-
-  user: (login) ->
-    "/profile/#{login}/me"
-
