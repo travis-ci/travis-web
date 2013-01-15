@@ -31,7 +31,7 @@
       controller: Travis.WorkersController.create()
 
       didInsertElement: ->
-        @set 'controller.content', Travis.Worker.find()
+        #@set 'controller.content', Travis.Worker.find()
         @_super.apply this, arguments
 
     QueuesView: Em.View.extend
