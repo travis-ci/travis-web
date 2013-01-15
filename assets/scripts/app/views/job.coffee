@@ -186,7 +186,7 @@
         unless payload.append
           pathWithNumber = "#{url}#L#{number}"
           p = document.createElement('p')
-          p.innerHTML = '<a href="%@" id="L%@" class="log-line-number" name="L%@">%@</a>%@'.fmt(pathWithNumber, number, number, number, line)
+          p.innerHTML = '<a href="%@" id="L%@" class="log-line-number">%@</a>%@'.fmt(pathWithNumber, number, number, line)
           line = p
 
         if payload.fold && !payload.foldContinuation
