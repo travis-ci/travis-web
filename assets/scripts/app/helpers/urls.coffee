@@ -1,4 +1,6 @@
 @Travis.Urls =
+  plainTextLog: (id) ->
+    "#{Travis.config.api_endpoint}/artifacts/#{id}.txt?deansi=true"
 
   githubPullRequest: (slug, pullRequestNumber) ->
     "http://github.com/#{slug}/pull/#{pullRequestNumber}"

@@ -42,6 +42,11 @@
     templateName: 'jobs/log'
     logBinding: 'job.log'
 
+    plainTextLogUrl: (->
+      if id = @get('job.log.id')
+        Travis.Urls.plainTextLog(id)
+    ).property('job.log')
+
     didInsertElement: ->
       @_super.apply this, arguments
       @tryScrollingToHashLineNumber()
