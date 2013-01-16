@@ -29,6 +29,11 @@
         <a href="#" name="regenerate-key" class="open-popup" {{action regenerateKeyPopup target="view"}}>Regenerate Key</a>
       </li>
     {{/if}}
+    {{#if view.showDownloadLog}}
+      <li>
+        <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}>Download log</a>
+      </li>
+    {{/if}}
   </ul>
 </div>
 
