@@ -17,6 +17,7 @@ group :assets do
   gem 'compass'
   gem 'tilt'
   gem 'uglifier'
+  gem 'yui-compressor'
 end
 
 group :development, :test do
