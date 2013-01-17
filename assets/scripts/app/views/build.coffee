@@ -3,6 +3,11 @@
     templateName: 'builds/list'
     buildsBinding: 'controller.builds'
 
+    isPullRequestsList: (->
+      console.log @get('controller.tab')
+      @get('controller.tab') == 'pull_requests'
+    ).property('controller.tab')
+
     showMore: ->
       id     = @get('controller.repo.id')
       number = @get('builds.lastObject.number')
@@ -35,13 +40,13 @@
       Travis.Helpers.colorForState(@get('build.state'))
     ).property('build.state')
 
-    urlBuild: (->
-      Travis.Urls.build(@get('repo.slug'), @get('build.id'))
-    ).property('repo.slug', 'build.id')
-
     urlGithubCommit: (->
       Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
     ).property('repo.slug', 'commit.sha')
+
+    urlGithubPullRequest: (->
+      Travis.Urls.githubPullRequest(@get('repo.slug'), @get('commit.pullRequestNumber'))
+    ).property('repo.slug', 'commit.pullRequestNumber')
 
   BuildView: Travis.View.extend
     templateName: 'builds/show'
@@ -61,10 +66,6 @@
     color: (->
       Travis.Helpers.colorForState(@get('build.state'))
     ).property('build.state')
-
-    urlBuild: (->
-      Travis.Urls.build(@get('repo.slug'), @get('build.id'))
-    ).property('repo.slug', 'build.id')
 
     urlGithubCommit: (->
       Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))

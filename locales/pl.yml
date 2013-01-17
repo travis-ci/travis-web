@@ -4,7 +4,7 @@ pl:
     finished_at: Zakończono
     job: Zadanie
   builds:
-    allowed_failures: Dopuszczalne Niepowodzenia
+    allowed_failures: Akceptowalne Niepowodzenia
     author: Autor
     branch: Gałąź
     build_matrix: Macierz Buildów
@@ -18,33 +18,37 @@ pl:
     messages:
       sponsored_by: Te testy zostały uruchomione na maszynie sponsorowanej przez
     name: Build
+    pr: 
     started_at: Rozpoczęto
-    state: 
+    state: status
   datetime:
     distance_in_words:
       hours_exact:
+        few: ! '%{count} godzin'
         one: ! '%{count} godzina'
         other: ! '%{count} godziny'
       minutes_exact:
+        few: ! '%{count} minut'
         one: ! '%{count} minuta'
         other: ! '%{count} minuty'
       seconds_exact:
+        few: ! '%{count} sekund'
         one: ! '%{count} sekunda'
         other: ! '%{count} sekundy'
   errors:
     messages:
-      already_confirmed: 
-      not_found: 
-      not_locked: 
+      already_confirmed: został już potwierdzony
+      not_found: nie znaleziono
+      not_locked: nie został zablokowany
   home:
-    name: 
+    name: główna
   jobs:
     allowed_failures: Dopuszczalne Niepowodzenia
     author: Autor
     branch: Gałąź
     build_matrix: Macierz Buildów
     commit: Commit
-    committer: Committer
+    committer: Komitujący
     compare: Porównanie
     config: Konfiguracja
     duration: Czas trwania
@@ -54,19 +58,19 @@ pl:
       sponsored_by: Te testy zostały uruchomione na maszynie sponsorowanej przez
     sponsored_by: Te testy zostały uruchomione na maszynie sponsorowanej przez
     started_at: Rozpoczęto
-    state: 
+    state: status
   layouts:
     about:
       alpha: To wciąż jest wersja alpha.
-      join: Pomóż i dołącz do nas!
-      mailing_list: Lista mailingowa
+      join: Dołącz do nas i pomóż!
+      mailing_list: Lista Mailingowa
       messages:
         alpha: Proszę <strong>nie</strong> traktuj tego jako stabilnej usługi. Wciąż nam wiele do tego brakuje! Więcej informacji znajdziesz <a href='https://github.com/travis-ci'>tutaj.</a>
       repository: Repozytorium
       twitter: Twitter
     application:
       fork_me: Fork me on Github
-      my_repositories: Moje repozytoria
+      my_repositories: Moje Repozytoria
       recent: Ostatnie
       search: Wyniki
       sponsers: Sponsorzy
@@ -84,18 +88,18 @@ pl:
       job: Zadanie
       log: Log
     top:
-      accounts: 
-      admin: 
+      accounts: Konta
+      admin: Admin
       blog: Blog
       docs: Dokumentacja
       github_login: Zaloguj się przy pomocy Githuba
       home: Start
       profile: Profil
       sign_out: Wyloguj się
-      signing_in: 
+      signing_in: Zaloguj się
       stats: Statystki
   locales:
-    ca: 
+    ca: Čeština
     en: English
     es: Español
     fr: Français
@@ -108,27 +112,29 @@ pl:
   no_job: Brak zadań
   profiles:
     show:
-      email: Email
+      email: E-mail
       github: Github
-      locale: 
+      locale: język
       message:
         config: jak skonfigurować niestandardowe opcje builda
-        your_repos: ! "  Przesuń suwak poniżej, aby włączyć Travisa, dla twoich projektów, a następnie umieść swój kod na GitHubie.<br />\n Aby testować swój kod przy użyciu wielu wersji Rubiego, zobacz"
+        your_repos: ! 'Przesuń suwak poniżej, aby włączyć Travisa dla twoich projektów, a następnie umieść swój kod na GitHubie.<br />
+
+          Aby testować swój kod przy użyciu wielu wersji Rubiego, zobacz'
       messages:
-        notice: ! "Aby zacząć, przeczytaj nasz <a href=\"http://about.travis-ci.org/docs/user/getting-started/\">Przewodnik </a>.\n  <small>Zajmie ci to tylko kilka minut.</small>"
+        notice: ! "Aby zacząć, przeczytaj nasz <a href=\"http://about.travis-ci.org/docs/user/getting-started/\">Przewodnik</a>.\n  <small>Zajmie ci to tylko kilka minut.</small>"
       token: Token
-      update: 
-      update_locale: 
-      your_locale: 
-      your_repos: Twoje repozytoria
+      update: Zmień
+      update_locale: Zmień
+      your_locale: Twój Język
+      your_repos: Twoje Repozytoria
   queue: Kolejka
   repositories:
-    asciidoc: 
+    asciidoc: AsciiDoc
     branch: Gałąź
     commit: Commit
     duration: Czas trwania
     finished_at: Zakończono
-    image_url: URL obrazka
+    image_url: URL Obrazka
     markdown: Markdown
     message: Opis
     rdoc: RDOC
@@ -139,20 +145,20 @@ pl:
       build_history: Historia Buildów
       current: Aktualny
       job: Zadanie
-      pull_requests: 
+      pull_requests: Pull Requesty
     test: 
     textile: Textile
   repository:
-    duration: 
+    duration: Czas trwania
   statistics:
     index:
       build_count: Liczba buildów
       count: Ilość
       last_month: ostatni miesiąc
-      repo_growth: Przyrost repozytoriów
+      repo_growth: Przyrost Repozytoriów
       total_builds: Łącznie Buildów
-      total_projects: Łącznie projektów/repozytoriów
+      total_projects: Łącznie Projektów/Repozytoriów
   user:
-    failure: 
-    signed_out: 
-  workers: Workers
+    failure: niepowodzenie
+    signed_out: Wyloguj
+  workers: Workery

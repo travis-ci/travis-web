@@ -15,6 +15,8 @@ FOLDS = [
       @addFold fold
 
   append: (lines) ->
+    return unless lines
+
     log   = @join lines
     log   = @escape log
     log   = @deansi log
@@ -122,7 +124,7 @@ FOLDS = [
              .replace(/\033\[K\r/g, '\r')
              .replace(/\[2K/g, '')
              .replace(/\033\(B/g, '')
-             .replace(/\033\[\d+G/, '')
+             .replace(/\033\[\d+G/g, '')
 
     ansi = ansiparse(log)
 

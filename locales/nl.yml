@@ -7,7 +7,7 @@ nl:
     allowed_failures: Toegestane mislukkingen
     author: Auteur
     branch: Tak
-    build_matrix: Bouw Matrix
+    build_matrix: Bouw matrix
     commit: Commit
     committer: Committer
     compare: Vergelijk
@@ -18,6 +18,7 @@ nl:
     messages:
       sponsored_by: Deze tests zijn gedraaid op een machine gesponsord door
     name: Bouw
+    pr: 
     started_at: Gestart
     state: 
   datetime:
@@ -84,7 +85,7 @@ nl:
       job: Taak
       log: Logboek
     top:
-      accounts: 
+      accounts: accounts
       admin: Administratie
       blog: Blog
       docs: Documentatie
@@ -110,7 +111,7 @@ nl:
     show:
       email: Email adres
       github: Github
-      locale: 
+      locale: Taal
       message:
         config: hoe eigen bouw-opties in te stellen
         your_repos: ! 'Zet de schakelaars hieronder aan om de Travis hook voor uw projecten te activeren en push daarna naar Github<br />
@@ -141,7 +142,7 @@ nl:
       build_history: Bouw geschiedenis
       current: Huidig
       job: Taak
-      pull_requests: 
+      pull_requests: Pull Requests
     test: 
     textile: Textile
   repository:

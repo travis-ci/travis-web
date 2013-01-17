@@ -3,8 +3,15 @@
     <thead>
       <tr>
         <th>{{t builds.name}}</th>
-        <th>{{t builds.commit}}</th>
         <th>{{t builds.message}}</th>
+        <th>
+          {{t builds.commit}}
+        </th>
+        {{#if view.isPullRequestsList}}
+          <th>
+            {{t builds.pr}}
+          </th>
+        {{/if}}
         <th>{{t builds.duration}}</th>
         <th>{{t builds.finished_at}}</th>
       </tr>
@@ -21,14 +28,21 @@
               </a>
             {{/if}}
           </td>
+          <td class="message">
+            {{{formatMessage commit.message short="true"}}}
+          </td>
           <td class="commit">
             <a {{bindAttr href="view.urlGithubCommit"}}>
               {{formatCommit commit}}
             </a>
           </td>
-          <td class="message">
-            {{{formatMessage commit.message short="true"}}}
-          </td>
+          {{#if commit.pullRequestNumber}}
+            <td>
+              <a {{bindAttr href="view.urlGithubPullRequest"}}>
+                #{{commit.pullRequestNumber}}
+              </a>
+            </td>
+          {{/if}}
           <td class="duration" {{bindAttr title="duration"}}>
             {{formatDuration duration}}
           </td>

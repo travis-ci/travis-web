@@ -6,3 +6,4 @@
 /public/version
 .sass-cache
 .localeapp/key
+/assets/scripts/config/locales.js

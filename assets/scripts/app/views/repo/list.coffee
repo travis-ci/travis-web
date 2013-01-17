@@ -19,14 +19,6 @@
         Travis.Helpers.colorForState(@get('repo.lastBuildState'))
       ).property('repo.lastBuildState')
 
-      urlRepo: (->
-        Travis.Urls.repo(@get('repo.slug'))
-      ).property('repo.slug')
-
-      urlLastBuild: (->
-        Travis.Urls.build(@get('repo.slug'), @get('repo.lastBuildId'))
-      ).property('repo.slug', 'repo.lastBuildId')
-
   ReposListTabsView: Travis.View.extend
     templateName: 'repos/list/tabs'
     tabBinding: 'controller.tab'

@@ -1,21 +1,9 @@
 @Travis.Urls =
-  repo: (slug) ->
-    "/#{slug}"
+  plainTextLog: (id) ->
+    "#{Travis.config.api_endpoint}/artifacts/#{id}.txt?deansi=true"
 
-  builds: (slug) ->
-    "/#{slug}/builds"
-
-  pullRequests: (slug) ->
-    "/#{slug}/pull_requests"
-
-  branches: (slug) ->
-    "/#{slug}/branches"
-
-  build: (slug, id) ->
-    "/#{slug}/builds/#{id}"
-
-  job: (slug, id) ->
-    "/#{slug}/jobs/#{id}"
+  githubPullRequest: (slug, pullRequestNumber) ->
+    "http://github.com/#{slug}/pull/#{pullRequestNumber}"
 
   githubCommit: (slug, sha) ->
     "http://github.com/#{slug}/commit/#{sha}"
@@ -37,10 +25,3 @@
 
   email: (email) ->
     "mailto:#{email}"
-
-  account: (login) ->
-    "/profile/#{login}"
-
-  user: (login) ->
-    "/profile/#{login}/me"
-

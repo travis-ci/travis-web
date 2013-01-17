@@ -204,7 +204,7 @@ Travis.Router = Ember.Router.extend
         dynamicSegmentPattern: "([^/#]+)"
 
         connectOutlets: (router, repo) ->
-          unless repo.constructor == Travis.Repo
+          if repo && repo.constructor != Travis.Repo
             repo = Travis.Repo.find(repo.id)
           router.get('repoController').set 'repo', repo
 
@@ -300,6 +300,19 @@ Travis.Router = Ember.Router.extend
             lineNumber: lineNumberRoute
             dynamicSegmentPattern: "([^/#]+)"
 
+            logRedirect: Ember.Route.extend
+              route: '/log.txt'
+              connectOutlets: (router) ->
+                build = router.get('repoController').get 'build'
+
+                observer = ->
+                  if logId = build.get('jobs.firstObject.log.id')
+                    window.location = Travis.Urls.plainTextLog(logId)
+
+                  build.removeObserver('jobs.firstObject.log.id', observer)
+
+                build.addObserver('jobs.firstObject.log.id', observer)
+
         pullRequests: Ember.Route.extend
           route: '/pull_requests'
           connectOutlets: (router, repo) ->
@@ -349,3 +362,16 @@ Travis.Router = Ember.Router.extend
           initialState: 'default'
           default: defaultRoute
           lineNumber: lineNumberRoute
+
+          logRedirect: Ember.Route.extend
+            route: '/log.txt'
+            connectOutlets: (router, job) ->
+              job = router.get('repoController').get 'job'
+
+              observer = ->
+                if logId = job.get('log.id')
+                  window.location = Travis.Urls.plainTextLog(logId)
+
+                job.removeObserver('log.id', observer)
+
+              job.addObserver('log.id', observer)

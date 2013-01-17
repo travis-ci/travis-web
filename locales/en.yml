@@ -18,8 +18,9 @@ en:
     messages:
       sponsored_by: This test series was run on a worker box sponsored by
     name: Build
+    pr: PR
     started_at: Started
-    state: state
+    state: State
   datetime:
     distance_in_words:
       hours_exact:
@@ -52,9 +53,9 @@ en:
     message: Message
     messages:
       sponsored_by: This test series was run on a worker box sponsored by
-    sponsored_by: 
+    sponsored_by: Sponsored by
     started_at: Started
-    state: state
+    state: State
   layouts:
     about:
       alpha: This stuff is alpha.
@@ -84,7 +85,7 @@ en:
       job: Job
       log: Log
     top:
-      accounts: accounts
+      accounts: Accounts
       admin: Admin
       blog: Blog
       docs: Docs
@@ -92,7 +93,7 @@ en:
       home: Home
       profile: Profile
       sign_out: Sign Out
-      signing_in: signing_in
+      signing_in: Signing In
       stats: Stats
   locales:
     ca: 
@@ -153,6 +154,6 @@ en:
       total_builds: Total Builds
       total_projects: Total Projects/Repositories
   user:
-    failure: 
-    signed_out: 
+    failure: failure
+    signed_out: Signed Out
   workers: Workers

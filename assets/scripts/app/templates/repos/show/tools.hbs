@@ -29,6 +29,11 @@
         <a href="#" name="regenerate-key" class="open-popup" {{action regenerateKeyPopup target="view"}}>Regenerate Key</a>
       </li>
     {{/if}}
+    {{#if view.showDownloadLog}}
+      <li>
+        <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}>Download log</a>
+      </li>
+    {{/if}}
   </ul>
 </div>
 
@@ -37,14 +42,14 @@
   <p>
     <label>{{t repositories.branch}}:</label>
     {{#if view.branches.isLoaded}}
-      {{view Ember.Select contentBinding="view.branches" selectionBinding="view.branch" optionLabelPath="content.commit.branch" optionValuePath="content.commit.branch"}}
+      {{view Ember.Select contentBinding="view.branches" selectionBinding="view.statusImageBranch" optionLabelPath="content.commit.branch" optionValuePath="content.commit.branch"}}
     {{else}}
       <span class="loading"></span>
     {{/if}}
   </p>
   <p>
     <label>{{t repositories.image_url}}:</label>
-    <input type="text" class="url" {{bindAttr value="view.urlStatusImage"}}></input>
+    <input type="text" class="url" {{bindAttr value="view.statusImageUrl"}}></input>
   </p>
   <p>
     <label>{{t repositories.markdown}}:</label>

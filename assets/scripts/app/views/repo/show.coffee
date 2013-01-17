@@ -140,6 +140,20 @@
       @get('isJobTab') && @get('job.isFinished') && @get('hasPermission')
     ).property('isJobTab', 'job.isFinished', 'hasPermissions')
 
+    showDownloadLog: (->
+      @get('logId')
+    ).property('logId')
+
+    logId: (->
+      @get('job.log.id') ||
+        (@get('build.jobs.length') == 1 && @get('build.jobs.firstObject.log.id'))
+    ).property('job.log.id', 'build.jobs.firstObject.log.id', 'build.jobs.length')
+
+    plainTextLogUrl: (->
+      if id = @get('logId')
+        Travis.Urls.plainTextLog(id)
+    ).property('logId')
+
     canCancelBuild: (->
       # @get('isBuildTab') && @get('build.canCancel') && @get('hasPermission')
       false
@@ -173,26 +187,29 @@
       @get('repo.branches') if @get('active')
     ).property('active', 'repo.branches')
 
-    urlRepo: (->
-      'https://' + location.host + Travis.Urls.repo(@get('repo.slug'))
-    ).property('repo.slug')
+    setStatusImageBranch: (->
+      if @get('repo.branches.isLoaded')
+        @set('statusImageBranch', @get('repo.branches').findProperty('commit.branch', @get('build.commit.branch')))
+      else
+        @set('statusImageBranch', null)
+    ).observes('repo.branches', 'repo.branches.isLoaded', 'build.commit.branch')
 
-    urlStatusImage: (->
-      Travis.Urls.statusImage(@get('repo.slug'), @get('branch.commit.branch'))
-    ).property('repo.slug', 'branch')
+    statusImageUrl: (->
+      Travis.Urls.statusImage(@get('repo.slug'), @get('statusImageBranch.commit.branch'))
+    ).property('repo.slug', 'statusImageBranch')
 
     markdownStatusImage: (->
-      "[![Build Status](#{@get('urlStatusImage')})](#{@get('urlRepo')})"
-    ).property('urlStatusImage')
+      "[![Build Status](#{@get('statusImageUrl')})](#{@get('urlRepo')})"
+    ).property('statusImageUrl')
 
     textileStatusImage: (->
-      "!#{@get('urlStatusImage')}!:#{@get('urlRepo')}"
-    ).property('urlStatusImage')
+      "!#{@get('statusImageUrl')}!:#{@get('urlRepo')}"
+    ).property('statusImageUrl')
 
     rdocStatusImage: (->
-      "{<img src=\"#{@get('urlStatusImage')}\" alt=\"Build Status\" />}[#{@get('urlRepo')}]"
-    ).property('urlStatusImage')
+      "{<img src=\"#{@get('statusImageUrl')}\" alt=\"Build Status\" />}[#{@get('urlRepo')}]"
+    ).property('statusImageUrl')
 
     asciidocStatusImage: (->
-      "image:#{@get('urlStatusImage')}[\"Build Status\", link=\"#{@get('urlRepo')}\"]"
-    ).property('urlStatusImage')
+      "image:#{@get('statusImageUrl')}[\"Build Status\", link=\"#{@get('urlRepo')}\"]"
+    ).property('statusImageUrl')

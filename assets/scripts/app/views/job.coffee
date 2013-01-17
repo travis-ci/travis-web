@@ -13,10 +13,6 @@
       Travis.Helpers.colorForState(@get('job.state'))
     ).property('job.state')
 
-    urlJob: (->
-      Travis.Urls.job(@get('repo.slug'), @get('job.id'))
-    ).property('repo.slug', 'job.id')
-
   JobView: Travis.View.extend
     templateName: 'jobs/show'
 
@@ -29,10 +25,6 @@
     color: (->
       Travis.Helpers.colorForState(@get('job.state'))
     ).property('job.state')
-
-    urlJob: (->
-      Travis.Urls.job(@get('repo.slug'), @get('job.id'))
-    ).property('repo.slug', 'job.id')
 
     urlGithubCommit: (->
       Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
@@ -49,6 +41,11 @@
   LogView: Travis.View.extend
     templateName: 'jobs/log'
     logBinding: 'job.log'
+
+    plainTextLogUrl: (->
+      if id = @get('job.log.id')
+        Travis.Urls.plainTextLog(id)
+    ).property('job.log')
 
     didInsertElement: ->
       @_super.apply this, arguments
@@ -186,7 +183,7 @@
         unless payload.append
           pathWithNumber = "#{url}#L#{number}"
           p = document.createElement('p')
-          p.innerHTML = '<a href="%@" id="L%@" class="log-line-number" name="L%@">%@</a>%@'.fmt(pathWithNumber, number, number, number, line)
+          p.innerHTML = '<a href="%@" id="L%@" class="log-line-number">%@</a>%@'.fmt(pathWithNumber, number, number, line)
           line = p
 
         if payload.fold && !payload.foldContinuation
