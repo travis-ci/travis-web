@@ -71,7 +71,7 @@ end
 output 'public/styles'
 input assets.styles do
   match '**/*.{scss,sass}' do
-    sass assets.production? ? { style: :compressed } : nil
+    sass assets.production? ? { style: :compressed } : {}
     concat [], ['app.css']
   end
 end
