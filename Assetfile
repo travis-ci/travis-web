@@ -56,14 +56,16 @@ input assets.scripts do
   end
 
   match %r(^(?!spec).*\.js$) do
-    concat ['vendor.js'], ['app.js', 'min/app.js']
+    paths = ['min/app.js']
+    paths.push 'app.js' unless assets.production?
+    concat ['vendor.js'], paths
   end
 
   if assets.production?
     match 'min/app.js' do
       strip_debug
       uglify squeeze: true
-      concat 'app.min.js'
+      concat 'app.js'
     end
   end
 end
