@@ -71,15 +71,8 @@ end
 output 'public/styles'
 input assets.styles do
   match '**/*.{scss,sass}' do
-    sass
-    concat [], ['app.css', 'min/app.css']
-  end
-
-  if assets.production?
-    match "min/app.css" do
-      yui_css :jar_file => File.expand_path('../vendor/yuicompressor-2.4.7.jar', __FILE__)
-      concat 'app.min.css'
-    end
+    sass assets.production? ? { style: :compressed } : nil
+    concat [], ['app.css']
   end
 end
 
