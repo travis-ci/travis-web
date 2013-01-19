@@ -39,6 +39,7 @@ $.extend Travis.Pusher.prototype,
     data = @normalize(event, data) if data.id
 
     # TODO remove job:requeued, once sf-restart-event has been merged
+    # TODO this also needs to clear logs on build:created if matrix jobs are already loaded
     if event == 'job:created' || event == 'job:requeued'
       job = Travis.Job.find(data.job.id)
       job.clearLog() if job
