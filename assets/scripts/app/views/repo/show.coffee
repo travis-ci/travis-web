@@ -182,6 +182,9 @@
         permissions.contains @get('repo.id')
     ).property('Travis.app.currentUser.permissions.length', 'repo.id')
 
+    urlRepo: (->
+      "https://#{location.host}/#{@get('repo.slug')}"
+    ).property('repo.slug')
 
     branches: (->
       @get('repo.branches') if @get('active')
