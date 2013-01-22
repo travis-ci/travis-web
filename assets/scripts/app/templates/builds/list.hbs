@@ -7,6 +7,9 @@
         <th>
           {{t builds.commit}}
         </th>
+        <th>
+          {{t builds.commiter}}
+        </th>
         {{#if view.isPullRequestsList}}
           <th>
             {{t builds.pr}}
@@ -35,6 +38,9 @@
             <a {{bindAttr href="view.urlGithubCommit"}}>
               {{formatCommit commit}}
             </a>
+          </td>
+          <td class="committer">
+            {{commit.committerName}}
           </td>
           {{#if commit.pullRequestNumber}}
             <td>
