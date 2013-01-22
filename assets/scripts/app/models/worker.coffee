@@ -25,6 +25,10 @@ require 'travis/model'
     Travis.Job.find @get('job_id')
   ).property('jobId')
 
+  jobNumber: (->
+    @get('payload.job.number')
+  ).property('jobNumber')
+
   repoData: (->
     { id: @get('repoId'), slug: @get('repoSlug') }
   ).property('repoSlug', 'repoId')

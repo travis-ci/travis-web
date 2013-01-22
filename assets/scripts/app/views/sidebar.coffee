@@ -67,12 +67,9 @@
     display: (->
       name = (@get('worker.name') || '').replace('travis-', '')
       state = @get('worker.state')
-      payload = @get('worker.payload')
 
-      if state == 'working' && payload?.repository && payload?.job
-        repo = @get('worker.repoSlug')
-        number = ' #' + payload.job.number
-        "<span class='name'>#{name}: #{repo}</span> #{number}".htmlSafe()
+      if state == 'working'
+        "<span class='name'>#{name}: #{@get('worker.repoSlug')}</span> ##{@get('worker.jobNumber')}".htmlSafe()
       else
         "#{name}: #{state}"
     ).property('worker.state')
