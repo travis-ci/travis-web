@@ -10,8 +10,6 @@
     ).property('repo.isLoaded')
 
     isEmpty: (->
-      console.log('repos.isLoaded', @get('repos.isLoaded'))
-      console.log('repos.length', @get('repos.length'))
       @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.isLoaded', 'repos.length')
 

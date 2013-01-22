@@ -4,7 +4,6 @@ require 'travis/model'
   state: DS.attr('string')
   name: DS.attr('string')
   host: DS.attr('string')
-  lastSeenAt: DS.attr('string')
 
   payload: (->
     @get('data.payload')
