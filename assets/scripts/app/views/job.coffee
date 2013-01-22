@@ -87,7 +87,7 @@
 
       target.closest('.fold').toggleClass('open')
 
-      if target.is('.log-line-number')
+      if target.is('a') && target.attr('id').match(/^L\d+$/)
         path = target.attr 'href'
         Travis.app.get('router').route(path)
         event.stopPropagation()
@@ -183,7 +183,7 @@
         unless payload.append
           pathWithNumber = "#{url}#L#{number}"
           p = document.createElement('p')
-          p.innerHTML = '<a href="%@" id="L%@" class="log-line-number">%@</a>%@'.fmt(pathWithNumber, number, number, line)
+          p.innerHTML = "<a href=\"#{pathWithNumber}\" id=\"L#{number}\">#{number}</a>#{line}"
           line = p
 
         if payload.fold && !payload.foldContinuation
