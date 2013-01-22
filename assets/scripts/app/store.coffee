@@ -68,7 +68,7 @@ Travis.Store = DS.Store.extend
       { id: id, clientId: clientId }
 
   receive: (event, data) ->
-    return if event == 'worker:added' || event == 'worker:removed'
+    # return if event == 'worker:added' || event == 'worker:removed'
 
     [name, type] = event.split(':')
 
