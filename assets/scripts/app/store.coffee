@@ -67,6 +67,9 @@ Travis.Store = DS.Store.extend
 
       { id: id, clientId: clientId }
 
+  isInStore: (type, id) ->
+    !!@typeMapFor(type).idToCid[id]
+
   receive: (event, data) ->
     [name, type] = event.split(':')
 
