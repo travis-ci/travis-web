@@ -68,8 +68,6 @@ Travis.Store = DS.Store.extend
       { id: id, clientId: clientId }
 
   receive: (event, data) ->
-    # return if event == 'worker:added' || event == 'worker:removed'
-
     [name, type] = event.split(':')
 
     mappings = @adapter.get('mappings')
@@ -111,14 +109,7 @@ Travis.Store = DS.Store.extend
     # things I want to update here:
     if type == Travis.Build && (json.repository || json.repo)
       @loadIncomplete(Travis.Repo, json.repository || json.repo)
-    else if type == Travis.Worker && json.worker.payload
-      if repo = (json.worker.payload.repo || json.worker.payload.repository)
-        # I use skipIfExists here, cause worker payload is usually outdated
-        # If there is no info on repo yet, it's worth to add it, but if it already
-        # exists, we will most likely end up with inconsistent situation
-        @loadIncomplete(Travis.Repo, repo, skipIfExists: true)
-      if job = json.worker.payload.job
-        @loadIncomplete(Travis.Job, job)
+
     @loadIncomplete(type, json[root])
 
   addLoadedData: (type, clientId, hash) ->
