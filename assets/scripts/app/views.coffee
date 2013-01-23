@@ -9,6 +9,10 @@ require 'ext/ember/namespace'
     popupClose: (event) ->
       $(event.target).closest('.popup').removeClass('display')
     popupCloseAll: ->
+      if view = Travis.View.currentPopupView
+        view.destroy()
+        Travis.View.currentPopupView = null
+
       $('.popup').removeClass('display')
 
 require 'views/accounts'
@@ -23,3 +27,4 @@ require 'views/sidebar'
 require 'views/stats'
 require 'views/signin'
 require 'views/top'
+require 'views/status_images'
