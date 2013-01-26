@@ -70,6 +70,9 @@ require 'travis/model'
   byRepoId: (id, parameters) ->
     @find($.extend(parameters || {}, repository_id: id))
 
+  branches: (options) ->
+    @find repository_id: options.repoId, branches: true
+
   olderThanNumber: (id, build_number) ->
     # TODO fix this api and use some kind of pagination scheme
     @find(url: "/builds", repository_id: id, after_number: build_number)

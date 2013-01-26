@@ -62,7 +62,7 @@ require 'travis/model'
   ).property()
 
   branches: (->
-    Travis.Branch.byRepoId @get('id')
+    Travis.Build.branches repoId: @get('id')
   ).property()
 
   events: (->
