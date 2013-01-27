@@ -1,10 +1,15 @@
 require 'travis/model'
 
-@Travis.Artifact = Travis.Model.extend
+@Travis.Artifact = Em.Object.extend
   version: 1 # used to refresh log on requeue
-  body: DS.attr('string')
+  body: null
+  isLoaded: false
+
   init: ->
     @_super.apply this, arguments
+
+    @fetchBody()
+
     @set 'queue', Ember.A([])
     @set 'parts', Ember.ArrayProxy.create(content: [])
 
@@ -14,6 +19,14 @@ require 'travis/model'
   clear: ->
     @set('body', '')
     @incrementProperty('version')
+
+  fetchBody: ->
+    self = this
+    Travis.ajax.ajax "/jobs/#{@get('job.id')}/log.txt", 'GET',
+      dataType: 'text'
+      success: (data) ->
+        self.set 'body', data
+        self.set 'isLoaded', true
 
   append: (body) ->
     if @get('isInitialized')

@@ -21,7 +21,7 @@ jQuery.support.cors = true
 
     options.url = "#{endpoint}#{url}"
     options.type = method
-    options.dataType = 'json'
+    options.dataType = options.dataType || 'json'
     options.contentType = 'application/json; charset=utf-8'
     options.context = this
 

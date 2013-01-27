@@ -17,7 +17,9 @@ require 'travis/model'
   repo:   DS.belongsTo('Travis.Repo',     key: 'repository_id')
   build:  DS.belongsTo('Travis.Build',    key: 'build_id')
   commit: DS.belongsTo('Travis.Commit',   key: 'commit_id')
-  log:    DS.belongsTo('Travis.Artifact', key: 'log_id')
+  log: ( ->
+    Travis.Artifact.create(job: this)
+  ).property()
 
   repoSlug: (->
     @get('repositorySlug')

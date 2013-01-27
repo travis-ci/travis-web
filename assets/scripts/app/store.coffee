@@ -71,6 +71,7 @@ Travis.Store = DS.Store.extend
     !!@typeMapFor(type).idToCid[id]
 
   receive: (event, data) ->
+    console.log event, data
     [name, type] = event.split(':')
 
     mappings = @adapter.get('mappings')
