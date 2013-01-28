@@ -24,6 +24,7 @@ require 'travis/model'
     self = this
     Travis.ajax.ajax "/jobs/#{@get('job.id')}/log.txt", 'GET',
       dataType: 'text'
+      contentType: 'text/plain'
       success: (data) ->
         self.set 'body', data
         self.set 'isLoaded', true
