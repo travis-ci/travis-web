@@ -27,7 +27,12 @@ require 'travis/model'
       contentType: 'text/plain'
       success: (data, textStatus, xhr) ->
         if xhr.status == 204
-          logUrl = xhr.getResponseHeader('Location')
+          logUrl = xhr.getResponseHeader('X-Log-Location')
+
+          # For some reason not all browsers can fetch this header
+          unless logUrl
+            logUrl = self.s3Url("/jobs/#{self.get('job.id')}/log.txt")
+
           $.ajax
             url: logUrl
             type: 'GET'
@@ -35,6 +40,13 @@ require 'travis/model'
               self.fetchedBody(data)
         else
           self.fetchedBody(data)
+
+  s3Url: (path) ->
+    endpoint = Travis.config.api_endpoint
+    staging = if endpoint.match(/-staging/) then '-staging' else ''
+    host = Travis.config.api_endpoint.replace(/^https?:\/\//, '').split('.').slice(-2).join('.')
+    "https://s3.amazonaws.com/archive#{staging}.#{host}#{path}"
+
 
   fetchedBody: (body) ->
     @set 'body', body
