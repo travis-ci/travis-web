@@ -23,11 +23,13 @@ jQuery.support.cors = true
     options.url = "#{endpoint}#{url}"
     options.type = method
     options.dataType = options.dataType || 'json'
-    options.contentType = options.contentType || 'application/json; charset=utf-8'
     options.context = this
 
     if options.data && method != 'GET'
       options.data = JSON.stringify(options.data)
+
+    if method != 'GET' && method != 'HEAD'
+      options.contentType = options.contentType || 'application/json; charset=utf-8'
 
     success = options.success || (->)
     options.success = (data) =>
