@@ -35,9 +35,12 @@ jQuery.support.cors = true
     options.success = (data) =>
       Travis.app.router.flashController.loadFlashes(data.flash) if Travis.app?.router && data.flash
       delete data.flash
-      success.call(this, data)
+      success.apply(this, arguments)
 
+    error = options.error || (->)
     options.error = (data) =>
       Travis.app.router.flashController.pushObject(data.flash) if data.flash
+      delete data.flash
+      error.apply(this, arguments)
 
     $.ajax($.extend(options, Travis.ajax.DEFAULT_OPTIONS))
