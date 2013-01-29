@@ -12,6 +12,7 @@ jQuery.support.cors = true
     @ajax(url, 'post', data: data, success: callback)
 
   ajax: (url, method, options) ->
+    method = method.toUpperCase()
     endpoint = Travis.config.api_endpoint || ''
     options = options || {}
 
@@ -25,7 +26,7 @@ jQuery.support.cors = true
     options.contentType = options.contentType || 'application/json; charset=utf-8'
     options.context = this
 
-    if options.data && method != 'GET' && method != 'get'
+    if options.data && method != 'GET'
       options.data = JSON.stringify(options.data)
 
     success = options.success || (->)
