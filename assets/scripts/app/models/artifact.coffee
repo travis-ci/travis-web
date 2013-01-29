@@ -8,6 +8,7 @@ require 'travis/model'
   init: ->
     @_super.apply this, arguments
 
+    @addObserver 'job.id', @fetchBody
     @fetchBody()
 
     @set 'queue', Ember.A([])
@@ -21,25 +22,28 @@ require 'travis/model'
     @incrementProperty('version')
 
   fetchBody: ->
-    self = this
-    Travis.ajax.ajax "/jobs/#{@get('job.id')}/log.txt?cors_hax=true", 'GET',
-      dataType: 'text'
-      contentType: 'text/plain'
-      success: (data, textStatus, xhr) ->
-        if xhr.status == 204
-          logUrl = xhr.getResponseHeader('X-Log-Location')
+    if jobId = @get('job.id')
+      @removeObserver 'job.id', @fetchBody
 
-          # For some reason not all browsers can fetch this header
-          unless logUrl
-            logUrl = self.s3Url("/jobs/#{self.get('job.id')}/log.txt")
+      self = this
+      Travis.ajax.ajax "/jobs/#{jobId}/log.txt?cors_hax=true", 'GET',
+        dataType: 'text'
+        contentType: 'text/plain'
+        success: (data, textStatus, xhr) ->
+          if xhr.status == 204
+            logUrl = xhr.getResponseHeader('X-Log-Location')
 
-          $.ajax
-            url: logUrl
-            type: 'GET'
-            success: (data) ->
-              self.fetchedBody(data)
-        else
-          self.fetchedBody(data)
+            # For some reason not all browsers can fetch this header
+            unless logUrl
+              logUrl = self.s3Url("/jobs/#{jobId}/log.txt")
+
+            $.ajax
+              url: logUrl
+              type: 'GET'
+              success: (data) ->
+                self.fetchedBody(data)
+          else
+            self.fetchedBody(data)
 
   s3Url: (path) ->
     endpoint = Travis.config.api_endpoint
