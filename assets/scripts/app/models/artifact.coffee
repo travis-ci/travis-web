@@ -22,12 +22,23 @@ require 'travis/model'
 
   fetchBody: ->
     self = this
-    Travis.ajax.ajax "/jobs/#{@get('job.id')}/log.txt", 'GET',
+    Travis.ajax.ajax "/jobs/#{@get('job.id')}/log.txt?cors_hax=true", 'GET',
       dataType: 'text'
       contentType: 'text/plain'
-      success: (data) ->
-        self.set 'body', data
-        self.set 'isLoaded', true
+      success: (data, textStatus, xhr) ->
+        if xhr.status == 204
+          logUrl = xhr.getResponseHeader('Location')
+          $.ajax
+            url: logUrl
+            type: 'GET'
+            success: (data) ->
+              self.fetchedBody(data)
+        else
+          self.fetchedBody(data)
+
+  fetchedBody: (body) ->
+    @set 'body', body
+    @set 'isLoaded', true
 
   append: (body) ->
     if @get('isInitialized')
