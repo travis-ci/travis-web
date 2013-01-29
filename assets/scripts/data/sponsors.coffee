@@ -39,6 +39,9 @@
   { type: 'silver', link: "<a href=\"http://twitter.com\">Twitter</a><span>: instantly connects people everywhere</span>" }
   { type: 'silver', link: "<a href=\"http://agileanimal.com\">AGiLE ANiMAL</a><span>: we <3 Travis CI.</span>" }
   { type: 'silver', link: "<a href=\"http://tupalo.com\">Tupalo</a><span>: Discover, review &amp; share local businesses.</span>" }
+  { type: 'silver', link: "<a href=\"http://pivotallabs.com\">Pivotal Labs</a>"}
+  { type: 'silver', link: "<a href=\"http://fiksu.com\">Fiksu</a>"}
+  { type: 'silver', link: "<a href=\"http://saucelabs.com\">Sauce Labs</a>"}
 ]
 
 @Travis.WORKERS = {
