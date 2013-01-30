@@ -24,7 +24,8 @@
     @setData(data) if data
 
   userDataFrom: (storage) ->
-    user  = JSON.parse storage.getItem('travis.user')
+    userJSON = storage.getItem('travis.user')
+    user  = JSON.parse userJSON if userJSON?
     user  = user.user if user?.user
     token = storage.getItem('travis.token')
     if user && token && @validateUser(user)
