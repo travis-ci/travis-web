@@ -146,18 +146,18 @@
     ).property('isJobTab', 'job.isFinished', 'hasPermissions')
 
     showDownloadLog: (->
-      @get('logId')
-    ).property('logId')
+      @get('jobIdForLog')
+    ).property('jobIdForLog')
 
-    logId: (->
-      @get('job.log.id') ||
-        (@get('build.jobs.length') == 1 && @get('build.jobs.firstObject.log.id'))
-    ).property('job.log.id', 'build.jobs.firstObject.log.id', 'build.jobs.length')
+    jobIdForLog: (->
+      @get('job.id') ||
+        (@get('build.jobs.length') == 1 && @get('build.jobs.firstObject.id'))
+    ).property('job.id', 'build.jobs.firstObject.id', 'build.jobs.length')
 
     plainTextLogUrl: (->
-      if id = @get('logId')
+      if id = @get('jobIdForLog')
         Travis.Urls.plainTextLog(id)
-    ).property('logId')
+    ).property('jobIdForLog')
 
     canCancelBuild: (->
       # @get('isBuildTab') && @get('build.canCancel') && @get('hasPermission')
