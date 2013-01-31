@@ -1,0 +1,160 @@
+de:
+  build:
+    duration: Dauer
+    finished_at: Fertig
+    job: Aufgabe
+  builds:
+    allowed_failures: Erlaubte Fehlschläge
+    author: Autor
+    branch: Branch
+    build_matrix: Build-Matrix
+    commit: Commit
+    committer: Committer
+    compare: Vergleichen
+    config: Konfiguration
+    duration: Dauer
+    finished_at: Fertig
+    message: Nachricht
+    messages:
+      sponsored_by: Dieser Testablauf lief auf einem Arbeiter-Rechner gesponsert von
+    name: Build
+    pr: PR
+    started_at: Läuft
+    state: Status
+  datetime:
+    distance_in_words:
+      hours_exact:
+        one: ! '%{count} Stunde'
+        other: ! '%{count} Stunden'
+      minutes_exact:
+        one: ! '%{count} Minute'
+        other: ! '%{count} Minuten'
+      seconds_exact:
+        one: ! '%{count} Sekunde'
+        other: ! '%{count} Sekunden'
+  errors:
+    messages:
+      already_confirmed: wurde bereits bestätigt
+      not_found: nicht gefunden
+      not_locked: war nicht gesperrt
+  home:
+    name: Startseite
+  jobs:
+    allowed_failures: Erlaubte Fehlschläge
+    author: Autor
+    branch: Branch
+    build_matrix: Build-Matrix
+    commit: Commit
+    committer: Committer
+    compare: Vergleichen
+    config: Konfiguration
+    duration: Dauer
+    finished_at: Fertig
+    message: Nachricht
+    messages:
+      sponsored_by: Dieser Testablauf lief auf einem Arbeiter-Rechner gesponsert von
+    sponsored_by: Gesponsert von
+    started_at: Läuft
+    state: Status
+  layouts:
+    about:
+      alpha: Dieses Zeugs ist Alpha!
+      join: Komm dazu und helfe!
+      mailing_list: Mailinglist
+      messages:
+        alpha: Bitte empfinde das <strong>nicht</strong> als stabilen Dienst. Wir sind immer noch weit davon entfernt! Mehr Informationen <a href='https://github.com/travis-ci'>hier</a>.
+      repository: Repository
+      twitter: Twitter
+    application:
+      fork_me: Fork me on Github
+      my_repositories: Meine Repositories
+      recent: Aktuell
+      search: Suche
+      sponsers: Sponsoren
+      sponsors_link: Schaue alle unsere tollen Sponsoren an &rarr;
+    mobile:
+      author: Autor
+      build: Build
+      build_matrix: Build-Matrix
+      commit: Commit
+      committer: Committer
+      compare: Vergleichen
+      config: Konfiguration
+      duration: Dauer
+      finished_at: Fertig
+      job: Aufgabe
+      log: Log
+    top:
+      accounts: Accounts
+      admin: Admin
+      blog: Blog
+      docs: Dokumentation
+      github_login: Mit GitHub anmelden
+      home: Startseite
+      profile: Profil
+      sign_out: Abmelden
+      signing_in: Einloggen
+      stats: Statistik
+  locales:
+    ca: 
+    de: Deutsch
+    en: English
+    es: Español
+    fr: Français
+    ja: 日本語
+    nb: Norsk Bokmål
+    nl: Nederlands
+    pl: Polski
+    pt-BR: português brasileiro
+    ru: Русский
+  no_job: Es gibt keine Aufgaben
+  profiles:
+    show:
+      email: E-Mail
+      github: GitHub
+      locale: Ort
+      message:
+        config: Wie du eigene Build-Optionen konfigurieren kannst
+        your_repos: ! "  Lege die Schalter unten um, um den Travis Dienst-Hook für deine Projekte zu aktivieren, dann pushe zu GitHub.<br />\n  Um gegen mehrere Rubine zu testen, sehe"
+      messages:
+        notice: ! "Bitte lese dir unser <a href=\"http://about.travis-ci.org/docs/user/getting-started/\">Getting Started-Handbuch</a> durch, um loszulegen.\n  <small>Es dauert nur ein paar Minuten.</small>"
+      token: Token
+      update: Update
+      update_locale: Update
+      your_locale: Dein Ort
+      your_repos: Deine Repositories
+  queue: Warteschlange
+  repositories:
+    asciidoc: AsciiDoc
+    branch: Branch
+    commit: Commit
+    duration: Dauer
+    finished_at: Fertig
+    image_url: Bild-URL
+    markdown: Markdown
+    message: Nachricht
+    rdoc: RDOC
+    started_at: Angefangen
+    tabs:
+      branches: Branch-Zusammenfassung
+      build: Build
+      build_history: Build-Geschichte
+      current: Aktuell
+      job: Aufgabe
+      pull_requests: Pull-Requests
+    test: 
+    textile: Textile
+  repository:
+    duration: Dauer
+  statistics:
+    index:
+      build_count: Build-Anzahl
+      count: Anzahl
+      last_month: letzter Monat
+      repo_growth: Repository-Zuwachs
+      total_builds: Gesamte Builds
+      total_projects: Gesamte Projekte/Repositories
+  user:
+    failure: Fehlschlag
+    signed_out: Abgemeldet
+  workers: Arbeiter
