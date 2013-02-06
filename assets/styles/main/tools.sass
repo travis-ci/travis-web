@@ -25,7 +25,10 @@
     a
       display: block
       padding: 5px 25px 5px 25px
-      &:hover
+      &:hover:not(.disabled)
         background-color: $color-bg-menu-hover
       &:last-child
         @include border-bottom-radius(4px)
+      &.disabled
+        cursor: default
+        color: $color-link-disabled

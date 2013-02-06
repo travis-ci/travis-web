@@ -95,12 +95,14 @@
       @get('build').requeue()
 
     cancelBuild: ->
-      @closeMenu()
-      @get('build').cancel()
+      if @get('canCancelBuild')
+        @closeMenu()
+        @get('build').cancel()
 
     cancelJob: ->
-      @closeMenu()
-      @get('job').cancel()
+      if @get('canCancelJob')
+        @closeMenu()
+        @get('job').cancel()
 
     statusImages: (event) ->
       @set('active', true)
@@ -114,18 +116,21 @@
       event.stopPropagation()
 
     regenerateKeyPopup: (event) ->
-      @set('active', true)
-      @closeMenu()
-      @popup(event)
-      event.stopPropagation()
+      if @get('canRegenerateKey')
+        @set('active', true)
+        @closeMenu()
+        @popup(event)
+        event.stopPropagation()
 
     requeueBuild: ->
-      @closeMenu()
-      @get('build').requeue()
+      if @get('canRequeueJobBuild')
+        @closeMenu()
+        @get('build').requeue()
 
     requeueJob: ->
-      @closeMenu()
-      @get('job').requeue()
+      if @get('canRequeueJob')
+        @closeMenu()
+        @get('job').requeue()
 
     regenerateKey: ->
       @popupCloseAll()
@@ -137,13 +142,21 @@
         error: ->
           Travis.app.router.flashController.loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 
+    displayRequeueBuild: (->
+      @get('isBuildTab') && @get('build.isFinished')
+    ).property('isBuildTab', 'build.isFinished')
+
     canRequeueBuild: (->
-      @get('isBuildTab') && @get('build.isFinished') && @get('hasPermission')
-    ).property('isBuildTab', 'build.isFinished', 'hasPermissions')
+      @get('displayRequeueBuild') && @get('hasPermission')
+    ).property('displayRequireBuild', 'hasPermissions')
+
+    displayRequeueJob: (->
+      @get('isJobTab') && @get('job.isFinished')
+    ).property('isJobTab', 'job.isFinished')
 
     canRequeueJob: (->
-      @get('isJobTab') && @get('job.isFinished') && @get('hasPermission')
-    ).property('isJobTab', 'job.isFinished', 'hasPermissions')
+      @get('displayRequeueJob') && @get('hasPermission')
+    ).property('displayRequeueJob', 'hasPermissions')
 
     showDownloadLog: (->
       @get('jobIdForLog')
@@ -159,18 +172,30 @@
         Travis.Urls.plainTextLog(id)
     ).property('jobIdForLog')
 
-    canCancelBuild: (->
-      # @get('isBuildTab') && @get('build.canCancel') && @get('hasPermission')
+    displayCancelBuild: (->
+      # @get('isBuildTab') && @get('build.canCancel')
       false
-    ).property('build.state', 'hasPermission', 'tab')
+    ).property('build.state', 'tab')
+
+    canCancelBuild: (->
+      # @get('displayCancelBuild') && @get('hasPermission')
+      false
+    ).property('displayCancelBuild', 'hasPermission')
+
+    displayCancelJob: (->
+      # @get('isJobTab') && @get('job.canCancel')
+      false
+    ).property('job.state', 'tab')
 
     canCancelJob: (->
-      # @get('isJobTab') && @get('job.canCancel') && @get('hasPermission')
+      # @get('displayCancelJob') && @get('hasPermission')
       false
-    ).property('job.state', 'hasPermission', 'tab')
+    ).property('displayCancelJob', 'hasPermission')
+
+    displayRegenerateKey: true
 
     canRegenerateKey: (->
-      @get('hasPermission')
+      @get('displayRegenerateKey') && @get('hasPermission')
     ).property('hasPermission')
 
 
