@@ -55,6 +55,7 @@ Storage = Em.Object.extend
     { name: 'common',  display: 'Common' }
     { name: 'php',     display: 'PHP, Perl and Python' }
     { name: 'linux',   display: 'Linux' }
+    { name: 'mac_osx', display: 'Queue: Mac and OSX' }
   ]
 
   INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
