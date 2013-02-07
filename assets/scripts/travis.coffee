@@ -54,9 +54,7 @@ Storage = Em.Object.extend
   QUEUES: [
     { name: 'common',  display: 'Common' }
     { name: 'php',     display: 'PHP, Perl and Python' }
-    { name: 'jvmotp',  display: 'JVM, Erlang and Node.js' }
-    { name: 'rails',   display: 'Rails' }
-    { name: 'spree',   display: 'Spree' }
+    { name: 'linux',   display: 'Linux' }
   ]
 
   INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
