@@ -42,6 +42,7 @@
   { type: 'silver', link: "<a href=\"http://pivotallabs.com\">Pivotal Labs</a>"}
   { type: 'silver', link: "<a href=\"http://fiksu.com\">Fiksu</a>"}
   { type: 'silver', link: "<a href=\"http://saucelabs.com\">Sauce Labs</a>"}
+  { type: 'silver', link: "<a href=\"http://mogotest.com\">Mogo</a><span>Never be embarrassed by a visually broken site again.</span>"}
 ]
 
 @Travis.WORKERS = {
