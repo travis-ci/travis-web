@@ -1,6 +1,6 @@
 Travis.RunningJobsController = Em.ArrayProxy.extend
   Group: Em.Object.extend
-    build: (-> @get('jobs.firstObject.build') ).property('jobs.firstObject.build')
+    repo: (-> @get('jobs.firstObject.repo') ).property('jobs.firstObject.repo')
 
     init: ->
       @set 'jobs', []
@@ -24,7 +24,7 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
     ).property('jobs.length')
 
   groups: []
-  groupsByBuildIds: {}
+  groupsBySlug: {}
 
   init: ->
     @_super.apply this, arguments
@@ -46,23 +46,24 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
   addedJobs: (jobs) ->
     self = this
     jobs.forEach (job) ->
-      buildId = job.get('buildId')
-      group = self.groupForBuild(buildId)
+      slug = job.get('repoSlug')
+      group = self.groupForSlug(slug)
       group.add(job)
 
   removedJobs: (jobs) ->
     self = this
     jobs.forEach (job) ->
-      buildId = job.get('buildId')
-      group = self.groupForBuild(buildId)
+      slug = job.get('repoSlug')
+      group = self.groupForSlug(slug)
       group.remove(job)
 
-  groupForBuild: (buildId) ->
-    @groupsByBuildIds[buildId] ||= @Group.create(buildId: buildId, parent: this)
+  groupForSlug: (slug) ->
+    console.log 'slug', slug
+    @groupsBySlug[slug] ||= @Group.create(slug: slug, parent: this)
 
   addGroup: (group) ->
     @get('groups').pushObject group unless @get('groups').contains group
 
   removeGroup: (group) ->
     @get('groups').removeObject group
-    delete @groupsByBuildIds[group.get('buildId')]
+    delete @groupsBySlug[group.get('slug')]
