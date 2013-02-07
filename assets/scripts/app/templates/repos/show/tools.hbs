@@ -4,29 +4,37 @@
     <li>
       <a href="#" name="status-images" class="open-popup" {{action statusImages target="view"}}>Status Images</a>
     </li>
-    {{#if view.canCancelBuild}}
+    {{#if view.displayCancelBuild}}
       <li>
-        <a href="#" {{action cancelBuild target="view"}}>Cancel Build</a>
+        <a href="#" {{action cancelBuild target="view"}}
+          {{bindAttr class="view.canCancelBuild::disabled"}}>Cancel Build</a>
       </li>
     {{/if}}
-    {{#if view.canCancelJob}}
+    {{#if view.displayCancelJob}}
       <li>
-        <a href="#" {{action cancelJob target="view"}}>Cancel Job</a>
+        <a href="#" {{action cancelJob target="view"}}
+          {{bindAttr class="view.canCancelJob::disabled"}}>Cancel Job</a>
       </li>
     {{/if}}
-    {{#if view.canRequeueBuild}}
+    {{#if view.displayRequeueBuild}}
       <li>
-        <a href="#" {{action requeueBuild target="view"}}>Restart Build</a>
+        <a href="#" {{action requeueBuild target="view"}}
+          {{bindAttr class="view.canRequeueBuild::disabled"}}>Restart Build</a>
       </li>
     {{/if}}
-    {{#if view.canRequeueJob}}
+    {{#if view.displayRequeueJob}}
       <li>
-        <a href="#" {{action requeueJob target="view"}}>Restart Job</a>
+        <a href="#" {{action requeueJob target="view"}}
+          {{bindAttr class="view.canRequeueJob::disabled"}}> Restart Job </a>
       </li>
     {{/if}}
-    {{#if view.canRegenerateKey}}
+    {{#if view.displayRegenerateKey}}
       <li>
-        <a href="#" name="regenerate-key" class="open-popup" {{action regenerateKeyPopup target="view"}}>Regenerate Key</a>
+        <a href="#" name="regenerate-key"
+          {{action regenerateKeyPopup target="view"}}
+          {{bindAttr class=":open-popup view.canRegenerateKey::disabled"}}>
+            Regenerate Key
+        </a>
       </li>
     {{/if}}
     {{#if view.showDownloadLog}}
