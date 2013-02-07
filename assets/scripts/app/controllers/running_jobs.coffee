@@ -46,19 +46,36 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
   addedJobs: (jobs) ->
     self = this
     jobs.forEach (job) ->
-      slug = job.get('repoSlug')
-      group = self.groupForSlug(slug)
-      group.add(job)
+      self.waitForSlug(job, 'addJob')
 
   removedJobs: (jobs) ->
     self = this
     jobs.forEach (job) ->
-      slug = job.get('repoSlug')
-      group = self.groupForSlug(slug)
-      group.remove(job)
+      self.waitForSlug(job, 'removeJob')
+
+  addJob: (job) ->
+    slug = job.get('repoSlug')
+    group = @groupForSlug(slug)
+    group.add(job)
+
+  removeJob: (job) ->
+    slug = job.get('repoSlug')
+    group = @groupForSlug(slug)
+    group.remove(job)
+
+  waitForSlug: (job, callbackName) ->
+    callback = @[callbackName]
+    self = this
+    if job.get('repoSlug')?
+      callback.call self, job
+    else
+      observer = ->
+        if job.get('repoSlug')?
+          callback.call self, job
+          job.removeObserver 'repoSlug', observer
+      job.addObserver 'repoSlug', observer
 
   groupForSlug: (slug) ->
-    console.log 'slug', slug
     @groupsBySlug[slug] ||= @Group.create(slug: slug, parent: this)
 
   addGroup: (group) ->
