@@ -3,7 +3,7 @@
 </a>
 
 <ul class="jobs">
-  {{#each job in jobs}}
+  {{#each job in sortedJobs}}
     <li class="job">
       <a {{action showJob job.repoData job target="Travis.app.router" href=true}}>
         #{{job.number}}

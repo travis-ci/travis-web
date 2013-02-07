@@ -5,6 +5,10 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
     init: ->
       @set 'jobs', []
 
+      @set 'sortedJobs', Em.ArrayProxy.extend(Em.SortableMixin,
+        sortProperties: ['number']
+      ).create(content: @get('jobs'))
+
     add: (job) ->
       @get('jobs').pushObject(job) unless @get('jobs').contains job
       @attach()
@@ -24,6 +28,12 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
     ).property('jobs.length')
 
   groups: []
+  sortedGroups: (->
+    Em.ArrayProxy.extend(Em.SortableMixin,
+      sortProperties: ['slug']
+    ).create(content: @get('groups'))
+  ).property()
+
   groupsBySlug: {}
 
   init: ->
