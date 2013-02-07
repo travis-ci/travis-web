@@ -51,6 +51,27 @@
         @set 'controller.content', queues
         @_super.apply this, arguments
 
+    RunningJobsView: Em.View.extend
+      templateName: 'jobs/running'
+      elementId: 'running-jobs'
+      controller: Travis.RunningJobsController.create()
+
+      groupsBinding: 'controller.groups'
+
+      didInsertElement: ->
+        @get('controller').set 'content', Travis.Job.running()
+
+      GroupView: Em.View.extend
+        templateName: 'jobs/running/group'
+        tagName: 'li'
+        contextBinding: 'group'
+        expanded: false
+        classNameBindings: ['expanded']
+        classNames: ['group']
+        toggle: ->
+          @toggleProperty('expanded')
+
+
   WorkersView: Travis.View.extend
     toggleWorkers: (event) ->
       handle = $(event.target).toggleClass('open')

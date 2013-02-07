@@ -1,0 +1,14 @@
+<a {{action toggle target="view"}}>
+  <span class="slug">{{build.repo.slug}}</span>
+  #{{build.number}}
+</a>
+
+<ul class="jobs">
+  {{#each job in jobs}}
+    <li class="job">
+      <a {{action showJob job.repoData job target="Travis.app.router" href=true}}>
+        #{{job.number}}
+      </a>
+    </li>
+  {{/each}}
+</ul>

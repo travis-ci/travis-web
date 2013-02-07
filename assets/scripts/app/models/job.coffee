@@ -103,6 +103,11 @@ require 'travis/model'
       # TODO: why queue is sometimes just common instead of build.common?
       queued && (!queue || job.get('queue') == "builds.#{queue}" || job.get('queue') == queue)
 
+  running: ->
+    @find(state: 'started')
+    Travis.app.store.filter this, (job) ->
+      job.get('state') == 'started'
+
   findMany: (ids) ->
     Travis.app.store.findMany this, ids
 
