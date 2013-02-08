@@ -33,6 +33,7 @@ Storage = Em.Object.extend
   config:
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
+    ga_code:      $('meta[name="travis.ga_code"]').attr('value')
 
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala', 'compiler']
 
@@ -110,3 +111,4 @@ require 'ext/i18n'
 require 'travis/ajax'
 require 'app'
 
+setupGoogleAnalytics()

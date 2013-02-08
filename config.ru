@@ -29,5 +29,6 @@ run Travis::Web::App.new(
   environment:  ENV['RACK_ENV'] || 'development',
   api_endpoint: ENV['API_ENDPOINT'],
   pusher_key:   ENV['PUSHER_KEY'],
+  ga_code:      ENV['GA_CODE'],
   root:         File.expand_path('../public', __FILE__)
 )
