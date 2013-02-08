@@ -1,5 +1,5 @@
 var setupGoogleAnalytics = function() {
-  var _gaq = _gaq || [];
+  window._gaq = [];
   _gaq.push(['_setAccount', Travis.config.ga_code]);
   _gaq.push(['_trackPageview']);
 
