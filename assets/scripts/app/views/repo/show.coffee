@@ -123,7 +123,7 @@
         event.stopPropagation()
 
     requeueBuild: ->
-      if @get('canRequeueJobBuild')
+      if @get('canRequeueBuild')
         @closeMenu()
         @get('build').requeue()
 
