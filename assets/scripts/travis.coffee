@@ -107,7 +107,7 @@ Storage = Em.Object.extend
       @store = app.store
       $ => app.initialize()
 
-setupGoogleAnalytics()
+setupGoogleAnalytics() if Travis.config.ga_code
 
 require 'ext/i18n'
 require 'travis/ajax'
