@@ -3,7 +3,7 @@ require 'travis/location'
 Ember.Route.reopen
   enter: (router) ->
     @_super(router)
-    if @get('isLeafRoute') && !window.location.host.match(/^staging\.|^localhost/)
+    if @get('isLeafRoute') && !window.location.host.match(/staging|localhost/)
       _gaq.push(['_trackPageview', @absoluteRoute(router)])
 
 defaultRoute = Ember.Route.extend
