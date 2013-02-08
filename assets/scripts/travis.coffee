@@ -107,8 +107,8 @@ Storage = Em.Object.extend
       @store = app.store
       $ => app.initialize()
 
+setupGoogleAnalytics()
+
 require 'ext/i18n'
 require 'travis/ajax'
 require 'app'
-
-setupGoogleAnalytics()
