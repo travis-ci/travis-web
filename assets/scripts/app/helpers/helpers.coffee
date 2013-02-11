@@ -30,6 +30,8 @@ require 'config/emoij'
     config = $.only config, 'rvm', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'scala', 'jdk', 'python', 'perl', 'compiler'
     values = $.map config, (value, key) ->
       value = (if value && value.join then value.join(', ') else value) || ''
+      if key == 'rvm' && "#{value}".match(/^\d+$/)
+        value = "#{value}.0"
       '%@: %@'.fmt $.camelize(key), value
     if values.length == 0 then '-' else values.join(', ')
 
