@@ -3,5 +3,7 @@
 <ul class="groups">
   {{#each group in view.groups}}
     {{view view.GroupView groupBinding="group"}}
+  {{else}}
+    {{t no_job}}
   {{/each}}
 </ul>
