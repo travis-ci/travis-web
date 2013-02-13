@@ -75,7 +75,7 @@ FOLDS = [
 
         @initial = false
 
-        if payload.foldContinuation && payload.content.match(/Done. Build script exited with:/)
+        if payload.foldContinuation && payload.content.match(/Done. Build script exited/)
           # script ended, but fold is still closed, which most probably means
           # error, end the fold and open it.
           # TODO: we need log marks to make it easier
