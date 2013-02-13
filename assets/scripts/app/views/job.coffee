@@ -217,13 +217,11 @@
 
           if payload.openFold
             folds = fragment.querySelectorAll(".fold.#{payload.openFold}")
-            console.log folds
             if fold = folds[folds.length - 1]
               fold = $(fold)
             else
               fold = this.$(".fold.#{payload.openFold}:last")
 
-            console.log fold, payload
             fold.removeClass('show-first-line').addClass('open')
 
           if payload.foldEnd
