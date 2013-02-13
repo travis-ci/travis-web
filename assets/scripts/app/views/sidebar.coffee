@@ -57,6 +57,7 @@
       controller: Travis.RunningJobsController.create()
 
       groupsBinding: 'controller.sortedGroups'
+      jobsBinding: 'controller'
 
       didInsertElement: ->
         @get('controller').set 'content', Travis.Job.running()
