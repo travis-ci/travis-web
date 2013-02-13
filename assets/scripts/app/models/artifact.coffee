@@ -17,6 +17,10 @@ require 'travis/model'
     @addObserver 'body', @fetchWorker
     @fetchWorker()
 
+  id: (->
+    @get('job.id')
+  ).property('job.id')
+
   clear: ->
     @set('body', '')
     @incrementProperty('version')

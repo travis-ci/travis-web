@@ -9,6 +9,7 @@ FOLDS = [
   init: ->
     @set 'folds', []
     @set 'line', 1
+    @set 'lineNumber', 1
     @initial = true
 
     for fold in FOLDS
@@ -16,6 +17,7 @@ FOLDS = [
 
   append: (lines) ->
     return unless lines
+    return if @get('lineNumber') > 5000
 
     log   = @join lines
     log   = @escape log
@@ -25,8 +27,6 @@ FOLDS = [
     target       = @get 'target'
     index        = 0
     currentFold  = @currentFold
-
-    @set 'lineNumber', 1 unless @get 'lineNumber'
 
     result = []
 
@@ -87,6 +87,10 @@ FOLDS = [
 
         if currentFold
           @set 'foldContinuation', true
+
+        if @get('lineNumber') + index >= 5000
+          result.pushObject logWasCut: true
+          break
 
     if result.length > 0
       if currentFold

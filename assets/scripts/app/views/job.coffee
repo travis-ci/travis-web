@@ -87,7 +87,7 @@
 
       target.closest('.fold').toggleClass('open')
 
-      if target.is('a') && target.attr('id').match(/^L\d+$/)
+      if target.is('a') && target.attr('id') && target.attr('id').match(/^L\d+$/)
         path = target.attr 'href'
         Travis.app.get('router').route(path)
         event.stopPropagation()
@@ -173,6 +173,7 @@
       url = @get('logUrl')
 
       leftOut  = []
+      cut      = false
       fragment = document.createDocumentFragment()
 
       # TODO: refactor this loop, it's getting messy
@@ -180,54 +181,60 @@
         line   = payload.content
         number = payload.number
 
-        unless payload.append
-          pathWithNumber = "#{url}#L#{number}"
-          p = document.createElement('p')
-          p.innerHTML = "<a href=\"#{pathWithNumber}\" id=\"L#{number}\">#{number}</a>#{line}"
-          line = p
-
-        if payload.fold && !payload.foldContinuation
-          div = document.createElement('div')
-          div.appendChild line
-          div.className = "fold #{payload.fold} show-first-line"
-          line = div
-
-        if payload.replace
-          if link = fragment.querySelector("#L#{number}")
-            link.parentElement.innerHTML = line.innerHTML
-          else
-            this.$("#L#{number}").parent().replaceWith line
-        else if payload.append
-          if link = fragment.querySelector("#L#{number}")
-            link.parentElement.innerHTML += line
-          else
-            this.$("#L#{number}").parent().append line
-        else if payload.foldContinuation
-          folds = fragment.querySelectorAll(".fold.#{payload.fold}")
-          if fold = folds[folds.length - 1]
-            fold.appendChild line
-          else
-            this.$("#log .fold.#{payload.fold}:last").append line
+        if payload.logWasCut
+          cut = true
         else
-          fragment.appendChild(line)
+          unless payload.append
+            pathWithNumber = "#{url}#L#{number}"
+            p = document.createElement('p')
+            p.innerHTML = "<a href=\"#{pathWithNumber}\" id=\"L#{number}\">#{number}</a>#{line}"
+            line = p
 
-        if payload.openFold
-          folds = fragment.querySelectorAll(".fold.#{payload.fold}")
-          if fold = folds[folds.length - 1]
-            fold = $(fold)
+          if payload.fold && !payload.foldContinuation
+            div = document.createElement('div')
+            div.appendChild line
+            div.className = "fold #{payload.fold} show-first-line"
+            line = div
+
+          if payload.replace
+            if link = fragment.querySelector("#L#{number}")
+              link.parentElement.innerHTML = line.innerHTML
+            else
+              this.$("#L#{number}").parent().replaceWith line
+          else if payload.append
+            if link = fragment.querySelector("#L#{number}")
+              link.parentElement.innerHTML += line
+            else
+              this.$("#L#{number}").parent().append line
+          else if payload.foldContinuation
+            folds = fragment.querySelectorAll(".fold.#{payload.fold}")
+            if fold = folds[folds.length - 1]
+              fold.appendChild line
+            else
+              this.$("#log .fold.#{payload.fold}:last").append line
           else
-            fold = this.$(".fold.#{payload.fold}:last")
+            fragment.appendChild(line)
 
-          fold.removeClass('show-first-line').addClass('open')
+          if payload.openFold
+            folds = fragment.querySelectorAll(".fold.#{payload.fold}")
+            if fold = folds[folds.length - 1]
+              fold = $(fold)
+            else
+              fold = this.$(".fold.#{payload.fold}:last")
 
-        if payload.foldEnd
-          folds = fragment.querySelectorAll(".fold.#{payload.fold}")
-          if fold = folds[folds.length - 1]
-            fold = $(fold)
-          else
-            fold = this.$(".fold.#{payload.fold}:last")
+            fold.removeClass('show-first-line').addClass('open')
 
-          fold.removeClass('show-first-line')
+          if payload.foldEnd
+            folds = fragment.querySelectorAll(".fold.#{payload.fold}")
+            if fold = folds[folds.length - 1]
+              fold = $(fold)
+            else
+              fold = this.$(".fold.#{payload.fold}:last")
+
+            fold.removeClass('show-first-line')
 
       this.$('#log')[0].appendChild fragment
+      if cut
+        url = Travis.Urls.plainTextLog(@get('log.id'))
+        this.$("#log").append $("<p class=\"cut\">Log was too long to display. Download the <a href=\"#{url}\">the raw version</a> to get the full log.</p>")
 
