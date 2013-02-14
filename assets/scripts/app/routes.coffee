@@ -3,7 +3,7 @@ require 'travis/location'
 Ember.Route.reopen
   enter: (router) ->
     @_super(router)
-    _gaq.push(['_trackPageview', @absoluteRoute(router)]) if @get('isLeafRoute') && _gaq
+    _gaq.push(['_trackPageview', @absoluteRoute(router)]) if @get('isLeafRoute') && _gaq?
 
 defaultRoute = Ember.Route.extend
   route: '/'
