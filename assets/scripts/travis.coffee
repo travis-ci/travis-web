@@ -54,7 +54,6 @@ Storage = Em.Object.extend
 
   QUEUES: [
     { name: 'common',  display: 'Common' }
-    { name: 'php',     display: 'PHP, Perl and Python' }
     { name: 'linux',   display: 'Linux' }
     { name: 'mac_osx', display: 'Mac and OSX' }
   ]
