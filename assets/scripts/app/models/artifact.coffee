@@ -1,4 +1,5 @@
 require 'travis/model'
+require 'travis/chunk_buffer'
 
 @Travis.Artifact = Em.Object.extend
   version: 1 # used to refresh log on requeue
