@@ -40,3 +40,13 @@ Travis.RestAdapter = DS.RESTAdapter.extend
       @_super.apply this, arguments
 
 Travis.RestAdapter.map 'Travis.Commit', {}
+
+Travis.RestAdapter.map 'Travis.Build', {
+  repoId: { key: 'repository_id' }
+  repo:   { key: 'repository_id' }
+  _duration: { key: 'duration' }
+  jobs: { key: 'job_ids' }
+  _config: { key: 'config' }
+}
+
+Travis.RestAdapter.map 'Travis.Repo', {}

@@ -2,32 +2,33 @@ require 'travis/model'
 
 @Travis.Build = Travis.Model.extend Travis.DurationCalculations,
   eventType:       DS.attr('string')
-  repoId:          DS.attr('number', key: 'repository_id')
+  repoId:          DS.attr('number')
   commitId:        DS.attr('number')
 
   state:           DS.attr('string')
   number:          DS.attr('number')
   branch:          DS.attr('string')
   message:         DS.attr('string')
-  _duration:       DS.attr('number', key: 'duration')
-  startedAt:       DS.attr('string', key: 'started_at')
-  finishedAt:      DS.attr('string', key: 'finished_at')
+  _duration:       DS.attr('number')
+  _config:         DS.attr('string')
+  startedAt:       DS.attr('string')
+  finishedAt:      DS.attr('string')
 
-  repo:   DS.belongsTo('Travis.Repo', key: 'repository_id')
+  repo:   DS.belongsTo('Travis.Repo')
   commit: DS.belongsTo('Travis.Commit')
-  jobs:   DS.hasMany('Travis.Job', key: 'job_ids')
+  jobs:   DS.hasMany('Travis.Job')
 
   config: (->
-    Travis.Helpers.compact(@get('data.config'))
-  ).property('data.config')
+    Travis.Helpers.compact(@get('_config'))
+  ).property('_config')
 
   isPullRequest: (->
     @get('eventType') == 'pull_request'
   ).property('eventType')
 
   isMatrix: (->
-    @get('data.job_ids.length') > 1
-  ).property('data.job_ids.length')
+    @get('jobs.length') > 1
+  ).property('jobs.length')
 
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']

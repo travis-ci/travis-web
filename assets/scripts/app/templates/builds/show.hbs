@@ -6,9 +6,7 @@
       <dt>{{t builds.name}}</dt>
       <dd class="number">
         <span class="status"></span>
-        {{#with build}}
-          <a {{action showBuild repo this href=true}}>{{number}}</a>
-        {{/with}}
+        {{#linkTo build repo build}}{{build.number}}{{/linkTo}}
       </dd>
       <dt>{{t builds.state}}</dt>
       <dd class="state">{{capitalize build.state}}</dd>
