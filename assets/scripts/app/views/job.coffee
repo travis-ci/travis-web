@@ -116,7 +116,7 @@
         else
           'showJob'
 
-        Travis.app.get('router').urlForEvent(event, repo, item)
+        #Travis.get('router').urlForEvent(event, repo, item)
     ).property('job.repo', 'parentView.currentItem')
 
   PreView: Em.View.extend

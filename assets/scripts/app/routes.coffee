@@ -382,10 +382,10 @@ Travis.Router.map ->
     @resource 'repo', path: '/:owner/:name', ->
       @route 'index', path: '/'
       @resource 'build', path: '/builds/:build_id'
+      @resource 'job',   path: '/jobs/:job_id'
 
 Travis.IndexCurrentRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'repo'
     @render 'build',   outlet: 'pane', into: 'repo'
 
   setupController: ->
@@ -394,15 +394,8 @@ Travis.IndexCurrentRoute = Ember.Route.extend
 Travis.BuildRoute = Ember.Route.extend
   renderTemplate: (->)
 
-
-  deserialize: (params) ->
-    Travis.Build.find(params.build_id)
-
   serialize: (model, params) ->
-    id = if model.get
-      model.get('id')
-    else
-      model
+    id = if model.get then model.get('id') else model
 
     { build_id: id }
 
@@ -410,8 +403,25 @@ Travis.BuildRoute = Ember.Route.extend
     model = Travis.Build.find(model) if model && !model.get
 
     repo = @container.lookup('controller:repo')
-    repo.activate('build')
     repo.set('build', model)
+    repo.activate('build')
+
+Travis.JobRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'job', outlet: 'pane', into: 'repo'
+
+  serialize: (model, params) ->
+    id = if model.get then model.get('id') else model
+
+    { job_id: id }
+
+  setupController: (controller, model) ->
+    model = Travis.Job.find(model) if model && !model.get
+
+    repo = @container.lookup('controller:repo')
+    console.log model.toString()
+    repo.set('job', model)
+    repo.activate('job')
 
 Travis.RepoIndexRoute = Ember.Route.extend
   setupController: (controller, model) ->

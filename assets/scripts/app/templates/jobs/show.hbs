@@ -1,51 +1,49 @@
-{{#with view}}
-  {{#if job.isLoaded}}
-    <div {{bindAttr class="view.color"}}>
-      <dl id="summary">
-        <div class="left">
-          <dt>Job</dt>
-          <dd class="number">
-            <span class="status"></span>
-            {{#if job.id}}
-              <a {{action showJob repo job href=true}}>{{job.number}}</a>
-            {{/if}}
-          </dd>
-          <dt>{{t jobs.state}}</dt>
-          <dd class="state">{{capitalize job.state}}</dd>
-          <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
-          <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime job.finishedAt}}</dd>
-          <dt>{{t jobs.duration}}</dt>
-          <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration job.duration}}</dd>
-        </div>
-
-        <div class="right">
-          <dt>{{t jobs.commit}}</dt>
-          <dd class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
-          {{#if commit.compareUrl}}
-            <dt>{{t jobs.compare}}</dt>
-            <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
+{{#if job.isLoaded}}
+  <div {{bindAttr class="view.color"}}>
+    <dl id="summary">
+      <div class="left">
+        <dt>Job</dt>
+        <dd class="number">
+          <span class="status"></span>
+          {{#if job.id}}
+            {{#linkTo job repo job}}{{job.number}}{{/linkTo}}
           {{/if}}
-          {{#if commit.authorName}}
-            <dt>{{t jobs.author}}</dt>
-            <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.authorName}}</a></dd>
-          {{/if}}
-          {{#if commit.committerName}}
-            <dt>{{t jobs.committer}}</dt>
-            <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committerName}}</a></dd>
-          {{/if}}
-        </div>
+        </dd>
+        <dt>{{t jobs.state}}</dt>
+        <dd class="state">{{capitalize job.state}}</dd>
+        <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
+        <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime job.finishedAt}}</dd>
+        <dt>{{t jobs.duration}}</dt>
+        <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration job.duration}}</dd>
+      </div>
 
-        <dt>{{t jobs.message}}</dt>
-        <dd class="message">{{formatMessage commit.message}}</dd>
-        <dt>{{t jobs.config}}</dt>
-        <dd class="config">{{formatConfig job.config}}</dd>
-      </dl>
+      <div class="right">
+        <dt>{{t jobs.commit}}</dt>
+        <dd class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
+        {{#if commit.compareUrl}}
+          <dt>{{t jobs.compare}}</dt>
+          <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
+        {{/if}}
+        {{#if commit.authorName}}
+          <dt>{{t jobs.author}}</dt>
+          <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.authorName}}</a></dd>
+        {{/if}}
+        {{#if commit.committerName}}
+          <dt>{{t jobs.committer}}</dt>
+          <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committerName}}</a></dd>
+        {{/if}}
+      </div>
 
-      {{view Travis.LogView contextBinding="job"}}}
-    </div>
-  {{else}}
-    <div id="job" class="loading">
-      <span>Loading</span>
-    </div>
-  {{/if}}
-{{/with}}
+      <dt>{{t jobs.message}}</dt>
+      <dd class="message">{{formatMessage commit.message}}</dd>
+      <dt>{{t jobs.config}}</dt>
+      <dd class="config">{{formatConfig job.config}}</dd>
+    </dl>
+
+    {{view Travis.LogView contextBinding="job"}}}
+  </div>
+{{else}}
+  <div id="job" class="loading">
+    <span>Loading</span>
+  </div>
+{{/if}}
