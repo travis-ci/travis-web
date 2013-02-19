@@ -50,7 +50,6 @@
 
   BuildView: Travis.View.extend
     templateName: 'builds/show'
-    elementId: 'build'
     classNameBindings: ['color', 'loading']
 
     loadingBinding: 'controller.loading'

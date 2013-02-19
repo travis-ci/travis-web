@@ -65,11 +65,6 @@ Travis.RepoController = Travis.Controller.extend
     @_bind('build', 'job.build')
     @connectTab('job')
 
-  repoObserver: (->
-    repo = @get('repo')
-    repo.select() if repo
-  ).observes('repo.id')
-
   connectTab: (tab) ->
     name = if tab == 'current' then 'build' else tab
     viewClass = if name in ['builds', 'branches', 'pull_requests']

@@ -377,6 +377,76 @@ Ember.Router.reopen
   location: Ember.HistoryLocation.create()
 
 Travis.Router.map ->
+  @resource 'index', path: '/', ->
+    @route 'current', path: '/'
+    @resource 'repo', path: '/:owner/:name', ->
+      @route 'index', path: '/'
+      @resource 'build', path: '/builds/:build_id'
+
+Travis.IndexCurrentRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'repo'
+    @render 'build',   outlet: 'pane', into: 'repo'
+
+  setupController: ->
+    @container.lookup('controller:repo').activate('index')
+
+Travis.BuildRoute = Ember.Route.extend
+  renderTemplate: (->)
+
+
+  deserialize: (params) ->
+    Travis.Build.find(params.build_id)
+
+  serialize: (model, params) ->
+    id = if model.get
+      model.get('id')
+    else
+      model
+
+    { build_id: id }
+
+  setupController: (controller, model) ->
+    model = Travis.Build.find(model) if model && !model.get
+
+    repo = @container.lookup('controller:repo')
+    repo.activate('build')
+    repo.set('build', model)
+
+Travis.RepoIndexRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    @container.lookup('controller:repo').activate('current')
+
+Travis.RepoRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'repo'
+    @render 'build', outlet: 'pane', into: 'repo'
+
+  setupController: (controller, model) ->
+    controller.set('repo', model)
+
+  serialize: (repo) ->
+    [owner, name] = repo.get('slug').split('/')
+    { owner: owner, name: name }
+
+  deserialize: (params) ->
+    slug = "#{params.owner}/#{params.name}"
+    proxy = Ember.ObjectProxy.create(content: Ember.Object.create())
+    proxy.setProperties slug: slug, isLoaded: false
+
+    repos = Travis.Repo.bySlug(slug)
+
+    observer = ->
+      if repos.get 'isLoaded'
+        repos.removeObserver 'isLoaded', observer
+        proxy.set 'content', repos.objectAt(0)
+
+    if repos.length
+      proxy.set('content', repos[0])
+    else
+      repos.addObserver 'isLoaded', observer
+
+    proxy
 
 Travis.IndexRoute = Ember.Route.extend
   renderTemplate: ->
@@ -386,10 +456,7 @@ Travis.IndexRoute = Ember.Route.extend
     @render 'sidebar', outlet: 'right'
     @render 'top',     outlet: 'top'
     @render 'flash',   outlet: 'flash'
-    @render 'repo'
-    @render 'build',   outlet: 'pane', into: 'repo'
 
   setupController: (controller)->
     @container.lookup('controller:repos').activate()
     @container.lookup('view:application').connectLayout 'home'
-    @container.lookup('controller:repo').activate('index')
