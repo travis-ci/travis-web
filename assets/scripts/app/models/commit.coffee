@@ -12,4 +12,4 @@ require 'travis/model'
   committerEmail:    DS.attr('string')
   pullRequestNumber: DS.attr('number')
 
-  build: DS.belongsTo('Travis.Build', key: 'buildId')
+  build: DS.belongsTo('Travis.Build')

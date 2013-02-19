@@ -1,7 +1,7 @@
 require 'travis/model'
 
 @Travis.Job = Travis.Model.extend Travis.DurationCalculations,
-  repoId:   DS.attr('number', key: 'repository_id')
+  repoId:         DS.attr('number')
   buildId:        DS.attr('number')
   commitId:       DS.attr('number')
   logId:          DS.attr('number')
@@ -11,13 +11,13 @@ require 'travis/model'
   number:         DS.attr('string')
   startedAt:      DS.attr('string')
   finishedAt:     DS.attr('string')
-  allowFailure:   DS.attr('boolean', key: 'allow_failure')
+  allowFailure:   DS.attr('boolean')
 
   repositorySlug: DS.attr('string')
-  repo:   DS.belongsTo('Travis.Repo',     key: 'repository_id')
-  build:  DS.belongsTo('Travis.Build',    key: 'build_id')
-  commit: DS.belongsTo('Travis.Commit',   key: 'commit_id')
-  commits: DS.belongsTo('Travis.Commit',   key: 'commit_id')
+  repo:   DS.belongsTo('Travis.Repo')
+  build:  DS.belongsTo('Travis.Build')
+  commit: DS.belongsTo('Travis.Commit')
+  commits: DS.belongsTo('Travis.Commit')
   log: ( ->
     Travis.Artifact.create(job: this)
   ).property()

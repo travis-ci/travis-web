@@ -9,6 +9,7 @@ require 'travis/model'
   lastBuildState:      DS.attr('string')
   lastBuildStartedAt:  DS.attr('string')
   lastBuildFinishedAt: DS.attr('string')
+  _lastBuildDuration:  DS.attr('number')
 
   lastBuild: DS.belongsTo('Travis.Build')
 
@@ -78,10 +79,10 @@ require 'travis/model'
   ).property('slug')
 
   lastBuildDuration: (->
-    duration = @get('data.last_build_duration')
+    duration = @get('_lastBuildDuration')
     duration = Travis.Helpers.durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
     duration
-  ).property('data.last_build_duration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
+  ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
   sortOrder: (->
     # cuz sortAscending seems buggy when set to false

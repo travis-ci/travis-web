@@ -49,4 +49,11 @@ Travis.RestAdapter.map 'Travis.Build', {
   _config: { key: 'config' }
 }
 
-Travis.RestAdapter.map 'Travis.Repo', {}
+Travis.RestAdapter.map 'Travis.Repo', {
+  _lastBuildDuration: { key: 'last_build_duration' }
+}
+
+Travis.RestAdapter.map 'Travis.Job', {
+  repoId: { key: 'repository_id' }
+  repo:   { key: 'repository_id' }
+}
