@@ -82,7 +82,7 @@
 
         checker()
 
-    click: (event) ->
+    click: ->
       target = $(event.target)
 
       target.closest('.fold').toggleClass('open')
@@ -125,7 +125,7 @@
       @_super.apply this, arguments
       @set 'logManager', Travis.Log.create(target: this)
 
-    toggleTailing: (event) ->
+    toggleTailing: ->
       Travis.app.tailing.toggle()
       event.preventDefault()
 

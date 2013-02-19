@@ -25,7 +25,7 @@
     needs: ['currentUser']
     currentUserBinding: 'controllers.currentUser'
 
-    activate: (event) ->
+    activate: ->
       @get('controller').activate(event.target.name)
 
     classRecent: (->
@@ -43,5 +43,5 @@
       'active' if @get('tab') == 'search'
     ).property('tab')
 
-    toggleInfo: (event) ->
+    toggleInfo: ->
       $('#repos').toggleClass('open')

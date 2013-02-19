@@ -39,7 +39,7 @@
         @_super.apply this, arguments
         @set 'controller', @get('controller').container.lookup('controller:queues')
 
-      showAll: (event) ->
+      showAll: ->
         queue = event.context
         queue.showAll()
 
@@ -73,7 +73,7 @@
         $('#workers li').removeClass('open')
 
   WorkersListView: Travis.View.extend
-    toggle: (event) ->
+    toggle: ->
       this.$().find('> li').toggleClass('open')
 
   WorkersItemView: Travis.View.extend

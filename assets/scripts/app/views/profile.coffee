@@ -11,7 +11,7 @@
     templateName: 'profile/tabs'
     tabBinding: 'controller.tab'
 
-    activate: (event) ->
+    activate: ->
       @get('controller').activate(event.target.name)
 
     classHooks: (->
@@ -62,7 +62,7 @@
         { key: 'ru', name: 'Русский' }
       ]
     ).property()
-    
-    change: (event) ->
+
+    change: ->
       return unless $('#locale').val()
       @get('user').updateLocale($('#locale').val())

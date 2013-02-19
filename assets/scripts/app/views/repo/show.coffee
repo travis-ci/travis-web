@@ -77,11 +77,12 @@
     tabBinding: 'controller.tab'
 
     closeMenu: ->
+      console.log 'closeMenu'
       $('.menu').removeClass('display')
 
-    menu: (event) ->
+    menu: ->
       @popupCloseAll()
-      element = $('#tools .menu').toggleClass('display')
+      $('#tools .menu').toggleClass('display')
       event.stopPropagation()
 
     requeue: ->
@@ -98,7 +99,7 @@
         @closeMenu()
         @get('job').cancel()
 
-    statusImages: (event) ->
+    statusImages: ->
       @set('active', true)
       @closeMenu()
       @popupCloseAll()
@@ -109,7 +110,7 @@
       view.appendTo($('body'))
       event.stopPropagation()
 
-    regenerateKeyPopup: (event) ->
+    regenerateKeyPopup: ->
       if @get('canRegenerateKey')
         @set('active', true)
         @closeMenu()
