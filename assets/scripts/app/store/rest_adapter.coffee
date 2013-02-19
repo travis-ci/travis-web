@@ -1,6 +1,11 @@
 require 'travis/ajax'
 require 'models'
 
+DS.JSONTransforms['object'] = {
+  deserialize: (serialized) -> serialized
+  serialize: (deserialized) -> deserialized
+}
+
 Travis.RestAdapter = DS.RESTAdapter.extend
   mappings:
     broadcasts:   Travis.Broadcast

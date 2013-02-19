@@ -4,10 +4,7 @@ require 'travis/model'
   state: DS.attr('string')
   name: DS.attr('string')
   host: DS.attr('string')
-
-  payload: (->
-    @get('data.payload')
-  ).property('data.payload')
+  payload: DS.attr('object')
 
   number: (->
     @get('name').match(/\d+$/)[0]

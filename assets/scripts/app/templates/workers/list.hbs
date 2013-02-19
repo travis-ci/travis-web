@@ -1,7 +1,7 @@
 {{#view Travis.WorkersView}}
   <h4>
     {{t workers}}
-    <a id="toggle-workers" {{action toggleWorkers target="parentView.parentView"}}></a>
+    <a id="toggle-workers" {{action toggleWorkers target="view"}}></a>
   </h4>
   <ul id="workers">
     {{#each group in controller.groups}}

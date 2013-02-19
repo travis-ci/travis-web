@@ -29,11 +29,9 @@
 
     WorkersView: Em.View.extend
       templateName: 'workers/list'
-      controller: Travis.WorkersController.create()
-
-      didInsertElement: ->
-        @set 'controller.content', Travis.Worker.find()
+      init: ->
         @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:workers')
 
     QueuesView: Em.View.extend
       templateName: 'queues/list'
@@ -67,7 +65,7 @@
 
 
   WorkersView: Travis.View.extend
-    toggleWorkers: (event) ->
+    toggleWorkers: ->
       handle = $(event.target).toggleClass('open')
       if handle.hasClass('open')
         $('#workers li').addClass('open')
@@ -76,7 +74,7 @@
 
   WorkersListView: Travis.View.extend
     toggle: (event) ->
-      $(event.target).closest('li').toggleClass('open')
+      this.$().find('> li').toggleClass('open')
 
   WorkersItemView: Travis.View.extend
     display: (->
@@ -88,7 +86,6 @@
       else
         "#{name}: #{state}"
     ).property('worker.state')
-
 
   QueueItemView: Travis.View.extend
     tagName: 'li'

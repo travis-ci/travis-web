@@ -19,6 +19,10 @@ Travis.reopen
       @set 'content', queues
 
   WorkersController: Em.ArrayController.extend
+    init: ->
+      @_super.apply this, arguments
+      @set 'content', Travis.Worker.find()
+
     groups: (->
       if content = @get 'arrangedContent'
         groups = {}
