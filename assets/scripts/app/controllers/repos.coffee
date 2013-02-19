@@ -6,6 +6,7 @@ Travis.ReposController = Ember.ArrayController.extend
 
   init: ->
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
+    @_super.apply this, arguments
 
   updateTimes: ->
     if content = @get('content')
@@ -27,7 +28,6 @@ Travis.ReposController = Ember.ArrayController.extend
       )
       limit: 30
     @set('content', content)
-    # @set('content', Travis.Repo.find())
 
   viewOwned: ->
     @set('content', Travis.Repo.accessibleBy(Travis.app.get('currentUser.login')))

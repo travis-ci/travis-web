@@ -35,6 +35,7 @@ $.extend Travis.Pusher.prototype,
     "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"
 
   receive: (event, data) ->
+    return
     return if event.substr(0, 6) == 'pusher'
     data = @normalize(event, data) if data.id
 

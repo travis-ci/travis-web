@@ -2,20 +2,14 @@
   RepoView: Travis.View.extend
     templateName: 'repos/show'
 
-    reposBinding: 'controller.repos'
-    repoBinding:  'controller.repo'
+    classNameBindings: ['loading:isLoaded']
 
-    class: (->
-      'loading' unless @get('repo.isLoaded')
-    ).property('repo.isLoaded')
+    isLoadedBinding: 'controller.repo.isLoaded'
+    reposBinding: 'controllers.repos'
 
     isEmpty: (->
       @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.isLoaded', 'repos.length')
-
-    urlGithub: (->
-      Travis.Urls.githubRepo(@get('repo.slug'))
-    ).property('repo.slug'),
 
   RepoShowStatsView: Travis.View.extend
     templateName: 'repos/show/stats'
@@ -208,6 +202,6 @@
     ).property('tab')
 
     hasPermission: (->
-      if permissions = Travis.app.get('currentUser.permissions')
+      if permissions = Travis.get('currentUser.permissions')
         permissions.contains @get('repo.id')
-    ).property('Travis.app.currentUser.permissions.length', 'repo.id')
+    ).property('Travis.currentUser.permissions.length', 'repo.id')

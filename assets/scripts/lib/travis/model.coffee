@@ -1,7 +1,4 @@
 @Travis.Model = DS.Model.extend
-  primaryKey: 'id'
-  id: DS.attr('number')
-
   init: ->
     @loadedAttributes = []
     @_super.apply this, arguments
@@ -58,15 +55,15 @@
 @Travis.Model.reopenClass
   find: ->
     if arguments.length == 0
-      Travis.app.store.findAll(this)
+      Travis.store.findAll(this)
     else
       @_super.apply(this, arguments)
 
   filter: (callback) ->
-    Travis.app.store.filter(this, callback)
+    Travis.store.filter(this, callback)
 
   load: (attrs) ->
-    Travis.app.store.load(this, attrs)
+    Travis.store.load(this, attrs)
 
   select: (id) ->
     @find().forEach (record) ->
@@ -86,7 +83,7 @@
     name.replace(/([A-Z])/g, '_$1').toLowerCase().slice(1)
 
   pluralName: ->
-    Travis.app.store.adapter.pluralize(@singularName())
+    Travis.store.adapter.pluralize(@singularName())
 
   isAttribute: (name) ->
     Ember.get(this, 'attributes').has(name) ||

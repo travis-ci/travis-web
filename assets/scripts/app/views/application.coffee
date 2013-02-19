@@ -1,4 +1,4 @@
-@Travis.reopen
+Travis.reopen
   ApplicationView: Travis.View.extend
     templateName: 'layouts/home'
     classNames: ['application']

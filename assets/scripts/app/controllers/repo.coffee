@@ -1,5 +1,6 @@
 Travis.RepoController = Travis.Controller.extend
   bindings: []
+  needs: ['repos']
 
   init: ->
     @_super.apply this, arguments
@@ -33,7 +34,7 @@ Travis.RepoController = Travis.Controller.extend
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
-    @_bind('repo', 'controllers.reposController.firstObject')
+    @_bind('repo', 'controllers.repos.firstObject')
     @_bind('build', 'repo.lastBuild')
     @connectTab('current')
 
@@ -77,7 +78,7 @@ Travis.RepoController = Travis.Controller.extend
       Travis["#{$.camelize(name)}View"]
 
     @set('tab', tab)
-    @connectOutlet(outletName: 'pane', controller: this, viewClass: viewClass)
+    #@connectOutlet(outletName: 'pane', controller: this, viewClass: viewClass)
 
   _bind: (to, from) ->
     @bindings.push Ember.oneWay(this, to, from)
@@ -85,3 +86,7 @@ Travis.RepoController = Travis.Controller.extend
   _unbind: ->
     binding.disconnect(this) for binding in @bindings
     @bindings.clear()
+
+  urlGithub: (->
+    Travis.Urls.githubRepo(@get('repo.slug'))
+  ).property('repo.slug'),

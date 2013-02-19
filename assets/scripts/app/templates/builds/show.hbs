@@ -1,55 +1,53 @@
-{{#with view}}
-  {{#if loading}}
-    <span>Loading</span>
+{{#if loading}}
+  <span>Loading</span>
+{{else}}
+  <dl id="summary">
+    <div class="left">
+      <dt>{{t builds.name}}</dt>
+      <dd class="number">
+        <span class="status"></span>
+        {{#with build}}
+          <a {{action showBuild repo this href=true}}>{{number}}</a>
+        {{/with}}
+      </dd>
+      <dt>{{t builds.state}}</dt>
+      <dd class="state">{{capitalize build.state}}</dd>
+      <dt class="finished_at_label">{{t builds.finished_at}}</dt>
+      <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime build.finishedAt}}</dd>
+      <dt>{{t builds.duration}}</dt>
+      <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration build.duration}}</dd>
+    </div>
+
+    <div class="right">
+      <dt>{{t builds.commit}}</dt>
+      <dd class="commit"><a href="{{unbound urlGithubCommit}}">{{formatCommit build.commit}}</a></dd>
+      {{#if commit.compareUrl}}
+        <dt>{{t builds.compare}}</dt>
+        <dd class="compare"><a href="{{unbound commit.compareUrl}}">{{pathFrom build.commit.compareUrl}}</a></dd>
+      {{/if}}
+      {{#if commit.authorName}}
+        <dt>{{t builds.author}}</dt>
+        <dd class="author"><a href="{{unbound urlAuthor}}">{{build.commit.authorName}}</a></dd>
+      {{/if}}
+      {{#if commit.committerName}}
+        <dt>{{t builds.committer}}</dt>
+        <dd class="committer"><a href="{{unbound urlCommitter}}">{{build.commit.committerName}}</a></dd>
+      {{/if}}
+    </div>
+
+    <dt>{{t builds.message}}</dt>
+    <dd class="message">{{{formatMessage build.commit.message}}}</dd>
+
+    {{#unless isMatrix}}
+      <dt>{{t builds.config}}</dt>
+      <dd class="config">{{formatConfig build.config}}</dd>
+    {{/unless}}
+  </dl>
+
+  {{#if build.isMatrix}}
+    {{view Travis.JobsView jobsBinding="build.requiredJobs" required="true"}}
+    {{view Travis.JobsView jobsBinding="build.allowedFailureJobs"}}
   {{else}}
-    <dl id="summary">
-      <div class="left">
-        <dt>{{t builds.name}}</dt>
-        <dd class="number">
-          <span class="status"></span>
-          {{#with build}}
-            <a {{action showBuild repo this href=true}}>{{number}}</a>
-          {{/with}}
-        </dd>
-        <dt>{{t builds.state}}</dt>
-        <dd class="state">{{capitalize build.state}}</dd>
-        <dt class="finished_at_label">{{t builds.finished_at}}</dt>
-        <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime build.finishedAt}}</dd>
-        <dt>{{t builds.duration}}</dt>
-        <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration build.duration}}</dd>
-      </div>
-
-      <div class="right">
-        <dt>{{t builds.commit}}</dt>
-        <dd class="commit"><a href="{{unbound urlGithubCommit}}">{{formatCommit build.commit}}</a></dd>
-        {{#if commit.compareUrl}}
-          <dt>{{t builds.compare}}</dt>
-          <dd class="compare"><a href="{{unbound commit.compareUrl}}">{{pathFrom build.commit.compareUrl}}</a></dd>
-        {{/if}}
-        {{#if commit.authorName}}
-          <dt>{{t builds.author}}</dt>
-          <dd class="author"><a href="{{unbound urlAuthor}}">{{build.commit.authorName}}</a></dd>
-        {{/if}}
-        {{#if commit.committerName}}
-          <dt>{{t builds.committer}}</dt>
-          <dd class="committer"><a href="{{unbound urlCommitter}}">{{build.commit.committerName}}</a></dd>
-        {{/if}}
-      </div>
-
-      <dt>{{t builds.message}}</dt>
-      <dd class="message">{{{formatMessage build.commit.message}}}</dd>
-
-      {{#unless isMatrix}}
-        <dt>{{t builds.config}}</dt>
-        <dd class="config">{{formatConfig build.config}}</dd>
-      {{/unless}}
-    </dl>
-
-    {{#if build.isMatrix}}
-      {{view Travis.JobsView jobsBinding="build.requiredJobs" required="true"}}
-      {{view Travis.JobsView jobsBinding="build.allowedFailureJobs"}}
-    {{else}}
-      {{view Travis.LogView contextBinding="build.jobs.firstObject"}}
-    {{/if}}
+    {{view Travis.LogView contextBinding="build.jobs.firstObject"}}
   {{/if}}
-{{/with}}
+{{/if}}

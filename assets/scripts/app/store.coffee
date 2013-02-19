@@ -5,7 +5,7 @@ DATA_PROXY =
     @savedData[name]
 
 Travis.Store = DS.Store.extend
-  revision: 4
+  revision: 11
   adapter: Travis.RestAdapter.create()
 
   init: ->
@@ -71,6 +71,7 @@ Travis.Store = DS.Store.extend
     !!@typeMapFor(type).idToCid[id]
 
   receive: (event, data) ->
+    console.log event, data
     [name, type] = event.split(':')
 
     mappings = @adapter.get('mappings')

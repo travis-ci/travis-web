@@ -1,10 +1,10 @@
-require 'travis/location'
-
-Ember.Route.reopen
-  enter: (router) ->
-    @_super(router)
-    _gaq.push(['_trackPageview', @absoluteRoute(router)]) if @get('isLeafRoute') && _gaq?
-
+#require 'travis/location'
+#
+#Ember.Route.reopen
+#  enter: (router) ->
+#    @_super(router)
+#    _gaq.push(['_trackPageview', @absoluteRoute(router)]) if @get('isLeafRoute') && _gaq?
+#
 defaultRoute = Ember.Route.extend
   route: '/'
   index: 1000
@@ -17,26 +17,26 @@ lineNumberRoute = Ember.Route.extend
 
   dynamicSegmentPattern: "([0-9]+)"
 
-Travis.Router = Ember.Router.extend
+Travis.OldRouter = Ember.Object.extend
   location: 'travis'
   # enableLogging: true
   enableLogging: false
   initialState: 'loading'
 
-  showRoot:         Ember.Route.transitionTo('root.home.show')
-  showStats:        Ember.Route.transitionTo('root.stats')
-
-  showRepo:         Ember.Route.transitionTo('root.home.repo.show')
-  showBuilds:       Ember.Route.transitionTo('root.home.repo.builds.index')
-  showBuild:        Ember.Route.transitionTo('root.home.repo.builds.show')
-  showPullRequests: Ember.Route.transitionTo('root.home.repo.pullRequests')
-  showBranches:     Ember.Route.transitionTo('root.home.repo.branches')
-  showEvents:       Ember.Route.transitionTo('root.home.repo.events')
-  showJob:          Ember.Route.transitionTo('root.home.repo.job')
-
-  showProfile:      Ember.Route.transitionTo('root.profile')
-  showAccount:      Ember.Route.transitionTo('root.profile.account')
-  showUserProfile:  Ember.Route.transitionTo('root.profile.account.profile')
+  #  showRoot:         Ember.Route.transitionTo('root.home.show')
+  #  showStats:        Ember.Route.transitionTo('root.stats')
+  #
+  #  showRepo:         Ember.Route.transitionTo('root.home.repo.show')
+  #  showBuilds:       Ember.Route.transitionTo('root.home.repo.builds.index')
+  #  showBuild:        Ember.Route.transitionTo('root.home.repo.builds.show')
+  #  showPullRequests: Ember.Route.transitionTo('root.home.repo.pullRequests')
+  #  showBranches:     Ember.Route.transitionTo('root.home.repo.branches')
+  #  showEvents:       Ember.Route.transitionTo('root.home.repo.events')
+  #  showJob:          Ember.Route.transitionTo('root.home.repo.job')
+  #
+  #  showProfile:      Ember.Route.transitionTo('root.profile')
+  #  showAccount:      Ember.Route.transitionTo('root.profile.account')
+  #  showUserProfile:  Ember.Route.transitionTo('root.profile.account.profile')
 
   saveLineNumberHash: (path) ->
     Ember.run.next this, ->
@@ -372,3 +372,24 @@ Travis.Router = Ember.Router.extend
                 job.removeObserver('log.id', observer)
 
               job.addObserver('log.id', observer)
+
+Ember.Router.reopen
+  location: Ember.HistoryLocation.create()
+
+Travis.Router.map ->
+
+Travis.IndexRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'home')
+
+    @render 'repos',   outlet: 'left'
+    @render 'sidebar', outlet: 'right'
+    @render 'top',     outlet: 'top'
+    @render 'flash',   outlet: 'flash'
+    @render 'repo'
+    @render 'build',   outlet: 'pane', into: 'repo'
+
+  setupController: (controller)->
+    @container.lookup('controller:repos').activate()
+    @container.lookup('view:application').connectLayout 'home'
+    @container.lookup('controller:repo').activate('index')

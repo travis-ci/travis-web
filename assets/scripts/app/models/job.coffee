@@ -17,6 +17,7 @@ require 'travis/model'
   repo:   DS.belongsTo('Travis.Repo',     key: 'repository_id')
   build:  DS.belongsTo('Travis.Build',    key: 'build_id')
   commit: DS.belongsTo('Travis.Commit',   key: 'commit_id')
+  commits: DS.belongsTo('Travis.Commit',   key: 'commit_id')
   log: ( ->
     Travis.Artifact.create(job: this)
   ).property()
@@ -76,11 +77,11 @@ require 'travis/model'
 
   subscribe: ->
     if id = @get('id')
-      Travis.app.pusher.subscribe "job-#{id}"
+      Travis.pusher.subscribe "job-#{id}"
 
   onStateChange: (->
-    if @get('state') == 'finished' && Travis.app
-      Travis.app.pusher.unsubscribe "job-#{@get('id')}"
+    if @get('state') == 'finished' && Travis.pusher
+      Travis.pusher.unsubscribe "job-#{@get('id')}"
   ).observes('state')
 
   isAttributeLoaded: (key) ->
@@ -98,16 +99,16 @@ require 'travis/model'
 @Travis.Job.reopenClass
   queued: (queue) ->
     @find()
-    Travis.app.store.filter this, (job) ->
+    Travis.store.filter this, (job) ->
       queued = ['created', 'queued'].indexOf(job.get('state')) != -1
       # TODO: why queue is sometimes just common instead of build.common?
       queued && (!queue || job.get('queue') == "builds.#{queue}" || job.get('queue') == queue)
 
   running: ->
     @find(state: 'started')
-    Travis.app.store.filter this, (job) ->
+    Travis.store.filter this, (job) ->
       job.get('state') == 'started'
 
   findMany: (ids) ->
-    Travis.app.store.findMany this, ids
+    Travis.store.findMany this, ids
 

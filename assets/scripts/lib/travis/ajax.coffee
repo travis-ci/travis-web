@@ -1,6 +1,6 @@
 jQuery.support.cors = true
 
-@Travis.ajax = Em.Object.create
+Travis.ajax = Em.Object.create
   DEFAULT_OPTIONS:
     accepts:
       json: 'application/vnd.travis-ci.2+json'

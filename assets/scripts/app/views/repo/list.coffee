@@ -22,6 +22,8 @@
   ReposListTabsView: Travis.View.extend
     templateName: 'repos/list/tabs'
     tabBinding: 'controller.tab'
+    needs: ['currentUser']
+    currentUserBinding: 'controllers.currentUser'
 
     activate: (event) ->
       @get('controller').activate(event.target.name)
@@ -33,9 +35,9 @@
     classOwned: (->
       classes = []
       classes.push('active')  if @get('tab') == 'owned'
-      classes.push('display-inline') if Travis.app.get('currentUser')
+      classes.push('display-inline') if @get('currentUser')
       classes.join(' ')
-    ).property('tab', 'Travis.app.currentUser')
+    ).property('tab', 'currentUser')
 
     classSearch: (->
       'active' if @get('tab') == 'search'

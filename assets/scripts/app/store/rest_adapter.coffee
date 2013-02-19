@@ -1,7 +1,7 @@
 require 'travis/ajax'
 require 'models'
 
-@Travis.RestAdapter = DS.RESTAdapter.extend
+Travis.RestAdapter = DS.RESTAdapter.extend
   mappings:
     broadcasts:   Travis.Broadcast
     repositories: Travis.Repo
@@ -38,3 +38,5 @@ require 'models'
       return
     else
       @_super.apply this, arguments
+
+Travis.RestAdapter.map 'Travis.Commit', {}

@@ -54,7 +54,7 @@ Travis.LimitedArray = Em.ArrayProxy.extend
     if addedCount
       if index < limit
         addedObjects = array.slice(index, index + addedCount)
-        @replaceContent(index, 0, addedObjects)
+        @get('arrangedContent').replace(index, 0, addedObjects)
 
     @balanceArray()
 

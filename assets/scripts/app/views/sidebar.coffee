@@ -9,9 +9,10 @@
 
       didInsertElement: ->
         controller = @get 'controller'
-        unless controller.get('content')
-          Travis.app.get('router.sidebarController').tickables.push(controller)
-          controller.set 'content', Travis.Sponsor.decks()
+        # TODO: move this stuff to controller
+        #unless controller.get('content')
+          #Travis.app.get('router.sidebarController').tickables.push(controller)
+          #controller.set 'content', Travis.Sponsor.decks()
         @_super.apply this, arguments
 
     LinksView: Em.View.extend
@@ -21,9 +22,9 @@
 
       didInsertElement: ->
         controller = @get 'controller'
-        unless controller.get('content')
-          controller.set 'content', Travis.Sponsor.links()
-          Travis.app.get('router.sidebarController').tickables.push(controller)
+        #unless controller.get('content')
+        #  controller.set 'content', Travis.Sponsor.links()
+        #  Travis.app.get('router.sidebarController').tickables.push(controller)
         @_super.apply this, arguments
 
     WorkersView: Em.View.extend

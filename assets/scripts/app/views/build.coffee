@@ -53,15 +53,7 @@
     elementId: 'build'
     classNameBindings: ['color', 'loading']
 
-    repoBinding: 'controller.repo'
-    buildBinding: 'controller.build'
-    commitBinding: 'build.commit'
-
-    currentItemBinding: 'build'
-
-    loading: (->
-      !@get('build.isLoaded')
-    ).property('build.isLoaded')
+    loadingBinding: 'controller.loading'
 
     color: (->
       Travis.Helpers.colorForState(@get('build.state'))

@@ -5,7 +5,7 @@
 {{view Travis.ReposListTabsView}}
 
 <div class="tab">
-  {{#collection Travis.ReposListView contentBinding="controller"}}
+  {{#collection Travis.ReposListView contentBinding="this"}}
     {{#with view.repo}}
       <div class="slug-and-status">
         <span class="status"></span>

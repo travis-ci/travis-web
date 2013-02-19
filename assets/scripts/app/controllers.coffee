@@ -1,19 +1,19 @@
 require 'helpers'
 require 'travis/ticker'
 
-Travis.reopen
-  Controller: Em.Controller.extend()
-
-  TopController: Em.Controller.extend
+Travis.Controller    = Em.Controller.extend()
+Travis.TopController = Em.Controller.extend
     userBinding: 'Travis.app.currentUser'
 
-  ApplicationController: Em.Controller.extend()
-  MainController: Em.Controller.extend()
-  StatsLayoutController: Em.Controller.extend()
-  ProfileLayoutController: Em.Controller.extend()
-  AuthLayoutController: Em.Controller.extend()
+Travis.ApplicationController = Em.Controller.extend()
+Travis.MainController = Em.Controller.extend()
+Travis.StatsLayoutController = Em.Controller.extend()
+Travis.ProfileLayoutController = Em.Controller.extend()
+Travis.AuthLayoutController = Em.Controller.extend()
+Travis.CurrentUserController = Em.ObjectController.extend()
 
 require 'controllers/accounts'
+require 'controllers/build'
 require 'controllers/builds'
 require 'controllers/flash'
 require 'controllers/home'
