@@ -66,6 +66,8 @@ Travis.RepoController = Travis.Controller.extend
     @connectTab('job')
 
   connectTab: (tab) ->
+    # TODO: such implementation seems weird now, because we render
+    #       in the renderTemplate function in routes
     name = if tab == 'current' then 'build' else tab
     viewClass = if name in ['builds', 'branches', 'pull_requests']
       Travis.BuildsView
@@ -73,7 +75,6 @@ Travis.RepoController = Travis.Controller.extend
       Travis["#{$.camelize(name)}View"]
 
     @set('tab', tab)
-    #@connectOutlet(outletName: 'pane', controller: this, viewClass: viewClass)
 
   _bind: (to, from) ->
     @bindings.push Ember.oneWay(this, to, from)

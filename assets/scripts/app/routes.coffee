@@ -385,6 +385,7 @@ Travis.Router.map ->
       @resource 'job',   path: '/jobs/:job_id'
       @resource 'builds', path: '/builds'
       @resource 'pullRequests', path: '/pull_requests'
+      @resource 'branches', path: '/branches'
 
 Travis.IndexCurrentRoute = Ember.Route.extend
   renderTemplate: ->
@@ -393,19 +394,16 @@ Travis.IndexCurrentRoute = Ember.Route.extend
   setupController: ->
     @container.lookup('controller:repo').activate('index')
 
-Travis.BuildsRoute = Ember.Route.extend
+Travis.AbstractBuidsRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'builds', outlet: 'pane', into: 'repo'
 
   setupController: ->
-    @container.lookup('controller:repo').activate('builds')
+    @container.lookup('controller:repo').activate(@get('contentType'))
 
-Travis.PullRequestsRoute = Ember.Route.extend
-  renderTemplate: ->
-    @render 'builds', outlet: 'pane', into: 'repo'
-
-  setupController: ->
-    @container.lookup('controller:repo').activate('pull_requests')
+Travis.BuildsRoute = Travis.AbstractBuidsRoute.extend(contentType: 'builds')
+Travis.PullRequestsRoute = Travis.AbstractBuidsRoute.extend(contentType: 'pull_requests')
+Travis.BranchesRoute = Travis.AbstractBuidsRoute.extend(contentType: 'branches')
 
 Travis.BuildRoute = Ember.Route.extend
   renderTemplate: ->

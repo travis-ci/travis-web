@@ -28,20 +28,20 @@
   </li>
   <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
     <h5>
-      {{#if view.repo.slug}}
-      <a {{action showBranches view.repo href=true}}>
-        {{t repositories.tabs.branches}}
-      </a>
+      {{#if slug}}
+        {{#linkTo "branches" this}}
+          {{t repositories.tabs.branches}}
+        {{/linkTo}}
       {{/if}}
     </h5>
   </li>
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
     <h5>
       {{#with view.build}}
-        {{#if id}}
-          <a {{action showBuild repo this href=true}}>
+        {{#if repo.slug}}
+          {{#linkTo "build" repo this}}
             {{t repositories.tabs.build}} #{{number}}
-          </a>
+          {{/linkTo}}
         {{/if}}
       {{/with}}
     </h5>
@@ -49,10 +49,10 @@
   <li id="tab_job" {{bindAttr class="view.classJob"}}>
     <h5>
       {{#with view.job}}
-        {{#if id}}
-          <a {{action showJob repo this href=true}}>
+        {{#if repo.slug}}
+          {{#linkTo "job" repo this}}
             {{t repositories.tabs.job}} #{{number}}
-          </a>
+          {{/linkTo}}
         {{/if}}
       {{/with}}
     </h5>
