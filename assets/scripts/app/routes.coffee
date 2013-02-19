@@ -383,16 +383,33 @@ Travis.Router.map ->
       @route 'index', path: '/'
       @resource 'build', path: '/builds/:build_id'
       @resource 'job',   path: '/jobs/:job_id'
+      @resource 'builds', path: '/builds'
+      @resource 'pullRequests', path: '/pull_requests'
 
 Travis.IndexCurrentRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'build',   outlet: 'pane', into: 'repo'
+    @render 'build', outlet: 'pane', into: 'repo'
 
   setupController: ->
     @container.lookup('controller:repo').activate('index')
 
+Travis.BuildsRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'builds', outlet: 'pane', into: 'repo'
+
+  setupController: ->
+    @container.lookup('controller:repo').activate('builds')
+
+Travis.PullRequestsRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'builds', outlet: 'pane', into: 'repo'
+
+  setupController: ->
+    @container.lookup('controller:repo').activate('pull_requests')
+
 Travis.BuildRoute = Ember.Route.extend
-  renderTemplate: (->)
+  renderTemplate: ->
+    @render 'build', outlet: 'pane', into: 'repo'
 
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
@@ -427,10 +444,12 @@ Travis.RepoIndexRoute = Ember.Route.extend
   setupController: (controller, model) ->
     @container.lookup('controller:repo').activate('current')
 
+  renderTemplate: ->
+    @render 'build', outlet: 'pane', into: 'repo'
+
 Travis.RepoRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'repo'
-    @render 'build', outlet: 'pane', into: 'repo'
 
   setupController: (controller, model) ->
     controller.set('repo', model)

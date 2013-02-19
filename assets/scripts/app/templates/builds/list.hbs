@@ -26,9 +26,9 @@
           <td class="number">
             <span class="status"></span>
             {{#if id}}
-              <a {{action showBuild repo this href=true}}>
+              {{#linkTo "build" repo this}}
                 {{number}}
-              </a>
+              {{/linkTo}}
             {{/if}}
           </td>
           <td class="message">

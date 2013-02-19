@@ -1,5 +1,7 @@
 Travis.BuildsController = Em.ArrayController.extend
   # sortAscending: false
+  needs: ['repo']
 
-  repo: 'parent.repo'
-  contentBinding: 'parent.builds'
+  repoBinding: 'controllers.repo'
+  buildsBinding: 'repo.builds'
+  tabBinding: 'controllers.repo.tab'

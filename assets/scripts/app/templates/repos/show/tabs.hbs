@@ -1,28 +1,28 @@
 <ul class="tabs">
   <li id="tab_current" {{bindAttr class="view.classCurrent"}}>
     <h5>
-      {{#if view.repo.slug}}
-      <a {{action showRepo view.repo href=true}}>
-        {{t repositories.tabs.current}}
-      </a>
+      {{#if slug}}
+        {{#linkTo "repo" this currentWhen="repo.index"}}
+          {{t repositories.tabs.current}}
+        {{/linkTo}}
       {{/if}}
     </h5>
   </li>
   <li id="tab_builds" {{bindAttr class="view.classBuilds"}}>
     <h5>
-      {{#if view.repo.slug}}
-      <a {{action showBuilds view.repo href=true}}>
-        {{t repositories.tabs.build_history}}
-      </a>
+      {{#if slug}}
+        {{#linkTo "builds" this}}
+          {{t repositories.tabs.build_history}}
+        {{/linkTo}}
       {{/if}}
     </h5>
   </li>
   <li id="tab_pull_requests" {{bindAttr class="view.classPullRequests"}}>
     <h5>
-      {{#if view.repo.slug}}
-      <a {{action showPullRequests view.repo href=true}}>
-        {{t repositories.tabs.pull_requests}}
-      </a>
+      {{#if slug}}
+        {{#linkTo "pullRequests" this}}
+          {{t repositories.tabs.pull_requests}}
+        {{/linkTo}}
       {{/if}}
     </h5>
   </li>

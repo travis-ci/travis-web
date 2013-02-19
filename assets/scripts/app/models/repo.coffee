@@ -33,6 +33,7 @@ require 'travis/model'
   builds: (->
     id = @get('id')
     builds = Travis.Build.byRepoId id, event_type: 'push'
+    # TODO: move to controller
     array  = Travis.ExpandableRecordArray.create
       type: Travis.Build
       content: Ember.A([])
