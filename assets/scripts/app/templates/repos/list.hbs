@@ -9,10 +9,14 @@
     {{#with view.repo}}
       <div class="slug-and-status">
         <span class="status"></span>
-        {{#linkTo repo this class="slug"}}{{slug}}{{/linkTo}}
+        {{#if slug}}
+          {{#linkTo repo this class="slug"}}{{slug}}{{/linkTo}}
+        {{/if}}
       </div>
       {{#with lastBuildHash}}
-        {{#linkTo build repo id class="last_build"}}{{number}}{{/linkTo}}
+        {{#if repo.slug}}
+          {{#linkTo build repo id class="last_build"}}{{number}}{{/linkTo}}
+        {{/if}}
       {{/with}}
 
       <p class="summary">

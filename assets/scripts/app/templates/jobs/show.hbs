@@ -6,7 +6,9 @@
         <dd class="number">
           <span class="status"></span>
           {{#if job.id}}
-            {{#linkTo job repo job}}{{job.number}}{{/linkTo}}
+            {{#if job.repo.slug}}
+              {{#linkTo job repo job}}{{job.number}}{{/linkTo}}
+            {{/if}}
           {{/if}}
         </dd>
         <dt>{{t jobs.state}}</dt>
