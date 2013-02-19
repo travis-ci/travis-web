@@ -452,10 +452,14 @@ Travis.RepoRoute = Ember.Route.extend
     @render 'repo'
 
   setupController: (controller, model) ->
+    # TODO: if repo is just a data hash with id and slug load it
+    #       as incomplete record
+    model = Travis.Repo.find(model.id) if model && !model.get
     controller.set('repo', model)
 
   serialize: (repo) ->
-    [owner, name] = repo.get('slug').split('/')
+    slug = if repo.get then repo.get('slug') else repo.slug
+    [owner, name] = slug.split('/')
     { owner: owner, name: name }
 
   deserialize: (params) ->

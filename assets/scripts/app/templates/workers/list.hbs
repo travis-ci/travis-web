@@ -17,9 +17,9 @@
                 <div class="status"></div>
                 {{#if worker.isWorking}}
                   {{#if worker.jobId}}
-                    <a {{action showJob worker.repoData worker.jobId target="Travis.app.router" href=true}}>
+                    {{#linkTo "job" worker.repoData worker.jobId}}
                       {{view.display}}
-                    </a>
+                    {{/linkTo}}
                   {{/if}}
                 {{else}}
                   {{view.display}}

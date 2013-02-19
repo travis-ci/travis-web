@@ -7,7 +7,16 @@ Travis.reopen
     tick: ->
       tickable.tick() for tickable in @tickables
 
-  QueuesController: Em.ArrayController.extend()
+  QueuesController: Em.ArrayController.extend
+    init: ->
+      @_super.apply this, arguments
+
+      queues = for queue in Travis.QUEUES
+        Travis.LimitedArray.create
+          content: Travis.Job.queued(queue.name), limit: 20
+          id: "queue_#{queue.name}"
+          name: queue.display
+      @set 'content', queues
 
   WorkersController: Em.ArrayController.extend
     groups: (->

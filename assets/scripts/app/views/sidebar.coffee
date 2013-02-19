@@ -37,20 +37,14 @@
 
     QueuesView: Em.View.extend
       templateName: 'queues/list'
-      controller: Em.ArrayController.create()
+      init: ->
+        @_super.apply this, arguments
+
+        @set 'controller', @get('controller').container.lookup('controller:queues')
 
       showAll: (event) ->
         queue = event.context
         queue.showAll()
-
-      didInsertElement: ->
-        queues = for queue in Travis.QUEUES
-          Travis.LimitedArray.create
-            content: Travis.Job.queued(queue.name), limit: 20
-            id: "queue_#{queue.name}"
-            name: queue.display
-        @set 'controller.content', queues
-        @_super.apply this, arguments
 
     RunningJobsView: Em.View.extend
       templateName: 'jobs/running'
