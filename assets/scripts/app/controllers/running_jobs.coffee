@@ -39,7 +39,9 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
   init: ->
     @_super.apply this, arguments
 
-    @addedJobs @get('content') if @get('content')
+    jobs = Travis.Job.running()
+    @set 'content', jobs
+    @addedJobs jobs
 
   contentArrayWillChange: (array, index, removedCount, addedCount) ->
     @_super.apply this, arguments

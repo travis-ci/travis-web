@@ -39,7 +39,6 @@
       templateName: 'queues/list'
       init: ->
         @_super.apply this, arguments
-
         @set 'controller', @get('controller').container.lookup('controller:queues')
 
       showAll: (event) ->
@@ -49,13 +48,12 @@
     RunningJobsView: Em.View.extend
       templateName: 'jobs/running'
       elementId: 'running-jobs'
-      controller: Travis.RunningJobsController.create()
+      init: ->
+        @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:runningJobs')
 
       groupsBinding: 'controller.sortedGroups'
       jobsBinding: 'controller'
-
-      didInsertElement: ->
-        @get('controller').set 'content', Travis.Job.running()
 
       GroupView: Em.View.extend
         templateName: 'jobs/running/group'
