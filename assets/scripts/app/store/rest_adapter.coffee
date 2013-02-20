@@ -62,3 +62,7 @@ Travis.RestAdapter.map 'Travis.Job', {
   repoId: { key: 'repository_id' }
   repo:   { key: 'repository_id' }
 }
+
+Travis.RestAdapter.map 'Travis.User', {
+  _name: { key: 'name' }
+}

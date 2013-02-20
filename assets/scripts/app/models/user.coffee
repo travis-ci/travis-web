@@ -2,7 +2,7 @@ require 'travis/ajax'
 require 'travis/model'
 
 @Travis.User = Travis.Model.extend
-  _name:       DS.attr('string', key: 'name')
+  _name:       DS.attr('string')
   email:       DS.attr('string')
   login:       DS.attr('string')
   token:       DS.attr('string')
@@ -22,8 +22,9 @@ require 'travis/model'
   ).property('login', '_name')
 
   init: ->
-    @poll() if @get('isSyncing')
     @_super()
+
+    #@poll() if @get('isSyncing')
 
     Ember.run.next this, ->
       transaction = @get('store').transaction()

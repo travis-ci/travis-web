@@ -49,19 +49,23 @@
   setData: (data) ->
     @storeData(data, Travis.sessionStorage)
     @storeData(data, Travis.storage) unless @userDataFrom(Travis.storage)
-    @set('user', @loadUser(data.user))
+    user = @loadUser(data.user)
+    # TODO: we should not use __container__ directly, how to do it better?
+    Travis.__container__.lookup('controller:currentUser').set('content', user)
+
     @set('state', 'signed-in')
     Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
-    @get('app.router').send('afterSignIn', @readAfterSignInPath())
+    #@get('app.router').send('afterSignIn', @readAfterSignInPath())
 
   storeData: (data, storage) ->
     storage.setItem('travis.token', data.token)
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
-    @app.store.load(Travis.User, user)
-    user = @app.store.find(Travis.User, user.id)
+    store = @app.store
+    store.load(Travis.User, user.id, user)
+    user = store.find(Travis.User, user.id)
     user.get('permissions')
     user
 

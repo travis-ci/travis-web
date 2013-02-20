@@ -17,7 +17,7 @@
   </li>
   <li {{bindAttr class="view.classProfile"}}>
     <p class="handle">
-      <a class="signed-out" href="#" {{action signIn target="Travis.app"}}>{{t layouts.top.github_login}}</a>
+      <a class="signed-out" href="#" {{action signIn target="Travis"}}>{{t layouts.top.github_login}}</a>
       <a class="signed-in" {{action showProfile href=true}}><img {{bindAttr src="view.gravatarUrl"}}>{{view.userName}}</a>
       <span class="signing-in">{{t layouts.top.signing_in}}</span>
     </p>
@@ -26,7 +26,7 @@
         <a {{action showProfile href=true}}>{{t layouts.top.accounts}}</a>
       </li>
       <li>
-        <a href="/" {{action signOut target="Travis.app"}}>{{t layouts.top.sign_out}}</a>
+        <a href="/" {{action signOut target="Travis"}}>{{t layouts.top.sign_out}}</a>
       </li>
     </ul>
   </li>

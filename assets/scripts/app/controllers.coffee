@@ -3,7 +3,8 @@ require 'travis/ticker'
 
 Travis.Controller    = Em.Controller.extend()
 Travis.TopController = Em.Controller.extend
-    userBinding: 'Travis.app.currentUser'
+  needs: ['currentUser']
+  userBinding: 'controllers.currentUser'
 
 Travis.ApplicationController = Em.Controller.extend
   templateName: 'layouts/home'
