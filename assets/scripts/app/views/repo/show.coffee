@@ -1,4 +1,4 @@
-@Travis.reopen
+Travis.reopen
   RepoView: Travis.View.extend
     templateName: 'repos/show'
 

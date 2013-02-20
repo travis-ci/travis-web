@@ -492,7 +492,6 @@ Travis.IndexRoute = Ember.Route.extend
     @render 'flash',   outlet: 'flash'
 
   setupController: (controller)->
-    console.log 'setupController IndexRoute'
     @container.lookup('controller:repos').activate()
     @container.lookup('controller:application').connectLayout 'home'
 

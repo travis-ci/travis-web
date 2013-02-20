@@ -20,6 +20,7 @@ Travis.ReposController = Ember.ArrayController.extend
     this["view#{$.camelize(tab)}"](params)
 
   viewRecent: ->
+    return if @get('content')
     content = Travis.LimitedArray.create
       content: Em.ArrayProxy.extend(Em.SortableMixin).create(
         sortProperties: ['sortOrder']
