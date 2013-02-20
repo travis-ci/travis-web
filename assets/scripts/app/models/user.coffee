@@ -24,6 +24,7 @@ require 'travis/model'
   init: ->
     @_super()
 
+    # TODO: the next line fails, check this
     #@poll() if @get('isSyncing')
 
     Ember.run.next this, ->
