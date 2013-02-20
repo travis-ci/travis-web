@@ -1,13 +1,13 @@
-<a {{action showRoot href=true}}>
+{{#linkTo index.current}}
   <h1>Travis</h1>
-</a>
+{{/linkTo}}
 
 <ul id="navigation">
   <li class="home">
-    <a {{action showRoot href=true}}>{{t layouts.top.home}}</a>
+    {{#linkTo index.current}}{{t layouts.top.home}}{{/linkTo}}
   </li>
   <li class="stats">
-    <a {{action showStats href=true}}>{{t layouts.top.stats}}</a>
+    {{#linkTo stats}}{{t layouts.top.stats}}{{/linkTo}}
   </li>
   <li>
     <a href="http://about.travis-ci.org/blog">{{t layouts.top.blog}}</a>

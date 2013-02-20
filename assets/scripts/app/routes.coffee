@@ -387,8 +387,11 @@ Travis.Router.map ->
       @resource 'pullRequests', path: '/pull_requests'
       @resource 'branches', path: '/branches'
 
+  @route 'stats', path: '/stats'
+
 Travis.IndexCurrentRoute = Ember.Route.extend
   renderTemplate: ->
+    @render 'repo'
     @render 'build', outlet: 'pane', into: 'repo'
 
   setupController: ->
@@ -489,5 +492,16 @@ Travis.IndexRoute = Ember.Route.extend
     @render 'flash',   outlet: 'flash'
 
   setupController: (controller)->
+    console.log 'setupController IndexRoute'
     @container.lookup('controller:repos').activate()
-    @container.lookup('view:application').connectLayout 'home'
+    @container.lookup('controller:application').connectLayout 'home'
+
+Travis.StatsRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'stats')
+
+    @render 'top', outlet: 'top'
+    @render 'stats'
+
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('simple')

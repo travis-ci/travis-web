@@ -1,16 +1,11 @@
 Travis.reopen
   ApplicationView: Travis.View.extend
-    templateName: 'layouts/home'
+    templateName: (-> @get 'controller.templateName' ).property('controller.templateName')
     classNames: ['application']
 
-    connectLayout: (name) ->
-      name = "layouts/#{name}"
-      if @get('templateName') != name
-        @set('templateName', name)
-        @rerender()
-
-    # popup: (event) ->
-    #   console.log event
+    templateNameDidChange: (->
+      @rerender()
+    ).observes('templateName')
 
     click: ->
       # TODO: this solves the case of closing menus and popups,

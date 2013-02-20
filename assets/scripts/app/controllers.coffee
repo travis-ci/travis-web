@@ -5,7 +5,14 @@ Travis.Controller    = Em.Controller.extend()
 Travis.TopController = Em.Controller.extend
     userBinding: 'Travis.app.currentUser'
 
-Travis.ApplicationController = Em.Controller.extend()
+Travis.ApplicationController = Em.Controller.extend
+  templateName: 'layouts/home'
+
+  connectLayout: (name) ->
+    name = "layouts/#{name}"
+    if @get('templateName') != name
+      @set('templateName', name)
+
 Travis.MainController = Em.Controller.extend()
 Travis.StatsLayoutController = Em.Controller.extend()
 Travis.ProfileLayoutController = Em.Controller.extend()
