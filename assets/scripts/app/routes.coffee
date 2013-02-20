@@ -389,6 +389,12 @@ Travis.Router.map ->
 
   @route 'stats', path: '/stats'
 
+  @resource 'profile', path: '/profile', ->
+    @route 'index', path: '/'
+    @resource 'account', path: '/:login', ->
+      @route 'index', path: '/'
+      @route 'profile', path: '/profile'
+
 Travis.IndexCurrentRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'repo'
@@ -504,3 +510,70 @@ Travis.StatsRoute = Ember.Route.extend
 
   setupController: ->
     @container.lookup('controller:application').connectLayout('simple')
+
+Travis.ProfileRoute = Ember.Route.extend
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('profile')
+    @container.lookup('controller:accounts').set('content', Travis.Account.find())
+
+  renderTemplate: ->
+    $('body').attr('id', 'profile')
+
+    @render 'top', outlet: 'top'
+    @render 'accounts', outlet: 'left'
+    @render 'flash', outlet: 'flash'
+    @render 'profile'
+
+Travis.ProfileIndexRoute = Ember.Route.extend
+  setupController: ->
+    @container.lookup('controller:profile').activate 'hooks'
+
+  renderTemplate: ->
+    @render 'hooks', outlet: 'pane', into: 'profile'
+
+Travis.AccountRoute = Ember.Route.extend
+  setupController: (controller, account) ->
+    profileController = @container.lookup('controller:profile')
+    profileController.activate 'hooks'
+
+    if account
+      params = { login: account.get('login') }
+      profileController.setParams(params)
+
+  deserialize: (params) ->
+    controller = @container.lookup('controller:accounts')
+    account = controller.findByLogin(params.login)
+
+    if account
+      account
+    else
+      content = Ember.Object.create(login: params.login)
+      proxy = Ember.ObjectProxy.create(content: content)
+
+      observer = ->
+        if account = controller.findByLogin(params.login)
+          controller.removeObserver 'content.length', observer
+          proxy.set('content', account)
+      controller.addObserver 'content.length', observer
+
+      proxy
+
+  serialize: (account) ->
+    if account
+      { login: account.get('login') }
+    else
+      {}
+
+Travis.AccountIndexRoute = Ember.Route.extend
+  setupController: ->
+    @container.lookup('controller:profile').activate 'hooks'
+
+  renderTemplate: ->
+    @render 'hooks', outlet: 'pane', into: 'profile'
+
+Travis.AccountProfileRoute = Ember.Route.extend
+  setupController: ->
+    @container.lookup('controller:profile').activate 'user'
+
+  renderTemplate: ->
+    @render 'user', outlet: 'pane', into: 'profile'

@@ -1,4 +1,4 @@
-@Travis.reopen
+Travis.reopen
   ProfileView: Travis.View.extend
     templateName: 'profile/show'
     accountBinding: 'controller.account'
