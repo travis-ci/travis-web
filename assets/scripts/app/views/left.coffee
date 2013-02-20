@@ -10,9 +10,9 @@
     classOwned: (->
       classes = []
       classes.push('active')  if @get('tab') == 'owned'
-      classes.push('display') if Travis.app.get('currentUser')
+      classes.push('display') if @get('controller.currentUser')
       classes.join(' ')
-    ).property('tab', 'Travis.currentUser')
+    ).property('tab', 'controller.currentUser')
 
     classSearch: (->
       'active' if @get('tab') == 'search'

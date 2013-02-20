@@ -89,7 +89,7 @@
 
       if target.is('a') && target.attr('id') && target.attr('id').match(/^L\d+$/)
         path = target.attr 'href'
-        Travis.app.get('router').route(path)
+        Travis.get('router').route(path)
         event.stopPropagation()
         return false
 
@@ -126,7 +126,7 @@
       @set 'logManager', Travis.Log.create(target: this)
 
     toggleTailing: ->
-      Travis.app.tailing.toggle()
+      Travis.tailing.toggle()
       event.preventDefault()
 
     didInsertElement: ->

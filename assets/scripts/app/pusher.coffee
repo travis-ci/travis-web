@@ -46,7 +46,7 @@ $.extend Travis.Pusher.prototype,
         Travis.Job.find(data.job.id).clearLog()
 
     Ember.run.next ->
-      Travis.app.store.receive(event, data)
+      Travis.store.receive(event, data)
 
   normalize: (event, data) ->
     switch event
