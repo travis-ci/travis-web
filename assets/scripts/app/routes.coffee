@@ -471,8 +471,8 @@ Travis.RepoRoute = Ember.Route.extend
 
   deserialize: (params) ->
     slug = "#{params.owner}/#{params.name}"
-    proxy = Ember.ObjectProxy.create(content: Ember.Object.create())
-    proxy.setProperties slug: slug, isLoaded: false
+    content = Ember.Object.create slug: slug, isLoaded: false
+    proxy = Ember.ObjectProxy.create(content: content)
 
     repos = Travis.Repo.bySlug(slug)
 
