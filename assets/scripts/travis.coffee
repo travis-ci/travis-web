@@ -25,7 +25,7 @@ window.Travis = Em.Application.extend(Ember.Evented,
     @store = Travis.Store.create(
       adapter: Travis.RestAdapter.create(serializer: DS.RESTSerializer)
     )
-    #@store.loadMany(Travis.Sponsor, Travis.SPONSORS)
+    @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
     @slider = new Travis.Slider()
     @pusher = new Travis.Pusher(Travis.config.pusher_key)

@@ -4,28 +4,15 @@
 
     DecksView: Em.View.extend
       templateName: "sponsors/decks"
-      controller: Travis.SponsorsController.create
-        perPage: 1
-
-      didInsertElement: ->
-        controller = @get 'controller'
-        # TODO: move this stuff to controller
-        #unless controller.get('content')
-          #Travis.app.get('router.sidebarController').tickables.push(controller)
-          #controller.set 'content', Travis.Sponsor.decks()
+      init: ->
         @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:decks')
 
     LinksView: Em.View.extend
       templateName: "sponsors/links"
-      controller: Travis.SponsorsController.create
-        perPage: 6
-
-      didInsertElement: ->
-        controller = @get 'controller'
-        #unless controller.get('content')
-        #  controller.set 'content', Travis.Sponsor.links()
-        #  Travis.app.get('router.sidebarController').tickables.push(controller)
+      init: ->
         @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:links')
 
     WorkersView: Em.View.extend
       templateName: 'workers/list'

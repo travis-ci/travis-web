@@ -66,3 +66,22 @@ Travis.reopen
     end: ->
       @start() + @get('perPage')
 
+Travis.DecksController = Travis.SponsorsController.extend
+  needs: ['sidebar']
+  perPage: 1
+
+  init: ->
+    @_super.apply this, arguments
+
+    @get('controllers.sidebar').tickables.push(this)
+    @set 'content', Travis.Sponsor.decks()
+
+Travis.LinksController = Travis.SponsorsController.extend
+  needs: ['sidebar']
+  perPage: 6
+
+  init: ->
+    @_super.apply this, arguments
+
+    @get('controllers.sidebar').tickables.push(this)
+    @set 'content', Travis.Sponsor.links()

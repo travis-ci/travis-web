@@ -4,10 +4,11 @@ require 'travis/model'
   type:  DS.attr('string')
   url:   DS.attr('string')
   link:  DS.attr('string')
+  _image: DS.attr('string')
 
   image: (->
-    "/images/sponsors/#{@get('data.image')}"
-  ).property('data.image')
+    "/images/sponsors/#{@get('_image')}"
+  ).property('_image')
 
 Travis.Sponsor.reopenClass
   decks: ->

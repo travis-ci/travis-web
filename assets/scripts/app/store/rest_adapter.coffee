@@ -66,3 +66,7 @@ Travis.RestAdapter.map 'Travis.Job', {
 Travis.RestAdapter.map 'Travis.User', {
   _name: { key: 'name' }
 }
+
+Travis.RestAdapter.map 'Travis.Sponsor', {
+  _image: { key: 'image' }
+}
