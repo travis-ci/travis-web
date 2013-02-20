@@ -1,6 +1,7 @@
 Travis.RepoController = Travis.Controller.extend
   bindings: []
-  needs: ['repos']
+  needs: ['repos', 'currentUser']
+  currentUserBinding: 'controllers.currentUser'
 
   init: ->
     @_super.apply this, arguments

@@ -75,6 +75,7 @@ Travis.reopen
     buildBinding: 'controller.build'
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
+    currentUserBinding: 'controller.currentUser'
 
     closeMenu: ->
       console.log 'closeMenu'
@@ -203,6 +204,6 @@ Travis.reopen
     ).property('tab')
 
     hasPermission: (->
-      if permissions = Travis.get('currentUser.permissions')
-        permissions.contains @get('repo.id')
-    ).property('Travis.currentUser.permissions.length', 'repo.id')
+      if permissions = @get('currentUser.permissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.permissions.length', 'repo.id')
