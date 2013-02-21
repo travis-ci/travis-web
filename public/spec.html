@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/styles/jasmine-ext.css">
     <script src="/scripts/app.js"></script>
     <script>
+      window.testMode = true;
       minispade.require('travis')
     </script>
 
@@ -28,8 +29,5 @@
       jasmine.getEnv().addReporter(console_reporter);
       jasmine.getEnv().execute();
     </script>
-
-    <div id="application">
-    </div>
   </body>
 </html>

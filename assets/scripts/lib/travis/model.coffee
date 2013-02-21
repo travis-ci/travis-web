@@ -3,10 +3,22 @@
     @loadedAttributes = []
     @_super.apply this, arguments
 
-  refresh: ->
-    if id = @get('id')
-      store = @get('store')
-      store.adapter.find store, @constructor, id
+  getAttr: (key, options) ->
+    @needsCompletionCheck(key)
+    @_super.apply this, arguments
+
+  getBelongsTo: (key, type, meta) ->
+    @needsCompletionCheck(key)
+    @_super.apply this, arguments
+
+  getHasMany: (key, type, meta) ->
+    @needsCompletionCheck(key)
+    @_super.apply this, arguments
+
+  needsCompletionCheck: (key) ->
+    if key && (@constructor.isAttribute(key) || @constructor.isRelationship(key)) &&
+        @get('incomplete') && !@isAttributeLoaded(key)
+      @loadTheRest(key)
 
   update: (attrs) ->
     $.each attrs, (key, value) =>
@@ -14,14 +26,7 @@
     this
 
   isAttributeLoaded: (name) ->
-    key = null
-    if meta = Ember.get(this.constructor, 'attributes').get(name)
-      key = meta.key(this.constructor)
-    else if meta = Ember.get(this.constructor, 'associationsByName').get(name)
-      key = meta.options.key || @get('namingConvention').foreignKey(name)
-
-    if key
-      @get('store').isDataLoadedFor(this.constructor, @get('clientId'), key)
+    @get('store').isDataLoadedFor(this.constructor, @get('clientId'), name)
 
   isComplete: (->
     if @get 'incomplete'
@@ -44,13 +49,12 @@
     return if @get('isCompleting')
     @set 'isCompleting', true
 
-    @refresh()
+    if @get('stateManager.currentState.path') != 'rootState.loaded.materializing'
+      @reload()
+    @set 'incomplete', false
 
   select: ->
     @constructor.select(@get('id'))
-
-  loadedAsIncomplete: () ->
-    @set 'incomplete', true
 
 @Travis.Model.reopenClass
   find: ->
@@ -86,5 +90,15 @@
     Travis.store.adapter.pluralize(@singularName())
 
   isAttribute: (name) ->
-    Ember.get(this, 'attributes').has(name) ||
-      Ember.get(this, 'associationsByName').has(name)
+    Ember.get(this, 'attributes').has(name)
+
+  isRelationship: (name) ->
+    Ember.get(this, 'relationshipsByName').has(name)
+
+  isHasManyRelationship: (name) ->
+    if relationship = Ember.get(this, 'relationshipsByName').get(name)
+      relationship.kind == 'hasMany'
+
+  isBelongsToRelationship: (name) ->
+    if relationship = Ember.get(this, 'relationshipsByName').get(name)
+      relationship.kind == 'belongsTo'

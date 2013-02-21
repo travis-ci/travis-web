@@ -374,7 +374,7 @@ Travis.OldRouter = Ember.Object.extend
               job.addObserver('log.id', observer)
 
 Ember.Router.reopen
-  location: Ember.HistoryLocation.create()
+  location: (if testMode? then Ember.HashLocation.create() else Ember.HistoryLocation.create())
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->

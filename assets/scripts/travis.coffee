@@ -17,13 +17,12 @@ Storage = Em.Object.extend
     @set('storage', {})
 
 window.Travis = Em.Application.extend(Ember.Evented,
-  autoinit: false
   authStateBinding: 'auth.state'
   signedIn: (-> @get('authState') == 'signed-in' ).property('authState')
 
   setup: ->
     @store = Travis.Store.create(
-      adapter: Travis.RestAdapter.create(serializer: DS.RESTSerializer)
+      adapter: Travis.RestAdapter.create()
     )
     @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
@@ -72,6 +71,8 @@ window.Travis = Em.Application.extend(Ember.Evented,
     @setLocale 'locale', @get('defaultLocale')
     @autoSignIn() unless @get('signedIn')
 ).create()
+
+Travis.deferReadiness()
 
 $.extend Travis,
   config:

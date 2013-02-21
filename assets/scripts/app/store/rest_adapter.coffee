@@ -6,7 +6,49 @@ DS.JSONTransforms['object'] = {
   serialize: (deserialized) -> deserialized
 }
 
+Travis.Serializer = DS.RESTSerializer.extend
+  merge: (record, serialized) ->
+    data = record.get('data')
+
+    # TODO: write test that ensures that we go to materializingData
+    #       only if we can
+    state = record.get('stateManager.currentState.path')
+    unless state == "rootState.loaded.materializing"
+      record.send('materializingData')
+
+    record.eachAttribute( (name, attribute) ->
+      value = @extractAttribute(record.constructor, serialized, name)
+      if value != undefined
+        value = @deserializeValue(value, attribute.type)
+        if value != data.attributes[name]
+          record.materializeAttribute(name, value)
+          record.notifyPropertyChange(name)
+    , this)
+
+    record.eachRelationship( (name, relationship) ->
+      if relationship.kind == 'belongsTo'
+        key = @_keyForBelongsTo(record.constructor, relationship.key)
+        value = @extractBelongsTo(record.constructor, serialized, key)
+
+        if value != undefined && data.belongsTo[name] != value
+          record.materializeBelongsTo name, value
+          record.notifyPropertyChange(name)
+      else if relationship.kind == 'hasMany'
+        key = @_keyForHasMany(record.constructor, relationship.key)
+        value = @extractHasMany(record.constructor, serialized, key)
+
+        if value != undefined
+          record.materializeHasMany name, value
+          record.notifyPropertyChange(name)
+    , this)
+
+    # TODO: add test that ensures that this line is called
+    #       it should check if record goes into loaded.saved
+    #       state after being in materializing
+    record.notifyPropertyChange('data')
+
 Travis.RestAdapter = DS.RESTAdapter.extend
+  serializer: Travis.Serializer
   mappings:
     broadcasts:   Travis.Broadcast
     repositories: Travis.Repo
@@ -43,6 +85,9 @@ Travis.RestAdapter = DS.RESTAdapter.extend
       return
     else
       @_super.apply this, arguments
+
+  merge: (store, record, serialized) ->
+    @get('serializer').merge(record, serialized)
 
 Travis.RestAdapter.map 'Travis.Commit', {}
 

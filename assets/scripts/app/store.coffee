@@ -1,8 +1,6 @@
 require 'store/rest_adapter'
 
-DATA_PROXY =
-  get: (name) ->
-    @savedData[name]
+coerceId = (id) -> if id == null then null else id+''
 
 Travis.Store = DS.Store.extend
   revision: 11
@@ -11,20 +9,15 @@ Travis.Store = DS.Store.extend
   init: ->
     @_super.apply this, arguments
     @_loadedData = {}
+    @clientIdToComplete = {}
 
-  load: (type, id, hash) ->
+  load: (type, data, prematerialized) ->
     result = @_super.apply this, arguments
 
-    if result && result.clientId
+    if result && result.clientId && @clientIdToComplete[result.clientId] == undefined
       # I assume that everything that goes through load is complete record
       # representation, incomplete hashes from pusher go through merge()
-      record = @findByClientId type, result.clientId
-      record.set 'incomplete', false
-      record.set 'complete', true
-      # setting both incomplete and complete may be weird, but it's easier to
-      # work with both values. I need to check if record has already been completed
-      # and in order to do that, without having 'complete', I would need to check
-      # for incomplete == false, which looks worse
+      @clientIdToComplete[result.clientId] = true
 
     result
 
@@ -34,38 +27,26 @@ Travis.Store = DS.Store.extend
     array.set('isLoaded', true) for array in @typeMapFor(type).recordArrays
     result
 
-  merge: (type, id, hash) ->
-    if hash == undefined
-      hash = id
-      primaryKey = type.proto().primaryKey
-      Ember.assert("A data hash was loaded for a record of type " + type.toString() + " but no primary key '" + primaryKey + "' was provided.", hash[primaryKey])
-      id = hash[primaryKey]
+  merge: (type, data, incomplete) ->
+    id = coerceId data.id
 
-    typeMap     = @typeMapFor(type)
-    dataCache   = typeMap.cidToHash
-    clientId    = typeMap.idToCid[id]
-    recordCache = @get('recordCache')
-
-    if clientId != undefined
-      if (data = dataCache[clientId]) && (typeof data == 'object')
-        for key, value of hash
-          if ( descriptor = Object.getOwnPropertyDescriptor(data, key) ) && descriptor.set
-            Ember.set(data, key, value)
-          else
-            data[key] = value
-      else
-        dataCache[clientId] = hash
-
-      if record = recordCache[clientId]
-        record.send('didChangeData')
+    typeMap   = @typeMapFor(type)
+    clientId  = typeMap.idToCid[id]
+    record    = @recordCache[clientId]
+    if record
+      @get('adapter').merge(this, record, data)
     else
-      clientId = @pushHash(hash, id, type)
+      if (savedData = @clientIdToData[clientId]) && savedData.id?
+        $.extend(savedData, data)
+      else
+        result = @load(type, data, {id: data.id})
 
-    if clientId
-      DATA_PROXY.savedData = hash
-      @updateRecordArrays(type, clientId, DATA_PROXY)
+        if result && result.clientId
+          clientId = result.clientId
+          if incomplete
+            @clientIdToComplete[result.clientId] = false
 
-      { id: id, clientId: clientId }
+    { clientId: clientId, id: id }
 
   isInStore: (type, id) ->
     !!@typeMapFor(type).idToCid[id]
@@ -76,6 +57,7 @@ Travis.Store = DS.Store.extend
 
     mappings = @adapter.get('mappings')
     type = mappings[name]
+
 
     if event == 'build:started' && data.build.commit
       # TODO: commit should be a sideload record on build, not mixed with it
@@ -114,14 +96,29 @@ Travis.Store = DS.Store.extend
     if type == Travis.Build && (json.repository || json.repo)
       @loadIncomplete(Travis.Repo, json.repository || json.repo)
 
-    @loadIncomplete(type, json[root])
+    result = @loadIncomplete(type, json[root])
+    if result.id
+      @find(type, result.id)
 
   addLoadedData: (type, clientId, hash) ->
     id = hash.id
     @_loadedData[type.toString()] ||= {}
     loadedData = (@_loadedData[type][clientId] ||= [])
-    for key of hash
-      loadedData.pushObject key unless loadedData.contains(key)
+
+    serializer = @get('adapter.serializer')
+
+    Ember.get(type, 'attributes').forEach( (name, meta) ->
+      value = @extractAttribute(type, hash, name)
+      if value != undefined
+        loadedData.pushObject name unless loadedData.contains(name)
+    , serializer)
+
+    Ember.get(type, 'relationshipsByName').forEach( (name, relationship) ->
+      key   = @_keyForBelongsTo(type, relationship.key)
+      value = @extractBelongsTo(type, hash, key)
+      if value != undefined
+        loadedData.pushObject name unless loadedData.contains(name)
+    , serializer)
 
   isDataLoadedFor: (type, clientId, key) ->
     if recordsData = @_loadedData[type.toString()]
@@ -131,26 +128,32 @@ Travis.Store = DS.Store.extend
   loadIncomplete: (type, hash, options) ->
     options ?= {}
 
-    id = hash.id
+    id = coerceId hash.id
 
     typeMap     = @typeMapFor(type)
-    dataCache   = typeMap.cidToHash
+    cidToData   = @clientIdToData
     clientId    = typeMap.idToCid[id]
 
-    if dataCache[clientId] && options.skipIfExists
+    if clientId && cidToData[clientId] && options.skipIfExists
       return
 
-    result = @merge(type, hash)
-
+    result = @merge(type, hash, true)
     if result && result.clientId
       @addLoadedData(type, result.clientId, hash)
-      record = @findByClientId(type, result.clientId)
-      unless record.get('complete')
-        record.loadedAsIncomplete()
+    # TODO: it will be probably needed to uncomment and fix this
+    #@_updateAssociations(type, type.singularName(), hash)
 
-      @_updateAssociations(type, type.singularName(), hash)
+    result
 
-      record
+  materializeRecord: (type, clientId, id) ->
+    record = @_super.apply this, arguments
+
+    if @clientIdToComplete[clientId] != undefined && !@clientIdToComplete[clientId]
+      record.set 'incomplete', true
+    else
+      record.set 'incomplete', false
+
+    record
 
   _loadMany: (store, type, json) ->
     root = type.pluralName()
