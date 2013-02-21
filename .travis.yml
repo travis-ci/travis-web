@@ -2,11 +2,21 @@ language: ruby
 rvm:
   - 1.9.3
 before_script:
-  - bundle exec rakep
+  - "gem install travis-artifacts"
+  - "bundle exec rakep"
+
 env:
-  - "TEST_SUITE=spec"
-  - "TEST_SUITE=ember"
+  global:
+    - "ARTIFACTS_S3_BUCKET=travis-web-production"
+    - secure: "RFuCOppyjWHC4XWKtQlgS4zO4B6KVxytdX8+G5jRY3XM+OEGte8VDD88gZLM\nKDpkqMFDbNJAVTsh1kMANCTct2ONi30RTxuJWLtRyK7RE5zCcaGbAkTNZgXo\nOR5OWLEPJZbNfbh17H6J7izTy6yiLR+CsVP1wMgeVusP0eoDhCA="
+    - secure: "duqMXPALumXB3e2j/kM2uCaCGwgZsRrU0GCDY+3Zk6a+PK+s0mE9BftcXdxm\n6u87ld2PvCBO0inpe5YeS9LOZsT+OFS4jj+GGTsRI6rmGz+kok0N+ATLTdcj\nu15zhLhUUlhoKW0DZURrDv/iTiC/FKvJ0u5Rft0XbjfTY+0go/M="
+  matrix:
+    - "TEST_SUITE=spec"
+    - "TEST_SUITE=ember"
 script: "script/ci"
+
+after_script:
+  - "test $TEST_SUITE = \"ember\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public"
 
 matrix:
   allow_failures:
