@@ -42,7 +42,7 @@
       <dd class="config">{{formatConfig job.config}}</dd>
     </dl>
 
-    {{view Travis.LogView contextBinding="job"}}}
+    {{view Travis.LogView jobBinding="job"}}
   </div>
 {{else}}
   <div id="job" class="loading">

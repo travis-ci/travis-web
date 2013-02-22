@@ -52,7 +52,7 @@ Travis.Store = DS.Store.extend
     !!@typeMapFor(type).idToCid[id]
 
   receive: (event, data) ->
-    console.log event, data
+    #console.log event, data
     [name, type] = event.split(':')
 
     mappings = @adapter.get('mappings')
@@ -79,8 +79,9 @@ Travis.Store = DS.Store.extend
 
 
     if event == 'job:log'
-      if job = @find(Travis.Job, data['job']['id'])
-        job.appendLog(data['job']['_log'])
+      data = data.job
+      job  = @find(Travis.Job, data.id)
+      job.appendLog(number: parseInt(data.number), content: data._log)
     else if data[type.singularName()]
       @_loadOne(this, type, data)
     else if data[type.pluralName()]

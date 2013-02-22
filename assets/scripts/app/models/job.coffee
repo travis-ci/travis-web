@@ -18,8 +18,9 @@ require 'travis/model'
   build:  DS.belongsTo('Travis.Build')
   commit: DS.belongsTo('Travis.Commit')
   commits: DS.belongsTo('Travis.Commit')
+
   log: ( ->
-    Travis.Artifact.create(job: this)
+    Travis.Log.create(job: this)
   ).property()
 
   repoSlug: (->
@@ -39,7 +40,7 @@ require 'travis/model'
   ).property('state')
 
   clearLog: ->
-    @get('log').clear() if @get('log.isLoaded')
+    @get('log').clear()
 
   sponsor: (->
     worker = @get('log.workerName')
@@ -71,13 +72,13 @@ require 'travis/model'
   requeue: ->
     Travis.ajax.post '/requests', job_id: @get('id')
 
-  appendLog: (text) ->
-    if log = @get('log')
-      log.append(text)
+  appendLog: (part) ->
+    @get('log').append part
 
   subscribe: ->
-    if id = @get('id')
-      Travis.pusher.subscribe "job-#{id}"
+    return if @get('subscribed')
+    @set('subscribed', true)
+    Travis.pusher.subscribe "job-#{@get('id')}"
 
   onStateChange: (->
     if @get('state') == 'finished' && Travis.pusher
