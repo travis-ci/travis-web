@@ -156,14 +156,14 @@ class Travis::Web::App
       Rack::Mime.mime_type File.extname(file)
     end
 
-    def set_config(string, options = {})
+    def set_config(string, opts = {})
       string.gsub! %r(<meta (rel|name)="travis\.([^"]*)" (href|value)="([^"]*)"[^>]*>) do
         %(<meta #{$1}="travis.#{$2}" #{$3}="#{options[$2.to_sym] || $4}">)
       end
 
       string.gsub! %r{(src|href)="(?:\/?)((styles|scripts)\/[^"]*)"} do
-        if options[:custom_branch]
-          url = "https://s3.amazonaws.com/travis-web-production/assets/#{options[:custom_branch]}/#{$2}"
+        if opts[:custom_branch]
+          url = "https://s3.amazonaws.com/travis-web-production/assets/#{opts[:custom_branch]}/#{$2}"
           %(#$1="#{url}")
         else
           %(#$1="/#{version}/#$2")
