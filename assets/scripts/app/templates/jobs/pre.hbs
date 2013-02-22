@@ -1,4 +1,14 @@
-<pre id="log" class="ansi"><a href="#" id="tail" {{action toggleTailing target="view"}}>
-  <span class="status"></span>
-  <label>Follow logs</label>
-</a></pre>
+<div id="log-container">
+  <a href="#" id="tail" {{action toggleTailing target="view"}}>
+    <span class="status"></span>
+    <label>Follow logs</label>
+  </a>
+  <pre id="log" class="ansi"></pre>
+
+  {{#if view.isLimited}}
+    <p class="warning">
+      This log is too long to be displayed. Please reduce the verbosity of your
+      build or download the the <a {{bindAttr href="view.plainTextLogUrl"}}>raw log</a>.
+    </p>
+  {{/if}}
+</div>
