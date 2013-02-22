@@ -28,10 +28,12 @@ This will run against API run locally.
 
 ### Running the spec suite
 
-To run the test suite, you must first start the app (see above).
+First, start the app (see above).
 
     bundle exec foreman start
 
-Then run rspec against the spec/ directory
+To run the Ruby specs, run rspec against the spec/ directory:
 
     bundle exec rspec spec/
+
+To run the Jasmine specs, open the spec page: [localhost:5000/spec.html](http://localhost:5000/spec.html)
