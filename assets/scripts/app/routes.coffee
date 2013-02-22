@@ -1,5 +1,12 @@
+require 'travis/location'
+
 Ember.Router.reopen
-  location: (if testMode? then Ember.HashLocation.create() else Ember.HistoryLocation.create())
+  location: (if testMode? then Ember.HashLocation.create() else Travis.Location.create())
+
+  handleURL: (url) ->
+    console.log 'our handle url', url
+    url = url.replace(/#.*?$/, '')
+    @_super(url)
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->
