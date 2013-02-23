@@ -1,4 +1,5 @@
 require 'travis/location'
+require 'travis/line_number_parser'
 
 Ember.Router.reopen
   location: (if testMode? then Ember.HashLocation.create() else Travis.Location.create())
@@ -45,7 +46,7 @@ Travis.BuildsRoute = Travis.AbstractBuidsRoute.extend(contentType: 'builds')
 Travis.PullRequestsRoute = Travis.AbstractBuidsRoute.extend(contentType: 'pull_requests')
 Travis.BranchesRoute = Travis.AbstractBuidsRoute.extend(contentType: 'branches')
 
-Travis.BuildRoute = Ember.Route.extend
+Travis.BuildRoute = Ember.Route.extend Travis.LineNumberParser,
   renderTemplate: ->
     @render 'build', outlet: 'pane', into: 'repo'
 
@@ -57,11 +58,14 @@ Travis.BuildRoute = Ember.Route.extend
   setupController: (controller, model) ->
     model = Travis.Build.find(model) if model && !model.get
 
+    if lineNumber = @fetchLineNumber()
+      controller.set('lineNumber', lineNumber)
+
     repo = @container.lookup('controller:repo')
     repo.set('build', model)
     repo.activate('build')
 
-Travis.JobRoute = Ember.Route.extend
+Travis.JobRoute = Ember.Route.extend Travis.LineNumberParser,
   renderTemplate: ->
     @render 'job', outlet: 'pane', into: 'repo'
 
@@ -72,6 +76,9 @@ Travis.JobRoute = Ember.Route.extend
 
   setupController: (controller, model) ->
     model = Travis.Job.find(model) if model && !model.get
+
+    if lineNumber = @fetchLineNumber()
+      controller.set('lineNumber', lineNumber)
 
     repo = @container.lookup('controller:repo')
     console.log model.toString()

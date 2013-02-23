@@ -19,6 +19,7 @@ Travis.reopen
     didInsertElement: ->
       @_super.apply this, arguments
       @createEngine()
+      @lineNumberDidChange()
 
     willDestroyElement: ->
       parts = @get('log.parts')
@@ -96,7 +97,7 @@ Log.Scroll.prototype = $.extend new Log.Listener,
     @tryScroll() if @number
 
   tryScroll: ->
-    if element = $("#log p:nth-child(#{@number})")
+    if (element = $("#log p:nth-child(#{@number})")) && element.length
       $('#main').scrollTop(0)
       $('html, body').scrollTop(element.offset()?.top) # weird, html works in chrome, body in firefox
       @highlight(element)
