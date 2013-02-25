@@ -37,3 +37,21 @@ To run the Ruby specs, run rspec against the spec/ directory:
     bundle exec rspec spec/
 
 To run the Jasmine specs, open the spec page: [localhost:5000/spec.html](http://localhost:5000/spec.html)
+
+### i18n
+
+Localization for travis-web is managed via [localeapp](http://localeapp.com).
+If you are interested in improving the existing localizations or adding
+a new locale, please contact us on irc (#travis) and we will set you up.
+
+Please do **not** edit the YAML files directly.
+
+Localization data can be synced with the following rake task:
+
+    bundle exec localeapp:update
+
+This will publish any new keys in en.yml, as well as any missing keys
+from your handlebars templates and pull down the latest localizations.
+
+*note*: You will need to have the localeapp api key exported to
+LOCALEAPP_API_KEY
