@@ -6,7 +6,7 @@ describe Travis::Web::App do
   end
 
   describe 'catch all' do
-    before { get('/foo/bar') }
+    before  { get('/foo/bar') }
     example { last_response.should be_ok }
     example { headers['Content-Location'].should be == '/' }
     example { headers['Cache-Control'].should include('must-revalidate') }
@@ -15,7 +15,7 @@ describe Travis::Web::App do
   end
 
   describe 'assets' do
-    before { get('/favicon.ico') }
+    before  { get('/favicon.ico') }
     example { last_response.should be_ok }
     example { headers['Content-Location'].should be == '/favicon.ico' }
     example { headers['Cache-Control'].should_not include('must-revalidate') }
@@ -24,30 +24,30 @@ describe Travis::Web::App do
   end
 
   describe 'version' do
-    before { get('/version') }
+    before  { get('/version') }
     example { last_response.should be_ok }
     example { headers['Content-Location'].should be == '/version' }
     example { headers['Cache-Control'].should be == 'no-cache' }
     example { headers['Vary'].split(',').should_not include('Accept') }
   end
 
-  describe 'custom branch' do
-    context 'when passing custom branch as a param' do
-      before { get('/?custom-branch=foo') }
+  describe 'alternate asset versions' do
+    context 'not passing an alt param' do
+      before  { get('/') }
+      example { headers['Set-Cookie'].should be_nil }
+    end
+
+    context 'passing an alt param' do
+      before  { get('/?alt=foo') }
       example { last_response.should be_ok }
       example { last_response.body.should include('/assets/foo/styles/app.css') }
       example { last_response.body.should include('/assets/foo/scripts/app.js') }
-      example { headers['Set-Cookie'].should include('custom_branch=foo') }
+      example { headers['Set-Cookie'].should == 'alt=foo; Max-Age=86400' }
     end
 
-    context 'disabling custom branch' do
-      before { get('/?disable-custom-branch=true') }
-      example { last_response.should be_ok }
-      example { last_response.body.should =~ %r{src="/[^\/]+/scripts/app.js} }
-      example { last_response.body.should_not include('/assets/true/styles/app.css') }
-      example { last_response.body.should_not include('/assets/foo/styles/app.css') }
-      example { last_response.body.should_not include('/assets/foo/scripts/app.js') }
-      example { headers['Set-Cookie'].should include('custom_branch=;') }
+    context 'passing default as an alt param' do
+      before  { get('/?alt=default') }
+      example { headers['Set-Cookie'].should == 'alt=default; Max-Age=0' }
     end
   end
 end

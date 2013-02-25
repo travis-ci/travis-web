@@ -25,7 +25,7 @@ use Travis::Web::ApiRedirect do |app|
   app.settings.api_endpoint = ENV['API_ENDPOINT'] if ENV['API_ENDPOINT']
 end
 
-run Travis::Web::App.new(
+run Travis::Web::App.build(
   environment:  ENV['RACK_ENV'] || 'development',
   api_endpoint: ENV['API_ENDPOINT'],
   pusher_key:   ENV['PUSHER_KEY'],
