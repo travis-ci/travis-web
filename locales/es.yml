@@ -9,6 +9,7 @@ es:
     branch: Rama
     build_matrix: Matriz de Builds
     commit: Commit
+    commiter: 
     committer: Committer
     compare: Comparar
     config: Configuración
@@ -97,6 +98,7 @@ es:
       stats: Estadísticas
   locales:
     ca: 
+    de: Deutsch
     en: English
     es: Español
     fr: Français

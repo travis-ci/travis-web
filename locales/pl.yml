@@ -9,6 +9,7 @@ pl:
     branch: Gałąź
     build_matrix: Macierz Buildów
     commit: Commit
+    commiter: 
     committer: Komitujący
     compare: Porównanie
     config: Konfiguracja
@@ -100,6 +101,7 @@ pl:
       stats: Statystki
   locales:
     ca: Čeština
+    de: Deutsch
     en: English
     es: Español
     fr: Français

@@ -9,6 +9,7 @@ pt-BR:
     branch: Branch
     build_matrix: Matriz de Build
     commit: Commit
+    commiter: 
     committer: Committer
     compare: Comparar
     config: Config
@@ -97,6 +98,7 @@ pt-BR:
       stats: Estatísticas
   locales:
     ca: 
+    de: Deutsch
     en: English
     es: Español
     fr: Français

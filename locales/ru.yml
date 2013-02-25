@@ -9,6 +9,7 @@ ru:
     branch: Ветка
     build_matrix: Матрица
     commit: Коммит
+    commiter: 
     committer: Коммитер
     compare: Дифф
     config: Конфигурация
@@ -18,7 +19,7 @@ ru:
     messages:
       sponsored_by: Эта серия тестов была запущена на машине, спонсируемой
     name: Билд
-    pr: 
+    pr: PR
     started_at: Начало
     state: состояние
   datetime:
@@ -103,6 +104,7 @@ ru:
       stats: Статистика
   locales:
     ca: 
+    de: Deutsch
     en: English
     es: Español
     fr: Français
@@ -162,6 +164,6 @@ ru:
       total_builds: Всего билдов
       total_projects: Всего проектов/репозиториев
   user:
-    failure: 
-    signed_out: 
+    failure: сбой
+    signed_out: Вышел
   workers: Машины
