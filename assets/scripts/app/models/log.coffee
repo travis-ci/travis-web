@@ -24,10 +24,12 @@ require 'travis/model'
     @get('parts').pushObject(part)
 
   loadParts: (parts) ->
+    console.log 'log model: load parts'
     @append(part) for part in parts
     @set('isLoaded', true)
 
   loadText: (text) ->
+    console.log 'log model: load text'
     number = -1
     @append(number: 0, content: text)
     @set('isLoaded', true)

@@ -2,10 +2,11 @@ Travis.reopen
   RepoView: Travis.View.extend
     templateName: 'repos/show'
 
-    classNameBindings: ['loading:isLoaded']
-
-    isLoadedBinding: 'controller.repo.isLoaded'
+    repoBinding:  'controllers.repo'
     reposBinding: 'controllers.repos'
+
+    isLoadedBinding: 'repo.isLoaded'
+    classNameBindings: ['loading:isLoaded']
 
     isEmpty: (->
       @get('repos.isLoaded') && @get('repos.length') == 0

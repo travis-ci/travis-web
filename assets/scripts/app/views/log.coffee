@@ -17,10 +17,12 @@ Travis.reopen
     templateName: 'jobs/pre'
 
     didInsertElement: ->
+      console.log 'log view: did insert'
       @_super.apply this, arguments
       @createEngine()
 
     willDestroyElement: ->
+      console.log 'log view: will destroy'
       parts = @get('log.parts')
       parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
 
@@ -29,13 +31,15 @@ Travis.reopen
     ).observes('log.version')
 
     logDidChange: (->
+      console.log 'log view: log did change: rerender'
       @rerender() if @get('inDOM')
     ).observes('log')
 
     createEngine: ->
+      console.log 'log view: create engine'
       @limit = new Log.Limit
       @scroll = new Log.Scroll
-      @engine = Log.create(listeners: [@limit, new Log.FragmentRenderer, new Log.Folds, @scroll])
+      @engine = Log.create(listeners: [new Log.FragmentRenderer, new Log.Logger, new Log.Folds, @scroll])
       @observeParts()
       @numberLineOnHover()
 
@@ -46,6 +50,7 @@ Travis.reopen
       @partsDidChange(parts, 0, null, parts.length)
 
     partsDidChange: (parts, start, _, added) ->
+      console.log 'log view: parts did change'
       unless @get('isLimited')
         @engine.set(part.number, part.content) for part, i in parts.slice(start, start + added)
         @propertyDidChange('isLimited')
@@ -117,3 +122,13 @@ Log.Limit.prototype = $.extend new Log.Listener,
 
   isLimited: ->
     @count > @MAX_LINES
+    false
+
+Log.Logger = ->
+Log.Logger.prototype = $.extend new Log.Listener,
+  # receive: (log, number) ->
+  #   console.log 'log engine: receive', arguments
+  remove: (log, ids) ->
+    console.log 'log engine: remove', ids
+  insert: (log, after, nodes) ->
+    console.log "log engine: insert", after, nodes
