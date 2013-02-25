@@ -9,6 +9,7 @@ en:
     branch: Branch
     build_matrix: Build Matrix
     commit: Commit
+    commiter: commiter
     committer: Committer
     compare: Compare
     config: Config
@@ -97,6 +98,7 @@ en:
       stats: Stats
   locales:
     ca: 
+    de: Deutsch
     en: English
     es: Español
     fr: Français
