@@ -1,9 +1,6 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
 
-window.bootstrapTravis = ->
-  Travis.run()
-
 if window.history.state == undefined
   window.history.state = {}
   oldPushState = window.history.pushState
@@ -33,6 +30,9 @@ Storage = Em.Object.extend
 
 
 @Travis = Em.Namespace.create Ember.Evented,
+  run: ->
+    Travis.run()
+
   config:
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
