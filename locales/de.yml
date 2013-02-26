@@ -116,7 +116,7 @@ de:
       locale: Sprache
       message:
         config: Wie du eigene Build-Optionen konfigurieren kannst
-        your_repos: Lege die Schalter unten um, um den Travis Dienst-Hook für deine Projekte zu aktivieren, dann pushe zu GitHub.<br />\n  Um gegen mehrere Rubine zu testen, sehe
+        your_repos: Lege die Schalter unten um, um den Travis Dienst-Hook für deine Projekte zu aktivieren, dann pushe zu GitHub.<br />  Um gegen mehrere Rubine zu testen, sehe
       messages:
         notice: Bitte lese dir unser <a href=\\"http://about.travis-ci.org/docs/user/getting-started/\\">Getting Started-Handbuch</a> durch, um loszulegen.\\n  <small>Es dauert nur ein paar Minuten.</small>
       token: 
