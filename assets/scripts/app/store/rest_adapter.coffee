@@ -7,6 +7,22 @@ DS.JSONTransforms['object'] = {
 }
 
 Travis.Serializer = DS.RESTSerializer.extend
+  # The next 3 methods specify the behavior of adding records to dirty sets
+  # (ie. which records will be treated as dirty on the next commit). We don't
+  # allow to change most of the records on the client, so for anything except
+  # the User, we ignore dirtyiness.
+  dirtyRecordsForAttributeChange: (dirtySet, record) ->
+    if record.constructor == Travis.User
+      @_super.apply this, arguments
+
+  dirtyRecordsForBelongsToChange: (dirtySet, record) ->
+    if record.constructor == Travis.User
+      @_super.apply this, arguments
+
+  dirtyRecordsForHasManyChange: (dirtySet, record) ->
+    if record.constructor == Travis.User
+      @_super.apply this, arguments
+
   merge: (record, serialized) ->
     data = record.get('data')
 
@@ -42,9 +58,6 @@ Travis.Serializer = DS.RESTSerializer.extend
           record.notifyPropertyChange(name)
     , this)
 
-    # TODO: add test that ensures that this line is called
-    #       it should check if record goes into loaded.saved
-    #       state after being in materializing
     record.notifyPropertyChange('data')
 
 Travis.RestAdapter = DS.RESTAdapter.extend
