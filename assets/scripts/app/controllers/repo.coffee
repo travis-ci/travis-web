@@ -86,4 +86,4 @@ Travis.RepoController = Travis.Controller.extend
 
   urlGithub: (->
     Travis.Urls.githubRepo(@get('repo.slug'))
-  ).property('repo.slug'),
+  ).property('repo.slug')

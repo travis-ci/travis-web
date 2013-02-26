@@ -75,6 +75,11 @@ require 'travis/model'
   branches: (options) ->
     @find repository_id: options.repoId, branches: true
 
-  olderThanNumber: (id, build_number) ->
+  olderThanNumber: (id, build_number, type) ->
+    console.log type
     # TODO fix this api and use some kind of pagination scheme
-    @find(url: "/builds", repository_id: id, after_number: build_number)
+    options = { repository_id: id, after_number: build_number }
+    if type?
+      options.event_type = type.replace(/s$/, '') # poor man's singularize
+
+    @find(options)

@@ -59,9 +59,11 @@
       {{/each}}
     </tbody>
   </table>
-  <p>
-    {{view view.ShowMoreButton}}
-  </p>
+  {{#if displayShowMoreButton}}
+    <p>
+      {{view view.ShowMoreButton}}
+    </p>
+  {{/if}}
 {{else}}
   <div class="loading"><span>Loading</span></div>
 {{/if}}

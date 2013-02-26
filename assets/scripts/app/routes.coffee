@@ -66,16 +66,16 @@ Travis.IndexCurrentRoute = Ember.Route.extend
   setupController: ->
     @container.lookup('controller:repo').activate('index')
 
-Travis.AbstractBuidsRoute = Ember.Route.extend
+Travis.AbstractBuildsRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'builds', outlet: 'pane', into: 'repo'
 
   setupController: ->
     @container.lookup('controller:repo').activate(@get('contentType'))
 
-Travis.BuildsRoute = Travis.AbstractBuidsRoute.extend(contentType: 'builds')
-Travis.PullRequestsRoute = Travis.AbstractBuidsRoute.extend(contentType: 'pull_requests')
-Travis.BranchesRoute = Travis.AbstractBuidsRoute.extend(contentType: 'branches')
+Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
+Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
+Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
 
 Travis.BuildRoute = Ember.Route.extend Travis.LineNumberParser,
   renderTemplate: ->
