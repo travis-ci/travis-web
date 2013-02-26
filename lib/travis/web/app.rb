@@ -6,6 +6,7 @@ require 'delegate'
 require 'time'
 
 class Travis::Web::App
+  autoload :AltVersions,    'travis/web/app/alt_versions'
   autoload :MobileRedirect, 'travis/web/app/mobile_redirect'
 
   S3_URL = 'https://s3.amazonaws.com/travis-web-production/assets'
@@ -24,42 +25,6 @@ class Travis::Web::App
     end
   end
 
-  class AltVersions
-    attr_reader :app
-
-    def initialize(app)
-      @app = app
-    end
-
-    def call(env)
-      alt = alt_from(env)
-      env['travis.alt'] = alt if alt
-      status, headers, body = app.call(env)
-      set_cookies(headers, env['travis.alt']) if env.key?('travis.alt')
-      [status, headers, body]
-    end
-
-    def set_cookies(headers, alt)
-      headers['Set-Cookie'] = "alt=#{alt}; Max-Age=#{alt == 'default' ? 0 : 86400}"
-    end
-
-    def alt_from(env)
-      alt_from_params(env) || alt_from_cookie(env)
-    end
-
-    def alt_from_params(env)
-      alt_from_string env['QUERY_STRING']
-    end
-
-    def alt_from_cookie(env)
-      alt_from_string env['HTTP_COOKIE']
-    end
-
-    def alt_from_string(string)
-      $1 if string =~ /alt=([^&]*)/
-    end
-  end
-
   class << self
     def new(options = {})
       return super unless options[:environment] == 'development'
@@ -68,7 +33,7 @@ class Travis::Web::App
 
     def build(options = {})
       builder = Rack::Builder.new
-      if options.fetch(:environment) == 'production'
+      if options[:environment] == 'production'
         builder.use Rack::SSL
         builder.use Rack::Cache
       end
@@ -84,11 +49,10 @@ class Travis::Web::App
     end
   end
 
-  attr_reader :routers, :environment, :version, :last_modified, :age, :options, :root
+  attr_reader :routers, :version, :last_modified, :age, :options, :root
 
   def initialize(options = {})
     @options       = options
-    @environment   = options.fetch(:environment)
     @root          = options.fetch(:root)
     @version       = File.read File.expand_path('version', root)
     @last_modified = Time.now
@@ -118,7 +82,6 @@ class Travis::Web::App
     def response_for(file, options = {})
       content = File.read(file)
       set_config(content, options) if config_needed?(file)
-
       headers = {
         'Content-Length'   => content.bytesize.to_s,
         'Content-Location' => path_for(file),
@@ -130,13 +93,11 @@ class Travis::Web::App
         'Expires'          => (last_modified + age).httpdate,
         'Vary'             => vary_for(file)
       }
-
       [ 200, headers, [content] ]
     end
 
     def each_file
-      pattern = File.join(root, '**/*')
-      Dir.glob(pattern) { |f| yield f if File.file? f }
+      Dir.glob(File.join(root, '**/*')) { |file| yield file if File.file?(file) }
     end
 
     def prefix?(file)
