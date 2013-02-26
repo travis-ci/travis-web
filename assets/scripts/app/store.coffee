@@ -52,7 +52,6 @@ Travis.Store = DS.Store.extend
     !!@typeMapFor(type).idToCid[id]
 
   receive: (event, data) ->
-    #console.log event, data
     [name, type] = event.split(':')
 
     mappings = @adapter.get('mappings')
@@ -142,8 +141,6 @@ Travis.Store = DS.Store.extend
     result = @merge(type, hash, true)
     if result && result.clientId
       @addLoadedData(type, result.clientId, hash)
-    # TODO: it will be probably needed to uncomment and fix this
-    #@_updateAssociations(type, type.singularName(), hash)
 
     result
 
@@ -161,14 +158,3 @@ Travis.Store = DS.Store.extend
     root = type.pluralName()
     @adapter.sideload(store, type, json, root)
     @loadMany(type, json[root])
-
-  _updateAssociations: (type, name, data) ->
-    Em.get(type, 'associationsByName').forEach (key, meta) =>
-      if meta.kind == 'belongsTo'
-        id = data["#{key}_id"]
-        if clientId = @typeMapFor(meta.type).idToCid[id]
-          if parent = this.findByClientId(meta.type, clientId, id)
-            dataProxy = parent.get('data')
-            if ids = dataProxy.get("#{name}_ids")
-              ids.pushObject(data.id) unless data.id in ids
-              parent.send('didChangeData');

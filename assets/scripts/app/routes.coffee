@@ -1,4 +1,5 @@
 require 'travis/location'
+require 'travis/line_number_parser'
 
 Ember.Router.reopen
   location: (if testMode? then Ember.HashLocation.create() else Travis.Location.create())
@@ -6,6 +7,36 @@ Ember.Router.reopen
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
     @_super(url)
+
+# TODO: don't reopen Ember.Route to add events, there should be
+#       a better way (like "parent" resource for everything inside map)
+Ember.Route.reopen
+  events:
+    afterSignIn: (path) ->
+      @routeTo(path)
+
+    afterSignOut: ->
+      @routeTo('/')
+
+  routeTo: (path) ->
+    return unless path
+    @router.handleURL(path)
+    @router.location.setURL(path)
+
+  signedIn: ->
+    @controllerFor('currentUser').get('content')
+
+  redirect: ->
+    if @get('needsAuth')
+      @authorize(@router.location.getURL())
+    else
+      @_super.apply this, arguments
+    Travis.autoSignIn() unless @signedIn()
+
+  authorize: (path) ->
+    if !@signedIn()
+      Travis.storeAfterSignInPath(path)
+      @transitionTo('auth')
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->
@@ -19,6 +50,7 @@ Travis.Router.map ->
       @resource 'branches', path: '/branches'
 
   @route 'stats', path: '/stats'
+  @route 'auth', path: '/auth'
 
   @resource 'profile', path: '/profile', ->
     @route 'index', path: '/'
@@ -34,18 +66,18 @@ Travis.IndexCurrentRoute = Ember.Route.extend
   setupController: ->
     @container.lookup('controller:repo').activate('index')
 
-Travis.AbstractBuidsRoute = Ember.Route.extend
+Travis.AbstractBuildsRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'builds', outlet: 'pane', into: 'repo'
 
   setupController: ->
     @container.lookup('controller:repo').activate(@get('contentType'))
 
-Travis.BuildsRoute = Travis.AbstractBuidsRoute.extend(contentType: 'builds')
-Travis.PullRequestsRoute = Travis.AbstractBuidsRoute.extend(contentType: 'pull_requests')
-Travis.BranchesRoute = Travis.AbstractBuidsRoute.extend(contentType: 'branches')
+Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
+Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
+Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
 
-Travis.BuildRoute = Ember.Route.extend
+Travis.BuildRoute = Ember.Route.extend Travis.LineNumberParser,
   renderTemplate: ->
     @render 'build', outlet: 'pane', into: 'repo'
 
@@ -57,11 +89,14 @@ Travis.BuildRoute = Ember.Route.extend
   setupController: (controller, model) ->
     model = Travis.Build.find(model) if model && !model.get
 
+    if lineNumber = @fetchLineNumber()
+      controller.set('lineNumber', lineNumber)
+
     repo = @container.lookup('controller:repo')
     repo.set('build', model)
     repo.activate('build')
 
-Travis.JobRoute = Ember.Route.extend
+Travis.JobRoute = Ember.Route.extend Travis.LineNumberParser,
   renderTemplate: ->
     @render 'job', outlet: 'pane', into: 'repo'
 
@@ -72,6 +107,9 @@ Travis.JobRoute = Ember.Route.extend
 
   setupController: (controller, model) ->
     model = Travis.Job.find(model) if model && !model.get
+
+    if lineNumber = @fetchLineNumber()
+      controller.set('lineNumber', lineNumber)
 
     repo = @container.lookup('controller:repo')
     console.log model.toString()
@@ -143,6 +181,8 @@ Travis.StatsRoute = Ember.Route.extend
     @container.lookup('controller:application').connectLayout('simple')
 
 Travis.ProfileRoute = Ember.Route.extend
+  needsAuth: true
+
   setupController: ->
     @container.lookup('controller:application').connectLayout('profile')
     @container.lookup('controller:accounts').set('content', Travis.Account.find())
@@ -160,7 +200,7 @@ Travis.ProfileIndexRoute = Ember.Route.extend
     @container.lookup('controller:profile').activate 'hooks'
 
   renderTemplate: ->
-    @render 'hooks', outlet: 'pane', into: 'profile'
+    @render 'hooks', outlet: 'pane', into: 'profile', controller: 'profile'
 
 Travis.AccountRoute = Ember.Route.extend
   setupController: (controller, account) ->
@@ -208,3 +248,13 @@ Travis.AccountProfileRoute = Ember.Route.extend
 
   renderTemplate: ->
     @render 'user', outlet: 'pane', into: 'profile'
+
+Travis.AuthRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'auth')
+
+    @render 'top', outlet: 'top'
+    @render 'auth.signin'
+
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('simple')

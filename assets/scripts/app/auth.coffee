@@ -13,6 +13,8 @@
     Travis.setLocale Travis.default_locale
     @set('state', 'signed-out')
     @set('user', undefined)
+    Travis.__container__.lookup('controller:currentUser').set('content', null)
+    Travis.__container__.lookup('router:main').send('afterSignOut')
 
   signIn: ->
     @set('state', 'signing-in')
@@ -51,12 +53,13 @@
     @storeData(data, Travis.storage) unless @userDataFrom(Travis.storage)
     user = @loadUser(data.user)
     # TODO: we should not use __container__ directly, how to do it better?
+    #        A good answer seems to do auth in context of controller.
     Travis.__container__.lookup('controller:currentUser').set('content', user)
 
     @set('state', 'signed-in')
     Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
-    #@get('app.router').send('afterSignIn', @readAfterSignInPath())
+    Travis.__container__.lookup('router:main').send('afterSignIn', @readAfterSignInPath())
 
   storeData: (data, storage) ->
     storage.setItem('travis.token', data.token)

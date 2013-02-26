@@ -18,6 +18,9 @@ Travis.reopen
           name: queue.display
       @set 'content', queues
 
+    showAll: (queue) ->
+      queue.showAll()
+
   WorkersController: Em.ArrayController.extend
     init: ->
       @_super.apply this, arguments

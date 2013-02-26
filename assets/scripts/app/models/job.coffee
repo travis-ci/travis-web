@@ -19,6 +19,13 @@ require 'travis/model'
   commit: DS.belongsTo('Travis.Commit')
   commits: DS.belongsTo('Travis.Commit')
 
+  # this is a fake relationship just to get rid
+  # of ember data's bug: https://github.com/emberjs/data/issues/758
+  # TODO: remove when this issue is fixed
+  fakeBuild:  DS.belongsTo('Travis.Build')
+
+  _config: DS.attr('object')
+
   log: ( ->
     Travis.Log.create(job: this)
   ).property()
@@ -32,8 +39,8 @@ require 'travis/model'
   ).property('repoSlug', 'repoId')
 
   config: (->
-    Travis.Helpers.compact(@get('data.config'))
-  ).property('data.config')
+    Travis.Helpers.compact(@get('_config'))
+  ).property('_config')
 
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']

@@ -9,6 +9,7 @@ nb:
     branch: Gren
     build_matrix: Jobbmatrise
     commit: Innsending
+    commiter: 
     committer: Innsender
     compare: Sammenlign
     config: Oppsett
@@ -97,6 +98,7 @@ nb:
       stats: Statistikk
   locales:
     ca: 
+    de: Deutsch
     en: English
     es: Español
     fr: Français

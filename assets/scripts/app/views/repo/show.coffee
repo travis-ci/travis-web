@@ -12,19 +12,6 @@ Travis.reopen
       @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.isLoaded', 'repos.length')
 
-  RepoShowStatsView: Travis.View.extend
-    templateName: 'repos/show/stats'
-    repoBinding:  'parentView.repo'
-    statsBinding: 'repo.stats'
-
-    urlGithubWatchers: (->
-      Travis.Urls.githubWatchers(@get('repo.slug'))
-    ).property('repo.slug'),
-
-    urlGithubNetwork: (->
-      Travis.Urls.githubNetwork(@get('repo.slug'))
-    ).property('repo.slug'),
-
   ReposEmptyView: Travis.View.extend
     template: ''
 
@@ -131,11 +118,10 @@ Travis.reopen
 
     regenerateKey: ->
       @popupCloseAll()
-      self = this
 
-      @get('repo').regenerateKey
-        success: ->
-          self.popup('regeneration-success')
+      (@get('repo.content') || @get('repo')).regenerateKey
+        success: =>
+          @popup('regeneration-success')
         error: ->
           Travis.app.router.flashController.loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 

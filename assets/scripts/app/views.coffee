@@ -2,9 +2,9 @@ require 'ext/ember/namespace'
 
 @Travis.reopen
   View: Em.View.extend
-    popup: ->
+    popup: (name) ->
       @popupCloseAll()
-      name = if event.target then event.target.name else event
+      name = event?.target?.name || name
       $("##{name}").toggleClass('display')
     popupClose: ->
       $(event.target).closest('.popup').removeClass('display')

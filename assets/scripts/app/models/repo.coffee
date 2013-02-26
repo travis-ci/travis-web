@@ -22,12 +22,7 @@ require 'travis/model'
   ).property('lastBuildId', 'lastBuildNumber')
 
   allBuilds: (->
-    allBuilds = DS.RecordArray.create
-      type: Travis.Build
-      content: Ember.A([])
-      store: @get('store')
-    @get('store').registerRecordArray(allBuilds, Travis.Build);
-    allBuilds
+    Travis.Build.find()
   ).property()
 
   builds: (->
@@ -42,7 +37,7 @@ require 'travis/model'
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> build.get('repo.id') == id && !build.get('isPullRequest') )
+    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('eventType') && build.get('repo.id') == id && !build.get('isPullRequest') )
 
     array
   ).property()
@@ -58,7 +53,7 @@ require 'travis/model'
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> @get('repositoryId') == id && build.get('isPullRequest') )
+    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('eventType') && build.get('repo.id') == id && build.get('isPullRequest') )
 
     array
   ).property()

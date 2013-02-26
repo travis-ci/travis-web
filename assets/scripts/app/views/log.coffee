@@ -20,6 +20,7 @@ Travis.reopen
       console.log 'log view: did insert'
       @_super.apply this, arguments
       @createEngine()
+      @lineNumberDidChange()
 
     willDestroyElement: ->
       console.log 'log view: will destroy'
@@ -67,7 +68,7 @@ Travis.reopen
       Travis.Urls.plainTextLog(id) if id = @get('log.job.id')
     ).property('job.log.id')
 
-    toggleTailing: (event) ->
+    toggleTailing: ->
       Travis.tailing.toggle()
       event.preventDefault()
 
@@ -75,7 +76,7 @@ Travis.reopen
       $('#log').on 'mouseenter', 'a', ->
         $(this).attr('href', '#L' + ($(this.parentNode).prevAll('p').length + 1))
 
-    click: (event) ->
+    click: ->
       if (href = $(event.target).attr('href')) && matches = href?.match(/#L(\d+)$/)
         @lineNumberClicked(matches[1])
         event.stopPropagation()
@@ -101,7 +102,7 @@ Log.Scroll.prototype = $.extend new Log.Listener,
     @tryScroll() if @number
 
   tryScroll: ->
-    if element = $("#log p:nth-child(#{@number})")
+    if (element = $("#log p:nth-child(#{@number})")) && element.length
       $('#main').scrollTop(0)
       $('html, body').scrollTop(element.offset()?.top) # weird, html works in chrome, body in firefox
       @highlight(element)

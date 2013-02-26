@@ -7,11 +7,6 @@ Travis.reopen
       @get('controller.tab') == 'pull_requests'
     ).property('controller.tab')
 
-    showMore: ->
-      id     = @get('controller.repo.id')
-      number = @get('builds.lastObject.number')
-      @get('builds').load Travis.Build.olderThanNumber(id, number)
-
     ShowMoreButton: Em.View.extend
       tagName: 'button'
       classNameBindings: ['isLoading']
@@ -26,7 +21,7 @@ Travis.reopen
       ).property('isLoading')
 
       click: ->
-        @get('parentView').showMore()
+        @get('controller').showMore()
 
   BuildsItemView: Travis.View.extend
     tagName: 'tr'
@@ -54,5 +49,5 @@ Travis.reopen
     loadingBinding: 'controller.loading'
 
     color: (->
-      Travis.Helpers.colorForState(@get('build.state'))
-    ).property('build.state')
+      Travis.Helpers.colorForState(@get('controller.build.state'))
+    ).property('controller.build.state')

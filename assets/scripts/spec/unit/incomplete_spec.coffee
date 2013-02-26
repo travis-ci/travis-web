@@ -18,7 +18,9 @@ describe 'Travis.Model - incomplete', ->
       niceBar:     DS.belongsTo('Travis.Bar')
       veryNiceBar: DS.belongsTo('Travis.Bar')
 
-    Travis.Bar = Travis.Model.extend()
+    Travis.Bar = Travis.Model.extend
+      name: DS.attr('string')
+      foos: DS.hasMany('Travis.Foo')
 
     adapterClass = Travis.RestAdapter.extend()
     adapterClass.map 'Travis.Foo',
@@ -32,6 +34,22 @@ describe 'Travis.Model - incomplete', ->
     delete Travis.Foo
     delete Travis.Bar
     store.destroy()
+
+  it 'allows to merge many times', ->
+    store.load(Travis.Bar, { id: '1', foo_ids: ['1', '2'] }, { id: '1' })
+    store.load(Travis.Foo, { id: '1', bar_id: '1' }, { id: '1' })
+    store.load(Travis.Foo, { id: '2', bar_id: '1' }, { id: '2' })
+
+    record = store.find(Travis.Bar, 1)
+    store.find(Travis.Foo, 1)
+    store.find(Travis.Foo, 2)
+
+    record.get('foos')
+    store.loadIncomplete(Travis.Bar, id: 1, name: 'foo')
+    store.loadIncomplete(Travis.Bar, id: 1, name: 'bar')
+
+    expect( record.get('foos.length') ).toEqual(2)
+    expect( record.get('name') ).toEqual('bar')
 
   describe 'with incomplete record with loaded associations', ->
     beforeEach ->
