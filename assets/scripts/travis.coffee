@@ -43,7 +43,6 @@ window.Travis = Em.Application.extend(Ember.Evented,
 
   signOut: ->
     @get('auth').signOut()
-    #@get('router').send('afterSignOut')
 
   receive: ->
     @store.receive.apply(@store, arguments)
@@ -69,7 +68,6 @@ window.Travis = Em.Application.extend(Ember.Evented,
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
     I18n.fallbacks = true
     @setLocale 'locale', @get('defaultLocale')
-    @autoSignIn() unless @get('signedIn')
 ).create()
 
 Travis.deferReadiness()

@@ -8,6 +8,36 @@ Ember.Router.reopen
     url = url.replace(/#.*?$/, '')
     @_super(url)
 
+# TODO: don't reopen Ember.Route to add events, there should be
+#       a better way (like "parent" resource for everything inside map)
+Ember.Route.reopen
+  events:
+    afterSignIn: (path) ->
+      @routeTo(path)
+
+    afterSignOut: ->
+      @routeTo('/')
+
+  routeTo: (path) ->
+    return unless path
+    @router.handleURL(path)
+    @router.location.setURL(path)
+
+  signedIn: ->
+    @controllerFor('currentUser').get('content')
+
+  redirect: ->
+    if @get('needsAuth')
+      @authorize(@router.location.getURL())
+    else
+      @_super.apply this, arguments
+    Travis.autoSignIn() unless @signedIn()
+
+  authorize: (path) ->
+    if !@signedIn()
+      Travis.storeAfterSignInPath(path)
+      @transitionTo('auth')
+
 Travis.Router.map ->
   @resource 'index', path: '/', ->
     @route 'current', path: '/'
@@ -20,6 +50,7 @@ Travis.Router.map ->
       @resource 'branches', path: '/branches'
 
   @route 'stats', path: '/stats'
+  @route 'auth', path: '/auth'
 
   @resource 'profile', path: '/profile', ->
     @route 'index', path: '/'
@@ -150,6 +181,8 @@ Travis.StatsRoute = Ember.Route.extend
     @container.lookup('controller:application').connectLayout('simple')
 
 Travis.ProfileRoute = Ember.Route.extend
+  needsAuth: true
+
   setupController: ->
     @container.lookup('controller:application').connectLayout('profile')
     @container.lookup('controller:accounts').set('content', Travis.Account.find())
@@ -167,7 +200,7 @@ Travis.ProfileIndexRoute = Ember.Route.extend
     @container.lookup('controller:profile').activate 'hooks'
 
   renderTemplate: ->
-    @render 'hooks', outlet: 'pane', into: 'profile'
+    @render 'hooks', outlet: 'pane', into: 'profile', controller: 'profile'
 
 Travis.AccountRoute = Ember.Route.extend
   setupController: (controller, account) ->
@@ -215,3 +248,13 @@ Travis.AccountProfileRoute = Ember.Route.extend
 
   renderTemplate: ->
     @render 'user', outlet: 'pane', into: 'profile'
+
+Travis.AuthRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'auth')
+
+    @render 'top', outlet: 'top'
+    @render 'auth.signin'
+
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('simple')
