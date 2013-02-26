@@ -16,7 +16,7 @@ class Travis::Web::App::AltVersions
   private
 
     def cookie(alt)
-      "alt=#{alt}; Domain=travis-ci.org; Secure; Max-Age=#{alt == 'default' ? 0 : 86400}"
+      "alt=#{alt}; Domain=staging.travis-ci.org; Secure; Max-Age=#{alt == 'default' ? 0 : 86400}"
     end
 
     def alt_from_params(env)
