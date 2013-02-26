@@ -75,6 +75,9 @@ window.Travis = Em.Application.extend(Ember.Evented,
 Travis.deferReadiness()
 
 $.extend Travis,
+  run:
+    Travis.advanceReadiness() # bc, remove once merged to master
+
   config:
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
