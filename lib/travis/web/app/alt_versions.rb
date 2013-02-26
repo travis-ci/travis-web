@@ -16,7 +16,7 @@ class Travis::Web::App::AltVersions
   private
 
     def set_cookie(headers, alt)
-      cookie = "alt=#{alt}; Path=/; Secure"
+      cookie = "alt=#{alt}; path=/"
       puts "setting cookie #{cookie}"
       headers['Set-Cookie'] = cookie
     end
