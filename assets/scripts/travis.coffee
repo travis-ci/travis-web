@@ -1,6 +1,9 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
 
+window.bootstrapTravis = ->
+  Travis.advanceReadiness()
+
 # TODO: how can I put it in Travis namespace and use immediately?
 Storage = Em.Object.extend
   init: ->

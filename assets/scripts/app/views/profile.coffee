@@ -60,6 +60,7 @@ Travis.reopen
         { key: 'pl', name: 'Polski' }
         { key: 'pt-BR', name: 'Português brasileiro' }
         { key: 'ru', name: 'Русский' }
+        { key: 'de', name: 'Deutsch' }
       ]
     ).property()
 
