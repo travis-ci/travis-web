@@ -9,7 +9,7 @@ class Travis::Web::App::AltVersions
     alt = alt_from_params(env) || alt_from_cookie(env)
     env['travis.alt'] = alt if alt
     status, headers, body = app.call(env)
-    headers['Set-Cookie'] = "alt=#{alt}; path=/; Secure" if alt
+    headers['Set-Cookie'] = "alt=#{alt}; Path=/; Secure" if alt
     [status, headers, body]
   end
 
