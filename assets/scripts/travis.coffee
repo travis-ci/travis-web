@@ -73,7 +73,7 @@ window.Travis = Em.Application.extend(Ember.Evented,
 Travis.deferReadiness()
 
 $.extend Travis,
-  run:
+  run: ->
     Travis.advanceReadiness() # bc, remove once merged to master
 
   config:
