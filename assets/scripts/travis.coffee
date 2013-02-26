@@ -1,6 +1,9 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
 
+window.bootstrapTravis = ->
+  Travis.run()
+
 if window.history.state == undefined
   window.history.state = {}
   oldPushState = window.history.pushState
