@@ -16,7 +16,7 @@ env:
 script: "script/ci"
 
 after_script:
-  - "ENV=production bundle exec rakep"
+  - "bundle exec rakep"
   - "test $TEST_SUITE = \"ember\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public/scripts:scripts --path public/styles:styles"
 
 matrix:
