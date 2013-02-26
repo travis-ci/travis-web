@@ -16,7 +16,7 @@ class Travis::Web::App::AltVersions
   private
 
     def set_cookie(headers, alt)
-      cookie = "alt=#{alt}; path=/"
+      cookie = "alt=#{alt}; path=/; max-age=#{alt == 'default' ? 0 : 86400}"
       puts "setting cookie #{cookie}"
       headers['Set-Cookie'] = cookie
     end
