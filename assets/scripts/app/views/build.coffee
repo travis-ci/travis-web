@@ -54,5 +54,5 @@ Travis.reopen
     loadingBinding: 'controller.loading'
 
     color: (->
-      Travis.Helpers.colorForState(@get('build.state'))
-    ).property('build.state')
+      Travis.Helpers.colorForState(@get('controller.build.state'))
+    ).property('controller.build.state')
