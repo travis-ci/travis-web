@@ -130,11 +130,10 @@ Travis.reopen
 
     regenerateKey: ->
       @popupCloseAll()
-      self = this
 
-      @get('repo').regenerateKey
-        success: ->
-          self.popup('regeneration-success')
+      (@get('repo.content') || @get('repo')).regenerateKey
+        success: =>
+          @popup('regeneration-success')
         error: ->
           Travis.app.router.flashController.loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 

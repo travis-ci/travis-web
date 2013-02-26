@@ -63,7 +63,7 @@ Travis.reopen
       Travis.Urls.plainTextLog(id) if id = @get('log.job.id')
     ).property('job.log.id')
 
-    toggleTailing: (event) ->
+    toggleTailing: ->
       Travis.tailing.toggle()
       event.preventDefault()
 
@@ -71,7 +71,7 @@ Travis.reopen
       $('#log').on 'mouseenter', 'a', ->
         $(this).attr('href', '#L' + ($(this.parentNode).prevAll('p').length + 1))
 
-    click: (event) ->
+    click: ->
       if (href = $(event.target).attr('href')) && matches = href?.match(/#L(\d+)$/)
         @lineNumberClicked(matches[1])
         event.stopPropagation()
