@@ -19,6 +19,11 @@ require 'travis/model'
   commit: DS.belongsTo('Travis.Commit')
   commits: DS.belongsTo('Travis.Commit')
 
+  # this is a fake relationship just to get rid
+  # of ember data's bug: https://github.com/emberjs/data/issues/758
+  # TODO: remove when this issue is fixed
+  fakeBuild:  DS.belongsTo('Travis.Build')
+
   log: ( ->
     Travis.Log.create(job: this)
   ).property()
