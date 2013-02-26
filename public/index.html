@@ -15,8 +15,10 @@
     <link rel="stylesheet" href="/styles/app.css">
     <script src="/scripts/app.js"></script>
     <script>
-      minispade.require('travis')
-      bootstrapTravis()
+      $(function() {
+        minispade.require('travis');
+        Travis.advanceReadiness();
+      });
     </script>
   </head>
   <body id="home"></body>
