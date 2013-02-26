@@ -24,6 +24,8 @@ require 'travis/model'
   # TODO: remove when this issue is fixed
   fakeBuild:  DS.belongsTo('Travis.Build')
 
+  _config: DS.attr('object')
+
   log: ( ->
     Travis.Log.create(job: this)
   ).property()
@@ -37,8 +39,8 @@ require 'travis/model'
   ).property('repoSlug', 'repoId')
 
   config: (->
-    Travis.Helpers.compact(@get('data.config'))
-  ).property('data.config')
+    Travis.Helpers.compact(@get('_config'))
+  ).property('_config')
 
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']

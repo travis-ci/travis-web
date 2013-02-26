@@ -10,7 +10,7 @@ require 'travis/model'
   branch:          DS.attr('string')
   message:         DS.attr('string')
   _duration:       DS.attr('number')
-  _config:         DS.attr('string')
+  _config:         DS.attr('object')
   startedAt:       DS.attr('string')
   finishedAt:      DS.attr('string')
 
