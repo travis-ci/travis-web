@@ -26,10 +26,6 @@
         @_super.apply this, arguments
         @set 'controller', @get('controller').container.lookup('controller:queues')
 
-      showAll: ->
-        queue = event.context
-        queue.showAll()
-
     RunningJobsView: Em.View.extend
       templateName: 'jobs/running'
       elementId: 'running-jobs'
