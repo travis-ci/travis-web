@@ -9,15 +9,11 @@ class Travis::Web::App::AltVersions
     alt = alt_from_params(env) || alt_from_cookie(env)
     env['travis.alt'] = alt if alt
     status, headers, body = app.call(env)
-    headers['Set-Cookie'] = cookie(alt) if env.key?('travis.alt')
+    headers['Set-Cookie'] = "alt=#{alt}; path=/; Secure" if alt
     [status, headers, body]
   end
 
   private
-
-    def cookie(alt)
-      "alt=#{alt}; Domain=staging.travis-ci.org; Secure; Max-Age=#{alt == 'default' ? 0 : 86400}"
-    end
 
     def alt_from_params(env)
       alt_from_string env['QUERY_STRING']
