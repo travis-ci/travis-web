@@ -11,19 +11,6 @@ Travis.reopen
       @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.isLoaded', 'repos.length')
 
-  RepoShowStatsView: Travis.View.extend
-    templateName: 'repos/show/stats'
-    repoBinding:  'parentView.repo'
-    statsBinding: 'repo.stats'
-
-    urlGithubWatchers: (->
-      Travis.Urls.githubWatchers(@get('repo.slug'))
-    ).property('repo.slug'),
-
-    urlGithubNetwork: (->
-      Travis.Urls.githubNetwork(@get('repo.slug'))
-    ).property('repo.slug'),
-
   ReposEmptyView: Travis.View.extend
     template: ''
 
