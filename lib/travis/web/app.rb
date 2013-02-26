@@ -35,7 +35,7 @@ class Travis::Web::App
       builder = Rack::Builder.new
       if options[:environment] == 'production'
         builder.use Rack::SSL
-        builder.use Rack::Cache
+        # builder.use Rack::Cache
       end
       builder.use Rack::Deflater
       builder.use Rack::Head
