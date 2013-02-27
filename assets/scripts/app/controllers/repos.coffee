@@ -3,8 +3,14 @@ require 'travis/limited_array'
 Travis.ReposController = Ember.ArrayController.extend
   defaultTab: 'recent'
   isLoadedBinding: 'content.isLoaded'
-  needs: ['currentUser']
+  needs: ['currentUser', 'repo']
   currentUserBinding: 'controllers.currentUser'
+  selectedRepo: (->
+    # we need to observe also repo.content here, because we use
+    # ObjectProxy in repo controller
+    # TODO: get rid of ObjectProxy there
+    @get('controllers.repo.repo.content') || @get('controllers.repo.repo')
+  ).property('controllers.repo.repo', 'controllers.repo.repo.content')
 
   init: ->
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
