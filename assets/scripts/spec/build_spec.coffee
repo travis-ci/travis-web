@@ -1,12 +1,12 @@
 describe 'on the "build" state', ->
   beforeEach ->
-    app 'travis-ci/travis-core/builds/1'
+    app '/travis-ci/travis-core/builds/1'
+
+    console.log 'wait for repos'
     waitFor reposRendered
     runs ->
+      console.log 'wait for build'
       waitFor buildRendered
-
-  afterEach ->
-    window.history.pushState({}, null, '/spec.html')
 
   it 'displays the expected stuff', ->
     listsRepos [
@@ -52,13 +52,10 @@ describe 'on the "build" state', ->
 
 describe 'on the "current" state', ->
   beforeEach ->
-    app 'travis-ci/travis-core'
+    app '/travis-ci/travis-core'
     waitFor reposRendered
     runs ->
       waitFor buildRendered
-
-  afterEach ->
-    window.history.pushState({}, null, '/spec.html')
 
   it 'correctly updates values on pusher build:started event', ->
     payload =
@@ -72,8 +69,8 @@ describe 'on the "current" state', ->
         finished_at: '2012-07-02T00:02:55Z'
         event_type: 'push'
         result: 1
-        commit_message: 'commit message 3'
-        commit: '1234567'
+        message: 'commit message 3'
+        commit: 'foo1234'
         state: 'started'
       repository:
         id: 1
@@ -81,10 +78,19 @@ describe 'on the "current" state', ->
         last_build_id: 11
 
     Em.run ->
-      Travis.app.receive 'build:started', payload
+      Travis.receive 'build:started', payload
 
-    waits(100)
     runs ->
       displaysSummaryBuildLink '/travis-ci/travis-core/builds/11', '3'
 
+      displaysSummary
+        type: 'build'
+        id: 11
+        repo: 'travis-ci/travis-core'
+        commit: 'foo1234'
+        branch: 'master'
+        compare: '0123456..1234567'
+        finishedAt: 'less than a minute ago'
+        duration: '55 sec'
+        message: 'commit message 3'
 

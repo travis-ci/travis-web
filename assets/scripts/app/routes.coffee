@@ -2,7 +2,7 @@ require 'travis/location'
 require 'travis/line_number_parser'
 
 Ember.Router.reopen
-  location: (if testMode? then Ember.HashLocation.create() else Travis.Location.create())
+  location: (if testMode? then Ember.NoneLocation.create() else Travis.Location.create())
 
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
