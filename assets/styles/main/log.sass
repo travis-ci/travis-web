@@ -44,7 +44,7 @@ pre#log
   .fold
     height: 16px
     overflow: hidden
-    background: $color-bg-log-fold inline-image('ui/log.fold.closed.2.png') no-repeat 99.5% 2px
+    background: $color-bg-log-fold inline-image('ui/log.fold.closed.2.png') no-repeat 99.5% 3px
     cursor: pointer
     &.open
       height: auto
@@ -59,20 +59,21 @@ pre#log
       height: auto
       min-height: 16px
 
-    .fold-start:not(.fold),
-    .fold-end
-      display: none
-    .fold span.fold-name
+    .fold-name
       position: absolute
       display: block
-      right: 20px
-      margin-top: 3px
-      padding: 0px 5px 2px 5px
+      right: 23px
+      margin-top: 2px
+      padding: 0px 7px 2px 7px
       line-height: 10px
       font-size: 10px
-      background-color: #999
-      border-radius: 4px
-      color: #eee
+      background-color: #666
+      border-radius: 6px
+      color: #bbb
+
+  .fold-start:not(.fold),
+  .fold-end
+    display: none
 
 #log.loading
   padding: 25px 0 0 10px
