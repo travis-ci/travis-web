@@ -21,7 +21,7 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'rake', '~> 0.9.2'
+  gem 'rake'
   gem 'localeapp'
   gem 'handlebars'
   gem 'localeapp-handlebars_i18n'
