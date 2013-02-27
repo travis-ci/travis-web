@@ -40,7 +40,7 @@ Travis.reopen
       console.log 'log view: create engine'
       @limit = new Log.Limit
       @scroll = new Log.Scroll
-      @engine = Log.create(listeners: [new Log.FragmentRenderer, new Log.Logger, new Log.Folds, @scroll])
+      @engine = Log.create(listeners: [@limit, new Log.FragmentRenderer, new Log.Logger, new Log.Folds, @scroll])
       @observeParts()
       @numberLineOnHover()
 
