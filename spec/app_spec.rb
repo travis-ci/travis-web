@@ -42,12 +42,12 @@ describe Travis::Web::App do
       example { last_response.should be_ok }
       example { last_response.body.should include('/assets/foo/styles/app.css') }
       example { last_response.body.should include('/assets/foo/scripts/app.js') }
-      example { headers['Set-Cookie'].should == 'alt=foo; Domain=travis-ci.org; Secure; Max-Age=86400' }
+      example { headers['Set-Cookie'].should == 'alt=foo; path=/; max-age=86400' }
     end
 
     context 'passing default as an alt param' do
       before  { get('/?alt=default') }
-      example { headers['Set-Cookie'].should == 'alt=default; Domain=travis-ci.org; Secure; Max-Age=0' }
+      example { headers['Set-Cookie'].should == 'alt=default; path=/; max-age=0' }
     end
   end
 end
