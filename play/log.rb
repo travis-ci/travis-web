@@ -1,3 +1,16 @@
+puts 'simulating git fetch (compressing objects)'
+1.upto(99) do |i|
+  print "remote: Compressing objects: #{i.to_s.rjust(3)}% (1/34)   \e[K\r"
+end
+print "remote: Compressing objects: 100% (1/1), done.\e[K\r\n"
+
+puts 'simulating git fetch (unpacking objects)'
+1.upto(99) do |i|
+  print "remote: Unpacking objects: #{i.to_s.rjust(3)}% (1/43)   \r"
+end
+print "remote: Unpacking objects: 100% (1/43)   \r\n"
+exit
+
 puts 'progress on one same line (faster)'
 1.upto(200) do |i|
   print "#{i}|"; sleep(0.025)
