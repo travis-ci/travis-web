@@ -49,10 +49,30 @@ pre#log
     &.open
       height: auto
       background-image: inline-image('ui/log.fold.open.2.png')
-    &.show-first-line:not(.open)
-      height: 36px
-      p:not(:first-child):not(:last-child)
-        display: none
+    // &.show-first-line:not(.open)
+    //   height: 36px
+    //   p:not(:first-child):not(:last-child)
+    //     display: none
+
+    &:not(.open) p:first-of-type
+      visibility: visible
+      height: auto
+      min-height: 16px
+
+    .fold-start:not(.fold),
+    .fold-end
+      display: none
+    .fold span.fold-name
+      position: absolute
+      display: block
+      right: 20px
+      margin-top: 3px
+      padding: 0px 5px 2px 5px
+      line-height: 10px
+      font-size: 10px
+      background-color: #999
+      border-radius: 4px
+      color: #eee
 
 #log.loading
   padding: 25px 0 0 10px

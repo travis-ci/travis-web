@@ -9,7 +9,7 @@ puts 'simulating git fetch (unpacking objects)'
   print "remote: Unpacking objects: #{i.to_s.rjust(3)}% (1/43)   \r"
 end
 print "remote: Unpacking objects: 100% (1/43)   \r\n"
-exit
+puts
 
 puts 'progress on one same line (faster)'
 1.upto(200) do |i|
