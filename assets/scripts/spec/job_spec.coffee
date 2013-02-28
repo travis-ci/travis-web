@@ -5,9 +5,6 @@ describe 'on the "job" state', ->
     runs ->
       waitFor hasText('#tab_build', 'Build #1')
 
-  afterEach ->
-    window.history.pushState({}, null, '/spec.html')
-
   it 'displays the expected stuff', ->
     listsRepos [
       { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }

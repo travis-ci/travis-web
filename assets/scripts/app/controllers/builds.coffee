@@ -1,15 +1,18 @@
 Travis.BuildsController = Em.ArrayController.extend
-  # sortAscending: false
+  sortAscending: false
+  sortProperties: ['number']
+
   needs: ['repo']
 
   repoBinding: 'controllers.repo.repo'
-  buildsBinding: 'controllers.repo.builds'
+  contentBinding: 'controllers.repo.builds'
   tabBinding: 'controllers.repo.tab'
+  isLoadedBinding: 'content.isLoaded'
 
   showMore: ->
     id     = @get('repo.id')
-    number = @get('builds.lastObject.number')
-    @get('builds').load Travis.Build.olderThanNumber(id, number, @get('tab'))
+    number = @get('lastObject.number')
+    @get('content').load Travis.Build.olderThanNumber(id, number, @get('tab'))
 
   displayShowMoreButton: (->
     @get('tab') != 'branches'

@@ -1,7 +1,4 @@
 describe 'events', ->
-  afterEach ->
-    window.history.pushState({}, null, '/spec.html')
-
   describe 'an event adding a repository', ->
     beforeEach ->
       app 'travis-ci/travis-core'
