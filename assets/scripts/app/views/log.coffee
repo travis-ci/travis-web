@@ -127,9 +127,11 @@ Log.Limit.prototype = $.extend new Log.Listener,
 
 Log.Logger = ->
 Log.Logger.prototype = $.extend new Log.Listener,
-  # receive: (log, number) ->
-  #   console.log 'log engine: receive', arguments
-  remove: (log, ids) ->
-    console.log 'log engine: remove', ids
-  insert: (log, after, nodes) ->
-    console.log "log engine: insert", after, nodes
+  receive: (log, num, string) ->
+    @log("rcv #{num} #{JSON.stringify(string)}")
+  insert: (log, after, datas) ->
+    @log("ins #{datas.map((data) -> data.id).join(', ')}, after: #{after || '?'}, #{JSON.stringify(datas)}")
+  remove: (log, id) ->
+    @log("rem #{id}")
+  log: (line) ->
+    console.log(line)
