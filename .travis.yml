@@ -4,6 +4,7 @@ rvm:
 before_script:
   - "gem install travis-artifacts"
   - "bundle exec rakep"
+  - "phantomjs --version"
 
 env:
   global:
