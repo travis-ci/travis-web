@@ -1,4 +1,4 @@
-{{#if builds.isLoaded}}
+{{#if content.isLoaded}}
   <table id="builds" class="list">
     <thead>
       <tr>
@@ -21,7 +21,7 @@
     </thead>
 
     <tbody>
-      {{#each build in builds}}
+      {{#each build in controller}}
         {{#view Travis.BuildsItemView contextBinding="build"}}
           <td class="number">
             <span class="status"></span>

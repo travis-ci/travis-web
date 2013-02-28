@@ -32,6 +32,12 @@ window.Travis = Em.Application.extend(Ember.Evented,
 
     @set('auth', Travis.Auth.create(app: this, endpoint: Travis.config.api_endpoint))
 
+  reset: ->
+    @store.destroy()
+    @setup()
+
+    @_super.apply(this, arguments);
+
   storeAfterSignInPath: (path) ->
     @get('auth').storeAfterSignInPath(path)
 

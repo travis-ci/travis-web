@@ -1,30 +1,14 @@
 minispade.require 'app'
 
-@reset = ->
-  Em.run ->
-    if Travis.app
-      if Travis.app.store
-        Travis.app.store.destroy()
-      Travis.app.destroy()
-      delete Travis.app
-      delete Travis.store
-
-  waits(500) # TODO not sure what we need to wait for here
-  $('#application').remove()
-  $('body').append( $('<div id="application"></div>') )
-
 @app = (url) ->
-  reset()
-  Em.run ->
-    Travis.run(rootElement: $('#application'))
-    waitFor -> Travis.app
-    # TODO: so much waiting here, I'm sure we can minimize this
-    runs ->
-      url = "/#{url}" if url && !url.match(/^\//)
-      Travis.app.router.route(url)
-      waits 500
-      runs ->
-        foo = 'bar'
+  # TODO: this should wait till app is initialized, not some
+  #       arbitrary amount of time
+  waits(50)
+  runs ->
+    Travis.reset()
+
+    url = "/#{url}" unless url.match /^\//
+    Travis.__container__.lookup('router:main').handleURL(url)
 
 _Date = Date
 @Date = (date) ->

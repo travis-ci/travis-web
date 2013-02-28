@@ -13,7 +13,9 @@
       repoBinding: 'content'
       classNames: ['repo']
       classNameBindings: ['color', 'selected']
-      selectedBinding: 'repo.selected'
+      selected: (->
+        @get('content') == @get('controller.selectedRepo')
+      ).property('controller.selectedRepo')
 
       color: (->
         Travis.Helpers.colorForState(@get('repo.lastBuildState'))
