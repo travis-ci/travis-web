@@ -1,6 +1,6 @@
 ruby '1.9.3' rescue nil
 
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'puma'
 gem 'rack-ssl', '~> 1.3'
