@@ -1,5 +1,5 @@
-// Version: v1.0.0-rc.1-85-gd25f1ad
-// Last commit: d25f1ad (2013-02-27 18:40:56 +0100)
+// Version: v1.0.0-rc.1-109-g8cc5392
+// Last commit: 8cc5392 (2013-03-04 02:00:20 +0100)
 
 
 (function() {
@@ -150,8 +150,8 @@ Ember.deprecateFunc = function(message, func) {
 
 })();
 
-// Version: v1.0.0-rc.1-85-gd25f1ad
-// Last commit: d25f1ad (2013-02-27 18:40:56 +0100)
+// Version: v1.0.0-rc.1-109-g8cc5392
+// Last commit: 8cc5392 (2013-03-04 02:00:20 +0100)
 
 
 (function() {
@@ -4564,6 +4564,21 @@ function scheduleOnce(queue, target, method, args) {
     // doFoo will only be executed once at the end of the RunLoop
   });
   ```
+  
+  Also note that passing an anonymous function to `Ember.run.once` will
+  not prevent additional calls with an identical anonymous function from 
+  scheduling the items multiple times, e.g.:
+  
+  ```javascript
+  function scheduleIt() {
+    Ember.run.once(myContext, function() { console.log("Closure"); });
+  }
+  scheduleIt();
+  scheduleIt();
+  // "Closure" will print twice, even though we're using `Ember.run.once`,
+  // because the function we pass to it is anonymous and won't match the 
+  // previously scheduled operation.
+  ```
 
   @method once
   @param {Object} [target] target of method to invoke
@@ -6956,10 +6971,11 @@ Ember.String = {
   */
   dasherize: function(str) {
     var cache = STRING_DASHERIZE_CACHE,
-        ret   = cache[str];
+        hit   = cache.hasOwnProperty(str),
+        ret;
 
-    if (ret) {
-      return ret;
+    if (hit) {
+      return cache[str];
     } else {
       ret = Ember.String.decamelize(str).replace(STRING_DASHERIZE_REGEXP,'-');
       cache[str] = ret;
@@ -6969,7 +6985,7 @@ Ember.String = {
   },
 
   /**
-    Returns the lowerCaseCamel form of a string.
+    Returns the lowerCamelCase form of a string.
 
     ```javascript
     'innerHTML'.camelize();          // 'innerHTML'
@@ -7040,10 +7056,10 @@ Ember.String = {
   /**
     Returns the Capitalized form of a string
 
-       'innerHTML'.capitalize()         => 'InnerHTML'
-       'action_name'.capitalize()       => 'Action_name'
-       'css-class-name'.capitalize()    => 'Css-class-name'
-       'my favorite items'.capitalize() => 'My favorite items'
+       'innerHTML'.capitalize()         // 'InnerHTML'
+       'action_name'.capitalize()       // 'Action_name'
+       'css-class-name'.capitalize()    // 'Css-class-name'
+       'my favorite items'.capitalize() // 'My favorite items'
 
     @method capitalize
     @param {String} str
@@ -7440,10 +7456,10 @@ Ember.Enumerable = Ember.Mixin.create(
 
     ```javascript
     var arr = ["a", "b", "c"];
-    arr.firstObject();  // "a"
+    arr.get('firstObject');  // "a"
 
     var arr = [];
-    arr.firstObject();  // undefined
+    arr.get('firstObject');  // undefined
     ```
 
     @property firstObject
@@ -7466,10 +7482,10 @@ Ember.Enumerable = Ember.Mixin.create(
 
     ```javascript
     var arr = ["a", "b", "c"];
-    arr.lastObject();  // "c"
+    arr.get('lastObject');  // "c"
 
     var arr = [];
-    arr.lastObject();  // undefined
+    arr.get('lastObject');  // undefined
     ```
 
     @property lastObject
@@ -7602,7 +7618,7 @@ Ember.Enumerable = Ember.Mixin.create(
     @return {Array} The mapped array.
   */
   map: function(callback, target) {
-    var ret = [];
+    var ret = Ember.A([]);
     this.forEach(function(x, idx, i) {
       ret[idx] = callback.call(target, x, idx,i);
     });
@@ -7652,7 +7668,7 @@ Ember.Enumerable = Ember.Mixin.create(
     @return {Array} A filtered array.
   */
   filter: function(callback, target) {
-    var ret = [];
+    var ret = Ember.A([]);
     this.forEach(function(x, idx, i) {
       if (callback.call(target, x, idx, i)) ret.push(x);
     });
@@ -7941,7 +7957,7 @@ Ember.Enumerable = Ember.Mixin.create(
     @return {Array} return values from calling invoke.
   */
   invoke: function(methodName) {
-    var args, ret = [];
+    var args, ret = Ember.A([]);
     if (arguments.length>1) args = a_slice.call(arguments, 1);
 
     this.forEach(function(x, idx) {
@@ -7962,7 +7978,7 @@ Ember.Enumerable = Ember.Mixin.create(
     @return {Array} the enumerable as an array.
   */
   toArray: function() {
-    var ret = [];
+    var ret = Ember.A([]);
     this.forEach(function(o, idx) { ret[idx] = o; });
     return ret ;
   },
@@ -7996,7 +8012,7 @@ Ember.Enumerable = Ember.Mixin.create(
   */
   without: function(value) {
     if (!this.contains(value)) return this; // nothing to do
-    var ret = [] ;
+    var ret = Ember.A([]);
     this.forEach(function(k) {
       if (k !== value) ret[ret.length] = k;
     }) ;
@@ -8016,7 +8032,7 @@ Ember.Enumerable = Ember.Mixin.create(
     @return {Ember.Enumerable}
   */
   uniq: function() {
-    var ret = [];
+    var ret = Ember.A([]);
     this.forEach(function(k){
       if (a_indexOf(ret, k)<0) ret.push(k);
     });
@@ -8048,7 +8064,7 @@ Ember.Enumerable = Ember.Mixin.create(
 
     @method addEnumerableObserver
     @param {Object} target
-    @param {Hash} opts
+    @param {Hash} [opts]
   */
   addEnumerableObserver: function(target, opts) {
     var willChange = (opts && opts.willChange) || 'enumerableWillChange',
@@ -8184,7 +8200,7 @@ Ember.Enumerable = Ember.Mixin.create(
 // HELPERS
 //
 
-var get = Ember.get, set = Ember.set, meta = Ember.meta, map = Ember.EnumerableUtils.map, cacheFor = Ember.cacheFor;
+var get = Ember.get, set = Ember.set, map = Ember.EnumerableUtils.map, cacheFor = Ember.cacheFor;
 
 function none(obj) { return obj===null || obj===undefined; }
 
@@ -8326,12 +8342,12 @@ Ember.Array = Ember.Mixin.create(Ember.Enumerable, /** @scope Ember.Array.protot
     ```
 
     @method slice
-    @param beginIndex {Integer} (Optional) index to begin slicing from.
-    @param endIndex {Integer} (Optional) index to end the slice at.
+    @param {Integer} beginIndex (Optional) index to begin slicing from.
+    @param {Integer} endIndex (Optional) index to end the slice at.
     @return {Array} New array with specified slice
   */
   slice: function(beginIndex, endIndex) {
-    var ret = [];
+    var ret = Ember.A([]);
     var length = get(this, 'length') ;
     if (none(beginIndex)) beginIndex = 0 ;
     if (none(endIndex) || (endIndex > length)) endIndex = length ;
@@ -9233,7 +9249,7 @@ Ember.MutableArray = Ember.Mixin.create(Ember.Array, Ember.MutableEnumerable,
 @submodule ember-runtime
 */
 
-var get = Ember.get, set = Ember.set, defineProperty = Ember.defineProperty;
+var get = Ember.get, set = Ember.set;
 
 /**
   ## Overview
@@ -10360,7 +10376,7 @@ CoreObject.PrototypeMixin = Mixin.create({
           }
         });
         teacher = App.Teacher.create()
-        teacher.toString(); // #=> "<App.Teacher:ember1026:Tom Dale>"
+        teacher.toString(); //=> "<App.Teacher:ember1026:Tom Dale>"
 
     @method toString
     @return {String} string representation
@@ -14888,7 +14904,6 @@ Ember.View = Ember.CoreView.extend(
       // JavaScript property changes.
       var observer = function() {
         elem = this.$();
-        if (!elem) { return; }
 
         attributeValue = get(this, property);
 
@@ -15756,10 +15771,18 @@ Ember.View = Ember.CoreView.extend(
   },
 
   registerObserver: function(root, path, target, observer) {
-    Ember.addObserver(root, path, target, observer);
+    if (!observer && 'function' === typeof target) {
+      observer = target;
+      target = null;
+    }
+    var view = this,
+        stateCheckedObserver = function(){
+          view.currentState.invokeObserver(this, observer);
+        };
+    Ember.addObserver(root, path, target, stateCheckedObserver);
 
     this.one('willClearRender', function() {
-      Ember.removeObserver(root, path, target, observer);
+      Ember.removeObserver(root, path, target, stateCheckedObserver);
     });
   }
 
@@ -16037,7 +16060,8 @@ Ember.View.states._default = {
     return false;
   },
 
-  rerender: Ember.K
+  rerender: Ember.K,
+  invokeObserver: Ember.K
 };
 
 })();
@@ -16158,6 +16182,10 @@ Ember.merge(inBuffer, {
     }
 
     return value;
+  },
+
+  invokeObserver: function(target, observer) {
+    observer.call(target);
   }
 });
 
@@ -16245,6 +16273,10 @@ Ember.merge(hasElement, {
     } else {
       return true; // continue event propagation
     }
+  },
+
+  invokeObserver: function(target, observer) {
+    observer.call(target);
   }
 });
 
@@ -17584,7 +17616,7 @@ if(!Handlebars && typeof require === 'function') {
   Handlebars = require('handlebars');
 }
 
-Ember.assert("Ember Handlebars requires Handlebars 1.0.0-rc.3 or greater", Handlebars && Handlebars.VERSION.match(/^1\.0\.[0-9](\.rc\.[23456789]+)?/));
+Ember.assert("Ember Handlebars requires Handlebars 1.0.rc.3 or greater", Handlebars && Handlebars.VERSION.match(/^1\.0(\.0)?(\.|-)rc\.[23456789]+/));
 
 /**
   Prepares the Handlebars templating library for use inside Ember's view
@@ -23950,10 +23982,10 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     The default target for `{{action}}`s in the rendered template is the
     named controller.
 
-    @method action
+    @method render
     @for Ember.Handlebars.helpers
-    @param {String} actionName
-    @param {Object?} model
+    @param {String} name
+    @param {Object?} contextString
     @param {Hash} options
   */
   Ember.Handlebars.registerHelper('render', function(name, contextString, options) {
@@ -27035,8 +27067,8 @@ Ember States
 
 
 })();
-// Version: v1.0.0-rc.1-85-gd25f1ad
-// Last commit: d25f1ad (2013-02-27 18:40:56 +0100)
+// Version: v1.0.0-rc.1-109-g8cc5392
+// Last commit: 8cc5392 (2013-03-04 02:00:20 +0100)
 
 
 (function() {

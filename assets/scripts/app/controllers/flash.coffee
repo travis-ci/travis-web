@@ -5,8 +5,8 @@ Travis.FlashController = Ember.ArrayController.extend
   broadcastBinding: 'currentUser.broadcasts'
 
   init: ->
-    @set('flashes', Ember.A())
     @_super.apply this, arguments
+    @set('flashes', Ember.A())
 
   content: (->
     @get('unseenBroadcasts').concat(@get('flashes'))

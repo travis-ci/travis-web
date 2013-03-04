@@ -21,7 +21,7 @@ describe 'events', ->
           responseText: payload
 
         Em.run ->
-          Travis.app.receive 'build:started',
+          Travis.receive 'build:started',
             build:
               id: 10
             repository:
@@ -60,7 +60,7 @@ describe 'events', ->
           state: 'started'
 
       Em.run ->
-        Travis.app.receive 'build:started', payload
+        Travis.receive 'build:started', payload
 
       waits(100)
       runs ->
@@ -95,7 +95,7 @@ describe 'events', ->
         responseText: payload
 
       Em.run ->
-        Travis.app.receive 'job:started',
+        Travis.receive 'job:started',
           job:
             id: 15
             repository_id: 1
@@ -123,7 +123,7 @@ describe 'events', ->
         responseText: payload
 
       Em.run ->
-        Travis.app.receive 'job:started',
+        Travis.receive 'job:started',
           job:
             id: 12
             repository_id: 1
@@ -140,7 +140,7 @@ describe 'events', ->
 
     it 'updates only keys that are available', ->
       Em.run ->
-        Travis.app.receive 'job:started',
+        Travis.receive 'job:started',
           job:
             id: 1
             build_id: 1
@@ -171,7 +171,7 @@ describe 'events', ->
         responseText: payload
 
       Em.run ->
-        Travis.app.receive 'worker:created',
+        Travis.receive 'worker:created',
           worker:
             id: 10
             name: 'ruby-3'
@@ -205,7 +205,7 @@ describe 'events', ->
               last_build_number: '999'
 
       Em.run ->
-        Travis.app.receive 'worker:updated', payload
+        Travis.receive 'worker:updated', payload
 
       waits(100)
       runs ->

@@ -123,7 +123,7 @@ Travis.reopen
         success: =>
           @popup('regeneration-success')
         error: ->
-          Travis.app.router.flashController.loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
+          Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 
     displayRequeueBuild: (->
       @get('isBuildTab') && @get('build.isFinished')
