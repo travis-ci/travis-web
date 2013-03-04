@@ -6,17 +6,6 @@ Travis.RepoController = Travis.Controller.extend
   init: ->
     @_super.apply this, arguments
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
-    @set 'builds', Em.ArrayProxy.create(Em.SortableMixin,
-      isLoadedBinding: 'content.isLoaded'
-      sortProperties: ['number']
-      sortAscending: false
-      content: []
-      isLoadingBinding: 'content.isLoading'
-      load: (records) ->
-        content = @get('content')
-        if content && content.load
-          content.load(records)
-    )
 
   updateTimes: ->
     if builds = @get('builds')
@@ -45,15 +34,15 @@ Travis.RepoController = Travis.Controller.extend
 
   viewBuilds: ->
     @connectTab('builds')
-    @_bind('builds.content', 'repo.builds')
+    @_bind('builds', 'repo.builds')
 
   viewPullRequests: ->
     @connectTab('pull_requests')
-    @_bind('builds.content', 'repo.pullRequests')
+    @_bind('builds', 'repo.pullRequests')
 
   viewBranches: ->
     @connectTab('branches')
-    @_bind('builds.content', 'repo.branches')
+    @_bind('builds', 'repo.branches')
 
   viewEvents: ->
     @connectTab('events')

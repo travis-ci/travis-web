@@ -3,6 +3,7 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
     repo: (-> @get('jobs.firstObject.repo') ).property('jobs.firstObject.repo')
 
     init: ->
+      @_super.apply this, arguments
       @set 'jobs', []
 
       @set 'sortedJobs', Em.ArrayProxy.extend(Em.SortableMixin,

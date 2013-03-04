@@ -1,6 +1,7 @@
 Travis.reopen
   SidebarController: Em.ArrayController.extend
     init: ->
+      @_super.apply this, arguments
       @tickables = []
       Travis.Ticker.create(target: this, interval: Travis.INTERVALS.sponsors)
 

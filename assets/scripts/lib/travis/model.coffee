@@ -42,14 +42,14 @@
     # undefined key
     return if !key || key == 'undefined'
 
-    message = "Load missing fields for #{@constructor.toString()} because of missing key '#{key}', cid: #{@get('clientId')}"
+    message = "Load missing fields for #{@constructor.toString()} because of missing key '#{key}', cid: #{@get('clientId')}, id: #{@get('id')}"
     if @constructor.isAttribute('state') && key != 'state'
       message += ", in state: #{@get('state')}"
     console.log message
     return if @get('isCompleting')
     @set 'isCompleting', true
 
-    if @get('stateManager.currentState.path') != 'rootState.loaded.materializing'
+    unless @get('stateManager.currentState.path').match /^rootState.loaded.materializing/
       @reload()
     @set 'incomplete', false
 

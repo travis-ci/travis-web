@@ -13,8 +13,8 @@ Travis.ReposController = Ember.ArrayController.extend
   ).property('controllers.repo.repo', 'controllers.repo.repo.content')
 
   init: ->
-    Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
     @_super.apply this, arguments
+    Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   recentRepos: (->
     Travis.LimitedArray.create

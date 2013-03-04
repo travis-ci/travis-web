@@ -141,6 +141,7 @@ Travis.Store = DS.Store.extend
     result = @merge(type, hash, true)
     if result && result.clientId
       @addLoadedData(type, result.clientId, hash)
+    #@_updateRelationships(type, hash)
 
     result
 
@@ -158,3 +159,18 @@ Travis.Store = DS.Store.extend
     root = type.pluralName()
     @adapter.sideload(store, type, json, root)
     @loadMany(type, json[root])
+
+  _updateRelationships: (type, data) ->
+    Em.get(type, 'relationshipsByName').forEach (key, meta) =>
+      if meta.kind == 'belongsTo'
+        id = data["#{key}_id"]
+        if clientId = @typeMapFor(meta.type).idToCid[id]
+          if parent = this.findByClientId(meta.type, clientId, id)
+            dataProxy = parent.get('data')
+            if ids = dataProxy['hasMany'][type.pluralName()]
+              unless data.id in ids
+                state = parent.get('stateManager.currentState.path')
+                unless state == "rootState.loaded.materializing"
+                  parent.send('materializingData')
+                ids.pushObject(data.id)
+                parent.notifyPropertyChange('data')

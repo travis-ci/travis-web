@@ -21,7 +21,7 @@ describe 'events', ->
           responseText: payload
 
         Em.run ->
-          Travis.app.receive 'build:started',
+          Travis.receive 'build:started',
             build:
               id: 10
             repository:
@@ -54,13 +54,12 @@ describe 'events', ->
           started_at: '2012-07-02T00:02:00Z'
           finished_at: '2012-07-02T00:02:55Z'
           event_type: 'push'
-          result: 1
           message: 'commit message 3'
           commit: '1234567'
-          state: 'started'
+          state: 'failed'
 
       Em.run ->
-        Travis.app.receive 'build:started', payload
+        Travis.receive 'build:started', payload
 
       waits(100)
       runs ->
@@ -74,40 +73,6 @@ describe 'events', ->
       waitFor jobsRendered
       runs ->
         waitFor queuesRendered
-
-    it 'adds a job to the jobs matrix', ->
-      payload =
-        job:
-          id: 15
-          repository_id: 1
-          build_id: 1
-          commit_id: 1
-          log_id: 1
-          number: '1.4'
-          duration: 55
-          started_at: '2012-07-02T00:02:00Z'
-          finished_at: '2012-07-02T00:02:55Z'
-          config: { rvm: 'jruby' }
-
-      $.mockjax
-        url: '/jobs/15'
-        responseTime: 0
-        responseText: payload
-
-      Em.run ->
-        Travis.app.receive 'job:started',
-          job:
-            id: 15
-            repository_id: 1
-            build_id: 1
-            commit_id: 1
-
-      waits(100)
-      runs ->
-        listsJob
-          table: $('#jobs')
-          row: 3
-          item: { id: 15, number: '1.4', repo: 'travis-ci/travis-core', finishedAt: 'less than a minute ago', duration: '55 sec', rvm: 'jruby' }
 
     it 'adds a job to the jobs queue', ->
       payload =
@@ -123,7 +88,7 @@ describe 'events', ->
         responseText: payload
 
       Em.run ->
-        Travis.app.receive 'job:started',
+        Travis.receive 'job:started',
           job:
             id: 12
             repository_id: 1
@@ -140,7 +105,7 @@ describe 'events', ->
 
     it 'updates only keys that are available', ->
       Em.run ->
-        Travis.app.receive 'job:started',
+        Travis.receive 'job:started',
           job:
             id: 1
             build_id: 1
@@ -171,7 +136,7 @@ describe 'events', ->
         responseText: payload
 
       Em.run ->
-        Travis.app.receive 'worker:created',
+        Travis.receive 'worker:created',
           worker:
             id: 10
             name: 'ruby-3'
@@ -191,7 +156,7 @@ describe 'events', ->
       app '/travis-ci/travis-core'
       waitFor workersRendered
 
-    it 'does not update repository if it\'s already in store', ->
+    it 'does not update repository if it\'s already in the store', ->
       payload =
         worker:
           id: 1
@@ -205,7 +170,7 @@ describe 'events', ->
               last_build_number: '999'
 
       Em.run ->
-        Travis.app.receive 'worker:updated', payload
+        Travis.receive 'worker:updated', payload
 
       waits(100)
       runs ->

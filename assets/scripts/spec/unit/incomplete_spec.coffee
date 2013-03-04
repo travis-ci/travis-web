@@ -2,13 +2,13 @@ record = null
 store = null
 adapterClass = null
 
-$.mockjax
-  url: '/foos/1'
-  responseTime: 10
-  responseText: { foo: { id: 1, name: 'foo', description: 'bar' } }
-
 describe 'Travis.Model - incomplete', ->
   beforeEach ->
+    $.mockjax
+      url: '/foos/1'
+      responseTime: 1
+      responseText: { foo: { id: 1, name: 'foo', description: 'bar' } }
+
     Travis.Foo = Travis.Model.extend
       name:        DS.attr('string')
       description: DS.attr('string')
@@ -18,9 +18,13 @@ describe 'Travis.Model - incomplete', ->
       niceBar:     DS.belongsTo('Travis.Bar')
       veryNiceBar: DS.belongsTo('Travis.Bar')
 
+    Travis.Foo.toString = -> 'Travis.Foo'
+
     Travis.Bar = Travis.Model.extend
       name: DS.attr('string')
       foos: DS.hasMany('Travis.Foo')
+
+    Travis.Bar.toString = -> 'Travis.Bar'
 
     adapterClass = Travis.RestAdapter.extend()
     adapterClass.map 'Travis.Foo',

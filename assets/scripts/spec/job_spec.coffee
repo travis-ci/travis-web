@@ -1,5 +1,11 @@
 describe 'on the "job" state', ->
   beforeEach ->
+    $.mockjax
+      url: '/jobs/1/log?cors_hax=true'
+      responseTime: 0
+      responseText: 'log 1'
+
+
     app 'travis-ci/travis-core/jobs/1'
     waitFor jobRendered
     runs ->
@@ -32,6 +38,8 @@ describe 'on the "job" state', ->
       build:   { href: '/travis-ci/travis-core/builds/1' }
       job:     { href: '/travis-ci/travis-core/jobs/1', active: true }
 
-    displaysLog [
-      'log 1'
-    ]
+    waits 10
+    runs ->
+      displaysLog [
+        'log 1'
+      ]

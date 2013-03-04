@@ -38,6 +38,9 @@ window.Travis = Em.Application.extend(Ember.Evented,
 
     @_super.apply(this, arguments);
 
+  lookup: ->
+    @__container__.lookup.apply this, arguments
+
   storeAfterSignInPath: (path) ->
     @get('auth').storeAfterSignInPath(path)
 

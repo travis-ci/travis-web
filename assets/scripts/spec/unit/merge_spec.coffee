@@ -36,7 +36,7 @@ describe 'Travis.Model - merge', ->
 
     record.removeObserver 'firstName', observer
 
-    expect(changes).toEqual(1)
+    expect(changes > 0).toBeTruthy()
     expect(record.get('firstName')).toEqual('Peter')
     expect(record.get('login')).toEqual('drogus')
     expect(record.get('email')).toEqual('drogus@example.org')

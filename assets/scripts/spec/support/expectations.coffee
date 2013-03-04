@@ -41,9 +41,8 @@
   expect(element.text()).toEqual data.message
 
 @displaysLog = (lines) ->
-  ix = 0
-  log = $.map(lines, (line) -> ix += 1; "#{ix}#{line}").join("\n")
-  expect($('#log p').text().trim()).toEqual log
+  log = lines.join()
+  expect($('#log').text().trim()).toEqual log
 
 @listsRepos = (items) ->
   listsItems('repo', items)

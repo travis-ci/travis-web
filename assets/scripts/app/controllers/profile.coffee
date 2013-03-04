@@ -6,6 +6,8 @@ Travis.ProfileController = Travis.Controller.extend
   accountsBinding: 'controllers.accounts'
 
   init: ->
+    @_super.apply this, arguments
+
     self = this
     Travis.on("user:synced", (->
       self.reloadHooks()
