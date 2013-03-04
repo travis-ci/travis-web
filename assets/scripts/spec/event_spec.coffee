@@ -54,10 +54,9 @@ describe 'events', ->
           started_at: '2012-07-02T00:02:00Z'
           finished_at: '2012-07-02T00:02:55Z'
           event_type: 'push'
-          result: 1
           message: 'commit message 3'
           commit: '1234567'
-          state: 'started'
+          state: 'failed'
 
       Em.run ->
         Travis.receive 'build:started', payload
@@ -74,40 +73,6 @@ describe 'events', ->
       waitFor jobsRendered
       runs ->
         waitFor queuesRendered
-
-    it 'adds a job to the jobs matrix', ->
-      payload =
-        job:
-          id: 15
-          repository_id: 1
-          build_id: 1
-          commit_id: 1
-          log_id: 1
-          number: '1.4'
-          duration: 55
-          started_at: '2012-07-02T00:02:00Z'
-          finished_at: '2012-07-02T00:02:55Z'
-          config: { rvm: 'jruby' }
-
-      $.mockjax
-        url: '/jobs/15'
-        responseTime: 0
-        responseText: payload
-
-      Em.run ->
-        Travis.receive 'job:started',
-          job:
-            id: 15
-            repository_id: 1
-            build_id: 1
-            commit_id: 1
-
-      waits(100)
-      runs ->
-        listsJob
-          table: $('#jobs')
-          row: 3
-          item: { id: 15, number: '1.4', repo: 'travis-ci/travis-core', finishedAt: 'less than a minute ago', duration: '55 sec', rvm: 'jruby' }
 
     it 'adds a job to the jobs queue', ->
       payload =
@@ -191,7 +156,7 @@ describe 'events', ->
       app '/travis-ci/travis-core'
       waitFor workersRendered
 
-    it 'does not update repository if it\'s already in store', ->
+    it 'does not update repository if it\'s already in the store', ->
       payload =
         worker:
           id: 1

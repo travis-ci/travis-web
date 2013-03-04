@@ -129,7 +129,7 @@ describe 'Travis.Model - incomplete', ->
 
       waits 50
       runs ->
-        expect( record.get('description') ).toEqual 'bar'
+        expect( other.get('record.description') ).toEqual 'bar'
         expect( record.get('isComplete') ).toBeTruthy()
 
     it 'loads missing data on try to get it', ->
