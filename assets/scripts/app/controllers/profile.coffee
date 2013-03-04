@@ -20,6 +20,9 @@ Travis.ProfileController = Travis.Controller.extend
     account
   ).property('accounts.length', 'params.login')
 
+  sync: ->
+    @get('user').sync()
+
   activate: (action, params) ->
     @setParams(params || @get('params'))
     this["view#{$.camelize(action)}"]()

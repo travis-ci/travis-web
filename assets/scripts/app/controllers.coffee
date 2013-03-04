@@ -18,15 +18,10 @@ Travis.MainController = Em.Controller.extend()
 Travis.StatsLayoutController = Em.Controller.extend()
 Travis.ProfileLayoutController = Em.Controller.extend()
 Travis.AuthLayoutController = Em.Controller.extend()
-Travis.CurrentUserController = Em.ObjectController.extend()
 
 Travis.AccountProfileController = Em.Controller.extend
   needs: ['currentUser']
   userBinding: 'controllers.currentUser'
-
-Travis.AccountIndexController = Em.Controller.extend
-  needs: ['profile']
-  hooksBinding: 'controllers.profile.hooks'
 
 require 'controllers/accounts'
 require 'controllers/build'
@@ -40,3 +35,6 @@ require 'controllers/repo'
 require 'controllers/running_jobs'
 require 'controllers/sidebar'
 require 'controllers/stats'
+require 'controllers/current_user'
+require 'controllers/account_index'
+
