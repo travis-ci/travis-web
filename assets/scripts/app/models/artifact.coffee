@@ -14,9 +14,6 @@ require 'travis/chunk_buffer'
 
     @set 'parts', Travis.ChunkBuffer.create(content: [])
 
-    #@addObserver 'body', @fetchWorker
-    #@fetchWorker()
-
   id: (->
     @get('job.id')
   ).property('job.id')
@@ -41,6 +38,7 @@ require 'travis/chunk_buffer'
       Travis.Artifact.Request.create(id: id, handlers: handlers).run() if id = @get('job.id')
 
   append: (part) ->
+    @fetchWorker Ember.get(part, 'content')
     @get('parts').pushObject(part)
 
   loadParts: (parts) ->
@@ -54,14 +52,13 @@ require 'travis/chunk_buffer'
     @append(number: 1, content: text)
     @set('isLoaded', true)
 
-  fetchWorker: ->
-    if !@get('workerName') && (body = @get('body'))
-      line = body.split("\n")[0]
+  fetchWorker: (string) ->
+    if !@get('workerName')
+      line = string.split("\n")[0]
       if line && (match = line.match /Using worker: (.*)/)
         if worker = match[1]
           worker = worker.trim().split(':')[0]
           @set('workerName', worker)
-          @removeObserver 'body', @fetchWorker
 
 Travis.Artifact.Request = Em.Object.extend
   HEADERS:

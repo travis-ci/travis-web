@@ -97,7 +97,6 @@ Travis.Store = DS.Store.extend
 
     if event == 'job:log'
       if job = @find(Travis.Job, data['job']['id'])
-        console.log 'job:log', data
         job.appendLog(number: data['job']['number'], content: data['job']['_log'])
     else if data[type.singularName()]
       @_loadOne(this, type, data)
