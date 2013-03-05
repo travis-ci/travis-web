@@ -1,12 +1,19 @@
-Travis.ChunkBuffer = Em.ArrayProxy.extend Ember.MutableEnumerable,
-  timeout: 15000
-  start: 0
-  next: 0
+get = Ember.get
+
+Travis.ChunkBuffer = Em.ArrayProxy.extend
+  timeout: 5000
+  checkTimeoutFrequency: 1000
+  start: 1
+  next: 1
 
   init: ->
     @_super.apply this, arguments
 
+    @lastInsert = 0
+
     @set('next', @get('start'))
+
+    @checkTimeout()
 
     if @get('content.length')
       @get('queue.content').pushObjects @get('content').toArray()
@@ -33,13 +40,13 @@ Travis.ChunkBuffer = Em.ArrayProxy.extend Ember.MutableEnumerable,
   ).property()
 
   contentArrayDidChange: (array, index, removedCount, addedCount) ->
-    console.log 'content array did change'
     @_super.apply this, arguments
 
     if addedCount
       queue   = @get('queue.content')
       queue.pushObjects array.slice(index, index + addedCount)
       @check()
+      @inserted()
 
   check: ->
     queue = @get('queue')
@@ -48,10 +55,35 @@ Travis.ChunkBuffer = Em.ArrayProxy.extend Ember.MutableEnumerable,
     arrangedContent = @get('arrangedContent')
     toPush = []
 
-    while queue.get('firstObject.number') == next
-      toPush.pushObject queue.shiftObject().get('content')
-      next += 1
+    while queue.get('firstObject.number') <= next
+      element = queue.shiftObject()
+      if get(element, 'number') == next
+        toPush.pushObject get(element, 'content')
+        next += 1
 
-    arrangedContent.pushObjects toPush if toPush.length
+    if toPush.length
+      arrangedContent.pushObjects toPush
 
     @set('next', next)
+
+  inserted: ->
+    now = @now()
+    @lastInsert = now
+
+  checkTimeout: ->
+    now = @now()
+    if now - @lastInsert > @get('timeout')
+      @giveUpOnMissingParts()
+    @set 'runLaterId', Ember.run.later(this, @checkTimeout, @get('checkTimeoutFrequency'))
+
+  willDestroy: ->
+    Ember.run.cancel @get('runLaterId')
+    @_super.apply this, arguments
+
+  now: ->
+    (new Date()).getTime()
+
+  giveUpOnMissingParts: ->
+    if number = @get('queue.firstObject.number')
+      @set('next', number)
+      @check()

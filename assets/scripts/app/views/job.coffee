@@ -104,7 +104,7 @@
       job = @get('job')
       job.subscribe() if job && !job.get('isFinished')
       null
-    ).property('job', 'job.state')
+    ).property('job', 'job.isFinished')
 
     logUrl: (->
       repo = @get('job.repo')
@@ -133,7 +133,7 @@
       @_super.apply this, arguments
 
       Ember.run.next this, ->
-        if @get 'log.isInitialized'
+        if @get 'log'
           @logDidChange()
 
     willDestroy: ->
@@ -148,9 +148,9 @@
     ).observes('log.version')
 
     logDidChange: (->
-      if @get('log.isInitialized') && @state == 'inDOM'
+      if @get('log') && @state == 'inDOM'
         @attachLogObservers()
-    ).observes('log', 'log.isInitialized')
+    ).observes('log')
 
     attachLogObservers: ->
       return if @get('logPartsObserversAttached') == Ember.guidFor(@get('log'))
