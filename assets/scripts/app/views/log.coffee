@@ -1,5 +1,7 @@
 require 'log'
 
+Log.DEBUG = true
+
 Travis.reopen
   LogView: Travis.View.extend
     templateName: 'jobs/log'
@@ -9,6 +11,10 @@ Travis.reopen
     didInsertElement: ->
       job = @get('job')
       job.subscribe() if job && !job.get('isFinished')
+
+    willDestroyElement: ->
+      job = @get('job')
+      job.unsubscribe() if job
 
     toTop: () ->
       $(window).scrollTop(0)
@@ -40,8 +46,7 @@ Travis.reopen
       console.log 'log view: create engine'
       @limit = new Log.Limit
       @scroll = new Log.Scroll
-      # @engine = Log.create(listeners: [@limit, new Log.FragmentRenderer, new Log.Logger, new Log.Folds, @scroll])
-      @engine = Log.create(listeners: [new Log.FragmentRenderer, new Log.Folds])
+      @engine = Log.create(listeners: [@limit, new Log.FragmentRenderer, new Log.Folds, @scroll])
       @observeParts()
       @numberLineOnHover()
 
@@ -54,8 +59,12 @@ Travis.reopen
     partsDidChange: (parts, start, _, added) ->
       console.log 'log view: parts did change'
       unless @get('isLimited')
-        @engine.set(part.number, part.content) for part, i in parts.slice(start, start + added)
+        for part, i in parts.slice(start, start + added)
+          console.log(part.number, part.content)
+          @engine.set(part.number, part.content)
         @propertyDidChange('isLimited')
+      else
+        console.log('skipping part because the log was limited')
 
     lineNumberDidChange: (->
       @scroll.set(number) if !@get('isDestroyed') && number = @get('controller.lineNumber')
@@ -75,7 +84,7 @@ Travis.reopen
 
     numberLineOnHover: ->
       $('#log').on 'mouseenter', 'a', ->
-        $(this).attr('href', '#L' + ($(this.parentNode).prevAll('p').length + 1))
+        $(this).attr('href', '#L' + ($(this.parentNode).prevAll('p:visible').length + 1))
 
     click: ->
       if (href = $(event.target).attr('href')) && matches = href?.match(/#L(\d+)$/)
@@ -99,13 +108,13 @@ Log.Scroll.prototype = $.extend new Log.Listener,
     @number = number
     @tryScroll()
 
-  insert: (log, after, data) ->
+  insert: (log, line, pos) ->
     @tryScroll() if @number
 
   tryScroll: ->
-    if (element = $("#log p:nth-child(#{@number})")) && element.length
+    if element = $("#log p:visible")[@number - 1]
       $('#main').scrollTop(0)
-      $('html, body').scrollTop(element.offset()?.top) # weird, html works in chrome, body in firefox
+      $('html, body').scrollTop($(element).offset()?.top) # weird, html works in chrome, body in firefox
       @highlight(element)
       @number = undefined
 
@@ -118,21 +127,19 @@ Log.Limit.prototype = $.extend new Log.Listener,
   MAX_LINES: 5000
   count: 0
 
-  insert: (log, after, lines) ->
-    @count += lines.length
-    lines.length = @MAX_LINES if lines.length > @MAX_LINES
+  insert: (log, line, pos) ->
+    @count += 1 if line.type == 'paragraph' && !line.hidden
 
   isLimited: ->
     @count > @MAX_LINES
-    false
 
 Log.Logger = ->
 Log.Logger.prototype = $.extend new Log.Listener,
   receive: (log, num, string) ->
     @log("rcv #{num} #{JSON.stringify(string)}")
-  insert: (log, after, datas) ->
-    @log("ins #{datas.map((data) -> data.id).join(', ')}, after: #{after || '?'}, #{JSON.stringify(datas)}")
-  remove: (log, id) ->
-    @log("rem #{id}")
+  insert: (log, element, pos) ->
+    @log("ins #{element.id}, #{if pos.before then 'before' else 'after'}: #{pos.before || pos.after || '?'}, #{JSON.stringify(element)}")
+  remove: (log, element) ->
+    @log("rem #{element.id}")
   log: (line) ->
     console.log(line)

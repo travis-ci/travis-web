@@ -87,6 +87,11 @@ require 'travis/model'
     @set('subscribed', true)
     Travis.pusher.subscribe "job-#{@get('id')}"
 
+  unsubscribe: ->
+    return unless @get('subscribed')
+    @set('subscribed', false)
+    Travis.pusher.unsubscribe "job-#{@get('id')}"
+
   onStateChange: (->
     if @get('state') == 'finished' && Travis.pusher
       Travis.pusher.unsubscribe "job-#{@get('id')}"
