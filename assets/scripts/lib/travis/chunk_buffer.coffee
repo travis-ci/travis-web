@@ -43,8 +43,10 @@ Travis.ChunkBuffer = Em.ArrayProxy.extend
     @_super.apply this, arguments
 
     if addedCount
-      queue   = @get('queue.content')
-      queue.pushObjects array.slice(index, index + addedCount)
+      queue = @get('queue.content')
+      addedObjects = array.slice(index, index + addedCount)
+      console.log 'Added log parts with numbers:', addedObjects.map( (element) -> get(element, 'number') )
+      queue.pushObjects addedObjects
       @check()
       @inserted()
 
@@ -85,5 +87,6 @@ Travis.ChunkBuffer = Em.ArrayProxy.extend
 
   giveUpOnMissingParts: ->
     if number = @get('queue.firstObject.number')
+      console.log 'Giving up on missing parts in the buffer, switching to:', number
       @set('next', number)
       @check()
