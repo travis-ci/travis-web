@@ -47,7 +47,8 @@ describe Travis::Web::App do
 
     context 'passing default as an alt param' do
       before  { get('/?alt=default') }
-      example { headers['Set-Cookie'].should == 'alt=default; path=/; max-age=0' }
+      example { last_response.body.should_not =~ /\/assets\/[^\/]+\/scripts\/app.js/ }
+      example { headers['Set-Cookie'].should == 'alt=; path=/; max-age=0' }
     end
   end
 end
