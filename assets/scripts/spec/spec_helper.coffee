@@ -10,10 +10,10 @@ minispade.require 'app'
     url = "/#{url}" unless url.match /^\//
     Travis.__container__.lookup('router:main').handleURL(url)
 
-_Date = Date
-@Date = (date) ->
-  new _Date(date || '2012-07-02T00:03:00Z')
-@Date.UTC = _Date.UTC
+
+now = -> new Date('2012-07-02T00:03:00Z')
+$.timeago.settings.nowFunction = -> now().getTime()
+Travis.currentDate = now
 
 # hacks for missing features in webkit
 unless Function::bind

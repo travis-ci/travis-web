@@ -41,7 +41,8 @@
         months: '%d months',
         year: 'about a year',
         years: '%d years',
-        numbers: []
+        numbers: [],
+        nowFunction: function() { return new Date().getTime(); }
       }
     },
     distanceInWords: function(date) {
@@ -95,7 +96,7 @@
       return (this.now() - date.getTime());
     },
     now: function() {
-      return new Date().getTime();
+      return this.settings.nowFunction.call(this);
     },
     parse: function(iso8601) {
       var s = $.trim(iso8601);

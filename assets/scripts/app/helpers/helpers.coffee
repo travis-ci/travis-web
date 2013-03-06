@@ -73,7 +73,7 @@ require 'config/emoij'
     string
 
   _nowUtc: ->
-    @_toUtc new Date()
+    @_toUtc Travis.currentDate()
 
   _toUtc: (date) ->
     Date.UTC date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()
