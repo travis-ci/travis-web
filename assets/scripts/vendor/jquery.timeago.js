@@ -42,8 +42,8 @@
         year: 'about a year',
         years: '%d years',
         numbers: [],
-        nowFunction: function() { return new Date().getTime(); }
-      }
+      },
+      nowFunction: function() { return new Date().getTime(); }
     },
     distanceInWords: function(date) {
       if(!date) {
