@@ -23,6 +23,9 @@ Travis.ProfileController = Travis.Controller.extend
   sync: ->
     @get('user').sync()
 
+  toggle: (hook) ->
+    hook.toggle()
+
   activate: (action, params) ->
     @setParams(params || @get('params'))
     this["view#{$.camelize(action)}"]()

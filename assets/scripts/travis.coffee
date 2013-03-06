@@ -1,6 +1,9 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
 
+window.ENV ||= {}
+window.ENV.RAISE_ON_DEPRECATION = true
+
 # TODO: how can I put it in Travis namespace and use immediately?
 Storage = Em.Object.extend
   init: ->
@@ -77,6 +80,9 @@ window.Travis = Em.Application.extend(Ember.Evented,
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
     I18n.fallbacks = true
     @setLocale 'locale', @get('defaultLocale')
+
+  currentDate: ->
+    new Date()
 ).create()
 
 Travis.deferReadiness()

@@ -24,7 +24,7 @@
 
           <div class="controls">
             <a {{bindAttr href="hook.urlGithubAdmin"}} class="github-admin tool-tip" title="Github service hooks admin page"></a>
-            <a {{action toggle target="hook"}} class="switch">
+            <a {{action toggle hook}} class="switch">
               {{#if hook.active}}
                 ON
               {{else}}
