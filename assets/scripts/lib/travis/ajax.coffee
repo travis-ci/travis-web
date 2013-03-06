@@ -33,13 +33,13 @@ Travis.ajax = Em.Object.create
 
     success = options.success || (->)
     options.success = (data) =>
-      Travis.lookup('controller:flash').loadFlashes(data.flash) if data.flash
+      Travis.lookup('controller:flash').loadFlashes(data.flash) if data?.flash
       delete data.flash if data?
       success.apply(this, arguments)
 
     error = options.error || (->)
     options.error = (data) =>
-      Travis.lookup('controller:flash').pushObject(data.flash) if data.flash
+      Travis.lookup('controller:flash').pushObject(data.flash) if data?.flash
       delete data.flash if data?
       error.apply(this, arguments)
 
