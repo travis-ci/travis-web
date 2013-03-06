@@ -24,10 +24,12 @@ $.extend Travis.Pusher.prototype,
     @pusher.subscribeAll()
 
   subscribe: (channel) ->
+    console.log("subscribing to #{channel}")
     channel = @prefix(channel)
     @pusher.subscribe(channel).bind_all((event, data) => @receive(event, data)) unless @pusher?.channel(channel)
 
   unsubscribe: (channel) ->
+    console.log("unsubscribing from #{channel}")
     channel = @prefix(channel)
     @pusher.unsubscribe(channel) if @pusher?.channel(channel)
 

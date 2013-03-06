@@ -78,7 +78,7 @@ Travis.Store = DS.Store.extend
 
 
     if event == 'job:log'
-      console.log 'store: received job:log event', data
+      console.log 'store: received job:log event', data if Log.DEBUG
       data = data.job
       job  = @find(Travis.Job, data.id)
       job.appendLog(number: parseInt(data.number), content: data._log)

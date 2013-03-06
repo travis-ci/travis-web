@@ -112,7 +112,7 @@ Travis.JobRoute = Ember.Route.extend Travis.LineNumberParser,
       controller.set('lineNumber', lineNumber)
 
     repo = @container.lookup('controller:repo')
-    console.log model.toString()
+    # console.log model.toString()
     repo.set('job', model)
     repo.activate('job')
 

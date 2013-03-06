@@ -1,5 +1,5 @@
 Travis.JobController = Em.Controller.extend
-  needs: ['repo']
+  needs: ['repo', 'log']
 
   jobBinding: 'controllers.repo.job'
   repoBinding: 'controllers.repo.repo'
@@ -16,3 +16,7 @@ Travis.JobController = Em.Controller.extend
   urlCommitter: (->
     Travis.Urls.email(@get('commit.committerEmail'))
   ).property('commit.committerEmail')
+
+  hasLoaded: (->
+    @set('controllers.log.job', @get('job'))
+  ).observes('job.id')

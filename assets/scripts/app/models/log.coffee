@@ -10,7 +10,7 @@ require 'travis/model'
     @fetch()
 
   fetch: ->
-    console.log 'fetch'
+    console.log 'log model: fetching log' if Log.DEBUG
     handlers =
       json: (json) => @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
@@ -24,12 +24,12 @@ require 'travis/model'
     @get('parts').pushObject(part)
 
   loadParts: (parts) ->
-    console.log 'log model: load parts'
+    console.log 'log model: load parts' if Log.DEBUG
     @append(part) for part in parts
     @set('isLoaded', true)
 
   loadText: (text) ->
-    console.log 'log model: load text'
+    console.log 'log model: load text' if Log.DEBUG
     number = -1
     @append(number: 0, content: text)
     @set('isLoaded', true)

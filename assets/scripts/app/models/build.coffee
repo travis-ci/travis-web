@@ -31,6 +31,10 @@ require 'travis/model'
     @get('jobs.length') > 1
   ).property('jobs.length')
 
+  firstJob: (->
+    @get('jobs.firstObject')
+  ).property('jobs.length')
+
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')
