@@ -1,6 +1,9 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
 
+window.ENV ||= {}
+window.ENV.RAISE_ON_DEPRECATION = true
+
 # TODO: how can I put it in Travis namespace and use immediately?
 Storage = Em.Object.extend
   init: ->
