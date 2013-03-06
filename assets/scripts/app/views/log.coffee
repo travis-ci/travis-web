@@ -23,13 +23,13 @@ Travis.reopen
     templateName: 'jobs/pre'
 
     didInsertElement: ->
-      console.log 'log view: did insert'
+      console.log 'log view: did insert' if Log.DEBUG
       @_super.apply this, arguments
       @createEngine()
       @lineNumberDidChange()
 
     willDestroyElement: ->
-      console.log 'log view: will destroy'
+      console.log 'log view: will destroy' if Log.DEBUG
       parts = @get('log.parts')
       parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
 
@@ -38,12 +38,12 @@ Travis.reopen
     ).observes('log.version')
 
     logDidChange: (->
-      console.log 'log view: log did change: rerender'
+      console.log 'log view: log did change: rerender' if Log.DEBUG
       @rerender() if @get('inDOM')
     ).observes('log')
 
     createEngine: ->
-      console.log 'log view: create engine'
+      console.log 'log view: create engine' if Log.DEBUG
       @limit = new Log.Limit
       @scroll = new Log.Scroll
       @engine = Log.create(listeners: [@limit, new Log.FragmentRenderer, new Log.Folds, @scroll])
@@ -57,14 +57,11 @@ Travis.reopen
       @partsDidChange(parts, 0, null, parts.length)
 
     partsDidChange: (parts, start, _, added) ->
-      console.log 'log view: parts did change'
-      unless @get('isLimited')
-        for part, i in parts.slice(start, start + added)
-          console.log(part.number, part.content)
-          @engine.set(part.number, part.content)
+      console.log 'log view: parts did change' if Log.DEBUG
+      for part, i in parts.slice(start, start + added)
+        @engine.set(part.number, part.content)
         @propertyDidChange('isLimited')
-      else
-        console.log('skipping part because the log was limited')
+        break if @get('isLimited')
 
     lineNumberDidChange: (->
       @scroll.set(number) if !@get('isDestroyed') && number = @get('controller.lineNumber')
@@ -124,7 +121,7 @@ Log.Scroll.prototype = $.extend new Log.Listener,
 
 Log.Limit = ->
 Log.Limit.prototype = $.extend new Log.Listener,
-  MAX_LINES: 5000
+  MAX_LINES: 1000
   count: 0
 
   insert: (log, line, pos) ->
