@@ -102,6 +102,18 @@ Travis.RestAdapter = DS.RESTAdapter.extend
   merge: (store, record, serialized) ->
     @get('serializer').merge(record, serialized)
 
+  didSaveRecord: (store, type, record, payload) ->
+    # API sometimes return { result: true } response
+    # which does not play nice with ember-data. For now
+    # let's just change payload to have serialized record
+    # included, but ideally it should be fixed in the API
+    # to be consistent across all the endpoints.
+    if payload?.result == true
+      payload = {}
+      payload[type.singularName()] = record.serialize()
+
+    @_super(store, type, record, payload)
+
 Travis.RestAdapter.map 'Travis.Commit', {}
 
 Travis.RestAdapter.map 'Travis.Build', {

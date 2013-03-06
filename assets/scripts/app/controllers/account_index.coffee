@@ -5,3 +5,6 @@ Travis.AccountIndexController = Em.Controller.extend
 
   sync: ->
     @get('user').sync()
+
+  toggle: (hook) ->
+    hook.toggle()
