@@ -1,12 +1,16 @@
 require 'log'
 
-Log.DEBUG = false
+Log.DEBUG = true
 
 Travis.reopen
   LogView: Travis.View.extend
     templateName: 'jobs/log'
     logBinding: 'job.log'
     contextBinding: 'job'
+
+    willDestroyElement: ->
+      job = @get('job')
+      job.unsubscribe() if job
 
     toTop: () ->
       $(window).scrollTop(0)
