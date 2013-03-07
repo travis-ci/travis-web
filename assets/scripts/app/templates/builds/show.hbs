@@ -6,7 +6,11 @@
       <dt>{{t builds.name}}</dt>
       <dd class="number">
         <span class="status"></span>
-        {{#linkTo build repo build}}{{build.number}}{{/linkTo}}
+        {{#if build.id}}
+          {{#if build.repo.slug}}
+            {{#linkTo build repo build}}{{build.number}}{{/linkTo}}
+          {{/if}}
+        {{/if}}
       </dd>
       <dt>{{t builds.state}}</dt>
       <dd class="state">{{capitalize build.state}}</dd>
