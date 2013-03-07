@@ -38,7 +38,7 @@ describe 'on the "job" state', ->
       build:   { href: '/travis-ci/travis-core/builds/1' }
       job:     { href: '/travis-ci/travis-core/jobs/1', active: true }
 
-    waits 10
+    waits 30
     runs ->
       displaysLog [
         'log 1'
