@@ -1,5 +1,5 @@
-// Version: v1.0.0-rc.1-109-g8cc5392
-// Last commit: 8cc5392 (2013-03-04 02:00:20 +0100)
+// Version: v1.0.0-rc.1-110-g1446ad7
+// Last commit: 1446ad7 (2013-03-07 19:07:55 +0100)
 
 
 (function() {
@@ -150,8 +150,8 @@ Ember.deprecateFunc = function(message, func) {
 
 })();
 
-// Version: v1.0.0-rc.1-109-g8cc5392
-// Last commit: 8cc5392 (2013-03-04 02:00:20 +0100)
+// Version: v1.0.0-rc.1-110-g1446ad7
+// Last commit: 1446ad7 (2013-03-07 19:07:55 +0100)
 
 
 (function() {
@@ -23775,6 +23775,14 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     return ret.concat(resolvedPaths(linkView.parameters));
   }
 
+  var _createPath = function(path) {
+    var fullPath = 'paramsContext';
+    if(path !== '') {
+      fullPath += '.' + path;
+    }
+    return fullPath;
+  };
+
   var LinkView = Ember.View.extend({
     tagName: 'a',
     namedRoute: null,
@@ -23792,21 +23800,28 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
           length = params.length,
           context = this.parameters.context,
           self = this,
-          path;
+          path, paths = Ember.A([]), i;
 
       set(this, 'paramsContext', context);
 
-      var observer = function() {
-        this.notifyPropertyChange('href');
+      for(i=0; i < length; i++) {
+        paths.pushObject(_createPath(params[i]));
+      }
+
+      var observer = function(object, path) {
+        var notify = true, i;
+        for(i=0; i < paths.length; i++) {
+          if(!get(this, paths[i])) {
+            notify = false;
+          }
+        }
+        if(notify) {
+          this.notifyPropertyChange('href');
+        }
       };
 
-      for(var i=0; i < length; i++) {
-        path = 'paramsContext';
-        if(params[i] !== '') {
-          path += '.' + params[i];
-        }
-
-        Ember.addObserver(this, path, this, observer);
+      for(i=0; i < length; i++) {
+        Ember.addObserver(this, paths[i], this, observer);
       }
     },
 
@@ -27067,8 +27082,8 @@ Ember States
 
 
 })();
-// Version: v1.0.0-rc.1-109-g8cc5392
-// Last commit: 8cc5392 (2013-03-04 02:00:20 +0100)
+// Version: v1.0.0-rc.1-110-g1446ad7
+// Last commit: 1446ad7 (2013-03-07 19:07:55 +0100)
 
 
 (function() {
