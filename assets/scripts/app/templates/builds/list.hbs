@@ -42,7 +42,7 @@
           <td class="committer">
             {{commit.committerName}}
           </td>
-          {{#if commit.pullRequestNumber}}
+          {{#if view.isPullRequestsList}}
             <td>
               <a {{bindAttr href="view.urlGithubPullRequest"}}>
                 #{{commit.pullRequestNumber}}
