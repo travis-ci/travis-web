@@ -60,6 +60,8 @@
       this.$().find('> li').toggleClass('open')
 
   WorkersItemView: Travis.View.extend
+    classNameBindings: ['worker.state']
+
     display: (->
       name = (@get('worker.name') || '').replace('travis-', '')
       state = @get('worker.state')
