@@ -102,6 +102,13 @@ Travis.RestAdapter = DS.RESTAdapter.extend
   merge: (store, record, serialized) ->
     @get('serializer').merge(record, serialized)
 
+  didFindRecord: (store, type, payload, id) ->
+    if (type == Travis.Build || type == Travis.Job) && payload.commit?
+      payload.commits = payload.commit
+      delete payload.commit
+
+    @_super.apply this, arguments
+
   didSaveRecord: (store, type, record, payload) ->
     # API sometimes return { result: true } response
     # which does not play nice with ember-data. For now

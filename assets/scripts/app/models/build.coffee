@@ -16,7 +16,6 @@ require 'travis/model'
 
   repo:   DS.belongsTo('Travis.Repo')
   commit: DS.belongsTo('Travis.Commit')
-  commits: DS.belongsTo('Travis.Commit')
   jobs:   DS.hasMany('Travis.Job')
 
   config: (->
