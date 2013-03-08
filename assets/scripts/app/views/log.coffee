@@ -55,9 +55,9 @@ Travis.reopen
     partsDidChange: (parts, start, _, added) ->
       console.log 'log view: parts did change' if Log.DEBUG
       for part, i in parts.slice(start, start + added)
+        break if @get('limited')
         @engine.set(part.number, part.content)
         @propertyDidChange('limited')
-        break if @get('limited')
 
     lineNumberDidChange: (->
       @scroll.set(number) if !@get('isDestroyed') && number = @get('controller.lineNumber')
