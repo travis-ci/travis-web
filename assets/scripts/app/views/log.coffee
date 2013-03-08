@@ -42,7 +42,7 @@ Travis.reopen
       console.log 'log view: create engine' if Log.DEBUG
       @limit = new Log.Limit
       @scroll = new Log.Scroll
-      @engine = Log.create(listeners: [@limit, new Log.FragmentRenderer, new Log.Folds, @scroll])
+      @engine = Log.create(listeners: [new Log.FragmentRenderer, new Log.Folds, @scroll])
       @observeParts()
       @numberLineOnHover()
 
@@ -55,6 +55,7 @@ Travis.reopen
     partsDidChange: (parts, start, _, added) ->
       console.log 'log view: parts did change' if Log.DEBUG
       for part, i in parts.slice(start, start + added)
+        # console.log "limit in log view: #{@get('limited')}"
         break if @get('limited')
         @engine.set(part.number, part.content)
         @propertyDidChange('limited')
