@@ -56,15 +56,15 @@ Travis.reopen
       console.log 'log view: parts did change' if Log.DEBUG
       for part, i in parts.slice(start, start + added)
         @engine.set(part.number, part.content)
-        @propertyDidChange('isLimited')
-        break if @get('isLimited')
+        @propertyDidChange('limited')
+        break if @get('limited')
 
     lineNumberDidChange: (->
       @scroll.set(number) if !@get('isDestroyed') && number = @get('controller.lineNumber')
     ).observes('controller.lineNumber')
 
-    isLimited: (->
-      @limit && @limit.isLimited()
+    limited: (->
+      @limit && @limit.limited
     ).property()
 
     plainTextLogUrl: (->
@@ -103,6 +103,7 @@ Log.Scroll.prototype = $.extend new Log.Listener,
 
   insert: (log, line, pos) ->
     @tryScroll() if @number
+    true
 
   tryScroll: ->
     if element = $("#log p:visible")[@number - 1]
@@ -115,21 +116,11 @@ Log.Scroll.prototype = $.extend new Log.Listener,
     $('#log p.highlight').removeClass('highlight')
     $(element).addClass('highlight')
 
-Log.Limit = ->
-Log.Limit.prototype = $.extend new Log.Listener,
-  MAX_LINES: 1000
-  count: 0
-
-  insert: (log, line, pos) ->
-    @count += 1 if line.type == 'paragraph' && !line.hidden
-
-  isLimited: ->
-    @count > @MAX_LINES
-
 Log.Logger = ->
 Log.Logger.prototype = $.extend new Log.Listener,
   receive: (log, num, string) ->
     @log("rcv #{num} #{JSON.stringify(string)}")
+    true
   insert: (log, element, pos) ->
     @log("ins #{element.id}, #{if pos.before then 'before' else 'after'}: #{pos.before || pos.after || '?'}, #{JSON.stringify(element)}")
   remove: (log, element) ->
