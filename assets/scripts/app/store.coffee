@@ -3,7 +3,7 @@ require 'store/rest_adapter'
 coerceId = (id) -> if id == null then null else id+''
 
 Travis.Store = DS.Store.extend
-  revision: 11
+  revision: 12
   adapter: Travis.RestAdapter.create()
 
   init: ->
