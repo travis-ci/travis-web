@@ -56,7 +56,6 @@ Storage = Em.Object.extend
     '#':                           ['home', 'index']
 
   QUEUES: [
-    { name: 'common',  display: 'Common' }
     { name: 'linux',   display: 'Linux' }
     { name: 'mac_osx', display: 'Mac and OSX' }
   ]
