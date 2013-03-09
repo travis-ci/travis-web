@@ -96,6 +96,7 @@ en:
       sign_out: Sign Out
       signing_in: Signing In
       stats: Stats
+      status: Status
   locales:
     ca: 
     de: Deutsch

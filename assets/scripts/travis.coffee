@@ -4,6 +4,18 @@ require 'ext/ember/namespace'
 window.ENV ||= {}
 window.ENV.RAISE_ON_DEPRECATION = true
 
+if window.history.state == undefined
+  window.history.state = {}
+  oldPushState = window.history.pushState
+  window.history.pushState = (state, title, href) ->
+    window.history.state = state
+    oldPushState.apply this, arguments
+
+  oldReplaceState = window.history.replaceState
+  window.history.replaceState = (state, title, href) ->
+    window.history.state = state
+    oldReplaceState.apply this, arguments
+
 # TODO: how can I put it in Travis namespace and use immediately?
 Storage = Em.Object.extend
   init: ->
@@ -99,7 +111,6 @@ $.extend Travis,
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala', 'compiler']
 
   QUEUES: [
-    { name: 'common',  display: 'Common' }
     { name: 'linux',   display: 'Linux' }
     { name: 'mac_osx', display: 'Mac and OSX' }
   ]
