@@ -26,11 +26,6 @@ minispade.require 'app'
       runs ->
         foo = 'bar'
 
-_Date = Date
-@Date = (date) ->
-  new _Date(date || '2012-07-02T00:03:00Z')
-@Date.UTC = _Date.UTC
-
 # hacks for missing features in webkit
 unless Function::bind
   Function::bind = (oThis) ->
