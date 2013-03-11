@@ -2,7 +2,6 @@ Travis.reopen
   RepoView: Travis.View.extend
     templateName: 'repos/show'
 
-    repoBinding:  'controllers.repo'
     reposBinding: 'controllers.repos'
 
     classNameBindings: ['controller.isLoading:loading']

@@ -8,8 +8,8 @@ Travis.BuildController = Ember.Controller.extend
   currentItemBinding: 'build'
 
   loading: (->
-    !@get('build.isLoaded')
-  ).property('build.isLoaded')
+    @get('build.isLoading')
+  ).property('build.isLoading')
 
   urlGithubCommit: (->
     Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))

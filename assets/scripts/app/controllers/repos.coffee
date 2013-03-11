@@ -20,7 +20,7 @@ Travis.ReposController = Ember.ArrayController.extend
     Travis.LimitedArray.create
       content: Em.ArrayProxy.extend(Em.SortableMixin).create(
         sortProperties: ['sortOrder']
-        content: Travis.Repo.find()
+        content: Travis.Repo.withLastBuild()
         isLoadedBinding: 'content.isLoaded'
       )
       limit: 30
