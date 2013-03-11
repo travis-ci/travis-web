@@ -140,7 +140,7 @@ Travis.RepoRoute = Ember.Route.extend
 
   deserialize: (params) ->
     slug = "#{params.owner}/#{params.name}"
-    content = Ember.Object.create slug: slug, isLoaded: false
+    content = Ember.Object.create slug: slug, isLoaded: false, isLoading: true
     proxy = Ember.ObjectProxy.create(content: content)
 
     repos = Travis.Repo.bySlug(slug)
@@ -148,7 +148,14 @@ Travis.RepoRoute = Ember.Route.extend
     observer = ->
       if repos.get 'isLoaded'
         repos.removeObserver 'isLoaded', observer
-        proxy.set 'content', repos.objectAt(0)
+        proxy.set 'isLoading', false
+
+        if repos.get('length') == 0
+          # isError is also used in DS.Model, but maybe we should use something
+          # more focused like notFound later
+          proxy.set 'isError', true
+        else
+          proxy.set 'content', repos.objectAt(0)
 
     if repos.length
       proxy.set('content', repos[0])

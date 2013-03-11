@@ -5,8 +5,7 @@ Travis.reopen
     repoBinding:  'controllers.repo'
     reposBinding: 'controllers.repos'
 
-    isLoadedBinding: 'repo.isLoaded'
-    classNameBindings: ['loading:isLoaded']
+    classNameBindings: ['controller.isLoading:loading']
 
     isEmpty: (->
       @get('repos.isLoaded') && @get('repos.length') == 0
