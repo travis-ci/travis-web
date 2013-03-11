@@ -36,7 +36,7 @@ require 'travis/model'
 
 Travis.Log.Request = Em.Object.extend
   HEADERS:
-    accept: 'application/vnd.travis-ci.2+json; chunked=true; version=2, text/plain; version=2'
+    accept: 'application/json; chunked=true; version=2, text/plain; version=2'
 
   run: ->
     Travis.ajax.ajax "/jobs/#{@id}/log?cors_hax=true", 'GET',
