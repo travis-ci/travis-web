@@ -65,7 +65,7 @@ ja:
       my_repositories: マイリポジトリ
       recent: 最近
       search: 検索
-      sponsers: スポンサー
+      sponsors: スポンサー
       sponsors_link: スポンサーをもっと見る &rarr;
     mobile:
       author: 制作者
@@ -90,6 +90,7 @@ ja:
       sign_out: ログアウト
       signing_in: 
       stats: 統計
+      status: 
   locales:
     ca: 
     de: Deutsch

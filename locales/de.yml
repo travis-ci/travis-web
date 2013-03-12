@@ -71,7 +71,7 @@ de:
       my_repositories: Meine Repositories
       recent: Aktuell
       search: Suche
-      sponsers: Sponsoren
+      sponsors: Sponsoren
       sponsors_link: Schaue alle unsere tollen Sponsoren an &rarr;
     mobile:
       author: Autor
@@ -96,6 +96,7 @@ de:
       sign_out: Abmelden
       signing_in: Anmelden...
       stats: Statistik
+      status: 
   locales:
     ca: 
     de: Deutsch

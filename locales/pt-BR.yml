@@ -71,7 +71,7 @@ pt-BR:
       my_repositories: Meus Repositórios
       recent: Recentes
       search: Buscar
-      sponsers: Patrocinadores
+      sponsors: Patrocinadores
       sponsors_link: Conheça todos os nossos patrocinadores &rarr;
     mobile:
       author: Autor
@@ -96,6 +96,7 @@ pt-BR:
       sign_out: Sair
       signing_in: 
       stats: Estatísticas
+      status: 
   locales:
     ca: 
     de: Deutsch
