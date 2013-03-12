@@ -24,5 +24,5 @@ Travis.BuildController = Ember.Controller.extend
   ).property('commit.committerEmail')
 
   hasLoaded: (->
-    @set('controllers.log.job', @get('build.firstJob')) if @get('build.isLoaded') && !@get('build.isMatrix')
-  ).observes('build.id', 'loading')
+    @set('controllers.log.job', @get('build.firstJob')) if @get('build.firstJob') && !@get('build.isMatrix')
+  ).observes('build.id', 'build.firstJob')

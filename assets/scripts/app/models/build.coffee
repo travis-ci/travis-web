@@ -31,7 +31,7 @@ require 'travis/model'
   ).property('jobs.length')
 
   firstJob: (->
-    @get('jobs.firstObject')
+    @get('jobs').objectAt(0)
   ).property('jobs.length')
 
   isFinished: (->

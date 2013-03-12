@@ -26,6 +26,7 @@ require 'travis/model'
   _config: DS.attr('object')
 
   log: ( ->
+    @set('isLogAccessed', true)
     Travis.Log.create(job: this)
   ).property()
 
@@ -46,7 +47,9 @@ require 'travis/model'
   ).property('state')
 
   clearLog: ->
-    @get('log').clear()
+    # This is needed if we don't want to fetch log just to clear it
+    if @get('isLogAccessed')
+      @get('log').clear()
 
   sponsor: (->
     worker = @get('log.workerName')
