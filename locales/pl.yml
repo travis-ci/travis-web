@@ -99,6 +99,7 @@ pl:
       sign_out: Wyloguj się
       signing_in: Zaloguj się
       stats: Statystki
+      status: 
   locales:
     ca: Čeština
     de: Deutsch

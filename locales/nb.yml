@@ -96,6 +96,7 @@ nb:
       sign_out: Logg ut
       signing_in: 
       stats: Statistikk
+      status: 
   locales:
     ca: 
     de: Deutsch
