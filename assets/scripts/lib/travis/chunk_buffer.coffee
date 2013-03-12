@@ -32,18 +32,18 @@ Travis.ChunkBuffer = Em.ArrayProxy.extend
     @get('content').replace(idx, amt, objects)
 
   queue: (->
-    Em.ArrayProxy.create(Em.SortableMixin,
+    Em.ArrayProxy.extend(Em.SortableMixin, {
       content: []
       sortProperties: ['number']
       sortAscending: true
-    )
+    }).create()
   ).property()
 
   contentArrayDidChange: (array, index, removedCount, addedCount) ->
     @_super.apply this, arguments
 
     if addedCount
-      queue = @get('queue.content')
+      queue = @get('queue')
       addedObjects = array.slice(index, index + addedCount)
       console.log 'Added log parts with numbers:', addedObjects.map( (element) -> get(element, 'number') )+'', 'current', @get('next')
       queue.pushObjects addedObjects

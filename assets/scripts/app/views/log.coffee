@@ -34,15 +34,19 @@ Travis.UnorderedLogEngineMixin = Ember.Mixin.create
     @scroll.set(number) if !@get('isDestroyed') && number = @get('controller.lineNumber')
   ).observes('controller.lineNumber')
 
+  limited: (->
+    @limit && @limit.limited
+  ).property()
+
 Travis.OrderedLogEngineMixin = Ember.Mixin.create
   setupEngine: ->
     @set('logManager', Travis.OrderedLog.create(target: this))
 
-    @get('logManager').append @get('log.parts').map( (part) -> Ember.get(part, 'content') )
+    @get('logManager').append @get('log.parts')
 
     @get('log.parts').addArrayObserver this,
       didChange: 'partsDidChange'
-      willChange: 'partsWillChange'
+      willChange: 'noop'
 
   destroyEngine: (view) ->
     @get('logManager').destroy()
@@ -51,7 +55,7 @@ Travis.OrderedLogEngineMixin = Ember.Mixin.create
       willChange: 'noop'
 
   partsDidChange: (parts, index, removedCount, addedCount) ->
-    addedParts = parts.slice(index, index + addedCount).map( (part) -> Ember.get(part, 'content') )
+    addedParts = parts.slice(index, index + addedCount)
     @get('logManager').append addedParts
 
   lineNumberDidChange: (->
@@ -189,9 +193,6 @@ Travis.reopen
       @rerender() if @get('inDOM')
     ).observes('log')
 
-    #limited: (->
-    #  @limit && @limit.limited
-    #).property()
 
     plainTextLogUrl: (->
       Travis.Urls.plainTextLog(id) if id = @get('log.job.id')

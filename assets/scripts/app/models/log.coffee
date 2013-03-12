@@ -1,4 +1,5 @@
 require 'travis/model'
+require 'travis/chunk_buffer'
 
 @Travis.Log = Em.Object.extend
   version: 0 # used to refresh log on requeue
@@ -6,8 +7,12 @@ require 'travis/model'
   length: 0
 
   init: ->
-    @set('parts', Ember.ArrayProxy.create(content: []))
+    @setParts()
     @fetch()
+
+  setParts: ->
+    #@set 'parts', Ember.ArrayProxy.create(content: [])
+    @set 'parts', Travis.ChunkBuffer.create(content: [])
 
   fetch: ->
     console.log 'log model: fetching log' if Log.DEBUG
@@ -17,7 +22,7 @@ require 'travis/model'
     Travis.Log.Request.create(id: id, handlers: handlers).run() if id = @get('job.id')
 
   clear: ->
-    @set('parts', Ember.ArrayProxy.create(content: []))
+    @setParts()
     @incrementProperty('version')
 
   append: (part) ->
@@ -31,7 +36,7 @@ require 'travis/model'
   loadText: (text) ->
     console.log 'log model: load text' if Log.DEBUG
     number = -1
-    @append(number: 0, content: text)
+    @append(number: 1, content: text)
     @set('isLoaded', true)
 
 Travis.Log.Request = Em.Object.extend
