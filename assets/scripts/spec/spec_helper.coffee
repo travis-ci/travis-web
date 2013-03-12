@@ -6,7 +6,6 @@ minispade.require 'app'
   waits(50)
   runs ->
     Travis.reset()
-
     url = "/#{url}" unless url.match /^\//
     Travis.__container__.lookup('router:main').handleURL(url)
 
