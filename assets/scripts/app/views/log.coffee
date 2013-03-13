@@ -1,7 +1,8 @@
 require 'log'
 require 'travis/ordered_log'
 
-Log.DEBUG = true
+Log.DEBUG = false
+Log.LIMIT = 10000
 
 Travis.reopen
   LogView: Travis.View.extend
@@ -13,10 +14,9 @@ Travis.reopen
       job = @get('job')
       job.unsubscribe() if job
 
-    toTop: () ->
-      $(window).scrollTop(0)
+  PreView: Em.View.extend
 
-  PreView: Em.View.extend(Travis.OrderedLogEngineMixin, {
+  PreView: Em.View.extend
     templateName: 'jobs/pre'
 
     didInsertElement: ->
@@ -41,10 +41,8 @@ Travis.reopen
 
     createEngine: ->
       console.log 'log view: create engine' if Log.DEBUG
-      # @limit = new Log.Limit
-      # @scroll = new Log.Scroll
-      # @engine = Log.create(listeners: [new Log.FragmentRenderer, new Log.Folds, @scroll])
-      @engine = new Log
+      @scroll = new Log.Scroll
+      @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
       @observeParts()
       @numberLineOnHover()
 
@@ -63,11 +61,11 @@ Travis.reopen
         @propertyDidChange('limited')
 
     lineNumberDidChange: (->
-      # @scroll.set(number) if !@get('isDestroyed') && number = @get('controller.lineNumber')
+      @scroll.set(number) if !@get('isDestroyed') && number = @get('controller.lineNumber')
     ).observes('controller.lineNumber')
 
     limited: (->
-      @limit && @limit.limited
+      @engine?.limit?.limited
     ).property()
 
     plainTextLogUrl: (->
@@ -95,30 +93,33 @@ Travis.reopen
       window.history.pushState(null, null, "#{window.location.pathname}#L#{number}");
       @set('controller.lineNumber', number)
 
+    toTop: () ->
+      $(window).scrollTop(0)
+
     noop: -> # TODO required?
 
-# Log.Scroll = ->
-# Log.Scroll.prototype = $.extend new Log.Listener,
-#   set: (number) ->
-#     return unless number
-#     @number = number
-#     @tryScroll()
-#
-#   insert: (log, line, pos) ->
-#     @tryScroll() if @number
-#     true
-#
-#   tryScroll: ->
-#     if element = $("#log p:visible")[@number - 1]
-#       $('#main').scrollTop(0)
-#       $('html, body').scrollTop($(element).offset()?.top) # weird, html works in chrome, body in firefox
-#       @highlight(element)
-#       @number = undefined
-#
-#   highlight: (element) ->
-#     $('#log p.highlight').removeClass('highlight')
-#     $(element).addClass('highlight')
-#
+Log.Scroll = ->
+Log.Scroll.prototype = $.extend new Log.Listener,
+  set: (number) ->
+    return unless number
+    @number = number
+    @tryScroll()
+
+  insert: (log, data, pos) ->
+    @tryScroll() if @number
+    true
+
+  tryScroll: ->
+    if element = $("#log > p:visible")[@number - 1]
+      $('#main').scrollTop(0)
+      $('html, body').scrollTop($(element).offset()?.top) # weird, html works in chrome, body in firefox
+      @highlight(element)
+      @number = undefined
+
+  highlight: (element) ->
+    $('#log p.highlight').removeClass('highlight')
+    $(element).addClass('highlight')
+
 # Log.Logger = ->
 # Log.Logger.prototype = $.extend new Log.Listener,
 #   receive: (log, num, string) ->
