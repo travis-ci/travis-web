@@ -1,5 +1,5 @@
-// Version: v1.0.0-rc.1-178-g7fdc957
-// Last commit: 7fdc957 (2013-03-12 23:56:02 +0100)
+// Version: v1.0.0-rc.1-179-g737c076
+// Last commit: 737c076 (2013-03-14 15:31:32 +0100)
 
 
 (function() {
@@ -150,8 +150,8 @@ Ember.deprecateFunc = function(message, func) {
 
 })();
 
-// Version: v1.0.0-rc.1-178-g7fdc957
-// Last commit: 7fdc957 (2013-03-12 23:56:02 +0100)
+// Version: v1.0.0-rc.1-179-g737c076
+// Last commit: 737c076 (2013-03-14 15:31:32 +0100)
 
 
 (function() {
@@ -19482,6 +19482,11 @@ EmberHandlebars.ViewHelper = Ember.Object.create({
       dup = true;
     }
 
+    if (hash.tag) {
+      extensions.tagName = hash.tag;
+      dup = true;
+    }
+
     if (classes) {
       classes = classes.split(' ');
       extensions.classNames = classes;
@@ -19508,6 +19513,7 @@ EmberHandlebars.ViewHelper = Ember.Object.create({
     if (dup) {
       hash = Ember.$.extend({}, hash);
       delete hash.id;
+      delete hash.tag;
       delete hash['class'];
       delete hash.classBinding;
     }
@@ -27254,8 +27260,8 @@ Ember States
 
 
 })();
-// Version: v1.0.0-rc.1-178-g7fdc957
-// Last commit: 7fdc957 (2013-03-12 23:56:02 +0100)
+// Version: v1.0.0-rc.1-179-g737c076
+// Last commit: 737c076 (2013-03-14 15:31:32 +0100)
 
 
 (function() {
