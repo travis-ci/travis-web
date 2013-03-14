@@ -1,5 +1,3 @@
 Travis.LineNumberParser = Ember.Mixin.create
   fetchLineNumber: ->
-    url = @container.lookup('router:main').get('url')
-    if match = url.match(/#L(\d+)$/)
-      match[1]
+    match[1] if match = document.location.hash.match(/#L(\d+)$/)
