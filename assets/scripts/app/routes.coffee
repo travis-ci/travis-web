@@ -38,6 +38,13 @@ Ember.Route.reopen
       Travis.storeAfterSignInPath(path)
       @transitionTo('auth')
 
+Travis.Router.reopen
+  transitionTo: ->
+    this.container.lookup('controller:repo').set('lineNumber', null)
+
+    @_super.apply this, arguments
+
+
 Travis.Router.map ->
   @resource 'index', path: '/', ->
     @route 'current', path: '/'
