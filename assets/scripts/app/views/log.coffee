@@ -219,7 +219,7 @@ Travis.reopen
         target.closest('.fold').toggleClass('open')
 
     logUrl: (->
-      repo = @get('log.job.repo')
+      repo = @get('controller.currentItem.repo')
       item = @get('controller.currentItem')
 
       if repo && item
