@@ -5,6 +5,8 @@ Travis.JobController = Em.Controller.extend
   repoBinding: 'controllers.repo.repo'
   commitBinding: 'job.commit'
 
+  currentItemBinding: 'job'
+
   urlGithubCommit: (->
     Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
   ).property('repo.slug', 'commit.sha')

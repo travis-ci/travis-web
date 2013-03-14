@@ -219,17 +219,20 @@ Travis.reopen
         target.closest('.fold').toggleClass('open')
 
     logUrl: (->
-      repo = @get('controller.currentItem.repo')
-      item = @get('controller.currentItem')
+      if item = @get('controller.currentItem')
+        if repo = item.get('repo')
 
-      if repo && item
-        name = if item.constructor == Travis.Build
-          'build'
-        else
-          'job'
+          console.log item+''
+          console.log repo+''
+          console.log @get('controller')+''
 
-        Travis.__container__.lookup('router:main').generate(name, repo, item)
-    ).property('job.repo', 'parentView.currentItem')
+          name = if item.constructor == Travis.Build
+            'build'
+          else
+            'job'
+
+          Travis.__container__.lookup('router:main').generate(name, repo, item)
+    ).property('controller.currentItem.repo', 'controller.currentItem')
 
     lineNumberClicked: (number) ->
       path = @get('logUrl') + "#L#{number}"
