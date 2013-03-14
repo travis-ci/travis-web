@@ -1,6 +1,6 @@
 Travis.RunningJobsController = Em.ArrayProxy.extend
   Group: Em.Object.extend
-    repo: (-> @get('jobs.firstObject.repo') ).property('jobs.firstObject.repo')
+    slug: (-> @get('jobs.firstObject.repoSlug') ).property('jobs.firstObject.repoSlug')
 
     init: ->
       @_super.apply this, arguments
