@@ -7,6 +7,6 @@ describe 'the sidebar', ->
 
   it 'displays the expected stuff', ->
     listsQueues [
-      { name: 'common', item: { number: '5.1', repo: 'travis-ci/travis-core' } }
-      { name: 'common', item: { number: '5.2', repo: 'travis-ci/travis-core' } }
+      { name: 'linux', item: { number: '5.1', repo: 'travis-ci/travis-core' } }
+      { name: 'linux', item: { number: '5.2', repo: 'travis-ci/travis-core' } }
     ]

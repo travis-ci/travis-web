@@ -70,9 +70,9 @@ describe 'events', ->
   describe 'an event adding a job', ->
     beforeEach ->
       app 'travis-ci/travis-core'
-      waitFor jobsRendered
+      waitFor jobsRendered, 'jobs should be rendered'
       runs ->
-        waitFor queuesRendered
+        waitFor queuesRendered, 'queues should be rendered'
 
     it 'adds a job to the jobs queue', ->
       payload =
@@ -80,7 +80,7 @@ describe 'events', ->
           id: 12
           repository_id: 1
           number: '1.4'
-          queue: 'builds.common'
+          queue: 'builds.linux'
 
       $.mockjax
         url: '/jobs/12'
@@ -93,13 +93,13 @@ describe 'events', ->
             id: 12
             repository_id: 1
             number: '1.4'
-            queue: 'builds.common'
+            queue: 'builds.linux'
             state: 'created'
 
-      waits(100)
+      waits(1000)
       runs ->
         listsQueuedJob
-          name: 'common'
+          name: 'linux'
           row: 3
           item: { number: '1.4', repo: 'travis-ci/travis-core' }
 

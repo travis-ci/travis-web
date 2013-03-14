@@ -58,6 +58,12 @@ Travis.Router.map ->
       @route 'index', path: '/'
       @route 'profile', path: '/profile'
 
+Travis.ApplicationRoute = Ember.Route.extend Travis.LineNumberParser,
+  setupController: ->
+    @_super.apply this, arguments
+
+    this.controllerFor('repo').set('lineNumber', @fetchLineNumber())
+
 Travis.IndexCurrentRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'repo'
@@ -77,7 +83,7 @@ Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
 Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
 Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
 
-Travis.BuildRoute = Ember.Route.extend Travis.LineNumberParser,
+Travis.BuildRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'build', outlet: 'pane', into: 'repo'
 
@@ -89,14 +95,11 @@ Travis.BuildRoute = Ember.Route.extend Travis.LineNumberParser,
   setupController: (controller, model) ->
     model = Travis.Build.find(model) if model && !model.get
 
-    if lineNumber = @fetchLineNumber()
-      controller.set('lineNumber', lineNumber)
-
     repo = @container.lookup('controller:repo')
     repo.set('build', model)
     repo.activate('build')
 
-Travis.JobRoute = Ember.Route.extend Travis.LineNumberParser,
+Travis.JobRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'job', outlet: 'pane', into: 'repo'
 
@@ -107,9 +110,6 @@ Travis.JobRoute = Ember.Route.extend Travis.LineNumberParser,
 
   setupController: (controller, model) ->
     model = Travis.Job.find(model) if model && !model.get
-
-    if lineNumber = @fetchLineNumber()
-      controller.set('lineNumber', lineNumber)
 
     repo = @container.lookup('controller:repo')
     repo.set('job', model)
