@@ -37,24 +37,24 @@
   </li>
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
     <h5>
-      {{#with view.build}}
-        {{#if repo.slug}}
-          {{#linkTo "build" repo this}}
-            {{t repositories.tabs.build}} #{{number}}
+      {{#if view.build.id}}
+        {{#if view.build.repo.slug}}
+          {{#linkTo "build" view.build.repo view.build}}
+            {{t repositories.tabs.build}} #{{view.build.number}}
           {{/linkTo}}
         {{/if}}
-      {{/with}}
+      {{/if}}
     </h5>
   </li>
   <li id="tab_job" {{bindAttr class="view.classJob"}}>
     <h5>
-      {{#with view.job}}
-        {{#if repo.slug}}
-          {{#linkTo "job" repo this}}
-            {{t repositories.tabs.job}} #{{number}}
+      {{#if view.job.id}}
+        {{#if view.job.repo.slug}}
+          {{#linkTo "job" view.job.repo view.job}}
+            {{t repositories.tabs.job}} #{{view.job.number}}
           {{/linkTo}}
         {{/if}}
-      {{/with}}
+      {{/if}}
     </h5>
   </li>
 </ul>
