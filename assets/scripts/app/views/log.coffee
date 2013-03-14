@@ -18,8 +18,6 @@ Travis.reopen
       job.unsubscribe() if job
 
   PreView: Em.View.extend
-
-  PreView: Em.View.extend
     templateName: 'jobs/pre'
 
     didInsertElement: ->
