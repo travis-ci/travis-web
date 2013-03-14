@@ -31,7 +31,7 @@ require 'travis/model'
   ).property()
 
   repoSlug: (->
-    @get('repoSlug') || @get('repo.slug')
+    @get('repositorySlug') || @get('repo.slug')
   ).property('repo.slug', 'repositorySlug')
 
   repoData: (->
