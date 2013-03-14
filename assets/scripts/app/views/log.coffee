@@ -93,7 +93,8 @@ Travis.reopen
         target.closest('.fold').toggleClass('open')
 
     lineNumberClicked: (number) ->
-      window.history.pushState(null, null, "#{window.location.pathname}#L#{number}");
+      path = "#{window.location.pathname}#L#{number}"
+      window.history.pushState({ path: path }, null, path);
       @set('controller.lineNumber', number)
 
     toTop: () ->
