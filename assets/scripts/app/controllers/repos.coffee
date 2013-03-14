@@ -17,6 +17,7 @@ Travis.ReposController = Ember.ArrayController.extend
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   recentRepos: (->
+    Travis.Repo.find()
     Travis.LimitedArray.create
       content: Em.ArrayProxy.extend(Em.SortableMixin).create(
         sortProperties: ['sortOrder']

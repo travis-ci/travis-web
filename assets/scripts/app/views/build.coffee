@@ -30,6 +30,8 @@ Travis.reopen
     buildBinding: 'context'
     commitBinding: 'build.commit'
 
+    isPullRequestsList: ( -> @get('parentView.isPullRequestsList') ).property('parentView.isPullRequestsList')
+
     color: (->
       Travis.Helpers.colorForState(@get('build.state'))
     ).property('build.state')
