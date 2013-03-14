@@ -44,7 +44,6 @@ Travis.reopen
 
   BuildView: Travis.View.extend
     templateName: 'builds/show'
-    jobBinding: 'controller.job'
     classNameBindings: ['color', 'loading']
 
     loadingBinding: 'controller.loading'

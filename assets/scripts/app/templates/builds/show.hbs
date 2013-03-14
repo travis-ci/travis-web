@@ -53,7 +53,7 @@
       {{view Travis.JobsView jobsBinding="build.requiredJobs" required="true"}}
       {{view Travis.JobsView jobsBinding="build.allowedFailureJobs"}}
     {{else}}
-      {{view Travis.LogView jobBinding="job"}}
+      {{view Travis.LogView jobBinding="build.jobs.firstObject"}}
     {{/if}}
   {{else}}
     There are no builds for this repository.

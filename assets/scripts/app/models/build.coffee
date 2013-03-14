@@ -30,10 +30,6 @@ require 'travis/model'
     @get('jobs.length') > 1
   ).property('jobs.length')
 
-  firstJob: (->
-    @get('jobs').objectAt(0)
-  ).property('jobs.length')
-
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')

@@ -157,12 +157,15 @@ Travis.OrderedLogEngineMixin = Ember.Mixin.create
       url = Travis.Urls.plainTextLog(@get('log.id'))
       this.$("#log").append $("<p class=\"cut\">Log was too long to display. Download the <a href=\"#{url}\">the raw version</a> to get the full log.</p>")
 
-
 Travis.reopen
   LogView: Travis.View.extend
     templateName: 'jobs/log'
     logBinding: 'job.log'
     contextBinding: 'job'
+
+    didInsertElement: ->
+      job = @get('job')
+      job.subscribe() if job && !job.get('isFinished')
 
     willDestroyElement: ->
       job = @get('job')

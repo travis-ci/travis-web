@@ -1,9 +1,8 @@
 Travis.BuildController = Ember.Controller.extend
-  needs: ['repo', 'log']
+  needs: ['repo']
   repoBinding: 'controllers.repo.repo'
   buildBinding: 'controllers.repo.build'
   commitBinding: 'build.commit'
-  jobBinding: 'controllers.log.job'
 
   currentItemBinding: 'build'
 
@@ -22,7 +21,3 @@ Travis.BuildController = Ember.Controller.extend
   urlCommitter: (->
     Travis.Urls.email(@get('commit.committerEmail'))
   ).property('commit.committerEmail')
-
-  hasLoaded: (->
-    @set('controllers.log.job', @get('build.firstJob')) if @get('build.firstJob') && !@get('build.isMatrix')
-  ).observes('build.id', 'build.firstJob')
