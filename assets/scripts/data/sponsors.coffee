@@ -43,6 +43,7 @@
   { id: '40', type: 'silver', link: "<a href=\"http://fiksu.com\">Fiksu</a>"}
   { id: '41', type: 'silver', link: "<a href=\"http://saucelabs.com\">Sauce Labs</a>"}
   { id: '42', type: 'silver', link: "<a href=\"http://mogotest.com\">Mogotest</a><span>: Never be embarrassed by a visually broken site again.</span>"}
+  { id: '43', type: 'silver', link: "<a href=\"http://busyconf.com\">BusyConf</a><span>: Conferences and Events Made Easy</span>"}
 ]
 
 @Travis.WORKERS = {
