@@ -92,6 +92,7 @@ describe 'events', ->
           job:
             id: 12
             repository_id: 1
+            repository_slug: 'travis-ci/travis-core'
             number: '1.4'
             queue: 'builds.linux'
             state: 'created'
