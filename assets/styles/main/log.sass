@@ -49,16 +49,18 @@ pre#log
     &.open
       height: auto
 
-    &.active
-      p:first-of-type
-        padding-right: 130px
-        background: $color-bg-log-fold inline-image('ui/log.fold.open.2.png') no-repeat 8px 3px
+    p:first-of-type
+      padding-right: 130px
 
-      &:not(.open) p:first-of-type
-        visibility: visible
-        height: auto
-        min-height: 16px
-        background-image: inline-image('ui/log.fold.closed.3.png')
+    // &.active
+    p:first-of-type
+      background: $color-bg-log-fold inline-image('ui/log.fold.open.2.png') no-repeat 8px 3px
+
+    &:not(.open) p:first-of-type
+      visibility: visible
+      height: auto
+      min-height: 16px
+      background-image: inline-image('ui/log.fold.closed.3.png')
 
     .fold-name
       position: absolute

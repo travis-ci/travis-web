@@ -81,7 +81,7 @@ Travis.reopen
 
     numberLineOnHover: ->
       $('#log').on 'mouseenter', 'a', ->
-        $(this).attr('href', '#L' + ($(this.parentNode).prevAll('p:visible').length + 1))
+        $(@).attr('href', '#L' + ($("#log p:visible").index(@parentNode) + 1))
 
     click: ->
       if (href = $(event.target).attr('href')) && matches = href?.match(/#L(\d+)$/)
@@ -113,7 +113,7 @@ Log.Scroll.prototype = $.extend new Log.Listener,
     true
 
   tryScroll: ->
-    if element = $("#log > p:visible")[@number - 1]
+    if element = $("#log p:visible")[@number - 1]
       $('#main').scrollTop(0)
       $('html, body').scrollTop($(element).offset()?.top) # weird, html works in chrome, body in firefox
       @highlight(element)
