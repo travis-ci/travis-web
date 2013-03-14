@@ -1,5 +1,4 @@
 require 'log'
-require 'travis/ordered_log'
 
 Log.DEBUG = false
 Log.LIMIT = 10000
@@ -9,6 +8,10 @@ Travis.reopen
     templateName: 'jobs/log'
     logBinding: 'job.log'
     contextBinding: 'job'
+
+    didInsertElement: ->
+      job = @get('job')
+      job.subscribe() if job && !job.get('isFinished')
 
     willDestroyElement: ->
       job = @get('job')

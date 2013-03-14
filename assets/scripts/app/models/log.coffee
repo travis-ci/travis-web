@@ -11,8 +11,8 @@ require 'travis/chunk_buffer'
     @fetch()
 
   setParts: ->
-    #@set 'parts', Ember.ArrayProxy.create(content: [])
-    @set 'parts', Travis.ChunkBuffer.create(content: [])
+    @set 'parts', Ember.ArrayProxy.create(content: [])
+    # @set 'parts', Travis.ChunkBuffer.create(content: [])
 
   fetch: ->
     console.log 'log model: fetching log' if Log.DEBUG
