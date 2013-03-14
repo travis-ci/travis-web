@@ -221,11 +221,6 @@ Travis.reopen
     logUrl: (->
       if item = @get('controller.currentItem')
         if repo = item.get('repo')
-
-          console.log item+''
-          console.log repo+''
-          console.log @get('controller')+''
-
           name = if item.constructor == Travis.Build
             'build'
           else
