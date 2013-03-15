@@ -1,8 +1,5 @@
 {{#view Travis.WorkersView}}
-  <h4>
-    {{t workers}}
-    <a id="toggle-workers" {{action toggleWorkers target="view"}}></a>
-  </h4>
+  <a id="toggle-workers" {{action toggleWorkers target="view"}}></a>
   <ul id="workers">
     {{#each group in controller.groups}}
       {{#view Travis.WorkersListView}}

@@ -11,11 +11,8 @@
 {{view view.DecksView}}
 
 <ul class="tabs">
-  <li id="tab_queues" {{bindAttr class="view.classQueues"}}>
-    <h5><a href="#" {{action activate "queues" target="view"}}>{{t layouts.application.queues}}</a></h5>
-  </li>
   <li id="tab_jobs" {{bindAttr class="view.classJobs"}}>
-    <h5><a href="#" {{action activate "jobs" target="view"}}>{{t layouts.application.jobs}}</a></h5>
+    <h5><a href="#" {{action activate "jobs" target="view"}}>{{t layouts.application.jobs}} ({{jobs.length}})</a></h5>
   </li>
   <li id="tab_workers" {{bindAttr class="view.classWorkers"}}>
     <h5><a href="#" {{action activate "workers" target="view"}}>{{t layouts.application.workers}}</a></h5>
@@ -25,7 +22,7 @@
 <div class="pane">
   {{outlet pane}}
 </div>
-
+{{view view.QueuesView}}
 {{view view.LinksView}}
 
 <div id="about" class="box">

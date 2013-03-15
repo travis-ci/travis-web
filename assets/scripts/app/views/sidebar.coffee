@@ -2,6 +2,11 @@
   SidebarView: Travis.View.extend
     templateName: 'layouts/sidebar'
 
+    didInsertElement: ->
+      @_super.apply this, arguments
+
+      @activate('jobs')
+
     activate: (name) ->
       @set('activeTab', name)
       @connectOutlet 'pane', @["#{name.capitalize()}View"].create(controller: @get('controller'))

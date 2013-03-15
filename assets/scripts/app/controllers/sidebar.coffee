@@ -1,5 +1,8 @@
 Travis.reopen
   SidebarController: Em.ArrayController.extend
+    needs: ['runningJobs']
+    jobsBinding: 'controllers.runningJobs'
+
     init: ->
       @_super.apply this, arguments
       @tickables = []
