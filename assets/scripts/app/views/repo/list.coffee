@@ -26,8 +26,8 @@
     tabBinding: 'controller.tab'
     currentUserBinding: 'controller.currentUser'
 
-    activate: ->
-      @get('controller').activate(event.target.name)
+    activate: (name) ->
+      @get('controller').activate(name)
 
     classRecent: (->
       'active' if @get('tab') == 'recent'

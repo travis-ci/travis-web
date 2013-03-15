@@ -4,7 +4,7 @@ Travis.ReposController = Ember.ArrayController.extend
   defaultTab: 'recent'
   isLoadedBinding: 'content.isLoaded'
   needs: ['currentUser', 'repo']
-  currentUserBinding: 'controllers.currentUser'
+  currentUserBinding: 'controllers.currentUser.user'
   selectedRepo: (->
     # we need to observe also repo.content here, because we use
     # ObjectProxy in repo controller
