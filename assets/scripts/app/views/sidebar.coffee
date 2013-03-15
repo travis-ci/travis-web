@@ -2,6 +2,22 @@
   SidebarView: Travis.View.extend
     templateName: 'layouts/sidebar'
 
+    activate: (name) ->
+      @set('activeTab', name)
+      @connectOutlet 'pane', @["#{name.capitalize()}View"].create(controller: @get('controller'))
+
+    classQueues: (->
+      'active' if @get('activeTab') == 'queues'
+    ).property('activeTab')
+
+    classWorkers: (->
+      'active' if @get('activeTab') == 'workers'
+    ).property('activeTab')
+
+    classJobs: (->
+      'active' if @get('activeTab') == 'jobs'
+    ).property('activeTab')
+
     DecksView: Em.View.extend
       templateName: "sponsors/decks"
       init: ->
@@ -26,7 +42,7 @@
         @_super.apply this, arguments
         @set 'controller', @get('controller').container.lookup('controller:queues')
 
-    RunningJobsView: Em.View.extend
+    JobsView: Em.View.extend
       templateName: 'jobs/running'
       elementId: 'running-jobs'
       init: ->
