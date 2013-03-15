@@ -24,7 +24,7 @@
   ReposListTabsView: Travis.View.extend
     templateName: 'repos/list/tabs'
     tabBinding: 'controller.tab'
-    currentUserBinding: 'controller.currentUser'
+    currentUserBinding: 'controller.currentUser.id'
 
     activate: (name) ->
       @get('controller').activate(name)
