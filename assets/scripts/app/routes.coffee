@@ -6,7 +6,10 @@ Ember.Router.reopen
 
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
-    @_super(url)
+    try
+      @_super(url)
+    catch error
+      @_super('/not-found')
 
 # TODO: don't reopen Ember.Route to add events, there should be
 #       a better way (like "parent" resource for everything inside map)
@@ -58,6 +61,7 @@ Travis.Router.map ->
 
   @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
+  @route 'notFound', path: '/not-found'
 
   @resource 'profile', path: '/profile', ->
     @route 'index', path: '/'
@@ -189,6 +193,16 @@ Travis.StatsRoute = Ember.Route.extend
 
     @render 'top', outlet: 'top'
     @render 'stats'
+
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('simple')
+
+Travis.NotFoundRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'not-found')
+
+    @render 'top', outlet: 'top'
+    @render 'not_found'
 
   setupController: ->
     @container.lookup('controller:application').connectLayout('simple')
