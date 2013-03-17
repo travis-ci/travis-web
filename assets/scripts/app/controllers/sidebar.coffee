@@ -1,15 +1,32 @@
 Travis.reopen
   SidebarController: Em.ArrayController.extend
     init: ->
+      @_super.apply this, arguments
       @tickables = []
       Travis.Ticker.create(target: this, interval: Travis.INTERVALS.sponsors)
 
     tick: ->
       tickable.tick() for tickable in @tickables
 
-  QueuesController: Em.ArrayController.extend()
+  QueuesController: Em.ArrayController.extend
+    init: ->
+      @_super.apply this, arguments
+
+      queues = for queue in Travis.QUEUES
+        Travis.LimitedArray.create
+          content: Travis.Job.queued(queue.name), limit: 20
+          id: "queue_#{queue.name}"
+          name: queue.display
+      @set 'content', queues
+
+    showAll: (queue) ->
+      queue.showAll()
 
   WorkersController: Em.ArrayController.extend
+    init: ->
+      @_super.apply this, arguments
+      @set 'content', Travis.Worker.find()
+
     groups: (->
       if content = @get 'arrangedContent'
         groups = {}
@@ -53,3 +70,22 @@ Travis.reopen
     end: ->
       @start() + @get('perPage')
 
+Travis.DecksController = Travis.SponsorsController.extend
+  needs: ['sidebar']
+  perPage: 1
+
+  init: ->
+    @_super.apply this, arguments
+
+    @get('controllers.sidebar').tickables.push(this)
+    @set 'content', Travis.Sponsor.decks()
+
+Travis.LinksController = Travis.SponsorsController.extend
+  needs: ['sidebar']
+  perPage: 6
+
+  init: ->
+    @_super.apply this, arguments
+
+    @get('controllers.sidebar').tickables.push(this)
+    @set 'content', Travis.Sponsor.links()

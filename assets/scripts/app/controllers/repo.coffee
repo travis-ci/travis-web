@@ -1,20 +1,15 @@
 Travis.RepoController = Travis.Controller.extend
   bindings: []
+  needs: ['repos', 'currentUser']
+  currentUserBinding: 'controllers.currentUser'
+
+  isError: (-> @get('repo.isError') ).property('repo.isError')
+  slug: (-> @get('repo.slug') ).property('repo.slug')
+  isLoading: (-> @get('repo.isLoading') ).property('repo.isLoading')
 
   init: ->
     @_super.apply this, arguments
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
-    @set 'builds', Em.ArrayProxy.create(Em.SortableMixin,
-      isLoadedBinding: 'content.isLoaded'
-      sortProperties: ['number']
-      sortAscending: false
-      content: []
-      isLoadingBinding: 'content.isLoading'
-      load: (records) ->
-        content = @get('content')
-        if content && content.load
-          content.load(records)
-    )
 
   updateTimes: ->
     if builds = @get('builds')
@@ -33,7 +28,7 @@ Travis.RepoController = Travis.Controller.extend
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
-    @_bind('repo', 'controllers.reposController.firstObject')
+    @_bind('repo', 'controllers.repos.firstObject')
     @_bind('build', 'repo.lastBuild')
     @connectTab('current')
 
@@ -43,15 +38,15 @@ Travis.RepoController = Travis.Controller.extend
 
   viewBuilds: ->
     @connectTab('builds')
-    @_bind('builds.content', 'repo.builds')
+    @_bind('builds', 'repo.builds')
 
   viewPullRequests: ->
     @connectTab('pull_requests')
-    @_bind('builds.content', 'repo.pullRequests')
+    @_bind('builds', 'repo.pullRequests')
 
   viewBranches: ->
     @connectTab('branches')
-    @_bind('builds.content', 'repo.branches')
+    @_bind('builds', 'repo.branches')
 
   viewEvents: ->
     @connectTab('events')
@@ -64,12 +59,9 @@ Travis.RepoController = Travis.Controller.extend
     @_bind('build', 'job.build')
     @connectTab('job')
 
-  repoObserver: (->
-    repo = @get('repo')
-    repo.select() if repo
-  ).observes('repo.id')
-
   connectTab: (tab) ->
+    # TODO: such implementation seems weird now, because we render
+    #       in the renderTemplate function in routes
     name = if tab == 'current' then 'build' else tab
     viewClass = if name in ['builds', 'branches', 'pull_requests']
       Travis.BuildsView
@@ -77,7 +69,6 @@ Travis.RepoController = Travis.Controller.extend
       Travis["#{$.camelize(name)}View"]
 
     @set('tab', tab)
-    @connectOutlet(outletName: 'pane', controller: this, viewClass: viewClass)
 
   _bind: (to, from) ->
     @bindings.push Ember.oneWay(this, to, from)
@@ -85,3 +76,7 @@ Travis.RepoController = Travis.Controller.extend
   _unbind: ->
     binding.disconnect(this) for binding in @bindings
     @bindings.clear()
+
+  urlGithub: (->
+    Travis.Urls.githubRepo(@get('repo.slug'))
+  ).property('repo.slug')

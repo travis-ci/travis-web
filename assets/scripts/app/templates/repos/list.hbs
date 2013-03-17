@@ -5,17 +5,17 @@
 {{view Travis.ReposListTabsView}}
 
 <div class="tab">
-  {{#collection Travis.ReposListView contentBinding="controller"}}
+  {{#collection Travis.ReposListView contentBinding="this"}}
     {{#with view.repo}}
       <div class="slug-and-status">
         <span class="status"></span>
         {{#if slug}}
-          <a {{action showRepo this href=true}} class="slug">{{slug}}</a>
+          {{#linkTo repo this class="slug"}}{{slug}}{{/linkTo}}
         {{/if}}
       </div>
       {{#with lastBuildHash}}
-        {{#if id}}
-          <a {{action showBuild repo id href=true}} class="last_build">{{number}}</a>
+        {{#if repo.slug}}
+          {{#linkTo build repo id class="last_build"}}{{number}}{{/linkTo}}
         {{/if}}
       {{/with}}
 

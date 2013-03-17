@@ -72,7 +72,7 @@ nl:
       my_repositories: Mijn repositories
       recent: Recent
       search: Zoeken
-      sponsers: Sponsors
+      sponsors: Sponsors
       sponsors_link: Bekijk al onze geweldige sponsors &rarr;
     mobile:
       author: Auteur
@@ -97,6 +97,7 @@ nl:
       sign_out: Uitloggen
       signing_in: 
       stats: Statistieken
+      status: 
   locales:
     ca: 
     de: Deutsch

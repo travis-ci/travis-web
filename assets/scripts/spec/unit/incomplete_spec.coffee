@@ -1,28 +1,59 @@
-Travis.Foo = Travis.Model.extend
-  name:        DS.attr('string')
-  description: DS.attr('string')
-  lastName:    DS.attr('string')
-
-  bar:         DS.belongsTo('Travis.Bar')
-  niceBar:     DS.belongsTo('Travis.Bar')
-  veryNiceBar: DS.belongsTo('Travis.Bar', key: 'very_nice_bar_indeed_id')
-
-Travis.Bar = Travis.Model.extend()
-
 record = null
 store = null
+adapterClass = null
 
-$.mockjax
-  url: '/foos/1'
-  responseTime: 10
-  responseText: { foo: { id: 1, name: 'foo', description: 'bar' } }
-
-describe 'Travis.Model', ->
+describe 'Travis.Model - incomplete', ->
   beforeEach ->
-    store = Travis.Store.create()
+    $.mockjax
+      url: '/foos/1'
+      responseTime: 1
+      responseText: { foo: { id: 1, name: 'foo', description: 'bar' } }
+
+    Travis.Foo = Travis.Model.extend
+      name:        DS.attr('string')
+      description: DS.attr('string')
+      lastName:    DS.attr('string')
+
+      bar:         DS.belongsTo('Travis.Bar')
+      niceBar:     DS.belongsTo('Travis.Bar')
+      veryNiceBar: DS.belongsTo('Travis.Bar')
+
+    Travis.Foo.toString = -> 'Travis.Foo'
+
+    Travis.Bar = Travis.Model.extend
+      name: DS.attr('string')
+      foos: DS.hasMany('Travis.Foo')
+
+    Travis.Bar.toString = -> 'Travis.Bar'
+
+    adapterClass = Travis.RestAdapter.extend()
+    adapterClass.map 'Travis.Foo',
+      veryNiceBar: { key: 'very_nice_bar_indeed_id' }
+      niceBar: { key: 'nice_bar_id' }
+
+    store = Travis.Store.create
+      adapter: adapterClass.create()
 
   afterEach ->
+    delete Travis.Foo
+    delete Travis.Bar
     store.destroy()
+
+  it 'allows to merge many times', ->
+    store.load(Travis.Bar, { id: '1', foo_ids: ['1', '2'] }, { id: '1' })
+    store.load(Travis.Foo, { id: '1', bar_id: '1' }, { id: '1' })
+    store.load(Travis.Foo, { id: '2', bar_id: '1' }, { id: '2' })
+
+    record = store.find(Travis.Bar, 1)
+    store.find(Travis.Foo, 1)
+    store.find(Travis.Foo, 2)
+
+    record.get('foos')
+    store.loadIncomplete(Travis.Bar, id: 1, name: 'foo')
+    store.loadIncomplete(Travis.Bar, id: 1, name: 'bar')
+
+    expect( record.get('foos.length') ).toEqual(2)
+    expect( record.get('name') ).toEqual('bar')
 
   describe 'with incomplete record with loaded associations', ->
     beforeEach ->
@@ -32,43 +63,45 @@ describe 'Travis.Model', ->
         nice_bar_id: 3
         very_nice_bar_indeed_id: 4
       }
-      record = store.loadIncomplete(Travis.Foo, attrs)
+      store.loadIncomplete(Travis.Foo, attrs)
+      record = store.find Travis.Foo, 1
       store.load(Travis.Bar, id: 2)
       store.load(Travis.Bar, id: 3)
       store.load(Travis.Bar, id: 4)
 
     it 'does not load record on association access', ->
-      expect( record.get('bar.id') ).toEqual 2
-      expect( record.get('niceBar.id') ).toEqual 3
-      expect( record.get('veryNiceBar.id') ).toEqual 4
+      expect( record.get('bar.id') ).toEqual '2'
+      expect( record.get('niceBar.id') ).toEqual '3'
+      expect( record.get('veryNiceBar.id') ).toEqual '4'
       waits 50
       runs ->
-        expect( record.get('complete') ).toBeFalsy()
+        expect( record.get('incomplete') ).toBeTruthy()
 
   describe 'with incomplete record without loaded associations', ->
     beforeEach ->
       attrs = {
         id: 1
       }
-      record = store.loadIncomplete(Travis.Foo, attrs)
+      store.loadIncomplete(Travis.Foo, attrs)
+      record = store.find Travis.Foo, 1
 
     it 'loads record based on regular association key', ->
       record.get('bar')
       waits 50
       runs ->
-        expect( record.get('complete') ).toBeTruthy()
+        expect( record.get('incomplete') ).toBeFalsy()
 
     it 'loads record based on camel case association key', ->
       record.get('niceBar')
       waits 50
       runs ->
-        expect( record.get('complete') ).toBeTruthy()
+        expect( record.get('incomplete') ).toBeFalsy()
 
     it 'loads record based on ssociation with explicit key', ->
       record.get('veryNiceBar')
       waits 50
       runs ->
-        expect( record.get('complete') ).toBeTruthy()
+        expect( record.get('incomplete') ).toBeFalsy()
 
   describe 'with incomplete record', ->
     beforeEach ->
@@ -77,7 +110,8 @@ describe 'Travis.Model', ->
         name: 'foo'
         last_name: 'foobar'
       }
-      record = store.loadIncomplete(Travis.Foo, attrs)
+      store.loadIncomplete(Travis.Foo, attrs)
+      record = store.find Travis.Foo, 1
 
     it 'shows if attribute is loaded', ->
       expect( record.isAttributeLoaded('name') ).toBeTruthy()
@@ -87,7 +121,7 @@ describe 'Travis.Model', ->
       expect( record.get('name') ).toEqual 'foo'
       waits 50
       runs ->
-        expect( record.get('complete') ).toBeFalsy()
+        expect( record.get('incomplete') ).toBeTruthy()
 
     it 'loads missing data if getPath is used', ->
       other = Em.Object.create(record: record)
@@ -104,7 +138,6 @@ describe 'Travis.Model', ->
       waits 50
       runs ->
         expect( record.get('description') ).toEqual 'bar'
-        expect( record.get('complete') ).toBeTruthy()
         expect( record.get('isComplete') ).toBeTruthy()
 
     it 'does not set incomplete on the record twice', ->
@@ -124,28 +157,29 @@ describe 'Travis.Model', ->
       expect( record.get('lastName') ).toEqual 'foobar'
       waits 50
       runs ->
-        expect( record.get('complete') ).toBeFalsy()
+        expect( record.get('incomplete') ).toBeTruthy()
 
     it 'adds takes into account additional data loaded as incomplete', ->
-      record = store.loadIncomplete(Travis.Foo, { id: 1, description: 'baz' })
+      store.loadIncomplete(Travis.Foo, { id: 1, description: 'baz' })
+      record = store.find Travis.Foo, 1
       expect( record.get('description') ).toEqual 'baz'
       waits 50
       runs ->
-        expect( record.get('complete') ).toBeFalsy()
+        expect( record.get('incomplete') ).toBeTruthy()
 
   describe 'with complete record', ->
     beforeEach ->
-      id = 5
+      id = '5'
       attrs = {
         id: id
         name: 'foo'
       }
 
-      store.load(Travis.Foo, id, attrs)
-      record = Travis.Foo.find(id)
+      store.load(Travis.Foo, attrs, { id: attrs.id })
+      record = store.find(Travis.Foo, id)
 
     it 'is marked as completed', ->
-      expect( record.get('complete') ).toBeTruthy()
+      expect( record.get('incomplete') ).toBeFalsy()
 
     it 'allows to get regular attribute', ->
       expect( record.get('name') ).toEqual 'foo'

@@ -13,7 +13,9 @@
       repoBinding: 'content'
       classNames: ['repo']
       classNameBindings: ['color', 'selected']
-      selectedBinding: 'repo.selected'
+      selected: (->
+        @get('content') == @get('controller.selectedRepo')
+      ).property('controller.selectedRepo')
 
       color: (->
         Travis.Helpers.colorForState(@get('repo.lastBuildState'))
@@ -22,9 +24,10 @@
   ReposListTabsView: Travis.View.extend
     templateName: 'repos/list/tabs'
     tabBinding: 'controller.tab'
+    currentUserBinding: 'controller.currentUser.id'
 
-    activate: (event) ->
-      @get('controller').activate(event.target.name)
+    activate: (name) ->
+      @get('controller').activate(name)
 
     classRecent: (->
       'active' if @get('tab') == 'recent'
@@ -33,13 +36,13 @@
     classOwned: (->
       classes = []
       classes.push('active')  if @get('tab') == 'owned'
-      classes.push('display-inline') if Travis.app.get('currentUser')
+      classes.push('display-inline') if @get('currentUser')
       classes.join(' ')
-    ).property('tab', 'Travis.app.currentUser')
+    ).property('tab', 'currentUser')
 
     classSearch: (->
       'active' if @get('tab') == 'search'
     ).property('tab')
 
-    toggleInfo: (event) ->
+    toggleInfo: ->
       $('#repos').toggleClass('open')

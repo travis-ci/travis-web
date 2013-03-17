@@ -1,10 +1,7 @@
 describe 'on the "builds" state', ->
   beforeEach ->
-    app 'travis-ci/travis-core/builds'
+    app '/travis-ci/travis-core/builds'
     waitFor buildsRendered
-
-  afterEach ->
-    window.history.pushState({}, null, '/spec.html')
 
   it 'displays the expected stuff', ->
     listsRepos [

@@ -9,6 +9,6 @@
 @buildsRendered  = notEmpty('#builds .number')
 @jobRendered     = notEmpty('#summary .number')
 @jobsRendered    = notEmpty('#jobs .number')
-@queuesRendered  = notEmpty('#queue_common li')
+@queuesRendered  = notEmpty('#queue_linux li')
 @workersRendered = notEmpty('.worker')
 

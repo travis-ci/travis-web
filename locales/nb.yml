@@ -72,7 +72,7 @@ nb:
       my_repositories: Mine kodelagre
       recent: Nylig
       search: Søk
-      sponsers: Sponsorer
+      sponsors: Sponsorer
       sponsors_link: Se alle de flotte sponsorene våre &rarr;
     mobile:
       author: Forfatter
@@ -97,6 +97,7 @@ nb:
       sign_out: Logg ut
       signing_in: 
       stats: Statistikk
+      status: 
   locales:
     ca: 
     de: Deutsch

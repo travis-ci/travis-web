@@ -1,6 +1,5 @@
-ruby '1.9.3' rescue nil
-
-source :rubygems
+source 'https://rubygems.org'
+ruby '1.9.3'
 
 gem 'puma'
 gem 'rack-ssl', '~> 1.3'
@@ -21,7 +20,7 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'rake', '~> 0.9.2'
+  gem 'rake'
   gem 'localeapp'
   gem 'handlebars'
   gem 'localeapp-handlebars_i18n'

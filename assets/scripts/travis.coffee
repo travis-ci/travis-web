@@ -1,6 +1,9 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
 
+window.ENV ||= {}
+window.ENV.RAISE_ON_DEPRECATION = true
+
 if window.history.state == undefined
   window.history.state = {}
   oldPushState = window.history.pushState
@@ -28,10 +31,77 @@ Storage = Em.Object.extend
   clear: ->
     @set('storage', {})
 
+window.Travis = Em.Application.extend(Ember.Evented,
+  authStateBinding: 'auth.state'
+  signedIn: (-> @get('authState') == 'signed-in' ).property('authState')
 
-@Travis = Em.Namespace.create Ember.Evented,
+  setup: ->
+    @store = Travis.Store.create(
+      adapter: Travis.RestAdapter.create()
+    )
+    @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
+
+    @slider = new Travis.Slider()
+    @pusher = new Travis.Pusher(Travis.config.pusher_key)
+    @tailing = new Travis.Tailing()
+
+    @set('auth', Travis.Auth.create(app: this, endpoint: Travis.config.api_endpoint))
+
+  reset: ->
+    @store.destroy()
+    @setup()
+
+    @_super.apply(this, arguments);
+
+  lookup: ->
+    @__container__.lookup.apply this, arguments
+
+  storeAfterSignInPath: (path) ->
+    @get('auth').storeAfterSignInPath(path)
+
+  autoSignIn: (path) ->
+    @get('auth').autoSignIn()
+
+  signIn: ->
+    @get('auth').signIn()
+
+  signOut: ->
+    @get('auth').signOut()
+
+  receive: ->
+    @store.receive.apply(@store, arguments)
+
+  toggleSidebar: ->
+    $('body').toggleClass('maximized')
+    # TODO gotta force redraws here :/
+    element = $('<span></span>')
+    $('#top .profile').append(element)
+    Em.run.later (-> element.remove()), 10
+    element = $('<span></span>')
+    $('#repo').append(element)
+    Em.run.later (-> element.remove()), 10
+
+  setLocale: (locale) ->
+    return unless locale
+    I18n.locale = locale
+    Travis.set('locale', locale)
+
+  defaultLocale: 'en'
+
+  ready: ->
+    location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
+    I18n.fallbacks = true
+    @setLocale 'locale', @get('defaultLocale')
+
+  currentDate: ->
+    new Date()
+).create()
+
+Travis.deferReadiness()
+
+$.extend Travis,
   run: ->
-    Travis.run()
+    Travis.advanceReadiness() # bc, remove once merged to master
 
   config:
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
@@ -40,33 +110,12 @@ Storage = Em.Object.extend
 
   CONFIG_KEYS: ['rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala', 'compiler']
 
-  ROUTES:
-    'profile/:login/me':           ['profile', 'user']
-    'profile/:login':              ['profile', 'hooks']
-    'profile':                     ['profile', 'hooks']
-    'stats':                       ['stats', 'show']
-    ':owner/:name/jobs/:id/:line': ['home', 'job']
-    ':owner/:name/jobs/:id':       ['home', 'job']
-    ':owner/:name/builds/:id':     ['home', 'build']
-    ':owner/:name/builds':         ['home', 'builds']
-    ':owner/:name/pull_requests':  ['home', 'pullRequests']
-    ':owner/:name/branches':       ['home', 'branches']
-    ':owner/:name':                ['home', 'current']
-    '':                            ['home', 'index']
-    '#':                           ['home', 'index']
-
   QUEUES: [
-    { name: 'common',  display: 'Common' }
     { name: 'linux',   display: 'Linux' }
     { name: 'mac_osx', display: 'Mac and OSX' }
   ]
 
   INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
-
-  setLocale: (locale) ->
-    return unless locale
-    I18n.locale = locale
-    Travis.set('locale', locale)
 
   storage: (->
     storage = null
@@ -77,7 +126,7 @@ Storage = Em.Object.extend
 
     storage
   )()
-  default_locale: 'en'
+
   sessionStorage: (->
     storage = null
     try
@@ -91,26 +140,25 @@ Storage = Em.Object.extend
     storage
   )()
 
-  run: (attrs) ->
-    location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
-
-    I18n.fallbacks = true
-    Travis.setLocale 'locale', @default_locale
-
-    Ember.run.next this, ->
-      app = Travis.App.create(attrs || {})
-      # TODO: router expects the classes for controllers on main namespace, so
-      #       if we want to keep app at Travis.app, we need to copy that, it would
-      #       be ideal to send a patch to ember and get rid of this
-      $.each Travis, (key, value) ->
-        app[key] = value if value && value.isClass && key != 'constructor'
-
-      @app   = app
-      @store = app.store
-      $ => app.initialize()
-
 setupGoogleAnalytics() if Travis.config.ga_code
 
 require 'ext/i18n'
 require 'travis/ajax'
-require 'app'
+require 'auth'
+require 'controllers'
+require 'helpers'
+require 'models'
+require 'pusher'
+require 'routes'
+require 'slider'
+require 'store'
+require 'tailing'
+require 'templates'
+require 'views'
+
+require 'config/locales'
+require 'data/sponsors'
+
+require 'travis/instrumentation'
+
+Travis.setup()

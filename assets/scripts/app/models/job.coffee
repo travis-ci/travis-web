@@ -1,7 +1,7 @@
 require 'travis/model'
 
 @Travis.Job = Travis.Model.extend Travis.DurationCalculations,
-  repoId:   DS.attr('number', key: 'repository_id')
+  repoId:         DS.attr('number')
   buildId:        DS.attr('number')
   commitId:       DS.attr('number')
   logId:          DS.attr('number')
@@ -11,14 +11,23 @@ require 'travis/model'
   number:         DS.attr('string')
   startedAt:      DS.attr('string')
   finishedAt:     DS.attr('string')
-  allowFailure:   DS.attr('boolean', key: 'allow_failure')
+  allowFailure:   DS.attr('boolean')
 
   repositorySlug: DS.attr('string')
-  repo:   DS.belongsTo('Travis.Repo',     key: 'repository_id')
-  build:  DS.belongsTo('Travis.Build',    key: 'build_id')
-  commit: DS.belongsTo('Travis.Commit',   key: 'commit_id')
+  repo:   DS.belongsTo('Travis.Repo')
+  build:  DS.belongsTo('Travis.Build')
+  commit: DS.belongsTo('Travis.Commit')
+
+  # this is a fake relationship just to get rid
+  # of ember data's bug: https://github.com/emberjs/data/issues/758
+  # TODO: remove when this issue is fixed
+  fakeBuild:  DS.belongsTo('Travis.Build')
+
+  _config: DS.attr('object')
+
   log: ( ->
-    Travis.Artifact.create(job: this)
+    @set('isLogAccessed', true)
+    Travis.Log.create(job: this)
   ).property()
 
   repoSlug: (->
@@ -30,15 +39,17 @@ require 'travis/model'
   ).property('repoSlug', 'repoId')
 
   config: (->
-    Travis.Helpers.compact(@get('data.config'))
-  ).property('data.config')
+    Travis.Helpers.compact(@get('_config'))
+  ).property('_config')
 
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')
 
   clearLog: ->
-    @get('log').clear() if @get('log.isLoaded')
+    # This is needed if we don't want to fetch log just to clear it
+    if @get('isLogAccessed')
+      @get('log').clear()
 
   sponsor: (->
     worker = @get('log.workerName')
@@ -70,17 +81,22 @@ require 'travis/model'
   requeue: ->
     Travis.ajax.post '/requests', job_id: @get('id')
 
-  appendLog: (text) ->
-    if log = @get('log')
-      log.append(text)
+  appendLog: (part) ->
+    @get('log').append part
 
   subscribe: ->
-    if id = @get('id')
-      Travis.app.pusher.subscribe "job-#{id}"
+    return if @get('subscribed')
+    @set('subscribed', true)
+    Travis.pusher.subscribe "job-#{@get('id')}"
+
+  unsubscribe: ->
+    return unless @get('subscribed')
+    @set('subscribed', false)
+    Travis.pusher.unsubscribe "job-#{@get('id')}"
 
   onStateChange: (->
-    if @get('state') == 'finished' && Travis.app
-      Travis.app.pusher.unsubscribe "job-#{@get('id')}"
+    if @get('state') == 'finished' && Travis.pusher
+      Travis.pusher.unsubscribe "job-#{@get('id')}"
   ).observes('state')
 
   isAttributeLoaded: (key) ->
@@ -98,16 +114,16 @@ require 'travis/model'
 @Travis.Job.reopenClass
   queued: (queue) ->
     @find()
-    Travis.app.store.filter this, (job) ->
+    Travis.store.filter this, (job) ->
       queued = ['created', 'queued'].indexOf(job.get('state')) != -1
       # TODO: why queue is sometimes just common instead of build.common?
       queued && (!queue || job.get('queue') == "builds.#{queue}" || job.get('queue') == queue)
 
   running: ->
     @find(state: 'started')
-    Travis.app.store.filter this, (job) ->
+    Travis.store.filter this, (job) ->
       job.get('state') == 'started'
 
   findMany: (ids) ->
-    Travis.app.store.findMany this, ids
+    Travis.store.findMany this, ids
 

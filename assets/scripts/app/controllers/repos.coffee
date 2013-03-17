@@ -3,9 +3,29 @@ require 'travis/limited_array'
 Travis.ReposController = Ember.ArrayController.extend
   defaultTab: 'recent'
   isLoadedBinding: 'content.isLoaded'
+  needs: ['currentUser', 'repo']
+  currentUserBinding: 'controllers.currentUser'
+  selectedRepo: (->
+    # we need to observe also repo.content here, because we use
+    # ObjectProxy in repo controller
+    # TODO: get rid of ObjectProxy there
+    @get('controllers.repo.repo.content') || @get('controllers.repo.repo')
+  ).property('controllers.repo.repo', 'controllers.repo.repo.content')
 
   init: ->
+    @_super.apply this, arguments
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
+
+  recentRepos: (->
+    Travis.Repo.find()
+    Travis.LimitedArray.create
+      content: Em.ArrayProxy.extend(Em.SortableMixin).create(
+        sortProperties: ['sortOrder']
+        content: Travis.Repo.withLastBuild()
+        isLoadedBinding: 'content.isLoaded'
+      )
+      limit: 30
+  ).property()
 
   updateTimes: ->
     if content = @get('content')
@@ -19,18 +39,10 @@ Travis.ReposController = Ember.ArrayController.extend
     this["view#{$.camelize(tab)}"](params)
 
   viewRecent: ->
-    content = Travis.LimitedArray.create
-      content: Em.ArrayProxy.extend(Em.SortableMixin).create(
-        sortProperties: ['sortOrder']
-        content: Travis.Repo.find()
-        isLoadedBinding: 'content.isLoaded'
-      )
-      limit: 30
-    @set('content', content)
-    # @set('content', Travis.Repo.find())
+    @set('content', @get('recentRepos'))
 
   viewOwned: ->
-    @set('content', Travis.Repo.accessibleBy(Travis.app.get('currentUser.login')))
+    @set('content', Travis.Repo.accessibleBy(@get('currentUser.login')))
 
   viewSearch: (params) ->
     @set('content', Travis.Repo.search(params.search))

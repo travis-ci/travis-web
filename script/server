@@ -4,5 +4,5 @@ cd "$(dirname "$0")/.."
 [ $RACK_ENV ] || RACK_ENV=development
 
 cmd="ruby -I lib -S bundle exec ruby -I lib -S puma -p $PORT"
-[[ $RACK_ENV == "development" ]] && exec rerun "$cmd" -p '{lib,public}/**/*'
+# [[ $RACK_ENV == "development" ]] && exec rerun "$cmd" -p '{lib,public}/**/*'
 exec $cmd

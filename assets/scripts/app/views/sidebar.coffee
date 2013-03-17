@@ -4,63 +4,37 @@
 
     DecksView: Em.View.extend
       templateName: "sponsors/decks"
-      controller: Travis.SponsorsController.create
-        perPage: 1
-
-      didInsertElement: ->
-        controller = @get 'controller'
-        unless controller.get('content')
-          Travis.app.get('router.sidebarController').tickables.push(controller)
-          controller.set 'content', Travis.Sponsor.decks()
+      init: ->
         @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:decks')
 
     LinksView: Em.View.extend
       templateName: "sponsors/links"
-      controller: Travis.SponsorsController.create
-        perPage: 6
-
-      didInsertElement: ->
-        controller = @get 'controller'
-        unless controller.get('content')
-          controller.set 'content', Travis.Sponsor.links()
-          Travis.app.get('router.sidebarController').tickables.push(controller)
+      init: ->
         @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:links')
 
     WorkersView: Em.View.extend
       templateName: 'workers/list'
-      controller: Travis.WorkersController.create()
-
-      didInsertElement: ->
-        @set 'controller.content', Travis.Worker.find()
+      init: ->
         @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:workers')
 
     QueuesView: Em.View.extend
       templateName: 'queues/list'
-      controller: Em.ArrayController.create()
-
-      showAll: (event) ->
-        queue = event.context
-        queue.showAll()
-
-      didInsertElement: ->
-        queues = for queue in Travis.QUEUES
-          Travis.LimitedArray.create
-            content: Travis.Job.queued(queue.name), limit: 20
-            id: "queue_#{queue.name}"
-            name: queue.display
-        @set 'controller.content', queues
+      init: ->
         @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:queues')
 
     RunningJobsView: Em.View.extend
       templateName: 'jobs/running'
       elementId: 'running-jobs'
-      controller: Travis.RunningJobsController.create()
+      init: ->
+        @_super.apply this, arguments
+        @set 'controller', @get('controller').container.lookup('controller:runningJobs')
 
       groupsBinding: 'controller.sortedGroups'
       jobsBinding: 'controller'
-
-      didInsertElement: ->
-        @get('controller').set 'content', Travis.Job.running()
 
       GroupView: Em.View.extend
         templateName: 'jobs/running/group'
@@ -74,7 +48,7 @@
 
 
   WorkersView: Travis.View.extend
-    toggleWorkers: (event) ->
+    toggleWorkers: ->
       handle = $(event.target).toggleClass('open')
       if handle.hasClass('open')
         $('#workers li').addClass('open')
@@ -82,10 +56,12 @@
         $('#workers li').removeClass('open')
 
   WorkersListView: Travis.View.extend
-    toggle: (event) ->
-      $(event.target).closest('li').toggleClass('open')
+    toggle: ->
+      this.$().find('> li').toggleClass('open')
 
   WorkersItemView: Travis.View.extend
+    classNameBindings: ['worker.state']
+
     display: (->
       name = (@get('worker.name') || '').replace('travis-', '')
       state = @get('worker.state')
@@ -95,7 +71,6 @@
       else
         "#{name}: #{state}"
     ).property('worker.state')
-
 
   QueueItemView: Travis.View.extend
     tagName: 'li'

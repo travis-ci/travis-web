@@ -1,4 +1,3 @@
-require 'travis/log'
 require 'config/emoij'
 
 @Travis.Helpers =
@@ -40,16 +39,6 @@ require 'config/emoij'
     message = message.split(/\n/)[0]  if options.short
     @_emojize(@_escape(message)).replace /\n/g, '<br/>'
 
-  formatLog: (log, repo, item) ->
-    event = if item.constructor == Travis.Build
-      'showBuild'
-    else
-      'showJob'
-
-    url = Travis.app.get('router').urlForEvent(event, repo, item)
-
-    Travis.Log.filter(log, url)
-
   pathFrom: (url) ->
     (url || '').split('/').pop()
 
@@ -84,7 +73,7 @@ require 'config/emoij'
     string
 
   _nowUtc: ->
-    @_toUtc new Date()
+    @_toUtc Travis.currentDate()
 
   _toUtc: (date) ->
     Date.UTC date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()

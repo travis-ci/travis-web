@@ -17,62 +17,70 @@ pre#log
   border: 1px solid $color-border-log
   @include border-radius(4px)
   overflow-x: scroll
+  counter-reset: line-numbering
 
-  p.cut
-    margin-top: 15px
-    &:hover
-      background-color: transparent
-    &.highlight
-      background-color: transparent
-    a
-      margin: 0
   p
-    padding: 0 15px 0 50px
+    padding: 0 15px 0 55px
     margin: 0
     min-height: 16px
     &:hover
-      background-color: $color-bg-log-highlight
+      background-color: $color-bg-log-hover !important
     &.highlight
       background-color: $color-bg-log-highlight
+      a
+        color: white
     a
-      margin-left: -40px
-      margin-right: 10px
+      // display: inline-block
+      // min-width: 30px
+      margin-left: -33px
       cursor: pointer
+      text-decoration: none
+
+      &::before
+        content: counter(line-numbering)
+        counter-increment: line-numbering
+        padding-right: 1em
+        text-align: right
 
   .fold
     height: 16px
     overflow: hidden
-    background: $color-bg-log-fold inline-image('ui/log.fold.closed.2.png') no-repeat 99.5% 2px
     cursor: pointer
     &.open
       height: auto
-      background-image: inline-image('ui/log.fold.open.2.png')
-    &.show-first-line:not(.open)
-      height: 36px
-      p:not(:first-child):not(:last-child)
-        display: none
+
+    p:first-of-type
+      background: $color-bg-log-fold inline-image('ui/log.fold.open.2.png') no-repeat 8px 3px
+
+    &:not(.open) p:first-of-type
+      visibility: visible
+      height: auto
+      min-height: 16px
+      background-image: inline-image('ui/log.fold.closed.3.png')
+
+    .fold-name
+      position: absolute
+      display: block
+      right: 12px
+      margin-top: 2px
+      padding: 0px 7px 2px 7px
+      line-height: 10px
+      font-size: 10px
+      background-color: #666
+      border-radius: 6px
+      color: #bbb
+
+  .fold-start:not(.fold),
+  .fold-end
+    display: none
 
 #log.loading
   padding: 25px 0 0 10px
 
-#log::-webkit-scrollbar
-  height: 10px
-  width: 10px
+#log-container
+  position: relative
 
-#log::-webkit-scrollbar-button:start:decrement,
-#log::-webkit-scrollbar-button:end:increment
-  display: none
-
-#log::-webkit-scrollbar-track-piece
-  background: #444
-  -webkit-border-radius: 4px
-
-#log::-webkit-scrollbar-thumb:horizontal
-  background: -webkit-gradient(linear, left top, left bottom, from(#85888E), to(#55585E))
-  -webkit-border-radius: 4px
-  width: 25px
-
-#log #tail
+#log-container #tail
   z-index: 99
   position: absolute
   display: block

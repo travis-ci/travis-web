@@ -1,374 +1,287 @@
 require 'travis/location'
+require 'travis/line_number_parser'
 
+Ember.Router.reopen
+  location: (if testMode? then Ember.NoneLocation.create() else Travis.Location.create())
+
+  handleURL: (url) ->
+    url = url.replace(/#.*?$/, '')
+    try
+      @_super(url)
+    catch error
+      @_super('/not-found')
+
+# TODO: don't reopen Ember.Route to add events, there should be
+#       a better way (like "parent" resource for everything inside map)
 Ember.Route.reopen
-  enter: (router) ->
-    @_super(router)
-    _gaq.push(['_trackPageview', @absoluteRoute(router)]) if @get('isLeafRoute') && _gaq?
+  events:
+    afterSignIn: (path) ->
+      @routeTo(path)
 
-defaultRoute = Ember.Route.extend
-  route: '/'
-  index: 1000
+    afterSignOut: ->
+      @routeTo('/')
 
-lineNumberRoute = Ember.Route.extend
-  route: '#L:number'
-  index: 1
-  connectOutlets: (router) ->
-    router.saveLineNumberHash()
-
-  dynamicSegmentPattern: "([0-9]+)"
-
-Travis.Router = Ember.Router.extend
-  location: 'travis'
-  # enableLogging: true
-  enableLogging: false
-  initialState: 'loading'
-
-  showRoot:         Ember.Route.transitionTo('root.home.show')
-  showStats:        Ember.Route.transitionTo('root.stats')
-
-  showRepo:         Ember.Route.transitionTo('root.home.repo.show')
-  showBuilds:       Ember.Route.transitionTo('root.home.repo.builds.index')
-  showBuild:        Ember.Route.transitionTo('root.home.repo.builds.show')
-  showPullRequests: Ember.Route.transitionTo('root.home.repo.pullRequests')
-  showBranches:     Ember.Route.transitionTo('root.home.repo.branches')
-  showEvents:       Ember.Route.transitionTo('root.home.repo.events')
-  showJob:          Ember.Route.transitionTo('root.home.repo.job')
-
-  showProfile:      Ember.Route.transitionTo('root.profile')
-  showAccount:      Ember.Route.transitionTo('root.profile.account')
-  showUserProfile:  Ember.Route.transitionTo('root.profile.account.profile')
-
-  saveLineNumberHash: (path) ->
-    Ember.run.next this, ->
-      path = path || @get('location').getURL()
-      if match = path.match(/#L\d+$/)
-        @set 'repoController.lineNumberHash', match[0]
-
-  reload: ->
-    console.log 'Triggering reload'
-    url = @get('location').getURL()
-    @transitionTo('loading')
-    # Without ember next @route sometimes hit the place where HistoryLocation
-    # does not have any state set up yet, so it's best to defer it a little bit.
-    Ember.run.next this, ->
-      @route(url)
+  routeTo: (path) ->
+    return unless path
+    @router.handleURL(path)
+    @router.location.setURL(path)
 
   signedIn: ->
-    !!Travis.app.get('auth.user')
+    @controllerFor('currentUser').get('content')
 
-  needsAuth: (path) ->
-    path.indexOf('/profile') == 0
-
-  afterSignOut: ->
-    @authorize('/')
-
-  loading: Ember.Route.extend
-    routePath: (router, path) ->
-      router.saveLineNumberHash(path)
-      router.authorize(path)
-      Travis.app.autoSignIn() unless router.signedIn()
+  redirect: ->
+    if @get('needsAuth')
+      @authorize(@router.location.getURL())
+    else
+      @_super.apply this, arguments
+    Travis.autoSignIn() unless @signedIn()
 
   authorize: (path) ->
-    if !@signedIn() && @needsAuth(path)
-      Travis.app.storeAfterSignInPath(path)
-      @transitionTo('root.auth')
+    if !@signedIn()
+      Travis.storeAfterSignInPath(path)
+      @transitionTo('auth')
+
+Travis.Router.reopen
+  transitionTo: ->
+    this.container.lookup('controller:repo').set('lineNumber', null)
+
+    @_super.apply this, arguments
+
+
+Travis.Router.map ->
+  @resource 'index', path: '/', ->
+    @route 'current', path: '/'
+    @resource 'repo', path: '/:owner/:name', ->
+      @route 'index', path: '/'
+      @resource 'build', path: '/builds/:build_id'
+      @resource 'job',   path: '/jobs/:job_id'
+      @resource 'builds', path: '/builds'
+      @resource 'pullRequests', path: '/pull_requests'
+      @resource 'branches', path: '/branches'
+
+  @route 'stats', path: '/stats'
+  @route 'auth', path: '/auth'
+  @route 'notFound', path: '/not-found'
+
+  @resource 'profile', path: '/profile', ->
+    @route 'index', path: '/'
+    @resource 'account', path: '/:login', ->
+      @route 'index', path: '/'
+      @route 'profile', path: '/profile'
+
+Travis.ApplicationRoute = Ember.Route.extend Travis.LineNumberParser,
+  setupController: ->
+    @_super.apply this, arguments
+
+    this.controllerFor('repo').set('lineNumber', @fetchLineNumber())
+
+Travis.IndexCurrentRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'repo'
+    @render 'build', outlet: 'pane', into: 'repo'
+
+  setupController: ->
+    @container.lookup('controller:repo').activate('index')
+
+Travis.AbstractBuildsRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'builds', outlet: 'pane', into: 'repo'
+
+  setupController: ->
+    @container.lookup('controller:repo').activate(@get('contentType'))
+
+Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
+Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
+Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
+
+Travis.BuildRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'build', outlet: 'pane', into: 'repo'
+
+  serialize: (model, params) ->
+    id = if model.get then model.get('id') else model
+
+    { build_id: id }
+
+  setupController: (controller, model) ->
+    model = Travis.Build.find(model) if model && !model.get
+
+    repo = @container.lookup('controller:repo')
+    repo.set('build', model)
+    repo.activate('build')
+
+Travis.JobRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'job', outlet: 'pane', into: 'repo'
+
+  serialize: (model, params) ->
+    id = if model.get then model.get('id') else model
+
+    { job_id: id }
+
+  setupController: (controller, model) ->
+    model = Travis.Job.find(model) if model && !model.get
+
+    repo = @container.lookup('controller:repo')
+    repo.set('job', model)
+    repo.activate('job')
+
+Travis.RepoIndexRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    @container.lookup('controller:repo').activate('current')
+
+  renderTemplate: ->
+    @render 'build', outlet: 'pane', into: 'repo'
+
+Travis.RepoRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'repo'
+
+  setupController: (controller, model) ->
+    # TODO: if repo is just a data hash with id and slug load it
+    #       as incomplete record
+    model = Travis.Repo.find(model.id) if model && !model.get
+    controller.set('repo', model)
+
+  serialize: (repo) ->
+    slug = if repo.get then repo.get('slug') else repo.slug
+    [owner, name] = slug.split('/')
+    { owner: owner, name: name }
+
+  deserialize: (params) ->
+    slug = "#{params.owner}/#{params.name}"
+    content = Ember.Object.create slug: slug, isLoaded: false, isLoading: true
+    proxy = Ember.ObjectProxy.create(content: content)
+
+    repos = Travis.Repo.bySlug(slug)
+
+    observer = ->
+      if repos.get 'isLoaded'
+        repos.removeObserver 'isLoaded', observer
+        proxy.set 'isLoading', false
+
+        if repos.get('length') == 0
+          # isError is also used in DS.Model, but maybe we should use something
+          # more focused like notFound later
+          proxy.set 'isError', true
+        else
+          proxy.set 'content', repos.objectAt(0)
+
+    if repos.length
+      proxy.set('content', repos[0])
     else
-      @transitionTo('root')
-      @route(path)
+      repos.addObserver 'isLoaded', observer
 
-  root: Ember.Route.extend
-    route: '/'
-    loading: Ember.State.extend()
-    afterSignIn: (-> )
+    proxy
 
-    auth: Ember.Route.extend
-      route: '/auth'
-      customRegexp: /^\/?auth($|\/)/
-      connectOutlets: (router) ->
-        router.get('applicationView').connectLayout 'simple'
-        $('body').attr('id', 'auth')
-        router.get('applicationController').connectOutlet('top', 'top')
-        router.get('applicationController').connectOutlet('main', 'signin')
+Travis.IndexRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'home')
 
-      afterSignIn: (router, path) ->
-        router.route(path || '/')
+    @render 'repos',   outlet: 'left'
+    @render 'sidebar', outlet: 'right'
+    @render 'top',     outlet: 'top'
+    @render 'flash',   outlet: 'flash'
 
-    stats: Ember.Route.extend
-      route: '/stats'
-      customRegexp: /^\/?stats($|\/)/
-      connectOutlets: (router) ->
-        router.get('applicationView').connectLayout 'simple'
-        $('body').attr('id', 'stats')
-        router.get('applicationController').connectOutlet 'top', 'top'
-        router.get('applicationController').connectOutlet 'main', 'stats'
+  setupController: (controller)->
+    @container.lookup('controller:repos').activate()
+    @container.lookup('controller:application').connectLayout 'home'
 
-    profile: Ember.Route.extend
-      initialState: 'index'
-      route: '/profile'
+Travis.StatsRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'stats')
 
-      connectOutlets: (router) ->
-        router.get('applicationView').connectLayout 'profile'
-        $('body').attr('id', 'profile')
-        router.get('accountsController').set('content', Travis.Account.find())
-        router.get('applicationController').connectOutlet 'top', 'top'
-        router.get('applicationController').connectOutlet 'left', 'accounts'
-        router.get('applicationController').connectOutlet 'flash', 'flash'
+    @render 'top', outlet: 'top'
+    @render 'stats'
 
-      index: Ember.Route.extend
-        route: '/'
-        connectOutlets: (router) ->
-          router.get('applicationController').connectOutlet 'main', 'profile'
-          router.get('profileController').activate 'hooks'
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('simple')
 
-      account: Ember.Route.extend
-        initialState: 'index'
-        route: '/:login'
+Travis.NotFoundRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'not-found')
 
-        connectOutlets: (router, account) ->
-          if account
-            params = { login: account.get('login') }
-            router.get('profileController').setParams(params)
-          else
-            router.send 'showProfile'
+    @render 'top', outlet: 'top'
+    @render 'not_found'
 
-        deserialize: (router, params) ->
-          controller = router.get('accountsController')
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('simple')
 
-          unless controller.get 'content'
-            controller.set('content', Travis.Account.find())
+Travis.ProfileRoute = Ember.Route.extend
+  needsAuth: true
 
-          account    = controller.findByLogin(params.login)
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('profile')
+    @container.lookup('controller:accounts').set('content', Travis.Account.find())
 
-          if account
-            account
-          else
-            deferred = $.Deferred()
+  renderTemplate: ->
+    $('body').attr('id', 'profile')
 
-            observer = ->
-              if account = controller.findByLogin(params.login)
-                controller.removeObserver 'content.length', observer
-                deferred.resolve account
-            controller.addObserver 'content.length', observer
+    @render 'top', outlet: 'top'
+    @render 'accounts', outlet: 'left'
+    @render 'flash', outlet: 'flash'
+    @render 'profile'
 
-            deferred.promise()
+Travis.ProfileIndexRoute = Ember.Route.extend
+  setupController: ->
+    @container.lookup('controller:profile').activate 'hooks'
 
-        serialize: (router, account) ->
-          if account
-            { login: account.get('login') }
-          else
-            {}
+  renderTemplate: ->
+    @render 'hooks', outlet: 'pane', into: 'profile', controller: 'profile'
 
-        index: Ember.Route.extend
-          route: '/'
-          connectOutlets: (router) ->
-            router.get('profileController').activate 'hooks'
+Travis.AccountRoute = Ember.Route.extend
+  setupController: (controller, account) ->
+    profileController = @container.lookup('controller:profile')
+    profileController.activate 'hooks'
 
-        profile: Ember.Route.extend
-          route: '/profile'
+    if account
+      params = { login: account.get('login') }
+      profileController.setParams(params)
 
-          connectOutlets: (router) ->
-            router.get('profileController').activate 'user'
+  deserialize: (params) ->
+    controller = @container.lookup('controller:accounts')
+    account = controller.findByLogin(params.login)
 
-    home: Ember.Route.extend
-      route: '/'
-      connectOutlets: (router) ->
-          router.get('applicationView').connectLayout 'home'
-          $('body').attr('id', 'home')
-          router.get('applicationController').connectOutlet 'left', 'repos'
-          router.get('applicationController').connectOutlet 'right', 'sidebar'
-          router.get('applicationController').connectOutlet 'top', 'top'
-          router.get('applicationController').connectOutlet 'main', 'repo'
-          router.get('applicationController').connectOutlet 'flash', 'flash'
-          router.get('reposController').activate()
-          router.get('repoController').set('repos', router.get('reposController'))
+    if account
+      account
+    else
+      content = Ember.Object.create(login: params.login)
+      proxy = Ember.ObjectProxy.create(content: content)
 
-      show: Ember.Route.extend
-        route: '/'
-        connectOutlets: (router) ->
-          router.get('repoController').activate('index')
+      observer = ->
+        if account = controller.findByLogin(params.login)
+          controller.removeObserver 'content.length', observer
+          proxy.set('content', account)
+      controller.addObserver 'content.length', observer
 
-        initialState: 'default'
-        default: defaultRoute
-        lineNumber: lineNumberRoute
+      proxy
 
-      showWithLineNumber: Ember.Route.extend
-        route: '/#/L:number'
-        connectOutlets: (router) ->
-          router.get('repoController').activate('index')
+  serialize: (account) ->
+    if account
+      { login: account.get('login') }
+    else
+      {}
 
-      repo: Ember.Route.extend
-        route: '/:owner/:name'
-        dynamicSegmentPattern: "([^/#]+)"
+Travis.AccountIndexRoute = Ember.Route.extend
+  setupController: ->
+    @container.lookup('controller:profile').activate 'hooks'
 
-        connectOutlets: (router, repo) ->
-          if repo && repo.constructor != Travis.Repo
-            repo = Travis.Repo.find(repo.id)
-          router.get('repoController').set 'repo', repo
+  renderTemplate: ->
+    @render 'hooks', outlet: 'pane', into: 'profile'
 
-        deserialize: (router, params) ->
-          slug = "#{params.owner}/#{params.name}"
-          repos = Travis.Repo.bySlug(slug)
-          deferred = $.Deferred()
+Travis.AccountProfileRoute = Ember.Route.extend
+  setupController: ->
+    @container.lookup('controller:profile').activate 'user'
 
-          observer = ->
-            if repos.get 'isLoaded'
-              repos.removeObserver 'isLoaded', observer
-              deferred.resolve repos.objectAt(0)
+  renderTemplate: ->
+    @render 'user', outlet: 'pane', into: 'profile'
 
-          if repos.length
-            deferred.resolve repos[0]
-          else
-            repos.addObserver 'isLoaded', observer
+Travis.AuthRoute = Ember.Route.extend
+  renderTemplate: ->
+    $('body').attr('id', 'auth')
 
-          deferred.promise()
+    @render 'top', outlet: 'top'
+    @render 'auth.signin'
 
-        serialize: (router, repo) ->
-          if typeof repo == 'string'
-            [owner, name] = repo.split '/'
-            { owner: owner, name: name }
-          else if repo && repo.constructor == Travis.Repo
-            { owner: repo.get('owner'), name: repo.get('name') }
-          else if repo && repo.id && repo.slug
-            [owner, name] = repo.slug.split '/'
-            { owner: owner, name: name }
-          else
-            # TODO: it would be nice to handle 404 somehow
-            {}
-
-        show: Ember.Route.extend
-          route: '/'
-          connectOutlets: (router) ->
-            router.get('repoController').activate('current')
-
-          initialState: 'default'
-          default: defaultRoute
-          lineNumber: lineNumberRoute
-
-        builds: Ember.Route.extend
-          route: '/builds'
-
-          index: Ember.Route.extend
-            route: '/'
-            connectOutlets: (router, repo) ->
-              router.get('repoController').activate 'builds'
-
-          show: Ember.Route.extend
-            route: '/:build_id'
-            connectOutlets: (router, build) ->
-              unless build.get
-                # TODO: apparently when I use id in url, it will pass it
-                #       here, why doesn't it use deserialize?
-                build = Travis.Build.find(build)
-              router.get('repoController').set 'build', build
-              router.get('repoController').activate 'build'
-
-            serialize: (router, build) ->
-              if build.get
-                { build_id: build.get('id') }
-              else
-                { build_id: build }
-
-            deserialize: (router, params) ->
-              # Something is wrong here. If I don't use deferred, id is not
-              # initialized and url ends up being /jobs/null
-              # This should not be needed, as id should be immediately set on the
-              # record.
-              # TODO: find out why it happens
-              build = Travis.Build.find params.build_id
-
-              if build.get 'id'
-                build
-              else
-                deferred = $.Deferred()
-
-                observer = ->
-                  if build.get 'id'
-                    build.removeObserver 'id', observer
-                    deferred.resolve build
-
-                build.addObserver 'id', observer
-
-                deferred.promise()
-
-            # TODO: this is not dry, but for some weird
-            #       reason Mixins don't play nice with Ember.Route
-            initialState: 'default'
-            default: defaultRoute
-            lineNumber: lineNumberRoute
-            dynamicSegmentPattern: "([^/#]+)"
-
-            logRedirect: Ember.Route.extend
-              route: '/log.txt'
-              connectOutlets: (router) ->
-                build = router.get('repoController').get 'build'
-
-                observer = ->
-                  if logId = build.get('jobs.firstObject.log.id')
-                    window.location = Travis.Urls.plainTextLog(logId)
-
-                  build.removeObserver('jobs.firstObject.log.id', observer)
-
-                build.addObserver('jobs.firstObject.log.id', observer)
-
-        pullRequests: Ember.Route.extend
-          route: '/pull_requests'
-          connectOutlets: (router, repo) ->
-            router.get('repoController').activate 'pull_requests'
-
-        branches: Ember.Route.extend
-          route: '/branches'
-          connectOutlets: (router, repo) ->
-            router.get('repoController').activate 'branches'
-
-        events: Ember.Route.extend
-          route: '/events'
-          connectOutlets: (router, repo) ->
-            router.get('repoController').activate 'events'
-
-        job: Ember.Route.extend
-          route: '/jobs/:job_id'
-          dynamicSegmentPattern: "([^/#]+)"
-          connectOutlets: (router, job) ->
-            unless job.get
-              # In case I use id
-              job = Travis.Job.find(job)
-            router.get('repoController').set 'job', job
-            router.get('repoController').activate 'job'
-
-          serialize: (router, job) ->
-            if job.get
-              { job_id: job.get('id') }
-            else
-              { job_id: job }
-
-          deserialize: (router, params) ->
-            job = Travis.Job.find params.job_id
-
-            if job.get 'id'
-              job
-            else
-              deferred = $.Deferred()
-
-              observer = ->
-                if job.get 'id'
-                  job.removeObserver 'id', observer
-                  deferred.resolve job
-              job.addObserver 'id', observer
-              deferred.promise()
-
-          initialState: 'default'
-          default: defaultRoute
-          lineNumber: lineNumberRoute
-
-          logRedirect: Ember.Route.extend
-            route: '/log.txt'
-            connectOutlets: (router, job) ->
-              job = router.get('repoController').get 'job'
-
-              observer = ->
-                if logId = job.get('log.id')
-                  window.location = Travis.Urls.plainTextLog(logId)
-
-                job.removeObserver('log.id', observer)
-
-              job.addObserver('log.id', observer)
+  setupController: ->
+    @container.lookup('controller:application').connectLayout('simple')

@@ -1,8 +1,9 @@
 Travis.RunningJobsController = Em.ArrayProxy.extend
   Group: Em.Object.extend
-    repo: (-> @get('jobs.firstObject.repo') ).property('jobs.firstObject.repo')
+    slug: (-> @get('jobs.firstObject.repoSlug') ).property('jobs.firstObject.repoSlug')
 
     init: ->
+      @_super.apply this, arguments
       @set 'jobs', []
 
       @set 'sortedJobs', Em.ArrayProxy.extend(Em.SortableMixin,
@@ -39,7 +40,9 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
   init: ->
     @_super.apply this, arguments
 
-    @addedJobs @get('content') if @get('content')
+    jobs = Travis.Job.running()
+    @set 'content', jobs
+    @addedJobs jobs
 
   contentArrayWillChange: (array, index, removedCount, addedCount) ->
     @_super.apply this, arguments

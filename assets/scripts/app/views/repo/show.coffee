@@ -1,34 +1,14 @@
-@Travis.reopen
+Travis.reopen
   RepoView: Travis.View.extend
     templateName: 'repos/show'
 
-    reposBinding: 'controller.repos'
-    repoBinding:  'controller.repo'
+    reposBinding: 'controllers.repos'
 
-    class: (->
-      'loading' unless @get('repo.isLoaded')
-    ).property('repo.isLoaded')
+    classNameBindings: ['controller.isLoading:loading']
 
     isEmpty: (->
       @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.isLoaded', 'repos.length')
-
-    urlGithub: (->
-      Travis.Urls.githubRepo(@get('repo.slug'))
-    ).property('repo.slug'),
-
-  RepoShowStatsView: Travis.View.extend
-    templateName: 'repos/show/stats'
-    repoBinding:  'parentView.repo'
-    statsBinding: 'repo.stats'
-
-    urlGithubWatchers: (->
-      Travis.Urls.githubWatchers(@get('repo.slug'))
-    ).property('repo.slug'),
-
-    urlGithubNetwork: (->
-      Travis.Urls.githubNetwork(@get('repo.slug'))
-    ).property('repo.slug'),
 
   ReposEmptyView: Travis.View.extend
     template: ''
@@ -81,13 +61,15 @@
     buildBinding: 'controller.build'
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
+    currentUserBinding: 'controller.currentUser'
 
     closeMenu: ->
+      console.log 'closeMenu'
       $('.menu').removeClass('display')
 
-    menu: (event) ->
+    menu: ->
       @popupCloseAll()
-      element = $('#tools .menu').toggleClass('display')
+      $('#tools .menu').toggleClass('display')
       event.stopPropagation()
 
     requeue: ->
@@ -104,7 +86,7 @@
         @closeMenu()
         @get('job').cancel()
 
-    statusImages: (event) ->
+    statusImages: ->
       @set('active', true)
       @closeMenu()
       @popupCloseAll()
@@ -115,7 +97,7 @@
       view.appendTo($('body'))
       event.stopPropagation()
 
-    regenerateKeyPopup: (event) ->
+    regenerateKeyPopup: ->
       if @get('canRegenerateKey')
         @set('active', true)
         @closeMenu()
@@ -134,13 +116,12 @@
 
     regenerateKey: ->
       @popupCloseAll()
-      self = this
 
-      @get('repo').regenerateKey
-        success: ->
-          self.popup('regeneration-success')
+      (@get('repo.content') || @get('repo')).regenerateKey
+        success: =>
+          @popup('regeneration-success')
         error: ->
-          Travis.app.router.flashController.loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
+          Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 
     displayRequeueBuild: (->
       @get('isBuildTab') && @get('build.isFinished')
@@ -208,6 +189,6 @@
     ).property('tab')
 
     hasPermission: (->
-      if permissions = Travis.app.get('currentUser.permissions')
-        permissions.contains @get('repo.id')
-    ).property('Travis.app.currentUser.permissions.length', 'repo.id')
+      if permissions = @get('currentUser.permissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.permissions.length', 'repo.id')

@@ -5,9 +5,9 @@
 <ul class="jobs">
   {{#each job in sortedJobs}}
     <li class="job">
-      <a {{action showJob job.repoData job target="Travis.app.router" href=true}}>
+      {{#linkTo "job" job.repoData job}}
         #{{job.number}}
-      </a>
+      {{/linkTo}}
     </li>
   {{/each}}
 </ul>

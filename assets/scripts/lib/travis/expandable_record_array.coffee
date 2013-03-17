@@ -33,10 +33,9 @@ Travis.ExpandableRecordArray = DS.RecordArray.extend
         @pushObject object
 
   pushObject: (record) ->
-    ids      = @get 'content'
-    id       = record.get 'id'
-    clientId = record.get 'clientId'
+    content   = @get 'content'
+    id        = record.get 'id'
+    clientId  = record.get 'clientId'
+    reference = @get('store').referenceForClientId(clientId)
 
-    return if ids.contains clientId
-
-    ids.pushObject clientId
+    @addReference reference

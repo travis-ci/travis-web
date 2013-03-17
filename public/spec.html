@@ -6,12 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travis CI - Free Hosted Continuous Integration Platform for the Open Source Community</title>
     <link rel="icon" type="image/png" href="/favicon.ico">
+
+    <script>
+      if (!Function.prototype.bind) {
+        Function.prototype.bind = function (oThis) {
+          if (typeof this !== "function") {
+            // closest thing possible to the ECMAScript 5 internal IsCallable function
+            throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+          }
+
+          var aArgs = Array.prototype.slice.call(arguments, 1),
+              fToBind = this,
+              fNOP = function () {},
+              fBound = function () {
+                return fToBind.apply(this instanceof fNOP && oThis
+                                       ? this
+                                       : oThis,
+                                     aArgs.concat(Array.prototype.slice.call(arguments)));
+              };
+
+          fNOP.prototype = this.prototype;
+          fBound.prototype = new fNOP();
+
+          return fBound;
+        };
+      }
+
+      window.history.state = {};
+
+      var oldPushState = window.history.pushState;
+
+      window.history.pushState = function(state, title, href) {
+        window.history.state = state;
+        return oldPushState.apply(this, arguments);
+      };
+    </script>
     <link rel="stylesheet" href="/styles/app.css">
     <link rel="stylesheet" href="/styles/jasmine.css">
     <link rel="stylesheet" href="/styles/jasmine-ext.css">
     <script src="/scripts/app.js"></script>
     <script>
+      window.testMode = true;
       minispade.require('travis')
+      Travis.advanceReadiness()
     </script>
 
     <script src="/scripts/specs.js"></script>
@@ -28,8 +65,5 @@
       jasmine.getEnv().addReporter(console_reporter);
       jasmine.getEnv().execute();
     </script>
-
-    <div id="application">
-    </div>
   </body>
 </html>

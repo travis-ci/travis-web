@@ -1,4 +1,4 @@
-{{#if builds.isLoaded}}
+{{#if content.isLoaded}}
   <table id="builds" class="list">
     <thead>
       <tr>
@@ -21,14 +21,14 @@
     </thead>
 
     <tbody>
-      {{#each build in builds}}
+      {{#each build in controller}}
         {{#view Travis.BuildsItemView contextBinding="build"}}
           <td class="number">
             <span class="status"></span>
             {{#if id}}
-              <a {{action showBuild repo this href=true}}>
+              {{#linkTo "build" repo this}}
                 {{number}}
-              </a>
+              {{/linkTo}}
             {{/if}}
           </td>
           <td class="message">
@@ -42,7 +42,7 @@
           <td class="committer">
             {{commit.committerName}}
           </td>
-          {{#if commit.pullRequestNumber}}
+          {{#if view.isPullRequestsList}}
             <td>
               <a {{bindAttr href="view.urlGithubPullRequest"}}>
                 #{{commit.pullRequestNumber}}
@@ -59,9 +59,11 @@
       {{/each}}
     </tbody>
   </table>
-  <p>
-    {{view view.ShowMoreButton}}
-  </p>
+  {{#if displayShowMoreButton}}
+    <p>
+      {{view view.ShowMoreButton}}
+    </p>
+  {{/if}}
 {{else}}
   <div class="loading"><span>Loading</span></div>
 {{/if}}

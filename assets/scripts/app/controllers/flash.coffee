@@ -1,9 +1,12 @@
 Travis.FlashController = Ember.ArrayController.extend
-  broadcastBinding: 'Travis.app.currentUser.broadcasts'
+  needs: ['currentUser']
+  currentUserBinding: 'controllers.currentUser'
+
+  broadcastBinding: 'currentUser.broadcasts'
 
   init: ->
-    @set('flashes', Ember.A())
     @_super.apply this, arguments
+    @set('flashes', Ember.A())
 
   content: (->
     @get('unseenBroadcasts').concat(@get('flashes'))
@@ -14,8 +17,8 @@ Travis.FlashController = Ember.ArrayController.extend
   ).property('broadcasts.isLoaded', 'broadcasts.length')
 
   broadcasts: (->
-    if Travis.app.get('currentUser') then Travis.Broadcast.find() else Ember.A()
-  ).property('Travis.app.currentUser')
+    if @get('currentUser') then Travis.Broadcast.find() else Ember.A()
+  ).property('currentUser')
 
   loadFlashes: (msgs) ->
     for msg in msgs

@@ -11,6 +11,4 @@
     @schedule()
 
   schedule: ->
-    Ember.run.later((=> @tick()), @get('interval') || Travis.app.TICK_INTERVAL)
-
-
+    Ember.run.later((=> @tick()), @get('interval') || Travis.TICK_INTERVAL)

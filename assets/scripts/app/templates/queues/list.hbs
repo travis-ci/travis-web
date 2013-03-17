@@ -6,12 +6,12 @@
       {{#each job in queue}}
         {{#view Travis.QueueItemView jobBinding="job"}}
           {{#if job.repoSlug}}
-            <a {{action showJob job.repoData job target="Travis.app.router" href=true}}>
+            {{#linkTo "job" job.repoData job}}
               <span class="slug">
                 {{job.repoSlug}}
               </span>
               #{{job.number}}
-            </a>
+            {{/linkTo}}
           {{/if}}
         {{/view}}
       {{else}}
@@ -20,7 +20,7 @@
     </ul>
 
     {{#if queue.isMore}}
-      <a {{action showAll this.queue target="view"}} class="show-more-jobs">
+      <a {{action showAll queue}} class="show-more-jobs">
         {{queue.leftLength}} more jobs - show all
       </a>
     {{/if}}

@@ -1,6 +1,6 @@
 jQuery.support.cors = true
 
-@Travis.ajax = Em.Object.create
+Travis.ajax = Em.Object.create
   DEFAULT_OPTIONS:
     accepts:
       json: 'application/vnd.travis-ci.2+json'
@@ -33,14 +33,14 @@ jQuery.support.cors = true
 
     success = options.success || (->)
     options.success = (data) =>
-      Travis.app.router.flashController.loadFlashes(data.flash) if Travis.app?.router && data.flash
-      delete data.flash
+      Travis.lookup('controller:flash').loadFlashes(data.flash) if data?.flash
+      delete data.flash if data?
       success.apply(this, arguments)
 
     error = options.error || (->)
     options.error = (data) =>
-      Travis.app.router.flashController.pushObject(data.flash) if data.flash
-      delete data.flash
+      Travis.lookup('controller:flash').pushObject(data.flash) if data?.flash
+      delete data.flash if data?
       error.apply(this, arguments)
 
     $.ajax($.extend(options, Travis.ajax.DEFAULT_OPTIONS))

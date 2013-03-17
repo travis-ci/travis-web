@@ -1,27 +1,29 @@
-<div id="repo" {{bindAttr class="view.class"}}>
+<div id="repo" {{bindAttr class="view.className"}}>
   {{#if view.isEmpty}}
     {{view Travis.ReposEmptyView}}
   {{else}}
-    {{#if view.repo.isLoaded}}
-      {{#with view.repo}}
-        <h3>
-          <a {{bindAttr href="view.urlGithub"}}>{{slug}}</a>
-        </h3>
-
-        <p class="description">{{description}}</p>
-
-        {{view Travis.RepoShowStatsView}}
-        {{view Travis.RepoShowTabsView}}
-        {{view Travis.RepoShowToolsView}}
-      {{/with}}
-
+    {{#if isError}}
+      <span class="not-found">The repository at {{slug}} was not found.</span>
     {{else}}
-      <span>Loading</span>
-    {{/if}}
+      {{#if repo.isLoaded}}
+        {{#with repo}}
+          <h3>
+            <a {{bindAttr href="controller.urlGithub"}}>{{slug}}</a>
+          </h3>
 
-    <div class="tab">
-      {{outlet pane}}
-    </div>
+          <p class="description">{{description}}</p>
+
+          {{view Travis.RepoShowTabsView}}
+          {{view Travis.RepoShowToolsView}}
+        {{/with}}
+
+        <div class="tab">
+          {{outlet pane}}
+        </div>
+      {{else}}
+        <span>Loading</span>
+      {{/if}}
+    {{/if}}
   {{/if}}
 </div>
 

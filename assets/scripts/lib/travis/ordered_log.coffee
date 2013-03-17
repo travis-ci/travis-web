@@ -5,7 +5,7 @@ FOLDS = [
   Em.Object.create(name: 'bundle',  startPattern: /^\$ bundle install/, endPattern: /^(<\/span>)?\$/)
 ]
 
-@Travis.Log = Em.Object.extend
+@Travis.OrderedLog = Em.Object.extend
   init: ->
     @set 'folds', []
     @set 'line', 1

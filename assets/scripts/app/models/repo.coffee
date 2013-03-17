@@ -9,6 +9,7 @@ require 'travis/model'
   lastBuildState:      DS.attr('string')
   lastBuildStartedAt:  DS.attr('string')
   lastBuildFinishedAt: DS.attr('string')
+  _lastBuildDuration:  DS.attr('number')
 
   lastBuild: DS.belongsTo('Travis.Build')
 
@@ -21,17 +22,14 @@ require 'travis/model'
   ).property('lastBuildId', 'lastBuildNumber')
 
   allBuilds: (->
-    allBuilds = DS.RecordArray.create
-      type: Travis.Build
-      content: Ember.A([])
-      store: @get('store')
-    @get('store').registerRecordArray(allBuilds, Travis.Build);
-    allBuilds
+    Travis.Build.find()
   ).property()
 
   builds: (->
     id = @get('id')
     builds = Travis.Build.byRepoId id, event_type: 'push'
+
+    # TODO: move to controller
     array  = Travis.ExpandableRecordArray.create
       type: Travis.Build
       content: Ember.A([])
@@ -40,7 +38,7 @@ require 'travis/model'
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> build.get('repo.id') == id && !build.get('isPullRequest') )
+    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('eventType') && build.get('repo.id') == id && !build.get('isPullRequest') )
 
     array
   ).property()
@@ -56,7 +54,7 @@ require 'travis/model'
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> @get('repositoryId') == id && build.get('isPullRequest') )
+    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('eventType') && build.get('repo.id') == id && build.get('isPullRequest') )
 
     array
   ).property()
@@ -78,10 +76,10 @@ require 'travis/model'
   ).property('slug')
 
   lastBuildDuration: (->
-    duration = @get('data.last_build_duration')
+    duration = @get('_lastBuildDuration')
     duration = Travis.Helpers.durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
     duration
-  ).property('data.last_build_duration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
+  ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
   sortOrder: (->
     # cuz sortAscending seems buggy when set to false
@@ -117,6 +115,9 @@ require 'travis/model'
 
   search: (query) ->
     @find(search: query, orderBy: 'name')
+
+  withLastBuild: ->
+    @filter( (repo) -> repo.get('lastBuildId') )
 
   bySlug: (slug) ->
     repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)

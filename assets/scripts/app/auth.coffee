@@ -13,6 +13,8 @@
     Travis.setLocale Travis.default_locale
     @set('state', 'signed-out')
     @set('user', undefined)
+    Travis.__container__.lookup('controller:currentUser').set('content', null)
+    Travis.__container__.lookup('router:main').send('afterSignOut')
 
   signIn: ->
     @set('state', 'signing-in')
@@ -31,7 +33,7 @@
     if user && token && @validateUser(user)
       { user: user, token: token }
     else
-      console.log('dropping user, no token') unless token?
+      # console.log('dropping user, no token') if token?
       storage.removeItem('travis.user')
       storage.removeItem('travis.token')
       null
@@ -43,25 +45,30 @@
     if user[field]
       true
     else
-      console.log("discarding user data, lacks #{field}")
+      # console.log("discarding user data, lacks #{field}")
       false
 
   setData: (data) ->
     @storeData(data, Travis.sessionStorage)
     @storeData(data, Travis.storage) unless @userDataFrom(Travis.storage)
-    @set('user', @loadUser(data.user))
+    user = @loadUser(data.user)
+    # TODO: we should not use __container__ directly, how to do it better?
+    #        A good answer seems to do auth in context of controller.
+    Travis.__container__.lookup('controller:currentUser').set('content', user)
+
     @set('state', 'signed-in')
     Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
-    @get('app.router').send('afterSignIn', @readAfterSignInPath())
+    Travis.__container__.lookup('router:main').send('afterSignIn', @readAfterSignInPath())
 
   storeData: (data, storage) ->
     storage.setItem('travis.token', data.token)
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
-    @app.store.load(Travis.User, user)
-    user = @app.store.find(Travis.User, user.id)
+    store = @app.store
+    store.load(Travis.User, user.id, user)
+    user = store.find(Travis.User, user.id)
     user.get('permissions')
     user
 

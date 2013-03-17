@@ -72,7 +72,7 @@ fr:
       my_repositories: Mes dépôts
       recent: Récent
       search: Chercher
-      sponsers: Sponsors
+      sponsors: Sponsors
       sponsors_link: Voir tous nos extraordinaire sponsors &rarr;
     mobile:
       author: Auteur
@@ -97,6 +97,7 @@ fr:
       sign_out: Déconnexion
       signing_in: 
       stats: Statistiques
+      status: 
   locales:
     ca: 
     de: Deutsch

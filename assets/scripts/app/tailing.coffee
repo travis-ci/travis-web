@@ -12,7 +12,7 @@ $.extend Travis.Tailing.prototype,
     @positionButton()
     Ember.run.later(@run.bind(this), @options.timeout) if @active()
 
-  toggle: (event) ->
+  toggle: ->
     if @active() then @stop() else @start()
 
   active: ->

@@ -1,25 +1,40 @@
 require 'helpers'
 require 'travis/ticker'
 
-Travis.reopen
-  Controller: Em.Controller.extend()
+Travis.Controller    = Em.Controller.extend()
+Travis.TopController = Em.Controller.extend
+  needs: ['currentUser']
+  userBinding: 'controllers.currentUser'
 
-  TopController: Em.Controller.extend
-    userBinding: 'Travis.app.currentUser'
+Travis.ApplicationController = Em.Controller.extend
+  templateName: 'layouts/home'
 
-  ApplicationController: Em.Controller.extend()
-  MainController: Em.Controller.extend()
-  StatsLayoutController: Em.Controller.extend()
-  ProfileLayoutController: Em.Controller.extend()
-  AuthLayoutController: Em.Controller.extend()
+  connectLayout: (name) ->
+    name = "layouts/#{name}"
+    if @get('templateName') != name
+      @set('templateName', name)
+
+Travis.MainController = Em.Controller.extend()
+Travis.StatsLayoutController = Em.Controller.extend()
+Travis.ProfileLayoutController = Em.Controller.extend()
+Travis.AuthLayoutController = Em.Controller.extend()
+
+Travis.AccountProfileController = Em.Controller.extend
+  needs: ['currentUser']
+  userBinding: 'controllers.currentUser'
 
 require 'controllers/accounts'
+require 'controllers/build'
 require 'controllers/builds'
 require 'controllers/flash'
 require 'controllers/home'
+require 'controllers/job'
 require 'controllers/profile'
 require 'controllers/repos'
 require 'controllers/repo'
 require 'controllers/running_jobs'
 require 'controllers/sidebar'
 require 'controllers/stats'
+require 'controllers/current_user'
+require 'controllers/account_index'
+
