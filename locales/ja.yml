@@ -20,6 +20,7 @@ ja:
       sponsored_by: このテストは以下のスポンサーの協力で行いました。
     name: ビルド
     pr: 
+    pull_request: 
     started_at: 開始時刻
     state: 
   datetime:

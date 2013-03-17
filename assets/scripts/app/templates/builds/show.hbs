@@ -22,9 +22,14 @@
       <div class="right">
         <dt>{{t builds.commit}}</dt>
         <dd class="commit"><a href="{{unbound urlGithubCommit}}">{{formatCommit build.commit}}</a></dd>
-        {{#if commit.compareUrl}}
-          <dt>{{t builds.compare}}</dt>
-          <dd class="compare"><a href="{{unbound commit.compareUrl}}">{{pathFrom build.commit.compareUrl}}</a></dd>
+        {{#if build.isPullRequest}}
+          <dt>{{t builds.pullRequest}}</dt>
+          <dd class="pull_request"><a href="{{unbound commit.compareUrl}}">#{{build.commit.pullRequestNumber}} {{build.commit.pullRequestTitle}}</a></dd>
+        {{else}}
+          {{#if commit.compareUrl}}
+            <dt>{{t builds.compare}}</dt>
+            <dd class="compare"><a href="{{unbound commit.compareUrl}}">{{pathFrom build.commit.compareUrl}}</a></dd>
+          {{/if}}
         {{/if}}
         {{#if commit.authorName}}
           <dt>{{t builds.author}}</dt>

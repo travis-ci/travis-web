@@ -10,7 +10,7 @@ require 'travis/model'
   authorEmail:       DS.attr('string')
   committerName:     DS.attr('string')
   committerEmail:    DS.attr('string')
-  pullRequestName:   DS.attr('string')
+  pullRequestTitle:  DS.attr('string')
   pullRequestNumber: DS.attr('number')
 
 
