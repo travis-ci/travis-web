@@ -1,5 +1,5 @@
 # Contributing to Travis-CI
-Issues for any Travis-CI should be submitted to https://github.com/travis-ci/travis-ci/issues
+Issues for any Travis-CI repo should be submitted to https://github.com/travis-ci/travis-ci/issues
 
 ## Security Issues
 ***Any security issues should be submitted directly to [security@travis-ci.org](mailto:security@travis-ci.org)***
