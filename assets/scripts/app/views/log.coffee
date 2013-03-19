@@ -154,8 +154,8 @@ Travis.OrderedLogEngineMixin = Ember.Mixin.create
 
     this.$('#log')[0].appendChild fragment
     if cut
-      url = Travis.Urls.plainTextLog(@get('log.id'))
-      this.$("#log").append $("<p class=\"cut\">Log was too long to display. Download the <a href=\"#{url}\">the raw version</a> to get the full log.</p>")
+      url = Travis.Urls.plainTextLog(@get('log.job.id'))
+      this.$("#log").append $("<div class=\"cut\">Log was too long to display. Download the <a href=\"#{url}\">the raw version</a> to get the full log.</div>")
 
 Travis.reopen
   LogView: Travis.View.extend

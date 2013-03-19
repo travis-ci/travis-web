@@ -42,7 +42,7 @@
 
 @displaysLog = (lines) ->
   log = lines.join()
-  expect($('#log').text().trim()).toEqual log
+  expect($('#log p').text().trim()).toEqual log
 
 @listsRepos = (items) ->
   listsItems('repo', items)
