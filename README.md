@@ -1,5 +1,5 @@
 ## Travis CI ember web client
-
+[![Build Status](https://travis-ci.org/travis-ci/travis-web.png)](https://travis-ci.org/travis-ci/travis-web)
 ### Running the app
 
 In order to run the app you need to install dependencies with:
