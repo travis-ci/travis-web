@@ -22,7 +22,7 @@ unless window.TravisApplication
       @_super.apply(this, arguments);
 
     lookup: ->
-      @__container__.lookup.apply this, arguments
+      @__container__.lookup.apply @__container__, arguments
 
     storeAfterSignInPath: (path) ->
       @get('auth').storeAfterSignInPath(path)
