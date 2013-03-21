@@ -1,5 +1,5 @@
-createChunk = (number, content) ->
-  Em.Object.create(number: number, content: content)
+createChunk = (number, content, options) ->
+  Em.Object.create(number: number, content: content, final: options?.final)
 
 describe 'Travis.ChunkBuffer', ->
   it 'waits for parts to be in order before revealing them', ->
@@ -91,3 +91,23 @@ describe 'Travis.ChunkBuffer', ->
   it 'sets next to start if start is given at init', ->
     buffer = Travis.ChunkBuffer.create(content: [], start: 5)
     expect(buffer.get('next')).toEqual(5)
+
+  it 'runs finalize after getting final element', ->
+    finalizeRuns = 0
+    buffer = Travis.ChunkBuffer.extend({
+      finalize: ->
+        @_super.apply this, arguments
+        finalizeRuns += 1
+    }).create(content: [])
+
+    buffer.pushObject createChunk(1, "foo")
+    buffer.pushObject createChunk(2, "bar")
+    buffer.pushObject createChunk(3, "baz")
+
+    expect(finalizeRuns).toEqual(0)
+
+    buffer.pushObject createChunk(4, "qux", final: true)
+
+    expect(buffer.get('length')).toEqual(4)
+
+    expect(finalizeRuns).toEqual(1)

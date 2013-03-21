@@ -81,7 +81,7 @@ Travis.Store = DS.Store.extend
       console.log 'store: received job:log event', data if Log.DEBUG
       data = data.job
       job  = @find(Travis.Job, data.id)
-      job.appendLog(number: parseInt(data.number), content: data._log)
+      job.appendLog(number: parseInt(data.number), content: data._log, final: data.final)
     else if data[type.singularName()]
       @_loadOne(this, type, data)
     else if data[type.pluralName()]
