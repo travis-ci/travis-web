@@ -10,6 +10,9 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
         sortProperties: ['number']
       ).create(content: @get('jobs'))
 
+    willDestroy: ->
+      @get('sortedJobs').destroy()
+
     add: (job) ->
       @get('jobs').pushObject(job) unless @get('jobs').contains job
       @attach()
@@ -97,3 +100,4 @@ Travis.RunningJobsController = Em.ArrayProxy.extend
   removeGroup: (group) ->
     @get('groups').removeObject group
     delete @groupsBySlug[group.get('slug')]
+    group.destroy()
