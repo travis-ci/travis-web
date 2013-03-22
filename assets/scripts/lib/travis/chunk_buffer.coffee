@@ -2,7 +2,7 @@ get = Ember.get
 
 Travis.ChunkBuffer = Em.ArrayProxy.extend
   timeout: 5000
-  checkTimeoutFrequency: 1000
+  checkTimeoutFrequency: 5000
   start: 1
   next: 1
 
@@ -48,7 +48,6 @@ Travis.ChunkBuffer = Em.ArrayProxy.extend
       console.log 'Added log parts with numbers:', addedObjects.map( (element) -> get(element, 'number') )+'', 'current', @get('next')
       queue.pushObjects addedObjects
       @check()
-      @inserted()
 
   check: ->
     queue = @get('queue')
@@ -60,11 +59,13 @@ Travis.ChunkBuffer = Em.ArrayProxy.extend
     while queue.get('firstObject.number') <= next
       element = queue.shiftObject()
       if get(element, 'number') == next
+        @finalize() if get(element, 'final')
         toPush.pushObject get(element, 'content')
         next += 1
 
     if toPush.length
       arrangedContent.pushObjects toPush
+      @inserted()
 
     @set('next', next)
 
@@ -72,14 +73,17 @@ Travis.ChunkBuffer = Em.ArrayProxy.extend
     now = @now()
     @lastInsert = now
 
+  finalize: ->
+    clearTimeout @get('runLaterId')
+
   checkTimeout: ->
     now = @now()
     if now - @lastInsert > @get('timeout')
       @giveUpOnMissingParts()
-    @set 'runLaterId', Ember.run.later(this, @checkTimeout, @get('checkTimeoutFrequency'))
+    @set 'runLaterId', setTimeout((=> @checkTimeout()), @get('checkTimeoutFrequency'))
 
   willDestroy: ->
-    Ember.run.cancel @get('runLaterId')
+    @finalize()
     @_super.apply this, arguments
 
   now: ->

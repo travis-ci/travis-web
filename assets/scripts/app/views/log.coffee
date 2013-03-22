@@ -11,7 +11,9 @@ Travis.reopen
 
     didInsertElement: ->
       job = @get('job')
-      job.subscribe() if job && !job.get('isFinished')
+      if job && !job.get('isFinished')
+        job.get('log').fetch()
+        job.subscribe()
 
     willDestroyElement: ->
       job = @get('job')

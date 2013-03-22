@@ -6,6 +6,7 @@ FOLDS = [
 ]
 
 @Travis.OrderedLog = Em.Object.extend
+  linesLimit: 5000
   init: ->
     @set 'folds', []
     @set 'line', 1
@@ -17,7 +18,7 @@ FOLDS = [
 
   append: (lines) ->
     return unless lines
-    return if @get('lineNumber') > 5000
+    return if @get('lineNumber') > @get('linesLimit')
 
     log   = @join lines
     log   = @escape log
@@ -88,7 +89,7 @@ FOLDS = [
         if currentFold
           @set 'foldContinuation', true
 
-        if @get('lineNumber') + index >= 5000
+        if @get('lineNumber') + index >= @get('linesLimit')
           result.pushObject logWasCut: true
           break
 

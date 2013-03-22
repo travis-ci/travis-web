@@ -8,7 +8,6 @@ require 'travis/chunk_buffer'
 
   init: ->
     @setParts()
-    @fetch()
 
   setParts: ->
     @set 'parts', Ember.ArrayProxy.create(content: [])
@@ -35,8 +34,7 @@ require 'travis/chunk_buffer'
 
   loadText: (text) ->
     console.log 'log model: load text' if Log.DEBUG
-    number = -1
-    @append(number: 1, content: text)
+    @append(number: 1, content: text, final: true)
     @set('isLoaded', true)
 
 Travis.Log.Request = Em.Object.extend

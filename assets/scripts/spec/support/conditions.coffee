@@ -11,4 +11,5 @@
 @jobsRendered    = notEmpty('#jobs .number')
 @queuesRendered  = notEmpty('#queue_linux li')
 @workersRendered = notEmpty('.worker')
-
+@logRendered     = notEmpty('#log p')
+@appRendered     = -> $('.ember-view.application').length
