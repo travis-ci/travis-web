@@ -33,11 +33,11 @@ Travis.reopen
         for worker in content.toArray()
           host = worker.get('host')
           unless groups[host]
-            groups[host] = Em.ArrayProxy.create(Em.SortableMixin,
+            groups[host] = Em.ArrayProxy.extend(Em.SortableMixin,
               content: [],
               sortProperties: ['nameForSort']
-            )
-          groups[host].addObject(worker)
+            ).create()
+          groups[host].pushObject(worker)
 
         $.values(groups)
     ).property('length')
