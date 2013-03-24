@@ -1,18 +1,20 @@
 require 'travis/model'
 
 @Travis.Build = Travis.Model.extend Travis.DurationCalculations,
-  eventType:       DS.attr('string')
-  repoId:          DS.attr('number')
-  commitId:        DS.attr('number')
+  eventType:        DS.attr('string')
+  repoId:           DS.attr('number')
+  commitId:         DS.attr('number')
 
-  state:           DS.attr('string')
-  number:          DS.attr('number')
-  branch:          DS.attr('string')
-  message:         DS.attr('string')
-  _duration:       DS.attr('number')
-  _config:         DS.attr('object')
-  startedAt:       DS.attr('string')
-  finishedAt:      DS.attr('string')
+  state:            DS.attr('string')
+  number:           DS.attr('number')
+  branch:           DS.attr('string')
+  message:          DS.attr('string')
+  _duration:        DS.attr('number')
+  _config:          DS.attr('object')
+  startedAt:        DS.attr('string')
+  finishedAt:       DS.attr('string')
+  pullRequest:      DS.attr('boolean')
+  pullRequestTitle: DS.attr('string')
 
   repo:   DS.belongsTo('Travis.Repo')
   commit: DS.belongsTo('Travis.Commit')

@@ -20,6 +20,7 @@ es:
       sponsored_by: Esta serie de tests han sido ejecutados en una caja de Proceso patrocinada por
     name: Build
     pr: 
+    pull_request: 
     started_at: Iniciado
     state: 
   datetime:

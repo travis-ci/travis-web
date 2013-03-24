@@ -20,6 +20,7 @@ fr:
       sponsored_by: Cette série de tests a été exécutée sur une machine sponsorisée par
     name: Version
     pr: 
+    pull_request: 
     started_at: Commencé
     state: 
   datetime:

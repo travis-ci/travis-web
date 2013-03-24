@@ -25,9 +25,14 @@
         <div class="right">
           <dt>{{t builds.commit}}</dt>
           <dd class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit build.commit}}</a></dd>
-          {{#if commit.compareUrl}}
-            <dt>{{t builds.compare}}</dt>
-            <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom build.commit.compareUrl}}</a></dd>
+          {{#if build.pullRequest}}
+            <dt>{{t builds.pullRequest}}</dt>
+            <dd class="pull_request"><a {{bindAttr href="build.commit.compareUrl"}}>#{{build.commit.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
+          {{else}}
+            {{#if commit.compareUrl}}
+              <dt>{{t builds.compare}}</dt>
+              <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom build.commit.compareUrl}}</a></dd>
+            {{/if}}
           {{/if}}
           {{#if commit.authorName}}
             <dt>{{t builds.author}}</dt>
