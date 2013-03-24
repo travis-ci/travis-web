@@ -20,6 +20,7 @@ ru:
       sponsored_by: Эта серия тестов была запущена на машине, спонсируемой
     name: Билд
     pr: PR
+    pull_request: 
     started_at: Начало
     state: состояние
   datetime:

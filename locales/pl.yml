@@ -20,6 +20,7 @@ pl:
       sponsored_by: Te testy zostały uruchomione na maszynie sponsorowanej przez
     name: Build
     pr: 
+    pull_request: 
     started_at: Rozpoczęto
     state: status
   datetime:

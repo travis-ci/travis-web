@@ -20,6 +20,7 @@ pt-BR:
       sponsored_by: Esta série de testes foi executada em uma caixa de processos patrocinada por
     name: Build
     pr: 
+    pull_request: 
     started_at: Iniciou em
     state: 
   datetime:

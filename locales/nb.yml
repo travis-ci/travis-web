@@ -20,6 +20,7 @@ nb:
       sponsored_by: Denne testen ble kjørt på en maskin sponset av
     name: Jobb
     pr: 
+    pull_request: 
     started_at: Startet
     state: 
   datetime:
