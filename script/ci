@@ -10,6 +10,7 @@ elif [ "$TEST_SUITE" == "browser" ]; then
   curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
   gem install selenium-webdriver
   bundle exec rackup -s puma -p 5000 -D
-  sleep 3
+  sleep 5
+  curl -v http://localhost:4000/spec.html
   ruby script/saucelabs.rb
 fi
