@@ -15,6 +15,7 @@ require 'travis/model'
   finishedAt:       DS.attr('string')
   pullRequest:      DS.attr('boolean')
   pullRequestTitle: DS.attr('string')
+  pullRequestNumber: DS.attr('number')
 
   repo:   DS.belongsTo('Travis.Repo')
   commit: DS.belongsTo('Travis.Commit')
