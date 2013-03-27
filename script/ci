@@ -6,4 +6,10 @@ elif [ "$TEST_SUITE" == "ember" ]; then
   bundle exec rackup -s puma -p 5000 -D
   sleep 3
   ./run_jasmine.coffee http://localhost:5000/spec.html
+elif [ "$TEST_SUITE" == "browser" ]; then
+  curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
+  gem install selenium-webdriver
+  bundle exec rackup -s puma -p 5000 -D
+  sleep 3
+  ruby script/saucelabs.rb
 fi

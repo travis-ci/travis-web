@@ -11,9 +11,13 @@ env:
     - "ARTIFACTS_S3_BUCKET=travis-web-production"
     - secure: "RFuCOppyjWHC4XWKtQlgS4zO4B6KVxytdX8+G5jRY3XM+OEGte8VDD88gZLM\nKDpkqMFDbNJAVTsh1kMANCTct2ONi30RTxuJWLtRyK7RE5zCcaGbAkTNZgXo\nOR5OWLEPJZbNfbh17H6J7izTy6yiLR+CsVP1wMgeVusP0eoDhCA="
     - secure: "duqMXPALumXB3e2j/kM2uCaCGwgZsRrU0GCDY+3Zk6a+PK+s0mE9BftcXdxm\n6u87ld2PvCBO0inpe5YeS9LOZsT+OFS4jj+GGTsRI6rmGz+kok0N+ATLTdcj\nu15zhLhUUlhoKW0DZURrDv/iTiC/FKvJ0u5Rft0XbjfTY+0go/M="
+    - secure: "sW8X/OxQQnCfSWfo5uho8os/4eV8Y3QWOx5LdhqcmOxb4KLlQkndRNNqz+DF\nKynSgnSpty2uvol6611J9RDPEVn6cZw7EFQj/EO7NRVQC8uD+8LtT/2C2J8L\nc/bf7sQqpAkDq9MOEub/A6R4jIk043lGQ4IyWAQmGlETMQ2Q/K0="
+    - secure: "XCGOrMQHDR59KARYeN2GaAkDQKwq2nW9okEFMaKEH1AuUFFcU4hHAsunNeXe\nwSHu4Dpo/CioI2EKQpxL8nwMUPsx3HaY/2W8ef1YPvhU1GuSyiPDW0va8sV7\nBmZf1b26ktrzqaYDxyJjwe1EKrzfZx0LPV0MNU6wSWdHILthPY8="
   matrix:
     - "TEST_SUITE=spec"
     - "TEST_SUITE=ember"
+    - "TEST_SUITE=browser BROWSER='firefox::Windows 2012'"
+    - "TEST_SUITE=browser BROWSER='chrome::Windows 2008'"
 script: "script/ci"
 
 after_script:
