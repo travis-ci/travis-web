@@ -16,7 +16,7 @@ driver = Selenium::WebDriver.for(
   :url => "http://#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}@localhost:4445/wd/hub",
   :desired_capabilities => caps)
 
-driver.navigate.to "http://localhost:4000/spec.html"
+driver.navigate.to "http://localhost:5000/spec.html"
 begin
   status = driver.execute_script('return consoleReporter.status;')
   sleep 1
