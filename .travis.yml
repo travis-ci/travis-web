@@ -14,10 +14,10 @@ env:
     - secure: "sW8X/OxQQnCfSWfo5uho8os/4eV8Y3QWOx5LdhqcmOxb4KLlQkndRNNqz+DF\nKynSgnSpty2uvol6611J9RDPEVn6cZw7EFQj/EO7NRVQC8uD+8LtT/2C2J8L\nc/bf7sQqpAkDq9MOEub/A6R4jIk043lGQ4IyWAQmGlETMQ2Q/K0="
     - secure: "XCGOrMQHDR59KARYeN2GaAkDQKwq2nW9okEFMaKEH1AuUFFcU4hHAsunNeXe\nwSHu4Dpo/CioI2EKQpxL8nwMUPsx3HaY/2W8ef1YPvhU1GuSyiPDW0va8sV7\nBmZf1b26ktrzqaYDxyJjwe1EKrzfZx0LPV0MNU6wSWdHILthPY8="
   matrix:
-    - "TEST_SUITE=spec"
-    - "TEST_SUITE=ember"
-    - "TEST_SUITE=browser BROWSER='firefox:19:Windows 2012'"
-    - "TEST_SUITE=browser BROWSER='chrome::Windows 2008'"
+    - "TEST_SUITE=ruby"
+    - "TEST_SUITE=phantomjs"
+    - "TEST_SUITE=saucelabs BROWSER='firefox:19:Windows 2012'"
+    - "TEST_SUITE=saucelabs BROWSER='chrome::Windows 2008'"
 script: "script/ci"
 
 after_script:
