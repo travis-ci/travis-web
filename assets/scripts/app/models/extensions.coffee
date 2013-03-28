@@ -7,5 +7,6 @@ Travis.DurationCalculations = Ember.Mixin.create
   ).property('_duration', 'finishedAt', 'startedAt')
 
   updateTimes: ->
-    @notifyPropertyChange '_duration'
-    @notifyPropertyChange 'finished_at'
+    if @get('stateManager.currentState.path') != 'rootState.loaded.reloading'
+      @notifyPropertyChange '_duration'
+      @notifyPropertyChange 'finished_at'
