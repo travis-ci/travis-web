@@ -16,7 +16,7 @@ env:
   matrix:
     - "TEST_SUITE=spec"
     - "TEST_SUITE=ember"
-    - "TEST_SUITE=browser BROWSER='firefox::Windows 2012'"
+    - "TEST_SUITE=browser BROWSER='firefox:19:Windows 2012'"
     - "TEST_SUITE=browser BROWSER='chrome::Windows 2008'"
 script: "script/ci"
 
