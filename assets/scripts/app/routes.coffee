@@ -1,6 +1,25 @@
 require 'travis/location'
 require 'travis/line_number_parser'
 
+Travis.DontSetupModelForControllerMixin = Ember.Mixin.create
+  # I've override setup to *not* set controller's model
+  # this can be remove when this patch will be merged https://github.com/emberjs/ember.js/pull/2044
+  # this will allow us to override setting up model for a controller
+  setup: (context) ->
+    @redirected = false
+    @_checkingRedirect = true
+
+    @redirect(context)
+
+    @_checkingRedirect = false
+    if @redirected
+      return false
+
+    controller = @controllerFor(@routeName, context)
+
+    @setupController(controller, context)
+    @renderTemplate(controller, context);
+
 Ember.Router.reopen
   location: (if testMode? then Ember.NoneLocation.create() else Travis.Location.create())
 
@@ -75,7 +94,7 @@ Travis.ApplicationRoute = Ember.Route.extend Travis.LineNumberParser,
 
     this.controllerFor('repo').set('lineNumber', @fetchLineNumber())
 
-Travis.IndexCurrentRoute = Ember.Route.extend
+Travis.IndexCurrentRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   renderTemplate: ->
     @render 'repo'
     @render 'build', outlet: 'pane', into: 'repo'
@@ -83,7 +102,7 @@ Travis.IndexCurrentRoute = Ember.Route.extend
   setupController: ->
     @container.lookup('controller:repo').activate('index')
 
-Travis.AbstractBuildsRoute = Ember.Route.extend
+Travis.AbstractBuildsRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   renderTemplate: ->
     @render 'builds', outlet: 'pane', into: 'repo'
 
@@ -94,7 +113,7 @@ Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
 Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
 Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
 
-Travis.BuildRoute = Ember.Route.extend
+Travis.BuildRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   renderTemplate: ->
     @render 'build', outlet: 'pane', into: 'repo'
 
@@ -110,7 +129,7 @@ Travis.BuildRoute = Ember.Route.extend
     repo.set('build', model)
     repo.activate('build')
 
-Travis.JobRoute = Ember.Route.extend
+Travis.JobRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   renderTemplate: ->
     @render 'job', outlet: 'pane', into: 'repo'
 
@@ -126,14 +145,14 @@ Travis.JobRoute = Ember.Route.extend
     repo.set('job', model)
     repo.activate('job')
 
-Travis.RepoIndexRoute = Ember.Route.extend
+Travis.RepoIndexRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   setupController: (controller, model) ->
     @container.lookup('controller:repo').activate('current')
 
   renderTemplate: ->
     @render 'build', outlet: 'pane', into: 'repo'
 
-Travis.RepoRoute = Ember.Route.extend
+Travis.RepoRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   renderTemplate: ->
     @render 'repo'
 

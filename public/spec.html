@@ -60,9 +60,9 @@
       //  if(key.match(/_spec$/))
       //    minispade.require(key);
 
-      var console_reporter = new jasmine.ConsoleReporter();
+      var consoleReporter = new jasmine.ConsoleReporter();
       jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
-      jasmine.getEnv().addReporter(console_reporter);
+      jasmine.getEnv().addReporter(consoleReporter);
       jasmine.getEnv().execute();
     </script>
   </body>

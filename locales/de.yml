@@ -20,6 +20,7 @@ de:
       sponsored_by: Dieser Testablauf lief auf einem Arbeiter-Rechner gesponsert von
     name: 
     pr: 
+    pull_request: 
     started_at: Läuft
     state: Status
   datetime:

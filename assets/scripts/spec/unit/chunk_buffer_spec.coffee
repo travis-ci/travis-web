@@ -27,7 +27,7 @@ describe 'Travis.ChunkBuffer', ->
 
     expect(buffer.get('length')).toEqual(1)
 
-    waits 40
+    waits 100
     runs ->
       expect(buffer.get('length')).toEqual(2)
       expect(buffer.toArray()).toEqual(['foo', 'baz'])
