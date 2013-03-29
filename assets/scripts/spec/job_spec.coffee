@@ -51,22 +51,20 @@ describe 'too long log', ->
       responseTime: 0
       responseText: '1\n2\n3\n4\n5\n6\n7\n8\n9\n10'
 
-    Travis.OrderedLog.reopen
-      linesLimit: 5
+    Log.LIMIT = 5
 
     app 'travis-ci/travis-core/jobs/2'
     waitFor logRendered
 
   afterEach ->
-    Travis.OrderedLog.reopen
-      linesLimit: 5000
+    Log.LIMIT = 10000
 
   it 'is cut after given limit', ->
     displaysLog [
       '12345'
     ]
 
-    expect( $('#log .cut').text() ).toEqual 'Log was too long to display. Download the the raw version to get the full log.'
-    expect( $('#log .cut a').attr('href') ).toEqual '/jobs/2/log.txt?deansi=true'
+    expect( $('#log-container .warning').text() ).toMatch /This log is too long to be displayed/
+    expect( $('#log-container .warning a').attr('href') ).toEqual '/jobs/2/log.txt?deansi=true'
 
 
