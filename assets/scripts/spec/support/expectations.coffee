@@ -41,7 +41,7 @@
   expect(element.text()).toEqual data.message
 
 @displaysLog = (lines) ->
-  log = lines.join()
+  log = lines.join('')
   expect($('#log p').text().trim()).toEqual log
 
 @listsRepos = (items) ->

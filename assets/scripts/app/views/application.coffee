@@ -7,7 +7,7 @@ Travis.reopen
       @rerender()
     ).observes('templateName')
 
-    click: ->
+    click: (event) ->
       # TODO: this solves the case of closing menus and popups,
       #       but I would like to rewrite it later, not sure how
       #       yet, but this does not seem optimal

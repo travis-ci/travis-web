@@ -3,7 +3,7 @@ describe 'on the "job" state', ->
     $.mockjax
       url: '/jobs/1/log?cors_hax=true'
       responseTime: 0
-      responseText: 'log 1'
+      responseText: "First line\ncontent:travis_fold:start:install\r$ Install something\nInstalling something\ncontent:travis_fold:end:install\r$ End"
 
 
     app 'travis-ci/travis-core/jobs/1'
@@ -41,8 +41,21 @@ describe 'on the "job" state', ->
         job:     { href: '/travis-ci/travis-core/jobs/1', active: true }
 
       displaysLog [
-        'log 1'
+        'First line',
+        '$ Install something',
+        'Installing something',
+        '$ End'
       ]
+
+  it 'allows to expand folds', ->
+    waits 100
+    runs ->
+      expect($('#fold-start-install').hasClass('open')).toBeFalsy()
+      $('#fold-start-install').click()
+      waits 20
+      runs ->
+        expect($('#fold-start-install').hasClass('open')).toBeTruthy()
+
 
 describe 'too long log', ->
   beforeEach ->
