@@ -1,10 +1,6 @@
 language: ruby
 rvm:
   - 1.9.3
-before_script:
-  - "gem install travis-artifacts"
-  - "bundle exec rakep"
-  - "phantomjs --version"
 
 env:
   global:
@@ -19,6 +15,10 @@ env:
     - "TEST_SUITE=saucelabs BROWSER='chrome::Windows 2008'"
 script: "script/ci"
 
+before_script:
+  - "test $TEST_SUITE = \"ruby\" && gem install travis-artifacts"
+  - "bundle exec rakep"
+  - "phantomjs --version"
 after_script:
   - "bundle exec rakep"
   - "test $TEST_SUITE = \"ruby\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public/scripts:scripts --path public/styles:styles"
