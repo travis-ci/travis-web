@@ -20,7 +20,6 @@ before_script:
   - "bundle exec rakep"
   - "phantomjs --version"
 after_script:
-  - "bundle exec rakep"
   - "test $TEST_SUITE = \"ruby\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public/scripts:scripts --path public/styles:styles"
 
 notifications:
