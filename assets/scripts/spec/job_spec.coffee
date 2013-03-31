@@ -3,7 +3,7 @@ describe 'on the "job" state', ->
     $.mockjax
       url: '/jobs/1/log?cors_hax=true'
       responseTime: 0
-      responseText: 'log 1'
+      responseText: "First line\ncontent:travis_fold:start:install\r$ Install something\nInstalling something\ncontent:travis_fold:end:install\r$ End"
 
 
     app 'travis-ci/travis-core/jobs/1'
@@ -41,8 +41,21 @@ describe 'on the "job" state', ->
         job:     { href: '/travis-ci/travis-core/jobs/1', active: true }
 
       displaysLog [
-        'log 1'
+        'First line',
+        '$ Install something',
+        'Installing something',
+        '$ End'
       ]
+
+  it 'allows to expand folds', ->
+    waits 100
+    runs ->
+      expect($('#fold-start-install').hasClass('open')).toBeFalsy()
+      $('#fold-start-install').click()
+      waits 20
+      runs ->
+        expect($('#fold-start-install').hasClass('open')).toBeTruthy()
+
 
 describe 'too long log', ->
   beforeEach ->
@@ -51,22 +64,20 @@ describe 'too long log', ->
       responseTime: 0
       responseText: '1\n2\n3\n4\n5\n6\n7\n8\n9\n10'
 
-    Travis.OrderedLog.reopen
-      linesLimit: 5
+    Log.LIMIT = 5
 
     app 'travis-ci/travis-core/jobs/2'
     waitFor logRendered
 
   afterEach ->
-    Travis.OrderedLog.reopen
-      linesLimit: 5000
+    Log.LIMIT = 10000
 
   it 'is cut after given limit', ->
     displaysLog [
       '12345'
     ]
 
-    expect( $('#log .cut').text() ).toEqual 'Log was too long to display. Download the the raw version to get the full log.'
-    expect( $('#log .cut a').attr('href') ).toEqual '/jobs/2/log.txt?deansi=true'
+    expect( $('#log-container .warning').text() ).toMatch /This log is too long to be displayed/
+    expect( $('#log-container .warning a').attr('href') ).toEqual '/jobs/2/log.txt?deansi=true'
 
 

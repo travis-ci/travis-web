@@ -83,7 +83,7 @@ Travis.reopen
       $('#log').on 'mouseenter', 'a', ->
         $(@).attr('href', '#L' + ($("#log p:visible").index(@parentNode) + 1))
 
-    click: ->
+    click: (event) ->
       if (href = $(event.target).attr('href')) && matches = href?.match(/#L(\d+)$/)
         @lineNumberClicked(matches[1])
         event.stopPropagation()
