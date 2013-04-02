@@ -64,7 +64,7 @@ Travis.Log.Request = Em.Object.extend
     endpoint = Travis.config.api_endpoint
     staging = if endpoint.match(/-staging/) then '-staging' else ''
     host = endpoint.replace(/^https?:\/\//, '').split('.').slice(-2).join('.')
-    "https://s3.amazonaws.com/archive#{staging}.#{host}#{path}/jobs/#{@id}/log.txt"
+    "https://s3.amazonaws.com/archive#{staging}.#{host}/jobs/#{@get('id')}/log.txt"
 
   isJson: (xhr, body) ->
     # Firefox can't see the Content-Type header on the xhr response due to the wrong
