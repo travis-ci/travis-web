@@ -129,7 +129,7 @@ Travis.reopen
 
     canRequeueBuild: (->
       @get('displayRequeueBuild') && @get('hasPermission')
-    ).property('displayRequireBuild', 'hasPermissions')
+    ).property('displayRequireBuild', 'hasPermission')
 
     displayRequeueJob: (->
       @get('isJobTab') && @get('job.isFinished')
@@ -137,7 +137,7 @@ Travis.reopen
 
     canRequeueJob: (->
       @get('displayRequeueJob') && @get('hasPermission')
-    ).property('displayRequeueJob', 'hasPermissions')
+    ).property('displayRequeueJob', 'hasPermission')
 
     showDownloadLog: (->
       @get('jobIdForLog')
