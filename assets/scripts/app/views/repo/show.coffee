@@ -66,7 +66,7 @@ Travis.reopen
     closeMenu: ->
       $('.menu').removeClass('display')
 
-    menu: (event) ->
+    menu: ->
       @popupCloseAll()
       $('#tools .menu').toggleClass('display')
       event.stopPropagation()
