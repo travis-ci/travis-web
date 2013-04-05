@@ -1,6 +1,6 @@
 require 'travis/model'
 
-@Travis.Branch = Travis.Model.extend Travis.Helpers,
+@Travis.Branch = Travis.Model.extend
   repoId:       DS.attr('number', key: 'repository_id')
   commitId:     DS.attr('number')
   state:        DS.attr('string')

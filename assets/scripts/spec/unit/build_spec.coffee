@@ -30,3 +30,17 @@ describe 'Travis.Build', ->
       waits 50
       runs ->
         expect( record.get('incomplete') ).toBeFalsy()
+
+  describe 'configKeys', ->
+    it 'takes into account all the jobs when getting config keys', ->
+      buildConfig = { rvm: ['1.9.3', '2.0.0'] }
+      store.load Travis.Build, { id: '1', job_ids: ['1', '2', '3'], config: buildConfig }, { id: '1' }
+
+      store.load Travis.Job, { id: '1', config: { rvm: '1.9.3', env: 'FOO=foo'       } }, { id: '1' }
+      store.load Travis.Job, { id: '2', config: { rvm: '2.0.0', gemfile: 'Gemfile.1' } }, { id: '2' }
+      store.load Travis.Job, { id: '3', config: { rvm: '1.9.3', jdk: 'OpenJDK'       } }, { id: '3' }
+
+      build = store.find(Travis.Build, '1')
+
+      expect( build.get('rawConfigKeys') ).toEqual( ['rvm', 'env', 'gemfile', 'jdk' ] )
+      expect( build.get('configKeys') ).toEqual( [ 'Job', 'Duration', 'Finished', 'Rvm', 'Env', 'Gemfile', 'Jdk' ] )
