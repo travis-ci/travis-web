@@ -8,6 +8,7 @@
       @activate('jobs')
 
     activate: (name) ->
+      return if @get('activeTab') == name
       @set('activeTab', name)
       @connectOutlet 'pane', @["#{name.capitalize()}View"].create(controller: @get('controller'))
 

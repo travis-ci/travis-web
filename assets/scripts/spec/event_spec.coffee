@@ -121,7 +121,10 @@ describe 'events', ->
   describe 'an event adding a worker', ->
     beforeEach ->
       app ''
-      waitFor workersRendered
+      waitFor sidebarTabsRendered
+      runs ->
+        $('#right #tab_workers a').trigger('click')
+        waitFor workersRendered
 
     it 'adds a worker to the workers list', ->
       payload =
@@ -155,7 +158,10 @@ describe 'events', ->
   describe 'an event updating a worker', ->
     beforeEach ->
       app '/travis-ci/travis-core'
-      waitFor workersRendered
+      waitFor sidebarTabsRendered
+      runs ->
+        $('#right #tab_workers a').trigger('click')
+        waitFor workersRendered
 
     it 'does not update repository if it\'s already in the store', ->
       payload =

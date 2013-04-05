@@ -12,3 +12,4 @@
 @queuesRendered  = notEmpty('#queue_linux li')
 @workersRendered = notEmpty('.worker')
 
+@sidebarTabsRendered = notEmpty('#right #tab_workers a')
