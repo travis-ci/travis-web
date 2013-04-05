@@ -64,10 +64,9 @@ Travis.reopen
     currentUserBinding: 'controller.currentUser'
 
     closeMenu: ->
-      console.log 'closeMenu'
       $('.menu').removeClass('display')
 
-    menu: ->
+    menu: (event) ->
       @popupCloseAll()
       $('#tools .menu').toggleClass('display')
       event.stopPropagation()

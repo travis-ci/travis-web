@@ -1,12 +1,51 @@
 @import "_mixins/all"
 
 #right
-  #queues
-    margin-top: 0
+  .tabs
+    margin-top: 28px
+    height: 25px
+    border-bottom-color: $color-border-light
+
+    li
+      display: inline-block
+      height: 24px
+      margin-right: 5px
+      background-color: $color-bg-right
+      border: 1px solid $color-bg-right
+      border-bottom-color: $color-border-light
+      white-space: nowrap
+      cursor: pointer
+      @include border-top-radius(4px)
+      font-size: 10px
+
+      &:hover
+        background-color: $color-bg-tab-hover
+        border-color: $color-border-light
+        border-bottom-color: $color-bg-tab-active
+
+    .active
+      background-color: $color-bg-tab-active
+      border-color: $color-border-light
+      border-bottom-color: $color-bg-tab-active
+
+    h5
+      margin: 0
+      font-size: $font-size-small
+      font-weight: normal
+      line-height: 26px
+
+      a
+        display: block
+        padding: 0 10px
+
+  .pane
+    position: relative
 
   #toggle-workers
+    position: absolute
+    top: -30px
+    right: 5px
     display: inline-block
-    float: right
     width: 10px
     height: 10px
     cursor: pointer
@@ -16,6 +55,9 @@
 
   #workers li ul
     display: none
+
+  #queues
+    margin-top: 0
 
   #workers li,
   #queues ul li

@@ -13,3 +13,5 @@
 @workersRendered = notEmpty('.worker')
 @logRendered     = notEmpty('#log p')
 @appRendered     = -> $('.ember-view.application').length
+
+@sidebarTabsRendered = notEmpty('#right #tab_workers a')
