@@ -1,20 +1,4 @@
 @Travis.reopen
-  WorkersView: Em.View.extend
-    templateName: 'workers/list'
-    init: ->
-      @_super.apply this, arguments
-      @set 'controller', @get('controller').container.lookup('controller:workers')
-
-  JobsView: Em.View.extend
-    templateName: 'jobs/running'
-    elementId: 'running-jobs'
-    init: ->
-      @_super.apply this, arguments
-      @set 'controller', @get('controller').container.lookup('controller:runningJobs')
-
-    groupsBinding: 'controller.sortedGroups'
-    jobsBinding: 'controller'
-
   SidebarView: Travis.View.extend
     templateName: 'layouts/sidebar'
 
@@ -24,9 +8,10 @@
       @activate('jobs')
 
     activate: (name) ->
+      console.log
       return if @get('activeTab') == name
       @set('activeTab', name)
-      @connectOutlet 'pane', Travis["#{name.capitalize()}View"].create(controller: @get('controller'))
+      @connectOutlet 'pane', Travis.SidebarView["#{name.capitalize()}View"].create(controller: @get('controller'))
 
     classQueues: (->
       'active' if @get('activeTab') == 'queues'
@@ -96,3 +81,20 @@
 
   QueueItemView: Travis.View.extend
     tagName: 'li'
+
+Travis.SidebarView.reopenClass
+  WorkersView: Em.View.extend
+    templateName: 'workers/list'
+    init: ->
+      @_super.apply this, arguments
+      @set 'controller', @get('controller').container.lookup('controller:workers')
+
+  JobsView: Em.View.extend
+    templateName: 'jobs/running'
+    elementId: 'running-jobs'
+    init: ->
+      @_super.apply this, arguments
+      @set 'controller', @get('controller').container.lookup('controller:runningJobs')
+
+    groupsBinding: 'controller.sortedGroups'
+    jobsBinding: 'controller'
