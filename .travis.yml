@@ -20,7 +20,7 @@ before_script:
   - "bundle exec rakep"
   - "phantomjs --version"
 after_script:
-  - "test $TEST_SUITE = \"ruby\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public/scripts:scripts --path public/styles:styles || true"
+  - "test $TEST_SUITE = \"ruby\" && test $TRAVIS_PULL_REQUEST = \"false\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public/scripts:scripts --path public/styles:styles || true"
 
 notifications:
   irc: "irc.freenode.org#travis"
