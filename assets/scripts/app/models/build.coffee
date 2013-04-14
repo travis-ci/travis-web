@@ -45,12 +45,21 @@ require 'travis/model'
     @get('jobs').filter (data) -> data.get('allowFailure')
   ).property('jobs.@each.allowFailure')
 
+  rawConfigKeys: (->
+    keys = Travis.Helpers.configKeys(@get('config'))
+
+    @get('jobs').forEach (job) ->
+      Travis.Helpers.configKeys(job.get('config')).forEach (key) ->
+        keys.pushObject key unless keys.contains key
+
+    keys
+  ).property('config', 'jobs.@each.config')
+
   configKeys: (->
-    return [] unless config = @get('config')
-    keys = $.intersect($.keys(config), Travis.CONFIG_KEYS)
+    keys = @get('rawConfigKeys')
     headers = (I18n.t(key) for key in ['build.job', 'build.duration', 'build.finished_at'])
     $.map(headers.concat(keys), (key) -> return $.camelize(key))
-  ).property('config')
+  ).property('rawConfigKeys.length')
 
   canCancel: (->
     @get('state') == 'created' # TODO

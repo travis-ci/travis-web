@@ -2,6 +2,29 @@
   SidebarView: Travis.View.extend
     templateName: 'layouts/sidebar'
 
+    didInsertElement: ->
+      @_super.apply this, arguments
+
+      @activate('jobs')
+
+    activate: (name) ->
+      console.log
+      return if @get('activeTab') == name
+      @set('activeTab', name)
+      @connectOutlet 'pane', Travis.SidebarView["#{name.capitalize()}View"].create(controller: @get('controller'))
+
+    classQueues: (->
+      'active' if @get('activeTab') == 'queues'
+    ).property('activeTab')
+
+    classWorkers: (->
+      'active' if @get('activeTab') == 'workers'
+    ).property('activeTab')
+
+    classJobs: (->
+      'active' if @get('activeTab') == 'jobs'
+    ).property('activeTab')
+
     DecksView: Em.View.extend
       templateName: "sponsors/decks"
       init: ->
@@ -14,27 +37,11 @@
         @_super.apply this, arguments
         @set 'controller', @get('controller').container.lookup('controller:links')
 
-    WorkersView: Em.View.extend
-      templateName: 'workers/list'
-      init: ->
-        @_super.apply this, arguments
-        @set 'controller', @get('controller').container.lookup('controller:workers')
-
     QueuesView: Em.View.extend
       templateName: 'queues/list'
       init: ->
         @_super.apply this, arguments
         @set 'controller', @get('controller').container.lookup('controller:queues')
-
-    RunningJobsView: Em.View.extend
-      templateName: 'jobs/running'
-      elementId: 'running-jobs'
-      init: ->
-        @_super.apply this, arguments
-        @set 'controller', @get('controller').container.lookup('controller:runningJobs')
-
-      groupsBinding: 'controller.sortedGroups'
-      jobsBinding: 'controller'
 
       GroupView: Em.View.extend
         templateName: 'jobs/running/group'
@@ -74,3 +81,20 @@
 
   QueueItemView: Travis.View.extend
     tagName: 'li'
+
+Travis.SidebarView.reopenClass
+  WorkersView: Em.View.extend
+    templateName: 'workers/list'
+    init: ->
+      @_super.apply this, arguments
+      @set 'controller', @get('controller').container.lookup('controller:workers')
+
+  JobsView: Em.View.extend
+    templateName: 'jobs/running'
+    elementId: 'running-jobs'
+    init: ->
+      @_super.apply this, arguments
+      @set 'controller', @get('controller').container.lookup('controller:runningJobs')
+
+    groupsBinding: 'controller.sortedGroups'
+    jobsBinding: 'controller'

@@ -61,14 +61,14 @@ require 'travis/model'
   ).property('log.workerName')
 
   configValues: (->
-    config      = @get('config')
-    buildConfig = @get('build.config')
-    if config && buildConfig
-      keys = $.intersect($.keys(buildConfig), Travis.CONFIG_KEYS)
+    config = @get('config')
+    keys   = @get('build.rawConfigKeys')
+
+    if config && keys
       keys.map (key) -> config[key]
     else
       []
-  ).property('config')
+  ).property('config', 'build.rawConfigKeys.length')
 
   canCancel: (->
     @get('state') == 'created' || @get('state') == 'queued' # TODO

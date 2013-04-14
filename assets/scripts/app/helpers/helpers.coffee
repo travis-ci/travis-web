@@ -91,3 +91,6 @@ require 'config/emoij'
   _escape: (text) ->
     text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace />/g, '&gt;'
 
+  configKeys: (config) ->
+    return [] unless config
+    $.intersect($.keys(config), Travis.CONFIG_KEYS)
