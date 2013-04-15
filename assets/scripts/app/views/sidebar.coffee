@@ -43,17 +43,6 @@
         @_super.apply this, arguments
         @set 'controller', @get('controller').container.lookup('controller:queues')
 
-      GroupView: Em.View.extend
-        templateName: 'jobs/running/group'
-        tagName: 'li'
-        contextBinding: 'group'
-        expanded: false
-        classNameBindings: ['expanded']
-        classNames: ['group']
-        toggle: ->
-          @toggleProperty('expanded')
-
-
   WorkersView: Travis.View.extend
     toggleWorkers: ->
       handle = $(event.target).toggleClass('open')
@@ -98,3 +87,13 @@ Travis.SidebarView.reopenClass
 
     groupsBinding: 'controller.sortedGroups'
     jobsBinding: 'controller'
+
+    GroupView: Em.View.extend
+      templateName: 'jobs/running/group'
+      tagName: 'li'
+      contextBinding: 'group'
+      expanded: false
+      classNameBindings: ['expanded']
+      classNames: ['group']
+      toggle: ->
+        @toggleProperty('expanded')
