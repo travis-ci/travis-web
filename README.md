@@ -13,8 +13,8 @@ use foreman:
 
 Now you can open [localhost:5000](http://localhost:5000)
 
-By default it uses official API at `https://api.travis-ci.org`, but you
-can set your own enpoint using:
+By default it uses the official API at `https://api.travis-ci.org`, but you
+can customize the API server URL using:
 
 
     API_ENDPOINT="http://localhost:300/" bundle exec foreman start
