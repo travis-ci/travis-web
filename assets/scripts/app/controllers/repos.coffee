@@ -1,7 +1,7 @@
 require 'travis/limited_array'
 
 Travis.ReposController = Ember.ArrayController.extend
-  defaultTab: 'recent'
+  defaultTab: 'owned'
   isLoadedBinding: 'content.isLoaded'
   needs: ['currentUser', 'repo']
   currentUserBinding: 'controllers.currentUser'
