@@ -5,7 +5,7 @@
     didInsertElement: ->
       @_super.apply this, arguments
 
-      @activate('jobs')
+      #@activate('jobs')
 
     activate: (name) ->
       console.log
