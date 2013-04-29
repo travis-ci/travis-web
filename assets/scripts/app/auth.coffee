@@ -13,10 +13,10 @@
     Travis.setLocale Travis.default_locale
     @set('state', 'signed-out')
     @set('user', undefined)
-    user = Travis.__container__.lookup('controller:currentUser').get('content')
-    if user.get('stateManager.currentPath') == 'rootState.loaded.updated.uncommitted'
-      user.send('rollback')
-    user.unloadRecord()
+    if user = Travis.__container__.lookup('controller:currentUser').get('content')
+      if user.get('stateManager.currentPath') == 'rootState.loaded.updated.uncommitted'
+        user.send('rollback')
+      user.unloadRecord()
     Travis.__container__.lookup('controller:currentUser').set('content', null)
     Travis.__container__.lookup('router:main').send('afterSignOut')
 
