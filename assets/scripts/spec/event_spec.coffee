@@ -71,38 +71,38 @@ describe 'events', ->
     beforeEach ->
       app 'travis-ci/travis-core'
       waitFor jobsRendered, 'jobs should be rendered'
-      runs ->
-        waitFor queuesRendered, 'queues should be rendered'
+      #runs ->
+      #  waitFor queuesRendered, 'queues should be rendered'
 
-    it 'adds a job to the jobs queue', ->
-      payload =
-        job:
-          id: 12
-          repository_id: 1
-          number: '1.4'
-          queue: 'builds.linux'
+    #it 'adds a job to the jobs queue', ->
+    #  payload =
+    #    job:
+    #      id: 12
+    #      repository_id: 1
+    #      number: '1.4'
+    #      queue: 'builds.linux'
 
-      $.mockjax
-        url: '/jobs/12'
-        responseTime: 0
-        responseText: payload
+    #  $.mockjax
+    #    url: '/jobs/12'
+    #    responseTime: 0
+    #    responseText: payload
 
-      Em.run ->
-        Travis.receive 'job:started',
-          job:
-            id: 12
-            repository_id: 1
-            repository_slug: 'travis-ci/travis-core'
-            number: '1.4'
-            queue: 'builds.linux'
-            state: 'created'
+    #  Em.run ->
+    #    Travis.receive 'job:started',
+    #      job:
+    #        id: 12
+    #        repository_id: 1
+    #        repository_slug: 'travis-ci/travis-core'
+    #        number: '1.4'
+    #        queue: 'builds.linux'
+    #        state: 'created'
 
-      waits(1000)
-      runs ->
-        listsQueuedJob
-          name: 'linux'
-          row: 3
-          item: { number: '1.4', repo: 'travis-ci/travis-core' }
+    #  waits(1000)
+    #  runs ->
+    #    listsQueuedJob
+    #      name: 'linux'
+    #      row: 3
+    #      item: { number: '1.4', repo: 'travis-ci/travis-core' }
 
     it 'updates only keys that are available', ->
       Em.run ->
@@ -118,72 +118,72 @@ describe 'events', ->
           row: 1
           item: { id: 1, number: '1.1', repo: 'travis-ci/travis-core', finishedAt: '3 minutes ago', duration: '30 sec', rvm: 'rbx' }
 
-  describe 'an event adding a worker', ->
-    beforeEach ->
-      app ''
-      waitFor sidebarTabsRendered
-      runs ->
-        $('#right #tab_workers a').trigger('click')
-        waitFor workersRendered
+  #describe 'an event adding a worker', ->
+  #  beforeEach ->
+  #    app ''
+  #    waitFor sidebarTabsRendered
+  #    runs ->
+  #      $('#right #tab_workers a').trigger('click')
+  #      waitFor workersRendered
 
-    it 'adds a worker to the workers list', ->
-      payload =
-        worker:
-          id: 10
-          host: 'worker.travis-ci.org'
-          name: 'ruby-3'
-          state: 'ready'
+  #  it 'adds a worker to the workers list', ->
+  #    payload =
+  #      worker:
+  #        id: 10
+  #        host: 'worker.travis-ci.org'
+  #        name: 'ruby-3'
+  #        state: 'ready'
 
-      $.mockjax
-        url: '/workers/10'
-        responseTime: 0
-        responseText: payload
+  #    $.mockjax
+  #      url: '/workers/10'
+  #      responseTime: 0
+  #      responseText: payload
 
-      Em.run ->
-        Travis.receive 'worker:created',
-          worker:
-            id: 10
-            name: 'ruby-3'
-            host: 'worker.travis-ci.org'
-            state: 'ready'
+  #    Em.run ->
+  #      Travis.receive 'worker:created',
+  #        worker:
+  #          id: 10
+  #          name: 'ruby-3'
+  #          host: 'worker.travis-ci.org'
+  #          state: 'ready'
 
-      waits(100)
-      runs ->
-        listsWorker
-          group: 'worker.travis-ci.org'
-          row: 3
-          item: { name: 'ruby-3', state: 'ready' }
+  #    waits(100)
+  #    runs ->
+  #      listsWorker
+  #        group: 'worker.travis-ci.org'
+  #        row: 3
+  #        item: { name: 'ruby-3', state: 'ready' }
 
 
-  describe 'an event updating a worker', ->
-    beforeEach ->
-      app '/travis-ci/travis-core'
-      waitFor sidebarTabsRendered
-      runs ->
-        $('#right #tab_workers a').trigger('click')
-        waitFor workersRendered
+  #describe 'an event updating a worker', ->
+  #  beforeEach ->
+  #    app '/travis-ci/travis-core'
+  #    waitFor sidebarTabsRendered
+  #    runs ->
+  #      $('#right #tab_workers a').trigger('click')
+  #      waitFor workersRendered
 
-    it 'does not update repository if it\'s already in the store', ->
-      payload =
-        worker:
-          id: 1
-          host: 'worker.travis-ci.org'
-          name: 'ruby-2'
-          state: 'working'
-          payload:
-            repository:
-              id: 1
-              last_build_id: 999
-              last_build_number: '999'
+  #  it 'does not update repository if it\'s already in the store', ->
+  #    payload =
+  #      worker:
+  #        id: 1
+  #        host: 'worker.travis-ci.org'
+  #        name: 'ruby-2'
+  #        state: 'working'
+  #        payload:
+  #          repository:
+  #            id: 1
+  #            last_build_id: 999
+  #            last_build_number: '999'
 
-      Em.run ->
-        Travis.receive 'worker:updated', payload
+  #    Em.run ->
+  #      Travis.receive 'worker:updated', payload
 
-      waits(100)
-      runs ->
-        listsRepo
-          row: 2
-          item: { slug: 'travis-ci/travis-core',  build: { number: 1, url: '/travis-ci/travis-core/builds/1', duration: '30 sec', finishedAt: '3 minutes ago' } }
+  #    waits(100)
+  #    runs ->
+  #      listsRepo
+  #        row: 2
+  #        item: { slug: 'travis-ci/travis-core',  build: { number: 1, url: '/travis-ci/travis-core/builds/1', duration: '30 sec', finishedAt: '3 minutes ago' } }
 
 
 
