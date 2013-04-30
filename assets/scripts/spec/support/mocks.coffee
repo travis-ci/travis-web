@@ -6,6 +6,14 @@ repos = [
   { id: '3', owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4, last_build_result: undefined, last_build_duration: undefined, last_build_started_at: '2012-07-02T00:02:00Z', last_build_finished_at: undefined, description: 'Description of travis-hub'},
 ]
 
+reposByName = (name) ->
+  # this is hardcoded as well as user is hardcoded in app() helper,
+  # please make it more flexible if needed
+  if name == 'tyrion'
+    [repos[0], repos[2]]
+  else
+    []
+
 builds = [
   { id: '1', repository_id: '1', commit_id: 1, job_ids: [1, 2, 3], number: 1, pull_request: false, config: { rvm: ['rbx', '1.9.3', 'jruby'] }, duration: 30, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:30Z', state: 'passed' },
   { id: '2', repository_id: '1', commit_id: 2, job_ids: [4],       number: 2, pull_request: false, config: { rvm: ['rbx'] } },
@@ -70,8 +78,11 @@ $.mockjax
       this.responseText = { repos: [$.detect(repos, (repository) -> repository.slug == slug)] }
     else if search = settings.data.search
       this.responseText = { repos: $.select(repos, (repository) -> repository.slug.indexOf(search) > -1).toArray() }
+    else if settings.data.member
+      this.responseText = { repos: reposByName(settings.data.member) }
     else
-      raise "don't know this ditty"
+      console.log settings.data
+      throw 'unknown params for repos'
 
 for repository in repos
   $.mockjax

@@ -1,7 +1,20 @@
 require 'travis/limited_array'
 
 Travis.ReposController = Ember.ArrayController.extend
-  defaultTab: 'owned'
+  defaultTab: ( ->
+    if @get('currentUser.id')
+      'owned'
+    else
+      'recent'
+  ).property('currentUser')
+
+  currentUserIdDidChange: (->
+    if @get('currentUser.id')
+      @activate('owned')
+    else if @get('tab') == 'owned'
+      @activate('recent')
+  ).observes('currentUser.id')
+
   isLoadedBinding: 'content.isLoaded'
   needs: ['currentUser', 'repo']
   currentUserBinding: 'controllers.currentUser'
@@ -34,7 +47,7 @@ Travis.ReposController = Ember.ArrayController.extend
     Ember.run.later(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   activate: (tab, params) ->
-    tab ||= @defaultTab
+    tab ||= @get('defaultTab')
     @set('tab', tab)
     this["view#{$.camelize(tab)}"](params)
 

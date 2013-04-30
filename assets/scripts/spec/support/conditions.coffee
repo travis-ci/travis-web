@@ -5,6 +5,7 @@
   -> $(selector).text().trim() == text
 
 @reposRendered   = notEmpty('#repos li.selected')
+@myReposRendered = -> notEmpty('#repos li.selected')() && $('#left #tab_owned').hasClass('active')
 @buildRendered   = notEmpty('#summary .number')
 @buildsRendered  = notEmpty('#builds .number')
 @jobRendered     = notEmpty('#summary .number')
