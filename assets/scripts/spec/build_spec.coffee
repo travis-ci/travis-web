@@ -2,10 +2,8 @@ describe 'on the "build" state', ->
   beforeEach ->
     app '/travis-ci/travis-core/builds/1'
 
-    console.log 'wait for repos'
     waitFor reposRendered
     runs ->
-      console.log 'wait for build'
       waitFor buildRendered
 
   it 'displays the expected stuff', ->

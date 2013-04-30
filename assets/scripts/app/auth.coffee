@@ -13,20 +13,23 @@
     Travis.setLocale Travis.default_locale
     @set('state', 'signed-out')
     @set('user', undefined)
-    user = Travis.__container__.lookup('controller:currentUser').get('content')
-    if user.get('stateManager.currentPath') == 'rootState.loaded.updated.uncommitted'
-      user.send('rollback')
-    user.unloadRecord()
+    if user = Travis.__container__.lookup('controller:currentUser').get('content')
+      if user.get('stateManager.currentPath') == 'rootState.loaded.updated.uncommitted'
+        user.send('rollback')
+      user.unloadRecord()
     Travis.__container__.lookup('controller:currentUser').set('content', null)
     Travis.__container__.lookup('router:main').send('afterSignOut')
 
-  signIn: ->
-    @set('state', 'signing-in')
-    url = "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}"
-    $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url)
+  signIn: (data) ->
+    if data
+      @autoSignIn(data)
+    else
+      @set('state', 'signing-in')
+      url = "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}"
+      $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url)
 
-  autoSignIn: ->
-    data = @userDataFrom(Travis.sessionStorage) || @userDataFrom(Travis.storage)
+  autoSignIn: (data) ->
+    data ||= @userDataFrom(Travis.sessionStorage) || @userDataFrom(Travis.storage)
     @setData(data) if data
 
   userDataFrom: (storage) ->

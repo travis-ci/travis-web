@@ -10,6 +10,20 @@ Travis.reopen
       @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.isLoaded', 'repos.length')
 
+    repoIsLoadedDidChange: (->
+      # Ember does not automatically rerender outlets and sometimes 'pane' outlet
+      # in repos/show.hbs is empty when view is rerendered without routing
+      # taking place. Try to render the default outlet in such case
+      # TODO: look into fixing it in more general way
+      pane = Ember.get('_outlets.pane')
+      if @get('controller.repo.isLoaded') && @state == 'inDOM' &&
+         @get('controller.tab') == 'current' && (!pane || pane.state == 'destroyed')
+        view = @get('controller.container').lookup('view:build')
+        view.set('controller', @get('controller.container').lookup('controller:build'))
+        Ember.run.next =>
+          @connectOutlet('pane',  view)
+    ).observes('controller.repo.isLoaded')
+
   ReposEmptyView: Travis.View.extend
     template: ''
 
