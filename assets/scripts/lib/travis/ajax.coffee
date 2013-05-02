@@ -1,6 +1,8 @@
 jQuery.support.cors = true
 
 Travis.ajax = Em.Object.create
+  publicEndpoints: [/\/repos\/?.*/, /\/builds\/?.*/, /\/jobs\/?.*/]
+
   DEFAULT_OPTIONS:
     accepts:
       json: 'application/vnd.travis-ci.2+json'
@@ -11,12 +13,21 @@ Travis.ajax = Em.Object.create
   post: (url, data, callback) ->
     @ajax(url, 'post', data: data, success: callback)
 
+  needsAuth: (method, url) ->
+    return false if method != 'GET'
+
+    result = @publicEndpoints.find (pattern) ->
+      url.match(pattern)
+
+    !result
+
   ajax: (url, method, options) ->
     method = method.toUpperCase()
     endpoint = Travis.config.api_endpoint || ''
     options = options || {}
 
-    if token = Travis.sessionStorage.getItem('travis.token')
+    token = Travis.sessionStorage.getItem('travis.token')
+    if token && Travis.ajax.needsAuth(method, url)
       options.headers ||= {}
       options.headers['Authorization'] ||= "token #{token}"
 
