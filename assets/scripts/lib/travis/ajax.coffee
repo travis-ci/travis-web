@@ -14,7 +14,7 @@ Travis.ajax = Em.Object.create
     @ajax(url, 'post', data: data, success: callback)
 
   needsAuth: (method, url) ->
-    return false if method != 'GET'
+    return true if method != 'GET'
 
     result = @publicEndpoints.find (pattern) ->
       url.match(pattern)
