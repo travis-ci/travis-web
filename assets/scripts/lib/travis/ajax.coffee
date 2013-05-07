@@ -33,7 +33,7 @@ Travis.ajax = Em.Object.create
       options.headers ||= {}
       options.headers['Authorization'] ||= "token #{token}"
 
-    url = "#{endpoint}#{url}"
+    options.url = url = "#{endpoint}#{url}"
     options.type = method
     options.dataType = options.dataType || 'json'
     options.context = this
@@ -57,6 +57,11 @@ Travis.ajax = Em.Object.create
       error.apply(this, arguments)
 
     options = $.extend(options, Travis.ajax.DEFAULT_OPTIONS)
+
+    if Travis.testing
+      # we use jquery.mockjax for test, I don't want to hack it or rewrite it,
+      # so let's just pretend we still use ajax if testing mode is on
+      return $.ajax(options)
 
     if options.data && (method == "GET" || method == "HEAD")
       params = []

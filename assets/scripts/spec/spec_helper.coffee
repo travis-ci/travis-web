@@ -28,3 +28,4 @@ minispade.require 'app'
 now = -> new Date('2012-07-02T00:03:00Z')
 $.timeago.settings.nowFunction = -> now().getTime()
 Travis.currentDate = now
+Travis.testing = true
