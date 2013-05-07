@@ -76,7 +76,7 @@ Travis.ajax = Em.Object.create
 
     xhr.open(method, url)
 
-    if options.accepts
+    if options.accepts && !options.headers?.accept?
       accepts = []
       for key, value of options.accepts
         accepts.pushObject(value)
