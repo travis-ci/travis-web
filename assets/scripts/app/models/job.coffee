@@ -52,13 +52,11 @@ require 'travis/model'
       @get('log').clear()
 
   sponsor: (->
-    worker = @get('log.workerName')
-    if worker && worker.length
-      Travis.WORKERS[worker] || {
-        name: "Travis Pro"
-        url: "http://travis-ci.com"
-      }
-  ).property('log.workerName')
+    {
+      name: "Blue Box"
+      url: "http://bluebox.net"
+    }
+  ).property()
 
   configValues: (->
     config = @get('config')
