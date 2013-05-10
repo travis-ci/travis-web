@@ -1,6 +1,6 @@
 @displaysRepository = (repo) ->
   expect($('#repo h3 a').attr('href')).toEqual (repo.href)
-  expect($('#repo .github-icon a').attr('href')).toEqual ("https//github.com#{repo.href}")
+  expect($('#repo .github-icon a').attr('href')).toEqual ("http://github.com#{repo.href}")
 
 @displaysTabs = (tabs) ->
   for name, tab of tabs
