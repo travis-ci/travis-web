@@ -7,9 +7,10 @@
     {{else}}
       {{#if repo.isLoaded}}
         {{#with repo}}
-          <h3>
-            <a {{bindAttr href="controller.urlGithub"}}>{{slug}}</a>
-          </h3>
+          <div id="repo-header">
+            <h3>{{#linkTo "repo" this}}{{slug}}{{/linkTo}}</h3>
+            <div class="github-icon"><a {{bindAttr href="controller.urlGithub"}}><img src="/images/icons/github.png" width="21" height="21"/></a></div>
+          </div>
 
           <p class="description">{{description}}</p>
 
