@@ -11,7 +11,7 @@ describe 'on the "current" state', ->
     ]
 
     displaysRepository
-      href: 'http://github.com/travis-ci/travis-core'
+      href: '/travis-ci/travis-core'
 
     displaysSummary
       type: 'build'
