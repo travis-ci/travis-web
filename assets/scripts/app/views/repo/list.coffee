@@ -43,6 +43,3 @@
     classSearch: (->
       'active' if @get('tab') == 'search'
     ).property('tab')
-
-    toggleInfo: ->
-      $('#repos').toggleClass('open')
