@@ -11,7 +11,7 @@ describe 'on the "builds" state', ->
     ]
 
     displaysRepository
-      href: 'http://github.com/travis-ci/travis-core'
+      href: '/travis-ci/travis-core'
 
     displaysTabs
       current: { href: '/travis-ci/travis-core' }

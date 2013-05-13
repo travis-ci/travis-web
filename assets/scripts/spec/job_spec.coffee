@@ -21,7 +21,7 @@ describe 'on the "job" state', ->
     waits 100
     runs ->
       displaysRepository
-        href: 'http://github.com/travis-ci/travis-core'
+        href: '/travis-ci/travis-core'
 
       displaysSummary
         id: 1

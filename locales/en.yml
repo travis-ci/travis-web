@@ -68,7 +68,7 @@ en:
       repository: Repository
       twitter: Twitter
     application:
-      fork_me: Fork me on Github
+      fork_me: Fork me on GitHub
       my_repositories: My Repositories
       recent: Recent
       search: Search
@@ -91,7 +91,7 @@ en:
       admin: Admin
       blog: Blog
       docs: Docs
-      github_login: Sign in with Github
+      github_login: Sign in with GitHub
       home: Home
       profile: Profile
       sign_out: Sign Out
@@ -114,7 +114,7 @@ en:
   profiles:
     show:
       email: Email
-      github: Github
+      github: GitHub
       locale: locale
       message:
         config: how to configure custom build options
