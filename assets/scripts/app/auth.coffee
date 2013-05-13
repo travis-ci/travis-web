@@ -18,7 +18,8 @@
         user.send('rollback')
       user.unloadRecord()
     Travis.__container__.lookup('controller:currentUser').set('content', null)
-    Travis.__container__.lookup('router:main').send('afterSignOut')
+    if router = Travis.__container__.lookup('router:main')
+      router.send('afterSignOut')
 
   signIn: (data) ->
     if data

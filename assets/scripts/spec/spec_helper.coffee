@@ -12,12 +12,12 @@ minispade.require 'app'
     token: 'abcdef'
 
 @app = (url, options = {}) ->
+  Travis.auth.signOut()
   # TODO: this should wait till app is initialized, not some
   #       arbitrary amount of time
   waits(50)
   runs ->
     Travis.reset()
-    Travis.auth.signOut()
 
     if options.user
       signInUser()
