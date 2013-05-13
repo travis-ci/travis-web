@@ -66,7 +66,8 @@
     @set('state', 'signed-in')
     Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
-    Travis.__container__.lookup('router:main').send('afterSignIn', @readAfterSignInPath())
+    if path = @readAfterSignInPath()
+      Travis.__container__.lookup('router:main').send('afterSignIn', path)
 
   storeData: (data, storage) ->
     storage.setItem('travis.token', data.token)

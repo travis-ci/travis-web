@@ -6,24 +6,39 @@ Travis.DontSetupModelForControllerMixin = Ember.Mixin.create
   # this can be remove when this patch will be merged https://github.com/emberjs/ember.js/pull/2044
   # this will allow us to override setting up model for a controller
   setup: (context) ->
-    @redirected = false
+    isTop = undefined
+    unless @_redirected
+      isTop = true
+      @_redirected = []
+
     @_checkingRedirect = true
+    depth = ++@_redirectDepth
 
-    @redirect(context)
+    if context is `undefined`
+      @redirect()
+    else
+      @redirect context
 
+    @_redirectDepth--
     @_checkingRedirect = false
-    if @redirected
-      return false
+
+    redirected = @_redirected
+
+    @_redirected = null  if isTop
+
+    return false  if redirected[depth]
 
     controller = @controllerFor(@routeName, context)
 
-    @setupController(controller, context)
-    @renderTemplate(controller, context);
+    @setupController controller, context
+    @renderTemplate controller, context
 
 Ember.Router.reopen
   location: (if testMode? then Ember.NoneLocation.create() else Travis.Location.create())
 
   handleURL: (url) ->
+    Travis.autoSignIn() unless Travis.__container__.lookup('controller:currentUser').get('content')
+
     url = url.replace(/#.*?$/, '')
     try
       @_super(url)
@@ -49,11 +64,12 @@ Ember.Route.reopen
     @controllerFor('currentUser').get('content')
 
   redirect: ->
+    Travis.autoSignIn() unless @signedIn()
+
     if @get('needsAuth')
       @authorize(@router.location.getURL())
     else
       @_super.apply this, arguments
-    Travis.autoSignIn() unless @signedIn()
 
   authorize: (path) ->
     if !@signedIn()
