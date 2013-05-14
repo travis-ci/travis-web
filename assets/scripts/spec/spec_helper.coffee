@@ -12,12 +12,12 @@ minispade.require 'app'
     token: 'abcdef'
 
 @app = (url, options = {}) ->
+  Travis.auth.signOut()
   # TODO: this should wait till app is initialized, not some
   #       arbitrary amount of time
   waits(50)
   runs ->
     Travis.reset()
-    Travis.auth.signOut()
 
     if options.user
       signInUser()
@@ -28,3 +28,4 @@ minispade.require 'app'
 now = -> new Date('2012-07-02T00:03:00Z')
 $.timeago.settings.nowFunction = -> now().getTime()
 Travis.currentDate = now
+Travis.testing = true

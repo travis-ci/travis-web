@@ -18,7 +18,8 @@
         user.send('rollback')
       user.unloadRecord()
     Travis.__container__.lookup('controller:currentUser').set('content', null)
-    Travis.__container__.lookup('router:main').send('afterSignOut')
+    if router = Travis.__container__.lookup('router:main')
+      router.send('afterSignOut')
 
   signIn: (data) ->
     if data
@@ -66,7 +67,8 @@
     @set('state', 'signed-in')
     Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
-    Travis.__container__.lookup('router:main').send('afterSignIn', @readAfterSignInPath())
+    if path = @readAfterSignInPath()
+      Travis.__container__.lookup('router:main').send('afterSignIn', path)
 
   storeData: (data, storage) ->
     storage.setItem('travis.token', data.token)

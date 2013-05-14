@@ -51,23 +51,17 @@ Travis.Log.Request = Em.Object.extend
     if xhr.status == 204
       $.ajax(url: @redirectTo(xhr), type: 'GET', success: @handlers.text)
     else if @isJson(xhr, body)
-      @handlers.json(JSON.parse(body))
+      @handlers.json(body)
     else
       @handlers.text(body)
 
   redirectTo: (xhr) ->
     # Firefox can't see the Location header on the xhr response due to the wrong
     # status code 204. Should be some redirect code but that doesn't work with CORS.
-    xhr.getResponseHeader('Location') || @s3Url()
-
-  s3Url: ->
-    endpoint = Travis.config.api_endpoint
-    staging = if endpoint.match(/-staging/) then '-staging' else ''
-    host = endpoint.replace(/^https?:\/\//, '').split('.').slice(-2).join('.')
-    "https://s3.amazonaws.com/archive#{staging}.#{host}/jobs/#{@get('id')}/log.txt"
+    xhr.getResponseHeader('Location')
 
   isJson: (xhr, body) ->
     # Firefox can't see the Content-Type header on the xhr response due to the wrong
     # status code 204. Should be some redirect code but that doesn't work with CORS.
     type = xhr.getResponseHeader('Content-Type') || ''
-    type.indexOf('json') > -1 || body.slice(0, 8) == '{"log":{'
+    type.indexOf('json') > -1

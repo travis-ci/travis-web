@@ -37,7 +37,9 @@
         </a>
       </li>
     {{/if}}
-    {{#if view.showDownloadLog}}
+    {{!TODO: for some reason showDownloadLog, which just delegates to jobIdForLog
+             does not refresh 'if' properly, need further investigation}}
+    {{#if view.jobIdForLog}}
       <li>
         <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}>Download log</a>
       </li>
