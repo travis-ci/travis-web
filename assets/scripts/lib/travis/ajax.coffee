@@ -64,11 +64,7 @@ Travis.ajax = Em.Object.create
       return $.ajax(options)
 
     if options.data && (method == "GET" || method == "HEAD")
-      params = []
-      for key, value of options.data
-        params.pushObject("#{key}=#{value}")
-
-      params = params.join '&'
+      params = jQuery.param(options.data)
       delimeter = if url.indexOf('?') == -1 then '?' else '&'
       url = url + delimeter + params
 
