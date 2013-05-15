@@ -21,6 +21,7 @@ Travis.reopen
         view = @get('controller.container').lookup('view:build')
         view.set('controller', @get('controller.container').lookup('controller:build'))
         Ember.run.next =>
+          @set('_outlets', {}) if !@get('_outlets') && !@destroyed
           @connectOutlet('pane',  view)
     ).observes('controller.repo.isLoaded')
 
