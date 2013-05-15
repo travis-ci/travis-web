@@ -19,32 +19,31 @@
         <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration job.duration}}</dd>
       </div>
 
-      {{#if commit}}
+      {{#with job.commit}}
         <div class="right">
           <dt>{{t jobs.commit}}</dt>
-          <dd class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
+          <dd class="commit"><a {{bindAttr href="controller.urlGithubCommit"}}>{{formatCommit this}}</a></dd>
           {{#if job.build.pullRequest}}
             <dt>{{t builds.pull_request}}</dt>
-            <dd class="pull_request"><a {{bindAttr href="job.build.commit.compareUrl"}}>#{{job.build.pullRequestNumber}} {{job.build.pullRequestTitle}}</a></dd>
+            <dd class="pull_request"><a {{bindAttr href="compareUrl"}}>#{{job.build.pullRequestNumber}} {{job.build.pullRequestTitle}}</a></dd>
           {{else}}
-            {{#if commit.compareUrl}}
+            {{#if compareUrl}}
               <dt>{{t jobs.compare}}</dt>
-              <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
+              <dd class="compare"><a {{bindAttr href="compareUrl"}}>{{pathFrom compareUrl}}</a></dd>
             {{/if}}
           {{/if}}
-          {{#if commit.authorName}}
+          {{#if authorName}}
             <dt>{{t jobs.author}}</dt>
-            <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{commit.authorName}}</a></dd>
+            <dd class="author"><a {{bindAttr href="controller.urlAuthor"}}>{{authorName}}</a></dd>
           {{/if}}
-          {{#if commit.committerName}}
+          {{#if committerName}}
             <dt>{{t jobs.committer}}</dt>
-            <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{commit.committerName}}</a></dd>
+            <dd class="committer"><a {{bindAttr href="controller.urlCommitter"}}>{{committerName}}</a></dd>
           {{/if}}
         </div>
-      {{/if}}
-
+      {{/with}}
       <dt>{{t jobs.message}}</dt>
-      <dd class="message">{{formatMessage commit.message}}</dd>
+      <dd class="message">{{formatMessage job.commit.message}}</dd>
       <dt>{{t jobs.config}}</dt>
       <dd class="config">{{formatConfig job.config}}</dd>
     </dl>

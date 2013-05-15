@@ -21,29 +21,29 @@
         <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration build.duration}}</dd>
       </div>
 
-      {{#if commit}}
+      {{#with build.commit}}
         <div class="right">
           <dt>{{t builds.commit}}</dt>
-          <dd class="commit"><a {{bindAttr href="urlGithubCommit"}}>{{formatCommit build.commit}}</a></dd>
+          <dd class="commit"><a {{bindAttr href="controller.urlGithubCommit"}}>{{formatCommit this}}</a></dd>
           {{#if build.pullRequest}}
             <dt>{{t builds.pull_request}}</dt>
-            <dd class="pull_request"><a {{bindAttr href="build.commit.compareUrl"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
+            <dd class="pull_request"><a {{bindAttr href="compareUrl"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
           {{else}}
-            {{#if commit.compareUrl}}
+            {{#if compareUrl}}
               <dt>{{t builds.compare}}</dt>
-              <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom build.commit.compareUrl}}</a></dd>
+              <dd class="compare"><a {{bindAttr href="compareUrl"}}>{{pathFrom compareUrl}}</a></dd>
             {{/if}}
           {{/if}}
-          {{#if commit.authorName}}
+          {{#if authorName}}
             <dt>{{t builds.author}}</dt>
-            <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{build.commit.authorName}}</a></dd>
+            <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{authorName}}</a></dd>
           {{/if}}
-          {{#if commit.committerName}}
+          {{#if committerName}}
             <dt>{{t builds.committer}}</dt>
-            <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{build.commit.committerName}}</a></dd>
+            <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{committerName}}</a></dd>
           {{/if}}
         </div>
-      {{/if}}
+      {{/with}}
 
       <dt>{{t builds.message}}</dt>
       <dd class="message">{{formatMessage build.commit.message}}</dd>
