@@ -1,5 +1,11 @@
 require 'ext/ember/namespace'
 
+Em.View.reopen
+  init: ->
+    this.container ||= Travis.__container__
+
+    @_super.apply(this, arguments)
+
 @Travis.reopen
   View: Em.View.extend
     popup: (name) ->
