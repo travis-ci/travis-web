@@ -22,7 +22,7 @@ Travis.reopen
         view.set('controller', @get('controller.container').lookup('controller:build'))
         Ember.run.next =>
           @set('_outlets', {}) if !@get('_outlets') && !@isDestroyed
-          @connectOutlet('pane',  view)
+          @connectOutlet('pane',  view) unless @isDestroyed
     ).observes('controller.repo.isLoaded')
 
   ReposEmptyView: Travis.View.extend
