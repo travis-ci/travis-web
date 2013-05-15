@@ -85,6 +85,13 @@ Travis.ajax = Em.Object.create
     if options.contentType
       xhr.setRequestHeader('Content-Type', options.contentType)
 
+    resolve = null
+    reject = null
+    promise = new Ember.RSVP.Promise( (_resolve, _reject) ->
+      resolve = _resolve
+      reject = _reject
+    )
+
     xhr.onreadystatechange = ->
       if xhr.readyState == 4
         contentType = xhr.getResponseHeader('Content-Type')
@@ -94,8 +101,12 @@ Travis.ajax = Em.Object.create
           xhr.responseText
 
         if xhr.status >= 200 && xhr.status < 300
+          resolve(data)
           options.success.call(options.context, data, xhr.status, xhr)
         else
+          reject(xhr)
           options.error.call(data, xhr.status, xhr)
 
     xhr.send(options.data)
+
+    return promise
