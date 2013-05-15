@@ -1,3 +1,5 @@
+@import "_mixins/all"
+
 // ansi styles, see javascripts/lib/deansi.js
 .ansi
   .bold
@@ -7,37 +9,51 @@
   .underscore
     // monochrome displays only according to http://ascii-table.com/ansi-escape-sequences.php
   .black
-    color: black
-  .red
-    color: red
-  .green
-    color: lime
-  .yellow
-    color: yellow
-  .blue
-    color: blue
-  .magenta
-    color: magenta
-  .cyan
-    color: cyan
-  .white
-    color: white
+    color: $ansi-black
   .black.bright
-    color: #999
+    color: $ansi-black-bright
+  .red
+    color: $ansi-red
+  .red.bright
+    color: $ansi-red-bright
+  .green
+    color: $ansi-green
+  .green.bright
+    color: $ansi-green-bright
+  .yellow
+    color: $ansi-yellow
+  .yellow.bright
+    color: $ansi-yellow-bright
+  .blue
+    color: $ansi-blue
+  .blue.bright
+    color: $ansi-blue-bright
+  .magenta
+    color: $ansi-magenta
+  .magenta.bright
+    color: $ansi-magenta-bright
+  .cyan
+    color: $ansi-cyan
+  .cyan
+    color: $ansi-cyan-bright
+  .white
+    color: $ansi-white
+  .white.bright
+    color: $ansi-white-bright
   .bg-black
-    background-color: black
+    background-color: $ansi-black
   .bg-red
-    background-color: red
+    background-color: $ansi-red
   .bg-green
-    background-color: lime
+    background-color: $ansi-green
   .bg-yellow
-    background-color: yellow
+    background-color: $ansi-yellow
   .bg-blue
-    background-color: blue
+    background-color: $ansi-blue
   .bg-magenta
-    background-color: magenta
+    background-color: $ansi-magenta
   .bg-cyan
-    background-color: cyan
+    background-color: $ansi-cyan
   .bg-white
-    background-color: white
+    background-color: $ansi-white
 
