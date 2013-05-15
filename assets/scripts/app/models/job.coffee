@@ -25,6 +25,14 @@ require 'travis/model'
 
   _config: DS.attr('object')
 
+  repoSlugDidChange: (->
+    if slug = @get('repoSlug')
+      @get('store').loadIncomplete(Travis.Repo, {
+        id: @get('repoId'),
+        slug: slug
+      }, { skipIfExists: true })
+  ).observes('repoSlug')
+
   log: ( ->
     @set('isLogAccessed', true)
     Travis.Log.create(job: this)
@@ -33,10 +41,6 @@ require 'travis/model'
   repoSlug: (->
     @get('repositorySlug')
   ).property('repositorySlug')
-
-  repoData: (->
-    { id: @get('repoId'), slug: @get('repoSlug') }
-  ).property('repoSlug', 'repoId')
 
   config: (->
     Travis.Helpers.compact(@get('_config'))

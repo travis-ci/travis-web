@@ -117,7 +117,7 @@ require 'travis/model'
     @find(search: query, orderBy: 'name')
 
   withLastBuild: ->
-    @filter( (repo) -> repo.get('lastBuildId') )
+    @filter( (repo) -> !repo.get('incomplete') && repo.get('lastBuildId') )
 
   bySlug: (slug) ->
     repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)

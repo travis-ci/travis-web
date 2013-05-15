@@ -26,11 +26,15 @@ require 'travis/model'
     @get('payload.job.number')
   ).property('jobNumber')
 
-  repoData: (->
-    { id: @get('repoId'), slug: @get('repoSlug') }
-  ).property('repoSlug', 'repoId')
-
   repo: (->
+    id = @get('payload.repository.id') || @get('payload.repo.id')
+    slug = @get('repoSlug')
+
+    @get('store').loadIncomplete(Travis.Repo, {
+      id: id,
+      slug: slug
+    }, { skipIfExists: true })
+
     Travis.Repo.find(@get('payload.repository.id') || @get('payload.repo.id'))
   ).property('payload.repository.id', 'payload.repo.id')
 

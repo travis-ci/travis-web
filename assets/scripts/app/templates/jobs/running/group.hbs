@@ -5,8 +5,8 @@
 <ul class="jobs">
   {{#each job in sortedJobs}}
     <li class="job">
-      {{#if job.repoData.slug}}
-        {{#linkTo "job" job.repoData job}}
+      {{#if job.repo.slug}}
+        {{#linkTo "job" job.repo job}}
           #{{job.number}}
         {{/linkTo}}
       {{/if}}
