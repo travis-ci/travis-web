@@ -26205,14 +26205,6 @@ Ember.View.reopen({
   },
 
   connectOutlet: function(outletName, view) {
-    if (this._pendingDisconnections) {
-      delete this._pendingDisconnections[outletName];
-    }
-
-    if (this._hasEquivalentView(outletName, view)) {
-      return;
-    }
-
     var outlets = get(this, '_outlets'),
         container = get(this, 'container'),
         router = container && container.lookup('router:main'),
@@ -26225,23 +26217,7 @@ Ember.View.reopen({
     }
   },
 
-  _hasEquivalentView: function(outletName, view) {
-    var existingView = get(this, '_outlets.'+outletName);
-    return existingView &&
-      existingView.prototype === view.prototype &&
-      existingView.get('template') === view.get('template') &&
-      existingView.get('context') === view.get('context');
-  },
-
   disconnectOutlet: function(outletName) {
-    if (!this._pendingDisconnections) {
-      this._pendingDisconnections = {};
-    }
-    this._pendingDisconnections[outletName] = true;
-    Ember.run.once(this, '_finishDisconnections');
-  },
-
-  _finishDisconnections: function() {
     var outlets = get(this, '_outlets');
     var pendingDisconnections = this._pendingDisconnections;
     this._pendingDisconnections = null;
