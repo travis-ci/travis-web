@@ -96,7 +96,10 @@ Travis.ajax = Em.Object.create
       if xhr.readyState == 4
         contentType = xhr.getResponseHeader('Content-Type')
         data = if contentType && contentType.match /application\/json/
-          jQuery.parseJSON(xhr.responseText)
+          try
+            jQuery.parseJSON(xhr.responseText)
+          catch e
+            console.log('error while parsing a response', method, options.url, xhr.responseText)
         else
           xhr.responseText
 
