@@ -1,5 +1,6 @@
 unless window.TravisApplication
   window.TravisApplication = Em.Application.extend(Ember.Evented,
+    LOG_TRANSITIONS: true
     authStateBinding: 'auth.state'
     signedIn: (-> @get('authState') == 'signed-in' ).property('authState')
 
