@@ -17,10 +17,8 @@ unless window.TravisApplication
       @set('auth', Travis.Auth.create(app: this, endpoint: Travis.config.api_endpoint))
 
     reset: ->
-      @store.destroy()
-      @setup()
-
       @_super.apply(this, arguments);
+      @setup()
 
     lookup: ->
       @__container__.lookup.apply @__container__, arguments

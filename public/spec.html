@@ -47,8 +47,12 @@
     <script src="/scripts/app.js"></script>
     <script>
       window.testMode = true;
-      minispade.require('travis')
-      Travis.advanceReadiness()
+      minispade.require('travis');
+      Ember.run(function(){
+        Travis.setupForTesting();
+        Travis.injectTestHelpers()
+        Travis.advanceReadiness();
+      });
     </script>
 
     <script src="/scripts/specs.js"></script>

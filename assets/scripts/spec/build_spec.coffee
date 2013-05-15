@@ -78,6 +78,7 @@ describe 'on the "current" state', ->
     Em.run ->
       Travis.receive 'build:started', payload
 
+    waits 10
     runs ->
       displaysSummaryBuildLink '/travis-ci/travis-core/builds/11', '3'
 
