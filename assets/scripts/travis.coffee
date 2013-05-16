@@ -81,12 +81,12 @@ setupGoogleAnalytics() if Travis.config.ga_code
 
 require 'ext/i18n'
 require 'travis/ajax'
+require 'routes'
 require 'auth'
 require 'controllers'
 require 'helpers'
 require 'models'
 require 'pusher'
-require 'routes'
 require 'slider'
 require 'store'
 require 'tailing'

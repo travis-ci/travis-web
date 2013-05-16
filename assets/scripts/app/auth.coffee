@@ -67,8 +67,10 @@
     @set('state', 'signed-in')
     Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
-    if path = @readAfterSignInPath()
-      Travis.__container__.lookup('router:main').send('afterSignIn', path)
+    if router = Travis.__container__.lookup('router:main')
+      path = @readAfterSignInPath()
+      Ember.run.next ->
+        router.send('afterSignIn', path)
 
   storeData: (data, storage) ->
     storage.setItem('travis.token', data.token)
