@@ -1,6 +1,6 @@
 @Travis.reopen
   FlashView: Travis.View.extend
-    elementId: 'flash'
+    classNames: ['flash']
     tagName: 'ul'
     templateName: 'layouts/flash'
 
