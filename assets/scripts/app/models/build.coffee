@@ -80,6 +80,9 @@ require 'travis/model'
 
 
 @Travis.Build.reopenClass
+  recent: ->
+    @find()
+
   byRepoId: (id, parameters) ->
     @find($.extend(parameters || {}, repository_id: id))
 
