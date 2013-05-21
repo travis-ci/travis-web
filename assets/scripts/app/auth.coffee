@@ -69,11 +69,24 @@
     Travis.trigger('user:signed_in', data.user)
     if router = Travis.__container__.lookup('router:main')
       path = @readAfterSignInPath()
-      Ember.run.next ->
+      Ember.run.next =>
         router.send('afterSignIn', path)
+        @refreshUserData(data.user)
+
+  refreshUserData: (user) ->
+    Travis.ajax.get "/users/#{user.id}", (data) =>
+      Travis.store.loadIncomplete(Travis.User, data.user)
+      # if user is still signed in, update saved data
+      if @signedIn()
+        data.user.token = user.token
+        @storeData(data, Travis.sessionStorage)
+        @storeData(data, Travis.storage)
+
+  signedIn: ->
+    @get('state') == 'signed-in'
 
   storeData: (data, storage) ->
-    storage.setItem('travis.token', data.token)
+    storage.setItem('travis.token', data.token) if data.token
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
