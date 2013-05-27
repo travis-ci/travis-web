@@ -1,0 +1,7 @@
+#HTMLReporter {
+  height: 400px;
+  z-index: 1000;
+  background-color: white;
+  overflow: auto;
+  border: 1px solid #A80000;
+}
