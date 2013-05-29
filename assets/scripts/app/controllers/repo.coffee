@@ -9,7 +9,7 @@ Travis.RepoController = Travis.Controller.extend
 
   init: ->
     @_super.apply this, arguments
-    setTimeout(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
+    Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   updateTimes: ->
     if builds = @get('builds')
@@ -20,8 +20,6 @@ Travis.RepoController = Travis.Controller.extend
 
     if build && jobs = build.get('jobs')
       jobs.forEach (j) -> j.updateTimes()
-
-    setTimeout(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   activate: (action) ->
     @_unbind()

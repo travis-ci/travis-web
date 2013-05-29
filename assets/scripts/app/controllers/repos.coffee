@@ -27,7 +27,7 @@ Travis.ReposController = Ember.ArrayController.extend
 
   init: ->
     @_super.apply this, arguments
-    setTimeout(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
+    Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   recentRepos: (->
     Travis.Repo.find()
@@ -43,8 +43,6 @@ Travis.ReposController = Ember.ArrayController.extend
   updateTimes: ->
     if content = @get('content')
       content.forEach (r) -> r.updateTimes()
-
-    setTimeout(@updateTimes.bind(this), Travis.INTERVALS.updateTimes)
 
   activate: (tab, params) ->
     @set('sortProperties', null)
