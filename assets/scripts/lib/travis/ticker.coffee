@@ -11,4 +11,4 @@
     @schedule()
 
   schedule: ->
-    Ember.run.later((=> @tick()), @get('interval') || Travis.TICK_INTERVAL)
+    setTimeout((=> @tick()), @get('interval') || Travis.TICK_INTERVAL)
