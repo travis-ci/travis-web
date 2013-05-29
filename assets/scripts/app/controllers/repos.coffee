@@ -45,7 +45,7 @@ Travis.ReposController = Ember.ArrayController.extend
       content.forEach (r) -> r.updateTimes()
 
   activate: (tab, params) ->
-    @set('sortProperties', null)
+    @set('sortProperties', ['sortOrder'])
     tab ||= @get('defaultTab')
     @set('tab', tab)
     this["view#{$.camelize(tab)}"](params)
@@ -54,7 +54,6 @@ Travis.ReposController = Ember.ArrayController.extend
     @set('content', @get('recentRepos'))
 
   viewOwned: ->
-    @set('sortProperties', ['sortOrder'])
     @set('content', Travis.Repo.accessibleBy(@get('currentUser.login')))
 
   viewSearch: (params) ->
