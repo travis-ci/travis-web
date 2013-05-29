@@ -15,6 +15,14 @@ $.extend Travis.Pusher.prototype,
     @pusher = new Pusher(key, encrypted: Travis.Pusher.ENCRYPTED)
     @subscribeAll(Travis.Pusher.CHANNELS) if Travis.Pusher.CHANNELS
 
+    @callbacksToProcess = []
+
+    Visibility.change (e, state) =>
+      if state == 'visible'
+        @processSavedCallbacks()
+
+    setInterval @processSavedCallbacks.bind(this), @processingIntervalWhenHidden
+
   subscribeAll: (channels) ->
     for channel in channels
       name = @prefix(channel)
@@ -36,18 +44,35 @@ $.extend Travis.Pusher.prototype,
   prefix: (channel) ->
     "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"
 
+  # process pusher messages in batches every 5 minutes when the page is hidden
+  processingIntervalWhenHidden: 1000 * 60 * 5
+
   receive: (event, data) ->
     return if event.substr(0, 6) == 'pusher'
     data = @normalize(event, data) if data.id
 
-    # TODO remove job:requeued, once sf-restart-event has been merged
-    # TODO this also needs to clear logs on build:created if matrix jobs are already loaded
-    if event == 'job:created' || event == 'job:requeued'
-      if Travis.store.isInStore(Travis.Job, data.job.id)
-        Travis.Job.find(data.job.id).clearLog()
+    @processWhenVisible ->
+      # TODO remove job:requeued, once sf-restart-event has been merged
+      # TODO this also needs to clear logs on build:created if matrix jobs are already loaded
+      if event == 'job:created' || event == 'job:requeued'
+        if Travis.store.isInStore(Travis.Job, data.job.id)
+          Travis.Job.find(data.job.id).clearLog()
 
-    Ember.run.next ->
-      Travis.store.receive(event, data)
+      Ember.run.next ->
+        Travis.store.receive(event, data)
+
+  processSavedCallbacks: ->
+    while callback = @callbacksToProcess.shiftObject()
+      callback.call(this)
+
+  processLater: (callback) ->
+    @callbacksToProcess.pushObject(callback)
+
+  processWhenVisible: (callback) ->
+    if Visibility.hidden() && Visibility.isSupported()
+      @processLater(callback)
+    else
+      callback.call(this)
 
   normalize: (event, data) ->
     switch event
