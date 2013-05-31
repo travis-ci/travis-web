@@ -8,7 +8,6 @@ unless window.TravisApplication
       @store = Travis.Store.create(
         adapter: Travis.RestAdapter.create()
       )
-      @store.loadMany(Travis.Sponsor, Travis.SPONSORS)
 
       @slider = new Travis.Slider()
       @pusher = new Travis.Pusher(Travis.config.pusher_key) if Travis.config.pusher_key

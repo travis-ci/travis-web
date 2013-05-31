@@ -9,7 +9,6 @@ require 'models/hook'
 require 'models/job'
 require 'models/log'
 require 'models/repo'
-require 'models/sponsor'
 require 'models/user'
 require 'models/worker'
 

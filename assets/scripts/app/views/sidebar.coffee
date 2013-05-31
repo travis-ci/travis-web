@@ -25,18 +25,6 @@
       'active' if @get('activeTab') == 'jobs'
     ).property('activeTab')
 
-    DecksView: Em.View.extend
-      templateName: "sponsors/decks"
-      init: ->
-        @_super.apply this, arguments
-        @set 'controller', @get('controller').container.lookup('controller:decks')
-
-    LinksView: Em.View.extend
-      templateName: "sponsors/links"
-      init: ->
-        @_super.apply this, arguments
-        @set 'controller', @get('controller').container.lookup('controller:links')
-
     QueuesView: Em.View.extend
       templateName: 'queues/list'
       init: ->

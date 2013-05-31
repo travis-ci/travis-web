@@ -52,7 +52,7 @@ $.extend Travis,
     { name: 'mac_osx', display: 'Mac and OSX' }
   ]
 
-  INTERVALS: { sponsors: -1, times: -1, updateTimes: 1000 }
+  INTERVALS: { times: -1, updateTimes: 1000 }
 
   storage: (->
     storage = null
@@ -94,7 +94,6 @@ require 'templates'
 require 'views'
 
 require 'config/locales'
-require 'data/sponsors'
 
 require 'travis/instrumentation'
 
