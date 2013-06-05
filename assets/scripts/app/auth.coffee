@@ -70,7 +70,10 @@
     if router = Travis.__container__.lookup('router:main')
       path = @readAfterSignInPath()
       Ember.run.next =>
-        router.send('afterSignIn', path)
+        try
+          router.send('afterSignIn', path)
+        catch e
+          throw e unless e =~ /There are no active handlers/
         @refreshUserData(data.user)
 
   refreshUserData: (user) ->
