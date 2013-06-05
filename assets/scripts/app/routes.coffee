@@ -43,7 +43,10 @@ Ember.Router.reopen
     try
       @_super(url)
     catch error
-      @_super('/not-found') if error.message.match(/No route matched the URL/)
+      if error.message.match(/No route matched the URL/)
+        @_super('/not-found')
+      else
+        throw(error)
 
 # TODO: don't reopen Ember.Route to add events, there should be
 #       a better way (like "parent" resource for everything inside map)
