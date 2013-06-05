@@ -5,7 +5,6 @@ Travis.BuildsController = Em.ArrayController.extend
   needs: ['repo']
 
   repoBinding: 'controllers.repo.repo'
-  contentBinding: 'controllers.repo.builds'
   tabBinding: 'controllers.repo.tab'
   isLoadedBinding: 'content.isLoaded'
 

@@ -22,39 +22,27 @@ Travis.RepoController = Travis.Controller.extend
       jobs.forEach (j) -> j.updateTimes()
 
   activate: (action) ->
-    @_unbind()
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
-    @_bind('repo', 'controllers.repos.firstObject')
-    @_bind('build', 'repo.lastBuild')
     @connectTab('current')
 
   viewCurrent: ->
     @connectTab('current')
-    @_bind('build', 'repo.lastBuild')
 
   viewBuilds: ->
     @connectTab('builds')
-    @_bind('builds', 'repo.builds')
 
   viewPullRequests: ->
     @connectTab('pull_requests')
-    @_bind('builds', 'repo.pullRequests')
 
   viewBranches: ->
     @connectTab('branches')
-    @_bind('builds', 'repo.branches')
-
-  viewEvents: ->
-    @connectTab('events')
-    @_bind('events', 'repo.events')
 
   viewBuild: ->
     @connectTab('build')
 
   viewJob: ->
-    @_bind('build', 'job.build')
     @connectTab('job')
 
   connectTab: (tab) ->
@@ -67,13 +55,6 @@ Travis.RepoController = Travis.Controller.extend
       Travis["#{$.camelize(name)}View"]
 
     @set('tab', tab)
-
-  _bind: (to, from) ->
-    @bindings.push Ember.oneWay(this, to, from)
-
-  _unbind: ->
-    binding.disconnect(this) for binding in @bindings
-    @bindings.clear()
 
   urlGithub: (->
     Travis.Urls.githubRepo(@get('repo.slug'))

@@ -116,20 +116,56 @@ Travis.ApplicationRoute = Ember.Route.extend Travis.LineNumberParser,
 
     this.controllerFor('repo').set('lineNumber', @fetchLineNumber())
 
-Travis.IndexCurrentRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
+Travis.SetupLastBuild = Ember.Mixin.create
+  setupController: ->
+    @lastBuildDidChange()
+    @controllerFor('repo').addObserver('repo.lastBuild', this, 'lastBuildDidChange')
+
+  deactivate: ->
+    @_super.apply this, arguments
+    @controllerFor('repo').removeObserver('repo.lastBuild', this, 'lastBuildDidChange')
+
+  lastBuildDidChange: ->
+    build = @controllerFor('repo').get('repo.lastBuild')
+    @controllerFor('build').set('build', build)
+
+Travis.IndexCurrentRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin, Travis.SetupLastBuild,
   renderTemplate: ->
     @render 'repo'
     @render 'build', outlet: 'pane', into: 'repo'
 
   setupController: ->
+    @_super.apply this, arguments
+    @currentRepoDidChange()
     @container.lookup('controller:repo').activate('index')
+    @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
+
+  deactivate: ->
+    @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
+
+  currentRepoDidChange: ->
+    @controllerFor('repo').set('repo', @controllerFor('repos').get('firstObject'))
 
 Travis.AbstractBuildsRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   renderTemplate: ->
     @render 'builds', outlet: 'pane', into: 'repo'
 
   setupController: ->
-    @container.lookup('controller:repo').activate(@get('contentType'))
+    @controllerFor('repo').activate(@get('contentType'))
+    @contentDidChange()
+    @controllerFor('repo').addObserver(@get('path'), this, 'contentDidChange')
+
+  deactivate: ->
+    @controllerFor('repo').removeObserver(@get('path'), this, 'contentDidChange')
+
+  contentDidChange: ->
+    path = @get('path')
+    @controllerFor('builds').set('content', @controllerFor('repo').get(path))
+
+  path: (->
+    type = @get('contentType')
+    "repo.#{type.camelize()}"
+  ).property('contentType')
 
 Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
 Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
@@ -163,12 +199,15 @@ Travis.JobRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   setupController: (controller, model) ->
     model = Travis.Job.find(model) if model && !model.get
 
-    repo = @container.lookup('controller:repo')
+    repo = @controllerFor('repo')
     repo.set('job', model)
     repo.activate('job')
+    @controllerFor('build').set('build', model.get('build'))
+    repo.set('build', model.get('build'))
 
-Travis.RepoIndexRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
+Travis.RepoIndexRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin, Travis.SetupLastBuild,
   setupController: (controller, model) ->
+    @_super.apply this, arguments
     @container.lookup('controller:repo').activate('current')
 
   renderTemplate: ->
