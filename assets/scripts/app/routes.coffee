@@ -123,10 +123,18 @@ Travis.SetupLastBuild = Ember.Mixin.create
   setupController: ->
     @lastBuildDidChange()
     @controllerFor('repo').addObserver('repo.lastBuild', this, 'lastBuildDidChange')
+    @repoDidLoad()
+    @controllerFor('repo').addObserver('repo.isLoaded', this, 'repoDidLoad')
 
   deactivate: ->
     @_super.apply this, arguments
     @controllerFor('repo').removeObserver('repo.lastBuild', this, 'lastBuildDidChange')
+
+  repoDidLoad: ->
+    # TODO: it would be nicer to do it with promises
+    repo = @controllerFor('repo').get('repo')
+    if repo && repo.get('isLoaded') && !repo.get('repo.lastBuild')
+      @render('builds/not_found', outlet: 'pane', into: 'repo')
 
   lastBuildDidChange: ->
     build = @controllerFor('repo').get('repo.lastBuild')
@@ -238,15 +246,15 @@ Travis.RepoRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
 
     repos = Travis.Repo.bySlug(slug)
 
+    self = this
+
     observer = ->
       if repos.get 'isLoaded'
         repos.removeObserver 'isLoaded', observer
         proxy.set 'isLoading', false
 
         if repos.get('length') == 0
-          # isError is also used in DS.Model, but maybe we should use something
-          # more focused like notFound later
-          proxy.set 'isError', true
+          self.render('repos/not_found', outlet: 'main')
         else
           proxy.set 'content', repos.objectAt(0)
 

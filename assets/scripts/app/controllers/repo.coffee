@@ -3,7 +3,6 @@ Travis.RepoController = Travis.Controller.extend
   needs: ['repos', 'currentUser']
   currentUserBinding: 'controllers.currentUser'
 
-  isError: (-> @get('repo.isError') ).property('repo.isError')
   slug: (-> @get('repo.slug') ).property('repo.slug')
   isLoading: (-> @get('repo.isLoading') ).property('repo.isLoading')
 
