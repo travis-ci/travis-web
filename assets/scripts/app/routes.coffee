@@ -194,9 +194,11 @@ Travis.BuildRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   setupController: (controller, model) ->
     model = Travis.Build.find(model) if model && !model.get
 
-    repo = @container.lookup('controller:repo')
+    repo = @controllerFor('repo')
     repo.set('build', model)
     repo.activate('build')
+    @controllerFor('build').set('build', model)
+    repo.set('build', model)
 
 Travis.JobRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin,
   renderTemplate: ->
