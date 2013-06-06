@@ -26,7 +26,7 @@ require 'config/emoij'
     (sha || '').substr(0, 7)
 
   formatConfig: (config) ->
-    config = $.only config, 'rvm', 'go', 'gemfile', 'env', 'otp_release', 'php', 'node_js', 'scala', 'jdk', 'python', 'perl', 'compiler'
+    config = $.only config, Travis.CONFIG_KEYS
     values = $.map config, (value, key) ->
       value = (if value && value.join then value.join(', ') else value) || ''
       if key == 'rvm' && "#{value}".match(/^\d+$/)
