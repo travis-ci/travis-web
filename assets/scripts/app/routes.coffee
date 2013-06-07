@@ -59,12 +59,12 @@ Ember.Route.reopen
       @afterSignOut()
 
   afterSignIn: (path) ->
-    @routeTo(path)
+    @routeToPath(path)
 
   afterSignOut: ->
-    @routeTo('/')
+    @routeToPath('/')
 
-  routeTo: (path) ->
+  routeToPath: (path) ->
     return unless path
     @router.handleURL(path)
     @router.location.setURL(path)
