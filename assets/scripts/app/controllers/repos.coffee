@@ -15,6 +15,13 @@ Travis.ReposController = Ember.ArrayController.extend
       @activate('recent')
   ).observes('currentUser.id')
 
+  tabOrIsLoadedDidChange: (->
+    if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0 && !@get('gettingStartedLoaded')
+      @set('gettingStartedLoaded', true)
+
+      @container.lookup('router:main').transitionTo('getting_started')
+  ).observes('isLoaded', 'tab')
+
   isLoadedBinding: 'content.isLoaded'
   needs: ['currentUser', 'repo']
   currentUserBinding: 'controllers.currentUser'

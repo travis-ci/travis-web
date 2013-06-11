@@ -5,30 +5,34 @@
 {{view Travis.ReposListTabsView}}
 
 <div class="tab">
-  {{#collection Travis.ReposListView contentBinding="this"}}
-    {{#with view.repo}}
-      <div class="slug-and-status">
-        <span class="status"></span>
-        {{#if slug}}
-          {{#linkTo repo this class="slug"}}{{slug}}{{/linkTo}}
-        {{/if}}
-      </div>
-      {{#with lastBuildHash}}
-        {{#if repo.slug}}
-          {{#linkTo build repo id class="last_build"}}{{number}}{{/linkTo}}
-        {{/if}}
+  {{#if isLoaded}}
+    {{#collection Travis.ReposListView contentBinding="this"}}
+      {{#with view.repo}}
+        <div class="slug-and-status">
+          <span class="status"></span>
+          {{#if slug}}
+            {{#linkTo repo this class="slug"}}{{slug}}{{/linkTo}}
+          {{/if}}
+        </div>
+        {{#with lastBuildHash}}
+          {{#if repo.slug}}
+            {{#linkTo build repo id class="last_build"}}{{number}}{{/linkTo}}
+          {{/if}}
+        {{/with}}
+
+        <p class="summary">
+          <span class="duration_label">{{t repositories.duration}}:</span>
+          <abbr class="duration" {{bindAttr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>,
+          <span class="finished_at_label">{{t repositories.finished_at}}:</span>
+          <abbr class="finished_at timeago" {{bindAttr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
+        </p>
+
+        <div class="indicator"><span></span></div>
       {{/with}}
-
-      <p class="summary">
-        <span class="duration_label">{{t repositories.duration}}:</span>
-        <abbr class="duration" {{bindAttr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>,
-        <span class="finished_at_label">{{t repositories.finished_at}}:</span>
-        <abbr class="finished_at timeago" {{bindAttr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
-      </p>
-
-      <div class="indicator"><span></span></div>
-    {{/with}}
+    {{else}}
+      <p class="empty">You don't have any repos set up on Travis CI</p>
+    {{/collection}}
   {{else}}
-    <p class="empty"></p>
-  {{/collection}}
+    <div class="loading"><span>Loading</span></div>
+  {{/if}}
 </div>

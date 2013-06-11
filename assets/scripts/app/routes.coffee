@@ -103,6 +103,7 @@ Travis.Router.map ->
       @resource 'pullRequests', path: '/pull_requests'
       @resource 'branches', path: '/branches'
 
+  @route 'getting_started'
   @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
   @route 'notFound', path: '/not-found'
@@ -139,6 +140,16 @@ Travis.SetupLastBuild = Ember.Mixin.create
   lastBuildDidChange: ->
     build = @controllerFor('repo').get('repo.lastBuild')
     @controllerFor('build').set('build', build)
+
+Travis.GettingStartedRoute = Ember.Route.extend
+  setupController: ->
+    $('body').attr('id', 'getting-started')
+    @controllerFor('application').connectLayout('simple')
+    @_super.apply(this, arguments)
+
+  renderTemplate: ->
+    @render 'top', outlet: 'top'
+    @_super.apply(this, arguments)
 
 Travis.IndexCurrentRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin, Travis.SetupLastBuild,
   renderTemplate: ->
