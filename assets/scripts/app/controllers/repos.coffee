@@ -50,6 +50,10 @@ Travis.ReposController = Ember.ArrayController.extend
     if content = @get('content')
       content.forEach (r) -> r.updateTimes()
 
+  transitionToRoot: ->
+    @container.lookup('router:main').send('renderDefaultTemplate')
+    @container.lookup('router:main').transitionTo('index.current')
+
   activate: (tab, params) ->
     @set('sortProperties', ['sortOrder'])
     tab ||= @get('defaultTab')

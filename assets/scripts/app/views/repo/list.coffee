@@ -27,6 +27,7 @@
     currentUserBinding: 'controller.currentUser.id'
 
     activate: (name) ->
+      @get('controller').transitionToRoot()
       @get('controller').activate(name)
 
     classRecent: (->
