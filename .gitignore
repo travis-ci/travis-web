@@ -7,3 +7,4 @@
 .sass-cache
 .localeapp/key
 /assets/scripts/config/locales.js
+.DS_Store
