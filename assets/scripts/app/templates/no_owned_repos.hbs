@@ -1,5 +1,5 @@
 <div id="getting-started">
-  <h2>Welcome to Travis CI!</h2>
+  <h3>Welcome to Travis CI!</h3>
 
   <p>
     Hey, it looks like you're new around here and have yet to set up your first repository on Travis CI.
@@ -19,13 +19,20 @@
   </p>
 
   <p>
-    Once you've enabled one of your projects, push some code, and we'll start processing your builds. Wait a
-    little bit and reload the page, and your newly setup and built project will show up on the right. You'll also
-    get an email notifying you of your finished build.
-  </p>
+    Once you've enabled one of your projects, add a <a
+    href="http://about.travis-ci.org/docs/user/build-configuration/#.travis.yml-file%3A-what-it-is-and-how-it-is-used"><code>.travis.yml</code></a> to your project, push some code, and we'll start processing your builds. Wait a
+    whee while and reload the page, and your newly setup and built project will show up on the right.  </p>
 
   <p>
     <img src="/images/getting-started/first-build.jpg" width="550"/>
+  </p>
+
+  <p>
+    We'll also send you an email once the build has finished.
+  </p>
+
+  <p>
+    <img src="/images/getting-started/build-email.jpg" width="550"/>
   </p>
 
   <p>
@@ -34,4 +41,15 @@
     href="http://about.travis-ci.org/docs/user/build-configuration/">build
     environment</a> to fit your project's needs.
   </p>
+
+  <p>
+    You can also configure how you want to be notified of build results. Email is only one channel you can use. We
+    support <a href="http://about.travis-ci.org/docs/user/notifications/#Campfire-notification">Campfire</a>, <a
+    href="http://about.travis-ci.org/docs/user/notifications/#HipChat-notification">HipChat</a>, <a
+    href="http://about.travis-ci.org/docs/user/notifications/#Flowdock-notification">Flowdock</a>, <a
+    href="http://about.travis-ci.org/docs/user/notifications/#IRC-notification">IRC</a>, and <a
+    href="http://about.travis-ci.org/docs/user/notifications/#Webhook-notification">webhooks</a>. To avoid
+    exposing any private credentials, you can shield them from the public using <a
+    href="http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables">encrypted
+    configuration settings</a>.
 </div>
