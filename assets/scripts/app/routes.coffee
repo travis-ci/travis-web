@@ -125,7 +125,7 @@ Travis.SetupLastBuild = Ember.Mixin.create
     repo = @controllerFor('repo').get('repo')
     if repo && repo.get('isLoaded') && !repo.get('lastBuild')
       Ember.run.next =>
-        @render('builds/not_found', outlet: 'pane', into: 'repo')
+        @render('builds/not_found', outlet: 'pane', into: 'repo', controller: 'buildNotFound')
 
 Travis.GettingStartedRoute = Ember.Route.extend
   setupController: ->

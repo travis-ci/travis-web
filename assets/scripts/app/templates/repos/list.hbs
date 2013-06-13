@@ -14,11 +14,14 @@
             {{#linkTo "repo" this class="slug"}}{{slug}}{{/linkTo}}
           {{/if}}
         </div>
-        {{#with lastBuildHash}}
-          {{#if repo.slug}}
-            {{#linkTo "build" repo id class="last_build"}}{{number}}{{/linkTo}}
-          {{/if}}
-        {{/with}}
+
+        {{#if lastBuild}}
+          {{#with lastBuildHash}}
+            {{#if repo.slug}}
+              {{#linkTo "build" repo id class="last_build"}}{{number}}{{/linkTo}}
+            {{/if}}
+          {{/with}}
+        {{/if}}
 
         <p class="summary">
           <span class="duration-icon"></span><span class="duration_label">{{t repositories.duration}}:</span>
