@@ -21,6 +21,9 @@ Em.View.reopen
 
       $('.popup').removeClass('display')
 
+Travis.GettingStartedView = Travis.View.extend
+  templateName: 'no_owned_repos'
+
 require 'views/accounts'
 require 'views/application'
 require 'views/build'

@@ -147,6 +147,18 @@ Travis.SetupLastBuild = Ember.Mixin.create
     build = @controllerFor('repo').get('repo.lastBuild')
     @controllerFor('build').set('build', build)
 
+Travis.GettingStartedRoute = Ember.Route.extend
+  setupController: ->
+    $('body').attr('id', 'home')
+    @container.lookup('controller:repos').activate()
+    @container.lookup('controller:application').connectLayout 'home'
+    @_super.apply(this, arguments)
+
+  renderTemplate: ->
+    @render 'top', outlet: 'top'
+    @render 'repos',   outlet: 'left'
+    @_super.apply(this, arguments)
+
 Travis.IndexCurrentRoute = Ember.Route.extend Travis.DontSetupModelForControllerMixin, Travis.SetupLastBuild,
   renderDefaultTemplate: ->
     @render 'repo'
