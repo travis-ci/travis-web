@@ -5,8 +5,6 @@ Ember.Router.reopen
   location: (if testMode? then Ember.NoneLocation.create() else Travis.Location.create())
 
   handleURL: (url) ->
-    Travis.autoSignIn() unless Travis.__container__.lookup('controller:currentUser').get('content')
-
     url = url.replace(/#.*?$/, '')
     try
       @_super(url)
@@ -26,22 +24,35 @@ Ember.Route.reopen
     renderNoOwnedRepos: ->
       @render('no_owned_repos', outlet: 'main')
 
+    error: (error) ->
+      if error == 'needs-auth'
+        @transitionTo('auth')
+      else
+        throw(error)
+
     afterSignIn: (path) ->
       @afterSignIn(path)
 
     afterSignOut: ->
       @afterSignOut()
 
-  afterSignIn: (path) ->
-    @routeToPath(path)
+  afterSignIn: ->
+    if transition = Travis.auth.get('afterSignInTransition')
+      Travis.auth.set('afterSignInTransition', null)
+      transition.retry()
 
   afterSignOut: ->
-    @routeToPath('/')
+    @transitionTo('index.current')
 
-  routeToPath: (path) ->
-    return unless path
-    @router.handleURL(path)
-    @router.location.setURL(path)
+  beforeModel: (transition) ->
+    Travis.autoSignIn() unless @signedIn()
+
+    if !@signedIn() && @get('needsAuth')
+      Travis.auth.set('afterSignInTransition', transition)
+      transition.abort()
+      Ember.RSVP.reject("needs-auth")
+    else
+      @_super.apply(this, arguments)
 
   signedIn: ->
     @controllerFor('currentUser').get('content')
@@ -64,7 +75,6 @@ Travis.Router.reopen
     this.container.lookup('controller:repo').set('lineNumber', null)
 
     @_super.apply this, arguments
-
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->
@@ -346,7 +356,7 @@ Travis.AccountRoute = Ember.Route.extend
       proxy
 
   serialize: (account) ->
-    if account
+    if account && account.get
       { login: account.get('login') }
     else
       {}

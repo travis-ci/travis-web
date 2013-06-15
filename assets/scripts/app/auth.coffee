@@ -70,10 +70,9 @@
     Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
     if router = Travis.__container__.lookup('router:main')
-      path = @readAfterSignInPath()
       Ember.run.next =>
         try
-          router.send('afterSignIn', path)
+          router.send('afterSignIn')
         catch e
           throw e unless e =~ /There are no active handlers/
         @refreshUserData(data.user)
@@ -99,14 +98,6 @@
     user = Travis.User.find(user.id)
     user.get('permissions')
     user
-
-  storeAfterSignInPath: (path) ->
-    Travis.sessionStorage.setItem('travis.after_signin_path', path)
-
-  readAfterSignInPath: ->
-    path = Travis.sessionStorage.getItem('travis.after_signin_path')
-    Travis.sessionStorage.removeItem('travis.after_signin_path')
-    path
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()
