@@ -5,6 +5,7 @@ require 'travis/model'
   ownerName:   DS.attr('string')
   description: DS.attr('string')
   active:      DS.attr('boolean')
+  admin:       DS.attr('boolean')
 
   account: (->
     @get('slug').split('/')[0]

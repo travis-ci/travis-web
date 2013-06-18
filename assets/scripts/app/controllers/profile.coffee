@@ -35,7 +35,15 @@ Travis.ProfileController = Travis.Controller.extend
     @reloadHooks()
 
   reloadHooks: ->
-    @set('hooks', Travis.Hook.find(owner_name: @get('params.login') || @get('user.login')))
+    @set('allHooks', Travis.Hook.find(all: true, owner_name: @get('params.login') || @get('user.login')))
+
+  hooks: (->
+    @get('allHooks').filter (hook) -> hook.get('admin')
+  ).property('allHooks.length', 'allHooks')
+
+  unAdminisetableHooks: (->
+    @get('allHooks').filter (hook) -> !hook.get('admin')
+  ).property('allHooks.length', 'allHooks')
 
   viewUser: ->
     @connectTab('user')

@@ -2,7 +2,7 @@
   {{{t profiles.show.message.your_repos}}}
 </p>
 
-{{#if hooks.isLoaded}}
+{{#if allHooks.isLoaded}}
   {{#if user.isSyncing}}
     <p class="message loading">
       <span>Please wait while we sync from GitHub</span>
@@ -35,10 +35,33 @@
         </li>
       {{else}}
         <li>
-          You do not seem to have any repositories that we could sync.
+          {{#if unAdminisetableHooks.length}}
+            You do not have any repositories, which you can manage
+          {{else}}
+            You do not seem to have any repositories that we could sync.
+          {{/if}}
         </li>
       {{/each}}
     </ul>
+
+    {{#if unAdminisetableHooks.length}}
+      <div id="unadministerable-hooks">
+        <h3>Repositories without admin access</h3>
+
+        <p class="tip">
+          These are the repositories, which we synced, but you do not seem to have admin access for them.
+        </p>
+
+        <ul>
+          {{#each hook in unAdminisetableHooks}}
+            <li {{bindAttr class="hook.active:active"}}>
+              <a {{bindAttr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+              <p class="description">{{hook.description}}</p>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
   {{/if}}
 {{else}}
   <p class="message loading">

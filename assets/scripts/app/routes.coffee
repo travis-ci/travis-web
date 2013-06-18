@@ -328,7 +328,7 @@ Travis.ProfileRoute = Ember.Route.extend
 
   setupController: ->
     @container.lookup('controller:application').connectLayout('profile')
-    @container.lookup('controller:accounts').set('content', Travis.Account.find())
+    @container.lookup('controller:accounts').set('content', Travis.Account.find(all: true))
 
   renderTemplate: ->
     $('body').attr('id', 'profile')
