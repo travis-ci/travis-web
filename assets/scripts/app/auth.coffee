@@ -83,7 +83,7 @@
       if @signedIn()
         data.user.token = user.token
         @storeData(data, Travis.sessionStorage)
-        @storeData(data, Travis.storage)
+        # @storeData(data, Travis.storage) # messes with become
 
   signedIn: ->
     @get('state') == 'signed-in'
