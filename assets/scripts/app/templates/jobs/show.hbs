@@ -7,7 +7,7 @@
           <span class="status"></span>
           {{#if job.id}}
             {{#if job.repo.slug}}
-              {{#linkTo job repo job}}{{job.number}}{{/linkTo}}
+              {{#linkTo "job" repo job}}{{job.number}}{{/linkTo}}
             {{/if}}
           {{/if}}
         </dd>

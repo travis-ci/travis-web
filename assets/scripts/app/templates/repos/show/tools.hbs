@@ -1,37 +1,37 @@
 <div id="tools">
-  <a href="#" {{action menu target="view"}}></a>
+  <a href="#" {{action "menu" target="view"}}></a>
   <ul class="menu">
     <li>
-      <a href="#" name="status-images" class="open-popup" {{action statusImages target="view"}}>Status Images</a>
+      <a href="#" name="status-images" class="open-popup" {{action "statusImages" target="view"}}>Status Images</a>
     </li>
     {{#if view.displayCancelBuild}}
       <li>
-        <a href="#" {{action cancelBuild target="view"}}
+        <a href="#" {{action "cancelBuild" target="view"}}
           {{bindAttr class="view.canCancelBuild::disabled"}}>Cancel Build</a>
       </li>
     {{/if}}
     {{#if view.displayCancelJob}}
       <li>
-        <a href="#" {{action cancelJob target="view"}}
+        <a href="#" {{action "cancelJob" target="view"}}
           {{bindAttr class="view.canCancelJob::disabled"}}>Cancel Job</a>
       </li>
     {{/if}}
     {{#if view.displayRequeueBuild}}
       <li>
-        <a href="#" {{action requeueBuild target="view"}}
+        <a href="#" {{action "requeueBuild" target="view"}}
           {{bindAttr class="view.canRequeueBuild::disabled"}}>Restart Build</a>
       </li>
     {{/if}}
     {{#if view.displayRequeueJob}}
       <li>
-        <a href="#" {{action requeueJob target="view"}}
+        <a href="#" {{action "requeueJob" target="view"}}
           {{bindAttr class="view.canRequeueJob::disabled"}}> Restart Job </a>
       </li>
     {{/if}}
     {{#if view.displayRegenerateKey}}
       <li>
         <a href="#" name="regenerate-key"
-          {{action regenerateKeyPopup target="view"}}
+          {{action "regenerateKeyPopup" target="view"}}
           {{bindAttr class=":open-popup view.canRegenerateKey::disabled"}}>
             Regenerate Key
         </a>
@@ -48,7 +48,7 @@
 </div>
 
 <div id="regenerate-key" class="popup">
-  <a href="#" class="close" {{action popupClose target="view"}}></a>
+  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
   <p>
     Do you really want to regenerate ssl keys for this repository? Please note that
     any data, which is encrypted, such as notification services credentials or secure
@@ -57,14 +57,14 @@
   </p>
 
   <p>
-    <a class="sync_now button" {{action regenerateKey target="view"}}>Yes! Do it!</a>
+    <a class="sync_now button" {{action "regenerateKey" target="view"}}>Yes! Do it!</a>
     <span class="or">or</span>
-    <a href="#" class="cancel" {{action popupClose target="view"}}>Cancel</a>
+    <a href="#" class="cancel" {{action "popupClose" target="view"}}>Cancel</a>
   </p>
 </div>
 
 <div id="regeneration-success" class="popup">
-  <a href="#" class="close" {{action popupClose target="view"}}></a>
+  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
   <p>
     Key for this repository has been regenerated. If you used previous key
     for encryption, you will need encrypt your data again with the new key.

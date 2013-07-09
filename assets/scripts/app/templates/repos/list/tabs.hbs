@@ -1,13 +1,13 @@
 <ul class="tabs">
   <li id="tab_owned" {{bindAttr class="view.classOwned"}}>
-    <h5><a {{action activate "owned" target="view"}}>{{t layouts.application.my_repositories}}</a></h5>
+    <h5><a {{action "activate" "owned" target="view"}}>{{t layouts.application.my_repositories}}</a></h5>
   </li>
 
   <li id="tab_recent" {{bindAttr class="view.classRecent"}}>
-    <h5><a {{action activate "recent" target="view"}}>{{t layouts.application.recent}}</a></h5>
+    <h5><a {{action "activate" "recent" target="view"}}>{{t layouts.application.recent}}</a></h5>
   </li>
 
   <li id="tab_search" {{bindAttr class="view.classSearch"}}>
-    <h5><a {{action activate "search" target="view"}}>{{t layouts.application.search}}</a></h5>
+    <h5><a {{action "activate" "search" target="view"}}>{{t layouts.application.search}}</a></h5>
   </li>
 </ul>

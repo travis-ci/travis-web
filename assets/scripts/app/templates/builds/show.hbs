@@ -8,7 +8,7 @@
         <span class="status"></span>
         {{#if build.id}}
           {{#if build.repo.slug}}
-            {{#linkTo build repo build}}{{build.number}}{{/linkTo}}
+            {{#linkTo "build" repo build}}{{build.number}}{{/linkTo}}
           {{/if}}
         {{/if}}
       </dd>

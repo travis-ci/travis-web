@@ -20,7 +20,7 @@
     </ul>
 
     {{#if queue.isMore}}
-      <a {{action showAll queue}} class="show-more-jobs">
+      <a {{action "showAll" queue}} class="show-more-jobs">
         {{queue.leftLength}} more jobs - show all
       </a>
     {{/if}}

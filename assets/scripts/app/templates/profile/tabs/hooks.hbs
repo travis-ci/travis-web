@@ -10,7 +10,7 @@
   {{else}}
     <p class="message">
       Last synchronized from GitHub: {{formatTime user.syncedAt}}
-      <a class="sync_now button" {{action sync}}>
+      <a class="sync_now button" {{action "sync"}}>
         Sync now
       </a>
     </p>
@@ -24,7 +24,7 @@
 
           <div class="controls">
             <a {{bindAttr href="hook.urlGithubAdmin"}} class="github-admin tool-tip" title="Github service hooks admin page"></a>
-            <a {{action toggle hook}} class="switch">
+            <a {{action "toggle" hook}} class="switch">
               {{#if hook.active}}
                 ON
               {{else}}
