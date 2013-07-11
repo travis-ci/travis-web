@@ -83,6 +83,8 @@ $.extend Travis.Pusher.prototype,
         { job: data }
       when 'worker:added', 'worker:updated', 'worker:removed'
         { worker: data }
+      when 'annotation:created', 'annotation:updated'
+        { annotation: data }
 
   warn: (type, warning) ->
     console.warn(warning) unless @ignoreWarning(warning)
