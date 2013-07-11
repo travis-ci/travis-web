@@ -18,6 +18,8 @@ require 'travis/model'
   build:  DS.belongsTo('Travis.Build')
   commit: DS.belongsTo('Travis.Commit')
 
+  annotations: DS.hasMany('Travis.Annotation')
+
   # this is a fake relationship just to get rid
   # of ember data's bug: https://github.com/emberjs/data/issues/758
   # TODO: remove when this issue is fixed
