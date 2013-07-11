@@ -54,11 +54,7 @@
   </dl>
 
   {{#unless build.isMatrix}}
-    <div id="annotations">
-      {{#each annotation in build.jobs.firstObject.annotations}}
-        <div class="annotation"><a {{bindAttr href="annotation.url"}}>{{annotation.providerName}}</a>: {{annotation.description}}</div>
-      {{/each}}
-    </div>
+    {{view Travis.AnnotationsView annotationsBinding="build.jobs.firstObject.annotations"}}
   {{/unless}}
 
   {{#if build.isMatrix}}

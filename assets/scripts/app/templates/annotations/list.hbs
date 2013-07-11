@@ -1,0 +1,8 @@
+<div id="annotations">
+  {{#each annotation in view.annotations}}
+    <div class="annotation">
+      <a {{bindAttr href="annotation.url"}}>{{annotation.providerName}}</a>:
+      {{annotation.description}}
+    </div>
+  {{/each}}
+</div>

@@ -25,6 +25,7 @@ Travis.GettingStartedView = Travis.View.extend
   templateName: 'no_owned_repos'
 
 require 'views/accounts'
+require 'views/annotation'
 require 'views/application'
 require 'views/build'
 require 'views/events'
