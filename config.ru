@@ -9,7 +9,9 @@ class RedirectSubdomain < Struct.new(:app, :from)
   def call(env)
     request = Rack::Request.new(env)
     if request.host == from
-      [301, { 'Location' => "https://travis-ci.org/#{request.fullpath}", 'Content-Type' => 'text/html' }, []]
+      # Make sure that we don't have https://travis-ci.org//owner/repo
+      fullpath = "/#{request.fullpath}".gsub(%r{\A//}, '/')
+      [301, { 'Location' => "https://travis-ci.org#{fullpath}", 'Content-Type' => 'text/html' }, []]
     else
       app.call(env)
     end
