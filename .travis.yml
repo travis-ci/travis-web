@@ -19,3 +19,10 @@ before_script:
   - "test $TEST_SUITE = \"ruby\" && gem install travis-artifacts || true"
   - "bundle exec rakep"
   - "phantomjs --version"
+after_script:
+  - "test $TEST_SUITE = \"ruby\" && test $TRAVIS_PULL_REQUEST = \"false\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public/scripts:scripts --path public/styles:styles || true"
+
+notifications:
+  irc: "irc.freenode.org#travis"
+  campfire:
+    secure: "JJezWGD9KJY/LC2aznI3Zyohy31VTIhcTKX7RWR4C/C8YKbW9kZv3xV6Vn11\nSHxJTeZo6st2Bpv6tjlWZ+HCR09kyCNavIChedla3+oHOiuL0D4gSo+gkTNW\nUKYZz9mcQUd9RoQpTeyxvdvX+l7z62/7JwFA7txHOqxbTS8jrjc="
