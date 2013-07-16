@@ -51,3 +51,7 @@ Travis.StatusImagesView = Em.View.extend
   asciidocStatusImage: (->
     "image:#{@get('statusImageUrl')}[\"Build Status\", link=\"#{@get('urlRepo')}\"]"
   ).property('statusImageUrl')
+
+  rstStatusImage: (->
+    ".. image:: #{@get('statusImageUrl')}   :target: #{@get('urlRepo')}"
+  ).property('statusImageUrl')
