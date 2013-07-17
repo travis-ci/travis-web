@@ -25,7 +25,11 @@
           <dd class="commit"><a {{bindAttr href="controller.urlGithubCommit"}}>{{formatCommit this}}</a></dd>
           {{#if ../job.build.pullRequest}}
             <dt>{{t builds.pull_request}}</dt>
-            <dd class="pull_request"><a {{bindAttr href="compareUrl"}}>#{{job.build.pullRequestNumber}} {{job.build.pullRequestTitle}}</a></dd>
+            <dd class="pull_request">
+              {{#if compareUrl}}
+                <a {{bindAttr href="job.commit.compareUrl"}}>#{{job.build.pullRequestNumber}} {{job.build.pullRequestTitle}}</a>
+              {{/if}}
+            </dd>
           {{else}}
             {{#if compareUrl}}
               <dt>{{t jobs.compare}}</dt>
