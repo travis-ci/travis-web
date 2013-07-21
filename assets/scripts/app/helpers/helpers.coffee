@@ -71,16 +71,23 @@ require 'config/emoij'
 
   githubify: (text, owner, repo) ->
     self = this
-    text = text.replace @_githubRefferenceRegexp, (refference, matchedOwner, matchedRepo, matchedNumber) ->
-      self._githubRefferenceLink(refference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
+    text = text.replace @_githubReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedNumber) ->
+      self._githubReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
+    text = text.replace @_githubUserRegexp, (reference, username) ->
+      self._githubUserLink(reference, username)
     text
 
-  _githubRefferenceLink: (refference, current, matched) ->
+  _githubReferenceLink: (reference, current, matched) ->
     owner = matched.owner || current.owner
     repo = matched.repo || current.repo
-    "<a href=\"http://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{refference}</a>"
+    "<a href=\"http://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
 
-  _githubRefferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?#(\\d+)", 'g')
+  _githubReferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g')
+
+  _githubUserRegexp: new RegExp("@([\\w-]+)", 'g')
+
+  _githubUserLink: (reference, username) ->
+    "<a href=\"http://github.com/#{username}\">#{reference}</a>"
 
   _normalizeDateString: (string) ->
     if window.JHW
