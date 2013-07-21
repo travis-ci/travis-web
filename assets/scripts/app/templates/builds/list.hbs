@@ -32,7 +32,7 @@
             {{/if}}
           </td>
           <td class="message">
-            {{{formatMessage commit.message short="true"}}}
+            {{{formatMessage commit.message short="true" repoBinding=build.repo}}}
           </td>
           <td class="commit">
             <a {{bindAttr href="view.urlGithubCommit"}}>

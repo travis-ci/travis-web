@@ -47,7 +47,7 @@
         </div>
       {{/with}}
       <dt>{{t jobs.message}}</dt>
-      <dd class="message">{{formatMessage job.commit.message}}</dd>
+      <dd class="message">{{formatMessage job.commit.message repoBinding=job.repo}}</dd>
       <dt>{{t jobs.config}}</dt>
       <dd class="config">{{formatConfig job.config}}</dd>
     </dl>
