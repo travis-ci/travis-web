@@ -70,24 +70,17 @@ require 'config/emoij'
       if result.length > 0 then result.join(' ') else '-'
 
   githubify: (text, owner, repo) ->
-    refferences = text.match(@_githubRefferenceRegexp('g'))
-    if !!refferences
-      self = this
-      for refference in refferences
-        do (refference) ->
-          text = text.replace refference, (refference) ->
-            self._githubRefferenceLink(refference, owner, repo)
-
+    self = this
+    text = text.replace @_githubRefferenceRegexp, (refference, matchedOwner, matchedRepo, matchedNumber) ->
+      self._githubRefferenceLink(refference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
     text
 
-  _githubRefferenceLink: (refference, owner, repo) ->
-    [newOwner, newRepo, issue] = refference.match(@_githubRefferenceRegexp())[1..3]
-    actualOwner = if newOwner? then newOwner else owner
-    actualRepo = if newRepo? then newRepo else repo
-    "<a href=\"http://github.com/#{actualOwner}/#{actualRepo}/issues/#{issue}\">#{refference}</a>"
+  _githubRefferenceLink: (refference, current, matched) ->
+    owner = matched.owner || current.owner
+    repo = matched.repo || current.repo
+    "<a href=\"http://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{refference}</a>"
 
-  _githubRefferenceRegexp: (flags) ->
-    new RegExp("([\\w-]+)?\\/?([\\w-]+)?#(\\d+)", flags)
+  _githubRefferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?#(\\d+)", 'g')
 
   _normalizeDateString: (string) ->
     if window.JHW
