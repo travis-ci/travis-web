@@ -14,7 +14,7 @@ Travis.RepoController = Travis.Controller.extend
     if builds = @get('builds')
       builds.forEach (b) -> b.updateTimes()
 
-    if build = @get('build')
+    if build = @get('controllers.build.build')
       build.updateTimes()
 
     if build && jobs = build.get('jobs')
