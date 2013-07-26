@@ -35,11 +35,11 @@
         {{/if}}
         {{#if authorName}}
           <dt>{{t builds.author}}</dt>
-          <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{authorName}}</a></dd>
+          <dd class="author"><a {{bindAttr href="controller.urlAuthor"}}>{{authorName}}</a></dd>
         {{/if}}
         {{#if committerName}}
           <dt>{{t builds.committer}}</dt>
-          <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{committerName}}</a></dd>
+          <dd class="committer"><a {{bindAttr href="controller.urlCommitter"}}>{{committerName}}</a></dd>
         {{/if}}
       </div>
     {{/with}}
