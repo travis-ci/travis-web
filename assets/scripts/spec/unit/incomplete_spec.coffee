@@ -1,188 +1,83 @@
-record = null
-store = null
-adapterClass = null
+fullPostHash = null
+Post = null
+Author = null
 
-describe 'Travis.Model - incomplete', ->
-  beforeEach ->
-    $.mockjax
-      url: '/foos/1'
-      responseTime: 1
-      responseText: { foo: { id: 1, name: 'foo', description: 'bar' } }
+module "Travis.Model - incomplete",
+  setup: ->
+    fullPostHash = {
+      id: '1',
+      title: 'foo',
+      published_at: 'today',
 
-    Travis.Foo = Travis.Model.extend
-      name:        DS.attr('string')
-      description: DS.attr('string')
-      lastName:    DS.attr('string')
+      author_id: '1'
+    }
 
-      bar:         DS.belongsTo('Travis.Bar')
-      niceBar:     DS.belongsTo('Travis.Bar')
-      veryNiceBar: DS.belongsTo('Travis.Bar')
+    Author = Travis.Model.extend()
 
-    Travis.Foo.toString = -> 'Travis.Foo'
+    Post = Travis.Model.extend(
+      title: Ember.attr('string'),
+      publishedAt: Ember.attr('string', key: 'published_at'),
 
-    Travis.Bar = Travis.Model.extend
-      name: DS.attr('string')
-      foos: DS.hasMany('Travis.Foo')
+      author: Ember.belongsTo(Author, { key: 'author_id' })
+    )
 
-    Travis.Bar.toString = -> 'Travis.Bar'
+    Post.adapter = Ember.FixtureAdapter.create()
 
-    adapterClass = Travis.RestAdapter.extend()
-    adapterClass.map 'Travis.Foo',
-      veryNiceBar: { key: 'very_nice_bar_indeed_id' }
-      niceBar: { key: 'nice_bar_id' }
+test "record is marked as incomplete if attributes are missing when loading a record", ->
+  Post.load([{ id: '1', title: 'foo' }])
 
-    store = Travis.Store.create
-      adapter: adapterClass.create()
+  record = Post.find('1')
+  ok(record.get('incomplete'), 'record should be incomplete')
+  equal(record.get('title'), 'foo', 'attributes should be accessible')
 
-  afterEach ->
-    delete Travis.Foo
-    delete Travis.Bar
-    store.destroy()
+test "record is marked as complete if missing attributes are loaded", ->
+  Post.load([{ id: '1', title: 'foo' }])
 
-  it 'allows to merge many times', ->
-    store.load(Travis.Bar, { id: '1', foo_ids: ['1', '2'] }, { id: '1' })
-    store.load(Travis.Foo, { id: '1', bar_id: '1' }, { id: '1' })
-    store.load(Travis.Foo, { id: '2', bar_id: '1' }, { id: '2' })
+  record = Post.find('1')
+  ok(record.get('incomplete'), 'record should be complete')
+  equal(record.get('title'), 'foo', 'attributes should be accessible')
 
-    record = store.find(Travis.Bar, 1)
-    store.find(Travis.Foo, 1)
-    store.find(Travis.Foo, 2)
+  record.load('1', fullPostHash)
 
-    record.get('foos')
-    store.loadIncomplete(Travis.Bar, id: 1, name: 'foo')
-    store.loadIncomplete(Travis.Bar, id: 1, name: 'bar')
+  ok(!record.get('incomplete'), 'record should be complete')
 
-    expect( record.get('foos.length') ).toEqual(2)
-    expect( record.get('name') ).toEqual('bar')
+test "record is marked as incomplete if belongsTo key is missing", ->
+  delete(fullPostHash.author_id)
+  Post.load([fullPostHash])
 
-  describe 'with incomplete record with loaded associations', ->
-    beforeEach ->
-      attrs = {
-        id: 1
-        bar_id: 2
-        nice_bar_id: 3
-        very_nice_bar_indeed_id: 4
-      }
-      store.loadIncomplete(Travis.Foo, attrs)
-      record = store.find Travis.Foo, 1
-      store.load(Travis.Bar, id: 2)
-      store.load(Travis.Bar, id: 3)
-      store.load(Travis.Bar, id: 4)
+  record = Post.find('1')
+  ok(record.get('incomplete'), 'record should be incomplete')
 
-    it 'does not load record on association access', ->
-      expect( record.get('bar.id') ).toEqual '2'
-      expect( record.get('niceBar.id') ).toEqual '3'
-      expect( record.get('veryNiceBar.id') ).toEqual '4'
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeTruthy()
+test "proeperty can be loaded as null, which means that the property is still loaded", ->
+  fullPostHash.author_id = null
+  fullPostHash.title = null
 
-  describe 'with incomplete record without loaded associations', ->
-    beforeEach ->
-      attrs = {
-        id: 1
-      }
-      store.loadIncomplete(Travis.Foo, attrs)
-      record = store.find Travis.Foo, 1
+  Post.load([fullPostHash])
 
-    it 'loads record based on regular association key', ->
-      record.get('bar')
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeFalsy()
+  record = Post.find('1')
+  ok(!record.get('incomplete'), 'record should be complete')
+  equal(record.get('title'), null, 'title should be null')
 
-    it 'loads record based on camel case association key', ->
-      record.get('niceBar')
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeFalsy()
+test "when accessing missing property, record is loaded", ->
+  Post.FIXTURES = [fullPostHash]
+  Post.load([{ id: '1' }])
 
-    it 'loads record based on ssociation with explicit key', ->
-      record.get('veryNiceBar')
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeFalsy()
+  record = null
+  Ember.run -> record = Post.find('1')
 
-  describe 'with incomplete record', ->
-    beforeEach ->
-      attrs = {
-        id: 1
-        name: 'foo'
-        last_name: 'foobar'
-      }
-      store.loadIncomplete(Travis.Foo, attrs)
-      record = store.find Travis.Foo, 1
+  ok(record.get('incomplete'), 'record should be incomplete')
 
-    it 'shows if attribute is loaded', ->
-      expect( record.isAttributeLoaded('name') ).toBeTruthy()
-      expect( record.isAttributeLoaded('description') ).toBeFalsy()
+  publishedAt = null
+  Ember.run -> publishedAt = record.get('publishedAt')
 
-    it 'does not trigger a request when getting known attribute', ->
-      expect( record.get('name') ).toEqual 'foo'
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeTruthy()
+  ok(!publishedAt, 'publishedAt should be missing')
 
-    it 'loads missing data if getPath is used', ->
-      other = Em.Object.create(record: record)
-      expect( other.get('record.description') ).toBeNull()
+  stop()
+  setTimeout( ->
+    start()
 
-      waits 50
-      runs ->
-        expect( other.get('record.description') ).toEqual 'bar'
-        expect( record.get('isComplete') ).toBeTruthy()
+    Ember.run -> publishedAt = record.get('publishedAt')
+    equal(publishedAt, 'today', 'publishedAt should be loaded')
+    ok(!record.get('incomplete'), 'record should be complete')
+  , 50)
 
-    it 'loads missing data on try to get it', ->
-      expect( record.get('name') ).toEqual 'foo'
-      expect( record.get('description') ).toBeNull()
-      waits 50
-      runs ->
-        expect( record.get('description') ).toEqual 'bar'
-        expect( record.get('isComplete') ).toBeTruthy()
-
-    it 'does not set incomplete on the record twice', ->
-      record.get('description')
-      waits 50
-      runs ->
-        store.loadIncomplete(Travis.Foo, id: 1)
-        expect( record.get('incomplete') ).toBeFalsy()
-
-    it 'does not load data on non attribute', ->
-      record.get('foobarbaz')
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeTruthy()
-
-    it 'works with camel case values', ->
-      expect( record.get('lastName') ).toEqual 'foobar'
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeTruthy()
-
-    it 'adds takes into account additional data loaded as incomplete', ->
-      store.loadIncomplete(Travis.Foo, { id: 1, description: 'baz' })
-      record = store.find Travis.Foo, 1
-      expect( record.get('description') ).toEqual 'baz'
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeTruthy()
-
-  describe 'with complete record', ->
-    beforeEach ->
-      id = '5'
-      attrs = {
-        id: id
-        name: 'foo'
-      }
-
-      store.load(Travis.Foo, attrs, { id: attrs.id })
-      record = store.find(Travis.Foo, id)
-
-    it 'is marked as completed', ->
-      expect( record.get('incomplete') ).toBeFalsy()
-
-    it 'allows to get regular attribute', ->
-      expect( record.get('name') ).toEqual 'foo'
-
-    it 'allows to check attribute state', ->
-      expect( record.isAttributeLoaded('name') ).toBeFalsy()

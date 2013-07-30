@@ -1,12 +1,11 @@
-describe 'on the "build" state', ->
-  beforeEach ->
-    app '/travis-ci/travis-core/builds/1'
+module "Build page",
+  setup: ->
+    Ember.run -> Travis.advanceReadiness()
+  teardown: ->
+    Ember.run -> Travis.reset()
 
-    waitFor reposRendered
-    runs ->
-      waitFor buildRendered
-
-  it 'displays the expected stuff', ->
+test "displaying information on build page", ->
+  visit('/travis-ci/travis-core/builds/1').then ->
     listsRepos [
       { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }
       { slug: 'travis-ci/travis-core',   build: { number: 1, url: '/travis-ci/travis-core/builds/1',   duration: '30 sec', finishedAt: '3 minutes ago' } }
@@ -48,14 +47,8 @@ describe 'on the "build" state', ->
         { color: '', id: 3, number: '1.3', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: 'jruby' }
       ]
 
-describe 'on the "current" state', ->
-  beforeEach ->
-    app '/travis-ci/travis-core'
-    waitFor reposRendered
-    runs ->
-      waitFor buildRendered
-
-  it 'correctly updates values on pusher build:started event', ->
+test "updating current build", ->
+  visit('/travis-ci/travis-core').then ->
     payload =
       build:
         id: 11
@@ -69,7 +62,11 @@ describe 'on the "current" state', ->
         result: 1
         message: 'commit message 3'
         commit: 'foo1234'
+        branch: 'master'
         state: 'started'
+        config: {}
+        pull_request: false
+        compare_url: 'http://github.com/compare/0123456..1234567'
       repository:
         id: 1
         last_build_number: '3'
@@ -78,8 +75,7 @@ describe 'on the "current" state', ->
     Em.run ->
       Travis.receive 'build:started', payload
 
-    waits 10
-    runs ->
+    wait().then ->
       displaysSummaryBuildLink '/travis-ci/travis-core/builds/11', '3'
 
       displaysSummary
@@ -92,4 +88,3 @@ describe 'on the "current" state', ->
         finishedAt: 'less than a minute ago'
         duration: '55 sec'
         message: 'commit message 3'
-

@@ -1,86 +1,113 @@
-store = null
 record = null
 
-describe 'Travis.Job', ->
-  beforeEach ->
-    store = Travis.Store.create()
+module "Travis.Job",
+  setup: ->
+  teardown: ->
+    Travis.Job.resetData()
+    Travis.Build.resetData()
 
-  afterEach ->
-    store.destroy()
+test 'configKeys takes into account the keys of other jobs', ->
+  buildConfig = { rvm: ['1.9.3', '2.0.0'] }
+  Travis.Build.load [{ id: '1', job_ids: ['1', '2', '3'], config: buildConfig }]
 
-  describe 'configKeys', ->
-    it 'takes into account the keys of other jobs', ->
-      buildConfig = { rvm: ['1.9.3', '2.0.0'] }
-      store.load Travis.Build, { id: '1', job_ids: ['1', '2', '3'], config: buildConfig }, { id: '1' }
+  Travis.Job.load [{ id: '1', config: { rvm: '1.9.3', env: 'FOO=foo'       }, build_id: '1' }]
+  Travis.Job.load [{ id: '2', config: { rvm: '2.0.0', gemfile: 'Gemfile.1' },  build_id: '1' }]
+  Travis.Job.load [{ id: '3', config: { rvm: '1.9.3', jdk: 'OpenJDK'       },  build_id: '1' }]
 
-      store.load Travis.Job, { id: '1', config: { rvm: '1.9.3', env: 'FOO=foo'       }, build_id: '1' }, { id: '1' }
-      store.load Travis.Job, { id: '2', config: { rvm: '2.0.0', gemfile: 'Gemfile.1' },  build_id: '1' }, { id: '2' }
-      store.load Travis.Job, { id: '3', config: { rvm: '1.9.3', jdk: 'OpenJDK'       },  build_id: '1' }, { id: '3' }
+  configValues1 = null
+  configValues2 = null
+  configValues3 = null
+  job1 = null
+  job2 = null
+  job3 = null
 
-      job1 = store.find(Travis.Job, '1')
-      job2 = store.find(Travis.Job, '2')
-      job3 = store.find(Travis.Job, '3')
+  Ember.run ->
+    job1 = Travis.Job.find('1')
+    job2 = Travis.Job.find('2')
+    job3 = Travis.Job.find('3')
 
-      expect( job1.get('configValues') ).toEqual( [ '1.9.3', 'FOO=foo', undefined, undefined ] )
-      expect( job2.get('configValues') ).toEqual( [ '2.0.0', undefined, 'Gemfile.1', undefined ] )
-      expect( job3.get('configValues') ).toEqual( [ '1.9.3', undefined, undefined, 'OpenJDK' ] )
+  wait().then ->
+    Ember.run ->
+      configValues1 = job1.get('configValues')
+      configValues2 = job2.get('configValues')
+      configValues3 = job3.get('configValues')
 
-  describe 'incomplete attributes', ->
-    beforeEach ->
-      store.loadIncomplete Travis.Job, { id: 1, state: 'started' }
-      record = store.find Travis.Job, 1
+    deepEqual( configValues1, [ '1.9.3', 'FOO=foo', undefined, undefined ] )
+    deepEqual( configValues2, [ '2.0.0', undefined, 'Gemfile.1', undefined ] )
+    deepEqual( configValues3, [ '1.9.3', undefined, undefined, 'OpenJDK' ] )
 
-    it 'does not load record on duration, finishedAt and result if job is not in finished state', ->
-      record.get('_duration')
-      record.get('finishedAt')
-      record.get('result')
+test 'it does not load record on duration, finishedAt and result if job is not in finished state', ->
+  Travis.Job.load [{ id: 1, state: 'started' }]
 
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeTruthy()
+  Ember.run ->
+    record = Travis.Job.find 1
 
-    it 'loads the rest of the record if it\'s in finished state', ->
-      store.loadIncomplete Travis.Job, { id: 1, state: 'passed' }
-      record = store.find Travis.Job, 1
-      record.get('finishedAt')
+    record.loadTheRest = ->
+      ok(false, 'loadTheRest should not be called')
 
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeFalsy()
+    record.get('_duration')
+    record.get('finishedAt')
+    record.get('result')
 
+  wait().then ->
+    ok(true, 'loadTheRest was not called')
 
-  describe 'with different number of config keys in sibling jobs', ->
-    beforeEach ->
-      buildAttrs =
-        id: 1
-        job_ids: [1, 2]
-        config:
-          jdk: ['oraclejdk7']
-          rvm: ['jruby-head']
+test 'it loads record on duration, finishedAt and result if job is in finished state', ->
+  expect(1)
 
-      store.load Travis.Build, 1, buildAttrs
+  Travis.Job.load [{ id: 1, state: 'passed' }]
 
-      jobAttrs =
-        id: 1
-        build_id: 1
-        config:
-          jdk: 'oraclejdk7'
-          rvm: 'jruby-head'
+  Ember.run ->
+    record = Travis.Job.find 1
 
-      store.load Travis.Job, 1, jobAttrs
+    record.loadTheRest = ->
+      ok(true, 'loadTheRest should be called')
 
-      jobAttrs =
-        id: 2
-        build_id: 1
-        config:
-          jdk: null
-          rvm: 'jruby-head'
+    record.get('finishedAt')
 
-      store.load Travis.Job, 2, jobAttrs
+  wait()
 
-    it 'returns config values for all keys available on build', ->
-      job1 = store.find Travis.Job, 1
-      job2 = store.find Travis.Job, 2
+test 'returns config values for all keys available on build with different number of config keys in sibling jobs', ->
+  buildAttrs =
+    id: 1
+    job_ids: [1, 2]
+    config:
+      jdk: ['oraclejdk7']
+      rvm: ['jruby-head']
 
-      expect( job1.get('configValues') ).toEqual ['oraclejdk7', 'jruby-head']
-      expect( job2.get('configValues') ).toEqual [undefined,    'jruby-head']
+  Travis.Build.load [buildAttrs]
+
+  jobAttrs =
+    id: 1
+    build_id: 1
+    config:
+      jdk: 'oraclejdk7'
+      rvm: 'jruby-head'
+
+  Travis.Job.load [jobAttrs]
+
+  jobAttrs =
+    id: 2
+    build_id: 1
+    config:
+      jdk: null
+      rvm: 'jruby-head'
+
+  Travis.Job.load [jobAttrs]
+
+  configValues1 = null
+  configValues2 = null
+  job1 = null
+  job2 = null
+
+  Ember.run ->
+    job1 = Travis.Job.find(1)
+    job2 = Travis.Job.find(2)
+
+  wait().then ->
+    Ember.run ->
+      configValues1 = job1.get('configValues')
+      configValues2 = job2.get('configValues')
+
+    deepEqual( configValues1, ['oraclejdk7', 'jruby-head'] )
+    deepEqual( configValues2, [undefined,    'jruby-head'] )

@@ -1,46 +1,47 @@
-describe 'Travis.LimitedArray', ->
-  it 'limits given content', ->
-    content = [1, 2, 3]
-    array = Travis.LimitedArray.create content: content, limit: 2
-    expect( array.get('length') ).toEqual 2
-    expect( array.toArray() ).toEqual [1, 2]
+module 'Travis.LimitedArray'
 
-  it 'inserts content at the right place when unshifting', ->
-    content = [1, 2, 3]
-    array = Travis.LimitedArray.create content: content, limit: 2
-    content.unshiftObject 0
-    expect( array.get('length') ).toEqual 2
-    expect( array.toArray() ).toEqual [0, 1]
+test 'limits given content', ->
+  content = [1, 2, 3]
+  array = Travis.LimitedArray.create content: content, limit: 2
+  equal( array.get('length'), 2 )
+  deepEqual( array.toArray(), [1, 2] )
 
-  it 'does not insert content when it\'s inserted not in the limited range', ->
-    content = [1, 2, 3]
-    array = Travis.LimitedArray.create content: content, limit: 2
-    content.pushObject 0
-    expect( array.get('length') ).toEqual 2
-    expect( array.toArray() ).toEqual [1, 2]
+test 'inserts content at the right place when unshifting', ->
+  content = [1, 2, 3]
+  array = Travis.LimitedArray.create content: content, limit: 2
+  content.unshiftObject 0
+  equal( array.get('length'), 2 )
+  deepEqual( array.toArray(), [0, 1] )
 
-  it 'properly removes items', ->
-    content = [1, 2, 3]
-    array = Travis.LimitedArray.create content: content, limit: 2
-    content.shiftObject()
+test 'does not insert content when it\'s inserted not in the limited range', ->
+  content = [1, 2, 3]
+  array = Travis.LimitedArray.create content: content, limit: 2
+  content.pushObject 0
+  equal( array.get('length'), 2 )
+  deepEqual( array.toArray(), [1, 2] )
 
-    expect( array.get('length') ).toEqual 2
-    expect( array.toArray() ).toEqual [2, 3]
+test 'properly removes items', ->
+  content = [1, 2, 3]
+  array = Travis.LimitedArray.create content: content, limit: 2
+  content.shiftObject()
 
-    content.shiftObject()
+  equal( array.get('length'), 2 )
+  deepEqual( array.toArray(), [2, 3] )
 
-    expect( array.get('length') ).toEqual 1
-    expect( array.toArray() ).toEqual [3]
+  content.shiftObject()
 
-    content.shiftObject()
+  equal( array.get('length'), 1 )
+  deepEqual( array.toArray(), [3] )
 
-    expect( array.get('length') ).toEqual 0
+  content.shiftObject()
 
-  it 'allows to expand array to show all items', ->
-    content = [1, 2, 3]
-    array = Travis.LimitedArray.create content: content, limit: 2
+  equal( array.get('length'), 0)
 
-    array.showAll()
+test 'allows to expand array to show all items', ->
+  content = [1, 2, 3]
+  array = Travis.LimitedArray.create content: content, limit: 2
 
-    expect( array.get('length') ).toEqual 3
-    expect( array.toArray() ).toEqual [1, 2, 3]
+  array.showAll()
+
+  equal( array.get('length'), 3)
+  deepEqual( array.toArray(), [1, 2, 3])

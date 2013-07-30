@@ -1,9 +1,11 @@
-describe 'on the "builds" state', ->
-  beforeEach ->
-    app '/travis-ci/travis-core/builds'
-    waitFor buildsRendered
+module "Builds page",
+  setup: ->
+    Ember.run -> Travis.advanceReadiness()
+  teardown: ->
+    Ember.run -> Travis.reset()
 
-  it 'displays the expected stuff', ->
+test "displaying information on builds page", ->
+  visit('/travis-ci/travis-core/builds').then ->
     listsRepos [
       { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }
       { slug: 'travis-ci/travis-core',   build: { number: 1, url: '/travis-ci/travis-core/builds/1',   duration: '30 sec', finishedAt: '3 minutes ago' } }
