@@ -26,9 +26,7 @@
           {{#if ../job.build.pullRequest}}
             <dt>{{t builds.pull_request}}</dt>
             <dd class="pull_request">
-              {{#if compareUrl}}
-                <a {{bindAttr href="job.commit.compareUrl"}}>#{{job.build.pullRequestNumber}} {{job.build.pullRequestTitle}}</a>
-              {{/if}}
+              <a {{bindAttr href="job.build.commit.compareUrl"}}>#{{job.build.pullRequestNumber}} {{job.build.pullRequestTitle}}</a>
             </dd>
           {{else}}
             {{#if compareUrl}}
