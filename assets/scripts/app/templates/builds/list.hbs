@@ -62,6 +62,9 @@
   {{#if displayShowMoreButton}}
     <p>
       {{view view.ShowMoreButton}}
+      {{#if isLoading}}
+        <span class="loading"></span>
+      {{/if}}
     </p>
   {{/if}}
 {{else}}

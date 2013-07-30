@@ -7,6 +7,7 @@ Travis.BuildsController = Em.ArrayController.extend
   repoBinding: 'controllers.repo.repo'
   tabBinding: 'controllers.repo.tab'
   isLoadedBinding: 'content.isLoaded'
+  isLoadingBinding: 'content.isLoading'
 
   showMore: ->
     id     = @get('repo.id')
