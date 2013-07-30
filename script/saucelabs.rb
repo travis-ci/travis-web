@@ -3,25 +3,36 @@
 require 'rubygems'
 require 'selenium-webdriver'
 
-browser = ENV['BROWSER'].split(':')
+driver = nil
 
-caps = Selenium::WebDriver::Remote::Capabilities.send browser[0]
-caps.version = browser[1]
-caps.platform = browser[2]
-caps['tunnel-identifier'] = ENV['TRAVIS_JOB_NUMBER']
-caps['name'] = "Travis ##{ENV['TRAVIS_JOB_NUMBER']}"
+if ENV['TRAVIS']
+  browser = ENV['BROWSER'].split(':')
 
-driver = Selenium::WebDriver.for(
-  :remote,
-  :url => "http://#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}@localhost:4445/wd/hub",
-  :desired_capabilities => caps)
+  caps = Selenium::WebDriver::Remote::Capabilities.send browser[0]
+  caps.version = browser[1]
+  caps.platform = browser[2]
+  caps['tunnel-identifier'] = ENV['TRAVIS_JOB_NUMBER']
+  caps['name'] = "Travis ##{ENV['TRAVIS_JOB_NUMBER']}"
+
+  driver = Selenium::WebDriver.for(
+    :remote,
+    :url => "http://#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}@localhost:4445/wd/hub",
+    :desired_capabilities => caps)
+else
+  driver = Selenium::WebDriver.for :chrome
+end
 
 driver.navigate.to "http://localhost:5000/spec.html"
+
+driver.execute_script("QUnit.done(function(result) { window.result = result; });")
+
 begin
-  status = driver.execute_script('return consoleReporter.status;')
+  result = driver.execute_script('return window.result;')
   sleep 1
-end while status == 'running'
+end while result.nil?
+
+passed = result["total"] - result["passed"] == 0
 
 driver.quit
 
-raise 'tests failed' unless status == 'success'
+raise 'tests failed' unless passed

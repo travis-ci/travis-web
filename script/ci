@@ -5,7 +5,7 @@ if [ "$TEST_SUITE" == "ruby" ]; then
 elif [ "$TEST_SUITE" == "phantomjs" ]; then
   bundle exec rackup -s puma -p 5000 -D
   sleep 3
-  ./run_jasmine.coffee http://localhost:5000/spec.html
+  phantomjs run_qunit.js http://localhost:5000/spec.html
 elif [ "$TRAVIS_SECURE_ENV_VARS" == "true" -a "$TEST_SUITE" == "saucelabs" ]; then
   bundle exec rackup -s puma -p 5000 -D
   sleep 3
