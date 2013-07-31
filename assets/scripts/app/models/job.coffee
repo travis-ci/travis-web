@@ -113,15 +113,24 @@ require 'travis/model'
 @Travis.Job.reopenClass
   queued: (queue) ->
     @find()
-    Travis.store.filter this, (job) ->
-      queued = ['created', 'queued'].indexOf(job.get('state')) != -1
-      # TODO: why queue is sometimes just common instead of build.common?
-      queued && (!queue || job.get('queue') == "builds.#{queue}" || job.get('queue') == queue)
+    Ember.FilteredRecordArray.create(
+      modelClass: Travis.Job
+      filterFunction: (job) ->
+        queued = ['created', 'queued'].indexOf(job.get('state')) != -1
+        # TODO: why queue is sometimes just common instead of build.common?
+        queued && (!queue || job.get('queue') == "builds.#{queue}" || job.get('queue') == queue)
+
+      filterProperties: ['state', 'queue']
+    )
 
   running: ->
     @find(state: 'started')
-    Travis.store.filter this, (job) ->
-      job.get('state') == 'started'
+    Ember.FilteredRecordArray.create(
+      modelClass: Travis.Job
+      filterFunction: (job) ->
+        job.get('state') == 'started'
+      filterProperties: ['state']
+    )
 
   findMany: (ids) ->
     Travis.store.findMany this, ids

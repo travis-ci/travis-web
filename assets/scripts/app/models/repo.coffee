@@ -118,7 +118,17 @@ require 'travis/model'
     @find(search: query, orderBy: 'name')
 
   withLastBuild: ->
-    @filter( (repo) -> (!repo.get('incomplete') || repo.isAttributeLoaded('lastBuildId')) && repo.get('lastBuildId') )
+    filtered = Ember.FilteredRecordArray.create(
+      modelClass: Travis.Repo
+      filterFunction: (repo) -> repo.get('lastBuildId')
+      filterProperties: ['lastBuildId']
+    )
+
+    Travis.Repo.fetch().then (array) ->
+      filtered.updateFilter()
+      filtered.set('isLoaded', true)
+
+    filtered
 
   bySlug: (slug) ->
     repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
@@ -126,5 +136,3 @@ require 'travis/model'
 
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'
-
-
