@@ -12,14 +12,15 @@ Travis.RepoController = Travis.Controller.extend
     Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   updateTimes: ->
-    if builds = @get('builds')
-      builds.forEach (b) -> b.updateTimes()
+    Ember.run this, ->
+      if builds = @get('builds')
+        builds.forEach (b) -> b.updateTimes()
 
-    if build = @get('build')
-      build.updateTimes()
+      if build = @get('build')
+        build.updateTimes()
 
-    if build && jobs = build.get('jobs')
-      jobs.forEach (j) -> j.updateTimes()
+      if build && jobs = build.get('jobs')
+        jobs.forEach (j) -> j.updateTimes()
 
   activate: (action) ->
     this["view#{$.camelize(action)}"]()
