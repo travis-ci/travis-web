@@ -14,9 +14,7 @@
     @set('state', 'signed-out')
     @set('user', undefined)
     if user = Travis.__container__.lookup('controller:currentUser').get('content')
-      if user.get('stateManager.currentPath') == 'rootState.loaded.updated.uncommitted'
-        user.send('rollback')
-      user.unloadRecord()
+      user.unload()
     Travis.__container__.lookup('controller:currentUser').set('content', null)
     if router = Travis.__container__.lookup('router:main')
       router.send('afterSignOut')
