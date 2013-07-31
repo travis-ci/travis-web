@@ -1,8 +1,8 @@
 <ul class="tabs">
   <li id="tab_current" {{bindAttr class="view.classCurrent"}}>
     <h5>
-      {{#if slug}}
-        {{#linkTo "repo" this currentWhen="repo.index"}}
+      {{#if repo.slug}}
+        {{#linkTo "repo" repo currentWhen="repo.index"}}
           {{t repositories.tabs.current}}
         {{/linkTo}}
       {{/if}}
@@ -10,8 +10,8 @@
   </li>
   <li id="tab_builds" {{bindAttr class="view.classBuilds"}}>
     <h5>
-      {{#if slug}}
-        {{#linkTo "builds" this}}
+      {{#if repo.slug}}
+        {{#linkTo "builds" repo}}
           {{t repositories.tabs.build_history}}
         {{/linkTo}}
       {{/if}}
@@ -19,8 +19,8 @@
   </li>
   <li id="tab_pull_requests" {{bindAttr class="view.classPullRequests"}}>
     <h5>
-      {{#if slug}}
-        {{#linkTo "pullRequests" this}}
+      {{#if repo.slug}}
+        {{#linkTo "pullRequests" repo}}
           {{t repositories.tabs.pull_requests}}
         {{/linkTo}}
       {{/if}}
@@ -28,8 +28,8 @@
   </li>
   <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
     <h5>
-      {{#if slug}}
-        {{#linkTo "branches" this}}
+      {{#if repo.slug}}
+        {{#linkTo "branches" repo}}
           {{t repositories.tabs.branches}}
         {{/linkTo}}
       {{/if}}
@@ -37,10 +37,10 @@
   </li>
   <li id="tab_build" {{bindAttr class="view.classBuild"}}>
     <h5>
-      {{#if view.build.id}}
-        {{#if view.build.repo.slug}}
-          {{#linkTo "build" view.build.repo view.build}}
-            {{t repositories.tabs.build}} #{{view.build.number}}
+      {{#if build.id}}
+        {{#if repo.slug}}
+          {{#linkTo "build" repo build}}
+            {{t repositories.tabs.build}} #{{build.number}}
           {{/linkTo}}
         {{/if}}
       {{/if}}
@@ -48,10 +48,10 @@
   </li>
   <li id="tab_job" {{bindAttr class="view.classJob"}}>
     <h5>
-      {{#if view.job.id}}
-        {{#if view.job.repo.slug}}
-          {{#linkTo "job" view.job.repo view.job}}
-            {{t repositories.tabs.job}} #{{view.job.number}}
+      {{#if job.id}}
+        {{#if repo.slug}}
+          {{#linkTo "job" repo job}}
+            {{t repositories.tabs.job}} #{{job.number}}
           {{/linkTo}}
         {{/if}}
       {{/if}}

@@ -1,7 +1,8 @@
 Travis.RepoController = Travis.Controller.extend
-  bindings: []
-  needs: ['repos', 'currentUser']
+  needs: ['repos', 'currentUser', 'build']
   currentUserBinding: 'controllers.currentUser'
+
+  build: Ember.computed.alias('controllers.build.build')
 
   slug: (-> @get('repo.slug') ).property('repo.slug')
   isLoading: (-> @get('repo.isLoading') ).property('repo.isLoading')

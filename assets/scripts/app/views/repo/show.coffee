@@ -32,10 +32,8 @@ Travis.reopen
   RepoShowTabsView: Travis.View.extend
     templateName: 'repos/show/tabs'
 
-    repoBinding: 'controller.repo'
-    buildBinding: 'controller.build'
-    jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
+    contextBinding: 'controller'
 
     # hrm. how to parametrize bindAttr?
     classCurrent: (->
