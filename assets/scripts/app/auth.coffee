@@ -80,7 +80,7 @@
 
   refreshUserData: (user) ->
     Travis.ajax.get "/users/#{user.id}", (data) =>
-      Travis.store.loadIncomplete(Travis.User, data.user)
+      Travis.loadOrMerge(Travis.User, data.user)
       # if user is still signed in, update saved data
       if @signedIn()
         data.user.token = user.token
@@ -95,9 +95,8 @@
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
-    store = @app.store
-    store.load(Travis.User, user.id, user)
-    user = store.find(Travis.User, user.id)
+    Travis.loadOrMerge(Travis.User, user)
+    user = Travis.User.find(user.id)
     user.get('permissions')
     user
 
