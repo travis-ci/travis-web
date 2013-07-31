@@ -45,7 +45,7 @@ Travis.Log.Request = Em.Object.extend
     Travis.ajax.ajax "/jobs/#{@id}/log?cors_hax=true", 'GET',
       dataType: 'text'
       headers: @HEADERS
-      success: (body, status, xhr) => @handle(body, status, xhr)
+      success: (body, status, xhr) => Ember.run(this, -> @handle(body, status, xhr))
 
   handle: (body, status, xhr) ->
     if xhr.status == 204
