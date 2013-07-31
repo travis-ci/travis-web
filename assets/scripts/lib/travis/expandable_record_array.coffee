@@ -1,4 +1,4 @@
-Travis.ExpandableRecordArray = DS.RecordArray.extend
+Travis.ExpandableRecordArray = Ember.RecordArray.extend
   isLoaded: false
   isLoading: false
 
@@ -33,9 +33,4 @@ Travis.ExpandableRecordArray = DS.RecordArray.extend
         @pushObject object
 
   pushObject: (record) ->
-    content   = @get 'content'
-    id        = record.get 'id'
-    clientId  = record.get 'clientId'
-    reference = @get('store').referenceForClientId(clientId)
-
-    @addReference reference
+    @get('content').pushObject(record)
