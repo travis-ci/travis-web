@@ -18,8 +18,9 @@ Ember.registerBoundHelper 'formatTime', (value, options) ->
 Ember.registerBoundHelper 'formatDuration', (duration, options) ->
   safe Travis.Helpers.timeInWords(duration)
 
-Ember.registerBoundHelper 'formatCommit', (commit, options) ->
+Ember.Handlebars.helper('formatCommit', (commit) ->
   safe Travis.Helpers.formatCommit(commit.get('sha'), commit.get('branch')) if commit
+, 'sha', 'branch')
 
 Ember.registerBoundHelper 'formatSha', (sha, options) ->
   safe Travis.Helpers.formatSha(sha)
