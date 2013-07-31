@@ -32,9 +32,9 @@ Storage = Em.Object.extend
   clear: ->
     @set('storage', {})
 
-window.Travis = TravisApplication.create()
-
-Travis.deferReadiness()
+window.Travis = TravisApplication.create(
+  LOG_TRANSITIONS: true
+)
 
 $.extend Travis,
   run: ->
