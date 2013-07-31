@@ -99,7 +99,9 @@ unless window.TravisApplication
       result = @loadOrMerge(type, json[root])
       if result && result.id
         record = type.find(result.id)
-        type.addToRecordArrays(record)
+        # TODO: find a nicer way to not add record to record arrays twice
+        if !type._findAllRecordArray || !type._findAllRecordArray.contains(record)
+          type.addToRecordArrays(record)
 
       # we get other types of records only in a few situations and
       # it's not always needed to update data, so I'm specyfing which
@@ -108,7 +110,8 @@ unless window.TravisApplication
         result = @loadOrMerge(Travis.Repo, json.repository || json.repo)
         if result && result.id
           record = Travis.Repo.find(result.id)
-          Travis.Repo.addToRecordArrays(record)
+          if !Travis.Repo._findAllRecordArray || !Travis.Repo._findAllRecordArray.contains(record)
+            Travis.Repo.addToRecordArrays(record)
 
     loadOrMerge: (type, hash, options) ->
       options ||= {}
