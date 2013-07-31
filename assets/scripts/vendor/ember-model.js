@@ -821,7 +821,7 @@ Ember.Model.reopenClass({
       this.recordArrays.forEach(function(recordArray) {
         if (recordArray instanceof Ember.FilteredRecordArray) {
           recordArray.registerObserversOnRecord(record);
-          recordArray.updateFilter();
+          recordArray.updateFilterForRecord(record);
         } else {
           recordArray.pushObject(record);
         }
