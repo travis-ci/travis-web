@@ -145,3 +145,25 @@ Array.prototype.diff = (a) ->
     !!@_referenceForId(id).record
 
   camelizeKeys: true
+
+  # TODO: the functions below will be added to Ember Model, remove them when that
+  # happens
+  resetData: ->
+    @_idToReference = null
+    @sideloadedData = null
+    @recordCache = null
+    @recordArrays = null
+    @_currentBatchIds = null
+    @_hasManyArrays = null
+    @_findAllRecordArray = null
+
+  unload: (record) ->
+    @removeFromRecordArrays(record)
+    primaryKey = record.get(get(this, 'primaryKey'))
+    @removeFromCache(primaryKey)
+
+  removeFromCache: (key) ->
+    if @sideloadedData && @sideloadedData[key]
+      delete this.sideloadedData[key]
+    if @recordCache && @recordCache[key]
+      delete this.recordCache[key]
