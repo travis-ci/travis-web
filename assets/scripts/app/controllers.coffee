@@ -1,5 +1,4 @@
 require 'helpers'
-require 'travis/ticker'
 
 Travis.Controller    = Em.Controller.extend()
 Travis.TopController = Em.Controller.extend
