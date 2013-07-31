@@ -17,7 +17,11 @@
       user.unload()
     Travis.__container__.lookup('controller:currentUser').set('content', null)
     if router = Travis.__container__.lookup('router:main')
-      router.send('afterSignOut')
+      try
+        router.send('afterSignOut')
+      catch e
+        throw e unless e.message =~ /There are no active handlers/
+
 
   signIn: (data) ->
     if data
