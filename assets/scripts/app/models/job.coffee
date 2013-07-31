@@ -132,6 +132,4 @@ require 'travis/model'
       filterProperties: ['state']
     )
 
-  findMany: (ids) ->
-    Travis.store.findMany this, ids
 
