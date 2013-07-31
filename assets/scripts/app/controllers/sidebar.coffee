@@ -5,10 +5,6 @@ Travis.reopen
 
     init: ->
       @_super.apply this, arguments
-      @tickables = []
-
-    tick: ->
-      tickable.tick() for tickable in @tickables
 
   QueuesController: Em.ArrayController.extend
     init: ->
