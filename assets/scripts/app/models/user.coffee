@@ -2,17 +2,17 @@ require 'travis/ajax'
 require 'travis/model'
 
 @Travis.User = Travis.Model.extend
-  _name:       DS.attr('string')
-  email:       DS.attr('string')
-  login:       DS.attr('string')
-  token:       DS.attr('string')
-  locale:      DS.attr('string')
-  gravatarId:  DS.attr('string')
-  isSyncing:   DS.attr('boolean')
-  syncedAt:    DS.attr('string')
-  repoCount:   DS.attr('number')
+  _name:       Ember.attr('string', key: 'name')
+  email:       Ember.attr('string')
+  login:       Ember.attr('string')
+  token:       Ember.attr('string')
+  locale:      Ember.attr('string')
+  gravatarId:  Ember.attr('string')
+  isSyncing:   Ember.attr('boolean')
+  syncedAt:    Ember.attr('string')
+  repoCount:   Ember.attr('number')
 
-  # This is the only way I found to override the attribue created with DS.attr
+  # This is the only way I found to override the attribue created with Ember.attr
   name: Ember.computed( (key, value) ->
     if arguments.length == 1
       @get('_name') || @get('login')

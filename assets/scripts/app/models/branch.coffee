@@ -1,18 +1,18 @@
 require 'travis/model'
 
 @Travis.Branch = Travis.Model.extend
-  repoId:       DS.attr('number', key: 'repository_id')
-  commitId:     DS.attr('number')
-  state:        DS.attr('string')
-  number:       DS.attr('number')
-  branch:       DS.attr('string')
-  message:      DS.attr('string')
-  result:       DS.attr('number')
-  duration:     DS.attr('number')
-  startedAt:    DS.attr('string')
-  finishedAt:   DS.attr('string')
+  repoId:       Ember.attr('number', key: 'repository_id')
+  commitId:     Ember.attr('number')
+  state:        Ember.attr('string')
+  number:       Ember.attr('number')
+  branch:       Ember.attr('string')
+  message:      Ember.attr('string')
+  result:       Ember.attr('number')
+  duration:     Ember.attr('number')
+  startedAt:    Ember.attr('string')
+  finishedAt:   Ember.attr('string')
 
-  commit: DS.belongsTo('Travis.Commit')
+  commit: Ember.belongsTo('Travis.Commit')
 
   repo: (->
     Travis.Repo.find @get('repoId')  if @get('repoId')

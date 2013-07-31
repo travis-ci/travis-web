@@ -1,11 +1,11 @@
 require 'travis/model'
 
 @Travis.Event = Travis.Model.extend
-  event:     DS.attr('string')
-  repoId:    DS.attr('number', key: 'repository_id')
-  sourceId:  DS.attr('number', key: 'source_id')
-  sourceType:  DS.attr('string', key: 'source_type')
-  createdAt: DS.attr('string', key: 'created_at')
+  event:     Ember.attr('string')
+  repoId:    Ember.attr('number', key: 'repository_id')
+  sourceId:  Ember.attr('number', key: 'source_id')
+  sourceType:  Ember.attr('string', key: 'source_type')
+  createdAt: Ember.attr('string', key: 'created_at')
 
   event_: (->
     @get('event')

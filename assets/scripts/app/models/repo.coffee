@@ -2,16 +2,17 @@ require 'travis/expandable_record_array'
 require 'travis/model'
 
 @Travis.Repo = Travis.Model.extend
-  slug:                DS.attr('string')
-  description:         DS.attr('string')
-  lastBuildId:         DS.attr('number')
-  lastBuildNumber:     DS.attr('string')
-  lastBuildState:      DS.attr('string')
-  lastBuildStartedAt:  DS.attr('string')
-  lastBuildFinishedAt: DS.attr('string')
-  _lastBuildDuration:  DS.attr('number')
+  id:                  Ember.attr('string')
+  slug:                Ember.attr('string')
+  description:         Ember.attr('string')
+  lastBuildId:         Ember.attr('string')
+  lastBuildNumber:     Ember.attr(Number)
+  lastBuildState:      Ember.attr('string')
+  lastBuildStartedAt:  Ember.attr('string')
+  lastBuildFinishedAt: Ember.attr('string')
+  _lastBuildDuration:  Ember.attr(Number, key: 'last_build_duration')
 
-  lastBuild: DS.belongsTo('Travis.Build')
+  lastBuild: Ember.belongsTo('Travis.Build', key: 'last_build_id')
 
   lastBuildHash: (->
     {

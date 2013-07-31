@@ -1,29 +1,24 @@
 require 'travis/model'
 
 @Travis.Job = Travis.Model.extend Travis.DurationCalculations,
-  repoId:         DS.attr('number')
-  buildId:        DS.attr('number')
-  commitId:       DS.attr('number')
-  logId:          DS.attr('number')
+  repoId:         Ember.attr('string', key: 'repository_id')
+  buildId:        Ember.attr('string')
+  commitId:       Ember.attr('string')
+  logId:          Ember.attr('string')
 
-  queue:          DS.attr('string')
-  state:          DS.attr('string')
-  number:         DS.attr('string')
-  startedAt:      DS.attr('string')
-  finishedAt:     DS.attr('string')
-  allowFailure:   DS.attr('boolean')
+  queue:          Ember.attr('string')
+  state:          Ember.attr('string')
+  number:         Ember.attr(Number)
+  startedAt:      Ember.attr('string')
+  finishedAt:     Ember.attr('string')
+  allowFailure:   Ember.attr('boolean')
 
-  repositorySlug: DS.attr('string')
-  repo:   DS.belongsTo('Travis.Repo')
-  build:  DS.belongsTo('Travis.Build')
-  commit: DS.belongsTo('Travis.Commit')
+  repositorySlug: Ember.attr('string')
+  repo:   Ember.belongsTo('Travis.Repo', key: 'repository_id')
+  build:  Ember.belongsTo('Travis.Build')
+  commit: Ember.belongsTo('Travis.Commit')
 
-  # this is a fake relationship just to get rid
-  # of ember data's bug: https://github.com/emberjs/data/issues/758
-  # TODO: remove when this issue is fixed
-  fakeBuild:  DS.belongsTo('Travis.Build')
-
-  _config: DS.attr('object')
+  _config: Ember.attr('object', key: 'config')
 
   repoSlugDidChange: (->
     if slug = @get('repoSlug')
