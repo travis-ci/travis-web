@@ -22,10 +22,10 @@ require 'travis/model'
 
   repoSlugDidChange: (->
     if slug = @get('repoSlug')
-      @get('store').loadIncomplete(Travis.Repo, {
+      Travis.Repo.load([{
         id: @get('repoId'),
         slug: slug
-      }, { skipIfExists: true })
+      }])
   ).observes('repoSlug')
 
   log: ( ->
@@ -98,7 +98,7 @@ require 'travis/model'
       Travis.pusher.unsubscribe "job-#{@get('id')}"
   ).observes('state')
 
-  isAttributeLoaded: (key) ->
+  isPropertyLoaded: (key) ->
     if ['finishedAt'].contains(key) && !@get('isFinished')
       return true
     else if key == 'startedAt' && @get('state') == 'created'

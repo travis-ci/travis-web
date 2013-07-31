@@ -1,41 +1,92 @@
-@Travis.Model = DS.Model.extend
+get = Ember.get
+set = Ember.set
+
+Array.prototype.diff = (a) ->
+  this.filter (i) -> !(a.indexOf(i) > -1)
+
+
+@Travis.Model = Ember.Model.extend
+  id: Ember.attr('number')
+
   init: ->
-    @loadedAttributes = []
     @_super.apply this, arguments
+    this
+
+  merge: (hash) ->
+    data = @get('_data')
+    Ember.merge(data, hash)
+    @notifyPropertyChange('_data')
+
+  dataKey: (key) ->
+    meta = @constructor.metaForProperty(key)
+    if meta.isRelationship && !meta.options?.key?
+      type = meta.type
+      if typeof type == "string"
+        type = Ember.get(Ember.lookup, type)
+
+      if meta.kind == 'belongsTo'
+        return type.singularName() + '_id'
+      else
+        return type.singularName() + '_ids'
+
+    @_super(key)
+
+  load: (id, hash) ->
+    @loadedAttributes = []
+    @loadedRelationships = []
+
+    attributes = this.attributes || []
+    relationships = this.relationships || []
+
+    for key in attributes
+      dataKey = @dataKey(key)
+      if hash.hasOwnProperty(dataKey)
+        @loadedAttributes.pushObject(key)
+
+    for key in relationships
+      dataKey = @dataKey(key)
+      if hash.hasOwnProperty(dataKey)
+        @loadedRelationships.pushObject(key)
+
+    incomplete = Ember.EnumerableUtils.intersection(@loadedAttributes, attributes).length != attributes.length ||
+                 Ember.EnumerableUtils.intersection(@loadedRelationships, relationships).length != relationships.length
+
+    #if incomplete
+    #  properties = attributes.concat(relationships)
+    #  loadedProperties = @loadedAttributes.concat(@loadedRelationships)
+    #  diff = properties.diff(loadedProperties)
+    #  #console.log(@constructor, 'with id', id, 'loaded as incomplete, info:', { diff: diff, attributes: loadedProperties, data: hash})
+
+    @set('incomplete', incomplete)
+
+    @_super(id, hash)
 
   getAttr: (key, options) ->
     @needsCompletionCheck(key)
     @_super.apply this, arguments
 
   getBelongsTo: (key, type, meta) ->
+    unless key
+      key = type.singularName() + '_id'
     @needsCompletionCheck(key)
-    @_super.apply this, arguments
+    @_super(key, type, meta)
 
   getHasMany: (key, type, meta) ->
+    unless key
+      key = type.singularName() + '_ids'
     @needsCompletionCheck(key)
-    @_super.apply this, arguments
+    @_super(key, type, meta)
 
   needsCompletionCheck: (key) ->
-    if key && (@constructor.isAttribute(key) || @constructor.isRelationship(key)) &&
-        @get('incomplete') && !@isAttributeLoaded(key)
+    if key && (@isAttribute(key) || @isRelationship(key)) &&
+        @get('incomplete') && !@isPropertyLoaded(key)
       @loadTheRest(key)
 
-  update: (attrs) ->
-    $.each attrs, (key, value) =>
-      @set(key, value) unless key is 'id'
-    this
+  isAttribute: (name) ->
+    this.attributes.contains(name)
 
-  isAttributeLoaded: (name) ->
-    @get('store').isDataLoadedFor(this.constructor, @get('clientId'), name)
-
-  isComplete: (->
-    if @get 'incomplete'
-      @loadTheRest()
-      false
-    else
-      @set 'isCompleting', false
-      @get 'isLoaded'
-  ).property('incomplete', 'isLoaded')
+  isRelationship: (name) ->
+    this.relationships.contains(name)
 
   loadTheRest: (key) ->
     # for some weird reason key comes changed to a string and for some weird reason it even is called with
@@ -43,32 +94,21 @@
     return if !key || key == 'undefined'
 
     message = "Load missing fields for #{@constructor.toString()} because of missing key '#{key}', cid: #{@get('clientId')}, id: #{@get('id')}"
-    if @constructor.isAttribute('state') && key != 'state'
+    if @isAttribute('state') && key != 'state'
       message += ", in state: #{@get('state')}"
     console.log message
     return if @get('isCompleting')
     @set 'isCompleting', true
 
-    unless @get('stateManager.currentState.path').match /^rootState.loaded.materializing/
-      @reload()
-    @set 'incomplete', false
+    @reload()
 
   select: ->
     @constructor.select(@get('id'))
 
+  isPropertyLoaded: (name) ->
+    @loadedAttributes.contains(name) || @loadedRelationships.contains(name)
+
 @Travis.Model.reopenClass
-  find: ->
-    if arguments.length == 0
-      Travis.store.findAll(this)
-    else
-      @_super.apply(this, arguments)
-
-  filter: (callback) ->
-    Travis.store.filter(this, callback)
-
-  load: (attrs) ->
-    Travis.store.load(this, attrs)
-
   select: (id) ->
     @find().forEach (record) ->
       record.set('selected', record.get('id') == id)
@@ -87,18 +127,21 @@
     name.replace(/([A-Z])/g, '_$1').toLowerCase().slice(1)
 
   pluralName: ->
-    Travis.store.adapter.pluralize(@singularName())
+    @singularName() + 's'
 
-  isAttribute: (name) ->
-    Ember.get(this, 'attributes').has(name)
+  collectionKey: (->
+    @pluralName()
+  ).property()
 
-  isRelationship: (name) ->
-    Ember.get(this, 'relationshipsByName').has(name)
+  rootKey: (->
+    @singularName()
+  ).property()
 
-  isHasManyRelationship: (name) ->
-    if relationship = Ember.get(this, 'relationshipsByName').get(name)
-      relationship.kind == 'hasMany'
+  isModel: (->
+    true
+  ).property()
 
-  isBelongsToRelationship: (name) ->
-    if relationship = Ember.get(this, 'relationshipsByName').get(name)
-      relationship.kind == 'belongsTo'
+  isRecordLoaded: (id) ->
+    !!@_referenceForId(id).record
+
+  camelizeKeys: true

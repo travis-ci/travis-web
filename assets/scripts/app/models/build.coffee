@@ -71,7 +71,7 @@ require 'travis/model'
   requeue: ->
     Travis.ajax.post '/requests', build_id: @get('id')
 
-  isAttributeLoaded: (key) ->
+  isPropertyLoaded: (key) ->
     if ['_duration', 'finishedAt'].contains(key) && !@get('isFinished')
       return true
     else
