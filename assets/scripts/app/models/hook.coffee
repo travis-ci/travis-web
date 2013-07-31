@@ -25,9 +25,5 @@ require 'travis/model'
 
   toggle: ->
     return if @get('isSaving')
-    transaction = @get('store').transaction()
-    transaction.add this
-
     @set 'active', !@get('active')
-
-    transaction.commit()
+    @save()

@@ -27,10 +27,6 @@ require 'travis/model'
     Ember.run.next this, ->
       @poll() if @get('isSyncing')
 
-    Ember.run.next this, ->
-      transaction = @get('store').transaction()
-      transaction.add this
-
   urlGithub: (->
     "https://github.com/#{@get('login')}"
   ).property()
@@ -43,18 +39,7 @@ require 'travis/model'
   ).property()
 
   updateLocale: (locale) ->
-
-    transaction = @get('transaction')
-    transaction.commit()
-
-    self = this
-    observer = ->
-      unless self.get('isSaving')
-        self.removeObserver 'isSaving', observer
-        transaction = self.get('store').transaction()
-        transaction.add self
-
-    @addObserver 'isSaving', observer
+    @save()
     Travis.setLocale(locale)
 
   type: (->
