@@ -32,10 +32,9 @@ require 'travis/model'
   ).property()
 
   permissions: (->
-    unless @permissions
-      @permissions = Ember.ArrayProxy.create(content: [])
-      Travis.ajax.get('/users/permissions', (data) => @permissions.set('content', data.permissions))
-    @permissions
+    permissions = Ember.ArrayProxy.create(content: [])
+    Travis.ajax.get('/users/permissions', (data) => permissions.set('content', data.permissions))
+    permissions
   ).property()
 
   updateLocale: (locale) ->
