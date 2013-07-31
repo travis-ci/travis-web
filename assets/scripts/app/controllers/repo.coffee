@@ -48,11 +48,6 @@ Travis.RepoController = Travis.Controller.extend
     # TODO: such implementation seems weird now, because we render
     #       in the renderTemplate function in routes
     name = if tab == 'current' then 'build' else tab
-    viewClass = if name in ['builds', 'branches', 'pull_requests']
-      Travis.BuildsView
-    else
-      Travis["#{$.camelize(name)}View"]
-
     @set('tab', tab)
 
   urlGithub: (->
