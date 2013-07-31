@@ -203,8 +203,16 @@ Travis.JobRoute = Ember.Route.extend
     repo = @controllerFor('repo')
     repo.set('job', model)
     repo.activate('job')
-    @controllerFor('build').set('build', model.get('build'))
-    repo.set('build', model.get('build'))
+
+    # since we're no longer using promises, the setupController resolves right away,
+    # so we need to wait for build to be loaded
+    buildObserver = ->
+      if build = model.get('build')
+        @controllerFor('build').set('build', build)
+        repo.set('build', build)
+
+        model.removeObserver('build', buildObserver)
+    model.addObserver('build', this, buildObserver)
 
 Travis.RepoIndexRoute = Ember.Route.extend Travis.SetupLastBuild,
   setupController: (controller, model) ->
