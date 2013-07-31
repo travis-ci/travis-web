@@ -35,6 +35,7 @@ Storage = Em.Object.extend
 window.Travis = TravisApplication.create(
   LOG_TRANSITIONS: true
 )
+Travis.deferReadiness()
 
 $.extend Travis,
   run: ->
