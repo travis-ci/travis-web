@@ -64,7 +64,11 @@ Travis.ReposController = Ember.ArrayController.extend
     @set('content', @get('recentRepos'))
 
   viewOwned: ->
-    @set('content', Travis.Repo.accessibleBy(@get('currentUser.login')))
+    @set('content', @get('userRepos'))
+
+  userRepos: (->
+    Travis.Repo.accessibleBy(@get('currentUser.login'))
+  ).property('currentUser.login')
 
   viewSearch: (params) ->
     @set('content', Travis.Repo.search(params.search))
