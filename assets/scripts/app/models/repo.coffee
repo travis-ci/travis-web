@@ -34,12 +34,11 @@ require 'travis/model'
     array  = Travis.ExpandableRecordArray.create
       type: Travis.Build
       content: Ember.A([])
-      store: @get('store')
 
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('eventType') && build.get('repo.id') == id && !build.get('isPullRequest') )
+    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && !build.get('isPullRequest') )
 
     array
   ).property()
@@ -50,12 +49,11 @@ require 'travis/model'
     array  = Travis.ExpandableRecordArray.create
       type: Travis.Build
       content: Ember.A([])
-      store: @get('store')
 
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('eventType') && build.get('repo.id') == id && build.get('isPullRequest') )
+    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && build.get('isPullRequest') )
 
     array
   ).property()
