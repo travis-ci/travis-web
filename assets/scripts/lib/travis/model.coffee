@@ -167,3 +167,14 @@ Array.prototype.diff = (a) ->
       delete this.sideloadedData[key]
     if @recordCache && @recordCache[key]
       delete this.recordCache[key]
+
+  loadRecordForReference: (reference) ->
+    record = this.create({ _reference: reference })
+    this.recordCache = {} unless this.recordCache
+    this.sideloadedData = {} unless this.sideloadedData
+    this.recordCache[reference.id] = record
+    reference.record = record
+    record.load(reference.id, this.sideloadedData[reference.id])
+    # TODO: find a nicer way to not add record to record arrays twice
+    if !this._findAllRecordArray || !this._findAllRecordArray.contains(record)
+      this.addToRecordArrays(record)

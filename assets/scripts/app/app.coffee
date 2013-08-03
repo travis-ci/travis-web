@@ -96,22 +96,18 @@ unless window.TravisApplication
 
     _loadOne: (store, type, json) ->
       root = type.singularName()
-      result = @loadOrMerge(type, json[root])
-      if result && result.id
-        record = type.find(result.id)
-        # TODO: find a nicer way to not add record to record arrays twice
-        if !type._findAllRecordArray || !type._findAllRecordArray.contains(record)
-          type.addToRecordArrays(record)
+      reference = @loadOrMerge(type, json[root])
+      unless reference.record
+        type.loadRecordForReference(reference)
 
       # we get other types of records only in a few situations and
       # it's not always needed to update data, so I'm specyfing which
       # things I want to update here:
       if type == Travis.Build && (json.repository || json.repo)
-        result = @loadOrMerge(Travis.Repo, json.repository || json.repo)
-        if result && result.id
-          record = Travis.Repo.find(result.id)
-          if !Travis.Repo._findAllRecordArray || !Travis.Repo._findAllRecordArray.contains(record)
-            Travis.Repo.addToRecordArrays(record)
+        data = json.repository || json.repo
+        reference = @loadOrMerge(Travis.Repo, data)
+        unless reference.record
+          Travis.Repo.loadRecordForReference(reference)
 
     loadOrMerge: (type, hash, options) ->
       options ||= {}
