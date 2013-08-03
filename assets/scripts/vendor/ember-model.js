@@ -171,6 +171,8 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
       throw new Error('FilteredRecordArrays must be created with filterProperties');
     }
 
+    this._registeredClientIds = Ember.A([]);
+
     var modelClass = get(this, 'modelClass');
     modelClass.registerRecordArray(this);
 
@@ -191,7 +193,7 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
 
   updateFilterForRecord: function(record) {
     var results = get(this, 'content');
-    if (this.filterFunction(record)) {
+    if (this.filterFunction(record) && !results.contains(record)) {
       results.pushObject(record);
     }
   },
@@ -205,10 +207,14 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
 
   registerObserversOnRecord: function(record) {
     var self = this,
-        filterProperties = get(this, 'filterProperties');
+        filterProperties = get(this, 'filterProperties'),
+        clientId = record._reference.clientId;
 
-    for (var i = 0, l = get(filterProperties, 'length'); i < l; i++) {
-      record.addObserver(filterProperties[i], self, 'updateFilterForRecord');
+    if(!this._registeredClientIds.contains(clientId)) {
+      for (var i = 0, l = get(filterProperties, 'length'); i < l; i++) {
+        record.addObserver(filterProperties[i], self, 'updateFilterForRecord');
+      }
+      this._registeredClientIds.pushObject(clientId);
     }
   }
 });
