@@ -30,7 +30,7 @@
         <div class="indicator"><span></span></div>
       {{/with}}
     {{else}}
-      <p class="empty">You don't have any repos set up on Travis CI</p>
+      <p class="empty">{{noReposMessage}}</p>
     {{/collection}}
   {{else}}
     <div class="loading"><span>Loading</span></div>

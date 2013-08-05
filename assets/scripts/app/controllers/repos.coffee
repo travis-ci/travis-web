@@ -86,3 +86,14 @@ Travis.ReposController = Ember.ArrayController.extend
     @searchLater = Ember.run.later(this, (->
       @activate 'search', search: phrase
     ), 500)
+
+  noReposMessage: (->
+   tab = @get('tab')
+
+   if tab == 'owned'
+    'You don\'t have any repos set up on Travis CI'
+   else if tab == 'recent'
+    'Repositories could not be loaded'
+   else
+    'Could not find any repos'
+  ).property('tab')
