@@ -2,7 +2,7 @@
 
 #auth
   #main
-    top: 200px
+    top: 100px
     margin: 0 auto
     padding: 25px 50px
     height: 100px
@@ -11,7 +11,7 @@
     flex: none
     width: 300px
     min-width: auto
-    border: 10px solid #bbb
+    //border: 10px solid #bbb
     max-height: 400px
     @include border-radius(8px)
 
@@ -20,7 +20,24 @@
       color: #333
 
     p
-      color: #333
+      color: #334
+      text-align: center
+      font-size: 15px
+
+      > a
+        display: inline-block
+        padding: 10px
+        border: 1px solid #d4d4d4
+        -webkit-border-radius: 4px
+        -moz-border-radius: 4px
+        -ms-border-radius: 4px
+        -o-border-radius: 4px
+        border-radius: 4px
+        background-color: #c7000f
+        font-size: 20px
+        color: #f6f6f6
+        width: 200px
+        text-align: center
 
     a:hover
       text-decoration: underline
