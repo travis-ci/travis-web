@@ -20,14 +20,6 @@ require 'travis/model'
 
   _config: Ember.attr('object', key: 'config')
 
-  repoSlugDidChange: (->
-    if slug = @get('repoSlug')
-      Travis.Repo.load([{
-        id: @get('repoId'),
-        slug: slug
-      }])
-  ).observes('repoSlug')
-
   log: ( ->
     @set('isLogAccessed', true)
     Travis.Log.create(job: this)
