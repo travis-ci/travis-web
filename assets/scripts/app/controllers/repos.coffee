@@ -66,7 +66,10 @@ Travis.ReposController = Ember.ArrayController.extend
     @set('content', @get('userRepos'))
 
   userRepos: (->
-    Travis.Repo.accessibleBy(@get('currentUser.login'))
+    if login = @get('currentUser.login')
+      Travis.Repo.accessibleBy(login)
+    else
+      []
   ).property('currentUser.login')
 
   viewSearch: (params) ->
