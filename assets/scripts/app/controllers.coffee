@@ -42,6 +42,12 @@ Travis.AccountProfileController = Em.Controller.extend
   needs: ['currentUser']
   userBinding: 'controllers.currentUser'
 
+Travis.FirstSyncController = Em.Controller.extend
+  needs: ['currentUser']
+  user: Ember.computed.alias('controllers.currentUser')
+
+  isSyncing: Ember.computed.alias('user.isSyncing')
+
 require 'controllers/accounts'
 require 'controllers/build'
 require 'controllers/builds'

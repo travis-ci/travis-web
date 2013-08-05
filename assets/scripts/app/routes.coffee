@@ -24,6 +24,9 @@ Ember.Route.reopen
     renderNoOwnedRepos: ->
       @render('no_owned_repos', outlet: 'main')
 
+    renderFirstSync: ->
+      @renderFirstSync()
+
     error: (error) ->
       if error == 'needs-auth'
         authController = @container.lookup('controller:auth') || @generateController('auth')
@@ -47,6 +50,9 @@ Ember.Route.reopen
 
   afterSignOut: ->
     @transitionTo('index.current')
+
+  renderFirstSync: ->
+    @transitionTo 'first_sync'
 
   beforeModel: (transition) ->
     Travis.autoSignIn() unless @signedIn()
@@ -92,6 +98,7 @@ Travis.Router.map ->
       @resource 'branches', path: '/branches'
 
   @route 'getting_started'
+  @route 'first_sync'
   @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
   @route 'notFound', path: '/not-found'
@@ -139,6 +146,17 @@ Travis.GettingStartedRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'top', outlet: 'top'
     @render 'repos',   outlet: 'left'
+    @_super.apply(this, arguments)
+
+Travis.FirstSyncRoute = Ember.Route.extend
+  setupController: ->
+    $('body').attr('id', 'home')
+    @container.lookup('controller:repos').activate()
+    @container.lookup('controller:application').connectLayout 'simple'
+    @_super.apply(this, arguments)
+
+  renderTemplate: ->
+    @render 'top', outlet: 'top'
     @_super.apply(this, arguments)
 
 Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
