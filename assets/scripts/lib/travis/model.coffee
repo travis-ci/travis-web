@@ -17,6 +17,9 @@ Array.prototype.diff = (a) ->
     Ember.merge(data, hash)
     @notifyPropertyChange('_data')
 
+  unload: ->
+    @constructor.unload(this)
+
   dataKey: (key) ->
     meta = @constructor.metaForProperty(key)
     if meta.isRelationship && !meta.options?.key?
