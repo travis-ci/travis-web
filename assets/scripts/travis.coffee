@@ -32,6 +32,34 @@ Storage = Em.Object.extend
   clear: ->
     @set('storage', {})
 
+Ember.RecordArray.reopen
+  # TODO: ember.js changed a way ArrayProxies behave, so that check for content is done
+  #       in _replace method. I should not be overriding it, because it's private, but
+  #       there is no easy other way to do it at this point
+  _replace: (index, removedCount, records) ->
+    # in Travis it's sometimes the case that we add new records to RecordArrays
+    # from pusher before its content has loaded from an ajax query. In order to handle
+    # this case nicer I'm extending record array to buffer those records and push them
+    # to content when it's available
+    @bufferedRecords = [] unless @bufferedRecords
+
+    if !@get('content')
+      for record in records
+        @bufferedRecords.pushObject(record) unless @bufferedRecords.contains(record)
+
+      records = []
+
+    # call super only if there's anything more to add
+    if removedCount || records.length
+      @_super(index, removedCount, records)
+
+  contentDidChange: (->
+    if (content = @get('content')) && @bufferedRecords && @bufferedRecords.length
+      for record in @bufferedRecords
+        content.pushObject(record) unless content.contains(record)
+      @bufferedRecords = []
+  ).observes('content')
+
 window.Travis = TravisApplication.create(
   LOG_TRANSITIONS: true
 )
