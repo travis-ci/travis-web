@@ -1,7 +1,7 @@
 unless window.TravisApplication
   window.TravisApplication = Em.Application.extend(Ember.Evented,
     LOG_TRANSITIONS: true,
-    authStateBinding: 'auth.state'
+    authState: Ember.computed.alias('auth.state')
     signedIn: (-> @get('authState') == 'signed-in' ).property('authState')
 
     mappings: (->
@@ -57,6 +57,10 @@ unless window.TravisApplication
 
     signOut: ->
       @get('auth').signOut()
+
+    signingIn: (->
+      Travis.get('authState') == 'signing-in'
+    ).property('authState')
 
     receive: (event, data) ->
       [name, type] = event.split(':')

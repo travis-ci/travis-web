@@ -26,6 +26,8 @@ Ember.Route.reopen
 
     error: (error) ->
       if error == 'needs-auth'
+        authController = @container.lookup('controller:auth') || @generateController('auth')
+        authController.set('redirected', true)
         @transitionTo('auth')
       else
         throw(error)
@@ -384,3 +386,6 @@ Travis.AuthRoute = Ember.Route.extend
 
   setupController: ->
     @container.lookup('controller:application').connectLayout('simple')
+
+  deactivate: ->
+    @controllerFor('auth').set('redirected', false)
