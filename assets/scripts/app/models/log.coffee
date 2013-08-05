@@ -15,6 +15,7 @@ require 'travis/chunk_buffer'
 
   fetch: ->
     console.log 'log model: fetching log' if Log.DEBUG
+    @setParts()
     handlers =
       json: (json) => @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
