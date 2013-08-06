@@ -11,7 +11,7 @@ Travis.reopen
       tagName: 'button'
       classNameBindings: ['isLoading']
       attributeBindings: ['disabled']
-      isLoadingBinding: 'controller.builds.isLoading'
+      isLoadingBinding: 'controller.isLoading'
       template: Em.Handlebars.compile('{{view.label}}')
 
       disabledBinding: 'isLoading'
