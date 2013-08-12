@@ -13,3 +13,11 @@ require 'travis/model'
   pullRequestNumber: DS.attr('number')
 
   build: DS.belongsTo('Travis.Build')
+
+  shortSha: (->
+    @get('sha')[0...6]
+  ).property('sha')
+
+  isPullRequest: (->
+    @get('eventType') == 'pull_request'
+  ).property('eventType')

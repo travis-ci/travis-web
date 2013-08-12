@@ -30,17 +30,38 @@
       top: 15px
       right: 20px
       text-align: right
-      // font-size: $font-size-normal
-      // border: 1px solid #ddd
-      // @include border-radius(10px)
 
     .summary
-      margin: 5px 0 0 16px
+      margin: 5px 0 0 0
       white-space: nowrap
       overflow: hidden
       text-overflow: ellipsis
       color: $color-text-light
       font-size: $font-size-small
+
+      .icon-time,
+      .icon-commit,
+      .icon-pr
+        display: inline-block
+        width: 14px
+        height: 14px
+        line-height: 14px
+        vertical-align: text-top
+        background-position: 0 0
+        background-repeat: no-repeat
+        vertical-align: top
+        *display: inline
+        *zoom: 1
+        *margin-right: .3em
+
+      .icon-time
+        background-image: inline-image('icons/clock.svg')
+
+      .icon-commit
+        background-image: inline-image('icons/github-commit.png')
+
+      .icon-pr
+        background-image: inline-image('icons/github-pr.png')
 
     .info
       overflow: hidden

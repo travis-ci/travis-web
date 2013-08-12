@@ -294,13 +294,13 @@ Travis.IndexRoute = Ember.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'home')
 
-    @render 'repos',   outlet: 'left'
+    @render 'left',    outlet: 'left'
     @render 'sidebar', outlet: 'right'
     @render 'top',     outlet: 'top'
     @render 'flash',   outlet: 'flash'
 
   setupController: (controller)->
-    @container.lookup('controller:repos').activate()
+    @container.lookup('controller:left').activate()
     @container.lookup('controller:application').connectLayout 'home'
 
 Travis.StatsRoute = Ember.Route.extend

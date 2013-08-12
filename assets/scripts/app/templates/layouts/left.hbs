@@ -1,0 +1,33 @@
+{{#collection Travis.BuildsListView contentBinding="this"}}
+  {{#with view.build}}
+    <div class="slug-and-status">
+      <span class="status"></span>
+      {{#if repo.slug}}
+        {{#linkTo build repo id class="slug"}}{{repo.slug}}{{/linkTo}}
+      {{/if}}
+    </div>
+    {{#if repo.slug}}
+      {{#linkTo build repo id class="last_build"}}{{number}}{{/linkTo}}
+    {{/if}}
+    <div class="summary">
+      {{#if isPullRequest}}
+        <span class="icon-pr"></span>
+        #{{pullRequestNumber}}: {{pullRequestTitle}}
+      {{else}}
+        <span class="icon-commit"></span>
+        {{commit.branch}}@{{commit.shortSha}}
+      {{/if}}
+      <br>
+        <span class="icon-time"></span>
+      {{#if finishedAt}}
+        <abbr class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime finishedAt}}</abbr>
+      {{else}}
+        still runnning
+      {{/if}}
+    </div>
+
+    <div class="indicator"><span></span></div>
+  {{/with}}
+{{else}}
+  <p class="empty"></p>
+{{/collection}}
