@@ -5,8 +5,13 @@ require 'travis/model'
   login:       Ember.attr('string')
   name:        Ember.attr('string')
   type:        Ember.attr('string')
-  reposCount:  Ember.attr(Number)
+  _reposCount:  Ember.attr(Number, key: 'repos_count')
 
   urlGithub: (->
     "http://github.com/#{@get('login')}"
   ).property()
+
+  # TODO: maybe it would be good to add a "default" value for Ember.attr
+  reposCount: (->
+    @get('_reposCount') || 0
+  ).property('_reposCount')
