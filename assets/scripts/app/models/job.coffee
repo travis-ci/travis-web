@@ -73,7 +73,7 @@ require 'travis/model'
   ).property('config', 'build.rawConfigKeys.length')
 
   canCancel: (->
-    @get('state') == 'created'
+    !@get('isFinished')
   ).property('state')
 
   cancel: (->
