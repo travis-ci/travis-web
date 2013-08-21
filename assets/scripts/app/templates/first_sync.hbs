@@ -1,9 +1,31 @@
-This is the first time you log in to Travis and we're still syncing your repositories.
+<div id="getting-started">
+  <h3>Just one more thing...</h3>
 
-{{#if isSyncing}}
---- big indicator ---
-{{else}}
-Syncing has finished, you may check out your
-{{#linkTo "profile.index"}}profile{{/linkTo}}
- now
-{{/if}}
+  <p>
+    We're almost done getting you on board, just a few more seconds as we talk to GitHub to find out which
+    repositories belong to you.
+  </p>
+
+  <p>
+    If you're part of an organization that already has repositories set up on Travis CI, we'll take you to the list
+    once we're done.
+  </p>
+
+  <p>
+    If this is your first time on Travis CI, and you're not part of any existing organizations yet, we'll take you to
+    a handy getting started guide to get you off the ground quickly.
+  </p>
+
+  <p>
+    Now hold tight while we sync the last bits from GitHub, we should be done here any minute now.
+  </p>
+
+  {{#if isSyncing}}
+  --- big indicator ---
+  {{else}}
+    <h3>Great news!</h3>
+    <p>
+      We've successfully synchronized your details from GitHub. Now {{#linkTo "index.current"}}go get started!{{/linkTo}}
+    </p>    
+  {{/if}}
+</div>
