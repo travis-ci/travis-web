@@ -22,7 +22,9 @@ require 'travis/model'
   ).property('lastBuildId', 'lastBuildNumber')
 
   allBuilds: (->
-    Travis.Build.find()
+    recordArray = DS.RecordArray.create({ type: Travis.Build, content: Ember.A([]), store: Travis.store, isLoaded: true })
+    Travis.store.registerRecordArray(recordArray, Travis.Build)
+    recordArray
   ).property()
 
   builds: (->
