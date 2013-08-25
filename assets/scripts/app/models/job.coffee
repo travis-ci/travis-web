@@ -60,11 +60,11 @@ require 'travis/model'
   ).property('config', 'build.rawConfigKeys.length')
 
   canCancel: (->
-    @get('state') == 'created' || @get('state') == 'queued' # TODO
+    !@get('isFinished')
   ).property('state')
 
   cancel: (->
-    Travis.ajax.post "/jobs/#{@get('id')}", _method: 'delete'
+    Travis.ajax.post "/jobs/#{@get('id')}/cancel"
   )
 
   requeue: ->

@@ -46,6 +46,9 @@ unless window.TravisApplication
     lookup: ->
       @__container__.lookup.apply @__container__, arguments
 
+    flash: (options) ->
+      Travis.lookup('controller:flash').loadFlashes([options])
+
     storeAfterSignInPath: (path) ->
       @get('auth').storeAfterSignInPath(path)
 

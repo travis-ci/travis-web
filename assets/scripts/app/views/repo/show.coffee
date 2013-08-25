@@ -92,12 +92,30 @@ Travis.reopen
     cancelBuild: ->
       if @get('canCancelBuild')
         @closeMenu()
-        @get('build').cancel()
+        Travis.flash(notice: 'Build cancelation has been scheduled.')
+        @get('build').cancel().then ->
+          Travis.flash(success: 'Build has been successfuly canceled.')
+        , (xhr) ->
+          if xhr.status == 422
+            Travis.flash(error: 'This build can\'t be canceled')
+          else if xhr.status == 403
+            Travis.flash(error: 'You don\'t have sufficient access to cancel this build')
+          else
+            Travis.flash(error: 'An error occured when canceling the build')
 
     cancelJob: ->
       if @get('canCancelJob')
         @closeMenu()
-        @get('job').cancel()
+        Travis.flash(notice: 'Job cancelation has been scheduled.')
+        @get('job').cancel().then ->
+          Travis.flash(success: 'Job has been successfuly canceled.')
+        , (xhr) ->
+          if xhr.status == 422
+            Travis.flash(error: 'This job can\'t be canceled')
+          else if xhr.status == 403
+            Travis.flash(error: 'You don\'t have sufficient access to cancel this job')
+          else
+            Travis.flash(error: 'An error occured when canceling the job')
 
     statusImages: ->
       @set('active', true)
@@ -166,25 +184,21 @@ Travis.reopen
         Travis.Urls.plainTextLog(id)
     ).property('jobIdForLog')
 
-    displayCancelBuild: (->
-      # @get('isBuildTab') && @get('build.canCancel')
-      false
-    ).property('build.state', 'tab')
-
     canCancelBuild: (->
-      # @get('displayCancelBuild') && @get('hasPermission')
-      false
+      @get('displayCancelBuild') && @get('hasPermission')
     ).property('displayCancelBuild', 'hasPermission')
 
-    displayCancelJob: (->
-      # @get('isJobTab') && @get('job.canCancel')
-      false
-    ).property('job.state', 'tab')
+    displayCancelBuild: (->
+      @get('isBuildTab') && @get('build.canCancel')
+    ).property('isBuildTab', 'build.canCancel')
 
     canCancelJob: (->
-      # @get('displayCancelJob') && @get('hasPermission')
-      false
+      @get('displayCancelJob') && @get('hasPermission')
     ).property('displayCancelJob', 'hasPermission')
+
+    displayCancelJob: (->
+      @get('isJobTab') && @get('job.canCancel')
+    ).property('isJobTab', 'job.canCancel')
 
     displayRegenerateKey: true
 

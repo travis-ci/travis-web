@@ -78,7 +78,7 @@ $.extend Travis.Pusher.prototype,
     switch event
       when 'build:started', 'build:finished'
         data
-      when 'job:created', 'job:started', 'job:requeued', 'job:finished', 'job:log'
+      when 'job:created', 'job:started', 'job:requeued', 'job:finished', 'job:log', 'job:canceled'
         data.queue = data.queue.replace('builds.', '') if data.queue
         { job: data }
       when 'worker:added', 'worker:updated', 'worker:removed'
