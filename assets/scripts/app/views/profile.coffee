@@ -66,4 +66,5 @@ Travis.reopen
 
     change: ->
       return unless $('#locale').val()
-      @get('user').updateLocale($('#locale').val())
+      @get('user').set('locale', $('#locale').val())
+      
