@@ -63,7 +63,6 @@ Ember.RecordArray.reopen
 window.Travis = TravisApplication.create(
   LOG_TRANSITIONS: true
 )
-Travis.deferReadiness()
 
 $.extend Travis,
   run: ->

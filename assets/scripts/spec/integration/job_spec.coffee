@@ -11,7 +11,7 @@ test 'displaying information on job page', ->
     responseTime: 0
     responseText: "First line\ncontent:travis_fold:start:install\r$ Install something\nInstalling something\ncontent:travis_fold:end:install\r$ End"
 
-  visit('travis-ci/travis-core/jobs/1').then ->
+  visit('/travis-ci/travis-core/jobs/1').then ->
     listsRepos [
       { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }
       { slug: 'travis-ci/travis-core',   build: { number: 1, url: '/travis-ci/travis-core/builds/1',   duration: '30 sec', finishedAt: '3 minutes ago' } }

@@ -220,6 +220,9 @@ Travis.BuildRoute = Ember.Route.extend
     @controllerFor('build').set('build', model)
     repo.set('build', model)
 
+  model: (params) ->
+    Travis.Build.find(params.build_id)
+
 Travis.JobRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'job', outlet: 'pane', into: 'repo'
@@ -245,6 +248,9 @@ Travis.JobRoute = Ember.Route.extend
 
         model.removeObserver('build', buildObserver)
     model.addObserver('build', this, buildObserver)
+
+  model: (params) ->
+    Travis.Job.find(params.job_id)
 
 Travis.RepoIndexRoute = Ember.Route.extend Travis.SetupLastBuild,
   setupController: (controller, model) ->

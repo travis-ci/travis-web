@@ -5,7 +5,7 @@ module "Events",
     Ember.run -> Travis.reset()
 
 test "event containing a repository, adds repository to repos list", ->
-  visit('travis-ci/travis-core').then ->
+  visit('/travis-ci/travis-core').then ->
     payload =
       repository:
         id: 10
@@ -36,7 +36,7 @@ test "event containing a repository, adds repository to repos list", ->
         item: { slug: 'travis-ci/travis-support',  build: { number: 4, url: '/travis-ci/travis-support/builds/10', duration: '1 min 30 sec', finishedAt: 'less than a minute ago' } }
 
 test "an event with a build adds a build to a builds list", ->
-  visit('travis-ci/travis-core/builds').then ->
+  visit('/travis-ci/travis-core/builds').then ->
     payload =
       build:
         id: 11

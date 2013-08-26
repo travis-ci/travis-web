@@ -5,7 +5,7 @@ module "Index page",
     Ember.run -> Travis.reset()
 
 test "displaying information on index page", ->
-  visit('travis-ci/travis-core').then ->
+  visit('/travis-ci/travis-core').then ->
     listsRepos [
       { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }
       { slug: 'travis-ci/travis-core',   build: { number: 1, url: '/travis-ci/travis-core/builds/1',   duration: '30 sec', finishedAt: '3 minutes ago' } }
