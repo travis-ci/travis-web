@@ -118,7 +118,7 @@ en:
       locale: locale
       message:
         config: how to configure custom build options
-        your_repos: ! "  Flick the switches below to turn on the Travis service hook for your projects, then push to GitHub.<br />\n  To test against multiple rubies, see"
+        your_repos: ! "  Flick the switches below to turn on the Travis service hook for your projects, then push to GitHub.<br />"
       messages:
         notice: ! "To get started, please read our <a href=\"http://about.travis-ci.org/docs/user/getting-started/\">Getting Started guide</a>.\n  <small>It will only take a couple of minutes.</small>"
       token: Token
