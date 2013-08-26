@@ -1,5 +1,5 @@
 <div id="getting-started">
-  <h3>Just one more thing...</h3>
+  <h3>Just one more thing...<img class="spinner" width="20" src="/images/ui/mustache-spinner.gif"/></h3>
 
   <p>
     We're almost done getting you on board, just a few more seconds as we talk to GitHub to find out which
@@ -20,11 +20,10 @@
     Now hold tight while we sync the last bits from GitHub, we should be done here any minute now.
   </p>
 
-  {{#if isSyncing}}
-  {{else}}
+  {{#unless isSyncing}}
     <h3>Great news!</h3>
     <p>
       We've successfully synchronized your details from GitHub. We will redirect you to your profile in a few seconds.
     </p>
-  {{/if}}
+  {{/unless}}
 </div>
