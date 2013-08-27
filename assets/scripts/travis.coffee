@@ -79,6 +79,7 @@ $.extend Travis,
     syncingPageRedirectionTime: 5000
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
+    pusher_host:  $('meta[name="travis.pusher_host"]').attr('value')
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
     ssh_key_enabled: $('meta[name="travis.ssh_key_enabled"]').attr('value') == 'true'

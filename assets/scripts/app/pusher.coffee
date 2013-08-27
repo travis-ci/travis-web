@@ -10,9 +10,10 @@ $.extend Travis.Pusher,
 $.extend Travis.Pusher.prototype,
   active_channels: []
 
-  init: (key) ->
+  init: (config) ->
     Pusher.warn = @warn.bind(this)
-    @pusher = new Pusher(key, encrypted: Travis.Pusher.ENCRYPTED)
+    Pusher.host = config.host if config.host
+    @pusher = new Pusher(config.key, encrypted: Travis.Pusher.ENCRYPTED)
     @subscribeAll(Travis.Pusher.CHANNELS) if Travis.Pusher.CHANNELS
 
     @callbacksToProcess = []
