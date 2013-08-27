@@ -104,8 +104,7 @@ require 'travis/model'
 
 @Travis.Job.reopenClass
   queued: (queue) ->
-    @find()
-    Ember.FilteredRecordArray.create(
+    filtered = Ember.FilteredRecordArray.create(
       modelClass: Travis.Job
       filterFunction: (job) ->
         queued = ['created', 'queued'].indexOf(job.get('state')) != -1
@@ -115,13 +114,24 @@ require 'travis/model'
       filterProperties: ['state', 'queue']
     )
 
+    @fetch(state: 'started').then (array) ->
+      filtered.updateFilter()
+      filtered.set('isLoaded', true)
+
+    filtered
+
   running: ->
-    @find(state: 'started')
-    Ember.FilteredRecordArray.create(
+    filtered = Ember.FilteredRecordArray.create(
       modelClass: Travis.Job
       filterFunction: (job) ->
         job.get('state') == 'started'
       filterProperties: ['state']
     )
+
+    @fetch(state: 'started').then (array) ->
+      filtered.updateFilter()
+      filtered.set('isLoaded', true)
+
+    filtered
 
 
