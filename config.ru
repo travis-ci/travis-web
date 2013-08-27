@@ -29,6 +29,7 @@ run Travis::Web::App.build(
   environment:  ENV['RACK_ENV'] || 'development',
   api_endpoint: ENV['API_ENDPOINT'],
   pusher_key:   ENV['PUSHER_KEY'],
+  pusher_host:  ENV['PUSHER_HOST'] || 'ws.pusherapp.com',
   ga_code:      ENV['GA_CODE'],
   root:         File.expand_path('../public', __FILE__),
   server_start: Time.now,
