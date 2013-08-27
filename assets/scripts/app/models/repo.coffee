@@ -10,6 +10,7 @@ require 'travis/model'
   lastBuildState:      Ember.attr('string')
   lastBuildStartedAt:  Ember.attr('string')
   lastBuildFinishedAt: Ember.attr('string')
+  githubLanguage:      Ember.attr('string')
   _lastBuildDuration:  Ember.attr(Number, key: 'last_build_duration')
 
   lastBuild: Ember.belongsTo('Travis.Build', key: 'last_build_id')
