@@ -46,7 +46,7 @@ Ember.Route.reopen
       Travis.auth.set('afterSignInTransition', null)
       transition.retry()
     else
-      @transitionTo('index.current') if @constructor == Travis.AuthRoute
+      @transitionTo('index.current') if @constructor == Travis.AuthRoute || @constructor.superclass == Travis.AuthRoute
 
   afterSignOut: ->
     @transitionTo('index.current')
