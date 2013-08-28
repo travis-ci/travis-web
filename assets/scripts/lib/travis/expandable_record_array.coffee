@@ -12,7 +12,7 @@ Travis.ExpandableRecordArray = Ember.RecordArray.extend
 
         array.removeObserver 'isLoaded', observer
         array.forEach (record) ->
-          self.pushObject record
+          self.pushObject(record) unless self.contains(record)
 
         self.set 'isLoading', false
         self.set 'isLoaded',  true
@@ -30,7 +30,8 @@ Travis.ExpandableRecordArray = Ember.RecordArray.extend
     addedObjects = array.slice index, index + addedCount
     for object in addedObjects
       if @get('filterWith').call this, object
-        @pushObject object
+        @pushObject(object) unless @contains(object)
 
   pushObject: (record) ->
-    @get('content').pushObject(record)
+    if content = @get('content')
+      content.pushObject(record) unless content.contains(record)
