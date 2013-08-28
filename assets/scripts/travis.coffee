@@ -64,8 +64,7 @@ window.Travis = TravisApplication.create(
   LOG_TRANSITIONS: true
 )
 
-unless window.testMode
-  Travis.deferReadiness()
+Travis.deferReadiness()
 
 $.extend Travis,
   run: ->
