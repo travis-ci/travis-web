@@ -103,18 +103,15 @@ require 'travis/model'
   ).property('state')
 
 @Travis.Job.reopenClass
-  queued: (queue) ->
+  queued: ->
     filtered = Ember.FilteredRecordArray.create(
       modelClass: Travis.Job
       filterFunction: (job) ->
-        queued = ['created', 'queued'].indexOf(job.get('state')) != -1
-        # TODO: why queue is sometimes just common instead of build.common?
-        queued && (!queue || job.get('queue') == "builds.#{queue}" || job.get('queue') == queue)
-
+        ['created', 'queued'].indexOf(job.get('state')) != -1
       filterProperties: ['state', 'queue']
     )
 
-    @fetch(state: 'started').then (array) ->
+    @fetch().then (array) ->
       filtered.updateFilter()
       filtered.set('isLoaded', true)
 

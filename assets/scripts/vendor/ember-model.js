@@ -438,6 +438,10 @@ Ember.Model = Ember.Object.extend(Ember.Evented, {
   init: function() {
     this._createReference();
     this._super();
+
+    this.one('didLoad', function() {
+      this.constructor.addToRecordArrays(this);
+    });
   },
 
   _createReference: function() {
