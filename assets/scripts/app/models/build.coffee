@@ -25,7 +25,7 @@ require 'travis/model'
   ).property('_config')
 
   isPullRequest: (->
-    @get('eventType') == 'pull_request'
+    @get('eventType') == 'pull_request' || @get('pullRequest')
   ).property('eventType')
 
   isMatrix: (->
