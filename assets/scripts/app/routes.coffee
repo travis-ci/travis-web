@@ -306,7 +306,6 @@ Travis.IndexRoute = Ember.Route.extend
     $('body').attr('id', 'home')
 
     @render 'repos',   outlet: 'left'
-    @render 'sidebar', outlet: 'right'
     @render 'top',     outlet: 'top'
     @render 'flash',   outlet: 'flash'
 
