@@ -4,5 +4,6 @@ Travis.CurrentUserController = Em.ObjectController.extend
 
   syncingDidChange: (->
     if (user = @get('content')) && user.get('isSyncing') && !user.get('syncedAt')
-      @container.lookup('router:main').send('renderFirstSync')
+      Ember.run.scheduleOnce 'routerTransitions', this, ->
+        @container.lookup('router:main').send('renderFirstSync')
   ).observes('isSyncing', 'content')
