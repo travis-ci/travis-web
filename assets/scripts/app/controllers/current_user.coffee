@@ -1,3 +1,9 @@
+delegate = (name, options) ->
+  options ||= options
+  ->
+    target = @get(options.to)
+    target[name].apply(target, arguments)
+
 Travis.CurrentUserController = Em.ObjectController.extend
   sync: ->
     @get('content').sync()
@@ -7,3 +13,5 @@ Travis.CurrentUserController = Em.ObjectController.extend
       Ember.run.scheduleOnce 'routerTransitions', this, ->
         @container.lookup('router:main').send('renderFirstSync')
   ).observes('isSyncing', 'content')
+
+  updateLocale: delegate('updateLocale', to: 'content')
