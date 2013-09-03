@@ -135,6 +135,12 @@ Travis.reopen
         @popup(event)
         event.stopPropagation()
 
+    codeClimatePopup: ->
+      @set('active', true)
+      @closeMenu()
+      @popup(event)
+      event.stopPropagation()
+      
     requeueBuild: ->
       if @get('canRequeueBuild')
         @closeMenu()
@@ -219,3 +225,7 @@ Travis.reopen
       if permissions = @get('currentUser.permissions')
         permissions.contains parseInt(@get('repo.id'))
     ).property('currentUser.permissions.length', 'repo.id')
+
+    displayCodeClimate: (->
+      Travis.config.code_climate == "true" and @get('repo.githubLanguage') == 'Ruby'
+    ).property('repo.githubLanguage')

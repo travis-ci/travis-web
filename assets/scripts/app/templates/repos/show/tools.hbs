@@ -44,6 +44,16 @@
         <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}>Download log</a>
       </li>
     {{/if}}
+    {{#if view.displayCodeClimate}}
+      <li>
+        <a href="#" name="code-climate"
+          {{action "codeClimatePopup" target="view"}}
+          {{bindAttr class=":open-popup"}}>
+          Code Climate
+        </a>
+      </li>
+    {{/if}}
+
   </ul>
 </div>
 
@@ -73,4 +83,37 @@
   <p>
     You can read more about encryption keys <a href="http://about.travis-ci.org/docs/user/encryption-keys/">in Travis documentation</a>
   </p>
+</div>
+
+<div id="code-climate" class="popup">
+  <p>
+    Integrating <a href="https://codeclimate.com">Code Climate</a>'s code coverage reporting with your test
+    suite on Travis CI allows to track changes in coverage over time. It only takes a few steps, once you've set up your project:
+  </p>
+
+  <ol>
+    <li>
+      Add the `code-climate-reporter` gem to your Gemfile:<br/>
+
+<pre>
+gem "codeclimate-test-reporter", group: :test, require: nil
+</pre>
+    </li>
+    <li>
+      Load the reporter in your `test_helper` or `spec_helper`, putting it at the very top:
+
+<pre>
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+</pre>
+    </li>
+    <li>
+      Add the Code Climate token to your .travis.yml:
+
+<pre>
+env:
+  global:
+    - CODECLIMATE_REPO_TOKEN=adf08323...
+</pre>
+    </li>
 </div>
