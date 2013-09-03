@@ -121,9 +121,7 @@ pl:
       locale: język
       message:
         config: jak skonfigurować niestandardowe opcje builda
-        your_repos: ! 'Przesuń suwak poniżej, aby włączyć Travisa dla twoich projektów, a następnie umieść swój kod na GitHubie.<br />
-
-          Aby testować swój kod przy użyciu wielu wersji Rubiego, zobacz'
+        your_repos: ! 'Przesuń suwak poniżej, aby włączyć Travisa dla twoich projektów, a następnie umieść swój kod na GitHubie.'
       messages:
         notice: ! "Aby zacząć, przeczytaj nasz <a href=\"http://about.travis-ci.org/docs/user/getting-started/\">Przewodnik</a>.\n  <small>Zajmie ci to tylko kilka minut.</small>"
       token: Token
