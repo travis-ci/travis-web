@@ -89,5 +89,13 @@ $.extend Travis.Pusher.prototype,
     console.warn(type, object.error) unless @ignoreWarning(type, object.error)
 
   ignoreWarning: (type, error) ->
-    if message = error?.data?.message
-      message.indexOf('Existing subscription') == 0 or message.indexOf('No current subscription') == 0
+    code = error?.data?.code || 0
+    message = error?.data?.message || ''
+    @ignoreCode(code) || @ignoreMessage(message)
+
+  ignoreCode: (code) ->
+    code == 1006
+
+  ignoreMessage: (message) ->
+    message.indexOf('Existing subscription') == 0 or message.indexOf('No current subscription') == 0
+
