@@ -126,7 +126,7 @@ unless window.TravisApplication
       if reference && options.skipIfExists
         return
 
-      reference = type._referenceForId(hash.id)
+      reference = type._getOrCreateReferenceForId(hash.id)
       if reference.record
         reference.record.merge(hash)
       else

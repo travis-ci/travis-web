@@ -86,10 +86,10 @@ Array.prototype.diff = (a) ->
       @loadTheRest(key)
 
   isAttribute: (name) ->
-    this.attributes.contains(name)
+    this.constructor.getAttributes().contains(name)
 
   isRelationship: (name) ->
-    this.relationships.contains(name)
+    this.constructor.getRelationships().contains(name)
 
   loadTheRest: (key) ->
     # for some weird reason key comes changed to a string and for some weird reason it even is called with
@@ -145,7 +145,7 @@ Array.prototype.diff = (a) ->
   ).property()
 
   isRecordLoaded: (id) ->
-    !!@_referenceForId(id).record
+    !!@_getOrCreateReferenceForId(id).record
 
   camelizeKeys: true
 
