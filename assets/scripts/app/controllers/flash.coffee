@@ -9,7 +9,7 @@ Travis.FlashController = Ember.ArrayController.extend
     @set('flashes', Ember.A())
 
   content: (->
-    @get('unseenBroadcasts').concat(@get('flashes')).filter (o) -> !!o
+    @get('unseenBroadcasts').concat(@get('flashes'))
   ).property('unseenBroadcasts.length', 'flashes.length')
 
   unseenBroadcasts: (->
