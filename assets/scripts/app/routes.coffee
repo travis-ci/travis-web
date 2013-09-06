@@ -225,7 +225,10 @@ Travis.BuildRoute = Ember.Route.extend
 
 Travis.JobRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'job', outlet: 'pane', into: 'repo'
+    # TODO: this run.next should not be needed here, I couldn't reproduce it on a clean
+    #       app, so it's most likely because of some weird thing that we do.
+    Ember.run.next this, ->
+      @render 'job', outlet: 'pane', into: 'repo'
 
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
@@ -248,6 +251,7 @@ Travis.JobRoute = Ember.Route.extend
 
         model.removeObserver('build', buildObserver)
     model.addObserver('build', this, buildObserver)
+    buildObserver.apply(this)
 
   model: (params) ->
     Travis.Job.find(params.job_id)
