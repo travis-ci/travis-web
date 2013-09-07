@@ -15,15 +15,18 @@ Travis.reopen
       # in repos/show.hbs is empty when view is rerendered without routing
       # taking place. Try to render the default outlet in such case
       # TODO: look into fixing it in more general way
-      pane = Ember.get('_outlets.pane')
-      if @get('controller.repo.isLoaded') && @state == 'inDOM' &&
-         @get('controller.repo.lastBuild') &&
-         @get('controller.tab') == 'current' && (!pane || pane.state == 'destroyed')
-        view = @get('controller.container').lookup('view:build')
-        view.set('controller', @get('controller.container').lookup('controller:build'))
-        Ember.run.next =>
-          @set('_outlets', {}) if !@get('_outlets') && !@isDestroyed
-          @connectOutlet('pane',  view) unless @isDestroyed
+      Ember.run.schedule('afterRender', this, ->
+        pane = Ember.get('_outlets.pane')
+        console.log('tab', @get('controller.tab'))
+        if @get('controller.repo.isLoaded') && @state == 'inDOM' &&
+           @get('controller.repo.lastBuild') &&
+           @get('controller.tab') == 'current' && (!pane || pane.state == 'destroyed')
+          view = @get('controller.container').lookup('view:build')
+          view.set('controller', @get('controller.container').lookup('controller:build'))
+          Ember.run.next =>
+            @set('_outlets', {}) if !@get('_outlets') && !@isDestroyed
+            @connectOutlet('pane',  view) unless @isDestroyed
+      )
     ).observes('controller.repo.isLoaded')
 
   ReposEmptyView: Travis.View.extend
