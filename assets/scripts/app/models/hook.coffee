@@ -16,11 +16,11 @@ require 'travis/model'
   ).property('ownerName', 'name')
 
   urlGithub: (->
-    "https://github.com/#{@get('slug')}"
+    "#{Travis.config.source_endpoint}/#{@get('slug')}"
   ).property()
 
   urlGithubAdmin: (->
-    "https://github.com/#{@get('slug')}/settings/hooks#travis_minibucket"
+    "#{Travis.config.source_endpoint}/#{@get('slug')}/settings/hooks#travis_minibucket"
   ).property()
 
   toggle: ->

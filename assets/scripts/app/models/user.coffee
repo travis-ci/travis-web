@@ -26,7 +26,7 @@ require 'travis/model'
   ).observes('isSyncing')
 
   urlGithub: (->
-    "https://github.com/#{@get('login')}"
+    "#{Travis.config.source_endpoint}/#{@get('login')}"
   ).property()
 
   _rawPermissions: (->
