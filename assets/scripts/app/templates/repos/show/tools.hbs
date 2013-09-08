@@ -1,47 +1,13 @@
 <div id="tools">
   <a href="#" {{action "menu" target="view"}}></a>
   <ul class="menu">
-    <li>
-      <a href="#" name="status-images" class="open-popup" {{action "statusImages" target="view"}}>Status Images</a>
-    </li>
-    {{#if view.displayCancelBuild}}
-      <li>
-        <a href="#" {{action "cancelBuild" target="view"}}
-          {{bindAttr class="view.canCancelBuild::disabled"}}>Cancel Build</a>
-      </li>
-    {{/if}}
-    {{#if view.displayCancelJob}}
-      <li>
-        <a href="#" {{action "cancelJob" target="view"}}
-          {{bindAttr class="view.canCancelJob::disabled"}}>Cancel Job</a>
-      </li>
-    {{/if}}
-    {{#if view.displayRequeueBuild}}
-      <li>
-        <a href="#" {{action "requeueBuild" target="view"}}
-          {{bindAttr class="view.canRequeueBuild::disabled"}}>Restart Build</a>
-      </li>
-    {{/if}}
-    {{#if view.displayRequeueJob}}
-      <li>
-        <a href="#" {{action "requeueJob" target="view"}}
-          {{bindAttr class="view.canRequeueJob::disabled"}}> Restart Job </a>
-      </li>
-    {{/if}}
-    {{#if view.displayRegenerateKey}}
+   {{#if view.displayRegenerateKey}}
       <li>
         <a href="#" name="regenerate-key"
           {{action "regenerateKeyPopup" target="view"}}
           {{bindAttr class=":open-popup view.canRegenerateKey::disabled"}}>
             Regenerate Key
         </a>
-      </li>
-    {{/if}}
-    {{!TODO: for some reason showDownloadLog, which just delegates to jobIdForLog
-             does not refresh 'if' properly, need further investigation}}
-    {{#if view.jobIdForLog}}
-      <li>
-        <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}>Download log</a>
       </li>
     {{/if}}
   </ul>
@@ -57,7 +23,7 @@
   </p>
 
   <p>
-    <a class="sync_now button" {{action "regenerateKey" target="view"}}>Yes! Do it!</a>
+    <a class="sync_now button" {{action "regenerateKey" target="view"}}>Yes, do it!</a>
     <span class="or">or</span>
     <a href="#" class="cancel" {{action "popupClose" target="view"}}>Cancel</a>
   </p>
