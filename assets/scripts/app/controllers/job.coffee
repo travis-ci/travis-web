@@ -5,6 +5,8 @@ Travis.JobController = Em.Controller.extend
   repoBinding: 'controllers.repo.repo'
   commitBinding: 'job.commit'
   lineNumberBinding: 'controllers.repo.lineNumber'
+  currentUserBinding: 'controllers.repo.currentUser'
+  tabBinding: 'controllers.repo.tab'
 
   currentItemBinding: 'job'
 

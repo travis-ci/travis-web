@@ -119,7 +119,7 @@ Travis.reopen
     buildBinding: 'controller.build'
     jobBinding: 'controller.job'
     tabBinding: 'controller.controllers.repo.tab'
-    currentUserBinding: 'controller.controllers.repo.currentUser'
+    currentUserBinding: 'controller.currentUser'
 
     requeue: ->
       @get('build').requeue()
