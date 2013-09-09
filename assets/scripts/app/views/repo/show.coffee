@@ -118,8 +118,17 @@ Travis.reopen
     repoBinding: 'controller.repo'
     buildBinding: 'controller.build'
     jobBinding: 'controller.job'
-    tabBinding: 'controller.controllers.repo.tab'
+    tabBinding: 'controller.tab'
+    slugBinding: 'controller.repo.slug'
     currentUserBinding: 'controller.currentUser'
+
+    statusImageUrl: (->
+      "/#{@get('slug')}.png"
+    ).property('slug')
+
+    displayStatusImages: (->
+      @get('hasPermission')
+    ).property('hasPermission')
 
     requeue: ->
       @get('build').requeue()
@@ -149,13 +158,6 @@ Travis.reopen
             Travis.flash(error: 'You don\'t have sufficient access to cancel this job')
           else
             Travis.flash(error: 'An error occured when canceling the job')
-
-    statusImages: ->
-      @popupCloseAll()
-      view = Travis.StatusImagesView.create(toolsView: this)
-      Travis.View.currentPopupView = view
-      view.appendTo($('body'))
-      event.stopPropagation()
 
     hasPermission: (->
       if permissions = @get('currentUser.permissions')
@@ -223,3 +225,12 @@ Travis.reopen
     requeueJob: ->
       if @get('canRequeueJob')
         @get('job').requeue()
+
+    statusImages: ->
+      @popupCloseAll()
+      view = Travis.StatusImagesView.create(toolsView: this)
+      Travis.View.currentPopupView = view
+      view.appendTo($('body'))
+      event.stopPropagation()
+
+

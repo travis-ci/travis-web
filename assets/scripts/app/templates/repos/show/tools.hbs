@@ -1,5 +1,6 @@
 <div id="tools">
-  <a href="#" {{action "menu" target="view"}}></a>
+  <a href="#" {{action "menu" target="view"}} class="menu-popup-button"></a>
+
   <ul class="menu">
    {{#if view.displayRegenerateKey}}
       <li>
@@ -11,6 +12,7 @@
       </li>
     {{/if}}
   </ul>
+
 </div>
 
 <div id="regenerate-key" class="popup">
