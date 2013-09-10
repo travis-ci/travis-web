@@ -186,6 +186,8 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
     get(this, 'modelClass').forEachCachedRecord(function(record) {
       if (self.filterFunction(record)) {
         results.push(record);
+      } else {
+        results.removeObject(record);
       }
     });
     this.set('content', Ember.A(results));
@@ -193,8 +195,12 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
 
   updateFilterForRecord: function(record) {
     var results = get(this, 'content');
-    if (this.filterFunction(record) && !results.contains(record)) {
-      results.pushObject(record);
+    if (this.filterFunction(record)) {
+      if(!results.contains(record)) {
+        results.pushObject(record);
+      }
+    } else {
+      results.removeObject(record);
     }
   },
 
@@ -432,6 +438,10 @@ Ember.Model = Ember.Object.extend(Ember.Evented, {
   init: function() {
     this._createReference();
     this._super();
+
+    this.one('didLoad', function() {
+      this.constructor.addToRecordArrays(this);
+    });
   },
 
   _createReference: function() {

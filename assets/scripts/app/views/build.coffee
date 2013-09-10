@@ -41,8 +41,8 @@ Travis.reopen
     ).property('repo.slug', 'commit.sha')
 
     urlGithubPullRequest: (->
-      Travis.Urls.githubPullRequest(@get('repo.slug'), @get('commit.pullRequestNumber'))
-    ).property('repo.slug', 'commit.pullRequestNumber')
+      Travis.Urls.githubPullRequest(@get('repo.slug'), @get('build.pullRequestNumber'))
+    ).property('repo.slug', 'build.pullRequestNumber')
 
   BuildView: Travis.View.extend
     templateName: 'builds/show'

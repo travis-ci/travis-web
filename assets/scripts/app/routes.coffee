@@ -46,7 +46,7 @@ Ember.Route.reopen
       Travis.auth.set('afterSignInTransition', null)
       transition.retry()
     else
-      @transitionTo('index.current') if @constructor == Travis.AuthRoute
+      @transitionTo('index.current') if @constructor == Travis.AuthRoute || @constructor.superclass == Travis.AuthRoute
 
   afterSignOut: ->
     @transitionTo('index.current')
@@ -248,6 +248,7 @@ Travis.JobRoute = Ember.Route.extend
 
         model.removeObserver('build', buildObserver)
     model.addObserver('build', this, buildObserver)
+    buildObserver.apply(this)
 
   model: (params) ->
     Travis.Job.find(params.job_id)
@@ -306,7 +307,6 @@ Travis.IndexRoute = Ember.Route.extend
     $('body').attr('id', 'home')
 
     @render 'repos',   outlet: 'left'
-    @render 'sidebar', outlet: 'right'
     @render 'top',     outlet: 'top'
     @render 'flash',   outlet: 'flash'
 

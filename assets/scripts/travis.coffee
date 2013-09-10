@@ -64,6 +64,8 @@ window.Travis = TravisApplication.create(
   LOG_TRANSITIONS: true
 )
 
+Travis.deferReadiness()
+
 $.extend Travis,
   run: ->
     Travis.advanceReadiness() # bc, remove once merged to master

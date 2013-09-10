@@ -37,7 +37,10 @@ require 'config/emoij'
   formatMessage: (message, options) ->
     message = message || ''
     message = message.split(/\n/)[0]  if options.short
-    @_emojize(@_escape(message)).replace /\n/g, '<br/>'
+    message = @_emojize(@_escape(message))
+    if !!options.repo
+      message = @githubify(message, options.repo.get('owner'), options.repo.get('name'))
+    message.replace /\n/g, '<br/>'
 
   pathFrom: (url) ->
     (url || '').split('/').pop()
@@ -65,6 +68,26 @@ require 'config/emoij'
       result.push minutes + ' min'  if minutes > 0
       result.push seconds + ' sec'  if seconds > 0
       if result.length > 0 then result.join(' ') else '-'
+
+  githubify: (text, owner, repo) ->
+    self = this
+    text = text.replace @_githubReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedNumber) ->
+      self._githubReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
+    text = text.replace @_githubUserRegexp, (reference, username) ->
+      self._githubUserLink(reference, username)
+    text
+
+  _githubReferenceLink: (reference, current, matched) ->
+    owner = matched.owner || current.owner
+    repo = matched.repo || current.repo
+    "<a href=\"http://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
+
+  _githubReferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g')
+
+  _githubUserRegexp: new RegExp("@([\\w-]+)", 'g')
+
+  _githubUserLink: (reference, username) ->
+    "<a href=\"http://github.com/#{username}\">#{reference}</a>"
 
   _normalizeDateString: (string) ->
     if window.JHW

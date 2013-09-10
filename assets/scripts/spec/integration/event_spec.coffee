@@ -50,6 +50,9 @@ test "an event with a build adds a build to a builds list", ->
         message: 'commit message 3'
         commit: '1234567'
         state: 'failed'
+        pull_request: false
+        pull_request_number: null
+        pull_request_title: null
 
     Em.run ->
       Travis.receive 'build:started', payload

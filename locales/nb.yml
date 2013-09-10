@@ -118,7 +118,7 @@ nb:
       locale: 
       message:
         config: hvordan sette opp egne jobbinnstillinger
-        your_repos: ! "Slå\x10 på Travis for prosjektene dine ved å dra i bryterne under, og send koden til Github.<br />\nFor å teste mot flere versjoner av ruby, se "
+        your_repos: ! "Slå\x10 på Travis for prosjektene dine ved å dra i bryterne under, og send koden til Github."
       messages:
         notice: For å komme i gang, vennligst les <a href="http://about.travis-ci.org/docs/user/getting-started/">kom-i-gang-veivisereren</a> vår. <small>Det tar bare et par minutter.</small>
       token: Kode

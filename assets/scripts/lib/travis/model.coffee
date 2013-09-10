@@ -172,12 +172,23 @@ Array.prototype.diff = (a) ->
       delete this.recordCache[key]
 
   loadRecordForReference: (reference) ->
-    record = this.create({ _reference: reference })
-    this.recordCache = {} unless this.recordCache
-    this.sideloadedData = {} unless this.sideloadedData
-    this.recordCache[reference.id] = record
+    record = @create({ _reference: reference })
+    @recordCache = {} unless @recordCache
+    @sideloadedData = {} unless @sideloadedData
+    @recordCache[reference.id] = record
     reference.record = record
-    record.load(reference.id, this.sideloadedData[reference.id])
+    record.load(reference.id, @sideloadedData[reference.id])
     # TODO: find a nicer way to not add record to record arrays twice
-    if !this._findAllRecordArray || !this._findAllRecordArray.contains(record)
-      this.addToRecordArrays(record)
+    if @currentRecordsToAdd
+      @currentRecordsToAdd.pushObject(record) unless @currentRecordsToAdd.contains(record)
+    else
+      @currentRecordsToAdd = [record]
+
+    Ember.run.scheduleOnce('data', this, @_batchAddToRecordArrays);
+
+  _batchAddToRecordArrays: ->
+    for record in @currentRecordsToAdd
+      if !@_findAllRecordArray || !@_findAllRecordArray.contains(record)
+        @addToRecordArrays(record)
+
+    @currentRecordsToAdd = null
