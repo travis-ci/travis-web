@@ -126,7 +126,7 @@ Travis.reopen
     currentUserBinding: 'controller.currentUser'
 
     statusImageUrl: (->
-      "/#{@get('slug')}.png"
+      Travis.Urls.statusImage(@get('slug'))
     ).property('slug')
 
     displayStatusImages: (->
