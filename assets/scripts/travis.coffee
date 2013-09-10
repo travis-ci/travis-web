@@ -75,6 +75,7 @@ $.extend Travis,
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
+    code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
 
   CONFIG_KEYS: ['go', 'rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala', 'compiler']
 

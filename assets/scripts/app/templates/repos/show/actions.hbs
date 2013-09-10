@@ -1,14 +1,5 @@
 <div id="actions">
   <ul>
-    {{#if view.displayCodeClimate}}
-      <li>
-        <a href="#" name="code-climate"
-          {{action "codeClimatePopup" target="view"}}
-          {{bindAttr class=":open-popup"}}>
-          Test Coverage
-        </a>
-      </li>
-    {{/if}}
     {{#if view.displayStatusImages}}
     <li id="status-image-popup">
       <a href="#" name="status-images" class="open-popup" {{action "statusImages" target="view"}} style="margin-top: 0px;">
@@ -48,5 +39,15 @@
         <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}><img class="icon" src="/images/icons/align-justify.png" width="20" title="Download Log"/></a>
       </li>
     {{/if}}
+    {{#if view.displayCodeClimate}}
+      <li class="icon">
+        <a href="#" name="code-climate"
+          {{action "codeClimatePopup" target="view"}}
+          {{bindAttr class=":open-popup"}}>
+          <img src="/images/icons/code-climate-icon.png" title="Test Coverage with Code Climate"/>
+        </a>
+      </li>
+    {{/if}}
+
   </ul>
 </div>

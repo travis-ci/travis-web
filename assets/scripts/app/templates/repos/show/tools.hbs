@@ -43,9 +43,20 @@
 </div>
 
 <div id="code-climate" class="popup">
+  <img src="/images/icons/code-climate-logo.png" id="code-climate-logo"/>
+  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
   <p>
-    Integrating <a href="https://codeclimate.com">Code Climate</a>'s code coverage reporting with your test
-    suite on Travis CI allows to track changes in coverage over time. It only takes a few steps, once you've set up your project:
+    <b>Want test coverage for your tests?</b>
+  </p>
+  <p>
+    Integrating <a href="https://codeclimate.com">Code Climate's test coverage</a> reporting with your test
+    suite on Travis CI allows to track changes in coverage over time. If you haven't tried it out already, <a
+    href="" target="_blank">sign
+    up today</a> for to improve your code's quality. New customers get 20% off for the first three months!
+  </p> 
+
+  <p>
+    It only takes a few steps, once you've set up your project:
   </p>
 
   <ol>
@@ -68,9 +79,9 @@ CodeClimate::TestReporter.start
       Add the Code Climate token to your .travis.yml:
 
 <pre>
-env:
-  global:
-    - CODECLIMATE_REPO_TOKEN=adf08323...
+addons:
+  code_climate:
+    token: adf08323...
 </pre>
     </li>
 </div>

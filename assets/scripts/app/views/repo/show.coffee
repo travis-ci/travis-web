@@ -222,8 +222,14 @@ Travis.reopen
     ).property('tab')
 
     displayCodeClimate: (->
+      console.log @get('repo.githubLanguage')
       Travis.config.code_climate == "true" and @get('repo.githubLanguage') == 'Ruby'
     ).property('repo.githubLanguage')
+
+    codeClimatePopup: ->
+      @popupCloseAll()
+      @popup('code-climate')
+      event.stopPropagation()
 
     requeueBuild: ->
       if @get('canRequeueBuild')
