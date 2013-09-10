@@ -88,13 +88,56 @@ Travis.reopen
       $('#tools .menu').toggleClass('display')
       event.stopPropagation()
 
+    regenerateKeyPopup: ->
+      if @get('canRegenerateKey')
+        @set('active', true)
+        @closeMenu()
+        @popup(event)
+        event.stopPropagation()
+
+    regenerateKey: ->
+      @popupCloseAll()
+
+      (@get('repo.content') || @get('repo')).regenerateKey
+        success: =>
+          @popup('regeneration-success')
+        error: ->
+          Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
+
+    displayRegenerateKey: true
+
+    canRegenerateKey: (->
+      @get('displayRegenerateKey') && @get('hasPermission')
+    ).property('hasPermission')
+
+    hasPermission: (->
+      if permissions = @get('currentUser.permissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.permissions.length', 'repo.id')
+
+  RepoActionsView: Travis.View.extend
+    templateName: 'repos/show/actions'
+
+    repoBinding: 'controller.repo'
+    buildBinding: 'controller.build'
+    jobBinding: 'controller.job'
+    tabBinding: 'controller.tab'
+    slugBinding: 'controller.repo.slug'
+    currentUserBinding: 'controller.currentUser'
+
+    statusImageUrl: (->
+      "/#{@get('slug')}.png"
+    ).property('slug')
+
+    displayStatusImages: (->
+      @get('hasPermission')
+    ).property('hasPermission')
+
     requeue: ->
-      @closeMenu()
       @get('build').requeue()
 
     cancelBuild: ->
       if @get('canCancelBuild')
-        @closeMenu()
         Travis.flash(notice: 'Build cancelation has been scheduled.')
         @get('build').cancel().then ->
           Travis.flash(success: 'Build has been successfuly canceled.')
@@ -108,7 +151,6 @@ Travis.reopen
 
     cancelJob: ->
       if @get('canCancelJob')
-        @closeMenu()
         Travis.flash(notice: 'Job cancelation has been scheduled.')
         @get('job').cancel().then ->
           Travis.flash(success: 'Job has been successfuly canceled.')
@@ -120,42 +162,10 @@ Travis.reopen
           else
             Travis.flash(error: 'An error occured when canceling the job')
 
-    statusImages: ->
-      @set('active', true)
-      @closeMenu()
-      @popupCloseAll()
-      view = Travis.StatusImagesView.create(toolsView: this)
-      # TODO: create a general mechanism for managing current popup
-      #       and move all popups to use it
-      Travis.View.currentPopupView = view
-      view.appendTo($('body'))
-      event.stopPropagation()
-
-    regenerateKeyPopup: ->
-      if @get('canRegenerateKey')
-        @set('active', true)
-        @closeMenu()
-        @popup(event)
-        event.stopPropagation()
-
-    requeueBuild: ->
-      if @get('canRequeueBuild')
-        @closeMenu()
-        @get('build').requeue()
-
-    requeueJob: ->
-      if @get('canRequeueJob')
-        @closeMenu()
-        @get('job').requeue()
-
-    regenerateKey: ->
-      @popupCloseAll()
-
-      (@get('repo.content') || @get('repo')).regenerateKey
-        success: =>
-          @popup('regeneration-success')
-        error: ->
-          Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
+    hasPermission: (->
+      if permissions = @get('currentUser.permissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.permissions.length', 'repo.id')
 
     displayRequeueBuild: (->
       @get('isBuildTab') && @get('build.isFinished')
@@ -203,22 +213,27 @@ Travis.reopen
       @get('isJobTab') && @get('job.canCancel')
     ).property('isJobTab', 'job.canCancel')
 
-    displayRegenerateKey: true
-
-    canRegenerateKey: (->
-      @get('displayRegenerateKey') && @get('hasPermission')
-    ).property('hasPermission')
-
-
     isJobTab: (->
       @get('tab') == 'job'
-    ).property('tab')
+    ).property('tab', 'repo.id')
 
     isBuildTab: (->
       ['current', 'build'].indexOf(@get('tab')) > -1
     ).property('tab')
 
-    hasPermission: (->
-      if permissions = @get('currentUser.permissions')
-        permissions.contains parseInt(@get('repo.id'))
-    ).property('currentUser.permissions.length', 'repo.id')
+    requeueBuild: ->
+      if @get('canRequeueBuild')
+        @get('build').requeue()
+
+    requeueJob: ->
+      if @get('canRequeueJob')
+        @get('job').requeue()
+
+    statusImages: ->
+      @popupCloseAll()
+      view = Travis.StatusImagesView.create(toolsView: this)
+      Travis.View.currentPopupView = view
+      view.appendTo($('body'))
+      event.stopPropagation()
+
+
