@@ -6,6 +6,7 @@ gem 'rack-ssl', '~> 1.3'
 gem 'rack-protection', '~> 1.3'
 gem 'rack-mobile-detect'
 gem 'sinatra'
+gem 'hashr'
 
 gem 'rake-pipeline',  github: 'livingsocial/rake-pipeline'
 gem 'rake-pipeline-web-filters', github: 'wycats/rake-pipeline-web-filters'
