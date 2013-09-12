@@ -23,12 +23,15 @@ Travis.RepoController = Travis.Controller.extend
         jobs.forEach (j) -> j.updateTimes()
 
   activate: (action) ->
+    @stopObservingLastBuild()
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
+    @observeLastBuild()
     @connectTab('current')
 
   viewCurrent: ->
+    @observeLastBuild()
     @connectTab('current')
 
   viewBuilds: ->
@@ -45,6 +48,17 @@ Travis.RepoController = Travis.Controller.extend
 
   viewJob: ->
     @connectTab('job')
+
+  lastBuildDidChange: ->
+    build = @get('repo.lastBuild')
+    @controllerFor('build').set('build', build)
+
+  stopObservingLastBuild: ->
+    @removeObserver('repo.lastBuild', this, 'lastBuildDidChange')
+
+  observeLastBuild: ->
+    @lastBuildDidChange()
+    @addObserver('repo.lastBuild', this, 'lastBuildDidChange')
 
   connectTab: (tab) ->
     # TODO: such implementation seems weird now, because we render

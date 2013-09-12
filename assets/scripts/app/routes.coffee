@@ -117,24 +117,14 @@ Travis.ApplicationRoute = Ember.Route.extend Travis.LineNumberParser,
 
 Travis.SetupLastBuild = Ember.Mixin.create
   setupController: ->
-    @lastBuildDidChange()
-    @controllerFor('repo').addObserver('repo.lastBuild', this, 'lastBuildDidChange')
     @repoDidLoad()
     @controllerFor('repo').addObserver('repo.isLoaded', this, 'repoDidLoad')
-
-  deactivate: ->
-    @_super.apply this, arguments
-    @controllerFor('repo').removeObserver('repo.lastBuild', this, 'lastBuildDidChange')
 
   repoDidLoad: ->
     # TODO: it would be nicer to do it with promises
     repo = @controllerFor('repo').get('repo')
     if repo && repo.get('isLoaded') && !repo.get('lastBuild')
       @render('builds/not_found', outlet: 'pane', into: 'repo')
-
-  lastBuildDidChange: ->
-    build = @controllerFor('repo').get('repo.lastBuild')
-    @controllerFor('build').set('build', build)
 
 Travis.GettingStartedRoute = Ember.Route.extend
   setupController: ->
@@ -168,7 +158,7 @@ Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
     @_super.apply this, arguments
     @currentRepoDidChange()
 
-    @container.lookup('controller:repo').activate('index')
+    @controllerFor('repo').activate('index')
     @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
 
   deactivate: ->
@@ -256,7 +246,7 @@ Travis.JobRoute = Ember.Route.extend
 Travis.RepoIndexRoute = Ember.Route.extend Travis.SetupLastBuild,
   setupController: (controller, model) ->
     @_super.apply this, arguments
-    @container.lookup('controller:repo').activate('current')
+    @controllerFor('repo').activate('current')
 
   renderTemplate: ->
     @render 'build', outlet: 'pane', into: 'repo'
