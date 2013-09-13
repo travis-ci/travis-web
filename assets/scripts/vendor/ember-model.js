@@ -775,22 +775,11 @@ Ember.Model.reopenClass({
     this._currentBatchIds = null;
     this._currentBatchRecordArrays = null;
 
-    for (i = 0; i < batchIds.length; i++) {
-      if (!this.cachedRecordForId(batchIds[i]).get('isLoaded')) {
-        requestIds.push(batchIds[i]);
-      }
-    }
-
     if (batchIds.length === 1) {
       promise = get(this, 'adapter').find(this.cachedRecordForId(batchIds[0]), batchIds[0]);
     } else {
       var recordArray = Ember.RecordArray.create({_ids: batchIds});
-      if (requestIds.length === 0) {
-        promise = new Ember.RSVP.Promise(function(resolve, reject) { resolve(recordArray); });
-        recordArray.notifyLoaded();
-      } else {
-        promise = get(this, 'adapter').findMany(this, recordArray, requestIds);
-      }
+      promise = get(this, 'adapter').findMany(this, recordArray, batchIds);
     }
 
     promise.then(function() {
