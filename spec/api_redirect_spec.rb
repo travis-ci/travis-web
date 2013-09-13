@@ -10,30 +10,4 @@ describe Travis::Web::ApiRedirect do
   it 'redirects /:owner/:repo.png' do
     get('/foo/bar.png').should be_redirect
   end
-
-  it 'does not redirect catch-all for browsers' do
-    get('/foo/bar', {}, 'HTTP_ACCEPT' => browser_accept).should_not be_redirect
-  end
-
-  it 'does not redirect catch-all with generic Accept header' do
-    get('/foo/bar', {}, 'HTTP_ACCEPT' => '*/*').should be_redirect
-  end
-
-  it 'redirects catch-all without Accept header' do
-    get('/foo/bar').should be_redirect
-  end
-
-  it 'redirects catch-all JSON requests' do
-    get('/foo/bar', {}, 'HTTP_ACCEPT' => 'application/json').should be_redirect
-  end
-
-  it 'does not redirect asset requests' do
-    get('/version').should_not be_redirect
-  end
-
-  it 'redirects /:owner_name/:name/builds.json' do
-    response = get('/foo/bar/builds.json')
-    response.should be_redirect
-    response.headers['Location'].should == 'https://api.travis-ci.org/repos/foo/bar/builds.json'
-  end
 end
