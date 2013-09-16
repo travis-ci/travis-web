@@ -1,7 +1,6 @@
 require 'travis/model'
 
 @Travis.Account = Travis.Model.extend
-  primaryKey: 'login'
   login:       Ember.attr('string')
   name:        Ember.attr('string')
   type:        Ember.attr('string')
@@ -15,3 +14,5 @@ require 'travis/model'
   reposCount: (->
     @get('_reposCount') || 0
   ).property('_reposCount')
+
+Travis.Account.primaryKey = 'login'
