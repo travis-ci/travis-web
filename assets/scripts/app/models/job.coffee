@@ -8,7 +8,7 @@ require 'travis/model'
 
   queue:          Ember.attr('string')
   state:          Ember.attr('string')
-  number:         Ember.attr(Number)
+  number:         Ember.attr('string')
   startedAt:      Ember.attr('string')
   finishedAt:     Ember.attr('string')
   allowFailure:   Ember.attr('boolean')
