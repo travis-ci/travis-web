@@ -5,7 +5,7 @@ require 'travis/model'
   commitId:         Ember.attr('number')
 
   state:            Ember.attr('string')
-  number:           Ember.attr('string')
+  number:           Ember.attr(Number)
   branch:           Ember.attr('string')
   message:          Ember.attr('string')
   _duration:        Ember.attr(Number, key: 'duration')
