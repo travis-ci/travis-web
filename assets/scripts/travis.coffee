@@ -109,7 +109,27 @@ $.extend Travis,
     storage
   )()
 
-setupGoogleAnalytics() if Travis.config.ga_code
+Travis.initializer
+  name: 'googleAnalytics'
+
+  initialize: (container) ->
+    if Travis.config.ga_code
+      window._gaq = []
+      _gaq.push(['_setAccount', Travis.config.ga_code])
+
+      ga = document.createElement('script')
+      ga.type = 'text/javascript'
+      ga.async = true
+      ga.src = 'https://ssl.google-analytics.com/ga.js'
+      s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(ga, s)
+
+Travis.Router.reopen
+  didTransition: ->
+    @_super.apply @, arguments
+
+    if Travis.config.ga_code
+      _gaq.push ['_trackPageview', location.pathname]
 
 require 'ext/i18n'
 require 'travis/ajax'
