@@ -51,7 +51,7 @@ Travis.RepoController = Travis.Controller.extend
 
   lastBuildDidChange: ->
     build = @get('repo.lastBuild')
-    @controllerFor('build').set('build', build)
+    @set('build', build)
 
   stopObservingLastBuild: ->
     @removeObserver('repo.lastBuild', this, 'lastBuildDidChange')
