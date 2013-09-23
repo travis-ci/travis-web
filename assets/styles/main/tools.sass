@@ -4,7 +4,7 @@
   position: relative
   float: right
   top: 2px
-  width: 200px
+  width: 300px
 
   & > a.menu-popup-button
     display: block
@@ -36,6 +36,15 @@
         cursor: default
         color: $color-link-disabled
 
+  a#status-image-popup
+    float: right
+    display: block
+    opacity: 0.5
+    margin-top: -27px
+    margin-right: 45px
+    &:hover
+      opacity: 1.0
+
 #code-climate
   a
     text-decoration: underline
@@ -51,11 +60,6 @@
 #actions
   float: right
   text-align: right
-
-  li#status-image-popup
-    opacity: 0.5
-    &:hover
-      opacity: 1.0
 
   li.icon
     a

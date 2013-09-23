@@ -12,6 +12,13 @@
       </li>
     {{/if}}
   </ul>
+  {{#if view.displayStatusImages}}
+  <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target="view"}}>
+    <img {{bindAttr src="view.statusImageUrl"}} title="Build Status Images"/>
+  </a>
+  {{/if}}
+
+
 </div>
 
 <div id="regenerate-key" class="popup">

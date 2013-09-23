@@ -1,12 +1,5 @@
 <div id="actions">
   <ul>
-    {{#if view.displayStatusImages}}
-    <li id="status-image-popup">
-      <a href="#" name="status-images" class="open-popup" {{action "statusImages" target="view"}} style="margin-top: 0px;">
-        <img {{bindAttr src="view.statusImageUrl"}} title="Build Status Images"/>
-      </a>
-    </li>
-    {{/if}}
     {{#if view.displayCancelBuild}}
       <li class="icon">
         <a href="#" {{action "cancelBuild" target="view"}}

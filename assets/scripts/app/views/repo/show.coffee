@@ -78,6 +78,7 @@ Travis.reopen
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
     currentUserBinding: 'controller.currentUser'
+    slugBinding: 'controller.repo.slug'
 
     closeMenu: ->
       $('.menu').removeClass('display')
@@ -114,16 +115,6 @@ Travis.reopen
         permissions.contains parseInt(@get('repo.id'))
     ).property('currentUser.permissions.length', 'repo.id')
 
-  RepoActionsView: Travis.View.extend
-    templateName: 'repos/show/actions'
-
-    repoBinding: 'controller.repo'
-    buildBinding: 'controller.build'
-    jobBinding: 'controller.job'
-    tabBinding: 'controller.tab'
-    slugBinding: 'controller.repo.slug'
-    currentUserBinding: 'controller.currentUser'
-
     statusImageUrl: (->
       Travis.Urls.statusImage(@get('slug'))
     ).property('slug')
@@ -131,6 +122,23 @@ Travis.reopen
     displayStatusImages: (->
       @get('hasPermission')
     ).property('hasPermission')
+
+    statusImages: ->
+      @popupCloseAll()
+      view = Travis.StatusImagesView.create(toolsView: this)
+      Travis.View.currentPopupView = view
+      view.appendTo($('body'))
+      event.stopPropagation()
+
+
+  RepoActionsView: Travis.View.extend
+    templateName: 'repos/show/actions'
+
+    repoBinding: 'controller.repo'
+    buildBinding: 'controller.build'
+    jobBinding: 'controller.job'
+    tabBinding: 'controller.tab'
+    currentUserBinding: 'controller.currentUser'
 
     requeue: ->
       @get('build').requeue()
@@ -228,7 +236,7 @@ Travis.reopen
     codeClimatePopup: ->
       @popupCloseAll()
       @popup('code-climate')
-      event.stopPropagation()
+      event.stopPropagation() if event?
 
     requeueBuild: ->
       if @get('canRequeueBuild')
@@ -238,10 +246,4 @@ Travis.reopen
       if @get('canRequeueJob')
         @get('job').requeue()
 
-    statusImages: ->
-      @popupCloseAll()
-      view = Travis.StatusImagesView.create(toolsView: this)
-      Travis.View.currentPopupView = view
-      view.appendTo($('body'))
-      event.stopPropagation()
 
