@@ -47,11 +47,6 @@
     
     <dt>{{t builds.message}}</dt>
     <dd class="message">{{formatMessage build.commit.message repoBinding=build.repo}}</dd>
-
-    {{#unless isMatrix}}
-      <dt>{{t builds.config}}</dt>
-      <dd class="config">{{formatConfig build.config}}</dd>
-    {{/unless}}
   </dl>
 
   {{#if build.isMatrix}}
