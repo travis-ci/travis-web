@@ -17,8 +17,8 @@ Travis.FlashController = Ember.ArrayController.extend
   ).property('broadcasts.isLoaded', 'broadcasts.length')
 
   broadcasts: (->
-    if @get('currentUser') then Travis.Broadcast.find() else Ember.A()
-  ).property('currentUser')
+    if @get('currentUser.id') then Travis.Broadcast.find() else Ember.A()
+  ).property('currentUser.id')
 
   loadFlashes: (msgs) ->
     for msg in msgs
