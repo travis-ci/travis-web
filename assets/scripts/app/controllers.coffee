@@ -48,6 +48,24 @@ Travis.FirstSyncController = Em.Controller.extend
 
   isSyncing: Ember.computed.alias('user.isSyncing')
 
+Travis.ProfileRepoController = Em.ObjectController.extend()
+Travis.ProfileRepoSettingsTabController = Em.ObjectController.extend()
+
+Travis.ProfileRepoSettingsController = Em.Controller.extend
+  needs: ['profileRepoSettingsTab', 'profileRepo']
+  tab: Ember.computed.alias('controllers.profileRepoSettingsTab.model.tab')
+  repo: Ember.computed.alias('controllers.profileRepo.content')
+
+  submit: ->
+    @set('saving', true)
+    self = this
+    @get('repo').saveSettings(@get('settings')).then ->
+      self.set('saving', false)
+      Travis.flash(success: 'Settings were saved successfully')
+    , ->
+      self.set('saving', false)
+      Travis.flash(error: 'There was an error while saving settings. Please try again.')
+
 require 'controllers/accounts'
 require 'controllers/build'
 require 'controllers/builds'
