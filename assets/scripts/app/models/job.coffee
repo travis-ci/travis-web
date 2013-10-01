@@ -106,7 +106,8 @@ require 'travis/model'
   #       to use it there easily, I would have to refactor job and build
   #       controllers
   formattedFinishedAt: (->
-    moment(@get('finishedAt')).format('lll')
+    if finishedAt = @get('finishedAt')
+      moment(finishedAt).format('lll')
   ).property('finishedAt')
 
 @Travis.Job.reopenClass

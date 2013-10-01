@@ -78,7 +78,8 @@ require 'travis/model'
       @_super(key)
 
   formattedFinishedAt: (->
-    moment(@get('finishedAt')).format('lll')
+    if finishedAt = @get('finishedAt')
+      moment(finishedAt).format('lll')
   ).property('finishedAt')
 
 @Travis.Build.reopenClass
