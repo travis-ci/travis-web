@@ -102,6 +102,13 @@ require 'travis/model'
     @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')
 
+  # TODO: such formattings should be done in controller, but in order
+  #       to use it there easily, I would have to refactor job and build
+  #       controllers
+  formattedFinishedAt: (->
+    moment(@get('finishedAt')).format('lll')
+  ).property('finishedAt')
+
 @Travis.Job.reopenClass
   queued: ->
     filtered = Ember.FilteredRecordArray.create(
