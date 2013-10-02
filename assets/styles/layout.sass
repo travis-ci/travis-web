@@ -1,6 +1,14 @@
 @import "_mixins/all"
 
+$left-width: 250px
 
+@mixin display-flex
+  display: -webkit-flex
+  display: flex
+
+@mixin flex($grow, $shrink, $size)
+  -webkit-flex: $grow $shrink $size
+  flex:         $grow $shrink $size
 
 html, body
   height: 100%
@@ -25,18 +33,28 @@ html, body
 #left, #right
   position: relative
   min-height: 100%
-
+  -moz-box-flex: 0
+  -webkit-box-flex: 0
 
 #left
+  @include flex(1, 1, 30%)
   min-width: 380px
   max-width: 380px
+  width: -webkit-calc(100% - 1000px)
   padding: 0 0 110px 0
   background-color: $color-bg-left
   border-right: 1px solid $color-border-normal
 
+@media screen and (max-width: 980px)
+  #left
+    max-width: 300px
+
 #main
+  @include flex(1, 1, 70%)
+  -moz-box-flex: 4
+  -webkit-box-flex: 4
   position: relative
-  min-width: 500px
+  min-width: 760px
   padding: 20px 40px 80px 30px
 
 @media screen and (max-width: 1400px)
