@@ -1,7 +1,10 @@
 #getting-started
-  width: 600px
-  margin: 30px 0 0 20px
+  min-width: 600px
+  max-width: 800px
+  margin: 0 auto
+  padding-top: 30px
   font-family: 'Source Sans Pro'
+  text-align: center
 
   h2
     color: #919191
@@ -13,26 +16,38 @@
     color: #337389
 
   span
+    display: inline-block
     margin-top: 50px
 
   .steps
     font-size: 20px
-    color: #40454f
+    font-weight: 600
+    color: #939386
 
   p
     font-size: 15px
 
+  .end-of-steps
+    padding-bottom: 50px
+    border-bottom : 1px solid #AAAAAA
+
+  .after-steps
+    padding-top: 50px
+
   a
-    font-weight: bold
+    color: #a53230
+    text-decoration: none
 
     &:hover
+      color: #607a84
       text-decoration: underline
 
   img
-    border: 1px solid #ddd
     padding: 0 
     float: none
-    margin: 15px 0 15px 0
+    margin: 15px 0 0 0
+    max-width: 800px
+    min-width: 600px
 
     &.spinner
       border: 0px
