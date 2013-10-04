@@ -34,7 +34,7 @@ Travis.reopen
       parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
 
     versionDidChange: (->
-      @rerender() if @get('inDOM')
+      @rerender() if @get('state') == 'inDOM'
     ).observes('log.version')
 
     logDidChange: (->
