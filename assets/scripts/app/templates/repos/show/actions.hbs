@@ -1,43 +1,42 @@
 <div id="actions">
   <ul>
     {{#if view.displayCancelBuild}}
-      <li class="icon">
+      <li class="icon" title="Cancel Build">
         <a href="#" {{action "cancelBuild" target="view"}}
-          {{bindAttr class="view.canCancelBuild::disabled"}}><img class="icon" src="/images/icons/off.png" width="20" title="Cancel Build"></a>
+          {{bindAttr class="view.canCancelBuild::disabled"}}><img class="icon" src="/images/icons/off.png" width="20"></a>
       </li>
     {{/if}}
     {{#if view.displayCancelJob}}
-      <li class="icon">
+      <li class="icon" title="Cancel Job">
         <a href="#" {{action "cancelJob" target="view"}}
-          {{bindAttr class="view.canCancelJob::disabled"}}><img class="icon" width="20" src="/images/icons/off.png" title="Cancel Job"/></a>
+          {{bindAttr class="view.canCancelJob::disabled"}}><img class="icon" width="20" src="/images/icons/off.png"/></a>
       </li>
     {{/if}}
     {{#if view.displayRequeueBuild}}
-      <li class="icon">
+      <li class="icon" title="Restart Build">
         <a href="#" {{action "requeueBuild" target="view"}}
-          {{bindAttr class="view.canRequeueBuild::disabled"}}><img class="icon" src="/images/icons/repeat.png" width="20"
-          title="Restart Build"></a>
+          {{bindAttr class="view.canRequeueBuild::disabled"}}><img class="icon" src="/images/icons/repeat.png" width="20"></a>
       </li>
     {{/if}}
     {{#if view.displayRequeueJob}}
-      <li class="icon">
+      <li class="icon" title="Restart Job">
         <a href="#" {{action "requeueJob" target="view"}}
-          {{bindAttr class="view.canRequeueJob::disabled"}}><img src="/images/icons/repeat.png" width="20" title="Restart Job"></a>
+          {{bindAttr class="view.canRequeueJob::disabled"}}><img src="/images/icons/repeat.png" width="20"></a>
       </li>
     {{/if}}
     {{!TODO: for some reason showDownloadLog, which just delegates to jobIdForLog
              does not refresh 'if' properly, need further investigation}}
     {{#if view.jobIdForLog}}
-      <li class="icon">
-        <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}><img class="icon" src="/images/icons/align-justify.png" width="20" title="Download Log"/></a>
+      <li class="icon" title="Download Log">
+        <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}><img class="icon" src="/images/icons/align-justify.png" width="20"/></a>
       </li>
     {{/if}}
     {{#if view.displayCodeClimate}}
-      <li class="icon">
+      <li class="icon" title="Test Coverage with Code Climate">
         <a href="#" name="code-climate"
           {{action "codeClimatePopup" target="view"}}
           {{bindAttr class=":open-popup"}}>
-          <img src="/images/icons/code-climate-icon.png" title="Test Coverage with Code Climate"/>
+          <img src="/images/icons/code-climate-icon.png"/>
         </a>
       </li>
     {{/if}}
