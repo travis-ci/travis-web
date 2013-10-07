@@ -37,11 +37,6 @@ Travis.reopen
       @rerender() if @get('state') == 'inDOM'
     ).observes('log.version')
 
-    logDidChange: (->
-      console.log 'log view: log did change: rerender' if Log.DEBUG
-      @rerender() if @get('inDOM')
-    ).observes('log')
-
     createEngine: ->
       console.log 'log view: create engine' if Log.DEBUG
       @scroll = new Log.Scroll
