@@ -6,8 +6,8 @@
 
 <div class="tab">
   {{#if isLoaded}}
-    {{#linkTo "repo" repo}}  
-      {{#collection Travis.ReposListView contentBinding="this"}}
+    {{#collection Travis.ReposListView contentBinding="this"}}
+      {{#linkTo "repo" this}}
         {{#with view.repo}}
           <div class="slug-and-status">
             <span class="status"></span>
@@ -32,10 +32,10 @@
 
           <div class="indicator"><span></span></div>
         {{/with}}
-      {{else}}
-        <p class="empty">{{noReposMessage}}</p>
-      {{/collection}}
-    {{/linkTo}}
+      {{/linkTo}}
+    {{else}}
+      <p class="empty">{{noReposMessage}}</p>
+    {{/collection}}
   {{else}}
     <div class="loading"><span>Loading</span></div>
   {{/if}}
