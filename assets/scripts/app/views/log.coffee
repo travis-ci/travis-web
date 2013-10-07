@@ -13,7 +13,7 @@ Travis.reopen
       job = @get('job')
       if job
         job.get('log').fetch()
-        job.subscribe() if !job.get('isFinished')
+        job.subscribe()
 
     willDestroyElement: ->
       job = @get('job')
@@ -36,6 +36,11 @@ Travis.reopen
     versionDidChange: (->
       @rerender() if @get('state') == 'inDOM'
     ).observes('log.version')
+
+    logDidChange: (->
+      console.log 'log view: log did change: rerender' if Log.DEBUG
+      @rerender() if @get('state') == 'inDOM'
+    ).observes('log')
 
     createEngine: ->
       console.log 'log view: create engine' if Log.DEBUG
