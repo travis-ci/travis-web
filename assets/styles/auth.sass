@@ -13,10 +13,6 @@
     max-height: 400px
     @include border-radius(8px)
 
-    h1
-      margin-bottom: 1em
-      color: #333
-
     h2
       color: #919191
       font-weight: 400
@@ -30,12 +26,10 @@
       margin: 0
 
     p
-      color: #334
       text-align: center
-      font-size: 15px
 
-      > a
-        display: inline-block
+      a
+        display: inline
         padding: 15px 30px
         border: 0
         background-color: #a53230
@@ -43,6 +37,9 @@
         color: #ffffff
         width: 200px
         text-align: center
+      a:hover
+        display: inline
+        text-decoration: underline
 
     .mascot
       display: inline-block
@@ -51,6 +48,3 @@
       height: 150px
       background-image: inline-image('travis-mascot-150.png')
       background-size: cover
-
-    a:hover
-      text-decoration: underline
