@@ -9,7 +9,8 @@ Travis.reopen
 
     ShowMoreButton: Em.View.extend
       tagName: 'button'
-      classNameBindings: ['isLoading']
+      classNameBindings: ['isLoading', 'showMore']
+      showMore: true
       attributeBindings: ['disabled']
       isLoadingBinding: 'controller.isLoading'
       template: Em.Handlebars.compile('{{view.label}}')
