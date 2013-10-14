@@ -2016,7 +2016,7 @@ function suspendListener(obj, eventName, target, method, callback) {
 
   Suspends multiple listeners during a callback.
 
-  
+
   @method suspendListeners
   @for Ember
   @param obj
@@ -2082,7 +2082,7 @@ function watchedEvents(obj) {
   is skipped, and once listeners are removed. A listener without
   a target is executed on the passed object. If an array of actions
   is not passed, the actions stored on the passed object are invoked.
-  
+
   @method sendEvent
   @for Ember
   @param obj
@@ -2837,14 +2837,14 @@ Map.create = function() {
 Map.prototype = {
   /**
     This property will change as the number of objects in the map changes.
-   
+
     @property length
     @type number
     @default 0
   */
   length: 0,
-    
-    
+
+
   /**
     Retrieve the value associated with a given key.
 
@@ -4438,7 +4438,7 @@ Ember.computed.alias = function(dependentKey) {
   @return {Ember.ComputedProperty} computed property which creates an
   one way computed property to the original value for property.
 
-  Where `computed.alias` aliases `get` and `set`, and allows for bidirectional 
+  Where `computed.alias` aliases `get` and `set`, and allows for bidirectional
   data flow, `computed.oneWay` only provides an aliased `get`. The `set` will
   not mutate the upstream property, rather causes the current property to
   become the value set. This causes the downstream property to permentantly
@@ -8679,7 +8679,7 @@ Ember.Error.prototype = Ember.create(Error.prototype);
 (function() {
 /**
   Expose RSVP implementation
-  
+
   Documentation can be found here: https://github.com/tildeio/rsvp.js/blob/master/README.md
 
   @class RSVP
@@ -20624,7 +20624,7 @@ if (Handlebars.compile) {
 
     var template = Ember.Handlebars.template(templateSpec);
     template.isMethod = false; //Make sure we don't wrap templates with ._super
-      
+
     return template;
   };
 }
@@ -24307,7 +24307,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, hashTypes, hashContexts, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
-  
+
   var buffer = '', hashTypes, hashContexts;
   data.buffer.push("<option value=\"\">");
   hashTypes = {};
@@ -24318,7 +24318,7 @@ function program1(depth0,data) {
   }
 
 function program3(depth0,data) {
-  
+
   var stack1, hashTypes, hashContexts;
   hashTypes = {};
   hashContexts = {};
@@ -24327,7 +24327,7 @@ function program3(depth0,data) {
   else { data.buffer.push(''); }
   }
 function program4(depth0,data) {
-  
+
   var hashContexts, hashTypes;
   hashContexts = {'contentBinding': depth0,'labelBinding': depth0};
   hashTypes = {'contentBinding': "ID",'labelBinding': "ID"};
@@ -24338,7 +24338,7 @@ function program4(depth0,data) {
   }
 
 function program6(depth0,data) {
-  
+
   var stack1, hashTypes, hashContexts;
   hashTypes = {};
   hashContexts = {};
@@ -24347,7 +24347,7 @@ function program6(depth0,data) {
   else { data.buffer.push(''); }
   }
 function program7(depth0,data) {
-  
+
   var hashContexts, hashTypes;
   hashContexts = {'contentBinding': depth0};
   hashTypes = {'contentBinding': "STRING"};
@@ -24365,7 +24365,7 @@ function program7(depth0,data) {
   stack1 = helpers['if'].call(depth0, "view.optionGroupPath", {hash:{},inverse:self.program(6, program6, data),fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   return buffer;
-  
+
 }),
   attributeBindings: ['multiple', 'disabled', 'tabindex', 'name'],
 
@@ -29044,7 +29044,7 @@ Ember.ControllerMixin.reopen({
     Optionally supply a model for the route in question. The model
     will be serialized into the URL using the `serialize` hook of
     the route:
-    
+
     ```javascript
       aController.transitionToRoute('blogPost', aPost);
     ```
@@ -29168,7 +29168,7 @@ Ember.View.reopen({
 
 // Add a new named queue after the 'actions' queue (where RSVP promises
 // resolve), which is used in router transitions to prevent unnecessary
-// loading state entry if all context promises resolve on the 
+// loading state entry if all context promises resolve on the
 // 'actions' queue first.
 
 var queues = Ember.run.queues,
@@ -33110,7 +33110,7 @@ function chain(app, promise, fn) {
 * using your app.
 *
 * Example:
-* 
+*
 * ```
 * visit('posts/index').then(function() {
 *   // assert something
@@ -33118,7 +33118,7 @@ function chain(app, promise, fn) {
 * ```
 *
 * @method visit
-* @param {String} url the name of the route 
+* @param {String} url the name of the route
 * @returns {RSVP.Promise}
 */
 helper('visit', visit);

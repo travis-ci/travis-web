@@ -30,4 +30,5 @@
         Travis.Urls.account(@get('account.login'))
       ).property('account.login')
 
-
+      click: ->
+        @get('controller').transitionToRoute("account", @get('account.login'))

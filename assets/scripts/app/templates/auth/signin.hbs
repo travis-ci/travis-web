@@ -1,12 +1,16 @@
 {{#if redirected}}
-  <p>You need to sign in to see this page.</p>
 {{/if}}
+
+<span class="mascot"></span>
+<h3>Hey, we're so glad you're here!</h3>
+<h2>In order to view your repositories, please sign in.</h2>
+
 <p>
   <a href="#" {{action "signIn" target="Travis"}}>
     {{#if Travis.signingIn}}
       Signing in...
     {{else}}
-      Sign in with GitHub.
+      Sign in with GitHub
     {{/if}}
   </a>
 </p>

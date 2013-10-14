@@ -21,6 +21,9 @@
         Travis.Helpers.colorForState(@get('repo.lastBuildState'))
       ).property('repo.lastBuildState')
 
+      click: ->
+        @get('controller').transitionToRoute('/' + @get('repo.slug'))
+
   ReposListTabsView: Travis.View.extend
     templateName: 'repos/list/tabs'
     tabBinding: 'controller.tab'
