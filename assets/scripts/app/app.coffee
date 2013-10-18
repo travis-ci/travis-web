@@ -119,14 +119,12 @@ unless window.TravisApplication
     loadOrMerge: (type, hash, options) ->
       options ||= {}
 
-      if !type._idToReference
-        type._idToReference = {}
-      reference = type._idToReference[hash.id]
+      reference = type._getReferenceById(hash.id)
 
       if reference && options.skipIfExists
         return
 
-      reference = type._referenceForId(hash.id)
+      reference = type._getOrCreateReferenceForId(hash.id)
       if reference.record
         reference.record.merge(hash)
       else
