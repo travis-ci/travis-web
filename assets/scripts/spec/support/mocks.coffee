@@ -3,9 +3,9 @@ minispade.require 'ext/jquery'
 responseTime = 0
 
 repos = [
-  { id: '1', owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_state: 'passed', last_build_duration: 30, last_build_started_at: '2012-07-02T00:00:00Z', last_build_finished_at: '2012-07-02T00:00:30Z', description: 'Description of travis-core' },
-  { id: '2', owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3, last_build_state: 'failed', last_build_duration: 30, last_build_started_at: '2012-07-02T00:01:00Z', last_build_finished_at: '2012-07-01T00:01:30Z', description: 'Description of travis-assets'},
-  { id: '3', owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4, last_build_state: null, last_build_duration: null, last_build_started_at: '2012-07-02T00:02:00Z', last_build_finished_at: null, description: 'Description of travis-hub'},
+  { id: '1', owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_state: 'passed', last_build_duration: 30, last_build_started_at: '2012-07-02T00:00:00Z', last_build_finished_at: '2012-07-02T00:00:30Z', description: 'Description of travis-core', github_language: 'ruby' },
+  { id: '2', owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3, last_build_state: 'failed', last_build_duration: 30, last_build_started_at: '2012-07-02T00:01:00Z', last_build_finished_at: '2012-07-01T00:01:30Z', description: 'Description of travis-assets', github_language: 'ruby'},
+  { id: '3', owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4, last_build_state: null, last_build_duration: null, last_build_started_at: '2012-07-02T00:02:00Z', last_build_finished_at: null, description: 'Description of travis-hub', github_language: 'ruby' },
 ]
 
 reposByName = (name) ->
