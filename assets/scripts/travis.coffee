@@ -131,6 +131,9 @@ Travis.Router.reopen
     if Travis.config.ga_code
       _gaq.push ['_trackPageview', location.pathname]
 
+Ember.LinkView.reopen
+  loadingClass: 'loading_link'
+
 require 'ext/i18n'
 require 'travis/ajax'
 require 'travis/adapter'
