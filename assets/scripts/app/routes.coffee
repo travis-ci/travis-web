@@ -99,6 +99,7 @@ Travis.Router.map ->
 
   @route 'getting_started'
   @route 'first_sync'
+  @route 'insufficient_oauth_permissions'
   @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
   @route 'notFound', path: '/not-found'
@@ -138,7 +139,7 @@ Travis.GettingStartedRoute = Ember.Route.extend
     @render 'repos',   outlet: 'left'
     @_super.apply(this, arguments)
 
-Travis.FirstSyncRoute = Ember.Route.extend
+Travis.SimpleLayoutRoute = Ember.Route.extend
   setupController: ->
     $('body').attr('id', 'home')
     @container.lookup('controller:repos').activate()
@@ -148,6 +149,13 @@ Travis.FirstSyncRoute = Ember.Route.extend
   renderTemplate: ->
     @render 'top', outlet: 'top'
     @_super.apply(this, arguments)
+
+Travis.FirstSyncRoute = Travis.SimpleLayoutRoute.extend()
+Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
+  setupController: (controller) ->
+    @_super.apply this, arguments
+    existingUser = document.location.hash.match(/#existing[_-]user/)
+    controller.set('existingUser', existingUser)
 
 Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
   renderTemplate: ->
