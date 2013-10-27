@@ -4,7 +4,6 @@ Travis.Pusher = (key) ->
 
 $.extend Travis.Pusher,
   CHANNELS: ['common']
-  CHANNEL_PREFIX: ''
   ENCRYPTED: false
 
 $.extend Travis.Pusher.prototype,
@@ -27,18 +26,13 @@ $.extend Travis.Pusher.prototype,
     @subscribe(channel) for channel in channels
 
   subscribe: (channel) ->
-    channel = @prefix(channel)
     console.log("subscribing to #{channel}")
     unless @pusher?.channel(channel)
       @pusher.subscribe(channel).bind_all((event, data) => @receive(event, data))
 
   unsubscribe: (channel) ->
-    channel = @prefix(channel)
     console.log("unsubscribing from #{channel}")
     @pusher.unsubscribe(channel) if @pusher?.channel(channel)
-
-  prefix: (channel) ->
-    "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"
 
   # process pusher messages in batches every 5 minutes when the page is hidden
   processingIntervalWhenHidden: 1000 * 60 * 5

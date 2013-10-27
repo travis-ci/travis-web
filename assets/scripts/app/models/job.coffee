@@ -93,17 +93,18 @@ require 'travis/model'
     return if @get('subscribed')
     @set('subscribed', true)
     if Travis.pusher
-      Travis.pusher.subscribe "job-#{@get('id')}"
+      prefix = if @get('repo.private') then 'private-' else ''
+      Travis.pusher.subscribe "#{prefix}job-#{@get('id')}",
 
   unsubscribe: ->
     return unless @get('subscribed')
     @set('subscribed', false)
     if Travis.pusher
+      prefix = if @get('repo.private') then 'private-' else ''
       Travis.pusher.unsubscribe "job-#{@get('id')}"
 
   onStateChange: (->
-    if @get('state') == 'finished' && Travis.pusher
-      Travis.pusher.unsubscribe "job-#{@get('id')}"
+    @unsubscribe() if @get('state') == 'finished' && Travis.pusher
   ).observes('state')
 
   isPropertyLoaded: (key) ->
