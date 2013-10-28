@@ -27,18 +27,20 @@ $.extend Travis.Pusher.prototype,
     @subscribe(channel) for channel in channels
 
   subscribe: (channel) ->
+    return unless channel
     channel = @prefix(channel)
     console.log("subscribing to #{channel}")
     unless @pusher?.channel(channel)
       @pusher.subscribe(channel).bind_all((event, data) => @receive(event, data))
 
   unsubscribe: (channel) ->
+    return unless channel
     channel = @prefix(channel)
     console.log("unsubscribing from #{channel}")
     @pusher.unsubscribe(channel) if @pusher?.channel(channel)
 
   prefix: (channel) ->
-    "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}" unless channel.indexOf(Travis.Pusher.CHANNEL_PREFIX) == 0
+    "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}" if channel && channel.indexOf(Travis.Pusher.CHANNEL_PREFIX) != 0
 
   # process pusher messages in batches every 5 minutes when the page is hidden
   processingIntervalWhenHidden: 1000 * 60 * 5
