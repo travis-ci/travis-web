@@ -93,14 +93,12 @@ require 'travis/model'
     return if @get('subscribed')
     @set('subscribed', true)
     if Travis.pusher
-      prefix = if @get('repo.private') then 'private-' else ''
       Travis.pusher.subscribe "#{prefix}job-#{@get('id')}",
 
   unsubscribe: ->
     return unless @get('subscribed')
     @set('subscribed', false)
     if Travis.pusher
-      prefix = if @get('repo.private') then 'private-' else ''
       Travis.pusher.unsubscribe "job-#{@get('id')}"
 
   onStateChange: (->
