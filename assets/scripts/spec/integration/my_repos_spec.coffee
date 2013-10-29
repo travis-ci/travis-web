@@ -5,7 +5,6 @@ module "My repos",
     Ember.run -> Travis.reset()
 
 test "my repos is active by default when user is signed in", ->
-
   Ember.run -> signInUser()
   visit('/').then ->
     wait().then ->

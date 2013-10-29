@@ -140,6 +140,11 @@ Travis.GettingStartedRoute = Ember.Route.extend
     @_super.apply(this, arguments)
 
 Travis.FirstSyncRoute = Ember.Route.extend
+  events:
+    renderNoOwnedRepos: (->)
+      # do nothing, we are showing first sync, so it's normal that there is
+      # no owned repos
+
   setupController: ->
     $('body').attr('id', 'home')
     @container.lookup('controller:repos').activate()
