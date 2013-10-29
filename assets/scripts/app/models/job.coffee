@@ -93,7 +93,7 @@ require 'travis/model'
     return if @get('subscribed')
     @set('subscribed', true)
     if Travis.pusher
-      Travis.pusher.subscribe "#{prefix}job-#{@get('id')}",
+      Travis.pusher.subscribe "job-#{@get('id')}",
 
   unsubscribe: ->
     return unless @get('subscribed')
