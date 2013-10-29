@@ -11,10 +11,10 @@ module Travis
         new.update
       end
 
-      attr_reader :root
+      attr_reader :roots
 
-      def initialize(root = nil)
-        @root = Pathname.new(root || File.expand_path('.'))
+      def initialize(roots = nil)
+        @roots = roots
       end
 
       def read
@@ -29,8 +29,12 @@ module Travis
 
       protected
 
+        def cwd
+          Pathname.new(File.expand_path('.'))
+        end
+
         def file
-          root.join(FILE_NAME)
+          cwd.join(FILE_NAME)
         end
 
         def write(version)
@@ -42,14 +46,16 @@ module Travis
         end
 
         def digest
-          Digest::MD5.new << `ls -lAR #{sources.join(' ')} | awk '{print $5, $6, $7, $9}'`
+          Digest::MD5.new << `ls -lTAR #{sources.join(' ')} | awk '{ print $5, $6, $7, $8, $9, $10 }'`
         end
 
         def sources
-          SOURCES.map do |source|
-            source = root.join(source)
-            source.to_s if source.exist?
-          end.compact
+          roots.map do |root|
+            SOURCES.map do |source|
+              source = Pathname.new(root).join(source)
+              source.to_s if source.exist?
+            end
+          end.flatten.compact
         end
     end
   end
