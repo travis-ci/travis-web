@@ -12,6 +12,7 @@ require 'travis/model'
   lastBuildFinishedAt: Ember.attr('string')
   githubLanguage:      Ember.attr('string')
   _lastBuildDuration:  Ember.attr(Number, key: 'last_build_duration')
+  active:              Ember.attr('boolean')
 
   lastBuild: Ember.belongsTo('Travis.Build', key: 'last_build_id')
 
@@ -113,7 +114,7 @@ require 'travis/model'
     @find(owner_name: login, orderBy: 'name')
 
   accessibleBy: (login) ->
-    @find(member: login, orderBy: 'name')
+    @find(member: login, active: true)
 
   search: (query) ->
     @find(search: query, orderBy: 'name')

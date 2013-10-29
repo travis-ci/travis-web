@@ -48,6 +48,14 @@ Travis.FirstSyncController = Em.Controller.extend
 
   isSyncing: Ember.computed.alias('user.isSyncing')
 
+Travis.BuildNotFoundController = Em.Controller.extend
+  needs: ['repo', 'currentUser']
+  ownedAndActive: (->
+    if permissions = @get('controllers.currentUser.permissions')
+      if repo = @get('controllers.repo.repo')
+        repo.get('active') && permissions.contains(parseInt(repo.get('id')))
+  ).property('controllers.repo.repo', 'controllers.currentUser.permissions')
+
 require 'controllers/accounts'
 require 'controllers/build'
 require 'controllers/builds'
