@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '1.9.3'
+ruby '2.0.0'
 
 gem 'puma'
 gem 'rack-ssl', '~> 1.3'
@@ -17,12 +17,12 @@ group :assets do
   gem 'tilt'
   gem 'uglifier'
   gem 'yui-compressor'
+  gem 'libv8', '~> 3.16.0'
 end
 
 group :development, :test do
   gem 'rake'
   gem 'localeapp'
-  gem 'handlebars'
   gem 'localeapp-handlebars_i18n'
 end
 
