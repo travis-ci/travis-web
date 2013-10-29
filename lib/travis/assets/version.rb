@@ -46,7 +46,7 @@ module Travis
         end
 
         def digest
-          Digest::MD5.new << `ls -lTAR #{sources.join(' ')} | awk '{ print $5, $6, $7, $8, $9, $10 }'`
+          Digest::MD5.new << `ls -lAR #{sources.join(' ')} | awk '{ print $5, $6, $7, $8, $9, $10 }'`
         end
 
         def sources
