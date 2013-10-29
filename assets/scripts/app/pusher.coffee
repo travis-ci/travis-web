@@ -40,7 +40,10 @@ $.extend Travis.Pusher.prototype,
     @pusher.unsubscribe(channel) if @pusher?.channel(channel)
 
   prefix: (channel) ->
-    "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}" if channel && channel.indexOf(Travis.Pusher.CHANNEL_PREFIX) != 0
+    if channel.indexOf(Travis.Pusher.CHANNEL_PREFIX) != 0
+      "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"
+    else
+      channel
 
   # process pusher messages in batches every 5 minutes when the page is hidden
   processingIntervalWhenHidden: 1000 * 60 * 5
