@@ -107,12 +107,17 @@ require 'travis/model'
   ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
   sortOrder: (->
-    # cuz sortAscending seems buggy when set to false
-    if lastBuildFinishedAt = @get('lastBuildFinishedAt')
-      - new Date(lastBuildFinishedAt).getTime()
+    # this is prepared for ascending sort
+    if Ember.isNone(@get('lastBuildFinishedAt')) && @get('lastBuildStartedAt')
+      # if a build is running, it should be at the beginning
+      0
+    else if lastBuildStartedAt = @get('lastBuildStartedAt')
+      # if it's not running, but was already run, put newest builds first
+      new Date('9999').getTime() - Date.parse(lastBuildStartedAt)
     else
-      - new Date('9999').getTime() - parseInt(@get('lastBuildId'))
-  ).property('lastBuildFinishedAt', 'lastBuildId')
+      # if it's not started nor it was ran before, sort with newest id first
+      new Date('9999').getTime() - @get('id')
+  ).property('lastBuildFinishedAt', 'id', 'lastBuildStartedAt')
 
   stats: (->
     if @get('slug')
