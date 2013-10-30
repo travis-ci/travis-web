@@ -15,7 +15,7 @@
           {{/if}}
         </div>
 
-        {{#if lastBuild}}
+        {{#if lastBuildHash.number}}
           {{#with lastBuildHash}}
             {{#if repo.slug}}
               {{#linkTo "build" repo id class="last_build"}}{{number}}{{/linkTo}}
