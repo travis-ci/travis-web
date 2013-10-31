@@ -16,15 +16,19 @@ Ember.Container.prototype.stub = (fullName, instance) ->
   instance.destroy = instance.destroy || (->)
   this.cache.dict[fullName] = instance
 
-window.signInUser = ->
+window.signInUser = (data) ->
+  data ||= {}
+  userData = {
+    id: 1
+    email: 'tyrion@example.org'
+    login: 'tyrion'
+    token: 'abcdef'
+  }
+  userData = Ember.merge(userData, data)
   # for now let's just use harcoded data to log in the user,
   # we may extend it in the future to pass specific user data
   Travis.auth.signIn
-    user:
-      id: 1
-      email: 'tyrion@example.org'
-      login: 'tyrion'
-      token: 'abcdef'
+    user: userData
     token: 'abcdef'
 
   #@app = (url, options = {}) ->

@@ -71,6 +71,7 @@ $.extend Travis,
     Travis.advanceReadiness() # bc, remove once merged to master
 
   config:
+    syncingPageRedirectionTime: 5000
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
