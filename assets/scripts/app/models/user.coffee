@@ -31,27 +31,31 @@ require 'travis/model'
     "https://github.com/#{@get('login')}"
   ).property()
 
+  _rawPermissions: (->
+    Travis.ajax.get('/users/permissoins')
+  ).property()
+
   permissions: (->
     permissions = Ember.ArrayProxy.create(content: [])
-    Travis.ajax.get('/users/permissions', (data) => permissions.set('content', data.permissions))
+    @get('_rawPermissions').then (data) => permissions.set('content', data.permissions)
     permissions
   ).property()
 
   adminPermissions: (->
     permissions = Ember.ArrayProxy.create(content: [])
-    Travis.ajax.get('/users/permissions', (data) => permissions.set('content', data.admin))
+    @get('_rawPermissions').then (data) => permissions.set('content', data.admin)
     permissions
   ).property()
 
   pullPermissions: (->
     permissions = Ember.ArrayProxy.create(content: [])
-    Travis.ajax.get('/users/permissions', (data) => permissions.set('content', data.pull))
+    @get('_rawPermissions').then (data) => permissions.set('content', data.pull)
     permissions
   ).property()
 
   pushPermissions: (->
     permissions = Ember.ArrayProxy.create(content: [])
-    Travis.ajax.get('/users/permissions', (data) => permissions.set('content', data.push))
+    @get('_rawPermissions').then (data) => permissions.set('content', data.push)
     permissions
   ).property()
   
