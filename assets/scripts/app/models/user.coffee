@@ -32,7 +32,7 @@ require 'travis/model'
   ).property()
 
   _rawPermissions: (->
-    Travis.ajax.get('/users/permissoins')
+    Travis.ajax.get('/users/permissions')
   ).property()
 
   permissions: (->
