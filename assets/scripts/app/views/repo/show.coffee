@@ -215,16 +215,16 @@ Travis.reopen
     ).property('jobIdForLog')
 
     canCancelBuild: (->
-      @get('displayCancelBuild') && @get('hasPushPermission')
-    ).property('displayCancelBuild', 'hasPushPermission')
+      @get('displayCancelBuild') && @get('hasPermission')
+    ).property('displayCancelBuild', 'hasPermission')
 
     displayCancelBuild: (->
       @get('isBuildTab') && @get('build.canCancel')
     ).property('isBuildTab', 'build.canCancel')
 
     canCancelJob: (->
-      @get('displayCancelJob') && @get('hasPushPermission')
-    ).property('displayCancelJob', 'hasPushPermission')
+      @get('displayCancelJob') && @get('hasPermission')
+    ).property('displayCancelJob', 'hasPermission')
 
     displayCancelJob: (->
       @get('isJobTab') && @get('job.canCancel')
