@@ -21,12 +21,6 @@ Ember.Route.reopen
     renderDefaultTemplate: ->
       @renderDefaultTemplate() if @renderDefaultTemplate
 
-    renderNoOwnedRepos: ->
-      @render('no_owned_repos', outlet: 'main')
-
-    renderFirstSync: ->
-      @renderFirstSync()
-
     error: (error) ->
       if error == 'needs-auth'
         authController = @container.lookup('controller:auth') || @generateController('auth')
@@ -34,6 +28,13 @@ Ember.Route.reopen
         @transitionTo('auth')
       else
         throw(error)
+
+  _actions:
+    renderNoOwnedRepos: ->
+      @render('no_owned_repos', outlet: 'main')
+
+    renderFirstSync: ->
+      @renderFirstSync()
 
     afterSignIn: (path) ->
       @afterSignIn(path)
@@ -140,7 +141,7 @@ Travis.GettingStartedRoute = Ember.Route.extend
     @_super.apply(this, arguments)
 
 Travis.FirstSyncRoute = Ember.Route.extend
-  events:
+  _actions:
     renderNoOwnedRepos: (->)
       # do nothing, we are showing first sync, so it's normal that there is
       # no owned repos
