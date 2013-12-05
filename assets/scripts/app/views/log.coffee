@@ -97,8 +97,9 @@ Travis.reopen
       window.history.pushState({ path: path }, null, path);
       @set('controller.lineNumber', number)
 
-    toTop: () ->
-      $(window).scrollTop(0)
+    actions:
+      toTop: () ->
+        $(window).scrollTop(0)
 
     noop: -> # TODO required?
 
