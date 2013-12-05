@@ -124,7 +124,7 @@ Travis.SetupLastBuild = Ember.Mixin.create
   repoDidLoad: ->
     # TODO: it would be nicer to do it with promises
     repo = @controllerFor('repo').get('repo')
-    if repo && repo.get('isLoaded') && !repo.get('lastBuild')
+    if repo && repo.get('isLoaded') && !repo.get('lastBuildId')
       Ember.run.next =>
         @render('builds/not_found', outlet: 'pane', into: 'repo')
 
