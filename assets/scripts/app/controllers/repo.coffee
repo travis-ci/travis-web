@@ -50,6 +50,9 @@ Travis.RepoController = Travis.Controller.extend
     @connectTab('job')
 
   lastBuildDidChange: ->
+    Ember.run.scheduleOnce('data', this, @_lastBuildDidChange);
+
+  _lastBuildDidChange: ->
     build = @get('repo.lastBuild')
     @set('build', build)
 
