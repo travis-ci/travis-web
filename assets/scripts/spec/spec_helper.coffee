@@ -30,8 +30,14 @@ window.signInUser = (data) ->
     name: "Tyrion"
     synced_at: "2013-12-09T09:41:47Z"
   }
+  userData = Ember.merge(userData, data)
   $.mockjax
     url: '/users/1'
+    responseTime: 10
+    responseText:
+      user: userData
+  $.mockjax
+    url: '/users'
     responseTime: 10
     responseText:
       user: userData
@@ -54,7 +60,6 @@ window.signInUser = (data) ->
     responseText:
       accounts: []
 
-  userData = Ember.merge(userData, data)
   # for now let's just use harcoded data to log in the user,
   # we may extend it in the future to pass specific user data
   Travis.auth.signIn
