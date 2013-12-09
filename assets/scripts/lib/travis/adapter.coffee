@@ -3,10 +3,10 @@ Travis.Adapter = Ember.RESTAdapter.extend
     Travis.ajax.ajax(url, method || 'get', data: params)
 
   findMany: (klass, records, ids) ->
-    url = @buildURL(klass) + '?' + ids.map( (id) -> "ids[]=#{id}" ).join('&')
+    url = @buildURL(klass)
 
     self = this
-    @ajax(url).then (data) ->
+    @ajax(url, ids: ids).then (data) ->
       self.didFindMany(klass, records, data)
 
   didFindMany: (klass, records, data) ->
