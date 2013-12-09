@@ -61,7 +61,11 @@ Ember.RecordArray.reopen
   ).observes('content')
 
 window.Travis = TravisApplication.create(
-  LOG_TRANSITIONS: true
+  LOG_ACTIVE_GENERATION: true,
+  LOG_MODULE_RESOLVER: true,
+  LOG_TRANSITIONS: true,
+  LOG_TRANSITIONS_INTERNAL: true,
+  LOG_VIEW_LOOKUPS: true
 )
 
 Travis.deferReadiness()
