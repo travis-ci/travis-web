@@ -163,14 +163,14 @@ Ember.RecordArray = Ember.ArrayProxy.extend(Ember.Evented, {
 
     set(this, 'isLoaded', false);
     if (modelClass._findAllRecordArray === this) {
-      modelClass.adapter.findAll(modelClass, this);
+      return modelClass.adapter.findAll(modelClass, this);
     } else if (this._query) {
-      modelClass.adapter.findQuery(modelClass, this, this._query);
+      return modelClass.adapter.findQuery(modelClass, this, this._query);
     } else {
       promises = this.map(function(record) {
         return record.reload();
       });
-      Ember.RSVP.all(promises).then(function(data) {
+      return Ember.RSVP.all(promises).then(function(data) {
         self.notifyLoaded();
       });
     }
@@ -252,7 +252,7 @@ var get = Ember.get, set = Ember.set;
 
 Ember.ManyArray = Ember.RecordArray.extend({
   _records: null,
-  originalContent: null,
+  originalContent: [],
 
   isDirty: function() {
     var originalContent = get(this, 'originalContent'),
@@ -641,6 +641,7 @@ Ember.Model = Ember.Object.extend(Ember.Evented, {
   },
 
   reload: function() {
+    this.getWithDefault('_dirtyAttributes', []).clear();
     return this.constructor.reload(this.get(get(this.constructor, 'primaryKey')));
   },
 
@@ -950,7 +951,7 @@ Ember.Model.reopenClass({
 
   _executeBatch: function() {
     var batchIds = this._currentBatchIds,
-        batchRecordArrays = this._currentBatchRecordArrays,
+        batchRecordArrays = this._currentBatchRecordArrays || [],
         batchDeferreds = this._currentBatchDeferreds,
         self = this,
         requestIds = [],
@@ -984,7 +985,7 @@ Ember.Model.reopenClass({
         batchRecordArrays[i].loadForFindMany(self);
       }
 
-      if(batchDeferreds) {
+      if (batchDeferreds) {
         for (i = 0, l = batchDeferreds.length; i < l; i++) {
           var resolveWith = Ember.get(batchDeferreds[i], 'resolveWith');
           batchDeferreds[i].resolve(resolveWith);
@@ -1325,6 +1326,15 @@ function deserialize(value, type) {
   }
 }
 
+function serialize(value, type) {
+  if (type && type.serialize) {
+    return type.serialize(value);
+  } else if (type && Ember.Model.dataTypes[type]) {
+    return Ember.Model.dataTypes[type].serialize(value);
+  } else {
+    return value;
+  }
+}
 
 Ember.attr = function(type, options) {
   return Ember.computed(function(key, value) {
@@ -1349,7 +1359,7 @@ Ember.attr = function(type, options) {
         dataValue = data[dataKey] = value;
       }
 
-      if (dataValue !== value) {
+      if (dataValue !== serialize(value, type)) {
         dirtyAttributes.pushObject(key);
       } else {
         dirtyAttributes.removeObject(key);
@@ -1472,8 +1482,8 @@ Ember.RESTAdapter = Ember.Adapter.extend({
     record.didDeleteRecord();
   },
 
-  ajax: function(url, params, method) {
-    return this._ajax(url, params, method || "GET");
+  ajax: function(url, params, method, settings) {
+    return this._ajax(url, params, (method || "GET"), settings);
   },
 
   buildURL: function(klass, id) {
