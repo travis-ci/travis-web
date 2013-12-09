@@ -29,6 +29,8 @@ test "event containing a repository, adds repository to repos list", ->
           last_build_number: 10
           last_build_started_at: '2012-07-02T00:01:00Z'
           last_build_finished_at: '2012-07-02T00:02:30Z'
+          last_build_state: 'passed'
+          last_build_duration: 90
 
     wait().then ->
       listsRepo

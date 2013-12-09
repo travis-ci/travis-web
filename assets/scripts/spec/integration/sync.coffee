@@ -12,6 +12,19 @@ test "first sync page is show when user just signed up and is syncing", ->
       login: 'new-user'
     )
 
+  $.mockjax
+    url: '/hooks'
+    responseTime: 10
+    responseText:
+      hooks: []
+
+  $.mockjax
+    url: '/users'
+    responseTime: 10
+    responseText:
+      user:
+        is_syncing: true
+
   Travis.config.syncingPageRedirectionTime = 100
 
   wait().then ->

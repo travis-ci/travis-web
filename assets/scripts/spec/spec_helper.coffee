@@ -23,7 +23,37 @@ window.signInUser = (data) ->
     email: 'tyrion@example.org'
     login: 'tyrion'
     token: 'abcdef'
+    created_at: "2011-05-10T15:43:59Z"
+    gravatar_id: "582034b63279abeaa8e76acf12f5ee30"
+    is_syncing: false
+    locale: "en"
+    name: "Tyrion"
+    synced_at: "2013-12-09T09:41:47Z"
   }
+  $.mockjax
+    url: '/users/1'
+    responseTime: 10
+    responseText:
+      user: userData
+  $.mockjax
+    url: '/users/permissions'
+    responseTime: 10
+    responseText:
+      permissions: []
+      admin: []
+      push: []
+      pull: []
+  $.mockjax
+    url: '/broadcasts'
+    responseTime: 10
+    responseText:
+      broadcasts: []
+  $.mockjax
+    url: '/accounts'
+    responseTime: 10
+    responseText:
+      accounts: []
+
   userData = Ember.merge(userData, data)
   # for now let's just use harcoded data to log in the user,
   # we may extend it in the future to pass specific user data
