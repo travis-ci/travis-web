@@ -218,7 +218,7 @@ Travis.BuildRoute = Ember.Route.extend
     repo.set('build', model)
 
   model: (params) ->
-    Travis.Build.find(params.build_id)
+    Travis.Build.fetch(params.build_id)
 
 Travis.JobRoute = Ember.Route.extend
   renderTemplate: ->
@@ -236,19 +236,12 @@ Travis.JobRoute = Ember.Route.extend
     repo.set('job', model)
     repo.activate('job')
 
-    # since we're no longer using promises, the setupController resolves right away,
-    # so we need to wait for build to be loaded
-    buildObserver = ->
-      if build = model.get('build')
-        @controllerFor('build').set('build', build)
-        repo.set('build', build)
-
-        model.removeObserver('build', buildObserver)
-    model.addObserver('build', this, buildObserver)
-    buildObserver.apply(this)
+    if build = model.get('build')
+      @controllerFor('build').set('build', build)
+      repo.set('build', build)
 
   model: (params) ->
-    Travis.Job.find(params.job_id)
+    Travis.Job.fetch(params.job_id)
 
 Travis.RepoIndexRoute = Ember.Route.extend Travis.SetupLastBuild,
   setupController: (controller, model) ->
@@ -275,30 +268,13 @@ Travis.RepoRoute = Ember.Route.extend
 
   model: (params) ->
     slug = "#{params.owner}/#{params.name}"
-    content = Ember.Object.create slug: slug, isLoaded: false, isLoading: true
-    proxy = Ember.ObjectProxy.create(content: content)
 
-    repos = Travis.Repo.bySlug(slug)
+    Travis.Repo.fetchBySlug(slug)
 
-    self = this
-
-    observer = ->
-      if repos.get 'isLoaded'
-        repos.removeObserver 'isLoaded', observer
-        proxy.set 'isLoading', false
-
-        if repos.get('length') == 0
-          Ember.run.next ->
-            self.render('repos/not_found', outlet: 'main')
-        else
-          proxy.set 'content', repos.objectAt(0)
-
-    if repos.length
-      proxy.set('content', repos[0])
-    else
-      repos.addObserver 'isLoaded', observer
-
-    proxy
+  actions:
+    error: ->
+      Ember.run.next this, ->
+        @render('repos/not_found', outlet: 'main')
 
 Travis.IndexRoute = Ember.Route.extend
   renderTemplate: ->
@@ -311,6 +287,10 @@ Travis.IndexRoute = Ember.Route.extend
   setupController: (controller)->
     @container.lookup('controller:repos').activate()
     @container.lookup('controller:application').connectLayout 'home'
+
+Travis.IndexLoadingRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render('index_loading')
 
 Travis.StatsRoute = Ember.Route.extend
   renderTemplate: ->

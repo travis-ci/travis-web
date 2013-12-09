@@ -58,7 +58,7 @@ require 'travis/model'
     @get('_rawPermissions').then (data) => permissions.set('content', data.push)
     permissions
   ).property()
-  
+
   updateLocale: (locale) ->
     @save()
     Travis.setLocale(locale)
@@ -77,7 +77,10 @@ require 'travis/model'
   poll: ->
     Travis.ajax.get '/users', (data) =>
       if data.user.is_syncing
-        Ember.run.later(this, this.poll.bind(this), 3000)
+        self = this
+        setTimeout ->
+          self.poll()
+        , 3000
       else
         @set('isSyncing', false)
         @setWithSession('syncedAt', data.user.synced_at)
