@@ -84,7 +84,7 @@ require 'config/emoij'
 
   _githubReferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g')
 
-  _githubUserRegexp: new RegExp("^|\\B@([\\w-]+)", 'g')
+  _githubUserRegexp: new RegExp("\\B@([\\w-]+)", 'g')
 
   _githubUserLink: (reference, username) ->
     "<a href=\"http://github.com/#{username}\">#{reference}</a>"
