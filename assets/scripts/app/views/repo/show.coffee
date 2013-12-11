@@ -115,6 +115,11 @@ Travis.reopen
         permissions.contains parseInt(@get('repo.id'))
     ).property('currentUser.permissions.length', 'repo.id')
 
+    hasPushPermission: (->
+      if permissions = @get('currentUser.pushPermissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.pushPermissions.length', 'repo.id')
+
     hasAdminPermission: (->
       if permissions = @get('currentUser.adminPermissions')
         permissions.contains parseInt(@get('repo.id'))
@@ -123,6 +128,10 @@ Travis.reopen
     statusImageUrl: (->
       Travis.Urls.statusImage(@get('slug'))
     ).property('slug')
+
+    displaySettingsLink: (->
+      @get('hasPushPermission')
+    ).property('hasPushPermission')
 
     displayStatusImages: (->
       @get('hasPermission')
