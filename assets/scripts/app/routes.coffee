@@ -99,15 +99,16 @@ Travis.Router.map ->
       @resource 'pullRequests', path: '/pull_requests'
       @resource 'branches', path: '/branches'
 
+    # this can't be nested in repo, because we want a set of different
+    # templates rendered for settings (for example no "current", "builds", ... tabs)
+    @resource 'repo.settings', path: '/:owner/:name/settings', ->
+      @route 'tab', path: ':tab'
+
   @route 'getting_started'
   @route 'first_sync'
   @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
   @route 'notFound', path: '/not-found'
-
-  @resource 'profile.repo', path: '/profile/:owner/:name', ->
-    @resource 'profile.repo.settings', path: 'settings', ->
-      @route 'tab', path: ':tab'
 
   @resource 'profile', path: '/profile', ->
     @route 'index', path: '/'
@@ -398,14 +399,12 @@ Travis.AuthRoute = Ember.Route.extend
   deactivate: ->
     @controllerFor('auth').set('redirected', false)
 
-Travis.ProfileRepoRoute = Travis.ProfileRoute.extend
+Travis.RepoSettingsRoute = Ember.Route.extend
   setupController: (controller, model) ->
     # TODO: if repo is just a data hash with id and slug load it
     #       as incomplete record
     model = Travis.Repo.find(model.id) if model && !model.get
     @_super(controller, model)
-
-    controller.set('content', model)
 
   serialize: (repo) ->
     slug = if repo.get then repo.get('slug') else repo.slug
@@ -416,10 +415,8 @@ Travis.ProfileRepoRoute = Travis.ProfileRoute.extend
     slug = "#{params.owner}/#{params.name}"
     Travis.Repo.fetchBySlug(slug)
 
-Travis.ProfileRepoSettingsRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    controller.set('settings', model)
-
-  model: ->
-   repo = @modelFor('profileRepo')
-   repo.fetchSettings()
+  afterModel: (repo) ->
+    # I'm using afterModel to fetch settings, because model is not always called.
+    # If link-to already provides a model, it will be just set as a route context.
+    repo.fetchSettings().then (settings) ->
+      repo.set('settings', settings)

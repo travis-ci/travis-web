@@ -34,11 +34,12 @@ Travis.TabsView = Ember.View.extend
 
     tab.show() unless tab.get('visible')
 
+  # TODO: remove hardcoded link
   layout: Ember.Handlebars.compile(
     '<ul class="tabs">' +
     '  {{#each tab in tabs}}' +
     '    <li {{bindAttr class="tab.visible:active"}}>' +
-    '      <h5>{{#linkTo "profile.repo.settings.tab" tab.id}}{{tab.name}}{{/linkTo}}</h5>' +
+    '      <h5>{{#linkTo "repo.settings.tab" tab.id}}{{tab.name}}{{/linkTo}}</h5>' +
     '    </li>' +
     '  {{/each}}' +
     '</ul>' +
