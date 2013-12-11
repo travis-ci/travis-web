@@ -45,8 +45,9 @@ $.extend Travis.Tailing.prototype,
     offset = $(window).scrollTop() - $('#log').offset().top
     max = $('#log').height() - $('#tail').height() + 5
     offset = max if offset > max
+
     if offset > 0
-      tail.css(top: offset - 2)
+      tail.css(position: 'fixed', right: 32)
     else
-      tail.css(top: 0)
+      tail.css(position: 'absolute', right: 2)
 
