@@ -17,7 +17,7 @@ Ember.Router.reopen
 # TODO: don't reopen Ember.Route to add events, there should be
 #       a better way (like "parent" resource for everything inside map)
 Ember.Route.reopen
-  events:
+  _actions:
     renderDefaultTemplate: ->
       @renderDefaultTemplate() if @renderDefaultTemplate
 
@@ -29,7 +29,6 @@ Ember.Route.reopen
       else
         throw(error)
 
-  _actions:
     renderNoOwnedRepos: ->
       @render('no_owned_repos', outlet: 'main')
 
