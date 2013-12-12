@@ -30,7 +30,7 @@ Ember.Route.reopen
         @_super(error)
 
     renderNoOwnedRepos: ->
-      @render('no_owned_repos')
+      @render('no_owned_repos', outlet: 'main')
 
     renderFirstSync: ->
       @renderFirstSync()
@@ -132,7 +132,7 @@ Travis.SetupLastBuild = Ember.Mixin.create
     repo = @controllerFor('repo').get('repo')
     if repo && repo.get('isLoaded') && !repo.get('lastBuildId')
       Ember.run.next =>
-        @render('builds/not_found', into: 'repo')
+        @render('builds/not_found', into: 'repo', outlet: 'pane')
 
 Travis.GettingStartedRoute = Ember.Route.extend
   setupController: ->
@@ -165,7 +165,7 @@ Travis.FirstSyncRoute = Ember.Route.extend
 Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
   renderTemplate: ->
     @render 'repo'
-    @render 'build', into: 'repo'
+    @render 'build', into: 'repo', outlet: 'pane'
 
   setupController: ->
     @_super.apply this, arguments
@@ -182,7 +182,7 @@ Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
 
 Travis.AbstractBuildsRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'builds', into: 'repo'
+    @render 'builds', into: 'repo', outlet: 'pane'
 
   setupController: ->
     @controllerFor('repo').activate(@get('contentType'))
@@ -207,7 +207,7 @@ Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches'
 
 Travis.BuildRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'build', into: 'repo'
+    @render 'build', into: 'repo', outlet: 'pane'
 
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
@@ -228,7 +228,7 @@ Travis.BuildRoute = Ember.Route.extend
 
 Travis.JobRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'job', into: 'repo'
+    @render 'job', into: 'repo', outlet: 'pane'
 
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
@@ -255,7 +255,7 @@ Travis.RepoIndexRoute = Ember.Route.extend Travis.SetupLastBuild,
     @controllerFor('repo').activate('current')
 
   renderTemplate: ->
-    @render 'build', into: 'repo'
+    @render 'build', into: 'repo', outlet: 'pane'
 
 Travis.RepoRoute = Ember.Route.extend
   renderTemplate: ->
