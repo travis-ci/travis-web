@@ -71,8 +71,19 @@ test 'positionButton adds the scrolling class', ->
 
   tail.positionButton()
   equal(element.hasClass('scrolling'), true)
+  equal(element.hasClass('bottom'), false)
 
 test 'positionButton removes the scrolling class', ->
   log.offset = -> {top: 1}
   tail.positionButton()
   equal(element.hasClass('scrolling'), false)
+  equal(element.hasClass('bottom'), false)
+
+test 'positionButton sets the button as bottom', ->
+  log.offset  = -> {top: -100}
+  log.height  = -> 50
+  tail.height = -> 1
+
+  tail.positionButton()
+  equal(element.hasClass('scrolling'), false)
+  equal(element.hasClass('bottom'), true)

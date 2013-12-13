@@ -51,8 +51,13 @@ class @Travis.Tailing
     return if @tail().length is 0
     offset = @window.scrollTop() - @log().offset().top
     max = @log().height() - @tail().height() + 5
-    offset = max if offset > max
-    if offset > 0
+
+    if offset > 0 && offset <= max
+      @tail().removeClass('bottom')
       @tail().addClass('scrolling')
     else
+      if offset > max
+        @tail().addClass('bottom')
+      else
+        @tail().removeClass('bottom')
       @tail().removeClass('scrolling')
