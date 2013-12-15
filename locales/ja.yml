@@ -9,7 +9,6 @@ ja:
     branch: ブランチ
     build_matrix: 失敗許容範囲外
     commit: コミット
-    commiter: 
     committer: コミット者
     compare: 比較
     config: 設定

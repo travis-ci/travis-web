@@ -9,7 +9,6 @@ es:
     branch: Rama
     build_matrix: Matriz de Builds
     commit: Commit
-    commiter: 
     committer: Committer
     compare: Comparar
     config: Configuración

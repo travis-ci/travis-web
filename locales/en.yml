@@ -9,7 +9,6 @@ en:
     branch: Branch
     build_matrix: Build Matrix
     commit: Commit
-    commiter: commiter
     committer: Committer
     compare: Compare
     config: Config
