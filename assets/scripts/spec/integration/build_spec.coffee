@@ -34,7 +34,7 @@ test "displaying information on build page", ->
 
     listsJobs
       table: '#jobs'
-      headers: ['Job', 'Duration', 'Finished', 'Rvm']
+      headers: ['Job', 'Duration', 'Finished', 'Ruby']
       jobs: [
         { color: 'green', id: 1, number: '1.1', repo: 'travis-ci/travis-core', finishedAt: '3 minutes ago', duration: '30 sec', rvm: 'rbx' }
         { color: 'red',   id: 2, number: '1.2', repo: 'travis-ci/travis-core', finishedAt: '2 minutes ago', duration: '40 sec', rvm: '1.9.3' }
@@ -42,7 +42,7 @@ test "displaying information on build page", ->
 
     listsJobs
       table: '#allowed_failure_jobs'
-      headers: ['Job', 'Duration', 'Finished', 'Rvm']
+      headers: ['Job', 'Duration', 'Finished', 'Ruby']
       jobs: [
         { color: '', id: 3, number: '1.3', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: 'jruby' }
       ]

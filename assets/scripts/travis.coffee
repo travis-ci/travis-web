@@ -82,7 +82,22 @@ $.extend Travis,
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
     code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
 
-  CONFIG_KEYS: ['go', 'rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala', 'compiler', 'ghc', 'os']
+  CONFIG_KEYS_MAP: {
+    go:          'Go'
+    rvm:         'Ruby'
+    gemfile:     'Gemfile'
+    env:         'ENV'
+    jdk:         'JDK'
+    otp_release: 'OTP Release'
+    php:         'PHP'
+    node_js:     'Node.js'
+    perl:        'Perl'
+    python:      'Python'
+    scala:       'Scala'
+    compiler:    'Compiler'
+    ghc:         'GHC'
+    os:          'OS'
+  }
 
   QUEUES: [
     { name: 'linux',   display: 'Linux' }
