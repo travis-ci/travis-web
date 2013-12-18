@@ -8,21 +8,21 @@ test "settings input allows to bind to nested objects", ->
   controller = Ember.Object.create()
   view = Ember.View.create(
     controller: controller
-    template: Ember.Handlebars.compile("{{input value=foo}} {{controller}}")
+    template: Ember.Handlebars.compile("{{settings-input value=foo.bar.baz}}")
   )
 
   Ember.run ->
-    view.append()
+    view.appendTo($("#ember-testing")[0])
 
-
-  Ember.run ->
-    controller.set('foo', 'bar')
-
-  Ember.run.sync()
 
   input = view.$('input')
-  input.val('a value').change()
-  Ember.run.sync()
 
-  console.log controller.get('foo')
+  Ember.run ->
+    input.val('a value').change()
 
+  equal(controller.get('foo.bar.baz'), 'a value')
+
+  Ember.run ->
+    controller.set('foo.bar.baz', 'a new value')
+
+  equal(input.val(), 'a new value')
