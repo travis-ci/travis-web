@@ -45,7 +45,7 @@ require 'travis/model'
   ).property('jobs.@each.allowFailure')
 
   rawConfigKeys: (->
-    keys = Travis.Helpers.configKeys(@get('config'))
+    keys = []
 
     @get('jobs').forEach (job) ->
       Travis.Helpers.configKeys(job.get('config')).forEach (key) ->
