@@ -34,11 +34,11 @@
           {{/if}}
           {{#if commit.authorName}}
             <dt>{{t jobs.author}}</dt>
-            <dd class="author"><a {{bindAttr href="controller.urlAuthor"}}>{{commit.authorName}}</a></dd>
+            <dd class="author">{{commit.authorName}}</dd>
           {{/if}}
           {{#if commit.committerName}}
             <dt>{{t jobs.committer}}</dt>
-            <dd class="committer"><a {{bindAttr href="controller.urlCommitter"}}>{{commit.committerName}}</a></dd>
+            <dd class="committer">{{commit.committerName}}</dd>
           {{/if}}
         </div>
       {{/with}}
