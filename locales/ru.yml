@@ -9,7 +9,6 @@ ru:
     branch: Ветка
     build_matrix: Матрица
     commit: Коммит
-    commiter: 
     committer: Коммитер
     compare: Дифф
     config: Конфигурация

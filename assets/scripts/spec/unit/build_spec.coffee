@@ -54,4 +54,4 @@ test 'it takes into account all the jobs when getting config keys', ->
     configKeys = build.get('configKeys')
 
   deepEqual(rawConfigKeys, ['rvm', 'env', 'gemfile', 'jdk' ])
-  deepEqual(configKeys, [ 'Job', 'Duration', 'Finished', 'Rvm', 'Env', 'Gemfile', 'Jdk' ])
+  deepEqual(configKeys, [ 'Job', 'Duration', 'Finished', 'Ruby', 'ENV', 'Gemfile', 'JDK' ])

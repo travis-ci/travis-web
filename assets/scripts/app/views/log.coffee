@@ -13,7 +13,7 @@ Travis.reopen
       job = @get('job')
       if job
         job.get('log').fetch()
-        job.subscribe() if !job.get('isFinished')
+        job.subscribe()
 
     willDestroyElement: ->
       job = @get('job')
@@ -34,12 +34,12 @@ Travis.reopen
       parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
 
     versionDidChange: (->
-      @rerender() if @get('inDOM')
+      @rerender() if @get('state') == 'inDOM'
     ).observes('log.version')
 
     logDidChange: (->
       console.log 'log view: log did change: rerender' if Log.DEBUG
-      @rerender() if @get('inDOM')
+      @rerender() if @get('state') == 'inDOM'
     ).observes('log')
 
     createEngine: ->
@@ -97,8 +97,9 @@ Travis.reopen
       window.history.pushState({ path: path }, null, path);
       @set('controller.lineNumber', number)
 
-    toTop: () ->
-      $(window).scrollTop(0)
+    actions:
+      toTop: () ->
+        $(window).scrollTop(0)
 
     noop: -> # TODO required?
 

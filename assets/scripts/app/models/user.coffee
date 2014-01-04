@@ -31,9 +31,31 @@ require 'travis/model'
     "https://github.com/#{@get('login')}"
   ).property()
 
+  _rawPermissions: (->
+    Travis.ajax.get('/users/permissions')
+  ).property()
+
   permissions: (->
     permissions = Ember.ArrayProxy.create(content: [])
-    Travis.ajax.get('/users/permissions', (data) => permissions.set('content', data.permissions))
+    @get('_rawPermissions').then (data) => permissions.set('content', data.permissions)
+    permissions
+  ).property()
+
+  adminPermissions: (->
+    permissions = Ember.ArrayProxy.create(content: [])
+    @get('_rawPermissions').then (data) => permissions.set('content', data.admin)
+    permissions
+  ).property()
+
+  pullPermissions: (->
+    permissions = Ember.ArrayProxy.create(content: [])
+    @get('_rawPermissions').then (data) => permissions.set('content', data.pull)
+    permissions
+  ).property()
+
+  pushPermissions: (->
+    permissions = Ember.ArrayProxy.create(content: [])
+    @get('_rawPermissions').then (data) => permissions.set('content', data.push)
     permissions
   ).property()
 
@@ -55,7 +77,10 @@ require 'travis/model'
   poll: ->
     Travis.ajax.get '/users', (data) =>
       if data.user.is_syncing
-        Ember.run.later(this, this.poll.bind(this), 3000)
+        self = this
+        setTimeout ->
+          self.poll()
+        , 3000
       else
         @set('isSyncing', false)
         @setWithSession('syncedAt', data.user.synced_at)

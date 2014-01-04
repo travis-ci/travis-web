@@ -135,5 +135,12 @@ require 'travis/model'
     repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
     if repo.length > 0 then repo else @find(slug: slug)
 
+  fetchBySlug: (slug) ->
+    repos = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
+    if repos.length > 0
+      repos[0]
+    else
+      @fetch(slug: slug).then (repos) -> Ember.get(repos, 'firstObject')
+
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'

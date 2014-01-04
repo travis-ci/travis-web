@@ -52,3 +52,9 @@ test 'replaces @user with github user link', ->
   expected = 'It is for you <a href="http://github.com/tender_love1">@tender_love1</a>'
 
   equal(result, expected, "@user should be converted to a link")
+
+test 'does not replace @user if it is a sign-off', ->
+  message = 'Signed-off-by: GitHub User <user@example.com>'
+  result = Travis.Helpers.githubify(message, 'travis-ci', 'travis-web')
+
+  equal(result, message, "@user should not be converted to a link if it matches an email")

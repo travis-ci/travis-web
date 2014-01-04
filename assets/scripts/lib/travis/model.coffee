@@ -38,18 +38,19 @@ Array.prototype.diff = (a) ->
     @loadedAttributes = []
     @loadedRelationships = []
 
-    attributes = this.attributes || []
-    relationships = this.relationships || []
+    attributes = this.constructor.getAttributes() || []
+    relationships = this.constructor.getRelationships() || []
 
-    for key in attributes
-      dataKey = @dataKey(key)
-      if hash.hasOwnProperty(dataKey)
-        @loadedAttributes.pushObject(key)
+    if hash
+      for key in attributes
+        dataKey = @dataKey(key)
+        if hash.hasOwnProperty(dataKey)
+          @loadedAttributes.pushObject(key)
 
-    for key in relationships
-      dataKey = @dataKey(key)
-      if hash.hasOwnProperty(dataKey)
-        @loadedRelationships.pushObject(key)
+      for key in relationships
+        dataKey = @dataKey(key)
+        if hash.hasOwnProperty(dataKey)
+          @loadedRelationships.pushObject(key)
 
     incomplete = Ember.EnumerableUtils.intersection(@loadedAttributes, attributes).length != attributes.length ||
                  Ember.EnumerableUtils.intersection(@loadedRelationships, relationships).length != relationships.length
@@ -86,10 +87,10 @@ Array.prototype.diff = (a) ->
       @loadTheRest(key)
 
   isAttribute: (name) ->
-    this.attributes.contains(name)
+    this.constructor.getAttributes().contains(name)
 
   isRelationship: (name) ->
-    this.relationships.contains(name)
+    this.constructor.getRelationships().contains(name)
 
   loadTheRest: (key) ->
     # for some weird reason key comes changed to a string and for some weird reason it even is called with
@@ -145,19 +146,19 @@ Array.prototype.diff = (a) ->
   ).property()
 
   isRecordLoaded: (id) ->
-    !!@_referenceForId(id).record
+    reference = @_getReferenceById(id)
+    reference && reference.record
 
   camelizeKeys: true
 
   # TODO: the functions below will be added to Ember Model, remove them when that
   # happens
   resetData: ->
-    @_idToReference = null
-    @sideloadedData = null
-    @recordCache = null
-    @recordArrays = null
-    @_currentBatchIds = null
-    @_hasManyArrays = null
+    @_referenceCache = {}
+    @sideloadedData = {}
+    @recordArrays = []
+    @_currentBatchIds = []
+    @_hasManyArrays = []
     @_findAllRecordArray = null
 
   unload: (record) ->
@@ -172,10 +173,8 @@ Array.prototype.diff = (a) ->
       delete this.recordCache[key]
 
   loadRecordForReference: (reference) ->
-    record = @create({ _reference: reference })
-    @recordCache = {} unless @recordCache
+    record = @create({ _reference: reference, id: reference.id })
     @sideloadedData = {} unless @sideloadedData
-    @recordCache[reference.id] = record
     reference.record = record
     record.load(reference.id, @sideloadedData[reference.id])
     # TODO: find a nicer way to not add record to record arrays twice

@@ -6,7 +6,7 @@ Travis.ReposController = Ember.ArrayController.extend
       'owned'
     else
       'recent'
-  ).property('currentUser')
+  ).property('currentUser.id')
 
   currentUserIdDidChange: (->
     if @get('currentUser.id')
@@ -16,10 +16,10 @@ Travis.ReposController = Ember.ArrayController.extend
   ).observes('currentUser.id')
 
   tabOrIsLoadedDidChange: (->
-    if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0
-
-      @container.lookup('router:main').send('renderNoOwnedRepos')
-  ).observes('isLoaded', 'tab')
+    Ember.run.scheduleOnce 'routerTransitions', this, ->
+      if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0
+        @container.lookup('router:main').send('renderNoOwnedRepos')
+  ).observes('isLoaded', 'tab', 'length')
 
   isLoadedBinding: 'content.isLoaded'
   needs: ['currentUser', 'repo']

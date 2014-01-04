@@ -26,12 +26,12 @@ require 'config/emoij'
     (sha || '').substr(0, 7)
 
   formatConfig: (config) ->
-    config = $.only config, Travis.CONFIG_KEYS
+    config = $.only config, Object.keys(Travis.CONFIG_KEYS_MAP)
     values = $.map config, (value, key) ->
       value = (if value && value.join then value.join(', ') else value) || ''
       if key == 'rvm' && "#{value}".match(/^\d+$/)
         value = "#{value}.0"
-      '%@: %@'.fmt $.camelize(key), value
+      '%@: %@'.fmt Travis.CONFIG_KEYS_MAP[key], value
     if values.length == 0 then '-' else values.join(', ')
 
   formatMessage: (message, options) ->
@@ -84,7 +84,7 @@ require 'config/emoij'
 
   _githubReferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g')
 
-  _githubUserRegexp: new RegExp("@([\\w-]+)", 'g')
+  _githubUserRegexp: new RegExp("\\B@([\\w-]+)", 'g')
 
   _githubUserLink: (reference, username) ->
     "<a href=\"http://github.com/#{username}\">#{reference}</a>"
@@ -116,4 +116,4 @@ require 'config/emoij'
 
   configKeys: (config) ->
     return [] unless config
-    $.intersect($.keys(config), Travis.CONFIG_KEYS)
+    $.intersect($.keys(config), Object.keys(Travis.CONFIG_KEYS_MAP))

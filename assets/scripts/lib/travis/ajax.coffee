@@ -59,7 +59,7 @@ Travis.ajax = Em.Object.create
     options = $.extend(options, Travis.ajax.DEFAULT_OPTIONS)
 
     if testMode?
-      console.log('RUnning ajax with', options.url)
+      console.log('Running ajax with', options.url)
 
       # we use jquery.mockjax for test, I don't want to hack it or rewrite it,
       # so let's just pretend we still use ajax if testing mode is on

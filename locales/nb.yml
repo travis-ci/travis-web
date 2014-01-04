@@ -9,7 +9,6 @@ nb:
     branch: Gren
     build_matrix: Jobbmatrise
     commit: Innsending
-    commiter: 
     committer: Innsender
     compare: Sammenlign
     config: Oppsett

@@ -9,7 +9,6 @@ nl:
     branch: Tak
     build_matrix: Bouw matrix
     commit: Commit
-    commiter: 
     committer: Committer
     compare: Vergelijk
     config: Configuratie

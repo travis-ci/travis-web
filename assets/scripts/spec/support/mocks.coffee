@@ -1,11 +1,11 @@
 minispade.require 'ext/jquery'
 
-responseTime = 0
+responseTime = 10
 
 repos = [
-  { id: '1', owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_state: 'passed', last_build_duration: 30, last_build_started_at: '2012-07-02T00:00:00Z', last_build_finished_at: '2012-07-02T00:00:30Z', description: 'Description of travis-core' },
-  { id: '2', owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3, last_build_state: 'failed', last_build_duration: 30, last_build_started_at: '2012-07-02T00:01:00Z', last_build_finished_at: '2012-07-01T00:01:30Z', description: 'Description of travis-assets'},
-  { id: '3', owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4, last_build_state: null, last_build_duration: null, last_build_started_at: '2012-07-02T00:02:00Z', last_build_finished_at: null, description: 'Description of travis-hub'},
+  { id: '1', owner: 'travis-ci', name: 'travis-core',   slug: 'travis-ci/travis-core',   build_ids: [1, 2], last_build_id: 1, last_build_number: 1, last_build_state: 'passed', last_build_duration: 30, last_build_started_at: '2012-07-02T00:00:00Z', last_build_finished_at: '2012-07-02T00:00:30Z', description: 'Description of travis-core', github_language: 'ruby' },
+  { id: '2', owner: 'travis-ci', name: 'travis-assets', slug: 'travis-ci/travis-assets', build_ids: [3],    last_build_id: 3, last_build_number: 3, last_build_state: 'failed', last_build_duration: 30, last_build_started_at: '2012-07-02T00:01:00Z', last_build_finished_at: '2012-07-01T00:01:30Z', description: 'Description of travis-assets', github_language: 'ruby'},
+  { id: '3', owner: 'travis-ci', name: 'travis-hub',    slug: 'travis-ci/travis-hub',    build_ids: [4],    last_build_id: 4, last_build_number: 4, last_build_state: null, last_build_duration: null, last_build_started_at: '2012-07-02T00:02:00Z', last_build_finished_at: null, description: 'Description of travis-hub', github_language: 'ruby' },
 ]
 
 reposByName = (name) ->
@@ -18,9 +18,9 @@ reposByName = (name) ->
 
 builds = [
   { id: '1', repository_id: '1', commit_id: 1, job_ids: [1, 2, 3], number: 1, pull_request: false, config: { rvm: ['rbx', '1.9.3', 'jruby'] }, duration: 30, started_at: '2012-07-02T00:00:00Z', finished_at: '2012-07-02T00:00:30Z', state: 'passed' },
-  { id: '2', repository_id: '1', commit_id: 2, job_ids: [4],       number: 2, pull_request: false, config: { rvm: ['rbx'] }, duration: null },
+  { id: '2', repository_id: '1', commit_id: 2, job_ids: [4],       number: 2, pull_request: false, config: { rvm: ['rbx'] }, duration: null, state: 'created', finished_at: null },
   { id: '3', repository_id: '2', commit_id: 3, job_ids: [5],       number: 3, pull_request: false, config: { rvm: ['rbx'] }, duration: 30, started_at: '2012-07-02T00:01:00Z', finished_at: '2012-07-01T00:01:30Z', state: 'failed' },
-  { id: '4', repository_id: '3', commit_id: 4, job_ids: [6],       number: 4, pull_request: false, config: { rvm: ['rbx'] }, duration: null, started_at: '2012-07-02T00:02:00Z' },
+  { id: '4', repository_id: '3', commit_id: 4, job_ids: [6],       number: 4, pull_request: false, config: { rvm: ['rbx'] }, duration: null, started_at: '2012-07-02T00:02:00Z', state: 'queued', finished_at: null },
 ]
 
 commits = [
@@ -174,4 +174,3 @@ $.mockjax
   url: '/profile/hooks'
   responseTime: responseTime
   responseText: { hooks: hooks }
-

@@ -43,7 +43,7 @@ Travis.FirstSyncView = Travis.View.extend
         ).then(null, (e) ->
           console.log('There was a problem while redirecting from first sync', e)
         )
-      , 5000
+      , Travis.config.syncingPageRedirectionTime
 
 require 'views/accounts'
 require 'views/application'

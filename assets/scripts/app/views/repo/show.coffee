@@ -107,13 +107,18 @@ Travis.reopen
     displayRegenerateKey: true
 
     canRegenerateKey: (->
-      @get('displayRegenerateKey') && @get('hasPermission')
-    ).property('hasPermission')
+      @get('displayRegenerateKey') && @get('hasAdminPermission')
+    ).property('hasAdminPermission')
 
     hasPermission: (->
       if permissions = @get('currentUser.permissions')
         permissions.contains parseInt(@get('repo.id'))
     ).property('currentUser.permissions.length', 'repo.id')
+
+    hasAdminPermission: (->
+      if permissions = @get('currentUser.adminPermissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.adminPermissions.length', 'repo.id')
 
     statusImageUrl: (->
       Travis.Urls.statusImage(@get('slug'))
@@ -173,6 +178,11 @@ Travis.reopen
       if permissions = @get('currentUser.permissions')
         permissions.contains parseInt(@get('repo.id'))
     ).property('currentUser.permissions.length', 'repo.id')
+
+    hasPushPermission: (->
+      if permissions = @get('currentUser.pushPermissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.pushPermissions.length', 'repo.id')
 
     displayRequeueBuild: (->
       @get('isBuildTab') && @get('build.isFinished')

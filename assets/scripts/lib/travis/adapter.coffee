@@ -3,10 +3,10 @@ Travis.Adapter = Ember.RESTAdapter.extend
     Travis.ajax.ajax(url, method || 'get', data: params)
 
   findMany: (klass, records, ids) ->
-    url = @buildURL(klass) + '?' + ids.map( (id) -> "ids[]=#{id}" ).join('&')
+    url = @buildURL(klass)
 
     self = this
-    @ajax(url).then (data) ->
+    @ajax(url, ids: ids).then (data) ->
       self.didFindMany(klass, records, data)
 
   didFindMany: (klass, records, data) ->
@@ -15,6 +15,7 @@ Travis.Adapter = Ember.RESTAdapter.extend
 
     @sideload(klass, data)
     records.load(klass, dataToLoad)
+    @addToRecordArrays(records.get('content'))
 
   buildURL: ->
     @_super.apply(this, arguments).replace(/\.json$/, '')
@@ -22,26 +23,38 @@ Travis.Adapter = Ember.RESTAdapter.extend
   didFind: (record, id, data) ->
     @sideload(record.constructor, data)
     @_super(record, id, data)
+    @addToRecordArrays(record)
 
   didFindAll: (klass, records, data) ->
     @sideload(klass, data)
     @_super(klass, records, data)
+    @addToRecordArrays(records.get('content'))
 
   didFindQuery: (klass, records, params, data) ->
     @sideload(klass, data)
     @_super(klass, records, params, data)
+    @addToRecordArrays(records.get('content'))
 
   didCreateRecord: (record, data) ->
     @sideload(record.constructor, data)
     @_super(record, data)
+    @addToRecordArrays(record)
 
   didSaveRecord: (record, data) ->
     @sideload(record.constructor, data)
     @_super(record, data)
+    @addToRecordArrays(record)
 
   didDeleteRecord: (record, data) ->
     @sideload(record.constructor, data)
     @_super(record, data)
+    @addToRecordArrays(record)
+
+  addToRecordArrays: (records) ->
+    records = [records] unless Ember.isArray(records)
+    for record in records
+      record.constructor.addToRecordArrays(record)
+
 
   sideload: (klass, data) ->
     for name, records of data

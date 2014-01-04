@@ -5,8 +5,8 @@
 @displaysTabs = (tabs) ->
   for name, tab of tabs
     equal($("#tab_#{name} a").attr('href'), tab.href, "#{name} tab should link to #{tab.href}") unless tab.hidden
-    equal($("#tab_#{name}").hasClass('active'), !!tab.active, "#{name} tab should be active")
-    equal($("#tab_#{name}").hasClass('display-inline'), !tab.hidden, "#{name} tab should has class display-inline") if name in ['build', 'job']
+    equal($("#tab_#{name}").hasClass('active'), !!tab.active, "#{name} tab should #{'not' unless tab.active} be active")
+    equal($("#tab_#{name}").hasClass('display-inline'), !tab.hidden, "#{name} tab should have class display-inline") if name in ['build', 'job']
 
 @displaysSummaryBuildLink = (link, number) ->
   element = $('#summary .number a')

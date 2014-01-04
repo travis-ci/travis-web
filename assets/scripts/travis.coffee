@@ -61,7 +61,11 @@ Ember.RecordArray.reopen
   ).observes('content')
 
 window.Travis = TravisApplication.create(
-  LOG_TRANSITIONS: true
+  LOG_ACTIVE_GENERATION: true,
+  LOG_MODULE_RESOLVER: true,
+  LOG_TRANSITIONS: true,
+  LOG_TRANSITIONS_INTERNAL: true,
+  LOG_VIEW_LOOKUPS: true
 )
 
 Travis.deferReadiness()
@@ -71,13 +75,29 @@ $.extend Travis,
     Travis.advanceReadiness() # bc, remove once merged to master
 
   config:
+    syncingPageRedirectionTime: 5000
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
     code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
 
-  CONFIG_KEYS: ['go', 'rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala', 'compiler']
+  CONFIG_KEYS_MAP: {
+    go:          'Go'
+    rvm:         'Ruby'
+    gemfile:     'Gemfile'
+    env:         'ENV'
+    jdk:         'JDK'
+    otp_release: 'OTP Release'
+    php:         'PHP'
+    node_js:     'Node.js'
+    perl:        'Perl'
+    python:      'Python'
+    scala:       'Scala'
+    compiler:    'Compiler'
+    ghc:         'GHC'
+    os:          'OS'
+  }
 
   QUEUES: [
     { name: 'linux',   display: 'Linux' }
@@ -130,6 +150,9 @@ Travis.Router.reopen
 
     if Travis.config.ga_code
       _gaq.push ['_trackPageview', location.pathname]
+
+Ember.LinkView.reopen
+  loadingClass: 'loading_link'
 
 require 'ext/i18n'
 require 'travis/ajax'
