@@ -41,7 +41,7 @@ Travis.reopen
     userBinding: 'controller.user'
 
     gravatarUrl: (->
-      "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=96&d=mm"
+      "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=200&d=mm"
     ).property('user.gravatarId')
 
     locale: (->
