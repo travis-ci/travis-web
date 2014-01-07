@@ -82,7 +82,7 @@ Ember.Route.reopen
 
 Travis.Router.reopen
   transitionTo: ->
-    this.container.lookup('controller:repo').set('lineNumber', null)
+    this.container.lookup('controller:repo').set('lineNumbers', [])
 
     @_super.apply this, arguments
 
@@ -113,7 +113,8 @@ Travis.ApplicationRoute = Ember.Route.extend Travis.LineNumberParser,
   setupController: ->
     @_super.apply this, arguments
 
-    this.controllerFor('repo').set('lineNumber', @fetchLineNumber())
+    line_numbers = @fetchLineNumbers(document.location.hash)
+    this.controllerFor('repo').setLineNumbers line_numbers[0], line_numbers[1]
 
 Travis.SetupLastBuild = Ember.Mixin.create
   setupController: ->

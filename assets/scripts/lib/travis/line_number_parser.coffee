@@ -1,3 +1,14 @@
+Travis.LineNumberRegex = /#L(\d+)(-L(\d+))?$/
 Travis.LineNumberParser = Ember.Mixin.create
-  fetchLineNumber: ->
-    match[1] if match = document.location.hash.match(/#L(\d+)$/)
+
+  fetchLineNumbers: (hash) ->
+    if match = hash.match(Travis.LineNumberRegex)
+      start = match[1]
+      end   = match[3]
+
+      if end?
+        [start, end]
+      else
+        [start]
+    else
+      []
