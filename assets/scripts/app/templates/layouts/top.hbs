@@ -1,10 +1,10 @@
-{{#linkTo "index.current"}}
+{{#link-to "index.current"}}
   <h1>Travis</h1>
-{{/linkTo}}
+{{/link-to}}
 
 <ul id="navigation">
   <li class="home">
-    {{#linkTo "index.current"}}{{t layouts.top.home}}{{/linkTo}}
+    {{#link-to "index.current"}}{{t layouts.top.home}}{{/link-to}}
   </li>
   <li>
     <a href="http://about.travis-ci.org/blog">{{t layouts.top.blog}}</a>
@@ -35,7 +35,7 @@
         <a class="signed-out" href="#" {{action "signIn" target="Travis"}}>{{t layouts.top.github_login}}</a>
       {{/if}}
       {{#if signedIn}}
-        {{#linkTo "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/linkTo}}
+        {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/link-to}}
       {{/if}}
       {{#if signingIn}}
         <span class="signing-in">{{t layouts.top.signing_in}}</span>
@@ -43,7 +43,7 @@
     </p>
     <ul>
       <li>
-        {{#linkTo "profile.index" class="signed-in"}}{{t layouts.top.accounts}}{{/linkTo}}
+        {{#link-to "profile.index" class="signed-in"}}{{t layouts.top.accounts}}{{/link-to}}
       </li>
       <li>
         <a href="/" {{action "signOut" target="Travis"}}>{{t layouts.top.sign_out}}</a>

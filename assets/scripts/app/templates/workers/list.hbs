@@ -14,9 +14,9 @@
                 <div class="status"></div>
                 {{#if worker.isWorking}}
                   {{#if worker.jobId}}
-                    {{#linkTo "job" worker.repo worker.jobId}}
+                    {{#link-to "job" worker.repo worker.jobId}}
                       {{view.display}}
-                    {{/linkTo}}
+                    {{/link-to}}
                   {{/if}}
                 {{else}}
                   {{view.display}}

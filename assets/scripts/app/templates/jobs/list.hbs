@@ -25,7 +25,7 @@
             <span class="status"></span>
             {{#if job.id}}
               {{#if job.repo.slug}}
-                {{#linkTo "job" repo job}}{{number}}{{/linkTo}}
+                {{#link-to "job" repo job}}{{number}}{{/link-to}}
               {{/if}}
             {{/if}}
           </td>

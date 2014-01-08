@@ -6,12 +6,12 @@
       {{#each job in queue}}
         {{#view Travis.QueueItemView jobBinding="job"}}
           {{#if job.repo.slug}}
-            {{#linkTo "job" job.repo job}}
+            {{#link-to "job" job.repo job}}
               <span class="slug">
                 {{job.repo.slug}}
               </span>
               #{{job.number}}
-            {{/linkTo}}
+            {{/link-to}}
           {{/if}}
         {{/view}}
       {{else}}

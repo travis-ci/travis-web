@@ -2,36 +2,36 @@
   <li id="tab_current" {{bind-attr class="view.classCurrent"}}>
     <h5>
       {{#if repo.slug}}
-        {{#linkTo "repo" repo currentWhen="repo.index"}}
+        {{#link-to "repo" repo currentWhen="repo.index"}}
           {{t repositories.tabs.current}}
-        {{/linkTo}}
+        {{/link-to}}
       {{/if}}
     </h5>
   </li>
   <li id="tab_builds" {{bind-attr class="view.classBuilds"}}>
     <h5>
       {{#if repo.slug}}
-        {{#linkTo "builds" repo}}
+        {{#link-to "builds" repo}}
           {{t repositories.tabs.build_history}}
-        {{/linkTo}}
+        {{/link-to}}
       {{/if}}
     </h5>
   </li>
   <li id="tab_pull_requests" {{bind-attr class="view.classPullRequests"}}>
     <h5>
       {{#if repo.slug}}
-        {{#linkTo "pullRequests" repo}}
+        {{#link-to "pullRequests" repo}}
           {{t repositories.tabs.pull_requests}}
-        {{/linkTo}}
+        {{/link-to}}
       {{/if}}
     </h5>
   </li>
   <li id="tab_branches" {{bind-attr class="view.classBranches"}}>
     <h5>
       {{#if repo.slug}}
-        {{#linkTo "branches" repo}}
+        {{#link-to "branches" repo}}
           {{t repositories.tabs.branches}}
-        {{/linkTo}}
+        {{/link-to}}
       {{/if}}
     </h5>
   </li>
@@ -39,9 +39,9 @@
     <h5>
       {{#if build.id}}
         {{#if repo.slug}}
-          {{#linkTo "build" repo build}}
+          {{#link-to "build" repo build}}
             {{t repositories.tabs.build}} #{{build.number}}
-          {{/linkTo}}
+          {{/link-to}}
         {{/if}}
       {{/if}}
     </h5>
@@ -50,9 +50,9 @@
     <h5>
       {{#if job.id}}
         {{#if repo.slug}}
-          {{#linkTo "job" repo job}}
+          {{#link-to "job" repo job}}
             {{t repositories.tabs.job}} #{{job.number}}
-          {{/linkTo}}
+          {{/link-to}}
         {{/if}}
       {{/if}}
     </h5>
