@@ -1,5 +1,5 @@
 <ul class="tabs">
-  <li id="tab_current" {{bindAttr class="view.classCurrent"}}>
+  <li id="tab_current" {{bind-attr class="view.classCurrent"}}>
     <h5>
       {{#if repo.slug}}
         {{#linkTo "repo" repo currentWhen="repo.index"}}
@@ -8,7 +8,7 @@
       {{/if}}
     </h5>
   </li>
-  <li id="tab_builds" {{bindAttr class="view.classBuilds"}}>
+  <li id="tab_builds" {{bind-attr class="view.classBuilds"}}>
     <h5>
       {{#if repo.slug}}
         {{#linkTo "builds" repo}}
@@ -17,7 +17,7 @@
       {{/if}}
     </h5>
   </li>
-  <li id="tab_pull_requests" {{bindAttr class="view.classPullRequests"}}>
+  <li id="tab_pull_requests" {{bind-attr class="view.classPullRequests"}}>
     <h5>
       {{#if repo.slug}}
         {{#linkTo "pullRequests" repo}}
@@ -26,7 +26,7 @@
       {{/if}}
     </h5>
   </li>
-  <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
+  <li id="tab_branches" {{bind-attr class="view.classBranches"}}>
     <h5>
       {{#if repo.slug}}
         {{#linkTo "branches" repo}}
@@ -35,7 +35,7 @@
       {{/if}}
     </h5>
   </li>
-  <li id="tab_build" {{bindAttr class="view.classBuild"}}>
+  <li id="tab_build" {{bind-attr class="view.classBuild"}}>
     <h5>
       {{#if build.id}}
         {{#if repo.slug}}
@@ -46,7 +46,7 @@
       {{/if}}
     </h5>
   </li>
-  <li id="tab_job" {{bindAttr class="view.classJob"}}>
+  <li id="tab_job" {{bind-attr class="view.classJob"}}>
     <h5>
       {{#if job.id}}
         {{#if repo.slug}}

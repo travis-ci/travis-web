@@ -2,7 +2,7 @@
 {{#each queue in controller}}
   <li class="queue">
     <h4>{{t queue}}: {{queue.name}}</h4>
-    <ul {{bindAttr id="queue.id"}}>
+    <ul {{bind-attr id="queue.id"}}>
       {{#each job in queue}}
         {{#view Travis.QueueItemView jobBinding="job"}}
           {{#if job.repo.slug}}

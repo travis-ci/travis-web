@@ -29,13 +29,13 @@
   <li class="traviscicom">
     <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
   </li>
-  <li {{bindAttr class="view.classProfile"}}>
+  <li {{bind-attr class="view.classProfile"}}>
     <p class="handle">
       {{#if signedOut}}
         <a class="signed-out" href="#" {{action "signIn" target="Travis"}}>{{t layouts.top.github_login}}</a>
       {{/if}}
       {{#if signedIn}}
-        {{#linkTo "profile" class="signed-in"}}<img {{bindAttr src="gravatarUrl"}}/>{{userName}}{{/linkTo}}
+        {{#linkTo "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/linkTo}}
       {{/if}}
       {{#if signingIn}}
         <span class="signing-in">{{t layouts.top.signing_in}}</span>

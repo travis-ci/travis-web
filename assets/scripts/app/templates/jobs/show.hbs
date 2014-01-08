@@ -1,5 +1,5 @@
 {{#if job.isLoaded}}
-  <div {{bindAttr class="view.color"}}>
+  <div {{bind-attr class="view.color"}}>
     <dl id="summary">
       <div class="left">
         <dt>Job</dt>
@@ -14,22 +14,22 @@
         <dt>{{t jobs.state}}</dt>
         <dd class="state">{{capitalize job.state}}</dd>
         <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
-        <dd class="finished_at timeago" {{bindAttr title="job.formattedFinishedAt"}}>{{formatTime job.finishedAt}}</dd>
+        <dd class="finished_at timeago" {{bind-attr title="job.formattedFinishedAt"}}>{{formatTime job.finishedAt}}</dd>
         <dt>{{t jobs.duration}}</dt>
-        <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration job.duration}}</dd>
+        <dd class="duration" {{bind-attr title="startedAt"}}>{{formatDuration job.duration}}</dd>
       </div>
 
       {{#with job}}
         <div class="right">
           <dt>{{t jobs.commit}}</dt>
-          <dd class="commit"><a {{bindAttr href="controller.urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
+          <dd class="commit"><a {{bind-attr href="controller.urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
           {{#if build.pullRequest}}
             <dt>{{t builds.pull_request}}</dt>
-            <dd class="pull_request"><a {{bindAttr href="commit.compareUrl"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
+            <dd class="pull_request"><a {{bind-attr href="commit.compareUrl"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
           {{else}}
             {{#if commit.compareUrl}}
               <dt>{{t jobs.compare}}</dt>
-              <dd class="compare"><a {{bindAttr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
+              <dd class="compare"><a {{bind-attr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
             {{/if}}
           {{/if}}
           {{#if commit.authorName}}

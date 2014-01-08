@@ -22,11 +22,11 @@
 
         <p class="summary">
           <span class="duration-icon"></span><span class="duration_label">{{t repositories.duration}}:</span>
-          <abbr class="duration" {{bindAttr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>
+          <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>
         </p>
         <p class="summary">
           <span class="finished-icon"></span><span class="finished_at_label">{{t repositories.finished_at}}:</span>
-          <abbr class="finished_at timeago" {{bindAttr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
+          <abbr class="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
         </p>
 
         <div class="indicator"><span></span></div>

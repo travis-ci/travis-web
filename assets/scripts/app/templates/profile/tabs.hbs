@@ -1,5 +1,5 @@
 <ul class="tabs">
-  <li id="tab_hooks" {{bindAttr class="view.classHooks"}}>
+  <li id="tab_hooks" {{bind-attr class="view.classHooks"}}>
     <h5>
       {{#with view.account}}
         {{#if login}}
@@ -9,7 +9,7 @@
     </h5>
   </li>
   {{#if view.displayUser}}
-    <li id="tab_user" {{bindAttr class="view.classUser"}}>
+    <li id="tab_user" {{bind-attr class="view.classUser"}}>
       <h5>
         {{#linkTo "account.profile" view.account}}Profile{{/linkTo}}
       </h5>
