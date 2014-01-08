@@ -4,7 +4,7 @@
 
     tabBinding: 'controller.tab'
 
-    # hrm. how to parametrize bindAttr?
+    # hrm. how to parametrize bind-attr?
     classHome: (->
       'active' if @get('tab') == 'home'
     ).property('tab')
