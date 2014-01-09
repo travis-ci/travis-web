@@ -72,13 +72,3 @@ Travis.RepoController = Travis.Controller.extend
   urlGithub: (->
     Travis.Urls.githubRepo(@get('repo.slug'))
   ).property('repo.slug')
-
-  setLineNumbers: (start, end) ->
-    lines = []
-    index = start
-
-    while index <= (end || start)
-      lines.push(index)
-      index++
-
-    @set('lineNumbers', lines)

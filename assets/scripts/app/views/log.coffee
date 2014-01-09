@@ -1,4 +1,5 @@
 require 'log'
+require 'travis/lines_selector'
 
 Log.DEBUG = false
 Log.LIMIT = 10000
@@ -26,12 +27,12 @@ Travis.reopen
       console.log 'log view: did insert' if Log.DEBUG
       @_super.apply this, arguments
       @createEngine()
-      @lineNumbersDidChange()
 
     willDestroyElement: ->
       console.log 'log view: will destroy' if Log.DEBUG
       parts = @get('log.parts')
       parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
+      @lineSelector?.willDestroy()
 
     versionDidChange: (->
       @rerender() if @get('state') == 'inDOM'
@@ -46,8 +47,8 @@ Travis.reopen
       console.log 'log view: create engine' if Log.DEBUG
       @scroll = new Log.Scroll
       @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
+      @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll, window.location)
       @observeParts()
-      @numberLineOnHover()
 
     observeParts: ->
       parts = @get('log.parts')
@@ -63,10 +64,6 @@ Travis.reopen
         @engine.set(part.number, part.content)
         @propertyDidChange('limited')
 
-    lineNumbersDidChange: (->
-      @scroll.set(numbers) if !@get('isDestroyed') && numbers = @get('controller.lineNumbers')
-    ).observes('controller.lineNumbers')
-
     limited: (->
       @engine?.limit?.limited
     ).property()
@@ -79,36 +76,10 @@ Travis.reopen
       Travis.tailing.toggle()
       event.preventDefault()
 
-    numberLineOnHover: ->
-      $('#log').on 'mouseenter', 'a', (event) ->
-        hovered  = $("#log p:visible").index(@parentNode) + 1
-        selected = $("#log p:visible").index($('#log p.highlight')) + 1
-
-        if event.shiftKey
-          end   = "-L#{hovered}"
-          start = selected
-        else
-          start = hovered
-          end   = ''
-
-        $(@).attr('href', "#L#{start}#{end}")
-
     click: (event) ->
-      if (href = $(event.target).attr('href')) && matches = href?.match(Travis.LineNumberRegex)
-        lines = [matches[1], matches[3]].sort (a, b) -> a - b
-
-        @lineNumberClicked(lines[0], lines[1])
-        event.stopPropagation()
-        false
-      else
-        target = $(event.target)
+      target = $(event.target)
+      if target.prop('tagName') == 'P'
         target.closest('.fold').toggleClass('open')
-
-    lineNumberClicked: (start, end) ->
-      second_number = if end then "-L#{end}" else ''
-      path = "#{window.location.pathname}#L#{start}#{second_number}"
-      window.history.pushState({ path: path }, null, path);
-      @get('controller.controllers.repo').setLineNumbers(start, end)
 
     actions:
       toTop: () ->
@@ -118,32 +89,14 @@ Travis.reopen
 
 Log.Scroll = ->
 Log.Scroll.prototype = $.extend new Log.Listener,
-  set: (numbers) ->
-    return unless numbers.length > 0
-    @numbers = numbers
-    @tryScroll()
-
   insert: (log, data, pos) ->
     @tryScroll() if @numbers
     true
 
   tryScroll: ->
-    @removeHighlights()
-    @scrollToFirstLine()
-
-    first_line = @numbers[0] - 1
-    last_line  = @numbers[@numbers.length - 1]
-
-    $('#log').find('p:visible').slice(first_line, last_line).addClass('highlight')
-    @numbers = undefined
-
-  removeHighlights: ->
-    $('#log p.highlight').removeClass('highlight')
-
-  scrollToFirstLine: ->
-    if element = $("#log p:visible")[@numbers[0] - 1]
+    if element = $("#log p:visible.highlight:first")
       $('#main').scrollTop(0)
-      $('html, body').scrollTop($(element).offset()?.top) # weird, html works in chrome, body in firefox
+      $('html, body').scrollTop(element.offset()?.top) # weird, html works in chrome, body in firefox
 
 # Log.Logger = ->
 # Log.Logger.prototype = $.extend new Log.Listener,
