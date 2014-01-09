@@ -57,6 +57,7 @@ test "selects multiple lines", ->
   fakeLocation.hash = '#L2'
   Ember.run ->
     new Travis.LinesSelector(element, fakeScroll, fakeLocation)
+
   wait().then ->
     equal($('#fakeLog p.highlight').length, 1)
 
@@ -68,3 +69,24 @@ test "selects multiple lines", ->
     equal($('#fakeLog p:nth-child(1)').hasClass('highlight'), true)
     equal($('#fakeLog p:nth-child(2)').hasClass('highlight'), true)
     equal('#L1-L2', fakeLocation.hash)
+
+test "uses the last selected line as second selection line", ->
+  selector = null
+  Ember.run ->
+    selector = new Travis.LinesSelector(element, fakeScroll, fakeLocation)
+
+  wait().then ->
+    $('#fakeLog p:last a').click()
+    equal($('#fakeLog p.highlight').length, 1)
+    equal(3, selector.last_selected_line)
+
+    event = jQuery.Event('click')
+    event.shiftKey = true
+    $('#fakeLog p:first a').trigger(event)
+
+    equal($('#fakeLog p.highlight').length, 3)
+    equal($('#fakeLog p:nth-child(1)').hasClass('highlight'), true)
+    equal($('#fakeLog p:nth-child(2)').hasClass('highlight'), true)
+    equal($('#fakeLog p:nth-child(3)').hasClass('highlight'), true)
+    equal('#L1-L3', fakeLocation.hash)
+    equal(1, selector.last_selected_line)
