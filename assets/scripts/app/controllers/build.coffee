@@ -2,7 +2,6 @@ Travis.BuildController = Ember.Controller.extend
   needs: ['repo']
   repoBinding: 'controllers.repo.repo'
   commitBinding: 'build.commit'
-  lineNumberBinding: 'controllers.repo.lineNumber'
   currentUserBinding: 'controllers.repo.currentUser'
   tabBinding: 'controllers.repo.tab'
 
