@@ -26,16 +26,16 @@
           <td class="number">
             <span class="status"></span>
             {{#if id}}
-              {{#linkTo "build" repo this}}
+              {{#link-to "build" repo this}}
                 {{number}}
-              {{/linkTo}}
+              {{/link-to}}
             {{/if}}
           </td>
           <td class="message">
             {{{formatMessage commit.message short="true" repoBinding=build.repo}}}
           </td>
           <td class="commit">
-            <a {{bindAttr href="view.urlGithubCommit"}}>
+            <a {{bind-attr href="view.urlGithubCommit"}}>
               {{formatCommit commit}}
             </a>
           </td>
@@ -44,15 +44,15 @@
           </td>
           {{#if view.isPullRequestsList}}
             <td>
-              <a {{bindAttr href="view.urlGithubPullRequest"}}>
+              <a {{bind-attr href="view.urlGithubPullRequest"}}>
                 #{{pullRequestNumber}}
               </a>
             </td>
           {{/if}}
-          <td class="duration" {{bindAttr title="duration"}}>
+          <td class="duration" {{bind-attr title="duration"}}>
             {{formatDuration duration}}
           </td>
-          <td class="finished_at timeago" {{bindAttr title="formattedFinishedAt"}}>
+          <td class="finished_at timeago" {{bind-attr title="formattedFinishedAt"}}>
             {{formatTime finishedAt}}
           </td>
         {{/view}}

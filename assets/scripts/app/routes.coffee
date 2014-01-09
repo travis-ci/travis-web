@@ -59,7 +59,6 @@ Ember.Route.reopen
 
     if !@signedIn() && @get('needsAuth')
       Travis.auth.set('afterSignInTransition', transition)
-      transition.abort()
       Ember.RSVP.reject("needs-auth")
     else
       @_super.apply(this, arguments)

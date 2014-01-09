@@ -25,14 +25,14 @@
             <span class="status"></span>
             {{#if job.id}}
               {{#if job.repo.slug}}
-                {{#linkTo "job" repo job}}{{number}}{{/linkTo}}
+                {{#link-to "job" repo job}}{{number}}{{/link-to}}
               {{/if}}
             {{/if}}
           </td>
-          <td class="duration" {{bindAttr title="startedAt"}}>
+          <td class="duration" {{bind-attr title="startedAt"}}>
             {{formatDuration duration}}
           </td>
-          <td class="finished_at timeago" {{bindAttr title="formattedFinishedAt"}}>
+          <td class="finished_at timeago" {{bind-attr title="formattedFinishedAt"}}>
             {{formatTime finishedAt}}
           </td>
           {{#each value in configValues}}
