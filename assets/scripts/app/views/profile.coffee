@@ -43,27 +43,3 @@ Travis.reopen
     gravatarUrl: (->
       "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=200&d=mm"
     ).property('user.gravatarId')
-
-    locale: (->
-      @get('user.locale')
-    ).property('user.locale')
-
-    locales: (->
-      [
-        { key: null, name: '' }
-        { key: 'en', name: 'English' }
-        { key: 'es', name: 'Español' }
-        { key: 'fr', name: 'Français' }
-        { key: 'ja', name: '日本語' }
-        { key: 'nl', name: 'Nederlands' }
-        { key: 'nb', name: 'Norsk Bokmål' }
-        { key: 'pl', name: 'Polski' }
-        { key: 'pt-BR', name: 'Português brasileiro' }
-        { key: 'ru', name: 'Русский' }
-        { key: 'de', name: 'Deutsch' }
-      ]
-    ).property()
-
-    change: ->
-      return unless $('#locale').val()
-      @get('user').updateLocale($('#locale').val())
