@@ -21,7 +21,7 @@
         {{/with}}
 
         <p class="summary">
-          <span class="duration-icon"></span><span class="duration_label">{{t repositories.duration}}:</span>
+          <span class="duration_label">{{t repositories.duration}}:</span>
           <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>
         </p>
         <p class="summary">
