@@ -1,6 +1,6 @@
 @displaysRepository = (repo) ->
   equal($('#repo h3 a').attr('href'), repo.href, 'repository title should link to repo page')
-  equal($('#repo .github-icon a').attr('href'), "http://github.com#{repo.href}", 'github icon should link to repo on github')
+  equal($('#repo .github-icon a').attr('href'), "https://github.com#{repo.href}", 'github icon should link to repo on github')
 
 @displaysTabs = (tabs) ->
   for name, tab of tabs
@@ -27,13 +27,13 @@
   equal(element.text(), data.duration)
 
   element = $('#summary .commit a')
-  equal(element.attr('href'), "http://github.com/#{data.repo}/commit/#{data.commit}")
+  equal(element.attr('href'), "https://github.com/#{data.repo}/commit/#{data.commit}")
 
   element = $('#summary .commit a')
   equal(element.text(), "#{data.commit} (#{data.branch})")
 
   element = $('#summary .compare a')
-  equal(element.attr('href'), "http://github.com/compare/#{data.compare}")
+  equal(element.attr('href'), "https://github.com/compare/#{data.compare}")
 
   element = $('#summary .compare a')
   equal(element.text(), data.compare)

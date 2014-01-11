@@ -7,7 +7,7 @@ require 'travis/model'
   _reposCount:  Ember.attr(Number, key: 'repos_count')
 
   urlGithub: (->
-    "http://github.com/#{@get('login')}"
+    "https://github.com/#{@get('login')}"
   ).property()
 
   # TODO: maybe it would be good to add a "default" value for Ember.attr

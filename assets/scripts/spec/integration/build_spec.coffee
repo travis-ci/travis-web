@@ -66,7 +66,7 @@ test "updating current build", ->
         state: 'started'
         config: {}
         pull_request: false
-        compare_url: 'http://github.com/compare/0123456..1234567'
+        compare_url: 'https://github.com/compare/0123456..1234567'
       repository:
         id: 1
         last_build_number: '3'

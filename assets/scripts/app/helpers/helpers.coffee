@@ -84,19 +84,19 @@ require 'config/emoij'
   _githubReferenceLink: (reference, current, matched) ->
     owner = matched.owner || current.owner
     repo = matched.repo || current.repo
-    "<a href=\"http://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
+    "<a href=\"https://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
 
   _githubUserRegexp: new RegExp("\\B@([\\w-]+)", 'g')
 
   _githubUserLink: (reference, username) ->
-    "<a href=\"http://github.com/#{username}\">#{reference}</a>"
+    "<a href=\"https://github.com/#{username}\">#{reference}</a>"
 
   _githubCommitReferenceRegexp: new RegExp("([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)", 'g')
 
   _githubCommitReferenceLink: (reference, current, matched) ->
     owner = matched.owner || current.owner
     repo = matched.repo || current.repo
-    "<a href=\"http://github.com/#{owner}/#{repo}/commit/#{matched.sha}\">#{reference}</a>"
+    "<a href=\"https://github.com/#{owner}/#{repo}/commit/#{matched.sha}\">#{reference}</a>"
 
   _normalizeDateString: (string) ->
     if window.JHW

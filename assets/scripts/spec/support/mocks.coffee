@@ -24,10 +24,10 @@ builds = [
 ]
 
 commits = [
-  { id: '1', sha: '1234567', branch: 'master',  message: 'commit message 1', author_name: 'author name', author_email: 'author@email.com', committer_name: 'committer name', committer_email: 'committer@email.com', compare_url: 'http://github.com/compare/0123456..1234567' },
-  { id: '2', sha: '2345678', branch: 'feature', message: 'commit message 2', author_name: 'author name', author_email: 'author@email.com', committer_name: 'committer name', committer_email: 'committer@email.com', compare_url: 'http://github.com/compare/0123456..2345678' },
-  { id: '3', sha: '3456789', branch: 'master',  message: 'commit message 3', author_name: 'author name', author_email: 'author@email.com', committer_name: 'committer name', committer_email: 'committer@email.com', compare_url: 'http://github.com/compare/0123456..3456789' },
-  { id: '4', sha: '4567890', branch: 'master',  message: 'commit message 4', author_name: 'author name', author_email: 'author@email.com', committer_name: 'committer name', committer_email: 'committer@email.com', compare_url: 'http://github.com/compare/0123456..4567890' },
+  { id: '1', sha: '1234567', branch: 'master',  message: 'commit message 1', author_name: 'author name', author_email: 'author@email.com', committer_name: 'committer name', committer_email: 'committer@email.com', compare_url: 'https://github.com/compare/0123456..1234567' },
+  { id: '2', sha: '2345678', branch: 'feature', message: 'commit message 2', author_name: 'author name', author_email: 'author@email.com', committer_name: 'committer name', committer_email: 'committer@email.com', compare_url: 'https://github.com/compare/0123456..2345678' },
+  { id: '3', sha: '3456789', branch: 'master',  message: 'commit message 3', author_name: 'author name', author_email: 'author@email.com', committer_name: 'committer name', committer_email: 'committer@email.com', compare_url: 'https://github.com/compare/0123456..3456789' },
+  { id: '4', sha: '4567890', branch: 'master',  message: 'commit message 4', author_name: 'author name', author_email: 'author@email.com', committer_name: 'committer name', committer_email: 'committer@email.com', compare_url: 'https://github.com/compare/0123456..4567890' },
 ]
 
 jobs = [
