@@ -1,5 +1,6 @@
 require 'log'
 require 'travis/lines_selector'
+require 'travis/log_folder'
 
 Log.DEBUG = false
 Log.LIMIT = 10000
@@ -48,6 +49,7 @@ Travis.reopen
       @scroll = new Log.Scroll
       @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
       @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll)
+      @logFolder = new Travis.LogFolder(@$().find('#log'))
       @observeParts()
 
     observeParts: ->
@@ -75,11 +77,6 @@ Travis.reopen
     toggleTailing: ->
       Travis.tailing.toggle()
       event.preventDefault()
-
-    click: (event) ->
-      target = $(event.target)
-      if target.prop('tagName') == 'P'
-        target.closest('.fold').toggleClass('open')
 
     actions:
       toTop: () ->
