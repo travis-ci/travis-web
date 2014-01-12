@@ -92,7 +92,7 @@ ru:
       job: Задача
       log: Журнал
     top:
-      accounts: аккаунты
+      accounts: Аккаунты
       admin: Управление
       blog: Блог
       docs: Документация
@@ -100,7 +100,7 @@ ru:
       home: Главная
       profile: Профиль
       sign_out: Выход
-      signing_in: авторизация
+      signing_in: Авторизация
       stats: Статистика
       status: 
   locales:
