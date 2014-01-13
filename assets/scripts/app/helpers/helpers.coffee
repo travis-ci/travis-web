@@ -75,19 +75,28 @@ require 'config/emoij'
       self._githubReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
     text = text.replace @_githubUserRegexp, (reference, username) ->
       self._githubUserLink(reference, username)
+    text = text.replace @_githubCommitReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) ->
+      self._githubCommitReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, sha: matchedSHA })
     text
+
+  _githubReferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g')
 
   _githubReferenceLink: (reference, current, matched) ->
     owner = matched.owner || current.owner
     repo = matched.repo || current.repo
-    "<a href=\"http://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
-
-  _githubReferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g')
+    "<a href=\"https://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
 
   _githubUserRegexp: new RegExp("\\B@([\\w-]+)", 'g')
 
   _githubUserLink: (reference, username) ->
-    "<a href=\"http://github.com/#{username}\">#{reference}</a>"
+    "<a href=\"https://github.com/#{username}\">#{reference}</a>"
+
+  _githubCommitReferenceRegexp: new RegExp("([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)", 'g')
+
+  _githubCommitReferenceLink: (reference, current, matched) ->
+    owner = matched.owner || current.owner
+    repo = matched.repo || current.repo
+    "<a href=\"https://github.com/#{owner}/#{repo}/commit/#{matched.sha}\">#{reference}</a>"
 
   _normalizeDateString: (string) ->
     if window.JHW
