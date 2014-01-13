@@ -58,3 +58,17 @@ test 'does not replace @user if it is a sign-off', ->
   result = Travis.Helpers.githubify(message, 'travis-ci', 'travis-web')
 
   equal(result, message, "@user should not be converted to a link if it matches an email")
+
+test 'replaces one commit reference with github commit link', ->
+  message = 'See travis-ci/travis-core@732fe00'
+  result = Travis.Helpers.githubify(message, 'travis-ci', 'travis-web')
+  expected = 'See <a href="https://github.com/travis-ci/travis-core/commit/732fe00">travis-ci/travis-core@732fe00</a>'
+
+  equal(result, expected, "Commit reference should be converted to a link")
+
+test 'replaces multiple commit references with github commit links', ->
+  message = 'See travis-ci/travis-core@732fe00 and travis-ci/travis-web@3b6aa17'
+  result = Travis.Helpers.githubify(message, 'travis-ci', 'travis-web')
+  expected = 'See <a href="https://github.com/travis-ci/travis-core/commit/732fe00">travis-ci/travis-core@732fe00</a> and <a href="https://github.com/travis-ci/travis-web/commit/3b6aa17">travis-ci/travis-web@3b6aa17</a>'
+
+  equal(result, expected, "Commit references should be converted to links")
