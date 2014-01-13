@@ -147,8 +147,6 @@ unless window.TravisApplication
 
     ready: ->
       location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
-      I18n.fallbacks = true
-      @setLocale 'locale', @get('defaultLocale')
 
     currentDate: ->
       new Date()

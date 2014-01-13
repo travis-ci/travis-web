@@ -6,11 +6,9 @@
     window.addEventListener('message', (e) => @receiveMessage(e))
 
   signOut: ->
-    Travis.storage.removeItem('travis.locale')
     Travis.storage.removeItem('travis.user')
     Travis.storage.removeItem('travis.token')
     Travis.sessionStorage.clear()
-    Travis.setLocale Travis.default_locale
     @set('state', 'signed-out')
     @set('user', undefined)
     if user = Travis.__container__.lookup('controller:currentUser').get('content')
@@ -67,7 +65,6 @@
     Travis.__container__.lookup('controller:currentUser').set('content', user)
 
     @set('state', 'signed-in')
-    Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
     if router = Travis.__container__.lookup('router:main')
       Ember.run.next =>
