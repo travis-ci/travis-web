@@ -18,22 +18,28 @@ ja:
     messages:
       sponsored_by: このテストは以下のスポンサーの協力で行いました。
     name: ビルド
-    pr: 
-    pull_request: 
+    pr:
+    pull_request: プルリクエスト
     started_at: 開始時刻
-    state: 
+    state: ステイタス
   datetime:
     distance_in_words:
-      hours_exact: 
-      minutes_exact: 
-      seconds_exact: 
+      hours_exact:
+        one: ! '%{count} 時間'
+        other: ! '%{count} 時間'
+      minutes_exact:
+        one: ! '%{count} 分'
+        other: ! '%{count} 分'
+      seconds_exact:
+        one: ! '%{count} 秒'
+        other: ! '%{count} 秒'
   errors:
     messages:
-      already_confirmed: 
-      not_found: 
-      not_locked: 
+      already_confirmed: は既に承認済みです
+      not_found: は見つかりませんでした
+      not_locked: はロックされていません
   home:
-    name: 
+    name:
   jobs:
     allowed_failures: 失敗許容範囲内
     author: 制作者
@@ -48,9 +54,9 @@ ja:
     message: メッセージ
     messages:
       sponsored_by: このテストは以下のスポンサーの協力で行いました。
-    sponsored_by: 
+    sponsored_by:
     started_at: 開始時刻
-    state: 
+    state: ステイタス
   layouts:
     about:
       alpha: まだアルファですよ！
@@ -80,7 +86,7 @@ ja:
       job: ジョブ
       log: ログ
     top:
-      accounts: 
+      accounts:
       admin: 管理
       blog: ブログ
       docs: Travisとは？
@@ -88,11 +94,11 @@ ja:
       home: ホーム
       profile: プロフィール
       sign_out: ログアウト
-      signing_in: 
+      signing_in: ログイン中
       stats: 統計
-      status: 
+      status: ステイタス
   locales:
-    ca: 
+    ca:
     de: Deutsch
     en: English
     es: Español
@@ -107,7 +113,7 @@ ja:
   profiles:
     show:
       email: メール
-      github: Github
+      github: GitHub
       locale: 言語
       message:
         config: 詳細設定
@@ -121,7 +127,7 @@ ja:
       your_repos: リポジトリ
   queue: キュー
   repositories:
-    asciidoc: 
+    asciidoc: AsciiDoc
     branch: ブランチ
     commit: コミット
     duration: 処理時間
@@ -138,7 +144,7 @@ ja:
       current: 最新
       job: ジョブ
       pull_requests: プルリクエスト
-    test: 
+    test:
     textile: .textile
   repository:
     duration: 時間
@@ -151,6 +157,6 @@ ja:
       total_builds: 合計ビルド数
       total_projects: 合計リポジトリ
   user:
-    failure: 
-    signed_out: 
+    failure:
+    signed_out:
   workers: ワーカー
