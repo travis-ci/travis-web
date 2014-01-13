@@ -145,13 +145,6 @@ unless window.TravisApplication
       $('#repo').append(element)
       Em.run.later (-> element.remove()), 10
 
-    setLocale: (locale) ->
-      return unless locale
-      I18n.locale = locale
-      Travis.set('locale', locale)
-
-    defaultLocale: 'en'
-
     ready: ->
       location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
       I18n.fallbacks = true
