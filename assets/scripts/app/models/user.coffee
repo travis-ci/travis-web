@@ -6,7 +6,6 @@ require 'travis/model'
   email:       Ember.attr('string')
   login:       Ember.attr('string')
   token:       Ember.attr('string')
-  locale:      Ember.attr('string')
   gravatarId:  Ember.attr('string')
   isSyncing:   Ember.attr('boolean')
   syncedAt:    Ember.attr('string')
@@ -58,10 +57,6 @@ require 'travis/model'
     @get('_rawPermissions').then (data) => permissions.set('content', data.push)
     permissions
   ).property()
-
-  updateLocale: (locale) ->
-    @save()
-    Travis.setLocale(locale)
 
   type: (->
     'user'
