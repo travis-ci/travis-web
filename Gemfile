@@ -22,8 +22,6 @@ end
 
 group :development, :test do
   gem 'rake'
-  gem 'localeapp'
-  gem 'localeapp-handlebars_i18n'
 end
 
 
