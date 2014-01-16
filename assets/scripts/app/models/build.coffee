@@ -56,7 +56,7 @@ require 'travis/model'
 
   configKeys: (->
     keys = @get('rawConfigKeys')
-    headers = (I18n.t(key) for key in ['build.job', 'build.duration', 'build.finished_at'])
+    headers = ['Job', 'Duration', 'Finished']
     $.map(headers.concat(keys), (key) -> if Travis.CONFIG_KEYS_MAP.hasOwnProperty(key) then Travis.CONFIG_KEYS_MAP[key] else key)
   ).property('rawConfigKeys.length')
 
