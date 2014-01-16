@@ -10,10 +10,12 @@ class Travis.LinesSelector
   element: null
   scroll: null
   location: null
+  view: null
   last_selected_line: null
 
-  constructor: (@element, @scroll, location) ->
+  constructor: (@element, @scroll, @folder, location) ->
     @location = location || @Location
+
     Ember.run.scheduleOnce 'afterRender', this, ->
       @last_selected_line = @getSelectedLines()?.first
       @highlightLines()
@@ -38,6 +40,13 @@ class Travis.LinesSelector
     if lines = @getSelectedLines()
       @element.find('p:visible').slice(lines.first - 1, lines.last).addClass('highlight')
     @scroll.tryScroll()
+    @unfoldLines()
+
+  unfoldLines: ->
+    if lines = @getSelectedLines()
+      for index, l of lines
+        line = @element.find('p:visible').slice(l - 1, l)
+        @folder.unfold line
 
   setHashValueWithLine: (line, multiple) ->
     line_number = @getLineNumberFromElement(line)

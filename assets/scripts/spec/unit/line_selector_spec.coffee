@@ -7,6 +7,7 @@ fakeLocation = {
 
 fakeScroll =
   tryScroll: sinon.spy()
+fakeFolder = {}
 
 element = jQuery('<div id="fakeLog">
   <p><a></a>first line</p>
@@ -16,6 +17,7 @@ element = jQuery('<div id="fakeLog">
 
 module "Travis.LinesSelector",
   setup: ->
+    fakeFolder.unfold = sinon.spy()
     fakeLocation.hash = ''
     jQuery('body').append(element)
 
@@ -24,7 +26,7 @@ module "Travis.LinesSelector",
 
 test "defaults to no line selected", ->
   Ember.run ->
-    new Travis.LinesSelector(element, fakeScroll, fakeLocation)
+    new Travis.LinesSelector(element, fakeScroll, fakeFolder, fakeLocation)
 
   wait().then ->
     equal($('#fakeLog p.highlight').length, 0)
@@ -32,7 +34,7 @@ test "defaults to no line selected", ->
 test "defaults to a single line selected", ->
   fakeLocation.hash = '#L2'
   Ember.run ->
-    new Travis.LinesSelector(element, fakeScroll, fakeLocation)
+    new Travis.LinesSelector(element, fakeScroll, fakeFolder, fakeLocation)
 
   wait().then ->
     equal($('#fakeLog p.highlight').length, 1)
@@ -41,7 +43,7 @@ test "defaults to a single line selected", ->
 test "defaults to multiple lines selected", ->
   fakeLocation.hash = '#L2-L3'
   Ember.run ->
-    new Travis.LinesSelector(element, fakeScroll, fakeLocation)
+    new Travis.LinesSelector(element, fakeScroll, fakeFolder, fakeLocation)
 
   wait().then ->
     equal($('#fakeLog p.highlight').length, 2)
@@ -50,7 +52,7 @@ test "defaults to multiple lines selected", ->
 
 test "selects a single line", ->
   Ember.run ->
-    new Travis.LinesSelector(element, fakeScroll, fakeLocation)
+    new Travis.LinesSelector(element, fakeScroll, fakeFolder, fakeLocation)
 
   wait().then ->
     equal($('#fakeLog p.highlight').length, 0)
@@ -62,7 +64,7 @@ test "selects a single line", ->
 test "selects multiple lines", ->
   fakeLocation.hash = '#L2'
   Ember.run ->
-    new Travis.LinesSelector(element, fakeScroll, fakeLocation)
+    new Travis.LinesSelector(element, fakeScroll, fakeFolder, fakeLocation)
 
   wait().then ->
     equal($('#fakeLog p.highlight').length, 1)
@@ -79,7 +81,7 @@ test "selects multiple lines", ->
 test "uses the last selected line as second selection line", ->
   selector = null
   Ember.run ->
-    selector = new Travis.LinesSelector(element, fakeScroll, fakeLocation)
+    selector = new Travis.LinesSelector(element, fakeScroll, fakeFolder, fakeLocation)
 
   wait().then ->
     $('#fakeLog p:last a').click()
@@ -96,3 +98,11 @@ test "uses the last selected line as second selection line", ->
     equal($('#fakeLog p:nth-child(3)').hasClass('highlight'), true)
     equal('#L1-L3', fakeLocation.hash)
     equal(1, selector.last_selected_line)
+
+test "unfolds the first and last selected lines", ->
+  fakeLocation.hash = '#L1-L3'
+  Ember.run ->
+    new Travis.LinesSelector(element, fakeScroll, fakeFolder, fakeLocation)
+
+  wait().then ->
+    ok(fakeFolder.unfold.calledTwice, 'the first and last lines have been unfolded')
