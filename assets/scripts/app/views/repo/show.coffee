@@ -37,7 +37,7 @@ Travis.reopen
     tabBinding: 'controller.tab'
     contextBinding: 'controller'
 
-    # hrm. how to parametrize bindAttr?
+    # hrm. how to parametrize bind-attr?
     classCurrent: (->
       'active' if @get('tab') == 'current'
     ).property('tab')

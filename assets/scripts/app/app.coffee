@@ -33,7 +33,7 @@ unless window.TravisApplication
 
       @slider = new Travis.Slider()
       @pusher = new Travis.Pusher(Travis.config.pusher_key) if Travis.config.pusher_key
-      @tailing = new Travis.Tailing()
+      @tailing = new Travis.Tailing($(window), '#tail', '#log')
 
       @set('auth', Travis.Auth.create(app: this, endpoint: Travis.config.api_endpoint))
 

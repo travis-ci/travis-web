@@ -10,7 +10,7 @@
 
 # Handlebars
 
-* Can't {{bindAttr}} be just {{attr}}? Who cares it's "bound" in that context?
+* Can't {{bind-attr}} be just {{attr}}? Who cares it's "bound" in that context?
   {{#each}} isn't {{#bindEach}} either.
 
 * Why is {{#collection contentBinding="foo"}} not just {{#collection foo}}?

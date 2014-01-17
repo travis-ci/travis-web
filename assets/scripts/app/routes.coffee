@@ -1,5 +1,4 @@
 require 'travis/location'
-require 'travis/line_number_parser'
 
 Ember.Router.reopen
   location: (if testMode? then Ember.NoneLocation.create() else Travis.Location.create())
@@ -60,7 +59,6 @@ Ember.Route.reopen
 
     if !@signedIn() && @get('needsAuth')
       Travis.auth.set('afterSignInTransition', transition)
-      transition.abort()
       Ember.RSVP.reject("needs-auth")
     else
       @_super.apply(this, arguments)
@@ -115,12 +113,6 @@ Travis.Router.map ->
     @resource 'account', path: '/:login', ->
       @route 'index', path: '/'
       @route 'profile', path: '/profile'
-
-Travis.ApplicationRoute = Ember.Route.extend Travis.LineNumberParser,
-  setupController: ->
-    @_super.apply this, arguments
-
-    this.controllerFor('repo').set('lineNumber', @fetchLineNumber())
 
 Travis.SetupLastBuild = Ember.Mixin.create
   setupController: ->

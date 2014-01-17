@@ -17,8 +17,8 @@
 
     <ul id="hooks">
       {{#each hook in hooks}}
-        <li {{bindAttr class="hook.active:active"}}>
-          <a {{bindAttr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+        <li {{bind-attr class="hook.active:active"}}>
+          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
           {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
           <p class="description">{{hook.description}}</p>
 
@@ -54,8 +54,8 @@
 
         <ul>
           {{#each hook in unAdminisetableHooks}}
-            <li {{bindAttr class="hook.active:active"}}>
-              <a {{bindAttr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+            <li {{bind-attr class="hook.active:active"}}>
+              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
               <p class="description">{{hook.description}}</p>
             </li>
           {{/each}}

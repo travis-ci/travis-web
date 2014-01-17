@@ -57,6 +57,8 @@ pre#log
     // &.active
     p:first-of-type
       background: $color-bg-log-fold inline-image('ui/log.fold.open.2.png') no-repeat 8px 3px
+      &.highlight
+        background-color: $color-bg-log-fold-highlight
 
     &:not(.open) p:first-of-type
       visibility: visible
@@ -116,6 +118,14 @@ pre#log
       padding: 1px 4px 1px 6px
       label
         display: inline
+
+    &.scrolling
+      position: fixed
+      right: 32px
+
+    &.bottom
+      bottom: 45px
+      top: inherit
 
     .status
       display: inline-block
