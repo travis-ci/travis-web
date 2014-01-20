@@ -47,7 +47,7 @@ Travis.reopen
       console.log 'log view: create engine' if Log.DEBUG
       @scroll = new Log.Scroll
       @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
-      @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll, window.location)
+      @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll)
       @observeParts()
 
     observeParts: ->
