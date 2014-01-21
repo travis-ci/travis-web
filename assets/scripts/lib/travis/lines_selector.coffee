@@ -1,10 +1,19 @@
 class Travis.LinesSelector
+  Location:
+    getHash: ->
+      window.location.hash
+
+    setHash: (hash) ->
+      path = "#{window.location.pathname}#{hash}"
+      window.history.pushState({ path: path }, null, path);
+
   element: null
   scroll: null
   location: null
   last_selected_line: null
 
-  constructor: (@element, @scroll, @location) ->
+  constructor: (@element, @scroll, location) ->
+    @location = location || @Location
     Ember.run.scheduleOnce 'afterRender', this, ->
       @last_selected_line = @getSelectedLines()?.first
       @highlightLines()
@@ -17,7 +26,7 @@ class Travis.LinesSelector
       false
 
   willDestroy: ->
-    @location.hash = ''
+    @location.setHash('')
 
   loadLineNumbers: (element, multiple) ->
     @setHashValueWithLine(element, multiple)
@@ -40,7 +49,7 @@ class Travis.LinesSelector
       hash = "#L#{line_number}"
 
     @last_selected_line = line_number
-    @location.hash = hash
+    @location.setHash(hash)
 
   getLineNumberFromElement: (element) ->
     @element.find('p:visible').index(element) + 1
@@ -49,7 +58,7 @@ class Travis.LinesSelector
     @element.find('p.highlight').removeClass('highlight')
 
   getSelectedLines: ->
-    if match = @location.hash.match(/#L(\d+)(-L(\d+))?$/)
+    if match = @location.getHash().match(/#L(\d+)(-L(\d+))?$/)
       first = match[1]
       last = match[3] || match[1]
       {first: first, last: last}

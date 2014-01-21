@@ -24,13 +24,7 @@
 
           <div class="controls">
             {{#link-to "repo.settings" hook.repo class="repo-settings-icon tool-tip" title="Repository settings"}}{{/link-to}}
-            <a {{action "toggle" hook}} class="switch">
-              {{#if hook.active}}
-                ON
-              {{else}}
-                OFF
-              {{/if}}
-            </a>
+            {{travis-switch action="toggle" target=hook}}
           </div>
         </li>
       {{else}}

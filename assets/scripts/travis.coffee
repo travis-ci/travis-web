@@ -167,6 +167,7 @@ require 'slider'
 require 'tailing'
 require 'templates'
 require 'views'
+require 'components'
 
 require 'config/locales'
 

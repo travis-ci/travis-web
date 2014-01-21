@@ -1,4 +1,10 @@
-fakeLocation = {}
+fakeLocation = {
+  getHash: ->
+    @hash || ''
+  setHash: (hash) ->
+    @hash = hash
+}
+
 fakeScroll =
   tryScroll: sinon.spy()
 
