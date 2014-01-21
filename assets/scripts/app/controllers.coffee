@@ -54,7 +54,7 @@ Travis.RepoSettingsController = Em.ObjectController.extend
   tab: Ember.computed.alias('controllers.repoSettingsTab.model.tab')
   settings: Ember.computed.alias('model.settings')
 
-  submit: ->
+  save: ->
     @set('saving', true)
     self = this
     @get('model').saveSettings(@get('settings')).then ->

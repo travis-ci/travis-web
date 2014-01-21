@@ -5,26 +5,18 @@
     {{#travis-tab "general" "General Settings"}}
       {{#settings-form}}
         <p>
-          {{settings-input checked=builds_only_with_travis_yml type="checkbox" id="builds-only-with-travis-yml"}}
-            <label for="builds-only-with-travis-yml">Build only commits with .travis.yml file</label>
+          {{travis-switch action="save" active=settings.builds_only_with_travis_yml}}
+          Build only commits with .travis.yml file
         </p>
 
         <p>
-          {{settings-input checked=build_pushes type="checkbox" id="build-pushes"}}
-            <label for="build-pushes">Build pushes</label>
+          {{travis-switch action="save" active=settings.build_pushes}}
+          Build pushes
         </p>
 
         <p>
-          {{settings-input checked=build_pull_requests type="checkbox" id="build-pull-requests"}}
-            <label for="build-pull-requests">Build pull requests</label>
-        </p>
-
-        <p>
-          {{#if saving}}
-            <span class="saving">Saving</span>
-          {{else}}
-            <button type="submit">Save</button>
-          {{/if}}
+          {{travis-switch action="save" active=settings.build_pull_requests}}
+          Build pull requests
         </p>
       {{/settings-form}}
     {{/travis-tab}}
