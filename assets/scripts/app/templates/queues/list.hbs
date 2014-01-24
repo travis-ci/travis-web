@@ -2,16 +2,16 @@
 {{#each queue in controller}}
   <li class="queue">
     <h4>{{t queue}}: {{queue.name}}</h4>
-    <ul {{bindAttr id="queue.id"}}>
+    <ul {{bind-attr id="queue.id"}}>
       {{#each job in queue}}
         {{#view Travis.QueueItemView jobBinding="job"}}
           {{#if job.repo.slug}}
-            {{#linkTo "job" job.repo job}}
+            {{#link-to "job" job.repo job}}
               <span class="slug">
                 {{job.repo.slug}}
               </span>
               #{{job.number}}
-            {{/linkTo}}
+            {{/link-to}}
           {{/if}}
         {{/view}}
       {{else}}
@@ -20,7 +20,7 @@
     </ul>
 
     {{#if queue.isMore}}
-      <a {{action showAll queue}} class="show-more-jobs">
+      <a {{action "showAll" queue}} class="show-more-jobs">
         {{queue.leftLength}} more jobs - show all
       </a>
     {{/if}}

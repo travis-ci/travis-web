@@ -24,6 +24,27 @@ Em.View.reopen
 Travis.GettingStartedView = Travis.View.extend
   templateName: 'no_owned_repos'
 
+Travis.FirstSyncView = Travis.View.extend
+  didInsertElement: ->
+    this.addObserver('controller.isSyncing', this, this.isSyncingDidChange)
+
+  willDestroyElement: ->
+    this.removeObserver('controller.isSyncing', this, this.isSyncingDidChange)
+
+  isSyncingDidChange: ->
+    if !@get('controller.isSyncing')
+      self = this
+      Ember.run.later this, ->
+        Travis.Repo.fetch(member: @get('controller.user.login')).then( (repos) ->
+          if repos.get('length')
+            self.get('controller').transitionToRoute('index.current')
+          else
+            self.get('controller').transitionToRoute('profile')
+        ).then(null, (e) ->
+          console.log('There was a problem while redirecting from first sync', e)
+        )
+      , Travis.config.syncingPageRedirectionTime
+
 require 'views/accounts'
 require 'views/annotation'
 require 'views/application'
@@ -34,7 +55,6 @@ require 'views/job'
 require 'views/log'
 require 'views/repo'
 require 'views/profile'
-require 'views/sidebar'
 require 'views/stats'
 require 'views/signin'
 require 'views/top'

@@ -26,18 +26,21 @@ require 'config/emoij'
     (sha || '').substr(0, 7)
 
   formatConfig: (config) ->
-    config = $.only config, Travis.CONFIG_KEYS
+    config = $.only config, Object.keys(Travis.CONFIG_KEYS_MAP)
     values = $.map config, (value, key) ->
       value = (if value && value.join then value.join(', ') else value) || ''
       if key == 'rvm' && "#{value}".match(/^\d+$/)
         value = "#{value}.0"
-      '%@: %@'.fmt $.camelize(key), value
+      '%@: %@'.fmt Travis.CONFIG_KEYS_MAP[key], value
     if values.length == 0 then '-' else values.join(', ')
 
   formatMessage: (message, options) ->
     message = message || ''
     message = message.split(/\n/)[0]  if options.short
-    @_emojize(@_escape(message)).replace /\n/g, '<br/>'
+    message = @_emojize(@_escape(message))
+    if !!options.repo
+      message = @githubify(message, options.repo.get('owner'), options.repo.get('name'))
+    message.replace /\n/g, '<br/>'
 
   pathFrom: (url) ->
     (url || '').split('/').pop()
@@ -66,6 +69,35 @@ require 'config/emoij'
       result.push seconds + ' sec'  if seconds > 0
       if result.length > 0 then result.join(' ') else '-'
 
+  githubify: (text, owner, repo) ->
+    self = this
+    text = text.replace @_githubReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedNumber) ->
+      self._githubReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
+    text = text.replace @_githubUserRegexp, (reference, username) ->
+      self._githubUserLink(reference, username)
+    text = text.replace @_githubCommitReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) ->
+      self._githubCommitReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, sha: matchedSHA })
+    text
+
+  _githubReferenceRegexp: new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g')
+
+  _githubReferenceLink: (reference, current, matched) ->
+    owner = matched.owner || current.owner
+    repo = matched.repo || current.repo
+    "<a href=\"https://github.com/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
+
+  _githubUserRegexp: new RegExp("\\B@([\\w-]+)", 'g')
+
+  _githubUserLink: (reference, username) ->
+    "<a href=\"https://github.com/#{username}\">#{reference}</a>"
+
+  _githubCommitReferenceRegexp: new RegExp("([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)", 'g')
+
+  _githubCommitReferenceLink: (reference, current, matched) ->
+    owner = matched.owner || current.owner
+    repo = matched.repo || current.repo
+    "<a href=\"https://github.com/#{owner}/#{repo}/commit/#{matched.sha}\">#{reference}</a>"
+
   _normalizeDateString: (string) ->
     if window.JHW
       string = string.replace('T', ' ').replace(/-/g, '/')
@@ -93,4 +125,4 @@ require 'config/emoij'
 
   configKeys: (config) ->
     return [] unless config
-    $.intersect($.keys(config), Travis.CONFIG_KEYS)
+    $.intersect($.keys(config), Object.keys(Travis.CONFIG_KEYS_MAP))

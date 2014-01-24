@@ -1,12 +1,18 @@
 require 'travis/model'
 
 @Travis.Account = Travis.Model.extend
-  primaryKey: 'login'
-  login:       DS.attr('string')
-  name:        DS.attr('string')
-  type:        DS.attr('string')
-  reposCount:  DS.attr('number')
+  login:       Ember.attr('string')
+  name:        Ember.attr('string')
+  type:        Ember.attr('string')
+  _reposCount:  Ember.attr(Number, key: 'repos_count')
 
   urlGithub: (->
-    "http://github.com/#{@get('login')}"
+    "https://github.com/#{@get('login')}"
   ).property()
+
+  # TODO: maybe it would be good to add a "default" value for Ember.attr
+  reposCount: (->
+    @get('_reposCount') || 0
+  ).property('_reposCount')
+
+Travis.Account.primaryKey = 'login'

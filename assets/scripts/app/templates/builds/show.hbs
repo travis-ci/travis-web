@@ -8,49 +8,45 @@
         <span class="status"></span>
         {{#if build.id}}
           {{#if build.repo.slug}}
-            {{#linkTo build repo build}}{{build.number}}{{/linkTo}}
+            {{#link-to "build" repo build}}{{build.number}}{{/link-to}}
           {{/if}}
         {{/if}}
       </dd>
       <dt>{{t builds.state}}</dt>
       <dd class="state">{{capitalize build.state}}</dd>
       <dt class="finished_at_label">{{t builds.finished_at}}</dt>
-      <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime build.finishedAt}}</dd>
+      <dd class="finished_at timeago" {{bind-attr title="build.formattedFinishedAt"}}>{{formatTime build.finishedAt}}</dd>
       <dt>{{t builds.duration}}</dt>
-      <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration build.duration}}</dd>
+      <dd class="duration" {{bind-attr title="startedAt"}}>{{formatDuration build.duration}}</dd>
     </div>
 
-    {{#with build.commit}}
+    {{#with build}}
       <div class="right">
         <dt>{{t builds.commit}}</dt>
-        <dd class="commit"><a {{bindAttr href="controller.urlGithubCommit"}}>{{formatCommit this}}</a></dd>
-        {{#if ../build.pullRequest}}
+        <dd class="commit"><a {{bind-attr href="controller.urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
+        {{#if pullRequest}}
           <dt>{{t builds.pull_request}}</dt>
-          <dd class="pull_request"><a {{bindAttr href="compareUrl"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
+          <dd class="pull_request"><a {{bind-attr href="commit.compareUrl"}}>#{{pullRequestNumber}} {{pullRequestTitle}}</a></dd>
         {{else}}
-          {{#if compareUrl}}
+          {{#if commit.compareUrl}}
             <dt>{{t builds.compare}}</dt>
-            <dd class="compare"><a {{bindAttr href="compareUrl"}}>{{pathFrom compareUrl}}</a></dd>
+            <dd class="compare"><a {{bind-attr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
           {{/if}}
         {{/if}}
-        {{#if authorName}}
+        {{#if commit.authorName}}
           <dt>{{t builds.author}}</dt>
-          <dd class="author"><a {{bindAttr href="urlAuthor"}}>{{authorName}}</a></dd>
+          <dd class="author">{{commit.authorName}}</dd>
         {{/if}}
-        {{#if committerName}}
+        {{#if commit.committerName}}
           <dt>{{t builds.committer}}</dt>
-          <dd class="committer"><a {{bindAttr href="urlCommitter"}}>{{committerName}}</a></dd>
+          <dd class="committer">{{commit.committerName}}</dd>
         {{/if}}
       </div>
     {{/with}}
 
-    <dt>{{t builds.message}}</dt>
-    <dd class="message">{{formatMessage build.commit.message}}</dd>
 
-    {{#unless isMatrix}}
-      <dt>{{t builds.config}}</dt>
-      <dd class="config">{{formatConfig build.config}}</dd>
-    {{/unless}}
+    <dt>{{t builds.message}}</dt>
+    <dd class="message">{{formatMessage build.commit.message repoBinding=build.repo}}</dd>
   </dl>
 
   {{#unless build.isMatrix}}

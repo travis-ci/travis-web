@@ -15,15 +15,17 @@ Travis.reopen
       # in repos/show.hbs is empty when view is rerendered without routing
       # taking place. Try to render the default outlet in such case
       # TODO: look into fixing it in more general way
-      pane = Ember.get('_outlets.pane')
-      if @get('controller.repo.isLoaded') && @state == 'inDOM' &&
-         @get('controller.repo.lastBuild') &&
-         @get('controller.tab') == 'current' && (!pane || pane.state == 'destroyed')
-        view = @get('controller.container').lookup('view:build')
-        view.set('controller', @get('controller.container').lookup('controller:build'))
-        Ember.run.next =>
-          @set('_outlets', {}) if !@get('_outlets') && !@isDestroyed
-          @connectOutlet('pane',  view) unless @isDestroyed
+      Ember.run.schedule('afterRender', this, ->
+        pane = Ember.get('_outlets.pane')
+        if @get('controller.repo.isLoaded') && @state == 'inDOM' &&
+           @get('controller.repo.lastBuild') &&
+           @get('controller.tab') == 'current' && (!pane || pane.state == 'destroyed')
+          view = @get('controller.container').lookup('view:build')
+          view.set('controller', @get('controller.container').lookup('controller:build'))
+          Ember.run.next =>
+            @set('_outlets', {}) if !@get('_outlets') && !@isDestroyed
+            @connectOutlet('pane',  view) unless @isDestroyed
+      )
     ).observes('controller.repo.isLoaded')
 
   ReposEmptyView: Travis.View.extend
@@ -32,12 +34,10 @@ Travis.reopen
   RepoShowTabsView: Travis.View.extend
     templateName: 'repos/show/tabs'
 
-    repoBinding: 'controller.repo'
-    buildBinding: 'controller.build'
-    jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
+    contextBinding: 'controller'
 
-    # hrm. how to parametrize bindAttr?
+    # hrm. how to parametrize bind-attr?
     classCurrent: (->
       'active' if @get('tab') == 'current'
     ).property('tab')
@@ -78,6 +78,7 @@ Travis.reopen
     jobBinding: 'controller.job'
     tabBinding: 'controller.tab'
     currentUserBinding: 'controller.currentUser'
+    slugBinding: 'controller.repo.slug'
 
     closeMenu: ->
       $('.menu').removeClass('display')
@@ -87,47 +88,12 @@ Travis.reopen
       $('#tools .menu').toggleClass('display')
       event.stopPropagation()
 
-    requeue: ->
-      @closeMenu()
-      @get('build').requeue()
-
-    cancelBuild: ->
-      if @get('canCancelBuild')
-        @closeMenu()
-        @get('build').cancel()
-
-    cancelJob: ->
-      if @get('canCancelJob')
-        @closeMenu()
-        @get('job').cancel()
-
-    statusImages: ->
-      @set('active', true)
-      @closeMenu()
-      @popupCloseAll()
-      view = Travis.StatusImagesView.create(toolsView: this)
-      # TODO: create a general mechanism for managing current popup
-      #       and move all popups to use it
-      Travis.View.currentPopupView = view
-      view.appendTo($('body'))
-      event.stopPropagation()
-
     regenerateKeyPopup: ->
       if @get('canRegenerateKey')
         @set('active', true)
         @closeMenu()
         @popup(event)
         event.stopPropagation()
-
-    requeueBuild: ->
-      if @get('canRequeueBuild')
-        @closeMenu()
-        @get('build').requeue()
-
-    requeueJob: ->
-      if @get('canRequeueJob')
-        @closeMenu()
-        @get('job').requeue()
 
     regenerateKey: ->
       @popupCloseAll()
@@ -137,6 +103,86 @@ Travis.reopen
           @popup('regeneration-success')
         error: ->
           Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
+
+    displayRegenerateKey: true
+
+    canRegenerateKey: (->
+      @get('displayRegenerateKey') && @get('hasAdminPermission')
+    ).property('hasAdminPermission')
+
+    hasPermission: (->
+      if permissions = @get('currentUser.permissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.permissions.length', 'repo.id')
+
+    hasAdminPermission: (->
+      if permissions = @get('currentUser.adminPermissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.adminPermissions.length', 'repo.id')
+
+    statusImageUrl: (->
+      Travis.Urls.statusImage(@get('slug'))
+    ).property('slug')
+
+    displayStatusImages: (->
+      @get('hasPermission')
+    ).property('hasPermission')
+
+    statusImages: ->
+      @popupCloseAll()
+      view = Travis.StatusImagesView.create(toolsView: this)
+      Travis.View.currentPopupView = view
+      view.appendTo($('body'))
+      event.stopPropagation()
+
+
+  RepoActionsView: Travis.View.extend
+    templateName: 'repos/show/actions'
+
+    repoBinding: 'controller.repo'
+    buildBinding: 'controller.build'
+    jobBinding: 'controller.job'
+    tabBinding: 'controller.tab'
+    currentUserBinding: 'controller.currentUser'
+
+    requeue: ->
+      @get('build').requeue()
+
+    cancelBuild: ->
+      if @get('canCancelBuild')
+        Travis.flash(notice: 'Build cancelation has been scheduled.')
+        @get('build').cancel().then ->
+          Travis.flash(success: 'Build has been successfully canceled.')
+        , (xhr) ->
+          if xhr.status == 422
+            Travis.flash(error: 'This build can\'t be canceled')
+          else if xhr.status == 403
+            Travis.flash(error: 'You don\'t have sufficient access to cancel this build')
+          else
+            Travis.flash(error: 'An error occured when canceling the build')
+
+    cancelJob: ->
+      if @get('canCancelJob')
+        Travis.flash(notice: 'Job cancelation has been scheduled.')
+        @get('job').cancel().then ->
+          Travis.flash(success: 'Job has been successfully canceled.')
+        , (xhr) ->
+          if xhr.status == 422
+            Travis.flash(error: 'This job can\'t be canceled')
+          else if xhr.status == 403
+            Travis.flash(error: 'You don\'t have sufficient access to cancel this job')
+          else
+            Travis.flash(error: 'An error occured when canceling the job')
+
+    hasPermission: (->
+      if permissions = @get('currentUser.permissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.permissions.length', 'repo.id')
+
+    hasPushPermission: (->
+      if permissions = @get('currentUser.pushPermissions')
+        permissions.contains parseInt(@get('repo.id'))
+    ).property('currentUser.pushPermissions.length', 'repo.id')
 
     displayRequeueBuild: (->
       @get('isBuildTab') && @get('build.isFinished')
@@ -168,42 +214,46 @@ Travis.reopen
         Travis.Urls.plainTextLog(id)
     ).property('jobIdForLog')
 
-    displayCancelBuild: (->
-      # @get('isBuildTab') && @get('build.canCancel')
-      false
-    ).property('build.state', 'tab')
-
     canCancelBuild: (->
-      # @get('displayCancelBuild') && @get('hasPermission')
-      false
+      @get('displayCancelBuild') && @get('hasPermission')
     ).property('displayCancelBuild', 'hasPermission')
 
-    displayCancelJob: (->
-      # @get('isJobTab') && @get('job.canCancel')
-      false
-    ).property('job.state', 'tab')
+    displayCancelBuild: (->
+      @get('isBuildTab') && @get('build.canCancel')
+    ).property('isBuildTab', 'build.canCancel')
 
     canCancelJob: (->
-      # @get('displayCancelJob') && @get('hasPermission')
-      false
+      @get('displayCancelJob') && @get('hasPermission')
     ).property('displayCancelJob', 'hasPermission')
 
-    displayRegenerateKey: true
-
-    canRegenerateKey: (->
-      @get('displayRegenerateKey') && @get('hasPermission')
-    ).property('hasPermission')
-
+    displayCancelJob: (->
+      @get('isJobTab') && @get('job.canCancel')
+    ).property('isJobTab', 'job.canCancel')
 
     isJobTab: (->
       @get('tab') == 'job'
-    ).property('tab')
+    ).property('tab', 'repo.id')
 
     isBuildTab: (->
       ['current', 'build'].indexOf(@get('tab')) > -1
     ).property('tab')
 
-    hasPermission: (->
-      if permissions = @get('currentUser.permissions')
-        permissions.contains parseInt(@get('repo.id'))
-    ).property('currentUser.permissions.length', 'repo.id')
+    displayCodeClimate: (->
+      console.log @get('repo.githubLanguage')
+      Travis.config.code_climate == "true" and @get('repo.githubLanguage') == 'Ruby'
+    ).property('repo.githubLanguage')
+
+    codeClimatePopup: ->
+      @popupCloseAll()
+      @popup('code-climate')
+      event.stopPropagation() if event?
+
+    requeueBuild: ->
+      if @get('canRequeueBuild')
+        @get('build').requeue()
+
+    requeueJob: ->
+      if @get('canRequeueJob')
+        @get('job').requeue()
+
+

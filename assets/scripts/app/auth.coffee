@@ -14,12 +14,14 @@
     @set('state', 'signed-out')
     @set('user', undefined)
     if user = Travis.__container__.lookup('controller:currentUser').get('content')
-      if user.get('stateManager.currentPath') == 'rootState.loaded.updated.uncommitted'
-        user.send('rollback')
-      user.unloadRecord()
+      user.unload()
     Travis.__container__.lookup('controller:currentUser').set('content', null)
     if router = Travis.__container__.lookup('router:main')
-      router.send('afterSignOut')
+      try
+        router.send('afterSignOut')
+      catch e
+        throw e unless e.message =~ /There are no active handlers/
+
 
   signIn: (data) ->
     if data
@@ -68,17 +70,16 @@
     Travis.setLocale(data.user.locale || Travis.default_locale)
     Travis.trigger('user:signed_in', data.user)
     if router = Travis.__container__.lookup('router:main')
-      path = @readAfterSignInPath()
       Ember.run.next =>
         try
-          router.send('afterSignIn', path)
+          router.send('afterSignIn')
         catch e
           throw e unless e =~ /There are no active handlers/
         @refreshUserData(data.user)
 
   refreshUserData: (user) ->
     Travis.ajax.get "/users/#{user.id}", (data) =>
-      Travis.store.loadIncomplete(Travis.User, data.user)
+      Travis.loadOrMerge(Travis.User, data.user)
       # if user is still signed in, update saved data
       if @signedIn()
         data.user.token = user.token
@@ -93,19 +94,10 @@
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
-    store = @app.store
-    store.load(Travis.User, user.id, user)
-    user = store.find(Travis.User, user.id)
+    Travis.loadOrMerge(Travis.User, user)
+    user = Travis.User.find(user.id)
     user.get('permissions')
     user
-
-  storeAfterSignInPath: (path) ->
-    Travis.sessionStorage.setItem('travis.after_signin_path', path)
-
-  readAfterSignInPath: ->
-    path = Travis.sessionStorage.getItem('travis.after_signin_path')
-    Travis.sessionStorage.removeItem('travis.after_signin_path')
-    path
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()

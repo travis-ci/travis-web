@@ -1,10 +1,10 @@
 require 'travis/model'
 
 @Travis.Annotation = Travis.Model.extend
-  jobId:        DS.attr('number')
-  description:  DS.attr('string')
-  url:          DS.attr('string')
-  image:        DS.attr('object')
-  providerName: DS.attr('string')
+  jobId:        Ember.attr('number')
+  description:  Ember.attr('string')
+  url:          Ember.attr('string')
+  image:        Ember.attr('object')
+  providerName: Ember.attr('string')
 
-  job: DS.belongsTo('Travis.Job')
+  job: Ember.belongsTo('Travis.Job')

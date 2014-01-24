@@ -15,7 +15,6 @@ pre#log
   word-wrap: break-word
   background-color: $color-bg-log
   border: 1px solid $color-border-log
-  @include border-radius(4px)
   overflow-x: scroll
   counter-reset: line-numbering
 
@@ -33,8 +32,9 @@ pre#log
       a
         color: white
     a
-      // display: inline-block
-      // min-width: 30px
+      display: inline-block
+      text-align: right
+      min-width: 40px
       margin-left: -33px
       cursor: pointer
       text-decoration: none
@@ -43,7 +43,6 @@ pre#log
         content: counter(line-numbering)
         counter-increment: line-numbering
         padding-right: 1em
-        text-align: right
 
   .fold
     height: 16px
@@ -58,6 +57,8 @@ pre#log
     // &.active
     p:first-of-type
       background: $color-bg-log-fold inline-image('ui/log.fold.open.2.png') no-repeat 8px 3px
+      &.highlight
+        background-color: $color-bg-log-fold-highlight
 
     &:not(.open) p:first-of-type
       visibility: visible

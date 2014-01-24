@@ -8,7 +8,7 @@
     <table id="allowed_failure_jobs" class="list">
       <caption>
         {{t jobs.allowed_failures}}
-        <a title="What's this?" class="help open-popup" name="help-allowed_failures" {{action popup target="view"}}></a>
+        <a title="What's this?" class="help open-popup" name="help-allowed_failures" {{action "popup" target="view"}}></a>
       </caption>
   {{/if}}
     <thead>
@@ -25,14 +25,14 @@
             <span class="status"></span>
             {{#if job.id}}
               {{#if job.repo.slug}}
-                {{#linkTo "job" repo job}}{{number}}{{/linkTo}}
+                {{#link-to "job" repo job}}{{number}}{{/link-to}}
               {{/if}}
             {{/if}}
           </td>
-          <td class="duration" {{bindAttr title="startedAt"}}>
+          <td class="duration" {{bind-attr title="startedAt"}}>
             {{formatDuration duration}}
           </td>
-          <td class="finished_at timeago" {{bindAttr title="finishedAt"}}>
+          <td class="finished_at timeago" {{bind-attr title="formattedFinishedAt"}}>
             {{formatTime finishedAt}}
           </td>
           {{#each value in configValues}}
@@ -45,7 +45,7 @@
 
   {{#unless view.required}}
     <div id="help-allowed_failures" class="popup">
-      <a href="#" class="close" {{action popupClose target="view"}}></a>
+      <a href="#" class="close" {{action "popupClose" target="view"}}></a>
       <h4>{{t "jobs.allowed_failures"}}</h4>
       <p>
         Allowed Failures are items in your build matrix that are allowed to

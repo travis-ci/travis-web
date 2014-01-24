@@ -1,58 +1,58 @@
 <ul class="tabs">
-  <li id="tab_current" {{bindAttr class="view.classCurrent"}}>
+  <li id="tab_current" {{bind-attr class="view.classCurrent"}}>
     <h5>
-      {{#if slug}}
-        {{#linkTo "repo" this currentWhen="repo.index"}}
+      {{#if repo.slug}}
+        {{#link-to "repo" repo currentWhen="repo.index"}}
           {{t repositories.tabs.current}}
-        {{/linkTo}}
+        {{/link-to}}
       {{/if}}
     </h5>
   </li>
-  <li id="tab_builds" {{bindAttr class="view.classBuilds"}}>
+  <li id="tab_builds" {{bind-attr class="view.classBuilds"}}>
     <h5>
-      {{#if slug}}
-        {{#linkTo "builds" this}}
+      {{#if repo.slug}}
+        {{#link-to "builds" repo}}
           {{t repositories.tabs.build_history}}
-        {{/linkTo}}
+        {{/link-to}}
       {{/if}}
     </h5>
   </li>
-  <li id="tab_pull_requests" {{bindAttr class="view.classPullRequests"}}>
+  <li id="tab_pull_requests" {{bind-attr class="view.classPullRequests"}}>
     <h5>
-      {{#if slug}}
-        {{#linkTo "pullRequests" this}}
+      {{#if repo.slug}}
+        {{#link-to "pullRequests" repo}}
           {{t repositories.tabs.pull_requests}}
-        {{/linkTo}}
+        {{/link-to}}
       {{/if}}
     </h5>
   </li>
-  <li id="tab_branches" {{bindAttr class="view.classBranches"}}>
+  <li id="tab_branches" {{bind-attr class="view.classBranches"}}>
     <h5>
-      {{#if slug}}
-        {{#linkTo "branches" this}}
+      {{#if repo.slug}}
+        {{#link-to "branches" repo}}
           {{t repositories.tabs.branches}}
-        {{/linkTo}}
+        {{/link-to}}
       {{/if}}
     </h5>
   </li>
-  <li id="tab_build" {{bindAttr class="view.classBuild"}}>
+  <li id="tab_build" {{bind-attr class="view.classBuild"}}>
     <h5>
-      {{#if view.build.id}}
-        {{#if view.build.repo.slug}}
-          {{#linkTo "build" view.build.repo view.build}}
-            {{t repositories.tabs.build}} #{{view.build.number}}
-          {{/linkTo}}
+      {{#if build.id}}
+        {{#if repo.slug}}
+          {{#link-to "build" repo build}}
+            {{t repositories.tabs.build}} #{{build.number}}
+          {{/link-to}}
         {{/if}}
       {{/if}}
     </h5>
   </li>
-  <li id="tab_job" {{bindAttr class="view.classJob"}}>
+  <li id="tab_job" {{bind-attr class="view.classJob"}}>
     <h5>
-      {{#if view.job.id}}
-        {{#if view.job.repo.slug}}
-          {{#linkTo "job" view.job.repo view.job}}
-            {{t repositories.tabs.job}} #{{view.job.number}}
-          {{/linkTo}}
+      {{#if job.id}}
+        {{#if repo.slug}}
+          {{#link-to "job" repo job}}
+            {{t repositories.tabs.job}} #{{job.number}}
+          {{/link-to}}
         {{/if}}
       {{/if}}
     </h5>

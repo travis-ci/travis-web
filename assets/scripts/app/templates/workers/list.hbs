@@ -1,10 +1,10 @@
 {{#view Travis.WorkersView}}
-  <a id="toggle-workers" {{action toggleWorkers target="view"}}></a>
+  <a id="toggle-workers" {{action "toggleWorkers" target="view"}}></a>
   <ul id="workers">
     {{#each group in controller.groups}}
       {{#view Travis.WorkersListView}}
         <li class="group">
-          <h5 {{action toggle target="view"}}>
+          <h5 {{action "toggle" target="view"}}>
             {{group.firstObject.host}}
           </h5>
           <ul>
@@ -14,9 +14,9 @@
                 <div class="status"></div>
                 {{#if worker.isWorking}}
                   {{#if worker.jobId}}
-                    {{#linkTo "job" worker.repo worker.jobId}}
+                    {{#link-to "job" worker.repo worker.jobId}}
                       {{view.display}}
-                    {{/linkTo}}
+                    {{/link-to}}
                   {{/if}}
                 {{else}}
                   {{view.display}}

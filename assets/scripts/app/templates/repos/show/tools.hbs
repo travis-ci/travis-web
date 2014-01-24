@@ -1,54 +1,28 @@
 <div id="tools">
-  <a href="#" {{action menu target="view"}}></a>
+  <a href="#" {{action "menu" target="view"}} class="menu-popup-button"></a>
+
   <ul class="menu">
-    <li>
-      <a href="#" name="status-images" class="open-popup" {{action statusImages target="view"}}>Status Images</a>
-    </li>
-    {{#if view.displayCancelBuild}}
-      <li>
-        <a href="#" {{action cancelBuild target="view"}}
-          {{bindAttr class="view.canCancelBuild::disabled"}}>Cancel Build</a>
-      </li>
-    {{/if}}
-    {{#if view.displayCancelJob}}
-      <li>
-        <a href="#" {{action cancelJob target="view"}}
-          {{bindAttr class="view.canCancelJob::disabled"}}>Cancel Job</a>
-      </li>
-    {{/if}}
-    {{#if view.displayRequeueBuild}}
-      <li>
-        <a href="#" {{action requeueBuild target="view"}}
-          {{bindAttr class="view.canRequeueBuild::disabled"}}>Restart Build</a>
-      </li>
-    {{/if}}
-    {{#if view.displayRequeueJob}}
-      <li>
-        <a href="#" {{action requeueJob target="view"}}
-          {{bindAttr class="view.canRequeueJob::disabled"}}> Restart Job </a>
-      </li>
-    {{/if}}
-    {{#if view.displayRegenerateKey}}
+   {{#if view.displayRegenerateKey}}
       <li>
         <a href="#" name="regenerate-key"
-          {{action regenerateKeyPopup target="view"}}
-          {{bindAttr class=":open-popup view.canRegenerateKey::disabled"}}>
+          {{action "regenerateKeyPopup" target="view"}}
+          {{bind-attr class=":open-popup view.canRegenerateKey::disabled"}}>
             Regenerate Key
         </a>
       </li>
     {{/if}}
-    {{!TODO: for some reason showDownloadLog, which just delegates to jobIdForLog
-             does not refresh 'if' properly, need further investigation}}
-    {{#if view.jobIdForLog}}
-      <li>
-        <a class="download-log" {{bindAttr href="view.plainTextLogUrl"}}>Download log</a>
-      </li>
-    {{/if}}
   </ul>
+  {{#if view.displayStatusImages}}
+  <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target="view"}}>
+    <img {{bind-attr src="view.statusImageUrl"}} title="Build Status Images"/>
+  </a>
+  {{/if}}
+
+
 </div>
 
 <div id="regenerate-key" class="popup">
-  <a href="#" class="close" {{action popupClose target="view"}}></a>
+  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
   <p>
     Do you really want to regenerate ssl keys for this repository? Please note that
     any data, which is encrypted, such as notification services credentials or secure
@@ -57,14 +31,14 @@
   </p>
 
   <p>
-    <a class="sync_now button" {{action regenerateKey target="view"}}>Yes! Do it!</a>
+    <a class="sync_now button" {{action "regenerateKey" target="view"}}>Yes, do it!</a>
     <span class="or">or</span>
-    <a href="#" class="cancel" {{action popupClose target="view"}}>Cancel</a>
+    <a href="#" class="cancel" {{action "popupClose" target="view"}}>Cancel</a>
   </p>
 </div>
 
 <div id="regeneration-success" class="popup">
-  <a href="#" class="close" {{action popupClose target="view"}}></a>
+  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
   <p>
     Key for this repository has been regenerated. If you used previous key
     for encryption, you will need encrypt your data again with the new key.
@@ -73,4 +47,48 @@
   <p>
     You can read more about encryption keys <a href="http://about.travis-ci.org/docs/user/encryption-keys/">in Travis documentation</a>
   </p>
+</div>
+
+<div id="code-climate" class="popup">
+  <img src="/images/icons/code-climate-logo.png" id="code-climate-logo"/>
+  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
+  <p>
+    <b>Want test coverage for your tests?</b>
+  </p>
+  <p>
+    Integrating <a href="https://codeclimate.com">Code Climate's test coverage</a> reporting with your test
+    suite on Travis CI allows to track changes in coverage over time. If you haven't tried it out already, <a
+    {{bind-attr href="Travis.config.code_climate_url"}}" target="_blank">sign
+    up today</a> to improve your code's quality. New customers get 20% off for the first three months!
+  </p>
+
+  <p>
+    It only takes a few steps, once you've set up your project:
+  </p>
+
+  <ol>
+    <li>
+      Add the `code-climate-reporter` gem to your Gemfile:<br/>
+
+<pre>
+gem "codeclimate-test-reporter", group: :test, require: nil
+</pre>
+    </li>
+    <li>
+      Load the reporter in your `test_helper` or `spec_helper`, putting it at the very top:
+
+<pre>
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+</pre>
+    </li>
+    <li>
+      Add the Code Climate token to your .travis.yml:
+
+<pre>
+addons:
+  code_climate:
+    repo_token: adf08323...
+</pre>
+    </li>
 </div>

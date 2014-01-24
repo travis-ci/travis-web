@@ -9,7 +9,6 @@ pt-BR:
     branch: Branch
     build_matrix: Matriz de Build
     commit: Commit
-    commiter: 
     committer: Committer
     compare: Comparar
     config: Config
@@ -118,7 +117,7 @@ pt-BR:
       locale: 
       message:
         config: como configurar opções de build
-        your_repos: Use os botões abaixo para ligar ou desligar o hook de serviço do Travis para seus projetos, e então, faça um push para o Github.<br />Para testar com múltiplas versões do Ruby, leia
+        your_repos: Use os botões abaixo para ligar ou desligar o hook de serviço do Travis para seus projetos, e então, faça um push para o Github.
       messages:
         notice: Para começar, leia nosso <a href="http://about.travis-ci.org/docs/user/getting-started/">Guia de início</a>. <small>Só leva alguns minutinhos.</small>
       token: Token

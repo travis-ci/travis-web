@@ -7,7 +7,16 @@
     <title>Travis CI - Free Hosted Continuous Integration Platform for the Open Source Community</title>
     <link rel="icon" type="image/png" href="/favicon.ico">
 
+    <link rel="stylesheet" href="/styles/app.css">
+    <link rel="stylesheet" href="/styles/qunit.css">
+    <link rel="stylesheet" href="/styles/qunit-ext.css">
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
     <script>
+      window.testMode = true;
+
       if (!Function.prototype.bind) {
         Function.prototype.bind = function (oThis) {
           if (typeof this !== "function") {
@@ -41,33 +50,11 @@
         return oldPushState.apply(this, arguments);
       };
     </script>
-    <link rel="stylesheet" href="/styles/app.css">
-    <link rel="stylesheet" href="/styles/jasmine.css">
-    <link rel="stylesheet" href="/styles/jasmine-ext.css">
     <script src="/scripts/app.js"></script>
     <script>
-      window.testMode = true;
       minispade.require('travis');
-      Ember.run(function(){
-        Travis.setupForTesting();
-        Travis.injectTestHelpers()
-        Travis.advanceReadiness();
-      });
+      Travis.run()
     </script>
-
     <script src="/scripts/specs.js"></script>
-  </head>
-  <body>
-    <script>
-      window.cachedSearch = window.location.search;
-      //for(key in minispade.modules)
-      //  if(key.match(/_spec$/))
-      //    minispade.require(key);
-
-      var consoleReporter = new jasmine.ConsoleReporter();
-      jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
-      jasmine.getEnv().addReporter(consoleReporter);
-      jasmine.getEnv().execute();
-    </script>
   </body>
 </html>

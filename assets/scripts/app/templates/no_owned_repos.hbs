@@ -1,63 +1,77 @@
 <div id="getting-started">
   <h3>Welcome to Travis CI!</h3>
 
-  <p>
-    Hey, it looks like you're new around here and have yet to set up your first repository on Travis CI.
-  </p>
+  <h2>Hey, it looks like you're new around here and have yet to set up your first<br>repository on Travis CI. We're here to help you get started, it's easy!</h2>
 
-  <p>
-    We're here to help you get started, it's easy!
-  </p>
+  <div class="getting-started-row">
+    <div class="column">
+      <img src="/images/getting-started/project-switch.png">
+    </div>
 
-  <p>
-    <img src="/images/getting-started/project-switch.png" width="320"/>
-  </p>
+    <div class="column-right">
+      <span class="steps">Step 1: &nbsp; Enabling your projects</span>
+      <p>
+        Start by going to your {{#link-to "profile.index"}}profile{{/link-to}} and enable one of your projects. We've been
+        synchronizing all repositories you have administrative access to. Pick one and flip the switch next to it.
+      </p>
+    </div>
+  </div>
 
-  <p>
-    Start by going to your {{#linkTo "profile.index"}}profile{{/linkTo}} and enable one of your projects. We've been
-    synchronizing all repositories you have administrative access to. Pick one and flip the switch next to it.
-  </p>
+  <div class="getting-started-row">
+    <div class="column">
+      <img src="/images/getting-started/first-build.png">
+    </div>
 
-  <p>
-    <img src="/images/getting-started/first-build.png" width="320"/>
-  </p>
+    <div class="column-right">
+      <span class="steps">Step 2: &nbsp; Adding Travis</span>
+      <p>
+        Once you've enabled one of your projects, add a <a
+        href="http://about.travis-ci.org/docs/user/build-configuration/#.travis.yml-file%3A-what-it-is-and-how-it-is-used"><code>.travis.yml</code></a> to your project, push some code, and we'll start processing your builds. Wait a
+        whee while and reload the page, and your newly setup and built project will show up on the right.
+      </p>
+    </div>
+  </div>
 
-  <p>
-    Once you've enabled one of your projects, add a <a
-    href="http://about.travis-ci.org/docs/user/build-configuration/#.travis.yml-file%3A-what-it-is-and-how-it-is-used"><code>.travis.yml</code></a> to your project, push some code, and we'll start processing your builds. Wait a
-    whee while and reload the page, and your newly setup and built project will show up on the right.
-  </p>
+  <div class="getting-started-row">
+    <div class="column">
+      <img src="/images/getting-started/build-email.png">
+    </div>
 
-  <p>
-    We'll also send you an email once the build has finished.
-  </p>
+    <div class="column-right">
+      <span class="steps">Step 3: &nbsp; Wait for your build to finish</span>
+      <p>
+        We'll be sending you an email once the build has finished. Then, it's up to you to do the happy dance.
+      </p>
+    </div>
+  </div>
 
-  <p>
-    We use sensible defaults for <a href="http://about.travis-ci.org/docs/">most languages</a>, but you can customize
-    both the <a href="http://about.travis-ci.org/docs/user/build-configuration/">build process</a> and the <a
-    href="http://about.travis-ci.org/docs/user/build-configuration/">build
-    environment</a> to fit your project's needs.
-  </p>
+  <div class="getting-started-row">
+    <span class="after-steps steps">Build Configuration</span>
+    <p>
+      We use sensible defaults for <a href="http://about.travis-ci.org/docs/">most languages</a>, but you can customize
+      both the <a href="http://about.travis-ci.org/docs/user/build-configuration/">build process</a> and the <a
+      href="http://about.travis-ci.org/docs/user/build-configuration/">build
+      environment</a> to fit your project's needs.
+    </p>
 
-  <p>
-    You can also configure how you want to be notified of build results. Email is only one channel you can use. We
-    support <a href="http://about.travis-ci.org/docs/user/notifications/#Campfire-notification">Campfire</a>, <a
-    href="http://about.travis-ci.org/docs/user/notifications/#HipChat-notification">HipChat</a>, <a
-    href="http://about.travis-ci.org/docs/user/notifications/#Flowdock-notification">Flowdock</a>, <a
-    href="http://about.travis-ci.org/docs/user/notifications/#IRC-notification">IRC</a>, and <a
-    href="http://about.travis-ci.org/docs/user/notifications/#Webhook-notification">webhooks</a>. To avoid
-    exposing any private credentials, you can shield them from the public using <a
-    href="http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables">encrypted
-    configuration settings</a>.
-  </p>
+    <span class="steps">Notifications</span>
+    <p>
+      You can also configure how you want to be notified of build results. Email is only one channel you can use. We
+      support <a href="http://about.travis-ci.org/docs/user/notifications/#Campfire-notification">Campfire</a>, <a
+      href="http://about.travis-ci.org/docs/user/notifications/#HipChat-notification">HipChat</a>, <a
+      href="http://about.travis-ci.org/docs/user/notifications/#Flowdock-notification">Flowdock</a>, <a
+      href="http://about.travis-ci.org/docs/user/notifications/#IRC-notification">IRC</a>, and <a
+      href="http://about.travis-ci.org/docs/user/notifications/#Webhook-notification">webhooks</a>. To avoid
+      exposing any private credentials, you can shield them from the public using <a
+      href="http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables">encrypted
+      configuration settings</a>.
+    </p>
 
-  <p>
-    <img src="/images/getting-started/build-email.png" width="600"/>
-  </p>
-
-  <p>
-    Should you have any questions or issues, have a look at <a href="http://about.travis-ci.org/docs/" location="_top">our
-    documentation</a>, <a href="https://github.com/travis-ci/travis-ci/issues/new" location="_top">open an issue</a> or
-    <a href="mailto:support@travis-ci.com">send us an email</a>.
-  </p>
+    <span class="steps">Questions</span>
+    <p>
+      Should you have any questions or issues, have a look at <a href="http://about.travis-ci.org/docs/" location="_top">our
+      documentation</a>, <a href="https://github.com/travis-ci/travis-ci/issues/new" location="_top">open an issue</a> or
+      <a href="mailto:support@travis-ci.com">send us an email</a>.
+    </p>
+  </div>
 </div>

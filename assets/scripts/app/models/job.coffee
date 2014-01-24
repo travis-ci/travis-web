@@ -1,39 +1,26 @@
 require 'travis/model'
 
 @Travis.Job = Travis.Model.extend Travis.DurationCalculations,
-  repoId:         DS.attr('number')
-  buildId:        DS.attr('number')
-  commitId:       DS.attr('number')
-  logId:          DS.attr('number')
+  repoId:         Ember.attr('string', key: 'repository_id')
+  buildId:        Ember.attr('string')
+  commitId:       Ember.attr('string')
+  logId:          Ember.attr('string')
 
-  queue:          DS.attr('string')
-  state:          DS.attr('string')
-  number:         DS.attr('string')
-  startedAt:      DS.attr('string')
-  finishedAt:     DS.attr('string')
-  allowFailure:   DS.attr('boolean')
+  queue:          Ember.attr('string')
+  state:          Ember.attr('string')
+  number:         Ember.attr('string')
+  startedAt:      Ember.attr('string')
+  finishedAt:     Ember.attr('string')
+  allowFailure:   Ember.attr('boolean')
 
-  repositorySlug: DS.attr('string')
-  repo:   DS.belongsTo('Travis.Repo')
-  build:  DS.belongsTo('Travis.Build')
-  commit: DS.belongsTo('Travis.Commit')
+  repositorySlug: Ember.attr('string')
+  repo:   Ember.belongsTo('Travis.Repo', key: 'repository_id')
+  build:  Ember.belongsTo('Travis.Build')
+  commit: Ember.belongsTo('Travis.Commit')
 
-  annotations: DS.hasMany('Travis.Annotation')
+  annotations: Ember.hasMany('Travis.Annotation')
 
-  # this is a fake relationship just to get rid
-  # of ember data's bug: https://github.com/emberjs/data/issues/758
-  # TODO: remove when this issue is fixed
-  fakeBuild:  DS.belongsTo('Travis.Build')
-
-  _config: DS.attr('object')
-
-  repoSlugDidChange: (->
-    if slug = @get('repoSlug')
-      @get('store').loadIncomplete(Travis.Repo, {
-        id: @get('repoId'),
-        slug: slug
-      }, { skipIfExists: true })
-  ).observes('repoSlug')
+  _config: Ember.attr('object', key: 'config')
 
   log: ( ->
     @set('isLogAccessed', true)
@@ -75,11 +62,11 @@ require 'travis/model'
   ).property('config', 'build.rawConfigKeys.length')
 
   canCancel: (->
-    @get('state') == 'created' || @get('state') == 'queued' # TODO
+    !@get('isFinished')
   ).property('state')
 
   cancel: (->
-    Travis.ajax.post "/jobs/#{@get('id')}", _method: 'delete'
+    Travis.ajax.post "/jobs/#{@get('id')}/cancel"
   )
 
   requeue: ->
@@ -105,7 +92,7 @@ require 'travis/model'
       Travis.pusher.unsubscribe "job-#{@get('id')}"
   ).observes('state')
 
-  isAttributeLoaded: (key) ->
+  isPropertyLoaded: (key) ->
     if ['finishedAt'].contains(key) && !@get('isFinished')
       return true
     else if key == 'startedAt' && @get('state') == 'created'
@@ -117,19 +104,41 @@ require 'travis/model'
     @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')
 
+  # TODO: such formattings should be done in controller, but in order
+  #       to use it there easily, I would have to refactor job and build
+  #       controllers
+  formattedFinishedAt: (->
+    if finishedAt = @get('finishedAt')
+      moment(finishedAt).format('lll')
+  ).property('finishedAt')
+
 @Travis.Job.reopenClass
-  queued: (queue) ->
-    @find()
-    Travis.store.filter this, (job) ->
-      queued = ['created', 'queued'].indexOf(job.get('state')) != -1
-      # TODO: why queue is sometimes just common instead of build.common?
-      queued && (!queue || job.get('queue') == "builds.#{queue}" || job.get('queue') == queue)
+  queued: ->
+    filtered = Ember.FilteredRecordArray.create(
+      modelClass: Travis.Job
+      filterFunction: (job) ->
+        ['created', 'queued'].indexOf(job.get('state')) != -1
+      filterProperties: ['state', 'queue']
+    )
+
+    @fetch().then (array) ->
+      filtered.updateFilter()
+      filtered.set('isLoaded', true)
+
+    filtered
 
   running: ->
-    @find(state: 'started')
-    Travis.store.filter this, (job) ->
-      job.get('state') == 'started'
+    filtered = Ember.FilteredRecordArray.create(
+      modelClass: Travis.Job
+      filterFunction: (job) ->
+        job.get('state') == 'started'
+      filterProperties: ['state']
+    )
 
-  findMany: (ids) ->
-    Travis.store.findMany this, ids
+    @fetch(state: 'started').then (array) ->
+      filtered.updateFilter()
+      filtered.set('isLoaded', true)
+
+    filtered
+
 

@@ -24,7 +24,7 @@
   $.extend($.timeago, {
     settings: {
       refreshMillis: 3000,
-      allowFuture: true,
+      allowFuture: false,
       strings: {
         prefixAgo: null,
         prefixFromNow: null,
@@ -64,6 +64,10 @@
           suffix = $l.suffixFromNow;
         }
         distanceMillis = Math.abs(distanceMillis);
+      } else {
+        if (distanceMillis < 0) {
+          distanceMillis = 0;
+        }
       }
 
       var seconds = distanceMillis / 1000;
@@ -78,9 +82,9 @@
         return string.replace(/%d/i, value);
       }
 
-      var words = seconds < 45 && substitute($l.seconds, Math.round(seconds)) ||
+      var words = seconds < 55 && substitute($l.seconds, Math.round(seconds)) ||
         seconds < 90 && substitute($l.minute, 1) ||
-        minutes < 45 && substitute($l.minutes, Math.round(minutes)) ||
+        minutes < 55 && substitute($l.minutes, Math.round(minutes)) ||
         minutes < 90 && substitute($l.hour, 1) ||
         hours < 24 && substitute($l.hours, Math.round(hours)) ||
         hours < 48 && substitute($l.day, 1) ||

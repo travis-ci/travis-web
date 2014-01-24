@@ -2,14 +2,14 @@
 </div>
 
 <ul class="tabs">
-  <li id="tab_accounts" {{bindAttr class="view.classAccounts"}}>
+  <li id="tab_accounts" {{bind-attr class="view.classAccounts"}}>
     <h5><a name="accounts" href="">Accounts</a></h5>
   </li>
 </ul>
 
 <div class="tab">
   {{#collection Travis.AccountsListView contentBinding="controller"}}
-    {{#linkTo "account.index" view.account class="name"}}{{view.name}}{{/linkTo}}
+    {{#link-to "account.index" view.account class="name"}}{{view.name}}{{/link-to}}
     <p class="summary">
       <span class="repos_label">Repositories:</span>
       <abbr class="repos">{{view.account.reposCount}}</abbr>

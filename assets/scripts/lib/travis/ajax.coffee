@@ -58,10 +58,30 @@ Travis.ajax = Em.Object.create
 
     options = $.extend(options, Travis.ajax.DEFAULT_OPTIONS)
 
-    if Travis.testing
+    if testMode?
+      console.log('Running ajax with', options.url)
+
       # we use jquery.mockjax for test, I don't want to hack it or rewrite it,
       # so let's just pretend we still use ajax if testing mode is on
-      return $.ajax(options)
+      return new Ember.RSVP.Promise( (resolve, reject) ->
+        oldSuccess = options.success
+        options.success = (json, status, xhr) ->
+          Ember.run this, ->
+            oldSuccess.call(this, json, status, xhr)
+          Ember.run(null, resolve, json)
+
+        oldError = options.error
+        options.error = (jqXHR) ->
+          if jqXHR
+            # for a context, please see https://github.com/emberjs/ember.js/issues/3051
+            jqXHR.then = null
+
+          Ember.run this, ->
+            oldError.call this, jqXHR
+            reject(jqXHR)
+
+        $.ajax(options)
+      )
 
     if options.data && (method == "GET" || method == "HEAD")
       params = jQuery.param(options.data)

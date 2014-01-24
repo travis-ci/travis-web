@@ -18,8 +18,9 @@ Ember.registerBoundHelper 'formatTime', (value, options) ->
 Ember.registerBoundHelper 'formatDuration', (duration, options) ->
   safe Travis.Helpers.timeInWords(duration)
 
-Ember.registerBoundHelper 'formatCommit', (commit, options) ->
+Ember.Handlebars.helper('formatCommit', (commit) ->
   safe Travis.Helpers.formatCommit(commit.get('sha'), commit.get('branch')) if commit
+, 'sha', 'branch')
 
 Ember.registerBoundHelper 'formatSha', (sha, options) ->
   safe Travis.Helpers.formatSha(sha)
@@ -27,8 +28,8 @@ Ember.registerBoundHelper 'formatSha', (sha, options) ->
 Ember.registerBoundHelper 'pathFrom', (url, options) ->
   safe Travis.Helpers.pathFrom(url)
 
-Ember.registerBoundHelper 'formatMessage', (message, options) ->
-  safe Travis.Helpers.formatMessage(message, options)
+Ember.Handlebars.helper 'formatMessage', (message, options) ->
+  safe Travis.Helpers.formatMessage(message, options.hash)
 
 Ember.registerBoundHelper 'formatConfig', (config, options) ->
   safe Travis.Helpers.formatConfig(config)

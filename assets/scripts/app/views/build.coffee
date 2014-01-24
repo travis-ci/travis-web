@@ -9,9 +9,10 @@ Travis.reopen
 
     ShowMoreButton: Em.View.extend
       tagName: 'button'
-      classNameBindings: ['isLoading']
+      classNameBindings: ['isLoading', 'showMore']
+      showMore: true
       attributeBindings: ['disabled']
-      isLoadingBinding: 'controller.builds.isLoading'
+      isLoadingBinding: 'controller.isLoading'
       template: Em.Handlebars.compile('{{view.label}}')
 
       disabledBinding: 'isLoading'
@@ -41,8 +42,8 @@ Travis.reopen
     ).property('repo.slug', 'commit.sha')
 
     urlGithubPullRequest: (->
-      Travis.Urls.githubPullRequest(@get('repo.slug'), @get('commit.pullRequestNumber'))
-    ).property('repo.slug', 'commit.pullRequestNumber')
+      Travis.Urls.githubPullRequest(@get('repo.slug'), @get('build.pullRequestNumber'))
+    ).property('repo.slug', 'build.pullRequestNumber')
 
   BuildView: Travis.View.extend
     templateName: 'builds/show'

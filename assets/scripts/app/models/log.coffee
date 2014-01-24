@@ -15,6 +15,7 @@ require 'travis/chunk_buffer'
 
   fetch: ->
     console.log 'log model: fetching log' if Log.DEBUG
+    @setParts()
     handlers =
       json: (json) => @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
@@ -45,7 +46,7 @@ Travis.Log.Request = Em.Object.extend
     Travis.ajax.ajax "/jobs/#{@id}/log?cors_hax=true", 'GET',
       dataType: 'text'
       headers: @HEADERS
-      success: (body, status, xhr) => @handle(body, status, xhr)
+      success: (body, status, xhr) => Ember.run(this, -> @handle(body, status, xhr))
 
   handle: (body, status, xhr) ->
     if xhr.status == 204

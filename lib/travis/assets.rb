@@ -8,6 +8,7 @@ module Travis
 
     TYPES = [:styles, :scripts, :images, :static, :vendor]
     VENDOR_ORDER = %w(jquery.min minispade handlebars ember)
+    PRODUCTION_VENDOR_ORDER = %w(jquery.min minispade handlebars ember.prod)
     SPEC_VENDOR_ORDER = %w(jasmine jasmine-html jasmine-runner sinon)
 
     attr_reader :roots, :env
@@ -30,7 +31,8 @@ module Travis
     end
 
     def vendor_order
-      VENDOR_ORDER.map { |name| "vendor/#{name}.js" }
+      order = production? ? PRODUCTION_VENDOR_ORDER : VENDOR_ORDER
+      order.map { |name| "vendor/#{name}.js" }
     end
 
     def spec_vendor_order

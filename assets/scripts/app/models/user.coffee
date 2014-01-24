@@ -2,17 +2,17 @@ require 'travis/ajax'
 require 'travis/model'
 
 @Travis.User = Travis.Model.extend
-  _name:       DS.attr('string')
-  email:       DS.attr('string')
-  login:       DS.attr('string')
-  token:       DS.attr('string')
-  locale:      DS.attr('string')
-  gravatarId:  DS.attr('string')
-  isSyncing:   DS.attr('boolean')
-  syncedAt:    DS.attr('string')
-  repoCount:   DS.attr('number')
+  _name:       Ember.attr('string', key: 'name')
+  email:       Ember.attr('string')
+  login:       Ember.attr('string')
+  token:       Ember.attr('string')
+  locale:      Ember.attr('string')
+  gravatarId:  Ember.attr('string')
+  isSyncing:   Ember.attr('boolean')
+  syncedAt:    Ember.attr('string')
+  repoCount:   Ember.attr('number')
 
-  # This is the only way I found to override the attribue created with DS.attr
+  # This is the only way I found to override the attribue created with Ember.attr
   name: Ember.computed( (key, value) ->
     if arguments.length == 1
       @get('_name') || @get('login')
@@ -27,34 +27,40 @@ require 'travis/model'
     Ember.run.next this, ->
       @poll() if @get('isSyncing')
 
-    Ember.run.next this, ->
-      transaction = @get('store').transaction()
-      transaction.add this
-
   urlGithub: (->
     "https://github.com/#{@get('login')}"
   ).property()
 
+  _rawPermissions: (->
+    Travis.ajax.get('/users/permissions')
+  ).property()
+
   permissions: (->
-    unless @permissions
-      @permissions = Ember.ArrayProxy.create(content: [])
-      Travis.ajax.get('/users/permissions', (data) => @permissions.set('content', data.permissions))
-    @permissions
+    permissions = Ember.ArrayProxy.create(content: [])
+    @get('_rawPermissions').then (data) => permissions.set('content', data.permissions)
+    permissions
+  ).property()
+
+  adminPermissions: (->
+    permissions = Ember.ArrayProxy.create(content: [])
+    @get('_rawPermissions').then (data) => permissions.set('content', data.admin)
+    permissions
+  ).property()
+
+  pullPermissions: (->
+    permissions = Ember.ArrayProxy.create(content: [])
+    @get('_rawPermissions').then (data) => permissions.set('content', data.pull)
+    permissions
+  ).property()
+
+  pushPermissions: (->
+    permissions = Ember.ArrayProxy.create(content: [])
+    @get('_rawPermissions').then (data) => permissions.set('content', data.push)
+    permissions
   ).property()
 
   updateLocale: (locale) ->
-
-    transaction = @get('transaction')
-    transaction.commit()
-
-    self = this
-    observer = ->
-      unless self.get('isSaving')
-        self.removeObserver 'isSaving', observer
-        transaction = self.get('store').transaction()
-        transaction.add self
-
-    @addObserver 'isSaving', observer
+    @save()
     Travis.setLocale(locale)
 
   type: (->
@@ -71,7 +77,10 @@ require 'travis/model'
   poll: ->
     Travis.ajax.get '/users', (data) =>
       if data.user.is_syncing
-        Ember.run.later(this, this.poll.bind(this), 3000)
+        self = this
+        setTimeout ->
+          self.poll()
+        , 3000
       else
         @set('isSyncing', false)
         @setWithSession('syncedAt', data.user.synced_at)

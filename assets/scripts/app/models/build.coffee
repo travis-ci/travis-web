@@ -1,32 +1,31 @@
 require 'travis/model'
 
 @Travis.Build = Travis.Model.extend Travis.DurationCalculations,
-  eventType:        DS.attr('string')
-  repoId:           DS.attr('number')
-  commitId:         DS.attr('number')
+  repositoryId:     Ember.attr('number')
+  commitId:         Ember.attr('number')
 
-  state:            DS.attr('string')
-  number:           DS.attr('number')
-  branch:           DS.attr('string')
-  message:          DS.attr('string')
-  _duration:        DS.attr('number')
-  _config:          DS.attr('object')
-  startedAt:        DS.attr('string')
-  finishedAt:       DS.attr('string')
-  pullRequest:      DS.attr('boolean')
-  pullRequestTitle: DS.attr('string')
-  pullRequestNumber: DS.attr('number')
+  state:            Ember.attr('string')
+  number:           Ember.attr(Number)
+  branch:           Ember.attr('string')
+  message:          Ember.attr('string')
+  _duration:        Ember.attr(Number, key: 'duration')
+  _config:          Ember.attr('object', key: 'config')
+  startedAt:        Ember.attr('string')
+  finishedAt:       Ember.attr('string')
+  pullRequest:      Ember.attr('boolean')
+  pullRequestTitle: Ember.attr('string')
+  pullRequestNumber: Ember.attr(Number)
 
-  repo:   DS.belongsTo('Travis.Repo')
-  commit: DS.belongsTo('Travis.Commit')
-  jobs:   DS.hasMany('Travis.Job')
+  repo:   Ember.belongsTo('Travis.Repo', key: 'repository_id')
+  commit: Ember.belongsTo('Travis.Commit')
+  jobs:   Ember.hasMany('Travis.Job')
 
   config: (->
     Travis.Helpers.compact(@get('_config'))
   ).property('_config')
 
   isPullRequest: (->
-    @get('eventType') == 'pull_request'
+    @get('eventType') == 'pull_request' || @get('pullRequest')
   ).property('eventType')
 
   isMatrix: (->
@@ -46,7 +45,7 @@ require 'travis/model'
   ).property('jobs.@each.allowFailure')
 
   rawConfigKeys: (->
-    keys = Travis.Helpers.configKeys(@get('config'))
+    keys = []
 
     @get('jobs').forEach (job) ->
       Travis.Helpers.configKeys(job.get('config')).forEach (key) ->
@@ -58,26 +57,30 @@ require 'travis/model'
   configKeys: (->
     keys = @get('rawConfigKeys')
     headers = (I18n.t(key) for key in ['build.job', 'build.duration', 'build.finished_at'])
-    $.map(headers.concat(keys), (key) -> return $.camelize(key))
+    $.map(headers.concat(keys), (key) -> if Travis.CONFIG_KEYS_MAP.hasOwnProperty(key) then Travis.CONFIG_KEYS_MAP[key] else key)
   ).property('rawConfigKeys.length')
 
   canCancel: (->
-    @get('state') == 'created' # TODO
-  ).property('state')
+    !@get('isFinished') && @get('jobs').filter( (j) -> j.get('canCancel') ).get('length') > 0
+  ).property('isFinished', 'jobs.@each.canCancel')
 
   cancel: (->
-    Travis.ajax.post "/builds/#{@get('id')}", _method: 'delete'
+    Travis.ajax.post "/builds/#{@get('id')}/cancel"
   )
 
   requeue: ->
     Travis.ajax.post '/requests', build_id: @get('id')
 
-  isAttributeLoaded: (key) ->
+  isPropertyLoaded: (key) ->
     if ['_duration', 'finishedAt'].contains(key) && !@get('isFinished')
       return true
     else
       @_super(key)
 
+  formattedFinishedAt: (->
+    if finishedAt = @get('finishedAt')
+      moment(finishedAt).format('lll')
+  ).property('finishedAt')
 
 @Travis.Build.reopenClass
   byRepoId: (id, parameters) ->

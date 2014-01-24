@@ -27,7 +27,8 @@ html, body
   top: -40px
   left: 0
   width: 100%
-  height: 40px
+  min-width: 930px
+  height: 55px
   z-index: 1000
 
 #left, #right
@@ -38,13 +39,12 @@ html, body
 
 #left
   @include flex(1, 1, 30%)
-  min-width: 250px
-  max-width: 380px
+  min-width: 320px
+  max-width: 320px
   width: -webkit-calc(100% - 1000px)
   padding: 0 0 110px 0
-  background-color: $color-bg-left
+  background-color: #fbfbfa
   border-right: 1px solid $color-border-normal
-  @include box-shadow(transparent 0 0 0 0, $color-border-normal 0 1px 8px 0, transparent 0 0 0 0, transparent 0 0 0 0)
 
 @media screen and (max-width: 980px)
   #left
@@ -55,15 +55,8 @@ html, body
   -moz-box-flex: 4
   -webkit-box-flex: 4
   position: relative
-  min-width: 630px
+  min-width: 539px
   padding: 20px 40px 80px 30px
-
-#right
-  @include flex(1, 1, 205px)
-  width: 205px
-  padding: 11px 20px 80px 20px
-  background-color: $color-bg-right
-  border-left: 1px solid $color-border-normal
 
 @media screen and (max-width: 1400px)
   #left .duration_label

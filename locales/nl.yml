@@ -9,7 +9,6 @@ nl:
     branch: Tak
     build_matrix: Bouw matrix
     commit: Commit
-    commiter: 
     committer: Committer
     compare: Vergelijk
     config: Configuratie
@@ -118,9 +117,7 @@ nl:
       locale: Taal
       message:
         config: hoe eigen bouw-opties in te stellen
-        your_repos: ! 'Zet de schakelaars hieronder aan om de Travis hook voor uw projecten te activeren en push daarna naar Github<br />
-
-          Om te testen tegen meerdere rubies, zie'
+        your_repos: ! 'Zet de schakelaars hieronder aan om de Travis hook voor uw projecten te activeren en push daarna naar Github.'
       messages:
         notice: Om te beginnen kunt u onze <a href=\"http://about.travis-ci.org/docs/user/getting-started/\">startersgids</a> lezen.\n  <small>Het zal maar enkele minuten van uw tijd vergen.</small>
       token: Token

@@ -1,5 +1,5 @@
 {{#if job.isLoaded}}
-  <div {{bindAttr class="view.color"}}>
+  <div {{bind-attr class="view.color"}}>
     <dl id="summary">
       <div class="left">
         <dt>Job</dt>
@@ -7,45 +7,43 @@
           <span class="status"></span>
           {{#if job.id}}
             {{#if job.repo.slug}}
-              {{#linkTo job repo job}}{{job.number}}{{/linkTo}}
+              {{#link-to "job" repo job}}{{job.number}}{{/link-to}}
             {{/if}}
           {{/if}}
         </dd>
         <dt>{{t jobs.state}}</dt>
         <dd class="state">{{capitalize job.state}}</dd>
         <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
-        <dd class="finished_at timeago" {{bindAttr title="finishedAt"}}>{{formatTime job.finishedAt}}</dd>
+        <dd class="finished_at timeago" {{bind-attr title="job.formattedFinishedAt"}}>{{formatTime job.finishedAt}}</dd>
         <dt>{{t jobs.duration}}</dt>
-        <dd class="duration" {{bindAttr title="startedAt"}}>{{formatDuration job.duration}}</dd>
+        <dd class="duration" {{bind-attr title="startedAt"}}>{{formatDuration job.duration}}</dd>
       </div>
 
-      {{#with job.commit}}
+      {{#with job}}
         <div class="right">
           <dt>{{t jobs.commit}}</dt>
-          <dd class="commit"><a {{bindAttr href="controller.urlGithubCommit"}}>{{formatCommit this}}</a></dd>
-          {{#if ../job.build.pullRequest}}
+          <dd class="commit"><a {{bind-attr href="controller.urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
+          {{#if build.pullRequest}}
             <dt>{{t builds.pull_request}}</dt>
-            <dd class="pull_request"><a {{bindAttr href="compareUrl"}}>#{{job.build.pullRequestNumber}} {{job.build.pullRequestTitle}}</a></dd>
+            <dd class="pull_request"><a {{bind-attr href="commit.compareUrl"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
           {{else}}
-            {{#if compareUrl}}
+            {{#if commit.compareUrl}}
               <dt>{{t jobs.compare}}</dt>
-              <dd class="compare"><a {{bindAttr href="compareUrl"}}>{{pathFrom compareUrl}}</a></dd>
+              <dd class="compare"><a {{bind-attr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
             {{/if}}
           {{/if}}
-          {{#if authorName}}
+          {{#if commit.authorName}}
             <dt>{{t jobs.author}}</dt>
-            <dd class="author"><a {{bindAttr href="controller.urlAuthor"}}>{{authorName}}</a></dd>
+            <dd class="author">{{commit.authorName}}</dd>
           {{/if}}
-          {{#if committerName}}
+          {{#if commit.committerName}}
             <dt>{{t jobs.committer}}</dt>
-            <dd class="committer"><a {{bindAttr href="controller.urlCommitter"}}>{{committerName}}</a></dd>
+            <dd class="committer">{{commit.committerName}}</dd>
           {{/if}}
         </div>
       {{/with}}
       <dt>{{t jobs.message}}</dt>
-      <dd class="message">{{formatMessage job.commit.message}}</dd>
-      <dt>{{t jobs.config}}</dt>
-      <dd class="config">{{formatConfig job.config}}</dd>
+      <dd class="message">{{formatMessage job.commit.message repoBinding=job.repo}}</dd>
     </dl>
 
     {{view Travis.AnnotationsView annotationsBinding="view.annotations"}}

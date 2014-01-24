@@ -1,62 +1,33 @@
 @import "_mixins/all"
 
-#right
-  padding-bottom: 80px
-
-  h4
-    margin: 24px 0 0 0
-
-  ul
-    margin-top: 10px
-
-  .box
-    margin-top: 25px
-    margin-left: -3px
-    padding: 15px
-    border: 1px solid $color-border-normal
-    background-color: $color-bg-sidebar-box
-    @include border-radius(4px)
+#profile
+  #right
+    min-width: 180px
+    max-width: 180px
+    padding: 13px 20px 80px 20px
+    background-color: #E9E9E7
+    float: right
+    border-left: 1px solid $color-border-normal
 
     h4
-      margin: 0
-    a
-      text-decoration: underline
-    li
-      list-style-type: square
-      margin-left: 15px
+      margin: 24px 0 0 0
 
-#slider
-  position: absolute
-  height: 100%
-  top: 0
-  left: 0
-  width: 10px
-  background-color: $color-bg-slider
-  cursor: pointer
-  background: transparent inline-image('ui/slider-closed.png') no-repeat 3px 10px
+    ul
+      margin-top: 10px
 
-  &:hover
-    background-color: $color-border-slider-hover
+    .box
+      margin-top: 15px
+      margin-left: -3px
+      padding: 15px
+      border: 1px solid #e0e0e0
+      background-color: #ffffff
 
-#right .show-more-jobs
-  text-decoration: underline
-  cursor: pointer
+      h4
+        margin: 0
+      a
+        text-decoration: underline
+      li
+        list-style-type: square
+        margin-left: 15px
 
-#running-jobs
-  .jobs
-    display: none
-    margin: 5px 0 5px
-  .job
-    list-style-type: disc
-    list-style-position: inside
-  .expanded .jobs
-    display: block
-  .slug
-    max-width: 150px
-    overflow: hidden
-    white-space: nowrap
-    text-overflow: ellipsis
-    display: inline-block
-    display: -moz-inline-stack
-  .group a
-    cursor: pointer
+

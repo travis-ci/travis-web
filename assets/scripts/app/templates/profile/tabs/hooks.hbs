@@ -10,27 +10,21 @@
   {{else}}
     <p class="message">
       Last synchronized from GitHub: {{formatTime user.syncedAt}}
-      <a class="sync_now button" {{action sync}}>
+      <a class="sync_now button" {{action "sync"}}>
         Sync now
       </a>
     </p>
 
     <ul id="hooks">
       {{#each hook in hooks}}
-        <li {{bindAttr class="hook.active:active"}}>
-          <a {{bindAttr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+        <li {{bind-attr class="hook.active:active"}}>
+          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
           {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
           <p class="description">{{hook.description}}</p>
 
           <div class="controls">
-            <a {{bindAttr href="hook.urlGithubAdmin"}} class="github-admin tool-tip" title="Github service hooks admin page"></a>
-            <a {{action toggle hook}} class="switch">
-              {{#if hook.active}}
-                ON
-              {{else}}
-                OFF
-              {{/if}}
-            </a>
+            <a {{bind-attr href="hook.urlGithubAdmin"}} class="github-admin tool-tip" title="Github service hooks admin page"></a>
+            {{travis-switch action="toggle" target=hook}}
           </div>
         </li>
       {{else}}
@@ -54,8 +48,8 @@
 
         <ul>
           {{#each hook in unAdminisetableHooks}}
-            <li {{bindAttr class="hook.active:active"}}>
-              <a {{bindAttr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+            <li {{bind-attr class="hook.active:active"}}>
+              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
               <p class="description">{{hook.description}}</p>
             </li>
           {{/each}}

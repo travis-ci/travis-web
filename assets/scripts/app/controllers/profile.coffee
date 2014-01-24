@@ -35,13 +35,16 @@ Travis.ProfileController = Travis.Controller.extend
     @reloadHooks()
 
   reloadHooks: ->
-    @set('allHooks', Travis.Hook.find(all: true, owner_name: @get('params.login') || @get('user.login')))
+    # TODO: figure out why user is not available sometimes
+    @set('allHooks', Travis.Hook.find(all: true, owner_name: @get('params.login') || @get('user.login') || Travis.lookup('controller:currentUser').get('login')))
 
   hooks: (->
+    @reloadHooks() unless hooks = @get('allHooks')
     @get('allHooks').filter (hook) -> hook.get('admin')
   ).property('allHooks.length', 'allHooks')
 
   unAdminisetableHooks: (->
+    @reloadHooks() unless hooks = @get('allHooks')
     @get('allHooks').filter (hook) -> !hook.get('admin')
   ).property('allHooks.length', 'allHooks')
 

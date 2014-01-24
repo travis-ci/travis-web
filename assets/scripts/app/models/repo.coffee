@@ -2,16 +2,18 @@ require 'travis/expandable_record_array'
 require 'travis/model'
 
 @Travis.Repo = Travis.Model.extend
-  slug:                DS.attr('string')
-  description:         DS.attr('string')
-  lastBuildId:         DS.attr('number')
-  lastBuildNumber:     DS.attr('string')
-  lastBuildState:      DS.attr('string')
-  lastBuildStartedAt:  DS.attr('string')
-  lastBuildFinishedAt: DS.attr('string')
-  _lastBuildDuration:  DS.attr('number')
+  id:                  Ember.attr('string')
+  slug:                Ember.attr('string')
+  description:         Ember.attr('string')
+  lastBuildId:         Ember.attr('string')
+  lastBuildNumber:     Ember.attr(Number)
+  lastBuildState:      Ember.attr('string')
+  lastBuildStartedAt:  Ember.attr('string')
+  lastBuildFinishedAt: Ember.attr('string')
+  githubLanguage:      Ember.attr('string')
+  _lastBuildDuration:  Ember.attr(Number, key: 'last_build_duration')
 
-  lastBuild: DS.belongsTo('Travis.Build')
+  lastBuild: Ember.belongsTo('Travis.Build', key: 'last_build_id')
 
   lastBuildHash: (->
     {
@@ -22,7 +24,9 @@ require 'travis/model'
   ).property('lastBuildId', 'lastBuildNumber')
 
   allBuilds: (->
-    Travis.Build.find()
+    recordArray = Ember.RecordArray.create({ modelClass: Travis.Build, content: Ember.A([]) })
+    Travis.Build.registerRecordArray(recordArray)
+    recordArray
   ).property()
 
   builds: (->
@@ -33,12 +37,11 @@ require 'travis/model'
     array  = Travis.ExpandableRecordArray.create
       type: Travis.Build
       content: Ember.A([])
-      store: @get('store')
 
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('eventType') && build.get('repo.id') == id && !build.get('isPullRequest') )
+    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && !build.get('isPullRequest') )
 
     array
   ).property()
@@ -49,12 +52,11 @@ require 'travis/model'
     array  = Travis.ExpandableRecordArray.create
       type: Travis.Build
       content: Ember.A([])
-      store: @get('store')
 
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('eventType') && build.get('repo.id') == id && build.get('isPullRequest') )
+    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && build.get('isPullRequest') )
 
     array
   ).property()
@@ -117,13 +119,28 @@ require 'travis/model'
     @find(search: query, orderBy: 'name')
 
   withLastBuild: ->
-    @filter( (repo) -> (!repo.get('incomplete') || repo.isAttributeLoaded('lastBuildId')) && repo.get('lastBuildId') )
+    filtered = Ember.FilteredRecordArray.create(
+      modelClass: Travis.Repo
+      filterFunction: (repo) -> repo.get('lastBuildId')
+      filterProperties: ['lastBuildId']
+    )
+
+    Travis.Repo.fetch().then (array) ->
+      filtered.updateFilter()
+      filtered.set('isLoaded', true)
+
+    filtered
 
   bySlug: (slug) ->
     repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
     if repo.length > 0 then repo else @find(slug: slug)
 
+  fetchBySlug: (slug) ->
+    repos = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
+    if repos.length > 0
+      repos[0]
+    else
+      @fetch(slug: slug).then (repos) -> Ember.get(repos, 'firstObject')
+
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'
-
-

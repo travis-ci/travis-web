@@ -32,7 +32,41 @@ Storage = Em.Object.extend
   clear: ->
     @set('storage', {})
 
-window.Travis = TravisApplication.create()
+Ember.RecordArray.reopen
+  # TODO: ember.js changed a way ArrayProxies behave, so that check for content is done
+  #       in _replace method. I should not be overriding it, because it's private, but
+  #       there is no easy other way to do it at this point
+  _replace: (index, removedCount, records) ->
+    # in Travis it's sometimes the case that we add new records to RecordArrays
+    # from pusher before its content has loaded from an ajax query. In order to handle
+    # this case nicer I'm extending record array to buffer those records and push them
+    # to content when it's available
+    @bufferedRecords = [] unless @bufferedRecords
+
+    if !@get('content')
+      for record in records
+        @bufferedRecords.pushObject(record) unless @bufferedRecords.contains(record)
+
+      records = []
+
+    # call super only if there's anything more to add
+    if removedCount || records.length
+      @_super(index, removedCount, records)
+
+  contentDidChange: (->
+    if (content = @get('content')) && @bufferedRecords && @bufferedRecords.length
+      for record in @bufferedRecords
+        content.pushObject(record) unless content.contains(record)
+      @bufferedRecords = []
+  ).observes('content')
+
+window.Travis = TravisApplication.create(
+  LOG_ACTIVE_GENERATION: true,
+  LOG_MODULE_RESOLVER: true,
+  LOG_TRANSITIONS: true,
+  LOG_TRANSITIONS_INTERNAL: true,
+  LOG_VIEW_LOOKUPS: true
+)
 
 Travis.deferReadiness()
 
@@ -41,11 +75,29 @@ $.extend Travis,
     Travis.advanceReadiness() # bc, remove once merged to master
 
   config:
+    syncingPageRedirectionTime: 5000
     api_endpoint: $('meta[rel="travis.api_endpoint"]').attr('href')
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
+    code_climate: $('meta[name="travis.code_climate"]').attr('value')
+    code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
 
-  CONFIG_KEYS: ['go', 'rvm', 'gemfile', 'env', 'jdk', 'otp_release', 'php', 'node_js', 'perl', 'python', 'scala', 'compiler']
+  CONFIG_KEYS_MAP: {
+    go:          'Go'
+    rvm:         'Ruby'
+    gemfile:     'Gemfile'
+    env:         'ENV'
+    jdk:         'JDK'
+    otp_release: 'OTP Release'
+    php:         'PHP'
+    node_js:     'Node.js'
+    perl:        'Perl'
+    python:      'Python'
+    scala:       'Scala'
+    compiler:    'Compiler'
+    ghc:         'GHC'
+    os:          'OS'
+  }
 
   QUEUES: [
     { name: 'linux',   display: 'Linux' }
@@ -77,10 +129,34 @@ $.extend Travis,
     storage
   )()
 
-setupGoogleAnalytics() if Travis.config.ga_code
+Travis.initializer
+  name: 'googleAnalytics'
+
+  initialize: (container) ->
+    if Travis.config.ga_code
+      window._gaq = []
+      _gaq.push(['_setAccount', Travis.config.ga_code])
+
+      ga = document.createElement('script')
+      ga.type = 'text/javascript'
+      ga.async = true
+      ga.src = 'https://ssl.google-analytics.com/ga.js'
+      s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(ga, s)
+
+Travis.Router.reopen
+  didTransition: ->
+    @_super.apply @, arguments
+
+    if Travis.config.ga_code
+      _gaq.push ['_trackPageview', location.pathname]
+
+Ember.LinkView.reopen
+  loadingClass: 'loading_link'
 
 require 'ext/i18n'
 require 'travis/ajax'
+require 'travis/adapter'
 require 'routes'
 require 'auth'
 require 'controllers'
@@ -88,10 +164,10 @@ require 'helpers'
 require 'models'
 require 'pusher'
 require 'slider'
-require 'store'
 require 'tailing'
 require 'templates'
 require 'views'
+require 'components'
 
 require 'config/locales'
 

@@ -1,46 +1,57 @@
-store = null
 record = null
 
-describe 'Travis.Build', ->
-  beforeEach ->
-    store = Travis.Store.create()
+module "Travis.Build",
+  setup: ->
+  teardown: ->
+    Travis.Build.resetData()
+    Travis.Job.resetData()
 
-  afterEach ->
-    store.destroy()
+test 'it does not load record on duration, finishedAt and result if job is not in finished state', ->
+  Travis.Build.load [{ id: 1, state: 'started' }]
 
-  describe 'incomplete attributes', ->
-    beforeEach ->
-      store.loadIncomplete Travis.Build, { id: 1, state: 'started' }
-      record = store.find Travis.Build, 1
+  Ember.run ->
+    record = Travis.Build.find 1
 
-    it 'does not load record on duration, finishedAt and result if job is not in finished state', ->
-      record.get('_duration')
-      record.get('finishedAt')
-      record.get('result')
+    record.loadTheRest = ->
+      ok(false, 'loadTheRest should not be called')
 
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeTruthy()
+    record.get('_duration')
+    record.get('finishedAt')
+    record.get('result')
 
-    it 'loads the rest of the record if it\'s in finished state', ->
-      store.loadIncomplete Travis.Build, { id: 1, state: 'passed' }
-      record = store.find Travis.Build, 1
-      record.get('finishedAt')
+  wait().then ->
+    ok(true, 'loadTheRest was not called')
 
-      waits 50
-      runs ->
-        expect( record.get('incomplete') ).toBeFalsy()
+test 'it loads record on duration, finishedAt and result if job is in finished state', ->
+  expect(1)
 
-  describe 'configKeys', ->
-    it 'takes into account all the jobs when getting config keys', ->
-      buildConfig = { rvm: ['1.9.3', '2.0.0'] }
-      store.load Travis.Build, { id: '1', job_ids: ['1', '2', '3'], config: buildConfig }, { id: '1' }
+  Travis.Build.load [{ id: 1, state: 'passed' }]
 
-      store.load Travis.Job, { id: '1', config: { rvm: '1.9.3', env: 'FOO=foo'       } }, { id: '1' }
-      store.load Travis.Job, { id: '2', config: { rvm: '2.0.0', gemfile: 'Gemfile.1' } }, { id: '2' }
-      store.load Travis.Job, { id: '3', config: { rvm: '1.9.3', jdk: 'OpenJDK'       } }, { id: '3' }
+  Ember.run ->
+    record = Travis.Build.find 1
 
-      build = store.find(Travis.Build, '1')
+    record.loadTheRest = ->
+      ok(true, 'loadTheRest should be called')
 
-      expect( build.get('rawConfigKeys') ).toEqual( ['rvm', 'env', 'gemfile', 'jdk' ] )
-      expect( build.get('configKeys') ).toEqual( [ 'Job', 'Duration', 'Finished', 'Rvm', 'Env', 'Gemfile', 'Jdk' ] )
+    record.get('finishedAt')
+
+  wait()
+
+test 'it takes into account all the jobs when getting config keys', ->
+  buildConfig = { rvm: ['1.9.3', '2.0.0'] }
+  Travis.Build.load [{ id: '1', job_ids: ['1', '2', '3'], config: buildConfig }]
+
+  Travis.Job.load [{ id: '1', config: { rvm: '1.9.3', env: 'FOO=foo'       } }]
+  Travis.Job.load [{ id: '2', config: { rvm: '2.0.0', gemfile: 'Gemfile.1' } }]
+  Travis.Job.load [{ id: '3', config: { rvm: '1.9.3', jdk: 'OpenJDK'       } }]
+
+  build = null
+  rawConfigKeys = null
+  configKeys = null
+  Ember.run ->
+    build = Travis.Build.find '1'
+    rawConfigKeys = build.get('rawConfigKeys')
+    configKeys = build.get('configKeys')
+
+  deepEqual(rawConfigKeys, ['rvm', 'env', 'gemfile', 'jdk' ])
+  deepEqual(configKeys, [ 'Job', 'Duration', 'Finished', 'Ruby', 'ENV', 'Gemfile', 'JDK' ])

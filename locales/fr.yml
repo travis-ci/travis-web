@@ -9,7 +9,6 @@ fr:
     branch: Branche
     build_matrix: Table des versions
     commit: Commit
-    commiter: 
     committer: Committeur
     compare: Comparer
     config: Config
@@ -118,9 +117,7 @@ fr:
       locale: 
       message:
         config: comment configurer des options de version personnalisées
-        your_repos: ! 'Utilisez les boutons ci-dessous pour activer Travis sur vos projets puis déployez sur GitHub.<br />
-
-          Pour tester sur plus de versions de ruby, voir'
+        your_repos: ! 'Utilisez les boutons ci-dessous pour activer Travis sur vos projets puis déployez sur GitHub.'
       messages:
         notice: ! "Pour commencer, veuillez lire notre <a href=\"http://about.travis-ci.org/docs/user/getting-started/\">guide de démarrage</a>.\n <small>Cela ne vous prendra que quelques minutes.</small>"
       token: Jeton

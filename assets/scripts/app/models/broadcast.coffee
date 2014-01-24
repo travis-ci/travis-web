@@ -1,7 +1,7 @@
 require 'travis/model'
 
 @Travis.Broadcast = Travis.Model.extend
-  message: DS.attr('string')
+  message: Ember.attr('string')
 
   toObject: ->
     { type: 'broadcast', id: @get('id'), message: @get('message') }

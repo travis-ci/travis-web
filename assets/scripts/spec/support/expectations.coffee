@@ -1,49 +1,49 @@
 @displaysRepository = (repo) ->
-  expect($('#repo h3 a').attr('href')).toEqual (repo.href)
-  expect($('#repo .github-icon a').attr('href')).toEqual ("http://github.com#{repo.href}")
+  equal($('#repo h3 a').attr('href'), repo.href, 'repository title should link to repo page')
+  equal($('#repo .github-icon a').attr('href'), "https://github.com#{repo.href}", 'github icon should link to repo on github')
 
 @displaysTabs = (tabs) ->
   for name, tab of tabs
-    expect($("#tab_#{name} a").attr('href')).toEqual tab.href unless tab.hidden
-    expect($("#tab_#{name}").hasClass('active')).toEqual !!tab.active
-    expect($("#tab_#{name}").hasClass('display-inline')).toEqual !tab.hidden if name in ['build', 'job']
+    equal($("#tab_#{name} a").attr('href'), tab.href, "#{name} tab should link to #{tab.href}") unless tab.hidden
+    equal($("#tab_#{name}").hasClass('active'), !!tab.active, "#{name} tab should #{'not' unless tab.active} be active")
+    equal($("#tab_#{name}").hasClass('display-inline'), !tab.hidden, "#{name} tab should have class display-inline") if name in ['build', 'job']
 
 @displaysSummaryBuildLink = (link, number) ->
   element = $('#summary .number a')
-  expect( element.attr('href') ).toEqual link
-  expect( element.text().trim() ).toEqual "#{number}"
+  equal( element.attr('href') , link)
+  equal( element.text().trim() , "#{number}")
 
 @displaysSummary = (data) ->
   element = $('#summary .left:first-child dt:first-child')
-  expect(element.text()).toEqual $.camelize(data.type)
+  equal(element.text(), $.camelize(data.type))
 
   element = $('#summary .number a')
-  expect(element.attr('href')).toEqual "/#{data.repo}/#{data.type}s/#{data.id}"
+  equal(element.attr('href'), "/#{data.repo}/#{data.type}s/#{data.id}")
 
   element = $('#summary .finished_at')
-  expect(element.text()).toEqual data.finishedAt
+  equal(element.text(), data.finishedAt)
 
   element = $('#summary .duration')
-  expect(element.text()).toEqual data.duration
+  equal(element.text(), data.duration)
 
   element = $('#summary .commit a')
-  expect(element.attr('href')).toEqual "http://github.com/#{data.repo}/commit/#{data.commit}"
+  equal(element.attr('href'), "https://github.com/#{data.repo}/commit/#{data.commit}")
 
   element = $('#summary .commit a')
-  expect(element.text()).toEqual "#{data.commit} (#{data.branch})"
+  equal(element.text(), "#{data.commit} (#{data.branch})")
 
   element = $('#summary .compare a')
-  expect(element.attr('href')).toEqual "http://github.com/compare/#{data.compare}"
+  equal(element.attr('href'), "https://github.com/compare/#{data.compare}")
 
   element = $('#summary .compare a')
-  expect(element.text()).toEqual data.compare
+  equal(element.text(), data.compare)
 
   element = $('#summary .message')
-  expect(element.text()).toEqual data.message
+  equal(element.text(), data.message)
 
 @displaysLog = (lines) ->
   log = lines.join('')
-  expect($('#log p').text().trim()).toEqual log
+  equal($('#log p').text().trim(), log)
 
 @listsRepos = (items) ->
   listsItems('repo', items)
@@ -52,10 +52,10 @@
   row = $('#repos li')[data.row - 1]
   repo = data.item
 
-  expect($('a.slug', row).attr('href')).toEqual "/#{repo.slug}"
-  expect($('a.last_build', row).attr('href')).toEqual repo.build.url
-  expect($('.duration', row).text()).toEqual repo.build.duration
-  expect($('.finished_at', row).text()).toEqual repo.build.finishedAt
+  equal($('a.slug', row).attr('href'), "/#{repo.slug}")
+  equal($('a.last_build', row).attr('href'), repo.build.url)
+  equal($('.duration', row).text(), repo.build.duration)
+  equal($('.finished_at', row).text(), repo.build.finishedAt)
 
 @listsBuilds = (builds) ->
   listsItems('build', builds)
@@ -64,17 +64,17 @@
   row = $('#builds tbody tr')[data.row - 1]
   build = data.item
 
-  expect($('.number a', row).attr('href')).toEqual "/#{build.slug}/builds/#{build.id}"
-  expect($('.number a', row).text().trim()).toEqual build.number
-  expect($('.message', row).text().trim()).toEqual build.message
-  expect($('.duration', row).text().trim()).toEqual build.duration
-  expect($('.finished_at', row).text().trim()).toEqual build.finishedAt
-  expect($(row).attr('class')).toMatch build.color
+  equal($('.number a', row).attr('href'), "/#{build.slug}/builds/#{build.id}")
+  equal($('.number a', row).text().trim(), build.number)
+  equal($('.message', row).text().trim(), build.message)
+  equal($('.duration', row).text().trim(), build.duration)
+  equal($('.finished_at', row).text().trim(), build.finishedAt)
+  ok($(row).attr('class').match(build.color))
 
 @listsJobs = (data) ->
   table = $(data.table)
   headers = ($(element).text() for element in $("thead th", table))
-  expect(headers).toEqual(data.headers)
+  deepEqual(headers, data.headers)
 
   $.each data.jobs, (row, job) -> listsJob(table: data.table, row: row + 1, item: job)
 
@@ -83,22 +83,22 @@
   job = data.item
 
   element = $(row)
-  expect(element.attr('class')).toMatch job.color
+  ok(element.attr('class').match(job.color))
 
   element = $("td.number", row)
-  expect(element.text().trim()).toEqual job.number
+  equal(element.text().trim(), job.number)
 
   element = $("td.number a", row)
-  expect(element.attr('href')).toEqual "/#{job.repo}/jobs/#{job.id}"
+  equal(element.attr('href'), "/#{job.repo}/jobs/#{job.id}")
 
   element = $("td.duration", row)
-  expect(element.text().trim()).toEqual job.duration
+  equal(element.text().trim(), job.duration)
 
   element = $("td.finished_at", row)
-  expect(element.text().trim()).toEqual job.finishedAt
+  equal(element.text().trim(), job.finishedAt)
 
   element = $("td:nth-child(6)", row)
-  expect(element.text().trim()).toEqual job.rvm
+  equal(element.text().trim(), job.rvm)
 
 @listsQueuedJobs = (jobs) ->
   listsItems('queuedJob', jobs)
@@ -106,19 +106,19 @@
 @listsQueuedJob = (data) ->
   job = data.item
   text = $($("#queue_#{data.name} li")[data.row - 1]).text()
-  expect(text).toContain job.repo
-  expect(text).toContain "##{job.number}"
+  ok(text.match(job.repo), "#{text} should contain #{job.repo}")
+  ok(text.match(job.repo), "#{text} should contain #{job.number}")
 
 @listsQueue = (data) ->
   name = data.item.name
   job  = data.item.item
   text = $($("#queue_#{name} li")[data.row - 1]).text()
-  expect(text).toContain job.repo
-  expect(text).toContain "##{job.number}"
+  ok(text.match(job.repo), "#{text} should contain #{job.repo}")
+  ok(text.match(job.repo), "#{text} should contain #{job.number}")
 
 @listsItems = (type, items) ->
   $.each items, (row, item) =>
-    this["lists#{$.camelize(type)}"](item: item, row: row + 1)
+    window["lists#{$.camelize(type)}"](item: item, row: row + 1)
 
 @listsQueues = (queues) ->
   listsItems('queue', queues)
@@ -128,5 +128,5 @@
   element = $($('ul li', group)[data.row - 1])
   worker = data.item
 
-  expect(element.text()).toContain worker.name
-  expect(element.text()).toContain worker.state
+  ok(element.text().match(worker.name))
+  ok(element.text().match(worker.state))

@@ -9,7 +9,6 @@ es:
     branch: Rama
     build_matrix: Matriz de Builds
     commit: Commit
-    commiter: 
     committer: Committer
     compare: Comparar
     config: Configuración
@@ -118,7 +117,7 @@ es:
       locale: 
       message:
         config: como configurar tus propias opciones para el Build
-        your_repos: ! "  Activa los interruptores para inicial el  Travis service hook para tus proyectos, y haz un Push en GitHub.<br />\n  Para probar varias versiones de ruby, mira"
+        your_repos: ! "  Activa los interruptores para inicial el  Travis service hook para tus proyectos, y haz un Push en GitHub."
       messages:
         notice: ! "Para comenzar, por favor lee nuestra <a href=\"http://about.travis-ci.org/docs/user/getting-started/\">Guía de Inicio </a>.\n  <small>Solo tomará unos pocos minutos.</small>"
       token: Token

@@ -1,7 +1,8 @@
 Travis.RepoController = Travis.Controller.extend
-  bindings: []
-  needs: ['repos', 'currentUser']
+  needs: ['repos', 'currentUser', 'build']
   currentUserBinding: 'controllers.currentUser'
+
+  build: Ember.computed.alias('controllers.build.build')
 
   slug: (-> @get('repo.slug') ).property('repo.slug')
   isLoading: (-> @get('repo.isLoading') ).property('repo.isLoading')
@@ -11,22 +12,26 @@ Travis.RepoController = Travis.Controller.extend
     Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   updateTimes: ->
-    if builds = @get('builds')
-      builds.forEach (b) -> b.updateTimes()
+    Ember.run this, ->
+      if builds = @get('builds')
+        builds.forEach (b) -> b.updateTimes()
 
-    if build = @get('build')
-      build.updateTimes()
+      if build = @get('build')
+        build.updateTimes()
 
-    if build && jobs = build.get('jobs')
-      jobs.forEach (j) -> j.updateTimes()
+      if build && jobs = build.get('jobs')
+        jobs.forEach (j) -> j.updateTimes()
 
   activate: (action) ->
+    @stopObservingLastBuild()
     this["view#{$.camelize(action)}"]()
 
   viewIndex: ->
+    @observeLastBuild()
     @connectTab('current')
 
   viewCurrent: ->
+    @observeLastBuild()
     @connectTab('current')
 
   viewBuilds: ->
@@ -44,15 +49,24 @@ Travis.RepoController = Travis.Controller.extend
   viewJob: ->
     @connectTab('job')
 
+  lastBuildDidChange: ->
+    Ember.run.scheduleOnce('data', this, @_lastBuildDidChange);
+
+  _lastBuildDidChange: ->
+    build = @get('repo.lastBuild')
+    @set('build', build)
+
+  stopObservingLastBuild: ->
+    @removeObserver('repo.lastBuild', this, 'lastBuildDidChange')
+
+  observeLastBuild: ->
+    @lastBuildDidChange()
+    @addObserver('repo.lastBuild', this, 'lastBuildDidChange')
+
   connectTab: (tab) ->
     # TODO: such implementation seems weird now, because we render
     #       in the renderTemplate function in routes
     name = if tab == 'current' then 'build' else tab
-    viewClass = if name in ['builds', 'branches', 'pull_requests']
-      Travis.BuildsView
-    else
-      Travis["#{$.camelize(name)}View"]
-
     @set('tab', tab)
 
   urlGithub: (->

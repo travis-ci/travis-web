@@ -6,7 +6,7 @@ Travis.ReposController = Ember.ArrayController.extend
       'owned'
     else
       'recent'
-  ).property('currentUser')
+  ).property('currentUser.id')
 
   currentUserIdDidChange: (->
     if @get('currentUser.id')
@@ -16,10 +16,10 @@ Travis.ReposController = Ember.ArrayController.extend
   ).observes('currentUser.id')
 
   tabOrIsLoadedDidChange: (->
-    if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0
-
-      @container.lookup('router:main').send('renderNoOwnedRepos')
-  ).observes('isLoaded', 'tab')
+    Ember.run.scheduleOnce 'routerTransitions', this, ->
+      if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0
+        @container.lookup('router:main').send('renderNoOwnedRepos')
+  ).observes('isLoaded', 'tab', 'length')
 
   isLoadedBinding: 'content.isLoaded'
   needs: ['currentUser', 'repo']
@@ -36,7 +36,6 @@ Travis.ReposController = Ember.ArrayController.extend
     Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   recentRepos: (->
-    Travis.Repo.find()
     Travis.LimitedArray.create
       content: Em.ArrayProxy.extend(Em.SortableMixin).create(
         sortProperties: ['sortOrder']
@@ -64,7 +63,14 @@ Travis.ReposController = Ember.ArrayController.extend
     @set('content', @get('recentRepos'))
 
   viewOwned: ->
-    @set('content', Travis.Repo.accessibleBy(@get('currentUser.login')))
+    @set('content', @get('userRepos'))
+
+  userRepos: (->
+    if login = @get('currentUser.login')
+      Travis.Repo.accessibleBy(login)
+    else
+      []
+  ).property('currentUser.login')
 
   viewSearch: (params) ->
     @set('content', Travis.Repo.search(params.search))
@@ -83,3 +89,14 @@ Travis.ReposController = Ember.ArrayController.extend
     @searchLater = Ember.run.later(this, (->
       @activate 'search', search: phrase
     ), 500)
+
+  noReposMessage: (->
+   tab = @get('tab')
+
+   if tab == 'owned'
+    'You don\'t have any repos set up on Travis CI'
+   else if tab == 'recent'
+    'Repositories could not be loaded'
+   else
+    'Could not find any repos'
+  ).property('tab')

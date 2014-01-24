@@ -1,23 +1,23 @@
 <div id="log-container">
-  <a href="#" id="tail" {{action toggleTailing target="view"}}>
+  <a href="#" id="tail" {{action "toggleTailing" target="view"}}>
     <span class="status"></span>
     <label>Follow logs</label>
   </a>
   <pre id="log" class="ansi"></pre>
 
-  <a href='#' class="to-top" {{action toTop target="view"}}>To top</a>
+  <a href='#' class="to-top" {{action "toTop" target="view"}}>To top</a>
 
   {{#if view.job.sponsor.name}}
     <p class="sponsor">
       {{t builds.messages.sponsored_by}}
-      <a {{bindAttr href="sponsor.url"}}>{{sponsor.name}}</a>
+      <a {{bind-attr href="sponsor.url"}}>{{sponsor.name}}</a>
     </p>
   {{/if}}
 
   {{#if view.limited}}
     <p class="warning">
       This log is too long to be displayed. Please reduce the verbosity of your
-      build or download the the <a {{bindAttr href="view.plainTextLogUrl"}}>raw log</a>.
+      build or download the the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
     </p>
   {{/if}}
 </div>
