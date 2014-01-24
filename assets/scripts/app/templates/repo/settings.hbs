@@ -4,19 +4,19 @@
   {{#travis-tabs}}
     {{#travis-tab "general" "General Settings"}}
       {{#settings-form}}
-        <p>
-          {{travis-switch action="save" active=settings.builds_only_with_travis_yml}}
+        <p class="settings-row">
           Build only commits with .travis.yml file
+          {{travis-switch action="save" active=settings.builds_only_with_travis_yml}}
         </p>
 
-        <p>
-          {{travis-switch action="save" active=settings.build_pushes}}
+        <p class="settings-row">
           Build pushes
+          {{travis-switch action="save" active=settings.build_pushes}}
         </p>
 
-        <p>
-          {{travis-switch action="save" active=settings.build_pull_requests}}
+        <p class="settings-row">
           Build pull requests
+          {{travis-switch action="save" active=settings.build_pull_requests}}
         </p>
       {{/settings-form}}
     {{/travis-tab}}
