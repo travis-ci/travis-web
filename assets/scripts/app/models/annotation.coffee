@@ -4,7 +4,7 @@ require 'travis/model'
   jobId:        Ember.attr('number')
   description:  Ember.attr('string')
   url:          Ember.attr('string')
-  image:        Ember.attr('object')
+  status:       Ember.attr('string')
   providerName: Ember.attr('string')
 
   job: Ember.belongsTo('Travis.Job')

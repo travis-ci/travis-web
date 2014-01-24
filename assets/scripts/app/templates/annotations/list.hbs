@@ -2,11 +2,7 @@
   {{#each annotation in view.annotations}}
     <div class="annotation">
       <a {{bindAttr href="annotation.url"}}>
-        {{#if annotation.image}}
-          <img {{bindAttr src="annotation.image.url" alt="annotation.image.alt"}}>
-        {{else}}
-          {{annotation.providerName}}
-        {{/if}}
+          {{annotation.status}} {{annotation.providerName}}
       </a>:
       {{annotation.description}}
     </div>
