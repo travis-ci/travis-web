@@ -23,13 +23,14 @@ Travis.ajax = Em.Object.create
     !result
 
   ajax: (url, method, options) ->
+    method = method || "GET"
     method = method.toUpperCase()
 
     endpoint = Travis.config.api_endpoint || ''
     options = options || {}
 
     token = Travis.sessionStorage.getItem('travis.token')
-    if token && Travis.ajax.needsAuth(method, url)
+    if token && (Travis.ajax.needsAuth(method, url) || options.forceAuth)
       options.headers ||= {}
       options.headers['Authorization'] ||= "token #{token}"
 

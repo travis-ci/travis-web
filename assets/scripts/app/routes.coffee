@@ -26,7 +26,7 @@ Ember.Route.reopen
         authController.set('redirected', true)
         @transitionTo('auth')
       else
-        throw(error)
+        @_super(error)
 
     renderNoOwnedRepos: ->
       @render('no_owned_repos', outlet: 'main')
@@ -39,6 +39,7 @@ Ember.Route.reopen
 
     afterSignOut: ->
       @afterSignOut()
+
 
   afterSignIn: ->
     if transition = Travis.auth.get('afterSignInTransition')
@@ -78,6 +79,13 @@ Ember.Route.reopen
       Travis.storeAfterSignInPath(path)
       @transitionTo('auth')
 
+Travis.Router.reopen
+  transitionTo: ->
+    this.container.lookup('controller:repo').set('lineNumber', null)
+
+    @_super.apply this, arguments
+
+
 Travis.Router.map ->
   @resource 'index', path: '/', ->
     @route 'current', path: '/'
@@ -88,6 +96,11 @@ Travis.Router.map ->
       @resource 'builds', path: '/builds'
       @resource 'pullRequests', path: '/pull_requests'
       @resource 'branches', path: '/branches'
+
+    # this can't be nested in repo, because we want a set of different
+    # templates rendered for settings (for example no "current", "builds", ... tabs)
+    @resource 'repo.settings', path: '/:owner/:name/settings', ->
+      @route 'tab', path: ':tab'
 
   @route 'getting_started'
   @route 'first_sync'
@@ -111,7 +124,7 @@ Travis.SetupLastBuild = Ember.Mixin.create
     repo = @controllerFor('repo').get('repo')
     if repo && repo.get('isLoaded') && !repo.get('lastBuildId')
       Ember.run.next =>
-        @render('builds/not_found', outlet: 'pane', into: 'repo')
+        @render('builds/not_found', into: 'repo', outlet: 'pane')
 
 Travis.GettingStartedRoute = Ember.Route.extend
   setupController: ->
@@ -144,7 +157,7 @@ Travis.FirstSyncRoute = Ember.Route.extend
 Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
   renderTemplate: ->
     @render 'repo'
-    @render 'build', outlet: 'pane', into: 'repo'
+    @render 'build', into: 'repo', outlet: 'pane'
 
   setupController: ->
     @_super.apply this, arguments
@@ -161,7 +174,7 @@ Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
 
 Travis.AbstractBuildsRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'builds', outlet: 'pane', into: 'repo'
+    @render 'builds', into: 'repo', outlet: 'pane'
 
   setupController: ->
     @controllerFor('repo').activate(@get('contentType'))
@@ -186,7 +199,7 @@ Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches'
 
 Travis.BuildRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'build', outlet: 'pane', into: 'repo'
+    @render 'build', into: 'repo', outlet: 'pane'
 
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
@@ -207,7 +220,7 @@ Travis.BuildRoute = Ember.Route.extend
 
 Travis.JobRoute = Ember.Route.extend
   renderTemplate: ->
-    @render 'job', outlet: 'pane', into: 'repo'
+    @render 'job', into: 'repo', outlet: 'pane'
 
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
@@ -234,7 +247,7 @@ Travis.RepoIndexRoute = Ember.Route.extend Travis.SetupLastBuild,
     @controllerFor('repo').activate('current')
 
   renderTemplate: ->
-    @render 'build', outlet: 'pane', into: 'repo'
+    @render 'build', into: 'repo', outlet: 'pane'
 
 Travis.RepoRoute = Ember.Route.extend
   renderTemplate: ->
@@ -253,7 +266,6 @@ Travis.RepoRoute = Ember.Route.extend
 
   model: (params) ->
     slug = "#{params.owner}/#{params.name}"
-
     Travis.Repo.fetchBySlug(slug)
 
   actions:
@@ -310,7 +322,7 @@ Travis.ProfileRoute = Ember.Route.extend
     @render 'top', outlet: 'top'
     @render 'accounts', outlet: 'left'
     @render 'flash', outlet: 'flash'
-    @render 'profile'
+    @_super.apply(this, arguments)
 
 Travis.ProfileIndexRoute = Ember.Route.extend
   setupController: ->
@@ -378,3 +390,25 @@ Travis.AuthRoute = Ember.Route.extend
 
   deactivate: ->
     @controllerFor('auth').set('redirected', false)
+
+Travis.RepoSettingsRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    # TODO: if repo is just a data hash with id and slug load it
+    #       as incomplete record
+    model = Travis.Repo.find(model.id) if model && !model.get
+    @_super(controller, model)
+
+  serialize: (repo) ->
+    slug = if repo.get then repo.get('slug') else repo.slug
+    [owner, name] = slug.split('/')
+    { owner: owner, name: name }
+
+  model: (params) ->
+    slug = "#{params.owner}/#{params.name}"
+    Travis.Repo.fetchBySlug(slug)
+
+  afterModel: (repo) ->
+    # I'm using afterModel to fetch settings, because model is not always called.
+    # If link-to already provides a model, it will be just set as a route context.
+    repo.fetchSettings().then (settings) ->
+      repo.set('settings', settings)

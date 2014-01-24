@@ -23,7 +23,7 @@
           <p class="description">{{hook.description}}</p>
 
           <div class="controls">
-            <a {{bind-attr href="hook.urlGithubAdmin"}} class="github-admin tool-tip" title="Github service hooks admin page"></a>
+            {{#link-to "repo.settings" hook.repo class="repo-settings-icon tool-tip" title="Repository settings"}}{{/link-to}}
             {{travis-switch action="toggle" target=hook}}
           </div>
         </li>
