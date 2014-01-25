@@ -17,7 +17,7 @@ By default it uses the official API at `https://api.travis-ci.org`, but you
 can customize the API server URL using:
 
 
-    API_ENDPOINT="http://localhost:300/" bundle exec foreman start
+    API_ENDPOINT="http://localhost:3000/" bundle exec foreman start
 
 This will run against API run locally.
 
