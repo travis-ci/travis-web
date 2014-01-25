@@ -98,7 +98,7 @@ en:
       stats: Stats
       status: Status
   locales:
-    ca: 
+    ca:
     de: Deutsch
     en: English
     es: Español
@@ -135,6 +135,7 @@ en:
     image_url: Image URL
     markdown: Markdown
     message: Message
+    pod: POD
     rdoc: RDOC
     started_at: Started
     tabs:
@@ -144,7 +145,7 @@ en:
       current: Current
       job: Job
       pull_requests: Pull Requests
-    test: 
+    test:
     textile: Textile
   repository:
     duration: Duration

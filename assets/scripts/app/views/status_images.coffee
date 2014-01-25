@@ -55,3 +55,7 @@ Travis.StatusImagesView = Em.View.extend
   rstStatusImage: (->
     ".. image:: #{@get('statusImageUrl')}   :target: #{@get('urlRepo')}"
   ).property('statusImageUrl')
+
+  podStatusImage: (->
+    "=for HTML <a href=\"#{@get('urlRepo')}\"><img src=\"#{@get('statusImageUrl')}\"></a>"
+  ).property('statusImageUrl')
