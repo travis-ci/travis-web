@@ -18,6 +18,8 @@ require 'travis/model'
   build:  Ember.belongsTo('Travis.Build')
   commit: Ember.belongsTo('Travis.Commit')
 
+  annotations: Ember.hasMany('Travis.Annotation')
+
   _config: Ember.attr('object', key: 'config')
 
   log: ( ->

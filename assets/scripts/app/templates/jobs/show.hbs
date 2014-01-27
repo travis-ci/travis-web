@@ -46,6 +46,8 @@
       <dd class="message">{{formatMessage job.commit.message repoBinding=job.repo}}</dd>
     </dl>
 
+    {{view Travis.AnnotationsView annotationsBinding="view.annotations"}}
+
     {{view Travis.LogView jobBinding="job"}}
   </div>
 {{else}}

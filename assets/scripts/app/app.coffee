@@ -23,7 +23,7 @@ unless window.TravisApplication
     ).property()
 
     modelClasses: (->
-      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook]
+      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook, Travis.Annotation]
     ).property()
 
     setup: ->

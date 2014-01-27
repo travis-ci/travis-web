@@ -78,6 +78,8 @@ Travis.RestAdapter = DS.RESTAdapter.extend
     accounts:     Travis.Account
     worker:       Travis.Worker
     workers:      Travis.Worker
+    annotation:   Travis.Annotation
+    annotations:  Travis.Annotation
 
   plurals:
     repositories: 'repositories',
@@ -89,6 +91,7 @@ Travis.RestAdapter = DS.RESTAdapter.extend
     job:        'jobs'
     worker:     'workers'
     profile:    'profile'
+    annotation: 'annotations'
 
   ajax: ->
     Travis.ajax.ajax.apply(this, arguments)
@@ -139,6 +142,7 @@ Travis.RestAdapter.map 'Travis.Job', {
   repoId: { key: 'repository_id' }
   repo:   { key: 'repository_id' }
   _config: { key: 'config' }
+  annotations: { key: 'annotation_ids' }
 }
 
 Travis.RestAdapter.map 'Travis.User', {
