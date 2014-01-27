@@ -13,5 +13,3 @@ Travis.CurrentUserController = Em.ObjectController.extend
       Ember.run.scheduleOnce 'routerTransitions', this, ->
         @container.lookup('router:main').send('renderFirstSync')
   ).observes('isSyncing', 'content')
-
-  updateLocale: delegate('updateLocale', to: 'content')

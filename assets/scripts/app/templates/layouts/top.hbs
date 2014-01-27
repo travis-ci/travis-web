@@ -4,24 +4,24 @@
 
 <ul id="navigation">
   <li class="home">
-    {{#link-to "index.current"}}{{t layouts.top.home}}{{/link-to}}
+    {{#link-to "index.current"}}Home{{/link-to}}
   </li>
   <li>
-    <a href="http://blog.travis-ci.com">{{t layouts.top.blog}}</a>
+    <a href="http://blog.travis-ci.com">Blog</a>
   </li>
   <li>
-    <a href="http://status.travis-ci.com">{{t layouts.top.status}}</a>
+    <a href="http://status.travis-ci.com">Status</a>
   </li>
   <li class="menu community">
     <p class="handle">
       <a href="#">Help</a>
     </p>
     <ul>
-      <li><a href="http://docs.travis-ci.com">{{t layouts.top.docs}}</a></li>
+      <li><a href="http://docs.travis-ci.com">Docs</a></li>
       <li><a href="http://docs.travis-ci.com/newsletter">Newsletter</a></li>
       <li><a href="https://github.com/travis-ci/travis-ci/issues/new">File an Issue</a></li>
-      <li><a href="https://twitter.com/travisci">{{t layouts.about.twitter}}</a></li>
-      <li><a href="https://groups.google.com/group/travis-ci">{{t layouts.about.mailing_list}}</a></li>
+      <li><a href="https://twitter.com/travisci">Twitter</a></li>
+      <li><a href="https://groups.google.com/group/travis-ci">Mailing List</a></li>
       <li><a href="irc://irc.freenode.net#travis">IRC</a></li>
       <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
     </ul>
@@ -32,21 +32,21 @@
   <li {{bind-attr class="view.classProfile"}}>
     <p class="handle">
       {{#if signedOut}}
-        <a class="signed-out" href="#" {{action "signIn" target="Travis"}}>{{t layouts.top.github_login}}</a>
+        <a class="signed-out" href="#" {{action "signIn" target="Travis"}}>Sign in with Github</a>
       {{/if}}
       {{#if signedIn}}
         {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/link-to}}
       {{/if}}
       {{#if signingIn}}
-        <span class="signing-in">{{t layouts.top.signing_in}}</span>
+        <span class="signing-in">Signing In</span>
       {{/if}}
     </p>
     <ul>
       <li>
-        {{#link-to "profile.index" class="signed-in"}}{{t layouts.top.accounts}}{{/link-to}}
+        {{#link-to "profile.index" class="signed-in"}}Accounts{{/link-to}}
       </li>
       <li>
-        <a href="/" {{action "signOut" target="Travis"}}>{{t layouts.top.sign_out}}</a>
+        <a href="/" {{action "signOut" target="Travis"}}>Sign Out</a>
       </li>
     </ul>
   </li>

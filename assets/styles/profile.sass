@@ -10,22 +10,29 @@
 
     img
       float: left
-      width: 48px
-      height: 48px
+      width: 100px
+      height: 100px
       margin: 3px 20px 0 0
-      @include border-radius(4px)
+      @include border-radius(100px)
       background-color: $color-bg-light
 
     dl.profile
       display: table
+      font-size: 18px
+      line-height: 30px
       margin: 0 0 20px 0
       div
         display: table-row
       dt
+        color: #939386
+        font-weight: 600
         display: table-cell
         padding-right: 20px
       dd
         margin-left: 0
+        color: #337389
+        a
+          color: #337389
 
     form
       clear: left

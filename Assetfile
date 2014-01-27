@@ -1,7 +1,6 @@
 $: << 'lib'
 
 require 'rake-pipeline-web-filters'
-require 'rake-pipeline-i18n-filters'
 require 'travis/assets'
 require 'compass'
 
@@ -11,13 +10,6 @@ Encoding.default_internal = Encoding::UTF_8
 assets ||= Travis::Assets.new
 assets.setup_compass
 assets.update_version
-
-output 'assets/scripts/config'
-input 'locales' do
-  match '**/*.yml' do
-    i18n_js { 'locales.js' }
-  end
-end
 
 output 'public/scripts'
 input assets.scripts do

@@ -2,21 +2,21 @@
   <table id="builds" class="list">
     <thead>
       <tr>
-        <th>{{t builds.name}}</th>
-        <th>{{t builds.message}}</th>
+        <th>Build</th>
+        <th>Message</th>
         <th>
-          {{t builds.commit}}
+          Commit
         </th>
         <th class="committer">
-          {{t builds.committer}}
+          Committer
         </th>
         {{#if view.isPullRequestsList}}
           <th>
-            {{t builds.pr}}
+            PR
           </th>
         {{/if}}
-        <th>{{t builds.duration}}</th>
-        <th>{{t builds.finished_at}}</th>
+        <th>Duration</th>
+        <th>Finished</th>
       </tr>
     </thead>
 

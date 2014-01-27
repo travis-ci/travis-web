@@ -11,38 +11,38 @@
             {{/if}}
           {{/if}}
         </dd>
-        <dt>{{t jobs.state}}</dt>
+        <dt>state</dt>
         <dd class="state">{{capitalize job.state}}</dd>
-        <dt class="finished_at_label">{{t jobs.finished_at}}</dt>
+        <dt class="finished_at_label">Finished</dt>
         <dd class="finished_at timeago" {{bind-attr title="job.formattedFinishedAt"}}>{{formatTime job.finishedAt}}</dd>
-        <dt>{{t jobs.duration}}</dt>
+        <dt>Duration</dt>
         <dd class="duration" {{bind-attr title="startedAt"}}>{{formatDuration job.duration}}</dd>
       </div>
 
       {{#with job}}
         <div class="right">
-          <dt>{{t jobs.commit}}</dt>
+          <dt>Commit</dt>
           <dd class="commit"><a {{bind-attr href="controller.urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
           {{#if build.pullRequest}}
-            <dt>{{t builds.pull_request}}</dt>
+            <dt></dt>
             <dd class="pull_request"><a {{bind-attr href="commit.compareUrl"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
           {{else}}
             {{#if commit.compareUrl}}
-              <dt>{{t jobs.compare}}</dt>
+              <dt>Compare</dt>
               <dd class="compare"><a {{bind-attr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
             {{/if}}
           {{/if}}
           {{#if commit.authorName}}
-            <dt>{{t jobs.author}}</dt>
+            <dt>Author</dt>
             <dd class="author">{{commit.authorName}}</dd>
           {{/if}}
           {{#if commit.committerName}}
-            <dt>{{t jobs.committer}}</dt>
+            <dt>Committer</dt>
             <dd class="committer">{{commit.committerName}}</dd>
           {{/if}}
         </div>
       {{/with}}
-      <dt>{{t jobs.message}}</dt>
+      <dt>Message</dt>
       <dd class="message">{{formatMessage job.commit.message repoBinding=job.repo}}</dd>
     </dl>
 

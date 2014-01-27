@@ -3,7 +3,7 @@
     <h5>
       {{#if repo.slug}}
         {{#link-to "repo" repo currentWhen="repo.index"}}
-          {{t repositories.tabs.current}}
+          Current
         {{/link-to}}
       {{/if}}
     </h5>
@@ -12,7 +12,7 @@
     <h5>
       {{#if repo.slug}}
         {{#link-to "builds" repo}}
-          {{t repositories.tabs.build_history}}
+          Build History
         {{/link-to}}
       {{/if}}
     </h5>
@@ -21,7 +21,7 @@
     <h5>
       {{#if repo.slug}}
         {{#link-to "pullRequests" repo}}
-          {{t repositories.tabs.pull_requests}}
+          Pull Requests
         {{/link-to}}
       {{/if}}
     </h5>
@@ -30,7 +30,7 @@
     <h5>
       {{#if repo.slug}}
         {{#link-to "branches" repo}}
-          {{t repositories.tabs.branches}}
+          Branch Summary
         {{/link-to}}
       {{/if}}
     </h5>
@@ -40,7 +40,7 @@
       {{#if build.id}}
         {{#if repo.slug}}
           {{#link-to "build" repo build}}
-            {{t repositories.tabs.build}} #{{build.number}}
+            Build #{{build.number}}
           {{/link-to}}
         {{/if}}
       {{/if}}
@@ -51,7 +51,7 @@
       {{#if job.id}}
         {{#if repo.slug}}
           {{#link-to "job" repo job}}
-            {{t repositories.tabs.job}} #{{job.number}}
+            Job #{{job.number}}
           {{/link-to}}
         {{/if}}
       {{/if}}

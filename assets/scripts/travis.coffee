@@ -154,7 +154,6 @@ Travis.Router.reopen
 Ember.LinkView.reopen
   loadingClass: 'loading_link'
 
-require 'ext/i18n'
 require 'travis/ajax'
 require 'travis/adapter'
 require 'routes'
@@ -168,8 +167,6 @@ require 'tailing'
 require 'templates'
 require 'views'
 require 'components'
-
-require 'config/locales'
 
 require 'travis/instrumentation'
 

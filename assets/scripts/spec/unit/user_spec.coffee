@@ -17,7 +17,6 @@ test '', ->
     created_at: "2011-05-10T15:43:59Z"
     gravatar_id: "582034b63279abeaa8e76acf12f5ee30"
     is_syncing: false
-    locale: "en"
     name: "Tyrion"
     synced_at: "2013-12-09T09:41:47Z"
   }

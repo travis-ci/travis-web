@@ -1,6 +1,6 @@
 <a href="#" class="close" {{action "close" target="view"}}></a>
 <p>
-  <label>{{t repositories.branch}}:</label>
+  <label>Branch:</label>
   {{#if view.branches.isLoaded}}
     {{view Ember.Select contentBinding="view.branches" selectionBinding="view.statusImageBranch" optionLabelPath="content.commit.branch" optionValuePath="content.commit.branch"}}
   {{else}}
@@ -8,27 +8,27 @@
   {{/if}}
 </p>
 <p>
-  <label>{{t repositories.image_url}}:</label>
+  <label>Image URL:</label>
   <input type="text" class="url" {{bind-attr value="view.statusImageUrl"}}></input>
 </p>
 <p>
-  <label>{{t repositories.markdown}}:</label>
+  <label>Markdown:</label>
   <input type="text" class="markdown" {{bind-attr value="view.markdownStatusImage"}}></input>
 </p>
 <p>
-  <label>{{t repositories.textile}}:</label>
+  <label>Textile:</label>
   <input type="text" class="textile" {{bind-attr value="view.textileStatusImage"}}></input>
 </p>
 <p>
-  <label>{{t repositories.rdoc}}:</label>
+  <label>RDOC:</label>
   <input type="text" class="rdoc" {{bind-attr value="view.rdocStatusImage"}}></input>
 </p>
 <p>
-  <label>{{t repositories.asciidoc}}:</label>
+  <label>AsciiDoc:</label>
   <input type="text" class="asciidoc" {{bind-attr value="view.asciidocStatusImage"}}></input>
 </p>
 <p>
-  <label>{{t repositories.rst}}:</label>
+  <label>:</label>
   <input type="text" class="rst" {{bind-attr value="view.rstStatusImage"}}></input>
 </p>
 <p>

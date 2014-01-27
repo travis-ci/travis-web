@@ -1,7 +1,7 @@
 <ul id="queues">
 {{#each queue in controller}}
   <li class="queue">
-    <h4>{{t queue}}: {{queue.name}}</h4>
+    <h4>Queue: {{queue.name}}</h4>
     <ul {{bind-attr id="queue.id"}}>
       {{#each job in queue}}
         {{#view Travis.QueueItemView jobBinding="job"}}
@@ -15,7 +15,7 @@
           {{/if}}
         {{/view}}
       {{else}}
-        {{t no_job}}
+        There are no jobs
       {{/each}}
     </ul>
 

@@ -2,12 +2,12 @@
   {{#if view.required}}
     <table id="jobs" class="list">
       <caption>
-        {{t jobs.build_matrix}}
+        Build Matrix
       </caption>
   {{else}}
     <table id="allowed_failure_jobs" class="list">
       <caption>
-        {{t jobs.allowed_failures}}
+        Allowed Failures
         <a title="What's this?" class="help open-popup" name="help-allowed_failures" {{action "popup" target="view"}}></a>
       </caption>
   {{/if}}
@@ -46,7 +46,7 @@
   {{#unless view.required}}
     <div id="help-allowed_failures" class="popup">
       <a href="#" class="close" {{action "popupClose" target="view"}}></a>
-      <h4>{{t "jobs.allowed_failures"}}</h4>
+      <h4></h4>
       <p>
         Allowed Failures are items in your build matrix that are allowed to
         fail without causing the entire build to be shown as failed.
