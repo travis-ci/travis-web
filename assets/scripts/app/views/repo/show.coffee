@@ -239,7 +239,6 @@ Travis.reopen
     ).property('tab')
 
     displayCodeClimate: (->
-      console.log @get('repo.githubLanguage')
       Travis.config.code_climate == "true" and @get('repo.githubLanguage') == 'Ruby'
     ).property('repo.githubLanguage')
 
