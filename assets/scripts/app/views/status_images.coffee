@@ -44,6 +44,10 @@ Travis.StatusImagesView = Em.View.extend
     "!#{@get('statusImageUrl')}!:#{@get('urlRepo')}"
   ).property('statusImageUrl')
 
+  orgmodeStatusImage: (->
+    "[[@get('urlRepo')][@get('statusImageUrl')]]"
+  ).property('statusImageUrl')
+
   rdocStatusImage: (->
     "{<img src=\"#{@get('statusImageUrl')}\" alt=\"Build Status\" />}[#{@get('urlRepo')}]"
   ).property('statusImageUrl')
