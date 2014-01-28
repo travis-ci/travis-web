@@ -63,6 +63,7 @@ Travis.Adapter = Ember.RESTAdapter.extend
       # we need to skip records of type, which is loaded by adapter already
       if (type = Ember.get(Travis, 'mappings')[name]) && type != klass
         for record in records
-          type.findFromCacheOrLoad(record)
+          record = type.findFromCacheOrLoad(record)
+          @addToRecordArrays(record)
 
 
