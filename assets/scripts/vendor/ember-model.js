@@ -196,6 +196,8 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
       throw new Error('FilteredRecordArrays must be created with filterProperties');
     }
 
+    this._recordsCache = Ember.A([]);
+
     var modelClass = get(this, 'modelClass');
     modelClass.registerRecordArray(this);
 
@@ -233,9 +235,15 @@ Ember.FilteredRecordArray = Ember.RecordArray.extend({
     });
   },
 
+  recordIsObserved: function(record) {
+    return this._recordsCache.contains(record);
+  },
+
   registerObserversOnRecord: function(record) {
     var self = this,
         filterProperties = get(this, 'filterProperties');
+
+    this._recordsCache.pushObject(record);
 
     for (var i = 0, l = get(filterProperties, 'length'); i < l; i++) {
       record.addObserver(filterProperties[i], self, 'updateFilterForRecord');
@@ -1023,17 +1031,18 @@ Ember.Model.reopenClass({
     return record;
   },
 
-
   addToRecordArrays: function(record) {
-    if (this._findAllRecordArray) {
+    if (this._findAllRecordArray && !this._findAllRecordArray.contains(record)) {
       this._findAllRecordArray.pushObject(record);
     }
     if (this.recordArrays) {
       this.recordArrays.forEach(function(recordArray) {
         if (recordArray instanceof Ember.FilteredRecordArray) {
-          recordArray.registerObserversOnRecord(record);
-          recordArray.updateFilterForRecord(record);
-        } else {
+          if(!recordArray.recordIsObserved(record)) {
+            recordArray.registerObserversOnRecord(record);
+            recordArray.updateFilterForRecord(record);
+          }
+        } else if(!recordArray.contains(record)) {
           recordArray.pushObject(record);
         }
       });
