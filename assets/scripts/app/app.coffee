@@ -20,6 +20,8 @@ unless window.TravisApplication
       accounts:     Travis.Account
       worker:       Travis.Worker
       workers:      Travis.Worker
+      annotation:   Travis.Annotation
+      annotations:  Travis.Annotation
     ).property()
 
     modelClasses: (->
