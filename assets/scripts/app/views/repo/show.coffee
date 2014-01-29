@@ -124,10 +124,6 @@ Travis.reopen
       Travis.Urls.statusImage(@get('slug'))
     ).property('slug')
 
-    displayStatusImages: (->
-      @get('hasPermission')
-    ).property('hasPermission')
-
     statusImages: ->
       @popupCloseAll()
       view = Travis.StatusImagesView.create(toolsView: this)
