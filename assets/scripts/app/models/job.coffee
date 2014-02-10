@@ -70,7 +70,7 @@ require 'travis/model'
   )
 
   requeue: ->
-    Travis.ajax.post '/requests', job_id: @get('id')
+    Travis.ajax.post "/jobs/#{@get('id')}/restart"
 
   appendLog: (part) ->
     @get('log').append part
