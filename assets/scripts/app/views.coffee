@@ -45,7 +45,6 @@ Travis.FirstSyncView = Travis.View.extend
         )
       , Travis.config.syncingPageRedirectionTime
 
-
 require 'views/accounts'
 require 'views/annotation'
 require 'views/application'

@@ -105,13 +105,6 @@ require 'travis/model'
   regenerateKey: (options) ->
     Travis.ajax.ajax '/repos/' + @get('id') + '/key', 'post', options
 
-  fetchSettings: ->
-    Travis.ajax.ajax('/repos/' + @get('id') + '/settings', 'get', forceAuth: true).then (data) ->
-      data['settings']
-
-  saveSettings: (settings) ->
-    Travis.ajax.ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
-
 @Travis.Repo.reopenClass
   recent: ->
     @find()
@@ -147,10 +140,7 @@ require 'travis/model'
     if repos.length > 0
       repos[0]
     else
-      @fetch(slug: slug).then (repos) ->
-        error = new Error('repo not found')
-        error.slug = slug
-        Ember.get(repos, 'firstObject') || throw(error)
+      @fetch(slug: slug).then (repos) -> Ember.get(repos, 'firstObject')
 
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'

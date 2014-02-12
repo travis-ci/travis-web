@@ -11,12 +11,6 @@
         </a>
       </li>
     {{/if}}
-    {{#if view.displaySettingsLink}}
-      <li>
-        {{#linkTo "repo.settings" view.repo}}Settings{{/linkTo}}
-      </li>
-    {{/if}}
-
   </ul>
   <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target="view"}}>
     <img {{bind-attr src="view.statusImageUrl"}} title="Build Status Images"/>
