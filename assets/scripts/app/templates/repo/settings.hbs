@@ -1,0 +1,24 @@
+<div id="repo">
+  <h3>Settings: {{#linkTo "repo" this}}{{slug}}{{/linkTo}}</h3>
+
+  {{#travis-tabs}}
+    {{#travis-tab "general" "General Settings"}}
+      {{#settings-form}}
+        <p class="settings-row">
+          Build only commits with .travis.yml file
+          {{travis-switch action="save" active=settings.builds_only_with_travis_yml}}
+        </p>
+
+        <p class="settings-row">
+          Build pushes
+          {{travis-switch action="save" active=settings.build_pushes}}
+        </p>
+
+        <p class="settings-row">
+          Build pull requests
+          {{travis-switch action="save" active=settings.build_pull_requests}}
+        </p>
+      {{/settings-form}}
+    {{/travis-tab}}
+  {{/travis-tabs}}
+</div>

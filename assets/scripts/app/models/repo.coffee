@@ -105,6 +105,13 @@ require 'travis/model'
   regenerateKey: (options) ->
     Travis.ajax.ajax '/repos/' + @get('id') + '/key', 'post', options
 
+  fetchSettings: ->
+    Travis.ajax.ajax('/repos/' + @get('id') + '/settings', 'get', forceAuth: true).then (data) ->
+      data['settings']
+
+  saveSettings: (settings) ->
+    Travis.ajax.ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
+
 @Travis.Repo.reopenClass
   recent: ->
     @find()

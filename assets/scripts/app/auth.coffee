@@ -71,7 +71,7 @@
         try
           router.send('afterSignIn')
         catch e
-          throw e unless e =~ /There are no active handlers/
+          throw e unless e =~ /There are no active handlers/ || e =~ /Can't trigger action "afterSignIn/
         @refreshUserData(data.user)
 
   refreshUserData: (user) ->
