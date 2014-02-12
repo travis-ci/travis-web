@@ -10,10 +10,12 @@ Travis.TravisSwitchComponent = Ember.Component.extend
   ).property('target.active', 'active')
 
   click: ->
-    if target = @get('target')
-      @set('target.active', !@get('target.active'))
-    else
-      @set('active', !@get('active'))
+    target = @get('target')
+    if @get('toggleAutomatically') != 'false'
+      if target
+        @set('target.active', !@get('target.active'))
+      else
+        @set('active', !@get('active'))
     # allow for bindings to propagate
     Ember.run.next this, ->
       @sendAction('action', target)
