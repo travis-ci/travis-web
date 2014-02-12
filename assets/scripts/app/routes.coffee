@@ -268,10 +268,6 @@ Travis.IndexRoute = Ember.Route.extend
     @container.lookup('controller:repos').activate()
     @container.lookup('controller:application').connectLayout 'home'
 
-Travis.IndexLoadingRoute = Ember.Route.extend
-  renderTemplate: ->
-    @render('index_loading')
-
 Travis.StatsRoute = Ember.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'stats')
