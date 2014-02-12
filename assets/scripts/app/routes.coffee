@@ -252,9 +252,15 @@ Travis.RepoRoute = Ember.Route.extend
     Travis.Repo.fetchBySlug(slug)
 
   actions:
-    error: ->
-      Ember.run.next this, ->
-        @render('repos/not_found', outlet: 'main')
+    error: (error) ->
+      # if error throwed has a slug (ie. it was probably repo not found)
+      # set the slug on index.error controller to allow to properly
+      # display the repo information
+      if error.slug
+        this.controllerFor('index.error').set('slug', error.slug)
+
+      # bubble to the top
+      return true
 
 Travis.IndexRoute = Ember.Route.extend
   renderTemplate: ->

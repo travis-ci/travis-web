@@ -77,7 +77,9 @@ $.mockjax
     if !settings.data
       this.responseText = { repos: repos }
     else if slug = settings.data.slug
-      this.responseText = { repos: [$.detect(repos, (repository) -> repository.slug == slug)] }
+      repo = $.detect(repos, (repository) -> repository.slug == slug)
+      repos = if repo then [repo] else []
+      this.responseText = { repos: repos }
     else if search = settings.data.search
       this.responseText = { repos: $.select(repos, (repository) -> repository.slug.indexOf(search) > -1).toArray() }
     else if settings.data.member

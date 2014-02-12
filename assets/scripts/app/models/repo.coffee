@@ -140,7 +140,10 @@ require 'travis/model'
     if repos.length > 0
       repos[0]
     else
-      @fetch(slug: slug).then (repos) -> Ember.get(repos, 'firstObject')
+      @fetch(slug: slug).then (repos) ->
+        error = new Error('repo not found')
+        error.slug = slug
+        Ember.get(repos, 'firstObject') || throw(error)
 
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'

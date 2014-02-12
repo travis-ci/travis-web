@@ -48,6 +48,8 @@ Travis.FirstSyncController = Em.Controller.extend
 
   isSyncing: Ember.computed.alias('user.isSyncing')
 
+Travis.IndexErrorController = Em.Controller.extend()
+
 require 'controllers/accounts'
 require 'controllers/build'
 require 'controllers/builds'
