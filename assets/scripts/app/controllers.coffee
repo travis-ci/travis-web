@@ -57,13 +57,7 @@ Travis.RepoSettingsController = Em.ObjectController.extend
   settings: Ember.computed.alias('model.settings')
 
   save: ->
-    @set('saving', true)
-    self = this
-    @get('model').saveSettings(@get('settings')).then ->
-      self.set('saving', false)
-      Travis.flash(success: 'Settings were saved successfully')
-    , ->
-      self.set('saving', false)
+    @get('model').saveSettings(@get('settings')).then null, ->
       Travis.flash(error: 'There was an error while saving settings. Please try again.')
 
 require 'controllers/accounts'
