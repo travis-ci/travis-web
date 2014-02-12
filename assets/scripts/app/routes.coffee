@@ -20,7 +20,7 @@ Ember.Route.reopen
         authController.set('redirected', true)
         @transitionTo('auth')
       else
-        throw(error)
+        return true
 
     renderNoOwnedRepos: ->
       @render('no_owned_repos', outlet: 'main')
