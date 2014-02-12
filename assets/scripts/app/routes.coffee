@@ -7,33 +7,7 @@ Ember.Router.reopen
     url = url.replace(/#.*?$/, '')
     @_super(url)
 
-# TODO: don't reopen Ember.Route to add events, there should be
-#       a better way (like "parent" resource for everything inside map)
-Ember.Route.reopen
-  _actions:
-    renderDefaultTemplate: ->
-      @renderDefaultTemplate() if @renderDefaultTemplate
-
-    error: (error) ->
-      if error == 'needs-auth'
-        authController = @container.lookup('controller:auth') || @generateController('auth')
-        authController.set('redirected', true)
-        @transitionTo('auth')
-      else
-        return true
-
-    renderNoOwnedRepos: ->
-      @render('no_owned_repos', outlet: 'main')
-
-    renderFirstSync: ->
-      @renderFirstSync()
-
-    afterSignIn: (path) ->
-      @afterSignIn(path)
-
-    afterSignOut: ->
-      @afterSignOut()
-
+Travis.Route = Ember.Route.extend
   afterSignIn: ->
     if transition = Travis.auth.get('afterSignInTransition')
       Travis.auth.set('afterSignInTransition', null)
@@ -72,6 +46,31 @@ Ember.Route.reopen
       Travis.storeAfterSignInPath(path)
       @transitionTo('auth')
 
+Travis.ApplicationRoute = Travis.Route.extend
+  actions:
+    renderDefaultTemplate: ->
+      @renderDefaultTemplate() if @renderDefaultTemplate
+
+    error: (error) ->
+      if error == 'needs-auth'
+        authController = @container.lookup('controller:auth') || @generateController('auth')
+        authController.set('redirected', true)
+        @transitionTo('auth')
+      else
+        return true
+
+    renderNoOwnedRepos: ->
+      @render('no_owned_repos', outlet: 'main')
+
+    renderFirstSync: ->
+      @renderFirstSync()
+
+    afterSignIn: (path) ->
+      @afterSignIn(path)
+
+    afterSignOut: ->
+      @afterSignOut()
+
 Travis.Router.map ->
   @resource 'index', path: '/', ->
     @route 'current', path: '/'
@@ -108,7 +107,7 @@ Travis.SetupLastBuild = Ember.Mixin.create
       Ember.run.next =>
         @render('builds/not_found', outlet: 'pane', into: 'repo')
 
-Travis.GettingStartedRoute = Ember.Route.extend
+Travis.GettingStartedRoute = Travis.Route.extend
   setupController: ->
     $('body').attr('id', 'home')
     @container.lookup('controller:repos').activate()
@@ -120,8 +119,8 @@ Travis.GettingStartedRoute = Ember.Route.extend
     @render 'repos',   outlet: 'left'
     @_super.apply(this, arguments)
 
-Travis.FirstSyncRoute = Ember.Route.extend
-  _actions:
+Travis.FirstSyncRoute = Travis.Route.extend
+  actions:
     renderNoOwnedRepos: (->)
       # do nothing, we are showing first sync, so it's normal that there is
       # no owned repos
@@ -136,7 +135,7 @@ Travis.FirstSyncRoute = Ember.Route.extend
     @render 'top', outlet: 'top'
     @_super.apply(this, arguments)
 
-Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
+Travis.IndexCurrentRoute = Travis.Route.extend Travis.SetupLastBuild,
   renderTemplate: ->
     @render 'repo'
     @render 'build', outlet: 'pane', into: 'repo'
@@ -154,7 +153,7 @@ Travis.IndexCurrentRoute = Ember.Route.extend Travis.SetupLastBuild,
   currentRepoDidChange: ->
     @controllerFor('repo').set('repo', @controllerFor('repos').get('firstObject'))
 
-Travis.AbstractBuildsRoute = Ember.Route.extend
+Travis.AbstractBuildsRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'builds', outlet: 'pane', into: 'repo'
 
@@ -179,7 +178,7 @@ Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
 Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
 Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
 
-Travis.BuildRoute = Ember.Route.extend
+Travis.BuildRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'build', outlet: 'pane', into: 'repo'
 
@@ -200,7 +199,7 @@ Travis.BuildRoute = Ember.Route.extend
   model: (params) ->
     Travis.Build.fetch(params.build_id)
 
-Travis.JobRoute = Ember.Route.extend
+Travis.JobRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'job', outlet: 'pane', into: 'repo'
 
@@ -223,7 +222,7 @@ Travis.JobRoute = Ember.Route.extend
   model: (params) ->
     Travis.Job.fetch(params.job_id)
 
-Travis.RepoIndexRoute = Ember.Route.extend Travis.SetupLastBuild,
+Travis.RepoIndexRoute = Travis.Route.extend Travis.SetupLastBuild,
   setupController: (controller, model) ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('current')
@@ -231,7 +230,7 @@ Travis.RepoIndexRoute = Ember.Route.extend Travis.SetupLastBuild,
   renderTemplate: ->
     @render 'build', outlet: 'pane', into: 'repo'
 
-Travis.RepoRoute = Ember.Route.extend
+Travis.RepoRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'repo'
 
@@ -262,7 +261,7 @@ Travis.RepoRoute = Ember.Route.extend
       # bubble to the top
       return true
 
-Travis.IndexRoute = Ember.Route.extend
+Travis.IndexRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'home')
 
@@ -274,7 +273,7 @@ Travis.IndexRoute = Ember.Route.extend
     @container.lookup('controller:repos').activate()
     @container.lookup('controller:application').connectLayout 'home'
 
-Travis.StatsRoute = Ember.Route.extend
+Travis.StatsRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'stats')
 
@@ -284,7 +283,7 @@ Travis.StatsRoute = Ember.Route.extend
   setupController: ->
     @container.lookup('controller:application').connectLayout('simple')
 
-Travis.NotFoundRoute = Ember.Route.extend
+Travis.NotFoundRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'not-found')
 
@@ -294,7 +293,7 @@ Travis.NotFoundRoute = Ember.Route.extend
   setupController: ->
     @container.lookup('controller:application').connectLayout('simple')
 
-Travis.ProfileRoute = Ember.Route.extend
+Travis.ProfileRoute = Travis.Route.extend
   needsAuth: true
 
   setupController: ->
@@ -309,14 +308,14 @@ Travis.ProfileRoute = Ember.Route.extend
     @render 'flash', outlet: 'flash'
     @render 'profile'
 
-Travis.ProfileIndexRoute = Ember.Route.extend
+Travis.ProfileIndexRoute = Travis.Route.extend
   setupController: ->
     @container.lookup('controller:profile').activate 'hooks'
 
   renderTemplate: ->
     @render 'hooks', outlet: 'pane', into: 'profile', controller: 'profile'
 
-Travis.AccountRoute = Ember.Route.extend
+Travis.AccountRoute = Travis.Route.extend
   setupController: (controller, account) ->
     profileController = @container.lookup('controller:profile')
     profileController.activate 'hooks'
@@ -349,21 +348,21 @@ Travis.AccountRoute = Ember.Route.extend
     else
       {}
 
-Travis.AccountIndexRoute = Ember.Route.extend
+Travis.AccountIndexRoute = Travis.Route.extend
   setupController: ->
     @container.lookup('controller:profile').activate 'hooks'
 
   renderTemplate: ->
     @render 'hooks', outlet: 'pane', into: 'profile'
 
-Travis.AccountProfileRoute = Ember.Route.extend
+Travis.AccountProfileRoute = Travis.Route.extend
   setupController: ->
     @container.lookup('controller:profile').activate 'user'
 
   renderTemplate: ->
     @render 'user', outlet: 'pane', into: 'profile'
 
-Travis.AuthRoute = Ember.Route.extend
+Travis.AuthRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'auth')
 
