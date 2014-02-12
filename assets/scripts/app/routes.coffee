@@ -5,13 +5,7 @@ Ember.Router.reopen
 
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
-    try
-      @_super(url)
-    catch error
-      if error.message.match(/No route matched the URL/)
-        @_super('/not-found')
-      else
-        throw(error)
+    @_super(url)
 
 # TODO: don't reopen Ember.Route to add events, there should be
 #       a better way (like "parent" resource for everything inside map)
@@ -93,13 +87,14 @@ Travis.Router.map ->
   @route 'first_sync'
   @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
-  @route 'notFound', path: '/not-found'
 
   @resource 'profile', path: '/profile', ->
     @route 'index', path: '/'
     @resource 'account', path: '/:login', ->
       @route 'index', path: '/'
       @route 'profile', path: '/profile'
+
+  @route 'notFound', path: "/*path"
 
 Travis.SetupLastBuild = Ember.Mixin.create
   setupController: ->
