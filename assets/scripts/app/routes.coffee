@@ -60,7 +60,7 @@ Travis.ApplicationRoute = Travis.Route.extend
         return true
 
     renderNoOwnedRepos: ->
-      @render('no_owned_repos', outlet: 'main')
+      @render('no_owned_repos', outlet: 'main', into: 'application')
 
     renderFirstSync: ->
       @renderFirstSync()
