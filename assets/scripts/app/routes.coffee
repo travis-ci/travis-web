@@ -60,7 +60,7 @@ Travis.ApplicationRoute = Travis.Route.extend
         return true
 
     renderNoOwnedRepos: ->
-      @render('no_owned_repos', outlet: 'main', into: 'application')
+      @transitionTo('getting_started')
 
     renderFirstSync: ->
       @renderFirstSync()
@@ -122,12 +122,11 @@ Travis.GettingStartedRoute = Travis.Route.extend
   setupController: ->
     $('body').attr('id', 'home')
     @container.lookup('controller:repos').activate()
-    @container.lookup('controller:application').connectLayout 'home'
+    @container.lookup('controller:application').connectLayout 'simple'
     @_super.apply(this, arguments)
 
   renderTemplate: ->
     @render 'top', outlet: 'top'
-    @render 'repos',   outlet: 'left'
     @_super.apply(this, arguments)
 
 Travis.FirstSyncRoute = Travis.Route.extend
