@@ -32,7 +32,7 @@
   <li {{bind-attr class="view.classProfile"}}>
     <p class="handle">
       {{#if signedOut}}
-        <a class="signed-out" href="#" {{action "signIn" target="Travis"}}>Sign in with Github</a>
+        <a class="signed-out" href="#" {{action "signIn" target="Travis"}}>Sign in with GitHub</a>
       {{/if}}
       {{#if signedIn}}
         {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/link-to}}
