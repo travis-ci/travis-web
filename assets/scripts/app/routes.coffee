@@ -79,6 +79,7 @@ Travis.Router.reopen
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->
+    @resource 'getting_started'
     @route 'current', path: '/'
     @resource 'repo', path: '/:owner/:name', ->
       @route 'index', path: '/'
@@ -93,7 +94,6 @@ Travis.Router.map ->
     @resource 'repo.settings', path: '/:owner/:name/settings', ->
       @route 'tab', path: ':tab'
 
-  @route 'getting_started'
   @route 'first_sync'
   @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
@@ -119,15 +119,8 @@ Travis.SetupLastBuild = Ember.Mixin.create
         @render('builds/not_found', into: 'repo', outlet: 'pane')
 
 Travis.GettingStartedRoute = Travis.Route.extend
-  setupController: ->
-    $('body').attr('id', 'home')
-    @container.lookup('controller:repos').activate()
-    @container.lookup('controller:application').connectLayout 'simple'
-    @_super.apply(this, arguments)
-
   renderTemplate: ->
-    @render 'top', outlet: 'top'
-    @_super.apply(this, arguments)
+    @render('no_owned_repos')
 
 Travis.FirstSyncRoute = Travis.Route.extend
   actions:
