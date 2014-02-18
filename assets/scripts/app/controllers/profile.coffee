@@ -43,7 +43,7 @@ Travis.ProfileController = Travis.Controller.extend
     @get('allHooks').filter (hook) -> hook.get('admin')
   ).property('allHooks.length', 'allHooks')
 
-  unAdminisetableHooks: (->
+  hooksWithoutAdmin: (->
     @reloadHooks() unless hooks = @get('allHooks')
     @get('allHooks').filter (hook) -> !hook.get('admin')
   ).property('allHooks.length', 'allHooks')

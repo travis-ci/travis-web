@@ -1,5 +1,6 @@
 <p class="tip">
-  Flick the switches below to turn on the Travis service hook for your projects, then push to GitHub.
+  Enable your projects below by flicking the switch, add a <a href="https://docs.travis-ci.com">.travis.yml</a> to your project, and push a new commit to
+  GitHub.
 </p>
 
 {{#if allHooks.isLoaded}}
@@ -29,25 +30,25 @@
         </li>
       {{else}}
         <li>
-          {{#if unAdminisetableHooks.length}}
-            You do not have any repositories, which you can manage
+          {{#if hooksWithoutAdmin.length}}
+            Sorry, but we can't find any repositories you have admin access to.
           {{else}}
-            You do not seem to have any repositories that we could sync.
+            Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
           {{/if}}
         </li>
       {{/each}}
     </ul>
 
-    {{#if unAdminisetableHooks.length}}
+    {{#if hooksWithoutAdmin.length}}
       <div id="unadministerable-hooks">
         <h3>Repositories without admin access</h3>
 
         <p class="tip">
-          These are the repositories, which we synced, but you do not seem to have admin access for them.
+          You only have pull or push access to the repositories below.
         </p>
 
         <ul>
-          {{#each hook in unAdminisetableHooks}}
+          {{#each hook in hooksWithoutAdmin}}
             <li {{bind-attr class="hook.active:active"}}>
               <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
               <p class="description">{{hook.description}}</p>
