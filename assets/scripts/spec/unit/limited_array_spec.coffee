@@ -41,7 +41,8 @@ test 'allows to expand array to show all items', ->
   content = [1, 2, 3]
   array = Travis.LimitedArray.create content: content, limit: 2
 
-  array.showAll()
+  Ember.run ->
+    array.showAll()
 
   equal( array.get('length'), 3)
   deepEqual( array.toArray(), [1, 2, 3])

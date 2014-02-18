@@ -1,5 +1,6 @@
 require 'ext/jquery'
 require 'ext/ember/namespace'
+require 'ext/ember/computed'
 require 'app'
 
 window.ENV ||= {}
