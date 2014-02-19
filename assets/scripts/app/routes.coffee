@@ -8,16 +8,6 @@ Ember.Router.reopen
     @_super(url)
 
 Travis.Route = Ember.Route.extend
-  afterSignIn: ->
-    if transition = Travis.auth.get('afterSignInTransition')
-      Travis.auth.set('afterSignInTransition', null)
-      transition.retry()
-    else
-      @transitionTo('index.current') if @constructor == Travis.AuthRoute || @constructor.superclass == Travis.AuthRoute
-
-  afterSignOut: ->
-    @transitionTo('index.current')
-
   renderFirstSync: ->
     @transitionTo 'first_sync'
 
@@ -65,11 +55,13 @@ Travis.ApplicationRoute = Travis.Route.extend
     renderFirstSync: ->
       @renderFirstSync()
 
-    afterSignIn: (path) ->
-      @afterSignIn(path)
+    afterSignIn: ->
+      if transition = Travis.auth.get('afterSignInTransition')
+        Travis.auth.set('afterSignInTransition', null)
+        transition.retry()
 
     afterSignOut: ->
-      @afterSignOut()
+      @transitionTo('index.current')
 
 Travis.Router.reopen
   transitionTo: ->
@@ -376,6 +368,11 @@ Travis.AuthRoute = Travis.Route.extend
 
   deactivate: ->
     @controllerFor('auth').set('redirected', false)
+
+  actions:
+    afterSignIn: ->
+      @transitionTo('index.current')
+      return true
 
 Travis.RepoSettingsRoute = Travis.Route.extend
   setupController: (controller, model) ->

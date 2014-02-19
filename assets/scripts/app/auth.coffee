@@ -14,9 +14,9 @@
     if user = Travis.__container__.lookup('controller:currentUser').get('content')
       user.unload()
     Travis.__container__.lookup('controller:currentUser').set('content', null)
-    if router = Travis.__container__.lookup('router:main')
+    if controller = Travis.__container__.lookup('controller:currentUser')
       try
-        router.send('afterSignOut')
+        controller.send('afterSignOut')
       catch e
         throw e unless e.message =~ /There are no active handlers/
 
@@ -66,10 +66,10 @@
 
     @set('state', 'signed-in')
     Travis.trigger('user:signed_in', data.user)
-    if router = Travis.__container__.lookup('router:main')
+    if controller = Travis.__container__.lookup('controller:currentUser')
       Ember.run.next =>
         try
-          router.send('afterSignIn')
+          controller.send('afterSignIn')
         catch e
           throw e unless e =~ /There are no active handlers/ || e =~ /Can't trigger action "afterSignIn/
         @refreshUserData(data.user)
