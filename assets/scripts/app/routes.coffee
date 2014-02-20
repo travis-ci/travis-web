@@ -38,6 +38,9 @@ Travis.Route = Ember.Route.extend
 
 Travis.ApplicationRoute = Travis.Route.extend
   actions:
+    redirectToGettingStarted: ->
+      # do nothing, we handle it only in index path
+
     renderDefaultTemplate: ->
       @renderDefaultTemplate() if @renderDefaultTemplate
 
@@ -48,9 +51,6 @@ Travis.ApplicationRoute = Travis.Route.extend
         @transitionTo('auth')
       else
         return true
-
-    renderNoOwnedRepos: ->
-      @transitionTo('getting_started')
 
     renderFirstSync: ->
       @renderFirstSync()
@@ -116,7 +116,7 @@ Travis.GettingStartedRoute = Travis.Route.extend
 
 Travis.FirstSyncRoute = Travis.Route.extend
   actions:
-    renderNoOwnedRepos: (->)
+    redirectToGettingStarted: ->
       # do nothing, we are showing first sync, so it's normal that there is
       # no owned repos
 
@@ -142,11 +142,18 @@ Travis.IndexCurrentRoute = Travis.Route.extend Travis.SetupLastBuild,
     @controllerFor('repo').activate('index')
     @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
 
+  afterModel: ->
+    @controllerFor('repos').possiblyRedirectToGettingStartedPage()
+
   deactivate: ->
     @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
 
   currentRepoDidChange: ->
     @controllerFor('repo').set('repo', @controllerFor('repos').get('firstObject'))
+
+  actions:
+    redirectToGettingStarted: ->
+      @transitionTo('getting_started')
 
 Travis.AbstractBuildsRoute = Travis.Route.extend
   renderTemplate: ->

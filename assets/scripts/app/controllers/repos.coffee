@@ -16,10 +16,13 @@ Travis.ReposController = Ember.ArrayController.extend
   ).observes('currentUser.id')
 
   tabOrIsLoadedDidChange: (->
+    @possiblyRedirectToGettingStartedPage()
+  ).observes('isLoaded', 'tab', 'length')
+
+  possiblyRedirectToGettingStartedPage: ->
     Ember.run.scheduleOnce 'routerTransitions', this, ->
       if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0
-        @container.lookup('router:main').send('renderNoOwnedRepos')
-  ).observes('isLoaded', 'tab', 'length')
+        @container.lookup('router:main').send('redirectToGettingStarted')
 
   isLoadedBinding: 'content.isLoaded'
   needs: ['currentUser', 'repo']
