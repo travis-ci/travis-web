@@ -1,0 +1,30 @@
+<div id="insufficient-permissions">
+  <img src="/images/travis-crying.png" class="sad-travis" width="150">
+
+  <p class="insufficient-permissions-head">
+  	Oops, looks like something went wrong!
+  </p>
+  <p class="insufficient-permissions-more">
+  	It looks like we don't have authorization to access your GitHub account.<br>
+  	Please review your GitHub settings and try again.
+  </p>
+
+  <div class="insufficient-permissions-row">
+    <div class="insufficient-permissions-column">
+      <p class="align-right">
+        More information on GithubAuth
+      </p>
+    </div>
+
+    <div class="insufficient-permissions-column">
+      <p>
+        More information on GithubAuth
+      </p>
+    </div>
+  </div>
+  <div class="insufficient-permissions-row">
+    {{#if existingUser}}
+  	<p>This will be shown if #existing-user is added to the url</p>
+	{{/if}}
+  </div>
+</div>

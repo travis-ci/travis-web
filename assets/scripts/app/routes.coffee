@@ -87,6 +87,7 @@ Travis.Router.map ->
       @route 'tab', path: ':tab'
 
   @route 'first_sync'
+  @route 'insufficient_oauth_permissions'
   @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
 
@@ -114,12 +115,7 @@ Travis.GettingStartedRoute = Travis.Route.extend
   renderTemplate: ->
     @render('no_owned_repos')
 
-Travis.FirstSyncRoute = Travis.Route.extend
-  actions:
-    redirectToGettingStarted: ->
-      # do nothing, we are showing first sync, so it's normal that there is
-      # no owned repos
-
+Travis.SimpleLayoutRoute = Travis.Route.extend
   setupController: ->
     $('body').attr('id', 'home')
     @container.lookup('controller:repos').activate()
@@ -129,6 +125,18 @@ Travis.FirstSyncRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'top', outlet: 'top'
     @_super.apply(this, arguments)
+
+Travis.FirstSyncRoute = Travis.SimpleLayoutRoute.extend
+  actions:
+    redirectToGettingStarted: ->
+      # do nothing, we are showing first sync, so it's normal that there is
+      # no owned repos
+
+Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
+  setupController: (controller) ->
+    @_super.apply this, arguments
+    existingUser = document.location.hash.match(/#existing[_-]user/)
+    controller.set('existingUser', existingUser)
 
 Travis.IndexCurrentRoute = Travis.Route.extend Travis.SetupLastBuild,
   renderTemplate: ->
