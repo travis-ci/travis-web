@@ -66,8 +66,17 @@ Travis.reopen
       classes.join(' ')
     ).property('tab')
 
+    # TODO: refactor tabs, most of the things here are not really DRY
     classJob: (->
       'active display-inline' if @get('tab') == 'job'
+    ).property('tab')
+
+    classRequests: (->
+      'active display-inline' if @get('tab') == 'requests'
+    ).property('tab')
+
+    classRequest: (->
+      'active display-inline' if @get('tab') == 'request'
     ).property('tab')
 
   RepoShowToolsView: Travis.View.extend
@@ -79,6 +88,15 @@ Travis.reopen
     tabBinding: 'controller.tab'
     currentUserBinding: 'controller.currentUser'
     slugBinding: 'controller.repo.slug'
+
+
+    didInsertElement: ->
+      self = this
+      $('.menu a').on 'click', ->
+        self.closeMenu()
+
+    willRemoveElement: ->
+      $('.menu a').off 'click'
 
     closeMenu: ->
       $('.menu').removeClass('display')

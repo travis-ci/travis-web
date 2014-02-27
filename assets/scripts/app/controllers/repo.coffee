@@ -1,8 +1,9 @@
 Travis.RepoController = Travis.Controller.extend
-  needs: ['repos', 'currentUser', 'build']
+  needs: ['repos', 'currentUser', 'build', 'request']
   currentUserBinding: 'controllers.currentUser'
 
   build: Ember.computed.alias('controllers.build.build')
+  request: Ember.computed.alias('controllers.request.model')
 
   slug: (-> @get('repo.slug') ).property('repo.slug')
   isLoading: (-> @get('repo.isLoading') ).property('repo.isLoading')
@@ -48,6 +49,12 @@ Travis.RepoController = Travis.Controller.extend
 
   viewJob: ->
     @connectTab('job')
+
+  viewRequests: ->
+    @connectTab('requests')
+
+  viewRequest: ->
+    @connectTab('request')
 
   lastBuildDidChange: ->
     Ember.run.scheduleOnce('data', this, @_lastBuildDidChange);

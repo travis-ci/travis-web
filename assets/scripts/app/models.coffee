@@ -10,6 +10,7 @@ require 'models/job'
 require 'models/log'
 require 'models/annotation'
 require 'models/repo'
+require 'models/request'
 require 'models/user'
 require 'models/worker'
 

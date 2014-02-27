@@ -57,4 +57,24 @@
       {{/if}}
     </h5>
   </li>
+  <li id="tab_requests" {{bind-attr class="view.classRequests"}}>
+    <h5>
+      {{#if repo.slug}}
+        {{#link-to "requests" repo}}
+          Requests
+        {{/link-to}}
+      {{/if}}
+    </h5>
+  </li>
+  <li id="tab_request" {{bind-attr class="view.classRequest"}}>
+    <h5>
+      {{#if request.id}}
+        {{#if repo.slug}}
+          {{#link-to "request" repo request}}
+            Request #{{request.id}}
+          {{/link-to}}
+        {{/if}}
+      {{/if}}
+    </h5>
+  </li>
 </ul>

@@ -22,10 +22,12 @@ unless window.TravisApplication
       workers:      Travis.Worker
       annotation:   Travis.Annotation
       annotations:  Travis.Annotation
+      request:      Travis.Request
+      requests:     Travis.Request
     ).property()
 
     modelClasses: (->
-      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook, Travis.Annotation]
+      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook, Travis.Annotation, Travis.Request]
     ).property()
 
     setup: ->
