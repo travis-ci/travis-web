@@ -13,7 +13,7 @@
 
 #repos .yellow,
 .yellow #summary .number,
-.list .yellow .number,
+.list .yellow .number
   .status
     background-image: inline-image('icons/state-pending.svg')
   a
@@ -21,7 +21,8 @@
 
 #repos .green,
 .green #summary .number,
-.list .green .number
+.list .green .number,
+#requests .accepted .request-id
   .status
     background-image: inline-image('icons/state-passed.svg')
   a
@@ -29,7 +30,8 @@
 
 #repos .red,
 .red #summary .number,
-.list .red .number
+.list .red .number,
+#requests .rejected .request-id
   .status
     background-image: inline-image('icons/state-failed.svg')
   a
@@ -50,20 +52,20 @@ table.list
     tr:hover td
       background-color: $color-bg-job-highlight
 
-  .green
+  .green, .accepted
     td
       background-color: $color-bg-job-passed
     &:hover td
       background-color: $color-bg-job-passed-highlight
-    .number a
+    .number a, .request-id a
       color: $color-text-status-passed
 
-  .red
+  .red, .rejected
     td
       background-color: $color-bg-job-failed
     &:hover td
       background-color: $color-bg-job-failed-highlight
-    .number a
+    .number a, .request-id a
       color: $color-text-status-failed
 
   .gray

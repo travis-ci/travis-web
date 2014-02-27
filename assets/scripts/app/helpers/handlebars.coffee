@@ -309,7 +309,7 @@ Ember.Handlebars.helper('formatCommit', (commit) ->
   safe Travis.Helpers.formatCommit(commit.get('sha'), commit.get('branch')) if commit
 , 'sha', 'branch')
 
-Ember.registerBoundHelper 'formatSha', (sha, options) ->
+Ember.Handlebars.helper 'formatSha', (sha) ->
   safe Travis.Helpers.formatSha(sha)
 
 Ember.registerBoundHelper 'pathFrom', (url, options) ->

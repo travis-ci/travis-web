@@ -72,4 +72,5 @@ require 'controllers/repo'
 require 'controllers/stats'
 require 'controllers/current_user'
 require 'controllers/account_index'
-
+require 'controllers/request'
+require 'controllers/requests'
