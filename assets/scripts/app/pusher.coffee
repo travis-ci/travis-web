@@ -26,10 +26,8 @@ $.extend Travis.Pusher.prototype,
   subscribeAll: (channels) ->
     for channel in channels
       name = @prefix(channel)
-      unless @pusher.channels.find(name)
-        channel = @pusher.channels.add(name, this)
-        channel.bind_all((event, data) => @receive(event, data))
-    @pusher.subscribeAll()
+      channel = @pusher.subscribe(channel)
+      channel.bind_all((event, data) => @receive(event, data))
 
   subscribe: (channel) ->
     console.log("subscribing to #{channel}")
