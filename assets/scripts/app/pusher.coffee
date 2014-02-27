@@ -85,8 +85,4 @@ $.extend Travis.Pusher.prototype,
         { annotation: data }
 
   warn: (type, warning) ->
-    console.warn(warning) unless @ignoreWarning(warning)
-
-  ignoreWarning: (warning) ->
-    if message = warning.data?.message
-      message.indexOf('Existing subscription') == 0 or message.indexOf('No current subscription') == 0
+    console.warn(warning)
