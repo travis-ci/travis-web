@@ -26,7 +26,6 @@ class Travis.ToTop
     offset = container.offset().top + containerHeight - (@window.scrollTop() + windowHeight)
     max = containerHeight - windowHeight
     offset = max if offset > max
-    console.log(offset, max)
     if offset > 0
       element.css(bottom: offset)
     else
