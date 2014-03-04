@@ -21,13 +21,13 @@ class Travis.ToTop
     element = @element()
     container = @container()
     return if element.length is 0
-    containerHeight = container.height()
+    containerHeight = container.outerHeight()
     windowHeight = @window.height()
     offset = container.offset().top + containerHeight - (@window.scrollTop() + windowHeight)
     max = containerHeight - windowHeight
     offset = max if offset > max
     if offset > 0
-      element.css(bottom: offset)
+      element.css(bottom: offset + 4)
     else
       element.css(bottom: 2)
 
