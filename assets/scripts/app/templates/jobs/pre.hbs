@@ -1,7 +1,14 @@
 <div id="log-container">
   <a href="#" id="tail" {{action "toggleTailing" target="view"}}>
     <span class="status"></span>
-    <label>Follow logs</label>
+
+    <label>
+      {{#if view.job.isFinished}}
+        Scroll to end of logs
+      {{else}}
+        Follow logs
+      {{/if}}
+    </label>
   </a>
   <pre id="log" class="ansi"></pre>
 
