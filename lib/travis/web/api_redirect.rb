@@ -18,7 +18,7 @@ class Travis::Web::ApiRedirect < Sinatra::Base
     end
   end
 
-  get NotPublicImages.new(%r{^/([^/]+)/([^/]+).png}, %r{^/images/}) do
+  get NotPublicImages.new(%r{^/([^/]+)/([^/]+)\.png$}, %r{^/images/}) do
     redirect!
   end
 

@@ -10,4 +10,8 @@ describe Travis::Web::ApiRedirect do
   it 'redirects /:owner/:repo.png' do
     get('/foo/bar.png').should be_redirect
   end
+
+  it 'does not redirect /owner/some-png-repo' do
+    get('/owner/some-png-repo').should_not be_redirect
+  end
 end
