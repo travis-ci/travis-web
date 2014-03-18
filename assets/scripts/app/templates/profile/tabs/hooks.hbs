@@ -1,3 +1,10 @@
+{{#if showPrivateReposHint}}
+<p class="tip">
+  We're only showing <strong>your public repositories</strong> below.
+  You can find your <strong>private projects on <a href="https://travis-ci.com?utm_source=hooks">travis-ci.com</a></strong>.
+</p>
+{{/if}}
+
 <p class="tip">
   Enable your projects below by flicking the switch, add a <a href="http://docs.travis-ci.com">.travis.yml</a> to your project, and push a new commit to
   GitHub.
@@ -6,7 +13,7 @@
 {{#if allHooks.isLoaded}}
   {{#if user.isSyncing}}
     <p class="message loading">
-      <span>Please wait while we sync from GitHub</span>
+      <span>Please wait while we synchronize your data from GitHub</span>
     </p>
   {{else}}
     <p class="message">
