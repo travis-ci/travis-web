@@ -82,7 +82,7 @@ $.extend Travis,
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
     code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
-    show_repos_hint: 'public'
+    show_repos_hint: 'private'
 
   CONFIG_KEYS_MAP: {
     go:          'Go'

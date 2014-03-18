@@ -60,5 +60,9 @@ Travis.ProfileController = Travis.Controller.extend
     @set("params.#{key}", params[key]) for key, value of params
 
   showPrivateReposHint: (->
+    Travis.config.show_repos_hint == 'private'
+  ) .property()
+
+  showPublicReposHint: (->
     Travis.config.show_repos_hint == 'public'
   ) .property()
