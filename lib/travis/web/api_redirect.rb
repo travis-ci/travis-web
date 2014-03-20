@@ -3,6 +3,7 @@ require 'sinatra'
 class Travis::Web::ApiRedirect < Sinatra::Base
   disable :protection, :static
   set api_endpoint: 'https://api.travis-ci.org'
+  set redirect_png: ENV['REDIRECT_PNG']
 
   class NotPublicImages
     Match = Struct.new(:captures)
@@ -19,7 +20,11 @@ class Travis::Web::ApiRedirect < Sinatra::Base
   end
 
   get NotPublicImages.new(%r{^/([^/]+)/([^/]+)\.(png|svg)$}, %r{^/images/}) do
-    redirect!
+    if settings.redirect_png
+      redirect!(request.fullpath.gsub(/\.png$/, '.svg'))
+    else
+      redirect!
+    end
   end
 
   get '/:owner_name/:name/cc.xml' do
