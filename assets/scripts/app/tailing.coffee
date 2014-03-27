@@ -81,16 +81,12 @@ class @Travis.Tailing
     @position = position
 
   positionButton: ->
-    return if @tail().length is 0
-    offset = @window.scrollTop() - @log().offset().top
-    max = @log().height() - @tail().height() + 5
-
-    if offset > 0 && offset <= max
-      @tail().removeClass('bottom')
-      @tail().addClass('scrolling')
+    tail = $('#tail')
+    return if tail.length is 0
+    offset = $(window).scrollTop() - $('#log').offset().top
+    max = $('#log').height() - $('#tail').height() + 5
+    offset = max if offset > max
+    if offset > 0
+      tail.css(top: offset - 2)
     else
-      if offset > max
-        @tail().addClass('bottom')
-      else
-        @tail().removeClass('bottom')
-      @tail().removeClass('scrolling')
+      tail.css(top: 0)
