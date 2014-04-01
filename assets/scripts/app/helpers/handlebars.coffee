@@ -39,7 +39,7 @@ Travis.TabsView = Ember.View.extend
     '<ul class="tabs">' +
     '  {{#each tab in tabs}}' +
     '    <li {{bindAttr class="tab.visible:active"}}>' +
-    '      <h5>{{#linkTo "repo.settings.tab" tab.id}}{{tab.name}}{{/linkTo}}</h5>' +
+    '      <h5>{{#link-to "repo.settings.tab" tab.id}}{{tab.name}}{{/link-to}}</h5>' +
     '    </li>' +
     '  {{/each}}' +
     '</ul>' +
