@@ -7,8 +7,8 @@ Travis.ajax = Em.Object.create
     accepts:
       json: 'application/json; version=2'
 
-  get: (url, callback) ->
-    @ajax(url, 'get', success: callback)
+  get: (url, callback, errorCallback) ->
+    @ajax(url, 'get', success: callback, error: errorCallback)
 
   post: (url, data, callback) ->
     @ajax(url, 'post', data: data, success: callback)

@@ -82,6 +82,8 @@
         data.user.token = user.token
         @storeData(data, Travis.sessionStorage)
         @storeData(data, Travis.storage)
+    , (data, status, xhr) =>
+      @signOut()
 
   signedIn: ->
     @get('state') == 'signed-in'
