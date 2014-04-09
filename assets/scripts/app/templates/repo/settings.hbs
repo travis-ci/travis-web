@@ -5,7 +5,7 @@
     {{#travis-tab "general" "General Settings"}}
       {{#settings-form}}
         <p class="settings-row">
-          Build only commits with .travis.yml file
+          Build only if .travis.yml is present
           {{travis-switch action="save" active=settings.builds_only_with_travis_yml}}
         </p>
 
