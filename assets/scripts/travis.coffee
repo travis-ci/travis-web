@@ -99,6 +99,7 @@ $.extend Travis,
     compiler:    'Compiler'
     ghc:         'GHC'
     os:          'OS'
+    ruby:        'Ruby'
   }
 
   QUEUES: [
