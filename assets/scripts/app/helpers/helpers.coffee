@@ -41,6 +41,7 @@ require 'config/emoij'
     if !!options.repo
       message = @githubify(message, options.repo.get('owner'), options.repo.get('name'))
     message.replace /\n/g, '<br/>'
+    message.replace /^ +/, '&nbsp;'
 
   pathFrom: (url) ->
     (url || '').split('/').pop()
