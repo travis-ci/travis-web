@@ -40,7 +40,9 @@ require 'config/emoij'
     message = @_emojize(@_escape(message))
     if !!options.repo
       message = @githubify(message, options.repo.get('owner'), options.repo.get('name'))
-    message.replace /\n/g, '<br/>'
+    if !!options.pre
+      message = message.replace /\n/g, '<br/>'
+    message
 
   pathFrom: (url) ->
     (url || '').split('/').pop()

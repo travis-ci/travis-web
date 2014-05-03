@@ -46,7 +46,10 @@
 
 
     <dt>Message</dt>
-    <dd class="message">{{formatMessage build.commit.message repoBinding=build.repo}}</dd>
+    <dd class="message">
+      {{formatMessage build.commit.subject repoBinding=build.repo}}
+      <pre class="body">{{formatMessage build.commit.body repoBinding=build.repo pre=true}}</pre>
+    </dd>
   </dl>
 
   {{#unless build.isMatrix}}

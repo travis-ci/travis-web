@@ -10,5 +10,16 @@ require 'travis/model'
   authorEmail:       Ember.attr('string')
   committerName:     Ember.attr('string')
   committerEmail:    Ember.attr('string')
+  subject:           Ember.attr('string')
+  body:              Ember.attr('string')
 
   build: Ember.belongsTo('Travis.Build')
+
+  subject: ( ->
+    @get('message').split("\n", 1)[0]
+  ).property('message')
+
+  body: ( ->
+    message = @get('message')
+    message.substr(message.indexOf("\n") + 1).trim()
+  ).property('message')
