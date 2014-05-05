@@ -39,7 +39,7 @@
   equal(element.text(), data.compare)
 
   element = $('#summary .message')
-  equal(element.text(), data.message)
+  equal(element.text().trim(), data.message)
 
 @displaysLog = (lines) ->
   log = lines.join('')
