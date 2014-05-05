@@ -154,9 +154,6 @@ Travis.reopen
     tabBinding: 'controller.tab'
     currentUserBinding: 'controller.currentUser'
 
-    requeue: ->
-      @get('build').requeue()
-
     cancelBuild: ->
       if @get('canCancelBuild')
         Travis.flash(notice: 'Build cancelation has been scheduled.')
@@ -256,12 +253,20 @@ Travis.reopen
       @popup('code-climate')
       event.stopPropagation() if event?
 
+    requeueFinished: ->
+      @set('requeueing', false)
+
+    requeue: (thing) ->
+      return if @get('requeueing')
+      @set('requeueing', true)
+      thing.requeue().then(this.requeueFinished.bind(this), this.requeueFinished.bind(this))
+
     requeueBuild: ->
       if @get('canRequeueBuild')
-        @get('build').requeue()
+        @requeue @get('build')
 
     requeueJob: ->
       if @get('canRequeueJob')
-        @get('job').requeue()
+        @requeue @get('job')
 
 

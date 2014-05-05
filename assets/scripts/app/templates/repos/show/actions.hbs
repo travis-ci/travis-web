@@ -14,14 +14,22 @@
     {{/if}}
     {{#if view.displayRequeueBuild}}
       <li class="icon" title="Restart Build">
-        <a href="#" {{action "requeueBuild" target="view"}}
-          {{bind-attr class="view.canRequeueBuild::disabled"}}><img class="icon" src="/images/icons/repeat.png" width="20"></a>
+        {{#if view.requeueing}}
+          <span class="icon loading"></span>
+        {{else}}
+          <a href="#" {{action "requeueBuild" target="view"}}
+            {{bind-attr class="view.canRequeueBuild::disabled"}}><img class="icon" src="/images/icons/repeat.png" width="20"></a>
+        {{/if}}
       </li>
     {{/if}}
     {{#if view.displayRequeueJob}}
       <li class="icon" title="Restart Job">
-        <a href="#" {{action "requeueJob" target="view"}}
-          {{bind-attr class="view.canRequeueJob::disabled"}}><img src="/images/icons/repeat.png" width="20"></a>
+        {{#if view.requeueing}}
+          <span class="icon loading"></span>
+        {{else}}
+          <a href="#" {{action "requeueJob" target="view"}}
+            {{bind-attr class="view.canRequeueJob::disabled"}}><img src="/images/icons/repeat.png" width="20"></a>
+        {{/if}}
       </li>
     {{/if}}
     {{!TODO: for some reason showDownloadLog, which just delegates to jobIdForLog
