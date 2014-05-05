@@ -21,5 +21,8 @@ require 'travis/model'
 
   body: ( ->
     message = @get('message')
-    message.substr(message.indexOf("\n") + 1).trim()
+    if message.indexOf("\n") > 0
+      message.substr(message.indexOf("\n") + 1).trim()
+    else
+      ""
   ).property('message')
