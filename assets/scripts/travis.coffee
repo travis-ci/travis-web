@@ -100,6 +100,8 @@ $.extend Travis,
     ghc:         'GHC'
     os:          'OS'
     ruby:        'Ruby'
+    xcode_sdk:   'Xcode SDK'
+    xcode_scheme:'Xcode Scheme'
   }
 
   QUEUES: [
