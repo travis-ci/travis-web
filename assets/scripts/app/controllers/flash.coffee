@@ -4,10 +4,15 @@ Travis.FlashController = Ember.ArrayController.extend
 
   init: ->
     @_super.apply this, arguments
-    @set('flashes', Ember.A())
+    @set('flashes', Travis.LimitedArray.create(limit: 2, content: []))
 
   content: (->
-    @get('unseenBroadcasts').concat(@get('flashes')).filter( (o) -> o ).uniq()
+    broadcasts = @get('unseenBroadcasts')
+    flashes = @get('flashes')
+    content = []
+    content = content.concat(broadcasts.toArray()) if broadcasts
+    content = content.concat(flashes.toArray().reverse())    if flashes
+    content.uniq()
   ).property('unseenBroadcasts.length', 'flashes.length')
 
   unseenBroadcasts: (->
@@ -22,8 +27,8 @@ Travis.FlashController = Ember.ArrayController.extend
     for msg in msgs
       type = Ember.keys(msg)[0]
       msg = { type: type, message: msg[type] }
-      @get('flashes').pushObject(msg)
-      Ember.run.later(this, (-> @get('flashes').removeObject(msg)), 15000)
+      @get('flashes').unshiftObject(msg)
+      Ember.run.later(this, (-> @get('flashes.content').removeObject(msg)), 15000)
 
   close: (msg) ->
     if msg instanceof Travis.Broadcast
