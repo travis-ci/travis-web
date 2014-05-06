@@ -10,3 +10,11 @@ Travis.AccountIndexController = Em.Controller.extend
 
   toggle: (hook) ->
     hook.toggle()
+
+  showPrivateReposHint: (->
+    Travis.config.show_repos_hint == 'private'
+  ) .property()
+
+  showPublicReposHint: (->
+    Travis.config.show_repos_hint == 'public'
+  ) .property()
