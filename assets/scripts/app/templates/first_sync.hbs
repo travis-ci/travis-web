@@ -1,9 +1,8 @@
 <div id="first_sync">
+  {{#if isSyncing}}
   <img src="/images/getting-started/mustache-spinner.gif" class="spinner" width="300">
-
   <p class="first-sync-head">One more thing</p>
   <p class="few-more">Just a few more seconds as we talk to GitHub to find out which repositories belong to you.</p>
-
   <div class="sync-row">
     <div class="sync-column">
       <p class="align-right">
@@ -17,13 +16,15 @@
       </p>
     </div>
   </div>
+  {{/if}}
+
+  {{#unless isSyncing}}
   <div class="sync-row">
-    {{#unless isSyncing}}
       <img src="/images/getting-started/mustache-no-spin.png" class="spinner" width="100">
       <p class="great-news">Great news!</p>
       <p>
         We've successfully synchronized your details from GitHub. We will redirect you to your profile in a few seconds.
       </p>
-    {{/unless}}
   </div>
+  {{/unless}}
 </div>
