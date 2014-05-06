@@ -4,15 +4,15 @@
 
     <label>
       {{#if view.job.isFinished}}
-        Scroll to end of logs
+        Scroll to End of Logs
       {{else}}
-        Follow logs
+        Follow Log
       {{/if}}
     </label>
   </a>
   <pre id="log" class="ansi"></pre>
 
-  <a href='#' class="to-top" {{action "toTop" target="view"}}>To top</a>
+  <a href='#' class="to-top" {{action "toTop" target="view"}}>To Top</a>
 
   {{#if view.job.sponsor.name}}
     <p class="sponsor">
