@@ -47,3 +47,7 @@
     classSearch: (->
       'active' if @get('tab') == 'search'
     ).property('tab')
+
+    classNew: (->
+      'display-inline' if @get('currentUser')
+    ).property('currentUser')
