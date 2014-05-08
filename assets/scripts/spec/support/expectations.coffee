@@ -9,36 +9,36 @@
     equal($("#tab_#{name}").hasClass('display-inline'), !tab.hidden, "#{name} tab should have class display-inline") if name in ['build', 'job']
 
 @displaysSummaryBuildLink = (link, number) ->
-  element = $('#summary .number a')
+  element = $('#new-summary .build-status a')
   equal( element.attr('href') , link)
-  equal( element.text().trim() , "#{number}")
+  equal( element.text().trim() , "##{number} started")
 
 @displaysSummary = (data) ->
-  element = $('#summary .left:first-child dt:first-child')
-  equal(element.text(), $.camelize(data.type))
-
-  element = $('#summary .number a')
+  element = $('#new-summary .build-status a')
   equal(element.attr('href'), "/#{data.repo}/#{data.type}s/#{data.id}")
 
-  element = $('#summary .finished_at')
-  equal(element.text(), data.finishedAt)
+  element = $('#new-summary .finished')
+  equal(element.text().trim(), data.finishedAt)
 
-  element = $('#summary .duration')
-  equal(element.text(), data.duration)
+  element = $('#new-summary .runtime')
+  equal(element.text().trim(), "ran for #{data.duration}")
 
-  element = $('#summary .commit a')
+  element = $('#new-summary .commit a.commit')
   equal(element.attr('href'), "https://github.com/#{data.repo}/commit/#{data.commit}")
 
-  element = $('#summary .commit a')
-  equal(element.text(), "#{data.commit} (#{data.branch})")
+  element = $('#new-summary .commit a.commit')
+  equal(element.text(), "Commit #{data.commit}")
 
-  element = $('#summary .compare a')
+  element = $('#new-summary .branch')
+  equal(element.text().trim(), data.branch)
+
+  element = $('#new-summary .commit a.compare')
   equal(element.attr('href'), "https://github.com/compare/#{data.compare}")
 
-  element = $('#summary .compare a')
-  equal(element.text(), data.compare)
+  element = $('#new-summary .commit a.compare')
+  equal(element.text(), "Compare #{data.compare}")
 
-  element = $('#summary .message')
+  element = $('#new-summary .subject')
   equal(element.text().trim(), data.message)
 
 @displaysLog = (lines) ->
