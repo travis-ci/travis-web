@@ -26,6 +26,11 @@ test "displaying information on build page", ->
       duration: '30 sec'
       message: 'commit message 1'
 
+    displaysSummaryGravatars
+      authorEmail: 'author@email.com'
+      committerEmail: 'committer@email.com'
+
+
     displaysTabs
       current: { href: '/travis-ci/travis-core' }
       builds:  { href: '/travis-ci/travis-core/builds' }

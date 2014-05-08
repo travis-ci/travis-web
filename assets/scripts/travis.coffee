@@ -83,6 +83,7 @@ $.extend Travis,
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
     code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
     show_repos_hint: 'private'
+    avatar_default_url: 'https://travis-ci.org/images/mailer/mascot-avatar-40px.png'
 
   CONFIG_KEYS_MAP: {
     go:          'Go'

@@ -48,9 +48,19 @@ Travis.reopen
   BuildView: Travis.View.extend
     templateName: 'builds/show'
     classNameBindings: ['color', 'loading']
+    buildBinding: 'controller.build'
+    commitBinding: 'build.commit'
+
+    urlCommitterGravatarImage: (->
+      Travis.Urls.gravatarImage(@get('commit.committerEmail'), 40)
+    ).property('commit.committerEmail')
+
+    urlAuthorGravatarImage: (->
+      Travis.Urls.gravatarImage(@get('commit.authorEmail'), 40)
+    ).property('commit.authorEmail')
 
     loadingBinding: 'controller.loading'
 
     color: (->
-      Travis.Helpers.colorForState(@get('controller.build.state'))
-    ).property('controller.build.state')
+      Travis.Helpers.colorForState(@get('build.state'))
+    ).property('build.state')
