@@ -23,19 +23,19 @@
   element = $('#new-summary .runtime')
   equal(element.text().trim(), "ran for #{data.duration}")
 
-  element = $('#new-summary .commit a.commit')
+  element = $('#new-summary .commit-changes a.commit')
   equal(element.attr('href'), "https://github.com/#{data.repo}/commit/#{data.commit}")
 
-  element = $('#new-summary .commit a.commit')
+  element = $('#new-summary .commit-changes a.commit')
   equal(element.text(), "Commit #{data.commit}")
 
   element = $('#new-summary .branch')
   equal(element.text().trim(), data.branch)
 
-  element = $('#new-summary .commit a.compare')
+  element = $('#new-summary .commit-changes a.compare')
   equal(element.attr('href'), "https://github.com/compare/#{data.compare}")
 
-  element = $('#new-summary .commit a.compare')
+  element = $('#new-summary .commit-changes a.compare')
   equal(element.text(), "Compare #{data.compare}")
 
   element = $('#new-summary .subject')
