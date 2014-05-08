@@ -1,5 +1,83 @@
 @import "_mixins/all"
 
+.green .build-status
+  background-color: #0d8136
+
+.yellow .build-status
+  background-color: #e7d700
+
+.red .build-status
+  background-color: #e10000
+
+.gray .build-status
+  background-color: #a8a8a9
+
+#new-summary
+  @include clearfix
+  @include border-radius(5px)
+  width: 100%
+  background-color: #fafafa
+  min-height: 30px
+  padding: 5px 15px
+  margin-bottom: 20px
+
+  .branch
+    font-weight: bold
+    font-size: 16px
+    max-width: 200px
+    display: inline-block
+    margin-top: 10px
+    overflow: hide
+
+  .subject
+    display: inline
+    font-size: 15px
+    overflow: hide
+    margin-top: 10px
+
+  .body
+    min-width: 500px
+    display: block
+    min-height: 30px
+    font-size: 12px
+    font-family: Monaco, 'Liberation Mono', Courier, monospace
+    margin-bottom: 0px
+  
+  .build-status
+    @include border-radius(4px)
+    float: right
+    min-height: 30px
+    min-width: 90px
+    color: white
+    padding-top: 5px
+    padding-left: 10px
+    padding-right: 10px
+    font-size: 16px
+    text-align: center
+
+  .runtime
+    float: right
+    font-size: 11px
+    display: block
+    width: 100%
+    text-align: right
+    line-height: 13px
+    margin-top: 5px
+
+  .finished
+    float: right
+    font-size: 11px
+    width: 100%
+    text-align: right
+    line-height: 20px
+
+  .right
+    margin-top: 10px
+    float: right
+    width: 150px
+    font-size: 11px
+    margin-right: 30px
+
 #summary
   margin: 0 0 0 12px
   @include clearfix

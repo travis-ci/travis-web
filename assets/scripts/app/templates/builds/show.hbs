@@ -1,6 +1,34 @@
 {{#if loading}}
   <span>Loading</span>
 {{else}}
+  <div id="new-summary">
+    <div class="right">
+      <div class="build-status">
+        #{{build.number}} {{build.state}}
+      </div>
+
+      <div class="runtime">
+         ran for {{formatDuration build.duration}} 
+      </div>
+
+      <div class="finished">
+        {{formatTime build.finishedAt}}
+      </div>
+    </div>
+ 
+    <div class="branch" {{bind-attr title="build.commit.branch"}}>
+      {{build.commit.branch}}
+    </div>
+    -
+    <div class="subject">
+      {{formatMessage build.commit.subject repoBinding=build.repo}}
+    </div>
+
+    <pre class="body">
+{{formatMessage build.commit.body repoBinding=build.repo pre=true}}
+    </pre>
+  </div>
+
   <dl id="summary">
     <div class="left">
       <dt>Build</dt>
