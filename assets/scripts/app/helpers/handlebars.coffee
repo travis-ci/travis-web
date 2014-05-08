@@ -149,6 +149,16 @@ Travis.FormSettingsView = Ember.View.extend Ember.TargetActionSupport,
     event.preventDefault()
     @triggerAction()
 
+Ember.LinkView.reopen
+  init: ->
+    @_super()
+    eventName = Ember.get(this, 'eventName')
+    if Ember.get(this, 'trackEvent')
+      @on(eventName, this, @_trackEvent)
+    @on(eventName, this, @_invoke)
+
+  _trackEvent: (event) ->
+    event.preventDefault()
 
 Ember.Handlebars.registerHelper('settings-form', (path, options) ->
   if arguments.length == 1
