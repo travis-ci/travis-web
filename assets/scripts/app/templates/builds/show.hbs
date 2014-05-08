@@ -39,11 +39,12 @@
       </div>
 
       <div class="commit">
-        <a class="github" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a><img src="/images/icons/github.png" height="15"/>
+        <div><a class="github" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a></div><img src="/images/icons/github.png" height="15"/>
         {{#if build.pullRequest}}
-          <a {{bind-attr href="build.commit.compareUrl"}} >#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a> {{else}}
+          <div><a {{bind-attr href="build.commit.compareUrl"}} >#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a></div>
+        {{else}}
           {{#if build.commit.compareUrl}}
-            <a {{bind-attr href="build.commit.compareUrl"}}>Compare {{pathFrom build.commit.compareUrl}}</a>
+            <div><a {{bind-attr href="build.commit.compareUrl"}}>Compare {{shortCompareShas build.commit.compareUrl}}</a></div>
           {{/if}}
         {{/if}}
         <img src="/images/icons/github.png" height="15"/>
