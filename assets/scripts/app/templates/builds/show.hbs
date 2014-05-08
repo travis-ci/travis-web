@@ -27,6 +27,28 @@
     <pre class="body">
 {{formatMessage build.commit.body repoBinding=build.repo pre=true}}
     </pre>
+
+    <div class="footer">
+      <div class="author">
+        {{#if commit.authorName}}
+          <img src="https://travis-ci.org/images/mailer/mascot-avatar-40px.png"/>{{commit.authorName}} authored
+        {{/if}}
+        {{#if commit.committerName}}
+          <img src="https://travis-ci.org/images/mailer/mascot-avatar-40px.png"/>{{commit.committerName}} committed
+        {{/if}}
+      </div>
+
+      <div class="commit">
+        <a class="github" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a><img src="/images/icons/github.png" height="15"/>
+        {{#if build.pullRequest}}
+          <a {{bind-attr href="build.commit.compareUrl"}} >#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a> {{else}}
+          {{#if build.commit.compareUrl}}
+            <a {{bind-attr href="build.commit.compareUrl"}}>Compare {{pathFrom build.commit.compareUrl}}</a>
+          {{/if}}
+        {{/if}}
+        <img src="/images/icons/github.png" height="15"/>
+      </div>
+    </div>
   </div>
 
   <dl id="summary">
