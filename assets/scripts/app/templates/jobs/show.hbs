@@ -1,53 +1,57 @@
 {{#if job.isLoaded}}
   <div {{bind-attr class="view.color"}}>
-    <dl id="summary">
-      <div class="left">
-        <dt>Job</dt>
-        <dd class="number">
-          <span class="status"></span>
-          {{#if job.id}}
-            {{#if job.repo.slug}}
-              {{#link-to "job" repo job}}{{job.number}}{{/link-to}}
-            {{/if}}
-          {{/if}}
-        </dd>
-        <dt>State</dt>
-        <dd class="state">{{capitalize job.state}}</dd>
-        <dt class="finished_at_label">Finished</dt>
-        <dd class="finished_at timeago" {{bind-attr title="job.formattedFinishedAt"}}>{{formatTime job.finishedAt}}</dd>
-        <dt>Duration</dt>
-        <dd class="duration" {{bind-attr title="startedAt"}}>{{formatDuration job.duration}}</dd>
+    <div id="new-summary">
+      <div class="right">
+        <div class="build-status">
+          {{#link-to "job" repo job}}#{{job.number}} {{job.state}}{{/link-to}}
+        </div>
+
+        <div class="runtime">
+           ran for {{formatDuration job.duration}} 
+        </div>
+
+        <div class="finished">
+          {{formatTime job.finishedAt}}
+        </div>
+      </div>
+   
+      <div class="branch" {{bind-attr title="job.commit.branch"}}>
+        {{job.commit.branch}}
+      </div>
+      -
+      <div class="subject">
+        {{formatMessage job.commit.subject repoBinding=job.repo}}
       </div>
 
-      {{#with job}}
-        <div class="right">
-          <dt>Commit</dt>
-          <dd class="commit"><a {{bind-attr href="controller.urlGithubCommit"}}>{{formatCommit commit}}</a></dd>
-          {{#if build.pullRequest}}
-            <dt></dt>
-            <dd class="pull_request"><a {{bind-attr href="commit.compareUrl"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a></dd>
-          {{else}}
-            {{#if commit.compareUrl}}
-              <dt>Compare</dt>
-              <dd class="compare"><a {{bind-attr href="commit.compareUrl"}}>{{pathFrom commit.compareUrl}}</a></dd>
-            {{/if}}
-          {{/if}}
+      <pre class="body">
+{{formatMessage job.commit.body repoBinding=job.repo pre=true}}
+      </pre>
+
+      <div class="footer">
+        <div class="author">
           {{#if commit.authorName}}
-            <dt>Author</dt>
-            <dd class="author">{{commit.authorName}}</dd>
+            <img src="https://travis-ci.org/images/mailer/mascot-avatar-40px.png"/>{{commit.authorName}} authored
           {{/if}}
           {{#if commit.committerName}}
-            <dt>Committer</dt>
-            <dd class="committer">{{commit.committerName}}</dd>
+            <img src="https://travis-ci.org/images/mailer/mascot-avatar-40px.png"/>{{commit.committerName}} committed
           {{/if}}
         </div>
-      {{/with}}
-      <dt>Message</dt>
-      <dd class="message">
-        {{formatMessage job.commit.subject repoBinding=job.repo}}
-        <pre>{{formatMessage job.commit.body repoBinding=job.repo pre=true}}</pre>
-      </dd>
-    </dl>
+
+        <div class="commit-changes">
+          <div><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha job.commit.sha}}</a><img src="/images/icons/github.png" height="15"/></div>
+          <div>
+          {{#if job.build.pullRequest}}
+            <a class="compare" {{bind-attr href="job.commit.compareUrl"}} >#{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a><img src="/images/icons/github.png"/>
+          {{else}}
+            {{#if job.commit.compareUrl}}
+              <a class="compare" {{bind-attr href="job.commit.compareUrl"}}>Compare {{shortCompareShas job.commit.compareUrl}}</a><img src="/images/icons/github.png"/>
+            {{/if}}
+          {{/if}}
+          </div>
+          
+        </div>
+      </div>
+    </div>
 
     {{view Travis.AnnotationsView annotationsBinding="view.annotations"}}
 
