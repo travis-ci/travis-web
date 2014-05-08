@@ -17,7 +17,7 @@
           <span class="status"></span>
           {{request.id}}
         </td>
-        <td>{{formatSha request.commit.sha}}</td>
+        <td>{{githubCommitLink request.repo.slug request.commit.sha}}</td>
         <td>
           {{#if build}}
             {{#link-to "build" build}}#{{build.number}}{{/link-to}}
