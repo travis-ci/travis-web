@@ -38,16 +38,17 @@
         </div>
 
         <div class="commit-changes">
-          <div><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha job.commit.sha}}</a></div><img src="/images/icons/github.png" height="15"/>
+          <div><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha job.commit.sha}}</a><img src="/images/icons/github.png" height="15"/></div>
+          <div>
           {{#if job.build.pullRequest}}
-            <div><a class="compare" {{bind-attr href="job.commit.compareUrl"}} >#{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
+            <a class="compare" {{bind-attr href="job.commit.compareUrl"}} >#{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a><img src="/images/icons/github.png"/>
           {{else}}
             {{#if job.commit.compareUrl}}
-              <div><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>Compare {{shortCompareShas
-              job.commit.compareUrl}}</a></div>
+              <a class="compare" {{bind-attr href="job.commit.compareUrl"}}>Compare {{shortCompareShas job.commit.compareUrl}}</a><img src="/images/icons/github.png"/>
             {{/if}}
           {{/if}}
-          <img src="/images/icons/github.png" height="15"/>
+          </div>
+          
         </div>
       </div>
     </div>
