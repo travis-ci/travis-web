@@ -14,7 +14,7 @@ require 'travis/model'
   pullRequestTitle:  Ember.attr('string')
   pullRequestNumber: Ember.attr(Number)
 
-  repo:   Ember.belongsTo('Travis.Request', key: 'repository_id')
+  repo:   Ember.belongsTo('Travis.Repo', key: 'repository_id')
   commit: Ember.belongsTo('Travis.Commit', key: 'commit_id')
   build:  Ember.belongsTo('Travis.Build', key: 'build_id')
 

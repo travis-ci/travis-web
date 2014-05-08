@@ -299,6 +299,15 @@ Ember.registerBoundHelper 'capitalize', (value, options) ->
   else
     ''
 
+Ember.Handlebars.helper('githubCommitLink', (slug, commitSha) ->
+  return '' unless commitSha
+  sha = Handlebars.Utils.escapeExpression Travis.Helpers.formatCommit(commitSha)
+  return sha unless slug
+  url = Handlebars.Utils.escapeExpression Travis.Urls.githubCommit(slug, sha)
+
+  safe '<a class="github-link only-on-hover" href="' + url + '">' + sha + '</a>'
+)
+
 Ember.registerBoundHelper 'formatTime', (value, options) ->
   safe Travis.Helpers.timeAgoInWords(value) || '-'
 
