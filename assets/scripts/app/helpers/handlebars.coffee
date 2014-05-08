@@ -332,8 +332,12 @@ Ember.registerBoundHelper 'formatConfig', (config, options) ->
   safe Travis.Helpers.formatConfig(config)
 
 Ember.registerBoundHelper 'shortCompareShas', (url, options) ->
-  shas = Travis.Helpers.pathFrom(url).split('...')
-  "#{shas[0][0..6]}..#{shas[1][0..6]}"
+  path = Travis.Helpers.pathFrom(url)
+  if path.indexOf('...') >= 0
+    shas = path.split('...')
+    "#{shas[0][0..6]}..#{shas[1][0..6]}"
+  else
+    path
 
 Ember.registerBoundHelper 'formatLog', (log, options) ->
   parentView =  @get 'parentView'
