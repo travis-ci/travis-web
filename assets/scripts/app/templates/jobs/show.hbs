@@ -29,12 +29,14 @@
 
       <div class="footer">
         <div class="author">
-          {{#if commit.authorName}}
-            <img src="https://travis-ci.org/images/mailer/mascot-avatar-40px.png"/>{{commit.authorName}} authored
+          {{#if job.commit.authorName}}
+            <div class="authored"><img {{bind-attr src="view.urlAuthorGravatarImage"}}/>{{job.commit.authorName}} authored{{#if job.commit.authorIsCommitter}} and committed{{/if}}</div>
           {{/if}}
-          {{#if commit.committerName}}
-            <img src="https://travis-ci.org/images/mailer/mascot-avatar-40px.png"/>{{commit.committerName}} committed
-          {{/if}}
+          {{#unless job.commit.authorIsCommitter}}
+            {{#if job.commit.committerName}}
+              <div class="committed"><img {{bind-attr src="view.urlCommitterGravatarImage"}}/>{{job.commit.committerName}} committed</div>
+            {{/if}}
+          {{/unless}}
         </div>
 
         <div class="commit-changes">
