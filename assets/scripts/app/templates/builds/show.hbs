@@ -31,11 +31,13 @@
     <div class="footer">
       <div class="author">
         {{#if commit.authorName}}
-          <div class="authored"><img {{bind-attr src="view.urlAuthorGravatarImage"}}/>{{commit.authorName}} authored</div>
+          <div class="authored"><img {{bind-attr src="view.urlAuthorGravatarImage"}}/>{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</div>
         {{/if}}
-        {{#if commit.committerName}}
-          <div class="committed"><img {{bind-attr src="view.urlCommitterGravatarImage"}}/>{{commit.committerName}} committed</div>
-        {{/if}}
+        {{#unless commit.authorIsCommitter}}
+          {{#if commit.committerName}}
+            <div class="committed"><img {{bind-attr src="view.urlCommitterGravatarImage"}}/>{{commit.committerName}} committed</div>
+          {{/if}}
+        {{/unless}}
       </div>
 
       <div class="commit-changes">
