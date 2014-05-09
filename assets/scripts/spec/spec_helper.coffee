@@ -1,8 +1,8 @@
-document.write('<div id="ember-testing-container"><div id="ember-testing"></div></div>');
+document.write('<div id="ember-testing-container"><div id="ember-testing"></div></div>')
 
-Travis.rootElement = '#ember-testing';
-Travis.setupForTesting();
-Travis.injectTestHelpers();
+Travis.rootElement = '#ember-testing'
+Travis.setupForTesting()
+Travis.injectTestHelpers()
 
 oldSetup = Travis.setup
 Travis.ready = ->
