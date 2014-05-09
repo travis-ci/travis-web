@@ -39,7 +39,7 @@
   equal(element.text(), "Compare #{data.compare}")
 
   element = $('#new-summary .subject')
-  equal(element.text().trim(), data.message)
+  equal(element.text().trim(), "- #{data.message}")
 
 @displaysSummaryGravatars = (data) ->
   element = $('#new-summary .author .committed img')
