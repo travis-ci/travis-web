@@ -19,9 +19,9 @@
     <div class="branch" {{bind-attr title="build.commit.branch"}}>
       {{build.commit.branch}}
     </div>
-    -
+
     <div class="subject">
-      {{formatMessage build.commit.subject repoBinding=build.repo}}
+    - {{formatMessage build.commit.subject repoBinding=build.repo}}
     </div>
 
     <pre class="body">
