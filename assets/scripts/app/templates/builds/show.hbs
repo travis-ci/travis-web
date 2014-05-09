@@ -31,10 +31,10 @@
     <div class="footer">
       <div class="author">
         {{#if commit.authorName}}
-          <div><img src="https://travis-ci.org/images/mailer/mascot-avatar-40px.png"/>{{commit.authorName}} authored</div>
+          <div class="authored"><img {{bind-attr src="view.urlAuthorGravatarImage"}}/>{{commit.authorName}} authored</div>
         {{/if}}
         {{#if commit.committerName}}
-          <div><img src="https://travis-ci.org/images/mailer/mascot-avatar-40px.png"/>{{commit.committerName}} committed</div>
+          <div class="committed"><img {{bind-attr src="view.urlCommitterGravatarImage"}}/>{{commit.committerName}} committed</div>
         {{/if}}
       </div>
 

@@ -25,3 +25,6 @@
 
   email: (email) ->
     "mailto:#{email}"
+
+  gravatarImage: (email, size) ->
+    "https://www.gravatar.com/avatar/#{md5(email)}?s=#{size}&d=#{encodeURIComponent(Travis.config.avatar_default_url)}"

@@ -41,6 +41,13 @@
   element = $('#new-summary .subject')
   equal(element.text().trim(), data.message)
 
+@displaysSummaryGravatars = (data) ->
+  element = $('#new-summary .author .committed img')
+  equal(element.attr('src'), Travis.Urls.gravatarImage(data.committerEmail, 40))
+
+  element = $('#new-summary .author .authored img')
+  equal(element.attr('src'), Travis.Urls.gravatarImage(data.authorEmail, 40))
+
 @displaysLog = (lines) ->
   log = lines.join('')
   equal($('#log p').text().trim(), log)
