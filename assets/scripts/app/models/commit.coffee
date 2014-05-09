@@ -26,3 +26,8 @@ require 'travis/model'
     else
       ""
   ).property('message')
+
+  authorIsCommitter: ( ->
+    @get('authorName') == @get('committerName') and
+      @get('authorEmail') == @get('committerEmail')
+  ).property('authorName', 'authorEmail', 'committerName', 'committerEmail')
