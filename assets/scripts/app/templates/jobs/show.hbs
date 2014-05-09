@@ -7,7 +7,7 @@
         </div>
 
         <div class="runtime">
-           ran for {{formatDuration job.duration}} 
+           {{#if job.isFinished}}ran{{else}}running{{/if}} for {{formatDuration job.duration}} 
         </div>
 
         <div class="finished">
