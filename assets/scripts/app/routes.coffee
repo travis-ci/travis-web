@@ -80,6 +80,8 @@ Travis.Router.map ->
       @resource 'builds', path: '/builds'
       @resource 'pullRequests', path: '/pull_requests'
       @resource 'branches', path: '/branches'
+      @resource 'requests', path: '/requests'
+      @resource 'request', path: '/requests/:request_id'
 
     # this can't be nested in repo, because we want a set of different
     # templates rendered for settings (for example no "current", "builds", ... tabs)
@@ -110,6 +112,38 @@ Travis.SetupLastBuild = Ember.Mixin.create
     if repo && repo.get('isLoaded') && !repo.get('lastBuildId')
       Ember.run.next =>
         @render('builds/not_found', into: 'repo', outlet: 'pane')
+
+Travis.RepoLoadingRoute = Travis.Route.extend
+  renderTemplate: ->
+    # TODO: the main outlet used on repo level is called 'pane'
+    #       which makes a few things quite hard with current Ember.js
+    #       conventions. Here, we need to specify render behaviour
+    #       of a loading route explicitly, because otherwise it will
+    #       render into 'main' outlet. It would be nice to change
+    #       pane outlet into main outlet at some point
+    @render 'repo/loading', into: 'repo', outlet: 'pane'
+
+Travis.RequestsRoute = Travis.Route.extend
+  renderTemplate: ->
+    @render 'requests', into: 'repo', outlet: 'pane'
+
+  setupController: ->
+    @_super.apply this, arguments
+    @controllerFor('repo').activate('requests')
+
+  model: ->
+    Travis.Request.fetch repository_id: @modelFor('repo').get('id')
+
+Travis.RequestRoute = Travis.Route.extend
+  renderTemplate: ->
+    @render 'request', into: 'repo', outlet: 'pane'
+
+  setupController: ->
+    @_super.apply this, arguments
+    @controllerFor('repo').activate('request')
+
+  model: (params) ->
+    Travis.Request.fetch params.request_id
 
 Travis.GettingStartedRoute = Travis.Route.extend
   renderTemplate: ->

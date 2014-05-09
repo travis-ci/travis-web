@@ -1,0 +1,34 @@
+<table id="requests" class="list">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Commit</th>
+      <th>Build</th>
+      <th>Commit message</th>
+      <th>Type</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each request in controller itemController="request"}}
+      <tr {{bind-attr class="requestClass"}}>
+        <td class="request-id">
+          <span class="status"></span>
+          {{request.id}}
+        </td>
+        <td>{{githubCommitLink request.repo.slug request.commit.sha}}</td>
+        <td>
+          {{#if build}}
+            {{#link-to "build" build}}#{{build.number}}{{/link-to}}
+          {{else}}
+            -
+          {{/if}}
+        </td>
+        <td class="commit-message">{{{formatMessage request.commit.message short="true" repoBinding=build.repo}}}</td>
+        <td>{{request.type}}</td>
+        <td>{{request.message}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
