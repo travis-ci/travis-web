@@ -31,26 +31,24 @@
     <div class="footer">
       <div class="author">
         {{#if commit.authorName}}
-          <div class="authored"><img {{bind-attr src="view.urlAuthorGravatarImage"}}/>{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</div>
+          <div class="authored"><img {{bind-attr src="view.urlAuthorGravatarImage"}}/><div class="text">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</div></div>
         {{/if}}
         {{#unless commit.authorIsCommitter}}
           {{#if commit.committerName}}
-            <div class="committed"><img {{bind-attr src="view.urlCommitterGravatarImage"}}/>{{commit.committerName}} committed</div>
+            <div class="committed"><img {{bind-attr src="view.urlCommitterGravatarImage"}}/><div class="text">{{commit.committerName}} committed</div></div>
           {{/if}}
         {{/unless}}
       </div>
 
       <div class="commit-changes">
-        <div><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a></div><img src="/images/icons/github.png"/>
-        <div>
+        <div class="text"><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a></div><img src="/images/icons/github.png"/>
         {{#if build.pullRequest}}
-          <a class="compare" {{bind-attr href="build.commit.compareUrl"}} >#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a><img src="/images/icons/github.png"/>
+          <div class="text"><a class="compare" {{bind-attr href="build.commit.compareUrl"}}>#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a></div><img src="/images/icons/github.png"/>
         {{else}}
           {{#if build.commit.compareUrl}}
-            <a class="compare" {{bind-attr href="build.commit.compareUrl"}}>Compare {{shortCompareShas build.commit.compareUrl}}</a><img src="/images/icons/github.png"/>
+            <div class="text"><a class="compare" {{bind-attr href="build.commit.compareUrl"}}>Compare {{shortCompareShas build.commit.compareUrl}}</a></div><img src="/images/icons/github.png"/>
           {{/if}}
         {{/if}}
-        </div>
       </div>
     </div>
   </div>
