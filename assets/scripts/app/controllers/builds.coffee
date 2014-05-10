@@ -15,5 +15,5 @@ Travis.BuildsController = Em.ArrayController.extend
     @get('content').load Travis.Build.olderThanNumber(id, number, @get('tab'))
 
   displayShowMoreButton: (->
-    @get('tab') != 'branches'
-  ).property('tab')
+    @get('tab') != 'branches' and parseInt(@get('lastObject.number')) > 1
+  ).property('tab', 'lastObject.number')
