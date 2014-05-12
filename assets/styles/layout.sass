@@ -43,6 +43,7 @@ html, body
   background-color: #fbfbfa
   border-right: 1px solid $color-border-normal
 
+
 @media screen and (max-width: 980px)
   #left
     max-width: 300px
@@ -72,4 +73,28 @@ html, body
 
 @media screen and (max-width: 1310px)
   table#builds .committer
+    display: none
+
+@media handheld, only screen and (max-device-height: 1024px)
+  #left
+    display: none
+  #main
+    min-width: 99%
+    max-width: 99%
+    padding: 0px
+
+    .tabs
+      margin-top: 5px
+
+    p.description
+      margin: 5px 0px
+
+    #repo
+      padding: 15px 10px
+      width: 95%
+
+  #top
+    width: 100%
+    min-width: 960px
+  #tools
     display: none

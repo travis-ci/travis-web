@@ -85,3 +85,16 @@
       border-bottom-color: $color-bg-right
       h5
         font-weight: bold
+
+@media handheld, only screen and (max-device-width: 1024px)
+  #main
+    .tabs
+      margin-top: 5px
+      li
+        margin-right: 0px
+      h5
+        min-width: 0px
+        a
+          padding: 0px 2px   
+      #tab_branches
+        display: none
