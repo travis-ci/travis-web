@@ -21,7 +21,8 @@
   equal(element.text().trim(), data.finishedAt)
 
   element = $('#new-summary .runtime')
-  equal(element.text().trim(), "ran for #{data.duration}")
+  duration_regexp = new RegExp("(ran|running) for #{data.duration}")
+  ok(duration_regexp.test(element.text().trim()))
 
   element = $('#new-summary .commit-changes a.commit')
   equal(element.attr('href'), "https://github.com/#{data.repo}/commit/#{data.commit}")
