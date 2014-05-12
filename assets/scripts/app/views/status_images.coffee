@@ -9,10 +9,21 @@ Travis.StatusImagesView = Em.View.extend
   jobBinding:   'toolsView.job'
   branchesBinding: 'repo.branches'
 
+  formats: [
+    'Image URL',
+    'Markdown',
+    'Textile',
+    'RDOC',
+    'AsciiDoc',
+    'Rst',
+    'POD'
+  ]
+
   didInsertElement: ->
     @_super.apply(this, arguments)
 
     @setStatusImageBranch()
+    @setStatusImageFormat()
     @show()
 
   show: ->
@@ -21,9 +32,9 @@ Travis.StatusImagesView = Em.View.extend
   close: ->
     @destroy()
 
-  urlRepo: (->
-    "https://#{location.host}/#{@get('repo.slug')}"
-  ).property('repo.slug')
+  setStatusImageFormat: (->
+    @set('statusImageFormat', @formats[0])
+  )
 
   setStatusImageBranch: (->
     if @get('repo.branches.isLoaded')
@@ -32,30 +43,7 @@ Travis.StatusImagesView = Em.View.extend
       @set('statusImageBranch', null)
   ).observes('repo.branches', 'repo.branches.isLoaded', 'build.commit.branch')
 
-  statusImageUrl: (->
-    Travis.Urls.statusImage(@get('repo.slug'), @get('statusImageBranch.commit.branch'))
-  ).property('repo.slug', 'statusImageBranch')
+  statusString: (->
+    Travis.StatusImageFormatter.format(@get('statusImageFormat'), @get('repo.slug'), @get('statusImageBranch.commit.branch'))
+  ).property('statusImageFormat', 'repo.slug', 'statusImageBranch.commit.branch')
 
-  markdownStatusImage: (->
-    "[![Build Status](#{@get('statusImageUrl')})](#{@get('urlRepo')})"
-  ).property('statusImageUrl')
-
-  textileStatusImage: (->
-    "!#{@get('statusImageUrl')}!:#{@get('urlRepo')}"
-  ).property('statusImageUrl')
-
-  rdocStatusImage: (->
-    "{<img src=\"#{@get('statusImageUrl')}\" alt=\"Build Status\" />}[#{@get('urlRepo')}]"
-  ).property('statusImageUrl')
-
-  asciidocStatusImage: (->
-    "image:#{@get('statusImageUrl')}[\"Build Status\", link=\"#{@get('urlRepo')}\"]"
-  ).property('statusImageUrl')
-
-  rstStatusImage: (->
-    ".. image:: #{@get('statusImageUrl')}   :target: #{@get('urlRepo')}"
-  ).property('statusImageUrl')
-
-  podStatusImage: (->
-    "=for HTML <a href=\"#{@get('urlRepo')}\"><img src=\"#{@get('statusImageUrl')}\"></a>"
-  ).property('statusImageUrl')
