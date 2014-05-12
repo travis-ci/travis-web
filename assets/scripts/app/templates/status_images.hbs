@@ -10,5 +10,5 @@
 
 <p>
   <label>{{view Ember.Select contentBinding="view.formats" selectionBinding="view.statusImageFormat"}}</label>
-  <input type="text" onclick="this.select()" class="url" {{bind-attr value="view.statusString"}}></input>
+  {{view Travis.StatusImageInput valueBinding="view.statusString" class="url" rows=3}}
 </p>
