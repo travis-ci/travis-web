@@ -16,6 +16,7 @@
       when 'AsciiDoc' then @asciidocStatusImage()
       when 'Rst' then @rstStatusImage()
       when 'POD' then @podStatusImage()
+      when 'cc.xml' then @ccxmlStatusUrl()
 
   urlRepo: (->
     "https://#{location.host}/#{@slug}"
@@ -47,4 +48,8 @@
 
   podStatusImage: (->
     "=for HTML <a href=\"#{@url}\"><img src=\"#{@statusImageUrl()}\"></a>"
+  )
+
+  ccxmlStatusUrl: (->
+    "#{Travis.config.api_endpoint}/repos/#{@slug}/cc.xml"
   )
