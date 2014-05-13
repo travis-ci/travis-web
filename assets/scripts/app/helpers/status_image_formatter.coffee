@@ -51,5 +51,5 @@
   )
 
   ccxmlStatusUrl: (->
-    "#{Travis.config.api_endpoint}/repos/#{@slug}/cc.xml"
+    Travis.Urls.ccXml(@slug)
   )

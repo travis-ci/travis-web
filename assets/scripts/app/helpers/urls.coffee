@@ -23,6 +23,9 @@
   statusImage: (slug, branch) ->
     "#{location.protocol}//#{location.host}/#{slug}.svg" + if branch then "?branch=#{branch}" else ''
 
+  ccXml: (slug) ->
+    "#{Travis.config.api_endpoint}/repos/#{slug}/cc.xml"
+
   email: (email) ->
     "mailto:#{email}"
 
