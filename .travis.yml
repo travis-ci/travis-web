@@ -13,9 +13,7 @@ env:
     - "TEST_SUITE=phantomjs"
     - "TEST_SUITE=saucelabs BROWSER='firefox::Windows XP'"
     - "TEST_SUITE=saucelabs BROWSER='chrome::Windows XP'"
-  allow_failures:
-    - env: "TEST_SUITE=saucelabs BROWSER='firefox::Windows XP'"
-    - env: "TEST_SUITE=saucelabs BROWSER='chrome::Windows XP'"
+
 script: "script/ci"
 
 before_install:
@@ -26,6 +24,11 @@ before_script:
   - "phantomjs --version"
 after_script:
   - "test $TEST_SUITE = \"ruby\" && test $TRAVIS_PULL_REQUEST = \"false\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public/scripts:scripts --path public/styles:styles || true"
+
+matrix:
+  allow_failures:
+    - env: "TEST_SUITE=saucelabs BROWSER='firefox::Windows XP'"
+    - env: "TEST_SUITE=saucelabs BROWSER='chrome::Windows XP'"
 
 notifications:
   irc: "irc.freenode.org#travis"
