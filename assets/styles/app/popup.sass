@@ -47,7 +47,7 @@
   margin: -95px 0 0 -300px
 
   p
-    margin: 10px 0
+    margin: 0
     label
       width: 100px
       display: inline-block
@@ -57,7 +57,11 @@
       width: 485px
       padding: 4px
       resize: vertical
+      margin-bottom: 0px
       @include border-radius(3px)
+
+  p:last-child
+    margin-top: 10px
 
 #regenerate-key
   .cancel
