@@ -84,6 +84,8 @@ $.extend Travis,
     code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
     show_repos_hint: 'private'
     avatar_default_url: 'https://travis-ci.org/images/mailer/mascot-avatar-40px.png'
+    status_avatar_url: (state) ->
+      "http://localhost:5000/mascot-#{state}.png"
 
   CONFIG_KEYS_MAP: {
     go:          'Go'
@@ -173,7 +175,7 @@ require 'tailing'
 require 'templates'
 require 'views'
 require 'components'
-
+require 'travis/notify'
 require 'travis/instrumentation'
 
 Travis.setup()

@@ -24,6 +24,16 @@
       click: ->
         @get('controller').transitionToRoute('/' + @get('repo.slug'))
 
+      notifyUser: (->
+        if @get('repo.lastBuild.state') in ['passed', 'failed', 'errored', 'canceled']
+          notify.show(
+            "#{@get('repo.slug')} ##{@get('repo.lastBuild.number')} #{@get('repo.lastBuild.state')}",
+            @get('repo.lastBuild.commit.message') || '',
+            @get('repo.id'),
+            Travis.config.status_avatar_url(@get('repo.lastBuild.state'))
+          )
+      ).observes('repo.lastBuildState')
+
   ReposListTabsView: Travis.View.extend
     templateName: 'repos/list/tabs'
     tabBinding: 'controller.tab'
