@@ -113,16 +113,6 @@ Travis.SetupLastBuild = Ember.Mixin.create
       Ember.run.next =>
         @render('builds/not_found', into: 'repo', outlet: 'pane')
 
-Travis.RepoLoadingRoute = Travis.Route.extend
-  renderTemplate: ->
-    # TODO: the main outlet used on repo level is called 'pane'
-    #       which makes a few things quite hard with current Ember.js
-    #       conventions. Here, we need to specify render behaviour
-    #       of a loading route explicitly, because otherwise it will
-    #       render into 'main' outlet. It would be nice to change
-    #       pane outlet into main outlet at some point
-    @render 'repo/loading', into: 'repo', outlet: 'pane'
-
 Travis.RequestsRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'requests', into: 'repo', outlet: 'pane'
