@@ -83,7 +83,7 @@
         @storeData(data, Travis.sessionStorage)
         @storeData(data, Travis.storage)
     , (data, status, xhr) =>
-      @signOut()
+      @signOut() if xhr.status == 401
 
   signedIn: ->
     @get('state') == 'signed-in'
