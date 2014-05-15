@@ -30,5 +30,6 @@ run Travis::Web::App.build(
   api_endpoint: ENV['API_ENDPOINT'],
   pusher_key:   ENV['PUSHER_KEY'],
   ga_code:      ENV['GA_CODE'],
-  root:         File.expand_path('../public', __FILE__)
+  root:         File.expand_path('../public', __FILE__),
+  server_start: Time.now
 )

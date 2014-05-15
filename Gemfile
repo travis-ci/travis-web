@@ -4,7 +4,6 @@ ruby '2.1.2'
 gem 'puma'
 gem 'rack-ssl', '~> 1.3'
 gem 'rack-protection', '~> 1.3'
-gem 'rack-cache'
 gem 'rack-mobile-detect'
 gem 'sinatra'
 
