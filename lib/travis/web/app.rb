@@ -99,10 +99,6 @@ class Travis::Web::App
       Dir.glob(File.join(root, '**/*')) { |file| yield file if File.file?(file) }
     end
 
-    def prefix?(file)
-      file =~ /^(styles|scripts)\//
-    end
-
     def config_needed?(file)
       index?(file) || file.end_with?('spec.html')
     end
@@ -129,7 +125,6 @@ class Travis::Web::App
 
     def path_for(file)
       file = file.sub("#{root}/", '')
-      file = File.join(version, file) if prefix?(file)
       file = "" if index?(file)
       "/#{file}"
     end
@@ -144,7 +139,7 @@ class Travis::Web::App
       end
 
       string.gsub! %r{(src|href)="(?:\/?)((styles|scripts)\/[^"]*)"} do
-        %(#{$1}=#{opts[:alt] ? "#{S3_URL}/#{opts[:alt]}/#{$2}" : "/#{version}/#{$2}"})
+        %(#{$1}=#{opts[:alt] ? "#{S3_URL}/#{opts[:alt]}/#{$2}":"/#{$2}"})
       end
     end
 end
