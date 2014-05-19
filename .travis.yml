@@ -9,7 +9,7 @@ env:
     # SAUCE_ACCESS_KEY
     - secure: "vf+RnbxcpCZcJYCcJdlT/EbPm9go5BnyyGKHCBwdPqb3+w+k0XyYnUkO5V9pIewIFAKof50i2YlAT8DG9GiUmKrX8z54dqSDlA+R1arMxgZRCHJohLxBjcxHVZe05aVZm/9U7YMOl3DuX88gISG91XC6nr8jnmmp2xGNQR8MkaU="
     # SAUCE_USERNAME
-    - secure: "KiR/x2tu+EDHZpWlu7OW8ozQkUw7vgR/diUuu2hz8+BcZx6fTkbN0QDykKJAvsfpWP35p0ICshjm3AvcrcBKxmDCbATEdIBH2RfJnR6Q4aqJU6hp11cHP6x9sVqjeiS8/NlqhapcknSoBl96OrjOCwqhBNvj2Ee/soobfjtxclc="
+    - secure: "tg6TWOS7ZtS4/SXezv4mK482rR+F2MPKCe6PCp+U4oYidm5Jj0NPw/lVog26HSVxxLpayMq35WrBJPwR+7DiNLc+RyBS+yeL8zsLnDlBdGFqSYg6L0j3QK3mVUhQi/ivgvd5NiTcxLROKBie+NJ58HKbenwFFTfvVCy/WjK+dPA="
 
   matrix:
     - "TEST_SUITE=ruby ARTIFACTS_S3_BUCKET=travis-web-production"
