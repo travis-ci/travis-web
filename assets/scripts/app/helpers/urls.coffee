@@ -21,7 +21,7 @@
     "https://github.com/#{slug}/settings/hooks#travis_minibucket"
 
   statusImage: (slug, branch) ->
-    "#{location.protocol}//#{location.host}/#{slug}.svg" + if branch then "?branch=#{branch}" else ''
+    "#{location.protocol}//#{location.host}/#{slug}.svg" + if branch then "?branch=#{encodeURIComponent(branch)}" else ''
 
   ccXml: (slug) ->
     "#{Travis.config.api_endpoint}/repos/#{slug}/cc.xml"

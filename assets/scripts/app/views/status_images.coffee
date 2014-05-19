@@ -13,11 +13,11 @@ Travis.StatusImagesView = Em.View.extend
     'Image URL',
     'Markdown',
     'Textile',
-    'RDOC',
+    'Rdoc',
     'AsciiDoc',
     'Rst',
-    'POD',
-    'cc.xml'
+    'Pod',
+    'CCTray'
   ]
 
   didInsertElement: ->

@@ -12,11 +12,11 @@
       when 'Image URL' then @statusImageUrl()
       when 'Markdown' then @markdownStatusImage()
       when 'Textile' then @textileStatusImage()
-      when 'RDOC' then @rdocStatusImage()
+      when 'Rdoc' then @rdocStatusImage()
       when 'AsciiDoc' then @asciidocStatusImage()
       when 'Rst' then @rstStatusImage()
-      when 'POD' then @podStatusImage()
-      when 'cc.xml' then @ccxmlStatusUrl()
+      when 'Pod' then @podStatusImage()
+      when 'CCTray' then @ccxmlStatusUrl()
 
   urlRepo: (->
     "https://#{location.host}/#{@slug}"
