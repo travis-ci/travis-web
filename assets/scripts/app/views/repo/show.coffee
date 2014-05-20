@@ -174,7 +174,7 @@ Travis.reopen
 
     cancelBuild: ->
       if @get('canCancelBuild')
-        Travis.flash(notice: 'Build cancelation has been scheduled.')
+        Travis.flash(notice: 'Build cancellation has been scheduled.')
         @get('build').cancel().then ->
           Travis.flash(success: 'Build has been successfully canceled.')
         , (xhr) ->
@@ -187,7 +187,7 @@ Travis.reopen
 
     cancelJob: ->
       if @get('canCancelJob')
-        Travis.flash(notice: 'Job cancelation has been scheduled.')
+        Travis.flash(notice: 'Job cancellation has been scheduled.')
         @get('job').cancel().then ->
           Travis.flash(success: 'Job has been successfully canceled.')
         , (xhr) ->
