@@ -7,7 +7,11 @@ Travis.injectTestHelpers()
 oldSetup = Travis.setup
 Travis.ready = ->
   oldSetup.apply(this, arguments)
-  Travis.auth.signOut()
+  # TODO: in the future I would like to create a TestAuth class which
+  #       would have similar interface to Travis.Auth, but with the
+  #       auth logic stubbed out. It will give use ability to do things
+  #       like testAuth.shouldSucceedOnSignIn()
+  Travis.lookup('auth:main').signOut()
 
 window.exists = (selector) ->
   return !!find(selector).length
@@ -61,7 +65,7 @@ window.signInUser = (data) ->
 
   # for now let's just use harcoded data to log in the user,
   # we may extend it in the future to pass specific user data
-  Travis.auth.signIn
+  Travis.lookup('auth:main').signIn
     user: userData
     token: 'abcdef'
 

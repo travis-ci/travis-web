@@ -6,8 +6,8 @@
 <h2>In order to view your repositories, please sign in.</h2>
 
 <p>
-  <a href="#" {{action "signIn" target="Travis"}}>
-    {{#if Travis.signingIn}}
+  <a href="#" {{action "signIn" target="auth"}}>
+    {{#if auth.signingIn}}
       Signing in...
     {{else}}
       Sign in with GitHub

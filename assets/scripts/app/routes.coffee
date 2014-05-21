@@ -12,10 +12,10 @@ Travis.Route = Ember.Route.extend
     @transitionTo 'first_sync'
 
   beforeModel: (transition) ->
-    Travis.autoSignIn() unless @signedIn()
+    @auth.autoSignIn() unless @signedIn()
 
     if !@signedIn() && @get('needsAuth')
-      Travis.auth.set('afterSignInTransition', transition)
+      @auth.set('afterSignInTransition', transition)
       Ember.RSVP.reject("needs-auth")
     else
       @_super.apply(this, arguments)
@@ -24,7 +24,7 @@ Travis.Route = Ember.Route.extend
     @controllerFor('currentUser').get('content')
 
   redirect: ->
-    Travis.autoSignIn() unless @signedIn()
+    @auth.autoSignIn() unless @signedIn()
 
     if @get('needsAuth')
       @authorize(@router.location.getURL())
@@ -33,10 +33,23 @@ Travis.Route = Ember.Route.extend
 
   authorize: (path) ->
     if !@signedIn()
-      Travis.storeAfterSignInPath(path)
+      @auth.storeAfterSignInPath(path)
       @transitionTo('auth')
 
 Travis.ApplicationRoute = Travis.Route.extend
+  init: ->
+    @_super.apply this, arguments
+
+    @auth.set('hooksTarget', this)
+
+  afterSignIn: ->
+    if transition = @auth.get('afterSignInTransition')
+      @auth.set('afterSignInTransition', null)
+      transition.retry()
+
+  afterSignOut: ->
+    @transitionTo('index.current')
+
   actions:
     redirectToGettingStarted: ->
       # do nothing, we handle it only in index path
@@ -54,14 +67,6 @@ Travis.ApplicationRoute = Travis.Route.extend
 
     renderFirstSync: ->
       @renderFirstSync()
-
-    afterSignIn: ->
-      if transition = Travis.auth.get('afterSignInTransition')
-        Travis.auth.set('afterSignInTransition', null)
-        transition.retry()
-
-    afterSignOut: ->
-      @transitionTo('index.current')
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->

@@ -31,13 +31,13 @@
   </li>
   <li {{bind-attr class="view.classProfile"}}>
     <p class="handle">
-      {{#if signedOut}}
-        <a class="signed-out" href="#" {{action "signIn" target="Travis"}}>Sign in with GitHub</a>
+      {{#if auth.signedOut}}
+        <a class="signed-out" href="#" {{action "signIn" target="auth"}}>Sign in with GitHub</a>
       {{/if}}
-      {{#if signedIn}}
+      {{#if auth.signedIn}}
         {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/link-to}}
       {{/if}}
-      {{#if signingIn}}
+      {{#if auth.signingIn}}
         <span class="signing-in">Signing In</span>
       {{/if}}
     </p>
@@ -46,7 +46,7 @@
         {{#link-to "profile.index" class="signed-in"}}Accounts{{/link-to}}
       </li>
       <li>
-        <a href="/" {{action "signOut" target="Travis"}}>Sign Out</a>
+        <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
       </li>
     </ul>
   </li>

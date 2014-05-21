@@ -13,18 +13,6 @@ Travis.TopController = Em.Controller.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
   ).property('user.gravatarId')
 
-  signedIn: (->
-    Travis.get('authState') == 'signed-in'
-  ).property('Travis.authState')
-
-  signedOut: (->
-    Travis.get('authState') == 'signed-out'
-  ).property('Travis.authState')
-
-  signingIn: (->
-    Travis.get('authState') == 'signing-in'
-  ).property('Travis.authState')
-
 Travis.ApplicationController = Em.Controller.extend
   templateName: 'layouts/home'
 
