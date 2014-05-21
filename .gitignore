@@ -1,11 +1,13 @@
 /.bundle
 /config/travis.yml
 /tmp
-/public/scripts
-/public/styles
-/public/version
 .sass-cache
 .localeapp/key
 /assets/scripts/config/locales.js
 .DS_Store
-/public/images/emoji
+
+/public/images
+/public/scripts
+/public/styles/app.css
+/public/version
+
