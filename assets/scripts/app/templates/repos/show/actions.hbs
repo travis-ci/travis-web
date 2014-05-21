@@ -3,13 +3,13 @@
     {{#if view.displayCancelBuild}}
       <li class="icon" title="Cancel Build">
         <a href="#" {{action "cancelBuild" target="view"}}
-          {{bind-attr class="view.canCancelBuild::disabled"}}><img class="icon" src="/images/icons/off.png" width="20"></a>
+          {{bind-attr class="view.canCancelBuild::disabled"}}><img class="icon" src="/images/icons/off.svg" width="20"></a>
       </li>
     {{/if}}
     {{#if view.displayCancelJob}}
       <li class="icon" title="Cancel Job">
         <a href="#" {{action "cancelJob" target="view"}}
-          {{bind-attr class="view.canCancelJob::disabled"}}><img class="icon" width="20" src="/images/icons/off.png"/></a>
+          {{bind-attr class="view.canCancelJob::disabled"}}><img class="icon" width="20" src="/images/icons/off.svg"/></a>
       </li>
     {{/if}}
     {{#if view.displayRequeueBuild}}
@@ -18,7 +18,7 @@
           <span class="icon loading"></span>
         {{else}}
           <a href="#" {{action "requeueBuild" target="view"}}
-            {{bind-attr class="view.canRequeueBuild::disabled"}}><img class="icon" src="/images/icons/repeat.png" width="20"></a>
+            {{bind-attr class="view.canRequeueBuild::disabled"}}><img class="icon" src="/images/icons/repeat.svg" width="20"></a>
         {{/if}}
       </li>
     {{/if}}
@@ -28,7 +28,7 @@
           <span class="icon loading"></span>
         {{else}}
           <a href="#" {{action "requeueJob" target="view"}}
-            {{bind-attr class="view.canRequeueJob::disabled"}}><img src="/images/icons/repeat.png" width="20"></a>
+            {{bind-attr class="view.canRequeueJob::disabled"}}><img src="/images/icons/repeat.svg" width="20"></a>
         {{/if}}
       </li>
     {{/if}}
@@ -36,7 +36,7 @@
              does not refresh 'if' properly, need further investigation}}
     {{#if view.jobIdForLog}}
       <li class="icon" title="Download Log">
-        <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}><img class="icon" src="/images/icons/align-justify.png" width="20"/></a>
+        <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}><img class="icon" src="/images/icons/logs.svg" width="20"/></a>
       </li>
     {{/if}}
     {{#if view.displayCodeClimate}}
@@ -44,7 +44,7 @@
         <a href="#" name="code-climate"
           {{action "codeClimatePopup" target="view"}}
           {{bind-attr class=":open-popup"}}>
-          <img src="/images/icons/code-climate-icon.png"/>
+          <img src="/images/icons/code-climate-icon.svg"/>
         </a>
       </li>
     {{/if}}
