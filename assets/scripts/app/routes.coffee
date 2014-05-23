@@ -63,12 +63,6 @@ Travis.ApplicationRoute = Travis.Route.extend
     afterSignOut: ->
       @transitionTo('index.current')
 
-Travis.Router.reopen
-  transitionTo: ->
-    this.container.lookup('controller:repo').set('lineNumber', null)
-
-    @_super.apply this, arguments
-
 Travis.Router.map ->
   @resource 'index', path: '/', ->
     @resource 'getting_started'
