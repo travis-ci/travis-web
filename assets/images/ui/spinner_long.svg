@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="8">
+<g transform="translate(32, 4)">
+  <rect x="-31" y="-4" width="8" height="8">
+    <animateTransform id="a" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.55s" begin="0;b.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.55s" begin="0;b.end"/>
+    <animateTransform id="b" attributeName="transform" type="scale" from="1" to="1,0.5" dur="0.55s" begin="a.end"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.55s" begin="a.end"/>
+  </rect>
+  <rect x="-20" y="-4" width="8" height="8">
+    <animateTransform id="c" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.55s" begin="0.1s;d.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.55s" begin="0.1s;d.end"/>
+    <animateTransform id="d" begin="c.end" attributeName="transform" type="scale" to="1,0.5" from="1" dur="0.55s"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.55s" begin="c.end"/>
+  </rect>
+  <rect x="-9" y="-4" width="8" height="8">
+    <animateTransform id="e" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.55s" begin="0.2s;f.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.55s" begin="0.2s;f.end"/>
+    <animateTransform id="f" attributeName="transform" type="scale" from="1" to="1,0.5" dur="0.55s" begin="e.end"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.55s" begin="e.end"/>
+  </rect>
+  <rect x="1" y="-4" width="8" height="8">
+    <animateTransform id="g" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.55s" begin="0.3s;h.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.55s" begin="0.3s;h.end"/>
+    <animateTransform id="h" attributeName="transform" type="scale" from="1" to="1,0.5" dur="0.55s" begin="g.end"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.55s" begin="g.end"/>
+  </rect>
+  <rect x="12" y="-4" width="8" height="8">
+    <animateTransform id="i" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.55s" begin="0.4s;j.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.55s" begin="0.4s;j.end"/>
+    <animateTransform id="j" attributeName="transform" type="scale" from="1" to="1,0.5" dur="0.55s" begin="i.end"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.55s" begin="i.end"/>
+  </rect>
+  <rect x="23" y="-4" width="8" height="8">
+    <animateTransform id="k" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.55s" begin="0.5s;l.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.55s" begin="0.5s;l.end"/>
+    <animateTransform id="l" attributeName="transform" type="scale" from="1" to="1,0.5" dur="0.55s" begin="k.end"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.55s" begin="k.end"/>
+  </rect>
+</g>
+</svg>
+

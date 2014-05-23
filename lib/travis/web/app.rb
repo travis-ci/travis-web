@@ -1,6 +1,5 @@
 require 'rack'
 require 'rack/ssl'
-require 'rack/cache'
 require 'rack/protection'
 require 'delegate'
 require 'time'
@@ -35,7 +34,6 @@ class Travis::Web::App
       builder = Rack::Builder.new
       if options[:environment] == 'production'
         builder.use Rack::SSL
-        # builder.use Rack::Cache
       end
       builder.use Rack::Deflater
       builder.use Rack::Head
@@ -49,21 +47,23 @@ class Travis::Web::App
     end
   end
 
-  attr_reader :routers, :version, :last_modified, :age, :options, :root
+  attr_reader :routers, :version, :age, :options, :root, :server_start
 
   def initialize(options = {})
-    @options       = options
-    @root          = options.fetch(:root)
-    @version       = File.read File.expand_path('version', root)
-    @last_modified = Time.now
-    @age           = 60 * 60 * 24 * 365
-    @routers       = { default: create_router }
+    @options      = options
+    @server_start = options.fetch(:server_start)
+    @root         = options.fetch(:root)
+    @version      = File.read File.expand_path('version', root)
+    @age          = 60 * 60 * 24 * 365
+    @routers      = { default: create_router }
   end
 
   def call(env)
     name = env['travis.alt'] || :default
     routers[name] ||= create_router(alt: name)
-    routers[name].call(env)
+    route = routers[name].call(env)
+    route[1]["Date"] = Time.now.httpdate
+    route
   end
 
   private
@@ -84,13 +84,12 @@ class Travis::Web::App
       set_config(content, options) if config_needed?(file)
       headers = {
         'Content-Length'   => content.bytesize.to_s,
-        'Content-Location' => path_for(file),
         'Cache-Control'    => cache_control(file),
         'Content-Location' => path_for(file),
         'Content-Type'     => mime_type(file),
-        'ETag'             => version,
-        'Last-Modified'    => last_modified.httpdate,
-        'Expires'          => (last_modified + age).httpdate,
+        'ETag'             => %Q{"#{version}"},
+        'Last-Modified'    => server_start.httpdate,
+        'Expires'          => (server_start + age).httpdate,
         'Vary'             => vary_for(file)
       }
       [ 200, headers, [content] ]
@@ -98,10 +97,6 @@ class Travis::Web::App
 
     def each_file
       Dir.glob(File.join(root, '**/*')) { |file| yield file if File.file?(file) }
-    end
-
-    def prefix?(file)
-      file =~ /^(styles|scripts)\//
     end
 
     def config_needed?(file)
@@ -130,7 +125,6 @@ class Travis::Web::App
 
     def path_for(file)
       file = file.sub("#{root}/", '')
-      file = File.join(version, file) if prefix?(file)
       file = "" if index?(file)
       "/#{file}"
     end
@@ -145,7 +139,7 @@ class Travis::Web::App
       end
 
       string.gsub! %r{(src|href)="(?:\/?)((styles|scripts)\/[^"]*)"} do
-        %(#{$1}=#{opts[:alt] ? "#{S3_URL}/#{opts[:alt]}/#{$2}" : "/#{version}/#{$2}"})
+        %(#{$1}=#{opts[:alt] ? "#{S3_URL}/#{opts[:alt]}/#{$2}":"/#{$2}"})
       end
     end
 end

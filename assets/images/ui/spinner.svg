@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="8">
+<g transform="translate(8, 4)">
+  <rect x="-8" y="-4" width="5" height="8">
+    <animateTransform id="a" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.4s" begin="0;b.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.4s" begin="0;b.end"/>
+    <animateTransform id="b" attributeName="transform" type="scale" from="1" to="1,0.5" dur="0.4s" begin="a.end"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.4s" begin="a.end"/>
+  </rect>
+  <rect x="-2" y="-4" width="4" height="8">
+    <animateTransform id="c" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.4s" begin="0.1s;d.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.4s" begin="0.1s;d.end"/>
+    <animateTransform id="d" begin="c.end" attributeName="transform" type="scale" to="1,0.5" from="1" dur="0.4s"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.4s" begin="c.end"/>
+  </rect>
+  <rect x="3" y="-4" width="5" height="8">
+    <animateTransform id="e" attributeName="transform" type="scale" from="1,0.5" to="1" dur="0.4s" begin="0.2s;f.end"/>
+    <animate attributeName="fill" from="#eee" to="#888" dur="0.4s" begin="0.2s;f.end"/>
+    <animateTransform id="f" attributeName="transform" type="scale" from="1" to="1,0.5" dur="0.4s" begin="e.end"/>
+    <animate attributeName="fill" from="#888" to="#eee" dur="0.4s" begin="e.end"/>
+  </rect>
+</g>
+</svg>
+
