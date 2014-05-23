@@ -8,9 +8,6 @@ Ember.Router.reopen
     @_super(url)
 
 Travis.Route = Ember.Route.extend
-  renderFirstSync: ->
-    @transitionTo 'first_sync'
-
   beforeModel: (transition) ->
     @auth.autoSignIn() unless @signedIn()
 
@@ -40,7 +37,7 @@ Travis.ApplicationRoute = Travis.Route.extend
         return true
 
     renderFirstSync: ->
-      @renderFirstSync()
+      @transitionTo 'first_sync'
 
     afterSignIn: ->
       if transition = @auth.get('afterSignInTransition')
