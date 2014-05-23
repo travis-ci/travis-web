@@ -72,9 +72,7 @@ Travis.Router.map ->
   @route 'auth', path: '/auth'
 
   @resource 'profile', path: '/profile', ->
-    @route 'index', path: '/'
     @resource 'account', path: '/:login', ->
-      @route 'index', path: '/'
       @route 'profile', path: '/profile'
 
   @route 'notFound', path: "/*path"
