@@ -279,7 +279,6 @@ Travis.IndexRoute = Travis.Route.extend
     $('body').attr('id', 'home')
 
     @render 'repos',   outlet: 'left'
-    @render 'flash',   outlet: 'flash'
 
   setupController: (controller)->
     @container.lookup('controller:repos').activate()
@@ -314,7 +313,6 @@ Travis.ProfileRoute = Travis.Route.extend
     $('body').attr('id', 'profile')
 
     @render 'accounts', outlet: 'left'
-    @render 'flash', outlet: 'flash'
     @_super.apply(this, arguments)
 
 Travis.ProfileIndexRoute = Travis.Route.extend
