@@ -82,18 +82,6 @@ Travis.Router.map ->
 
   @route 'notFound', path: "/*path"
 
-Travis.SetupLastBuild = Ember.Mixin.create
-  setupController: ->
-    @repoDidLoad()
-    @controllerFor('repo').addObserver('repo.isLoaded', this, 'repoDidLoad')
-
-  repoDidLoad: ->
-    # TODO: it would be nicer to do it with promises
-    repo = @controllerFor('repo').get('repo')
-    if repo && repo.get('isLoaded') && !repo.get('lastBuildId')
-      Ember.run.next =>
-        @render('builds/not_found', into: 'repo', outlet: 'pane')
-
 Travis.RequestsRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'requests', into: 'repo', outlet: 'pane'
@@ -142,7 +130,7 @@ Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
     existingUser = document.location.hash.match(/#existing[_-]user/)
     controller.set('existingUser', existingUser)
 
-Travis.IndexCurrentRoute = Travis.Route.extend Travis.SetupLastBuild,
+Travis.IndexCurrentRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'repo'
     @render 'build', into: 'repo', outlet: 'pane'
@@ -236,13 +224,16 @@ Travis.JobRoute = Travis.Route.extend
   model: (params) ->
     Travis.Job.fetch(params.job_id)
 
-Travis.RepoIndexRoute = Travis.Route.extend Travis.SetupLastBuild,
+Travis.RepoIndexRoute = Travis.Route.extend
   setupController: (controller, model) ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('current')
 
   renderTemplate: ->
-    @render 'build', into: 'repo', outlet: 'pane'
+    if @modelFor('repo').get('lastBuildId')
+      @render 'build', into: 'repo', outlet: 'pane'
+    else
+      @render('builds/not_found', into: 'repo', outlet: 'pane')
 
 Travis.RepoRoute = Travis.Route.extend
   renderTemplate: ->
