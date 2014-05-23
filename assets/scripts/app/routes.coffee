@@ -73,7 +73,7 @@ Travis.Router.map ->
 
   @resource 'profile', path: '/profile', ->
     @resource 'account', path: '/:login', ->
-      @route 'profile', path: '/profile'
+    @route 'info', path: '/info'
 
   @route 'notFound', path: "/*path"
 
@@ -297,14 +297,6 @@ Travis.ProfileIndexRoute = Travis.Route.extend
     @render 'hooks', controller: 'profile'
 
 Travis.AccountRoute = Travis.Route.extend
-  setupController: (controller, account) ->
-    profileController = @container.lookup('controller:profile')
-    profileController.activate 'hooks'
-
-    if account
-      params = { login: account.get('login') }
-      profileController.setParams(params)
-
   model: (params) ->
     controller = @container.lookup('controller:accounts')
     account = controller.findByLogin(params.login)
@@ -330,13 +322,18 @@ Travis.AccountRoute = Travis.Route.extend
       {}
 
 Travis.AccountIndexRoute = Travis.Route.extend
-  setupController: ->
-    @container.lookup('controller:profile').activate 'hooks'
+  setupController: (controller) ->
+    profileController = @container.lookup('controller:profile')
+    profileController.activate 'hooks'
+
+    if account = @modelFor('account')
+      params = { login: account.get('login') }
+      profileController.setParams(params)
 
   renderTemplate: ->
     @render 'hooks'
 
-Travis.AccountProfileRoute = Travis.Route.extend
+Travis.ProfileInfoRoute = Travis.Route.extend
   setupController: ->
     @container.lookup('controller:profile').activate 'user'
 
