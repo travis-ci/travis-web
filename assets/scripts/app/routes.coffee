@@ -128,7 +128,6 @@ Travis.SimpleLayoutRoute = Travis.Route.extend
     @_super.apply(this, arguments)
 
   renderTemplate: ->
-    @render 'top', outlet: 'top'
     @_super.apply(this, arguments)
 
 Travis.FirstSyncRoute = Travis.SimpleLayoutRoute.extend
@@ -280,7 +279,6 @@ Travis.IndexRoute = Travis.Route.extend
     $('body').attr('id', 'home')
 
     @render 'repos',   outlet: 'left'
-    @render 'top',     outlet: 'top'
     @render 'flash',   outlet: 'flash'
 
   setupController: (controller)->
@@ -291,7 +289,6 @@ Travis.StatsRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'stats')
 
-    @render 'top', outlet: 'top'
     @render 'stats'
 
   setupController: ->
@@ -301,7 +298,6 @@ Travis.NotFoundRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'not-found')
 
-    @render 'top', outlet: 'top'
     @render 'not_found'
 
   setupController: ->
@@ -317,7 +313,6 @@ Travis.ProfileRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'profile')
 
-    @render 'top', outlet: 'top'
     @render 'accounts', outlet: 'left'
     @render 'flash', outlet: 'flash'
     @_super.apply(this, arguments)
@@ -380,7 +375,6 @@ Travis.AuthRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'auth')
 
-    @render 'top', outlet: 'top'
     @render 'auth.signin'
 
   setupController: ->
