@@ -83,9 +83,6 @@ Travis.Router.map ->
   @route 'notFound', path: "/*path"
 
 Travis.RequestsRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'requests', into: 'repo', outlet: 'pane'
-
   setupController: ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('requests')
@@ -94,9 +91,6 @@ Travis.RequestsRoute = Travis.Route.extend
     Travis.Request.fetch repository_id: @modelFor('repo').get('id')
 
 Travis.RequestRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'request', into: 'repo', outlet: 'pane'
-
   setupController: ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('request')
@@ -133,7 +127,7 @@ Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
 Travis.IndexCurrentRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'repo'
-    @render 'build', into: 'repo', outlet: 'pane'
+    @render 'build', into: 'repo'
 
   setupController: ->
     @_super.apply this, arguments
@@ -157,7 +151,7 @@ Travis.IndexCurrentRoute = Travis.Route.extend
 
 Travis.AbstractBuildsRoute = Travis.Route.extend
   renderTemplate: ->
-    @render 'builds', into: 'repo', outlet: 'pane'
+    @render 'builds'
 
   setupController: ->
     @controllerFor('repo').activate(@get('contentType'))
@@ -181,9 +175,6 @@ Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_
 Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
 
 Travis.BuildRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'build', into: 'repo', outlet: 'pane'
-
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
 
@@ -202,9 +193,6 @@ Travis.BuildRoute = Travis.Route.extend
     Travis.Build.fetch(params.build_id)
 
 Travis.JobRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'job', into: 'repo', outlet: 'pane'
-
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
 
@@ -231,9 +219,9 @@ Travis.RepoIndexRoute = Travis.Route.extend
 
   renderTemplate: ->
     if @modelFor('repo').get('lastBuildId')
-      @render 'build', into: 'repo', outlet: 'pane'
+      @render 'build'
     else
-      @render('builds/not_found', into: 'repo', outlet: 'pane')
+      @render 'builds/not_found'
 
 Travis.RepoRoute = Travis.Route.extend
   renderTemplate: ->
@@ -311,7 +299,7 @@ Travis.ProfileIndexRoute = Travis.Route.extend
     @container.lookup('controller:profile').activate 'hooks'
 
   renderTemplate: ->
-    @render 'hooks', outlet: 'pane', into: 'profile', controller: 'profile'
+    @render 'hooks', controller: 'profile'
 
 Travis.AccountRoute = Travis.Route.extend
   setupController: (controller, account) ->
@@ -351,14 +339,14 @@ Travis.AccountIndexRoute = Travis.Route.extend
     @container.lookup('controller:profile').activate 'hooks'
 
   renderTemplate: ->
-    @render 'hooks', outlet: 'pane', into: 'profile'
+    @render 'hooks'
 
 Travis.AccountProfileRoute = Travis.Route.extend
   setupController: ->
     @container.lookup('controller:profile').activate 'user'
 
   renderTemplate: ->
-    @render 'user', outlet: 'pane', into: 'profile'
+    @render 'user'
 
 Travis.AuthRoute = Travis.Route.extend
   renderTemplate: ->
