@@ -72,7 +72,7 @@ Travis.Router.map ->
   @route 'auth', path: '/auth'
 
   @resource 'profile', path: '/profile', ->
-    @resource 'account', path: '/:login', ->
+    @resource 'account', path: '/:login'
     @route 'info', path: '/info'
 
   @route 'notFound', path: "/*path"
@@ -279,59 +279,42 @@ Travis.NotFoundRoute = Travis.Route.extend
 Travis.ProfileRoute = Travis.Route.extend
   needsAuth: true
 
-  setupController: ->
+  setupController: (controller, model) ->
     @container.lookup('controller:application').connectLayout('profile')
-    @container.lookup('controller:accounts').set('content', Travis.Account.find(all: true))
+    @controllerFor('accounts').set('model', model)
+
+  model: ->
+    Travis.Account.fetch(all: true)
 
   renderTemplate: ->
     $('body').attr('id', 'profile')
-
     @render 'accounts', outlet: 'left'
+
     @_super.apply(this, arguments)
 
 Travis.ProfileIndexRoute = Travis.Route.extend
-  setupController: ->
-    @container.lookup('controller:profile').activate 'hooks'
-
-  renderTemplate: ->
-    @render 'hooks', controller: 'profile'
+  redirect: ->
+    # TODO: setting accounts model in ProfileRoute is wrong, but
+    #       at this stage it's better than what we had before
+    accounts = @modelFor('profile')
+    login    = @controllerFor('currentUser').get('login')
+    account  = accounts.find (account) -> account.get('login') == login
+    @transitionTo 'account', account
 
 Travis.AccountRoute = Travis.Route.extend
+  setupController: (controller, account) ->
+    @_super.apply this, arguments
+
+    @controllerFor('profile').activate 'hooks'
+
   model: (params) ->
-    controller = @container.lookup('controller:accounts')
-    account = controller.findByLogin(params.login)
-
-    if account
-      account
-    else
-      content = Ember.Object.create(login: params.login)
-      proxy = Ember.ObjectProxy.create(content: content)
-
-      observer = ->
-        if account = controller.findByLogin(params.login)
-          controller.removeObserver 'content.length', observer
-          proxy.set('content', account)
-      controller.addObserver 'content.length', observer
-
-      proxy
+    @modelFor('profile').find (account) -> account.get('login') == params.login
 
   serialize: (account) ->
     if account && account.get
       { login: account.get('login') }
     else
       {}
-
-Travis.AccountIndexRoute = Travis.Route.extend
-  setupController: (controller) ->
-    profileController = @container.lookup('controller:profile')
-    profileController.activate 'hooks'
-
-    if account = @modelFor('account')
-      params = { login: account.get('login') }
-      profileController.setParams(params)
-
-  renderTemplate: ->
-    @render 'hooks'
 
 Travis.ProfileInfoRoute = Travis.Route.extend
   setupController: ->

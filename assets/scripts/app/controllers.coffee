@@ -62,6 +62,7 @@ Travis.RepoSettingsController = Em.ObjectController.extend
 
 require 'controllers/accounts'
 require 'controllers/auth'
+require 'controllers/account'
 require 'controllers/build'
 require 'controllers/builds'
 require 'controllers/flash'

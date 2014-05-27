@@ -22,8 +22,6 @@ Travis.reopen
       'active' if @get('tab') == 'user'
     ).property('tab')
 
-    accountBinding: 'controller.account'
-
     displayUser: (->
       @get('controller.account.login') == @get('controller.user.login')
     ).property('controller.account.login', 'controller.user.login')
