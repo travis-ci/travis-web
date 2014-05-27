@@ -407,10 +407,9 @@ Travis.AuthRoute = Travis.Route.extend
   deactivate: ->
     @controllerFor('auth').set('redirected', false)
 
-  actions:
-    afterSignIn: ->
+  redirect: ->
+    if @auth.get('signedIn')
       @transitionTo('index.current')
-      return true
 
 Travis.RepoSettingsRoute = Travis.Route.extend
   setupController: (controller, model) ->
