@@ -1,0 +1,20 @@
+CACHE MANIFEST
+# <version>
+
+CACHE:
+/favicon.ico
+/index.html
+/scripts/app.js
+/styles/app.css
+/images/icons/github.svg
+/images/icons/off.svg
+/images/icons/code-climate-logo.svg
+
+https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,800
+https://themes.googleusercontent.com/static/fonts/sourcesanspro/v7/toadOcfmlt9b38dHJxOBGNbE_oMaV8t2eFeISPpzbdE.woff
+https://themes.googleusercontent.com/static/fonts/sourcesanspro/v7/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff
+https://themes.googleusercontent.com/static/fonts/sourcesanspro/v7/toadOcfmlt9b38dHJxOBGJ6-ys_j0H4QL65VLqzI3wI.woff
+
+NETWORK:
+*
+

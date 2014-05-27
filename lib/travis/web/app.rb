@@ -81,6 +81,7 @@ class Travis::Web::App
 
     def response_for(file, options = {})
       content = File.read(file)
+      content.sub! "# <version>", "# #{version}" if File.extname(file) == ".manifest"
       set_config(content, options) if config_needed?(file)
       headers = {
         'Content-Length'   => content.bytesize.to_s,
