@@ -93,7 +93,7 @@ Log.Scroll.prototype = $.extend new Log.Listener,
   tryScroll: ->
     if element = $("#log p:visible.highlight:first")
       $('#main').scrollTop(0)
-      $('html, body').scrollTop(element.offset()?.top) # weird, html works in chrome, body in firefox
+      $('html, body').scrollTop(element.offset()?.top - (window.innerHeight / 3)) # weird, html works in chrome, body in firefox
 
 # Log.Logger = ->
 # Log.Logger.prototype = $.extend new Log.Listener,
