@@ -23,19 +23,6 @@ Travis.Route = Ember.Route.extend
   signedIn: ->
     @controllerFor('currentUser').get('content')
 
-  redirect: ->
-    @auth.autoSignIn() unless @signedIn()
-
-    if @get('needsAuth')
-      @authorize(@router.location.getURL())
-    else
-      @_super.apply this, arguments
-
-  authorize: (path) ->
-    if !@signedIn()
-      @auth.storeAfterSignInPath(path)
-      @transitionTo('auth')
-
 Travis.ApplicationRoute = Travis.Route.extend
   init: ->
     @_super.apply this, arguments
