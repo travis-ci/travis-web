@@ -18,8 +18,7 @@ Auth = Ember.Object.extend
     if user = @get('currentUser')
       user.unload()
     @set('currentUser', null)
-    if hooksTarget = @get('hooksTarget')
-      hooksTarget.afterSignOut()
+    @sendToApp('afterSignOut')
 
   signIn: (data) ->
     if data
@@ -64,9 +63,7 @@ Auth = Ember.Object.extend
 
     @set('state', 'signed-in')
     Travis.trigger('user:signed_in', data.user)
-    # TODO: I would like to get rid of this dependency in the future
-    if hooksTarget = @get('hooksTarget')
-      hooksTarget.afterSignIn()
+    @sendToApp('afterSignIn')
 
   refreshUserData: (user) ->
     Travis.ajax.get "/users/#{user.id}", (data) =>
@@ -112,6 +109,21 @@ Auth = Ember.Object.extend
   expectedOrigin: ->
     endpoint = @get('endpoint')
     if endpoint[0] == '/' then @receivingEnd else endpoint
+
+  sendToApp: (name) ->
+    # TODO: this is an ugly solution, we need to do one of 2 things:
+    #       * find a way to check if we can already send an event to remove try/catch
+    #       * remove afterSignIn and afterSignOut events by replacing them in a more
+    #         straightforward code - we can do what's needed on a routes/controller level
+    #         as a direct response to either manual sign in or autoSignIn (right now
+    #         we treat both cases behave the same in terms of sent events which I think
+    #         makes it more complicated than it should be).
+    controller = @container.lookup('controller:auth')
+    try
+      controller.send(name)
+    catch error
+      unless error.message =~ /Can't trigger action/
+        throw error
 
 Ember.onLoad 'Ember.Application', (Application) ->
   Application.initializer

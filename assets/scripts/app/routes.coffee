@@ -24,19 +24,6 @@ Travis.Route = Ember.Route.extend
     @controllerFor('currentUser').get('content')
 
 Travis.ApplicationRoute = Travis.Route.extend
-  init: ->
-    @_super.apply this, arguments
-
-    @auth.set('hooksTarget', this)
-
-  afterSignIn: ->
-    if transition = @auth.get('afterSignInTransition')
-      @auth.set('afterSignInTransition', null)
-      transition.retry()
-
-  afterSignOut: ->
-    @transitionTo('index.current')
-
   actions:
     redirectToGettingStarted: ->
       # do nothing, we handle it only in index path
@@ -46,7 +33,7 @@ Travis.ApplicationRoute = Travis.Route.extend
 
     error: (error) ->
       if error == 'needs-auth'
-        authController = @container.lookup('controller:auth') || @generateController('auth')
+        authController = @container.lookup('controller:auth')
         authController.set('redirected', true)
         @transitionTo('auth')
       else
@@ -54,6 +41,14 @@ Travis.ApplicationRoute = Travis.Route.extend
 
     renderFirstSync: ->
       @renderFirstSync()
+
+    afterSignIn: ->
+      if transition = @auth.get('afterSignInTransition')
+        @auth.set('afterSignInTransition', null)
+        transition.retry()
+
+    afterSignOut: ->
+      @transitionTo('index.current')
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->
@@ -394,9 +389,10 @@ Travis.AuthRoute = Travis.Route.extend
   deactivate: ->
     @controllerFor('auth').set('redirected', false)
 
-  redirect: ->
-    if @auth.get('signedIn')
+  actions:
+    afterSignIn: ->
       @transitionTo('index.current')
+      return true
 
 Travis.RepoSettingsRoute = Travis.Route.extend
   setupController: (controller, model) ->
