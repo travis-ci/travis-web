@@ -16,9 +16,9 @@
     classProfile: (->
       classes = ['profile menu']
       classes.push('active') if @get('tab') == 'profile'
-      classes.push(Travis.get('authState') || 'signed-out')
+      classes.push(@get('controller.auth.state') || 'signed-out')
       classes.join(' ')
-    ).property('tab', 'Travis.authState')
+    ).property('tab', 'controller.auth.state')
 
     showProfile: ->
       $('#top .profile ul').show()

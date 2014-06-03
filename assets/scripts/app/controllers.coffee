@@ -38,7 +38,7 @@ Travis.StatsLayoutController = Em.Controller.extend()
 Travis.ProfileLayoutController = Em.Controller.extend()
 Travis.AuthLayoutController = Em.Controller.extend()
 
-Travis.AccountProfileController = Em.Controller.extend
+Travis.ProfileInfoController = Em.Controller.extend
   needs: ['currentUser', 'repos']
   userBinding: 'controllers.currentUser'
 
@@ -61,6 +61,7 @@ Travis.RepoSettingsController = Em.ObjectController.extend
       Travis.flash(error: 'There was an error while saving settings. Please try again.')
 
 require 'controllers/accounts'
+require 'controllers/auth'
 require 'controllers/build'
 require 'controllers/builds'
 require 'controllers/flash'
@@ -71,6 +72,5 @@ require 'controllers/repos'
 require 'controllers/repo'
 require 'controllers/stats'
 require 'controllers/current_user'
-require 'controllers/account_index'
 require 'controllers/request'
 require 'controllers/requests'

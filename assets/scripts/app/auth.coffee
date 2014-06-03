@@ -1,9 +1,13 @@
-@Travis.Auth = Ember.Object.extend
+Auth = Ember.Object.extend
   state:        "signed-out"
   receivingEnd: "#{location.protocol}//#{location.host}"
 
   init: ->
     window.addEventListener('message', (e) => @receiveMessage(e))
+
+  endpoint: (->
+    @container.lookup('application:main').config.api_endpoint
+  ).property(),
 
   signOut: ->
     Travis.storage.removeItem('travis.user')
@@ -11,22 +15,17 @@
     Travis.sessionStorage.clear()
     @set('state', 'signed-out')
     @set('user', undefined)
-    if user = Travis.__container__.lookup('controller:currentUser').get('content')
+    if user = @get('currentUser')
       user.unload()
-    Travis.__container__.lookup('controller:currentUser').set('content', null)
-    if controller = Travis.__container__.lookup('controller:currentUser')
-      try
-        controller.send('afterSignOut')
-      catch e
-        throw e unless e.message =~ /There are no active handlers/
-
+    @set('currentUser', null)
+    @sendToApp('afterSignOut')
 
   signIn: (data) ->
     if data
       @autoSignIn(data)
     else
       @set('state', 'signing-in')
-      url = "#{@endpoint}/auth/post_message?origin=#{@receivingEnd}"
+      url = "#{@get('endpoint')}/auth/post_message?origin=#{@receivingEnd}"
       $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url)
 
   autoSignIn: (data) ->
@@ -60,33 +59,34 @@
     @storeData(data, Travis.sessionStorage)
     @storeData(data, Travis.storage) unless @userDataFrom(Travis.storage)
     user = @loadUser(data.user)
-    # TODO: we should not use __container__ directly, how to do it better?
-    #        A good answer seems to do auth in context of controller.
-    Travis.__container__.lookup('controller:currentUser').set('content', user)
+    @set('currentUser', user)
 
     @set('state', 'signed-in')
     Travis.trigger('user:signed_in', data.user)
-    if controller = Travis.__container__.lookup('controller:currentUser')
-      Ember.run.next =>
-        try
-          controller.send('afterSignIn')
-        catch e
-          throw e unless e =~ /There are no active handlers/ || e =~ /Can't trigger action "afterSignIn/
-        @refreshUserData(data.user)
+    @sendToApp('afterSignIn')
 
   refreshUserData: (user) ->
     Travis.ajax.get "/users/#{user.id}", (data) =>
       Travis.loadOrMerge(Travis.User, data.user)
       # if user is still signed in, update saved data
-      if @signedIn()
+      if @get('signedIn')
         data.user.token = user.token
         @storeData(data, Travis.sessionStorage)
         @storeData(data, Travis.storage)
     , (data, status, xhr) =>
       @signOut() if xhr.status == 401
 
-  signedIn: ->
+  signedIn: (->
     @get('state') == 'signed-in'
+  ).property('state')
+
+  signedOut: (->
+    @get('state') == 'signed-out'
+  ).property('state')
+
+  signingIn: (->
+    @get('state') == 'signing-in'
+  ).property('state')
 
   storeData: (data, storage) ->
     storage.setItem('travis.token', data.token) if data.token
@@ -101,10 +101,37 @@
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()
       if event.data == 'redirect'
-        window.location = "#{@endpoint}/auth/handshake?redirect_uri=#{location}"
+        window.location = "#{@get('endpoint')}/auth/handshake?redirect_uri=#{location}"
       else if event.data.user?
         event.data.user.token = event.data.travis_token if event.data.travis_token
         @setData(event.data)
 
   expectedOrigin: ->
-    if @endpoint[0] == '/' then @receivingEnd else @endpoint
+    endpoint = @get('endpoint')
+    if endpoint[0] == '/' then @receivingEnd else endpoint
+
+  sendToApp: (name) ->
+    # TODO: this is an ugly solution, we need to do one of 2 things:
+    #       * find a way to check if we can already send an event to remove try/catch
+    #       * remove afterSignIn and afterSignOut events by replacing them in a more
+    #         straightforward code - we can do what's needed on a routes/controller level
+    #         as a direct response to either manual sign in or autoSignIn (right now
+    #         we treat both cases behave the same in terms of sent events which I think
+    #         makes it more complicated than it should be).
+    controller = @container.lookup('controller:auth')
+    try
+      controller.send(name)
+    catch error
+      unless error.message =~ /Can't trigger action/
+        throw error
+
+Ember.onLoad 'Ember.Application', (Application) ->
+  Application.initializer
+    name: "auth",
+
+    initialize: (container, application) ->
+      application.register 'auth:main', Auth
+
+      application.inject('route', 'auth', 'auth:main')
+      application.inject('controller', 'auth', 'auth:main')
+      application.inject('application', 'auth', 'auth:main')

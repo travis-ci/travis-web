@@ -1,8 +1,6 @@
 unless window.TravisApplication
   window.TravisApplication = Em.Application.extend(Ember.Evented,
     LOG_TRANSITIONS: true,
-    authState: Ember.computed.alias('auth.state')
-    signedIn: (-> @get('authState') == 'signed-in' ).property('authState')
 
     mappings: (->
       broadcasts:   Travis.Broadcast
@@ -40,8 +38,6 @@ unless window.TravisApplication
       @tailing = new Travis.Tailing($(window), '#tail', '#log')
       @toTop   = new Travis.ToTop($(window), '.to-top', '#log-container')
 
-      @set('auth', Travis.Auth.create(app: this, endpoint: Travis.config.api_endpoint))
-
     reset: ->
       @_super.apply(this, arguments)
       @get('modelClasses').forEach (klass) ->
@@ -53,22 +49,6 @@ unless window.TravisApplication
 
     flash: (options) ->
       Travis.lookup('controller:flash').loadFlashes([options])
-
-    storeAfterSignInPath: (path) ->
-      @get('auth').storeAfterSignInPath(path)
-
-    autoSignIn: (path) ->
-      @get('auth').autoSignIn()
-
-    signIn: ->
-      @get('auth').signIn()
-
-    signOut: ->
-      @get('auth').signOut()
-
-    signingIn: (->
-      Travis.get('authState') == 'signing-in'
-    ).property('authState')
 
     receive: (event, data) ->
       [name, type] = event.split(':')
