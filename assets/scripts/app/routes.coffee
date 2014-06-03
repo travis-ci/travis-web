@@ -8,9 +8,6 @@ Ember.Router.reopen
     @_super(url)
 
 Travis.Route = Ember.Route.extend
-  renderFirstSync: ->
-    @transitionTo 'first_sync'
-
   beforeModel: (transition) ->
     @auth.autoSignIn() unless @signedIn()
 
@@ -40,7 +37,7 @@ Travis.ApplicationRoute = Travis.Route.extend
         return true
 
     renderFirstSync: ->
-      @renderFirstSync()
+      @transitionTo 'first_sync'
 
     afterSignIn: ->
       if transition = @auth.get('afterSignInTransition')
@@ -75,29 +72,12 @@ Travis.Router.map ->
   @route 'auth', path: '/auth'
 
   @resource 'profile', path: '/profile', ->
-    @route 'index', path: '/'
-    @resource 'account', path: '/:login', ->
-      @route 'index', path: '/'
-      @route 'profile', path: '/profile'
+    @resource 'account', path: '/:login'
+    @route 'info', path: '/info'
 
   @route 'notFound', path: "/*path"
 
-Travis.SetupLastBuild = Ember.Mixin.create
-  setupController: ->
-    @repoDidLoad()
-    @controllerFor('repo').addObserver('repo.isLoaded', this, 'repoDidLoad')
-
-  repoDidLoad: ->
-    # TODO: it would be nicer to do it with promises
-    repo = @controllerFor('repo').get('repo')
-    if repo && repo.get('isLoaded') && !repo.get('lastBuildId')
-      Ember.run.next =>
-        @render('builds/not_found', into: 'repo', outlet: 'pane')
-
 Travis.RequestsRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'requests', into: 'repo', outlet: 'pane'
-
   setupController: ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('requests')
@@ -106,9 +86,6 @@ Travis.RequestsRoute = Travis.Route.extend
     Travis.Request.fetch repository_id: @modelFor('repo').get('id')
 
 Travis.RequestRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'request', into: 'repo', outlet: 'pane'
-
   setupController: ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('request')
@@ -128,7 +105,6 @@ Travis.SimpleLayoutRoute = Travis.Route.extend
     @_super.apply(this, arguments)
 
   renderTemplate: ->
-    @render 'top', outlet: 'top'
     @_super.apply(this, arguments)
 
 Travis.FirstSyncRoute = Travis.SimpleLayoutRoute.extend
@@ -143,10 +119,10 @@ Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
     existingUser = document.location.hash.match(/#existing[_-]user/)
     controller.set('existingUser', existingUser)
 
-Travis.IndexCurrentRoute = Travis.Route.extend Travis.SetupLastBuild,
+Travis.IndexCurrentRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'repo'
-    @render 'build', into: 'repo', outlet: 'pane'
+    @render 'build', into: 'repo'
 
   setupController: ->
     @_super.apply this, arguments
@@ -170,7 +146,7 @@ Travis.IndexCurrentRoute = Travis.Route.extend Travis.SetupLastBuild,
 
 Travis.AbstractBuildsRoute = Travis.Route.extend
   renderTemplate: ->
-    @render 'builds', into: 'repo', outlet: 'pane'
+    @render 'builds'
 
   setupController: ->
     @controllerFor('repo').activate(@get('contentType'))
@@ -194,9 +170,6 @@ Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_
 Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
 
 Travis.BuildRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'build', into: 'repo', outlet: 'pane'
-
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
 
@@ -215,9 +188,6 @@ Travis.BuildRoute = Travis.Route.extend
     Travis.Build.fetch(params.build_id)
 
 Travis.JobRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'job', into: 'repo', outlet: 'pane'
-
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
 
@@ -237,13 +207,16 @@ Travis.JobRoute = Travis.Route.extend
   model: (params) ->
     Travis.Job.fetch(params.job_id)
 
-Travis.RepoIndexRoute = Travis.Route.extend Travis.SetupLastBuild,
+Travis.RepoIndexRoute = Travis.Route.extend
   setupController: (controller, model) ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('current')
 
   renderTemplate: ->
-    @render 'build', into: 'repo', outlet: 'pane'
+    if @modelFor('repo').get('lastBuildId')
+      @render 'build'
+    else
+      @render 'builds/not_found'
 
 Travis.RepoRoute = Travis.Route.extend
   renderTemplate: ->
@@ -280,8 +253,6 @@ Travis.IndexRoute = Travis.Route.extend
     $('body').attr('id', 'home')
 
     @render 'repos',   outlet: 'left'
-    @render 'top',     outlet: 'top'
-    @render 'flash',   outlet: 'flash'
 
   setupController: (controller)->
     @container.lookup('controller:repos').activate()
@@ -291,7 +262,6 @@ Travis.StatsRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'stats')
 
-    @render 'top', outlet: 'top'
     @render 'stats'
 
   setupController: ->
@@ -301,7 +271,6 @@ Travis.NotFoundRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'not-found')
 
-    @render 'top', outlet: 'top'
     @render 'not_found'
 
   setupController: ->
@@ -310,51 +279,36 @@ Travis.NotFoundRoute = Travis.Route.extend
 Travis.ProfileRoute = Travis.Route.extend
   needsAuth: true
 
-  setupController: ->
+  setupController: (controller, model) ->
     @container.lookup('controller:application').connectLayout('profile')
-    @container.lookup('controller:accounts').set('content', Travis.Account.find(all: true))
+    @controllerFor('accounts').set('model', model)
+
+  model: ->
+    Travis.Account.fetch(all: true)
 
   renderTemplate: ->
     $('body').attr('id', 'profile')
-
-    @render 'top', outlet: 'top'
     @render 'accounts', outlet: 'left'
-    @render 'flash', outlet: 'flash'
+
     @_super.apply(this, arguments)
 
 Travis.ProfileIndexRoute = Travis.Route.extend
-  setupController: ->
-    @container.lookup('controller:profile').activate 'hooks'
-
-  renderTemplate: ->
-    @render 'hooks', outlet: 'pane', into: 'profile', controller: 'profile'
+  redirect: ->
+    # TODO: setting accounts model in ProfileRoute is wrong, but
+    #       at this stage it's better than what we had before
+    accounts = @modelFor('profile')
+    login    = @controllerFor('currentUser').get('login')
+    account  = accounts.find (account) -> account.get('login') == login
+    @transitionTo 'account', account
 
 Travis.AccountRoute = Travis.Route.extend
   setupController: (controller, account) ->
-    profileController = @container.lookup('controller:profile')
-    profileController.activate 'hooks'
+    @_super.apply this, arguments
 
-    if account
-      params = { login: account.get('login') }
-      profileController.setParams(params)
+    @controllerFor('profile').activate 'hooks'
 
   model: (params) ->
-    controller = @container.lookup('controller:accounts')
-    account = controller.findByLogin(params.login)
-
-    if account
-      account
-    else
-      content = Ember.Object.create(login: params.login)
-      proxy = Ember.ObjectProxy.create(content: content)
-
-      observer = ->
-        if account = controller.findByLogin(params.login)
-          controller.removeObserver 'content.length', observer
-          proxy.set('content', account)
-      controller.addObserver 'content.length', observer
-
-      proxy
+    @modelFor('profile').find (account) -> account.get('login') == params.login
 
   serialize: (account) ->
     if account && account.get
@@ -362,25 +316,17 @@ Travis.AccountRoute = Travis.Route.extend
     else
       {}
 
-Travis.AccountIndexRoute = Travis.Route.extend
-  setupController: ->
-    @container.lookup('controller:profile').activate 'hooks'
-
-  renderTemplate: ->
-    @render 'hooks', outlet: 'pane', into: 'profile'
-
-Travis.AccountProfileRoute = Travis.Route.extend
+Travis.ProfileInfoRoute = Travis.Route.extend
   setupController: ->
     @container.lookup('controller:profile').activate 'user'
 
   renderTemplate: ->
-    @render 'user', outlet: 'pane', into: 'profile'
+    @render 'user'
 
 Travis.AuthRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'auth')
 
-    @render 'top', outlet: 'top'
     @render 'auth.signin'
 
   setupController: ->

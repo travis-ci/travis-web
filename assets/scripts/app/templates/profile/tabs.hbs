@@ -1,17 +1,13 @@
 <ul class="tabs">
   <li id="tab_hooks" {{bind-attr class="view.classHooks"}}>
     <h5>
-      {{#with view.account}}
-        {{#if login}}
-          {{#link-to "account.index" this}}Repositories{{/link-to}}
-        {{/if}}
-      {{/with}}
+      {{#link-to "account" account}}Repositories{{/link-to}}
     </h5>
   </li>
   {{#if view.displayUser}}
     <li id="tab_user" {{bind-attr class="view.classUser"}}>
       <h5>
-        {{#link-to "account.profile" view.account}}Profile{{/link-to}}
+        {{#link-to "profile.info"}}Profile{{/link-to}}
       </h5>
     </li>
   {{/if}}
