@@ -1,4 +1,4 @@
-Auth = Ember.Object.extend
+window.Auth = Ember.Object.extend
   state:        "signed-out"
   receivingEnd: "#{location.protocol}//#{location.host}"
 
