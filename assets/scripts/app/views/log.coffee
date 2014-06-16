@@ -76,6 +76,7 @@ Travis.reopen
 
     toggleTailing: ->
       Travis.tailing.toggle()
+      @engine.autoCloseFold = !Travis.tailing.isActive()
       event.preventDefault()
 
     actions:

@@ -60,6 +60,9 @@ class @Travis.Tailing
     @tail().addClass('active')
     @run()
 
+  isActive: ->
+    @tail().hasClass('active')
+
   stop: ->
     @tail().removeClass('active')
 
