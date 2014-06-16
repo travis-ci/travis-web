@@ -3,21 +3,44 @@
 
   {{#travis-tabs}}
     {{#travis-tab "general" "General Settings"}}
-      {{#settings-form}}
-        <p class="settings-row">
-          Build only if .travis.yml is present
-          {{travis-switch action="save" active=settings.builds_only_with_travis_yml}}
-        </p>
+      {{#settings-form class="settings-form"}}
+        <div class="settings-row">
+          <div class="short-settings-element">
+            {{travis-switch action="save" active=settings.builds_only_with_travis_yml}}
+          </div>
+          <label class="tipsy" title="Build only commits when a .travis.yml file is present in the git tree. Helps reduce builds when first setting up a project or when there are branches around the projects that don't need to be built.">
+            Build only if .travis.yml is present
+          </label>
+        </div>
 
-        <p class="settings-row">
-          Build pushes
-          {{travis-switch action="save" active=settings.build_pushes}}
-        </p>
+        <div class="settings-row">
+          <div class="short-settings-element">
+            {{travis-switch action="save" active=settings.build_pushes}}
+          </div>
+          <label class="tipsy" title="Build commits that are part of a branch.">
+            Build pushes
+          </label>
+        </div>
 
-        <p class="settings-row">
-          Build pull requests
-          {{travis-switch action="save" active=settings.build_pull_requests}}
-        </p>
+        <div class="settings-row">
+
+          <div class="short-settings-element">
+            {{travis-switch action="save" active=settings.build_pull_requests}}
+          </div>
+
+          <label>
+            Build pull requests
+          </label>
+        </div>
+
+        <div class="settings-row">
+          <div class="short-settings-element">
+            {{input value=settings.maximum_number_of_builds size="4" pattern='/^[0-9]+$/'}}
+          </div>
+          <label>
+            Concurrent builds
+          </label>
+        </div>
       {{/settings-form}}
     {{/travis-tab}}
   {{/travis-tabs}}
