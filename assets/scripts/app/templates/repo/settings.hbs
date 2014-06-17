@@ -34,7 +34,7 @@
         </div>
 
         <div class="settings-row">
-          <div class="short-settings-element">
+          <div class="short-settings-element" {{bind-attr class="settings.maximum_number_of_builds_valid"}}>
             {{input value=settings.maximum_number_of_builds size="4" pattern='/^[0-9]+$/'}}
           </div>
           <label>

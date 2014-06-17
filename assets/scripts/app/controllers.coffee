@@ -58,10 +58,11 @@ Travis.RepoSettingsController = Em.ObjectController.extend
 
   settingsChanged: (->
     if parseInt(@get('settings.maximum_number_of_builds')) > 0
+      @set('settings.maximum_number_of_builds_valid', '')
       @get('model').saveSettings(@get('settings')).then null, ->
         Travis.flash(error: 'There was an error while saving settings. Please try again.')
     else
-      Travis.flash(error: 'The maximum number of concurrent builds needs to be a number greater than zero.')
+      @set('settings.maximum_number_of_builds_valid', 'invalid')
   ).observes('settings.maximum_number_of_builds')
 
   save: ->
