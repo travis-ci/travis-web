@@ -46,11 +46,15 @@ Travis.reopen
 
     createEngine: ->
       console.log 'log view: create engine' if Log.DEBUG
-      @scroll = new Log.Scroll
+      @scroll = new Log.Scroll beforeScroll: =>
+        @unfoldHighlight()
       @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
       @logFolder = new Travis.LogFolder(@$().find('#log'))
       @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll, @logFolder)
       @observeParts()
+
+    unfoldHighlight: ->
+      @lineSelector.unfoldLines()
 
     observeParts: ->
       parts = @get('log.parts')
@@ -85,7 +89,10 @@ Travis.reopen
 
     noop: -> # TODO required?
 
-Log.Scroll = ->
+Log.Scroll = (options) ->
+  options ||= {}
+  @beforeScroll = options.beforeScroll
+  this
 Log.Scroll.prototype = $.extend new Log.Listener,
   insert: (log, data, pos) ->
     @tryScroll() if @numbers
@@ -93,6 +100,8 @@ Log.Scroll.prototype = $.extend new Log.Listener,
 
   tryScroll: ->
     if element = $("#log p:visible.highlight:first")
+      if @beforeScroll
+        @beforeScroll()
       $('#main').scrollTop(0)
       $('html, body').scrollTop(element.offset()?.top - (window.innerHeight / 3)) # weird, html works in chrome, body in firefox
 
