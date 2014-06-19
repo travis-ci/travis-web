@@ -64,6 +64,7 @@ window.Auth = Ember.Object.extend
     @set('state', 'signed-in')
     Travis.trigger('user:signed_in', data.user)
     @sendToApp('afterSignIn')
+    @refreshUserData(data.user)
 
   refreshUserData: (user) ->
     Travis.ajax.get "/users/#{user.id}", (data) =>
