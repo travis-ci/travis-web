@@ -10,8 +10,8 @@ require 'travis/model'
   message:          Ember.attr('string')
   _duration:        Ember.attr(Number, key: 'duration')
   _config:          Ember.attr('object', key: 'config')
-  startedAt:        Ember.attr('string')
-  finishedAt:       Ember.attr('string')
+  _startedAt:       Ember.attr('string', key: 'started_at')
+  _finishedAt:      Ember.attr('string', key: 'finished_at')
   pullRequest:      Ember.attr('boolean')
   pullRequestTitle: Ember.attr('string')
   pullRequestNumber: Ember.attr(Number)
@@ -35,6 +35,20 @@ require 'travis/model'
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']
   ).property('state')
+
+  notStarted: (->
+    @get('state') in ['queued', 'created']
+  ).property('state')
+
+  startedAt: (->
+    unless @get('notStarted')
+      @get('_startedAt')
+  ).property('_startedAt')
+
+  finishedAt: (->
+    unless @get('notStarted')
+      @get('_finishedAt')
+  ).property('_finishedAt')
 
   requiredJobs: (->
     @get('jobs').filter (data) -> !data.get('allowFailure')

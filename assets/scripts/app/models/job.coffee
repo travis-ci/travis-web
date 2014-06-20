@@ -9,8 +9,8 @@ require 'travis/model'
   queue:          Ember.attr('string')
   state:          Ember.attr('string')
   number:         Ember.attr('string')
-  startedAt:      Ember.attr('string')
-  finishedAt:     Ember.attr('string')
+  _startedAt:     Ember.attr('string', key: 'started_at')
+  _finishedAt:    Ember.attr('string', key: 'finished_at')
   allowFailure:   Ember.attr('boolean')
 
   repositorySlug: Ember.attr('string')
@@ -27,6 +27,16 @@ require 'travis/model'
     Travis.Log.create(job: this)
   ).property()
 
+  startedAt: (->
+    unless @get('notStarted')
+      @get('_startedAt')
+  ).property('_startedAt')
+
+  finishedAt: (->
+    unless @get('notStarted')
+      @get('_finishedAt')
+  ).property('_finishedAt')
+
   repoSlug: (->
     @get('repositorySlug')
   ).property('repositorySlug')
@@ -37,6 +47,10 @@ require 'travis/model'
 
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']
+  ).property('state')
+
+  notStarted: (->
+    @get('state') in ['queued', 'created']
   ).property('state')
 
   clearLog: ->

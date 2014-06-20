@@ -1,6 +1,8 @@
 Travis.DurationCalculations = Ember.Mixin.create
   duration: (->
-    if duration = @get('_duration')
+    if @get('notStarted')
+      null
+    else if duration = @get('_duration')
       duration
     else
       Travis.Helpers.durationFrom(@get('startedAt'), @get('finishedAt'))
