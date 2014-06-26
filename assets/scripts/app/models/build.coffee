@@ -47,8 +47,8 @@ require 'travis/model'
 
   finishedAt: (->
     unless @get('notStarted')
-      @get('_finishedAt', 'notStarted')
-  ).property('_finishedAt')
+      @get('_finishedAt')
+  ).property('_finishedAt', 'notStarted')
 
   requiredJobs: (->
     @get('jobs').filter (data) -> !data.get('allowFailure')
