@@ -43,11 +43,11 @@ require 'travis/model'
   startedAt: (->
     unless @get('notStarted')
       @get('_startedAt')
-  ).property('_startedAt')
+  ).property('_startedAt', 'notStarted')
 
   finishedAt: (->
     unless @get('notStarted')
-      @get('_finishedAt')
+      @get('_finishedAt', 'notStarted')
   ).property('_finishedAt')
 
   requiredJobs: (->

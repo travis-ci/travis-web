@@ -30,12 +30,12 @@ require 'travis/model'
   startedAt: (->
     unless @get('notStarted')
       @get('_startedAt')
-  ).property('_startedAt')
+  ).property('_startedAt', 'notStarted')
 
   finishedAt: (->
     unless @get('notStarted')
       @get('_finishedAt')
-  ).property('_finishedAt')
+  ).property('_finishedAt', 'notStarted')
 
   repoSlug: (->
     @get('repositorySlug')
