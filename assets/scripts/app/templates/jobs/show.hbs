@@ -7,14 +7,14 @@
         </div>
 
         <div class="runtime">
-           {{#if job.isFinished}}ran{{else}}running{{/if}} for {{formatDuration job.duration}} 
+           {{#if job.isFinished}}ran{{else}}running{{/if}} for {{formatDuration job.duration}}
         </div>
 
         <div class="finished">
           {{formatTime job.finishedAt}}
         </div>
       </div>
-   
+
       <div class="branch" {{bind-attr title="job.commit.branch"}}>
         {{job.commit.branch}}
       </div>
@@ -23,9 +23,9 @@
         - {{formatMessage job.commit.subject repoBinding=job.repo}}
       </div>
 
-      <pre class="body">
-{{formatMessage job.commit.body repoBinding=job.repo pre=true}}
-      </pre>
+      <p class="body">
+{{formatMessage job.commit.body repoBinding=job.repo pre=false}}
+      </p>
 
       <div class="footer">
         <div class="author">

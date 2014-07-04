@@ -8,14 +8,14 @@
       </div>
 
       <div class="runtime">
-           {{#if build.isFinished}}ran{{else}}running{{/if}} for {{formatDuration build.duration}} 
+           {{#if build.isFinished}}ran{{else}}running{{/if}} for {{formatDuration build.duration}}
       </div>
 
       <div class="finished">
         {{formatTime build.finishedAt}}
       </div>
     </div>
- 
+
     <div class="branch" {{bind-attr title="build.commit.branch"}}>
       {{build.commit.branch}}
     </div>
@@ -24,9 +24,9 @@
     - {{formatMessage build.commit.subject repoBinding=build.repo}}
     </div>
 
-    <pre class="body">
-{{formatMessage build.commit.body repoBinding=build.repo pre=true}}
-    </pre>
+    <p class="body">
+{{formatMessage build.commit.body repoBinding=build.repo pre=false}}
+    </p>
 
     <div class="footer">
       <div class="author">
