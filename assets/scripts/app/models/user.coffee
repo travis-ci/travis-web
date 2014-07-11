@@ -20,11 +20,10 @@ require 'travis/model'
       value
   ).property('login', '_name')
 
-  init: ->
-    @_super()
-
+  isSyncingDidChange: (->
     Ember.run.next this, ->
       @poll() if @get('isSyncing')
+  ).observes('isSyncing')
 
   urlGithub: (->
     "https://github.com/#{@get('login')}"
@@ -66,7 +65,6 @@ require 'travis/model'
     self = this
     Travis.ajax.post('/users/sync', {}, ->
       self.setWithSession('isSyncing', true)
-      self.poll()
     )
 
   poll: ->

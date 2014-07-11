@@ -1,5 +1,7 @@
 Travis.AccountController = Ember.ObjectController.extend
   allHooks: []
+  needs: ['currentUser']
+  userBinding: 'controllers.currentUser'
 
   init: ->
     @_super.apply this, arguments
@@ -33,3 +35,8 @@ Travis.AccountController = Ember.ObjectController.extend
   showPublicReposHint: (->
     Travis.config.show_repos_hint == 'public'
   ) .property()
+
+  actions:
+    sync: ->
+      @get('user').sync()
+

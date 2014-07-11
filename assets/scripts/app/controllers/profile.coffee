@@ -5,9 +5,6 @@ Travis.ProfileController = Travis.Controller.extend
   userBinding: 'controllers.currentUser'
   accountBinding: 'controllers.account'
 
-  sync: ->
-    @get('user').sync()
-
   activate: (action, params) ->
     this["view#{$.camelize(action)}"]()
 

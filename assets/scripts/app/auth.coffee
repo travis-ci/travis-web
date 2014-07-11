@@ -64,6 +64,7 @@ window.Auth = Ember.Object.extend
     @set('state', 'signed-in')
     Travis.trigger('user:signed_in', data.user)
     @sendToApp('afterSignIn')
+    @refreshUserData(data.user)
 
   refreshUserData: (user) ->
     Travis.ajax.get "/users/#{user.id}", (data) =>
@@ -73,8 +74,8 @@ window.Auth = Ember.Object.extend
         data.user.token = user.token
         @storeData(data, Travis.sessionStorage)
         @storeData(data, Travis.storage)
-    , (data, status, xhr) =>
-      @signOut() if xhr.status == 401
+    , (status, xhr) =>
+      @signOut() if status == 403
 
   signedIn: (->
     @get('state') == 'signed-in'
