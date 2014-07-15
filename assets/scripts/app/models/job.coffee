@@ -107,9 +107,9 @@ require 'travis/model'
   ).observes('state')
 
   isPropertyLoaded: (key) ->
-    if ['finishedAt'].contains(key) && !@get('isFinished')
+    if ['_finishedAt'].contains(key) && !@get('isFinished')
       return true
-    else if key == 'startedAt' && @get('state') == 'created'
+    else if key == '_startedAt' && @get('state') == 'created'
       return true
     else
       @_super(key)

@@ -24,7 +24,7 @@ test "my repos is active by default when user is signed in", ->
         branch: 'master'
         compare: '0123456..4567890'
         finishedAt: '-'
-        duration: '1 min'
+        duration: '-'
         message: 'commit message 4'
 
 test "my repos is activated when user signs in", ->
