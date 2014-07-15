@@ -7,7 +7,7 @@ module "Travis.Build",
     Travis.Job.resetData()
 
 test 'it does not load record on duration, finishedAt and result if job is not in finished state', ->
-  Travis.Build.load [{ id: 1, state: 'started' }]
+  Travis.Build.load [{ id: 1, state: 'started', started_at: null }]
 
   Ember.run ->
     record = Travis.Build.find 1
@@ -15,7 +15,7 @@ test 'it does not load record on duration, finishedAt and result if job is not i
     record.loadTheRest = ->
       ok(false, 'loadTheRest should not be called')
 
-    record.get('_duration')
+    record.get('duration')
     record.get('finishedAt')
     record.get('result')
 
@@ -25,7 +25,7 @@ test 'it does not load record on duration, finishedAt and result if job is not i
 test 'it loads record on duration, finishedAt and result if job is in finished state', ->
   expect(1)
 
-  Travis.Build.load [{ id: 1, state: 'passed' }]
+  Travis.Build.load [{ id: 1, state: 'passed', started_at: null }]
 
   Ember.run ->
     record = Travis.Build.find 1

@@ -37,7 +37,7 @@ test 'configKeys takes into account the keys of other jobs', ->
     deepEqual( configValues3, [ '1.9.3', undefined, undefined, 'OpenJDK' ] )
 
 test 'it does not load record on duration, finishedAt and result if job is not in finished state', ->
-  Travis.Job.load [{ id: 1, state: 'started' }]
+  Travis.Job.load [{ id: 1, state: 'started', started_at: null }]
 
   Ember.run ->
     record = Travis.Job.find 1
@@ -55,7 +55,7 @@ test 'it does not load record on duration, finishedAt and result if job is not i
 test 'it loads record on duration, finishedAt and result if job is in finished state', ->
   expect(1)
 
-  Travis.Job.load [{ id: 1, state: 'passed' }]
+  Travis.Job.load [{ id: 1, state: 'passed', started_at: null }]
 
   Ember.run ->
     record = Travis.Job.find 1

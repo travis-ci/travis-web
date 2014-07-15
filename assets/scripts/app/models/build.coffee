@@ -86,7 +86,7 @@ require 'travis/model'
     Travis.ajax.post "/builds/#{@get('id')}/restart"
 
   isPropertyLoaded: (key) ->
-    if ['_duration', 'finishedAt'].contains(key) && !@get('isFinished')
+    if ['_duration', '_finishedAt'].contains(key) && !@get('isFinished')
       return true
     else
       @_super(key)
