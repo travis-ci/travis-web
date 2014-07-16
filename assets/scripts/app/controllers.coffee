@@ -57,7 +57,9 @@ Travis.RepoSettingsController = Em.ObjectController.extend
   settings: Ember.computed.alias('model.settings')
 
   settingsChanged: (->
-    if parseInt(@get('settings.maximum_number_of_builds')) > 0
+    value = @get('settings.maximum_number_of_builds')
+    console.log value
+    if parseInt(value) > 0 || value == '0' || value == 0
       @set('settings.maximum_number_of_builds_valid', '')
       @get('model').saveSettings(@get('settings')).then null, ->
         Travis.flash(error: 'There was an error while saving settings. Please try again.')
