@@ -4,82 +4,32 @@ safe = (string) ->
   new Handlebars.SafeString(string)
 
 Travis.Tab = Ember.Object.extend
-  show: ->
-    @get('tabs').forEach( (t) -> t.hide() )
-    @set('visible', true)
-
-  hide: ->
-    @set('visible', false)
+  url: (->
+    id = @get('id')
+    if id == 'env_vars'
+      id
+    else
+      "repo.settings.#{id}"
+  ).property('id')
 
 Travis.TabsView = Ember.View.extend
   tabBinding: 'controller.tab'
   tabsBinding: 'controller.tabs'
 
-  tabDidChange: (->
-    @activateTab(@get('tab'))
-  ).observes('tab')
-
-  tabsDidChange: (->
-    tab = @get('tab')
-    if tab
-      @activateTab(tab)
-    else if @get('tabs.length')
-      @activateTab(@get('tabs.firstObject.id'))
-  ).observes('tabs.length', 'tabs')
-
-  activateTab: (tabId) ->
-    tab = @get('tabs').findBy('id', tabId)
-
-    return unless tab
-
-    tab.show() unless tab.get('visible')
-
   # TODO: remove hardcoded link
   layout: Ember.Handlebars.compile(
     '<ul class="tabs">' +
-    '  {{#each tab in tabs}}' +
+    '  {{#each tab in _tabs}}' +
     '    <li {{bindAttr class="tab.visible:active"}}>' +
-    '      <h5>{{#link-to "repo.settings.tab" tab.id}}{{tab.name}}{{/link-to}}</h5>' +
+    '      <h5>{{#link-to tab.url}}{{tab.name}}{{/link-to}}</h5>' +
     '    </li>' +
     '  {{/each}}' +
     '</ul>' +
     '{{yield}}')
 
-Travis.TabView = Ember.View.extend
-  attributeBindings: ['style']
-
-  style: (->
-    if !@get('tab.visible')
-      'display: none'
-  ).property('tab.visible')
-
-Ember.Handlebars.registerHelper('travis-tab', (id, name, options) ->
-  controller = this
-  controller.set('tabs', []) unless controller.get('tabs')
-
-  tab = Travis.Tab.create(id: id, name: name, tabs: controller.get('tabs'))
-
-  view = Travis.TabView.create(
-    controller: this
-    tab: tab
-  )
-
-  controller = this
-  Ember.run.schedule('afterRender', ->
-    if controller.get('tabs.length') == 0
-      tab.show()
-    controller.get('tabs').pushObject(tab)
-  )
-
-  Ember.Handlebars.helpers.view.call(this, view, options)
-)
-
-
 Ember.Handlebars.registerHelper('travis-tabs', (options) ->
   template   = options.fn
   delete options.fn
-
-  @set('tabs', [])
 
   view = Travis.TabsView.create(
     controller: this

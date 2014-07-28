@@ -64,7 +64,7 @@ Travis.Router.map ->
     # this can't be nested in repo, because we want a set of different
     # templates rendered for settings (for example no "current", "builds", ... tabs)
     @resource 'repo.settings', path: '/:owner/:name/settings', ->
-      @route 'tab', path: ':tab'
+      @route 'index', path: '/'
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
@@ -356,8 +356,8 @@ Travis.RepoSettingsRoute = Travis.Route.extend
     slug = "#{params.owner}/#{params.name}"
     Travis.Repo.fetchBySlug(slug)
 
-  afterModel: (repo) ->
-    # I'm using afterModel to fetch settings, because model is not always called.
-    # If link-to already provides a model, it will be just set as a route context.
+Travis.RepoSettingsIndexRoute = Travis.Route.extend
+  model: ->
+    repo = @modelFor('repo_settings')
     repo.fetchSettings().then (settings) ->
       repo.set('settings', settings)
