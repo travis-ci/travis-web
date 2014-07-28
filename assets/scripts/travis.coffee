@@ -162,6 +162,7 @@ Ember.LinkView.reopen
 
 require 'travis/ajax'
 require 'travis/adapter'
+require 'travis/adapters/env_vars'
 require 'routes'
 require 'auth'
 require 'controllers'

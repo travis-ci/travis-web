@@ -22,16 +22,21 @@ unless window.TravisApplication
       annotations:  Travis.Annotation
       request:      Travis.Request
       requests:     Travis.Request
+      env_var:      Travis.EnvVar
+      env_vars:     Travis.EnvVar
     ).property()
 
     modelClasses: (->
-      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook, Travis.Annotation, Travis.Request]
+      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook, Travis.Annotation, Travis.Request, Travis.EnvVar]
     ).property()
 
     setup: ->
       @get('modelClasses').forEach (klass) ->
         klass.adapter = Travis.Adapter.create()
         klass.url = "/#{klass.pluralName()}"
+
+      Travis.EnvVar.url = "/settings/env_vars"
+      Travis.EnvVar.adapter = Travis.EnvVarsAdapter.create()
 
       @slider = new Travis.Slider()
       @pusher = new Travis.Pusher(Travis.config.pusher_key) if Travis.config.pusher_key

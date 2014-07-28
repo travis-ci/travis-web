@@ -25,11 +25,17 @@ Travis.ExpandableRecordArray = Ember.RecordArray.extend
       willChange: 'observedArrayWillChange'
       didChange: 'observedArraydidChange'
 
-  observedArrayWillChange: (->)
+  observedArrayWillChange: (array, index, removedCount, addedCount) ->
+    removedObjects = array.slice index, index + removedCount
+    for object in removedObjects
+      @removeObject(object)
+
   observedArraydidChange: (array, index, removedCount, addedCount) ->
     addedObjects = array.slice index, index + addedCount
     for object in addedObjects
-      if @get('filterWith').call this, object
+      # TODO: I'm not sure why deleted objects get here, but I'll just filter them
+      # for now
+      if !object.get('isDeleted') && @get('filterWith').call(this, object)
         @pushObject(object) unless @contains(object)
 
   pushObject: (record) ->

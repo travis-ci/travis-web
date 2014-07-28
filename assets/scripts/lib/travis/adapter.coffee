@@ -88,3 +88,14 @@ Travis.Adapter = Ember.RESTAdapter.extend
     @ajax(url, record.toJSON(), "DELETE").then (data) -> # TODO: Some APIs may or may not return data
       self.didDeleteRecord record, data
       return
+
+  saveRecord: (record) ->
+    primaryKey = get(record.constructor, 'primaryKey')
+    url = this.buildURL(record.constructor, get(record, primaryKey), record)
+    self = this
+
+    return this.ajax(url, record.toJSON(), "PATCH").then (data) ->
+      self.didSaveRecord(record, data)
+      return record
+
+

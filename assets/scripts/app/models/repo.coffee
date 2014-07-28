@@ -23,6 +23,26 @@ require 'travis/model'
     }
   ).property('lastBuildId', 'lastBuildNumber')
 
+  envVars: (->
+    id = @get('id')
+    envVars = Travis.EnvVar.find repository_id: id
+
+    # TODO: move to controller
+    array  = Travis.ExpandableRecordArray.create
+      type: Travis.EnvVar
+      content: Ember.A([])
+
+    array.load(envVars)
+
+    globalEnvVars = Ember.RecordArray.create({ modelClass: Travis.EnvVar, content: Ember.A([]) })
+    Travis.EnvVar.registerRecordArray(globalEnvVars)
+
+    array.observe(globalEnvVars, (envVar) -> envVar.get('isLoaded') && envVar.get('repo.id') == id )
+
+    array
+  ).property()
+
+
   allBuilds: (->
     recordArray = Ember.RecordArray.create({ modelClass: Travis.Build, content: Ember.A([]) })
     Travis.Build.registerRecordArray(recordArray)

@@ -65,6 +65,9 @@ Travis.Router.map ->
     # templates rendered for settings (for example no "current", "builds", ... tabs)
     @resource 'repo.settings', path: '/:owner/:name/settings', ->
       @route 'index', path: '/'
+      @resource 'env_vars', ->
+        @route 'new'
+      @route 'ssh_key'
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
@@ -361,3 +364,8 @@ Travis.RepoSettingsIndexRoute = Travis.Route.extend
     repo = @modelFor('repo_settings')
     repo.fetchSettings().then (settings) ->
       repo.set('settings', settings)
+
+Travis.EnvVarsRoute = Travis.Route.extend
+  model: (params) ->
+    repo = @modelFor('repo_settings')
+    repo.get('envVars')
