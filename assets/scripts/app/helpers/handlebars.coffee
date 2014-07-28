@@ -68,6 +68,7 @@ Ember.Handlebars.registerHelper('settings-form', (path, options) ->
     template: options.fn
     controller: this
     settingsPath: path
+    classNames: ['settings-form']
   )
 
   delete options.fn
