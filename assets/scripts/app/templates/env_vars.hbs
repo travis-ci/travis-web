@@ -2,19 +2,17 @@
   {{outlet}}
 </div>
 
-{{#link-to "env_vars.new"}}Add a new variable{{/link-to}}
+{{#link-to "env_vars.new" class="env_var_add"}}Add a new variable{{/link-to}}
 
 {{#each controller itemController="envVar"}}
   {{#if isEditing}}
     {{! TODO: reuse it with "new", it's almost identical }}
     <form {{action "save" on="submit"}}>
-      <p>Name: {{input value=name}}</p>
-      {{#if public}}<p>Value: {{input value=value}}</p>{{/if}}
-      <p>Public: {{input type="checkbox" checked=public}}</p>
+      {{label value=name}}: {{input value=name}}
+      {{#if public}}{{label value=value}}: {{input value=value}}{{/if}}
+      {{label value=public}}: {{input type="checkbox" checked=public}}
 
-      <p>
-        {{input type="submit" value="Save"}} or <a href="#" {{action "cancel"}}>Cancel</a>
-      </p>
+      {{input type="submit" value="Wat"}} or <a href="#" {{action "cancel"}}>Cancel</a>
     </form>
   {{else}}
     <p>
