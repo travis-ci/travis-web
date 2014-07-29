@@ -1,0 +1,31 @@
+{{#if model}}
+  {{#if isEditing}}
+    <form {{action "save" on="submit"}}>
+      <p>Description: {{input value=description}}</p>
+      <p>Value: {{textarea value=value}}</p>
+
+      <p>
+        {{input type="submit" value="Save"}} or <a href="#" {{action "cancel"}}>Cancel</a>
+      </p>
+    </form>
+  {{else}}
+    <p>
+      Ssh key is set.<br/>
+      {{#if description}}
+        Description: {{description}}<br/>
+      {{/if}}
+      Fingerprint: {{fingerprint}}
+    </p>
+    <p>
+      <a href="#" {{action "delete"}}>Delete</a>
+      <a href="#" {{action "edit"}}>Edit</a>
+    </p>
+  {{/if}}
+{{else}}
+  <p>
+    You don't have any custom key set up.
+    Currently used key has a following fingerprint: {{defaultKey.fingerprint}}
+  </p>
+
+  <p><a {{action "add"}} href="#">Add a custom ssh key</a></p>
+{{/if}}

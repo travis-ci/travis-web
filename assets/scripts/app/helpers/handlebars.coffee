@@ -6,7 +6,7 @@ safe = (string) ->
 Travis.Tab = Ember.Object.extend
   url: (->
     id = @get('id')
-    if id == 'env_vars'
+    if id == 'env_vars' || id == 'ssh_key'
       id
     else
       "repo.settings.#{id}"

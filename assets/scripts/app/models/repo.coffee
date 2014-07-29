@@ -23,6 +23,10 @@ require 'travis/model'
     }
   ).property('lastBuildId', 'lastBuildNumber')
 
+  sshKey: (->
+    Travis.SshKey.find(@get('id'))
+  )
+
   envVars: (->
     id = @get('id')
     envVars = Travis.EnvVar.find repository_id: id
@@ -41,7 +45,6 @@ require 'travis/model'
 
     array
   ).property()
-
 
   allBuilds: (->
     recordArray = Ember.RecordArray.create({ modelClass: Travis.Build, content: Ember.A([]) })

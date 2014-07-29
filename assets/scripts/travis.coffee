@@ -163,6 +163,7 @@ Ember.LinkView.reopen
 require 'travis/ajax'
 require 'travis/adapter'
 require 'travis/adapters/env_vars'
+require 'travis/adapters/ssh_key'
 require 'routes'
 require 'auth'
 require 'controllers'

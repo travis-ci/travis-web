@@ -24,10 +24,11 @@ unless window.TravisApplication
       requests:     Travis.Request
       env_var:      Travis.EnvVar
       env_vars:     Travis.EnvVar
+      ssh_key:      Travis.SshKey
     ).property()
 
     modelClasses: (->
-      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook, Travis.Annotation, Travis.Request, Travis.EnvVar]
+      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook, Travis.Annotation, Travis.Request, Travis.EnvVar, Travis.SshKey]
     ).property()
 
     setup: ->
@@ -37,6 +38,9 @@ unless window.TravisApplication
 
       Travis.EnvVar.url = "/settings/env_vars"
       Travis.EnvVar.adapter = Travis.EnvVarsAdapter.create()
+
+      Travis.SshKey.url = "/settings/ssh_key"
+      Travis.SshKey.adapter = Travis.SshKeyAdapter.create()
 
       @slider = new Travis.Slider()
       @pusher = new Travis.Pusher(Travis.config.pusher_key) if Travis.config.pusher_key

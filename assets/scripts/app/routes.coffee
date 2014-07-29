@@ -67,7 +67,7 @@ Travis.Router.map ->
       @route 'index', path: '/'
       @resource 'env_vars', ->
         @route 'new'
-      @route 'ssh_key'
+      @resource 'ssh_key'
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
@@ -369,3 +369,26 @@ Travis.EnvVarsRoute = Travis.Route.extend
   model: (params) ->
     repo = @modelFor('repo_settings')
     repo.get('envVars')
+
+Travis.SshKeyRoute = Travis.Route.extend
+  model: (params) ->
+    repo = @modelFor('repo_settings')
+    self = this
+    Travis.SshKey.fetch(repo.get('id')).then ( (result) -> result ), (xhr) ->
+      if xhr.status == 404
+        # if there is no model, just return null. I'm not sure if this is the
+        # best answer, maybe we should just redirect to different route, like
+        # ssh_key.new or ssh_key.no_key
+        return null
+
+  afterModel: (model, transition) ->
+    repo = @modelFor('repo_settings')
+    Travis.ajax.get "/repositories/#{repo.get('id')}/key", (data) =>
+      @defaultKey = Ember.Object.create(fingerprint: data.fingerprint)
+
+  setupController: (controller, model) ->
+    @_super.apply this, arguments
+
+    if @defaultKey
+      controller.set('defaultKey', @defaultKey)
+      @defaultKey = null
