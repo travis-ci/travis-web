@@ -61,13 +61,11 @@ Travis.Router.map ->
       @resource 'requests', path: '/requests'
       @resource 'request', path: '/requests/:request_id'
 
-    # this can't be nested in repo, because we want a set of different
-    # templates rendered for settings (for example no "current", "builds", ... tabs)
-    @resource 'repo.settings', path: '/:owner/:name/settings', ->
-      @route 'index', path: '/'
-      @resource 'env_vars', ->
-        @route 'new'
-      @resource 'ssh_key'
+      @resource 'settings', ->
+        @route 'index', path: '/'
+        @resource 'env_vars', ->
+          @route 'new'
+        @resource 'ssh_key'
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
@@ -359,20 +357,20 @@ Travis.RepoSettingsRoute = Travis.Route.extend
     slug = "#{params.owner}/#{params.name}"
     Travis.Repo.fetchBySlug(slug)
 
-Travis.RepoSettingsIndexRoute = Travis.Route.extend
+Travis.SettingsIndexRoute = Travis.Route.extend
   model: ->
-    repo = @modelFor('repo_settings')
+    repo = @modelFor('repo')
     repo.fetchSettings().then (settings) ->
       repo.set('settings', settings)
 
 Travis.EnvVarsRoute = Travis.Route.extend
   model: (params) ->
-    repo = @modelFor('repo_settings')
+    repo = @modelFor('repo')
     repo.get('envVars')
 
 Travis.SshKeyRoute = Travis.Route.extend
   model: (params) ->
-    repo = @modelFor('repo_settings')
+    repo = @modelFor('repo')
     self = this
     Travis.SshKey.fetch(repo.get('id')).then ( (result) -> result ), (xhr) ->
       if xhr.status == 404
@@ -382,7 +380,7 @@ Travis.SshKeyRoute = Travis.Route.extend
         return null
 
   afterModel: (model, transition) ->
-    repo = @modelFor('repo_settings')
+    repo = @modelFor('repo')
     Travis.ajax.get "/repositories/#{repo.get('id')}/key", (data) =>
       @defaultKey = Ember.Object.create(fingerprint: data.fingerprint)
 

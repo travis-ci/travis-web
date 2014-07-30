@@ -56,6 +56,9 @@ Travis.RepoController = Travis.Controller.extend
   viewRequest: ->
     @connectTab('request')
 
+  viewSettings: ->
+    @connectTab('request')
+
   lastBuildDidChange: ->
     Ember.run.scheduleOnce('data', this, @_lastBuildDidChange);
 

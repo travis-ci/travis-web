@@ -75,6 +75,10 @@ Travis.reopen
       'active display-inline' if @get('tab') == 'requests'
     ).property('tab')
 
+    classSettings: (->
+      'active display-inline' if @get('tab') == 'settings'
+    ).property('tab')
+
     classRequest: (->
       'active display-inline' if @get('tab') == 'request'
     ).property('tab')
