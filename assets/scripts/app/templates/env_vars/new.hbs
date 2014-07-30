@@ -1,9 +1,9 @@
-<form {{action "save" on="submit"}}>
-  <p>Name: {{input value=name}}</p>
-  <p>Value: {{input value=value}}</p>
+<form class="new-env-var" {{action "save" on="submit"}}>
+  <p>Name: {{input value=name class="env-name"}}</p>
+  <p>Value: {{input value=value class="env-value"}}</p>
   <p>Public: {{input type="checkbox" checked=public}}</p>
 
-  <p>
-    {{input type="submit" value="Add"}} or <a href="#" {{action "cancel"}}>Cancel</a>
+  <p class="env-actions">
+    {{input type="submit" value="Add" class="submit-env-var"}} or <a href="#" class="cancel-env-var" {{action "cancel"}}>Cancel</a>
   </p>
 </form>
