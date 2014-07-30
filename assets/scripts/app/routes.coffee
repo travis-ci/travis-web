@@ -187,6 +187,11 @@ Travis.BuildRoute = Travis.Route.extend
   model: (params) ->
     Travis.Build.fetch(params.build_id)
 
+  deactivate: ->
+    repo = @controllerFor('repo')
+    repo.set('build', null)
+    repo.set('job', null)
+
 Travis.JobRoute = Travis.Route.extend
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
@@ -207,6 +212,10 @@ Travis.JobRoute = Travis.Route.extend
   model: (params) ->
     Travis.Job.fetch(params.job_id)
 
+  deactivate: ->
+    repo = @controllerFor('repo')
+    repo.set('job', null)
+
 Travis.RepoIndexRoute = Travis.Route.extend
   setupController: (controller, model) ->
     @_super.apply this, arguments
@@ -217,6 +226,11 @@ Travis.RepoIndexRoute = Travis.Route.extend
       @render 'build'
     else
       @render 'builds/not_found'
+
+  deactivate: ->
+    repo = @controllerFor('repo')
+    repo.set('build', null)
+    repo.set('job', null)
 
 Travis.RepoRoute = Travis.Route.extend
   renderTemplate: ->
