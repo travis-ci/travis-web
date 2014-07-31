@@ -8,11 +8,13 @@
   {{#if isEditing}}
     {{! TODO: reuse it with "new", it's almost identical }}
     <form {{action "save" on="submit"}}>
-      {{label value=name}}: {{input value=name}}
-      {{#if public}}{{label value=value}}: {{input value=value}}{{/if}}
-      {{label value=public}}: {{input type="checkbox" checked=public}}
+      <p>Name: {{input value=name}}</p>
+      {{#if public}}<p>Value: {{input value=value}}</p>{{/if}}
+      <p>Public: {{input type="checkbox" checked=public}}</p>
 
-      {{input type="submit" value="Wat"}} or <a href="#" {{action "cancel"}}>Cancel</a>
+      <p>
+        {{input type="submit" value="Save"}} or <a href="#" {{action "cancel"}}>Cancel</a>
+      </p>
     </form>
   {{else}}
     <p>
