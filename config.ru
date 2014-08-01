@@ -31,5 +31,6 @@ run Travis::Web::App.build(
   pusher_key:   ENV['PUSHER_KEY'],
   ga_code:      ENV['GA_CODE'],
   root:         File.expand_path('../public', __FILE__),
-  server_start: Time.now
+  server_start: Time.now,
+  ssh_key_enabled: ENV['SSH_KEY_ENABLED']
 )

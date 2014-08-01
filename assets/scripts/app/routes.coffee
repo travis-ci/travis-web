@@ -65,7 +65,7 @@ Travis.Router.map ->
         @route 'index', path: '/'
         @resource 'env_vars', ->
           @route 'new'
-        @resource 'ssh_key'
+        @resource 'ssh_key' if Travis.config.ssh_key_enabled
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'

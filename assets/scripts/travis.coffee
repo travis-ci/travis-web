@@ -81,6 +81,7 @@ $.extend Travis,
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
+    ssh_key_enabled: $('meta[name="travis.ssh_key_enabled"]').attr('value') == 'true'
     code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
     show_repos_hint: 'private'
     avatar_default_url: 'https://travis-ci.org/images/mailer/mascot-avatar-40px.png'
