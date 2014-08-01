@@ -1,25 +1,24 @@
 {{#if model}}
   {{#if isEditing}}
-    <form {{action "save" on="submit"}}>
-      <p>Description: {{input value=description}}</p>
-      <p>Value: {{textarea value=value}} {{travis-errors "value"}}</p>
-
-      <p>
-        {{input type="submit" value="Save"}} or <a href="#" {{action "cancel"}}>Cancel</a>
-      </p>
-    </form>
+    {{partial "ssh_key/form"}}
   {{else}}
-    <p>
-      Ssh key is set.<br/>
+    <div class="ssh-key">
+      <p>Ssh key is set.</p>
       {{#if description}}
-        Description: {{description}}<br/>
+        <div class="row">
+          <span class="label">Description:</label>
+          <span class="value">{{description}}</span>
+        </div>
       {{/if}}
-      Fingerprint: {{fingerprint}}
-    </p>
-    <p>
-      <a href="#" {{action "delete"}}>Delete</a>
-      <a href="#" {{action "edit"}}>Edit</a>
-    </p>
+      <div class="row">
+        <span class="label">Fingerprint:</label>
+        <span class="value">{{fingerprint}}</span>
+      </div>
+    <div class="actions">
+      <a href="#" {{action "delete"}} {{bind-attr class=":delete-ssh-key isDeleting:deleting"}}>
+        Delete
+      </a>
+    </div>
   {{/if}}
 {{else}}
   <p>
@@ -27,5 +26,5 @@
     Currently used key has a following fingerprint: {{defaultKey.fingerprint}}
   </p>
 
-  <p><a {{action "add"}} href="#">Add a custom ssh key</a></p>
+  <a {{action "add"}} href="#" class="add-ssh-key">Add a custom ssh key</a>
 {{/if}}

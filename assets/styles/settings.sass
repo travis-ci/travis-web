@@ -26,26 +26,58 @@
       text-align: center
 
   .invalid
-    input
+    input, textarea
       border-width: 1px
       border-color: #ffb6c1
       background: rgb(252, 227, 230)
 
-  form.env-var
+  form.env-var, form.ssh-key
     margin-top: 20px
 
     .field
-      height: 33px
+      padding-bottom: 10px
+    .field:after
+      visibility: hidden
+      display: block
+      font-size: 0
+      content: " "
+      clear: both
+      height: 0
+
+    label
+      display: inline-block
+
+  form.env-var
     label
       width: 40px
+  form.ssh-key
+    span.error
+      display: block
+      margin-left: 76px
+    label
+      width: 73px
+    label.value
+      float: left
+    textarea
+      margin-left: 3px
+      width: 580px
+      height: 250px
       display: inline-block
+      padding: 0 5px 0 5px
+      background-color: #fff
+      border: 1px solid #ddd
+      line-height: 17px
+      font-size: 13px
+      color: #999999
+      text-align: left
 
   span.error
     display: inline-block
     margin-left: 10px
     color: #a80000
 
-  .env-var input[type=submit].saving, .env-var .delete-var.deleting
+  .env-var input[type=submit].saving, .ssh-key input[type=submit].saving,
+  .env-var .delete-var.deleting, .delete-ssh-key.deleting
     background-color: #bbb
     background-image: inline-image('ui/round-spinner.svg')
     background-repeat: no-repeat
@@ -54,7 +86,7 @@
     text-indent: -9999px
 
 
-  a.add-env-var
+  .add-env-var, .add-ssh-key
     color: #ffffff
     background-color: #97a3aa
     border-radius: 4px
@@ -63,7 +95,7 @@
     line-height: 70px
     cursor: pointer
 
-  .add-env-var:hover
+  .add-env-var:hover, .add-ssh-key:hover
     background-color: #7c878d
 
   input
@@ -81,7 +113,7 @@
   form.env-var .actions
     margin-bottom: 35px
 
-  input.submit-env-var
+  input.submit-env-var, input.submit-ssh-key
     color: #ffffff
     background-color: #7ea35a
     border-radius: 4px
@@ -92,13 +124,13 @@
     margin-right: 6px
     cursor: pointer
 
-  .submit-env-var:hover
+  .submit-env-var:hover, .submit-ssh-key:hover
     background-color: #6f924f
 
-  .cancel-env-var
+  .cancel-env-var, .cancel-ssh-key
     margin-left: 3px
 
-  .cancel-env-var:hover
+  .cancel-env-var:hover, .cancel-ssh-key:hover
     text-decoration: underline
 
   input[type="checkbox"]
@@ -118,7 +150,7 @@
   .edit-var:hover
     background-color: #a4a5a4
 
-  .delete-var
+  .delete-var, .delete-ssh-key
     display: inline-block
     margin: 6px 0 15px 0
     color: #ffffff
@@ -128,7 +160,7 @@
     font-size: 13px
     cursor: pointer
 
-  .delete-var:hover
+  .delete-var:hover, .delete-ssh-key:hover
     background-color: #820b0b
 
   ul.env-vars
