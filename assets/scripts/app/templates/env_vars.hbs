@@ -1,27 +1,26 @@
-<div>
-  {{outlet}}
-</div>
+{{outlet}}
 
-{{#link-to "env_vars.new" class="env_var_add"}}Add a new variable{{/link-to}}
-
-{{#each controller itemController="envVar"}}
-  {{#if isEditing}}
-    {{! TODO: reuse it with "new", it's almost identical }}
-    <form {{action "save" on="submit"}}>
-      <p>Name: {{input value=name}}</p>
-      {{#if public}}<p>Value: {{input value=value}}</p>{{/if}}
-      <p>Public: {{input type="checkbox" checked=public}}</p>
-
-      <p>
-        {{input type="submit" value="Save"}} or <a href="#" {{action "cancel"}}>Cancel</a>
-      </p>
-    </form>
-  {{else}}
-    <p>
-      Name: {{name}}<br/>
-      Value: {{value}}<br/>
-      <a href="#" class="edit_var"{{action "edit"}}>Edit</a>
-      <a href="#" class="delete_var"{{action "delete"}}>Delete</a>
-    </p>
-  {{/if}}
-{{/each}}
+<ul class="env-vars">
+  {{#each controller itemController="envVar"}}
+    {{#if isEditing}}
+      {{partial 'env_vars/form'}}
+    {{else}}
+      <li class="env-var">
+        <div class="row">
+          <span class="label">Name:</span>
+          <span class="value">{{name}}</span>
+        </div>
+        <div class="row">
+          <span class="label">Value:</span>
+          <span class="value">{{value}}</span>
+        </div>
+        <div class="actions">
+          <a href="#" class="edit-var" {{action "edit"}}>Edit</a>
+          <a href="#" {{action "delete"}} {{bind-attr class=":delete-var isDeleting:deleting"}}>
+            Delete
+          </a>
+        </div>
+      </li>
+    {{/if}}
+  {{/each}}
+</ul>

@@ -2,6 +2,23 @@ Travis.ExpandableRecordArray = Ember.RecordArray.extend
   isLoaded: false
   isLoading: false
 
+  promise: (->
+    console.log 'promise'
+    self = this
+    new Ember.RSVP.Promise (resolve, reject) ->
+      console.log 'inside promise'
+      observer = ->
+        console.log 'observer', self.get('isLoaded')
+        if self.get('isLoaded')
+          console.log 'resolve'
+          resolve(self)
+          self.removeObserver('isLoaded', observer)
+          true
+
+      unless observer()
+        self.addObserver 'isLoaded', observer
+  ).property()
+
   load: (array) ->
     @set 'isLoading', true
     self = this

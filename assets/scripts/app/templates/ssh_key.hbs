@@ -2,7 +2,7 @@
   {{#if isEditing}}
     <form {{action "save" on="submit"}}>
       <p>Description: {{input value=description}}</p>
-      <p>Value: {{textarea value=value}}</p>
+      <p>Value: {{textarea value=value}} {{travis-errors "value"}}</p>
 
       <p>
         {{input type="submit" value="Save"}} or <a href="#" {{action "cancel"}}>Cancel</a>

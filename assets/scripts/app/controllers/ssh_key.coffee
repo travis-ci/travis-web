@@ -1,9 +1,14 @@
-Travis.SshKeyController = Ember.ObjectController.extend
+require 'travis/validations'
+
+Travis.SshKeyController = Ember.ObjectController.extend Travis.Validations,
   isEditing: false
   defaultKey: null
 
-  needs: ['repoSettings']
-  repo: Ember.computed.alias('controllers.repoSettings.model')
+  needs: ['repo']
+  repo: Ember.computed.alias('controllers.repo.repo')
+
+  validates:
+    value: ['presence']
 
   actions:
     add: ->
@@ -12,8 +17,12 @@ Travis.SshKeyController = Ember.ObjectController.extend
       @set('isEditing', true)
 
     save: ->
-      @get('model').save().then =>
-        @set('isEditing', false)
+      if @isValid()
+        @get('model').save().then =>
+          @set('isEditing', false)
+        , (xhr) =>
+          if xhr.status == 422
+            @addErrorsFromResponse(JSON.parse(xhr.response)['errors'])
 
     delete: ->
       @get('model').deleteRecord().then =>

@@ -1,28 +1,29 @@
-.settings-form
-  margin: 20px
+#settings
+  .settings-form
+    margin: 20px
 
-  p.short-settings-element
-    display: inline-block
-    vertical-align: middle
-    margin: 0 10px 0 0
-    float: left
+    p.short-settings-element
+      display: inline-block
+      vertical-align: middle
+      margin: 0 10px 0 0
+      float: left
 
-  label
-    line-height: 30px
+    label
+      line-height: 30px
 
-  input
-    display: inline-block
-    float: left
-    width: 60px
-    height: 18px
-    padding: 5px 18px 5px 18px
-    background-color: #F5F5F5
-    border: 1px solid #E3E1E1
-    border-radius: 4px
-    line-height: 19px
-    font-size: 11px
-    color: #999999
-    text-align: center
+    input
+      display: inline-block
+      float: left
+      width: 60px
+      height: 18px
+      padding: 5px 18px 5px 18px
+      background-color: #F5F5F5
+      border: 1px solid #E3E1E1
+      border-radius: 4px
+      line-height: 19px
+      font-size: 11px
+      color: #999999
+      text-align: center
 
   .invalid
     input
@@ -30,88 +31,117 @@
       border-color: #ffb6c1
       background: rgb(252, 227, 230)
 
-.new-env-var
-  margin-top: 20px
+  form.env-var
+    margin-top: 20px
 
-a.env_var_add
-  color: #ffffff
-  background-color: #97a3aa
-  border-radius: 4px
-  padding: 8px 12px 8px 12px
-  font-size: 13px
-  line-height: 70px
-  cursor: pointer
+    .field
+      height: 33px
+    label
+      width: 40px
+      display: inline-block
 
-a.env_var_add:hover
-  background-color: #7c878d
+  span.error
+    display: inline-block
+    margin-left: 10px
+    color: #a80000
 
-input.env-name
-  margin-left: 6px
+  .env-var input[type=submit].saving, .env-var .delete-var.deleting
+    background-color: #bbb
+    background-image: inline-image('ui/round-spinner.svg')
+    background-repeat: no-repeat
+    background-position: center
+    background-size: 20px
+    text-indent: -9999px
 
-input.env-value
-  margin-left: 8px
 
-input
-  display: inline-block
-  width: 260px
-  height: 20px
-  padding: 0 5px 0 5px
-  background-color: #fff
-  border: 1px solid #ddd
-  line-height: 17px
-  font-size: 13px
-  color: #999999
-  text-align: left
+  a.add-env-var
+    color: #ffffff
+    background-color: #97a3aa
+    border-radius: 4px
+    padding: 8px 12px 8px 12px
+    font-size: 13px
+    line-height: 70px
+    cursor: pointer
 
-p.env-actions
-  margin-bottom: 35px
+  .add-env-var:hover
+    background-color: #7c878d
 
-input.submit-env-var
-  color: #ffffff
-  background-color: #7ea35a
-  border-radius: 4px
-  font-size: 13px
-  width: 60px
-  height: 32px
-  text-align: center
-  margin-right: 6px
-  cursor: pointer
+  input
+    display: inline-block
+    width: 260px
+    height: 20px
+    padding: 0 5px 0 5px
+    background-color: #fff
+    border: 1px solid #ddd
+    line-height: 17px
+    font-size: 13px
+    color: #999999
+    text-align: left
 
-input.submit-env-var:hover
-  background-color: #6f924f
+  form.env-var .actions
+    margin-bottom: 35px
 
-a.cancel-env-var
-  margin-left: 3px
+  input.submit-env-var
+    color: #ffffff
+    background-color: #7ea35a
+    border-radius: 4px
+    font-size: 13px
+    width: 60px
+    height: 32px
+    text-align: center
+    margin-right: 6px
+    cursor: pointer
 
-a.cancel-env-var:hover
-  text-decoration: underline
+  .submit-env-var:hover
+    background-color: #6f924f
 
-input[type="checkbox"]
-  display: inline-block
-  vertical-align: middle
+  .cancel-env-var
+    margin-left: 3px
 
-a.edit_var
-  display: inline-block
-  margin: 6px 0 15px 0
-  color: #ffffff
-  background-color: #bcbcbb
-  border-radius: 4px
-  padding: 4px 15px 4px 15px
-  font-size: 13px
-  cursor: pointer
+  .cancel-env-var:hover
+    text-decoration: underline
 
-a.edit_var:hover
-  background-color: #a4a5a4
+  input[type="checkbox"]
+    display: inline-block
+    vertical-align: middle
 
-a.delete_var
-  display: inline-block
-  margin: 6px 0 15px 0
-  color: #ffffff
-  background-color: #932828
-  border-radius: 4px
-  padding: 4px 15px 4px 15px
-  font-size: 13px
-  cursor: pointer
+  .edit-var
+    display: inline-block
+    margin: 6px 0 15px 0
+    color: #ffffff
+    background-color: #bcbcbb
+    border-radius: 4px
+    padding: 4px 15px 4px 15px
+    font-size: 13px
+    cursor: pointer
 
-a.delete_var:hover
-  background-color: #820b0b
+  .edit-var:hover
+    background-color: #a4a5a4
+
+  .delete-var
+    display: inline-block
+    margin: 6px 0 15px 0
+    color: #ffffff
+    background-color: #932828
+    border-radius: 4px
+    padding: 4px 15px 4px 15px
+    font-size: 13px
+    cursor: pointer
+
+  .delete-var:hover
+    background-color: #820b0b
+
+  ul.env-vars
+    max-width: 500px
+  li.env-var
+    .var
+      font-size: 13px
+      display: inline-block
+      margin-right: 10px
+
+    .row
+      .label
+        width: 35px
+        display: inline-block
+        text-align: left
+        margin-right: 5px

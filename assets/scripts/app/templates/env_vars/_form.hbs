@@ -1,0 +1,22 @@
+<form class="env-var" {{action "save" on="submit"}}>
+  {{#travis-field "name"}}
+    <label>Name:</label>
+    {{input value=name class="env-name"}} {{travis-errors "name"}}
+  {{/travis-field}}
+  {{#if showValueField}}
+    <div class="field">
+      <label>Value:</label>
+      {{input value=value class="env-value"}}
+    </div>
+  {{/if}}
+  <div class="field">
+    <label>Public:</label>
+    {{input type="checkbox" checked=public}}
+  </div>
+
+  <div class="actions">
+    <input type="submit" {{bind-attr value=actionType class=":submit-env-var isSaving:saving" disabled=isSaving}} />
+    <span class="or">or</span>
+    <a href="#" class="cancel-env-var" {{action "cancel"}}>Cancel</a>
+  </div>
+</form>

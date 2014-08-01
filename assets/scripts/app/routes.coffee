@@ -366,7 +366,7 @@ Travis.SettingsIndexRoute = Travis.Route.extend
 Travis.EnvVarsRoute = Travis.Route.extend
   model: (params) ->
     repo = @modelFor('repo')
-    repo.get('envVars')
+    repo.get('envVars.promise')
 
 Travis.SshKeyRoute = Travis.Route.extend
   model: (params) ->

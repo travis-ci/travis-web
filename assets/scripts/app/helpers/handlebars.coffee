@@ -59,6 +59,43 @@ Ember.LinkView.reopen
   _trackEvent: (event) ->
     event.preventDefault()
 
+FormFieldRowView = Ember.View.extend
+  invalid: Ember.computed.notEmpty('errors.[]')
+  classNameBindings: ['invalid']
+  classNames: 'field'
+
+Ember.Handlebars.registerHelper('travis-field', (name, options) ->
+  errors = @get('errors').for(name)
+  template   = options.fn
+  delete options.fn
+
+  view = FormFieldRowView.create(
+    controller: this
+    template: template
+    errors: errors
+  )
+
+  Ember.Handlebars.helpers.view.call(this, view, options)
+)
+Travis.ErrorsView = Ember.View.extend
+  tagName: 'span'
+  template: Ember.Handlebars.compile("{{#each view.errors}}{{message}}{{/each}}")
+  classNames: ['error']
+  classNameBindings: ['codes']
+  codes: (->
+    @get('errors').mapBy('code')
+  ).property('@errors')
+
+Ember.Handlebars.helper('travis-errors', (name, options) ->
+  errors = @get('errors').for(name)
+  view = Travis.ErrorsView.create(
+    controller: this
+    errors: errors
+  )
+
+  Ember.Handlebars.helpers.view.call(this, view, options)
+)
+
 Ember.Handlebars.registerHelper('settings-form', (path, options) ->
   if arguments.length == 1
     options = path

@@ -1,5 +1,14 @@
-Travis.EnvVarController = Ember.ObjectController.extend
+require 'travis/validations'
+
+Travis.EnvVarController = Ember.ObjectController.extend Travis.Validations,
   isEditing: false
+  isDeleting: false
+
+  validates:
+    name: ['presence']
+
+  actionType: 'Save'
+  showValueField: Ember.computed.alias('public')
 
   value: ( (key, value) ->
     if arguments.length == 2
@@ -13,7 +22,11 @@ Travis.EnvVarController = Ember.ObjectController.extend
 
   actions:
     delete: ->
-      @get('model').deleteRecord()
+      return if @get('isDeleting')
+      @set('isDeleting', true)
+
+      deletingDone = => @set('isDeleting', false)
+      @get('model').deleteRecord().then deletingDone, deletingDone
 
     edit: ->
       @set('isEditing', true)
@@ -23,8 +36,17 @@ Travis.EnvVarController = Ember.ObjectController.extend
       @get('model').revert()
 
     save: ->
-      env_var = @get('model')
+      return if @get('isSaving')
+      @set('isSaving', true)
 
-      # TODO: handle errors
-      env_var.save().then =>
-        @set('isEditing', false)
+      if @isValid()
+        env_var = @get('model')
+
+        # TODO: handle errors
+        env_var.save().then =>
+          @set('isEditing', false)
+          @set('isSaving', false)
+        , =>
+          @set('isSaving', false)
+      else
+        @set('isSaving', false)
