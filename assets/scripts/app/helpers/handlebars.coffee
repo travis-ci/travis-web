@@ -3,6 +3,11 @@ require 'ext/ember/bound_helper'
 safe = (string) ->
   new Handlebars.SafeString(string)
 
+Ember.Handlebars.helper('mb', (size) ->
+  if size
+    (size / 1024 / 1024).toFixed(2)
+, 'size')
+
 Travis.Tab = Ember.Object.extend
   show: ->
     @get('tabs').forEach( (t) -> t.hide() )

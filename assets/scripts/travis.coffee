@@ -82,6 +82,7 @@ $.extend Travis,
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
     code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
+    caches_enabled: $('meta[name="travis.caches_enabled"]').attr('value') == 'true'
     show_repos_hint: 'private'
     avatar_default_url: 'https://travis-ci.org/images/mailer/mascot-avatar-40px.png'
 

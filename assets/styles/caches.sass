@@ -1,0 +1,43 @@
+.delete-repo-caches.deleting
+  background-color: #bbb
+  background-image: inline-image('ui/round-spinner.svg')
+  background-repeat: no-repeat
+  background-position: center
+  background-size: 20px
+  text-indent: -9999px
+
+.delete-repo-caches
+  display: inline-block
+  margin: 6px 0 15px 0
+  color: #ffffff
+  background-color: #932828
+  border-radius: 4px
+  padding: 4px 15px 4px 15px
+  font-size: 13px
+  cursor: pointer
+
+#caches
+  .delete
+    color: #EA0000
+  .delete.deleting:after
+    content: ""
+    background-image: inline-image('ui/spinner.svg')
+    background-repeat: no-repeat
+    background-position: center
+    background-size: 13px
+    width: 13px
+    height: 10px
+    display: inline-block
+  .caches-group
+    padding-bottom: 5px
+
+    .branch
+      font-size: 14px
+      font-weight: bold
+
+  .caches-group .label
+    font-weight: bold
+
+  .caches-list
+    padding-top: 5px
+    padding-left: 14px
