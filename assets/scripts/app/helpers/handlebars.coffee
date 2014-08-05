@@ -3,51 +3,6 @@ require 'ext/ember/bound_helper'
 safe = (string) ->
   new Handlebars.SafeString(string)
 
-Travis.Tab = Ember.Object.extend
-  url: (->
-    id = @get('id')
-    if id == 'env_vars' || id == 'ssh_key'
-      id
-    else
-      "repo.settings.#{id}"
-  ).property('id')
-
-Travis.TabsView = Ember.View.extend
-  tabBinding: 'controller.tab'
-  tabsBinding: 'controller.tabs'
-
-  # TODO: remove hardcoded link
-  layout: Ember.Handlebars.compile(
-    '<ul class="tabs">' +
-    '  {{#each tab in _tabs}}' +
-    '    <li {{bindAttr class="tab.visible:active"}}>' +
-    '      <h5>{{#link-to tab.url}}{{tab.name}}{{/link-to}}</h5>' +
-    '    </li>' +
-    '  {{/each}}' +
-    '</ul>' +
-    '{{yield}}')
-
-Ember.Handlebars.registerHelper('travis-tabs', (options) ->
-  template   = options.fn
-  delete options.fn
-
-  view = Travis.TabsView.create(
-    controller: this
-    template: template
-  )
-
-  Ember.Handlebars.helpers.view.call(this, view, options)
-)
-
-Travis.FormSettingsView = Ember.View.extend Ember.TargetActionSupport,
-  target: Ember.computed.alias('controller')
-  actionContext: Ember.computed.alias('context'),
-  action: 'submit'
-  tagName: 'form'
-  submit: (event) ->
-    event.preventDefault()
-    @triggerAction()
-
 Ember.LinkView.reopen
   init: ->
     @_super()
@@ -64,6 +19,63 @@ FormFieldRowView = Ember.View.extend
   classNameBindings: ['invalid']
   classNames: 'field'
 
+LabelView = Ember.View.extend(
+  tagName: 'label'
+
+  attributeBindings: ['for', 'accesskey', 'form']
+)
+
+Ember.Handlebars.registerHelper('label', (options) ->
+  view = LabelView
+
+  name = options.hash.for
+  if name
+    labels = @get('_labels')
+    unless labels
+      labels = Ember.Object.create()
+      @set('_labels', labels)
+
+    # for now I support only label + input in their own context
+    id = labels.get(name)
+    unless id
+      id = "#{name}-#{Math.round(Math.random() * 1000000)}"
+      labels.set(name, id)
+
+    options.hash.for = id
+    options.hashTypes.for = 'STRING'
+    options.hashContexts.for = this
+
+  Ember.Handlebars.helpers.view.call(this, view, options)
+)
+
+originalInputHelper = Ember.Handlebars.helpers.input
+
+Ember.Handlebars.registerHelper('input', (options) ->
+  # for now I can match label only with the property name
+  # passed here matches the label
+  name = (options.hash.value || options.hash.checked)
+  id   = options.hash.id
+
+  # generate id only if it's not given
+  if name && !id
+    labels = @get('_labels')
+    unless labels
+      labels = Ember.Object.create()
+      @set('_labels', labels)
+
+    # for now I support only label + input in their own context
+    id = labels.get(name)
+    unless id
+      id = "#{name}-#{Math.round(Math.random() * 1000000)}"
+      labels.set(name, id)
+
+    options.hash.id = id
+    options.hashTypes.id = 'STRING'
+    options.hashContexts.id = this
+
+  originalInputHelper.call(this, options)
+)
+
 Ember.Handlebars.registerHelper('travis-field', (name, options) ->
   errors = @get('errors').for(name)
   template   = options.fn
@@ -77,6 +89,7 @@ Ember.Handlebars.registerHelper('travis-field', (name, options) ->
 
   Ember.Handlebars.helpers.view.call(this, view, options)
 )
+
 Travis.ErrorsView = Ember.View.extend
   tagName: 'span'
   template: Ember.Handlebars.compile("{{#each view.errors}}{{message}}{{/each}}")
@@ -92,23 +105,6 @@ Ember.Handlebars.helper('travis-errors', (name, options) ->
     controller: this
     errors: errors
   )
-
-  Ember.Handlebars.helpers.view.call(this, view, options)
-)
-
-Ember.Handlebars.registerHelper('settings-form', (path, options) ->
-  if arguments.length == 1
-    options = path
-    path = 'settings'
-
-  view = Travis.FormSettingsView.create(
-    template: options.fn
-    controller: this
-    settingsPath: path
-    classNames: ['settings-form']
-  )
-
-  delete options.fn
 
   Ember.Handlebars.helpers.view.call(this, view, options)
 )

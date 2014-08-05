@@ -1,16 +1,16 @@
 <form class="env-var" {{action "save" on="submit"}}>
   {{#travis-field "name"}}
-    <label>Name:</label>
+    {{#label for="name"}}Name:{{/label}}
     {{input value=name class="env-name"}} {{travis-errors "name"}}
   {{/travis-field}}
   {{#if showValueField}}
     <div class="field">
-      <label>Value:</label>
+      {{#label for="value"}}Value:{{/label}}
       {{input value=value class="env-value"}}
     </div>
   {{/if}}
   <div class="field">
-    <label>Public:</label>
+    {{#label for="public"}}Public:{{/label}}
     {{input type="checkbox" checked=public}}
   </div>
 

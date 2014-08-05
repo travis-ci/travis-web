@@ -1,4 +1,4 @@
-{{#settings-form}}
+<form class='settings-form'>
   <p class="settings-row">
     Build only if .travis.yml is present
     {{travis-switch action="save" active=settings.builds_only_with_travis_yml}}
@@ -22,4 +22,4 @@
       Concurrent builds
     </label>
   </p>
-{{/settings-form}}
+</form>
