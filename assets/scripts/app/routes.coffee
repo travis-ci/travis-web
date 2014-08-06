@@ -341,21 +341,9 @@ Travis.AuthRoute = Travis.Route.extend
       @transitionTo('index.current')
       return true
 
-Travis.RepoSettingsRoute = Travis.Route.extend
+Travis.SettingsRoute = Travis.Route.extend
   setupController: (controller, model) ->
-    # TODO: if repo is just a data hash with id and slug load it
-    #       as incomplete record
-    model = Travis.Repo.find(model.id) if model && !model.get
-    @_super(controller, model)
-
-  serialize: (repo) ->
-    slug = if repo.get then repo.get('slug') else repo.slug
-    [owner, name] = slug.split('/')
-    { owner: owner, name: name }
-
-  model: (params) ->
-    slug = "#{params.owner}/#{params.name}"
-    Travis.Repo.fetchBySlug(slug)
+    @controllerFor('repo').activate('settings')
 
 Travis.SettingsIndexRoute = Travis.Route.extend
   model: ->
