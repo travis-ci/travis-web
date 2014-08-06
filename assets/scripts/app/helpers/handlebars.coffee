@@ -57,7 +57,7 @@ Ember.Handlebars.registerHelper('input', (options) ->
   id   = options.hash.id
 
   # generate id only if it's not given
-  if name && !id
+  if name && !name.match(/\./) && !id
     labels = @get('_labels')
     unless labels
       labels = Ember.Object.create()
