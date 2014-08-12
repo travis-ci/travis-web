@@ -2,7 +2,7 @@ require 'log'
 require 'travis/lines_selector'
 require 'travis/log_folder'
 
-Log.DEBUG = true
+Log.DEBUG = false
 Log.LIMIT = 10000
 
 Travis.reopen
