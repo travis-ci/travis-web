@@ -53,9 +53,6 @@ Travis.RepoController = Travis.Controller.extend
   viewRequests: ->
     @connectTab('requests')
 
-  viewCaches: ->
-    @connectTab('caches')
-
   viewRequest: ->
     @connectTab('request')
 

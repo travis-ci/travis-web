@@ -2,7 +2,6 @@ jQuery.support.cors = true
 
 Travis.ajax = Em.Object.create
   publicEndpoints: [/\/repos\/?.*/, /\/builds\/?.*/, /\/jobs\/?.*/]
-  privateEndpoints: [/\/repos\/\d+\/caches/]
 
   DEFAULT_OPTIONS:
     accepts:
@@ -18,13 +17,10 @@ Travis.ajax = Em.Object.create
     return true if Travis.ajax.pro
     return true if method != 'GET'
 
-    publicEndpoint = @publicEndpoints.find (pattern) ->
+    result = @publicEndpoints.find (pattern) ->
       url.match(pattern)
 
-    privateEndpoint = @privateEndpoints.find (pattern) ->
-      url.match(pattern)
-
-    !publicEndpoint || privateEndpoint
+    !result
 
   ajax: (url, method, options) ->
     method = method || "GET"

@@ -19,11 +19,6 @@
     <li>
       {{#link-to "requests" view.repo}}Requests{{/link-to}}
     </li>
-    {{#if Travis.config.caches_enabled}}
-      <li>
-        {{#link-to "caches" view.repo}}Caches{{/link-to}}
-      </li>
-    {{/if}}
 
   </ul>
   <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target="view"}}>
