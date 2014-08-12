@@ -75,6 +75,10 @@ Travis.reopen
       'active display-inline' if @get('tab') == 'requests'
     ).property('tab')
 
+    classCaches: (->
+      'active display-inline' if @get('tab') == 'caches'
+    ).property('tab')
+
     classRequest: (->
       'active display-inline' if @get('tab') == 'request'
     ).property('tab')

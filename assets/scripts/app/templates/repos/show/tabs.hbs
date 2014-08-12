@@ -66,6 +66,16 @@
       {{/if}}
     </h5>
   </li>
+  <li id="tab_caches" {{bind-attr class="view.classCaches"}}>
+    <h5>
+      {{#if repo.slug}}
+        {{#link-to "caches" repo}}
+          Caches
+        {{/link-to}}
+      {{/if}}
+    </h5>
+  </li>
+
   <li id="tab_request" {{bind-attr class="view.classRequest"}}>
     <h5>
       {{#if request.id}}
