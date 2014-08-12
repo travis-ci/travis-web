@@ -49,7 +49,7 @@ Travis.CacheItemController = Ember.ObjectController.extend
       if confirm('Are you sure?')
         @set('isDeleting', true)
 
-        data = { branch: @get('branch'), match: @get('slug') }
+        data = { branch: @get('branch'), slug: @get('slug') }
 
         deletingDone = => @set('isDeleting', false)
 
