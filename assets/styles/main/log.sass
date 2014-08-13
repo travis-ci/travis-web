@@ -21,6 +21,7 @@ pre#log
     padding: 20px 15px 0 55px
 
   p
+    position: relative
     padding: 0 15px 0 55px
     margin: 0
     min-height: 16px
@@ -44,6 +45,7 @@ pre#log
         padding-right: 1em
 
   .fold
+    position: relative
     height: 16px
     overflow: hidden
     cursor: pointer
@@ -51,7 +53,7 @@ pre#log
       height: auto
 
     p:first-of-type
-      padding-right: 130px
+      padding-right: 190px
 
     // &.active
     p:first-of-type
@@ -67,9 +69,10 @@ pre#log
 
     .fold-name
       position: absolute
+      z-index: 1
       display: block
+      top: 2px
       right: 85px
-      margin-top: 2px
       padding: 0px 7px 2px 7px
       line-height: 10px
       font-size: 10px
@@ -84,8 +87,8 @@ pre#log
   .duration
     position: absolute
     display: block
+    top: 2px
     right: 12px
-    margin-top: -17px
     padding: 0px 7px 2px 7px
     line-height: 10px
     font-size: 10px
