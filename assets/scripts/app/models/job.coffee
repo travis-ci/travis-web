@@ -21,6 +21,7 @@ require 'travis/model'
   annotations: Ember.hasMany('Travis.Annotation')
 
   _config: Ember.attr('object', key: 'config')
+  _duration: Ember.attr(Number, key: 'duration')
 
   log: ( ->
     @set('isLogAccessed', true)
