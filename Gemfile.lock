@@ -23,6 +23,8 @@ GEM
       open4
     Platform (0.4.0)
     backports (3.0.3)
+    celluloid (0.15.2)
+      timers (~> 1.1.0)
     chunky_png (1.2.7)
     coderay (1.0.9)
     coffee-script (2.2.0)
@@ -37,6 +39,7 @@ GEM
     eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    ffi (1.9.3)
     foreman (0.61.0)
       thor (>= 0.13.6)
     fssm (0.2.10)
@@ -48,7 +51,10 @@ GEM
       thor (>= 0.14.6)
     json (1.7.7)
     libv8 (3.16.14.3)
-    listen (0.7.3)
+    listen (2.7.9)
+      celluloid (>= 0.15.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
     lumberjack (1.0.2)
     method_source (0.8.1)
     multi_json (1.6.1)
@@ -70,8 +76,10 @@ GEM
       rack (>= 1.0)
     rake (10.0.3)
     rb-fsevent (0.9.3)
-    rerun (0.8.0)
-      listen
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
+    rerun (0.10.0)
+      listen (~> 2.7, >= 2.7.3)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -96,6 +104,7 @@ GEM
     terminal-table (1.4.5)
     thor (0.17.0)
     tilt (1.3.3)
+    timers (1.1.0)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
@@ -119,7 +128,7 @@ DEPENDENCIES
   rake-pipeline!
   rake-pipeline-web-filters!
   rb-fsevent (~> 0.9.1)
-  rerun
+  rerun (~> 0.10.0)
   rspec (~> 2.11)
   sinatra
   sinatra-contrib
