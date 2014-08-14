@@ -25,8 +25,8 @@
         </td>
         <td>{{githubCommitLink request.repo.slug request.commit.sha}}</td>
         <td>
-          {{#if build}}
-            {{#link-to "build" build}}#{{build.number}}{{/link-to}}
+          {{#if request.build}}
+            {{#link-to "build" request.build}}#{{request.build.number}}{{/link-to}}
           {{else}}
             -
           {{/if}}
