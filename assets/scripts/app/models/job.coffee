@@ -21,7 +21,6 @@ require 'travis/model'
   annotations: Ember.hasMany('Travis.Annotation')
 
   _config: Ember.attr('object', key: 'config')
-  _duration: Ember.attr(Number, key: 'duration')
 
   log: ( ->
     @set('isLogAccessed', true)
@@ -108,7 +107,7 @@ require 'travis/model'
   ).observes('state')
 
   isPropertyLoaded: (key) ->
-    if ['_duration', '_finishedAt'].contains(key) && !@get('isFinished')
+    if ['_finishedAt'].contains(key) && !@get('isFinished')
       return true
     else if key == '_startedAt' && @get('state') == 'created'
       return true
