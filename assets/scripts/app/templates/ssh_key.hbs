@@ -3,7 +3,7 @@
     {{partial "ssh_key/form"}}
   {{else}}
     <div class="ssh-key">
-      <p>Ssh key is set.</p>
+      <p>SSH key is set.</p>
       {{#if description}}
         <div class="row">
           <span class="label">Description:</label>
@@ -23,8 +23,8 @@
 {{else}}
   <p>
     You don't have any custom key set up.
-    Currently used key has a following fingerprint: {{defaultKey.fingerprint}}
+    The default key's fingerprint is <code>{{defaultKey.fingerprint}}</code>
   </p>
 
-  <a {{action "add"}} href="#" class="add-ssh-key">Add a custom ssh key</a>
+  <a {{action "add"}} href="#" class="add-ssh-key">Add a custom SSH key</a>
 {{/if}}

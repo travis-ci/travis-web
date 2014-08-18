@@ -1,8 +1,8 @@
 Travis.RepoSettingsController = Em.ObjectController.extend
   tabs:
     index: "General Settings"
-    env_vars: "Environment variables"
-    ssh_key: "Ssh key"
+    env_vars: "Environment Variables"
+    ssh_key: "SSH Key"
 
   init: ->
     @_super.apply this, arguments
