@@ -6,13 +6,13 @@
       {{partial 'env_vars/form'}}
     {{else}}
       <li class="env-var">
-        <div class="row">
+        <div class="row env-var-name">
           <span class="label">Name:</span>
           <span class="value">{{name}}</span>
         </div>
-        <div class="row">
+        <div class="row env-var-value">
           <span class="label">Value:</span>
-          <span class="value">{{value}}</span>
+          <span class="value value-display">{{value}}</span>
         </div>
         <div class="actions">
           <a href="#" class="edit-var" {{action "edit"}}>Edit</a>

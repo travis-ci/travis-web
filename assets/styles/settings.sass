@@ -85,6 +85,20 @@
     background-size: 20px
     text-indent: -9999px
 
+  .env-var-name
+    span
+      font-size: 18px
+      font-weight: 600
+      color: #5e6872
+
+  .env-var-value
+    span
+      color: #838b8c
+      marin-bottom: 6px
+        
+    .value-display
+      letter-spacing: 2px
+      font-size: 15px
 
   .add-env-var, .add-ssh-key
     color: #ffffff
@@ -166,6 +180,8 @@
   ul.env-vars
     max-width: 500px
   li.env-var
+    margin-top: 20px
+
     .var
       font-size: 13px
       display: inline-block
@@ -173,7 +189,6 @@
 
     .row
       .label
-        width: 35px
         display: inline-block
         text-align: left
         margin-right: 5px
