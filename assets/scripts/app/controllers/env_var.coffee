@@ -18,7 +18,7 @@ Travis.EnvVarController = Ember.ObjectController.extend Travis.Validations,
       @get('model.value')
     else
       '••••••••••••••••'
-  ).property('model.value')
+  ).property('model.value', 'public')
 
   actions:
     delete: ->
