@@ -158,7 +158,7 @@
 
   .edit-var
     display: inline-block
-    margin: 6px 0 15px 0
+    margin: 6px 0 7px 0
     color: #ffffff
     background-color: #bcbcbb
     border-radius: 4px
@@ -171,13 +171,17 @@
 
   .delete-var, .delete-ssh-key
     display: inline-block
-    margin: 6px 0 15px 0
+    margin: 6px 0 7px 0
     color: #ffffff
     background-color: #932828
     border-radius: 4px
     padding: 4px 15px 4px 15px
     font-size: 13px
     cursor: pointer
+
+  .delete-var, .edit-var
+    float: right
+    margin-right: 10px
 
   .delete-var:hover, .delete-ssh-key:hover
     background-color: #820b0b
@@ -186,6 +190,12 @@
     display: block
   li.env-var
     margin: 20px 40px 0 0
+    overflow: auto
+    display: flex
+    align-items: center
+    justify-content: center
+    border-bottom: 1px dotted #bbb
+    max-width: 800px
 
     .var
       font-size: 13px
@@ -197,3 +207,20 @@
         display: inline-block
         text-align: left
         margin-right: 5px
+
+    .name, .value, .equals
+      display: block
+      float: left
+      position: relative
+      font-size: 15px
+
+    .equals
+      margin: 0 10px
+
+    .name
+      width: 30%
+      text-align: right
+
+    .value
+      width: 45%
+      text-align: left
