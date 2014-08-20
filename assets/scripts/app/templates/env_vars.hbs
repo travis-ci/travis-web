@@ -11,7 +11,7 @@
           Delete
         </a>
         <span class="name">{{name}}</span>
-        <span class="value value-display">{{value}}</span>
+        <span {{bind-attr class=":value :value-display public::secure"}}>{{value}}</span>
       {{/if}}
     </li>
   {{/each}}
