@@ -23,6 +23,7 @@ LabelView = Ember.View.extend(
   tagName: 'label'
 
   attributeBindings: ['for', 'accesskey', 'form']
+  classNameBindings: ['class']
 )
 
 Ember.Handlebars.registerHelper('label', (options) ->
