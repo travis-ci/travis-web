@@ -96,20 +96,20 @@
       font-weight: 600
       color: #5e6872
 
-  .env-var-value
-    span
-      color: #838b8c
-      marin-bottom: 6px
-
-    .value-display
-      letter-spacing: 2px
-      font-size: 15px
+  span.value.value-display
+    font-size: 14px
+    background-color: #efefdf
+    border-radius: 4px
+    padding: 0 10px 0 10px
+    color: #838b8c
+    font-family: monospace
 
   .add-env-var, .add-ssh-key
     color: #ffffff
     background-color: #97a3aa
     border-radius: 4px
     padding: 8px 12px 8px 12px
+    margin-bottom: 20px
     font-size: 13px
     line-height: 55px
     cursor: pointer
@@ -179,23 +179,20 @@
     font-size: 13px
     cursor: pointer
 
-  .delete-var, .edit-var
-    float: right
-    margin-right: 10px
-
   .delete-var:hover, .delete-ssh-key:hover
     background-color: #820b0b
 
   ul.env-vars
     display: block
   li.env-var
-    margin: 20px 40px 0 0
+    margin: 10px 40px 0 0
+    padding-bottom: 10px
     overflow: auto
     display: flex
     align-items: center
     justify-content: center
-    border-bottom: 1px dotted #bbb
-    max-width: 800px
+    border-bottom: 1px solid #F1F1F1
+    width: 100%
 
     form
       padding-left: 15px
@@ -238,8 +235,8 @@
         margin-right: 5px
 
     span.name, span.value, .equals
-      display: block
-      float: left
+      display: inline-block
+      line-height: 40px
       position: relative
       font-size: 15px
 
@@ -247,10 +244,10 @@
       margin: 0 10px
 
     span.name
-      width: 30%
-      text-align: right
+      width: 120px
+      margin: 0 10px 0 20px
+      text-align: left
 
     span.value
-      width: 45%
+      width: 400px
       text-align: left
-      margin-right: 15px
