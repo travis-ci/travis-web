@@ -197,6 +197,35 @@
     border-bottom: 1px dotted #bbb
     max-width: 800px
 
+    form
+      padding-left: 15px
+      width: 100%
+      label.name, label.value
+        display: none
+
+      label.public
+        width: 80%
+
+      .field.name, .field.value
+        float: left
+        padding-bottom: 0
+        height: 33px
+
+      span.equals
+        float: left
+        display: block
+
+      .field.name
+        width: 30%
+        input
+          width: 95%
+      .field.value
+        width: 45%
+        input
+          width: 95%
+      .actions
+        margin-bottom: 10px
+
     .var
       font-size: 13px
       display: inline-block
@@ -208,7 +237,7 @@
         text-align: left
         margin-right: 5px
 
-    .name, .value, .equals
+    span.name, span.value, .equals
       display: block
       float: left
       position: relative
@@ -217,10 +246,11 @@
     .equals
       margin: 0 10px
 
-    .name
+    span.name
       width: 30%
       text-align: right
 
-    .value
+    span.value
       width: 45%
       text-align: left
+      margin-right: 15px

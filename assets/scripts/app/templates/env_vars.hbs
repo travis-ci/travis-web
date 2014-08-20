@@ -2,10 +2,10 @@
 
 <ul class="env-vars">
   {{#each controller itemController="envVar"}}
-    {{#if isEditing}}
-      {{partial 'env_vars/form'}}
-    {{else}}
-      <li class="env-var">
+    <li class="env-var">
+      {{#if isEditing}}
+        {{partial 'env_vars/form'}}
+      {{else}}
         <span class="name">{{name}}</span>
         <span class="equals">=</span>
         <span class="value value-display">{{value}}</span>
@@ -13,7 +13,7 @@
         <a href="#" {{action "delete"}} {{bind-attr class=":delete-var isDeleting:deleting"}}>
           Delete
         </a>
-      </li>
-    {{/if}}
+      {{/if}}
+    </li>
   {{/each}}
 </ul>

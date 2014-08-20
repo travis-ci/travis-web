@@ -86,6 +86,8 @@ Ember.Handlebars.registerHelper('travis-field', (name, options) ->
     controller: this
     template: template
     errors: errors
+    name: name
+    classNameBindings: ['name']
   )
 
   Ember.Handlebars.helpers.view.call(this, view, options)
