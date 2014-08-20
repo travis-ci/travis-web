@@ -35,7 +35,7 @@
           <p class="description">{{hook.description}}</p>
 
           <div class="controls">
-            {{#link-to "repo.settings" hook.repo class="repo-settings-icon tool-tip" title="Repository settings"}}{{/link-to}}
+            {{#link-to "settings" hook.repo class="repo-settings-icon tool-tip" title="Repository settings"}}{{/link-to}}
             {{travis-switch action="toggle" target=hook toggleAutomatically="false"}}
           </div>
         </li>
