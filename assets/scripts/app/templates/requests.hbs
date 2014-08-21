@@ -17,23 +17,23 @@
   </thead>
 
   <tbody>
-    {{#each request in controller itemController="request"}}
+    {{#each controller itemController="request"}}
       <tr {{bind-attr class="requestClass"}}>
         <td class="request-id">
           <span class="status"></span>
-          {{request.id}}
+          {{id}}
         </td>
-        <td>{{githubCommitLink request.repo.slug request.commit.sha}}</td>
+        <td>{{githubCommitLink repo.slug commit.sha}}</td>
         <td>
-          {{#if request.build}}
-            {{#link-to "build" request.build}}#{{request.build.number}}{{/link-to}}
+          {{#if build}}
+            {{#link-to "build" build}}#{{build.number}}{{/link-to}}
           {{else}}
             -
           {{/if}}
         </td>
-        <td class="commit-message">{{{formatMessage request.commit.message short="true" repoBinding=build.repo}}}</td>
-        <td>{{request.type}}</td>
-        <td>{{request.message}}</td>
+        <td class="commit-message">{{{formatMessage commit.message short="true" repoBinding=build.repo}}}</td>
+        <td>{{type}}</td>
+        <td>{{message}}</td>
       </tr>
     {{/each}}
   </tbody>
