@@ -1,17 +1,4 @@
-Travis.RepoSettingsController = Em.ObjectController.extend
-  tabs:
-    index: "General Settings"
-    env_vars: "Environment Variables"
-    ssh_key: "SSH Key"
-
-  init: ->
-    @_super.apply this, arguments
-
-    tabs = []
-    @set('_tabs', tabs)
-    for own id, name of @get('tabs')
-      tabs.pushObject Travis.Tab.create(id: id, name: name)
-
+Travis.SettingsIndexController = Em.ObjectController.extend
   settings: Ember.computed.alias('model.settings')
 
   settingsChanged: (->

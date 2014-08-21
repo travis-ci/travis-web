@@ -103,9 +103,14 @@ Travis.ErrorsView = Ember.View.extend
   template: Ember.Handlebars.compile("{{#each view.errors}}{{message}}{{/each}}")
   classNames: ['error']
   classNameBindings: ['codes']
+  attributeBindings: ['style']
+  style: (->
+    'display: none' unless @get('show')
+  ).property('show')
   codes: (->
     @get('errors').mapBy('code')
   ).property('@errors')
+  show: Ember.computed.notEmpty('errors.[]')
 
 Ember.Handlebars.helper('travis-errors', (name, options) ->
   errors = @get('errors').for(name)
