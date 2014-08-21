@@ -111,7 +111,7 @@
     background-size: 0.5em
     padding-left: 26px
     width: 142px
-    
+
   .add-env-var, .add-ssh-key
     color: #ffffff
     background-color: #97a3aa
@@ -148,7 +148,7 @@
     width: 60px
     height: 32px
     text-align: center
-    margin-right: 6px
+    margin: 10px 6px 0 0
     cursor: pointer
 
   .submit-env-var:hover, .submit-ssh-key:hover
@@ -203,8 +203,8 @@
     width: 100%
 
     form
-      padding-left: 15px
       width: 100%
+      margin-top: 0
       label.name, label.value
         display: none
 
@@ -221,13 +221,13 @@
         display: block
 
       .field.name
-        width: 30%
+        width: 20%
         input
-          width: 95%
+          width: 97%
       .field.value
         width: 45%
         input
-          width: 95%
+          width: 97%
       .actions
         margin-bottom: 10px
 
@@ -239,17 +239,19 @@
     .row
       .label
         display: inline-block
-        text-align: left
-        margin-right: 5px
+        border: 1px solid #ddd
+        font-size: 13px
+        margin-top: 4px
+        height: 20px
 
-    span.name, span.value, .equals
+    span.name, span.value
       display: inline-block
       line-height: 40px
       position: relative
       font-size: 15px
 
     .equals
-      margin: 0 10px
+      margin: 0 10px 0 14px
 
     span.name
       width: 120px
