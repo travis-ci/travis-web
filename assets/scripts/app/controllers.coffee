@@ -50,27 +50,6 @@ Travis.FirstSyncController = Em.Controller.extend
 
 Travis.IndexErrorController = Em.Controller.extend()
 
-Travis.RepoSettingsTabController = Em.ObjectController.extend()
-Travis.RepoSettingsController = Em.ObjectController.extend
-  needs: ['repoSettingsTab']
-  tab: Ember.computed.alias('controllers.repoSettingsTab.model.tab')
-  settings: Ember.computed.alias('model.settings')
-
-  settingsChanged: (->
-    value = @get('settings.maximum_number_of_builds')
-    console.log value
-    if parseInt(value) > 0 || value == '0' || value == 0
-      @set('settings.maximum_number_of_builds_valid', '')
-      @get('model').saveSettings(@get('settings')).then null, ->
-        Travis.flash(error: 'There was an error while saving settings. Please try again.')
-    else
-      @set('settings.maximum_number_of_builds_valid', 'invalid')
-  ).observes('settings.maximum_number_of_builds')
-
-  save: ->
-    @get('model').saveSettings(@get('settings')).then null, ->
-      Travis.flash(error: 'There was an error while saving settings. Please try again.')
-
 require 'controllers/accounts'
 require 'controllers/auth'
 require 'controllers/account'
@@ -82,8 +61,13 @@ require 'controllers/job'
 require 'controllers/profile'
 require 'controllers/repos'
 require 'controllers/repo'
+require 'controllers/repo_settings'
 require 'controllers/stats'
 require 'controllers/current_user'
 require 'controllers/request'
 require 'controllers/requests'
 require 'controllers/caches'
+require 'controllers/env_var'
+require 'controllers/env_vars'
+require 'controllers/env_var_new'
+require 'controllers/ssh_key'

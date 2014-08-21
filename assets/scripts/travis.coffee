@@ -81,6 +81,7 @@ $.extend Travis,
     pusher_key:   $('meta[name="travis.pusher_key"]').attr('value')
     ga_code:      $('meta[name="travis.ga_code"]').attr('value')
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
+    ssh_key_enabled: $('meta[name="travis.ssh_key_enabled"]').attr('value') == 'true'
     code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
     caches_enabled: $('meta[name="travis.caches_enabled"]').attr('value') == 'true'
     show_repos_hint: 'private'
@@ -163,6 +164,8 @@ Ember.LinkView.reopen
 
 require 'travis/ajax'
 require 'travis/adapter'
+require 'travis/adapters/env_vars'
+require 'travis/adapters/ssh_key'
 require 'routes'
 require 'auth'
 require 'controllers'

@@ -62,10 +62,11 @@ Travis.Router.map ->
       @resource 'caches', path: '/caches' if Travis.config.caches_enabled
       @resource 'request', path: '/requests/:request_id'
 
-    # this can't be nested in repo, because we want a set of different
-    # templates rendered for settings (for example no "current", "builds", ... tabs)
-    @resource 'repo.settings', path: '/:owner/:name/settings', ->
-      @route 'tab', path: ':tab'
+      @resource 'settings', ->
+        @route 'index', path: '/'
+        @resource 'env_vars', ->
+          @route 'new'
+        @resource 'ssh_key' if Travis.config.ssh_key_enabled
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
@@ -380,24 +381,40 @@ Travis.AuthRoute = Travis.Route.extend
       @transitionTo('index.current')
       return true
 
-Travis.RepoSettingsRoute = Travis.Route.extend
+Travis.SettingsRoute = Travis.Route.extend
   setupController: (controller, model) ->
-    # TODO: if repo is just a data hash with id and slug load it
-    #       as incomplete record
-    model = Travis.Repo.find(model.id) if model && !model.get
-    @_super(controller, model)
+    @controllerFor('repo').activate('settings')
 
-  serialize: (repo) ->
-    slug = if repo.get then repo.get('slug') else repo.slug
-    [owner, name] = slug.split('/')
-    { owner: owner, name: name }
-
-  model: (params) ->
-    slug = "#{params.owner}/#{params.name}"
-    Travis.Repo.fetchBySlug(slug)
-
-  afterModel: (repo) ->
-    # I'm using afterModel to fetch settings, because model is not always called.
-    # If link-to already provides a model, it will be just set as a route context.
+Travis.SettingsIndexRoute = Travis.Route.extend
+  model: ->
+    repo = @modelFor('repo')
     repo.fetchSettings().then (settings) ->
       repo.set('settings', settings)
+
+Travis.EnvVarsRoute = Travis.Route.extend
+  model: (params) ->
+    repo = @modelFor('repo')
+    repo.get('envVars.promise')
+
+Travis.SshKeyRoute = Travis.Route.extend
+  model: (params) ->
+    repo = @modelFor('repo')
+    self = this
+    Travis.SshKey.fetch(repo.get('id')).then ( (result) -> result ), (xhr) ->
+      if xhr.status == 404
+        # if there is no model, just return null. I'm not sure if this is the
+        # best answer, maybe we should just redirect to different route, like
+        # ssh_key.new or ssh_key.no_key
+        return null
+
+  afterModel: (model, transition) ->
+    repo = @modelFor('repo')
+    Travis.ajax.get "/repositories/#{repo.get('id')}/key", (data) =>
+      @defaultKey = Ember.Object.create(fingerprint: data.fingerprint)
+
+  setupController: (controller, model) ->
+    @_super.apply this, arguments
+
+    if @defaultKey
+      controller.set('defaultKey', @defaultKey)
+      @defaultKey = null

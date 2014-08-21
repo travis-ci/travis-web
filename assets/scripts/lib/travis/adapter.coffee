@@ -1,3 +1,5 @@
+get = Ember.get
+
 Travis.Adapter = Ember.RESTAdapter.extend
   ajax: (url, params, method) ->
     Travis.ajax.ajax(url, method || 'get', data: params)
@@ -17,7 +19,7 @@ Travis.Adapter = Ember.RESTAdapter.extend
     records.load(klass, dataToLoad)
     @addToRecordArrays(records.get('content'))
 
-  buildURL: ->
+  buildURL: (klass, id, record) ->
     @_super.apply(this, arguments).replace(/\.json$/, '')
 
   didFind: (record, id, data) ->
@@ -55,7 +57,6 @@ Travis.Adapter = Ember.RESTAdapter.extend
     for record in records
       record.constructor.addToRecordArrays(record)
 
-
   sideload: (klass, data) ->
     for name, records of data
       records = [records] unless Ember.isArray(records)
@@ -65,5 +66,36 @@ Travis.Adapter = Ember.RESTAdapter.extend
         for record in records
           record = type.findFromCacheOrLoad(record)
           @addToRecordArrays(record)
+
+  find: (record, id) ->
+    url = @buildURL(record.constructor, id, record)
+    self = this
+    @ajax(url).then (data) ->
+      self.didFind record, id, data
+      record
+
+  createRecord: (record) ->
+    url = @buildURL(record.constructor, undefined, record)
+    self = this
+    @ajax(url, record.toJSON(), "POST").then (data) ->
+      self.didCreateRecord record, data
+      record
+
+  deleteRecord: (record) ->
+    primaryKey = get(record.constructor, "primaryKey")
+    url = @buildURL(record.constructor, get(record, primaryKey), record)
+    self = this
+    @ajax(url, record.toJSON(), "DELETE").then (data) -> # TODO: Some APIs may or may not return data
+      self.didDeleteRecord record, data
+      return
+
+  saveRecord: (record) ->
+    primaryKey = get(record.constructor, 'primaryKey')
+    url = this.buildURL(record.constructor, get(record, primaryKey), record)
+    self = this
+
+    return this.ajax(url, record.toJSON(), "PATCH").then (data) ->
+      self.didSaveRecord(record, data)
+      return record
 
 

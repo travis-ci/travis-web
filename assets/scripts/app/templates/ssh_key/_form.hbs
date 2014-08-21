@@ -1,0 +1,16 @@
+<form class="ssh-key" {{action "save" on="submit"}}>
+  <div class="field">
+    <label>Description:</label>
+    {{input value=description}}
+  </div>
+  {{#travis-field "value"}}
+    <label class="value">Private Key:</label>
+    {{textarea value=value}} {{travis-errors "value"}}
+  {{/travis-field}}
+
+  <div class="actions">
+    <input type="submit" {{bind-attr value=actionType class=":submit-ssh-key isSaving:saving" disabled=isSaving}} />
+    <span class="or">or</span>
+    <a href="#" class="cancel-ssh-key" {{action "cancel"}}>Cancel</a>
+  </div>
+</form>

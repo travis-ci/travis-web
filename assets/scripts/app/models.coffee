@@ -13,4 +13,5 @@ require 'models/repo'
 require 'models/request'
 require 'models/user'
 require 'models/worker'
-
+require 'models/env_var'
+require 'models/ssh_key'

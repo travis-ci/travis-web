@@ -57,6 +57,15 @@
       {{/if}}
     </h5>
   </li>
+  <li id="tab_settings" {{bind-attr class="view.classSettings"}}>
+    <h5>
+      {{#if repo.slug}}
+        {{#link-to "settings" repo}}
+          Settings
+        {{/link-to}}
+      {{/if}}
+    </h5>
+  </li>
   <li id="tab_requests" {{bind-attr class="view.classRequests"}}>
     <h5>
       {{#if repo.slug}}

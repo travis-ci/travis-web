@@ -1,0 +1,30 @@
+{{#if model}}
+  {{#if isEditing}}
+    {{partial "ssh_key/form"}}
+  {{else}}
+    <div class="ssh-key">
+      <p>SSH key is set.</p>
+      {{#if description}}
+        <div class="row">
+          <span class="label">Description:</label>
+          <span class="value">{{description}}</span>
+        </div>
+      {{/if}}
+      <div class="row">
+        <span class="label">Fingerprint:</label>
+        <span class="value">{{fingerprint}}</span>
+      </div>
+    <div class="actions">
+      <a href="#" {{action "delete"}} {{bind-attr class=":delete-ssh-key isDeleting:deleting"}}>
+        Delete
+      </a>
+    </div>
+  {{/if}}
+{{else}}
+  <p>
+    You don't have any custom key set up.
+    The default key's fingerprint is <code>{{defaultKey.fingerprint}}</code>
+  </p>
+
+  <a {{action "add"}} href="#" class="add-ssh-key">Add a custom SSH key</a>
+{{/if}}
