@@ -382,6 +382,7 @@ Travis.AuthRoute = Travis.Route.extend
       return true
 
 Travis.SettingsRoute = Travis.Route.extend
+  needsAuth: true
   setupController: (controller, model) ->
     @controllerFor('repo').activate('settings')
 
