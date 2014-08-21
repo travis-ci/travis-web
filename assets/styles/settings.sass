@@ -166,7 +166,7 @@
 
   .edit-var
     display: inline-block
-    margin: 6px 0 7px 0
+    margin: 6px 10px 7px 0
     color: #ffffff
     background-color: #bcbcbb
     border-radius: 4px
@@ -190,6 +190,41 @@
   .delete-var:hover, .delete-ssh-key:hover
     background-color: #820b0b
 
+  form.env-var
+    width: 100%
+    margin-top: 20px
+    margin-bottom: 30px
+    border-bottom: 1px solid #f1f1f1
+    label.name, label.value
+      display: none
+
+    label.public
+      width: 80%
+
+    .field.name, .field.value
+      float: left
+      padding-bottom: 0
+      height: 33px
+      line-height: 33px
+
+    span.equals
+      float: left
+      display: block
+      line-height: 33px
+      margin: 0 10px 0 14px
+
+    .field.name
+      width: 242px
+      margin-bottom: 10px
+      input
+        width: 97%
+    .field.value
+      width: 45%
+      input
+        width: 97%
+    .actions
+      margin-bottom: 10px
+
   ul.env-vars
     display: block
   li.env-var
@@ -197,39 +232,20 @@
     padding-bottom: 10px
     overflow: auto
     display: flex
+    display: -webkit-flex
+    display: -moz-flex
+    -webkit-align-items: center
+    -moz-align-items: center
     align-items: center
-    justify-content: center
+    justify-content: left
+    -webkit-justify-content: left
+    -moz-justify-content: left
     border-bottom: 1px solid #F1F1F1
     width: 100%
 
-    form
-      width: 100%
-      margin-top: 0
-      label.name, label.value
-        display: none
-
-      label.public
-        width: 80%
-
-      .field.name, .field.value
-        float: left
-        padding-bottom: 0
-        height: 33px
-
-      span.equals
-        float: left
-        display: block
-
-      .field.name
-        width: 20%
-        input
-          width: 97%
-      .field.value
-        width: 45%
-        input
-          width: 97%
-      .actions
-        margin-bottom: 10px
+    form.env-var
+      margin-bottom: 6px
+      border-bottom: none
 
     .var
       font-size: 13px
@@ -259,5 +275,7 @@
       text-align: left
 
     span.value
-      width: 400px
+      width: auto
       text-align: left
+      min-width: 158px
+      max-width: 450px
