@@ -266,17 +266,16 @@
 
     span.name, span.value
       display: inline-block
-      line-height: 40px
+      line-height: 20px
       position: relative
       font-size: 15px
+      word-wrap: break-word
 
     .equals
       margin: 0 10px 0 14px
 
     span.name
-      width: 300px
-      word-wrap: break-word
-      line-height: 20px
+      width: 250px
       margin: 0 10px 0 20px
       text-align: left
 
@@ -284,4 +283,15 @@
       width: auto
       text-align: left
       min-width: 158px
-      max-width: 450px
+      max-width: 390px
+      min-height: 25px
+      display: flex
+      display: -webkit-flex
+      display: -moz-flex
+      -webkit-align-items: center
+      -moz-align-items: center
+      align-items: center
+      justify-content: left
+      -webkit-justify-content: left
+      -moz-justify-content: left
+      padding: 8px 12px
