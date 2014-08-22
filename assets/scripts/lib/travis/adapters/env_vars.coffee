@@ -14,7 +14,7 @@ Travis.EnvVarsAdapter = Travis.Adapter.extend
     url = this.buildURL(record.constructor, get(record, primaryKey), record)
     self = this
 
-    return this.ajax(url, record.toJSON(), "PUT").then (data) ->
+    return this.ajax(url, record.toJSON(), "PATCH").then (data) ->
       self.didSaveRecord(record, data)
       return record
 
