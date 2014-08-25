@@ -2,11 +2,15 @@ get = Ember.get
 
 Error = Ember.Object.extend
   message: (->
-    switch @get('code')
+    switch code = @get('code')
       when 'blank' then "can't be blank"
       when 'not_a_private_key' then "the key is not a valid private key"
-      else "unknown error"
+      when 'key_with_a_passphrase' then 'we can\'t use key with a passphrase'
+      else @humanize(code)
   ).property('code')
+
+  humanize: (str) ->
+    str.replace(/_id$/, '').replace(/_/g, ' ').replace(/^\w/g, (s) -> s.toUpperCase())
 
 FieldErrors = Ember.ArrayProxy.extend
   add: (error) ->
