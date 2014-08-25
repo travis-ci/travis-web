@@ -414,6 +414,7 @@ Travis.SshKeyRoute = Travis.Route.extend
       @defaultKey = Ember.Object.create(fingerprint: data.fingerprint)
 
   setupController: (controller, model) ->
+    controller.reset()
     @_super.apply this, arguments
 
     if @defaultKey

@@ -12,6 +12,9 @@ Travis.SshKeyController = Ember.ObjectController.extend Travis.Validations,
   validates:
     value: ['presence']
 
+  reset: ->
+    @set('isEditing', false)
+
   actions:
     add: ->
       model = Travis.SshKey.create(id: @get('repo.id'))
@@ -38,6 +41,11 @@ Travis.SshKeyController = Ember.ObjectController.extend Travis.Validations,
       @set('isDeleting', true)
 
       deletingDone = => @set('isDeleting', false)
+
+      # because of the bug in ember model reference is not cleared after
+      # deleting the record, so I'm doing it manually here
+      delete @get('model').constructor._referenceCache(parseInt(@get('model.id')))
+
       @get('model').deleteRecord().then(deletingDone, deletingDone).then =>
         @set('model', null)
 
