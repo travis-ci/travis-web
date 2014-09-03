@@ -80,6 +80,7 @@ Travis.Router.map ->
   @route 'notFound', path: "/*path"
 
 Travis.RequestsRoute = Travis.Route.extend
+  needsAuth: true
   setupController: ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('requests')
@@ -88,6 +89,7 @@ Travis.RequestsRoute = Travis.Route.extend
     Travis.Request.fetch repository_id: @modelFor('repo').get('id')
 
 Travis.CachesRoute = Travis.Route.extend
+  needsAuth: true
   setupController: ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('caches')
