@@ -1,5 +1,5 @@
 require 'travis/model'
-require 'travis/chunk_buffer'
+require 'travis/log_chunks'
 
 @Travis.Log = Em.Object.extend
   version: 0 # used to refresh log on requeue
@@ -9,8 +9,29 @@ require 'travis/chunk_buffer'
   init: ->
     @setParts()
 
+  fetchMissingParts: (partNumbers, after) ->
+    # TODO: don't download if job is not running and log is finalized
+    data = {}
+    data['part_numbers'] = partNumbers if partNumbers
+    data['after'] = after if after
+
+    Travis.ajax.ajax "/jobs/#{@get('job.id')}/log", 'GET',
+      dataType: 'json'
+      headers:
+        accept: 'application/json; chunked=true; version=2'
+      data: data
+      success: (body, status, xhr) =>
+        Ember.run this, ->
+          if parts = body.log.parts
+            for part in parts
+              @append part
+
   setParts: ->
-    @set 'parts', Ember.ArrayProxy.create(content: [])
+    if parts = @get('parts')
+      parts.destroy()
+
+    parts = Travis.LogChunks.create(content: [], missingPartsCallback: => @fetchMissingParts.apply(this, arguments))
+    @set 'parts', parts
     # @set 'parts', Travis.ChunkBuffer.create(content: [])
 
   fetch: ->
