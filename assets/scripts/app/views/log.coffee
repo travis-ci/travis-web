@@ -33,6 +33,7 @@ Travis.reopen
       console.log 'log view: will destroy' if Log.DEBUG
       parts = @get('log.parts')
       parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
+      parts.destroy()
       @lineSelector?.willDestroy()
 
     versionDidChange: (->
