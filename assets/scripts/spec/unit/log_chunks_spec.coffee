@@ -57,7 +57,7 @@ test "it triggers downloading next parts if there is no final part", ->
     start()
   , 35
 
-test "it triggers downloading all available parts if there is no parts yet"
+test "it triggers downloading all available parts if there is no parts yet", ->
   expect(1)
   stop()
 
