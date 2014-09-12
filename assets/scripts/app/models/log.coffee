@@ -10,7 +10,8 @@ require 'travis/log_chunks'
     @setParts()
 
   fetchMissingParts: (partNumbers, after) ->
-    # TODO: don't download if job is not running and log is finalized
+    return if @get('notStarted')
+
     data = {}
     data['part_numbers'] = partNumbers if partNumbers
     data['after'] = after if after
