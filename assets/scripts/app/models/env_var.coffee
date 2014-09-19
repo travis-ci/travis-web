@@ -6,11 +6,3 @@ Travis.EnvVar = Travis.Model.extend
   public: Ember.attr('boolean')
 
   repo: Ember.belongsTo('Travis.Repo', key: 'repository_id')
-
-  isPropertyLoaded: (key) ->
-    if key == 'value'
-      return true
-    else
-      @_super(key)
-
-
