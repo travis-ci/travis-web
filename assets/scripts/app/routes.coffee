@@ -195,8 +195,19 @@ Travis.AbstractBuildsRoute = Travis.Route.extend
   ).property('contentType')
 
 Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
-Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
 Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
+Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(
+  contentType: 'pull_requests'
+
+  # TODO: it would be better to have separate controller for branches and PRs list
+  setupController: (controller, model) ->
+    @_super(controller, model)
+
+    this.controllerFor('builds').set('isPullRequestsList', true)
+
+  deactivate: ->
+    this.controllerFor('builds').set('isPullRequestsList', false)
+)
 
 Travis.BuildRoute = Travis.Route.extend
   serialize: (model, params) ->

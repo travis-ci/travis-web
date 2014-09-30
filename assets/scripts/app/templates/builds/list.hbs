@@ -10,7 +10,7 @@
         <th class="committer">
           Committer
         </th>
-        {{#if view.isPullRequestsList}}
+        {{#if isPullRequestsList}}
           <th>
             PR
           </th>
@@ -21,7 +21,7 @@
     </thead>
 
     <tbody>
-      {{#each build in controller}}
+      {{#each build in controller itemController="buildsItem"}}
         {{#view Travis.BuildsItemView contextBinding="build"}}
           <td class="number">
             <span class="status"></span>
@@ -35,16 +35,16 @@
             {{{formatMessage commit.message short="true" repoBinding=build.repo}}}
           </td>
           <td class="commit">
-            <a {{bind-attr href="view.urlGithubCommit"}}>
+            <a {{bind-attr href="urlGithubCommit"}}>
               {{formatCommit commit}}
             </a>
           </td>
           <td class="committer">
             {{commit.committerName}}
           </td>
-          {{#if view.isPullRequestsList}}
+          {{#if isPullRequestsList}}
             <td>
-              <a {{bind-attr href="view.urlGithubPullRequest"}}>
+              <a {{bind-attr href="urlGithubPullRequest"}}>
                 #{{pullRequestNumber}}
               </a>
             </td>

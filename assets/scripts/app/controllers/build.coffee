@@ -1,4 +1,4 @@
-Travis.BuildController = Ember.Controller.extend
+Travis.BuildController = Ember.Controller.extend Travis.GithubUrlProperties,
   needs: ['repo']
   repoBinding: 'controllers.repo.repo'
   commitBinding: 'build.commit'
@@ -10,7 +10,3 @@ Travis.BuildController = Ember.Controller.extend
   loading: (->
     @get('build.isLoading')
   ).property('build.isLoading')
-
-  urlGithubCommit: (->
-    Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
-  ).property('repo.slug', 'commit.sha')
