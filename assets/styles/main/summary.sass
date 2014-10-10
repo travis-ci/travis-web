@@ -53,13 +53,8 @@
   
   .build-status
     @include border-radius(4px)
-    float: right
-    min-height: 30px
-    min-width: 90px
     color: white
-    padding-top: 5px
-    padding-left: 10px
-    padding-right: 10px
+    padding: 8px 0
     font-size: 16px
     text-align: center
 
@@ -71,16 +66,39 @@
     font-size: 13px
     display: block
     width: 100%
-    text-align: right
-    line-height: 15px
+    text-align: left
+    line-height: 25px
     margin-top: 5px
+
+    img
+      height: 13px
+      width: 13px
 
   .finished
     float: right
     font-size: 13px
     width: 100%
-    text-align: right
-    line-height: 20px
+    text-align: left
+    line-height: 25px
+
+    img
+      height: 13px
+      width: 13px
+
+  .commit-changes
+    text-align: left
+    width: inherit
+    margin-top: 0px
+    float: right
+
+    img
+      margin-right: 2px
+      height: 13px
+      width: 13px
+
+    div
+      display: inline
+      clear: none
 
   .right
     margin-top: 10px
@@ -100,22 +118,6 @@
       display: inline-block
       position: relative
       top: 2px
-
-    .commit-changes
-      text-align: right
-      width: inherit
-      margin-top: 0px
-      float: right
-
-      div
-        display: inline
-        clear: none
-
-      img
-        margin-right: 2px
-        margin-left: 4px
-        height: 16px
-        width: 16px
 
     .author
       float: left
