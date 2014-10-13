@@ -1,5 +1,5 @@
-Travis.Pusher = (key) ->
-  @init(key) # if key
+Travis.Pusher = (config) ->
+  @init(config)
   this
 
 $.extend Travis.Pusher,
