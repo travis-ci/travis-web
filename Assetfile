@@ -49,7 +49,9 @@ input assets.scripts do
 
   match %r(^(?!vendor|spec).*\.js$) do
     modules = proc { |input| input.path.gsub(%r((^app/|lib/|\.js$)), '') }
-    minispade(string: assets.development?, rewrite_requires: true, module_id_generator: modules)
+    # why did we use the string strategy for development? makes it impossible to set breakpoints
+    # minispade(string: assets.development?, rewrite_requires: true, module_id_generator: modules)
+    minispade(string: false, rewrite_requires: true, module_id_generator: modules)
   end
 
   match %r(^(?!spec).*\.js$) do
