@@ -5,6 +5,7 @@ require 'travis/model'
   id:                  Ember.attr('string')
   slug:                Ember.attr('string')
   description:         Ember.attr('string')
+  private:             Ember.attr('boolean')
   lastBuildId:         Ember.attr('string')
   lastBuildNumber:     Ember.attr(Number)
   lastBuildState:      Ember.attr('string')

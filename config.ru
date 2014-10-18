@@ -26,12 +26,14 @@ use Travis::Web::ApiRedirect do |app|
 end
 
 run Travis::Web::App.build(
-  environment:  ENV['RACK_ENV'] || 'development',
-  api_endpoint: ENV['API_ENDPOINT'],
-  pusher_key:   ENV['PUSHER_KEY'],
-  ga_code:      ENV['GA_CODE'],
-  root:         File.expand_path('../public', __FILE__),
-  server_start: Time.now,
-  caches_enabled: ENV['CACHES_ENABLED'],
+  environment:     ENV['RACK_ENV'] || 'development',
+  api_endpoint:    ENV['API_ENDPOINT'],
+  source_endpoint: ENV['SOURCE_ENDPOINT'] || 'https://github.com',
+  pusher_key:      ENV['PUSHER_KEY'],
+  pusher_host:     ENV['PUSHER_HOST'] || 'ws.pusherapp.com',
+  ga_code:         ENV['GA_CODE'],
+  root:            File.expand_path('../public', __FILE__),
+  server_start:    Time.now,
+  caches_enabled:  ENV['CACHES_ENABLED'],
   ssh_key_enabled: ENV['SSH_KEY_ENABLED']
 )

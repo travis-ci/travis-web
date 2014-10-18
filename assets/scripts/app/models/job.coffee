@@ -102,8 +102,7 @@ require 'travis/model'
       Travis.pusher.unsubscribe "job-#{@get('id')}"
 
   onStateChange: (->
-    if @get('state') == 'finished' && Travis.pusher
-      Travis.pusher.unsubscribe "job-#{@get('id')}"
+    @unsubscribe() if @get('state') == 'finished' && Travis.pusher
   ).observes('state')
 
   isPropertyLoaded: (key) ->

@@ -1,5 +1,5 @@
-Travis.Pusher = (key) ->
-  @init(key) # if key
+Travis.Pusher = (config) ->
+  @init(config)
   this
 
 $.extend Travis.Pusher,
@@ -10,37 +10,40 @@ $.extend Travis.Pusher,
 $.extend Travis.Pusher.prototype,
   active_channels: []
 
-  init: (key) ->
+  init: (config) ->
     Pusher.warn = @warn.bind(this)
-    @pusher = new Pusher(key, encrypted: Travis.Pusher.ENCRYPTED)
+    Pusher.host = config.host if config.host
+    @pusher = new Pusher(config.key, encrypted: Travis.Pusher.ENCRYPTED, disableStats: true)
     @subscribeAll(Travis.Pusher.CHANNELS) if Travis.Pusher.CHANNELS
 
     @callbacksToProcess = []
 
     Visibility.change (e, state) =>
-      if state == 'visible'
-        @processSavedCallbacks()
+      @processSavedCallbacks() if state == 'visible'
 
     setInterval @processSavedCallbacks.bind(this), @processingIntervalWhenHidden
 
   subscribeAll: (channels) ->
-    for channel in channels
-      name = @prefix(channel)
-      channel = @pusher.subscribe(channel)
-      channel.bind_all((event, data) => @receive(event, data))
+    @subscribe(channel) for channel in channels
 
   subscribe: (channel) ->
-    console.log("subscribing to #{channel}")
+    return unless channel
     channel = @prefix(channel)
-    @pusher.subscribe(channel).bind_all((event, data) => @receive(event, data)) unless @pusher?.channel(channel)
+    console.log("subscribing to #{channel}")
+    unless @pusher?.channel(channel)
+      @pusher.subscribe(channel).bind_all((event, data) => @receive(event, data))
 
   unsubscribe: (channel) ->
-    console.log("unsubscribing from #{channel}")
+    return unless channel
     channel = @prefix(channel)
+    console.log("unsubscribing from #{channel}")
     @pusher.unsubscribe(channel) if @pusher?.channel(channel)
 
   prefix: (channel) ->
-    "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"
+    if channel.indexOf(Travis.Pusher.CHANNEL_PREFIX) != 0
+      "#{Travis.Pusher.CHANNEL_PREFIX}#{channel}"
+    else
+      channel
 
   # process pusher messages in batches every 5 minutes when the page is hidden
   processingIntervalWhenHidden: 1000 * 60 * 5
@@ -84,5 +87,17 @@ $.extend Travis.Pusher.prototype,
       when 'annotation:created', 'annotation:updated'
         { annotation: data }
 
-  warn: (type, warning) ->
-    console.warn(warning)
+  warn: (type, object) ->
+    console.warn(type, object.error) unless @ignoreWarning(type, object.error)
+
+  ignoreWarning: (type, error) ->
+    code = error?.data?.code || 0
+    message = error?.data?.message || ''
+    @ignoreCode(code) || @ignoreMessage(message)
+
+  ignoreCode: (code) ->
+    code == 1006
+
+  ignoreMessage: (message) ->
+    message.indexOf('Existing subscription') == 0 or message.indexOf('No current subscription') == 0
+

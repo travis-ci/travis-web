@@ -109,7 +109,7 @@ window.Auth = Ember.Object.extend
 
   expectedOrigin: ->
     endpoint = @get('endpoint')
-    if endpoint[0] == '/' then @receivingEnd else endpoint
+    if endpoint[0] == '/' then @receivingEnd else endpoint.match(/^https?:\/\/[^\/]*/)[0]
 
   sendToApp: (name) ->
     # TODO: this is an ugly solution, we need to do one of 2 things:

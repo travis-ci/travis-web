@@ -20,6 +20,7 @@
           {{/if}}
         {{/with}}
 
+        {{#if lastBuildHash.number }}
         <p class="summary">
           <span class="duration_label">Duration:</span>
           <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>
@@ -28,6 +29,7 @@
           <span class="finished-icon"></span><span class="finished_at_label">Finished:</span>
           <abbr class="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
         </p>
+        {{/if}}
 
         <div class="indicator"><span></span></div>
       {{/with}}

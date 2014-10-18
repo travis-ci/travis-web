@@ -3,22 +3,22 @@
     "#{Travis.config.api_endpoint}/jobs/#{id}/log.txt?deansi=true"
 
   githubPullRequest: (slug, pullRequestNumber) ->
-    "https://github.com/#{slug}/pull/#{pullRequestNumber}"
+    "#{Travis.config.source_endpoint}/#{slug}/pull/#{pullRequestNumber}"
 
   githubCommit: (slug, sha) ->
-    "https://github.com/#{slug}/commit/#{sha}"
+    "#{Travis.config.source_endpoint}/#{slug}/commit/#{sha}"
 
   githubRepo: (slug) ->
-    "https://github.com/#{slug}"
+    "#{Travis.config.source_endpoint}/#{slug}"
 
   githubWatchers: (slug) ->
-    "https://github.com/#{slug}/watchers"
+    "#{Travis.config.source_endpoint}/#{slug}/watchers"
 
   githubNetwork: (slug) ->
-    "https://github.com/#{slug}/network"
+    "#{Travis.config.source_endpoint}/#{slug}/network"
 
   githubAdmin: (slug) ->
-    "https://github.com/#{slug}/settings/hooks#travis_minibucket"
+    "#{Travis.config.source_endpoint}/#{slug}/settings/hooks#travis_minibucket"
 
   statusImage: (slug, branch) ->
     "#{location.protocol}//#{location.host}/#{slug}.svg" + if branch then "?branch=#{encodeURIComponent(branch)}" else ''
