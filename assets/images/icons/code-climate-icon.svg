@@ -1,5 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" height="40" width="40">
-<polygon points="118.67,106.61,127.6,97.68,152.94,123.02,166.04,109.91,127.6,71.472,105.57,93.505" fill="#000" transform="matrix(0.32751845,0,0,0.34056255,-15.380835,-16.340687)"/>
-<polygon points="55.18,117.8,50.015,122.97,63.12,136.07,68.282,130.9,85.151,114.04,88.455,110.73,101.5,123.78,113.79,136.07,126.89,122.96,114.6,110.68,101.5,97.572,88.455,84.526" fill="#000" transform="matrix(0.32751845,0,0,0.34056255,-15.380835,-16.340687)"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+<polygon fill="#FFFFFF" points="23.486,19.967 26.41,16.925 34.71,25.555 39,21.09 26.41,8 19.195,15.503 "/>
+<polygon fill="#FFFFFF" points="2.691,23.777 1,25.538 5.292,30 6.983,28.238 12.508,22.497 13.59,21.369 17.862,25.814 21.888,30 
+	26.178,25.535 22.152,21.353 17.862,16.889 13.59,12.446 "/>
 </svg>
-
