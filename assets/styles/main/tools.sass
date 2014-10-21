@@ -4,14 +4,18 @@
   position: relative
   float: right
   top: 2px
-  width: 300px
+  width: 600px
 
   & > a.menu-popup-button
-    display: block
-    width: 39px
-    height: 21px
+    display: inline-block
+    width: 88px
+    height: 24px
+    text-align: left
     margin-top: -27px
-    background-image: #000000 inline-image('icons/settings.svg') no-repeat
+    background: #a6adad inline-image('icons/settings.svg') no-repeat
+    background-size: 14px 14px
+    background-position: 6px 5px
+    @include border-radius(4px)
 
     cursor: pointer
     float: right
@@ -39,10 +43,10 @@
 
   a#status-image-popup
     float: right
-    display: block
+    display: inline-block
     opacity: 1.0
     margin-top: -26px
-    margin-right: 45px
+    margin-right: 100px
 
 #code-climate
   a

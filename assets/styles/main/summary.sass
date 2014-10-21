@@ -2,16 +2,27 @@
 
 .green .build-status
   background-color: #549e54
-  background-image: inline-image('icons/state-passed-white.svg') no-repeat
+  background: url('icons/state-passed-white.svg') no-repeat
+  background-size: 10px 10px
+  background-position: 5px 10px
 
 .yellow .build-status
   background-color: #bcaf39
+  background: inline-image('icons/state-pending-white.svg') no-repeat
+  background-size: 10px 10px
+  background-position: 5px 10px
 
 .red .build-status
   background-color: #b54223
+  background: inline-image('icons/state-failed-white.svg') no-repeat
+  background-size: 10px 10px
+  background-position: 5px 10px
 
 .gray .build-status
   background-color: #a8a8a9
+  background: inline-image('icons/state-errored-white.svg') no-repeat
+  background-size: 10px 10px
+  background-position: 5px 10px
 
 #new-summary
   @include clearfix
