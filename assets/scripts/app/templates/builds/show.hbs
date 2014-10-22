@@ -4,7 +4,6 @@
   <div id="new-summary">
     <div class="right">
       <div class="build-status">
-        <img {{bind-attr class="build.state"}}/>
         {{#link-to "build" repo build}}#{{build.number}} {{build.state}}{{/link-to}}
       </div>
 
