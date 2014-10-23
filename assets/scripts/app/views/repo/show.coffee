@@ -28,6 +28,17 @@ Travis.reopen
       )
     ).observes('controller.repo.isLoaded')
 
+    statusImages: ->
+      @popupCloseAll()
+      view = Travis.StatusImagesView.create(toolsView: this)
+      Travis.View.currentPopupView = view
+      view.appendTo($('body'))
+      event.stopPropagation()
+
+    statusImageUrl: (->
+      Travis.Urls.statusImage(@get('controller.repo.slug'))
+    ).property('controller.repo.slug')
+
   ReposEmptyView: Travis.View.extend
     template: ''
 
@@ -151,10 +162,6 @@ Travis.reopen
         permissions.contains parseInt(@get('repo.id'))
     ).property('currentUser.adminPermissions.length', 'repo.id')
 
-    statusImageUrl: (->
-      Travis.Urls.statusImage(@get('slug'))
-    ).property('slug')
-
     displaySettingsLink: (->
       @get('hasPushPermission')
     ).property('hasPushPermission')
@@ -162,14 +169,6 @@ Travis.reopen
     displayStatusImages: (->
       @get('hasPermission')
     ).property('hasPermission')
-
-    statusImages: ->
-      @popupCloseAll()
-      view = Travis.StatusImagesView.create(toolsView: this)
-      Travis.View.currentPopupView = view
-      view.appendTo($('body'))
-      event.stopPropagation()
-
 
   RepoActionsView: Travis.View.extend
     templateName: 'repos/show/actions'
