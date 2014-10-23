@@ -1,5 +1,11 @@
 <div id="actions">
   <ul>
+    {{#if view.displayRemoveLog}}
+      <li class="icon" title="Remove Log">
+        <a href="#" {{action "removeLog" target="view"}}
+          {{bind-attr class="view.canRemoveLog::disabled"}}><img class="icon" src="/images/icons/off.svg" width="20"></a>
+      </li>
+    {{/if}}
     {{#if view.displayCancelBuild}}
       <li class="icon" title="Cancel Build">
         <a href="#" {{action "cancelBuild" target="view"}}

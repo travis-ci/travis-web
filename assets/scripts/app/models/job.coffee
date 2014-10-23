@@ -83,6 +83,14 @@ require 'travis/model'
     Travis.ajax.post "/jobs/#{@get('id')}/cancel"
   )
 
+  removeLog: ->
+    Travis.ajax.patch("/jobs/#{@get('id')}/log").then =>
+      @reloadLog()
+
+  reloadLog: ->
+    @clearLog()
+    @get('log').fetch()
+
   requeue: ->
     Travis.ajax.post "/jobs/#{@get('id')}/restart"
 
@@ -124,6 +132,12 @@ require 'travis/model'
     if finishedAt = @get('finishedAt')
       moment(finishedAt).format('lll')
   ).property('finishedAt')
+
+  canRemoveLog: (->
+    # This should somehow get the status of removed log, but unfortunately there is
+    # no easy way to do that at the moment
+    true
+  ).property()
 
 @Travis.Job.reopenClass
   queued: ->

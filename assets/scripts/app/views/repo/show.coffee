@@ -193,6 +193,20 @@ Travis.reopen
           else
             Travis.flash(error: 'An error occured when canceling the build')
 
+
+    removeLog: ->
+      if @get('canRemoveLog')
+        job = @get('job') || @get('build.jobs.firstObject')
+        job.removeLog().then ->
+          Travis.flash(success: 'Log has been successfully removed.')
+        , (xhr) ->
+          if xhr.status == 409
+            Travis.flash(error: 'Log can\'t be removed')
+          else if xhr.status == 401
+            Travis.flash(error: 'You don\'t have sufficient access to remove the log')
+          else
+            Travis.flash(error: 'An error occured when removing the log')
+
     cancelJob: ->
       if @get('canCancelJob')
         Travis.flash(notice: 'Job cancellation has been scheduled.')
@@ -245,6 +259,14 @@ Travis.reopen
       if id = @get('jobIdForLog')
         Travis.Urls.plainTextLog(id)
     ).property('jobIdForLog')
+
+    canRemoveLog: (->
+      @get('displayRemoveLog') && @get('hasPermission')
+    ).property('displayRemoveLog', 'hasPermission')
+
+    displayRemoveLog: (->
+      (@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) && @get('build.jobs.firstObject.canRemoveLog')
+    ).property('isJobTab', 'isBuildTab', 'build.jobs.length', 'job.canRemoveLog')
 
     canCancelBuild: (->
       @get('displayCancelBuild') && @get('hasPermission')
