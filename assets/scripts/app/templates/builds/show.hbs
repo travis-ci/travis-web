@@ -17,6 +17,11 @@
         {{formatTime build.finishedAt}}
       </div>
 
+      <div class="tags">
+        <img src="/images/icons/tags.svg"/>
+        {{formatTime build.finishedAt}}
+      </div>
+
       <div class="commit-changes">
         <img src="/images/icons/github.svg"/>
         <div class="text"><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a></div>
