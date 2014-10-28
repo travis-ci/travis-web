@@ -1,11 +1,5 @@
 <div id="actions">
   <ul>
-    {{#if view.displayRemoveLog}}
-      <li class="icon" title="Remove Log">
-        <a href="#" {{action "removeLog" target="view"}}
-          {{bind-attr class="view.canRemoveLog::disabled"}}><img class="icon" src="/images/icons/off.svg" width="20"></a>
-      </li>
-    {{/if}}
     {{#if view.displayCancelBuild}}
       <li class="icon" title="Cancel Build">
         <a href="#" {{action "cancelBuild" target="view"}}
@@ -44,6 +38,12 @@
       <li class="icon" title="Download Log">
         <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}><img class="icon" src="/images/icons/download-log.svg" width="20"/></a>
       </li>
+      {{#if view.displayRemoveLog}}
+        <li class="icon" title="Remove Log">
+          <a href="#" {{action "removeLog" target="view"}}
+            {{bind-attr class="view.canRemoveLog::disabled"}}><img class="icon" src="/images/icons/delete-log.svg" width="20"></a>
+        </li>
+      {{/if}}
     {{/if}}
     {{#if view.displayCodeClimate}}
       <li class="icon" title="Test Coverage with Code Climate">
