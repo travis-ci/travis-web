@@ -46,12 +46,10 @@
       {{/if}}
     {{/if}}
     {{#if view.displayCodeClimate}}
-      <li class="icon" title="Test Coverage with Code Climate">
+      <li class="icon code-climate" title="Test Coverage with Code Climate">
         <a href="#" name="code-climate"
           {{action "codeClimatePopup" target="view"}}
-          {{bind-attr class=":open-popup"}}>
-          <img src="/images/icons/code-climate-icon.svg"/>
-        </a>
+          {{bind-attr class=":open-popup"}}></a>
       </li>
     {{/if}}
 
