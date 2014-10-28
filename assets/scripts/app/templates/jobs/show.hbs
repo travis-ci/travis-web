@@ -24,10 +24,10 @@
           <div class="text"><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha job.commit.sha}}</a></div>
         </div>
         <div class="commit-changes">
-          {{#if build.pullRequest}}
+          {{#if job.build.pullRequest}}
             <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>#{{build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
           {{else}}
-            {{#if build.commit.compareUrl}}
+            {{#if job.build.commit.compareUrl}}
               <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>Compare {{shortCompareShas job.build.commit.compareUrl}}</a></div>
             {{/if}}
           {{/if}}
