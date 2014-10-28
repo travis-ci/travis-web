@@ -3,13 +3,13 @@
     {{#if view.displayCancelBuild}}
       <li class="icon cancel-build" title="Cancel Build">
         <a href="#" {{action "cancelBuild" target="view"}}
-          {{bind-attr class="view.canCancelBuild::disabled"}}>Cancel build</a>
+          {{bind-attr class="view.canCancelBuild::disabled"}}></a>
       </li>
     {{/if}}
     {{#if view.displayCancelJob}}
       <li class="icon cancel-job" title="Cancel Job">
         <a href="#" {{action "cancelJob" target="view"}}
-          {{bind-attr class="view.canCancelJob::disabled"}}>Cancel job</a>
+          {{bind-attr class="view.canCancelJob::disabled"}}></a>
       </li>
     {{/if}}
     {{#if view.displayRequeueBuild}}
