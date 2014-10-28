@@ -24,7 +24,6 @@
   @include clearfix
   @include border-radius(4px)
   background-color: #fafafa
-  min-height: 30px
   padding: 2px 11px
   margin-bottom: 20px
   padding-bottom: 10px
@@ -51,7 +50,6 @@
   .body
     min-width: 500px
     display: block
-    min-height: 30px
     font-size: 12px
     font-family: Monaco, 'Liberation Mono', Courier, monospace
     margin-bottom: 0px
@@ -60,7 +58,7 @@
 
     a
       text-decoration: underline
-  
+
   .build-status
     @include border-radius(4px)
     color: white
@@ -74,58 +72,56 @@
       padding-left: 21px
 
   .runtime
+    background-image: inline-image('icons/run-time.svg')
+
+  .finished
+    background-image: inline-image('icons/finished.svg')
+
+  .tags
+    background-image: inline-image('icons/tags.svg')
+
+  .commit-changes
+    background-image: inline-image('icons/github.svg')
+
+  .runtime
+    margin-top: 5px
+
+  .runtime, .finished, .tags, .commit-changes
+    background-position: left center
+    background-repeat: no-repeat
+    background-size: 14px 14px
+    padding-left: 20px
     font-size: 13px
     display: block
     width: 100%
     text-align: left
-    line-height: 25px
-    margin: 5px 0 0 12px
-
-    img
-      height: 13px
-      width: 13px
-      opacity: 0.5
-      padding-right: 4px
-
-  .finished
-    font-size: 13px
-    width: 100%
-    text-align: left
-    line-height: 25px
+    line-height: 23px
     margin-left: 12px
-
-    img
-      height: 13px
-      width: 13px
-      opacity: 0.5
-      padding-right: 4px
-
-  .tags
-    font-size: 13px
-    width: 100%
-    text-align: left
-    line-height: 25px
-    margin-left: 12px
-
-    img
-      height: 13px
-      width: 13px
-      opacity: 0.5
-      padding-right: 4px
 
   .commit-changes
     text-align: left
     text-decoration: underline
     width: inherit
+
+    div
+      display: inline
+      clear: none
+
+    a
+      text-overflow: ellipsis
+      white-space: nowrap
+      overflow: hidden
+
+  .commit-changes
+    background: inline-image('icons/github.svg') left center no-repeat
+    background-size: 13px 13px
+    text-align: left
+    text-decoration: underline
+    width: inherit
     font-size: 13px
     margin-left: 12px
-
-    img
-      margin-right: 2px
-      height: 13px
-      width: 13px
-      opacity: 0.5
-      padding-right: 4px
+    padding-left: 20px
+    line-height: 20px
 
     div
       display: inline
@@ -159,6 +155,7 @@
 
     .author
       float: left
+      margin-top: 10px
 
       div
         display: inline
@@ -202,7 +199,7 @@
   .message
     white-space: normal
     min-width: 0
-  
+
     pre
       font-size: 12px
       display: inline-block

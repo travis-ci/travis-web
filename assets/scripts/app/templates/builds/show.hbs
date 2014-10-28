@@ -8,31 +8,27 @@
       </div>
 
       <div class="runtime">
-           <img src="/images/icons/run-time.svg"/>
-           {{#if build.isFinished}}ran{{else}}running{{/if}} for {{formatDuration build.duration}}
+        {{#if build.isFinished}}ran{{else}}running{{/if}} for {{formatDuration build.duration}}
       </div>
 
       <div class="finished">
-        <img src="/images/icons/finished.svg"/>
         {{formatTime build.finishedAt}}
       </div>
 
-      <div class="tags">
-        <img src="/images/icons/tags.svg"/>
-        {{formatTime build.finishedAt}}
-      </div>
+      {{#if build.tagName}}
+        <div class="tags">
+          {{build.tagName}}
+        </div>
+      {{/if}}
 
       <div class="commit-changes">
-        <img src="/images/icons/github.svg"/>
         <div class="text"><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a></div>
       </div>
       <div class="commit-changes">
         {{#if build.pullRequest}}
-          <img src="/images/icons/github.svg"/>
           <div class="text"><a class="compare" {{bind-attr href="build.commit.compareUrl"}}>#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a></div>
         {{else}}
           {{#if build.commit.compareUrl}}
-            <img src="/images/icons/github.svg"/>
             <div class="text"><a class="compare" {{bind-attr href="build.commit.compareUrl"}}>Compare {{shortCompareShas build.commit.compareUrl}}</a></div>
           {{/if}}
         {{/if}}
@@ -47,9 +43,7 @@
     - {{formatMessage build.commit.subject repoBinding=build.repo}}
     </div>
 
-    <pre class="body">
-{{formatMessage build.commit.body repoBinding=build.repo pre=true}}
-    </pre>
+    <pre class="body">{{formatMessage build.commit.body repoBinding=build.repo pre=true}}</pre>
 
     <div class="footer">
       <div class="author">
