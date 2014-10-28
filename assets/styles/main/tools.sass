@@ -12,10 +12,12 @@
     margin-top: -27px
     color: #fff
     font-size: 13px
-    padding: 3px 8px 2px 25px
-    background: #a6adad inline-image('icons/settings.svg') no-repeat
-    background-size: 14px 14px
-    background-position: 6px 6px
+    padding: 3px 24px 2px 25px
+    background-image: inline-image('icons/settings.svg'), inline-image('icons/dropdown-arrow-white.svg')
+    background-size: 14px 14px, 8px 8px
+    background-position: 6px 6px, right 9px center
+    background-color: #a6adad
+    background-repeat: no-repeat
     @include border-radius(4px)
 
     cursor: pointer
@@ -61,6 +63,18 @@
   float: right
   text-align: right
 
+  li.restart-build a, li.restart-job a
+    background-image: inline-image('icons/repeat.svg')
+
+  li.cancel-build a, li.cancel-job a
+    background-image: inline-image('icons/off.svg')
+
+  li.download-log a
+    background-image: inline-image('icons/download-log.svg')
+
+  li.remove-log a
+    background-image: inline-image('icons/delete-log.svg')
+
   li.icon
     span.loading
       background: inline-image('ui/round-spinner.svg') no-repeat
@@ -78,15 +92,19 @@
       background-position: center center
 
     a
+      text-indent: -9999px
       display: inline-block
-      width: 27px
-      height: 27px
+      width: 28px
+      height: 28px
       position: relative
       top: -7px
       cursor: pointer
       color: #fef4e9
       border-radius: 100px
-      background: #5e869a
+      background-color: #5e869a
+      background-size: 16px 16px
+      background-position: center center
+      background-repeat: no-repeat
       text-align: center
       margin-left: 5px
 
