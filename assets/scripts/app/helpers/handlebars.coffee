@@ -1,5 +1,3 @@
-require 'ext/ember/bound_helper'
-
 safe = (string) ->
   new Handlebars.SafeString(string)
 
@@ -125,7 +123,7 @@ Ember.Handlebars.helper('travis-errors', (name, options) ->
 Handlebars.registerHelper 'tipsy', (text, tip) ->
   safe '<span class="tool-tip" original-title="' + tip + '">' + text + '</span>'
 
-Ember.registerBoundHelper 'capitalize', (value, options) ->
+Ember.Handlebars.registerBoundHelper 'capitalize', (value, options) ->
   if value?
     safe $.capitalize(value)
   else
@@ -140,10 +138,10 @@ Ember.Handlebars.helper('githubCommitLink', (slug, commitSha) ->
   safe '<a class="github-link only-on-hover" href="' + url + '">' + sha + '</a>'
 )
 
-Ember.registerBoundHelper 'formatTime', (value, options) ->
+Ember.Handlebars.registerBoundHelper 'formatTime', (value, options) ->
   safe Travis.Helpers.timeAgoInWords(value) || '-'
 
-Ember.registerBoundHelper 'formatDuration', (duration, options) ->
+Ember.Handlebars.registerBoundHelper 'formatDuration', (duration, options) ->
   safe Travis.Helpers.timeInWords(duration)
 
 Ember.Handlebars.helper('formatCommit', (commit) ->
@@ -153,16 +151,16 @@ Ember.Handlebars.helper('formatCommit', (commit) ->
 Ember.Handlebars.helper 'formatSha', (sha) ->
   safe Travis.Helpers.formatSha(sha)
 
-Ember.registerBoundHelper 'pathFrom', (url, options) ->
+Ember.Handlebars.registerBoundHelper 'pathFrom', (url, options) ->
   safe Travis.Helpers.pathFrom(url)
 
 Ember.Handlebars.helper 'formatMessage', (message, options) ->
   safe Travis.Helpers.formatMessage(message, options.hash)
 
-Ember.registerBoundHelper 'formatConfig', (config, options) ->
+Ember.Handlebars.registerBoundHelper 'formatConfig', (config, options) ->
   safe Travis.Helpers.formatConfig(config)
 
-Ember.registerBoundHelper 'shortCompareShas', (url, options) ->
+Ember.Handlebars.registerBoundHelper 'shortCompareShas', (url, options) ->
   path = Travis.Helpers.pathFrom(url)
   if path.indexOf('...') >= 0
     shas = path.split('...')
@@ -170,7 +168,7 @@ Ember.registerBoundHelper 'shortCompareShas', (url, options) ->
   else
     path
 
-Ember.registerBoundHelper 'formatLog', (log, options) ->
+Ember.Handlebars.registerBoundHelper 'formatLog', (log, options) ->
   parentView =  @get 'parentView'
   repo = parentView.get(options.repo)
   item = parentView.get(options.item)
