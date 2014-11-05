@@ -54,7 +54,7 @@
   </div>
 
   {{#unless build.isMatrix}}
-    {{view Travis.AnnotationsView annotationsBinding="build.jobs.firstObject.annotations"}}
+    {{view 'annotations' annotations=build.jobs.firstObject.annotations}}
   {{/unless}}
 
   {{#if build.isMatrix}}
