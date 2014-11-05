@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       {{#each job in view.jobs}}
-        {{#view Travis.JobsItemView contextBinding="job"}}
+        {{#view 'jobs-item' context=job}}
           <td class="number">
             <span class="status"></span>
             {{#if job.id}}

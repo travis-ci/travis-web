@@ -2,7 +2,7 @@
   <li id="tab_current" {{bind-attr class="view.classCurrent"}}>
     <h5>
       {{#if repo.slug}}
-        {{#link-to "repo" repo currentWhen="repo.index"}}
+        {{#link-to "repo" repo current-when="repo.index"}}
           Current
         {{/link-to}}
       {{/if}}
