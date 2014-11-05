@@ -105,7 +105,7 @@
   element = $("td.finished_at", row)
   equal(element.text().trim(), job.finishedAt)
 
-  element = $("td:nth-child(6)", row)
+  element = $("td:nth-child(4)", row)
   equal(element.text().trim(), job.rvm)
 
 @listsQueuedJobs = (jobs) ->
