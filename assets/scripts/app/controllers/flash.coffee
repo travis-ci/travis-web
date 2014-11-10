@@ -6,13 +6,13 @@ Travis.FlashController = Ember.ArrayController.extend
     @_super.apply this, arguments
     @set('flashes', Travis.LimitedArray.create(limit: 2, content: []))
 
-  content: (->
+  model: (->
     broadcasts = @get('unseenBroadcasts')
     flashes = @get('flashes')
-    content = []
-    content = content.concat(broadcasts.toArray()) if broadcasts
-    content = content.concat(flashes.toArray().reverse())    if flashes
-    content.uniq()
+    model = []
+    model = model.concat(broadcasts.toArray()) if broadcasts
+    model = model.concat(flashes.toArray().reverse())    if flashes
+    model.uniq()
   ).property('unseenBroadcasts.length', 'flashes.length')
 
   unseenBroadcasts: (->

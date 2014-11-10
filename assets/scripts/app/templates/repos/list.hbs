@@ -1,12 +1,12 @@
 <div id="search_box">
-  {{view Ember.TextField valueBinding="controller.search" placeholder="Search all repositories"}}
+  {{input value=controller.search placeholder="Search all repositories"}}
 </div>
 
-{{view Travis.ReposListTabsView}}
+{{view 'repos-list-tabs'}}
 
 <div class="tab">
   {{#if isLoaded}}
-    {{#collection Travis.ReposListView contentBinding="this"}}
+    {{#collection 'repos-list' content=this}}
       {{#with view.repo}}
         <div class="slug-and-status">
           <span class="status"></span>

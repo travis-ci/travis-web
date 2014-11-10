@@ -40,7 +40,7 @@ test "it triggers downloading missing parts if there is a missing part, even tho
   , 40
 
 test "it triggers downloading next parts if there is no final part", ->
-  expect(2)
+  expect(4)
   stop()
 
   callback = (missingNumbers, after) ->
@@ -58,7 +58,7 @@ test "it triggers downloading next parts if there is no final part", ->
   , 35
 
 test "it triggers downloading all available parts if there is no parts yet", ->
-  expect(1)
+  expect(2)
   stop()
 
   callback = (missingNumbers, after) ->
