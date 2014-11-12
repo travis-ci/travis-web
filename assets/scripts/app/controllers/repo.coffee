@@ -10,8 +10,7 @@ Travis.RepoController = Travis.Controller.extend
 
   init: ->
     @_super.apply this, arguments
-    if !Ember.testing
-      Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
+    Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   updateTimes: ->
     Ember.run this, ->

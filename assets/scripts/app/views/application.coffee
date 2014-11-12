@@ -1,6 +1,6 @@
 Travis.reopen
   ApplicationView: Travis.View.extend
-    templateName: Ember.computed.alias('controller.templateName')
+    templateName: (-> @get 'controller.templateName' ).property('controller.templateName')
     classNames: ['application']
 
     templateNameDidChange: (->

@@ -37,12 +37,12 @@ Travis.reopen
       @lineSelector?.willDestroy()
 
     versionDidChange: (->
-      @rerender() if @get('_state') == 'inDOM'
+      @rerender() if @get('state') == 'inDOM'
     ).observes('log.version')
 
     logDidChange: (->
       console.log 'log view: log did change: rerender' if Log.DEBUG
-      @rerender() if @get('_state') == 'inDOM'
+      @rerender() if @get('state') == 'inDOM'
     ).observes('log')
 
     createEngine: ->

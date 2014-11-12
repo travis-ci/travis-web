@@ -1,11 +1,19 @@
+delegate = (name, options) ->
+  options ||= options
+  ->
+    target = @get(options.to)
+    target[name].apply(target, arguments)
+
 Travis.CurrentUserController = Em.ObjectController.extend
   sync: ->
-    @get('model').sync()
+    @get('content').sync()
 
-  model: Ember.computed.alias('auth.currentUser')
+  content: (->
+    @get('auth.currentUser')
+  ).property('auth.currentUser')
 
   syncingDidChange: (->
-    if (user = @get('model')) && user.get('isSyncing') && !user.get('syncedAt')
+    if (user = @get('content')) && user.get('isSyncing') && !user.get('syncedAt')
       Ember.run.scheduleOnce 'routerTransitions', this, ->
         @container.lookup('router:main').send('renderFirstSync')
-  ).observes('isSyncing', 'auth.currentUser')
+  ).observes('isSyncing', 'content')

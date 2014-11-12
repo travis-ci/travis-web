@@ -76,7 +76,6 @@ Travis.LogChunks = Em.ArrayProxy.extend
         if part.final
           @notifyPropertyChange('final')
 
-      Ember.run this, ->
-        Ember.run.once this, ->
-          @tryFinalizing()
-          @resetTimeout()
+      Ember.run.once this, ->
+        @tryFinalizing()
+        @resetTimeout()

@@ -1,4 +1,6 @@
 module "Router",
+  setup: ->
+    Ember.run -> Travis.advanceReadiness()
   teardown: ->
     Ember.run -> Travis.reset()
 
