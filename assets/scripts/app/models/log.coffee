@@ -31,7 +31,11 @@ require 'travis/log_chunks'
     if parts = @get('parts')
       parts.destroy()
 
-    parts = Travis.LogChunks.create(content: [], missingPartsCallback: => @fetchMissingParts.apply(this, arguments))
+    if Travis.config.pusher_log_fallback
+      parts = Travis.LogChunks.create(content: [], missingPartsCallback: => @fetchMissingParts.apply(this, arguments))
+    else
+      parts = Ember.ArrayProxy.create(content: [])
+
     @set 'parts', parts
     # @set 'parts', Travis.ChunkBuffer.create(content: [])
 

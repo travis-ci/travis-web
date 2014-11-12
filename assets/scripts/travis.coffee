@@ -88,6 +88,7 @@ $.extend Travis,
     caches_enabled: $('meta[name="travis.caches_enabled"]').attr('value') == 'true'
     show_repos_hint: 'private'
     avatar_default_url: 'https://travis-ci.org/images/mailer/mascot-avatar-40px.png'
+    pusher_log_fallback:  $('meta[name="travis.pusher_log_fallback"]').attr('value') == 'true'
 
   CONFIG_KEYS_MAP: {
     go:          'Go'

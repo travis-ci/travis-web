@@ -35,5 +35,6 @@ run Travis::Web::App.build(
   root:            File.expand_path('../public', __FILE__),
   server_start:    Time.now,
   caches_enabled:  ENV['CACHES_ENABLED'],
-  ssh_key_enabled: ENV['SSH_KEY_ENABLED']
+  ssh_key_enabled: ENV['SSH_KEY_ENABLED'],
+  pusher_log_fallback:  ENV['PUSHER_LOG_FALLBACK']
 )
