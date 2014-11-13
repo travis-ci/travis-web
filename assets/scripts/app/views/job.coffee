@@ -3,6 +3,13 @@ Travis.reopen
     templateName: 'jobs/list'
     buildBinding: 'controller.build'
 
+    jobTableId: Ember.computed(->
+      if @get('required')
+        'jobs'
+      else
+        'allowed_failure_jobs'
+    )
+
   JobsItemView: Travis.View.extend
     tagName: 'tr'
     classNameBindings: ['color']

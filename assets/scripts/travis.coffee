@@ -158,6 +158,15 @@ Travis.initializer
       s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(ga, s)
 
+Travis.initializer
+  name: 'inject-config'
+
+  initialize: (container, application) ->
+    application.register 'config:main', Travis.config, { instantiate: false }
+
+    application.inject('controller', 'config', 'config:main')
+
+
 Travis.Router.reopen
   didTransition: ->
     @_super.apply @, arguments

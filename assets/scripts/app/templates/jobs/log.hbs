@@ -1,5 +1,5 @@
 {{#if view.log.isLoaded}}
-  {{view Travis.PreView jobBinding="view.job" logBinding="view.log"}}
+  {{view 'pre' job=view.job log=view.log}}
 {{else}}
   <div id="log" class="loading">
     <span>Loading</span>

@@ -21,9 +21,9 @@ Travis.reopen
       # TODO: look into fixing it in more general way
       Ember.run.schedule('afterRender', this, ->
         pane = Ember.get('_outlets.pane')
-        if @get('controller.repo.isLoaded') && @state == 'inDOM' &&
+        if @get('controller.repo.isLoaded') && @_state == 'inDOM' &&
            @get('controller.repo.lastBuild') &&
-           @get('controller.tab') == 'current' && (!pane || pane.state == 'destroyed')
+           @get('controller.tab') == 'current' && (!pane || pane._state == 'destroyed')
           view = @get('controller.container').lookup('view:build')
           view.set('controller', @get('controller.container').lookup('controller:build'))
           Ember.run.next =>

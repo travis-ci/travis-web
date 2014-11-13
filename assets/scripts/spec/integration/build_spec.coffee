@@ -5,53 +5,56 @@ module "Build page",
     Ember.run -> Travis.reset()
 
 test "displaying information on build page", ->
-  visit('/travis-ci/travis-core/builds').then ->
-    visit('/travis-ci/travis-core/builds/1').then ->
-      listsRepos [
-        { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }
-        { slug: 'travis-ci/travis-core',   build: { number: 1, url: '/travis-ci/travis-core/builds/1',   duration: '30 sec', finishedAt: '3 minutes ago' } }
-        { slug: 'travis-ci/travis-assets', build: { number: 3, url: '/travis-ci/travis-assets/builds/3', duration: '30 sec', finishedAt: 'a day ago' } }
+  visit('/travis-ci/travis-core/builds')
+  visit('/travis-ci/travis-core/builds/1')
+  andThen(->
+    listsRepos [
+      { slug: 'travis-ci/travis-hub',    build: { number: 4, url: '/travis-ci/travis-hub/builds/4',    duration: '1 min', finishedAt: '-' } }
+      { slug: 'travis-ci/travis-core',   build: { number: 1, url: '/travis-ci/travis-core/builds/1',   duration: '30 sec', finishedAt: '3 minutes ago' } }
+      { slug: 'travis-ci/travis-assets', build: { number: 3, url: '/travis-ci/travis-assets/builds/3', duration: '30 sec', finishedAt: 'a day ago' } }
+    ]
+
+    displaysRepository
+      href: '/travis-ci/travis-core'
+
+    displaysSummary
+      type: 'build'
+      id: 1
+      repo: 'travis-ci/travis-core'
+      commit: '1234567'
+      branch: 'master'
+      compare: '0123456..1234567'
+      finishedAt: '3 minutes ago'
+      duration: '30 sec'
+      message: 'commit message 1'
+
+    displaysSummaryGravatars
+      authorEmail: 'author@email.com'
+      committerEmail: 'committer@email.com'
+
+
+    displaysTabs
+      current: { href: '/travis-ci/travis-core' }
+      builds:  { href: '/travis-ci/travis-core/builds' }
+      build:   { href: '/travis-ci/travis-core/builds/1', active: true }
+      job:     { hidden: true }
+
+    listsJobs
+      table: '#jobs'
+      headers: ['Job', 'Duration', 'Finished', 'Ruby']
+      jobs: [
+        { color: 'green', id: 1, number: '1.1', repo: 'travis-ci/travis-core', finishedAt: '3 minutes ago', duration: '30 sec', rvm: 'rbx' }
+        { color: 'red',   id: 2, number: '1.2', repo: 'travis-ci/travis-core', finishedAt: '2 minutes ago', duration: '40 sec', rvm: '1.9.3' }
       ]
 
-      displaysRepository
-        href: '/travis-ci/travis-core'
+    listsJobs
+      table: '#allowed_failure_jobs'
+      headers: ['Job', 'Duration', 'Finished', 'Ruby']
+      jobs: [
+        { color: '', id: 3, number: '1.3', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: 'jruby' }
+      ]
+  )
 
-      displaysSummary
-        type: 'build'
-        id: 1
-        repo: 'travis-ci/travis-core'
-        commit: '1234567'
-        branch: 'master'
-        compare: '0123456..1234567'
-        finishedAt: '3 minutes ago'
-        duration: '30 sec'
-        message: 'commit message 1'
-
-      displaysSummaryGravatars
-        authorEmail: 'author@email.com'
-        committerEmail: 'committer@email.com'
-
-
-      displaysTabs
-        current: { href: '/travis-ci/travis-core' }
-        builds:  { href: '/travis-ci/travis-core/builds' }
-        build:   { href: '/travis-ci/travis-core/builds/1', active: true }
-        job:     { hidden: true }
-
-      listsJobs
-        table: '#jobs'
-        headers: ['Job', 'Duration', 'Finished', 'Ruby']
-        jobs: [
-          { color: 'green', id: 1, number: '1.1', repo: 'travis-ci/travis-core', finishedAt: '3 minutes ago', duration: '30 sec', rvm: 'rbx' }
-          { color: 'red',   id: 2, number: '1.2', repo: 'travis-ci/travis-core', finishedAt: '2 minutes ago', duration: '40 sec', rvm: '1.9.3' }
-        ]
-
-      listsJobs
-        table: '#allowed_failure_jobs'
-        headers: ['Job', 'Duration', 'Finished', 'Ruby']
-        jobs: [
-          { color: '', id: 3, number: '1.3', repo: 'travis-ci/travis-core', finishedAt: '-', duration: '-', rvm: 'jruby' }
-        ]
 
 test "updating current build", ->
   visit('/travis-ci/travis-core').then ->

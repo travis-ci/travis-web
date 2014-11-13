@@ -19,7 +19,7 @@
     <li>
       {{#link-to "requests" view.repo}}Requests{{/link-to}}
     </li>
-    {{#if Travis.config.caches_enabled}}
+    {{#if config.caches_enabled}}
       <li>
         {{#link-to "caches" view.repo}}Caches{{/link-to}}
       </li>
@@ -65,7 +65,7 @@
   <p>
     Integrating <a href="https://codeclimate.com">Code Climate's test coverage</a> reporting with your test
     suite on Travis CI allows to track changes in coverage over time. If you haven't tried it out already, <a
-    {{bind-attr href="Travis.config.code_climate_url"}}" target="_blank">sign
+    {{bind-attr href=config.code_climate_url}}" target="_blank">sign
     up today</a> to improve your code's quality. New customers get 20% off for the first three months!
   </p>
 

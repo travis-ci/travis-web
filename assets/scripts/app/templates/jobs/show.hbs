@@ -62,9 +62,9 @@
       </div>
     </div>
 
-    {{view Travis.AnnotationsView annotationsBinding="view.annotations"}}
+    {{view 'annotations' annotations=view.annotations}}
 
-    {{view Travis.LogView jobBinding="job"}}
+    {{view 'log' job=job}}
   </div>
 {{else}}
   <div id="job" class="loading">

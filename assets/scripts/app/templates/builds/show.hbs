@@ -64,13 +64,13 @@
   </div>
 
   {{#unless build.isMatrix}}
-    {{view Travis.AnnotationsView annotationsBinding="build.jobs.firstObject.annotations"}}
+    {{view 'annotations' annotations=build.jobs.firstObject.annotations}}
   {{/unless}}
 
   {{#if build.isMatrix}}
-    {{view Travis.JobsView jobsBinding="build.requiredJobs" required="true"}}
-    {{view Travis.JobsView jobsBinding="build.allowedFailureJobs"}}
+    {{view 'jobs' jobs=build.requiredJobs required="true"}}
+    {{view 'jobs' jobs=build.allowedFailureJobs}}
   {{else}}
-    {{view Travis.LogView jobBinding="build.jobs.firstObject"}}
+    {{view 'log' job=build.jobs.firstObject}}
   {{/if}}
 {{/if}}

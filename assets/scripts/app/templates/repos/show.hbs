@@ -7,20 +7,19 @@
         <div id="repo-header">
           <h3>{{#link-to "repo" this}}{{slug}}{{/link-to}}</h3>
           <div class="github-icon"><a {{bind-attr href="controller.urlGithub"}}><img src="/images/icons/github.svg" width="21" height="21"/></a></div>
-
           <div class="status-image">
             <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target="view"}}>
             <img {{bind-attr src="view.statusImageUrl"}} title="Build Status Images"/>
             </a>
           </div>
 
-          {{view Travis.RepoShowToolsView}}
+          {{view 'repo-show-tools'}}
         </div>
 
         <p class="description">{{description}}</p>
 
-        {{view Travis.RepoShowTabsView}}
-        {{view Travis.RepoActionsView}}
+        {{view 'repo-show-tabs'}}
+        {{view 'repo-actions'}}
       {{/with}}
 
       <div class="tab">
