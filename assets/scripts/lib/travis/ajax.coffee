@@ -27,6 +27,9 @@ Travis.ajax = Em.Object.create
     !publicEndpoint || privateEndpoint
 
   ajax: (url, method, options) ->
+    # TODO: we have our own ajax implementation, because jQuery didn't
+    #       properly worked with headers on firefox, it would be nice to check
+    #       if this is still a problem and if we can remove this
     method = method || "GET"
     method = method.toUpperCase()
 
@@ -135,6 +138,10 @@ Travis.ajax = Em.Object.create
           reject(xhr)
           options.error.call(data, xhr.status, xhr)
 
-    xhr.send(options.data)
+    data = options.data
+    if typeof(options.data) == "object" && (Ember.isNone(options.contentType) || options.contentType.match /application\/json/)
+      data = JSON.stringify(data)
+
+    xhr.send(data)
 
     return promise
