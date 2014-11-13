@@ -25,14 +25,6 @@ Travis.TopController = Em.Controller.extend
     Travis.get('authState') == 'signing-in'
   ).property('Travis.authState')
 
-Travis.ApplicationController = Em.Controller.extend
-  templateName: 'layouts/home'
-
-  connectLayout: (name) ->
-    name = "layouts/#{name}"
-    if @get('templateName') != name
-      @set('templateName', name)
-
 Travis.MainController = Em.Controller.extend()
 Travis.StatsLayoutController = Em.Controller.extend()
 Travis.ProfileLayoutController = Em.Controller.extend()

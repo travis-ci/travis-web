@@ -21,10 +21,20 @@ Em.View.reopen
 
       $('.popup').removeClass('display')
 
+Travis.IndexView = Travis.View.extend
+  layoutName: 'layouts/home'
+  classNames: ['application']
+
 Travis.GettingStartedView = Travis.View.extend
   templateName: 'no_owned_repos'
 
+Travis.InsufficientOauthPermissionsView = Travis.View.extend
+  layoutName: 'layouts/simple'
+  classNames: ['application']
+
 Travis.FirstSyncView = Travis.View.extend
+  layoutName: 'layouts/simple'
+  classNames: ['application']
   didInsertElement: ->
     this.addObserver('controller.isSyncing', this, this.isSyncingDidChange)
 

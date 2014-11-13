@@ -1,17 +1,17 @@
 <ul class="tabs">
   <li id="tab_owned" {{bind-attr class="view.classOwned"}}>
-    <h5><a {{action "activate" "owned" target="view"}}>My Repositories</a></h5>
+    <h5><a {{action "activate" "owned"}}>My Repositories</a></h5>
   </li>
 
   <li id="tab_recent" {{bind-attr class="view.classRecent"}}>
-    <h5><a {{action "activate" "recent" target="view"}}>Recent</a></h5>
+    <h5><a {{action "activate" "recent"}}>Recent</a></h5>
   </li>
 
   <li id="tab_search" {{bind-attr class="view.classSearch"}}>
-    <h5><a {{action "activate" "search" target="view"}}>Search</a></h5>
+    <h5><a {{action "activate" "search"}}>Search</a></h5>
   </li>
 
   <li id="tab_new" {{bind-attr class="view.classNew"}}>
-    <h5>{{#link-to "profile.index" trackEvent="add-repository-from-list" title="Add New Repository"}}+{{/link-to}}</h5>
+    <h5>{{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}+{{/link-to}}</h5>
   </li>
 </ul>

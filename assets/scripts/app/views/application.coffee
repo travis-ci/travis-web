@@ -1,12 +1,5 @@
 Travis.reopen
   ApplicationView: Travis.View.extend
-    templateName: Ember.computed.alias('controller.templateName')
-    classNames: ['application']
-
-    templateNameDidChange: (->
-      @rerender()
-    ).observes('templateName')
-
     click: (event) ->
       # TODO: this solves the case of closing menus and popups,
       #       but I would like to rewrite it later, not sure how

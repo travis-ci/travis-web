@@ -1,6 +1,8 @@
 Travis.reopen
   ProfileView: Travis.View.extend
     templateName: 'profile/show'
+    layoutName: 'layouts/profile'
+    classNames: ['application']
     accountBinding: 'controller.account'
 
     name: (->

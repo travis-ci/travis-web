@@ -1,6 +1,11 @@
 require 'travis/limited_array'
 
 Travis.ReposController = Ember.ArrayController.extend
+  actions:
+    activate: (name) ->
+      @transitionToRoot()
+      @activate(name)
+
   defaultTab: ( ->
     if @get('currentUser.id')
       'owned'

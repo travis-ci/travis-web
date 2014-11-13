@@ -74,8 +74,9 @@ Travis.Router.map ->
   @route 'auth', path: '/auth'
 
   @resource 'profile', path: '/profile', ->
-    @resource 'account', path: '/:login'
-    @route 'info', path: '/info'
+    @resource 'accounts', path: '/', ->
+      @resource 'account', path: '/:login'
+      @route 'info', path: '/info'
 
   @route 'notFound', path: "/*path"
 
@@ -130,7 +131,6 @@ Travis.SimpleLayoutRoute = Travis.Route.extend
   setupController: ->
     $('body').attr('id', 'home')
     @container.lookup('controller:repos').activate()
-    @container.lookup('controller:application').connectLayout 'simple'
     @_super.apply(this, arguments)
 
   renderTemplate: ->
@@ -295,11 +295,12 @@ Travis.IndexRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'home')
 
-    @render 'repos',   outlet: 'left'
+    @_super.apply this, arguments
+
+    @render 'repos',   outlet: 'left', into: 'index'
 
   setupController: (controller)->
     @container.lookup('controller:repos').activate()
-    @container.lookup('controller:application').connectLayout 'home'
 
 Travis.StatsRoute = Travis.Route.extend
   renderTemplate: ->
@@ -307,42 +308,39 @@ Travis.StatsRoute = Travis.Route.extend
 
     @render 'stats'
 
-  setupController: ->
-    @container.lookup('controller:application').connectLayout('simple')
-
 Travis.NotFoundRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'not-found')
 
     @render 'not_found'
 
-  setupController: ->
-    @container.lookup('controller:application').connectLayout('simple')
-
 Travis.ProfileRoute = Travis.Route.extend
   needsAuth: true
 
   setupController: (controller, model) ->
-    @container.lookup('controller:application').connectLayout('profile')
     @controllerFor('accounts').set('model', model)
 
+  renderTemplate: ->
+    $('body').attr('id', 'profile')
+    @_super.apply(this, arguments)
+    @render 'loading', outlet: 'left', into: 'profile'
+
+Travis.AccountsRoute = Travis.Route.extend
   model: ->
     Travis.Account.fetch(all: true)
 
   renderTemplate: ->
-    $('body').attr('id', 'profile')
-    @render 'accounts', outlet: 'left'
-
     @_super.apply(this, arguments)
+    @render 'profile_accounts', outlet: 'left', into: 'profile'
 
-Travis.ProfileIndexRoute = Travis.Route.extend
+Travis.AccountsIndexRoute = Travis.Route.extend
   redirect: ->
     # TODO: setting accounts model in ProfileRoute is wrong, but
     #       at this stage it's better than what we had before
-    accounts = @modelFor('profile')
+    accounts = @modelFor('accounts')
     login    = @controllerFor('currentUser').get('login')
     account  = accounts.find (account) -> account.get('login') == login
-    @transitionTo 'account', account
+    @replaceWith 'account', account
 
 Travis.AccountRoute = Travis.Route.extend
   setupController: (controller, account) ->
@@ -351,7 +349,7 @@ Travis.AccountRoute = Travis.Route.extend
     @controllerFor('profile').activate 'hooks'
 
   model: (params) ->
-    @modelFor('profile').find (account) -> account.get('login') == params.login
+    @modelFor('accounts').find (account) -> account.get('login') == params.login
 
   serialize: (account) ->
     if account && account.get
@@ -371,9 +369,6 @@ Travis.AuthRoute = Travis.Route.extend
     $('body').attr('id', 'auth')
 
     @render 'auth.signin'
-
-  setupController: ->
-    @container.lookup('controller:application').connectLayout('simple')
 
   deactivate: ->
     @controllerFor('auth').set('redirected', false)

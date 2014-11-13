@@ -1,5 +1,5 @@
 @Travis.reopen
-  AccountsView: Travis.View.extend
+  ProfileAccountsView: Travis.View.extend
     tabBinding: 'controller.tab'
     templateName: 'profile/accounts'
     classAccounts: (->
