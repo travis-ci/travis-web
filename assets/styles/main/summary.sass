@@ -24,9 +24,8 @@
   @include clearfix
   @include border-radius(4px)
   background-color: #fafafa
-  padding: 2px 11px
-  margin-bottom: 20px
-  padding-bottom: 10px
+  padding: 0 11px 0 0
+  position: relative
 
   .branch
     font-weight: bold
@@ -49,12 +48,15 @@
 
   .body
     min-width: 500px
+    max-height: 63px
     display: block
     font-size: 12px
     font-family: Monaco, 'Liberation Mono', Courier, monospace
     margin-bottom: 0px
     margin-top: 10px
-    white-space: pre-wrap
+    text-overflow: ellipsis
+    white-space: nowrap
+    overflow: hidden
 
     a
       text-decoration: underline
@@ -142,6 +144,20 @@
     width: 220px
     font-size: 11px
 
+  .request-kind
+    background-color: #e8e9ea
+    opacity: 0.6
+    float: left
+    position: relative
+    display: block
+    width: 40px
+    height: 145px
+    margin-right: 10px
+
+  .kind-icon
+    padding-top: 13px
+    padding-left: 9px
+
   .footer
     a
       color: #818181
@@ -160,6 +176,9 @@
     .author
       float: left
       margin-top: 10px
+      position: absolute
+      bottom: 7px
+      left: 65px
 
       div
         display: inline

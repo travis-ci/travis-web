@@ -2,6 +2,11 @@
   <span>Loading</span>
 {{else}}
   <div id="new-summary">
+    <div class="request-kind">
+      <div class="kind-icon">
+        <img src="/images/icons/pull-request.svg" width="21" height="21"/>
+      </div>
+    </div>
     <div class="right">
       <div class="build-status">
         {{#link-to "build" repo build}}#{{build.number}} {{build.state}}{{/link-to}}
