@@ -43,6 +43,15 @@ html, body
   background-color: #fbfbfa
   border-right: 1px solid $color-border-normal
 
+.duration_label
+  display: inline-block
+  height: 14px
+  line-height: 16px
+  margin-right: 1px
+  overflow: hidden
+  background: inline-image('ui/clock.svg') no-repeat 0px 3px
+  background-size: contain
+
 
 @media screen and (max-width: 980px)
   #left
@@ -75,7 +84,7 @@ html, body
     width: 11px
     height: 14px
     margin-right: 1px
-    text-indent: -200px
+    text-indent: 10px
     overflow: hidden
     background: inline-image('ui/clock.svg') no-repeat 0px 3px
     background-size: contain
