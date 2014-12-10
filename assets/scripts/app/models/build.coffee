@@ -15,6 +15,8 @@ require 'travis/model'
   pullRequest:      Ember.attr('boolean')
   pullRequestTitle: Ember.attr('string')
   pullRequestNumber: Ember.attr(Number)
+  # TODO add eventType to the api for api build requests
+  # eventType:        Ember.attr('string')
 
   repo:   Ember.belongsTo('Travis.Repo', key: 'repository_id')
   commit: Ember.belongsTo('Travis.Commit')
@@ -23,6 +25,11 @@ require 'travis/model'
   config: (->
     Travis.Helpers.compact(@get('_config'))
   ).property('_config')
+
+  # TODO add eventType to the api for api build requests
+  eventType: (->
+    if @get('pullRequest') then 'pull_request' else 'push'
+  ).property('pull_request')
 
   isPullRequest: (->
     @get('eventType') == 'pull_request' || @get('pullRequest')
