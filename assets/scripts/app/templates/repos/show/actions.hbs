@@ -38,12 +38,12 @@
       <li class="icon download-log" title="Download Log">
         <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}></a>
       </li>
-      {{#if view.displayRemoveLog}}
+       <!-- {{#if view.displayRemoveLog}}
         <li class="icon remove-log" title="Remove Log">
           <a href="#" {{action "removeLog" target="view"}}
             {{bind-attr class="view.canRemoveLog::disabled"}}></a>
         </li>
-      {{/if}}
+      {{/if}} -->
     {{/if}}
     {{#if view.displayCodeClimate}}
       <li class="icon code-climate" title="Test Coverage with Code Climate">
