@@ -141,10 +141,8 @@ Travis.reopen
         error: ->
           Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 
-    displayRegenerateKey: true
-
     canRegenerateKey: (->
-      @get('displayRegenerateKey') && @get('hasAdminPermission')
+      @get('hasAdminPermission')
     ).property('hasAdminPermission')
 
     hasPermission: (->
@@ -161,6 +159,10 @@ Travis.reopen
       if permissions = @get('currentUser.adminPermissions')
         permissions.contains parseInt(@get('repo.id'))
     ).property('currentUser.adminPermissions.length', 'repo.id')
+
+    displayRegenerateKey: (->
+      @get('canRegenerateKey')
+    ).property('canRegenerateKey')
 
     displaySettingsLink: (->
       @get('hasPushPermission')
