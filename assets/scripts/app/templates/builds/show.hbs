@@ -3,9 +3,9 @@
 {{else}}
   <div id="new-summary">
     <div class="request-kind">
-      <div class=":kind-icon push">
+      <div {{bind-attr class=":kind-icon build.eventType"}}>
+      </div>
     </div>
-  </div>
     <div class="right">
       <div class="build-status">
         {{#link-to "build" repo build}}#{{build.number}} {{build.state}}{{/link-to}}
