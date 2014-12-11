@@ -108,6 +108,9 @@ $.extend Travis,
     ruby:        'Ruby'
     xcode_sdk:   'Xcode SDK'
     xcode_scheme:'Xcode Scheme'
+    d:           'D'
+    julia:       'Julia'
+    csharp:      'C#'
   }
 
   QUEUES: [
