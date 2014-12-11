@@ -79,7 +79,6 @@ end
 
 output 'public/images'
 input assets.images do
-  skip %r(^ui/)
   match '**/*' do
     copy
   end
