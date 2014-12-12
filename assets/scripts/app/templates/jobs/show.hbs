@@ -29,7 +29,7 @@
         </div>
         <div class="commit-changes">
           {{#if job.build.pullRequest}}
-            <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>#{{build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
+            <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>#{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
           {{else}}
             {{#if job.build.commit.compareUrl}}
               <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>Compare {{shortCompareShas job.build.commit.compareUrl}}</a></div>
