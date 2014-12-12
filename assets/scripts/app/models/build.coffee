@@ -29,7 +29,7 @@ require 'travis/model'
   # TODO add eventType to the api for api build requests
   eventType: (->
     if @get('pullRequest') then 'pull_request' else 'push'
-  ).property('pull_request')
+  ).property('pullRequest')
 
   isPullRequest: (->
     @get('eventType') == 'pull_request' || @get('pullRequest')
