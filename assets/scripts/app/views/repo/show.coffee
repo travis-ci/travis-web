@@ -3,6 +3,10 @@ Travis.reopen
     templateName: 'repos/show'
 
     reposBinding: 'controllers.repos'
+    repoBinding: 'controller.repo'
+    buildBinding: 'controller.build'
+    jobBinding: 'controller.job'
+    tabBinding: 'controller.tab'
 
     classNameBindings: ['controller.isLoading:loading']
 
