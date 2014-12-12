@@ -22,11 +22,6 @@ require 'travis/model'
 
   _config: Ember.attr('object', key: 'config')
 
-  # TODO add eventType to the api for api build requests
-  eventType: (->
-    if @get('pullRequest') then 'pull_request' else 'push'
-  ).property('pull_request')
-
   log: ( ->
     @set('isLogAccessed', true)
     Travis.Log.create(job: this)
