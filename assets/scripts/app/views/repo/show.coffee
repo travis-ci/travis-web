@@ -3,6 +3,10 @@ Travis.reopen
     templateName: 'repos/show'
 
     reposBinding: 'controllers.repos'
+    repoBinding: 'controller.repo'
+    buildBinding: 'controller.build'
+    jobBinding: 'controller.job'
+    tabBinding: 'controller.tab'
 
     classNameBindings: ['controller.isLoading:loading']
 
@@ -27,6 +31,17 @@ Travis.reopen
             @connectOutlet('pane',  view) unless @isDestroyed
       )
     ).observes('controller.repo.isLoaded')
+
+    statusImages: ->
+      @popupCloseAll()
+      view = Travis.StatusImagesView.create(toolsView: this)
+      Travis.View.currentPopupView = view
+      view.appendTo($('body'))
+      event.stopPropagation()
+
+    statusImageUrl: (->
+      Travis.Urls.statusImage(@get('controller.repo.slug'))
+    ).property('controller.repo.slug')
 
   ReposEmptyView: Travis.View.extend
     template: ''
@@ -130,10 +145,8 @@ Travis.reopen
         error: ->
           Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 
-    displayRegenerateKey: true
-
     canRegenerateKey: (->
-      @get('displayRegenerateKey') && @get('hasAdminPermission')
+      @get('hasAdminPermission')
     ).property('hasAdminPermission')
 
     hasPermission: (->
@@ -151,9 +164,9 @@ Travis.reopen
         permissions.contains parseInt(@get('repo.id'))
     ).property('currentUser.adminPermissions.length', 'repo.id')
 
-    statusImageUrl: (->
-      Travis.Urls.statusImage(@get('slug'))
-    ).property('slug')
+    displayRegenerateKey: (->
+      @get('canRegenerateKey')
+    ).property('canRegenerateKey')
 
     displaySettingsLink: (->
       @get('hasPushPermission')
@@ -162,14 +175,6 @@ Travis.reopen
     displayStatusImages: (->
       @get('hasPermission')
     ).property('hasPermission')
-
-    statusImages: ->
-      @popupCloseAll()
-      view = Travis.StatusImagesView.create(toolsView: this)
-      Travis.View.currentPopupView = view
-      view.appendTo($('body'))
-      event.stopPropagation()
-
 
   RepoActionsView: Travis.View.extend
     templateName: 'repos/show/actions'
@@ -192,6 +197,20 @@ Travis.reopen
             Travis.flash(error: 'You don\'t have sufficient access to cancel this build')
           else
             Travis.flash(error: 'An error occured when canceling the build')
+
+
+    removeLog: ->
+      if @get('canRemoveLog')
+        job = @get('job') || @get('build.jobs.firstObject')
+        job.removeLog().then ->
+          Travis.flash(success: 'Log has been successfully removed.')
+        , (xhr) ->
+          if xhr.status == 409
+            Travis.flash(error: 'Log can\'t be removed')
+          else if xhr.status == 401
+            Travis.flash(error: 'You don\'t have sufficient access to remove the log')
+          else
+            Travis.flash(error: 'An error occured when removing the log')
 
     cancelJob: ->
       if @get('canCancelJob')
@@ -245,6 +264,14 @@ Travis.reopen
       if id = @get('jobIdForLog')
         Travis.Urls.plainTextLog(id)
     ).property('jobIdForLog')
+
+    canRemoveLog: (->
+      @get('displayRemoveLog') && @get('hasPermission')
+    ).property('displayRemoveLog', 'hasPermission')
+
+    displayRemoveLog: (->
+      (@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) && @get('build.jobs.firstObject.canRemoveLog')
+    ).property('isJobTab', 'isBuildTab', 'build.jobs.length', 'job.canRemoveLog')
 
     canCancelBuild: (->
       @get('displayCancelBuild') && @get('hasPermission')

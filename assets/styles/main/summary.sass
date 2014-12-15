@@ -1,28 +1,35 @@
 @import "_mixins/all"
 
 .green .build-status
-  background-color: #0d8136
+  background: #549e54 inline-image('icons/state-passed-white.svg') no-repeat
+  background-size: 14px 14px
+  background-position: 12px 12px
 
 .yellow .build-status
-  background-color: #e7d700
+  background: #bcaf39 inline-image('icons/state-pending-white.svg') no-repeat
+  background-size: 14px 14px
+  background-position: 12px 12px
 
 .red .build-status
-  background-color: #e10000
+  background: #b54223 inline-image('icons/state-failed-white.svg') no-repeat
+  background-size: 14px 14px
+  background-position: 12px 12px
 
 .gray .build-status
-  background-color: #a8a8a9
+  background: #a8a8a9 inline-image('icons/state-errored-white.svg') no-repeat
+  background-size: 14px 14px
+  background-position: 12px 12px
 
 #new-summary
   @include clearfix
-  @include border-radius(5px)
+  @include border-radius(4px)
   background-color: #fafafa
-  min-height: 30px
-  padding: 2px 11px
-  margin-bottom: 20px
-  padding-bottom: 10px
+  padding: 0 11px 0 0
+  position: relative
 
   .branch
     font-weight: bold
+    color: #6c878e
     font-size: 16px
     max-width: 300px
     display: inline-block
@@ -33,67 +40,116 @@
   .subject
     display: inline-block
     font-size: 15px
+    color: #6c878e
     margin-top: 10px
     overflow: hidden
     margin-right: 2px
     line-height: 20px
 
   .body
-    min-width: 500px
+    max-height: 63px
     display: block
-    min-height: 30px
     font-size: 12px
     font-family: Monaco, 'Liberation Mono', Courier, monospace
     margin-bottom: 0px
     margin-top: 10px
-    white-space: pre-wrap
+    text-overflow: ellipsis
+    white-space: nowrap
+    overflow: hidden
 
     a
       text-decoration: underline
-  
+
   .build-status
     @include border-radius(4px)
-    float: right
-    min-height: 30px
-    min-width: 90px
     color: white
-    padding-top: 5px
-    padding-left: 10px
-    padding-right: 10px
+    padding: 8px 0
     font-size: 16px
-    text-align: center
+    text-align: left
+    padding-left: 10px
 
     a
       color: white
+      padding-left: 21px
 
   .runtime
-    float: right
+    background-image: inline-image('icons/run-time.svg')
+
+  .finished
+    background-image: inline-image('icons/finished.svg')
+
+  .tags
+    background-image: inline-image('icons/tags.svg')
+
+  .commit-changes
+    background-image: inline-image('icons/github.svg')
+
+  .runtime
+    margin-top: 5px
+
+  .runtime, .finished, .tags, .commit-changes
+    background-position: left center
+    background-repeat: no-repeat
+    background-size: 14px 14px
+    padding-left: 20px
     font-size: 13px
     display: block
     width: 100%
-    text-align: right
-    line-height: 15px
-    margin-top: 5px
+    height: 24px
+    text-align: left
+    line-height: 24px
+    margin-left: 12px
 
-  .finished
-    float: right
-    font-size: 13px
-    width: 100%
-    text-align: right
-    line-height: 20px
+  .commit-changes
+    div
+      display: inline
+      clear: none
+      height: 24px
+
+    a
+      text-overflow: ellipsis
+      white-space: nowrap
+      overflow: hidden
+      display: inline-block
+      max-width: 175px
+      line-height: 24px
 
   .right
     margin-top: 10px
     float: right
-    width: 150px
+    width: 220px
     font-size: 11px
+
+  .request-kind
+    background-color: #e8e9ea
+    opacity: 0.6
+    float: left
+    position: relative
+    display: block
+    height: 140px
+    margin-right: 10px
+    padding: 15px 10px 0 10px
+    
+    .kind-icon.push
+      background: inline-image('icons/push.svg') no-repeat
+      background-size: contain
+      height: 21px
+      width: 21px
+
+    .kind-icon.pull_request
+      background: inline-image('icons/pull-request.svg') no-repeat 2px
+      background-size: contain
+      height: 21px
+      width: 21px
 
   .footer
     a
+      color: #818181
       text-decoration: underline
 
     img
       vertical-align: middle
+      border-radius: 100px
 
     .text
       line-height: 15px
@@ -101,28 +157,17 @@
       position: relative
       top: 2px
 
-    .commit-changes
-      text-align: right
-      width: inherit
-      margin-top: 0px
-      float: right
-
-      div
-        display: inline
-        clear: none
-
-      img
-        margin-right: 2px
-        margin-left: 4px
-        height: 16px
-        width: 16px
-
     .author
       float: left
+      margin-top: 10px
+      position: absolute
+      bottom: 9px
+      left: 48px
 
       div
         display: inline
         clear: none
+        color: #818181
 
       img
         height: 16px
@@ -161,7 +206,7 @@
   .message
     white-space: normal
     min-width: 0
-  
+
     pre
       font-size: 12px
       display: inline-block

@@ -43,6 +43,16 @@ html, body
   background-color: #fbfbfa
   border-right: 1px solid $color-border-normal
 
+.duration_label
+  display: inline-block
+  height: 11px
+  line-height: 13px
+  text-indent: 14px
+  margin-right: 1px
+  overflow: hidden
+  background: inline-image('ui/clock.svg') no-repeat 0px 0px
+  background-size: contain
+
 
 @media screen and (max-width: 980px)
   #left
@@ -73,18 +83,18 @@ html, body
   #left .duration_label
     display: inline-block
     width: 11px
-    height: 14px
+    height: 11px
     margin-right: 1px
-    text-indent: -200px
+    text-indent: 10px
     overflow: hidden
-    background: inline-image('ui/clock.svg') no-repeat 0px 3px
+    background: inline-image('ui/clock.svg') no-repeat 0px 0px
     background-size: contain
 
-@media screen and (max-width: 1310px)
+@media screen and (max-width: 1400px)
   #left .finished_at_label
     display: none
 
-@media screen and (max-width: 1310px)
+@media screen and (max-width: 1400px)
   table#builds .committer
     display: none
 

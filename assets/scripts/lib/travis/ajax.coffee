@@ -14,6 +14,9 @@ Travis.ajax = Em.Object.create
   post: (url, data, callback) ->
     @ajax(url, 'post', data: data, success: callback)
 
+  patch: (url, data, callback) ->
+    @ajax(url, 'patch', data: data, success: callback)
+
   needsAuth: (method, url) ->
     return true if Travis.ajax.pro
     return true if method != 'GET'

@@ -2,15 +2,15 @@
 
 .tabs
   height: 29px
-  border-bottom: 1px solid #ccc
 
   li
     display: inline-block
     height: 28px
-    margin-right: 10px
     vertical-align: top
-    background-color: $color-bg-tab
-    border: 1px solid $color-border-light
+    background-color: #f8f8f8
+    border-radius: 4px 4px 0px 0px
+    padding: 0 12px 0 12px
+    margin-right: 10px
     white-space: nowrap
     cursor: pointer
 
@@ -21,6 +21,10 @@
     background-color: $color-bg-tab-active
     border-bottom-color: $color-bg-tab-active
 
+    a
+      color: #666666
+      font-weight: 600
+
   h5
     margin: 0
     font-size: $font-size-small
@@ -30,12 +34,12 @@
 
     a
       display: block
-      padding: 0 10px
+      color: #a8a9ab
+
 
 #left
   .tabs
-    padding-left: 20px
-    margin-top: -29px
+    margin: -28px 20px 0 15px
 
   #tab_search:not(.active)
     display: none
@@ -48,7 +52,10 @@
     display: none
     height: 25px
     width: 26px
+    margin-top: 3px
     float: right
+    margin-right: 0
+    padding: 0 5px 0 5px
 
     h5
       line-height: 25px
@@ -58,25 +65,40 @@
 
 #main
   .tabs
-    margin-top: 35px
-    h5
-      min-width: 65px
+    border-bottom: 3px solid #f5f5f6
+    
+    li
+      height: 30px
+      background-color: #f5f5f6
+      margin-right: 0
+
+      &:hover
+        background-color: #e1e8eb
+
     a
       text-decoration: none
 
+    .active
+      background-color: #d8e2e6
+      border-bottom-color: #d8e2e6
+
+      &:hover
+        background-color: #d8e2e6
+
+      a
+        color: #6c878e
+
   .tab
-    margin-top: 20px
+    margin-top: 15px
 
     ul.navigation
-      margin: -18px 0 20px 0
       height: 40px
       line-height: 40px
       border-bottom: 1px solid #EAEAEA
-      padding-left: 10px
 
       li
         display: inline-block
-        padding-right: 10px
+        margin-right: 10px
 
         a
           color: #ACACAC
@@ -117,7 +139,6 @@
         margin-right: 0px
       h5
         min-width: 0px
-        a
-          padding: 0px 2px
+        
       #tab_branches
         display: none

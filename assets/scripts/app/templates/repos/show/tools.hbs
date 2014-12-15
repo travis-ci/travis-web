@@ -1,5 +1,5 @@
 <div id="tools">
-  <a href="#" {{action "menu" target="view"}} class="menu-popup-button"></a>
+  <a href="#" {{action "menu" target="view"}} class="menu-popup-button">Settings</a>
 
   <ul class="menu">
    {{#if view.displayRegenerateKey}}
@@ -26,9 +26,6 @@
     {{/if}}
 
   </ul>
-  <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target="view"}}>
-    <img {{bind-attr src="view.statusImageUrl"}} title="Build Status Images"/>
-  </a>
 </div>
 
 <div id="regenerate-key" class="popup">
