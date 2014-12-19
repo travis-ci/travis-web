@@ -23,39 +23,60 @@
 #new-summary
   @include clearfix
   @include border-radius(4px)
-  background-color: #fafafa
-  padding: 0 11px 0 0
+  padding: 0 11px 0 51px
   position: relative
+  min-height: 155px
+
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN4/+HDfwAJcAPPMJixRQAAAABJRU5ErkJggg=='), #fafafa
+  background-size: 41px 100%
+  background-repeat: no-repeat
+
+  .request-kind
+    opacity: 0.55
+    position: absolute
+    top: 15px
+    left: 11px
+    background-size: contain
+    background-repeat: no-repeat
+    height: 21px
+    width: 21px
+
+    &.push
+      background-image: inline-image('icons/push.svg')
+
+    &.pull_request
+      background-image: inline-image('icons/pull-request.svg')
 
   .branch
+    margin-right: 5px
     font-weight: bold
     color: #6c878e
     font-size: 16px
     max-width: 300px
-    display: inline-block
     margin-top: 10px
     overflow: hidden
     white-space: nowrap
+    float: left
 
   .subject
-    display: inline-block
     font-size: 15px
     color: #6c878e
-    margin-top: 10px
+    margin-top: 12px
     overflow: hidden
     margin-right: 2px
     line-height: 20px
+    word-wrap: break-word
+    padding-left: 0.55em
+    text-indent: -0.55em
 
   .body
-    max-height: 63px
     display: block
     font-size: 12px
     font-family: Monaco, 'Liberation Mono', Courier, monospace
-    margin-bottom: 0px
-    margin-top: 10px
-    text-overflow: ellipsis
-    white-space: nowrap
+    margin-bottom: 3.5em
+    margin-top: 17px
     overflow: hidden
+    word-break: break-word
 
     a
       text-decoration: underline
@@ -119,28 +140,6 @@
     float: right
     width: 220px
     font-size: 11px
-
-  .request-kind
-    background-color: #e8e9ea
-    opacity: 0.6
-    float: left
-    position: relative
-    display: block
-    height: 140px
-    margin-right: 10px
-    padding: 15px 10px 0 10px
-    
-    .kind-icon.push
-      background: inline-image('icons/push.svg') no-repeat
-      background-size: contain
-      height: 21px
-      width: 21px
-
-    .kind-icon.pull_request
-      background: inline-image('icons/pull-request.svg') no-repeat 2px
-      background-size: contain
-      height: 21px
-      width: 21px
 
   .footer
     a
