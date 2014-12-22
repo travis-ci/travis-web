@@ -37,12 +37,15 @@
       </div>
     </div>
 
-    <div class="branch" {{bind-attr title="build.commit.branch"}}>
-      {{build.commit.branch}}
-    </div>
+    <div class="mainline">
+      <div class="branch" {{bind-attr title="build.commit.branch"}}>
+        {{build.commit.branch}} this is a long branch name
+      </div>
 
-    <div class="subject">
-    - {{formatMessage build.commit.subject repoBinding=build.repo}}
+      <div class="subject">
+      - {{formatMessage build.commit.subject repoBinding=build.repo}} this is a
+      long commit message line
+      </div>
     </div>
 
     <pre class="body">{{formatMessage build.commit.body repoBinding=build.repo pre=true}}</pre>

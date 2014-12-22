@@ -26,10 +26,18 @@
   padding: 0 11px 0 51px
   position: relative
   min-height: 155px
+  padding-right: 240px
 
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN4/+HDfwAJcAPPMJixRQAAAABJRU5ErkJggg=='), #fafafa
   background-size: 41px 100%
   background-repeat: no-repeat
+
+  .mainline
+    display: flex
+    width: 100%
+    flex-wrap: wrap
+    margin: 0 auto
+    align-items: flex-start
 
   .request-kind
     opacity: 0.55
@@ -136,10 +144,11 @@
       line-height: 24px
 
   .right
-    margin-top: 10px
-    float: right
     width: 220px
     font-size: 11px
+    top: 10px
+    right: 10px
+    position: absolute
 
   .footer
     a
