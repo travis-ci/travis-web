@@ -64,8 +64,8 @@ Travis.reopen
     ).observes('log')
 
     teardownLog: ->
-      if @get('log')
-        parts = @get('log.parts')
+      if log = @get('log')
+        parts = log.get('parts')
         parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
         parts.destroy()
         @lineSelector?.willDestroy()
@@ -84,10 +84,11 @@ Travis.reopen
       @lineSelector.unfoldLines()
 
     observeParts: ->
-      parts = @get('log.parts')
-      parts.addArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
-      parts = parts.slice(0)
-      @partsDidChange(parts, 0, null, parts.length)
+      if log = @get('log')
+        parts = log.get('parts')
+        parts.addArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
+        parts = parts.slice(0)
+        @partsDidChange(parts, 0, null, parts.length)
 
     partsDidChange: (parts, start, _, added) ->
       console.log 'log view: parts did change' if Log.DEBUG
