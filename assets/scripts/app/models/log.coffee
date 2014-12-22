@@ -34,9 +34,7 @@ require 'travis/log_chunks'
   clearParts: ->
     parts = @get('parts')
     @notifyPropertyChange('parts')
-    Ember.run.next ->
-      # destroy old parts after they're refreshed
-      parts.destroy()
+    parts.destroy()
 
   fetch: ->
     console.log 'log model: fetching log' if Log.DEBUG
