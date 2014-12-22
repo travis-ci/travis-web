@@ -6,14 +6,15 @@
       <p>SSH key is set.</p>
       {{#if description}}
         <div class="row">
-          <span class="label">Description:</label>
+          <span class="label">Description:</span>
           <span class="value">{{description}}</span>
         </div>
       {{/if}}
       <div class="row">
-        <span class="label">Fingerprint:</label>
+        <span class="label">Fingerprint:</span>
         <span class="value">{{fingerprint}}</span>
       </div>
+    </div>
     <div class="actions">
       <a href="#" {{action "delete"}} {{bind-attr class=":delete-ssh-key isDeleting:deleting"}}>
         Delete
