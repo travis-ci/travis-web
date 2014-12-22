@@ -43,14 +43,17 @@ Travis.ApplicationRoute = Travis.Route.extend
       if transition = @auth.get('afterSignInTransition')
         @auth.set('afterSignInTransition', null)
         transition.retry()
+      else
+        @transitionTo('index')
 
     afterSignOut: ->
-      @transitionTo('index.current')
+      @transitionTo('index')
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->
     @resource 'getting_started'
-    @route 'current', path: '/'
+    @route 'recent', path: '/recent'
+    @route 'my_repositories', path: '/my_repositories'
     @resource 'repo', path: '/:owner/:name', ->
       @route 'index', path: '/'
       @resource 'build', path: '/builds/:build_id'
@@ -130,7 +133,8 @@ Travis.GettingStartedRoute = Travis.Route.extend
 Travis.SimpleLayoutRoute = Travis.Route.extend
   setupController: ->
     $('body').attr('id', 'home')
-    @container.lookup('controller:repos').activate()
+    toActivate = if @signedIn() then 'owned' else 'recent'
+    @container.lookup('controller:repos').activate(toActivate)
     @_super.apply(this, arguments)
 
   renderTemplate: ->
@@ -148,7 +152,7 @@ Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
     existingUser = document.location.hash.match(/#existing[_-]user/)
     controller.set('existingUser', existingUser)
 
-Travis.IndexCurrentRoute = Travis.Route.extend
+Travis.IndexMyRepositoriesRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'repo'
     @render 'build', into: 'repo'
@@ -158,6 +162,34 @@ Travis.IndexCurrentRoute = Travis.Route.extend
     @currentRepoDidChange()
 
     @controllerFor('repo').activate('index')
+    @controllerFor('repos').activate('owned')
+    @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
+
+  afterModel: ->
+    @controllerFor('repos').possiblyRedirectToGettingStartedPage()
+
+  deactivate: ->
+    @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
+
+  currentRepoDidChange: ->
+    @controllerFor('repo').set('repo', @controllerFor('repos').get('firstObject'))
+
+  actions:
+    redirectToGettingStarted: ->
+      @transitionTo('getting_started')
+
+
+Travis.IndexRecentRoute = Travis.Route.extend
+  renderTemplate: ->
+    @render 'repo'
+    @render 'build', into: 'repo'
+
+  setupController: ->
+    @_super.apply this, arguments
+    @currentRepoDidChange()
+
+    @controllerFor('repo').activate('index')
+    @controllerFor('repos').activate('recent')
     @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
 
   afterModel: ->
@@ -293,6 +325,13 @@ Travis.RepoRoute = Travis.Route.extend
       # bubble to the top
       return true
 
+# Obviously Index route should be renamed to something
+# like "main" or "home"
+Travis.IndexIndexRoute = Travis.Route.extend
+  redirect: ->
+    target = if @signedIn() then 'my_repositories' else 'recent'
+    @transitionTo("index.#{target}")
+
 Travis.IndexRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'home')
@@ -302,7 +341,9 @@ Travis.IndexRoute = Travis.Route.extend
     @render 'repos',   outlet: 'left', into: 'index'
 
   setupController: (controller)->
-    @container.lookup('controller:repos').activate()
+    # TODO: this is redundant with my_repositories and recent routes
+    toActivate = if @signedIn() then 'owned' else 'recent'
+    @container.lookup('controller:repos').activate(toActivate)
 
 Travis.StatsRoute = Travis.Route.extend
   renderTemplate: ->
@@ -377,7 +418,7 @@ Travis.AuthRoute = Travis.Route.extend
 
   actions:
     afterSignIn: ->
-      @transitionTo('index.current')
+      @transitionTo('index')
       return true
 
 Travis.SettingsRoute = Travis.Route.extend

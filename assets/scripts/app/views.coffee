@@ -47,7 +47,7 @@ Travis.FirstSyncView = Travis.View.extend
       Ember.run.later this, ->
         Travis.Repo.fetch(member: @get('controller.user.login')).then( (repos) ->
           if repos.get('length')
-            self.get('controller').transitionToRoute('index.current')
+            self.get('controller').transitionToRoute('index')
           else
             self.get('controller').transitionToRoute('profile')
         ).then(null, (e) ->

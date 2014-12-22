@@ -3,22 +3,7 @@ require 'travis/limited_array'
 Travis.ReposController = Ember.ArrayController.extend
   actions:
     activate: (name) ->
-      @transitionToRoot()
       @activate(name)
-
-  defaultTab: ( ->
-    if @get('currentUser.id')
-      'owned'
-    else
-      'recent'
-  ).property('currentUser.id')
-
-  currentUserIdDidChange: (->
-    if @get('currentUser.id')
-      @activate('owned')
-    else if @get('tab') == 'owned'
-      @activate('recent')
-  ).observes('currentUser.id')
 
   tabOrIsLoadedDidChange: (->
     @possiblyRedirectToGettingStartedPage()
@@ -58,13 +43,8 @@ Travis.ReposController = Ember.ArrayController.extend
     if content = @get('content')
       content.forEach (r) -> r.updateTimes()
 
-  transitionToRoot: ->
-    @container.lookup('router:main').send('renderDefaultTemplate')
-    @container.lookup('router:main').transitionTo('index.current')
-
   activate: (tab, params) ->
     @set('sortProperties', ['sortOrder'])
-    tab ||= @get('defaultTab')
     @set('tab', tab)
     this["view#{$.camelize(tab)}"](params)
 

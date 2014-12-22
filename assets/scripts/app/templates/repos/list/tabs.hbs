@@ -1,10 +1,10 @@
 <ul class="tabs">
   <li id="tab_owned" {{bind-attr class="view.classOwned"}}>
-    <h5><a {{action "activate" "owned"}}>My Repositories</a></h5>
+    <h5>{{#link-to "index.my_repositories"}}My Repositories{{/link-to}}</h5>
   </li>
 
   <li id="tab_recent" {{bind-attr class="view.classRecent"}}>
-    <h5><a {{action "activate" "recent"}}>Recent</a></h5>
+    <h5>{{#link-to "index.recent"}}Recent{{/link-to}}</h5>
   </li>
 
   <li id="tab_search" {{bind-attr class="view.classSearch"}}>
