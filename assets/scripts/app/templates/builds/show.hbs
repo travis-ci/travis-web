@@ -39,12 +39,11 @@
 
     <div class="mainline">
       <div class="branch" {{bind-attr title="build.commit.branch"}}>
-        {{build.commit.branch}} this is a long branch name
+        {{build.commit.branch}}
       </div>
 
       <div class="subject">
-      - {{formatMessage build.commit.subject repoBinding=build.repo}} this is a
-      long commit message line
+      - {{formatMessage build.commit.subject repoBinding=build.repo}}
       </div>
     </div>
 
