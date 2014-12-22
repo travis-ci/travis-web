@@ -2,17 +2,16 @@
 
 #top
   line-height: 60px
-  background: #40454f
+  background: #404650
   font-size: $font-size-normal
 
-  h1
+  #home
     float: left
-    width: 72px
-    height: 30px
-    margin: 12px 40px 0 22px
+    width: 123px
+    height: 55px
+    margin-right: 14px
     text-indent: -9999px
-    background: inline-image('ui/logo.svg') no-repeat
-    background-size: cover
+    background: #dc4136 inline-image('ui/travis-logo.svg') no-repeat 20px 18px
 
   ul
     list-style-type: none
@@ -25,7 +24,7 @@
     display: inline-block
     a, span
       display: block
-      padding: 0 15px
+      padding: 0 12px
       &:hover
         color: #ADC7D0
   
@@ -92,11 +91,13 @@
       background: inline-image('ui/spinner.svg') no-repeat 110px 22px
 
     img
-      position: absolute
-      top: 12px
-      left: 5px
+      float: right
+      margin: 13px 0 0 10px
       width: 30px
       height: 30px
+      border-radius: 100px
+      -webkit-border-radius: 100px
+      -moz-border-radius: 100px
 
     ul
       min-width: 145px
