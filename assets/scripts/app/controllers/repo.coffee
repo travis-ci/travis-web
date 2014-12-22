@@ -1,8 +1,9 @@
 Travis.RepoController = Travis.Controller.extend
-  needs: ['repos', 'currentUser', 'build', 'request']
+  needs: ['repos', 'currentUser', 'build', 'request', 'job']
   currentUserBinding: 'controllers.currentUser'
 
   build: Ember.computed.alias('controllers.build.build')
+  job: Ember.computed.alias('controllers.job.job')
   request: Ember.computed.alias('controllers.request.model')
 
   slug: (-> @get('repo.slug') ).property('repo.slug')
@@ -23,6 +24,9 @@ Travis.RepoController = Travis.Controller.extend
 
       if build && jobs = build.get('jobs')
         jobs.forEach (j) -> j.updateTimes()
+
+  deactivate: ->
+    @stopObservingLastBuild()
 
   activate: (action) ->
     @stopObservingLastBuild()

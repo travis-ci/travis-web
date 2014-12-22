@@ -6,9 +6,6 @@ require 'travis/log_chunks'
   isLoaded: false
   length: 0
 
-  init: ->
-    @setParts()
-
   fetchMissingParts: (partNumbers, after) ->
     return if @get('notStarted')
 
@@ -27,31 +24,34 @@ require 'travis/log_chunks'
             for part in parts
               @append part
 
-  setParts: ->
-    if parts = @get('parts')
+  parts: (->
+    #if Travis.config.pusher_log_fallback
+    #  Travis.LogChunks.create(content: [], missingPartsCallback: => @fetchMissingParts.apply(this, arguments))
+    #else
+    Ember.ArrayProxy.create(content: [])
+  ).property()
+
+  clearParts: ->
+    parts = @get('parts')
+    @notifyPropertyChange('parts')
+    Ember.run.next ->
+      # destroy old parts after they're refreshed
       parts.destroy()
-
-    if Travis.config.pusher_log_fallback
-      parts = Travis.LogChunks.create(content: [], missingPartsCallback: => @fetchMissingParts.apply(this, arguments))
-    else
-      parts = Ember.ArrayProxy.create(content: [])
-
-    @set 'parts', parts
-    # @set 'parts', Travis.ChunkBuffer.create(content: [])
 
   fetch: ->
     console.log 'log model: fetching log' if Log.DEBUG
-    @setParts()
+    @clearParts()
     handlers =
       json: (json) => @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
     Travis.Log.Request.create(id: id, handlers: handlers).run() if id = @get('job.id')
 
   clear: ->
-    @setParts()
+    @clearParts()
     @incrementProperty('version')
 
   append: (part) ->
+    return if @get('parts').isDestroying || @get('parts').isDestroyed
     @get('parts').pushObject(part)
 
   loadParts: (parts) ->

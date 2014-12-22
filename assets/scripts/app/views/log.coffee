@@ -2,27 +2,45 @@ require 'log'
 require 'travis/lines_selector'
 require 'travis/log_folder'
 
-Log.DEBUG = false
+Log.DEBUG = true
 Log.LIMIT = 10000
 
 Travis.reopen
   LogView: Travis.View.extend
     templateName: 'jobs/log'
     logBinding: 'job.log'
-    contextBinding: 'job'
 
     didInsertElement: ->
+      @setupLog()
+
+    logDidChange: (->
+      @setupLog()
+    ).observes('log')
+
+    logWillChange: (->
+      @teardownLog()
+    ).observesBefore('log')
+
+    willDestroyElement: ->
+      @teardownLog()
+
+    teardownLog: ->
+      job = @get('job')
+      job.unsubscribe() if job
+
+    setupLog: ->
       job = @get('job')
       if job
         job.get('log').fetch()
         job.subscribe()
 
-    willDestroyElement: ->
-      job = @get('job')
-      job.unsubscribe() if job
-
   PreView: Em.View.extend
     templateName: 'jobs/pre'
+
+    logWillChange: (->
+      console.log 'log view: log will change' if Log.DEBUG
+      @teardownLog()
+    ).observesBefore('log')
 
     didInsertElement: ->
       console.log 'log view: did insert' if Log.DEBUG
@@ -31,10 +49,7 @@ Travis.reopen
 
     willDestroyElement: ->
       console.log 'log view: will destroy' if Log.DEBUG
-      parts = @get('log.parts')
-      parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
-      parts.destroy()
-      @lineSelector?.willDestroy()
+      @teardownLog()
 
     versionDidChange: (->
       @rerender() if @get('_state') == 'inDOM'
@@ -42,17 +57,28 @@ Travis.reopen
 
     logDidChange: (->
       console.log 'log view: log did change: rerender' if Log.DEBUG
-      @rerender() if @get('_state') == 'inDOM'
+
+      if @get('log')
+        @createEngine()
+        @rerender() if @get('_state') == 'inDOM'
     ).observes('log')
 
+    teardownLog: ->
+      if @get('log')
+        parts = @get('log.parts')
+        parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
+        parts.destroy()
+        @lineSelector?.willDestroy()
+
     createEngine: ->
-      console.log 'log view: create engine' if Log.DEBUG
-      @scroll = new Log.Scroll beforeScroll: =>
-        @unfoldHighlight()
-      @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
-      @logFolder = new Travis.LogFolder(@$().find('#log'))
-      @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll, @logFolder)
-      @observeParts()
+      if @get('log')
+        console.log 'log view: create engine' if Log.DEBUG
+        @scroll = new Log.Scroll beforeScroll: =>
+          @unfoldHighlight()
+        @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
+        @logFolder = new Travis.LogFolder(@$().find('#log'))
+        @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll, @logFolder)
+        @observeParts()
 
     unfoldHighlight: ->
       @lineSelector.unfoldLines()

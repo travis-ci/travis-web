@@ -208,18 +208,17 @@ Travis.BuildRoute = Travis.Route.extend
     model = Travis.Build.find(model) if model && !model.get
 
     repo = @controllerFor('repo')
-    repo.set('build', model)
-    repo.activate('build')
+    #repo.set('build', model)
     @controllerFor('build').set('build', model)
-    repo.set('build', model)
+    repo.activate('build')
+    #repo.set('build', model)
 
   model: (params) ->
     Travis.Build.fetch(params.build_id)
 
   deactivate: ->
-    repo = @controllerFor('repo')
-    repo.set('build', null)
-    repo.set('job', null)
+    @controllerFor('job').set('job', null)
+    @controllerFor('build').set('build', null)
 
 Travis.JobRoute = Travis.Route.extend
   serialize: (model, params) ->
@@ -231,19 +230,19 @@ Travis.JobRoute = Travis.Route.extend
     model = Travis.Job.find(model) if model && !model.get
 
     repo = @controllerFor('repo')
-    repo.set('job', model)
+    @controllerFor('job').set('job', model)
     repo.activate('job')
 
     if build = model.get('build')
       @controllerFor('build').set('build', build)
-      repo.set('build', build)
 
   model: (params) ->
     Travis.Job.fetch(params.job_id)
 
   deactivate: ->
-    repo = @controllerFor('repo')
-    repo.set('job', null)
+    @controllerFor('build').set('build', null)
+    @controllerFor('job').set('job', null)
+
 
 Travis.RepoIndexRoute = Travis.Route.extend
   setupController: (controller, model) ->
@@ -258,8 +257,8 @@ Travis.RepoIndexRoute = Travis.Route.extend
 
   deactivate: ->
     repo = @controllerFor('repo')
-    repo.set('build', null)
-    repo.set('job', null)
+    @controllerFor('build').set('build', null)
+    @controllerFor('job').set('job', null)
 
 Travis.RepoRoute = Travis.Route.extend
   renderTemplate: ->
@@ -279,6 +278,9 @@ Travis.RepoRoute = Travis.Route.extend
   model: (params) ->
     slug = "#{params.owner}/#{params.name}"
     Travis.Repo.fetchBySlug(slug)
+
+  resetController: ->
+    @controllerFor('repo').deactivate()
 
   actions:
     error: (error) ->
