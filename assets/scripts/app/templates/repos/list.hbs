@@ -7,27 +7,32 @@
 <div class="tab">
   {{#if isLoaded}}
     {{#collection 'repos-list' content=this}}
-      {{#with view.repo}}
+      {{#with view.repo as repo}}
         <div class="slug-and-status">
           <span class="status"></span>
-          {{#if slug}}
-            {{#link-to "repo" this class="slug"}}{{slug}}{{/link-to}}
+          {{#if repo.slug}}
+            {{#link-to "repo" repo class="slug"}}{{repo.slug}}{{/link-to}}
           {{/if}}
         </div>
-        {{#with lastBuildHash}}
+        {{#with repo.lastBuildHash as lastBuild}}
           {{#if repo.slug}}
-            {{#link-to "build" repo id class="last_build"}}{{number}}{{/link-to}}
+            {{#link-to "build" repo lastBuild.id
+            class="last_build"}}{{lastBuild.number}}{{/link-to}}
           {{/if}}
         {{/with}}
 
-        {{#if lastBuildHash.number }}
+        {{#if repo.lastBuildHash.number }}
         <p class="summary">
           <span class="duration_label">Duration:</span>
-          <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>{{formatDuration lastBuildDuration}}</abbr>
+          <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>
+            {{formatDuration repo.lastBuildDuration}}
+          </abbr>
         </p>
         <p class="summary">
           <span class="finished-icon"></span><span class="finished_at_label">Finished:</span>
-          <abbr class="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>{{formatTime lastBuildFinishedAt}}</abbr>
+          <abbr class="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>
+            {{formatTime repo.lastBuildFinishedAt}}
+          </abbr>
         </p>
         {{/if}}
 
