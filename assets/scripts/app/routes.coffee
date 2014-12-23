@@ -152,58 +152,39 @@ Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
     existingUser = document.location.hash.match(/#existing[_-]user/)
     controller.set('existingUser', existingUser)
 
-Travis.IndexMyRepositoriesRoute = Travis.Route.extend
+Travis.IndexTabRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'repo'
     @render 'build', into: 'repo'
 
   setupController: ->
     @_super.apply this, arguments
-    @currentRepoDidChange()
 
     @controllerFor('repo').activate('index')
-    @controllerFor('repos').activate('owned')
+    @controllerFor('repos').activate(@get('reposTabName'))
+
+    @currentRepoDidChange()
     @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
 
-  afterModel: ->
-    @controllerFor('repos').possiblyRedirectToGettingStartedPage()
 
   deactivate: ->
     @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
 
   currentRepoDidChange: ->
-    @controllerFor('repo').set('repo', @controllerFor('repos').get('firstObject'))
+    if repo = @controllerFor('repos').get('firstObject')
+      @controllerFor('repo').set('repo', repo)
 
   actions:
     redirectToGettingStarted: ->
       @transitionTo('getting_started')
 
-
-Travis.IndexRecentRoute = Travis.Route.extend
-  renderTemplate: ->
-    @render 'repo'
-    @render 'build', into: 'repo'
-
-  setupController: ->
-    @_super.apply this, arguments
-    @currentRepoDidChange()
-
-    @controllerFor('repo').activate('index')
-    @controllerFor('repos').activate('recent')
-    @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
-
+Travis.IndexMyRepositoriesRoute = Travis.IndexTabRoute.extend
+  reposTabName: 'owned'
   afterModel: ->
     @controllerFor('repos').possiblyRedirectToGettingStartedPage()
 
-  deactivate: ->
-    @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
-
-  currentRepoDidChange: ->
-    @controllerFor('repo').set('repo', @controllerFor('repos').get('firstObject'))
-
-  actions:
-    redirectToGettingStarted: ->
-      @transitionTo('getting_started')
+Travis.IndexRecentRoute = Travis.IndexTabRoute.extend
+  reposTabName: 'recent'
 
 Travis.AbstractBuildsRoute = Travis.Route.extend
   renderTemplate: ->
