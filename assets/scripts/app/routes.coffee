@@ -52,8 +52,8 @@ Travis.ApplicationRoute = Travis.Route.extend
 Travis.Router.map ->
   @resource 'index', path: '/', ->
     @resource 'getting_started'
-    @route 'recent', path: '/recent'
-    @route 'my_repositories', path: '/my_repositories'
+    @route 'recent'
+    @route 'my_repositories'
     @resource 'repo', path: '/:owner/:name', ->
       @route 'index', path: '/'
       @resource 'build', path: '/builds/:build_id'
@@ -165,7 +165,6 @@ Travis.IndexTabRoute = Travis.Route.extend
 
     @currentRepoDidChange()
     @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
-
 
   deactivate: ->
     @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
