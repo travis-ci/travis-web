@@ -1,11 +1,11 @@
 <div id="tools">
-  <a href="#" {{action "menu" target="view"}} class="menu-popup-button">Settings</a>
+  <a href="#" {{action "menu" target=view}} class="menu-popup-button">Settings</a>
 
   <ul class="menu">
    {{#if view.displayRegenerateKey}}
       <li>
         <a href="#" name="regenerate-key"
-          {{action "regenerateKeyPopup" target="view"}}
+          {{action "regenerateKeyPopup" target=view}}
           {{bind-attr class=":open-popup view.canRegenerateKey::disabled"}}>
             Regenerate Key
         </a>
@@ -29,7 +29,7 @@
 </div>
 
 <div id="regenerate-key" class="popup">
-  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
   <p>
     Do you really want to regenerate ssl keys for this repository? Please note that
     any data, which is encrypted, such as notification services credentials or secure
@@ -38,14 +38,14 @@
   </p>
 
   <p>
-    <a class="sync_now button" {{action "regenerateKey" target="view"}}>Yes, do it!</a>
+    <a class="sync_now button" {{action "regenerateKey" target=view}}>Yes, do it!</a>
     <span class="or">or</span>
-    <a href="#" class="cancel" {{action "popupClose" target="view"}}>Cancel</a>
+    <a href="#" class="cancel" {{action "popupClose" target=view}}>Cancel</a>
   </p>
 </div>
 
 <div id="regeneration-success" class="popup">
-  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
   <p>
     Key for this repository has been regenerated. If you used previous key
     for encryption, you will need encrypt your data again with the new key.
@@ -58,7 +58,7 @@
 
 <div id="code-climate" class="popup">
   <img src="/images/icons/code-climate-logo.svg" id="code-climate-logo"/>
-  <a href="#" class="close" {{action "popupClose" target="view"}}></a>
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
   <p>
     <b>Want test coverage for your tests?</b>
   </p>

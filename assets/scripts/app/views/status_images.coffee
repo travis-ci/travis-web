@@ -30,8 +30,9 @@ Travis.StatusImagesView = Em.View.extend
   show: ->
     @set('display', true)
 
-  close: ->
-    @destroy()
+  actions:
+    close: ->
+      @destroy()
 
   setStatusImageFormat: (->
     @set('statusImageFormat', @formats[0])

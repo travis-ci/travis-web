@@ -7,7 +7,7 @@
   {{else}}
     <caption>
       Allowed Failures
-      <a title="What's this?" class="help open-popup" name="help-allowed_failures" {{action "popup" target="view"}}></a>
+      <a title="What's this?" class="help open-popup" name="help-allowed_failures" {{action "popup" target=view}}></a>
     </caption>
   {{/if}}
     <thead>
@@ -44,7 +44,7 @@
 
   {{#unless view.required}}
     <div id="help-allowed_failures" class="popup">
-      <a href="#" class="close" {{action "popupClose" target="view"}}></a>
+      <a href="#" class="close" {{action "popupClose" target=view}}></a>
       <h4></h4>
       <p>
         Allowed Failures are items in your build matrix that are allowed to

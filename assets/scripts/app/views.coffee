@@ -8,6 +8,10 @@ Em.View.reopen
 
 @Travis.reopen
   View: Em.View.extend
+    actions:
+      popup: (name) -> @popup(name)
+      popupClose: -> @popupClose()
+
     popup: (name) ->
       @popupCloseAll()
       name = event?.target?.name || name

@@ -106,26 +106,27 @@ Travis.reopen
     closeMenu: ->
       $('.menu').removeClass('display')
 
-    menu: ->
-      @popupCloseAll()
-      $('#tools .menu').toggleClass('display')
-      event.stopPropagation()
-
-    regenerateKeyPopup: ->
-      if @get('canRegenerateKey')
-        @set('active', true)
-        @closeMenu()
-        @popup(event)
+    actions:
+      menu: ->
+        @popupCloseAll()
+        $('#tools .menu').toggleClass('display')
         event.stopPropagation()
 
-    regenerateKey: ->
-      @popupCloseAll()
+      regenerateKeyPopup: ->
+        if @get('canRegenerateKey')
+          @set('active', true)
+          @closeMenu()
+          @popup(event)
+          event.stopPropagation()
 
-      (@get('repo.content') || @get('repo')).regenerateKey
-        success: =>
-          @popup('regeneration-success')
-        error: ->
-          Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
+      regenerateKey: ->
+        @popupCloseAll()
+
+        (@get('repo.content') || @get('repo')).regenerateKey
+          success: =>
+            @popup('regeneration-success')
+          error: ->
+            Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 
     canRegenerateKey: (->
       @get('hasAdminPermission')
@@ -167,45 +168,59 @@ Travis.reopen
     tabBinding: 'controller.tab'
     currentUserBinding: 'controller.currentUser'
 
-    cancelBuild: ->
-      if @get('canCancelBuild')
-        Travis.flash(notice: 'Build cancellation has been scheduled.')
-        @get('build').cancel().then ->
-          Travis.flash(success: 'Build has been successfully canceled.')
-        , (xhr) ->
-          if xhr.status == 422
-            Travis.flash(error: 'This build can\'t be canceled')
-          else if xhr.status == 403
-            Travis.flash(error: 'You don\'t have sufficient access to cancel this build')
-          else
-            Travis.flash(error: 'An error occured when canceling the build')
+    actions:
+      requeueBuild: ->
+        if @get('canRequeueBuild')
+          @requeue @get('build')
+
+      requeueJob: ->
+        if @get('canRequeueJob')
+          @requeue @get('job')
+
+      cancelBuild: ->
+        if @get('canCancelBuild')
+          Travis.flash(notice: 'Build cancellation has been scheduled.')
+          @get('build').cancel().then ->
+            Travis.flash(success: 'Build has been successfully canceled.')
+          , (xhr) ->
+            if xhr.status == 422
+              Travis.flash(error: 'This build can\'t be canceled')
+            else if xhr.status == 403
+              Travis.flash(error: 'You don\'t have sufficient access to cancel this build')
+            else
+              Travis.flash(error: 'An error occured when canceling the build')
 
 
-    removeLog: ->
-      if @get('canRemoveLog')
-        job = @get('job') || @get('build.jobs.firstObject')
-        job.removeLog().then ->
-          Travis.flash(success: 'Log has been successfully removed.')
-        , (xhr) ->
-          if xhr.status == 409
-            Travis.flash(error: 'Log can\'t be removed')
-          else if xhr.status == 401
-            Travis.flash(error: 'You don\'t have sufficient access to remove the log')
-          else
-            Travis.flash(error: 'An error occured when removing the log')
+      removeLog: ->
+        if @get('canRemoveLog')
+          job = @get('job') || @get('build.jobs.firstObject')
+          job.removeLog().then ->
+            Travis.flash(success: 'Log has been successfully removed.')
+          , (xhr) ->
+            if xhr.status == 409
+              Travis.flash(error: 'Log can\'t be removed')
+            else if xhr.status == 401
+              Travis.flash(error: 'You don\'t have sufficient access to remove the log')
+            else
+              Travis.flash(error: 'An error occured when removing the log')
 
-    cancelJob: ->
-      if @get('canCancelJob')
-        Travis.flash(notice: 'Job cancellation has been scheduled.')
-        @get('job').cancel().then ->
-          Travis.flash(success: 'Job has been successfully canceled.')
-        , (xhr) ->
-          if xhr.status == 422
-            Travis.flash(error: 'This job can\'t be canceled')
-          else if xhr.status == 403
-            Travis.flash(error: 'You don\'t have sufficient access to cancel this job')
-          else
-            Travis.flash(error: 'An error occured when canceling the job')
+      cancelJob: ->
+        if @get('canCancelJob')
+          Travis.flash(notice: 'Job cancellation has been scheduled.')
+          @get('job').cancel().then ->
+            Travis.flash(success: 'Job has been successfully canceled.')
+          , (xhr) ->
+            if xhr.status == 422
+              Travis.flash(error: 'This job can\'t be canceled')
+            else if xhr.status == 403
+              Travis.flash(error: 'You don\'t have sufficient access to cancel this job')
+            else
+              Travis.flash(error: 'An error occured when canceling the job')
+
+      codeClimatePopup: ->
+        @popupCloseAll()
+        @popup('code-climate')
+        event.stopPropagation() if event?
 
     hasPermission: (->
       if permissions = @get('currentUser.permissions')
@@ -283,11 +298,6 @@ Travis.reopen
       Travis.config.code_climate == "true" and @get('repo.githubLanguage') == 'Ruby'
     ).property('repo.githubLanguage')
 
-    codeClimatePopup: ->
-      @popupCloseAll()
-      @popup('code-climate')
-      event.stopPropagation() if event?
-
     requeueFinished: ->
       @set('requeueing', false)
 
@@ -295,13 +305,4 @@ Travis.reopen
       return if @get('requeueing')
       @set('requeueing', true)
       thing.requeue().then(this.requeueFinished.bind(this), this.requeueFinished.bind(this))
-
-    requeueBuild: ->
-      if @get('canRequeueBuild')
-        @requeue @get('build')
-
-    requeueJob: ->
-      if @get('canRequeueJob')
-        @requeue @get('job')
-
 

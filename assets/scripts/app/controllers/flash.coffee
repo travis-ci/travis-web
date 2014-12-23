@@ -30,10 +30,11 @@ Travis.FlashController = Ember.ArrayController.extend
       @get('flashes').unshiftObject(msg)
       Ember.run.later(this, (-> @get('flashes.content').removeObject(msg)), 15000)
 
-  close: (msg) ->
-    if msg instanceof Travis.Broadcast
-      msg.setSeen()
-      @notifyPropertyChange('unseenBroadcasts')
-    else
-      @get('flashes').removeObject(msg)
+  actions:
+    close: (msg) ->
+      if msg instanceof Travis.Broadcast
+        msg.setSeen()
+        @notifyPropertyChange('unseenBroadcasts')
+      else
+        @get('flashes').removeObject(msg)
 

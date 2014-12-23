@@ -2,13 +2,13 @@
   <ul>
     {{#if view.displayCancelBuild}}
       <li class="icon cancel-build" title="Cancel Build">
-        <a href="#" {{action "cancelBuild" target="view"}}
+        <a href="#" {{action "cancelBuild" target=view}}
           {{bind-attr class="view.canCancelBuild::disabled"}}></a>
       </li>
     {{/if}}
     {{#if view.displayCancelJob}}
       <li class="icon cancel-job" title="Cancel Job">
-        <a href="#" {{action "cancelJob" target="view"}}
+        <a href="#" {{action "cancelJob" target=view}}
           {{bind-attr class="view.canCancelJob::disabled"}}></a>
       </li>
     {{/if}}
@@ -17,7 +17,7 @@
         {{#if view.requeueing}}
           <span class="icon loading"></span>
         {{else}}
-          <a href="#" {{action "requeueBuild" target="view"}}
+          <a href="#" {{action "requeueBuild" target=view}}
             {{bind-attr class="view.canRequeueBuild::disabled"}}></a>
         {{/if}}
       </li>
@@ -27,7 +27,7 @@
         {{#if view.requeueing}}
           <span class="icon loading"></span>
         {{else}}
-          <a href="#" {{action "requeueJob" target="view"}}
+          <a href="#" {{action "requeueJob" target=view}}
             {{bind-attr class="view.canRequeueJob::disabled"}}></a>
         {{/if}}
       </li>
@@ -42,7 +42,7 @@
     {{#if view.displayCodeClimate}}
       <li class="icon code-climate" title="Test Coverage with Code Climate">
         <a href="#" name="code-climate"
-          {{action "codeClimatePopup" target="view"}}
+          {{action "codeClimatePopup" target=view}}
           {{bind-attr class=":open-popup"}}></a>
       </li>
     {{/if}}
