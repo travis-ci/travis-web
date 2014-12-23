@@ -54,6 +54,7 @@ Travis.Router.map ->
     @resource 'getting_started'
     @route 'recent'
     @route 'my_repositories'
+    @route 'search', path: '/search/:phrase'
     @resource 'repo', path: '/:owner/:name', ->
       @route 'index', path: '/'
       @resource 'build', path: '/builds/:build_id'
@@ -184,6 +185,27 @@ Travis.IndexMyRepositoriesRoute = Travis.IndexTabRoute.extend
 
 Travis.IndexRecentRoute = Travis.IndexTabRoute.extend
   reposTabName: 'recent'
+
+Travis.IndexSearchRoute = Travis.IndexTabRoute.extend
+  renderTemplate: ->
+    @render 'repo'
+    @render 'build', into: 'repo'
+
+  setupController: (controller, searchPhrase) ->
+    # TODO: this method is almost the same as _super, refactor this
+    @controllerFor('repo').activate('index')
+    @controllerFor('repos').activate('search', searchPhrase)
+
+    @currentRepoDidChange()
+    @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
+
+  model: (params) ->
+    params.phrase
+
+  deactivate: ->
+    @_super.apply(this, arguments)
+
+    @controllerFor('repos').set('search', undefined)
 
 Travis.AbstractBuildsRoute = Travis.Route.extend
   renderTemplate: ->

@@ -61,22 +61,20 @@ Travis.ReposController = Ember.ArrayController.extend
       []
   ).property('currentUser.login')
 
-  viewSearch: (params) ->
-    @set('content', Travis.Repo.search(params.search))
+  viewSearch: (phrase) ->
+    @set('search', phrase)
+    @set('content', Travis.Repo.search(phrase))
 
   searchObserver: (->
     search = @get('search')
     if search
       @searchFor search
-    else
-      @activate 'recent'
-      'recent'
   ).observes('search')
 
   searchFor: (phrase) ->
     Ember.run.cancel(@searchLater) if @searchLater
     @searchLater = Ember.run.later(this, (->
-      @activate 'search', search: phrase
+      @transitionTo('index.search', phrase)
     ), 500)
 
   noReposMessage: (->
