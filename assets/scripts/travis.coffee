@@ -203,6 +203,9 @@ if charm_key = $('meta[name="travis.charm_key"]').attr('value')
   $('head').append $('<script src="https://charmscout.herokuapp.com/charmeur.js?v=2" async defer></script>')
 
 require 'travis/ajax'
+
+Travis.ajax.pro = Travis.config.pro
+
 require 'travis/adapter'
 require 'travis/adapters/env_vars'
 require 'travis/adapters/ssh_key'
