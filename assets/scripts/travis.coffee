@@ -192,9 +192,6 @@ Travis.Router.reopen
 Ember.LinkView.reopen
   loadingClass: 'loading_link'
 
-if Travis.config.pro
-  $('body').addClass('pro')
-
 if charm_key = $('meta[name="travis.charm_key"]').attr('value')
   @__CHARM =
     key: $('meta[name="travis.charm_key"]').attr('value')
