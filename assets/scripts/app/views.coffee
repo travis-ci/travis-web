@@ -60,6 +60,37 @@ Travis.FirstSyncView = Travis.View.extend
       , Travis.config.syncingPageRedirectionTime
 
 
+Travis.SidebarView = Travis.View.extend
+  templateName: 'pro/layouts/sidebar'
+
+  didInsertElement: ->
+    @_super.apply this, arguments
+
+  classQueues: (->
+    'active' if @get('activeTab') == 'queues'
+  ).property('activeTab')
+
+  classWorkers: (->
+    'active' if @get('activeTab') == 'workers'
+  ).property('activeTab')
+
+  classJobs: (->
+    'active' if @get('activeTab') == 'jobs'
+  ).property('activeTab')
+
+Travis.QueueItemView = Travis.View.extend
+  tagName: 'li'
+
+Travis.RunningJobsView = Em.View.extend
+  templateName: 'pro/jobs'
+  elementId: 'running-jobs'
+
+Travis.QueueView = Em.View.extend
+  templateName: 'pro/queues/show'
+  init: ->
+    @_super.apply this, arguments
+    @set 'controller', @get('controller').container.lookup('controller:queues')
+
 require 'views/accounts'
 require 'views/annotation'
 require 'views/application'
