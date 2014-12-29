@@ -192,6 +192,9 @@ Travis.Router.reopen
 Ember.LinkView.reopen
   loadingClass: 'loading_link'
 
+if Travis.config.pro
+  $('body').addClass('pro')
+
 require 'travis/ajax'
 require 'travis/adapter'
 require 'travis/adapters/env_vars'
