@@ -14,24 +14,56 @@
   <li>
     <a href="http://traviscistatus.com">Status</a>
   </li>
-  <li class="menu community">
-    <p class="handle">
-      <a href="#">Help</a>
-    </p>
-    <ul>
-      <li><a href="http://docs.travis-ci.com">Docs</a></li>
-      <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
-      <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
-      <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
-      <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
-    </ul>
-  </li>
+  {{#unless Travis.config.pro}}
+    <li class="menu community">
+      <p class="handle">
+        <a href="#">Help</a>
+      </p>
+      <ul>
+        <li><a href="http://docs.travis-ci.com">Docs</a></li>
+        <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
+        <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
+        <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
+        <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
+      </ul>
+    </li>
+  {{/unless}}
+
+  {{#if Travis.config.pages_endpoint}}
+    <li>
+      <a href="http://traviscistatus.com">Status</a>
+    </li>
+    <li class="menu legal">
+      <p class="handle">
+        <a {{bind-attr href="Travis.config.url_legal"}}>Legal</a>
+      </p>
+      <ul>
+        <li>
+          <a {{bind-attr href="Travis.config.url_imprint"}}>Imprint</a>
+        </li>
+        <li>
+          <a {{bind-attr href="Travis.config.url_security"}}>Security</a>
+        </li>
+        <li>
+          <a {{bind-attr href="Travis.config.url_terms"}}>Terms</a>
+        </li>
+      </ul>
+    </li>
+  {{/if}}
+
+
+  <!-- hiding for now
   <li>
     <a href="https://travisci.workable.com" class="werehiring" target="_blank">We're Hiring!</a>
   </li>
-  <li class="traviscicom">
-    <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
-  </li>
+   hiding for now -->
+
+  {{#unless Travis.config.pro}}
+    <li class="traviscicom">
+      <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
+    </li>
+  {{/unless}}
+
   <li {{bind-attr class="view.classProfile"}}>
     <p class="handle">
       {{#if auth.signedOut}}

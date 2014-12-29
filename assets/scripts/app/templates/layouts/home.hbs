@@ -10,3 +10,9 @@
   {{render "flash"}}
   {{yield}}
 </div>
+
+{{#if Travis.config.pro}}
+  <div id="right">
+    {{outlet right}}
+  </div>
+{{/if}}

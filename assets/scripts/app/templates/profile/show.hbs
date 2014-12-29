@@ -1,8 +1,25 @@
 <h3>{{view.name}}</h3>
 
+{{#if Travis.config.billing_endpoint}}
+  {{#if view.subscribed}}
+    <a class="button activated" {{bind-attr href="billingUrl"}}>
+      Subscription active!
+    </a>
+  {{else}}
+    {{#if view.education}}
+      <a class="button activated" {{bind-attr href="billingUrl"}}>
+        Educational account!
+      </a>
+    {{else}}
+      <a class="button activate" {{bind-attr href="billingUrl"}}>
+        Sign up this account!
+      </a>
+    {{/if}}
+  {{/if}}
+{{/if}}
+
 {{view Travis.ProfileTabsView}}
 
 <div class="tab">
   {{outlet}}
 </div>
-

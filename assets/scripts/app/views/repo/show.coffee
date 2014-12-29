@@ -26,7 +26,12 @@ Travis.reopen
     ).property('controller.repo.slug')
 
   ReposEmptyView: Travis.View.extend
-    template: ''
+    template: (->
+      if Travis.config.pro
+        'pro/repos/show/empty'
+      else
+        ''
+    ).property()
 
   RepoShowTabsView: Travis.View.extend
     templateName: 'repos/show/tabs'

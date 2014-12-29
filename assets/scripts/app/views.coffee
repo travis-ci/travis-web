@@ -29,8 +29,16 @@ Travis.IndexView = Travis.View.extend
   layoutName: 'layouts/home'
   classNames: ['application']
 
+@Travis.NoOwnedReposView = Ember.View.extend
+  templateName: 'pro/no_owned_repos'
+
 Travis.GettingStartedView = Travis.View.extend
-  templateName: 'no_owned_repos'
+  templateName: (->
+    if Travis.config.pro
+      'pro/no_owned_repos'
+    else
+      'no_owned_repos'
+  ).property()
 
 Travis.InsufficientOauthPermissionsView = Travis.View.extend
   layoutName: 'layouts/simple'
@@ -61,7 +69,7 @@ Travis.FirstSyncView = Travis.View.extend
 
 
 Travis.SidebarView = Travis.View.extend
-  templateName: 'pro/layouts/sidebar'
+  templateName: 'layouts/sidebar'
 
   didInsertElement: ->
     @_super.apply this, arguments
@@ -86,7 +94,7 @@ Travis.RunningJobsView = Em.View.extend
   elementId: 'running-jobs'
 
 Travis.QueueView = Em.View.extend
-  templateName: 'pro/queues/show'
+  templateName: 'queues/show'
   init: ->
     @_super.apply this, arguments
     @set 'controller', @get('controller').container.lookup('controller:queues')

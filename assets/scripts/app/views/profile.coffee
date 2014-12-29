@@ -4,6 +4,8 @@ Travis.reopen
     layoutName: 'layouts/profile'
     classNames: ['application']
     accountBinding: 'controller.account'
+    subscribedBinding: 'account.subscribed'
+    educationBinding: 'account.education'
 
     name: (->
       @get('account.name') || @get('account.login')

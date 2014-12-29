@@ -1,0 +1,19 @@
+<div id="slider" {{action toggle target="Travis.slider"}}>
+  <div class='icon'></div>&nbsp;
+</div>
+
+{{#if tip}}
+  <div class="tip box">
+    <h4>Tip:</h4>
+
+    <p>{{{tip}}}</p>
+  </div>
+{{/if}}
+
+{{#if Travis.config.pages_endpoint}}
+  {{view templateName="layouts/support"}}
+{{/if}}
+
+{{render "runningJobs"}}
+
+{{view Travis.QueueView}}
