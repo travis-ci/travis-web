@@ -20,7 +20,20 @@ Travis.Route = Ember.Route.extend
   signedIn: ->
     @controllerFor('currentUser').get('content')
 
+  needsAuth: (->
+    # on pro, we need to auth on every route
+    Travis.config.pro
+  ).property()
+
 Travis.ApplicationRoute = Travis.Route.extend
+  needsAuth: false
+
+  renderTemplate: ->
+    if Travis.config.pro
+      $('body').addClass('pro')
+
+    @_super.apply(this, arguments)
+
   actions:
     redirectToGettingStarted: ->
       # do nothing, we handle it only in index path
@@ -47,7 +60,10 @@ Travis.ApplicationRoute = Travis.Route.extend
         @transitionTo('index')
 
     afterSignOut: ->
-      @transitionTo('index')
+      if Travis.config.pro
+        @transitionTo('auth')
+      else
+        @transitionTo('index')
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->
@@ -342,6 +358,9 @@ Travis.IndexRoute = Travis.Route.extend
 
     @render 'repos',   outlet: 'left', into: 'index'
 
+    if Travis.config.pro
+      @render 'sidebar', outlet: 'right'
+
   setupController: (controller)->
     # TODO: this is redundant with my_repositories and recent routes
     toActivate = if @signedIn() then 'owned' else 'recent'
@@ -410,6 +429,8 @@ Travis.ProfileInfoRoute = Travis.Route.extend
     @render 'user'
 
 Travis.AuthRoute = Travis.Route.extend
+  needsAuth: false
+
   renderTemplate: ->
     $('body').attr('id', 'auth')
 
@@ -422,6 +443,10 @@ Travis.AuthRoute = Travis.Route.extend
     afterSignIn: ->
       @transitionTo('index')
       return true
+
+  redirect: ->
+    if @signedIn()
+      @transitionTo('index')
 
 Travis.SettingsRoute = Travis.Route.extend
   needsAuth: true
