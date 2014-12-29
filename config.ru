@@ -48,7 +48,7 @@ run Travis::Web::App.build(
   environment:     ENV['RACK_ENV'] || 'development',
   api_endpoint:    ENV['API_ENDPOINT'],
   pages_endpoint:   ENV['PAGES_ENDPOINT'],
-  billing_endpoint: ENV['BILLING_ENDPOINT'] || 'https://billing.travis-ci.com',
+  billing_endpoint: ENV['BILLING_ENDPOINT']
   source_endpoint: ENV['SOURCE_ENDPOINT'] || 'https://github.com',
   pusher_key:      ENV['PUSHER_KEY'],
   pusher_host:     ENV['PUSHER_HOST'] || 'ws.pusherapp.com',
