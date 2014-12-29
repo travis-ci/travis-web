@@ -33,6 +33,21 @@ use Travis::Web::ApiRedirect do |app|
   app.settings.api_endpoint = ENV['API_ENDPOINT'] if ENV['API_ENDPOINT']
 end
 
+if ENV['TRAVIS_PRO']
+  ENV['API_ENDPOINT'] ||= "https://api.travis-ci.com"
+  ENV['PAGES_ENDPOINT'] ||= "https://billing.travis-ci.com"
+  ENV['BILLING_ENDPOINT'] ||= "https://billing.travis-ci.com"
+
+  ENV['SSH_KEY_ENABLED'] = 'true' unless ENV.has_key?('SSH_KEY_ENABLED')
+  ENV['CACHES_ENABLED'] = 'true' unless ENV.has_key?('CACHES_ENABLED')
+
+  ENV['PUSHER_KEY'] ||= "59236bc0716a551eab40"
+  ENV['GA_CODE'] ||= "UA-24868285-5"
+
+  ENV['CODE_CLIMATE_URL'] ||= "https://codeclimate.com/partners/travisci"
+  ENV['CODE_CLIMATE'] = 'true' unless ENV.has_key?('CODE_CLIMATE')
+end
+
 run Travis::Web::App.build(
   environment:     ENV['RACK_ENV'] || 'development',
   api_endpoint:    ENV['API_ENDPOINT'],
@@ -50,5 +65,7 @@ run Travis::Web::App.build(
   pusher_log_fallback:  ENV['PUSHER_LOG_FALLBACK'],
   charm_key:        ENV['CHARM_KEY'],
   customer_io_site_id: ENV['CUSTOMER_IO_SITE_ID'],
-  pro: ENV['TRAVIS_PRO']
+  pro: ENV['TRAVIS_PRO'],
+  code_climate: ENV['CODE_CLIMATE'],
+  code_climate_url: ENV['CODE_CLIMATE_URL']
 )
