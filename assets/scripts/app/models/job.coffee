@@ -139,6 +139,10 @@ require 'travis/model'
     true
   ).property()
 
+  slug: (->
+    "#{@get('repo.slug')} ##{@get('number')}"
+  ).property()
+
 @Travis.Job.reopenClass
   queued: ->
     filtered = Ember.FilteredRecordArray.create(
