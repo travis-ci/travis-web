@@ -358,9 +358,6 @@ Travis.IndexRoute = Travis.Route.extend
 
     @render 'repos',   outlet: 'left', into: 'index'
 
-    if Travis.config.pro
-      @render 'sidebar', outlet: 'right'
-
   setupController: (controller)->
     # TODO: this is redundant with my_repositories and recent routes
     toActivate = if @signedIn() then 'owned' else 'recent'
