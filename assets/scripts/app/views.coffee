@@ -90,7 +90,7 @@ Travis.QueueItemView = Travis.View.extend
   tagName: 'li'
 
 Travis.RunningJobsView = Em.View.extend
-  templateName: 'pro/jobs'
+  templateName: 'jobs'
   elementId: 'running-jobs'
 
 Travis.QueueView = Em.View.extend
