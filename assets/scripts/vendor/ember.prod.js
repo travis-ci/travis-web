@@ -5,7 +5,7 @@
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   1.9.0
+ * @version   1.9.1
  */
 
 (function() {
@@ -6903,8 +6903,8 @@ enifed("ember-handlebars/ext",
     __exports__.handlebarsGet = handlebarsGet;
   });
 enifed("ember-handlebars/helpers/bind_attr",
-  ["ember-metal/core","ember-handlebars-compiler","ember-metal/utils","ember-runtime/system/string","ember-metal/array","ember-views/views/view","ember-metal/keys","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
+  ["ember-metal/core","ember-handlebars-compiler","ember-metal/utils","ember-runtime/system/string","ember-metal/array","ember-views/views/view","ember-metal/keys","ember-views/system/sanitize_attribute_value","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
     "use strict";
     /**
     @module ember
@@ -6921,6 +6921,8 @@ enifed("ember-handlebars/helpers/bind_attr",
     var forEach = __dependency5__.forEach;
     var View = __dependency6__["default"];
     var keys = __dependency7__["default"];
+
+    var sanitizeAttributeValue = __dependency8__["default"];
 
     var helpers = EmberHandlebars.helpers;
     var SafeString = EmberHandlebars.SafeString;
@@ -7084,6 +7086,7 @@ enifed("ember-handlebars/helpers/bind_attr",
         
         var lazyValue = view.getStream(path);
         var value = lazyValue.value();
+        value = sanitizeAttributeValue(null, attr, value);
         var type = typeOf(value);
 
         
@@ -8625,13 +8628,19 @@ enifed("ember-handlebars/helpers/view",
       helper: function(thisContext, newView, options) {
         var data = options.data;
         var fn   = options.fn;
+        var newViewProto;
 
         makeBindings(options);
 
         var viewOptions = this.propertiesFromHTMLOptions(options, thisContext);
         var currentView = data.view;
         viewOptions.templateData = data;
-        var newViewProto = newView.proto();
+
+        if (View.detectInstance(newView)) {
+          newViewProto = newView;
+        } else {
+          newViewProto = newView.proto();
+        }
 
         if (fn) {
                     viewOptions.template = fn;
@@ -12771,7 +12780,7 @@ enifed("ember-metal/core",
 
       @class Ember
       @static
-      @version 1.9.0
+      @version 1.9.1
     */
 
     if ('undefined' === typeof Ember) {
@@ -12798,10 +12807,10 @@ enifed("ember-metal/core",
     /**
       @property VERSION
       @type String
-      @default '1.9.0'
+      @default '1.9.1'
       @static
     */
-    Ember.VERSION = '1.9.0';
+    Ember.VERSION = '1.9.1';
 
     /**
       Standard environmental variables. You can define these in a global `EmberENV`
@@ -38189,6 +38198,62 @@ enifed("ember-views/system/renderer",
 
     __exports__["default"] = EmberRenderer;
   });
+enifed("ember-views/system/sanitize_attribute_value",
+  ["ember-handlebars-compiler","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    /* jshint scripturl:true */
+
+    var EmberHandlebars = __dependency1__["default"];
+
+    var parsingNode;
+    var badProtocols = {
+      'javascript:': true,
+      'vbscript:': true
+    };
+
+    var badTags = {
+      'A': true,
+      'BODY': true,
+      'LINK': true,
+      'IMG': true,
+      'IFRAME': true
+    };
+
+    var badAttributes = {
+      'href': true,
+      'src': true,
+      'background': true
+    };
+    __exports__.badAttributes = badAttributes;
+    __exports__["default"] = function sanitizeAttributeValue(element, attribute, value) {
+      var tagName;
+
+      if (!parsingNode) {
+        parsingNode = document.createElement('a');
+      }
+
+      if (!element) {
+        tagName = null;
+      } else {
+        tagName = element.tagName;
+      }
+
+      if (value instanceof EmberHandlebars.SafeString) {
+        return value.toString();
+      }
+
+      if ((tagName === null || badTags[tagName]) && badAttributes[attribute]) {
+        parsingNode.href = value;
+
+        if (badProtocols[parsingNode.protocol] === true) {
+          return 'unsafe:' + value;
+        }
+      }
+
+      return value;
+    }
+  });
 enifed("ember-views/system/utils",
   ["exports"],
   function(__exports__) {
@@ -39870,8 +39935,8 @@ enifed("ember-views/views/states/pre_render",
     __exports__["default"] = preRender;
   });
 enifed("ember-views/views/view",
-  ["ember-metal/core","ember-metal/platform","ember-runtime/mixins/evented","ember-runtime/system/object","ember-metal/error","ember-metal/property_get","ember-metal/property_set","ember-metal/set_properties","ember-metal/run_loop","ember-metal/observer","ember-metal/properties","ember-metal/utils","ember-metal/computed","ember-metal/mixin","ember-metal/streams/simple","ember-views/streams/key_stream","ember-metal/streams/stream_binding","ember-views/streams/context_stream","ember-metal/is_none","ember-metal/deprecate_property","ember-runtime/system/native_array","ember-runtime/system/string","ember-metal/enumerable_utils","ember-metal/property_events","ember-views/system/jquery","ember-views/system/ext","ember-views/views/core_view","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __dependency21__, __dependency22__, __dependency23__, __dependency24__, __dependency25__, __dependency26__, __dependency27__, __exports__) {
+  ["ember-metal/core","ember-metal/platform","ember-runtime/mixins/evented","ember-runtime/system/object","ember-metal/error","ember-metal/property_get","ember-metal/property_set","ember-metal/set_properties","ember-metal/run_loop","ember-metal/observer","ember-metal/properties","ember-metal/utils","ember-metal/computed","ember-metal/mixin","ember-metal/streams/simple","ember-views/streams/key_stream","ember-metal/streams/stream_binding","ember-views/streams/context_stream","ember-metal/is_none","ember-metal/deprecate_property","ember-runtime/system/native_array","ember-runtime/system/string","ember-metal/enumerable_utils","ember-metal/property_events","ember-views/system/jquery","ember-views/system/ext","ember-views/views/core_view","ember-views/system/sanitize_attribute_value","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __dependency21__, __dependency22__, __dependency23__, __dependency24__, __dependency25__, __dependency26__, __dependency27__, __dependency28__, __exports__) {
     "use strict";
     // Ember.assert, Ember.deprecate, Ember.warn, Ember.TEMPLATES,
     // Ember.K, jQuery, Ember.lookup,
@@ -39921,6 +39986,7 @@ enifed("ember-views/views/view",
      // for the side effect of extending Ember.run.queues
 
     var CoreView = __dependency27__["default"];
+    var sanitizeAttributeValue = __dependency28__["default"];
 
 
     /**
@@ -41279,6 +41345,22 @@ enifed("ember-views/views/view",
         if (!this.removedFromDOM) { this.destroyElement(); }
       },
 
+      /**
+        The HTML `id` of the view's element in the DOM. You can provide this
+        value yourself but it must be unique (just as in HTML):
+
+        ```handlebars
+          {{my-component elementId="a-really-cool-id"}}
+        ```
+
+        If not manually set a default value will be provided by the framework.
+
+        Once rendered an element's `elementId` is considered immutable and you
+        should never change it.
+
+        @property elementId
+        @type String
+      */
       elementId: null,
 
       /**
@@ -42077,7 +42159,8 @@ enifed("ember-views/views/view",
     // method.
     View.childViewsProperty = childViewsProperty;
 
-    View.applyAttributeBindings = function(elem, name, value) {
+    View.applyAttributeBindings = function(elem, name, initialValue) {
+      var value = sanitizeAttributeValue(elem[0], name, initialValue);
       var type = typeOf(value);
 
       // if this changes, also change the logic in ember-handlebars/lib/helpers/binding.js
