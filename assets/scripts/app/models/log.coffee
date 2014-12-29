@@ -73,6 +73,9 @@ Travis.Log.Request = Em.Object.extend
       success: (body, status, xhr) => Ember.run(this, -> @handle(body, status, xhr))
 
   handle: (body, status, xhr) ->
+    if Travis.config.pro
+      Travis.Job.find(@get('id')).get('log').set('token', xhr.getResponseHeader('X-Log-Access-Token'))
+
     if xhr.status == 204
       $.ajax(url: @redirectTo(xhr), type: 'GET', success: @handlers.text)
     else if @isJson(xhr, body)
