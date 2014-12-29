@@ -2,10 +2,17 @@ Travis.Pusher = (config) ->
   @init(config)
   this
 
-$.extend Travis.Pusher,
-  CHANNELS: ['common']
-  CHANNEL_PREFIX: ''
-  ENCRYPTED: false
+if Travis.config.pro
+  $.extend Travis.Pusher,
+      CHANNELS: []
+      CHANNEL_PREFIX: 'private-'
+      ENCRYPTED: true
+      KEY: ''
+else
+  $.extend Travis.Pusher,
+    CHANNELS: ['common']
+    CHANNEL_PREFIX: ''
+    ENCRYPTED: false
 
 $.extend Travis.Pusher.prototype,
   active_channels: []

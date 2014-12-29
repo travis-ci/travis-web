@@ -71,6 +71,11 @@ window.Travis = TravisApplication.create(
 
 Travis.deferReadiness()
 
+pages_endpoint   = $('meta[rel="travis.pages_endpoint"]').attr('href')
+billing_endpoint = $('meta[rel="travis.billing_endpoint"]').attr('href')
+customer_io_site_id = $('meta[name="travis.customer_io_site_id"]').attr('value')
+setupCustomerio(customer_io_site_id) if customer_io_site_id
+
 $.extend Travis,
   run: ->
     Travis.advanceReadiness() # bc, remove once merged to master
@@ -89,6 +94,16 @@ $.extend Travis,
     show_repos_hint: 'private'
     avatar_default_url: 'https://travis-ci.org/images/ui/default-avatar.png'
     pusher_log_fallback:  $('meta[name="travis.pusher_log_fallback"]').attr('value') == 'true'
+    pro: $('meta[name="travis.pro"]').attr('value') == 'true'
+
+    pages_endpoint: pages_endpoint || billing_endpoint
+    billing_endpoint: billing_endpoint
+
+    url_legal:   "#{billing_endpoint}/pages/legal"
+    url_imprint: "#{billing_endpoint}/pages/imprint"
+    url_security: "#{billing_endpoint}/pages/security"
+    url_terms:   "#{billing_endpoint}/pages/terms"
+    customer_io_site_id: customer_io_site_id
 
   CONFIG_KEYS_MAP: {
     go:          'Go'
