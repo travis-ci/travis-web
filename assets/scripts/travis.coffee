@@ -195,6 +195,13 @@ Ember.LinkView.reopen
 if Travis.config.pro
   $('body').addClass('pro')
 
+if charm_key = $('meta[name="travis.charm_key"]').attr('value')
+  @__CHARM =
+    key: $('meta[name="travis.charm_key"]').attr('value')
+    url: "https://charmscout.herokuapp.com/feedback"
+
+  $('head').append $('<script src="https://charmscout.herokuapp.com/charmeur.js?v=2" async defer></script>')
+
 require 'travis/ajax'
 require 'travis/adapter'
 require 'travis/adapters/env_vars'
