@@ -257,10 +257,20 @@ Travis.reopen
         (@get('build.jobs.length') == 1 && @get('build.jobs.firstObject.id'))
     ).property('job.id', 'build.jobs.firstObject.id', 'build.jobs.length')
 
+    job: (->
+      if id = @get('jobIdForLog')
+        Travis.Job.find(id)
+    ).property('jobIdForLog')
+
+
     plainTextLogUrl: (->
       if id = @get('jobIdForLog')
-        Travis.Urls.plainTextLog(id)
-    ).property('jobIdForLog')
+        url = Travis.Urls.plainTextLog(id)
+        if Travis.config.pro
+          token = @get('job.log.token') || @get('build.jobs.firstObject.log.token')
+        url += "&access_token=#{token}"
+        url
+    ).property('jobIdForLog', 'job.log.token', 'build.jobs.firstObject.log.token')
 
     canRemoveLog: (->
       @get('displayRemoveLog') && @get('hasPermission')

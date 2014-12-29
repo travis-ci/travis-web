@@ -103,8 +103,12 @@ Travis.reopen
     ).property()
 
     plainTextLogUrl: (->
-      Travis.Urls.plainTextLog(id) if id = @get('log.job.id')
-    ).property('job.log.id')
+      if id = @get('log.job.id')
+        url = Travis.Urls.plainTextLog(id)
+        if Travis.config.pro
+          url += "&access_token=#{@get('job.log.token')}"
+        url
+    ).property('job.log.id', 'job.log.token')
 
     toggleTailing: ->
       Travis.tailing.toggle()
