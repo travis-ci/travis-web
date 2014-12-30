@@ -68,6 +68,7 @@ Travis.reopen
         parts = log.get('parts')
         parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
         parts.destroy()
+        log.notifyPropertyChange('parts')
         @lineSelector?.willDestroy()
 
     createEngine: ->

@@ -33,8 +33,7 @@ require 'travis/log_chunks'
 
   clearParts: ->
     parts = @get('parts')
-    @notifyPropertyChange('parts')
-    parts.destroy()
+    parts.set('content', [])
 
   fetch: ->
     console.log 'log model: fetching log' if Log.DEBUG
