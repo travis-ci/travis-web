@@ -18,7 +18,7 @@ Travis.Route = Ember.Route.extend
       @_super.apply(this, arguments)
 
   signedIn: ->
-    @controllerFor('currentUser').get('content')
+    @controllerFor('currentUser').get('model')
 
   needsAuth: (->
     # on pro, we need to auth on every route
@@ -237,7 +237,7 @@ Travis.AbstractBuildsRoute = Travis.Route.extend
 
   contentDidChange: ->
     path = @get('path')
-    @controllerFor('builds').set('content', @controllerFor('repo').get(path))
+    @controllerFor('builds').set('model', @controllerFor('repo').get(path))
 
   path: (->
     type = @get('contentType')
