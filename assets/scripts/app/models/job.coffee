@@ -42,7 +42,13 @@ require 'travis/model'
   ).property('repositorySlug')
 
   config: (->
-    Travis.Helpers.compact(@get('_config'))
+    if config = @get('_config')
+      Travis.Helpers.compact(config)
+    else
+      return if @get('isFetchingConfig')
+      @set 'isFetchingConfig', true
+
+      @reload()
   ).property('_config')
 
   isFinished: (->
@@ -112,14 +118,6 @@ require 'travis/model'
   onStateChange: (->
     @unsubscribe() if @get('state') == 'finished' && Travis.pusher
   ).observes('state')
-
-  isPropertyLoaded: (key) ->
-    if ['_finishedAt'].contains(key) && !@get('isFinished')
-      return true
-    else if key == '_startedAt' && @get('state') == 'created'
-      return true
-    else
-      @_super(key)
 
   isFinished: (->
     @get('state') in ['passed', 'failed', 'errored', 'canceled']

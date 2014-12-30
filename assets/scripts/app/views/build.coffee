@@ -3,10 +3,6 @@ Travis.reopen
     templateName: 'builds/list'
     buildsBinding: 'controller.builds'
 
-    isPullRequestsList: (->
-      @get('controller.tab') == 'pull_requests'
-    ).property('controller.tab')
-
     ShowMoreButton: Em.View.extend
       tagName: 'button'
       classNameBindings: ['isLoading', 'showMore']
@@ -36,14 +32,6 @@ Travis.reopen
     color: (->
       Travis.Helpers.colorForState(@get('build.state'))
     ).property('build.state')
-
-    urlGithubCommit: (->
-      Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
-    ).property('repo.slug', 'commit.sha')
-
-    urlGithubPullRequest: (->
-      Travis.Urls.githubPullRequest(@get('repo.slug'), @get('build.pullRequestNumber'))
-    ).property('repo.slug', 'build.pullRequestNumber')
 
   BuildView: Travis.View.extend
     templateName: 'builds/show'

@@ -41,6 +41,7 @@ Travis.FirstSyncController = Em.Controller.extend
   isSyncing: Ember.computed.alias('user.isSyncing')
 
 Travis.IndexErrorController = Em.Controller.extend()
+Travis.BuildsItemController = Em.ObjectController.extend(Travis.GithubUrlProperties)
 
 Travis.QueuesController = Em.ArrayController.extend
   content: (->

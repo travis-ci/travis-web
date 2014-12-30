@@ -6,13 +6,14 @@ test "it doesn't trigger downloading missing parts if they come in timely fashio
 
   callback = -> ok false, 'callback should not be called'
 
-  chunks = Travis.LogChunks.create(timeout: 15, missingPartsCallback: callback, content: [])
+  chunks = Travis.LogChunks.create(timeout: 20, missingPartsCallback: callback, content: [])
 
-  setTimeout (-> chunks.pushObject(number: 1, final: false)), 10
-  setTimeout (-> chunks.pushObject(number: 2, final: false)), 20
+  Ember.run.later (-> chunks.pushObject(number: 1, final: false)), 10
+  Ember.run.later (-> chunks.pushObject(number: 2, final: false)), 20
   setTimeout ->
     ok true
-    chunks.pushObject(number: 3, final: true)
+    Ember.run ->
+      chunks.pushObject(number: 3, final: true)
     start()
 
     equal(chunks.get('finalized'), true, 'log should be finalized')
@@ -25,11 +26,11 @@ test "it triggers downloading missing parts if there is a missing part, even tho
   callback = (missingNumbers) ->
     deepEqual(missingNumbers, [2, 3], 'callback should be called with missing numbers')
 
-  chunks = Travis.LogChunks.create(timeout: 15, missingPartsCallback: callback, content: [])
+  chunks = Travis.LogChunks.create(timeout: 20, missingPartsCallback: callback, content: [])
 
-  chunks.pushObject(number: 1, final: false)
+  Ember.run -> chunks.pushObject(number: 1, final: false)
   setTimeout ->
-    chunks.pushObject(number: 4, final: true)
+    Ember.run -> chunks.pushObject(number: 4, final: true)
 
     ok(!chunks.get('finalized'), "log shouldn't be finalized")
   , 10
@@ -37,7 +38,7 @@ test "it triggers downloading missing parts if there is a missing part, even tho
   setTimeout ->
     Ember.run -> chunks.destroy() # destroy object to not fire more callbacks
     start()
-  , 40
+  , 60
 
 test "it triggers downloading next parts if there is no final part", ->
   expect(4)
@@ -49,8 +50,9 @@ test "it triggers downloading next parts if there is no final part", ->
 
   chunks = Travis.LogChunks.create(timeout: 15, missingPartsCallback: callback, content: [])
 
-  chunks.pushObject(number: 1, final: false)
-  chunks.pushObject(number: 3, final: false)
+  Ember.run ->
+    chunks.pushObject(number: 1, final: false)
+    chunks.pushObject(number: 3, final: false)
 
   setTimeout ->
     Ember.run -> chunks.destroy() # destroy object to not fire more callbacks
