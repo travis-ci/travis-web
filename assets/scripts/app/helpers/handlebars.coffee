@@ -110,7 +110,7 @@ Travis.ErrorsView = Ember.View.extend
   ).property('@errors')
   show: Ember.computed.notEmpty('errors.[]')
 
-Ember.Handlebars.helper('travis-errors', (name, options) ->
+Ember.Handlebars.registerHelper('travis-errors', (name, options) ->
   errors = @get('errors').for(name)
   view = Travis.ErrorsView.create(
     controller: this
