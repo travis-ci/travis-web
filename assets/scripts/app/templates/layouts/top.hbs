@@ -14,7 +14,7 @@
   <li>
     <a href="http://traviscistatus.com">Status</a>
   </li>
-  {{#unless Travis.config.pro}}
+  {{#unless config.pro}}
     <li class="menu community">
       <p class="handle">
         <a href="#">Help</a>
@@ -29,23 +29,23 @@
     </li>
   {{/unless}}
 
-  {{#if Travis.config.pages_endpoint}}
+  {{#if config.pages_endpoint}}
     <li>
       <a href="http://traviscistatus.com">Status</a>
     </li>
     <li class="menu legal">
       <p class="handle">
-        <a {{bind-attr href="Travis.config.url_legal"}}>Legal</a>
+        <a {{bind-attr href="config.url_legal"}}>Legal</a>
       </p>
       <ul>
         <li>
-          <a {{bind-attr href="Travis.config.url_imprint"}}>Imprint</a>
+          <a {{bind-attr href="config.url_imprint"}}>Imprint</a>
         </li>
         <li>
-          <a {{bind-attr href="Travis.config.url_security"}}>Security</a>
+          <a {{bind-attr href="config.url_security"}}>Security</a>
         </li>
         <li>
-          <a {{bind-attr href="Travis.config.url_terms"}}>Terms</a>
+          <a {{bind-attr href="config.url_terms"}}>Terms</a>
         </li>
       </ul>
     </li>
@@ -58,7 +58,7 @@
   </li>
    hiding for now -->
 
-  {{#unless Travis.config.pro}}
+  {{#unless config.pro}}
     <li class="traviscicom">
       <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
     </li>

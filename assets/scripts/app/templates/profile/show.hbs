@@ -1,6 +1,6 @@
 <h3>{{view.name}}</h3>
 
-{{#if Travis.config.billing_endpoint}}
+{{#if config.billing_endpoint}}
   {{#if view.subscribed}}
     <a class="button activated" {{bind-attr href="billingUrl"}}>
       Subscription active!
