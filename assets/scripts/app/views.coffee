@@ -40,6 +40,9 @@ Travis.GettingStartedView = Travis.View.extend
       'no_owned_repos'
   ).property()
 
+Travis.AuthSigninView = Travis.View.extend
+  layoutName: 'layouts/simple'
+
 Travis.InsufficientOauthPermissionsView = Travis.View.extend
   layoutName: 'layouts/simple'
   classNames: ['application']
