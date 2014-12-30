@@ -78,6 +78,14 @@
     </p>
     <ul>
       <li>
+        {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
+      </li>
+      {{#if Travis.config.billing_endpoint}}
+        <li>
+          <a {{bind-attr href="Travis.config.billing_endpoint"}}>Billing</a>
+        </li>
+      {{/if}}
+      <li>
         <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
       </li>
     </ul>
