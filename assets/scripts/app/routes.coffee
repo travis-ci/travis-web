@@ -476,7 +476,7 @@ Travis.SshKeyRoute = Travis.Route.extend
   model: (params) ->
     repo = @modelFor('repo')
     self = this
-    Travis.SshKey.fetch(repo.get('id')).then ( (result) -> result ), (xhr) ->
+    Travis.SshKey.fetch(repo.get('id')).then ( (result) -> result unless result.get('isNew') ), (xhr) ->
       if xhr.status == 404
         # if there is no model, just return null. I'm not sure if this is the
         # best answer, maybe we should just redirect to different route, like
@@ -495,3 +495,8 @@ Travis.SshKeyRoute = Travis.Route.extend
     if @defaultKey
       controller.set('defaultKey', @defaultKey)
       @defaultKey = null
+
+  deactivate: ->
+    @_super.apply(this, arguments)
+
+    @controllerFor('ssh_key').send('cancel')
