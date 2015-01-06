@@ -26,7 +26,8 @@ Travis.ReposController = Ember.ArrayController.extend
 
   init: ->
     @_super.apply this, arguments
-    Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
+    if !Ember.testing
+      Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   recentRepos: (->
     Ember.ArrayProxy.extend(

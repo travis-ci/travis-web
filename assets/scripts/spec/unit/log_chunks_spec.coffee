@@ -20,7 +20,7 @@ test "it doesn't trigger downloading missing parts if they come in timely fashio
   , 30
 
 test "it triggers downloading missing parts if there is a missing part, even though final part arrived", ->
-  expect(2)
+  expect(3)
   stop()
 
   callback = (missingNumbers) ->

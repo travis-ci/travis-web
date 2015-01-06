@@ -62,8 +62,8 @@
 
   equal($('a.slug', row).attr('href'), "/#{repo.slug}")
   equal($('a.last_build', row).attr('href'), repo.build.url)
-  equal($('.duration', row).text(), repo.build.duration)
-  equal($('.finished_at', row).text(), repo.build.finishedAt)
+  equal($('.duration', row).text().trim(), repo.build.duration)
+  equal($('.finished_at', row).text().trim(), repo.build.finishedAt)
 
 @listsBuilds = (builds) ->
   listsItems('build', builds)
