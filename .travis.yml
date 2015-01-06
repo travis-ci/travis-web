@@ -1,11 +1,18 @@
 language: ruby
 rvm:
   - 2.1.2
-  
+
 sudo: false
 
 cache:
   bundler: true
+
+matrix:
+  allow_failures:
+    - rvm: 2.1.2
+      env: 'TEST_SUITE=phantomjs'
+    - rvm: 2.1.2
+      env: "TEST_SUITE=saucelabs BROWSER='firefox::Windows XP'"
 
 env:
   global:
