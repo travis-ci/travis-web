@@ -2,10 +2,17 @@ Travis.Pusher = (config) ->
   @init(config)
   this
 
-$.extend Travis.Pusher,
-  CHANNELS: ['common']
-  CHANNEL_PREFIX: ''
-  ENCRYPTED: false
+if Travis.config.pro
+  $.extend Travis.Pusher,
+      CHANNELS: []
+      CHANNEL_PREFIX: 'private-'
+      ENCRYPTED: true
+      KEY: ''
+else
+  $.extend Travis.Pusher,
+    CHANNELS: ['common']
+    CHANNEL_PREFIX: ''
+    ENCRYPTED: false
 
 $.extend Travis.Pusher.prototype,
   active_channels: []
@@ -101,3 +108,73 @@ $.extend Travis.Pusher.prototype,
   ignoreMessage: (message) ->
     message.indexOf('Existing subscription') == 0 or message.indexOf('No current subscription') == 0
 
+pusher_host = $('meta[name="travis.pusher_host"]').attr('value')
+pusher_path = $('meta[name="travis.pusher_path"]').attr('value')
+
+Pusher.SockJSTransport.isSupported = -> false if pusher_host != 'ws.pusherapp.com'
+
+if Travis.config.pro
+  Pusher.channel_auth_transport = 'bulk_ajax'
+
+  Pusher.authorizers.bulk_ajax = (socketId, _callback) ->
+    channels = Travis.pusher.pusher.channels
+    channels.callbacks ||= []
+
+    name = this.channel.name
+    names = $.keys(channels.channels)
+
+    channels.callbacks.push (auths) ->
+      _callback(false, auth: auths[name])
+
+    unless channels.fetching
+      channels.fetching = true
+      Travis.ajax.post Pusher.channel_auth_endpoint, { socket_id: socketId, channels: names }, (data) ->
+        channels.fetching = false
+        callback(data.channels) for callback in channels.callbacks
+
+
+  Pusher.getDefaultStrategy = (config) ->
+    [
+      [":def", "ws_options", {
+        hostUnencrypted: config.wsHost + ":" + config.wsPort + (pusher_path && "/#{pusher_path}" || ''),
+        hostEncrypted: config.wsHost + ":" + config.wssPort + (pusher_path && "/#{pusher_path}" || '')
+        path: config.path
+      }],
+      [":def", "sockjs_options", {
+        hostUnencrypted: config.httpHost + ":" + config.httpPort,
+        hostEncrypted: config.httpHost + ":" + config.httpsPort
+      }],
+      [":def", "timeouts", {
+        loop: true,
+        timeout: 15000,
+        timeoutLimit: 60000
+      }],
+
+      [":def", "ws_manager", [":transport_manager", {
+        lives: 2,
+        minPingDelay: 10000,
+        maxPingDelay: config.activity_timeout
+      }]],
+
+      [":def_transport", "ws", "ws", 3, ":ws_options", ":ws_manager"],
+      [":def_transport", "flash", "flash", 2, ":ws_options", ":ws_manager"],
+      [":def_transport", "sockjs", "sockjs", 1, ":sockjs_options"],
+      [":def", "ws_loop", [":sequential", ":timeouts", ":ws"]],
+      [":def", "flash_loop", [":sequential", ":timeouts", ":flash"]],
+      [":def", "sockjs_loop", [":sequential", ":timeouts", ":sockjs"]],
+
+      [":def", "strategy",
+        [":cached", 1800000,
+          [":first_connected",
+            [":if", [":is_supported", ":ws"], [
+                ":best_connected_ever", ":ws_loop", [":delayed", 2000, [":sockjs_loop"]]
+              ], [":if", [":is_supported", ":flash"], [
+                ":best_connected_ever", ":flash_loop", [":delayed", 2000, [":sockjs_loop"]]
+              ], [
+                ":sockjs_loop"
+              ]
+            ]]
+          ]
+        ]
+      ]
+    ]

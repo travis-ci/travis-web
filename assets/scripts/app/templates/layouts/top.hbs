@@ -1,4 +1,4 @@
-{{#link-to "index.current"}}
+{{#link-to "index"}}
   <div id="home">
     <h1>Travis</h1>
   </div>
@@ -6,7 +6,7 @@
 
 <ul id="navigation">
   <li class="home">
-    {{#link-to "index.current"}}Home{{/link-to}}
+    {{#link-to "index"}}Home{{/link-to}}
   </li>
   <li>
     <a href="http://blog.travis-ci.com">Blog</a>
@@ -14,24 +14,56 @@
   <li>
     <a href="http://traviscistatus.com">Status</a>
   </li>
-  <li class="menu community">
-    <p class="handle">
-      <a href="#">Help</a>
-    </p>
-    <ul>
-      <li><a href="http://docs.travis-ci.com">Docs</a></li>
-      <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
-      <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
-      <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
-      <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
-    </ul>
-  </li>
+  {{#unless config.pro}}
+    <li class="menu community">
+      <p class="handle">
+        <a href="#">Help</a>
+      </p>
+      <ul>
+        <li><a href="http://docs.travis-ci.com">Docs</a></li>
+        <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
+        <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
+        <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
+        <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
+      </ul>
+    </li>
+  {{/unless}}
+
+  {{#if config.pages_endpoint}}
+    <li>
+      <a href="http://traviscistatus.com">Status</a>
+    </li>
+    <li class="menu legal">
+      <p class="handle">
+        <a {{bind-attr href="config.url_legal"}}>Legal</a>
+      </p>
+      <ul>
+        <li>
+          <a {{bind-attr href="config.url_imprint"}}>Imprint</a>
+        </li>
+        <li>
+          <a {{bind-attr href="config.url_security"}}>Security</a>
+        </li>
+        <li>
+          <a {{bind-attr href="config.url_terms"}}>Terms</a>
+        </li>
+      </ul>
+    </li>
+  {{/if}}
+
+
+  <!-- hiding for now
   <li>
     <a href="https://travisci.workable.com" class="werehiring" target="_blank">We're Hiring!</a>
   </li>
-  <li class="traviscicom">
-    <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
-  </li>
+   hiding for now -->
+
+  {{#unless config.pro}}
+    <li class="traviscicom">
+      <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
+    </li>
+  {{/unless}}
+
   <li {{bind-attr class="view.classProfile"}}>
     <p class="handle">
       {{#if auth.signedOut}}
@@ -46,8 +78,13 @@
     </p>
     <ul>
       <li>
-        {{#link-to "profile.index" class="signed-in"}}Accounts{{/link-to}}
+        {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
       </li>
+      {{#if Travis.config.billing_endpoint}}
+        <li>
+          <a {{bind-attr href="Travis.config.billing_endpoint"}}>Billing</a>
+        </li>
+      {{/if}}
       <li>
         <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
       </li>

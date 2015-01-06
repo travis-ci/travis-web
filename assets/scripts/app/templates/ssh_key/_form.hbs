@@ -1,10 +1,10 @@
 <form class="ssh-key" {{action "save" on="submit"}}>
   <div class="field">
-    <label>Description:</label>
+    {{label for="description" content="Description:"}}
     {{input value=description}}
   </div>
   {{#travis-field "value"}}
-    <label class="value">Private Key:</label>
+    {{label for="value" class="value" content="Private key:"}}
     {{textarea value=value}} {{travis-errors "value"}}
   {{/travis-field}}
 

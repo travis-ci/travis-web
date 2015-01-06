@@ -34,83 +34,18 @@ Array.prototype.diff = (a) ->
 
     @_super(key)
 
-  load: (id, hash) ->
-    @loadedAttributes = []
-    @loadedRelationships = []
-
-    attributes = this.constructor.getAttributes() || []
-    relationships = this.constructor.getRelationships() || []
-
-    if hash
-      for key in attributes
-        dataKey = @dataKey(key)
-        if hash.hasOwnProperty(dataKey)
-          @loadedAttributes.pushObject(key)
-
-      for key in relationships
-        dataKey = @dataKey(key)
-        if hash.hasOwnProperty(dataKey)
-          @loadedRelationships.pushObject(key)
-
-    incomplete = Ember.EnumerableUtils.intersection(@loadedAttributes, attributes).length != attributes.length ||
-                 Ember.EnumerableUtils.intersection(@loadedRelationships, relationships).length != relationships.length
-
-    #if incomplete
-    #  properties = attributes.concat(relationships)
-    #  loadedProperties = @loadedAttributes.concat(@loadedRelationships)
-    #  diff = properties.diff(loadedProperties)
-    #  #console.log(@constructor, 'with id', id, 'loaded as incomplete, info:', { diff: diff, attributes: loadedProperties, data: hash})
-
-    @set('incomplete', incomplete)
-
-    @_super(id, hash)
-
-  getAttr: (key, options) ->
-    @needsCompletionCheck(key)
-    @_super.apply this, arguments
-
   getBelongsTo: (key, type, meta) ->
     unless key
       key = type.singularName() + '_id'
-    @needsCompletionCheck(key)
     @_super(key, type, meta)
 
   getHasMany: (key, type, meta) ->
     unless key
       key = type.singularName() + '_ids'
-    @needsCompletionCheck(key)
     @_super(key, type, meta)
-
-  needsCompletionCheck: (key) ->
-    if key && (@isAttribute(key) || @isRelationship(key)) &&
-        @get('incomplete') && !@isPropertyLoaded(key)
-      @loadTheRest(key)
-
-  isAttribute: (name) ->
-    this.constructor.getAttributes().contains(name)
-
-  isRelationship: (name) ->
-    this.constructor.getRelationships().contains(name)
-
-  loadTheRest: (key) ->
-    # for some weird reason key comes changed to a string and for some weird reason it even is called with
-    # undefined key
-    return if !key || key == 'undefined'
-
-    message = "Load missing fields for #{@constructor.toString()} because of missing key '#{key}', cid: #{@get('clientId')}, id: #{@get('id')}"
-    if @isAttribute('state') && key != 'state'
-      message += ", in state: #{@get('state')}"
-    console.log message
-    return if @get('isCompleting')
-    @set 'isCompleting', true
-
-    @reload()
 
   select: ->
     @constructor.select(@get('id'))
-
-  isPropertyLoaded: (name) ->
-    @loadedAttributes.contains(name) || @loadedRelationships.contains(name)
 
 @Travis.Model.reopenClass
   select: (id) ->

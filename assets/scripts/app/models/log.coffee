@@ -6,9 +6,6 @@ require 'travis/log_chunks'
   isLoaded: false
   length: 0
 
-  init: ->
-    @setParts()
-
   fetchMissingParts: (partNumbers, after) ->
     return if @get('notStarted')
 
@@ -27,31 +24,31 @@ require 'travis/log_chunks'
             for part in parts
               @append part
 
-  setParts: ->
-    if parts = @get('parts')
-      parts.destroy()
+  parts: (->
+    #if Travis.config.pusher_log_fallback
+    #  Travis.LogChunks.create(content: [], missingPartsCallback: => @fetchMissingParts.apply(this, arguments))
+    #else
+    Ember.ArrayProxy.create(content: [])
+  ).property()
 
-    if Travis.config.pusher_log_fallback
-      parts = Travis.LogChunks.create(content: [], missingPartsCallback: => @fetchMissingParts.apply(this, arguments))
-    else
-      parts = Ember.ArrayProxy.create(content: [])
-
-    @set 'parts', parts
-    # @set 'parts', Travis.ChunkBuffer.create(content: [])
+  clearParts: ->
+    parts = @get('parts')
+    parts.set('content', [])
 
   fetch: ->
     console.log 'log model: fetching log' if Log.DEBUG
-    @setParts()
+    @clearParts()
     handlers =
       json: (json) => @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
     Travis.Log.Request.create(id: id, handlers: handlers).run() if id = @get('job.id')
 
   clear: ->
-    @setParts()
+    @clearParts()
     @incrementProperty('version')
 
   append: (part) ->
+    return if @get('parts').isDestroying || @get('parts').isDestroyed
     @get('parts').pushObject(part)
 
   loadParts: (parts) ->
@@ -75,6 +72,9 @@ Travis.Log.Request = Em.Object.extend
       success: (body, status, xhr) => Ember.run(this, -> @handle(body, status, xhr))
 
   handle: (body, status, xhr) ->
+    if Travis.config.pro
+      Travis.Job.find(@get('id')).get('log').set('token', xhr.getResponseHeader('X-Log-Access-Token'))
+
     if xhr.status == 204
       $.ajax(url: @redirectTo(xhr), type: 'GET', success: @handlers.text)
     else if @isJson(xhr, body)

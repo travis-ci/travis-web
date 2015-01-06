@@ -1,5 +1,5 @@
 <div id="log-container">
-  <a href="#" id="tail" {{action "toggleTailing" target="view"}}>
+  <a href="#" id="tail" {{action "toggleTailing" target=view}}>
     <span class="status"></span>
 
     <label>
@@ -12,7 +12,7 @@
   </a>
   <pre id="log" class="ansi"></pre>
 
-  <a href='#' class="to-top" {{action "toTop" target="view"}}>To Top</a>
+  <a href='#' class="to-top" {{action "toTop" target=view}}>To Top</a>
 
   {{#if view.job.sponsor.name}}
     <p class="sponsor">

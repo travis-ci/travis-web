@@ -16,5 +16,14 @@ Travis.ProfileController = Travis.Controller.extend
     @connectTab('user')
 
   connectTab: (tab) ->
-    viewClass = Travis["#{$.camelize(tab)}View"]
+    if tab == 'user'
+      view = 'AccountsInfoView'
+    else
+      view = "#{$.camelize(tab)}View"
+    viewClass = Travis[view]
     @set('tab', tab)
+
+  billingUrl: (->
+    id = if @get('account.type') == 'user' then 'user' else @get('account.login')
+    "#{Travis.config.billing_endpoint}/subscriptions/#{id}"
+  ).property('account.login', 'account.type')

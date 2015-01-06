@@ -1,0 +1,23 @@
+<ul id="queues">
+  <li class="queue">
+    <h4>Queue ({{controller.length}})</h4>
+    <ul>
+      {{#if controller.length}}
+        {{#each job in controller}}
+          {{#view Travis.QueueItemView jobBinding="job"}}
+            {{#if job.repo.slug}}
+              {{#link-to "job" job.repo job}}
+                <span class="slug" {{bind-attr title="job.slug"}}>
+                  {{job.repo.slug}}
+                </span>
+                #{{job.number}}
+              {{/link-to}}
+            {{/if}}
+          {{/view}}
+        {{/each}}
+      {{else}}
+        There are no jobs
+      {{/if}}
+    </ul>
+  </li>
+</ul>

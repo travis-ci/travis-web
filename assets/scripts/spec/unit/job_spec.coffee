@@ -36,37 +36,6 @@ test 'configKeys takes into account the keys of other jobs', ->
     deepEqual( configValues2, [ '2.0.0', undefined, 'Gemfile.1', undefined ] )
     deepEqual( configValues3, [ '1.9.3', undefined, undefined, 'OpenJDK' ] )
 
-test 'it does not load record on duration, finishedAt and result if job is not in finished state', ->
-  Travis.Job.load [{ id: 1, state: 'started', started_at: null }]
-
-  Ember.run ->
-    record = Travis.Job.find 1
-
-    record.loadTheRest = ->
-      ok(false, 'loadTheRest should not be called')
-
-    record.get('_duration')
-    record.get('finishedAt')
-    record.get('result')
-
-  wait().then ->
-    ok(true, 'loadTheRest was not called')
-
-test 'it loads record on duration, finishedAt and result if job is in finished state', ->
-  expect(1)
-
-  Travis.Job.load [{ id: 1, state: 'passed', started_at: null }]
-
-  Ember.run ->
-    record = Travis.Job.find 1
-
-    record.loadTheRest = ->
-      ok(true, 'loadTheRest should be called')
-
-    record.get('finishedAt')
-
-  wait()
-
 test 'returns config values for all keys available on build with different number of config keys in sibling jobs', ->
   buildAttrs =
     id: 1

@@ -145,3 +145,45 @@ unless window.TravisApplication
     currentDate: ->
       new Date()
   )
+
+  onUserUpdate: (user) ->
+    if Travis.config.pro
+      @identifyCustomer(user)
+      @subscribePusher(user)
+      @setupCharm(user)
+
+  subscribePusher: (user) ->
+    channels = user.channels
+    channels = channels.map (channel) ->
+      if channel.match /^private-/
+        channel
+      else
+        "private-#{channel}"
+    Travis.pusher.subscribeAll(channels)
+
+  setupCharm: (user) ->
+    $.extend window.__CHARM,
+      customer: user.login,
+      customer_id: user.id,
+      email: user.email
+
+  displayCharm: ->
+    __CHARM.show()
+
+  identifyCustomer: (user) ->
+    if _cio && _cio.identify
+      _cio.identify
+        id: user.id
+        email: user.email
+        name: user.name
+        created_at: (Date.parse(user.created_at) / 1000) || null
+        login: user.login
+
+    @on 'user:signed_in', (user) ->
+      Travis.onUserUpdate(user)
+
+    @on 'user:synced', (user) ->
+      Travis.onUserUpdate(user)
+
+    @_super.apply this, arguments
+

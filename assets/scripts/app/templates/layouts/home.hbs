@@ -3,10 +3,16 @@
 </div>
 
 <div id="left">
-  {{outlet left}}
+  {{outlet "left"}}
 </div>
 
 <div id="main">
   {{render "flash"}}
-  {{outlet}}
+  {{yield}}
 </div>
+
+{{#if config.pro}}
+  <div id="right">
+    {{render "layouts/sidebar"}}
+  </div>
+{{/if}}

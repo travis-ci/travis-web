@@ -23,7 +23,14 @@ require 'travis/model'
   jobs:   Ember.hasMany('Travis.Job')
 
   config: (->
-    Travis.Helpers.compact(@get('_config'))
+    console.log('config')
+    if config = @get('_config')
+      Travis.Helpers.compact(config)
+    else
+      return if @get('isFetchingConfig')
+      @set 'isFetchingConfig', true
+
+      @reload()
   ).property('_config')
 
   # TODO add eventType to the api for api build requests
@@ -91,12 +98,6 @@ require 'travis/model'
 
   requeue: ->
     Travis.ajax.post "/builds/#{@get('id')}/restart"
-
-  isPropertyLoaded: (key) ->
-    if ['_duration', '_finishedAt'].contains(key) && !@get('isFinished')
-      return true
-    else
-      @_super(key)
 
   formattedFinishedAt: (->
     if finishedAt = @get('finishedAt')

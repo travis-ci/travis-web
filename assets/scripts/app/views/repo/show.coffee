@@ -14,24 +14,6 @@ Travis.reopen
       @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.isLoaded', 'repos.length')
 
-    repoIsLoadedDidChange: (->
-      # Ember does not automatically rerender outlets and sometimes 'pane' outlet
-      # in repos/show.hbs is empty when view is rerendered without routing
-      # taking place. Try to render the default outlet in such case
-      # TODO: look into fixing it in more general way
-      Ember.run.schedule('afterRender', this, ->
-        pane = Ember.get('_outlets.pane')
-        if @get('controller.repo.isLoaded') && @state == 'inDOM' &&
-           @get('controller.repo.lastBuild') &&
-           @get('controller.tab') == 'current' && (!pane || pane.state == 'destroyed')
-          view = @get('controller.container').lookup('view:build')
-          view.set('controller', @get('controller.container').lookup('controller:build'))
-          Ember.run.next =>
-            @set('_outlets', {}) if !@get('_outlets') && !@isDestroyed
-            @connectOutlet('pane',  view) unless @isDestroyed
-      )
-    ).observes('controller.repo.isLoaded')
-
     statusImages: ->
       @popupCloseAll()
       view = Travis.StatusImagesView.create(toolsView: this)
@@ -44,7 +26,12 @@ Travis.reopen
     ).property('controller.repo.slug')
 
   ReposEmptyView: Travis.View.extend
-    template: ''
+    template: (->
+      if Travis.config.pro
+        'pro/repos/show/empty'
+      else
+        ''
+    ).property()
 
   RepoShowTabsView: Travis.View.extend
     templateName: 'repos/show/tabs'
@@ -124,26 +111,27 @@ Travis.reopen
     closeMenu: ->
       $('.menu').removeClass('display')
 
-    menu: ->
-      @popupCloseAll()
-      $('#tools .menu').toggleClass('display')
-      event.stopPropagation()
-
-    regenerateKeyPopup: ->
-      if @get('canRegenerateKey')
-        @set('active', true)
-        @closeMenu()
-        @popup(event)
+    actions:
+      menu: ->
+        @popupCloseAll()
+        $('#tools .menu').toggleClass('display')
         event.stopPropagation()
 
-    regenerateKey: ->
-      @popupCloseAll()
+      regenerateKeyPopup: ->
+        if @get('canRegenerateKey')
+          @set('active', true)
+          @closeMenu()
+          @popup(event)
+          event.stopPropagation()
 
-      (@get('repo.content') || @get('repo')).regenerateKey
-        success: =>
-          @popup('regeneration-success')
-        error: ->
-          Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
+      regenerateKey: ->
+        @popupCloseAll()
+
+        (@get('repo.content') || @get('repo')).regenerateKey
+          success: =>
+            @popup('regeneration-success')
+          error: ->
+            Travis.lookup('controller:flash').loadFlashes([{ error: 'Travis encountered an error while trying to regenerate the key, please try again.'}])
 
     canRegenerateKey: (->
       @get('hasAdminPermission')
@@ -185,45 +173,59 @@ Travis.reopen
     tabBinding: 'controller.tab'
     currentUserBinding: 'controller.currentUser'
 
-    cancelBuild: ->
-      if @get('canCancelBuild')
-        Travis.flash(notice: 'Build cancellation has been scheduled.')
-        @get('build').cancel().then ->
-          Travis.flash(success: 'Build has been successfully canceled.')
-        , (xhr) ->
-          if xhr.status == 422
-            Travis.flash(error: 'This build can\'t be canceled')
-          else if xhr.status == 403
-            Travis.flash(error: 'You don\'t have sufficient access to cancel this build')
-          else
-            Travis.flash(error: 'An error occured when canceling the build')
+    actions:
+      requeueBuild: ->
+        if @get('canRequeueBuild')
+          @requeue @get('build')
+
+      requeueJob: ->
+        if @get('canRequeueJob')
+          @requeue @get('job')
+
+      cancelBuild: ->
+        if @get('canCancelBuild')
+          Travis.flash(notice: 'Build cancellation has been scheduled.')
+          @get('build').cancel().then ->
+            Travis.flash(success: 'Build has been successfully canceled.')
+          , (xhr) ->
+            if xhr.status == 422
+              Travis.flash(error: 'This build can\'t be canceled')
+            else if xhr.status == 403
+              Travis.flash(error: 'You don\'t have sufficient access to cancel this build')
+            else
+              Travis.flash(error: 'An error occured when canceling the build')
 
 
-    removeLog: ->
-      if @get('canRemoveLog')
-        job = @get('job') || @get('build.jobs.firstObject')
-        job.removeLog().then ->
-          Travis.flash(success: 'Log has been successfully removed.')
-        , (xhr) ->
-          if xhr.status == 409
-            Travis.flash(error: 'Log can\'t be removed')
-          else if xhr.status == 401
-            Travis.flash(error: 'You don\'t have sufficient access to remove the log')
-          else
-            Travis.flash(error: 'An error occured when removing the log')
+      removeLog: ->
+        if @get('canRemoveLog')
+          job = @get('job') || @get('build.jobs.firstObject')
+          job.removeLog().then ->
+            Travis.flash(success: 'Log has been successfully removed.')
+          , (xhr) ->
+            if xhr.status == 409
+              Travis.flash(error: 'Log can\'t be removed')
+            else if xhr.status == 401
+              Travis.flash(error: 'You don\'t have sufficient access to remove the log')
+            else
+              Travis.flash(error: 'An error occured when removing the log')
 
-    cancelJob: ->
-      if @get('canCancelJob')
-        Travis.flash(notice: 'Job cancellation has been scheduled.')
-        @get('job').cancel().then ->
-          Travis.flash(success: 'Job has been successfully canceled.')
-        , (xhr) ->
-          if xhr.status == 422
-            Travis.flash(error: 'This job can\'t be canceled')
-          else if xhr.status == 403
-            Travis.flash(error: 'You don\'t have sufficient access to cancel this job')
-          else
-            Travis.flash(error: 'An error occured when canceling the job')
+      cancelJob: ->
+        if @get('canCancelJob')
+          Travis.flash(notice: 'Job cancellation has been scheduled.')
+          @get('job').cancel().then ->
+            Travis.flash(success: 'Job has been successfully canceled.')
+          , (xhr) ->
+            if xhr.status == 422
+              Travis.flash(error: 'This job can\'t be canceled')
+            else if xhr.status == 403
+              Travis.flash(error: 'You don\'t have sufficient access to cancel this job')
+            else
+              Travis.flash(error: 'An error occured when canceling the job')
+
+      codeClimatePopup: ->
+        @popupCloseAll()
+        @popup('code-climate')
+        event.stopPropagation() if event?
 
     hasPermission: (->
       if permissions = @get('currentUser.permissions')
@@ -260,10 +262,20 @@ Travis.reopen
         (@get('build.jobs.length') == 1 && @get('build.jobs.firstObject.id'))
     ).property('job.id', 'build.jobs.firstObject.id', 'build.jobs.length')
 
+    job: (->
+      if id = @get('jobIdForLog')
+        Travis.Job.find(id)
+    ).property('jobIdForLog')
+
+
     plainTextLogUrl: (->
       if id = @get('jobIdForLog')
-        Travis.Urls.plainTextLog(id)
-    ).property('jobIdForLog')
+        url = Travis.Urls.plainTextLog(id)
+        if Travis.config.pro
+          token = @get('job.log.token') || @get('build.jobs.firstObject.log.token')
+        url += "&access_token=#{token}"
+        url
+    ).property('jobIdForLog', 'job.log.token', 'build.jobs.firstObject.log.token')
 
     canRemoveLog: (->
       @get('displayRemoveLog') && @get('hasPermission')
@@ -301,11 +313,6 @@ Travis.reopen
       Travis.config.code_climate == "true" and @get('repo.githubLanguage') == 'Ruby'
     ).property('repo.githubLanguage')
 
-    codeClimatePopup: ->
-      @popupCloseAll()
-      @popup('code-climate')
-      event.stopPropagation() if event?
-
     requeueFinished: ->
       @set('requeueing', false)
 
@@ -313,13 +320,4 @@ Travis.reopen
       return if @get('requeueing')
       @set('requeueing', true)
       thing.requeue().then(this.requeueFinished.bind(this), this.requeueFinished.bind(this))
-
-    requeueBuild: ->
-      if @get('canRequeueBuild')
-        @requeue @get('build')
-
-    requeueJob: ->
-      if @get('canRequeueJob')
-        @requeue @get('job')
-
 

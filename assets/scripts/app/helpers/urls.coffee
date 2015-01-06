@@ -21,10 +21,18 @@
     "#{Travis.config.source_endpoint}/#{slug}/settings/hooks#travis_minibucket"
 
   statusImage: (slug, branch) ->
-    "#{location.protocol}//#{location.host}/#{slug}.svg" + if branch then "?branch=#{encodeURIComponent(branch)}" else ''
+    if Travis.config.pro
+      token = Travis.__container__.lookup('controller:currentUser').get('token')
+      "#{location.protocol}//#{location.host}/#{slug}.svg?token=#{token}" + if branch then "&branch=#{branch}" else ''
+    else
+      "#{location.protocol}//#{location.host}/#{slug}.svg" + if branch then "?branch=#{encodeURIComponent(branch)}" else ''
 
   ccXml: (slug) ->
-    "#{Travis.config.api_endpoint}/repos/#{slug}/cc.xml"
+    if Travis.config.pro
+      token = Travis.__container__.lookup('controller:currentUser').get('token')
+      "##{Travis.config.api_endpoint}/repos/#{slug}/cc.xml?token=#{token}"
+    else
+      "#{Travis.config.api_endpoint}/repos/#{slug}/cc.xml"
 
   email: (email) ->
     "mailto:#{email}"

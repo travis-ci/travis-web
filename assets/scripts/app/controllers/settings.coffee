@@ -12,6 +12,7 @@ Travis.SettingsIndexController = Em.ObjectController.extend
       @set('settings.maximum_number_of_builds_valid', 'invalid')
   ).observes('settings.maximum_number_of_builds')
 
-  save: ->
-    @get('model').saveSettings(@get('settings')).then null, ->
-      Travis.flash(error: 'There was an error while saving settings. Please try again.')
+  actions:
+    save: ->
+      @get('model').saveSettings(@get('settings')).then null, ->
+        Travis.flash(error: 'There was an error while saving settings. Please try again.')

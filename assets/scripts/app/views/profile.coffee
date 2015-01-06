@@ -1,7 +1,11 @@
 Travis.reopen
   ProfileView: Travis.View.extend
     templateName: 'profile/show'
+    layoutName: 'layouts/profile'
+    classNames: ['application']
     accountBinding: 'controller.account'
+    subscribedBinding: 'account.subscribed'
+    educationBinding: 'account.education'
 
     name: (->
       @get('account.name') || @get('account.login')
@@ -34,7 +38,7 @@ Travis.reopen
       Travis.Urls.githubAdmin(@get('hook.slug'))
     ).property('hook.slug')
 
-  UserView: Travis.View.extend
+  AccountsInfoView: Travis.View.extend
     templateName: 'profile/tabs/user'
     userBinding: 'controller.user'
 

@@ -11,8 +11,12 @@ Travis.AccountController = Ember.ObjectController.extend
       self.reloadHooks()
     ))
 
-  toggle: (hook) ->
-    hook.toggle()
+  actions:
+    sync: ->
+      @get('user').sync()
+
+    toggle: (hook) ->
+      hook.toggle()
 
   reloadHooks: ->
     if login = @get('login')
@@ -35,8 +39,3 @@ Travis.AccountController = Ember.ObjectController.extend
   showPublicReposHint: (->
     Travis.config.show_repos_hint == 'public'
   ) .property()
-
-  actions:
-    sync: ->
-      @get('user').sync()
-

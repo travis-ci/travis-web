@@ -6,8 +6,15 @@ Em.View.reopen
 
     @_super.apply(this, arguments)
 
+Travis.NotFoundView = Ember.View.extend
+  layoutName: 'layouts/simple'
+
 @Travis.reopen
   View: Em.View.extend
+    actions:
+      popup: (name) -> @popup(name)
+      popupClose: -> @popupClose()
+
     popup: (name) ->
       @popupCloseAll()
       name = event?.target?.name || name
@@ -21,10 +28,31 @@ Em.View.reopen
 
       $('.popup').removeClass('display')
 
+Travis.IndexView = Travis.View.extend
+  layoutName: 'layouts/home'
+  classNames: ['application']
+
+@Travis.NoOwnedReposView = Ember.View.extend
+  templateName: 'pro/no_owned_repos'
+
 Travis.GettingStartedView = Travis.View.extend
-  templateName: 'no_owned_repos'
+  templateName: (->
+    if Travis.config.pro
+      'pro/no_owned_repos'
+    else
+      'no_owned_repos'
+  ).property()
+
+Travis.AuthSigninView = Travis.View.extend
+  layoutName: 'layouts/simple'
+
+Travis.InsufficientOauthPermissionsView = Travis.View.extend
+  layoutName: 'layouts/simple'
+  classNames: ['application']
 
 Travis.FirstSyncView = Travis.View.extend
+  layoutName: 'layouts/simple'
+  classNames: ['application']
   didInsertElement: ->
     this.addObserver('controller.isSyncing', this, this.isSyncingDidChange)
 
@@ -37,7 +65,7 @@ Travis.FirstSyncView = Travis.View.extend
       Ember.run.later this, ->
         Travis.Repo.fetch(member: @get('controller.user.login')).then( (repos) ->
           if repos.get('length')
-            self.get('controller').transitionToRoute('index.current')
+            self.get('controller').transitionToRoute('index')
           else
             self.get('controller').transitionToRoute('profile')
         ).then(null, (e) ->
@@ -45,6 +73,37 @@ Travis.FirstSyncView = Travis.View.extend
         )
       , Travis.config.syncingPageRedirectionTime
 
+
+Travis.SidebarView = Travis.View.extend
+  templateName: 'layouts/sidebar'
+
+  didInsertElement: ->
+    @_super.apply this, arguments
+
+  classQueues: (->
+    'active' if @get('activeTab') == 'queues'
+  ).property('activeTab')
+
+  classWorkers: (->
+    'active' if @get('activeTab') == 'workers'
+  ).property('activeTab')
+
+  classJobs: (->
+    'active' if @get('activeTab') == 'jobs'
+  ).property('activeTab')
+
+Travis.QueueItemView = Travis.View.extend
+  tagName: 'li'
+
+Travis.RunningJobsView = Em.View.extend
+  templateName: 'jobs'
+  elementId: 'running-jobs'
+
+Travis.QueueView = Em.View.extend
+  templateName: 'queues/show'
+  init: ->
+    @_super.apply this, arguments
+    @set 'controller', @get('controller').container.lookup('controller:queues')
 
 require 'views/accounts'
 require 'views/annotation'

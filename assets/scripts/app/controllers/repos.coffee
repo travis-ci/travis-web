@@ -1,19 +1,9 @@
 require 'travis/limited_array'
 
 Travis.ReposController = Ember.ArrayController.extend
-  defaultTab: ( ->
-    if @get('currentUser.id')
-      'owned'
-    else
-      'recent'
-  ).property('currentUser.id')
-
-  currentUserIdDidChange: (->
-    if @get('currentUser.id')
-      @activate('owned')
-    else if @get('tab') == 'owned'
-      @activate('recent')
-  ).observes('currentUser.id')
+  actions:
+    activate: (name) ->
+      @activate(name)
 
   tabOrIsLoadedDidChange: (->
     @possiblyRedirectToGettingStartedPage()
@@ -36,7 +26,8 @@ Travis.ReposController = Ember.ArrayController.extend
 
   init: ->
     @_super.apply this, arguments
-    Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
+    if !Ember.testing
+      Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   recentRepos: (->
     Ember.ArrayProxy.extend(
@@ -53,13 +44,8 @@ Travis.ReposController = Ember.ArrayController.extend
     if content = @get('content')
       content.forEach (r) -> r.updateTimes()
 
-  transitionToRoot: ->
-    @container.lookup('router:main').send('renderDefaultTemplate')
-    @container.lookup('router:main').transitionTo('index.current')
-
   activate: (tab, params) ->
     @set('sortProperties', ['sortOrder'])
-    tab ||= @get('defaultTab')
     @set('tab', tab)
     this["view#{$.camelize(tab)}"](params)
 
@@ -76,22 +62,20 @@ Travis.ReposController = Ember.ArrayController.extend
       []
   ).property('currentUser.login')
 
-  viewSearch: (params) ->
-    @set('content', Travis.Repo.search(params.search))
+  viewSearch: (phrase) ->
+    @set('search', phrase)
+    @set('content', Travis.Repo.search(phrase))
 
   searchObserver: (->
     search = @get('search')
     if search
       @searchFor search
-    else
-      @activate 'recent'
-      'recent'
   ).observes('search')
 
   searchFor: (phrase) ->
     Ember.run.cancel(@searchLater) if @searchLater
     @searchLater = Ember.run.later(this, (->
-      @activate 'search', search: phrase
+      @transitionTo('index.search', phrase)
     ), 500)
 
   noReposMessage: (->

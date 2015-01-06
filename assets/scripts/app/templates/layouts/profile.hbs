@@ -3,16 +3,16 @@
 </div>
 
 <div id="left">
-  {{outlet left}}
+  {{outlet "left"}}
 </div>
 
 <div id="main">
   {{render "flash"}}
-  {{outlet main}}
+  {{yield}}
 </div>
 
 <div id="right">
-  <div id="slider" {{action "toggle" target="Travis.slider"}}>
+  <div id="slider" {{action "toggle" target=Travis.slider}}>
     <div class='icon'></div>&nbsp;
   </div>
 

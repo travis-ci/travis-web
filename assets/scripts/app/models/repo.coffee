@@ -24,6 +24,9 @@ require 'travis/model'
     }
   ).property('lastBuildId', 'lastBuildNumber')
 
+  withLastBuild: ->
+    @filter( (repo) -> repo.get('lastBuildId') )
+
   sshKey: (->
     Travis.SshKey.find(@get('id'))
   )

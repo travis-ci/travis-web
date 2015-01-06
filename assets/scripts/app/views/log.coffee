@@ -9,20 +9,38 @@ Travis.reopen
   LogView: Travis.View.extend
     templateName: 'jobs/log'
     logBinding: 'job.log'
-    contextBinding: 'job'
 
     didInsertElement: ->
+      @setupLog()
+
+    logDidChange: (->
+      @setupLog()
+    ).observes('log')
+
+    logWillChange: (->
+      @teardownLog()
+    ).observesBefore('log')
+
+    willDestroyElement: ->
+      @teardownLog()
+
+    teardownLog: ->
+      job = @get('job')
+      job.unsubscribe() if job
+
+    setupLog: ->
       job = @get('job')
       if job
         job.get('log').fetch()
         job.subscribe()
 
-    willDestroyElement: ->
-      job = @get('job')
-      job.unsubscribe() if job
-
   PreView: Em.View.extend
     templateName: 'jobs/pre'
+
+    logWillChange: (->
+      console.log 'log view: log will change' if Log.DEBUG
+      @teardownLog()
+    ).observesBefore('log')
 
     didInsertElement: ->
       console.log 'log view: did insert' if Log.DEBUG
@@ -31,37 +49,47 @@ Travis.reopen
 
     willDestroyElement: ->
       console.log 'log view: will destroy' if Log.DEBUG
-      parts = @get('log.parts')
-      parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
-      parts.destroy()
-      @lineSelector?.willDestroy()
+      @teardownLog()
 
     versionDidChange: (->
-      @rerender() if @get('state') == 'inDOM'
+      @rerender() if @get('_state') == 'inDOM'
     ).observes('log.version')
 
     logDidChange: (->
       console.log 'log view: log did change: rerender' if Log.DEBUG
-      @rerender() if @get('state') == 'inDOM'
+
+      if @get('log')
+        @createEngine()
+        @rerender() if @get('_state') == 'inDOM'
     ).observes('log')
 
+    teardownLog: ->
+      if log = @get('log')
+        parts = log.get('parts')
+        parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
+        parts.destroy()
+        log.notifyPropertyChange('parts')
+        @lineSelector?.willDestroy()
+
     createEngine: ->
-      console.log 'log view: create engine' if Log.DEBUG
-      @scroll = new Log.Scroll beforeScroll: =>
-        @unfoldHighlight()
-      @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
-      @logFolder = new Travis.LogFolder(@$().find('#log'))
-      @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll, @logFolder)
-      @observeParts()
+      if @get('log')
+        console.log 'log view: create engine' if Log.DEBUG
+        @scroll = new Log.Scroll beforeScroll: =>
+          @unfoldHighlight()
+        @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
+        @logFolder = new Travis.LogFolder(@$().find('#log'))
+        @lineSelector = new Travis.LinesSelector(@$().find('#log'), @scroll, @logFolder)
+        @observeParts()
 
     unfoldHighlight: ->
       @lineSelector.unfoldLines()
 
     observeParts: ->
-      parts = @get('log.parts')
-      parts.addArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
-      parts = parts.slice(0)
-      @partsDidChange(parts, 0, null, parts.length)
+      if log = @get('log')
+        parts = log.get('parts')
+        parts.addArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
+        parts = parts.slice(0)
+        @partsDidChange(parts, 0, null, parts.length)
 
     partsDidChange: (parts, start, _, added) ->
       console.log 'log view: parts did change' if Log.DEBUG
@@ -76,8 +104,12 @@ Travis.reopen
     ).property()
 
     plainTextLogUrl: (->
-      Travis.Urls.plainTextLog(id) if id = @get('log.job.id')
-    ).property('job.log.id')
+      if id = @get('log.job.id')
+        url = Travis.Urls.plainTextLog(id)
+        if Travis.config.pro
+          url += "&access_token=#{@get('job.log.token')}"
+        url
+    ).property('job.log.id', 'job.log.token')
 
     toggleTailing: ->
       Travis.tailing.toggle()

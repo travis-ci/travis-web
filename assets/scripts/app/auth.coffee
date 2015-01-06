@@ -46,7 +46,11 @@ window.Auth = Ember.Object.extend
       null
 
   validateUser: (user) ->
-    @validateHas('id', user) && @validateHas('login', user) && @validateHas('token', user) && @validateHas('correct_scopes', user) && user.correct_scopes
+    fieldsToValidate = ['id', 'login', 'token', 'correct_scopes']
+    if Travis.config.pro
+      fieldsToValidate.push 'channels'
+
+    fieldsToValidate.every( (field) => @validateHas(field, user) ) && user.correct_scopes
 
   validateHas: (field, user) ->
     if user[field]

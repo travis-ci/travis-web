@@ -19,3 +19,13 @@ Travis.RequestController = Ember.ObjectController.extend
     else
       'Rejected'
   ).property('isAccepted')
+
+  message: (->
+    message = @get('model.message')
+    if Travis.features.pro && message == "private repository"
+      ''
+    else
+      message
+  ).property('model.message')
+
+

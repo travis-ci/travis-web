@@ -29,10 +29,6 @@
     tabBinding: 'controller.tab'
     currentUserBinding: 'controller.currentUser.id'
 
-    activate: (name) ->
-      @get('controller').transitionToRoot()
-      @get('controller').activate(name)
-
     classRecent: (->
       'active' if @get('tab') == 'recent'
     ).property('tab')

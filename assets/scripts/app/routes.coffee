@@ -18,9 +18,22 @@ Travis.Route = Ember.Route.extend
       @_super.apply(this, arguments)
 
   signedIn: ->
-    @controllerFor('currentUser').get('content')
+    @controllerFor('currentUser').get('model')
+
+  needsAuth: (->
+    # on pro, we need to auth on every route
+    Travis.config.pro
+  ).property()
 
 Travis.ApplicationRoute = Travis.Route.extend
+  needsAuth: false
+
+  renderTemplate: ->
+    if Travis.config.pro
+      $('body').addClass('pro')
+
+    @_super.apply(this, arguments)
+
   actions:
     redirectToGettingStarted: ->
       # do nothing, we handle it only in index path
@@ -43,14 +56,21 @@ Travis.ApplicationRoute = Travis.Route.extend
       if transition = @auth.get('afterSignInTransition')
         @auth.set('afterSignInTransition', null)
         transition.retry()
+      else
+        @transitionTo('index')
 
     afterSignOut: ->
-      @transitionTo('index.current')
+      if Travis.config.pro
+        @transitionTo('auth')
+      else
+        @transitionTo('index')
 
 Travis.Router.map ->
   @resource 'index', path: '/', ->
     @resource 'getting_started'
-    @route 'current', path: '/'
+    @route 'recent'
+    @route 'my_repositories'
+    @route 'search', path: '/search/:phrase'
     @resource 'repo', path: '/:owner/:name', ->
       @route 'index', path: '/'
       @resource 'build', path: '/builds/:build_id'
@@ -74,8 +94,9 @@ Travis.Router.map ->
   @route 'auth', path: '/auth'
 
   @resource 'profile', path: '/profile', ->
-    @resource 'account', path: '/:login'
-    @route 'info', path: '/info'
+    @resource 'accounts', path: '/', ->
+      @resource 'account', path: '/:login'
+      @route 'info', path: '/info'
 
   @route 'notFound', path: "/*path"
 
@@ -129,8 +150,8 @@ Travis.GettingStartedRoute = Travis.Route.extend
 Travis.SimpleLayoutRoute = Travis.Route.extend
   setupController: ->
     $('body').attr('id', 'home')
-    @container.lookup('controller:repos').activate()
-    @container.lookup('controller:application').connectLayout 'simple'
+    toActivate = if @signedIn() then 'owned' else 'recent'
+    @container.lookup('controller:repos').activate(toActivate)
     @_super.apply(this, arguments)
 
   renderTemplate: ->
@@ -148,30 +169,59 @@ Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
     existingUser = document.location.hash.match(/#existing[_-]user/)
     controller.set('existingUser', existingUser)
 
-Travis.IndexCurrentRoute = Travis.Route.extend
+Travis.IndexTabRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'repo'
     @render 'build', into: 'repo'
 
   setupController: ->
     @_super.apply this, arguments
-    @currentRepoDidChange()
 
     @controllerFor('repo').activate('index')
-    @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
+    @controllerFor('repos').activate(@get('reposTabName'))
 
-  afterModel: ->
-    @controllerFor('repos').possiblyRedirectToGettingStartedPage()
+    @currentRepoDidChange()
+    @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
 
   deactivate: ->
     @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
 
   currentRepoDidChange: ->
-    @controllerFor('repo').set('repo', @controllerFor('repos').get('firstObject'))
+    if repo = @controllerFor('repos').get('firstObject')
+      @controllerFor('repo').set('repo', repo)
 
   actions:
     redirectToGettingStarted: ->
       @transitionTo('getting_started')
+
+Travis.IndexMyRepositoriesRoute = Travis.IndexTabRoute.extend
+  reposTabName: 'owned'
+  afterModel: ->
+    @controllerFor('repos').possiblyRedirectToGettingStartedPage()
+
+Travis.IndexRecentRoute = Travis.IndexTabRoute.extend
+  reposTabName: 'recent'
+
+Travis.IndexSearchRoute = Travis.IndexTabRoute.extend
+  renderTemplate: ->
+    @render 'repo'
+    @render 'build', into: 'repo'
+
+  setupController: (controller, searchPhrase) ->
+    # TODO: this method is almost the same as _super, refactor this
+    @controllerFor('repo').activate('index')
+    @controllerFor('repos').activate('search', searchPhrase)
+
+    @currentRepoDidChange()
+    @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
+
+  model: (params) ->
+    params.phrase
+
+  deactivate: ->
+    @_super.apply(this, arguments)
+
+    @controllerFor('repos').set('search', undefined)
 
 Travis.AbstractBuildsRoute = Travis.Route.extend
   renderTemplate: ->
@@ -187,7 +237,7 @@ Travis.AbstractBuildsRoute = Travis.Route.extend
 
   contentDidChange: ->
     path = @get('path')
-    @controllerFor('builds').set('content', @controllerFor('repo').get(path))
+    @controllerFor('builds').set('model', @controllerFor('repo').get(path))
 
   path: (->
     type = @get('contentType')
@@ -195,8 +245,19 @@ Travis.AbstractBuildsRoute = Travis.Route.extend
   ).property('contentType')
 
 Travis.BuildsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'builds')
-Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(contentType: 'pull_requests')
 Travis.BranchesRoute = Travis.AbstractBuildsRoute.extend(contentType: 'branches')
+Travis.PullRequestsRoute = Travis.AbstractBuildsRoute.extend(
+  contentType: 'pull_requests'
+
+  # TODO: it would be better to have separate controller for branches and PRs list
+  setupController: (controller, model) ->
+    @_super(controller, model)
+
+    this.controllerFor('builds').set('isPullRequestsList', true)
+
+  deactivate: ->
+    this.controllerFor('builds').set('isPullRequestsList', false)
+)
 
 Travis.BuildRoute = Travis.Route.extend
   serialize: (model, params) ->
@@ -208,18 +269,17 @@ Travis.BuildRoute = Travis.Route.extend
     model = Travis.Build.find(model) if model && !model.get
 
     repo = @controllerFor('repo')
-    repo.set('build', model)
-    repo.activate('build')
+    #repo.set('build', model)
     @controllerFor('build').set('build', model)
-    repo.set('build', model)
+    repo.activate('build')
+    #repo.set('build', model)
 
   model: (params) ->
     Travis.Build.fetch(params.build_id)
 
   deactivate: ->
-    repo = @controllerFor('repo')
-    repo.set('build', null)
-    repo.set('job', null)
+    @controllerFor('job').set('job', null)
+    @controllerFor('build').set('build', null)
 
 Travis.JobRoute = Travis.Route.extend
   serialize: (model, params) ->
@@ -231,19 +291,19 @@ Travis.JobRoute = Travis.Route.extend
     model = Travis.Job.find(model) if model && !model.get
 
     repo = @controllerFor('repo')
-    repo.set('job', model)
+    @controllerFor('job').set('job', model)
     repo.activate('job')
 
     if build = model.get('build')
       @controllerFor('build').set('build', build)
-      repo.set('build', build)
 
   model: (params) ->
     Travis.Job.fetch(params.job_id)
 
   deactivate: ->
-    repo = @controllerFor('repo')
-    repo.set('job', null)
+    @controllerFor('build').set('build', null)
+    @controllerFor('job').set('job', null)
+
 
 Travis.RepoIndexRoute = Travis.Route.extend
   setupController: (controller, model) ->
@@ -258,8 +318,8 @@ Travis.RepoIndexRoute = Travis.Route.extend
 
   deactivate: ->
     repo = @controllerFor('repo')
-    repo.set('build', null)
-    repo.set('job', null)
+    @controllerFor('build').set('build', null)
+    @controllerFor('job').set('job', null)
 
 Travis.RepoRoute = Travis.Route.extend
   renderTemplate: ->
@@ -280,6 +340,9 @@ Travis.RepoRoute = Travis.Route.extend
     slug = "#{params.owner}/#{params.name}"
     Travis.Repo.fetchBySlug(slug)
 
+  resetController: ->
+    @controllerFor('repo').deactivate()
+
   actions:
     error: (error) ->
       # if error throwed has a slug (ie. it was probably repo not found)
@@ -291,15 +354,25 @@ Travis.RepoRoute = Travis.Route.extend
       # bubble to the top
       return true
 
+# Obviously Index route should be renamed to something
+# like "main" or "home"
+Travis.IndexIndexRoute = Travis.Route.extend
+  redirect: ->
+    target = if @signedIn() then 'my_repositories' else 'recent'
+    @transitionTo("index.#{target}")
+
 Travis.IndexRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'home')
 
-    @render 'repos',   outlet: 'left'
+    @_super.apply this, arguments
+
+    @render 'repos',   outlet: 'left', into: 'index'
 
   setupController: (controller)->
-    @container.lookup('controller:repos').activate()
-    @container.lookup('controller:application').connectLayout 'home'
+    # TODO: this is redundant with my_repositories and recent routes
+    toActivate = if @signedIn() then 'owned' else 'recent'
+    @container.lookup('controller:repos').activate(toActivate)
 
 Travis.StatsRoute = Travis.Route.extend
   renderTemplate: ->
@@ -307,42 +380,39 @@ Travis.StatsRoute = Travis.Route.extend
 
     @render 'stats'
 
-  setupController: ->
-    @container.lookup('controller:application').connectLayout('simple')
-
 Travis.NotFoundRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'not-found')
 
     @render 'not_found'
 
-  setupController: ->
-    @container.lookup('controller:application').connectLayout('simple')
-
 Travis.ProfileRoute = Travis.Route.extend
   needsAuth: true
 
   setupController: (controller, model) ->
-    @container.lookup('controller:application').connectLayout('profile')
     @controllerFor('accounts').set('model', model)
 
+  renderTemplate: ->
+    $('body').attr('id', 'profile')
+    @_super.apply(this, arguments)
+    @render 'loading', outlet: 'left', into: 'profile'
+
+Travis.AccountsRoute = Travis.Route.extend
   model: ->
     Travis.Account.fetch(all: true)
 
   renderTemplate: ->
-    $('body').attr('id', 'profile')
-    @render 'accounts', outlet: 'left'
-
     @_super.apply(this, arguments)
+    @render 'profile_accounts', outlet: 'left', into: 'profile'
 
-Travis.ProfileIndexRoute = Travis.Route.extend
+Travis.AccountsIndexRoute = Travis.Route.extend
   redirect: ->
     # TODO: setting accounts model in ProfileRoute is wrong, but
     #       at this stage it's better than what we had before
-    accounts = @modelFor('profile')
+    accounts = @modelFor('accounts')
     login    = @controllerFor('currentUser').get('login')
     account  = accounts.find (account) -> account.get('login') == login
-    @transitionTo 'account', account
+    @replaceWith 'account', account
 
 Travis.AccountRoute = Travis.Route.extend
   setupController: (controller, account) ->
@@ -351,7 +421,7 @@ Travis.AccountRoute = Travis.Route.extend
     @controllerFor('profile').activate 'hooks'
 
   model: (params) ->
-    @modelFor('profile').find (account) -> account.get('login') == params.login
+    @modelFor('accounts').find (account) -> account.get('login') == params.login
 
   serialize: (account) ->
     if account && account.get
@@ -359,29 +429,34 @@ Travis.AccountRoute = Travis.Route.extend
     else
       {}
 
-Travis.ProfileInfoRoute = Travis.Route.extend
+Travis.AccountsInfoRoute = Travis.Route.extend
   setupController: ->
-    @container.lookup('controller:profile').activate 'user'
+    user = @controllerFor('currentUser').get('model')
+    @controllerFor('account').set('model', user)
+    @controllerFor('profile').activate 'user'
 
   renderTemplate: ->
-    @render 'user'
+    @render 'accounts_info'
 
 Travis.AuthRoute = Travis.Route.extend
+  needsAuth: false
+
   renderTemplate: ->
     $('body').attr('id', 'auth')
 
     @render 'auth.signin'
-
-  setupController: ->
-    @container.lookup('controller:application').connectLayout('simple')
 
   deactivate: ->
     @controllerFor('auth').set('redirected', false)
 
   actions:
     afterSignIn: ->
-      @transitionTo('index.current')
+      @transitionTo('index')
       return true
+
+  redirect: ->
+    if @signedIn()
+      @transitionTo('index')
 
 Travis.SettingsRoute = Travis.Route.extend
   needsAuth: true
@@ -403,7 +478,7 @@ Travis.SshKeyRoute = Travis.Route.extend
   model: (params) ->
     repo = @modelFor('repo')
     self = this
-    Travis.SshKey.fetch(repo.get('id')).then ( (result) -> result ), (xhr) ->
+    Travis.SshKey.fetch(repo.get('id')).then ( (result) -> result unless result.get('isNew') ), (xhr) ->
       if xhr.status == 404
         # if there is no model, just return null. I'm not sure if this is the
         # best answer, maybe we should just redirect to different route, like
@@ -422,3 +497,8 @@ Travis.SshKeyRoute = Travis.Route.extend
     if @defaultKey
       controller.set('defaultKey', @defaultKey)
       @defaultKey = null
+
+  deactivate: ->
+    @_super.apply(this, arguments)
+
+    @controllerFor('ssh_key').send('cancel')

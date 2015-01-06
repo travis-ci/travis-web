@@ -12,5 +12,6 @@
       @get('flash.type') || 'broadcast'
     ).property('flash.type')
 
-    close: ->
-      @get('controller').close(@get('flash'))
+    actions:
+      close: ->
+        @get('controller').close(@get('flash'))

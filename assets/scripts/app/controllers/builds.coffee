@@ -1,4 +1,6 @@
 Travis.BuildsController = Em.ArrayController.extend
+  isPullRequestsList: false
+
   sortAscending: false
   sortProperties: ['number']
 
