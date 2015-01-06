@@ -111,14 +111,14 @@ Travis.reopen
         url
     ).property('job.log.id', 'job.log.token')
 
-    toggleTailing: ->
-      Travis.tailing.toggle()
-      @engine.autoCloseFold = !Travis.tailing.isActive()
-      event.preventDefault()
-
     actions:
       toTop: () ->
         $(window).scrollTop(0)
+
+      toggleTailing: ->
+        Travis.tailing.toggle()
+        @engine.autoCloseFold = !Travis.tailing.isActive()
+        event.preventDefault()
 
     noop: -> # TODO required?
 
