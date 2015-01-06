@@ -6,6 +6,9 @@ Em.View.reopen
 
     @_super.apply(this, arguments)
 
+Travis.NotFoundView = Ember.View.extend
+  layoutName: 'layouts/simple'
+
 @Travis.reopen
   View: Em.View.extend
     actions:
