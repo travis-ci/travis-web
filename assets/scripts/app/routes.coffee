@@ -69,6 +69,7 @@ Travis.Router.map ->
   @resource 'index', path: '/', ->
     @resource 'getting_started'
     @route 'recent'
+    @route 'repositories'
     @route 'my_repositories'
     @route 'search', path: '/search/:phrase'
     @resource 'repo', path: '/:owner/:name', ->
@@ -194,7 +195,11 @@ Travis.IndexTabRoute = Travis.Route.extend
     redirectToGettingStarted: ->
       @transitionTo('getting_started')
 
-Travis.IndexMyRepositoriesRoute = Travis.IndexTabRoute.extend
+Travis.IndexMyRepositoriesRoute = Travis.Route.extend
+  redirect: ->
+    @transitionTo("index.repositories")
+
+Travis.IndexRepositoriesRoute = Travis.IndexTabRoute.extend
   reposTabName: 'owned'
   afterModel: ->
     @controllerFor('repos').possiblyRedirectToGettingStartedPage()
@@ -358,7 +363,7 @@ Travis.RepoRoute = Travis.Route.extend
 # like "main" or "home"
 Travis.IndexIndexRoute = Travis.Route.extend
   redirect: ->
-    target = if @signedIn() then 'my_repositories' else 'recent'
+    target = if @signedIn() then 'repositories' else 'recent'
     @transitionTo("index.#{target}")
 
 Travis.IndexRoute = Travis.Route.extend
@@ -370,7 +375,7 @@ Travis.IndexRoute = Travis.Route.extend
     @render 'repos',   outlet: 'left', into: 'index'
 
   setupController: (controller)->
-    # TODO: this is redundant with my_repositories and recent routes
+    # TODO: this is redundant with repositories and recent routes
     toActivate = if @signedIn() then 'owned' else 'recent'
     @container.lookup('controller:repos').activate(toActivate)
 
