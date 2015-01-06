@@ -16,7 +16,11 @@ Travis.ProfileController = Travis.Controller.extend
     @connectTab('user')
 
   connectTab: (tab) ->
-    viewClass = Travis["#{$.camelize(tab)}View"]
+    if tab == 'user'
+      view = 'AccountsInfoView'
+    else
+      view = "#{$.camelize(tab)}View"
+    viewClass = Travis[view]
     @set('tab', tab)
 
   billingUrl: (->

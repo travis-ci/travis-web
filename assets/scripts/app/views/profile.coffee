@@ -38,7 +38,7 @@ Travis.reopen
       Travis.Urls.githubAdmin(@get('hook.slug'))
     ).property('hook.slug')
 
-  UserView: Travis.View.extend
+  AccountsInfoView: Travis.View.extend
     templateName: 'profile/tabs/user'
     userBinding: 'controller.user'
 

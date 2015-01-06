@@ -30,7 +30,7 @@ Travis.StatsLayoutController = Em.Controller.extend()
 Travis.ProfileLayoutController = Em.Controller.extend()
 Travis.AuthLayoutController = Em.Controller.extend()
 
-Travis.ProfileInfoController = Em.Controller.extend
+Travis.AccountsInfoController = Em.Controller.extend
   needs: ['currentUser', 'repos']
   userBinding: 'controllers.currentUser'
 

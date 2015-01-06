@@ -429,12 +429,14 @@ Travis.AccountRoute = Travis.Route.extend
     else
       {}
 
-Travis.ProfileInfoRoute = Travis.Route.extend
+Travis.AccountsInfoRoute = Travis.Route.extend
   setupController: ->
-    @container.lookup('controller:profile').activate 'user'
+    user = @controllerFor('currentUser').get('model')
+    @controllerFor('account').set('model', user)
+    @controllerFor('profile').activate 'user'
 
   renderTemplate: ->
-    @render 'user'
+    @render 'accounts_info'
 
 Travis.AuthRoute = Travis.Route.extend
   needsAuth: false
