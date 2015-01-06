@@ -51,13 +51,11 @@
     </li>
   {{/if}}
 
-  {{#if config.pro}}
+  {{#unless config.pro}}
     <li>
       <a href="https://travisci.workable.com" class="werehiring" target="_blank">We're Hiring!</a>
     </li>
-  {{/if}}
 
-  {{#unless config.pro}}
     <li class="traviscicom">
       <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
     </li>
