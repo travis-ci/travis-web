@@ -4,6 +4,7 @@ ENV['RAILS_ENV']  = ENV['RACK_ENV']
 
 $: << 'lib'
 require 'travis/web'
+require 'rack-ssl'
 
 class RedirectSubdomain < Struct.new(:app, :from)
   def call(env)
