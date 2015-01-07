@@ -22,7 +22,7 @@ Travis.RequestController = Ember.ObjectController.extend
 
   message: (->
     message = @get('model.message')
-    if Travis.features.pro && message == "private repository"
+    if Travis.config.pro && message == "private repository"
       ''
     else
       message
