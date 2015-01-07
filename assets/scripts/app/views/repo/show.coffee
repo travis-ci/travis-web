@@ -273,7 +273,7 @@ Travis.reopen
         url = Travis.Urls.plainTextLog(id)
         if Travis.config.pro
           token = @get('job.log.token') || @get('build.jobs.firstObject.log.token')
-        url += "&access_token=#{token}"
+          url += "&access_token=#{token}"
         url
     ).property('jobIdForLog', 'job.log.token', 'build.jobs.firstObject.log.token')
 
