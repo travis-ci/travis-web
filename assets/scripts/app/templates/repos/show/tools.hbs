@@ -2,15 +2,6 @@
   <a href="#" {{action "menu" target=view}} class="menu-popup-button">Settings</a>
 
   <ul class="menu">
-   {{#if view.displayRegenerateKey}}
-      <li>
-        <a href="#" name="regenerate-key"
-          {{action "regenerateKeyPopup" target=view}}
-          {{bind-attr class=":open-popup view.canRegenerateKey::disabled"}}>
-            Regenerate Key
-        </a>
-      </li>
-    {{/if}}
     {{#if view.displaySettingsLink}}
       <li>
         {{#link-to "settings" view.repo}}Settings{{/link-to}}
