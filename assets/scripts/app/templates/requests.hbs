@@ -1,8 +1,10 @@
+{{#if config.pro}}
 <div class="travis-lint">
   <p>Travis Lint for clean .yml files
     <a {{bind-attr href="lintUrl"}}>lint.travis-ci.org/{{repo.slug}}</a>
   </p>
 </div>
+{{/if}}
 
 <table id="requests" class="list">
   <thead>
