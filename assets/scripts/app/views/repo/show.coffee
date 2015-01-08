@@ -14,16 +14,17 @@ Travis.reopen
       @get('repos.isLoaded') && @get('repos.length') == 0
     ).property('repos.isLoaded', 'repos.length')
 
-    statusImages: ->
-      @popupCloseAll()
-      view = Travis.StatusImagesView.create(toolsView: this)
-      Travis.View.currentPopupView = view
-      view.appendTo($('body'))
-      event.stopPropagation()
-
     statusImageUrl: (->
       Travis.Urls.statusImage(@get('controller.repo.slug'))
     ).property('controller.repo.slug')
+
+    actions:
+      statusImages: ->
+        @popupCloseAll()
+        view = Travis.StatusImagesView.create(toolsView: this)
+        Travis.View.currentPopupView = view
+        view.appendTo($('body'))
+        event.stopPropagation()
 
   ReposEmptyView: Travis.View.extend
     template: (->
