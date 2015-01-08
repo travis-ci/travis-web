@@ -39,7 +39,7 @@
     {{/if}}
     {{#if view.displayRemoveLog}}
       <li class="icon remove-log" title="Remove Log">
-        <a href="#" {{action "removeLog" target="view"}}
+        <a href="#" name="remove-log-popup" class="open-popup" {{action "removeLogPopup" target=view}}
           {{bind-attr class="view.canRemoveLog::disabled"}}></a>
       </li>
     {{/if}}
@@ -52,4 +52,15 @@
     {{/if}}
 
   </ul>
+</div>
+
+<div id="remove-log-popup" class="popup">
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
+  <p><strong>This action will remove the log permanently!</strong></p>
+  <p>Do you want to continue?</p>
+  <p>
+    <a class="sync_now button" {{action "removeLog" target="view"}}>Yes, please!</a>
+    <span class="or">or</span>
+    <a href="#" class="cancel" {{action "popupClose" target=view}}>Cancel</a>
+  </p>
 </div>
