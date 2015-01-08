@@ -10,7 +10,7 @@ module Travis
     VENDOR_ORDER = %w(jquery.min minispade handlebars ember)
     PRODUCTION_VENDOR_ORDER = %w(jquery.min minispade handlebars ember.prod)
     SPEC_VENDOR_ORDER = %w(jasmine jasmine-html jasmine-runner sinon)
-    STYLES_ORDER = %w()
+    STYLES_ORDER = %w(main/tools)
 
     attr_reader :roots, :env
 

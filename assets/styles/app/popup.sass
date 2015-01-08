@@ -6,7 +6,12 @@
   width: 16px
   margin: -4px 0 0 3px
   vertical-align: middle
-  background: inline-image('ui/help.svg') no-repeat scroll 0 3px transparent
+  background:
+    image: inline-image('ui/help.svg')
+    repeat: no-repeat
+    position: 0 1px
+    color: transparent
+    size: 100%
   cursor: pointer
 
 .popup
@@ -25,7 +30,10 @@
     top: 10px
     width: 16px
     height: 16px
-    background: inline-image('ui/close.svg') no-repeat 0 0
+    background:
+      image: inline-image('ui/close.svg')
+      repeat: no-repeat
+      size: 100%
 
   h4
     margin-top: 0
@@ -89,12 +97,14 @@
   width: 400px
 
 #code-climate
-  margin: -150px 0 0 -200px
   width: 500px
   padding: 5px 20px
+  margin-left: -250px
 
   pre
     padding: 5px 10px
 
   ol
     padding-left: 15px
+  img#code-climate-logo
+    margin-right: 50px
