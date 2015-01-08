@@ -283,8 +283,9 @@ Travis.reopen
     ).property('displayRemoveLog', 'hasPermission')
 
     displayRemoveLog: (->
-      (@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) &&
-        @get('build.jobs').objectAt(0).get?('canRemoveLog')
+      #(@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) &&
+      #  @get('build.jobs').objectAt(0).get?('canRemoveLog')
+      false
     ).property('isJobTab', 'isBuildTab', 'build.jobs.length', 'job.canRemoveLog')
 
     canCancelBuild: (->
