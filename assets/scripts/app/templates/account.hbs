@@ -1,11 +1,10 @@
 <p class="tip">
-  {{#if showPrivateReposHint}}
-  We're only showing <strong>your public repositories</strong> below.
-  You can find your <strong>private projects on <a href="https://travis-ci.com?utm_source=hooks">travis-ci.com</a></strong>.
-  {{/if}}
-  {{#if showPublicReposHint}}
+  {{#if config.pro}}
   We're only showing <strong>your private repositories</strong> below.
   You can find your <strong>public projects on <a href="https://travis-ci.org?utm_source=hooks">travis-ci.org</a></strong>.
+  {{else}}
+  We're only showing <strong>your public repositories</strong> below.
+  You can find your <strong>private projects on <a href="https://travis-ci.com?utm_source=hooks">travis-ci.com</a></strong>.
   {{/if}}
 </p>
 
