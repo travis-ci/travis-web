@@ -32,11 +32,15 @@
         {{/if}}
       </li>
     {{/if}}
-    {{!TODO: for some reason showDownloadLog, which just delegates to jobIdForLog
-             does not refresh 'if' properly, need further investigation}}
-    {{#if view.jobIdForLog}}
+    {{#if view.showDownloadLog}}
       <li class="icon download-log" title="Download Log">
         <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}></a>
+      </li>
+    {{/if}}
+    {{#if view.displayRemoveLog}}
+      <li class="icon remove-log" title="Remove Log">
+        <a href="#" {{action "removeLog" target="view"}}
+          {{bind-attr class="view.canRemoveLog::disabled"}}></a>
       </li>
     {{/if}}
     {{#if view.displayCodeClimate}}
