@@ -262,8 +262,8 @@ Travis.reopen
     ).property('displayRequeueJob', 'hasPermission')
 
     showDownloadLog: (->
-      @get('_job')
-    ).property('_job')
+      @get('jobIdForLog')
+    ).property('jobIdForLog')
 
     _job: (->
       if id = @get('jobIdForLog')
@@ -294,7 +294,7 @@ Travis.reopen
     displayRemoveLog: (->
       if job = Travis.Job.find(@get('jobIdForLog'))
         (@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) && job.get('canRemoveLog')
-    ).property('isJobTab', 'isBuildTab', 'build.jobs.length', 'job.canRemoveLog', 'jobIdForLog')
+    ).property('isJobTab', 'isBuildTab', 'build.jobs.length', '_job.canRemoveLog', 'jobIdForLog')
 
     canCancelBuild: (->
       @get('displayCancelBuild') && @get('hasPermission')

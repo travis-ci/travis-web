@@ -32,10 +32,12 @@
         {{/if}}
       </li>
     {{/if}}
-    {{#if view.showDownloadLog}}
-      <li class="icon download-log" title="Download Log">
-        <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}></a>
-      </li>
+    {{#if view.jobIdForLog}}
+      {{#if view.showDownloadLog}}
+        <li class="icon download-log" title="Download Log">
+          <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}></a>
+        </li>
+      {{/if}}
     {{/if}}
     {{#if view.displayRemoveLog}}
       <li class="icon remove-log" title="Remove Log">
