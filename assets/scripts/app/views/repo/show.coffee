@@ -235,12 +235,6 @@ Travis.reopen
           @popup('remove-log-popup')
           return false
 
-      removeLogPopup: ->
-        if @get('canRemoveLog')
-          @set('active', true)
-          @popup(event)
-          event.stopPropagation()
-
     hasPermission: (->
       if permissions = @get('currentUser.permissions')
         permissions.contains parseInt(@get('repo.id'))
