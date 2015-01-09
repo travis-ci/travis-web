@@ -20,7 +20,7 @@ Travis.NotFoundView = Ember.View.extend
       name = event?.target?.name || name
       $("##{name}").toggleClass('display')
     popupClose: ->
-      $(event.target).closest('.popup').removeClass('display')
+      $('.popup').removeClass('display')
     popupCloseAll: ->
       if view = Travis.View.currentPopupView
         view.destroy()
