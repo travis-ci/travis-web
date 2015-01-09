@@ -83,6 +83,8 @@ class Travis::Web::App
     def response_for(file, options = {})
       content = File.read(file)
       set_config(content, options) if config_needed?(file)
+      set_title(content) if index?(file)
+
       headers = {
         'Content-Length'   => content.bytesize.to_s,
         'Cache-Control'    => cache_control(file),
@@ -132,6 +134,11 @@ class Travis::Web::App
 
     def mime_type(file)
       Rack::Mime.mime_type File.extname(file)
+    end
+
+    def set_title(content)
+      default_title = "Travis CI - Free Hosted Continuous Integration Platform for the Open Source Community"
+      content.gsub!(/\{\{title\}\}/, ENV['SITE_TITLE'] || default_title)
     end
 
     def set_config(string, opts = {})
