@@ -98,7 +98,8 @@ require 'config/emoij'
   _githubCommitReferenceLink: (reference, current, matched) ->
     owner = matched.owner || current.owner
     repo = matched.repo || current.repo
-    "<a href=\"https://github.com/#{owner}/#{repo}/commit/#{matched.sha}\">#{reference}</a>"
+    url = "#{Travis.Urls.githubCommit("#{owner}/#{repo}", matched.sha)}"
+    "<a href=\"#{url}\">#{reference}</a>"
 
   _normalizeDateString: (string) ->
     if window.JHW

@@ -19,12 +19,12 @@ Travis.reopen
     ).property('controller.repo.slug')
 
     actions:
-      statusImages: ->
+      statusImages: () ->
         @popupCloseAll()
         view = Travis.StatusImagesView.create(toolsView: this)
         Travis.View.currentPopupView = view
         view.appendTo($('body'))
-        event.stopPropagation()
+        return false
 
   ReposEmptyView: Travis.View.extend
     template: (->
@@ -116,14 +116,14 @@ Travis.reopen
       menu: ->
         @popupCloseAll()
         $('#tools .menu').toggleClass('display')
-        event.stopPropagation()
+        return false
 
       regenerateKeyPopup: ->
         if @get('canRegenerateKey')
           @set('active', true)
           @closeMenu()
-          @popup(event)
-          event.stopPropagation()
+          @popup('regenerate-key-popup')
+          return false
 
       regenerateKey: ->
         @popupCloseAll()
@@ -227,7 +227,13 @@ Travis.reopen
       codeClimatePopup: ->
         @popupCloseAll()
         @popup('code-climate')
-        event.stopPropagation() if event?
+        return false
+
+      removeLogPopup: ->
+        if @get('canRemoveLog')
+          @set('active', true)
+          @popup('remove-log-popup')
+          return false
 
       removeLogPopup: ->
         if @get('canRemoveLog')
