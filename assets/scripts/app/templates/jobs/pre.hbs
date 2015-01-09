@@ -14,13 +14,6 @@
 
   <a href='#' class="to-top" {{action "toTop" target=view}}>To Top</a>
 
-  {{#if view.job.sponsor.name}}
-    <p class="sponsor">
-      This test series was run on a worker box sponsored by
-      <a {{bind-attr href="sponsor.url"}}>{{sponsor.name}}</a>
-    </p>
-  {{/if}}
-
   {{#if view.limited}}
     <p class="warning">
       This log is too long to be displayed. Please reduce the verbosity of your
