@@ -39,11 +39,15 @@
         </li>
       {{/if}}
     {{/if}}
-    {{#if view.displayRemoveLog}}
-      <li class="icon remove-log" title="Remove Log">
-        <a href="#" name="remove-log-popup" class="open-popup" {{action "removeLogPopup" target=view}}
-          {{bind-attr class="view.canRemoveLog::disabled"}}></a>
-      </li>
+    {{! the next if is a hack for refreshing displayRemoveLog when we change
+    views, it sometimes doesn't work properly }}
+    {{#if view.jobIdForLog}}
+      {{#if view.displayRemoveLog}}
+        <li class="icon remove-log" title="Remove Log">
+          <a href="#" name="remove-log-popup" class="open-popup" {{action "removeLogPopup" target=view}}
+            {{bind-attr class="view.canRemoveLog::disabled"}}></a>
+        </li>
+      {{/if}}
     {{/if}}
     {{#if view.displayCodeClimate}}
       <li class="icon code-climate" title="Test Coverage with Code Climate">
