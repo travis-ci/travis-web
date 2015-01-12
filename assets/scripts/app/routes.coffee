@@ -200,6 +200,7 @@ Travis.IndexMyRepositoriesRoute = Travis.Route.extend
     @transitionTo("index.repositories")
 
 Travis.IndexRepositoriesRoute = Travis.IndexTabRoute.extend
+  needsAuth: true
   reposTabName: 'owned'
   afterModel: ->
     @controllerFor('repos').possiblyRedirectToGettingStartedPage()
