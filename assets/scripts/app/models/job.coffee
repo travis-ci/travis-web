@@ -132,10 +132,8 @@ require 'travis/model'
   ).property('finishedAt')
 
   canRemoveLog: (->
-    # This should somehow get the status of removed log, but unfortunately there is
-    # no easy way to do that at the moment
-    true
-  ).property()
+    !@get('log.removed')
+  ).property('log.removed')
 
   slug: (->
     "#{@get('repo.slug')} ##{@get('number')}"

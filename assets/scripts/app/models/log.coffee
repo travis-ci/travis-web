@@ -39,7 +39,10 @@ require 'travis/log_chunks'
     console.log 'log model: fetching log' if Log.DEBUG
     @clearParts()
     handlers =
-      json: (json) => @loadParts(json['log']['parts'])
+      json: (json) =>
+        if json['log']['removed_at']
+          @set('removed', true)
+        @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
     Travis.Log.Request.create(id: id, handlers: handlers).run() if id = @get('job.id')
 

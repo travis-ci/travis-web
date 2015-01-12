@@ -19,12 +19,12 @@ Travis.reopen
     ).property('controller.repo.slug')
 
     actions:
-      statusImages: ->
+      statusImages: () ->
         @popupCloseAll()
         view = Travis.StatusImagesView.create(toolsView: this)
         Travis.View.currentPopupView = view
         view.appendTo($('body'))
-        event.stopPropagation()
+        return false
 
   ReposEmptyView: Travis.View.extend
     template: (->
@@ -116,14 +116,14 @@ Travis.reopen
       menu: ->
         @popupCloseAll()
         $('#tools .menu').toggleClass('display')
-        event.stopPropagation()
+        return false
 
       regenerateKeyPopup: ->
         if @get('canRegenerateKey')
           @set('active', true)
           @closeMenu()
-          @popup(event)
-          event.stopPropagation()
+          @popup('regenerate-key-popup')
+          return false
 
       regenerateKey: ->
         @popupCloseAll()
@@ -181,7 +181,7 @@ Travis.reopen
 
       requeueJob: ->
         if @get('canRequeueJob')
-          @requeue @get('job')
+          @requeue @get('_job')
 
       cancelBuild: ->
         if @get('canCancelBuild')
@@ -198,8 +198,9 @@ Travis.reopen
 
 
       removeLog: ->
+        @popupCloseAll()
         if @get('canRemoveLog')
-          job = @get('job') || @get('build.jobs.firstObject')
+          job = @get('_job') || @get('build.jobs.firstObject')
           job.removeLog().then ->
             Travis.flash(success: 'Log has been successfully removed.')
           , (xhr) ->
@@ -213,7 +214,7 @@ Travis.reopen
       cancelJob: ->
         if @get('canCancelJob')
           Travis.flash(notice: 'Job cancellation has been scheduled.')
-          @get('job').cancel().then ->
+          @get('_job').cancel().then ->
             Travis.flash(success: 'Job has been successfully canceled.')
           , (xhr) ->
             if xhr.status == 422
@@ -226,7 +227,13 @@ Travis.reopen
       codeClimatePopup: ->
         @popupCloseAll()
         @popup('code-climate')
-        event.stopPropagation() if event?
+        return false
+
+      removeLogPopup: ->
+        if @get('canRemoveLog')
+          @set('active', true)
+          @popup('remove-log-popup')
+          return false
 
     hasPermission: (->
       if permissions = @get('currentUser.permissions')
@@ -258,16 +265,18 @@ Travis.reopen
       @get('jobIdForLog')
     ).property('jobIdForLog')
 
-    jobIdForLog: (->
-      @get('job.id') ||
-        (@get('build.jobs.length') == 1 && @get('build.jobs').objectAt(0).get?('id'))
-    ).property('job.id', 'build.jobs.firstObject.id', 'build.jobs.length')
-
-    job: (->
+    _job: (->
       if id = @get('jobIdForLog')
         Travis.Job.find(id)
     ).property('jobIdForLog')
 
+    jobIdForLog: (->
+      job = @get('job.id')
+      unless job
+        if @get('build.jobs.length') == 1
+          job = @get('build.jobs').objectAt?(0).get?('id')
+      job
+    ).property('job.id', 'build.jobs.firstObject.id', 'build.jobs.length')
 
     plainTextLogUrl: (->
       if id = @get('jobIdForLog')
@@ -279,14 +288,14 @@ Travis.reopen
     ).property('jobIdForLog', 'job.log.token', 'build.jobs.firstObject.log.token')
 
     canRemoveLog: (->
-      @get('displayRemoveLog') && @get('hasPermission')
-    ).property('displayRemoveLog', 'hasPermission')
+      @get('displayRemoveLog')
+    ).property('displayRemoveLog')
 
     displayRemoveLog: (->
-      #(@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) &&
-      #  @get('build.jobs').objectAt(0).get?('canRemoveLog')
-      false
-    ).property('isJobTab', 'isBuildTab', 'build.jobs.length', 'job.canRemoveLog')
+      if job = @get('_job')
+        (@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) &&
+          job.get('canRemoveLog') && @get('hasPermission')
+    ).property('isJobTab', 'isBuildTab', 'build.jobs.length', '_job.canRemoveLog', 'jobIdForLog', 'canRemoveLog', 'hasPermission')
 
     canCancelBuild: (->
       @get('displayCancelBuild') && @get('hasPermission')

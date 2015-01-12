@@ -32,16 +32,22 @@
         {{/if}}
       </li>
     {{/if}}
-    {{#if view.showDownloadLog}}
-      <li class="icon download-log" title="Download Log">
-        <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}></a>
-      </li>
+    {{#if view.jobIdForLog}}
+      {{#if view.showDownloadLog}}
+        <li class="icon download-log" title="Download Log">
+          <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}></a>
+        </li>
+      {{/if}}
     {{/if}}
-    {{#if view.displayRemoveLog}}
-      <li class="icon remove-log" title="Remove Log">
-        <a href="#" {{action "removeLog" target="view"}}
-          {{bind-attr class="view.canRemoveLog::disabled"}}></a>
-      </li>
+    {{! the next if is a hack for refreshing displayRemoveLog when we change
+    views, it sometimes doesn't work properly }}
+    {{#if view.jobIdForLog}}
+      {{#if view.displayRemoveLog}}
+        <li class="icon remove-log" title="Remove Log">
+          <a href="#" name="remove-log-popup" class="open-popup" {{action "removeLogPopup" target=view}}
+            {{bind-attr class="view.canRemoveLog::disabled"}}></a>
+        </li>
+      {{/if}}
     {{/if}}
     {{#if view.displayCodeClimate}}
       <li class="icon code-climate" title="Test Coverage with Code Climate">
@@ -52,4 +58,15 @@
     {{/if}}
 
   </ul>
+</div>
+
+<div id="remove-log-popup" class="popup">
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
+  <p><strong>This action will remove the log permanently!</strong></p>
+  <p>Do you want to continue?</p>
+  <p>
+    <a class="sync_now button" {{action "removeLog" target="view"}}>Yes, please!</a>
+    <span class="or">or</span>
+    <a href="#" class="cancel" {{action "popupClose" target=view}}>Cancel</a>
+  </p>
 </div>
