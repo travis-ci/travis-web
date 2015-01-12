@@ -44,6 +44,7 @@ Travis.IndexErrorController = Em.Controller.extend()
 Travis.BuildsItemController = Em.ObjectController.extend(Travis.GithubUrlProperties,
   needs: ['builds']
   isPullRequestsListBinding: 'controllers.builds.isPullRequestsList'
+  buildBinding: 'content'
 )
 
 Travis.QueuesController = Em.ArrayController.extend
