@@ -10,6 +10,14 @@ Travis.reopen
         'allowed_failure_jobs'
     )
 
+    actions:
+      popupClose: ->
+        @popupCloseAll()
+
+      openHelpPopup: ->
+        @popupCloseAll()
+        @popup('help-allowed_failures')
+
   JobsItemView: Travis.View.extend
     tagName: 'tr'
     classNameBindings: ['color']
