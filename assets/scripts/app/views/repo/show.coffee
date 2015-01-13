@@ -262,8 +262,8 @@ Travis.reopen
     ).property('displayRequeueJob', 'hasPermission')
 
     showDownloadLog: (->
-      @get('jobIdForLog')
-    ).property('jobIdForLog')
+      @get('jobIdForLog') && (@get('isJobTab') || @get('isBuildTab'))
+    ).property('jobIdForLog', 'isJobTab', 'isBuildTab')
 
     _job: (->
       if id = @get('jobIdForLog')
