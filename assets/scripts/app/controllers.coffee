@@ -40,7 +40,7 @@ Travis.FirstSyncController = Em.Controller.extend
 
   isSyncing: Ember.computed.alias('user.isSyncing')
 
-Travis.IndexErrorController = Em.Controller.extend()
+Travis.MainErrorController = Em.Controller.extend()
 Travis.BuildsItemController = Em.ObjectController.extend(Travis.GithubUrlProperties,
   needs: ['builds']
   isPullRequestsListBinding: 'controllers.builds.isPullRequestsList'

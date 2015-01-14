@@ -1,6 +1,6 @@
 require 'routes/route'
 
-TravisRoute = Travis.Route
+TravisRoute = TravisRoute
 
 Route = TravisRoute.extend
   needsAuth: false
