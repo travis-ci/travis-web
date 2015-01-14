@@ -1,4 +1,5 @@
 require 'config/emoij'
+require 'helpers/urls'
 
 config_keys_map = Travis.CONFIG_KEYS_MAP
 config = Travis.config
