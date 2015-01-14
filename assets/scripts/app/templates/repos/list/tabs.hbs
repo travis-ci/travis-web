@@ -1,11 +1,11 @@
 <ul class="tabs">
   <li id="tab_owned" {{bind-attr class="view.classOwned"}}>
-    <h5>{{#link-to "index.repositories"}}My Repositories{{/link-to}}</h5>
+    <h5>{{#link-to "main.repositories"}}My Repositories{{/link-to}}</h5>
   </li>
 
   {{#unless config.pro}}
     <li id="tab_recent" {{bind-attr class="view.classRecent"}}>
-      <h5>{{#link-to "index.recent"}}Recent{{/link-to}}</h5>
+      <h5>{{#link-to "main.recent"}}Recent{{/link-to}}</h5>
     </li>
   {{/unless}}
 

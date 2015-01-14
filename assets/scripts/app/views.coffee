@@ -28,7 +28,7 @@ Travis.NotFoundView = Ember.View.extend
 
       $('.popup').removeClass('display')
 
-Travis.IndexView = Travis.View.extend
+Travis.MainView = Travis.View.extend
   layoutName: 'layouts/home'
   classNames: ['application']
 

@@ -57,16 +57,16 @@ Travis.ApplicationRoute = Travis.Route.extend
         @auth.set('afterSignInTransition', null)
         transition.retry()
       else
-        @transitionTo('index')
+        @transitionTo('main')
 
     afterSignOut: ->
       if Travis.config.pro
         @transitionTo('auth')
       else
-        @transitionTo('index')
+        @transitionTo('main')
 
 Travis.Router.map ->
-  @resource 'index', path: '/', ->
+  @resource 'main', path: '/', ->
     @resource 'getting_started'
     @route 'recent'
     @route 'repositories'
@@ -170,7 +170,7 @@ Travis.InsufficientOauthPermissionsRoute = Travis.SimpleLayoutRoute.extend
     existingUser = document.location.hash.match(/#existing[_-]user/)
     controller.set('existingUser', existingUser)
 
-Travis.IndexTabRoute = Travis.Route.extend
+Travis.MainTabRoute = Travis.Route.extend
   renderTemplate: ->
     @render 'repo'
     @render 'build', into: 'repo'
@@ -195,20 +195,20 @@ Travis.IndexTabRoute = Travis.Route.extend
     redirectToGettingStarted: ->
       @transitionTo('getting_started')
 
-Travis.IndexMyRepositoriesRoute = Travis.Route.extend
+Travis.MainMyRepositoriesRoute = Travis.Route.extend
   redirect: ->
-    @transitionTo("index.repositories")
+    @transitionTo("main.repositories")
 
-Travis.IndexRepositoriesRoute = Travis.IndexTabRoute.extend
+Travis.MainRepositoriesRoute = Travis.MainTabRoute.extend
   needsAuth: true
   reposTabName: 'owned'
   afterModel: ->
     @controllerFor('repos').possiblyRedirectToGettingStartedPage()
 
-Travis.IndexRecentRoute = Travis.IndexTabRoute.extend
+Travis.MainRecentRoute = Travis.MainTabRoute.extend
   reposTabName: 'recent'
 
-Travis.IndexSearchRoute = Travis.IndexTabRoute.extend
+Travis.MainSearchRoute = Travis.MainTabRoute.extend
   renderTemplate: ->
     @render 'repo'
     @render 'build', into: 'repo'
@@ -329,7 +329,7 @@ Travis.RepoIndexRoute = Travis.Route.extend
 
 Travis.RepoRoute = Travis.Route.extend
   renderTemplate: ->
-    @render 'repo'
+    @render 'repo', into: 'main'
 
   setupController: (controller, model) ->
     # TODO: if repo is just a data hash with id and slug load it
@@ -352,28 +352,26 @@ Travis.RepoRoute = Travis.Route.extend
   actions:
     error: (error) ->
       # if error throwed has a slug (ie. it was probably repo not found)
-      # set the slug on index.error controller to allow to properly
+      # set the slug on main.error controller to allow to properly
       # display the repo information
       if error.slug
-        this.controllerFor('index.error').set('slug', error.slug)
+        this.controllerFor('main.error').set('slug', error.slug)
 
       # bubble to the top
       return true
 
-# Obviously Index route should be renamed to something
-# like "main" or "home"
-Travis.IndexIndexRoute = Travis.Route.extend
+Travis.MainIndexRoute = Travis.Route.extend
   redirect: ->
     target = if @signedIn() then 'repositories' else 'recent'
-    @transitionTo("index.#{target}")
+    @transitionTo("main.#{target}")
 
-Travis.IndexRoute = Travis.Route.extend
+Travis.MainRoute = Travis.Route.extend
   renderTemplate: ->
     $('body').attr('id', 'home')
 
     @_super.apply this, arguments
 
-    @render 'repos',   outlet: 'left', into: 'index'
+    @render 'repos',   outlet: 'left', into: 'main'
 
   setupController: (controller)->
     # TODO: this is redundant with repositories and recent routes

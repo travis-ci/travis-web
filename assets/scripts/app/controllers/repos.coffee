@@ -75,7 +75,7 @@ Travis.ReposController = Ember.ArrayController.extend
   searchFor: (phrase) ->
     Ember.run.cancel(@searchLater) if @searchLater
     @searchLater = Ember.run.later(this, (->
-      @transitionTo('index.search', phrase)
+      @transitionTo('main.search', phrase)
     ), 500)
 
   noReposMessage: (->
