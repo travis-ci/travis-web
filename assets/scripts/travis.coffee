@@ -180,6 +180,7 @@ Travis.initializer
     application.register 'config:main', Travis.config, { instantiate: false }
 
     application.inject('controller', 'config', 'config:main')
+    application.inject('route', 'config', 'config:main')
 
 
 Travis.Router.reopen

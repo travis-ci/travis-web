@@ -1,4 +1,5 @@
 require 'travis/location'
+require 'routes/application'
 
 Ember.Router.reopen
   location: (if testMode? then Ember.NoneLocation.create() else Travis.Location.create())
@@ -6,64 +7,6 @@ Ember.Router.reopen
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
     @_super(url)
-
-Travis.Route = Ember.Route.extend
-  beforeModel: (transition) ->
-    @auth.autoSignIn() unless @signedIn()
-
-    if !@signedIn() && @get('needsAuth')
-      @auth.set('afterSignInTransition', transition)
-      Ember.RSVP.reject("needs-auth")
-    else
-      @_super.apply(this, arguments)
-
-  signedIn: ->
-    @controllerFor('currentUser').get('model')
-
-  needsAuth: (->
-    # on pro, we need to auth on every route
-    Travis.config.pro
-  ).property()
-
-Travis.ApplicationRoute = Travis.Route.extend
-  needsAuth: false
-
-  renderTemplate: ->
-    if Travis.config.pro
-      $('body').addClass('pro')
-
-    @_super.apply(this, arguments)
-
-  actions:
-    redirectToGettingStarted: ->
-      # do nothing, we handle it only in index path
-
-    renderDefaultTemplate: ->
-      @renderDefaultTemplate() if @renderDefaultTemplate
-
-    error: (error) ->
-      if error == 'needs-auth'
-        authController = @container.lookup('controller:auth')
-        authController.set('redirected', true)
-        @transitionTo('auth')
-      else
-        return true
-
-    renderFirstSync: ->
-      @transitionTo 'first_sync'
-
-    afterSignIn: ->
-      if transition = @auth.get('afterSignInTransition')
-        @auth.set('afterSignInTransition', null)
-        transition.retry()
-      else
-        @transitionTo('main')
-
-    afterSignOut: ->
-      if Travis.config.pro
-        @transitionTo('auth')
-      else
-        @transitionTo('main')
 
 Travis.Router.map ->
   @resource 'main', path: '/', ->
