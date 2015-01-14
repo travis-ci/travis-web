@@ -292,7 +292,6 @@ Travis.reopen
     ).property('displayRemoveLog')
 
     displayRemoveLog: (->
-      return if Travis.config.pro
       if job = @get('_job')
         (@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) &&
           job.get('canRemoveLog') && @get('hasPermission')
