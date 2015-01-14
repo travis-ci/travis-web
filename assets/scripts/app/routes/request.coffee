@@ -1,4 +1,5 @@
 require 'routes/route'
+require 'models/request'
 
 Request = Travis.Request
 TravisRoute = Travis.Route

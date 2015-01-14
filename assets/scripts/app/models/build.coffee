@@ -1,4 +1,5 @@
 require 'travis/model'
+require 'models/extensions'
 
 @Travis.Build = Travis.Model.extend Travis.DurationCalculations,
   repositoryId:     Ember.attr('number')

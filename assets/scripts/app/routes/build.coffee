@@ -1,4 +1,5 @@
 require 'routes/route'
+require 'models/build'
 
 Build = Travis.Build
 TravisRoute = Travis.Route

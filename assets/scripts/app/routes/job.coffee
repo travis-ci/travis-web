@@ -1,4 +1,5 @@
 require 'routes/route'
+require 'models/job'
 
 Job = Travis.Job
 TravisRoute = Travis.Route

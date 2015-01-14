@@ -1,4 +1,5 @@
 require 'travis/model'
+require 'models/extensions'
 
 @Travis.Job = Travis.Model.extend Travis.DurationCalculations,
   repoId:         Ember.attr('string', key: 'repository_id')

@@ -1,4 +1,5 @@
 require 'routes/route'
+require 'models/account'
 
 Account = Travis.Account
 TravisRoute = Travis.Route

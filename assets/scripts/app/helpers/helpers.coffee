@@ -4,7 +4,6 @@ require 'helpers/urls'
 config_keys_map = Travis.CONFIG_KEYS_MAP
 config = Travis.config
 githubCommitUrl = Travis.Urls.githubCommit
-currentDate = Travis.currentDate
 timeago = $.timeago
 intersect = $.intersect
 only = $.only
@@ -47,9 +46,9 @@ formatConfig = (config) ->
 formatMessage = (message, options) ->
   message = message || ''
   message = message.split(/\n/)[0]  if options.short
-  message = @_emojize(@_escape(message))
+  message = _emojize(_escape(message))
   if !!options.repo
-    message = @githubify(message, options.repo.get('owner'), options.repo.get('name'))
+    message = githubify(message, options.repo.get('owner'), options.repo.get('name'))
   if !!options.pre
     message = message.replace /\n/g, '<br/>'
   message
@@ -61,8 +60,8 @@ timeAgoInWords = (date) ->
   timeago.distanceInWords date
 
 durationFrom = (started, finished) ->
-  started = started and @_toUtc(new Date(@_normalizeDateString(started)))
-  finished = if finished then @_toUtc(new Date(@_normalizeDateString(finished))) else @_nowUtc()
+  started = started and _toUtc(new Date(_normalizeDateString(started)))
+  finished = if finished then _toUtc(new Date(_normalizeDateString(finished))) else _nowUtc()
   if started && finished then Math.round((finished - started) / 1000) else 0
 
 timeInWords = (duration) ->
@@ -83,11 +82,11 @@ timeInWords = (duration) ->
 
 githubify = (text, owner, repo) ->
   self = this
-  text = text.replace @_githubReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedNumber) ->
+  text = text.replace _githubReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedNumber) ->
     self._githubReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
-  text = text.replace @_githubUserRegexp, (reference, username) ->
+  text = text.replace _githubUserRegexp, (reference, username) ->
     self._githubUserLink(reference, username)
-  text = text.replace @_githubCommitReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) ->
+  text = text.replace _githubCommitReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) ->
     self._githubCommitReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, sha: matchedSHA })
   text
 
@@ -118,7 +117,9 @@ _normalizeDateString = (string) ->
   string
 
 _nowUtc = ->
-  @_toUtc currentDate()
+  # TODO: we overwrite Travis.currentDate in tests, so we need to leave this
+  # global usage as it is for now, but it should be removed at some point
+  _toUtc Travis.currentDate()
 
 _toUtc = (date) ->
   Date.UTC date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()
