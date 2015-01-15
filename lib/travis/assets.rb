@@ -10,7 +10,8 @@ module Travis
     VENDOR_ORDER = %w(jquery.min minispade handlebars ember)
     PRODUCTION_VENDOR_ORDER = %w(jquery.min minispade handlebars ember.prod)
     SPEC_VENDOR_ORDER = %w(jasmine jasmine-html jasmine-runner sinon)
-    STYLES_ORDER = %w(main/tools)
+    STYLES_ORDER = %w(app/main/tools)
+    DASHBOARD_STYLES_ORDER = %w(dashboard/foundation)
 
     attr_reader :roots, :env
 
@@ -38,6 +39,10 @@ module Travis
 
     def styles_order
       STYLES_ORDER.map { |name| "#{name}.css" }
+    end
+
+    def dashboard_styles_order
+      DASHBOARD_STYLES_ORDER.map { |name| "#{name}.css" }
     end
 
     def spec_vendor_order

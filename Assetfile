@@ -79,7 +79,7 @@ input assets.styles do
 
   match 'dashboard/**/*.{scss,sass,css}' do
     sass assets.production? ? { style: :compressed } : {}
-    concat assets.styles_order, ['dashboard.css']
+    concat assets.dashboard_styles_order, ['dashboard.css']
   end
 end
 
