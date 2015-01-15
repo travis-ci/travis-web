@@ -190,6 +190,21 @@ Travis.initializer
 
     application.inject('route', 'pusher', 'pusher:main')
 
+stylesheetsManager = Ember.Object.create
+  enable: (id) ->
+    $("##{id}").removeAttr('disabled')
+
+  disable: (id) ->
+    $("##{id}").attr('disabled', 'disabled')
+
+Travis.initializer
+  name: 'inject-stylesheets-manager'
+
+  initialize: (container, application) ->
+    application.register 'stylesheetsManager:main', stylesheetsManager, { instantiate: false }
+
+    application.inject('route', 'stylesheetsManager', 'stylesheetsManager:main')
+
 Travis.Router.reopen
   didTransition: ->
     @_super.apply @, arguments

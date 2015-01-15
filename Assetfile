@@ -71,9 +71,14 @@ end
 
 output 'public/styles'
 input assets.styles do
-  match '**/*.{scss,sass,css}' do
+  match 'app/**/*.{scss,sass,css}' do
     sass assets.production? ? { style: :compressed } : {}
     concat assets.styles_order, ['app.css']
+  end
+
+  match 'dashboard/**/*.{scss,sass,css}' do
+    sass assets.production? ? { style: :compressed } : {}
+    concat assets.styles_order, ['dashboard.css']
   end
 end
 
