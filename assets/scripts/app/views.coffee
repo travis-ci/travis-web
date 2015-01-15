@@ -24,26 +24,6 @@ Travis.InsufficientOauthPermissionsView = Travis.View.extend
 Travis.FirstSyncView = Travis.View.extend
   layoutName: 'layouts/simple'
   classNames: ['application']
-  didInsertElement: ->
-    this.addObserver('controller.isSyncing', this, this.isSyncingDidChange)
-
-  willDestroyElement: ->
-    this.removeObserver('controller.isSyncing', this, this.isSyncingDidChange)
-
-  isSyncingDidChange: ->
-    if !@get('controller.isSyncing')
-      self = this
-      Ember.run.later this, ->
-        Travis.Repo.fetch(member: @get('controller.user.login')).then( (repos) ->
-          if repos.get('length')
-            self.get('controller').transitionToRoute('index')
-          else
-            self.get('controller').transitionToRoute('profile')
-        ).then(null, (e) ->
-          console.log('There was a problem while redirecting from first sync', e)
-        )
-      , Travis.config.syncingPageRedirectionTime
-
 
 Travis.SidebarView = Travis.View.extend
   classQueues: (->
