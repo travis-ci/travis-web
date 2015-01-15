@@ -142,17 +142,6 @@ configKeys = (config) ->
 
 Travis.Helpers =
   configKeys: configKeys
-  _escape: _escape
-  _emojize: _emojize
-  _toUtc: _toUtc
-  _nowUtc: _nowUtc
-  _normalizeDateString: _normalizeDateString
-  _githubCommitReferenceLink: _githubCommitReferenceLink
-  _githubCommitReferenceRegexp: _githubCommitReferenceRegexp
-  _githubUserLink: _githubUserLink
-  _githubUserRegexp: _githubUserRegexp
-  _githubReferenceLink: _githubReferenceLink
-  _githubReferenceRegexp: _githubReferenceRegexp
   githubify: githubify
   timeInWords: timeInWords
   durationFrom: durationFrom
