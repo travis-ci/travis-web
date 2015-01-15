@@ -544,10 +544,10 @@ p.repo.errored {
 footer {
   padding          : 20px 0;
   background-color : #e0e0e0;
-  min-height       : 65px;
+  min-height       : 334px;
   font-size        : 12px;
   line-height      : 22px;
-  margin-top: -334px; /* sticky footer */
+  margin-top      : -334px; /* sticky footer */
 }
 
 .wrapper {
@@ -562,6 +562,7 @@ footer {
   }
   footer {
     margin-top: -204px;
+    min-height: 204px;
   }
 }
 
