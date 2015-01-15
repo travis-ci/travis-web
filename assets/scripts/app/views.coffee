@@ -23,22 +23,6 @@ Travis.InsufficientOauthPermissionsView = Travis.View.extend
 Travis.FirstSyncView = Travis.View.extend
   layoutName: 'layouts/simple'
 
-Travis.SidebarView = Travis.View.extend
-  classQueues: (->
-    'active' if @get('activeTab') == 'queues'
-  ).property('activeTab')
-
-  classWorkers: (->
-    'active' if @get('activeTab') == 'workers'
-  ).property('activeTab')
-
-  classJobs: (->
-    'active' if @get('activeTab') == 'jobs'
-  ).property('activeTab')
-
-Travis.QueueItemView = Travis.View.extend
-  tagName: 'li'
-
 Travis.QueueView = Em.View.extend
   init: ->
     @_super.apply this, arguments
