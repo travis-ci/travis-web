@@ -10,5 +10,6 @@
 /public/images
 /public/scripts
 /public/styles/app.css
+/public/styles/dashboard.css
 /public/version
 vendor/bundle
