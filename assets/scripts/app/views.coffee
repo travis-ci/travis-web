@@ -14,9 +14,6 @@ Travis.MainView = Travis.View.extend
   layoutName: 'layouts/home'
   classNames: ['main']
 
-@Travis.NoOwnedReposView = Ember.View.extend
-  templateName: 'pro/no_owned_repos'
-
 Travis.GettingStartedView = Travis.View.extend
   templateName: (->
     if Travis.config.pro
