@@ -1,6 +1,5 @@
 Travis.reopen
   BuildsView: Travis.View.extend
-    templateName: 'builds/list'
     buildsBinding: 'controller.builds'
 
     ShowMoreButton: Em.View.extend
@@ -21,7 +20,6 @@ Travis.reopen
         @get('controller').showMore()
 
   BuildView: Travis.View.extend
-    templateName: 'builds/show'
     classNameBindings: ['color', 'loading']
     buildBinding: 'controller.build'
     commitBinding: 'build.commit'
