@@ -19,11 +19,9 @@ Travis.AuthSigninView = Travis.View.extend
 
 Travis.InsufficientOauthPermissionsView = Travis.View.extend
   layoutName: 'layouts/simple'
-  classNames: ['application']
 
 Travis.FirstSyncView = Travis.View.extend
   layoutName: 'layouts/simple'
-  classNames: ['application']
 
 Travis.SidebarView = Travis.View.extend
   classQueues: (->
