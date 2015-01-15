@@ -9,6 +9,10 @@ Travis.BuildsItemController = Em.ObjectController.extend(Travis.GithubUrlPropert
   needs: ['builds']
   isPullRequestsListBinding: 'controllers.builds.isPullRequestsList'
   buildBinding: 'content'
+
+  color: (->
+    Travis.Helpers.colorForState(@get('build.state'))
+  ).property('build.state')
 )
 
 Travis.QueueController = Em.ArrayController.extend

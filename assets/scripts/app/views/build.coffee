@@ -20,19 +20,6 @@ Travis.reopen
       click: ->
         @get('controller').showMore()
 
-  BuildsItemView: Travis.View.extend
-    tagName: 'tr'
-    classNameBindings: ['color']
-    repoBinding: 'controller.repo'
-    buildBinding: 'context'
-    commitBinding: 'build.commit'
-
-    isPullRequestsList: ( -> @get('parentView.isPullRequestsList') ).property('parentView.isPullRequestsList')
-
-    color: (->
-      Travis.Helpers.colorForState(@get('build.state'))
-    ).property('build.state')
-
   BuildView: Travis.View.extend
     templateName: 'builds/show'
     classNameBindings: ['color', 'loading']

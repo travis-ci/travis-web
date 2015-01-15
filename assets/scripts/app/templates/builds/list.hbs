@@ -22,40 +22,40 @@
 
     <tbody>
       {{#each build in controller itemController="buildsItem"}}
-        {{#view Travis.BuildsItemView contextBinding="build"}}
+        <tr {{bind-attr class="build.color"}}>
           <td class="number">
             <span class="status"></span>
-            {{#if id}}
-              {{#link-to "build" repo this}}
-                {{number}}
+            {{#if build.id}}
+              {{#link-to "build" build.repo build}}
+                {{build.number}}
               {{/link-to}}
             {{/if}}
           </td>
           <td class="message">
-            {{{formatMessage commit.message short="true" repoBinding=build.repo}}}
+            {{{formatMessage build.commit.message short="true" repoBinding=build.repo}}}
           </td>
           <td class="commit">
-            <a {{bind-attr href="urlGithubCommit"}}>
-              {{formatCommit commit}}
+            <a {{bind-attr href="build.urlGithubCommit"}}>
+              {{formatCommit build.commit}}
             </a>
           </td>
           <td class="committer">
-            {{commit.committerName}}
+            {{build.commit.committerName}}
           </td>
           {{#if isPullRequestsList}}
             <td>
-              <a {{bind-attr href="urlGithubPullRequest"}}>
-                #{{pullRequestNumber}}
+              <a {{bind-attr href="build.urlGithubPullRequest"}}>
+                #{{build.pullRequestNumber}}
               </a>
             </td>
           {{/if}}
-          <td class="duration" {{bind-attr title="duration"}}>
-            {{formatDuration duration}}
+          <td class="duration" {{bind-attr title="build.duration"}}>
+            {{formatDuration build.duration}}
           </td>
-          <td class="finished_at timeago" {{bind-attr title="formattedFinishedAt"}}>
-            {{formatTime finishedAt}}
+          <td class="finished_at timeago" {{bind-attr title="build.formattedFinishedAt"}}>
+            {{formatTime build.finishedAt}}
           </td>
-        {{/view}}
+        </tr>
       {{/each}}
     </tbody>
   </table>
