@@ -1,5 +1,118 @@
-{{#link-to "main"}}Home{{/link-to}}
+<div class="wrapper">
+  <div id="top">
+    <div class="row">
+      <div class="small-2 medium-2 columns" id="logo">
+        <h1>{{#link-to "main"}}Home{{/link-to}}</h1>
+      </div>
+      <div class="small-4 medium-3 columns" id="nav">
+        <ul>
+          <li><a href="#">Docs</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <!-- <div class="small-4 medium-3 columns" id="status">
+        <div class="status-graph">Status Graph</div>
+      </div> -->
+      <div class="small-2 medium-5 columns no-padding" id="user">
+        <ul>
+          <li>
+            <p>Justine Arreche</p>
+            <img src="images/dashboard/gravatar.png">
+            <ul>
+              <li>Help</li>
+              <li>Sign Out</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="filters-search">
+    <div class="row">
+      <div class="small-6 medium-3 large-2 columns" id="filters">
+        <ul>
+          <li class="filters-start">
+            <div class="current-org-avatar org-travisci"></div>Travis CI <div class="arrow-down"></div>
+            <ul>
+              <li class="org-all">All organizations</li>
+              <li class="currently-selected"><div class="org-avatar org-travisci">Travis CI</div>Travis CI</li>
+              <li><div class="org-avatar org-saltinejustine">Justine Arreche</div>Justine Arreche</li>
+              <li><div class="org-avatar org-openkarma">Open Karma</div>Open Karma</li>
+              <li><div class="org-avatar org-eurucamp">eurucamp</div>eurucamp</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- <div class="small-6 medium-2 large-2 columns no-padding" id="views">
+        <ul>
+          <li class="views-start">
+            View all repos <div class="arrow-down"></div>
+            <ul>
+              <li class="currently-selected">View all repos</li>
+              <li>Queued builds</li>
+              <li>Failed builds</li>
+              <li>Passed builds</li>
+            </ul>
+          </li>
+        </ul>
+      </div> -->
+      <div class="small-6 medium-6 large-6 columns">
+        <div id="search">
+          <ul>
+            <li class="search-field">
+              Search all repositories <div class="search-icon">Search</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {{yield}}
 
-END
+</div>
+
+<footer>
+  <div class="row">
+    <div class="small-6 medium-4 large-4 columns">
+      <img src="images/dashboard/footer-logo.svg">
+    </div>
+    <div class="small-6 medium-2 large-2 columns">
+      <h3>&copy;Travis CI, GmbH</h3>
+      <ul>
+        <li>Rigaer Straße 8</li>
+        <li>10247 Berlin, Germany</li>
+      </ul>
+    </div>
+
+    <div class="small-6 medium-2 large-2 columns">
+      <h3>Help</h3>
+      <ul>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Email</a></li>
+        <li><a href="#">Live Chat</a></li>
+        <li><a href="#">Twitter</a></li>
+      </ul>
+    </div>
+
+    <div class="small-6 medium-2 large-2 columns">
+      <h3>Legal</h3>
+      <ul>
+        <li><a href="#">Imprint</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="small-6 medium-2 large-2 columns">
+      <h3>Travis CI Status</h3>
+      <ul>
+        <li><div class="status-circle">Status:</div>
+            <a href="#">Travis CI Status</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
