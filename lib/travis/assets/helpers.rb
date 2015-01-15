@@ -7,10 +7,6 @@ module Travis
         filter(Filters::Handlebars, *args, &block)
       end
 
-      def strip_debug(*args, &block)
-        filter(Filters::StripDebug, *args, &block)
-      end
-
       def safe_concat(*args, &block)
         if args.first.kind_of?(Array)
           filter(Filters::OrderingSafeConcat, *args, &block)

@@ -88,21 +88,6 @@ module Travis
           super
         end
       end
-
-      class StripDebug < Rake::Pipeline::Filter
-        def generate_output(inputs, output)
-          inputs.each do |input|
-            source = File.read(input.fullpath)
-            source = strip_debug(source)
-            source = Uglifier.compile(source)
-            output.write source
-          end
-        end
-
-        def strip_debug(source)
-          source.gsub(%r{^(\s)*Ember\.(assert|deprecate|warn)\((.*)\).*$}, "")
-        end
-      end
     end
   end
 end

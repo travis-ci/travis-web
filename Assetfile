@@ -64,7 +64,6 @@ input assets.scripts do
 
   if assets.production?
     match 'min/app.js' do
-      strip_debug
       # uglify squeeze: true
       concat 'app.js'
     end
