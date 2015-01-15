@@ -10845,7 +10845,7 @@
       The `attrs` option for a resource `{ embedded: 'always' }` is shorthand for:
 
       ```js
-      { 
+      {
         serialize: 'records',
         deserialize: 'records'
       }
@@ -10872,7 +10872,7 @@
       If you do not overwrite `attrs` for a specific relationship, the `EmbeddedRecordsMixin`
       will behave in the following way:
 
-      BelongsTo: `{ serialize: 'id', deserialize: 'id' }`  
+      BelongsTo: `{ serialize: 'id', deserialize: 'id' }`
       HasMany:   `{ serialize: false, deserialize: 'ids' }`
 
       ### Model Relationships
@@ -12185,3 +12185,4 @@
 }).call(this);
 
 //# sourceMappingURL=ember-data.js.map
+

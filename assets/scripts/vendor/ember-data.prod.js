@@ -583,7 +583,7 @@
         var fixtures = this.fixturesForType(type);
         var fixture;
 
-        
+
         if (fixtures) {
           fixture = Ember.A(fixtures).findBy('id', id);
         }
@@ -605,7 +605,7 @@
       findMany: function(store, type, ids) {
         var fixtures = this.fixturesForType(type);
 
-        
+
         if (fixtures) {
           fixtures = fixtures.filter(function(item) {
             return ember$data$lib$adapters$fixture_adapter$$indexOf(ids, item.id) !== -1;
@@ -630,7 +630,7 @@
       findAll: function(store, type) {
         var fixtures = this.fixturesForType(type);
 
-        
+
         return this.simulateRemoteCall(function() {
           return fixtures;
         }, this);
@@ -648,7 +648,7 @@
       findQuery: function(store, type, query, array) {
         var fixtures = this.fixturesForType(type);
 
-        
+
         fixtures = this.queryFixtures(fixtures, query, type);
 
         if (fixtures) {
@@ -3988,7 +3988,7 @@
       }
     });
 
-    
+
     var ember$data$lib$serializers$rest_serializer$$default = ember$data$lib$serializers$rest_serializer$$RESTSerializer;
     /**
       @module ember-data
@@ -4960,7 +4960,7 @@
         var type = ember$data$lib$system$record_arrays$many_array$$get(this, 'type');
         var record;
 
-        
+
         record = store.createRecord(type, hash);
         this.pushObject(record);
 
@@ -6556,7 +6556,7 @@
 
     ember$data$lib$system$relationships$state$has_many$$ManyRelationship.prototype.notifyRecordRelationshipAdded = function(record, idx) {
       var type = this.relationshipMeta.type;
-      
+
       this.record.notifyHasManyAdded(this.key, record, idx);
     };
 
@@ -6646,7 +6646,7 @@
           promise: promise
         });
       } else {
-          
+
         //TODO(Igor) WTF DO I DO HERE?
         if (!this.manyArray.get('isDestroyed')) {
           this.manyArray.set('isLoaded', true);
@@ -6701,7 +6701,7 @@
     ember$data$lib$system$relationships$state$belongs_to$$BelongsToRelationship.prototype.addCanonicalRecord = function(newRecord) {
       if (this.canonicalMembers.has(newRecord)){ return;}
       var type = this.relationshipMeta.type;
-      
+
       if (this.canonicalState) {
         this.removeCanonicalRecord(this.canonicalState);
       }
@@ -6726,7 +6726,7 @@
     ember$data$lib$system$relationships$state$belongs_to$$BelongsToRelationship.prototype.addRecord = function(newRecord) {
       if (this.members.has(newRecord)){ return;}
       var type = this.relationshipMeta.type;
-      
+
       if (this.inverseRecord) {
         this.removeRecord(this.inverseRecord);
       }
@@ -7678,7 +7678,7 @@
         @param {Object} data
       */
       setupData: function(data) {
-        
+
         Ember.merge(this._data, data);
 
         this.pushedData();
@@ -7999,7 +7999,7 @@
 
         this.eachComputedProperty(function(name, meta) {
           if (meta.isAttribute) {
-            
+
             meta.name = name;
             map.set(name, meta);
           }
@@ -8442,7 +8442,7 @@
       defaultAdapter: Ember.computed('adapter', function() {
         var adapter = ember$data$lib$system$store$$get(this, 'adapter');
 
-        
+
         if (typeof adapter === 'string') {
           adapter = this.container.lookup('adapter:' + adapter) || this.container.lookup('adapter:application') || this.container.lookup('adapter:-rest');
         }
@@ -8649,7 +8649,7 @@
         @return {Promise} promise
       */
       find: function(type, id, preload) {
-                
+
         if (arguments.length === 1) {
           return this.findAll(type);
         }
@@ -8764,7 +8764,7 @@
         var id = ember$data$lib$system$store$$get(record, 'id');
         var adapter = this.adapterFor(type);
 
-                
+
         var promise = ember$data$lib$system$store$$_find(adapter, this, type, id, record);
         return promise;
       },
@@ -8917,7 +8917,7 @@
         var adapter = this.adapterFor(type);
         var id = ember$data$lib$system$store$$get(record, 'id');
 
-                        
+
         return this.scheduleFetch(record);
       },
 
@@ -8996,7 +8996,7 @@
       findHasMany: function(owner, link, type) {
         var adapter = this.adapterFor(owner.constructor);
 
-                
+
         return ember$data$lib$system$store$$_findHasMany(adapter, this, owner, link, type);
       },
 
@@ -9011,7 +9011,7 @@
       findBelongsTo: function(owner, link, relationship) {
         var adapter = this.adapterFor(owner.constructor);
 
-                
+
         return ember$data$lib$system$store$$_findBelongsTo(adapter, this, owner, link, relationship);
       },
 
@@ -9039,7 +9039,7 @@
 
         var adapter = this.adapterFor(type);
 
-                
+
         return ember$data$lib$system$promise_proxies$$promiseArray(ember$data$lib$system$store$$_findQuery(adapter, this, type, query, array));
       },
 
@@ -9072,7 +9072,7 @@
 
         ember$data$lib$system$store$$set(array, 'isUpdating', true);
 
-                
+
         return ember$data$lib$system$promise_proxies$$promiseArray(ember$data$lib$system$store$$_findAll(adapter, this, type, sinceToken));
       },
 
@@ -9417,7 +9417,7 @@
         var oldId = ember$data$lib$system$store$$get(record, 'id');
         var id = ember$data$lib$system$store$$coerceId(data.id);
 
-        
+
         this.typeMapFor(record.constructor).idToRecord[id] = record;
 
         ember$data$lib$system$store$$set(record, 'id', id);
@@ -9576,7 +9576,7 @@
           updated.
       */
       push: function(typeName, data) {
-                
+
         var type = this.modelFor(typeName);
         var filter = Ember.EnumerableUtils.filter;
 
@@ -9756,7 +9756,7 @@
         var typeMap = this.typeMapFor(type);
         var idToRecord = typeMap.idToRecord;
 
-                
+
         // lookupFactory should really return an object that creates
         // instances with the injections applied
         var record = type._create({
@@ -9906,7 +9906,7 @@
       if (ember$data$lib$system$store$$isNone(id) || id instanceof ember$data$lib$system$model$model$$default) {
         return;
       }
-      
+
       var type;
 
       if (typeof id === 'number' || typeof id === 'string') {
@@ -10035,7 +10035,7 @@
         return ember$data$lib$system$store$$_adapterRun(store, function() {
           var payload = serializer.extract(store, type, adapterPayload, null, 'findMany');
 
-          
+
           return store.pushMany(type, payload);
         });
       }, null, "DS: Extract payload of " + type);
@@ -10054,7 +10054,7 @@
         return ember$data$lib$system$store$$_adapterRun(store, function() {
           var payload = serializer.extract(store, relationship.type, adapterPayload, null, 'findHasMany');
 
-          
+
           var records = store.pushMany(relationship.type, payload);
           return records;
         });
@@ -10096,7 +10096,7 @@
         ember$data$lib$system$store$$_adapterRun(store, function() {
           var payload = serializer.extract(store, type, adapterPayload, null, 'findAll');
 
-          
+
           store.pushMany(type, payload);
         });
 
@@ -10132,7 +10132,7 @@
       var serializer = ember$data$lib$system$store$$serializerForAdapter(adapter, type);
       var label = "DS: Extract and notify about " + operation + " completion of " + record;
 
-      
+
       promise = ember$data$lib$system$store$$Promise.cast(promise, label);
       promise = ember$data$lib$system$store$$_guard(promise, ember$data$lib$system$store$$_bind(ember$data$lib$system$store$$_objectIsAlive, store));
       promise = ember$data$lib$system$store$$_guard(promise, ember$data$lib$system$store$$_bind(ember$data$lib$system$store$$_objectIsAlive, record));
@@ -10188,7 +10188,7 @@
 
     var ember$data$lib$system$store$$default = ember$data$lib$system$store$$Store;
     function ember$data$lib$initializers$store$$initializeStore(container, application){
-      
+
       container.register('store:main', container.lookupFactory('store:application') || (application && application.Store) || ember$data$lib$system$store$$default);
 
       // allow older names to be looked up
@@ -10749,7 +10749,7 @@
       The `attrs` option for a resource `{ embedded: 'always' }` is shorthand for:
 
       ```js
-      { 
+      {
         serialize: 'records',
         deserialize: 'records'
       }
@@ -10776,7 +10776,7 @@
       If you do not overwrite `attrs` for a specific relationship, the `EmbeddedRecordsMixin`
       will behave in the following way:
 
-      BelongsTo: `{ serialize: 'id', deserialize: 'id' }`  
+      BelongsTo: `{ serialize: 'id', deserialize: 'id' }`
       HasMany:   `{ serialize: false, deserialize: 'ids' }`
 
       ### Model Relationships
@@ -11249,7 +11249,7 @@
         type = undefined;
       }
 
-      
+
       options = options || {};
 
       var meta = {
@@ -11386,7 +11386,7 @@
         type = undefined;
       }
 
-      
+
       options = options || {};
 
       // Metadata about relationships is stored on the meta of
@@ -11493,7 +11493,7 @@
           meta.key = name;
           type = ember$data$lib$system$relationship$meta$$typeForRelationshipMeta(this.store, meta);
 
-          
+
           if (!types.contains(type)) {
                         types.push(type);
           }
@@ -11676,7 +11676,7 @@
           inverseName = options.inverse;
           inverse = Ember.get(inverseType, 'relationshipsByName').get(inverseName);
 
-          
+
           inverseKind = inverse.kind;
         } else {
           //No inverse was specified manually, we need to use a heuristic to guess one
@@ -11689,12 +11689,12 @@
             return name === optionsForRelationship.inverse;
           });
 
-          
+
           if (filteredRelationships.length === 1 ) {
             possibleRelationships = filteredRelationships;
           }
 
-          
+
           inverseName = possibleRelationships[0].name;
           inverseKind = possibleRelationships[0].kind;
         }
@@ -12015,7 +12015,7 @@
     // support RSVP 2.x via resolve,  but prefer RSVP 3.x's Promise.cast
     Ember.RSVP.Promise.cast = Ember.RSVP.Promise.cast || Ember.RSVP.resolve;
 
-    
+
     ember$data$lib$core$$default.Store         = ember$data$lib$system$store$$Store;
     ember$data$lib$core$$default.PromiseArray  = ember$data$lib$system$promise_proxies$$PromiseArray;
     ember$data$lib$core$$default.PromiseObject = ember$data$lib$system$promise_proxies$$PromiseObject;
@@ -12070,3 +12070,4 @@
 }).call(this);
 
 //# sourceMappingURL=ember-data.js.map
+
