@@ -23,11 +23,6 @@ Travis.InsufficientOauthPermissionsView = Travis.View.extend
 Travis.FirstSyncView = Travis.View.extend
   layoutName: 'layouts/simple'
 
-Travis.QueueView = Em.View.extend
-  init: ->
-    @_super.apply this, arguments
-    @set 'controller', @get('controller').container.lookup('controller:queues')
-
 require 'views/accounts'
 require 'views/annotation'
 require 'views/application'

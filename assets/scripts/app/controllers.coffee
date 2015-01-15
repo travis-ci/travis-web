@@ -47,7 +47,7 @@ Travis.BuildsItemController = Em.ObjectController.extend(Travis.GithubUrlPropert
   buildBinding: 'content'
 )
 
-Travis.QueuesController = Em.ArrayController.extend
+Travis.QueueController = Em.ArrayController.extend
   content: (->
     Travis.Job.queued()
   ).property()
