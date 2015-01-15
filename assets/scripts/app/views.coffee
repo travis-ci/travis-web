@@ -39,10 +39,6 @@ Travis.SidebarView = Travis.View.extend
 Travis.QueueItemView = Travis.View.extend
   tagName: 'li'
 
-Travis.RunningJobsView = Em.View.extend
-  templateName: 'jobs'
-  elementId: 'running-jobs'
-
 Travis.QueueView = Em.View.extend
   templateName: 'queues/show'
   init: ->
