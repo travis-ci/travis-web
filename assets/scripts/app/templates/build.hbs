@@ -24,7 +24,7 @@
       {{/if}}
 
       <div class="commit-changes">
-        <a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a>
+        <a class="commit" {{bind-attr href="urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a>
       </div>
       <div class="commit-changes">
         {{#if build.pullRequest}}
@@ -52,11 +52,11 @@
     <div class="footer">
       <div class="author">
         {{#if commit.authorName}}
-          <div class="authored"><img {{bind-attr src="view.urlAuthorGravatarImage"}}/><div class="text">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</div></div>
+          <div class="authored"><img {{bind-attr src="urlAuthorGravatarImage"}}/><div class="text">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</div></div>
         {{/if}}
         {{#unless commit.authorIsCommitter}}
           {{#if commit.committerName}}
-            <div class="committed"><img {{bind-attr src="view.urlCommitterGravatarImage"}}/><div class="text">{{commit.committerName}} committed</div></div>
+            <div class="committed"><img {{bind-attr src="urlCommitterGravatarImage"}}/><div class="text">{{commit.committerName}} committed</div></div>
           {{/if}}
         {{/unless}}
       </div>
