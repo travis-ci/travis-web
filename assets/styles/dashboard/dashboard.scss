@@ -11,6 +11,12 @@ a {
   text-decoration : none;
 }
 
+.application,
+.dashboard {
+  height: 100%;
+}
+
+
 .no-padding {
   padding : 0;
 }
@@ -548,6 +554,7 @@ footer {
   padding-bottom: 334px;
   min-height: 100%;
   height: auto;
+  background-color: #f4f3ea;
 }
 @media (min-width: 640px) {
   .wrapper {
