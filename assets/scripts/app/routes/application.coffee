@@ -11,6 +11,9 @@ Route = TravisRoute.extend
 
     @_super.apply(this, arguments)
 
+  activate: ->
+    @get('stylesheetsManager').disable('dashboard')
+
   actions:
     redirectToGettingStarted: ->
       # do nothing, we handle it only in index path
