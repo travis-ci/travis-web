@@ -12,7 +12,7 @@ Travis.NotFoundView = Ember.View.extend
 
 Travis.MainView = Travis.View.extend
   layoutName: 'layouts/home'
-  classNames: ['application']
+  classNames: ['main']
 
 @Travis.NoOwnedReposView = Ember.View.extend
   templateName: 'pro/no_owned_repos'
