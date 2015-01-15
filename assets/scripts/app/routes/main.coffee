@@ -1,6 +1,8 @@
 require 'routes/route'
+require 'pusher'
 
 TravisRoute = Travis.Route
+channels = Travis.Pusher.CHANNELS
 
 Route = TravisRoute.extend
   renderTemplate: ->
@@ -15,5 +17,9 @@ Route = TravisRoute.extend
     toActivate = if @signedIn() then 'owned' else 'recent'
     @container.lookup('controller:repos').activate(toActivate)
 
+  activate: ->
+    # subscribe to pusher only if we're at a main route
+    if channels
+      @get('pusher').subscribeAll(channels)
 
 Travis.MainRoute = Route

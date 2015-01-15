@@ -21,7 +21,6 @@ $.extend Travis.Pusher.prototype,
     Pusher.warn = @warn.bind(this)
     Pusher.host = config.host if config.host
     @pusher = new Pusher(config.key, encrypted: Travis.Pusher.ENCRYPTED, disableStats: true)
-    @subscribeAll(Travis.Pusher.CHANNELS) if Travis.Pusher.CHANNELS
 
     @callbacksToProcess = []
 
@@ -32,6 +31,9 @@ $.extend Travis.Pusher.prototype,
 
   subscribeAll: (channels) ->
     @subscribe(channel) for channel in channels
+
+  unsubscribeAll: (channels) ->
+    @unsubscribe(channel) for channel in channels
 
   subscribe: (channel) ->
     return unless channel

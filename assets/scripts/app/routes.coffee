@@ -9,6 +9,7 @@ Ember.Router.reopen
     @_super(url)
 
 Travis.Router.map ->
+  @resource 'dashboard'
   @resource 'main', path: '/', ->
     @resource 'getting_started'
     @route 'recent'
@@ -80,3 +81,4 @@ require 'routes/settings'
 require 'routes/simple_layout'
 require 'routes/ssh_key'
 require 'routes/stats'
+require 'routes/dashboard'

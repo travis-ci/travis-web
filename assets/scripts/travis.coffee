@@ -182,6 +182,13 @@ Travis.initializer
     application.inject('controller', 'config', 'config:main')
     application.inject('route', 'config', 'config:main')
 
+Travis.initializer
+  name: 'inject-pusher'
+
+  initialize: (container, application) ->
+    application.register 'pusher:main', Travis.pusher, { instantiate: false }
+
+    application.inject('route', 'pusher', 'pusher:main')
 
 Travis.Router.reopen
   didTransition: ->
