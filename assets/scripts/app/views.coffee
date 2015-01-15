@@ -57,11 +57,6 @@ Travis.FirstSyncView = Travis.View.extend
 
 
 Travis.SidebarView = Travis.View.extend
-  templateName: 'layouts/sidebar'
-
-  didInsertElement: ->
-    @_super.apply this, arguments
-
   classQueues: (->
     'active' if @get('activeTab') == 'queues'
   ).property('activeTab')
