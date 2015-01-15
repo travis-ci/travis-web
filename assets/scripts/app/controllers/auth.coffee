@@ -1,1 +1,1 @@
-Travis.AuthController = Travis.Controller.extend()
+Travis.AuthController = Ember.Controller.extend()

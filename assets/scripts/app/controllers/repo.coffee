@@ -1,4 +1,4 @@
-Travis.RepoController = Travis.Controller.extend
+Travis.RepoController = Ember.Controller.extend
   needs: ['repos', 'currentUser', 'build', 'request', 'job']
   currentUserBinding: 'controllers.currentUser'
 

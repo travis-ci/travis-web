@@ -35,7 +35,6 @@ Travis.Router.map ->
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
-  @route 'stats', path: '/stats'
   @route 'auth', path: '/auth'
 
   @resource 'profile', path: '/profile', ->
@@ -80,5 +79,4 @@ require 'routes/settings/index'
 require 'routes/settings'
 require 'routes/simple_layout'
 require 'routes/ssh_key'
-require 'routes/stats'
 require 'routes/dashboard'

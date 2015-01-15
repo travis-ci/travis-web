@@ -1,6 +1,9 @@
 require 'travis/validations'
 
-Travis.EnvVarsNewController = Travis.Controller.extend Travis.Validations,
+Validations = Travis.Validations
+EnvVar = Travis.EnvVar
+
+Travis.EnvVarsNewController = Ember.Controller.extend Validations,
   needs: ['repo']
   repo: Ember.computed.alias('controllers.repo.repo')
 
@@ -23,7 +26,7 @@ Travis.EnvVarsNewController = Travis.Controller.extend Travis.Validations,
       @set('isSaving', true)
 
       if @isValid()
-        env_var = Travis.EnvVar.create(
+        env_var = EnvVar.create(
           name: @get('name')
           value: @get('value')
           public: @get('public')
