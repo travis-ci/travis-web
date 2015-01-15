@@ -81,13 +81,12 @@ timeInWords = (duration) ->
     if result.length > 0 then result.join(' ') else '-'
 
 githubify = (text, owner, repo) ->
-  self = this
   text = text.replace _githubReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedNumber) ->
-    self._githubReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
+    _githubReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, number: matchedNumber } )
   text = text.replace _githubUserRegexp, (reference, username) ->
-    self._githubUserLink(reference, username)
+    _githubUserLink(reference, username)
   text = text.replace _githubCommitReferenceRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) ->
-    self._githubCommitReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, sha: matchedSHA })
+    _githubCommitReferenceLink(reference, { owner: owner, repo: repo }, { owner: matchedOwner, repo: matchedRepo, sha: matchedSHA })
   text
 
 _githubReferenceRegexp = new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g')
