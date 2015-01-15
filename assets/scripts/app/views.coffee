@@ -14,14 +14,6 @@ Travis.MainView = Travis.View.extend
   layoutName: 'layouts/home'
   classNames: ['main']
 
-Travis.GettingStartedView = Travis.View.extend
-  templateName: (->
-    if Travis.config.pro
-      'pro/no_owned_repos'
-    else
-      'no_owned_repos'
-  ).property()
-
 Travis.AuthSigninView = Travis.View.extend
   layoutName: 'layouts/simple'
 
