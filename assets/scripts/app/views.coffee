@@ -40,7 +40,6 @@ Travis.QueueItemView = Travis.View.extend
   tagName: 'li'
 
 Travis.QueueView = Em.View.extend
-  templateName: 'queues/show'
   init: ->
     @_super.apply this, arguments
     @set 'controller', @get('controller').container.lookup('controller:queues')
