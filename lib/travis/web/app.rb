@@ -89,6 +89,7 @@ class Travis::Web::App
           'Content-Location' => path_for(file),
           'Content-Type'     => mime_type(file),
           'Expires'          => (server_start + age).httpdate,
+          'ETag'             => %Q{"#{version}"}
         }
       else
         set_config(content, options) if config_needed?(file)
