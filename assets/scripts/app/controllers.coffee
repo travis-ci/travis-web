@@ -1,30 +1,4 @@
 require 'helpers'
-
-Travis.AccountsInfoController = Em.Controller.extend
-  needs: ['currentUser', 'repos']
-  userBinding: 'controllers.currentUser'
-
-Travis.MainErrorController = Em.Controller.extend()
-Travis.BuildsItemController = Em.ObjectController.extend(Travis.GithubUrlProperties,
-  needs: ['builds']
-  isPullRequestsListBinding: 'controllers.builds.isPullRequestsList'
-  buildBinding: 'content'
-
-  color: (->
-    Travis.Helpers.colorForState(@get('build.state'))
-  ).property('build.state')
-)
-
-Travis.QueueController = Em.ArrayController.extend
-  content: (->
-    Travis.Job.queued()
-  ).property()
-
-Travis.RunningJobsController = Em.ArrayController.extend
-  content: (->
-    Travis.Job.running()
-  ).property()
-
 require 'controllers/accounts'
 require 'controllers/auth'
 require 'controllers/account'
@@ -47,3 +21,8 @@ require 'controllers/ssh_key'
 require 'controllers/sidebar'
 require 'controllers/top'
 require 'controllers/first_sync'
+require 'controllers/accounts/info'
+require 'controllers/main/error'
+require 'controllers/builds/item'
+require 'controllers/queue'
+require 'controllers/running_jobs'

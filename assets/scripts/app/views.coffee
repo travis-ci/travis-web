@@ -1,28 +1,5 @@
 require 'ext/ember/namespace'
 require 'views/view'
-
-Em.View.reopen
-  init: ->
-    this.container ||= Travis.__container__
-
-    @_super.apply(this, arguments)
-
-Travis.NotFoundView = Ember.View.extend
-  layoutName: 'layouts/simple'
-
-Travis.MainView = Travis.View.extend
-  layoutName: 'layouts/home'
-  classNames: ['main']
-
-Travis.AuthSigninView = Travis.View.extend
-  layoutName: 'layouts/simple'
-
-Travis.InsufficientOauthPermissionsView = Travis.View.extend
-  layoutName: 'layouts/simple'
-
-Travis.FirstSyncView = Travis.View.extend
-  layoutName: 'layouts/simple'
-
 require 'views/accounts'
 require 'views/annotation'
 require 'views/application'
@@ -40,3 +17,8 @@ require 'views/status_images'
 require 'views/status_image_input'
 require 'views/dashboard'
 require 'views/show-more-button'
+require 'views/main'
+require 'views/not_found'
+require 'views/auth/signin'
+require 'views/insufficient_oauth_permissions'
+require 'views/first_sync'
