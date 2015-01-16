@@ -14,7 +14,7 @@ assets.update_version
 output 'public/scripts'
 input assets.scripts do
   match '**/*.hbs' do
-    travis_handlebars :precompile => false # assets.production?
+    travis_handlebars :precompile => false#assets.production?
     concat 'templates.js'
   end
 
@@ -64,7 +64,7 @@ input assets.scripts do
 
   if assets.production?
     match 'min/app.js' do
-      # uglify squeeze: true
+      uglify squeeze: true
       concat 'app.js'
     end
   end
