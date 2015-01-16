@@ -82,19 +82,30 @@ class Travis::Web::App
 
     def response_for(file, options = {})
       content = File.read(file)
-      set_config(content, options) if config_needed?(file)
-      set_title(content) if index?(file)
+      if fingerprinted?(file)
+        headers = {
+          'Content-Length'   => content.bytesize.to_s,
+          'Cache-Control'    => cache_control(file),
+          'Content-Location' => path_for(file),
+          'Content-Type'     => mime_type(file),
+          'Expires'          => (server_start + age).httpdate,
+        }
+      else
+        set_config(content, options) if config_needed?(file)
+        set_title(content) if index?(file)
 
-      headers = {
-        'Content-Length'   => content.bytesize.to_s,
-        'Cache-Control'    => cache_control(file),
-        'Content-Location' => path_for(file),
-        'Content-Type'     => mime_type(file),
-        'ETag'             => %Q{"#{version}"},
-        'Last-Modified'    => server_start.httpdate,
-        'Expires'          => (server_start + age).httpdate,
-        'Vary'             => vary_for(file)
-      }
+        headers = {
+          'Content-Length'   => content.bytesize.to_s,
+          'Cache-Control'    => cache_control(file),
+          'Content-Location' => path_for(file),
+          'Content-Type'     => mime_type(file),
+          'ETag'             => %Q{"#{version}"},
+          'Last-Modified'    => server_start.httpdate,
+          'Expires'          => (server_start + age).httpdate,
+          'Vary'             => vary_for(file)
+        }
+      end
+
       [ 200, headers, [content] ]
     end
 
@@ -108,6 +119,11 @@ class Travis::Web::App
 
     def index?(file)
       file.end_with?('index.html')
+    end
+
+    def fingerprinted?(file)
+      basename = File.basename(file)
+      basename =~ /-[a-f0-9]{32}.(css|js)$/
     end
 
     def cache_control(file)
