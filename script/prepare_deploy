@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'digest'
+require 'fileutils'
+
+def fingerprint(file_path)
+  # file_path is relative to public
+  public_file_path = "public/#{file_path}"
+  digest = Digest::MD5.file public_file_path
+  extension = File.extname(file_path)
+  basename  = File.basename(file_path, extension)
+  dirname   = File.dirname(file_path)
+  new_file_path = "#{dirname}/#{basename}-#{digest}#{extension}"
+  new_public_file_path = "public/#{new_file_path}"
+  FileUtils.mv(public_file_path, new_public_file_path)
+
+  index_content = File.read("public/index.html")
+  index_content.gsub!(file_path, new_file_path)
+  File.open("public/index.html", "w") { |f|
+    f.write index_content
+  }
+end
+
+fingerprint('scripts/app.js')
+fingerprint('styles/app.css')
+fingerprint('styles/dashboard.css')
