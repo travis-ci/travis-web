@@ -1,66 +1,21 @@
 <div class="tiles">
   <div class="row">
+  {{#each repo in model}}
     <div class="large-4 medium-6 columns">
-      <div class="tile">
-        <div class="build-failed">
+      <div {{bind-attr class=":tile repo.last_build_state"}}>
+        <div class="build-bar">
         </div>
         <div class="build-information">
-          <p class="org failed">travis-ci</p>
-          <p class="repo failed">travisbot</p>
-          <div class="duration">56 sec</div>
-          <div class="finished">1 day ago</div>
-          <p class="build-status failed">#3286 Failed</p>
+          <p class="org">{{repo.owner}}</p>
+          <p class="repo">{{repo.name}}</p>
+          <div class="duration">{{formatDuration repo.last_build_duration}}</div>
+          <div class="finished">{{formatTime repo.last_build_finished_at}}</div>
+          <p class="build-status">#{{repo.last_build_number}} {{repo.last_build_state}}</p>
         </div>
         <div class="star-feature">
         </div>
       </div>
     </div>
-    <div class="large-4 medium-6 columns">
-      <div class="tile">
-        <div class="build-pending">
-        </div>
-        <div class="build-information">
-          <p class="org pending">travis-ci</p>
-          <p class="repo pending">travis-cookbooks</p>
-          <div class="if_private">Private</div>
-          <div class="duration"> 27 sec</div>
-          <div class="finished"> 3 min ago</div>
-          <p class="build-status pending">#3286 Started</p>
-        </div>
-        <div class="star-feature">
-        </div>
-      </div>
-    </div>
-    
-    <div class="large-4 medium-6 columns">
-      <div class="tile">
-        <div class="build-passed">
-        </div>
-        <div class="build-information">
-          <p class="org passed">travis-ci</p>
-          <p class="repo passed">docs-travis-ci-com</p>
-          <div class="duration">4 min 5 sec</div>
-          <div class="finished">1 day ago</div>
-          <p class="build-status passed">#3286 Passed</p>
-        </div>
-        <div class="star-feature">
-        </div>
-      </div>
-    </div>
-    <div class="large-4 medium-6 columns end">
-      <div class="tile">
-        <div class="build-passed">
-        </div>
-        <div class="build-information">
-          <p class="org passed">travis-ci</p>
-          <p class="repo passed">travis-worker</p>
-          <div class="duration">11 min 12 sec</div>
-          <div class="finished">2 days ago</div>
-          <p class="build-status passed">#3286 Passed</p>
-        </div>
-        <div class="star-feature">
-        </div>
-      </div>
-    </div>
+  {{/each}}
   </div>
 </div>
