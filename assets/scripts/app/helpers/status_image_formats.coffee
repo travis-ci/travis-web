@@ -1,41 +1,41 @@
-require 'helper/urls'
+require 'helpers/urls'
 
 ccXmlUrl = Travis.Urls.ccXml
 statusImageUrl = Travis.Urls.statusImage
 
-urlRepo: ( (slug) ->
+urlRepo = ( (slug) ->
   "https://#{location.host}/#{slug}"
 )
 
-markdownStatusImage: ( (url, slug, branch) ->
+markdownStatusImage = ( (url, slug, branch) ->
   "[![Build Status](#{statusImageUrl(slug, branch)})](#{url})"
 )
 
-textileStatusImage: ( (url, slug, branch) ->
+textileStatusImage = ( (url, slug, branch) ->
   "!#{statusImageUrl(slug, branch)}!:#{url}"
 )
 
-rdocStatusImage: ( (url, slug, branch) ->
+rdocStatusImage = ( (url, slug, branch) ->
   "{<img src=\"#{statusImageUrl(slug, branch)}\" alt=\"Build Status\" />}[#{url}]"
 )
 
-asciidocStatusImage: ( (url, slug, branch) ->
+asciidocStatusImage = ( (url, slug, branch) ->
   "image:#{statusImageUrl(slug, branch)}[\"Build Status\", link=\"#{url}\"]"
 )
 
-rstStatusImage: ( (url, slug, branch) ->
+rstStatusImage = ( (url, slug, branch) ->
   ".. image:: #{statusImageUrl(slug, branch)}\n    :target: #{url}"
 )
 
-podStatusImage: ( (url, slug, branch) ->
+podStatusImage = ( (url, slug, branch) ->
   "=for HTML <a href=\"#{url}\"><img src=\"#{statusImageUrl(slug, branch)}\"></a>"
 )
 
-ccxmlStatusUrl: ( (slug) ->
+ccxmlStatusUrl = ( (slug) ->
   ccXmlUrl(slug)
 )
 
-format: (version, slug, branch) ->
+format = (version, slug, branch) ->
   url = urlRepo(slug)
 
   switch version

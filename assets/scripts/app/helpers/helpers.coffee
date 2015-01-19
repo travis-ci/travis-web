@@ -53,9 +53,6 @@ formatMessage = (message, options) ->
     message = message.replace /\n/g, '<br/>'
   message
 
-pathFrom = (url) ->
-  (url || '').split('/').pop()
-
 timeAgoInWords = (date) ->
   timeago.distanceInWords date
 
@@ -140,13 +137,15 @@ configKeys = (config) ->
   return [] unless config
   intersect(Object.keys(config), Object.keys(config_keys_map))
 
+pathFrom = (url) ->
+  (url || '').split('/').pop()
+
 Travis.Helpers =
   configKeys: configKeys
   githubify: githubify
   timeInWords: timeInWords
   durationFrom: durationFrom
   timeAgoInWords: timeAgoInWords
-  pathFrom: pathFrom
   formatMessage: formatMessage
   formatConfig: formatConfig
   formatSha: formatSha
@@ -154,3 +153,4 @@ Travis.Helpers =
   colorForState: colorForState
   safe: safe
   compact: compact
+  pathFrom: pathFrom
