@@ -44,6 +44,11 @@ if ENV['TRAVIS_PRO']
   ENV['CODE_CLIMATE'] = 'true' unless ENV.has_key?('CODE_CLIMATE')
 end
 
+if ENV['TRAVIS_ENTERPRISE']
+  ENV['SSH_KEY_ENABLED'] = 'true' unless ENV.has_key?('SSH_KEY_ENABLED')
+  ENV['CACHES_ENABLED'] = 'true' unless ENV.has_key?('CACHES_ENABLED')
+end
+
 run Travis::Web::App.build(
   environment:     ENV['RACK_ENV'] || 'development',
   api_endpoint:    ENV['API_ENDPOINT'],
@@ -62,6 +67,7 @@ run Travis::Web::App.build(
   charm_key:        ENV['CHARM_KEY'],
   customer_io_site_id: ENV['CUSTOMER_IO_SITE_ID'],
   pro: ENV['TRAVIS_PRO'],
+  enterprise: ENV['TRAVIS_ENTERPRISE'],
   code_climate: ENV['CODE_CLIMATE'],
   code_climate_url: ENV['CODE_CLIMATE_URL'],
   assets_host: ENV['ASSETS_HOST']
