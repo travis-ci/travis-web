@@ -6,7 +6,6 @@ require 'app'
 window.ENV ||= {}
 window.ENV.RAISE_ON_DEPRECATION = true
 
-# TODO: how can I put it in Travis namespace and use immediately?
 Storage = Em.Object.extend
   init: ->
     @set('storage', {})
@@ -131,28 +130,43 @@ $.extend Travis,
 
   INTERVALS: { times: -1, updateTimes: 1000 }
 
-  storage: (->
-    storage = null
-    try
-      storage = window.localStorage || throw('no storage')
-    catch err
-      storage = Storage.create()
+sessionStorage = (->
+  storage = null
+  try
+    # firefox will not throw error on access for sessionStorage var,
+    # you need to actually get something from session
+    sessionStorage.getItem('foo')
+    storage = sessionStorage
+  catch err
+    storage = Storage.create()
 
-    storage
-  )()
+  storage
+)()
 
-  sessionStorage: (->
-    storage = null
-    try
-      # firefox will not throw error on access for sessionStorage var,
-      # you need to actually get something from session
-      sessionStorage.getItem('foo')
-      storage = sessionStorage
-    catch err
-      storage = Storage.create()
+storage = (->
+  storage = null
+  try
+    storage = window.localStorage || throw('no storage')
+  catch err
+    storage = Storage.create()
 
-    storage
-  )()
+  storage
+)()
+
+Travis.initializer
+  name: 'storage'
+
+  initialize: (container, application) ->
+    application.register 'storage:main', storage, { instantiate: false }
+    application.register 'sessionStorage:main', sessionStorage, { instantiate: false }
+
+    application.inject('auth', 'storage', 'storage:main')
+    application.inject('auth', 'sessionStorage', 'sessionStorage:main')
+
+    # I still use Travis.storage in some places which are not that easy to
+    # refactor
+    application.storage = storage
+    application.sessionStorage = sessionStorage
 
 Travis.initializer
   name: 'googleAnalytics'
@@ -177,6 +191,7 @@ Travis.initializer
 
     application.inject('controller', 'config', 'config:main')
     application.inject('route', 'config', 'config:main')
+    application.inject('auth', 'config', 'config:main')
 
 Travis.initializer
   name: 'inject-pusher'

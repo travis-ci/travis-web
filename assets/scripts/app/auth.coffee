@@ -10,9 +10,9 @@ window.Auth = Ember.Object.extend
   ).property(),
 
   signOut: ->
-    Travis.storage.removeItem('travis.user')
-    Travis.storage.removeItem('travis.token')
-    Travis.sessionStorage.clear()
+    @storage.removeItem('travis.user')
+    @storage.removeItem('travis.token')
+    @sessionStorage.clear()
     @set('state', 'signed-out')
     @set('user', undefined)
     if user = @get('currentUser')
@@ -29,7 +29,7 @@ window.Auth = Ember.Object.extend
       $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url)
 
   autoSignIn: (data) ->
-    data ||= @userDataFrom(Travis.sessionStorage) || @userDataFrom(Travis.storage)
+    data ||= @userDataFrom(@sessionStorage) || @userDataFrom(@storage)
     @setData(data) if data
 
   userDataFrom: (storage) ->
@@ -47,7 +47,7 @@ window.Auth = Ember.Object.extend
 
   validateUser: (user) ->
     fieldsToValidate = ['id', 'login', 'token', 'correct_scopes']
-    if Travis.config.pro
+    if @config.pro
       fieldsToValidate.push 'channels'
 
     fieldsToValidate.every( (field) => @validateHas(field, user) ) && user.correct_scopes
@@ -60,8 +60,8 @@ window.Auth = Ember.Object.extend
       false
 
   setData: (data) ->
-    @storeData(data, Travis.sessionStorage)
-    @storeData(data, Travis.storage) unless @userDataFrom(Travis.storage)
+    @storeData(data, @sessionStorage)
+    @storeData(data, @storage) unless @userDataFrom(@storage)
     user = @loadUser(data.user)
     @set('currentUser', user)
 
@@ -76,8 +76,8 @@ window.Auth = Ember.Object.extend
       # if user is still signed in, update saved data
       if @get('signedIn')
         data.user.token = user.token
-        @storeData(data, Travis.sessionStorage)
-        @storeData(data, Travis.storage)
+        @storeData(data, @sessionStorage)
+        @storeData(data, @storage)
     , (status, xhr) =>
       @signOut() if status == 403
 
