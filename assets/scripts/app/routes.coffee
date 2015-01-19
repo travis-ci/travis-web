@@ -455,12 +455,12 @@ Travis.AuthRoute = Travis.Route.extend
 
   actions:
     afterSignIn: ->
-      @transitionTo('index')
+      @transitionTo('main')
       return true
 
   redirect: ->
     if @signedIn()
-      @transitionTo('index')
+      @transitionTo('main')
 
 Travis.SettingsRoute = Travis.Route.extend
   needsAuth: true
