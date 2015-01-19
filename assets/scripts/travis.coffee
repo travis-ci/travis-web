@@ -76,6 +76,12 @@ billing_endpoint = $('meta[rel="travis.billing_endpoint"]').attr('href')
 customer_io_site_id = $('meta[name="travis.customer_io_site_id"]').attr('value')
 setupCustomerio(customer_io_site_id) if customer_io_site_id
 
+enterprise = $('meta[name="travis.enterprise"]').attr('value') == 'true'
+
+# for now I set pro to true also for enterprise, but it should be changed
+# to allow more granular config later
+pro = $('meta[name="travis.pro"]').attr('value') == 'true' || enterprise
+
 $.extend Travis,
   run: ->
     Travis.advanceReadiness() # bc, remove once merged to master
@@ -94,10 +100,9 @@ $.extend Travis,
     show_repos_hint: 'private'
     avatar_default_url: 'https://travis-ci.org/images/ui/default-avatar.png'
     pusher_log_fallback:  $('meta[name="travis.pusher_log_fallback"]').attr('value') == 'true'
-    # for now I set pro to true also for enterprise, but it should be changed
-    # to allow more granular config later
-    pro: $('meta[name="travis.pro"]').attr('value') == 'true' || $('meta[name="travis.enterprise"]').attr('value') == 'true'
-    enterprise: $('meta[name="travis.enterprise"]').attr('value') == 'true'
+    pro: pro
+    enterprise: enterprise
+    sidebar_support_box: pro && !enterprise
 
     pages_endpoint: pages_endpoint || billing_endpoint
     billing_endpoint: billing_endpoint

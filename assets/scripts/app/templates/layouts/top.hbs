@@ -8,14 +8,16 @@
   <li class="home">
     {{#link-to "main"}}Home{{/link-to}}
   </li>
-  {{#unless config.enterprise}}
+  {{#if config.enterprise}}
+    <li><a href="http://docs.travis-ci.com">Docs</a></li>
+  {{else}}
     <li>
       <a href="http://blog.travis-ci.com">Blog</a>
     </li>
     <li>
       <a href="http://traviscistatus.com">Status</a>
     </li>
-  {{/unless}}
+  {{/if}}
   {{#unless config.pro}}
     <li class="menu community">
       <p class="handle">
