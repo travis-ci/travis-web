@@ -1,4 +1,4 @@
-formatMessageHelper = Travis.Helpers.formatMessageHelper
+formatMessageHelper = Travis.Helpers.formatMessage
 safe = Travis.Helpers.safe
 
 formatMessage = (message, options) ->
