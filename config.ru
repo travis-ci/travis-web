@@ -64,4 +64,5 @@ run Travis::Web::App.build(
   pro: ENV['TRAVIS_PRO'],
   code_climate: ENV['CODE_CLIMATE'],
   code_climate_url: ENV['CODE_CLIMATE_URL'],
+  assets_host: ENV['ASSETS_HOST']
 )

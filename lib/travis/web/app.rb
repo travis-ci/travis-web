@@ -94,7 +94,6 @@ class Travis::Web::App
       else
         set_config(content, options) if config_needed?(file)
         set_title(content) if index?(file)
-        set_assets_host(content) if index?(file)
 
         headers = {
           'Content-Length'   => content.bytesize.to_s,
@@ -169,7 +168,14 @@ class Travis::Web::App
       end
 
       string.gsub! %r{(src|href)="(?:\/?)((styles|scripts)\/[^"]*)"} do
-        %(#{$1}=#{opts[:alt] ? "#{S3_URL}/#{opts[:alt]}/#{$2}":"/#{$2}"})
+        src = if options[:assets_host]
+          "#{options[:assets_host].chomp('/')}/#{$2}"
+        elsif opts[:alt]
+          "#{S3_URL}/#{opts[:alt]}/#{$2}"
+        else
+          "/#{$2}"
+        end
+        %(#{$1}="#{src}")
       end
     end
 end
