@@ -70,6 +70,9 @@ unless window.TravisApplication
 
       type = Ember.get(Travis, 'mappings')[name]
 
+      if name == 'job' && data.job?.commit
+        @loadOrMerge(Travis.Commit, data.job.commit)
+
       if name == 'build' && data.build?.commit
         # TODO: commit should be a sideload record on build, not mixed with it
         build = data.build
