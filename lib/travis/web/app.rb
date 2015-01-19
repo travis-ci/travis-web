@@ -158,13 +158,24 @@ class Travis::Web::App
       content.gsub!(/\{\{title\}\}/, ENV['SITE_TITLE'] || default_title)
     end
 
+    def set_assets_host(content)
+      content.gsub!(/\{\{assets_host\}\}/, ENV['ASSETS_HOST'] || '')
+    end
+
     def set_config(string, opts = {})
       string.gsub! %r(<meta (rel|name)="travis\.([^"]*)" (href|value)="([^"]*)"[^>]*>) do
         %(<meta #{$1}="travis.#{$2}" #{$3}="#{options[$2.to_sym] || $4}">)
       end
 
       string.gsub! %r{(src|href)="(?:\/?)((styles|scripts)\/[^"]*)"} do
-        %(#{$1}=#{opts[:alt] ? "#{S3_URL}/#{opts[:alt]}/#{$2}":"/#{$2}"})
+        src = if options[:assets_host]
+          "#{options[:assets_host].chomp('/')}/#{$2}"
+        elsif opts[:alt]
+          "#{S3_URL}/#{opts[:alt]}/#{$2}"
+        else
+          "/#{$2}"
+        end
+        %(#{$1}="#{src}")
       end
     end
 end

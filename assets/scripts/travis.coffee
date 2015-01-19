@@ -82,7 +82,10 @@ $.extend Travis,
     show_repos_hint: 'private'
     avatar_default_url: 'https://travis-ci.org/images/ui/default-avatar.png'
     pusher_log_fallback:  $('meta[name="travis.pusher_log_fallback"]').attr('value') == 'true'
-    pro: $('meta[name="travis.pro"]').attr('value') == 'true'
+    # for now I set pro to true also for enterprise, but it should be changed
+    # to allow more granular config later
+    pro: $('meta[name="travis.pro"]').attr('value') == 'true' || $('meta[name="travis.enterprise"]').attr('value') == 'true'
+    enterprise: $('meta[name="travis.enterprise"]').attr('value') == 'true'
 
     pages_endpoint: pages_endpoint || billing_endpoint
     billing_endpoint: billing_endpoint

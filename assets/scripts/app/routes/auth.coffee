@@ -15,11 +15,11 @@ Route = TravisRoute.extend
 
   actions:
     afterSignIn: ->
-      @transitionTo('index')
+      @transitionTo('main')
       return true
 
   redirect: ->
     if @signedIn()
-      @transitionTo('index')
+      @transitionTo('main')
 
 Travis.AuthRoute = Route

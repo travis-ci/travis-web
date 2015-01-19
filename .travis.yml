@@ -8,6 +8,7 @@ cache:
   bundler: true
 
 matrix:
+  fast_finish: true
   allow_failures:
     - rvm: 2.1.2
       env: 'TEST_SUITE=phantomjs'
