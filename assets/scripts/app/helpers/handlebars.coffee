@@ -48,6 +48,8 @@ Ember.Handlebars.registerHelper('label', (options) ->
     options.hash.for = id
     options.hashTypes.for = 'STRING'
     options.hashContexts.for = this
+    if options.hash.content
+      options.fn = Ember.Handlebars.compile("{{view.content}}")
 
   Ember.Handlebars.helpers.view.call(this, view, options)
 )
