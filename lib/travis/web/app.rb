@@ -94,6 +94,7 @@ class Travis::Web::App
       else
         set_config(content, options) if config_needed?(file)
         set_title(content) if index?(file)
+        set_assets_host(content) if index?(file)
 
         headers = {
           'Content-Length'   => content.bytesize.to_s,
@@ -156,6 +157,10 @@ class Travis::Web::App
     def set_title(content)
       default_title = "Travis CI - Free Hosted Continuous Integration Platform for the Open Source Community"
       content.gsub!(/\{\{title\}\}/, ENV['SITE_TITLE'] || default_title)
+    end
+
+    def set_assets_host(content)
+      content.gsub!(/\{\{assets_host\}\}/, ENV['ASSETS_HOST'] || '')
     end
 
     def set_config(string, opts = {})
