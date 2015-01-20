@@ -1,55 +1,33 @@
-Travis.reopen
-  JobsView: Travis.View.extend
-    templateName: 'jobs/list'
-    buildBinding: 'controller.build'
+require 'helpers/helpers'
 
-    jobTableId: Ember.computed(->
-      if @get('required')
-        'jobs'
-      else
-        'allowed_failure_jobs'
-    )
+colorForState = Travis.Helpers.colorForState
+githubCommit = Travis.Urls.githubCommit
+gravatarImage = Travis.Urls.gravatarImage
 
-    actions:
-      popupClose: ->
-        @popupCloseAll()
+View = Ember.View.extend
+  templateName: 'jobs/show'
 
-      openHelpPopup: ->
-        @popupCloseAll()
-        @popup('help-allowed_failures')
+  repoBinding: 'controller.repo'
+  jobBinding: 'controller.job'
+  commitBinding: 'job.commit'
+  annotationsBinding: 'job.annotations'
 
-  JobsItemView: Travis.View.extend
-    tagName: 'tr'
-    classNameBindings: ['color']
-    repoBinding: 'context.repo'
-    jobBinding: 'context'
+  currentItemBinding: 'job'
 
-    color: (->
-      Travis.Helpers.colorForState(@get('job.state'))
-    ).property('job.state')
+  color: (->
+    colorForState(@get('job.state'))
+  ).property('job.state')
 
-  JobView: Travis.View.extend
-    templateName: 'jobs/show'
+  urlGithubCommit: (->
+    githubCommit(@get('repo.slug'), @get('commit.sha'))
+  ).property('repo.slug', 'commit.sha')
 
-    repoBinding: 'controller.repo'
-    jobBinding: 'controller.job'
-    commitBinding: 'job.commit'
-    annotationsBinding: 'job.annotations'
+  urlCommitterGravatarImage: (->
+    gravatarImage(@get('commit.committerEmail'), 40)
+  ).property('commit.committerEmail')
 
-    currentItemBinding: 'job'
+  urlAuthorGravatarImage: (->
+    gravatarImage(@get('commit.authorEmail'), 40)
+  ).property('commit.authorEmail')
 
-    color: (->
-      Travis.Helpers.colorForState(@get('job.state'))
-    ).property('job.state')
-
-    urlGithubCommit: (->
-      Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
-    ).property('repo.slug', 'commit.sha')
-
-    urlCommitterGravatarImage: (->
-      Travis.Urls.gravatarImage(@get('commit.committerEmail'), 40)
-    ).property('commit.committerEmail')
-
-    urlAuthorGravatarImage: (->
-      Travis.Urls.gravatarImage(@get('commit.authorEmail'), 40)
-    ).property('commit.authorEmail')
+Travis.JobView = View
