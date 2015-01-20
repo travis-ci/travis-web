@@ -5,8 +5,6 @@ githubCommit = Travis.Urls.githubCommit
 gravatarImage = Travis.Urls.gravatarImage
 
 View = Ember.View.extend
-  templateName: 'jobs/show'
-
   repoBinding: 'controller.repo'
   jobBinding: 'controller.job'
   commitBinding: 'job.commit'

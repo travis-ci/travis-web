@@ -1,4 +1,6 @@
-Travis.BuildController = Ember.Controller.extend Travis.GithubUrlProperties,
+gravatarImage = Travis.Urls.gravatarImage
+
+Controller = Ember.Controller.extend Travis.GithubUrlProperties,
   needs: ['repo']
   repoBinding: 'controllers.repo.repo'
   commitBinding: 'build.commit'
@@ -12,9 +14,11 @@ Travis.BuildController = Ember.Controller.extend Travis.GithubUrlProperties,
   ).property('build.isLoading')
 
   urlCommitterGravatarImage: (->
-    Travis.Urls.gravatarImage(@get('commit.committerEmail'), 40)
+    gravatarImage(@get('commit.committerEmail'), 40)
   ).property('commit.committerEmail')
 
   urlAuthorGravatarImage: (->
-    Travis.Urls.gravatarImage(@get('commit.authorEmail'), 40)
+    gravatarImage(@get('commit.authorEmail'), 40)
   ).property('commit.authorEmail')
+
+Travis.BuildController = Controller

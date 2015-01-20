@@ -1,12 +1,12 @@
 jQuery.support.cors = true
 
+default_options =
+  accepts:
+    json: 'application/json; version=2'
+
 Travis.ajax = Em.Object.create
   publicEndpoints: [/\/repos\/?.*/, /\/builds\/?.*/, /\/jobs\/?.*/]
   privateEndpoints: [/\/repos\/\d+\/caches/]
-
-  DEFAULT_OPTIONS:
-    accepts:
-      json: 'application/json; version=2'
 
   get: (url, callback, errorCallback) ->
     @ajax(url, 'get', success: callback, error: errorCallback)
@@ -67,7 +67,7 @@ Travis.ajax = Em.Object.create
       delete data.flash if data?
       error.apply(this, arguments)
 
-    options = $.extend(options, Travis.ajax.DEFAULT_OPTIONS)
+    options = $.extend(options, default_options)
 
     if testMode?
       console.log('Running ajax with', options.url)

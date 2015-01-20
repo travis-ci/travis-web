@@ -1,5 +1,7 @@
 require 'travis/limited_array'
 
+Repo = Travis.Repo
+
 Travis.ReposController = Ember.ArrayController.extend
   actions:
     activate: (name) ->
@@ -32,7 +34,7 @@ Travis.ReposController = Ember.ArrayController.extend
   recentRepos: (->
     Ember.ArrayProxy.extend(
       isLoadedBinding: 'repos.isLoaded'
-      repos: Travis.Repo.withLastBuild()
+      repos: Repo.withLastBuild()
       sorted: Ember.computed.sort('repos', 'sortedReposKeys')
       content: Ember.computed.limit('sorted', 'limit')
       sortedReposKeys: ['sortOrder:asc']
@@ -47,7 +49,7 @@ Travis.ReposController = Ember.ArrayController.extend
   activate: (tab, params) ->
     @set('sortProperties', ['sortOrder'])
     @set('tab', tab)
-    this["view#{$.camelize(tab)}"](params)
+    this["view#{tab.camelize()}"](params)
 
   viewRecent: ->
     @set('content', @get('recentRepos'))
