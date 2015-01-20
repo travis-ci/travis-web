@@ -1,4 +1,6 @@
-Travis.RepoController = Ember.Controller.extend
+githubRepo = Travis.Urls.githubRepo
+
+Controller = Ember.Controller.extend
   needs: ['repos', 'currentUser', 'build', 'request', 'job']
   currentUserBinding: 'controllers.currentUser'
 
@@ -88,5 +90,7 @@ Travis.RepoController = Ember.Controller.extend
     @set('tab', tab)
 
   urlGithub: (->
-    Travis.Urls.githubRepo(@get('repo.slug'))
+    githubRepo(@get('repo.slug'))
   ).property('repo.slug')
+
+Travis.RepoController = Controller
