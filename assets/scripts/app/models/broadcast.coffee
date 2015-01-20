@@ -7,12 +7,12 @@ require 'travis/model'
     { type: 'broadcast', id: @get('id'), message: @get('message') }
 
   isSeen: (->
-    @get('id') in Travis.Broadcast.seen()
+    @get('id') in Travis.Broadcast.get('seen')
   ).property()
 
   setSeen: ->
-    Travis.Broadcast.seen.pushObject(@get('id'))
-    Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(Travis.Broadcast.seen()))
+    Travis.Broadcast.get('seen').pushObject(@get('id'))
+    Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(Travis.Broadcast.get('seen')))
     @notifyPropertyChange('isSeen')
 
 @Travis.Broadcast.reopenClass
@@ -20,7 +20,7 @@ require 'travis/model'
     seenBroadcasts = Travis.storage.getItem('travis.seen_broadcasts')
     seenBroadcasts = JSON.parse(seenBroadcasts) if seenBroadcasts?
     Ember.A(seenBroadcasts || [])
-  )
+  ).property()
 
   # TODO fix or monkey-patch the adapter's url and key lookup/generation crap
   # url: 'users/broadcasts'
