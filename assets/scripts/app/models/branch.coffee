@@ -1,5 +1,7 @@
 require 'travis/model'
 
+Repo = Travis.Repo
+
 @Travis.Branch = Travis.Model.extend
   repoId:       Ember.attr('number', key: 'repository_id')
   commitId:     Ember.attr('number')
@@ -15,7 +17,7 @@ require 'travis/model'
   commit: Ember.belongsTo('Travis.Commit')
 
   repo: (->
-    Travis.Repo.find @get('repoId')  if @get('repoId')
+    Repo.find @get('repoId')  if @get('repoId')
   ).property('repoId')
 
   updateTimes: ->

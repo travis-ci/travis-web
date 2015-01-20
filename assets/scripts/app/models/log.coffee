@@ -1,6 +1,41 @@
 require 'travis/model'
 require 'travis/log_chunks'
 
+Ajax = Travis.ajax
+Job = Travis.Job
+
+Request = Em.Object.extend
+  HEADERS:
+    accept: 'application/json; chunked=true; version=2, text/plain; version=2'
+
+  run: ->
+    Ajax.ajax "/jobs/#{@id}/log?cors_hax=true", 'GET',
+      dataType: 'text'
+      headers: @HEADERS
+      success: (body, status, xhr) => Ember.run(this, -> @handle(body, status, xhr))
+
+  handle: (body, status, xhr) ->
+    if Travis.config.pro
+      Job.find(@get('id')).get('log').set('token', xhr.getResponseHeader('X-Log-Access-Token'))
+
+    if xhr.status == 204
+      $.ajax(url: @redirectTo(xhr), type: 'GET', success: @handlers.text)
+    else if @isJson(xhr, body)
+      @handlers.json(body)
+    else
+      @handlers.text(body)
+
+  redirectTo: (xhr) ->
+    # Firefox can't see the Location header on the xhr response due to the wrong
+    # status code 204. Should be some redirect code but that doesn't work with CORS.
+    xhr.getResponseHeader('Location')
+
+  isJson: (xhr, body) ->
+    # Firefox can't see the Content-Type header on the xhr response due to the wrong
+    # status code 204. Should be some redirect code but that doesn't work with CORS.
+    type = xhr.getResponseHeader('Content-Type') || ''
+    type.indexOf('json') > -1
+
 @Travis.Log = Em.Object.extend
   version: 0 # used to refresh log on requeue
   isLoaded: false
@@ -13,7 +48,7 @@ require 'travis/log_chunks'
     data['part_numbers'] = partNumbers if partNumbers
     data['after'] = after if after
 
-    Travis.ajax.ajax "/jobs/#{@get('job.id')}/log", 'GET',
+    Ajax.ajax "/jobs/#{@get('job.id')}/log", 'GET',
       dataType: 'json'
       headers:
         accept: 'application/json; chunked=true; version=2'
@@ -44,7 +79,7 @@ require 'travis/log_chunks'
           @set('removed', true)
         @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
-    Travis.Log.Request.create(id: id, handlers: handlers).run() if id = @get('job.id')
+    Request.create(id: id, handlers: handlers).run() if id = @get('job.id')
 
   clear: ->
     @clearParts()
@@ -63,35 +98,3 @@ require 'travis/log_chunks'
     console.log 'log model: load text' if Log.DEBUG
     @append(number: 1, content: text, final: true)
     @set('isLoaded', true)
-
-Travis.Log.Request = Em.Object.extend
-  HEADERS:
-    accept: 'application/json; chunked=true; version=2, text/plain; version=2'
-
-  run: ->
-    Travis.ajax.ajax "/jobs/#{@id}/log?cors_hax=true", 'GET',
-      dataType: 'text'
-      headers: @HEADERS
-      success: (body, status, xhr) => Ember.run(this, -> @handle(body, status, xhr))
-
-  handle: (body, status, xhr) ->
-    if Travis.config.pro
-      Travis.Job.find(@get('id')).get('log').set('token', xhr.getResponseHeader('X-Log-Access-Token'))
-
-    if xhr.status == 204
-      $.ajax(url: @redirectTo(xhr), type: 'GET', success: @handlers.text)
-    else if @isJson(xhr, body)
-      @handlers.json(body)
-    else
-      @handlers.text(body)
-
-  redirectTo: (xhr) ->
-    # Firefox can't see the Location header on the xhr response due to the wrong
-    # status code 204. Should be some redirect code but that doesn't work with CORS.
-    xhr.getResponseHeader('Location')
-
-  isJson: (xhr, body) ->
-    # Firefox can't see the Content-Type header on the xhr response due to the wrong
-    # status code 204. Should be some redirect code but that doesn't work with CORS.
-    type = xhr.getResponseHeader('Content-Type') || ''
-    type.indexOf('json') > -1

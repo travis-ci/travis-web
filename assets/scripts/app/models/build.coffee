@@ -1,7 +1,14 @@
 require 'travis/model'
 require 'models/extensions'
+require 'utils/duration_calculations'
 
-@Travis.Build = Travis.Model.extend Travis.DurationCalculations,
+compact = Travis.Helpers.compact
+configKeys = Travis.Helpers.configKeys
+Ajax = Travis.ajax
+config_keys_map = Travis.CONFIG_KEYS_MAP
+DurationCalculations = Travis.DurationCalculations
+
+@Travis.Build = Travis.Model.extend DurationCalculations,
   repositoryId:     Ember.attr('number')
   commitId:         Ember.attr('number')
 
@@ -26,7 +33,7 @@ require 'models/extensions'
   config: (->
     console.log('config')
     if config = @get('_config')
-      Travis.Helpers.compact(config)
+      compact(config)
     else
       return if @get('isFetchingConfig')
       @set 'isFetchingConfig', true
@@ -77,7 +84,7 @@ require 'models/extensions'
     keys = []
 
     @get('jobs').forEach (job) ->
-      Travis.Helpers.configKeys(job.get('config')).forEach (key) ->
+      configKeys(job.get('config')).forEach (key) ->
         keys.pushObject key unless keys.contains key
 
     keys
@@ -86,7 +93,7 @@ require 'models/extensions'
   configKeys: (->
     keys = @get('rawConfigKeys')
     headers = ['Job', 'Duration', 'Finished']
-    $.map(headers.concat(keys), (key) -> if Travis.CONFIG_KEYS_MAP.hasOwnProperty(key) then Travis.CONFIG_KEYS_MAP[key] else key)
+    $.map(headers.concat(keys), (key) -> if config_keys_map.hasOwnProperty(key) then config_keys_map[key] else key)
   ).property('rawConfigKeys.length')
 
   canCancel: (->
@@ -94,11 +101,11 @@ require 'models/extensions'
   ).property('isFinished', 'jobs.@each.canCancel')
 
   cancel: (->
-    Travis.ajax.post "/builds/#{@get('id')}/cancel"
+    Ajax.post "/builds/#{@get('id')}/cancel"
   )
 
   requeue: ->
-    Travis.ajax.post "/builds/#{@get('id')}/restart"
+    Ajax.post "/builds/#{@get('id')}/restart"
 
   formattedFinishedAt: (->
     if finishedAt = @get('finishedAt')

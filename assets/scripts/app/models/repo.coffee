@@ -1,5 +1,14 @@
 require 'travis/expandable_record_array'
 require 'travis/model'
+require 'helpers/helpers'
+
+EnvVar = Travis.EnvVar
+Build  = Travis.Build
+SshKey = Travis.SshKey
+ExpandableRecordArray = Travis.ExpandableRecordArray
+Event = Travis.Event
+durationFrom = Travis.Helpers.durationFrom
+Ajax = Travis.ajax
 
 @Travis.Repo = Travis.Model.extend
   id:                  Ember.attr('string')
@@ -28,22 +37,22 @@ require 'travis/model'
     @filter( (repo) -> repo.get('lastBuildId') )
 
   sshKey: (->
-    Travis.SshKey.find(@get('id'))
+    SshKey.find(@get('id'))
   )
 
   envVars: (->
     id = @get('id')
-    envVars = Travis.EnvVar.find repository_id: id
+    envVars = EnvVar.find repository_id: id
 
     # TODO: move to controller
-    array  = Travis.ExpandableRecordArray.create
-      type: Travis.EnvVar
+    array  = ExpandableRecordArray.create
+      type: EnvVar
       content: Ember.A([])
 
     array.load(envVars)
 
-    globalEnvVars = Ember.RecordArray.create({ modelClass: Travis.EnvVar, content: Ember.A([]) })
-    Travis.EnvVar.registerRecordArray(globalEnvVars)
+    globalEnvVars = Ember.RecordArray.create({ modelClass: EnvVar, content: Ember.A([]) })
+    EnvVar.registerRecordArray(globalEnvVars)
 
     array.observe(globalEnvVars, (envVar) -> envVar.get('isLoaded') && envVar.get('repo.id') == id )
 
@@ -51,18 +60,18 @@ require 'travis/model'
   ).property()
 
   allBuilds: (->
-    recordArray = Ember.RecordArray.create({ modelClass: Travis.Build, content: Ember.A([]) })
-    Travis.Build.registerRecordArray(recordArray)
+    recordArray = Ember.RecordArray.create({ modelClass: Build, content: Ember.A([]) })
+    Build.registerRecordArray(recordArray)
     recordArray
   ).property()
 
   builds: (->
     id = @get('id')
-    builds = Travis.Build.byRepoId id, event_type: 'push'
+    builds = Build.byRepoId id, event_type: 'push'
 
     # TODO: move to controller
-    array  = Travis.ExpandableRecordArray.create
-      type: Travis.Build
+    array  = ExpandableRecordArray.create
+      type: Build
       content: Ember.A([])
 
     array.load(builds)
@@ -75,9 +84,9 @@ require 'travis/model'
 
   pullRequests: (->
     id = @get('id')
-    builds = Travis.Build.byRepoId id, event_type: 'pull_request'
-    array  = Travis.ExpandableRecordArray.create
-      type: Travis.Build
+    builds = Build.byRepoId id, event_type: 'pull_request'
+    array  = ExpandableRecordArray.create
+      type: Build
       content: Ember.A([])
 
     array.load(builds)
@@ -89,11 +98,11 @@ require 'travis/model'
   ).property()
 
   branches: (->
-    Travis.Build.branches repoId: @get('id')
+    Build.branches repoId: @get('id')
   ).property()
 
   events: (->
-    Travis.Event.byRepoId @get('id')
+    Event.byRepoId @get('id')
   ).property()
 
   owner: (->
@@ -106,7 +115,7 @@ require 'travis/model'
 
   lastBuildDuration: (->
     duration = @get('_lastBuildDuration')
-    duration = Travis.Helpers.durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
+    duration = durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
     duration
   ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
@@ -130,16 +139,16 @@ require 'travis/model'
     @notifyPropertyChange 'lastBuildDuration'
 
   regenerateKey: (options) ->
-    Travis.ajax.ajax '/repos/' + @get('id') + '/key', 'post', options
+    Ajax.ajax '/repos/' + @get('id') + '/key', 'post', options
 
   fetchSettings: ->
-    Travis.ajax.ajax('/repos/' + @get('id') + '/settings', 'get', forceAuth: true).then (data) ->
+    Ajax.ajax('/repos/' + @get('id') + '/settings', 'get', forceAuth: true).then (data) ->
       data['settings']
 
   saveSettings: (settings) ->
-    Travis.ajax.ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
+    Ajax.ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
 
-@Travis.Repo.reopenClass
+Travis.Repo.reopenClass
   recent: ->
     @find()
 
@@ -154,12 +163,12 @@ require 'travis/model'
 
   withLastBuild: ->
     filtered = Ember.FilteredRecordArray.create(
-      modelClass: Travis.Repo
+      modelClass: this
       filterFunction: (repo) -> repo.get('lastBuildId')
       filterProperties: ['lastBuildId']
     )
 
-    Travis.Repo.fetch().then (array) ->
+    @fetch().then (array) ->
       filtered.updateFilter()
       filtered.set('isLoaded', true)
 

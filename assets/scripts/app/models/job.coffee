@@ -1,7 +1,12 @@
 require 'travis/model'
 require 'models/extensions'
+require 'models/log'
 
-@Travis.Job = Travis.Model.extend Travis.DurationCalculations,
+DurationCalculations = Travis.DurationCalculations
+Log = Travis.Log
+compact = Travis.Helpers.compact
+
+@Travis.Job = Travis.Model.extend DurationCalculations,
   repoId:         Ember.attr('string', key: 'repository_id')
   buildId:        Ember.attr('string')
   commitId:       Ember.attr('string')
@@ -25,7 +30,7 @@ require 'models/extensions'
 
   log: ( ->
     @set('isLogAccessed', true)
-    Travis.Log.create(job: this)
+    Log.create(job: this)
   ).property()
 
   startedAt: (->
@@ -44,7 +49,7 @@ require 'models/extensions'
 
   config: (->
     if config = @get('_config')
-      Travis.Helpers.compact(config)
+      compact(config)
     else
       return if @get('isFetchingConfig')
       @set 'isFetchingConfig', true
@@ -87,11 +92,11 @@ require 'models/extensions'
   ).property('state')
 
   cancel: (->
-    Travis.ajax.post "/jobs/#{@get('id')}/cancel"
+    Ajax.post "/jobs/#{@get('id')}/cancel"
   )
 
   removeLog: ->
-    Travis.ajax.patch("/jobs/#{@get('id')}/log").then =>
+    Ajax.patch("/jobs/#{@get('id')}/log").then =>
       @reloadLog()
 
   reloadLog: ->
@@ -99,7 +104,7 @@ require 'models/extensions'
     @get('log').fetch()
 
   requeue: ->
-    Travis.ajax.post "/jobs/#{@get('id')}/restart"
+    Ajax.post "/jobs/#{@get('id')}/restart"
 
   appendLog: (part) ->
     @get('log').append part

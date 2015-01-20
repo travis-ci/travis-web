@@ -1,5 +1,8 @@
 require 'travis/model'
 
+loadOrMerge = Travis.loadOrMerge
+Repo = Travis.Repo
+
 @Travis.Hook = Travis.Model.extend
   name:        Ember.attr('string')
   ownerName:   Ember.attr('string')
@@ -34,6 +37,6 @@ require 'travis/model'
     # I add an info which we have here to the store - this will allow to display
     # a link to the repo and if more info is needed, it will be requested when the
     # link is used
-    Travis.loadOrMerge(Travis.Repo, @getProperties('id', 'slug', 'name', 'ownerName'), skipIfExists: true)
-    Travis.Repo.find(@get('id'))
+    loadOrMerge(Repo, @getProperties('id', 'slug', 'name', 'ownerName'), skipIfExists: true)
+    Repo.find(@get('id'))
   ).property('id')

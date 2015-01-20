@@ -1,6 +1,10 @@
 require 'travis/ajax'
 require 'travis/model'
 
+Ajax = Travis.ajax
+trigger = Travis.trigger
+Account = Travis.Account
+
 @Travis.User = Travis.Model.extend
   _name:       Ember.attr('string', key: 'name')
   email:       Ember.attr('string')
@@ -30,7 +34,7 @@ require 'travis/model'
   ).property()
 
   _rawPermissions: (->
-    Travis.ajax.get('/users/permissions')
+    Ajax.get('/users/permissions')
   ).property()
 
   permissions: (->
@@ -63,12 +67,12 @@ require 'travis/model'
 
   sync: ->
     self = this
-    Travis.ajax.post('/users/sync', {}, ->
+    Ajax.post('/users/sync', {}, ->
       self.setWithSession('isSyncing', true)
     )
 
   poll: ->
-    Travis.ajax.get '/users', (data) =>
+    Ajax.get '/users', (data) =>
       if data.user.is_syncing
         self = this
         setTimeout ->
@@ -77,10 +81,10 @@ require 'travis/model'
       else
         @set('isSyncing', false)
         @setWithSession('syncedAt', data.user.synced_at)
-        Travis.trigger('user:synced', data.user)
+        trigger('user:synced', data.user)
 
         # need to pass any param to trigger findQuery
-        Travis.Account.find(foo: '')
+        Account.find(foo: '')
 
   setWithSession: (name, value) ->
     @set(name, value)
