@@ -123,7 +123,7 @@ _toUtc = (date) ->
 _emojize = (text) ->
   emojis = text.match(/:\S+?:/g)
   if emojis isnt null
-    emojis.uniq().each (emoji, ix) ->
+    emojis.uniq().forEach (emoji, ix) ->
       strippedEmoji = emoji.substring(1, emoji.length - 1)
       unless EmojiDictionary.indexOf(strippedEmoji) is -1
         image = '<img class=\'emoji\' title=\'' + emoji + '\' alt=\'' + emoji + '\' src=\'' + '/images/emoji/' + strippedEmoji + '.png\'/>'
