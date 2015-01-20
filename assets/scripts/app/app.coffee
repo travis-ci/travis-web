@@ -42,7 +42,6 @@ unless window.TravisApplication
       Travis.SshKey.url = "/settings/ssh_key"
       Travis.SshKey.adapter = Travis.SshKeyAdapter.create()
 
-      @slider = new Travis.Slider()
       @pusher = new Travis.Pusher(key: Travis.config.pusher_key, host: Travis.config.pusher_host) if Travis.config.pusher_key
       @tailing = new Travis.Tailing($(window), '#tail', '#log')
       @toTop   = new Travis.ToTop($(window), '.to-top', '#log-container')
@@ -149,6 +148,7 @@ unless window.TravisApplication
       Em.run.later (-> element.remove()), 10
 
     ready: ->
+      @slider = new Travis.Slider(@storage)
       location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
 
     currentDate: ->

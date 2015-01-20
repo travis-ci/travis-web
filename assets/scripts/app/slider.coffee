@@ -1,5 +1,5 @@
-@Travis.Slider = ->
-  @minimize() if Travis.storage.getItem('travis.maximized') == 'true'
+@Travis.Slider = (storage) ->
+  @minimize() if storage.getItem('travis.maximized') == 'true'
   this
 
 $.extend Travis.Slider.prototype,
