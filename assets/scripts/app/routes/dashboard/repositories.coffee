@@ -3,10 +3,12 @@ require 'routes/route'
 TravisRoute = Travis.Route
 
 Route = TravisRoute.extend
+  queryParams:
+    filter: { replace: true }
   model: ->
     apiEndpoint = @get('config').api_endpoint
     $.ajax(apiEndpoint + '/repos?member=lislis', {
-      beforeSend: (xhr) -> 
+      beforeSend: (xhr) ->
         xhr.setRequestHeader('accept', 'application/json; version=2')
     }).then (response) ->
       response.repos.map (elem) ->

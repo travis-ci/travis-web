@@ -43,7 +43,7 @@ a {
 .status-graph {
   background  : url('/images/dashboard/health-stats.svg') no-repeat;
   background  : contain;
-  margin-top  : 17px; 
+  margin-top  : 17px;
   height      : 18px;
   width       : 78px;
   text-indent : -9999px;
@@ -69,7 +69,7 @@ a {
   color : #ffffff;
 }
 
-#top a:hover { 
+#top a:hover {
   color : #ADC7D0;
 }
 
@@ -102,7 +102,7 @@ a {
   margin     : 0;
   padding    : 15px 0 17px 0;
   list-style : none;
-  z-index    : 1000; 
+  z-index    : 1000;
 }
 
 #user ul li ul {
@@ -118,9 +118,9 @@ a {
 
 #user ul li ul li {
   background  : #404650;
-  color       : #ffffff; 
+  color       : #ffffff;
   display     : block;
-  line-height : 18px; 
+  line-height : 18px;
   padding     : 8px 18px;
   margin      : 0;
 }
@@ -146,14 +146,14 @@ a {
   height      : 20px;
   width       : 20px;
   vertical-align: top;
-  margin : -5px 5px 0 0;  
+  margin : -5px 5px 0 0;
 }
 
 #filters-search {
   background    : #ffffff;
   font-size     : 14px;
   padding       : 5px 0 5px 0;
-  max-height    : 44px; 
+  max-height    : 44px;
 }
 
 #filters {
@@ -166,7 +166,7 @@ a {
   margin     : 0;
   padding    : 0;
   list-style : none;
-  z-index    : 1000; 
+  z-index    : 1000;
 }
 
 #filters ul li {
@@ -200,10 +200,10 @@ a {
   -moz-box-shadow    : 2px 1px 4px 0px rgba(148,145,138,0.4);
 }
 
-#filters ul li ul li { 
+#filters ul li ul li {
   display      : block;
   line-height  : 23px;
-  padding-left : 20px; 
+  padding-left : 20px;
 }
 
 #filters ul li ul li:first-child {
@@ -221,10 +221,10 @@ a {
   width            : 20px;
   height           : 20px;
   margin-right     : 5px;
-  text-indent      : -9999px; 
+  text-indent      : -9999px;
   border-radius         : 100px;
   -webkit-border-radius : 100px;
-  -moz-border-radius    : 100px;  
+  -moz-border-radius    : 100px;
 }
 
 .org-travisci {
@@ -268,7 +268,7 @@ a {
   margin     : 0;
   padding    : 0;
   list-style : none;
-  z-index    : 1000; 
+  z-index    : 1000;
 }
 
 #views ul li {
@@ -300,10 +300,10 @@ a {
   box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4);
 }
 
-#views ul li ul li { 
+#views ul li ul li {
   display      : block;
   line-height  : 23px;
-  padding-left : 20px; 
+  padding-left : 20px;
 }
 
 #views ul li ul li:first-child {
@@ -332,10 +332,10 @@ a {
 }
 
 .arrow-down {
-  width        : 0; 
-  height       : 0; 
+  width        : 0;
+  height       : 0;
   display      : inline-block;
-  padding-top  : 2px; 
+  padding-top  : 2px;
   margin-left  : 5px;
   border-left  : 5px solid transparent;
   border-right : 5px solid transparent;
@@ -362,18 +362,19 @@ a {
   line-height  : 17px;
 }
 
-.search-icon {
-  background      : url('/images/dashboard/search-icon.svg') no-repeat;
-  background-size : contain;
-  display         : inline-block;
-  float           : right;
-  height          : 16px;
-  width           : 16px; 
-  text-indent     : -9999px;
+.search-field {
+  background-image   : url('/images/dashboard/search-icon.svg');
+  background-repeat  : no-repeat;
+  background-position: right center;
+  display            : inline-block;
+  float              : right;
+  border             : 1px solid #666;
+  padding            : 0.5em;
+  width              : 100px;
 }
 
 .tiles {
-  background  : #f4f3ea; 
+  background  : #f4f3ea;
   padding     : 30px 0 10px 0;
 }
 
@@ -497,14 +498,14 @@ a {
   background-image: url('/images/dashboard/time.svg');
   background-size : 11px 11px;
   text-indent     : 15px;
-  line-height     : 13px; 
+  line-height     : 13px;
 }
 
 .finished {
   background-image: url('/images/dashboard/cal.svg');
-  background-size : 11px 11px; 
+  background-size : 11px 11px;
   text-indent     : 15px;
-  line-height     : 14px; 
+  line-height     : 14px;
 }
 
 .build-status {
@@ -525,10 +526,10 @@ a {
   display         : inline-block;
   background      : url('/images/dashboard/private-icon.svg') no-repeat 0 0;
   background-size : contain;
-  height          : 12px; 
+  height          : 12px;
   width           : 9px;
   margin-left     : 5px;
-  text-indent     : -9999px;  
+  text-indent     : -9999px;
 }
 
 footer {
@@ -562,17 +563,17 @@ footer h3 {
   padding-top : 6px;
   font-weight : 400;
   color       : #8f9ba2;
-  border-top  : solid 4px #ccd0d5;    
+  border-top  : solid 4px #ccd0d5;
 }
 
 footer .row p {
-  display : inline-block; 
+  display : inline-block;
   margin  : 0;
 }
 
 footer .row ul,
 footer .row li {
-  display         : block; 
+  display         : block;
   color           : #404650;
   line-height     : 22px;
   padding         : 0;
@@ -582,7 +583,7 @@ footer .row li {
 
 footer a {
   text-decoration : none;
-  display         : inline-block; 
+  display         : inline-block;
   color           : #404650;
 }
 
@@ -593,7 +594,7 @@ footer a:active {
 
 a  {
   text-decoration : none;
-  display         : block; 
+  display         : block;
   color           : #404650;
 }
 
@@ -677,7 +678,7 @@ a  {
 #loader-container-small {
   height     : 20px;
   margin-top : 22px;
-  text-align : center; 
+  text-align : center;
 }
 
 #loader-container-small .load-text {
@@ -717,7 +718,7 @@ a  {
 }
 
 @-webkit-keyframes bounce {
-  0%, 100% { 
+  0%, 100% {
     -webkit-transform : scale(0.0)
   }
   60% {
@@ -726,10 +727,10 @@ a  {
 }
 
 @keyframes bounce {
-  0%, 100% { 
+  0%, 100% {
     transform         : scale(0.0);
     -webkit-transform : scale(0.0);
-  } 60% { 
+  } 60% {
     transform: scale(1.0);
     -webkit-transform : scale(1.0);
   }

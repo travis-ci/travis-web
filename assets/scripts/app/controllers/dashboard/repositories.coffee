@@ -6,13 +6,11 @@ Controller = Ember.Controller.extend
     filter = @get('filter')
     repos = @get('model')
 
-    if filter
-      repos.filter (item, index) ->
-
-        item.slug.match(new RegExp(filter))
-
-    else
+    if Ember.isBlank(filter)
       repos
+    else
+      repos.filter (item, index) ->
+        item.slug.match(new RegExp(filter))
 
   ).property('filter', 'model')
 
