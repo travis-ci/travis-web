@@ -158,7 +158,7 @@ require 'travis/model'
     filtered = Ember.FilteredRecordArray.create(
       modelClass: Travis.Job
       filterFunction: (job) ->
-        job.get('state') == 'started'
+        ['started', 'received'].indexOf(job.get('state')) != -1
       filterProperties: ['state']
     )
 
