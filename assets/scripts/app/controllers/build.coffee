@@ -1,3 +1,5 @@
+require 'helpers/urls'
+
 gravatarImage = Travis.Urls.gravatarImage
 
 Controller = Ember.Controller.extend Travis.GithubUrlProperties,

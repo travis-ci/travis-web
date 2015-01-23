@@ -49,7 +49,7 @@ Travis.ReposController = Ember.ArrayController.extend
   activate: (tab, params) ->
     @set('sortProperties', ['sortOrder'])
     @set('tab', tab)
-    this["view#{tab.camelize()}"](params)
+    this["view_#{tab}".camelize()]()
 
   viewRecent: ->
     @set('content', @get('recentRepos'))

@@ -49,5 +49,6 @@ Travis.Urls = {
   githubAdmin: githubAdmin,
   statusImage: statusImage,
   ccXml: ccXml,
-  email: email
+  email: email,
+  gravatarImage: gravatarImage
 }
