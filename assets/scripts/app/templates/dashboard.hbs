@@ -7,10 +7,10 @@
         </div>
         <div class="build-information">
           <p class="org">{{repo.owner}}</p>
-          <p class="repo">{{repo.name}}</p>
+          <p class="repo">{{#link-to "repo" repo.owner repo.name }}{{repo.name}}{{/link-to}}</p>
           <div class="duration">{{formatDuration repo.last_build_duration}}</div>
           <div class="finished">{{formatTime repo.last_build_finished_at}}</div>
-          <p class="build-status">#{{repo.last_build_number}} {{repo.last_build_state}}</p>
+          <p class="build-status">{{#link-to "build" repo.owner repo.name repo.last_build_id}}#{{repo.last_build_number}} {{repo.last_build_state}}{{/link-to}}</p>
         </div>
         <div class="star-feature">
         </div>

@@ -298,8 +298,6 @@ a {
   opacity    : 0;
   visibility : hidden;
   box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4);
-  -webkit-box-shadow : 2px 1px 4px 0px rgba(148,145,138,0.4);
-  -moz-box-shadow    : 2px 1px 4px 0px rgba(148,145,138,0.4);
 }
 
 #views ul li ul li { 
@@ -402,6 +400,10 @@ a {
   width           : 33px;
   border-radius   : 4px 0 0 4px;
 }
+// .repo a:hover,
+// .build-status a:hover {
+//   text-decoration: underline;
+// }
 
 .passed {
   .build-bar {
@@ -411,11 +413,14 @@ a {
     }
   }
   .org,
-  .repo,
-  .build-status {
+  .repo a,
+  .build-status a {
     color: #3ba85d;
   }
-
+  .repo a:focus,
+  .build-status a:focus {
+    outline: 1px dotted #3ba85d;
+  }
 }
 
 .failed {
@@ -426,9 +431,13 @@ a {
     }
   }
   .org,
-  .repo,
-  .build-status {
+  .repo a,
+  .build-status a {
     color: #d04729;
+  }
+  .repo a:focus,
+  .build-status a:focus {
+    outline: 1px dotted #d04729;
   }
 }
 
@@ -440,9 +449,13 @@ a {
     }
   }
   .org,
-  .repo,
-  .build-status {
+  .repo a,
+  .build-status a {
     color: #848032;
+  }
+  .repo a:focus,
+  .build-status a:focus {
+    outline: 1px dotted #848032;
   }
 }
 
@@ -454,9 +467,13 @@ a {
     }
   }
   .org,
-  .repo,
-  .build-status {
+  .repo a,
+  .build-status a {
     color: #999999;
+  }
+  .repo a:focus,
+  .build-status a:focus {
+    outline: 1px dotted #999999;
   }
 }
 
