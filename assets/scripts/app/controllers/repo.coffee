@@ -32,7 +32,7 @@ Controller = Ember.Controller.extend
 
   activate: (action) ->
     @stopObservingLastBuild()
-    this["view#{$.camelize(action)}"]()
+    this["view_#{action}".camelize()]()
 
   viewIndex: ->
     @observeLastBuild()
