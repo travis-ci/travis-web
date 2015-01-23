@@ -1,4 +1,5 @@
 View = Ember.View.extend
+  templateName: 'jobs'
   buildBinding: 'controller.build'
 
   jobTableId: Ember.computed(->
