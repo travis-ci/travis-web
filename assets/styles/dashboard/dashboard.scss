@@ -400,10 +400,17 @@ a {
   width           : 33px;
   border-radius   : 4px 0 0 4px;
 }
-// .repo a:hover,
-// .build-status a:hover {
-//   text-decoration: underline;
-// }
+
+.repo a:hover,
+.build-status a:hover,
+.repo a:active,
+.build-status a:active {
+  text-decoration: underline;
+}
+.repo a:focus,
+.build-status a:focus {
+  outline: 1px dotted;
+}
 
 .passed {
   .build-bar {
@@ -416,10 +423,6 @@ a {
   .repo a,
   .build-status a {
     color: #3ba85d;
-  }
-  .repo a:focus,
-  .build-status a:focus {
-    outline: 1px dotted #3ba85d;
   }
 }
 
@@ -435,10 +438,6 @@ a {
   .build-status a {
     color: #d04729;
   }
-  .repo a:focus,
-  .build-status a:focus {
-    outline: 1px dotted #d04729;
-  }
 }
 
 .started {
@@ -453,10 +452,6 @@ a {
   .build-status a {
     color: #848032;
   }
-  .repo a:focus,
-  .build-status a:focus {
-    outline: 1px dotted #848032;
-  }
 }
 
 .errored {
@@ -470,10 +465,6 @@ a {
   .repo a,
   .build-status a {
     color: #999999;
-  }
-  .repo a:focus,
-  .build-status a:focus {
-    outline: 1px dotted #999999;
   }
 }
 

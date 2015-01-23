@@ -12,7 +12,7 @@ Route = TravisRoute.extend
     @get('stylesheetsManager').disable('dashboard')
 
   model: ->
-    return new Ember.RSVP.Promise(->)
+    #return new Ember.RSVP.Promise(->)
     apiEndpoint = @get('config').api_endpoint
     $.ajax(apiEndpoint + '/repos?member=lislis', {
       beforeSend: (xhr) -> 
