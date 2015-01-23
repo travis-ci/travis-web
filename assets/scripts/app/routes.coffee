@@ -2,14 +2,17 @@ require 'travis/location'
 require 'routes/application'
 
 Ember.Router.reopen
-  location: (if testMode? then Ember.NoneLocation.create() else Travis.Location.create())
-
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
     @_super(url)
 
+Travis.Router.reopen
+  location: 'history'
+
 Travis.Router.map ->
-  @resource 'dashboard'
+  @resource 'dashboard', ->
+    @route 'repositories', path: '/'
+
   @resource 'main', path: '/', ->
     @resource 'getting_started'
     @route 'recent'
@@ -80,3 +83,4 @@ require 'routes/settings'
 require 'routes/simple_layout'
 require 'routes/ssh_key'
 require 'routes/dashboard'
+require 'routes/dashboard/repositories'
