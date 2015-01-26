@@ -130,6 +130,14 @@ window.Auth = Ember.Object.extend
       unless error.message =~ /Can't trigger action/
         throw error
 
+  userName: (->
+    @get('currentUser.name') || @get('currentUser.login')
+  ).property('currentUser.login', 'currentUser.name')
+
+  gravatarUrl: (->
+    "#{location.protocol}//www.gravatar.com/avatar/#{@get('currentUser.gravatarId')}?s=48&d=mm"
+  ).property('currentUser.gravatarId')
+
 Ember.onLoad 'Ember.Application', (Application) ->
   Application.initializer
     name: "auth",

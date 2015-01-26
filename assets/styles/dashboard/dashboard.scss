@@ -28,7 +28,7 @@ a {
   color       : #e9e9e9;
   line-height : 28px;
   background  : #404650;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 #logo {
@@ -88,7 +88,7 @@ a {
 
 #top img {
   float  : right;
-  margin : 5px 10px 0 10px;
+  margin : -7px 10px 0 10px;
   width  : 30px;
   height : 30px;
   border-radius         : 100px;
@@ -108,7 +108,7 @@ a {
 #user ul li ul {
   padding    : 0;
   position   : absolute;
-  top        : 45px;
+  top        : 55px;
   right      : 0;
   width      : 150px;
   display    : none;
@@ -133,12 +133,18 @@ a {
 #user ul li ul li:hover {
   background : #5e869a;
   color      : #ffffff;
+  a {
+    color: #fff;
+  }
 }
 
 #user ul li:hover ul {
   display    : block;
   opacity    : 1;
   visibility : visible;
+}
+#user .handle a {
+  display: inline;
 }
 
 .current-org-avatar {
@@ -615,7 +621,7 @@ a  {
 
 @media only screen and (min-width: 64.063em) {
   #top img {
-    margin : 5px 0 0 10px;
+    margin : -7px 0 0 10px;
   }
 }
 

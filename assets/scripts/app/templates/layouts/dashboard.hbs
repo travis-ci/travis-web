@@ -21,7 +21,7 @@
                 <a class="signed-out" href="#" {{action "signIn" target="auth"}}>Sign in with GitHub</a>
               {{/if}}
               {{#if auth.signedIn}}
-                {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{auth.currentUser.userName}}{{/link-to}}
+                {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="auth.gravatarUrl"}}/>{{auth.userName}}{{/link-to}}
               {{/if}}
               {{#if auth.signingIn}}
                 <span class="signing-in">Signing In</span>
@@ -29,7 +29,7 @@
             </p>
             <ul>
               <li>Help</li>
-              <li>Sign Out</li>
+              <li><a href="/" {{action "signOut" target="auth"}}>Sign Out</a></li>
             </ul>
           </li>
         </ul>
