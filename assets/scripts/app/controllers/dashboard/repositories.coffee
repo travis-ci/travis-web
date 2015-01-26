@@ -1,5 +1,5 @@
 Controller = Ember.Controller.extend
-  queryParams: ['filter']
+  #queryParams: ['filter']
   filter: null
 
   filteredRepositories: (->
