@@ -29,7 +29,8 @@
         </li>
       </ul>
     </div> -->
-    {{input placeholder="Search all repositories" class="search-field" value=filter}}
+    {{filter-input placeholder="Search all repositories" class="search-field"
+        value=filter action="updateFilter" on="key-up"}}
   </div>
 </div>
 

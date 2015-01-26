@@ -14,4 +14,14 @@ Controller = Ember.Controller.extend
 
   ).property('filter', 'model')
 
+  updateFilter: () ->
+    value = @get('_lastFilterValue')
+    @transitionToRoute queryParams: { filter: value }
+    #@set('filter', value)
+
+  actions:
+    updateFilter: (value) ->
+      @set('_lastFilterValue', value)
+      Ember.run.throttle this, @updateFilter, [], 200, false
+
 Travis.DashboardRepositoriesController = Controller

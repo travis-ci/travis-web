@@ -19,12 +19,14 @@ require 'helpers/format_message'
 require 'helpers/format_config'
 require 'helpers/short_compare_shas'
 require 'helpers/mb'
+require 'helpers/filter-input'
 
 Ember.Handlebars.registerHelper('label', Travis.Handlebars.label)
 Ember.Handlebars.registerHelper('input', Travis.Handlebars.input)
 Ember.Handlebars.registerHelper('tipsy', Travis.Handlebars.tipsy)
 Ember.Handlebars.registerHelper('travis-errors', Travis.Handlebars.travisErrors)
 Ember.Handlebars.registerHelper('travis-field', Travis.Handlebars.travisField)
+Ember.Handlebars.registerHelper('filter-input', Travis.Handlebars.filterInput)
 
 Ember.Handlebars.registerBoundHelper('capitalize', Travis.Handlebars.capitalize)
 Ember.Handlebars.registerBoundHelper('githubCommitLink', Travis.Handlebars.githubCommitLink)

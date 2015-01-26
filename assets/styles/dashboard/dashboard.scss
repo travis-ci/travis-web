@@ -365,12 +365,13 @@ a {
 .search-field {
   background-image   : url('/images/dashboard/search-icon.svg');
   background-repeat  : no-repeat;
-  background-position: right center;
+  background-position: right 5px center;
   display            : inline-block;
   float              : right;
   border             : 1px solid #666;
   padding            : 0.5em;
-  width              : 100px;
+  width              : 300px;
+  background-size    : 16px 16px;
 }
 
 .tiles {
