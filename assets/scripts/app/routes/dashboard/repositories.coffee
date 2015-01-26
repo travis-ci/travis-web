@@ -7,7 +7,8 @@ Route = TravisRoute.extend
     filter: { replace: true }
   model: ->
     apiEndpoint = @get('config').api_endpoint
-    $.ajax(apiEndpoint + '/repos?member=lislis', {
+    login = @controllerFor('currentUser').get('login')
+    $.ajax(apiEndpoint + '/repos?member='+ login, {
       beforeSend: (xhr) ->
         xhr.setRequestHeader('accept', 'application/json; version=2')
     }).then (response) ->

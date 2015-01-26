@@ -15,9 +15,18 @@
       </div> -->
       <div class="small-2 medium-5 columns no-padding" id="user">
         <ul>
-          <li>
-            <p>Justine Arreche</p>
-            <img src="images/dashboard/gravatar.png">
+          <li class="menu">
+            <p class="handle">
+              {{#if auth.signedOut}}
+                <a class="signed-out" href="#" {{action "signIn" target="auth"}}>Sign in with GitHub</a>
+              {{/if}}
+              {{#if auth.signedIn}}
+                {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{auth.currentUser.userName}}{{/link-to}}
+              {{/if}}
+              {{#if auth.signingIn}}
+                <span class="signing-in">Signing In</span>
+              {{/if}}
+            </p>
             <ul>
               <li>Help</li>
               <li>Sign Out</li>
