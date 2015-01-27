@@ -2,8 +2,6 @@ require 'views/view'
 
 TravisView = Travis.View
 
-View = TravisView.extend
-  layoutName: 'layouts/dashboard'
-  classNames: ['dashboard']
+View = TravisView.extend()
 
 Travis.LoadingView = View
