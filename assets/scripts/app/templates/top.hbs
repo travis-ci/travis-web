@@ -78,9 +78,9 @@
       <li>
         {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
       </li>
-      {{#if Travis.config.billing_endpoint}}
+      {{#if config.billing_endpoint}}
         <li>
-          <a {{bind-attr href="Travis.config.billing_endpoint"}}>Billing</a>
+          <a {{bind-attr href="config.billing_endpoint"}}>Billing</a>
         </li>
       {{/if}}
       <li>
