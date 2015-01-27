@@ -7,14 +7,12 @@ Route = TravisRoute.extend
     filter: { replace: true }
   model: ->
     apiEndpoint = @get('config').api_endpoint
-    $.ajax(apiEndpoint + '/v3/repos', {
+    $.ajax(apiEndpoint + '/v3/repos?repository.active=true', {
       headers: {
         Authorization: 'token ' + @auth.token()
       }
     }).then (response) ->
-      response.repositories.filter( (repo) ->
-        repo.active && repo.last_build && repo.last_build.id
-      ).sortBy('last_build.finished_at').map( (repo) ->
+      response.repositories.sortBy('last_build.finished_at').map( (repo) ->
         Ember.Object.create(repo)
       )
 
