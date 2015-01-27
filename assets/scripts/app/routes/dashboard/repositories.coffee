@@ -13,7 +13,7 @@ Route = TravisRoute.extend
       }
     }).then (response) ->
       response.repositories.filter( (repo) ->
-        repo.active
+        repo.active && repo.last_build && repo.last_build.id
       ).sortBy('last_build.finished_at').map( (repo) ->
         Ember.Object.create(repo)
       )
