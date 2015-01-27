@@ -5,6 +5,9 @@ window.Auth = Ember.Object.extend
   init: ->
     window.addEventListener('message', (e) => @receiveMessage(e))
 
+  token: ->
+    Travis.sessionStorage.getItem('travis.token')
+
   endpoint: (->
     @container.lookup('application:main').config.api_endpoint
   ).property(),

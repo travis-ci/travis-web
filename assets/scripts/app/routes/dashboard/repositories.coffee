@@ -7,15 +7,15 @@ Route = TravisRoute.extend
     filter: { replace: true }
   model: ->
     apiEndpoint = @get('config').api_endpoint
-    login = @controllerFor('currentUser').get('login')
-    $.ajax(apiEndpoint + '/repos?member='+ login, {
-      beforeSend: (xhr) ->
-        xhr.setRequestHeader('accept', 'application/json; version=2')
+    $.ajax(apiEndpoint + '/v3/repos', {
+      headers: {
+        Authorization: 'token ' + @auth.token()
+      }
     }).then (response) ->
-      response.repos.map (elem) ->
-        [owner, name] = elem.slug.split('/')
-        elem.owner = owner
-        elem.name = name
-        Ember.Object.create(elem)
+      response.repositories.filter( (repo) ->
+        repo.active
+      ).sortBy('last_build.finished_at').map( (repo) ->
+        Ember.Object.create(repo)
+      )
 
 Travis.DashboardRepositoriesRoute = Route

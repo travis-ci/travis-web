@@ -38,15 +38,19 @@
   <div class="row">
   {{#each repo in filteredRepositories}}
     <div class="large-4 medium-6 columns">
-      <div {{bind-attr class=":tile repo.last_build_state"}}>
+      <div {{bind-attr class=":tile repo.last_build.state"}}>
         <div class="build-bar">
         </div>
         <div class="build-information">
-          <p class="org">{{repo.owner}}</p>
-          <p class="repo">{{#link-to "repo" repo.owner repo.name }}{{repo.name}}{{/link-to}}</p>
-          <div class="duration">{{formatDuration repo.last_build_duration}}</div>
-          <div class="finished">{{formatTime repo.last_build_finished_at}}</div>
-          <p class="build-status">{{#link-to "build" repo.owner repo.name repo.last_build_id}}#{{repo.last_build_number}} {{repo.last_build_state}}{{/link-to}}</p>
+          <p class="org">{{repo.owner.login}}</p>
+          <p class="repo">{{#link-to "repo" repo.owner.login repo.name}}{{repo.name}}{{/link-to}}</p>
+          <div class="duration">{{formatDuration repo.last_build.duration}}</div>
+          <div class="finished">{{formatTime repo.last_build.finished_at}}</div>
+          <p class="build-status">
+            {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+              #{{repo.last_build.number}} {{repo.last_build.state}}
+            {{/link-to}}
+          </p>
         </div>
         <div class="star-feature">
         </div>
