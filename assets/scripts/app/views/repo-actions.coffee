@@ -100,7 +100,7 @@ View = Travis.View.extend
 
   _job: (->
     if id = @get('jobIdForLog')
-      Travis.Job.find(id)
+      Travis.__container__.lookup('store:main').find('job', id)
   ).property('jobIdForLog')
 
   jobIdForLog: (->

@@ -1,22 +1,21 @@
 require 'travis/model'
 
 @Travis.Request = Travis.Model.extend
-  id:                Ember.attr('string')
-  created_at:        Ember.attr('string')
-  event_type:        Ember.attr('string')
-  result:            Ember.attr('string')
-  message:           Ember.attr('string')
-  headCommit:        Ember.attr('string')
-  baseCommit:        Ember.attr('string')
-  branchName:        Ember.attr('string', key: 'branch')
-  tagName:           Ember.attr('string', key: 'tag')
-  pullRequest:       Ember.attr('boolean')
-  pullRequestTitle:  Ember.attr('string')
-  pullRequestNumber: Ember.attr(Number)
+  created_at:        DS.attr()
+  event_type:        DS.attr()
+  result:            DS.attr()
+  message:           DS.attr()
+  headCommit:        DS.attr()
+  baseCommit:        DS.attr()
+  branchName:        DS.attr()
+  tagName:           DS.attr()
+  pullRequest:       DS.attr('boolean')
+  pullRequestTitle:  DS.attr()
+  pullRequestNumber: DS.attr('number')
 
-  repo:   Ember.belongsTo('Travis.Repo', key: 'repository_id')
-  commit: Ember.belongsTo('Travis.Commit', key: 'commit_id')
-  build:  Ember.belongsTo('Travis.Build', key: 'build_id')
+  repo:   DS.belongsTo('repo')
+  commit: DS.belongsTo('commit')
+  build:  DS.belongsTo('build')
 
   isAccepted: (->
     # For some reason some of the requests have a null result beside the fact that

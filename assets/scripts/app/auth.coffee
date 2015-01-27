@@ -75,7 +75,7 @@ window.Auth = Ember.Object.extend
 
   refreshUserData: (user) ->
     Travis.ajax.get "/users/#{user.id}", (data) =>
-      Travis.loadOrMerge(Travis.User, data.user)
+      @store.push('user', data.user)
       # if user is still signed in, update saved data
       if @get('signedIn')
         data.user.token = user.token
@@ -101,8 +101,8 @@ window.Auth = Ember.Object.extend
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
-    Travis.loadOrMerge(Travis.User, user)
-    user = Travis.User.find(user.id)
+    @store.push('user', user)
+    user = @store.find('user', user.id)
     user.get('permissions')
     user
 
@@ -151,3 +151,5 @@ Ember.onLoad 'Ember.Application', (Application) ->
       application.inject('route', 'auth', 'auth:main')
       application.inject('controller', 'auth', 'auth:main')
       application.inject('application', 'auth', 'auth:main')
+
+      application.inject('auth', 'store', 'store:main')

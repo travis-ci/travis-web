@@ -2,46 +2,7 @@ unless window.TravisApplication
   window.TravisApplication = Em.Application.extend(Ember.Evented,
     LOG_TRANSITIONS: true,
 
-    mappings: (->
-      broadcasts:   Travis.Broadcast
-      repositories: Travis.Repo
-      repository:   Travis.Repo
-      repos:        Travis.Repo
-      repo:         Travis.Repo
-      builds:       Travis.Build
-      build:        Travis.Build
-      commits:      Travis.Commit
-      commit:       Travis.Commit
-      jobs:         Travis.Job
-      job:          Travis.Job
-      account:      Travis.Account
-      accounts:     Travis.Account
-      worker:       Travis.Worker
-      workers:      Travis.Worker
-      annotation:   Travis.Annotation
-      annotations:  Travis.Annotation
-      request:      Travis.Request
-      requests:     Travis.Request
-      env_var:      Travis.EnvVar
-      env_vars:     Travis.EnvVar
-      ssh_key:      Travis.SshKey
-    ).property()
-
-    modelClasses: (->
-      [Travis.User, Travis.Build, Travis.Job, Travis.Repo, Travis.Commit, Travis.Worker, Travis.Account, Travis.Broadcast, Travis.Hook, Travis.Annotation, Travis.Request, Travis.EnvVar, Travis.SshKey]
-    ).property()
-
     setup: ->
-      @get('modelClasses').forEach (klass) ->
-        klass.adapter = Travis.Adapter.create()
-        klass.url = "/#{klass.pluralName()}"
-
-      Travis.EnvVar.url = "/settings/env_vars"
-      Travis.EnvVar.adapter = Travis.EnvVarsAdapter.create()
-
-      Travis.SshKey.url = "/settings/ssh_key"
-      Travis.SshKey.adapter = Travis.SshKeyAdapter.create()
-
       @pusher = new Travis.Pusher(key: Travis.config.pusher_key, host: Travis.config.pusher_host) if Travis.config.pusher_key
       @tailing = new Travis.Tailing($(window), '#tail', '#log')
       @toTop   = new Travis.ToTop($(window), '.to-top', '#log-container')
@@ -65,12 +26,15 @@ unless window.TravisApplication
       Travis.lookup('controller:flash').loadFlashes([options])
 
     receive: (event, data) ->
+      return
       [name, type] = event.split(':')
 
-      type = Ember.get(Travis, 'mappings')[name]
+      store = @__container__.lookup('store:main')
+
+      type = store.modelFor(name)
 
       if name == 'job' && data.job?.commit
-        @loadOrMerge(Travis.Commit, data.job.commit)
+        store.pushPayload(commits: [data.job.commit])
 
       if name == 'build' && data.build?.commit
         # TODO: commit should be a sideload record on build, not mixed with it
@@ -88,13 +52,13 @@ unless window.TravisApplication
           sha:             build.commit
         }
         delete(data.build.commit)
-        @loadOrMerge(Travis.Commit, commit)
 
+        store.pushPayload(commits: [commit])
 
       if event == 'job:log'
         console.log 'store: received job:log event', data if Log.DEBUG
         data = data.job
-        job  = Travis.Job.find(data.id)
+        job = store.find('job', data.id)
         job.appendLog(number: parseInt(data.number), content: data._log, final: data.final)
       else if data[type.singularName()]
         @_loadOne(this, type, data)

@@ -1,19 +1,19 @@
 require 'travis/model'
 
 @Travis.Commit = Travis.Model.extend
-  buildId:           Ember.attr('number')
-  sha:               Ember.attr('string')
-  branch:            Ember.attr('string')
-  message:           Ember.attr('string')
-  compareUrl:        Ember.attr('string')
-  authorName:        Ember.attr('string')
-  authorEmail:       Ember.attr('string')
-  committerName:     Ember.attr('string')
-  committerEmail:    Ember.attr('string')
-  subject:           Ember.attr('string')
-  body:              Ember.attr('string')
+  sha:               DS.attr()
+  branch:            DS.attr()
+  message:           DS.attr()
+  compareUrl:        DS.attr()
+  authorName:        DS.attr()
+  authorEmail:       DS.attr()
+  committerName:     DS.attr()
+  committerEmail:    DS.attr()
+  subject:           DS.attr()
+  body:              DS.attr()
+  commitedAt:        DS.attr()
 
-  build: Ember.belongsTo('Travis.Build')
+  build: DS.belongsTo('build')
 
   subject: ( ->
     @get('message').split("\n", 1)[0]

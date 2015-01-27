@@ -11,7 +11,7 @@ Route = TravisRoute.extend
   setupController: (controller, model) ->
     # TODO: if repo is just a data hash with id and slug load it
     #       as incomplete record
-    model = Repo.find(model.id) if model && !model.get
+    model = @store.find('repo', model.id) if model && !model.get
     controller.set('repo', model)
 
   serialize: (repo) ->
@@ -21,7 +21,7 @@ Route = TravisRoute.extend
 
   model: (params) ->
     slug = "#{params.owner}/#{params.name}"
-    Repo.fetchBySlug(slug)
+    Repo.fetchBySlug(@store, slug)
 
   resetController: ->
     @controllerFor('repo').deactivate()

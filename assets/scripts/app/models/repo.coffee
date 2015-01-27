@@ -5,26 +5,23 @@ require 'helpers/helpers'
 EnvVar = Travis.EnvVar
 Build  = Travis.Build
 SshKey = Travis.SshKey
-ExpandableRecordArray = Travis.ExpandableRecordArray
 Event = Travis.Event
 durationFrom = Travis.Helpers.durationFrom
 Ajax = Travis.ajax
 
-@Travis.Repo = Travis.Model.extend
-  id:                  Ember.attr('string')
-  slug:                Ember.attr('string')
-  description:         Ember.attr('string')
-  private:             Ember.attr('boolean')
-  lastBuildId:         Ember.attr('string')
-  lastBuildNumber:     Ember.attr(Number)
-  lastBuildState:      Ember.attr('string')
-  lastBuildStartedAt:  Ember.attr('string')
-  lastBuildFinishedAt: Ember.attr('string')
-  githubLanguage:      Ember.attr('string')
-  _lastBuildDuration:  Ember.attr(Number, key: 'last_build_duration')
-
-  lastBuild: Ember.belongsTo('Travis.Build', key: 'last_build_id')
-
+Travis.Repo = Travis.Model.extend
+  slug:                DS.attr()
+  description:         DS.attr()
+  private:             DS.attr('boolean')
+  lastBuildNumber:     DS.attr('number')
+  lastBuildState:      DS.attr()
+  lastBuildStartedAt:  DS.attr()
+  lastBuildFinishedAt: DS.attr()
+  githubLanguage:      DS.attr()
+  _lastBuildDuration:  DS.attr('number')
+  lastBuildLanguage:   DS.attr()
+  active:              DS.attr()
+  lastBuildId:         DS.attr('number')
   lastBuildHash: (->
     {
       id: @get('lastBuildId')
@@ -32,6 +29,10 @@ Ajax = Travis.ajax
       repo: this
     }
   ).property('lastBuildId', 'lastBuildNumber')
+
+  lastBuild: (->
+    @store.find('build', @get('lastBuildId'))
+  ).property('lastBuildId')
 
   withLastBuild: ->
     @filter( (repo) -> repo.get('lastBuildId') )
@@ -42,7 +43,11 @@ Ajax = Travis.ajax
 
   envVars: (->
     id = @get('id')
-    envVars = EnvVar.find repository_id: id
+    envVars = @store.filter('env_var', { repository_id: id }, (envVar) ->
+#      envVar.get('
+    )
+
+    EnvVar.find repository_id: id
 
     # TODO: move to controller
     array  = ExpandableRecordArray.create
@@ -152,38 +157,41 @@ Travis.Repo.reopenClass
   recent: ->
     @find()
 
-  ownedBy: (login) ->
-    @find(owner_name: login, orderBy: 'name')
+  accessibleBy: (store, login) ->
+    repos = store.find('repo', { member: login, orderBy: 'name' })
 
-  accessibleBy: (login) ->
-    @find(member: login, orderBy: 'name')
+    repos.then () ->
+      repos.set('isLoaded', true)
 
-  search: (query) ->
-    @find(search: query, orderBy: 'name')
+    repos
 
-  withLastBuild: ->
-    filtered = Ember.FilteredRecordArray.create(
-      modelClass: this
-      filterFunction: (repo) -> repo.get('lastBuildId')
-      filterProperties: ['lastBuildId']
+  search: (store, query) ->
+    store.find('repo', search: query, orderBy: 'name')
+
+  withLastBuild: (store) ->
+    repos = store.filter('repo', {}, (build) ->
+      build.get('lastBuildId')
     )
 
-    @fetch().then (array) ->
-      filtered.updateFilter()
-      filtered.set('isLoaded', true)
+    repos.then () ->
+      repos.set('isLoaded', true)
 
-    filtered
+    repos
 
-  bySlug: (slug) ->
-    repo = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
-    if repo.length > 0 then repo else @find(slug: slug)
-
-  fetchBySlug: (slug) ->
-    repos = $.select(@find().toArray(), (repo) -> repo.get('slug') == slug)
-    if repos.length > 0
-      repos[0]
+  bySlug: (store, slug) ->
+    # first check if there is a repo with a given slug already ordered
+    repos = store.all('repo').filterBy('slug', slug)
+    if repos.get('length') > 0
+      repos
     else
-      @fetch(slug: slug).then (repos) ->
+      store.find('repo', { slug: slug })
+
+  fetchBySlug: (store, slug) ->
+    repos = @bySlug(store, slug)
+    if repos.get('length') > 0
+      repos.get('firstObject')
+    else
+      repos.then (repos) ->
         error = new Error('repo not found')
         error.slug = slug
         Ember.get(repos, 'firstObject') || throw(error)

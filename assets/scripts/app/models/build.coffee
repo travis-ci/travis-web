@@ -8,27 +8,22 @@ Ajax = Travis.ajax
 config_keys_map = Travis.CONFIG_KEYS_MAP
 DurationCalculations = Travis.DurationCalculations
 
-@Travis.Build = Travis.Model.extend DurationCalculations,
-  repositoryId:     Ember.attr('number')
-  commitId:         Ember.attr('number')
+Travis.Build = Travis.Model.extend DurationCalculations,
+  state:             DS.attr()
+  number:            DS.attr('number')
+  branch:            DS.attr('string')
+  message:           DS.attr('string')
+  _duration:         DS.attr('number')
+  _config:           DS.attr('object')
+  _startedAt:        DS.attr()
+  _finishedAt:       DS.attr()
+  pullRequest:       DS.attr('boolean')
+  pullRequestTitle:  DS.attr()
+  pullRequestNumber: DS.attr('number')
 
-  state:            Ember.attr('string')
-  number:           Ember.attr(Number)
-  branch:           Ember.attr('string')
-  message:          Ember.attr('string')
-  _duration:        Ember.attr(Number, key: 'duration')
-  _config:          Ember.attr('object', key: 'config')
-  _startedAt:       Ember.attr('string', key: 'started_at')
-  _finishedAt:      Ember.attr('string', key: 'finished_at')
-  pullRequest:      Ember.attr('boolean')
-  pullRequestTitle: Ember.attr('string')
-  pullRequestNumber: Ember.attr(Number)
-  # TODO add eventType to the api for api build requests
-  # eventType:        Ember.attr('string')
-
-  repo:   Ember.belongsTo('Travis.Repo', key: 'repository_id')
-  commit: Ember.belongsTo('Travis.Commit')
-  jobs:   Ember.hasMany('Travis.Job')
+  repo:   DS.belongsTo('repo', async: true)
+  commit: DS.belongsTo('commit', async: true)
+  jobs:   DS.hasMany('job', async: true)
 
   config: (->
     console.log('config')

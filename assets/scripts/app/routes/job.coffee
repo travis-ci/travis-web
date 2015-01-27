@@ -11,7 +11,7 @@ Route = TravisRoute.extend
     { job_id: id }
 
   setupController: (controller, model) ->
-    model = Job.find(model) if model && !model.get
+    model = @store.find('job', model) if model && !model.get
 
     repo = @controllerFor('repo')
     @controllerFor('job').set('job', model)
@@ -21,7 +21,7 @@ Route = TravisRoute.extend
       @controllerFor('build').set('build', build)
 
   model: (params) ->
-    Job.fetch(params.job_id)
+    @store.find('job', params.job_id)
 
   deactivate: ->
     @controllerFor('build').set('build', null)

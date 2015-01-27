@@ -6,23 +6,18 @@ trigger = Travis.trigger
 Account = Travis.Account
 
 @Travis.User = Travis.Model.extend
-  _name:       Ember.attr('string', key: 'name')
-  email:       Ember.attr('string')
-  login:       Ember.attr('string')
-  token:       Ember.attr('string')
-  gravatarId:  Ember.attr('string')
-  isSyncing:   Ember.attr('boolean')
-  syncedAt:    Ember.attr('string')
-  repoCount:   Ember.attr('number')
+  name:        DS.attr()
+  email:       DS.attr()
+  login:       DS.attr()
+  token:       DS.attr()
+  gravatarId:  DS.attr()
+  isSyncing:   DS.attr('boolean')
+  syncedAt:    DS.attr()
+  repoCount:   DS.attr('number')
 
-  # This is the only way I found to override the attribue created with Ember.attr
-  name: Ember.computed( (key, value) ->
-    if arguments.length == 1
-      @get('_name') || @get('login')
-    else
-      @set('_name', value)
-      value
-  ).property('login', '_name')
+  fullName: (->
+    @get('name') || @get('login')
+  ).property('name', 'login')
 
   isSyncingDidChange: (->
     Ember.run.next this, ->

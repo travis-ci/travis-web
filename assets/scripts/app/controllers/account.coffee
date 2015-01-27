@@ -20,7 +20,12 @@ Travis.AccountController = Ember.ObjectController.extend
 
   reloadHooks: ->
     if login = @get('login')
-      @set('allHooks', Travis.Hook.find(all: true, owner_name: login))
+      hooks = @store.find('hook', all: true, owner_name: login)
+
+      hooks.then () ->
+        hooks.set('isLoaded', true)
+
+      @set('allHooks', hooks)
 
   hooks: (->
     @reloadHooks() unless hooks = @get('allHooks')

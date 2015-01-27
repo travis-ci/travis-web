@@ -4,11 +4,12 @@ loadOrMerge = Travis.loadOrMerge
 Repo = Travis.Repo
 
 @Travis.Hook = Travis.Model.extend
-  name:        Ember.attr('string')
-  ownerName:   Ember.attr('string')
-  description: Ember.attr('string')
-  active:      Ember.attr('boolean')
-  admin:       Ember.attr('boolean')
+  name:        DS.attr()
+  ownerName:   DS.attr()
+  description: DS.attr()
+  active:      DS.attr('boolean')
+  admin:       DS.attr('boolean')
+  private:     DS.attr('boolean')
 
   account: (->
     @get('slug').split('/')[0]
@@ -37,6 +38,6 @@ Repo = Travis.Repo
     # I add an info which we have here to the store - this will allow to display
     # a link to the repo and if more info is needed, it will be requested when the
     # link is used
-    loadOrMerge(Repo, @getProperties('id', 'slug', 'name', 'ownerName'), skipIfExists: true)
-    Repo.find(@get('id'))
+    @store.push('repo', @getProperties('id', 'slug'))
+    @store.getById('repo', @get('id'))
   ).property('id')

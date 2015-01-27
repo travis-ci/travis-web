@@ -28,13 +28,13 @@ Travis.ReposController = Ember.ArrayController.extend
 
   init: ->
     @_super.apply this, arguments
-    if !Ember.testing
-      Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
+    #if !Ember.testing
+    #  Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   recentRepos: (->
     Ember.ArrayProxy.extend(
       isLoadedBinding: 'repos.isLoaded'
-      repos: Repo.withLastBuild()
+      repos: Repo.withLastBuild(@store)
       sorted: Ember.computed.sort('repos', 'sortedReposKeys')
       content: Ember.computed.limit('sorted', 'limit')
       sortedReposKeys: ['sortOrder:asc']
@@ -49,7 +49,7 @@ Travis.ReposController = Ember.ArrayController.extend
   activate: (tab, params) ->
     @set('sortProperties', ['sortOrder'])
     @set('tab', tab)
-    this["view_#{tab}".camelize()]()
+    this["view_#{tab}".camelize()](params)
 
   viewRecent: ->
     @set('content', @get('recentRepos'))
@@ -59,14 +59,14 @@ Travis.ReposController = Ember.ArrayController.extend
 
   userRepos: (->
     if login = @get('currentUser.login')
-      Travis.Repo.accessibleBy(login)
+      Travis.Repo.accessibleBy(@store, login)
     else
       []
   ).property('currentUser.login')
 
   viewSearch: (phrase) ->
     @set('search', phrase)
-    @set('content', Travis.Repo.search(phrase))
+    @set('content', Travis.Repo.search(@store, phrase))
 
   searchObserver: (->
     search = @get('search')

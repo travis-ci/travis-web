@@ -7,26 +7,23 @@ Log = Travis.Log
 compact = Travis.Helpers.compact
 
 @Travis.Job = Travis.Model.extend DurationCalculations,
-  repoId:         Ember.attr('string', key: 'repository_id')
-  buildId:        Ember.attr('string')
-  commitId:       Ember.attr('string')
-  logId:          Ember.attr('string')
+  logId:          DS.attr()
 
-  queue:          Ember.attr('string')
-  state:          Ember.attr('string')
-  number:         Ember.attr('string')
-  _startedAt:     Ember.attr('string', key: 'started_at')
-  _finishedAt:    Ember.attr('string', key: 'finished_at')
-  allowFailure:   Ember.attr('boolean')
+  queue:          DS.attr()
+  state:          DS.attr()
+  number:         DS.attr()
+  _startedAt:     DS.attr()
+  _finishedAt:    DS.attr()
+  allowFailure:   DS.attr('boolean')
 
-  repositorySlug: Ember.attr('string')
-  repo:   Ember.belongsTo('Travis.Repo', key: 'repository_id')
-  build:  Ember.belongsTo('Travis.Build')
-  commit: Ember.belongsTo('Travis.Commit')
+  repositorySlug: DS.attr()
+  repo:   DS.belongsTo('repo', async: true)
+  build:  DS.belongsTo('build', async: true)
+  commit: DS.belongsTo('commit', async: true)
 
-  annotations: Ember.hasMany('Travis.Annotation')
+  annotations: DS.hasMany('annotation')
 
-  _config: Ember.attr('object', key: 'config')
+  _config: DS.attr('object')
 
   log: ( ->
     @set('isLogAccessed', true)

@@ -1,8 +1,8 @@
 require 'travis/model'
 
 Travis.EnvVar = Travis.Model.extend
-  name: Ember.attr('string')
-  value: Ember.attr('string')
-  public: Ember.attr('boolean')
+  name:   DS.attr()
+  value:  DS.attr()
+  public: DS.attr('boolean')
 
-  repo: Ember.belongsTo('Travis.Repo', key: 'repository_id')
+  repo: DS.belongsTo('repo', async: true)

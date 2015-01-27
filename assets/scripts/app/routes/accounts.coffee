@@ -6,7 +6,7 @@ TravisRoute = Travis.Route
 
 Route = TravisRoute.extend
   model: ->
-    Account.fetch(all: true)
+    @store.find('account', { all: true })
 
   renderTemplate: ->
     @_super.apply(this, arguments)

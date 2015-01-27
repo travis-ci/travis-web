@@ -13,8 +13,8 @@ Controller = Ember.Controller.extend
 
   init: ->
     @_super.apply this, arguments
-    if !Ember.testing
-      Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
+    #if !Ember.testing
+    #  Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
 
   updateTimes: ->
     Ember.run this, ->
@@ -70,7 +70,7 @@ Controller = Ember.Controller.extend
     @connectTab('settings')
 
   lastBuildDidChange: ->
-    Ember.run.scheduleOnce('data', this, @_lastBuildDidChange);
+    Ember.run.scheduleOnce('actions', this, @_lastBuildDidChange);
 
   _lastBuildDidChange: ->
     build = @get('repo.lastBuild')

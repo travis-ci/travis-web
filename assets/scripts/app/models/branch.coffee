@@ -1,29 +1,27 @@
 require 'travis/model'
 
-Repo = Travis.Repo
+Travis.Branch = Travis.Model.extend
+  repositoryId: DS.attr('number')
+  commitId:     DS.attr('number')
+  state:        DS.attr()
+  number:       DS.attr('number')
+  branch:       DS.attr()
+  message:      DS.attr()
+  result:       DS.attr('number')
+  duration:     DS.attr('number')
+  startedAt:    DS.attr()
+  finishedAt:   DS.attr()
 
-@Travis.Branch = Travis.Model.extend
-  repoId:       Ember.attr('number', key: 'repository_id')
-  commitId:     Ember.attr('number')
-  state:        Ember.attr('string')
-  number:       Ember.attr('number')
-  branch:       Ember.attr('string')
-  message:      Ember.attr('string')
-  result:       Ember.attr('number')
-  duration:     Ember.attr('number')
-  startedAt:    Ember.attr('string')
-  finishedAt:   Ember.attr('string')
-
-  commit: Ember.belongsTo('Travis.Commit')
+  commit: DS.belongsTo('commit')
 
   repo: (->
-    Repo.find @get('repoId')  if @get('repoId')
-  ).property('repoId')
+    @store.find('repo', @get('repositoryId')) if @get('repositoryId')
+  ).property('repositoryId')
 
   updateTimes: ->
     @notifyPropertyChange 'started_at'
     @notifyPropertyChange 'finished_at'
 
-@Travis.Branch.reopenClass
+Travis.Branch.reopenClass
   byRepoId: (id) ->
     @find repository_id: id

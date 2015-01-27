@@ -61,12 +61,12 @@ $.extend Travis.Pusher.prototype,
     return if event.substr(0, 6) == 'pusher'
     data = @normalize(event, data) if data.id
 
-    @processWhenVisible ->
+    @processWhenVisible =>
       # TODO remove job:requeued, once sf-restart-event has been merged
       # TODO this also needs to clear logs on build:created if matrix jobs are already loaded
       if event == 'job:created' || event == 'job:requeued'
-        if Travis.Job.isRecordLoaded(data.job.id)
-          Travis.Job.find(data.job.id).clearLog()
+        if job = Travis.__container__.lookup('store:main').getById('job', data.job.id)
+          job.clearLog()
 
       Ember.run.next ->
         Travis.receive(event, data)
