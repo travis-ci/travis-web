@@ -19,6 +19,7 @@ Route = TravisRoute.extend
     repo.activate('job')
 
     if build = model.get('build')
+      build = @store.recordForId('build', build.get('id'))
       @controllerFor('build').set('build', build)
 
   model: (params) ->
