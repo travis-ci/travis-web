@@ -143,34 +143,3 @@ Ajax = Travis.ajax
   slug: (->
     "#{@get('repo.slug')} ##{@get('number')}"
   ).property()
-
-@Travis.Job.reopenClass
-  queued: ->
-    filtered = Ember.FilteredRecordArray.create(
-      modelClass: Travis.Job
-      filterFunction: (job) ->
-        ['created', 'queued'].indexOf(job.get('state')) != -1
-      filterProperties: ['state', 'queue']
-    )
-
-    @fetch().then (array) ->
-      filtered.updateFilter()
-      filtered.set('isLoaded', true)
-
-    filtered
-
-  running: ->
-    filtered = Ember.FilteredRecordArray.create(
-      modelClass: Travis.Job
-      filterFunction: (job) ->
-        ['started', 'received'].indexOf(job.get('state')) != -1
-      filterProperties: ['state']
-    )
-
-    @fetch(state: 'started').then (array) ->
-      filtered.updateFilter()
-      filtered.set('isLoaded', true)
-
-    filtered
-
-
