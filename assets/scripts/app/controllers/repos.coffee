@@ -1,8 +1,9 @@
 require 'travis/limited_array'
 
 Repo = Travis.Repo
+limit = Ember.computed.limit
 
-Travis.ReposController = Ember.ArrayController.extend
+Controller = Ember.ArrayController.extend
   actions:
     activate: (name) ->
       @activate(name)
@@ -36,7 +37,7 @@ Travis.ReposController = Ember.ArrayController.extend
       isLoadedBinding: 'repos.isLoaded'
       repos: Repo.withLastBuild(@store)
       sorted: Ember.computed.sort('repos', 'sortedReposKeys')
-      content: Ember.computed.limit('sorted', 'limit')
+      content: limit('sorted', 'limit')
       sortedReposKeys: ['sortOrder:asc']
       limit: 30
     ).create()
@@ -90,3 +91,5 @@ Travis.ReposController = Ember.ArrayController.extend
    else
     'Could not find any repos'
   ).property('tab')
+
+Travis.ReposController = Controller

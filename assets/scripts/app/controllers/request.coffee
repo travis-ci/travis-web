@@ -1,4 +1,4 @@
-Travis.RequestController = Ember.ObjectController.extend
+Controller = Ember.ObjectController.extend
   requestClass: (->
     if @get('content.isAccepted')
       'accepted'
@@ -28,4 +28,4 @@ Travis.RequestController = Ember.ObjectController.extend
       message
   ).property('model.message')
 
-
+Travis.RequestController = Controller

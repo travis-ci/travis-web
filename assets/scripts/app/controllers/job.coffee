@@ -1,4 +1,6 @@
-Travis.JobController = Em.Controller.extend
+githubCommit = Travis.Urls.githubCommit
+
+Controller = Ember.Controller.extend
   needs: ['repo']
 
   repoBinding: 'controllers.repo.repo'
@@ -10,5 +12,7 @@ Travis.JobController = Em.Controller.extend
   currentItemBinding: 'job'
 
   urlGithubCommit: (->
-    Travis.Urls.githubCommit(@get('repo.slug'), @get('commit.sha'))
+    githubCommit(@get('repo.slug'), @get('commit.sha'))
   ).property('repo.slug', 'commit.sha')
+
+Travis.JobController = Controller
