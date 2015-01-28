@@ -1,6 +1,8 @@
 require 'travis/model'
 
-@Travis.Event = Travis.Model.extend
+Model = Travis.Model
+
+Event = Model.extend
   event:        DS.attr()
   repositoryId: DS.attr('number')
   sourceId:     DS.attr('number')
@@ -23,6 +25,4 @@ require 'travis/model'
     Travis[type].find(@get('sourceId')) if type = @get('sourceType')
   ).property('sourceType', 'sourceId')
 
-@Travis.Event.reopenClass
-  byRepoId: (id) ->
-    @find repository_id: id
+Travis.Event = Event

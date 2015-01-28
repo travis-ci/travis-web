@@ -1,11 +1,12 @@
 require 'travis/ajax'
 require 'travis/model'
 
+Model = Travis.Model
 Ajax = Travis.ajax
 trigger = Travis.trigger
 Account = Travis.Account
 
-@Travis.User = Travis.Model.extend
+User = Model.extend
   name:        DS.attr()
   email:       DS.attr()
   login:       DS.attr()
@@ -86,3 +87,5 @@ Account = Travis.Account
     user = JSON.parse(Travis.sessionStorage.getItem('travis.user'))
     user[$.underscore(name)] = @get(name)
     Travis.sessionStorage.setItem('travis.user', JSON.stringify(user))
+
+Travis.User = User

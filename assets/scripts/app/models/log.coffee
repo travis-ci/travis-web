@@ -2,7 +2,7 @@ require 'travis/log_chunks'
 
 Ajax = Travis.ajax
 
-Request = Em.Object.extend
+Request = Ember.Object.extend
   HEADERS:
     accept: 'application/json; chunked=true; version=2, text/plain; version=2'
 
@@ -34,7 +34,7 @@ Request = Em.Object.extend
     type = xhr.getResponseHeader('Content-Type') || ''
     type.indexOf('json') > -1
 
-@Travis.Log = Em.Object.extend
+Log = Ember.Object.extend
   version: 0 # used to refresh log on requeue
   isLoaded: false
   length: 0
@@ -96,3 +96,5 @@ Request = Em.Object.extend
     console.log 'log model: load text' if Log.DEBUG
     @append(number: 1, content: text, final: true)
     @set('isLoaded', true)
+
+Travis.Log = Log

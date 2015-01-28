@@ -1,8 +1,9 @@
 require 'travis/model'
 
+Model = Travis.Model
 Repo = Travis.Repo
 
-@Travis.Hook = Travis.Model.extend
+Hook = Model.extend
   name:        DS.attr()
   ownerName:   DS.attr()
   description: DS.attr()
@@ -30,3 +31,5 @@ Repo = Travis.Repo
     return if @get('isSaving')
     @set 'active', !@get('active')
     @save()
+
+Travis.Hook = Hook

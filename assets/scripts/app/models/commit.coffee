@@ -1,6 +1,8 @@
 require 'travis/model'
 
-@Travis.Commit = Travis.Model.extend
+Model = Travis.Model
+
+Commit = Model.extend
   sha:               DS.attr()
   branch:            DS.attr()
   message:           DS.attr()
@@ -31,3 +33,5 @@ require 'travis/model'
     @get('authorName') == @get('committerName') and
       @get('authorEmail') == @get('committerEmail')
   ).property('authorName', 'authorEmail', 'committerName', 'committerEmail')
+
+Travis.Commit = Commit

@@ -2,6 +2,7 @@ require 'travis/expandable_record_array'
 require 'travis/model'
 require 'helpers/helpers'
 
+Model = Travis.Model
 ExpandableRecordArray = Travis.ExpandableRecordArray
 EnvVar = Travis.EnvVar
 Build  = Travis.Build
@@ -10,7 +11,7 @@ Event = Travis.Event
 durationFrom = Travis.Helpers.durationFrom
 Ajax = Travis.ajax
 
-Travis.Repo = Travis.Model.extend
+Repo = Model.extend
   slug:                DS.attr()
   description:         DS.attr()
   private:             DS.attr('boolean')
@@ -138,7 +139,7 @@ Travis.Repo = Travis.Model.extend
   saveSettings: (settings) ->
     Ajax.ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
 
-Travis.Repo.reopenClass
+Repo.reopenClass
   recent: ->
     @find()
 
@@ -183,3 +184,5 @@ Travis.Repo.reopenClass
 
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'
+
+Travis.Repo = Repo

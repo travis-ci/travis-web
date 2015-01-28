@@ -1,6 +1,8 @@
 require 'travis/model'
 
-@Travis.Request = Travis.Model.extend
+Model = Travis.Model
+
+Request = Model.extend
   created_at:        DS.attr()
   event_type:        DS.attr()
   result:            DS.attr()
@@ -27,3 +29,5 @@ require 'travis/model'
   isPullRequest: (->
     @get('event_type') == 'pull_request'
   ).property('event_type')
+
+Travis.Request = Request

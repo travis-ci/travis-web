@@ -6,10 +6,11 @@ require 'travis/ajax'
 compact = Travis.Helpers.compact
 configKeys = Travis.Helpers.configKeys
 Ajax = Travis.ajax
-config_keys_map = Travis.CONFIG_KEYS_MAP
+configKeysMap = Travis.CONFIG_KEYS_MAP
 DurationCalculations = Travis.DurationCalculations
+Model = Travis.Model
 
-Travis.Build = Travis.Model.extend DurationCalculations,
+Build = Model.extend DurationCalculations,
   state:             DS.attr()
   number:            DS.attr('number')
   branch:            DS.attr('string')
@@ -89,7 +90,7 @@ Travis.Build = Travis.Model.extend DurationCalculations,
   configKeys: (->
     keys = @get('rawConfigKeys')
     headers = ['Job', 'Duration', 'Finished']
-    $.map(headers.concat(keys), (key) -> if config_keys_map.hasOwnProperty(key) then config_keys_map[key] else key)
+    $.map(headers.concat(keys), (key) -> if configKeysMap.hasOwnProperty(key) then configKeysMap[key] else key)
   ).property('rawConfigKeys.length')
 
   canCancel: (->
@@ -107,3 +108,5 @@ Travis.Build = Travis.Model.extend DurationCalculations,
     if finishedAt = @get('finishedAt')
       moment(finishedAt).format('lll')
   ).property('finishedAt')
+
+Travis.Build = Build

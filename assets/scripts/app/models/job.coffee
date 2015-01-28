@@ -3,12 +3,13 @@ require 'models/extensions'
 require 'models/log'
 require 'travis/ajax'
 
+Model = Travis.Model
 DurationCalculations = Travis.DurationCalculations
 Log = Travis.Log
 compact = Travis.Helpers.compact
 Ajax = Travis.ajax
 
-@Travis.Job = Travis.Model.extend DurationCalculations,
+Job = Model.extend DurationCalculations,
   logId:          DS.attr()
 
   queue:          DS.attr()
@@ -143,3 +144,5 @@ Ajax = Travis.ajax
   slug: (->
     "#{@get('repo.slug')} ##{@get('number')}"
   ).property()
+
+Travis.Job = Job

@@ -1,6 +1,8 @@
 require 'travis/model'
 
-Travis.Branch = Travis.Model.extend
+Model = Travis.Model
+
+Branch = Model.extend
   repositoryId: DS.attr('number')
   commitId:     DS.attr('number')
   state:        DS.attr()
@@ -22,6 +24,4 @@ Travis.Branch = Travis.Model.extend
     @notifyPropertyChange 'started_at'
     @notifyPropertyChange 'finished_at'
 
-Travis.Branch.reopenClass
-  byRepoId: (id) ->
-    @find repository_id: id
+Travis.Branch = Branch

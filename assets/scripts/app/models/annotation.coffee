@@ -1,6 +1,8 @@
 require 'travis/model'
 
-Travis.Annotation = Travis.Model.extend
+Model = Travis.Model
+
+Annotation = Model.extend
   jobId:        DS.attr('number')
   description:  DS.attr()
   url:          DS.attr()
@@ -8,3 +10,5 @@ Travis.Annotation = Travis.Model.extend
   providerName: DS.attr()
 
   job: DS.belongsTo('job')
+
+Travis.Annotation = Annotation

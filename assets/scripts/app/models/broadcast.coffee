@@ -1,6 +1,8 @@
 require 'travis/model'
 
-Broadcast = Travis.Model.extend
+Model = Travis.Model
+
+Broadcast = Model.extend
   message: DS.attr()
 
   toObject: ->
