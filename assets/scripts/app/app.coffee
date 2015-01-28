@@ -26,12 +26,9 @@ unless window.TravisApplication
       Travis.lookup('controller:flash').loadFlashes([options])
 
     receive: (event, data) ->
-      return
       [name, type] = event.split(':')
 
       store = @__container__.lookup('store:main')
-
-      type = store.modelFor(name)
 
       if name == 'job' && data.job?.commit
         store.pushPayload(commits: [data.job.commit])
@@ -53,53 +50,29 @@ unless window.TravisApplication
         }
         delete(data.build.commit)
 
-        store.pushPayload(commits: [commit])
+        store.pushPayload(commit: [commit])
 
       if event == 'job:log'
         console.log 'store: received job:log event', data if Log.DEBUG
         data = data.job
-        job = store.find('job', data.id)
+        job = store.recordForId('job', data.id)
         job.appendLog(number: parseInt(data.number), content: data._log, final: data.final)
-      else if data[type.singularName()]
-        @_loadOne(this, type, data)
-      else if data[type.pluralName()]
-        @_loadMany(this, type, data)
+      else if data[name]
+        @_loadOne(store, name, data)
       else
         throw "can't load data for #{name}" unless type
 
     _loadOne: (store, type, json) ->
-      root = type.singularName()
-      reference = @loadOrMerge(type, json[root])
-      unless reference.record
-        type.loadRecordForReference(reference)
+      payload = {}
+      payload[type.pluralize()] = [json[type]]
+      store.pushPayload(payload)
 
       # we get other types of records only in a few situations and
       # it's not always needed to update data, so I'm specyfing which
       # things I want to update here:
-      if type == Travis.Build && (json.repository || json.repo)
+      if type == 'build' && (json.repository || json.repo)
         data = json.repository || json.repo
-        reference = @loadOrMerge(Travis.Repo, data)
-        unless reference.record
-          Travis.Repo.loadRecordForReference(reference)
-
-    loadOrMerge: (type, hash, options) ->
-      options ||= {}
-
-      reference = type._getReferenceById(hash.id)
-
-      if reference && options.skipIfExists
-        return
-
-      reference = type._getOrCreateReferenceForId(hash.id)
-      if reference.record
-        reference.record.merge(hash)
-      else
-        if type.sideloadedData && type.sideloadedData[hash.id]
-          Ember.merge(type.sideloadedData[hash.id], hash)
-        else
-          type.load([hash])
-
-      reference
+        store.pushPayload(repos: [data])
 
     toggleSidebar: ->
       $('body').toggleClass('maximized')

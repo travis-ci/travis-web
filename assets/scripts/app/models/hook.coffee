@@ -1,6 +1,5 @@
 require 'travis/model'
 
-loadOrMerge = Travis.loadOrMerge
 Repo = Travis.Repo
 
 @Travis.Hook = Travis.Model.extend
