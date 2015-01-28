@@ -1,6 +1,6 @@
 require 'log'
-require 'travis/lines_selector'
-require 'travis/log_folder'
+require 'travis/lines-selector'
+require 'travis/log-folder'
 
 Log.DEBUG = false
 Log.LIMIT = 10000

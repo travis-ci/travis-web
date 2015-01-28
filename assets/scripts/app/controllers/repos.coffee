@@ -1,4 +1,4 @@
-require 'travis/limited_array'
+require 'travis/limited-array'
 
 Repo = Travis.Repo
 limit = Ember.computed.limit

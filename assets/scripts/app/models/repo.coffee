@@ -1,4 +1,4 @@
-require 'travis/expandable_record_array'
+require 'travis/expandable-record-array'
 require 'travis/model'
 require 'helpers/helpers'
 

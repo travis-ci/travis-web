@@ -1,6 +1,6 @@
 require 'travis/model'
 require 'models/extensions'
-require 'utils/duration_calculations'
+require 'utils/duration-calculations'
 require 'travis/ajax'
 
 compact = Travis.Helpers.compact

@@ -1,5 +1,5 @@
 require 'routes/route'
-require 'routes/simple_layout'
+require 'routes/simple-layout'
 
 SimpleLayoutRoute = Travis.SimpleLayoutRoute
 
