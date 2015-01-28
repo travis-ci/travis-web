@@ -9,6 +9,10 @@ Travis.Handlebars = {}
 require 'helpers/label'
 require 'helpers/input'
 require 'helpers/tipsy'
+require 'helpers/travis-errors'
+require 'helpers/travis-field'
+require 'helpers/travis-field'
+require 'helpers/filter-input'
 require 'helpers/capitalize'
 require 'helpers/github_commit_link'
 require 'helpers/format_time'
@@ -19,7 +23,6 @@ require 'helpers/format_message'
 require 'helpers/format_config'
 require 'helpers/short_compare_shas'
 require 'helpers/mb'
-require 'helpers/filter-input'
 
 Ember.Handlebars.registerHelper('label', Travis.Handlebars.label)
 Ember.Handlebars.registerHelper('input', Travis.Handlebars.input)
