@@ -41,7 +41,8 @@ Travis.Repo = Travis.Model.extend
     @filter( (repo) -> repo.get('lastBuildId') )
 
   sshKey: (->
-    SshKey.find(@get('id'))
+    @store.find('ssh_key', @get('id'))
+    @store.recordForId('ssh_key', @get('id'))
   )
 
   envVars: (->
