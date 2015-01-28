@@ -32,7 +32,9 @@ Travis.Repo = Travis.Model.extend
   ).property('lastBuildId', 'lastBuildNumber')
 
   lastBuild: (->
-    @store.find('build', @get('lastBuildId'))
+    id = @get('lastBuildId')
+    @store.find('build', id)
+    @store.recordForId('build', id)
   ).property('lastBuildId')
 
   withLastBuild: ->
