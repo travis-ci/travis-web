@@ -14,8 +14,15 @@ Travis.BuildsController = Em.ArrayController.extend
   showMore: ->
     id     = @get('repo.id')
     number = @get('lastObject.number')
-    @get('content').load Travis.Build.olderThanNumber(id, number, @get('tab'))
+    @get('content').load @olderThanNumber(id, number, @get('tab'))
 
   displayShowMoreButton: (->
     @get('tab') != 'branches' and parseInt(@get('lastObject.number')) > 1
   ).property('tab', 'lastObject.number')
+
+  olderThanNumber: (id, number, type) ->
+    options = { repository_id: id, after_number: number }
+    if type?
+      options.event_type = type.replace(/s$/, '') # poor man's singularize
+
+    @store.find('build', options)

@@ -2,6 +2,7 @@ require 'travis/expandable_record_array'
 require 'travis/model'
 require 'helpers/helpers'
 
+ExpandableRecordArray = Travis.ExpandableRecordArray
 EnvVar = Travis.EnvVar
 Build  = Travis.Build
 SshKey = Travis.SshKey
@@ -64,50 +65,47 @@ Travis.Repo = Travis.Model.extend
     array
   ).property()
 
-  allBuilds: (->
-    recordArray = Ember.RecordArray.create({ modelClass: Build, content: Ember.A([]) })
-    Build.registerRecordArray(recordArray)
-    recordArray
-  ).property()
-
   builds: (->
     id = @get('id')
-    builds = Build.byRepoId id, event_type: 'push'
+    builds = @store.find('build', event_type: 'push', repository_id: id)
 
     # TODO: move to controller
     array  = ExpandableRecordArray.create
-      type: Build
+      type: 'build'
       content: Ember.A([])
 
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && !build.get('isPullRequest') )
+    array.observe(@store.all('build'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && !build.get('isPullRequest') )
 
     array
   ).property()
 
   pullRequests: (->
     id = @get('id')
-    builds = Build.byRepoId id, event_type: 'pull_request'
+    builds = @store.find('build', event_type: 'pull_request', repository_id: id)
+
+    # TODO: move to controller
     array  = ExpandableRecordArray.create
-      type: Build
+      type: 'build'
       content: Ember.A([])
 
     array.load(builds)
 
     id = @get('id')
-    array.observe(@get('allBuilds'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && build.get('isPullRequest') )
+    array.observe(@store.all('build'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && build.get('isPullRequest') )
 
     array
   ).property()
 
   branches: (->
-    Build.branches repoId: @get('id')
-  ).property()
+    builds = @store.find 'build', repository_id: @get('id'), branches: true
 
-  events: (->
-    Event.byRepoId @get('id')
+    builds.then ->
+      builds.set 'isLoaded', true
+
+    builds
   ).property()
 
   owner: (->

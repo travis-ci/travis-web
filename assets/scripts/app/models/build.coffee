@@ -106,19 +106,3 @@ Travis.Build = Travis.Model.extend DurationCalculations,
     if finishedAt = @get('finishedAt')
       moment(finishedAt).format('lll')
   ).property('finishedAt')
-
-@Travis.Build.reopenClass
-  byRepoId: (id, parameters) ->
-    @find($.extend(parameters || {}, repository_id: id))
-
-  branches: (options) ->
-    @find repository_id: options.repoId, branches: true
-
-  olderThanNumber: (id, build_number, type) ->
-    console.log type
-    # TODO fix this api and use some kind of pagination scheme
-    options = { repository_id: id, after_number: build_number }
-    if type?
-      options.event_type = type.replace(/s$/, '') # poor man's singularize
-
-    @find(options)
