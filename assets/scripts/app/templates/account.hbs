@@ -20,7 +20,7 @@
     </p>
   {{else}}
     <p class="message">
-      Last synchronized from GitHub: {{formatTime user.syncedAt}}
+      Last synchronized from GitHub: {{format-time user.syncedAt}}
       <a class="sync_now button" {{action "sync"}}>
         Sync now
       </a>

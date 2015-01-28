@@ -32,11 +32,11 @@
             {{/if}}
           </td>
           <td class="message">
-            {{{formatMessage build.commit.message short="true" repoBinding=build.repo}}}
+            {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
           </td>
           <td class="commit">
             <a {{bind-attr href="build.urlGithubCommit"}}>
-              {{formatCommit build.commit}}
+              {{format-commit build.commit}}
             </a>
           </td>
           <td class="committer">
@@ -53,7 +53,7 @@
             {{formatDuration build.duration}}
           </td>
           <td class="finished_at timeago" {{bind-attr title="build.formattedFinishedAt"}}>
-            {{formatTime build.finishedAt}}
+            {{format-time build.finishedAt}}
           </td>
         </tr>
       {{/each}}

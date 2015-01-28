@@ -33,7 +33,7 @@
             {{formatDuration duration}}
           </td>
           <td class="finished_at timeago" {{bind-attr title="formattedFinishedAt"}}>
-            {{formatTime finishedAt}}
+            {{format-time finishedAt}}
           </td>
           {{#each value in configValues}}
             <td>{{value}}</td>

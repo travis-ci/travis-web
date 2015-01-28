@@ -14,7 +14,7 @@
       </div>
 
       <div class="finished">
-        {{formatTime build.finishedAt}}
+        {{format-time build.finishedAt}}
       </div>
 
       {{#if build.tagName}}
@@ -24,14 +24,14 @@
       {{/if}}
 
       <div class="commit-changes">
-        <a class="commit" {{bind-attr href="urlGithubCommit"}}>Commit {{formatSha commit.sha}}</a>
+        <a class="commit" {{bind-attr href="urlGithubCommit"}}>Commit {{format-sha commit.sha}}</a>
       </div>
       <div class="commit-changes">
         {{#if build.pullRequest}}
           <a class="compare" {{bind-attr href="build.commit.compareUrl"}}>#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a>
         {{else}}
           {{#if build.commit.compareUrl}}
-            <a class="compare" {{bind-attr href="build.commit.compareUrl"}}>Compare {{shortCompareShas build.commit.compareUrl}}</a>
+            <a class="compare" {{bind-attr href="build.commit.compareUrl"}}>Compare {{short-compare-shas build.commit.compareUrl}}</a>
           {{/if}}
         {{/if}}
       </div>
@@ -43,11 +43,11 @@
       </div>
 
       <div class="subject">
-      - {{formatMessage build.commit.subject repoBinding=build.repo}}
+      - {{format-message build.commit.subject repoBinding=build.repo}}
       </div>
     </div>
 
-    <pre class="body">{{formatMessage build.commit.body repoBinding=build.repo pre=true}}</pre>
+    <pre class="body">{{format-message build.commit.body repoBinding=build.repo pre=true}}</pre>
 
     <div class="footer">
       <div class="author">

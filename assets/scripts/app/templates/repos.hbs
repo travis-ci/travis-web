@@ -31,7 +31,7 @@
         <p class="summary">
           <span class="finished-icon"></span><span class="finished_at_label">Finished:</span>
           <abbr class="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>
-            {{formatTime repo.lastBuildFinishedAt}}
+            {{format-time repo.lastBuildFinishedAt}}
           </abbr>
         </p>
         {{/if}}

@@ -15,7 +15,7 @@
         </div>
 
         <div class="finished">
-          {{formatTime job.finishedAt}}
+          {{format-time job.finishedAt}}
         </div>
 
         {{#if job.tagName}}
@@ -25,14 +25,14 @@
         {{/if}}
 
         <div class="commit-changes">
-          <div class="text"><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{formatSha job.commit.sha}}</a></div>
+          <div class="text"><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{format-sha job.commit.sha}}</a></div>
         </div>
         <div class="commit-changes">
           {{#if job.build.pullRequest}}
             <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>#{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
           {{else}}
             {{#if job.build.commit.compareUrl}}
-              <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>Compare {{shortCompareShas job.build.commit.compareUrl}}</a></div>
+              <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>Compare {{short-compare-shas job.build.commit.compareUrl}}</a></div>
             {{/if}}
           {{/if}}
         </div>
@@ -43,10 +43,10 @@
       </div>
 
       <div class="subject">
-        - {{formatMessage job.commit.subject repoBinding=job.repo}}
+        - {{format-message job.commit.subject repoBinding=job.repo}}
       </div>
 
-      <pre class="body">{{formatMessage job.commit.body repoBinding=job.repo pre=true}}</pre>
+      <pre class="body">{{format-message job.commit.body repoBinding=job.repo pre=true}}</pre>
 
       <div class="footer">
         <div class="author">

@@ -25,7 +25,7 @@
           <span class="status"></span>
           {{id}}
         </td>
-        <td>{{githubCommitLink repo.slug commit.sha}}</td>
+        <td>{{github-commit-link repo.slug commit.sha}}</td>
         <td>
           {{#if build}}
             {{#link-to "build" build}}#{{build.number}}{{/link-to}}
@@ -33,7 +33,7 @@
             -
           {{/if}}
         </td>
-        <td class="commit-message">{{{formatMessage commit.message short="true" repoBinding=build.repo}}}</td>
+        <td class="commit-message">{{{format-message commit.message short="true" repoBinding=build.repo}}}</td>
         <td>{{type}}</td>
         <td>{{message}}</td>
       </tr>

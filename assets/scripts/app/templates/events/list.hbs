@@ -13,7 +13,7 @@
       {{#each event in view.events}}
         {{#view Travis.EventsItemView contextBinding="event"}}
           <td class="created_at">
-            {{formatTime createdAt}}
+            {{format-time createdAt}}
           </td>
           <td class="event">
             {{event.event_}}

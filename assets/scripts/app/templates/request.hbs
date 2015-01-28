@@ -7,7 +7,7 @@
       <span class="pr-number" {{bind-attr title="pullRequestTitle"}}>#{{pullRequestNumber}}</span>
       pull request.
     {{else}}
-      This request is based on a commit {{formatCommit commit}} by {{commit.authorName}}
+      This request is based on a commit {{format-commit commit}} by {{commit.authorName}}
       pushed to
       {{#if branchName}}
         to <code>{{branchName}}</code>
