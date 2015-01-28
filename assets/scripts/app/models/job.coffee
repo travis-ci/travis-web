@@ -1,10 +1,12 @@
 require 'travis/model'
 require 'models/extensions'
 require 'models/log'
+require 'travis/ajax'
 
 DurationCalculations = Travis.DurationCalculations
 Log = Travis.Log
 compact = Travis.Helpers.compact
+Ajax = Travis.ajax
 
 @Travis.Job = Travis.Model.extend DurationCalculations,
   logId:          DS.attr()
