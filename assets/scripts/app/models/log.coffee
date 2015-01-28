@@ -1,8 +1,6 @@
-require 'travis/model'
 require 'travis/log_chunks'
 
 Ajax = Travis.ajax
-Job = Travis.Job
 
 Request = Em.Object.extend
   HEADERS:
@@ -16,7 +14,7 @@ Request = Em.Object.extend
 
   handle: (body, status, xhr) ->
     if Travis.config.pro
-      Job.find(@get('id')).get('log').set('token', xhr.getResponseHeader('X-Log-Access-Token'))
+      @log.set('token', xhr.getResponseHeader('X-Log-Access-Token'))
 
     if xhr.status == 204
       $.ajax(url: @redirectTo(xhr), type: 'GET', success: @handlers.text)
@@ -79,7 +77,7 @@ Request = Em.Object.extend
           @set('removed', true)
         @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
-    Request.create(id: id, handlers: handlers).run() if id = @get('job.id')
+    Request.create(id: id, handlers: handlers, log: this).run() if id = @get('job.id')
 
   clear: ->
     @clearParts()
