@@ -1,7 +1,6 @@
 require 'routes/route'
 require 'models/job'
 
-Job = Travis.Job
 TravisRoute = Travis.Route
 
 Route = TravisRoute.extend
@@ -11,7 +10,9 @@ Route = TravisRoute.extend
     { job_id: id }
 
   setupController: (controller, model) ->
-    model = @store.find('job', model) if model && !model.get
+    if model && !model.get
+      model = @store.recordForId('job', model)
+      @store.find('job', model)
 
     repo = @controllerFor('repo')
     @controllerFor('job').set('job', model)
