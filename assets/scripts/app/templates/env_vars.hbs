@@ -1,7 +1,7 @@
 {{outlet}}
 
 <ul class="env-vars">
-  {{#each controller itemController="envVar"}}
+  {{#each vars itemController="envVar"}}
     <li class="env-var">
       {{#if isEditing}}
         {{partial 'env_vars/form'}}

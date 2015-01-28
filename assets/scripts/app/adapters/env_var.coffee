@@ -8,7 +8,7 @@ Travis.EnvVarAdapter = Travis.ApplicationAdapter.extend
 
     if record && (repoId = get(record, 'repo.id'))
       delimiter = if url.indexOf('?') != -1 then '&' else '?'
-      url = "#{url}#{delimiter}repository_id=#{repo_id}"
+      url = "#{url}#{delimiter}repository_id=#{repoId}"
 
     url
 

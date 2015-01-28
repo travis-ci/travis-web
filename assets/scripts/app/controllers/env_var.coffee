@@ -25,8 +25,7 @@ Travis.EnvVarController = Ember.ObjectController.extend Travis.Validations,
       return if @get('isDeleting')
       @set('isDeleting', true)
 
-      deletingDone = => @set('isDeleting', false)
-      @get('model').deleteRecord().then deletingDone, deletingDone
+      @get('model').destroyRecord()
 
     edit: ->
       @set('isEditing', true)
@@ -37,7 +36,6 @@ Travis.EnvVarController = Ember.ObjectController.extend Travis.Validations,
 
     save: ->
       return if @get('isSaving')
-      @set('isSaving', true)
 
       if @isValid()
         env_var = @get('model')
@@ -45,8 +43,3 @@ Travis.EnvVarController = Ember.ObjectController.extend Travis.Validations,
         # TODO: handle errors
         env_var.save().then =>
           @set('isEditing', false)
-          @set('isSaving', false)
-        , =>
-          @set('isSaving', false)
-      else
-        @set('isSaving', false)

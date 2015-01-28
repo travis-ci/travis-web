@@ -7,6 +7,8 @@ Travis.EnvVarsNewController = Ember.Controller.extend Validations,
   needs: ['repo']
   repo: Ember.computed.alias('controllers.repo.repo')
 
+  isSaving: false
+
   validates:
     name: ['presence']
 
@@ -26,7 +28,7 @@ Travis.EnvVarsNewController = Ember.Controller.extend Validations,
       @set('isSaving', true)
 
       if @isValid()
-        env_var = EnvVar.create(
+        env_var = @store.createRecord('env_var',
           name: @get('name')
           value: @get('value')
           public: @get('public')
@@ -40,5 +42,3 @@ Travis.EnvVarsNewController = Ember.Controller.extend Validations,
           self.transitionToRoute('env_vars')
         , =>
           @set('isSaving', false)
-      else
-        @set('isSaving', false)

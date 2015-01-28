@@ -47,25 +47,9 @@ Travis.Repo = Travis.Model.extend
 
   envVars: (->
     id = @get('id')
-    envVars = @store.filter('env_var', { repository_id: id }, (envVar) ->
-#      envVar.get('
+    @store.filter('env_var', { repository_id: id }, (v) ->
+      v.get('repo.id') == id
     )
-
-    EnvVar.find repository_id: id
-
-    # TODO: move to controller
-    array  = ExpandableRecordArray.create
-      type: EnvVar
-      content: Ember.A([])
-
-    array.load(envVars)
-
-    globalEnvVars = Ember.RecordArray.create({ modelClass: EnvVar, content: Ember.A([]) })
-    EnvVar.registerRecordArray(globalEnvVars)
-
-    array.observe(globalEnvVars, (envVar) -> envVar.get('isLoaded') && envVar.get('repo.id') == id )
-
-    array
   ).property()
 
   builds: (->
