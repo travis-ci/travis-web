@@ -3,7 +3,6 @@ require 'travis/model'
 
 Model = Travis.Model
 Ajax = Travis.ajax
-trigger = Travis.trigger
 Account = Travis.Account
 
 User = Model.extend
@@ -77,7 +76,7 @@ User = Model.extend
       else
         @set('isSyncing', false)
         @setWithSession('syncedAt', data.user.synced_at)
-        trigger('user:synced', data.user)
+        Travis.trigger('user:synced', data.user)
 
         # need to pass any param to trigger findQuery
         Account.find(foo: '')
