@@ -134,6 +134,7 @@ $.extend Travis,
     d:           'D'
     julia:       'Julia'
     csharp:      'C#'
+    dart:        'Dart'
   }
 
   QUEUES: [
