@@ -1,5 +1,3 @@
-notEmpty = Ember.computed.notEmpty
-
 ErrorsView = Ember.View.extend
   tagName: 'span'
   template: Ember.Handlebars.compile("{{#each view.errors}}{{message}}{{/each}}")
@@ -12,7 +10,7 @@ ErrorsView = Ember.View.extend
   codes: (->
     @get('errors').mapBy('code')
   ).property('@errors')
-  show: notEmpty('errors.[]')
+  show: Ember.computed.notEmpty('errors.[]')
 
 fn = (name, options) ->
   errors = @get('errors').for(name)

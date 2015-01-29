@@ -1,4 +1,4 @@
-Controller = Em.ArrayController.extend
+Controller = Ember.ArrayController.extend
   init: ->
     @_super.apply this, arguments
     @tickables = []

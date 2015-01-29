@@ -1,7 +1,6 @@
 require 'routes/route'
 require 'models/request'
 
-Request = Travis.Request
 TravisRoute = Travis.Route
 
 Route = TravisRoute.extend
@@ -10,6 +9,6 @@ Route = TravisRoute.extend
     @controllerFor('repo').activate('request')
 
   model: (params) ->
-    Request.fetch params.request_id
+    @store.find 'request', params.request_id
 
 Travis.RequestRoute = Route

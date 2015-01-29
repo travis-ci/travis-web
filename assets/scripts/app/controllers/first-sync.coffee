@@ -1,4 +1,4 @@
-Controller = Em.Controller.extend
+Controller = Ember.Controller.extend
   needs: ['currentUser']
   user: Ember.computed.alias('controllers.currentUser')
 

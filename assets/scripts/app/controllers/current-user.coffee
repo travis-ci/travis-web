@@ -1,4 +1,4 @@
-Travis.CurrentUserController = Em.ObjectController.extend
+Controller = Ember.ObjectController.extend
   sync: ->
     @get('model').sync()
 
@@ -9,3 +9,5 @@ Travis.CurrentUserController = Em.ObjectController.extend
       Ember.run.scheduleOnce 'routerTransitions', this, ->
         @container.lookup('router:main').send('renderFirstSync')
   ).observes('isSyncing', 'auth.currentUser')
+
+Travis.CurrentUserController = Controller

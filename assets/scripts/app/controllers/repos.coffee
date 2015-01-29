@@ -30,7 +30,7 @@ Controller = Ember.ArrayController.extend
   init: ->
     @_super.apply this, arguments
     if !Ember.testing
-      Visibility.every Travis.INTERVALS.updateTimes, @updateTimes.bind(this)
+      Visibility.every @config.intervals.updateTimes, @updateTimes.bind(this)
 
   recentRepos: (->
     Ember.ArrayProxy.extend(

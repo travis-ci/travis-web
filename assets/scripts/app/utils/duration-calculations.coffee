@@ -1,5 +1,3 @@
-require 'helpers/helpers'
-
 durationFrom = Travis.Helpers.durationFrom
 
 Travis.DurationCalculations = Ember.Mixin.create

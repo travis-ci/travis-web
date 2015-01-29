@@ -1,7 +1,5 @@
-notEmpty = Ember.computed.notEmpty
-
 FormFieldRowView = Ember.View.extend
-  invalid: notEmpty('errors.[]')
+  invalid: Ember.computed.notEmpty('errors.[]')
   classNameBindings: ['invalid']
   classNames: 'field'
 

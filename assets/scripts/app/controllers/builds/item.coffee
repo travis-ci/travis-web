@@ -1,6 +1,7 @@
 colorForState = Travis.Helpers.colorForState
+GithubUrlProperties = Travis.GithubUrlProperties
 
-Controller = Em.ObjectController.extend(Travis.GithubUrlProperties,
+Controller = Ember.ObjectController.extend(GithubUrlProperties,
   needs: ['builds']
   isPullRequestsListBinding: 'controllers.builds.isPullRequestsList'
   buildBinding: 'content'

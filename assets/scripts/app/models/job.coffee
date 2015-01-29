@@ -1,5 +1,4 @@
 require 'travis/model'
-require 'models/extensions'
 require 'models/log'
 require 'travis/ajax'
 

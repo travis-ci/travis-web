@@ -1,5 +1,8 @@
 Adapter = DS.ActiveModelAdapter.extend
-  host: Travis.config.api_endpoint
+  host: (->
+    Travis.config.api_endpoint
+  ).property()
+
   ajaxOptions: (url, type, options) ->
     hash = @_super(url, type, options)
 

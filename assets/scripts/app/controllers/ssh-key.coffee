@@ -1,6 +1,8 @@
 require 'travis/validations'
 
-Travis.SshKeyController = Ember.ObjectController.extend Travis.Validations,
+Validations = Travis.Validations
+
+Controller = Ember.ObjectController.extend Validations,
   isEditing: false
   isSaving: false
   isDeleting: false
@@ -57,3 +59,5 @@ Travis.SshKeyController = Ember.ObjectController.extend Travis.Validations,
 
     edit: ->
       @set('isEditing', true)
+
+Travis.SshKeyController = Controller

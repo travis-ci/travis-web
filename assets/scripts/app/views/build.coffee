@@ -1,5 +1,3 @@
-require 'helpers/helpers'
-
 colorForState = Travis.Helpers.colorForState
 
 View = Travis.View.extend

@@ -1,5 +1,3 @@
-get = Ember.get
-
 Error = Ember.Object.extend
   message: (->
     switch code = @get('code')
@@ -43,13 +41,13 @@ Validator = Ember.Object.extend
 
   isValid: (target) ->
     name = @get('name')
-    @get('validator').call(target, get(target, name))
+    @get('validator').call(target, Ember.get(target, name))
 
   validate: (target) ->
     unless @isValid(target)
       @setError(target)
 
-Travis.Validations = Ember.Mixin.create
+Validations = Ember.Mixin.create
   init: ->
     @_super.apply this, arguments
 
@@ -89,3 +87,5 @@ Travis.Validations = Ember.Mixin.create
   addErrorsFromResponse: (errors) ->
     for error in errors
       @get('errors').add(error.field, error.code)
+
+Travis.Validations = Validations

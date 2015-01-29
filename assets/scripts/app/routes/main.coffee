@@ -1,5 +1,4 @@
 require 'routes/route'
-require 'pusher'
 
 TravisRoute = Travis.Route
 channels = Travis.Pusher.CHANNELS

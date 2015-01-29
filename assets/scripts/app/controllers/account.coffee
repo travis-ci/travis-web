@@ -1,4 +1,4 @@
-Travis.AccountController = Ember.ObjectController.extend
+Controller = Ember.ObjectController.extend
   allHooks: []
   needs: ['currentUser']
   userBinding: 'controllers.currentUser'
@@ -38,9 +38,11 @@ Travis.AccountController = Ember.ObjectController.extend
   ).property('allHooks.length', 'allHooks')
 
   showPrivateReposHint: (->
-    Travis.config.show_repos_hint == 'private'
+    @config.show_repos_hint == 'private'
   ) .property()
 
   showPublicReposHint: (->
-    Travis.config.show_repos_hint == 'public'
+    @config.show_repos_hint == 'public'
   ) .property()
+
+Travis.AccountController = Controller

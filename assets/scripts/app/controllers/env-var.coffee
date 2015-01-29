@@ -1,6 +1,8 @@
 require 'travis/validations'
 
-Travis.EnvVarController = Ember.ObjectController.extend Travis.Validations,
+Validations = Travis.Validations
+
+Controller = Ember.ObjectController.extend Validations,
   isEditing: false
   isDeleting: false
 
@@ -43,3 +45,5 @@ Travis.EnvVarController = Ember.ObjectController.extend Travis.Validations,
         # TODO: handle errors
         env_var.save().then =>
           @set('isEditing', false)
+
+Travis.EnvVarController = Controller

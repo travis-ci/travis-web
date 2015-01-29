@@ -1,8 +1,6 @@
 require 'routes/route'
-require 'models/request'
 
 TravisRoute = Travis.Route
-Request = Travis.Request
 
 Route = TravisRoute.extend
   needsAuth: true
@@ -12,6 +10,6 @@ Route = TravisRoute.extend
     @controllerFor('repo').activate('requests')
 
   model: ->
-    Request.fetch repository_id: @modelFor('repo').get('id')
+    @store.find 'request', repository_id: @modelFor('repo').get('id')
 
 Travis.RequestsRoute = Route

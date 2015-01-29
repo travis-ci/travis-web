@@ -1,2 +1,4 @@
-Travis.AccountsController = Ember.ArrayController.extend
+Controller = Ember.ArrayController.extend
   tab: 'accounts'
+
+Travis.AccountsController = Controller

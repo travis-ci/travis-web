@@ -1,5 +1,3 @@
-require 'helpers/helpers'
-
 colorForState = Travis.Helpers.colorForState
 githubCommit = Travis.Urls.githubCommit
 gravatarImage = Travis.Urls.gravatarImage

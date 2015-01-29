@@ -1,4 +1,4 @@
-Travis.LimitedArray = Em.ArrayProxy.extend
+LimitedArray = Ember.ArrayProxy.extend
   limit: 10
   isLoadedBinding: 'content.isLoaded'
   arrangedContent: Ember.computed.limit('content', 'limit')
@@ -21,3 +21,5 @@ Travis.LimitedArray = Em.ArrayProxy.extend
 
   showAll: ->
     @set 'limit', Infinity
+
+Travis.LimitedArray = LimitedArray

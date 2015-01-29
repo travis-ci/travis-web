@@ -1,4 +1,4 @@
-Travis.BuildsController = Em.ArrayController.extend
+Controller = Ember.ArrayController.extend
   isPullRequestsList: false
 
   sortAscending: false
@@ -26,3 +26,5 @@ Travis.BuildsController = Em.ArrayController.extend
       options.event_type = type.replace(/s$/, '') # poor man's singularize
 
     @store.find('build', options)
+
+Travis.BuildsController = Controller

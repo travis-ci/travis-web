@@ -1,10 +1,13 @@
-Travis.FlashController = Ember.ArrayController.extend
+LimitedArray = Travis.LimitedArray
+Broadcast = Travis.Broadcast
+
+Controller = Ember.ArrayController.extend
   needs: ['currentUser']
   currentUserBinding: 'controllers.currentUser'
 
   init: ->
     @_super.apply this, arguments
-    @set('flashes', Travis.LimitedArray.create(limit: 2, content: []))
+    @set('flashes', LimitedArray.create(limit: 2, content: []))
 
   model: (->
     broadcasts = @get('unseenBroadcasts')
@@ -31,7 +34,7 @@ Travis.FlashController = Ember.ArrayController.extend
       Ember.run.later(this, (-> @get('flashes.content').removeObject(msg)), 15000)
 
   close: (msg) ->
-    if msg instanceof Travis.Broadcast
+    if msg instanceof Broadcast
       msg.setSeen()
       @notifyPropertyChange('unseenBroadcasts')
     else
@@ -40,3 +43,5 @@ Travis.FlashController = Ember.ArrayController.extend
   actions:
     close: (msg) ->
       @close(msg)
+
+Travis.FlashController = Controller

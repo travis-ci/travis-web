@@ -6,88 +6,9 @@ require 'app'
 window.ENV ||= {}
 window.ENV.RAISE_ON_DEPRECATION = true
 
-window.Travis = TravisApplication.create(
-  LOG_ACTIVE_GENERATION: true,
-  LOG_MODULE_RESOLVER: true,
-  LOG_TRANSITIONS: true,
-  LOG_TRANSITIONS_INTERNAL: true,
-  LOG_VIEW_LOOKUPS: true
-)
+window.Travis = App.create()
 
 Travis.deferReadiness()
-
-pages_endpoint   = $('meta[rel="travis.pages_endpoint"]').attr('href')
-billing_endpoint = $('meta[rel="travis.billing_endpoint"]').attr('href')
-customer_io_site_id = $('meta[name="travis.customer_io_site_id"]').attr('value')
-setupCustomerio(customer_io_site_id) if customer_io_site_id
-
-enterprise = $('meta[name="travis.enterprise"]').attr('value') == 'true'
-
-# for now I set pro to true also for enterprise, but it should be changed
-# to allow more granular config later
-pro = $('meta[name="travis.pro"]').attr('value') == 'true' || enterprise
-
-$.extend Travis,
-  run: ->
-    Travis.advanceReadiness() # bc, remove once merged to master
-
-  config:
-    syncingPageRedirectionTime: 5000
-    api_endpoint:    $('meta[rel="travis.api_endpoint"]').attr('href')
-    source_endpoint: $('meta[rel="travis.source_endpoint"]').attr('href')
-    pusher_key:      $('meta[name="travis.pusher_key"]').attr('value')
-    pusher_host:     $('meta[name="travis.pusher_host"]').attr('value')
-    ga_code:         $('meta[name="travis.ga_code"]').attr('value')
-    code_climate: $('meta[name="travis.code_climate"]').attr('value')
-    ssh_key_enabled: $('meta[name="travis.ssh_key_enabled"]').attr('value') == 'true'
-    code_climate_url: $('meta[name="travis.code_climate_url"]').attr('value')
-    caches_enabled: $('meta[name="travis.caches_enabled"]').attr('value') == 'true'
-    show_repos_hint: 'private'
-    avatar_default_url: 'https://travis-ci.org/images/ui/default-avatar.png'
-    pusher_log_fallback:  $('meta[name="travis.pusher_log_fallback"]').attr('value') == 'true'
-    pro: pro
-    enterprise: enterprise
-    sidebar_support_box: pro && !enterprise
-
-    pages_endpoint: pages_endpoint || billing_endpoint
-    billing_endpoint: billing_endpoint
-
-    url_legal:   "#{billing_endpoint}/pages/legal"
-    url_imprint: "#{billing_endpoint}/pages/imprint"
-    url_security: "#{billing_endpoint}/pages/security"
-    url_terms:   "#{billing_endpoint}/pages/terms"
-    customer_io_site_id: customer_io_site_id
-
-  CONFIG_KEYS_MAP: {
-    go:          'Go'
-    rvm:         'Ruby'
-    gemfile:     'Gemfile'
-    env:         'ENV'
-    jdk:         'JDK'
-    otp_release: 'OTP Release'
-    php:         'PHP'
-    node_js:     'Node.js'
-    perl:        'Perl'
-    python:      'Python'
-    scala:       'Scala'
-    compiler:    'Compiler'
-    ghc:         'GHC'
-    os:          'OS'
-    ruby:        'Ruby'
-    xcode_sdk:   'Xcode SDK'
-    xcode_scheme:'Xcode Scheme'
-    d:           'D'
-    julia:       'Julia'
-    csharp:      'C#'
-    dart:        'Dart'
-  }
-
-  QUEUES: [
-    { name: 'linux',   display: 'Linux' }
-    { name: 'mac_osx', display: 'Mac and OSX' }
-  ]
-
-  INTERVALS: { times: -1, updateTimes: 1000 }
 
 Ember.LinkView.reopen
   loadingClass: 'loading_link'
@@ -101,8 +22,15 @@ if charm_key = $('meta[name="travis.charm_key"]').attr('value')
 
 require 'travis/ajax'
 
-Travis.ajax.pro = Travis.config.pro
+require 'utils/urls'
+require 'utils/helpers'
+require 'utils/status-image-formats'
+require 'utils/pusher'
+require 'utils/slider'
+require 'utils/tailing'
+require 'mixins/github-url-properties'
 
+require 'utils/keys-map'
 require 'adapters/application'
 require 'serializers/application'
 require 'serializers/repo'
@@ -168,11 +96,13 @@ require 'controllers/job'
 require 'controllers/profile'
 require 'controllers/repos'
 require 'controllers/repo'
-require 'controllers/settings'
+require 'controllers/settings/index'
 require 'controllers/current-user'
 require 'controllers/request'
 require 'controllers/requests'
 require 'controllers/caches'
+require 'controllers/caches-item'
+require 'controllers/caches-by-branch'
 require 'controllers/env-var'
 require 'controllers/env-vars'
 require 'controllers/env-var-new'
@@ -186,11 +116,6 @@ require 'controllers/builds/item'
 require 'controllers/queue'
 require 'controllers/running-jobs'
 require 'controllers/dashboard/repositories'
-
-require 'utils/helpers'
-require 'utils/urls'
-require 'helpers/status-image-formats'
-require 'helpers/github-url-properties'
 
 Travis.Handlebars = {}
 
@@ -241,7 +166,6 @@ Ember.LinkView.reopen
   _trackEvent: (event) ->
     event.preventDefault()
 
-require 'models/extensions'
 require 'models/account'
 require 'models/broadcast'
 require 'models/branch'
@@ -257,11 +181,6 @@ require 'models/request'
 require 'models/user'
 require 'models/env-var'
 require 'models/ssh-key'
-
-require 'utlils/pusher'
-require 'slider'
-require 'tailing'
-require 'templates'
 
 require 'ext/ember/namespace'
 require 'views/view'

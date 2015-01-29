@@ -1,4 +1,4 @@
-Travis.SettingsIndexController = Em.ObjectController.extend
+Controller = Ember.ObjectController.extend
   settings: Ember.computed.alias('model.settings')
 
   settingsChanged: (->
@@ -16,3 +16,5 @@ Travis.SettingsIndexController = Em.ObjectController.extend
     save: ->
       @get('model').saveSettings(@get('settings')).then null, ->
         Travis.flash(error: 'There was an error while saving settings. Please try again.')
+
+Travis.SettingsIndexController = Controller

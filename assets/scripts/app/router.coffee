@@ -1,20 +1,20 @@
 require 'travis/location'
 require 'routes/application'
 
-Ember.Router.reopen
+Router = Ember.Router.extend
+  location: 'history'
+
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
     @_super(url)
 
-Travis.Router.reopen
-  location: 'history'
   didTransition: ->
     @_super.apply @, arguments
 
     if Travis.config.ga_code
       _gaq.push ['_trackPageview', location.pathname]
 
-Travis.Router.map ->
+Router.map ->
   @resource 'dashboard', ->
     @route 'repositories', path: '/'
 
@@ -32,14 +32,14 @@ Travis.Router.map ->
       @resource 'pullRequests', path: '/pull_requests'
       @resource 'branches', path: '/branches'
       @resource 'requests', path: '/requests'
-      @resource 'caches', path: '/caches' if Travis.config.caches_enabled
+      @resource 'caches', path: '/caches'
       @resource 'request', path: '/requests/:request_id'
 
       @resource 'settings', ->
         @route 'index', path: '/'
         @resource 'env_vars', ->
           @route 'new'
-        @resource 'ssh_key' if Travis.config.ssh_key_enabled
+        @resource 'ssh_key'
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
@@ -52,3 +52,4 @@ Travis.Router.map ->
 
   @route 'notFound', path: "/*path"
 
+Travis.Router = Router

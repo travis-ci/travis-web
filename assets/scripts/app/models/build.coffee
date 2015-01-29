@@ -1,5 +1,4 @@
 require 'travis/model'
-require 'models/extensions'
 require 'utils/duration-calculations'
 require 'travis/ajax'
 

@@ -20,7 +20,7 @@ Route = SimpleLayoutRoute.extend
     if !controller.get('isSyncing')
       self = this
       Ember.run.later this, ->
-        Repo.fetch(member: @get('controller.user.login')).then( (repos) ->
+        @store.find('repo', member: @get('controller.user.login')).then( (repos) ->
           if repos.get('length')
             self.transitionTo('main')
           else

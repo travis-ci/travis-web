@@ -1,3 +1,3 @@
-Controller = Em.Controller.extend()
+Controller = Ember.Controller.extend()
 
 Travis.MainErrorController = Controller

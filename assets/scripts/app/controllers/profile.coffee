@@ -1,4 +1,4 @@
-Travis.ProfileController = Ember.Controller.extend
+Controller = Ember.Controller.extend
   name: 'profile'
 
   needs: ['currentUser', 'accounts', 'account']
@@ -22,3 +22,5 @@ Travis.ProfileController = Ember.Controller.extend
     id = if @get('account.type') == 'user' then 'user' else @get('account.login')
     "#{@get('config').billing_endpoint}/subscriptions/#{id}"
   ).property('account.login', 'account.type')
+
+Travis.ProfileController = Controller
