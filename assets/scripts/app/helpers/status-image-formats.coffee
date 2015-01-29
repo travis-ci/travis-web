@@ -1,4 +1,4 @@
-require 'helpers/urls'
+require 'utils/urls'
 
 ccXmlUrl = Travis.Urls.ccXml
 statusImageUrl = Travis.Urls.statusImage

@@ -1,6 +1,5 @@
-require 'helpers/handlebars'
-require 'helpers/helpers'
-require 'helpers/urls'
+require 'utils/helpers'
+require 'utils/urls'
 require 'helpers/status-image-formats'
 require 'helpers/github-url-properties'
 
