@@ -6,7 +6,7 @@ initialize = (container, application) ->
   application.inject('auth', 'config', 'config:main')
 
 ConfigInitializer =
-  name: 'pusher'
+  name: 'config'
   initialize: initialize
 
 Ember.onLoad 'Ember.Application', (Application) ->
