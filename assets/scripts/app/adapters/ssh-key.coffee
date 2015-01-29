@@ -1,6 +1,8 @@
 get = Ember.get
 
-Travis.SshKeyAdapter = Travis.ApplicationAdapter.extend
+ApplicationAdapter = Travis.ApplicationAdapter
+
+Adapter = ApplicationAdapter.extend
   namespace: 'settings'
 
   createRecord: (store, type, record) ->
@@ -9,3 +11,5 @@ Travis.SshKeyAdapter = Travis.ApplicationAdapter.extend
     serializer.serializeIntoHash(data, type, record, { includeId: true });
 
     this.ajax(this.buildURL(type.typeKey, null, record), "POST", { data: data })
+
+Travis.SshKeyAdapter = Adapter

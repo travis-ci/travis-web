@@ -6,20 +6,6 @@ require 'app'
 window.ENV ||= {}
 window.ENV.RAISE_ON_DEPRECATION = true
 
-Storage = Em.Object.extend
-  init: ->
-    @set('storage', {})
-  key: (key) ->
-    "__#{key.replace('.', '__')}"
-  getItem: (k) ->
-    return @get("storage.#{@key(k)}")
-  setItem: (k,v) ->
-    @set("storage.#{@key(k)}", v)
-  removeItem: (k) ->
-    @setItem(k, null)
-  clear: ->
-    @set('storage', {})
-
 window.Travis = TravisApplication.create(
   LOG_ACTIVE_GENERATION: true,
   LOG_MODULE_RESOLVER: true,
@@ -102,101 +88,6 @@ $.extend Travis,
   ]
 
   INTERVALS: { times: -1, updateTimes: 1000 }
-
-sessionStorage = (->
-  storage = null
-  try
-    # firefox will not throw error on access for sessionStorage var,
-    # you need to actually get something from session
-    sessionStorage.getItem('foo')
-    storage = sessionStorage
-  catch err
-    storage = Storage.create()
-
-  storage
-)()
-
-storage = (->
-  storage = null
-  try
-    storage = window.localStorage || throw('no storage')
-  catch err
-    storage = Storage.create()
-
-  storage
-)()
-
-Travis.initializer
-  name: 'storage'
-
-  initialize: (container, application) ->
-    application.register 'storage:main', storage, { instantiate: false }
-    application.register 'sessionStorage:main', sessionStorage, { instantiate: false }
-
-    application.inject('auth', 'storage', 'storage:main')
-    application.inject('auth', 'sessionStorage', 'sessionStorage:main')
-
-    # I still use Travis.storage in some places which are not that easy to
-    # refactor
-    application.storage = storage
-    application.sessionStorage = sessionStorage
-
-Travis.initializer
-  name: 'googleAnalytics'
-
-  initialize: (container) ->
-    if Travis.config.ga_code
-      window._gaq = []
-      _gaq.push(['_setAccount', Travis.config.ga_code])
-
-      ga = document.createElement('script')
-      ga.type = 'text/javascript'
-      ga.async = true
-      ga.src = 'https://ssl.google-analytics.com/ga.js'
-      s = document.getElementsByTagName('script')[0]
-      s.parentNode.insertBefore(ga, s)
-
-Travis.initializer
-  name: 'inject-config'
-
-  initialize: (container, application) ->
-    application.register 'config:main', Travis.config, { instantiate: false }
-
-    application.inject('controller', 'config', 'config:main')
-    application.inject('route', 'config', 'config:main')
-    application.inject('auth', 'config', 'config:main')
-
-Travis.initializer
-  name: 'inject-pusher'
-
-  initialize: (container, application) ->
-    application.register 'pusher:main', Travis.pusher, { instantiate: false }
-
-    application.inject('route', 'pusher', 'pusher:main')
-
-    Travis.pusher.store = container.lookup('store:main')
-
-stylesheetsManager = Ember.Object.create
-  enable: (id) ->
-    $("##{id}").removeAttr('disabled')
-
-  disable: (id) ->
-    $("##{id}").attr('disabled', 'disabled')
-
-Travis.initializer
-  name: 'inject-stylesheets-manager'
-
-  initialize: (container, application) ->
-    application.register 'stylesheetsManager:main', stylesheetsManager, { instantiate: false }
-
-    application.inject('route', 'stylesheetsManager', 'stylesheetsManager:main')
-
-Travis.Router.reopen
-  didTransition: ->
-    @_super.apply @, arguments
-
-    if Travis.config.ga_code
-      _gaq.push ['_trackPageview', location.pathname]
 
 Ember.LinkView.reopen
   loadingClass: 'loading_link'

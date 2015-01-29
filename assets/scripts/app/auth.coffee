@@ -1,4 +1,4 @@
-window.Auth = Ember.Object.extend
+Auth = Ember.Object.extend
   state:        "signed-out"
   receivingEnd: "#{location.protocol}//#{location.host}"
 
@@ -9,7 +9,7 @@ window.Auth = Ember.Object.extend
     Travis.sessionStorage.getItem('travis.token')
 
   endpoint: (->
-    @container.lookup('application:main').config.api_endpoint
+    @config.api_endpoint
   ).property(),
 
   signOut: ->
@@ -141,15 +141,4 @@ window.Auth = Ember.Object.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('currentUser.gravatarId')}?s=48&d=mm"
   ).property('currentUser.gravatarId')
 
-Ember.onLoad 'Ember.Application', (Application) ->
-  Application.initializer
-    name: "auth",
-
-    initialize: (container, application) ->
-      application.register 'auth:main', Auth
-
-      application.inject('route', 'auth', 'auth:main')
-      application.inject('controller', 'auth', 'auth:main')
-      application.inject('application', 'auth', 'auth:main')
-
-      application.inject('auth', 'store', 'store:main')
+window.Auth = Auth

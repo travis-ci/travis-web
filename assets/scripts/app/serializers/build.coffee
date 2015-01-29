@@ -1,4 +1,6 @@
-Travis.BuildSerializer = Travis.ApplicationSerializer.extend
+ApplicationSerializer = Travis.ApplicationSerializer
+
+Serializer = ApplicationSerializer.extend
   attrs: {
     repo:        { key: 'repository_id' }
     _config:     { key: 'config' }
@@ -11,3 +13,5 @@ Travis.BuildSerializer = Travis.ApplicationSerializer.extend
       rawPayload.commits = [commit]
 
     @_super(store, primaryType, rawPayload, recordId)
+
+Travis.BuildSerializer = Serializer

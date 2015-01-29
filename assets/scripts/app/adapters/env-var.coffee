@@ -1,12 +1,12 @@
-get = Ember.get
+ApplicationAdapter = Travis.ApplicationAdapter
 
-Travis.EnvVarAdapter = Travis.ApplicationAdapter.extend
+Adapter = ApplicationAdapter.extend
   namespace: 'settings'
 
   buildURL: (type, id, record) ->
     url = @_super.apply this, arguments
 
-    if record && (repoId = get(record, 'repo.id'))
+    if record && (repoId = Ember.get(record, 'repo.id'))
       delimiter = if url.indexOf('?') != -1 then '&' else '?'
       url = "#{url}#{delimiter}repository_id=#{repoId}"
 
@@ -21,3 +21,5 @@ Travis.EnvVarAdapter = Travis.ApplicationAdapter.extend
     id = Ember.get(record, 'id');
 
     this.ajax(this.buildURL(type.typeKey, id, record), "PATCH", { data: data })
+
+Travis.EnvVarAdapter = Adapter

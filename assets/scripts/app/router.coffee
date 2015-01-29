@@ -8,6 +8,11 @@ Ember.Router.reopen
 
 Travis.Router.reopen
   location: 'history'
+  didTransition: ->
+    @_super.apply @, arguments
+
+    if Travis.config.ga_code
+      _gaq.push ['_trackPageview', location.pathname]
 
 Travis.Router.map ->
   @resource 'dashboard', ->

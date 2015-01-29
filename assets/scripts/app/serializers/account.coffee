@@ -1,2 +1,6 @@
-Travis.AccountSerializer = Travis.ApplicationSerializer.extend
+ApplicationSerializer = Travis.ApplicationSerializer
+
+Serializer = ApplicationSerializer.extend
   primaryKey: 'login'
+
+Travis.AccountSerializer = Serializer

@@ -1,4 +1,4 @@
-Travis.ApplicationAdapter = DS.ActiveModelAdapter.extend
+Adapter = DS.ActiveModelAdapter.extend
   host: Travis.config.api_endpoint
   ajaxOptions: (url, type, options) ->
     hash = @_super(url, type, options)
@@ -11,3 +11,6 @@ Travis.ApplicationAdapter = DS.ActiveModelAdapter.extend
     hash.headers['Authorization'] ||= "token #{token}"
 
     hash
+
+
+Travis.ApplicationAdapter = Adapter
