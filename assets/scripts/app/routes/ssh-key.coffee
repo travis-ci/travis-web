@@ -1,6 +1,6 @@
 require 'routes/route'
 require 'models/ssh-key'
-require 'travis/ajax'
+require 'utils/ajax'
 
 SshKey = Travis.SshKey
 Ajax = Travis.ajax

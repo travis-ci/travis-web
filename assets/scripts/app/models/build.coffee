@@ -1,6 +1,6 @@
 require 'models/model'
 require 'utils/duration-calculations'
-require 'travis/ajax'
+require 'utils/ajax'
 
 compact = Travis.Helpers.compact
 configKeys = Travis.Helpers.configKeys

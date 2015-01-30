@@ -1,6 +1,6 @@
 require 'routes/route'
 require 'models/request'
-require 'travis/ajax'
+require 'utils/ajax'
 
 Request = Travis.Request
 Ajax = Travis.ajax

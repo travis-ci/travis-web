@@ -1,6 +1,6 @@
 require 'models/model'
 require 'models/log'
-require 'travis/ajax'
+require 'utils/ajax'
 
 Model = Travis.Model
 DurationCalculations = Travis.DurationCalculations

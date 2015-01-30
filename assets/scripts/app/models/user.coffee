@@ -1,4 +1,4 @@
-require 'travis/ajax'
+require 'utils/ajax'
 require 'models/model'
 
 Model = Travis.Model
