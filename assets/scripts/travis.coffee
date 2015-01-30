@@ -221,3 +221,5 @@ require 'initializers/pusher'
 require 'initializers/services'
 require 'initializers/storage'
 require 'initializers/stylesheets-manager'
+
+require 'templates'
