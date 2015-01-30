@@ -5,9 +5,7 @@ initialize = (container, app) ->
   app.inject('controller', 'auth', 'auth:main')
   app.inject('application', 'auth', 'auth:main')
 
-  Auth.store = container.lookup('store:main')
-  Auth.config = container.lookup('config:main')
-
+  app.inject('auth', 'store', 'store:main')
 
 AuthInitializer =
   name: 'auth'
