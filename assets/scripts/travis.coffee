@@ -19,6 +19,14 @@ if charm_key = $('meta[name="travis.charm_key"]').attr('value')
 
   $('head').append $('<script src="https://charmscout.herokuapp.com/charmeur.js?v=2" async defer></script>')
 
+require 'initializers/auth'
+require 'initializers/config'
+require 'initializers/google-analytics'
+require 'initializers/pusher'
+require 'initializers/services'
+require 'initializers/storage'
+require 'initializers/stylesheets-manager'
+
 require 'utils/ajax'
 
 require 'utils/urls'
