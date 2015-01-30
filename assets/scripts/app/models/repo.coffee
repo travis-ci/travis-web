@@ -1,4 +1,4 @@
-require 'travis/expandable-record-array'
+require 'utils/expandable-record-array'
 require 'travis/model'
 
 Model = Travis.Model
