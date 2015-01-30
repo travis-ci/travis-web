@@ -176,3 +176,8 @@ Ember.Handlebars.registerBoundHelper 'formatLog', (log, options) ->
   item = parentView.get(options.item)
   Travis.Helpers.formatLog(log, repo, item) || ''
 
+Ember.Handlebars.registerBoundHelper 'humanize-state', (state) ->
+  if state == 'received'
+    'booting'
+  else
+    state
