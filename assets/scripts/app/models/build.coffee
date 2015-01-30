@@ -1,4 +1,4 @@
-require 'travis/model'
+require 'models/model'
 require 'utils/duration-calculations'
 require 'travis/ajax'
 

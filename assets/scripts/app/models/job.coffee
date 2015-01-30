@@ -1,4 +1,4 @@
-require 'travis/model'
+require 'models/model'
 require 'models/log'
 require 'travis/ajax'
 

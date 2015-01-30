@@ -1,4 +1,4 @@
-require 'travis/model'
+require 'models/model'
 
 Model = Travis.Model
 

@@ -1,5 +1,5 @@
 require 'travis/ajax'
-require 'travis/model'
+require 'models/model'
 
 Model = Travis.Model
 Ajax = Travis.ajax
