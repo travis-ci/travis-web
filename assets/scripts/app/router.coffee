@@ -13,7 +13,7 @@ Router = Ember.Router.extend
   didTransition: ->
     @_super.apply @, arguments
 
-    if Travis.config.ga_code
+    if config.ga_code
       _gaq.push ['_trackPageview', location.pathname]
 
 Router.map ->

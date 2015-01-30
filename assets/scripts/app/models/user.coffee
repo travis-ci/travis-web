@@ -4,6 +4,7 @@ require 'models/model'
 Model = Travis.Model
 Ajax = Travis.ajax
 Account = Travis.Account
+config = ENV.config
 
 User = Model.extend
   name:        DS.attr()
@@ -25,7 +26,7 @@ User = Model.extend
   ).observes('isSyncing')
 
   urlGithub: (->
-    "#{Travis.config.source_endpoint}/#{@get('login')}"
+    "#{config.source_endpoint}/#{@get('login')}"
   ).property()
 
   _rawPermissions: (->

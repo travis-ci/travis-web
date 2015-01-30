@@ -5,6 +5,8 @@ require 'utils/log-folder'
 Log.DEBUG = false
 Log.LIMIT = 10000
 
+config = ENV.config
+
 Travis.reopen
   LogView: Travis.View.extend
     templateName: 'jobs/log'
@@ -106,7 +108,7 @@ Travis.reopen
     plainTextLogUrl: (->
       if id = @get('log.job.id')
         url = Travis.Urls.plainTextLog(id)
-        if Travis.config.pro
+        if config.pro
           url += "&access_token=#{@get('job.log.token')}"
         url
     ).property('job.log.id', 'job.log.token')

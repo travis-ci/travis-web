@@ -1,7 +1,7 @@
 require 'config/emoij'
 
 config_keys_map = Travis.CONFIG_KEYS_MAP
-config = Travis.config
+config = ENV.config
 githubCommitUrl = Travis.Urls.githubCommit
 timeago = $.timeago
 intersect = $.intersect

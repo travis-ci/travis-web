@@ -1,3 +1,5 @@
+config = ENV.config
+
 View = Travis.View.extend
   templateName: 'repos/show/actions'
 
@@ -116,7 +118,7 @@ View = Travis.View.extend
   plainTextLogUrl: (->
     if id = @get('jobIdForLog')
       url = Travis.Urls.plainTextLog(id)
-      if Travis.config.pro
+      if config.pro
         token = @get('job.log.token') || @get('build.jobs.firstObject.log.token')
         url += "&access_token=#{token}"
       url

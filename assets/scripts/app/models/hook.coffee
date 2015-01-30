@@ -1,7 +1,8 @@
 require 'models/model'
 
+config = ENV.config
+
 Model = Travis.Model
-Repo = Travis.Repo
 
 Hook = Model.extend
   name:        DS.attr()
@@ -20,11 +21,11 @@ Hook = Model.extend
   ).property('ownerName', 'name')
 
   urlGithub: (->
-    "#{Travis.config.source_endpoint}/#{@get('slug')}"
+    "#{config.source_endpoint}/#{@get('slug')}"
   ).property()
 
   urlGithubAdmin: (->
-    "#{Travis.config.source_endpoint}/#{@get('slug')}/settings/hooks#travis_minibucket"
+    "#{config.source_endpoint}/#{@get('slug')}/settings/hooks#travis_minibucket"
   ).property()
 
   toggle: ->

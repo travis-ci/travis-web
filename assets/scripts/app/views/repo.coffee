@@ -1,5 +1,6 @@
 statusImage = Travis.Urls.statusImage
 StatusImagesView = Travis.StatusImagesView
+config = ENV.config
 
 View = Travis.View.extend
   reposBinding: 'controllers.repos'
@@ -28,7 +29,7 @@ View = Travis.View.extend
 
   ReposEmptyView: Travis.View.extend
     template: (->
-      if Travis.config.pro
+      if config.pro
         'pro/repos/show/empty'
       else
         ''

@@ -86,7 +86,7 @@ App = Ember.Application.extend(Ember.Evented,
     new Date()
 
   onUserUpdate: (user) ->
-    if Travis.config.pro
+    if config.pro
       @identifyCustomer(user)
       @subscribePusher(user)
       @setupCharm(user)

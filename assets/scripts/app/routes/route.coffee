@@ -1,3 +1,5 @@
+config = ENV.config
+
 Route = Ember.Route.extend
   beforeModel: (transition) ->
     @auth.autoSignIn() unless @signedIn()
@@ -13,7 +15,7 @@ Route = Ember.Route.extend
 
   needsAuth: (->
     # on pro, we need to auth on every route
-    Travis.config.pro
+    config.pro
   ).property()
 
 Travis.Route = Route

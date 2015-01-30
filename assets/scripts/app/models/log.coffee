@@ -1,6 +1,7 @@
 require 'utils/log-chunks'
 
 Ajax = Travis.ajax
+config = ENV.config
 
 Request = Ember.Object.extend
   HEADERS:
@@ -13,7 +14,7 @@ Request = Ember.Object.extend
       success: (body, status, xhr) => Ember.run(this, -> @handle(body, status, xhr))
 
   handle: (body, status, xhr) ->
-    if Travis.config.pro
+    if config.pro
       @log.set('token', xhr.getResponseHeader('X-Log-Access-Token'))
 
     if xhr.status == 204
@@ -58,7 +59,7 @@ Log = Ember.Object.extend
               @append part
 
   parts: (->
-    #if Travis.config.pusher_log_fallback
+    #if config.pusher_log_fallback
     #  Travis.LogChunks.create(content: [], missingPartsCallback: => @fetchMissingParts.apply(this, arguments))
     #else
     Ember.ArrayProxy.create(content: [])
