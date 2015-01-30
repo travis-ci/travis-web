@@ -50,7 +50,7 @@
             </td>
           {{/if}}
           <td class="duration" {{bind-attr title="build.duration"}}>
-            {{formatDuration build.duration}}
+            {{format-duration build.duration}}
           </td>
           <td class="finished_at timeago" {{bind-attr title="build.formattedFinishedAt"}}>
             {{format-time build.finishedAt}}

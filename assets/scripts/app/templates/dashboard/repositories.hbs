@@ -44,7 +44,7 @@
         <div class="build-information">
           <p class="org">{{repo.owner.login}}</p>
           <p class="repo">{{#link-to "repo" repo.owner.login repo.name}}{{repo.name}}{{/link-to}}</p>
-          <div class="duration">{{formatDuration repo.last_build.duration}}</div>
+          <div class="duration">{{format-duration repo.last_build.duration}}</div>
           <div class="finished">{{format-time repo.last_build.finished_at}}</div>
           <p class="build-status">
             {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
