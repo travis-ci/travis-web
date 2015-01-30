@@ -19,7 +19,7 @@ if charm_key = $('meta[name="travis.charm_key"]').attr('value')
 
   $('head').append $('<script src="https://charmscout.herokuapp.com/charmeur.js?v=2" async defer></script>')
 
-require 'travis/ajax'
+require 'utils/ajax'
 
 require 'utils/urls'
 require 'utils/helpers'
@@ -216,7 +216,5 @@ require 'views/application/loading'
 require 'views/dashboard/loading'
 
 require 'components/travis-switch'
-
-require 'travis/instrumentation'
 
 Travis.setup()
