@@ -1,4 +1,4 @@
-require 'travis/log-chunks'
+require 'utils/log-chunks'
 
 Ajax = Travis.ajax
 

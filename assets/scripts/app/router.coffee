@@ -1,4 +1,4 @@
-require 'travis/location'
+require 'utils/location'
 require 'routes/application'
 
 config = ENV.config

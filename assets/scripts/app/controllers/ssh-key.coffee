@@ -1,4 +1,4 @@
-require 'travis/validations'
+require 'utils/validations'
 
 Validations = Travis.Validations
 
