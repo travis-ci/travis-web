@@ -1,4 +1,9 @@
+config = ENV.config
+
 initialize = (container, application) ->
+  if config.pusher.key
+    application.pusher = new Pusher(config.pusher)
+
   application.register 'pusher:main', application.pusher, { instantiate: false }
 
   application.inject('route', 'pusher', 'pusher:main')
