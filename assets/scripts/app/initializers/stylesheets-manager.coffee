@@ -13,3 +13,6 @@ initialize = (container, application) ->
 StylesheetsManagerInitializer =
   name: 'inject-stylesheets-manager'
   initialize: initialize
+
+Ember.onLoad 'Ember.Application', (Application) ->
+  Application.initializer StylesheetsManagerInitializer
