@@ -1,3 +1,5 @@
+config = ENV.config
+
 App = Ember.Application.extend(Ember.Evented,
   LOG_TRANSITIONS: true
   LOG_TRANSITIONS_INTERNAL: true
@@ -5,18 +7,6 @@ App = Ember.Application.extend(Ember.Evented,
   LOG_MODULE_RESOLVER: true
   LOG_VIEW_LOOKUPS: true
   #LOG_RESOLVER: true
-
-  setup: ->
-    if @config.pusher.key
-      @pusher = new Travis.Pusher(@config.pusher)
-    @tailing = new Travis.Tailing($(window), '#tail', '#log')
-    @toTop   = new Travis.ToTop($(window), '.to-top', '#log-container')
-
-    @on 'user:signed_in', (user) ->
-      Travis.onUserUpdate(user)
-
-    @on 'user:synced', (user) ->
-      Travis.onUserUpdate(user)
 
   lookup: ->
     @__container__.lookup.apply @__container__, arguments
@@ -84,8 +74,13 @@ App = Ember.Application.extend(Ember.Evented,
     Em.run.later (-> element.remove()), 10
 
   ready: ->
-    @slider = new Travis.Slider(@storage)
     location.href = location.href.replace('#!/', '') if location.hash.slice(0, 2) == '#!'
+
+    @on 'user:signed_in', (user) ->
+      Travis.onUserUpdate(user)
+
+    @on 'user:synced', (user) ->
+      Travis.onUserUpdate(user)
 
   currentDate: ->
     new Date()

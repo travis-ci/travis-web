@@ -180,7 +180,6 @@ require 'models/user'
 require 'models/env-var'
 require 'models/ssh-key'
 
-require 'ext/ember/namespace'
 require 'views/view'
 require 'views/accounts'
 require 'views/annotation'
@@ -214,5 +213,3 @@ require 'views/application/loading'
 require 'views/dashboard/loading'
 
 require 'components/travis-switch'
-
-Travis.setup()

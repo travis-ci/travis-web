@@ -166,3 +166,5 @@ if config.pro
         ]
       ]
     ]
+
+Travis.Pusher = TravisPusher

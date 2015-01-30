@@ -1,7 +1,9 @@
+config = ENV.config
+
 initialize = (container) ->
-  if Travis.config.ga_code
+  if config.ga_code
     window._gaq = []
-    _gaq.push(['_setAccount', Travis.config.ga_code])
+    _gaq.push(['_setAccount', config.ga_code])
 
     ga = document.createElement('script')
     ga.type = 'text/javascript'
