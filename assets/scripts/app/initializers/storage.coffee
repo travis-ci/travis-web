@@ -49,6 +49,7 @@ initialize = (container, application) ->
 
 StorageInitializer =
   name: 'storage'
+  before: 'services'
   initialize: initialize
 
 Ember.onLoad 'Ember.Application', (Application) ->
