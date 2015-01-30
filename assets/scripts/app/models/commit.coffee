@@ -11,8 +11,6 @@ Commit = Model.extend
   authorEmail:       DS.attr()
   committerName:     DS.attr()
   committerEmail:    DS.attr()
-  subject:           DS.attr()
-  body:              DS.attr()
   commitedAt:        DS.attr()
 
   build: DS.belongsTo('build')

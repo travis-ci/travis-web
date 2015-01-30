@@ -124,10 +124,6 @@ Job = Model.extend DurationCalculations,
     @unsubscribe() if @get('state') == 'finished' && Travis.pusher
   ).observes('state')
 
-  isFinished: (->
-    @get('state') in ['passed', 'failed', 'errored', 'canceled']
-  ).property('state')
-
   # TODO: such formattings should be done in controller, but in order
   #       to use it there easily, I would have to refactor job and build
   #       controllers
