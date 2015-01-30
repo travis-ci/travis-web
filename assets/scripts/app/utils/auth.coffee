@@ -1,3 +1,5 @@
+config = ENV.config
+
 Auth = Ember.Object.extend
   state:        "signed-out"
   receivingEnd: "#{location.protocol}//#{location.host}"
@@ -9,7 +11,7 @@ Auth = Ember.Object.extend
     Travis.sessionStorage.getItem('travis.token')
 
   endpoint: (->
-    @config.api_endpoint
+    config.api_endpoint
   ).property(),
 
   signOut: ->
@@ -50,7 +52,7 @@ Auth = Ember.Object.extend
 
   validateUser: (user) ->
     fieldsToValidate = ['id', 'login', 'token', 'correct_scopes']
-    if @config.pro
+    if config.pro
       fieldsToValidate.push 'channels'
 
     fieldsToValidate.every( (field) => @validateHas(field, user) ) && user.correct_scopes

@@ -7,7 +7,8 @@ App = Ember.Application.extend(Ember.Evented,
   #LOG_RESOLVER: true
 
   setup: ->
-    @pusher = new Travis.Pusher(key: Travis.config.pusher_key, host: Travis.config.pusher_host) if Travis.config.pusher_key
+    if @config.pusher.key
+      @pusher = new Travis.Pusher(@config.pusher)
     @tailing = new Travis.Tailing($(window), '#tail', '#log')
     @toTop   = new Travis.ToTop($(window), '.to-top', '#log-container')
 

@@ -1,6 +1,8 @@
 require 'travis/location'
 require 'routes/application'
 
+config = ENV.config
+
 Router = Ember.Router.extend
   location: 'history'
 
@@ -32,14 +34,14 @@ Router.map ->
       @resource 'pullRequests', path: '/pull_requests'
       @resource 'branches', path: '/branches'
       @resource 'requests', path: '/requests'
-      @resource 'caches', path: '/caches'
+      @resource 'caches', path: '/caches' if config.endpoints.caches
       @resource 'request', path: '/requests/:request_id'
 
       @resource 'settings', ->
         @route 'index', path: '/'
         @resource 'env_vars', ->
           @route 'new'
-        @resource 'ssh_key'
+        @resource 'ssh_key' if config.endpoints.ssh_key
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'

@@ -1,4 +1,4 @@
-Travis.Model = Model
+Model = Travis.Model
 
 SshKey = Model.extend
   value:       DS.attr()

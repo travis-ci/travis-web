@@ -1,3 +1,5 @@
+config = ENV.config
+
 jQuery.support.cors = true
 
 default_options =
@@ -18,7 +20,7 @@ Travis.ajax = Em.Object.create
     @ajax(url, 'patch', data: data, success: callback)
 
   needsAuth: (method, url) ->
-    return true if Travis.ajax.pro
+    return true if config.pro
     return true if method != 'GET'
 
     publicEndpoint = @publicEndpoints.find (pattern) ->
@@ -36,7 +38,7 @@ Travis.ajax = Em.Object.create
     method = method || "GET"
     method = method.toUpperCase()
 
-    endpoint = Travis.config.api_endpoint || ''
+    endpoint = config.api_endpoint || ''
     options = options || {}
 
     token = Travis.sessionStorage.getItem('travis.token')

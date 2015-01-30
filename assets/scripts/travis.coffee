@@ -1,6 +1,5 @@
-require 'ext/jquery'
-require 'ext/ember/namespace'
-require 'ext/ember/computed'
+require 'config/environment'
+require 'utils/computed-limit'
 require 'app'
 
 window.ENV ||= {}

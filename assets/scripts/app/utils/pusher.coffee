@@ -1,3 +1,5 @@
+config = ENV.config
+
 TravisPusher = (config) ->
   @init(config)
   this
@@ -7,7 +9,7 @@ TravisPusher.prototype.active_channels = []
 TravisPusher.prototype.init = (config) ->
   Pusher.warn = @warn.bind(this)
   Pusher.host = config.host if config.host
-  @pusher = new Pusher(config.key, encrypted: @config.pusher.encrypted, disableStats: true)
+  @pusher = new Pusher(config.key, encrypted: config.encrypted, disableStats: true)
 
   @callbacksToProcess = []
 
@@ -97,9 +99,9 @@ TravisPusher.prototype.ignoreCode = (code) ->
 TravisPusher.prototype.ignoreMessage = (message) ->
   message.indexOf('Existing subscription') == 0 or message.indexOf('No current subscription') == 0
 
-Pusher.SockJSTransport.isSupported = -> false if pusher_host != 'ws.pusherapp.com'
+Pusher.SockJSTransport.isSupported = -> false if config.pusher.host != 'ws.pusherapp.com'
 
-if Travis.config.pro
+if config.pro
   Pusher.channel_auth_transport = 'bulk_ajax'
 
   Pusher.authorizers.bulk_ajax = (socketId, _callback) ->
@@ -122,8 +124,8 @@ if Travis.config.pro
   Pusher.getDefaultStrategy = (config) ->
     [
       [":def", "ws_options", {
-        hostUnencrypted: config.wsHost + ":" + config.wsPort + (pusher_path && "/#{pusher_path}" || ''),
-        hostEncrypted: config.wsHost + ":" + config.wssPort + (pusher_path && "/#{pusher_path}" || '')
+        hostUnencrypted: config.wsHost + ":" + config.wsPort + (config.pusher.path && "/#{config.pusher.path}" || ''),
+        hostEncrypted: config.wsHost + ":" + config.wssPort + (config.pusher.path && "/#{config.pusher.path}" || '')
         path: config.path
       }],
       [":def", "sockjs_options", {
