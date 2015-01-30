@@ -1,3 +1,5 @@
+require 'utils/limited-array'
+
 LimitedArray = Travis.LimitedArray
 Broadcast = Travis.Broadcast
 

@@ -1,4 +1,7 @@
+require 'utils/pusher'
+
 config = ENV.config
+Pusher = Travis.Pusher
 
 initialize = (container, application) ->
   if config.pusher.key
