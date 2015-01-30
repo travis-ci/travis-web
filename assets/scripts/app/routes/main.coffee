@@ -1,7 +1,6 @@
 require 'routes/route'
 
 TravisRoute = Travis.Route
-channels = Travis.Pusher.CHANNELS
 
 Route = TravisRoute.extend
   renderTemplate: ->
@@ -18,7 +17,7 @@ Route = TravisRoute.extend
 
   activate: ->
     # subscribe to pusher only if we're at a main route
-    if channels
-      @get('pusher').subscribeAll(channels)
+    if @config.pusher.channels
+      @get('pusher').subscribeAll(@config.pusher.channels)
 
 Travis.MainRoute = Route

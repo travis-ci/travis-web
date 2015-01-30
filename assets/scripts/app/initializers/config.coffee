@@ -10,12 +10,25 @@ loadConfig =  ->
   # to allow more granular config later
   pro = $('meta[name="travis.pro"]').attr('value') == 'true' || enterprise
 
+  if config.pro
+    pusher =
+      channels: []
+      channel_prefix: 'private-'
+      encrypted: true
+      key: ''
+  else
+    pusher =
+      channels: ['common']
+      channel_prefix: ''
+      encrypted: false
+
   return {
     syncingPageRedirectionTime: 5000
     api_endpoint:    $('meta[rel="travis.api_endpoint"]').attr('href')
     source_endpoint: $('meta[rel="travis.source_endpoint"]').attr('href')
     pusher_key:      $('meta[name="travis.pusher_key"]').attr('value')
     pusher_host:     $('meta[name="travis.pusher_host"]').attr('value')
+    pusher_path:     $('meta[name="travis.pusher_path"]').attr('value')
     ga_code:         $('meta[name="travis.ga_code"]').attr('value')
     code_climate: $('meta[name="travis.code_climate"]').attr('value')
     ssh_key_enabled: $('meta[name="travis.ssh_key_enabled"]').attr('value') == 'true'
@@ -38,14 +51,18 @@ loadConfig =  ->
     customer_io_site_id: customer_io_site_id
 
     intervals: { times: -1, updateTimes: 1000 }
+    pusher: pusher
   }
 
 initialize = (container, application) ->
-  application.register 'config:main', application.config, { instantiate: false }
+  config = application.config
+  application.register 'config:main', config, { instantiate: false }
 
   application.inject('controller', 'config', 'config:main')
   application.inject('route', 'config', 'config:main')
   application.inject('auth', 'config', 'config:main')
+
+  application.pusher.config = config
 
 ConfigInitializer =
   name: 'config'
