@@ -22,7 +22,7 @@ Auth = Ember.Object.extend
     @set('state', 'signed-out')
     @set('user', undefined)
     if user = @get('currentUser')
-      user.unload()
+      @store.unloadAll('user')
     @set('currentUser', null)
     @sendToApp('afterSignOut')
 
