@@ -4,8 +4,6 @@ config_keys_map = Travis.CONFIG_KEYS_MAP
 config = ENV.config
 githubCommitUrl = Travis.Urls.githubCommit
 timeago = $.timeago
-intersect = $.intersect
-only = $.only
 mapObject = $.map
 
 colors = {
@@ -15,6 +13,28 @@ colors = {
   errored:  'gray'
   canceled: 'gray'
 }
+
+mapObject = (elems, callback, arg) ->
+  value = undefined
+  key = undefined
+  ret = []
+  i = 0
+  for key of elems
+    value = callback(elems[key], key, arg)
+    ret[ret.length] = value  if value?
+  ret.concat.apply [], ret
+
+only = (object) ->
+  keys = Array::slice.apply(arguments)
+  object = (if (typeof keys[0] is 'object') then keys.shift() else this)
+  result = {}
+  for key of object
+    result[key] = object[key]  unless keys.indexOf(key) is -1
+  result
+
+intersect = (array, other) ->
+  array.filter (element) ->
+    other.indexOf(element) != -1
 
 compact = (object) ->
   result = {}

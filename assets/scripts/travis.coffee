@@ -21,6 +21,7 @@ if charm_key = $('meta[name="travis.charm_key"]').attr('value')
 
 require 'utils/ajax'
 
+require 'utils/keys-map'
 require 'utils/urls'
 require 'utils/helpers'
 require 'utils/status-image-formats'
