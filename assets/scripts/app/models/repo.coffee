@@ -7,7 +7,7 @@ EnvVar = Travis.EnvVar
 Build  = Travis.Build
 SshKey = Travis.SshKey
 Event = Travis.Event
-durationFrom = Travis.Helpers.durationFrom
+durationFromHelper = Travis.Helpers.durationFrom
 Ajax = Travis.ajax
 
 Repo = Model.extend
@@ -105,7 +105,7 @@ Repo = Model.extend
 
   lastBuildDuration: (->
     duration = @get('_lastBuildDuration')
-    duration = durationFrom(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
+    duration = durationFromHelper(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
     duration
   ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
