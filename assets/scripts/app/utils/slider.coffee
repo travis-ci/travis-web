@@ -17,6 +17,6 @@ Slider.prototype.toggle = ->
   # TODO gotta force redraws here :/
   element = $('<span></span>')
   $('#top .profile').append(element)
-  Em.run.later (-> element.remove()), 10
+  Ember.run.later (-> element.remove()), 10
 
 Travis.Slider = Slider
