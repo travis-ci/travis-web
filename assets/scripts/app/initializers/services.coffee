@@ -1,6 +1,5 @@
 config = ENV.config
 Slider = Travis.Slider
-Pusher = Travis.Pusher
 Tailing = Travis.Tailing
 ToTop = Travis.ToTop
 
