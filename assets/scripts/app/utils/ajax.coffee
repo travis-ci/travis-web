@@ -6,7 +6,7 @@ default_options =
   accepts:
     json: 'application/json; version=2'
 
-Travis.ajax = Em.Object.create
+ajax = Em.Object.create
   publicEndpoints: [/\/repos\/?.*/, /\/builds\/?.*/, /\/jobs\/?.*/]
   privateEndpoints: [/\/repos\/\d+\/caches/]
 
@@ -150,3 +150,5 @@ Travis.ajax = Em.Object.create
     xhr.send(data)
 
     return promise
+
+Travis.ajax = ajax
