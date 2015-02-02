@@ -60,14 +60,14 @@ Controller = Ember.ArrayController.extend
 
   userRepos: (->
     if login = @get('currentUser.login')
-      Travis.Repo.accessibleBy(@store, login)
+      Repo.accessibleBy(@store, login)
     else
       []
   ).property('currentUser.login')
 
   viewSearch: (phrase) ->
     @set('search', phrase)
-    @set('content', Travis.Repo.search(@store, phrase))
+    @set('content', Repo.search(@store, phrase))
 
   searchObserver: (->
     search = @get('search')

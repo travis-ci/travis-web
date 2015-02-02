@@ -1,4 +1,5 @@
 config = ENV.config
+Ajax = Travis.ajax
 
 Auth = Ember.Object.extend
   state:        "signed-out"
@@ -76,7 +77,7 @@ Auth = Ember.Object.extend
     @refreshUserData(data.user)
 
   refreshUserData: (user) ->
-    Travis.ajax.get "/users/#{user.id}", (data) =>
+    Ajax.get "/users/#{user.id}", (data) =>
       @store.pushPayload(users: [data.user])
       # if user is still signed in, update saved data
       if @get('signedIn')

@@ -42,7 +42,7 @@ ajax = Em.Object.create
     options = options || {}
 
     token = Travis.sessionStorage.getItem('travis.token')
-    if token && (Travis.ajax.needsAuth(method, url) || options.forceAuth)
+    if token && (ajax.needsAuth(method, url) || options.forceAuth)
       options.headers ||= {}
       options.headers['Authorization'] ||= "token #{token}"
 
