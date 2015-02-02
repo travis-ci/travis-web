@@ -39,7 +39,7 @@ App = Ember.Application.extend(Ember.Evented,
       }
       delete(data.build.commit)
 
-      store.pushPayload(commit: [commit])
+      store.pushPayload(commits: [commit])
 
     if event == 'job:log'
       console.log 'store: received job:log event', data if Log.DEBUG

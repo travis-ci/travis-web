@@ -77,7 +77,7 @@ Auth = Ember.Object.extend
 
   refreshUserData: (user) ->
     Travis.ajax.get "/users/#{user.id}", (data) =>
-      @store.push('user', data.user)
+      @store.pushPayload(users: [data.user])
       # if user is still signed in, update saved data
       if @get('signedIn')
         data.user.token = user.token
@@ -103,7 +103,7 @@ Auth = Ember.Object.extend
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
-    @store.push('user', user)
+    @store.pushPayload(users: [user])
     user = @store.find('user', user.id)
     user.get('permissions')
     user
