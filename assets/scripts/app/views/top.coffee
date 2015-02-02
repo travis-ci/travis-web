@@ -1,26 +1,28 @@
-@Travis.reopen
-  TopView: Travis.BasicView.extend
-    tabBinding: 'controller.tab'
+BasicView = Travis.BasicView
 
-    # hrm. how to parametrize bind-attr?
-    classHome: (->
-      'active' if @get('tab') == 'home'
-    ).property('tab')
+View = BasicView.extend
+  tabBinding: 'controller.tab'
 
-    classStats: (->
-      'active' if @get('tab') == 'stats'
-    ).property('tab')
+  # hrm. how to parametrize bind-attr?
+  classHome: (->
+    'active' if @get('tab') == 'home'
+  ).property('tab')
 
-    classProfile: (->
-      classes = ['profile menu']
-      classes.push('active') if @get('tab') == 'profile'
-      classes.push(@get('controller.auth.state') || 'signed-out')
-      classes.join(' ')
-    ).property('tab', 'controller.auth.state')
+  classStats: (->
+    'active' if @get('tab') == 'stats'
+  ).property('tab')
 
-    showProfile: ->
-      $('#top .profile ul').show()
+  classProfile: (->
+    classes = ['profile menu']
+    classes.push('active') if @get('tab') == 'profile'
+    classes.push(@get('controller.auth.state') || 'signed-out')
+    classes.join(' ')
+  ).property('tab', 'controller.auth.state')
 
-    hideProfile: ->
-      $('#top .profile ul').hide()
+  showProfile: ->
+    $('#top .profile ul').show()
 
+  hideProfile: ->
+    $('#top .profile ul').hide()
+
+Travis.TopView = View

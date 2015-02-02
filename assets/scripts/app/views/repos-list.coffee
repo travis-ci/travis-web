@@ -1,6 +1,6 @@
 colorForState = Travis.Helpers.colorForState
 
-View = Em.CollectionView.extend
+View = Ember.CollectionView.extend
   elementId: 'repos'
   tagName: 'ul'
 

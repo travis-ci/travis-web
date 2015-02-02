@@ -1,4 +1,4 @@
-class Travis.LinesSelector
+class LinesSelector
   Location:
     getHash: ->
       window.location.hash
@@ -71,3 +71,5 @@ class Travis.LinesSelector
       first = match[1]
       last = match[3] || match[1]
       {first: first, last: last}
+
+Travis.LinesSelector = LinesSelector

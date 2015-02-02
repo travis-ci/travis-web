@@ -1,2 +1,3 @@
-Travis.reopen
-  AnnotationsView: Travis.BasicView.extend
+View = Ember.View.extend()
+
+Travis.AnnotationsView = View

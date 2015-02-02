@@ -1,4 +1,4 @@
-Travis.LogChunks = Em.ArrayProxy.extend
+LogChunks = Ember.ArrayProxy.extend
   timeout: 30000
 
   init: ->
@@ -80,3 +80,5 @@ Travis.LogChunks = Em.ArrayProxy.extend
         Ember.run.once this, ->
           @tryFinalizing()
           @resetTimeout()
+
+Travis.LogChunks = LogChunks

@@ -1,8 +1,9 @@
 statusImage = Travis.Urls.statusImage
 StatusImagesView = Travis.StatusImagesView
 config = ENV.config
+BasicView = Travis.BasicView
 
-View = Travis.BasicView.extend
+View = BasicView.extend
   reposBinding: 'controllers.repos'
   repoBinding: 'controller.repo'
   buildBinding: 'controller.build'
@@ -23,11 +24,11 @@ View = Travis.BasicView.extend
     statusImages: () ->
       @popupCloseAll()
       view = StatusImagesView.create(toolsView: this)
-      Travis.BasicView.currentPopupView = view
+      BasicView.currentPopupView = view
       view.appendTo($('body'))
       return false
 
-  ReposEmptyView: Travis.BasicView.extend
+  ReposEmptyView: BasicView.extend
     template: (->
       if config.pro
         'pro/repos/show/empty'

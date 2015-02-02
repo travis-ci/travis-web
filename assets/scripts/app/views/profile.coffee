@@ -1,47 +1,15 @@
-Travis.reopen
-  ProfileView: Travis.BasicView.extend
-    templateName: 'profile/show'
-    layoutName: 'layouts/profile'
-    classNames: ['profile-view']
-    accountBinding: 'controller.account'
-    subscribedBinding: 'account.subscribed'
-    educationBinding: 'account.education'
+BasicView = Travis.BasicView
 
-    name: (->
-      @get('account.name') || @get('account.login')
-    ).property('account.name', 'account.login')
+View = BasicView.extend
+  templateName: 'profile/show'
+  layoutName: 'layouts/profile'
+  classNames: ['profile-view']
+  accountBinding: 'controller.account'
+  subscribedBinding: 'account.subscribed'
+  educationBinding: 'account.education'
 
-  ProfileTabsView: Travis.BasicView.extend
-    templateName: 'profile/tabs'
-    tabBinding: 'controller.tab'
+  name: (->
+    @get('account.name') || @get('account.login')
+  ).property('account.name', 'account.login')
 
-    activate: ->
-      @get('controller').activate(event.target.name)
-
-    classHooks: (->
-      'active' if @get('tab') == 'hooks'
-    ).property('tab')
-
-    classUser: (->
-      'active' if @get('tab') == 'user'
-    ).property('tab')
-
-    displayUser: (->
-      @get('controller.account.login') == @get('controller.user.login')
-    ).property('controller.account.login', 'controller.user.login')
-
-  HooksView: Travis.BasicView.extend
-    templateName: 'profile/tabs/hooks'
-    userBinding: 'controller.user'
-
-    urlGithubAdmin: (->
-      Travis.Urls.githubAdmin(@get('hook.slug'))
-    ).property('hook.slug')
-
-  AccountsInfoView: Travis.BasicView.extend
-    templateName: 'profile/tabs/user'
-    userBinding: 'controller.user'
-
-    gravatarUrl: (->
-      "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=200&d=mm"
-    ).property('user.gravatarId')
+ProfileView = View

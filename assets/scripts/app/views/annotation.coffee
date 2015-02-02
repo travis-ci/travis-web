@@ -1,4 +1,6 @@
-Travis.reopen
-  AnnotationsView: Travis.BasicView.extend
-    templateName: 'annotations/list'
+BasicView = Travis.BasicView
 
+View = BasicView.extend
+  templateName: 'annotations/list'
+
+Travis.AnnotationsView = View

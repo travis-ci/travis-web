@@ -1,8 +1,6 @@
 require 'views/basic'
 
-TravisView = Travis.BasicView
-
-View = TravisView.extend
+View = Ember.View.extend
   layoutName: 'layouts/dashboard'
   classNames: ['dashboard']
 

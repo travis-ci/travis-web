@@ -1,4 +1,6 @@
-Travis.StatusImagesView = Em.View.extend
+format = Travis.StatusImageFormats.format
+
+View = Ember.View.extend
   templateName: 'status_images'
   elementId: 'status-images'
   classNames: ['popup']
@@ -46,6 +48,7 @@ Travis.StatusImagesView = Em.View.extend
   ).observes('repo.branches', 'repo.branches.isLoaded', 'build.commit.branch')
 
   statusString: (->
-    Travis.StatusImageFormatter.format(@get('statusImageFormat'), @get('repo.slug'), @get('statusImageBranch.commit.branch'))
+    format(@get('statusImageFormat'), @get('repo.slug'), @get('statusImageBranch.commit.branch'))
   ).property('statusImageFormat', 'repo.slug', 'statusImageBranch.commit.branch')
 
+Travis.StatusImagesView = View

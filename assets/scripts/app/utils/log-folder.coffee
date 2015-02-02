@@ -1,4 +1,4 @@
-class Travis.LogFolder
+class LogFolder
   constructor: (@element) ->
     @element.on 'click', '.fold', (event) =>
       folder = @getFolderFromLine $(event.target)
@@ -22,3 +22,5 @@ class Travis.LogFolder
 
   getFolderFromLine: (line) ->
     line.parent('.fold')
+
+ Travis.LogFolder = LogFolder
