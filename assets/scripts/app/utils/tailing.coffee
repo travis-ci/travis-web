@@ -9,7 +9,8 @@ class Tailing
 
   constructor: (@window, @tail_selector, @log_selector) ->
     @position = @window.scrollTop()
-    @window.scroll( $.throttle( 200, @onScroll.bind(this) ) )
+    @window.scroll =>
+      Ember.run.throttle(this, @onScroll, [], 200, false)
     this
 
   run: ->

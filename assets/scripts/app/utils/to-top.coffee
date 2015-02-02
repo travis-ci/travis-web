@@ -6,7 +6,8 @@ class ToTop
   #       the calculations.
   constructor: (@window, @element_selector, @container_selector) ->
     @position = @window.scrollTop()
-    @window.scroll( $.throttle( 200, @onScroll.bind(this) ) )
+    @window.scroll =>
+      Ember.run.throttle(this, @onScroll, [], 200, false)
     this
 
   element: ->
