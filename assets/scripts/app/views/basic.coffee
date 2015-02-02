@@ -17,3 +17,4 @@ View = Ember.View.extend
     $('.popup').removeClass('display')
 
 Travis.BasicView = View
+Travis.View = View
