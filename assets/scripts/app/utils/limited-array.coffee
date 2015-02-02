@@ -1,9 +1,9 @@
-computedLimit = Ember.computed.limit
+limit = Ember.computed.limit
 
 LimitedArray = Ember.ArrayProxy.extend
   limit: 10
   isLoadedBinding: 'content.isLoaded'
-  arrangedContent: computedLimit('content', 'limit')
+  arrangedContent: limit('content', 'limit')
 
   totalLength: (->
     @get('content.length')
