@@ -1,6 +1,6 @@
-require 'routes/route'
+require 'routes/basic'
 
-TravisRoute = Travis.Route
+TravisRoute = Travis.BasicRoute
 
 Route = TravisRoute.extend
   needsAuth: false

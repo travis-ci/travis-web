@@ -1,6 +1,6 @@
 colorForState = Travis.Helpers.colorForState
 
-View = Travis.View.extend
+View = Travis.BasicView.extend
     classNameBindings: ['color', 'loading']
     buildBinding: 'controller.build'
     loadingBinding: 'controller.loading'

@@ -8,7 +8,7 @@ Log.LIMIT = 10000
 config = ENV.config
 
 Travis.reopen
-  LogView: Travis.View.extend
+  LogView: Travis.BasicView.extend
     templateName: 'jobs/log'
     logBinding: 'job.log'
 

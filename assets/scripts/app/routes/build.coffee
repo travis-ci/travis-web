@@ -1,7 +1,7 @@
-require 'routes/route'
+require 'routes/basic'
 require 'models/build'
 
-TravisRoute = Travis.Route
+TravisRoute = Travis.BasicRoute
 
 Route = TravisRoute.extend
   serialize: (model, params) ->

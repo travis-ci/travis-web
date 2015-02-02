@@ -1,5 +1,5 @@
 @Travis.reopen
-  ProfileAccountsView: Travis.View.extend
+  ProfileAccountsView: Travis.BasicView.extend
     tabBinding: 'controller.tab'
     templateName: 'profile/accounts'
     classAccounts: (->
@@ -14,7 +14,7 @@
     emptyView: Ember.View.extend
       template: Ember.Handlebars.compile('<div class="loading"><span>Loading</span></div>')
 
-    itemViewClass: Travis.View.extend
+    itemViewClass: Travis.BasicView.extend
       accountBinding: 'content'
       typeBinding: 'content.type'
       selectedBinding: 'account.selected'

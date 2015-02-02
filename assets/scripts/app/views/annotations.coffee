@@ -1,2 +1,2 @@
 Travis.reopen
-  AnnotationsView: Travis.View.extend
+  AnnotationsView: Travis.BasicView.extend

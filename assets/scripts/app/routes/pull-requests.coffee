@@ -1,4 +1,4 @@
-require 'routes/route'
+require 'routes/basic'
 
 AbstractBuildsRoute = Travis.AbstractBuildsRoute
 

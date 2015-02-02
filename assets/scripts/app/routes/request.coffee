@@ -1,7 +1,7 @@
-require 'routes/route'
+require 'routes/basic'
 require 'models/request'
 
-TravisRoute = Travis.Route
+TravisRoute = Travis.BasicRoute
 
 Route = TravisRoute.extend
   setupController: ->

@@ -1,4 +1,4 @@
-View = Travis.View.extend
+View = Travis.BasicView.extend
     tagName: 'tr'
     classNameBindings: ['color']
     repoBinding: 'context.repo'

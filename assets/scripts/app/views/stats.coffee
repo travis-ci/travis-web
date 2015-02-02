@@ -1,5 +1,5 @@
 @Travis.reopen
-  StatsView: Travis.View.extend
+  StatsView: Travis.BasicView.extend
     templateName: 'stats/show'
     didInsertElement: ->
       # @renderChart(config) for name, config of @CHARTS

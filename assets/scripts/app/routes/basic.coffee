@@ -18,4 +18,4 @@ Route = Ember.Route.extend
     config.pro
   ).property()
 
-Travis.Route = Route
+Travis.BasicRoute = Route

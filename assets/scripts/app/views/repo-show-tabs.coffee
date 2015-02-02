@@ -1,4 +1,4 @@
-View = Travis.View.extend
+View = Travis.BasicView.extend
   templateName: 'repos/show/tabs'
 
   tabBinding: 'controller.tab'

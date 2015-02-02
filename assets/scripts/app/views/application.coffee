@@ -1,5 +1,5 @@
 Travis.reopen
-  ApplicationView: Travis.View.extend
+  ApplicationView: Travis.BasicView.extend
     classNames: ['application']
     click: (event) ->
       # TODO: this solves the case of closing menus and popups,

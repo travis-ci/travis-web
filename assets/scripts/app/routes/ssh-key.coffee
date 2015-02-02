@@ -1,10 +1,10 @@
-require 'routes/route'
+require 'routes/basic'
 require 'models/ssh-key'
 require 'utils/ajax'
 
 SshKey = Travis.SshKey
 Ajax = Travis.ajax
-TravisRoute = Travis.Route
+TravisRoute = Travis.BasicRoute
 
 Route = TravisRoute.extend
   model: (params) ->

@@ -1,3 +1,3 @@
 @Travis.reopen
-  SigninView: Travis.View.extend
+  SigninView: Travis.BasicView.extend
     templateName: 'auth/signin'

@@ -1,5 +1,5 @@
 @Travis.reopen
-  TopView: Travis.View.extend
+  TopView: Travis.BasicView.extend
     tabBinding: 'controller.tab'
 
     # hrm. how to parametrize bind-attr?

@@ -7,7 +7,7 @@ View = Em.CollectionView.extend
   emptyView: Ember.View.extend
     template: Ember.Handlebars.compile('<div class="loading"><span>Loading</span></div>')
 
-  itemViewClass: Travis.View.extend
+  itemViewClass: Travis.BasicView.extend
     repoBinding: 'content'
     classNames: ['repo']
     classNameBindings: ['color', 'selected']

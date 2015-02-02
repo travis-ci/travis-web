@@ -1,6 +1,6 @@
 config = ENV.config
 
-View = Travis.View.extend
+View = Travis.BasicView.extend
   templateName: 'repos/show/actions'
 
   repoBinding: 'controller.repo'

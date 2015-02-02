@@ -1,5 +1,5 @@
 Travis.reopen
-  ProfileView: Travis.View.extend
+  ProfileView: Travis.BasicView.extend
     templateName: 'profile/show'
     layoutName: 'layouts/profile'
     classNames: ['profile-view']
@@ -11,7 +11,7 @@ Travis.reopen
       @get('account.name') || @get('account.login')
     ).property('account.name', 'account.login')
 
-  ProfileTabsView: Travis.View.extend
+  ProfileTabsView: Travis.BasicView.extend
     templateName: 'profile/tabs'
     tabBinding: 'controller.tab'
 
@@ -30,7 +30,7 @@ Travis.reopen
       @get('controller.account.login') == @get('controller.user.login')
     ).property('controller.account.login', 'controller.user.login')
 
-  HooksView: Travis.View.extend
+  HooksView: Travis.BasicView.extend
     templateName: 'profile/tabs/hooks'
     userBinding: 'controller.user'
 
@@ -38,7 +38,7 @@ Travis.reopen
       Travis.Urls.githubAdmin(@get('hook.slug'))
     ).property('hook.slug')
 
-  AccountsInfoView: Travis.View.extend
+  AccountsInfoView: Travis.BasicView.extend
     templateName: 'profile/tabs/user'
     userBinding: 'controller.user'
 

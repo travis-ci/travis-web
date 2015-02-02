@@ -10,10 +10,10 @@ View = Ember.View.extend
   popupClose: ->
     $('.popup').removeClass('display')
   popupCloseAll: ->
-    if view = Travis.View.currentPopupView
+    if view = Ember.View.currentPopupView
       view.destroy()
-      Travis.View.currentPopupView = null
+      Ember.View.currentPopupView = null
 
     $('.popup').removeClass('display')
 
-Travis.View = View
+Travis.BasicView = View

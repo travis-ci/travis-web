@@ -1,5 +1,5 @@
 @Travis.reopen
-  ReposView: Travis.View.extend
+  ReposView: Travis.BasicView.extend
     templateName: 'repos/list'
     tabBinding: 'controller.tab'
 

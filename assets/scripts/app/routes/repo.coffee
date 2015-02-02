@@ -1,8 +1,8 @@
-require 'routes/route'
+require 'routes/basic'
 require 'models/repo'
 
 Repo = Travis.Repo
-TravisRoute = Travis.Route
+TravisRoute = Travis.BasicRoute
 
 Route = TravisRoute.extend
   renderTemplate: ->

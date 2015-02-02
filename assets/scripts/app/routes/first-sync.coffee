@@ -1,4 +1,4 @@
-require 'routes/route'
+require 'routes/basic'
 require 'routes/simple-layout'
 require 'models/repo'
 

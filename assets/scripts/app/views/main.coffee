@@ -1,4 +1,4 @@
-View = Travis.View.extend
+View = Travis.BasicView.extend
   layoutName: 'layouts/home'
   classNames: ['main']
 

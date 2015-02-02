@@ -1,6 +1,6 @@
-require 'views/view'
+require 'views/basic'
 
-TravisView = Travis.View
+TravisView = Travis.BasicView
 
 View = TravisView.extend()
 

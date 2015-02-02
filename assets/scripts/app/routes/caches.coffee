@@ -1,10 +1,10 @@
-require 'routes/route'
+require 'routes/basic'
 require 'models/request'
 require 'utils/ajax'
 
 Request = Travis.Request
 Ajax = Travis.ajax
-TravisRoute = Travis.Route
+TravisRoute = Travis.BasicRoute
 
 Route = TravisRoute.extend
   needsAuth: true

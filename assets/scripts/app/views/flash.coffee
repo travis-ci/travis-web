@@ -1,10 +1,10 @@
 @Travis.reopen
-  FlashView: Travis.View.extend
+  FlashView: Travis.BasicView.extend
     classNames: ['flash']
     tagName: 'ul'
     templateName: 'layouts/flash'
 
-  FlashItemView: Travis.View.extend
+  FlashItemView: Travis.BasicView.extend
     tagName: 'li'
     classNameBindings: ['type']
 

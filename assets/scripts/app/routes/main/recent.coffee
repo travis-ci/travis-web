@@ -1,4 +1,4 @@
-require 'routes/route'
+require 'routes/basic'
 require 'routes/main-tab'
 
 MainTabRoute = Travis.MainTabRoute
