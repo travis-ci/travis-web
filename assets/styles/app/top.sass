@@ -1,35 +1,38 @@
 @import "app/_mixins/all"
 
 #top
-  line-height: 60px
-  background: #404650
-  font-size: $font-size-normal
+  position: static
+  font-size: $font-size-small
+  background  : $topbar-bg
+  height: 55px
+  overflow: hidden
 
-  #home
-    float: left
-    width: 123px
-    height: 55px
-    margin-right: 14px
-    text-indent: -9999px
-    background: #dc4136 inline-image('ui/travis-logo.svg') no-repeat 20px 18px
+  #logo
+    float        : left
+    width        : 123px
+    height       : 55px
+    margin-right : 14px
+    text-indent  : -9999px
+    background   : $logo-red inline-image('ui/travis-logo.svg') no-repeat 20px 18px
 
   ul
     list-style-type: none
+    line-height: 30px
 
   a, span
-    color: #ffffff
+    color: $white
     text-decoration: none
 
   li
-    display: inline-block
+    border-top: 1px solid $topbar-bg-darker
     a, span
       display: block
       padding: 0 12px
       &:hover
-        color: #ADC7D0
+        color: $color-link-top-highlight
   
   a.werehiring
-    background-color: #31363d
+    background-color: $topbar-bg-darker
     border-radius: 4px
     padding: 8px 16px
     line-height: 20px
@@ -40,6 +43,30 @@
     a
       padding-left: 0px
 
+  @media #{$medium-up}
+    overflow: visible
+    ul
+      line-height: 60px
+    li
+      display: inline-block
+      border: none
+
+  #burger
+    font-size: 50px
+    background: none
+    border: none
+    line-height: 1
+    color: $white
+    outline: none !important
+    @include clearfix
+    &:hover
+      cursor: pointer
+    @media #{$medium-up}
+      display: none
+
+  &.is-open
+    height: auto
+
   .menu
     position: relative
 
@@ -49,50 +76,36 @@
     &:hover > ul
       display: block
 
-    ul
-      display: none
-      position: absolute
-      z-index: 300
-      right: 0px
-      top: 55px
-      width: 100%
-      background-color: $color-bg-dropdown
+    ul li a
+      padding-left: 3em
 
-      li
-        display: block
-
-      a
-        display: block
-        line-height: 24px
-        white-space: nowrap
-        padding: 5px 20px
-        &:hover
-          background-color: $color-bg-dropdown-highlight
+    @media #{$medium-up}
+      ul
+        display: none
+        position: absolute
+        z-index: 300
+        right: 0px
+        top: 55px
+        width: 100%
+        background-color: $color-bg-dropdown
+        li
+          display: block
+        li a
+          display: block
+          line-height: 24px
+          white-space: nowrap
+          padding: 5px 20px
+          &:hover
+            background-color: $color-bg-dropdown-highlight
 
   .menu.community
     min-width: 120px
 
   .menu.profile
-    float: right
-
-    .handle > *
-      display: none
-      padding: 0 15px 0 45px
-    .signed-out, .signing-in
-      min-width: 110px
-    &.signed-out .signed-out
-      display: block
-    &.signing-in .signing-in
-      display: inline-block
-    &.signed-in .signed-in
-      display: block
-
     .signing-in
       background: inline-image('ui/spinner.svg') no-repeat 110px 22px
 
     img
-      float: right
-      margin: 13px 0 0 10px
       width: 30px
       height: 30px
       border-radius: 100px
@@ -101,9 +114,27 @@
 
     ul
       min-width: 145px
-
       a
         padding: 5px 25px 5px 45px
+
+    @media #{$medium-up}
+      float: right
+
+      .handle > *
+        display: none
+        padding: 0 15px 0 45px
+      .signed-out, .signing-in
+        min-width: 110px
+      &.signed-out .signed-out
+        display: block
+      &.signing-in .signing-in
+        display: inline-block
+      &.signed-in .signed-in
+        display: block
+
+      img
+        float: right
+        margin: 13px 0 0 10px
 
     &:not(.signed-in):hover ul
       display: none
@@ -117,4 +148,71 @@
     color: #ffffff
   a:hover
     color: $color-link-top-highlight
+
+
+// .status-graph
+//   background  : url('/images/dashboard/health-stats.svg') no-repeat
+//   background  : contain
+//   margin-top  : 17px
+//   height      : 18px
+//   width       : 78px
+//   text-indent : -9999px
+
+#user
+  text-align : right
+  cursor     : pointer
+
+#user p
+  display : none
+
+// #top img
+//   float  : right
+//   margin : -7px 10px 0 10px
+//   width  : 30px
+//   height : 30px
+//   border-radius: 100px
+
+#user ul
+  text-align : left
+  display    : inline
+  margin     : 0
+  padding    : 15px 0 17px 0
+  list-style : none
+  z-index    : 1000
+
+#user ul li ul
+  padding    : 0
+  position   : absolute
+  top        : 55px
+  right      : 0
+  width      : 150px
+  display    : none
+  opacity    : 0
+  visibility : hidden
+
+#user ul li ul li
+  background  : $topbar-bg
+  color       : $white
+  display     : block
+  line-height : 18px
+  padding     : 8px 18px
+  margin      : 0
+
+#user ul li ul li:last-child
+  border-bottom-left-radius  : 4px
+  border-bottom-right-radius : 4px
+
+#user ul li ul li:hover
+  background : #5e869a
+  color      : $white
+  a
+    color: $white
+
+
+#user ul li:hover ul
+  display    : block
+  opacity    : 1
+  visibility : visible
+#user .handle a
+  display: inline
 

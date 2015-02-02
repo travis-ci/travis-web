@@ -2,13 +2,13 @@
   {{render "top"}}
 </div>
 
-<div id="left">
-  {{outlet "left"}}
-</div>
-
 <div id="main">
   {{render "flash"}}
   {{yield}}
+</div>
+
+<div id="left">
+  {{outlet "left"}}
 </div>
 
 {{#if config.pro}}

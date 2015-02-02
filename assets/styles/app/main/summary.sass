@@ -1,4 +1,5 @@
 @import "app/_mixins/all"
+@import "app/foundation/scss/foundation/components/_grid"
 
 .green .build-status
   background: #549e54 inline-image('icons/state-passed-white.svg') no-repeat
@@ -26,11 +27,13 @@
   padding: 0 11px 0 51px
   position: relative
   min-height: 155px
-  padding-right: 240px
 
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN4/+HDfwAJcAPPMJixRQAAAABJRU5ErkJggg=='), #fafafa
   background-size: 41px 100%
   background-repeat: no-repeat
+
+  @media #{$large-up}
+    padding-right: 240px
 
   .mainline
     display: -webkit-flex
@@ -146,13 +149,20 @@
       display: inline-block
       max-width: 175px
       line-height: 24px
+      color: $color-link
 
   .right
-    width: 220px
     font-size: 11px
-    top: 10px
-    right: 10px
-    position: absolute
+
+    color: $color-link
+    a:hover
+      text-decoration: underline
+
+    @media #{$large-up}
+      position: absolute
+      top: 10px
+      right: 10px
+      width: 220px
 
   .footer
     a
@@ -168,6 +178,7 @@
       display: inline-block
       position: relative
       top: 2px
+      font-size: $font-size-small
 
     .author
       float: left

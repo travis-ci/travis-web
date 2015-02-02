@@ -2,39 +2,39 @@
 
 $left-width: 250px
 
-@mixin display-flex
-  display: -webkit-flex
-  display: -moz-flex
-  display: -ms-flexbox
-  display: flex
+// @mixin display-flex
+//   display: -webkit-flex
+//   display: -moz-flex
+//   display: -ms-flexbox
+//   display: flex
 
-@mixin flex($grow, $shrink, $size)
-  -ms-flex:     $grow $shrink $size
-  -webkit-flex: $grow $shrink $size
-  -moz-flex:    $grow $shrink $size
-  flex:         $grow $shrink $size
+// @mixin flex($grow, $shrink, $size)
+//   -ms-flex:     $grow $shrink $size
+//   -webkit-flex: $grow $shrink $size
+//   -moz-flex:    $grow $shrink $size
+//   flex:         $grow $shrink $size
 
-html, body
-  min-height: 100vh
+// html, body
+//   min-height: 100vh
 
-body > div:first-child
-  min-height: 100vh
+// body > div:first-child
+//   min-height: 100vh
 
 .main, .profile-view
   position: relative
   width: 100%
   min-height: 100vh
-  margin-top: 40px
-  @include display-flex
+  // margin-top: 40px
+  //@include display-flex
 
-#top
-  position: absolute
-  top: -40px
-  left: 0
-  width: 100%
-  min-width: 930px
-  height: 55px
-  z-index: 1000
+// #top
+//   position: absolute
+//   top: -40px
+//   left: 0
+//   width: 100%
+//   min-width: 930px
+//   height: 55px
+//   z-index: 1000
 
 #auth, #not-found, #simple
   #top
@@ -47,12 +47,21 @@ body > div:first-child
 #left, #right
   position: relative
   min-height: 100%
-  @include flex(0, 0, 25em)
+  //@include flex(0, 0, 25em)
 
 #left
+  float: left
   padding: 0 0 110px 0
   background-color: #fbfbfa
   border-right: 1px solid $color-border-normal
+
+@media #{$medium-up}
+  #left
+    width: grid-calc(8, 24)
+@media #{$large-up}
+  #left
+    width: grid-calc(5, 24)
+    max-width: 300px
 
 .duration_label
   display: inline-block
@@ -64,24 +73,23 @@ body > div:first-child
   background: inline-image('ui/clock.svg') no-repeat 0px 0px
   background-size: contain
 
-
-@media screen and (max-width: 980px)
-  #left
-    max-width: 300px
-
 #main
-  -webkit-flex: 1
-  -moz-flex:    1
-  -ms-flex:     1
-  flex:         1
   position: relative
-  min-width: 539px
-  padding: 20px 40px 80px 30px
+  padding: 20px 30px 80px
+
+@media #{$medium-up}
+  #main
+    width: grid-calc(16, 24)
+    float: right
+@media #{$medium-up}
+  #main
+    width: grid-calc(19, 24)
+    float: right
 
 .travis-lint
-  background-color: #fafafa
+  background-color: $travis-lint-bg
   width: 100%
-  color: #9b9d9e
+  color: $travis-lint-color
   margin: 10px 0 36px 0
   p
     padding: 10px
@@ -132,3 +140,14 @@ body > div:first-child
     min-width: 960px
   #tools
     display: none
+
+a
+  text-decoration : none
+
+.application,
+.dashboard
+  height: 100%
+
+
+.no-padding
+  padding : 0
