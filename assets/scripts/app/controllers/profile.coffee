@@ -6,7 +6,7 @@ Controller = Ember.Controller.extend
   accountBinding: 'controllers.account'
 
   activate: (action, params) ->
-    this["view#{$.camelize(action)}"]()
+    this["view_#{action}".camelize()]()
 
   viewHooks: ->
     @connectTab('hooks')
