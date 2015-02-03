@@ -1,10 +1,6 @@
-require 'utils/ajax'
-require 'models/model'
-
-Model = Travis.Model
-Ajax = Travis.ajax
-Account = Travis.Account
-config = ENV.config
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
+`import Ajax from 'travis/utils/ajax'`
 
 User = Model.extend
   name:        DS.attr()
@@ -88,4 +84,4 @@ User = Model.extend
     user[$.underscore(name)] = @get(name)
     Travis.sessionStorage.setItem('travis.user', JSON.stringify(user))
 
-Travis.User = User
+`export default User`

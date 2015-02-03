@@ -1,6 +1,5 @@
-require 'models/model'
-
-Model = Travis.Model
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
 
 EnvVar = Model.extend
   name:   DS.attr()
@@ -9,4 +8,4 @@ EnvVar = Model.extend
 
   repo: DS.belongsTo('repo', async: true)
 
-Travis.EnvVar = EnvVar
+`export default EnvVar`

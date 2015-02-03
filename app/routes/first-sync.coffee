@@ -1,9 +1,4 @@
-require 'routes/basic'
-require 'routes/simple-layout'
-require 'models/repo'
-
-SimpleLayoutRoute = Travis.SimpleLayoutRoute
-Repo = Travis.Repo
+`import SimpleLayoutRoute from 'travis/routes/simple-layout'`
 
 Route = SimpleLayoutRoute.extend
   activate: ->
@@ -35,4 +30,4 @@ Route = SimpleLayoutRoute.extend
       # do nothing, we are showing first sync, so it's normal that there is
       # no owned repos
 
-Travis.FirstSyncRoute = Route
+`export default Route`

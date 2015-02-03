@@ -1,10 +1,11 @@
-require 'utils/lines-selector'
-require 'utils/log-folder'
+`import LinesSelector from 'travis/utils/lines-selector'`
+`import LogFolder from 'travis/utils/log-folder'`
+`import config from 'travis/config/environment'`
+`import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls'`
+`import Log from 'travis/vendor/log'`
 
-config = ENV.config
-plainTextLogUrl = Travis.Urls.plainTextLog
-LogFolder = Travis.LogFolder
-LinesSelector = Travis.LinesSelector
+Log.DEBUG = false
+Log.LIMIT = 10000
 
 Log.Scroll = (options) ->
   options ||= {}
@@ -110,4 +111,5 @@ View = Ember.View.extend
 
   noop: -> # TODO required?
 
+`export default View`
 Travis.PreView = View

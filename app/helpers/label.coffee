@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 LabelView = Ember.View.extend(
   tagName: 'label'
 
@@ -29,4 +31,4 @@ label = (options) ->
 
   Ember.Handlebars.helpers.view.call(this, view, options)
 
-Travis.Handlebars.label = label
+`export default label`

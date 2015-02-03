@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   redirect: ->
@@ -11,5 +9,4 @@ Route = TravisRoute.extend
     account  = accounts.find (account) -> account.get('login') == login
     @replaceWith 'account', account
 
-
-Travis.AccountsIndexRoute = Route
+`export default Route`

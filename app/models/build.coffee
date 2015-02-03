@@ -1,13 +1,9 @@
-require 'models/model'
-require 'utils/duration-calculations'
-require 'utils/ajax'
-
-compact = Travis.Helpers.compact
-configKeys = Travis.Helpers.configKeys
-Ajax = Travis.ajax
-configKeysMap = Travis.CONFIG_KEYS_MAP
-DurationCalculations = Travis.DurationCalculations
-Model = Travis.Model
+`import { durationFrom, configKeys, compact } from 'travis/utils/helpers'`
+`import Ajax from 'travis/utils/ajax'`
+`import configKeysMap from 'travis/utils/keys-map'`
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
+`import DurationCalculations from 'travis/utils/duration-calculations'`
 
 Build = Model.extend DurationCalculations,
   state:             DS.attr()
@@ -108,4 +104,4 @@ Build = Model.extend DurationCalculations,
       moment(finishedAt).format('lll')
   ).property('finishedAt')
 
-Travis.Build = Build
+`export default Build`

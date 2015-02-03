@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 LogChunks = Ember.ArrayProxy.extend
   timeout: 30000
 
@@ -81,4 +83,4 @@ LogChunks = Ember.ArrayProxy.extend
           @tryFinalizing()
           @resetTimeout()
 
-Travis.LogChunks = LogChunks
+`export default LogChunks`

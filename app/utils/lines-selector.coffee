@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 class LinesSelector
   Location:
     getHash: ->
@@ -72,4 +74,4 @@ class LinesSelector
       last = match[3] || match[1]
       {first: first, last: last}
 
-Travis.LinesSelector = LinesSelector
+`export default LinesSelector`

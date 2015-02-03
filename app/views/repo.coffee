@@ -1,7 +1,7 @@
-statusImage = Travis.Urls.statusImage
-StatusImagesView = Travis.StatusImagesView
-config = ENV.config
-BasicView = Travis.BasicView
+`import { statusImage } from 'travis/utils/urls'`
+`import StatusImagesView from 'travis/views/status-images'`
+`import BasicView from 'travis/views/basic'`
+`import config from 'travis/config/environment'`
 
 View = BasicView.extend
   reposBinding: 'controllers.repos'
@@ -36,4 +36,4 @@ View = BasicView.extend
         ''
     ).property()
 
-Travis.RepoView = View
+`export default View`

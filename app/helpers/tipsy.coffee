@@ -1,6 +1,7 @@
-safe = Travis.Helpers.safe
+`import { safe } from 'travis/utils/helpers'`
+`import Ember from "ember"`
 
-tipsy = (text, tip) ->
+helper = Ember.Handlebars.makeBoundHelper (text, tip) ->
   safe '<span class="tool-tip" original-title="' + tip + '">' + text + '</span>'
 
-Travis.Handlebars.tipsy = tipsy
+`export default helper`

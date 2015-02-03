@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.Controller.extend
   #queryParams: ['filter']
   filter: null
@@ -24,4 +26,4 @@ Controller = Ember.Controller.extend
       @set('_lastFilterValue', value)
       Ember.run.throttle this, @updateFilter, [], 200, false
 
-Travis.DashboardRepositoriesController = Controller
+`export default Controller`

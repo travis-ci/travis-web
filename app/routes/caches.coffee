@@ -1,10 +1,6 @@
-require 'routes/basic'
-require 'models/request'
-require 'utils/ajax'
-
-Request = Travis.Request
-Ajax = Travis.ajax
-TravisRoute = Travis.BasicRoute
+`import Ember from 'ember'`
+`import TravisRoute from 'travis/routes/basic'`
+`import Ajax from 'travis/utils/ajax'`
 
 Route = TravisRoute.extend
   needsAuth: true
@@ -32,4 +28,4 @@ Route = TravisRoute.extend
       result
     )
 
-Travis.CachesRoute = Route
+`export default Route`

@@ -1,10 +1,10 @@
-safe = Travis.Helpers.safe
+`import { safe } from 'travis/utils/helpers'`
+`import Ember from "ember"`
 
-fn = (state) ->
+helper = Ember.Handlebars.makeBoundHelper (state) ->
   if state == 'received'
     'booting'
   else
     state
 
-
-Travis.Handlebars.humanizeState = fn
+`export default helper`

@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   setupController: (controller, model) ->
@@ -18,4 +16,4 @@ Route = TravisRoute.extend
     @controllerFor('build').set('build', null)
     @controllerFor('job').set('job', null)
 
-Travis.RepoIndexRoute = Route
+`export default Route`

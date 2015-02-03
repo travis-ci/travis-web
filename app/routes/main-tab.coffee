@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   renderTemplate: ->
@@ -27,4 +25,4 @@ Route = TravisRoute.extend
     redirectToGettingStarted: ->
       @transitionTo('getting_started')
 
-Travis.MainTabRoute = Route
+`export default Route`

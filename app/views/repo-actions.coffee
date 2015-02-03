@@ -1,6 +1,9 @@
-config = ENV.config
+`import Ember from 'ember'`
+`import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls'`
+`import Job from 'travis/models/job'`
+`import config from 'travis/config/environment'`
 
-View = Travis.BasicView.extend
+View = Ember.View.extend
   templateName: 'repos/show/actions'
 
   repoBinding: 'controller.repo'
@@ -117,7 +120,7 @@ View = Travis.BasicView.extend
 
   plainTextLogUrl: (->
     if id = @get('jobIdForLog')
-      url = Travis.Urls.plainTextLog(id)
+      url = plainTextLogUrl(id)
       if config.pro
         token = @get('job.log.token') || @get('build.jobs.firstObject.log.token')
         url += "&access_token=#{token}"
@@ -170,4 +173,4 @@ View = Travis.BasicView.extend
     @set('requeueing', true)
     thing.requeue().then(this.requeueFinished.bind(this), this.requeueFinished.bind(this))
 
-Travis.RepoActionsView = View
+`export default View`

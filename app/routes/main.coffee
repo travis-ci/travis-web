@@ -1,7 +1,8 @@
-require 'routes/basic'
+#require 'pusher'
+#channels = Travis.Pusher.CHANNELS
 
-TravisRoute = Travis.BasicRoute
-config = ENV.config
+`import TravisRoute from 'travis/routes/basic'`
+`import config from 'travis/config/environment'`
 
 Route = TravisRoute.extend
   renderTemplate: ->
@@ -21,4 +22,4 @@ Route = TravisRoute.extend
     if config.pusher.channels
       @get('pusher').subscribeAll(config.pusher.channels)
 
-Travis.MainRoute = Route
+`export default Route`

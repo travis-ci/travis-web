@@ -1,4 +1,5 @@
-limit = Ember.computed.limit
+`import Ember from 'ember'`
+`import limit from 'travis/utils/computed-limit'`
 
 LimitedArray = Ember.ArrayProxy.extend
   limit: 10
@@ -24,4 +25,4 @@ LimitedArray = Ember.ArrayProxy.extend
   showAll: ->
     @set 'limit', Infinity
 
-Travis.LimitedArray = LimitedArray
+`export default LimitedArray`

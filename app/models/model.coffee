@@ -1,3 +1,3 @@
-Model = DS.Model.extend()
+`import DS from 'ember-data';`
 
-Travis.Model = Model
+`export default DS.Model.extend();`

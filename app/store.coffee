@@ -1,5 +1,7 @@
+`import DS from 'ember-data'`
+
 Store = DS.Store.extend
   defaultAdapter: 'application'
   adapter: 'application'
 
-Travis.Store = Store
+`export default Store`

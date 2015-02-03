@@ -1,4 +1,5 @@
-ApplicationSerializer = Travis.ApplicationSerializer
+`import Ember from 'ember'`
+`import ApplicationSerializer from 'travis/serializers/application'`
 
 Serializer = ApplicationSerializer.extend
   attrs: {
@@ -14,4 +15,4 @@ Serializer = ApplicationSerializer.extend
 
     @_super(store, primaryType, rawPayload, recordId)
 
-Travis.BuildSerializer = Serializer
+`export default Serializer`

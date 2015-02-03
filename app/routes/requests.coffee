@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   needsAuth: true
@@ -12,4 +10,4 @@ Route = TravisRoute.extend
   model: ->
     @store.find 'request', repository_id: @modelFor('repo').get('id')
 
-Travis.RequestsRoute = Route
+`export default Route`

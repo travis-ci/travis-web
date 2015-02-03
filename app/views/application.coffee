@@ -1,4 +1,4 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   classNames: ['application']
@@ -16,4 +16,4 @@ View = BasicView.extend
     if ! targetAndParents.hasClass('menu') && !targetAndParents.is('#tools > a')
       $('.menu').removeClass('display')
 
-ApplicationView = View
+`export default View`

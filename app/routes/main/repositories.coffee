@@ -1,7 +1,4 @@
-require 'routes/basic'
-require 'routes/main-tab'
-
-MainTabRoute = Travis.MainTabRoute
+`import MainTabRoute from 'travis/routes/main-tab'`
 
 Route = MainTabRoute.extend
   needsAuth: true
@@ -9,4 +6,4 @@ Route = MainTabRoute.extend
   afterModel: ->
     @controllerFor('repos').possiblyRedirectToGettingStartedPage()
 
-Travis.MainRepositoriesRoute = Route
+`export default Route`

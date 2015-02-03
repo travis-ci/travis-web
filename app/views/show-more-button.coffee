@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 View = Ember.View.extend
   tagName: 'button'
   classNameBindings: ['isLoading', 'showMore']
@@ -15,4 +17,4 @@ View = Ember.View.extend
   click: ->
     @get('controller').showMore()
 
-Travis.ShowMoreButtonView = View
+`export default View`

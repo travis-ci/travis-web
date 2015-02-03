@@ -1,9 +1,8 @@
-require 'utils/location'
-require 'routes/application'
-
-config = ENV.config
+`import Ember from 'ember'`
+`import config from './config/environment'`
 
 Router = Ember.Router.extend
+  # TODO: we should use TravisLocation here
   location: 'history'
 
   handleURL: (url) ->
@@ -54,4 +53,4 @@ Router.map ->
 
   @route 'notFound', path: "/*path"
 
-Travis.Router = Router
+`export default Router`

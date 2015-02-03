@@ -1,7 +1,7 @@
-timeAgoInWords = Travis.Helpers.timeAgoInWords
-safe = Travis.Helpers.safe
+`import { timeAgoInWords, safe } from 'travis/utils/helpers'`
+`import Ember from "ember"`
 
-formatTime = (value, options) ->
+helper = Ember.Handlebars.makeBoundHelper (value, options) ->
   safe timeAgoInWords(value) || '-'
 
-Travis.Handlebars.formatTime = formatTime
+`export default helper`

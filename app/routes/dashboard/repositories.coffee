@@ -1,6 +1,5 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import Ember from 'ember'`
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   queryParams:
@@ -16,4 +15,4 @@ Route = TravisRoute.extend
         Ember.Object.create(repo)
       )
 
-Travis.DashboardRepositoriesRoute = Route
+`export default Route`

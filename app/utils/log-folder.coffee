@@ -23,4 +23,4 @@ class LogFolder
   getFolderFromLine: (line) ->
     line.parent('.fold')
 
- Travis.LogFolder = LogFolder
+`export default LogFolder`

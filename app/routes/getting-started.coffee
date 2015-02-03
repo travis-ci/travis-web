@@ -1,7 +1,5 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend()
 
-Travis.GettingStartedRoute = Route
+`export default Route`

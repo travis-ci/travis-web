@@ -1,8 +1,5 @@
-BasicView = Travis.BasicView
-
-Log.DEBUG = false
-Log.LIMIT = 10000
-config = ENV.config
+`import BasicView from 'travis/views/basic'`
+`import config from 'travis/config/environment'`
 
 View = BasicView.extend
   templateName: 'jobs/log'
@@ -32,4 +29,4 @@ View = BasicView.extend
       job.get('log').fetch()
       job.subscribe()
 
-Travis.LogView = View
+`export default View`

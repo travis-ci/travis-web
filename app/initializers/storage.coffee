@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Storage = Em.Object.extend
   init: ->
     @set('storage', {})
@@ -52,5 +54,5 @@ StorageInitializer =
   before: 'services'
   initialize: initialize
 
-Ember.onLoad 'Ember.Application', (Application) ->
-  Application.initializer StorageInitializer
+`export {initialize}`
+`export default StorageInitializer`

@@ -1,7 +1,4 @@
-require 'routes/basic'
-require 'routes/main-tab'
-
-MainTabRoute = Travis.MainTabRoute
+`import MainTabRoute from 'travis/routes/main-tab'`
 
 Route = MainTabRoute.extend
   renderTemplate: ->
@@ -24,4 +21,4 @@ Route = MainTabRoute.extend
 
     @controllerFor('repos').set('search', undefined)
 
-Travis.MainSearchRoute = Route
+`export default Route`

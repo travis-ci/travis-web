@@ -1,6 +1,5 @@
-require 'models/model'
-
-Model = Travis.Model
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
 
 Request = Model.extend
   created_at:        DS.attr()
@@ -30,4 +29,4 @@ Request = Model.extend
     @get('event_type') == 'pull_request'
   ).property('event_type')
 
-Travis.Request = Request
+`export default Request`

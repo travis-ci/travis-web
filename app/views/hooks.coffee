@@ -1,5 +1,5 @@
-BasicView = Travis.BasicView
-githubAdminUrl = Travis.Urls.githubAdmin
+`import BasicView from 'travis/views/basic'`
+`import { githubAdmin as githubAdminUrl } from 'travis/utils/urls'`
 
 View = BasicView.extend
   templateName: 'profile/tabs/hooks'
@@ -9,4 +9,4 @@ View = BasicView.extend
     githubAdminUrl(@get('hook.slug'))
   ).property('hook.slug')
 
-HooksView = View
+`export default View`

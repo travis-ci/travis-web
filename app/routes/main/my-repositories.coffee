@@ -1,9 +1,7 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   redirect: ->
     @transitionTo("main.repositories")
 
-Travis.MainMyRepositoriesRoute = Route
+`export default Route`

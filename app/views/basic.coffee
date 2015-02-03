@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 View = Ember.View.extend
   actions:
     popup: (name) -> @popup(name)
@@ -16,5 +18,4 @@ View = Ember.View.extend
 
     $('.popup').removeClass('display')
 
-Travis.BasicView = View
-Travis.View = View
+`export default View`

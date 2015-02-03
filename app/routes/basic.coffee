@@ -1,4 +1,5 @@
-config = ENV.config
+`import config from 'travis/config/environment'`
+`import Ember from 'ember'`
 
 Route = Ember.Route.extend
   beforeModel: (transition) ->
@@ -18,4 +19,4 @@ Route = Ember.Route.extend
     config.pro
   ).property()
 
-Travis.BasicRoute = Route
+`export default Route`

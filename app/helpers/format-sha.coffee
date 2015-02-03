@@ -1,7 +1,7 @@
-formatShaHelper = Travis.Helpers.formatSha
-safe = Travis.Helpers.safe
+`import { formatSha as _formatSha, safe } from 'travis/utils/helpers'`
+`import Ember from "ember"`
 
-formatSha = (sha) ->
-  safe formatShaHelper(sha)
+helper = Ember.Handlebars.makeBoundHelper (sha) ->
+  safe _formatSha(sha)
 
-Travis.Handlebars.formatSha = formatSha
+`export default helper`

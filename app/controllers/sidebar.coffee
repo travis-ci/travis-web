@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ArrayController.extend
   init: ->
     @_super.apply this, arguments
@@ -14,4 +16,4 @@ Controller = Ember.ArrayController.extend
       tips[Math.floor(Math.random()*tips.length)]
   ).property().volatile()
 
-Travis.SidebarController = Controller
+`export default Controller`

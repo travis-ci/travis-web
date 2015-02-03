@@ -1,6 +1,7 @@
-durationFrom = Travis.Helpers.durationFrom
+`import Ember from 'ember'`
+`import { durationFrom } from 'travis/utils/helpers'`
 
-Travis.DurationCalculations = Ember.Mixin.create
+mixin = Ember.Mixin.create
   duration: (->
     if @get('notStarted')
       null
@@ -14,3 +15,5 @@ Travis.DurationCalculations = Ember.Mixin.create
     unless @get('isFinished')
       @notifyPropertyChange '_duration'
       @notifyPropertyChange 'finished_at'
+
+`export default mixin`

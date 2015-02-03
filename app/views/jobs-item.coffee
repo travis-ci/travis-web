@@ -1,5 +1,5 @@
-colorForState = Travis.Helpers.colorForState
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
+`import { colorForState } from 'travis/utils/helpers'`
 
 View = BasicView.extend
     tagName: 'tr'
@@ -11,4 +11,4 @@ View = BasicView.extend
       colorForState(@get('job.state'))
     ).property('job.state')
 
-Travis.JobsItemView = View
+`export default View`

@@ -1,5 +1,5 @@
-config = ENV.config
-Ajax = Travis.ajax
+`import config from 'travis/config/environment'`
+`import Ajax from 'travis/utils/ajax'`
 
 Auth = Ember.Object.extend
   state:        "signed-out"
@@ -144,4 +144,4 @@ Auth = Ember.Object.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('currentUser.gravatarId')}?s=48&d=mm"
   ).property('currentUser.gravatarId')
 
-window.Auth = Auth
+`export default Auth`

@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Slider = (storage) ->
   @minimize() if storage.getItem('travis.maximized') == 'true'
   this
@@ -19,4 +21,4 @@ Slider.prototype.toggle = ->
   $('#top .profile').append(element)
   Ember.run.later (-> element.remove()), 10
 
-Travis.Slider = Slider
+`export default Slider`

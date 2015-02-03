@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.Controller.extend
   needs: ['currentUser']
   userBinding: 'controllers.currentUser'
@@ -10,4 +12,4 @@ Controller = Ember.Controller.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
   ).property('user.gravatarId')
 
-Travis.TopController = Controller
+`export default Controller`

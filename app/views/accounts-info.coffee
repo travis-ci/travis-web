@@ -1,4 +1,4 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   templateName: 'profile/tabs/user'
@@ -8,4 +8,4 @@ View = BasicView.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=200&d=mm"
   ).property('user.gravatarId')
 
-AccountsInfoView = View
+`export default View`

@@ -1,6 +1,6 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   templateName: 'auth/signin'
 
-Travis.SigninView = View
+`export default View`

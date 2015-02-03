@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.Controller.extend()
 
-Travis.MainErrorController = Controller
+`export default Controller`

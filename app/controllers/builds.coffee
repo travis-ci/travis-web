@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ArrayController.extend
   isPullRequestsList: false
 
@@ -27,4 +29,4 @@ Controller = Ember.ArrayController.extend
 
     @store.find('build', options)
 
-Travis.BuildsController = Controller
+`export default Controller`

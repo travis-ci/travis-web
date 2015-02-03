@@ -1,4 +1,5 @@
-config = ENV.config
+`import DS from 'ember-data'`
+`import config from 'travis/config/environment'`
 
 Adapter = DS.ActiveModelAdapter.extend
   host: config.api_endpoint
@@ -15,5 +16,4 @@ Adapter = DS.ActiveModelAdapter.extend
 
     hash
 
-
-Travis.ApplicationAdapter = Adapter
+`export default Adapter`

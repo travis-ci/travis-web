@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ArrayController.extend
   needs: ['repo']
   repo: Ember.computed.alias('controllers.repo.repo')
@@ -7,4 +9,4 @@ Controller = Ember.ArrayController.extend
     "https://lint.travis-ci.org/#{slug}"
   ).property('repo.slug')
 
-Travis.RequestsController = Controller
+`export default Controller`

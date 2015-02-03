@@ -1,5 +1,6 @@
-colorForState = Travis.Helpers.colorForState
-GithubUrlProperties = Travis.GithubUrlProperties
+`import Ember from 'ember'`
+`import { colorForState } from 'travis/utils/helpers'`
+`import GithubUrlProperties from 'travis/mixins/github-url-properties'`
 
 Controller = Ember.ObjectController.extend(GithubUrlProperties,
   needs: ['builds']
@@ -11,4 +12,4 @@ Controller = Ember.ObjectController.extend(GithubUrlProperties,
   ).property('build.state')
 )
 
-Travis.BuildsItemController = Controller
+`export default Controller`

@@ -1,5 +1,7 @@
-View = Travis.BasicView.extend
+`import Ember from 'ember'`
+
+View = Ember.View.extend
   layoutName: 'layouts/home'
   classNames: ['main']
 
-Travis.MainView = View
+`export default View`

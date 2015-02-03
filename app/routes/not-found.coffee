@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   renderTemplate: ->
@@ -8,4 +6,4 @@ Route = TravisRoute.extend
 
     @render 'not_found'
 
-Travis.NotFoundRoute = Route
+`export default Route`

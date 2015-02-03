@@ -1,4 +1,4 @@
-config = ENV.config
+`import config from 'travis/config/environment'`
 
 TravisPusher = (config) ->
   @init(config)
@@ -167,4 +167,4 @@ if config.pro
       ]
     ]
 
-Travis.Pusher = TravisPusher
+`export default TravisPusher`

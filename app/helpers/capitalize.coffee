@@ -1,9 +1,10 @@
-safe = Travis.Helpers.safe
+`import { safe } from 'travis/utils/helpers'`
+`import Ember from "ember"`
 
-capitalize = (value, options) ->
+helper = Ember.Handlebars.makeBoundHelper (value, options) ->
   if value?
     safe $.capitalize(value)
   else
     ''
 
-Travis.Handlebars.capitalize = capitalize
+`export default helper`

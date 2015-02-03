@@ -1,4 +1,5 @@
-githubRepo = Travis.Urls.githubRepo
+`import Ember from 'ember'`
+`import { githubRepo } from 'travis/utils/urls'`
 
 Controller = Ember.Controller.extend
   needs: ['repos', 'currentUser', 'build', 'request', 'job']
@@ -93,4 +94,4 @@ Controller = Ember.Controller.extend
     githubRepo(@get('repo.slug'))
   ).property('repo.slug')
 
-Travis.RepoController = Controller
+`export default Controller`

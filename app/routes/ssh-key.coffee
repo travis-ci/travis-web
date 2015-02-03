@@ -1,10 +1,6 @@
-require 'routes/basic'
-require 'models/ssh-key'
-require 'utils/ajax'
-
-SshKey = Travis.SshKey
-Ajax = Travis.ajax
-TravisRoute = Travis.BasicRoute
+`import Ember from 'ember'`
+`import Ajax from 'travis/utils/ajax'`
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   model: (params) ->
@@ -35,4 +31,4 @@ Route = TravisRoute.extend
 
     @controllerFor('ssh_key').send('cancel')
 
-Travis.SshKeyRoute = Route
+`export default Route`

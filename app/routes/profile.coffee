@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   needsAuth: true
@@ -13,4 +11,4 @@ Route = TravisRoute.extend
     @_super.apply(this, arguments)
     @render 'loading', outlet: 'left', into: 'profile'
 
-Travis.ProfileRoute = Route
+`export default Route`

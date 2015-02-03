@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 TextField = Ember.TextField.extend
   keyUp: (event) ->
     @sendAction('action', @get('_value'), event)
@@ -13,4 +15,4 @@ fn = (options) ->
   options.hash.onEvent = onEvent || 'enter'
   return Ember.Handlebars.helpers.view.call(this, TextField, options)
 
-Travis.Handlebars.filterInput = fn
+`export default fn`

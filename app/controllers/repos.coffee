@@ -1,7 +1,6 @@
-require 'utils/limited-array'
-
-Repo = Travis.Repo
-limit = Ember.computed.limit
+`import Ember from 'ember'`
+`import limit from 'travis/utils/computed-limit'`
+`import Repo from 'travis/models/repo'`
 
 Controller = Ember.ArrayController.extend
   actions:
@@ -92,4 +91,4 @@ Controller = Ember.ArrayController.extend
     'Could not find any repos'
   ).property('tab')
 
-Travis.ReposController = Controller
+`export default Controller`

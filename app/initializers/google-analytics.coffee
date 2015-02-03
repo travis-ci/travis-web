@@ -1,4 +1,4 @@
-config = ENV.config
+`import config from 'travis/config/environment'`
 
 initialize = (container) ->
   if config.ga_code
@@ -16,5 +16,5 @@ GAInitializer =
   name: 'google-analytics'
   initialize: initialize
 
-Ember.onLoad 'Ember.Application', (Application) ->
-  Application.initializer GAInitializer
+`export {initialize}`
+`export default GAInitializer`

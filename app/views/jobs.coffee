@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 View = Ember.View.extend
   templateName: 'jobs'
   buildBinding: 'controller.build'
@@ -17,4 +19,4 @@ View = Ember.View.extend
       @popupCloseAll()
       @popup('help-allowed_failures')
 
-Travis.JobsView = View
+`export default View`

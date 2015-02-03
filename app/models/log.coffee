@@ -1,7 +1,8 @@
-require 'utils/log-chunks'
-
-Ajax = Travis.ajax
-config = ENV.config
+`import Model from 'travis/models/model'`
+`import Ajax from 'travis/utils/ajax'`
+`import Job from 'travis/models/job'`
+`import Ember from 'ember'`
+`import config from 'travis/config/environment'`
 
 Request = Ember.Object.extend
   HEADERS:
@@ -98,4 +99,4 @@ Log = Ember.Object.extend
     @append(number: 1, content: text, final: true)
     @set('isLoaded', true)
 
-Travis.Log = Log
+`export default Log`

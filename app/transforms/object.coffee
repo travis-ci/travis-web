@@ -1,3 +1,5 @@
+`import DS from 'ember-data'`
+
 Transform = DS.Transform.extend
   deserialize: (serialized) ->
     serialized
@@ -5,4 +7,4 @@ Transform = DS.Transform.extend
   serialize: (deserialized) ->
     deserialized
 
-Travis.ObjectTransform = Transform
+`export default Transform`

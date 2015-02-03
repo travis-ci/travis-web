@@ -1,7 +1,6 @@
-safe = Travis.Helpers.safe
-formatCommitHelper = Travis.Helpers.formatCommit
+`import { safe, formatCommit as formatCommitHelper } from 'travis/utils/helpers'`
 
-formatCommit = (commit) ->
+helper = Ember.Handlebars.makeBoundHelper (commit) ->
   safe formatCommitHelper(commit.get('sha'), commit.get('branch')) if commit
 
-Travis.Handlebars.formatCommit = formatCommit
+`export default helper`

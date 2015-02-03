@@ -1,7 +1,5 @@
-require 'routes/basic'
-
-AbstractBuildsRoute = Travis.AbstractBuildsRoute
+`import AbstractBuildsRoute from 'travis/routes/abstract-builds'`
 
 Route = AbstractBuildsRoute.extend(contentType: 'builds')
 
-Travis.BuildsRoute = Route
+`export default Route`

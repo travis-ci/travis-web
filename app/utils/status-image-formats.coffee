@@ -1,7 +1,4 @@
-require 'utils/urls'
-
-ccXmlUrl = Travis.Urls.ccXml
-statusImageUrl = Travis.Urls.statusImage
+`import { ccXml as ccXmlUrl, statusImage as statusImageUrl } from 'travis/utils/urls'`
 
 urlRepo = ( (slug) ->
   "https://#{location.host}/#{slug}"
@@ -49,7 +46,4 @@ format = (version, slug, branch) ->
     when 'CCTray' then ccxmlStatusUrl(url, slug, branch)
 
 
-
-Travis.StatusImageFormats = {
-  format: format
-}
+`export default format`

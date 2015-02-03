@@ -1,7 +1,6 @@
-require 'utils/limited-array'
-
-LimitedArray = Travis.LimitedArray
-Broadcast = Travis.Broadcast
+`import Ember from 'ember'`
+`import LimitedArray from 'travis/utils/limited-array'`
+`import Broadcast from 'travis/models/broadcast'`
 
 Controller = Ember.ArrayController.extend
   needs: ['currentUser']
@@ -46,4 +45,4 @@ Controller = Ember.ArrayController.extend
     close: (msg) ->
       @close(msg)
 
-Travis.FlashController = Controller
+`export default Controller`

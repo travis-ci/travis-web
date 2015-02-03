@@ -1,6 +1,5 @@
-get = Ember.get
-
-ApplicationAdapter = Travis.ApplicationAdapter
+`import Ember from 'ember'`
+`import ApplicationAdapter from 'adapters/application'`
 
 Adapter = ApplicationAdapter.extend
   namespace: 'settings'
@@ -12,4 +11,4 @@ Adapter = ApplicationAdapter.extend
 
     this.ajax(this.buildURL(type.typeKey, null, record), "POST", { data: data })
 
-Travis.SshKeyAdapter = Adapter
+`export default Adapter`

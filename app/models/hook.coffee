@@ -1,8 +1,5 @@
-require 'models/model'
-
-config = ENV.config
-
-Model = Travis.Model
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
 
 Hook = Model.extend
   name:        DS.attr()
@@ -33,4 +30,4 @@ Hook = Model.extend
     @set 'active', !@get('active')
     @save()
 
-Travis.Hook = Hook
+`export default Hook`

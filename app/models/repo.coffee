@@ -1,15 +1,10 @@
-require 'utils/expandable-record-array'
-require 'models/model'
-
-Model = Travis.Model
-ExpandableRecordArray = Travis.ExpandableRecordArray
-EnvVar = Travis.EnvVar
-Build  = Travis.Build
-SshKey = Travis.SshKey
-Event = Travis.Event
-durationFromHelper = Travis.Helpers.durationFrom
-Ajax = Travis.ajax
-
+`import ExpandableRecordArray from 'travis/utils/expandable-record-array'`
+`import Model from 'travis/models/model'`
+`import Ajax from 'travis/utils/ajax'`
+# TODO: Investigate for some weird reason if I use durationFrom here not durationFromHelper,
+#       the function stops being visible inside computed properties.
+`import { durationFrom as durationFromHelper } from 'travis/utils/helpers'`
+`import Build from 'travis/models/build'`
 Repo = Model.extend
   slug:                DS.attr()
   description:         DS.attr()
@@ -184,4 +179,4 @@ Repo.reopenClass
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'
 
-Travis.Repo = Repo
+`export default Repo`

@@ -1,4 +1,6 @@
-View = Travis.BasicView.extend
+`import Ember from 'ember'`
+
+View = Ember.View.extend
   templateName: 'repos/show/tools'
 
   repoBinding: 'controller.repo'
@@ -73,4 +75,4 @@ View = Travis.BasicView.extend
     @get('hasPermission')
   ).property('hasPermission')
 
-Travis.RepoShowToolsView = View
+`export default View`

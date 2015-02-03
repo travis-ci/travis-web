@@ -1,6 +1,5 @@
-require 'models/model'
-
-Model = Travis.Model
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
 
 Broadcast = Model.extend
   message: DS.attr()
@@ -27,4 +26,4 @@ Broadcast.reopenClass
   # TODO fix or monkey-patch the adapter's url and key lookup/generation crap
   # url: 'users/broadcasts'
 
-Travis.Broadcast = Broadcast
+`export default Broadcast`

@@ -1,6 +1,6 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   layoutName: 'layouts/simple'
 
-Travis.FirstSyncView = View
+`export default View`

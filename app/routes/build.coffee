@@ -1,7 +1,4 @@
-require 'routes/basic'
-require 'models/build'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   serialize: (model, params) ->
@@ -25,4 +22,4 @@ Route = TravisRoute.extend
     @controllerFor('job').set('job', null)
     @controllerFor('build').set('build', null)
 
-Travis.BuildRoute = Route
+`export default Route`

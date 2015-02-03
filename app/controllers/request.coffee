@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ObjectController.extend
   requestClass: (->
     if @get('content.isAccepted')
@@ -28,4 +30,4 @@ Controller = Ember.ObjectController.extend
       message
   ).property('model.message')
 
-Travis.RequestController = Controller
+`export default Controller`

@@ -1,4 +1,5 @@
-githubCommit = Travis.Urls.githubCommit
+`import Ember from 'ember'`
+`import { githubCommit } from 'travis/utils/urls'`
 
 Controller = Ember.Controller.extend
   needs: ['repo']
@@ -15,4 +16,4 @@ Controller = Ember.Controller.extend
     githubCommit(@get('repo.slug'), @get('commit.sha'))
   ).property('repo.slug', 'commit.sha')
 
-Travis.JobController = Controller
+`export default Controller`

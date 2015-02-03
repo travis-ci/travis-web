@@ -1,4 +1,5 @@
-colorForState = Travis.Helpers.colorForState
+`import Ember from 'ember'`
+`import colorForState from 'travis/utils/helpers'`
 
 View = Ember.CollectionView.extend
   elementId: 'repos'
@@ -7,7 +8,7 @@ View = Ember.CollectionView.extend
   emptyView: Ember.View.extend
     template: Ember.Handlebars.compile('<div class="loading"><span>Loading</span></div>')
 
-  itemViewClass: Travis.BasicView.extend
+  itemViewClass: Ember.View.extend
     repoBinding: 'content'
     classNames: ['repo']
     classNameBindings: ['color', 'selected']
@@ -16,10 +17,11 @@ View = Ember.CollectionView.extend
     ).property('controller.selectedRepo')
 
     color: (->
-      colorForState(@get('repo.lastBuildState'))
+      # TODO: temp comment
+      #colorForState(@get('repo.lastBuildState'))
     ).property('repo.lastBuildState')
 
     click: ->
       @get('controller').transitionToRoute('/' + @get('repo.slug'))
 
-Travis.ReposListView = View
+`export default View`

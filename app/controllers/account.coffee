@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ObjectController.extend
   allHooks: []
   needs: ['currentUser']
@@ -45,4 +47,4 @@ Controller = Ember.ObjectController.extend
     @config.show_repos_hint == 'public'
   ) .property()
 
-Travis.AccountController = Controller
+`export default Controller`

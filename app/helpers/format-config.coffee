@@ -1,8 +1,6 @@
-formatConfigHelper = Travis.Helpers.formatConfig
-safe = Travis.Helpers.safe
+`import { safe, formatConfig as formatConfigHelper } from 'travis/utils/helpers'`
 
 formatConfig = (config, options) ->
   safe formatConfigHelper(config)
 
-Travis.Handlebars.formatConfig = formatConfig
-
+`export default helper`

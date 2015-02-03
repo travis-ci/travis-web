@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   model: ->
@@ -11,4 +9,4 @@ Route = TravisRoute.extend
     @render 'profile_accounts', outlet: 'left', into: 'profile'
 
 
-Travis.AccountsRoute = Route
+`export default Route`

@@ -1,6 +1,5 @@
-require 'models/model'
-
-Model = Travis.Model
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
 
 Account = Model.extend
   name:         DS.attr()
@@ -10,4 +9,4 @@ Account = Model.extend
   education:    DS.attr('boolean')
   loginBinding: 'id'
 
-Travis.Account = Account
+`export default Account`

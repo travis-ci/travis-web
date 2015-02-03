@@ -1,9 +1,7 @@
-require 'routes/basic'
-require 'routes/main-tab'
-
-MainTabRoute = Travis.MainTabRoute
+`import TravisRoute from 'travis/routes/basic'`
+`import MainTabRoute from 'travis/routes/main-tab'`
 
 Route = MainTabRoute.extend
   reposTabName: 'recent'
 
-Travis.MainRecentRoute = Route
+`export default Route`

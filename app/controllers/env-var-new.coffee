@@ -1,7 +1,4 @@
-require 'utils/validations'
-
-Validations = Travis.Validations
-EnvVar = Travis.EnvVar
+`import Validations from 'travis/utils/validations'`
 
 Controller = Ember.Controller.extend Validations,
   needs: ['repo']
@@ -44,3 +41,4 @@ Controller = Ember.Controller.extend Validations,
           @set('isSaving', false)
 
 Travis.EnvVarsNewController = Controller
+`export default Controller`

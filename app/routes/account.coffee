@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   setupController: (controller, account) ->
@@ -17,4 +15,4 @@ Route = TravisRoute.extend
     else
       {}
 
-Travis.AccountRoute = Route
+`export default Route`

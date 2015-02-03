@@ -1,4 +1,6 @@
-Travis.ExpandableRecordArray = DS.RecordArray.extend
+`import Ember from 'ember'`
+
+ExpandableRecordArray = Ember.ArrayProxy.extend
   isLoaded: false
   isLoading: false
 
@@ -46,3 +48,5 @@ Travis.ExpandableRecordArray = DS.RecordArray.extend
   pushObject: (record) ->
     if content = @get('content')
       content.pushObject(record) unless content.contains(record)
+
+`export default ExpandableRecordArray`

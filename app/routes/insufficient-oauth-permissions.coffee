@@ -1,7 +1,4 @@
-require 'routes/basic'
-require 'routes/simple-layout'
-
-SimpleLayoutRoute = Travis.SimpleLayoutRoute
+`import SimpleLayoutRoute from 'travis/routes/simple-layout'`
 
 Route = SimpleLayoutRoute.extend
   setupController: (controller) ->
@@ -9,4 +6,4 @@ Route = SimpleLayoutRoute.extend
     existingUser = document.location.hash.match(/#existing[_-]user/)
     controller.set('existingUser', existingUser)
 
-Travis.InsufficientOauthPermissionsRoute = Route
+`export default Route`

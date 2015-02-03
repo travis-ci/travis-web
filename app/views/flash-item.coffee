@@ -1,4 +1,4 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   tagName: 'li'
@@ -12,4 +12,4 @@ View = BasicView.extend
     close: ->
       @get('controller').close(@get('flash'))
 
-FlashItemView = View
+`export default View`

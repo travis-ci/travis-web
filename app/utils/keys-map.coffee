@@ -1,4 +1,4 @@
-keys = {
+configKeysMap = {
   go:          'Go'
   rvm:         'Ruby'
   gemfile:     'Gemfile'
@@ -22,4 +22,4 @@ keys = {
   dart:        'Dart'
 }
 
-Travis.CONFIG_KEYS_MAP = keys
+`export default configKeysMap`

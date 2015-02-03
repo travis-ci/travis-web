@@ -1,7 +1,7 @@
-formatMessageHelper = Travis.Helpers.formatMessage
-safe = Travis.Helpers.safe
+`import { formatMessage as _formatMessage, safe } from 'travis/utils/helpers'`
+`import Ember from "ember"`
 
-formatMessage = (message, options) ->
-  safe formatMessageHelper(message, options.hash)
+helper = Ember.Handlebars.makeBoundHelper (message, options) ->
+  safe _formatMessage(message, options.hash)
 
-Travis.Handlebars.formatMessage = formatMessage
+`export default helper`

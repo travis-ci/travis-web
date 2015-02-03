@@ -1,12 +1,10 @@
-require 'models/model'
-require 'models/log'
-require 'utils/ajax'
-
-Model = Travis.Model
-DurationCalculations = Travis.DurationCalculations
-Log = Travis.Log
-compact = Travis.Helpers.compact
-Ajax = Travis.ajax
+`import { durationFrom, configKeys, compact } from 'travis/utils/helpers'`
+`import Ajax from 'travis/utils/ajax'`
+`import configKeysMap from 'travis/utils/keys-map'`
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
+`import Log from 'travis/models/log'`
+`import DurationCalculations from 'travis/utils/duration-calculations'`
 
 Job = Model.extend DurationCalculations,
   logId:          DS.attr()
@@ -140,4 +138,4 @@ Job = Model.extend DurationCalculations,
     "#{@get('repo.slug')} ##{@get('number')}"
   ).property()
 
-Travis.Job = Job
+`export default Job`

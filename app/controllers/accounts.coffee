@@ -1,4 +1,6 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ArrayController.extend
   tab: 'accounts'
 
-Travis.AccountsController = Controller
+`export default Controller`

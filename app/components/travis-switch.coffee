@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Component = Ember.Component.extend
   tagName: 'a'
   classNames: ['travis-switch']
@@ -20,4 +22,4 @@ Component = Ember.Component.extend
     Ember.run.next this, ->
       @sendAction('action', target)
 
-Travis.TravisSwitchComponent = Component
+`export default Component`

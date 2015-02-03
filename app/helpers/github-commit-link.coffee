@@ -1,8 +1,7 @@
-formatConfig = Travis.Helpers.formatConfig
-githubCommitUrl = Travis.Urls.githubCommit
-safe = Travis.Helpers.safe
+`import { formatConfig, save } from 'travis/utils/helpers'`
+`import { githubCommit as githubCommitUrl } from 'travis/utils/urls'`
 
-githubCommitLink = (slug, commitSha) ->
+helper = Ember.Handlebars.makeBoundHelper (slug, commitSha) ->
   return '' unless commitSha
   sha = Handlebars.Utils.escapeExpression formatCommit(commitSha)
   return sha unless slug
@@ -10,4 +9,4 @@ githubCommitLink = (slug, commitSha) ->
 
   safe '<a class="github-link only-on-hover" href="' + url + '">' + sha + '</a>'
 
-Travis.Handlebars.githubCommitLink = githubCommitLink
+`export default helper`

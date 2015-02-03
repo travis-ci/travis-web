@@ -1,4 +1,6 @@
-View = Travis.BasicView.extend
+`import BasicView from 'travis/views/basic'`
+
+View = BasicView.extend
   layoutName: 'layouts/simple'
 
-Travis.InsufficientOauthPermissionsView = View
+`export default View`

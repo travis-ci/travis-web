@@ -1,4 +1,6 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ArrayController.extend
   vars: Ember.computed.filterBy('model', 'isNew', false)
 
-Travis.EnvVarsController = Controller
+`export default Controller`

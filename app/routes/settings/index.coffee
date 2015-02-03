@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   model: ->
@@ -8,4 +6,4 @@ Route = TravisRoute.extend
     repo.fetchSettings().then (settings) ->
       repo.set('settings', settings)
 
-Travis.SettingsIndexRoute = Route
+`export default Route`

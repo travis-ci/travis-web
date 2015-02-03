@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-AbstractBuildsRoute = Travis.AbstractBuildsRoute
+`import AbstractBuildsRoute from 'travis/routes/abstract-builds'`
 
 Route = AbstractBuildsRoute.extend(
   contentType: 'pull_requests'
@@ -15,4 +13,4 @@ Route = AbstractBuildsRoute.extend(
     this.controllerFor('builds').set('isPullRequestsList', false)
 )
 
-Travis.PullRequestsRoute = Route
+`export default Route`

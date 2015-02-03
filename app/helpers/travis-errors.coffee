@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 ErrorsView = Ember.View.extend
   tagName: 'span'
   template: Ember.Handlebars.compile("{{#each view.errors}}{{message}}{{/each}}")
@@ -21,4 +23,4 @@ fn = (name, options) ->
 
   Ember.Handlebars.helpers.view.call(this, view, options)
 
-Travis.Handlebars.travisErrors = fn
+`export default fn`

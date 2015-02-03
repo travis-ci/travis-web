@@ -1,4 +1,5 @@
-accountUrl = Travis.Urls.account
+`import Ember from 'ember'`
+`import { account as accountUrl } from 'travis/utils/urls'`
 
 View = Ember.CollectionView.extend
   elementId: 'accounts'
@@ -27,4 +28,4 @@ View = Ember.CollectionView.extend
     click: ->
       @get('controller').transitionToRoute("account", @get('account.login'))
 
-AccountsListView = View
+`export default View`

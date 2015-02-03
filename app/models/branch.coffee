@@ -1,6 +1,5 @@
-require 'models/model'
-
-Model = Travis.Model
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
 
 Branch = Model.extend
   repositoryId: DS.attr('number')
@@ -24,4 +23,4 @@ Branch = Model.extend
     @notifyPropertyChange 'started_at'
     @notifyPropertyChange 'finished_at'
 
-Travis.Branch = Branch
+`export default Branch`

@@ -1,7 +1,4 @@
-require 'utils/pusher'
-
-config = ENV.config
-Pusher = Travis.Pusher
+`import config from 'travis/config/environment'`
 
 initialize = (container, application) ->
   if config.pusher.key
@@ -18,5 +15,5 @@ PusherInitializer =
   name: 'pusher'
   initialize: initialize
 
-Ember.onLoad 'Ember.Application', (Application) ->
-  Application.initializer PusherInitializer
+`export {initialize}`
+`export default PusherInitializer`

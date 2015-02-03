@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ObjectController.extend
   settings: Ember.computed.alias('model.settings')
 
@@ -17,4 +19,4 @@ Controller = Ember.ObjectController.extend
       @get('model').saveSettings(@get('settings')).then null, ->
         Travis.flash(error: 'There was an error while saving settings. Please try again.')
 
-Travis.SettingsIndexController = Controller
+`export default Controller`

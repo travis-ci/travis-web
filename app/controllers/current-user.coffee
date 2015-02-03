@@ -10,4 +10,4 @@ Controller = Ember.ObjectController.extend
         @container.lookup('router:main').send('renderFirstSync')
   ).observes('isSyncing', 'auth.currentUser')
 
-Travis.CurrentUserController = Controller
+`export default Controller`

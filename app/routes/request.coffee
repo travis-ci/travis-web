@@ -1,7 +1,4 @@
-require 'routes/basic'
-require 'models/request'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   setupController: ->
@@ -11,4 +8,4 @@ Route = TravisRoute.extend
   model: (params) ->
     @store.find 'request', params.request_id
 
-Travis.RequestRoute = Route
+`export default Route`

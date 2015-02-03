@@ -1,6 +1,5 @@
-require 'models/model'
-
-Model = Travis.Model
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
 
 Annotation = Model.extend
   jobId:        DS.attr('number')
@@ -11,4 +10,4 @@ Annotation = Model.extend
 
   job: DS.belongsTo('job')
 
-Travis.Annotation = Annotation
+`export default Annotation`

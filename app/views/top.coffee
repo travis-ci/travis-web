@@ -1,4 +1,4 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   tabBinding: 'controller.tab'
@@ -25,4 +25,4 @@ View = BasicView.extend
   hideProfile: ->
     $('#top .profile ul').hide()
 
-Travis.TopView = View
+`export default View`

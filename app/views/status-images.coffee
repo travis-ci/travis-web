@@ -1,4 +1,5 @@
-format = Travis.StatusImageFormats.format
+`import Ember from 'ember'`
+`import format from 'travis/utils/status-image-formats'`
 
 View = Ember.View.extend
   templateName: 'status_images'
@@ -51,4 +52,4 @@ View = Ember.View.extend
     format(@get('statusImageFormat'), @get('repo.slug'), @get('statusImageBranch.commit.branch'))
   ).property('statusImageFormat', 'repo.slug', 'statusImageBranch.commit.branch')
 
-Travis.StatusImagesView = View
+`export default View`

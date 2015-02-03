@@ -1,4 +1,4 @@
-config = ENV.config
+`import config from 'travis/config/environment'`
 
 plainTextLog = (id) ->
   "#{config.api_endpoint}/jobs/#{id}/log.txt?deansi=true"
@@ -41,16 +41,4 @@ email = (email) ->
 gravatarImage = (email, size) ->
   "https://www.gravatar.com/avatar/#{md5(email)}?s=#{size}&d=#{encodeURIComponent(config.avatar_default_url)}"
 
-Travis.Urls = {
-  plainTextLog: plainTextLog,
-  githubPullRequest: githubPullRequest,
-  githubCommit: githubCommit,
-  githubRepo: githubRepo,
-  githubWatchers: githubWatchers,
-  githubNetwork: githubNetwork,
-  githubAdmin: githubAdmin,
-  statusImage: statusImage,
-  ccXml: ccXml,
-  email: email,
-  gravatarImage: gravatarImage
-}
+`export { plainTextLog, githubPullRequest, githubCommit, githubRepo, githubWatchers, githubNetwork, githubAdmin, statusImage, ccXml, email, gravatarImage }`

@@ -1,8 +1,8 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   classNames: ['flash']
-  tagName: 'ul'
+  tagname: 'ul'
   templateName: 'layouts/flash'
 
-Travis.FlashView = View
+`export default View`

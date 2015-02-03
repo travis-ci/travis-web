@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 View = Ember.View.extend()
 
-Travis.AnnotationsView = View
+`export default View`

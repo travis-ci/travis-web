@@ -1,3 +1,5 @@
+`import Auth from 'travis/utils/auth'`
+
 initialize = (container, app) ->
   app.register 'auth:main', Auth
 
@@ -11,5 +13,5 @@ AuthInitializer =
   name: 'auth'
   initialize: initialize
 
-Ember.onLoad 'Ember.Application', (Application) ->
-  Application.initializer AuthInitializer
+`export {initialize}`
+`export default AuthInitializer`

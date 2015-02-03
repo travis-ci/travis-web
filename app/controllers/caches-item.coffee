@@ -1,4 +1,5 @@
-Ajax = Travis.ajax
+`import Ember from 'ember'`
+`import Ajax from 'travis/utils/ajax'`
 
 Controller = Ember.ObjectController.extend
   isDeleting: false
@@ -23,4 +24,4 @@ Controller = Ember.ObjectController.extend
           if @get('parent.caches.length') == 0
             @get('controllers.caches').removeObject(@get('parent'))
 
-Travis.CacheItemController = Controller
+`export default Controller`

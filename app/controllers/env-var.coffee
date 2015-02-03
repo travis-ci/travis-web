@@ -1,6 +1,5 @@
-require 'utils/validations'
-
-Validations = Travis.Validations
+`import Ember from 'ember'`
+`import Validations from 'travis/utils/validations'`
 
 Controller = Ember.ObjectController.extend Validations,
   isEditing: false
@@ -46,4 +45,4 @@ Controller = Ember.ObjectController.extend Validations,
         env_var.save().then =>
           @set('isEditing', false)
 
-Travis.EnvVarController = Controller
+`export default Controller`

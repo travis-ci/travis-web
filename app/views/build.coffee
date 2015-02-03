@@ -1,5 +1,5 @@
-colorForState = Travis.Helpers.colorForState
-BasicView = Travis.BasicView
+`import { colorForState } from 'travis/utils/helpers'`
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   classNameBindings: ['color', 'loading']
@@ -10,4 +10,4 @@ View = BasicView.extend
     colorForState(@get('build.state'))
   ).property('build.state')
 
-Travis.BuildView = View
+`export default View`

@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   renderTemplate: ->
@@ -23,4 +21,4 @@ Route = TravisRoute.extend
     "repo.#{type.camelize()}"
   ).property('contentType')
 
-Travis.AbstractBuildsRoute = Route
+`export default Route`

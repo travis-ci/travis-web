@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.Controller.extend
   name: 'profile'
 
@@ -23,4 +25,4 @@ Controller = Ember.Controller.extend
     "#{@get('config').billing_endpoint}/subscriptions/#{id}"
   ).property('account.login', 'account.type')
 
-Travis.ProfileController = Controller
+`export default Controller`

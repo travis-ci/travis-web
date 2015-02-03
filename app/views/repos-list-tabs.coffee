@@ -1,4 +1,6 @@
-View = Travis.BasicView.extend
+`import Ember from 'ember'`
+
+View = Ember.View.extend
   templateName: 'repos/list/tabs'
   tabBinding: 'controller.tab'
   currentUserBinding: 'controller.currentUser.id'
@@ -22,4 +24,4 @@ View = Travis.BasicView.extend
     'display-inline' if @get('currentUser')
   ).property('currentUser')
 
-Travis.ReposListTabsView = View
+`export default View`

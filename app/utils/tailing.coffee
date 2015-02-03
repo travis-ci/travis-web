@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 class Tailing
   options:
     timeout: 200
@@ -62,4 +64,4 @@ class Tailing
     else
       tail.css(top: 0)
 
-Travis.Tailing = Tailing
+`export default Tailing`

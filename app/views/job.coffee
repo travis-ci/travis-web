@@ -1,6 +1,6 @@
-colorForState = Travis.Helpers.colorForState
-githubCommit = Travis.Urls.githubCommit
-gravatarImage = Travis.Urls.gravatarImage
+`import Ember from 'ember'`
+`import { colorForState } from 'travis/utils/helpers'`
+`import { githubCommit, gravatarImage } from 'travis/utils/urls'`
 
 View = Ember.View.extend
   repoBinding: 'controller.repo'
@@ -26,4 +26,4 @@ View = Ember.View.extend
     gravatarImage(@get('commit.authorEmail'), 40)
   ).property('commit.authorEmail')
 
-Travis.JobView = View
+`export default View`

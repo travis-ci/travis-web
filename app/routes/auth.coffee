@@ -1,6 +1,4 @@
-require 'routes/basic'
-
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
   needsAuth: false
@@ -22,4 +20,4 @@ Route = TravisRoute.extend
     if @signedIn()
       @transitionTo('main')
 
-Travis.AuthRoute = Route
+`export default Route`

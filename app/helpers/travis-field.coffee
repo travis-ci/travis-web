@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 FormFieldRowView = Ember.View.extend
   invalid: Ember.computed.notEmpty('errors.[]')
   classNameBindings: ['invalid']
@@ -18,4 +20,4 @@ fn = (name, options) ->
 
   Ember.Handlebars.helpers.view.call(this, view, options)
 
-Travis.Handlebars.travisField = fn
+`export default fn`

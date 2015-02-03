@@ -1,4 +1,4 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   templateName: 'profile/show'
@@ -12,4 +12,4 @@ View = BasicView.extend
     @get('account.name') || @get('account.login')
   ).property('account.name', 'account.login')
 
-ProfileView = View
+`export default View`

@@ -1,7 +1,5 @@
-require 'views/basic'
+`import BasicView from 'travis/views/basic'`
 
-TravisView = Travis.BasicView
+View = BasicView.extend()
 
-View = TravisView.extend()
-
-Travis.LoadingView = View
+`export default View`

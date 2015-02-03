@@ -1,4 +1,6 @@
-limit = function(dependentKey, limitKey) {
+import Ember from 'ember';
+
+var limit = function(dependentKey, limitKey) {
   var options = {
     addedItem: function(array, item, changeMeta, instanceMeta) {
       var limit = Ember.get(this, limitKey);
@@ -25,4 +27,4 @@ limit = function(dependentKey, limitKey) {
   return Ember.arrayComputed(dependentKey, limitKey, options);
 };
 
-Ember.computed.limit = limit;
+export default limit;

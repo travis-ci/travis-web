@@ -1,5 +1,7 @@
+`import Ember from 'ember'`
+
 View = Ember.TextArea.extend
   click: ->
     @get('element').select()
 
-Travis.StatusImageInput = View
+`export default View`

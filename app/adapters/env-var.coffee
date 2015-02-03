@@ -1,4 +1,5 @@
-ApplicationAdapter = Travis.ApplicationAdapter
+`import Ember from 'ember'`
+`import ApplicationAdapter from 'adapters/application'`
 
 Adapter = ApplicationAdapter.extend
   namespace: 'settings'
@@ -22,4 +23,4 @@ Adapter = ApplicationAdapter.extend
 
     this.ajax(this.buildURL(type.typeKey, id, record), "PATCH", { data: data })
 
-Travis.EnvVarAdapter = Adapter
+`export default Adapter`

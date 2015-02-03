@@ -1,4 +1,4 @@
-BasicView = Travis.BasicView
+`import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
   tabBinding: 'controller.tab'
@@ -8,4 +8,4 @@ View = BasicView.extend
   ).property('tab')
 
 
-ProfileAccountsView = View
+`export default View`

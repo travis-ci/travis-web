@@ -1,8 +1,8 @@
-require 'config/emoij'
+`import emojiDictionary from 'travis/utils/emoji-dictionary'`
+`import { githubCommit as githubCommitUrl } from 'travis/utils/urls'`
+`import configKeysMap from 'travis/utils/keys-map'`
+`import config from 'travis/config/environment'`
 
-configKeysMap = Travis.configKeysMap
-config = ENV.config
-githubCommitUrl = Travis.Urls.githubCommit
 timeago = $.timeago
 mapObject = $.map
 
@@ -73,7 +73,7 @@ formatMessage = (message, options) ->
   message
 
 timeAgoInWords = (date) ->
-  timeago.distanceInWords date
+  timeago date if date
 
 durationFrom = (started, finished) ->
   started = started and _toUtc(new Date(_normalizeDateString(started)))
@@ -159,17 +159,7 @@ configKeys = (config) ->
 pathFrom = (url) ->
   (url || '').split('/').pop()
 
-Travis.Helpers =
-  configKeys: configKeys
-  githubify: githubify
-  timeInWords: timeInWords
-  durationFrom: durationFrom
-  timeAgoInWords: timeAgoInWords
-  formatMessage: formatMessage
-  formatConfig: formatConfig
-  formatSha: formatSha
-  formatCommit: formatCommit
-  colorForState: colorForState
-  safe: safe
-  compact: compact
-  pathFrom: pathFrom
+`export {
+  configKeys, githubify, timeInWords, durationFrom, timeAgoInWords, formatMessage, formatConfig,
+  formatSha, formatCommit, colorForState, safe, compact, pathFrom
+}`

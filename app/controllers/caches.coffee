@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Controller = Ember.ArrayController.extend
   isDeleting: false
   needs: ['repo']
@@ -16,4 +18,4 @@ Controller = Ember.ArrayController.extend
         Travis.ajax.ajax("/repos/#{repo.get('id')}/caches", "DELETE").then(deletingDone, deletingDone).then =>
           @clear()
 
-Travis.CachesController = Controller
+`export default Controller`

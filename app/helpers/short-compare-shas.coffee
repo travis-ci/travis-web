@@ -1,6 +1,7 @@
-pathFrom = Travis.Helpers.pathFrom
+`import { pathFrom } from 'travis/utils/helpers'`
+`import Ember from "ember"`
 
-fn = (url, options) ->
+helper = Ember.Handlebars.makeBoundHelper (url, options) ->
   path = pathFrom(url)
   if path.indexOf('...') >= 0
     shas = path.split('...')
@@ -8,4 +9,4 @@ fn = (url, options) ->
   else
     path
 
-Travis.Handlebars.shortCompareShas = fn
+`export default helper`

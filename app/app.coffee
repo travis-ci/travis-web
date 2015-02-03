@@ -1,4 +1,9 @@
-config = ENV.config
+`import Ember from 'ember'`
+`import Resolver from 'ember/resolver'`
+`import loadInitializers from 'ember/load-initializers'`
+`import config from './config/environment'`
+
+Ember.MODEL_FACTORY_INJECTIONS = true
 
 App = Ember.Application.extend(Ember.Evented,
   LOG_TRANSITIONS: true
@@ -7,6 +12,10 @@ App = Ember.Application.extend(Ember.Evented,
   LOG_MODULE_RESOLVER: true
   LOG_VIEW_LOOKUPS: true
   #LOG_RESOLVER: true
+
+  modulePrefix: config.modulePrefix
+  podModulePrefix: config.podModulePrefix
+  Resolver: Resolver
 
   lookup: ->
     @__container__.lookup.apply @__container__, arguments
@@ -118,5 +127,6 @@ App = Ember.Application.extend(Ember.Evented,
         created_at: (Date.parse(user.created_at) / 1000) || null
         login: user.login
 )
+loadInitializers(App, config.modulePrefix)
 
-window.App = App unless window.App
+`export default App`

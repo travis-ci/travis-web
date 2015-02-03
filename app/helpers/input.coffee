@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 originalInputHelper = Ember.Handlebars.helpers.input
 
 input = (options) ->
@@ -25,4 +27,4 @@ input = (options) ->
 
   originalInputHelper.call(this, options)
 
-Travis.Handlebars.input = input
+`export default input`

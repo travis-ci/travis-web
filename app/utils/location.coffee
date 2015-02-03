@@ -1,4 +1,4 @@
-Travis.Location = Ember.HistoryLocation.extend
+Location = Ember.HistoryLocation.extend
   getURL: ->
     location = @get('location')
     location.pathname + location.hash

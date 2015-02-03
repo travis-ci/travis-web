@@ -1,7 +1,7 @@
-require 'views/basic'
+`import Ember from 'ember'`
 
 View = Ember.View.extend
   layoutName: 'layouts/dashboard'
   classNames: ['dashboard']
 
-Travis.DashboardView = View
+`export default View`

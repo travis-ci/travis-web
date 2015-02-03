@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 Error = Ember.Object.extend
   message: (->
     switch code = @get('code')
@@ -88,4 +90,4 @@ Validations = Ember.Mixin.create
     for error in errors
       @get('errors').add(error.field, error.code)
 
-Travis.Validations = Validations
+`export default Validations`

@@ -1,8 +1,5 @@
-require 'routes/basic'
-require 'models/repo'
-
-Repo = Travis.Repo
-TravisRoute = Travis.BasicRoute
+`import TravisRoute from 'travis/routes/basic'`
+`import Repo from 'travis/models/repo'`
 
 Route = TravisRoute.extend
   renderTemplate: ->
@@ -37,4 +34,4 @@ Route = TravisRoute.extend
       # bubble to the top
       return true
 
-Travis.RepoRoute = Route
+`export default Route`

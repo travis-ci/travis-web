@@ -1,6 +1,8 @@
-gravatarImage = Travis.Urls.gravatarImage
+`import Ember from 'ember'`
+`import { gravatarImage } from 'travis/utils/urls'`
+`import GithubUrlPropertievs from 'travis/mixins/github-url-properties'`
 
-Controller = Ember.Controller.extend Travis.GithubUrlProperties,
+Controller = Ember.Controller.extend GithubUrlPropertievs,
   needs: ['repo']
   repoBinding: 'controllers.repo.repo'
   commitBinding: 'build.commit'
@@ -21,4 +23,4 @@ Controller = Ember.Controller.extend Travis.GithubUrlProperties,
     gravatarImage(@get('commit.authorEmail'), 40)
   ).property('commit.authorEmail')
 
-Travis.BuildController = Controller
+`export default Controller`

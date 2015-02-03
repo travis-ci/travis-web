@@ -1,3 +1,5 @@
+`import Ember from 'ember'`
+
 class ToTop
   # NOTE: I could have probably extract fixed positioning from
   #       Tailing, but then I would need to parametrize positionElement
@@ -32,4 +34,4 @@ class ToTop
     else
       element.css(bottom: 2)
 
-Travis.ToTop = ToTop
+`export default ToTop`

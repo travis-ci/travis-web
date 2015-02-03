@@ -1,6 +1,7 @@
-ApplicationSerializer = Travis.ApplicationSerializer
+`import Ember from 'ember'`
+`import ApplicationSerializer from 'travis/serializers/application'`
 
 Serializer = ApplicationSerializer.extend
   primaryKey: 'login'
 
-Travis.AccountSerializer = Serializer
+`export default Serializer`

@@ -1,6 +1,4 @@
-require 'config/environment'
-
-config = ENV.config
+`import config from 'travis/config/environment'`
 
 initialize = (container, application) ->
   application.register 'config:main', config, { instantiate: false }
@@ -12,5 +10,5 @@ ConfigInitializer =
   name: 'config'
   initialize: initialize
 
-Ember.onLoad 'Ember.Application', (Application) ->
-  Application.initializer ConfigInitializer
+`export {initialize}`
+`export default ConfigInitializer`

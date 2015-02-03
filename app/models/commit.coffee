@@ -1,6 +1,6 @@
-require 'models/model'
-
-Model = Travis.Model
+`import Ember from 'ember'`
+`import Model from 'travis/models/model'`
+`import Build from 'travis/models/build'`
 
 Commit = Model.extend
   sha:               DS.attr()
@@ -32,4 +32,4 @@ Commit = Model.extend
       @get('authorEmail') == @get('committerEmail')
   ).property('authorName', 'authorEmail', 'committerName', 'committerEmail')
 
-Travis.Commit = Commit
+`export default Commit`
