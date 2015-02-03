@@ -3,6 +3,7 @@ require 'rack/ssl'
 require 'rack/protection'
 require 'delegate'
 require 'time'
+require 'json'
 
 class Travis::Web::App
   autoload :AltVersions,    'travis/web/app/alt_versions'
@@ -115,7 +116,7 @@ class Travis::Web::App
     end
 
     def index?(file)
-      file.end_with?('index.html')
+      file == File.join(root, 'index.html') || file == 'index.html'
     end
 
     def fingerprinted?(file)
@@ -157,19 +158,27 @@ class Travis::Web::App
     end
 
     def set_config(string, opts = {})
-      string.gsub! %r(<meta (rel|name)="travis\.([^"]*)" (href|value)="([^"]*)"[^>]*>) do
-        %(<meta #{$1}="travis.#{$2}" #{$3}="#{options[$2.to_sym] || $4}">)
-      end
+      p options
+      config = {}
+      config[:api_endpoint] = options[:api_endpoint] if options[:api_endpoint]
+      config[:pages_endpoint] = options[:pages_endpoint] if options[:pages_endpoint]
+      config[:billing_endpoint] = options[:billing_endpoint] if options[:billing_endpoint]
+      config[:source_endpoint] = options[:source_endpoint] if options[:source_endpoint]
+      pusher = {}
+      pusher[:key] = options[:pusher_key] if options[:pusher_key]
+      pusher[:host] = options[:pusher_host] if options[:pusher_host]
+      pusher[:path] = options[:pusher_path] if options[:pusher_path]
+      config[:pusher] = pusher
 
-      string.gsub! %r{(src|href)="(?:\/?)((styles|scripts)\/[^"]*)"} do
-        src = if options[:assets_host]
-          "#{options[:assets_host].chomp('/')}/#{$2}"
-        elsif opts[:alt]
-          "#{S3_URL}/#{opts[:alt]}/#{$2}"
-        else
-          "/#{$2}"
-        end
-        %(#{$1}="#{src}")
-      end
+      config[:ga_code] = options[:ga_code] if options[:ga_code]
+      config[:pro] = options[:pro] if options[:pro]
+      config[:enterprise] = options[:enterprise] if options[:enterprise]
+
+      config[:code_climate] = options[:code_climate] if options[:code_climate]
+      config[:code_climate_url] = options[:code_climate_url] if options[:code_climate_url]
+
+      json = config.to_json
+
+      string.gsub! /window.TravisENV = {}/, "window.TravisENV = #{json}"
     end
 end
