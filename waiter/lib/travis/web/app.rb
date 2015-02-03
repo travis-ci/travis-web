@@ -87,7 +87,8 @@ class Travis::Web::App
           'Cache-Control'    => cache_control(file),
           'Content-Location' => path_for(file),
           'Content-Type'     => mime_type(file),
-          'Expires'          => (server_start + age).httpdate
+          'Expires'          => (server_start + age).httpdate,
+          'ETag'             => fingerprint(file)
         }
       else
         set_config(content, options) if config_needed?(file)
@@ -100,7 +101,8 @@ class Travis::Web::App
           'Content-Type'     => mime_type(file),
           'Last-Modified'    => server_start.httpdate,
           'Expires'          => (server_start + age).httpdate,
-          'Vary'             => vary_for(file)
+          'Vary'             => vary_for(file),
+          'ETag'             => Digest::MD5.hexdigest(content)
         }
       end
 
@@ -119,10 +121,14 @@ class Travis::Web::App
       file == File.join(root, 'index.html') || file == 'index.html'
     end
 
-    def fingerprinted?(file)
+    def fingerprint(file)
       basename = File.basename(file)
-      basename =~ /-[a-f0-9]{32}.(css|js)$/
+      extname  = File.extname(file)
+      if result = basename.scan(/.+-([a-f0-9]{32})#{extname}$/)
+        result.flatten[0]
+      end
     end
+    alias fingerprinted? fingerprint
 
     def cache_control(file)
       case path_for(file)
