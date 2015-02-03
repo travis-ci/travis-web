@@ -1,40 +1,13 @@
 @import "app/_mixins/all"
 
-$left-width: 250px
 
-// @mixin display-flex
-//   display: -webkit-flex
-//   display: -moz-flex
-//   display: -ms-flexbox
-//   display: flex
-
-// @mixin flex($grow, $shrink, $size)
-//   -ms-flex:     $grow $shrink $size
-//   -webkit-flex: $grow $shrink $size
-//   -moz-flex:    $grow $shrink $size
-//   flex:         $grow $shrink $size
-
-// html, body
-//   min-height: 100vh
-
-// body > div:first-child
-//   min-height: 100vh
+.centered .row
+  max-width: 1024px
 
 .main, .profile-view
   position: relative
   width: 100%
   min-height: 100vh
-  // margin-top: 40px
-  //@include display-flex
-
-// #top
-//   position: absolute
-//   top: -40px
-//   left: 0
-//   width: 100%
-//   min-width: 930px
-//   height: 55px
-//   z-index: 1000
 
 #auth, #not-found, #simple
   #top
@@ -47,21 +20,12 @@ $left-width: 250px
 #left, #right
   position: relative
   min-height: 100%
-  //@include flex(0, 0, 25em)
 
 #left
   float: left
   padding: 0 0 110px 0
   background-color: #fbfbfa
   border-right: 1px solid $color-border-normal
-
-@media #{$medium-up}
-  #left
-    width: grid-calc(8, 24)
-@media #{$large-up}
-  #left
-    width: grid-calc(5, 24)
-    max-width: 300px
 
 .duration_label
   display: inline-block
@@ -78,13 +42,27 @@ $left-width: 250px
   padding: 20px 30px 80px
 
 @media #{$medium-up}
-  #main
-    width: grid-calc(16, 24)
+  #left
+    width: grid-calc(3, 12)
+    float: left
+  #right
+    width: grid-calc(2, 12)
     float: right
-@media #{$medium-up}
+  // #main
+  //   width: grid-calc(16, 12)
+  //   float: right
   #main
-    width: grid-calc(19, 24)
-    float: right
+    width: grid-calc(7, 12)
+    float: left
+
+
+@media #{$large-up}
+  // #left
+  //   width: grid-calc(5, 24)
+  //   max-width: 300px
+  // #main
+  //   width: grid-calc(19, 24)
+  //   float: right
 
 .travis-lint
   background-color: $travis-lint-bg

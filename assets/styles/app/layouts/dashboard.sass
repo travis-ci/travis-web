@@ -1,3 +1,9 @@
+/*
+ * Dashboard
+ * @todo: split into components: filter, search, tiles
+ */
+
+@import "app/_mixins/all"
 
 .current-org-avatar
   display     : inline-block
@@ -7,7 +13,7 @@
   margin : -5px 5px 0 0
 
 #filters-search
-  background    : #ffffff
+  background    : $white
   font-size     : 14px
   padding       : 5px 0 5px 0
   max-height    : 44px
@@ -24,7 +30,7 @@
   z-index    : 1000
 
 #filters ul li
-  background   : #fff
+  background   : $white
   position     : relative
   display      : inline-block
   padding      : 10px 0 10px 0
@@ -32,8 +38,6 @@
   margin-top   : 0
   cursor       : pointer
   border-radius         : 0px
-  -webkit-border-radius : 0px
-  -moz-border-radius    : 0px
 
 #filters li.filters-start:hover
   background-color : #fff
@@ -48,8 +52,6 @@
   opacity    : 0
   visibility : hidden
   box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
-  -webkit-box-shadow : 2px 1px 4px 0px rgba(148,145,138,0.4)
-  -moz-box-shadow    : 2px 1px 4px 0px rgba(148,145,138,0.4)
 
 #filters ul li ul li
   display      : block
@@ -70,29 +72,27 @@
   height           : 20px
   margin-right     : 5px
   text-indent      : -9999px
-  border-radius         : 100px
-  -webkit-border-radius : 100px
-  -moz-border-radius    : 100px
+  border-radius    : 100px
 
-.org-travisci
-  background      : url('/images/dashboard/orgs-travisci.png') no-repeat
-  background-size : contain
+// .org-travisci
+//   background      : url('/images/dashboard/orgs-travisci.png') no-repeat
+//   background-size : contain
 
-.org-saltinejustine
-  background      : url('/images/dashboard/orgs-saltinejustine.png') no-repeat
-  background-size : contain
+// .org-saltinejustine
+//   background      : url('/images/dashboard/orgs-saltinejustine.png') no-repeat
+//   background-size : contain
 
-.org-openkarma
-  background      : url('/images/dashboard/orgs-openkarma.png') no-repeat
-  background-size : contain
+// .org-openkarma
+//   background      : url('/images/dashboard/orgs-openkarma.png') no-repeat
+//   background-size : contain
 
-.org-eurucamp
-  background      : url('/images/dashboard/orgs-eurucamp.png') no-repeat
-  background-size : contain
+// .org-eurucamp
+//   background      : url('/images/dashboard/orgs-eurucamp.png') no-repeat
+//   background-size : contain
 
 #filters ul li ul li:hover
   background : #5e869a
-  color      : #ffffff
+  color      : $white
 
 #filters ul li:hover ul
   display    : block
@@ -111,7 +111,7 @@
   z-index    : 1000
 
 #views ul li
-  background   : #fff
+  background   : $white
   position     : relative
   display      : inline-block
   padding      : 10px 0 10px 0
@@ -151,7 +151,7 @@
 
 #views ul li ul li:hover
   background : #5e869a
-  color      : #ffffff
+  color      : $white
 
 #views ul li:hover ul
   display    : block
@@ -204,15 +204,13 @@
   padding     : 30px 0 10px 0
 
 .tile
-  background    : #fff
+  background    : $white
   min-height    : 125px
   color         : #9d9fa1
   font-size     : 14px
   margin-bottom : 20px
   padding       : 0 10px 0 0
   border-radius         : 4px
-  -webkit-border-radius : 4px
-  -moz-border-radius    : 4px
 
   .duration
     background-image: url('/images/dashboard/time.svg')
@@ -224,8 +222,6 @@
     margin-top : 8px
     background-repeat: no-repeat
     background-position: 0 1px
-
-
 
   .finished
     background-image: url('/images/dashboard/cal.svg')
@@ -239,7 +235,7 @@
     margin-bottom: 0
 
 .build-bar
-  position        : absolute
+  position: absolute
   background:
     repeat: no-repeat
     position: 7px 10px
@@ -261,53 +257,43 @@
 .passed
   .build-bar
     background:
-      color: #3ba85d
+      color: $pass-color
       image: url('/images/dashboard/status-passed.svg')
-  
-
   .org,
   .repo a,
   .build-status a
-    color: #3ba85d
-
+    color: $pass-color
 
 .failed
   .build-bar
     background:
-      color: #d04729
+      color: $fail-color
       image: url('/images/dashboard/status-failed.svg')
-  
-
   .org,
   .repo a,
   .build-status a
-    color: #d04729
-
+    color: $fail-color
 
 .started
   .build-bar
     background:
-      color: #D2CA24
+      color: $start-bg-color
       image: url('/images/dashboard/status-pending.svg')
-  
-
   .org,
   .repo a,
   .build-status a
-    color: #848032
+    color: $start-color
 
 
 .errored
   .build-bar
     background:
-      color: #999999
+      color: $error-color
       image: url('/images/dashboard/status-errored.svg')
-  
-
   .org,
   .repo a,
   .build-status a
-    color: #999999
+    color: $error-color
 
 
 .tile .build-information
@@ -326,8 +312,6 @@
   line-height   : 20px
   text-overflow : ellipsis
 
-
-
 .tile .star-feature
   position        : absolute
   top             : 0
@@ -344,180 +328,19 @@
   margin-left     : 5px
   text-indent     : -9999px
 
-footer
-  padding          : 20px 0
-  background-color : #e0e0e0
-  min-height       : 334px
-  font-size        : 12px
-  line-height      : 22px
-  margin-top      : -334px /* sticky footer */
-
-.wrapper
-  padding-bottom: 334px
-  min-height: 100%
-  height: auto
-  background-color: #f4f3ea
-@media (min-width: 640px)
-  .wrapper
-    padding-bottom: 204px
-
-  footer
-    margin-top: -204px
-    min-height: 204px
-
-
-footer h3
-  font-size   : 15px
-  margin  : 0 0 10px 0
-  padding-top : 6px
-  font-weight : 400
-  color       : #8f9ba2
-  border-top  : solid 4px #ccd0d5
-
-footer .row p
-  display : inline-block
-  margin  : 0
-
-footer .row ul,
-footer .row li
-  display         : block
-  color           : #404650
-  line-height     : 22px
-  padding         : 0
-  margin-top      : 0
-  list-style-type : none
-
-footer a
-  text-decoration : none
-  display         : inline-block
-  color           : #404650
-
-footer a:hover,
-footer a:active
-  text-decoration : underline
-
-a 
-  text-decoration : none
-  display         : block
-  color           : #404650
-
-.status-circle
-  background   : #3ba85d
-  display      : inline-block
-  height       : 11px
-  width        : 11px
-  text-indent  : -9999px
-  margin-right : 5px
-  border-radius         : 100px
-  -webkit-border-radius : 100px
-  -moz-border-radius    : 100px
-  vertical-align: middle
 
 
 @media only screen and (min-width: 64.063em)
   #top img
     margin : -7px 0 0 10px
 
-
 @media only screen and (min-width: 640px)
   #top #status li
     display : inline-block
 
-
   #user p
     display : inline-block
 
-
   #search
     float : right
-
-
-
-
-#loader-container-large
-  margin-top: 2em
-  height     : 70px
-  text-align : center
-
-#loader-container-large .load-text
-  font-size   : 25px
-  line-height : 30px
-  font-weight : 300
-  margin-top  : 20px
-  font-weight: 400
-
-.loader-large
-  width    : 60px
-  height   : 60px
-  position : relative
-  margin   : 0 auto
-
-#loader-container-medium
-  height     : 40px
-  margin-top : 15px
-  text-align : center
-
-#loader-container-medium .load-text
-  vertical-align : 10px
-  display        : inline-block
-
-.loader-medium
-  width        : 30px
-  height       : 30px
-  position     : relative
-  display      : inline-block
-  margin       : 0 auto
-  margin-right : 10px
-
-#loader-container-small
-  height     : 20px
-  margin-top : 22px
-  text-align : center
-
-#loader-container-small .load-text
-  vertical-align : 3px
-  display        : inline-block
-
-.loader-small
-  width        : 15px
-  height       : 15px
-  position     : relative
-  display      : inline-block
-  margin       : 0 auto
-  margin-right : 5px
-
-.load-circle1, .load-circle2
-  width         : 100%
-  height        : 100%
-  border-radius : 50%
-  opacity       : 0.7
-  position      : absolute
-  top           : 0
-  left          : 0
-  -webkit-animation : bounce 1.5s infinite ease-in-out
-  animation         : bounce 1.5s infinite ease-in-out
-
-.load-circle1
-  background-color : #347389
-
-.load-circle2
-  background-color : #bdc5c5
-  -webkit-animation-delay : -0.5s
-  animation-delay         : -0.5s
-
-@-webkit-keyframes bounce
-  0%, 100%
-    -webkit-transform : scale(0.0)
-
-  60%
-    -webkit-transform : scale(1.0)
-
-
-@keyframes bounce
-  0%, 100%
-    transform         : scale(0.0)
-    -webkit-transform : scale(0.0)
-  60%
-    transform: scale(1.0)
-    -webkit-transform : scale(1.0)
 

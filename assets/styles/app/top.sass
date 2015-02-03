@@ -101,6 +101,11 @@
   .menu.community
     min-width: 120px
 
+  .user
+    text-align: right
+    a
+      padding-right: 0
+
   .menu.profile
     .signing-in
       background: inline-image('ui/spinner.svg') no-repeat 110px 22px
@@ -132,9 +137,9 @@
       &.signed-in .signed-in
         display: block
 
-      img
-        float: right
-        margin: 13px 0 0 10px
+      // img
+      //   float: right
+      //   margin: 13px 0 0 10px
 
     &:not(.signed-in):hover ul
       display: none
@@ -158,61 +163,63 @@
 //   width       : 78px
 //   text-indent : -9999px
 
-#user
-  text-align : right
-  cursor     : pointer
+// #user
+//   text-align : right
+//   cursor     : pointer
 
-#user p
-  display : none
+// #user p
+//   display : none
 
-// #top img
-//   float  : right
-//   margin : -7px 10px 0 10px
-//   width  : 30px
-//   height : 30px
-//   border-radius: 100px
-
-#user ul
-  text-align : left
-  display    : inline
-  margin     : 0
-  padding    : 15px 0 17px 0
-  list-style : none
-  z-index    : 1000
-
-#user ul li ul
-  padding    : 0
-  position   : absolute
-  top        : 55px
-  right      : 0
-  width      : 150px
-  display    : none
-  opacity    : 0
-  visibility : hidden
-
-#user ul li ul li
-  background  : $topbar-bg
-  color       : $white
-  display     : block
-  line-height : 18px
-  padding     : 8px 18px
-  margin      : 0
-
-#user ul li ul li:last-child
-  border-bottom-left-radius  : 4px
-  border-bottom-right-radius : 4px
-
-#user ul li ul li:hover
-  background : #5e869a
-  color      : $white
-  a
-    color: $white
+#top img
+  float  : right
+  margin : 14px 0 0 10px
+  width  : 30px
+  height : 30px
+  border-radius: 100px
 
 
-#user ul li:hover ul
-  display    : block
-  opacity    : 1
-  visibility : visible
-#user .handle a
-  display: inline
+
+// #user ul
+//   text-align : left
+//   display    : inline
+//   margin     : 0
+//   padding    : 15px 0 17px 0
+//   list-style : none
+//   z-index    : 1000
+
+// #user ul li ul
+//   padding    : 0
+//   position   : absolute
+//   top        : 55px
+//   right      : 0
+//   width      : 150px
+//   display    : none
+//   opacity    : 0
+//   visibility : hidden
+
+// #user ul li ul li
+//   background  : $topbar-bg
+//   color       : $white
+//   display     : block
+//   line-height : 18px
+//   padding     : 8px 18px
+//   margin      : 0
+
+// #user ul li ul li:last-child
+//   border-bottom-left-radius  : 4px
+//   border-bottom-right-radius : 4px
+
+// #user ul li ul li:hover
+//   background : #5e869a
+//   color      : $white
+//   a
+//     color: $white
+
+
+// #user ul li:hover ul
+//   display    : block
+//   opacity    : 1
+//   visibility : visible
+// #user .handle a
+//   display: inline
 
