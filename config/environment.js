@@ -1,5 +1,28 @@
 /* jshint node: true */
 
+// TODO: how to include this from app/utils/ here?
+var extend = function(out) {
+  out = out || {};
+
+  for (var i = 1; i < arguments.length; i++) {
+    var obj = arguments[i];
+
+    if (!obj)
+      continue;
+
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (typeof obj[key] === 'object')
+          deepExtend(out[key], obj[key]);
+        else
+          out[key] = obj[key];
+      }
+    }
+  }
+
+  return out;
+};
+
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'travis',
@@ -31,6 +54,11 @@ module.exports = function(environment) {
     intervals: { updateTimes: 1000 }
   };
 
+  // merge environment vars from index.html
+  if(typeof TravisENV !== 'undefined') {
+    extend(ENV, TravisENV);
+  }
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -54,15 +82,6 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
   }
-
-  ENV.endpoints = {
-    ssh_key: false,
-    caches: false
-  };
-  ENV.pro = false;
-  ENV.pusher = {};
-  ENV.intervals = { updateTimes: 1000, times: -1 };
-  ENV.api_endpoint = 'https://api.travis-ci.org';
 
   ENV.contentSecurityPolicy = {
     'default-src': "'none'",
