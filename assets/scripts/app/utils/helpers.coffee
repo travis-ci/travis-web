@@ -1,6 +1,6 @@
 require 'config/emoij'
 
-config_keys_map = Travis.CONFIG_KEYS_MAP
+configKeysMap = Travis.configKeysMap
 config = ENV.config
 githubCommitUrl = Travis.Urls.githubCommit
 timeago = $.timeago
@@ -54,12 +54,12 @@ formatSha = (sha) ->
   (sha || '').substr(0, 7)
 
 formatConfig = (config) ->
-  config = only config, Object.keys(config_keys_map)
+  config = only config, Object.keys(configKeysMap)
   values = mapObject config, (value, key) ->
     value = (if value && value.join then value.join(', ') else value) || ''
     if key == 'rvm' && "#{value}".match(/^\d+$/)
       value = "#{value}.0"
-    '%@: %@'.fmt config_keys_map[key], value
+    '%@: %@'.fmt configKeysMap[key], value
   if values.length == 0 then '-' else values.join(', ')
 
 formatMessage = (message, options) ->
@@ -154,7 +154,7 @@ _escape = (text) ->
 
 configKeys = (config) ->
   return [] unless config
-  intersect(Object.keys(config), Object.keys(config_keys_map))
+  intersect(Object.keys(config), Object.keys(configKeysMap))
 
 pathFrom = (url) ->
   (url || '').split('/').pop()
