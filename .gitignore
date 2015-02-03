@@ -1,15 +1,15 @@
-/.bundle
-/config/travis.yml
+# compiled output
+/dist
 /tmp
-.sass-cache
-.localeapp/key
-/assets/scripts/config/locales.js
-.DS_Store
-*.sw[op]
 
-/public/images
-/public/scripts
-/public/styles/app.css
-/public/styles/dashboard.css
-/public/version
-vendor/bundle
+# dependencies
+/node_modules
+/bower_components
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log
+testem.log
