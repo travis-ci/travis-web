@@ -10,8 +10,8 @@ Adapter = DS.ActiveModelAdapter.extend
 
     hash.headers['accept'] = 'application/json; version=2'
 
-    token = Travis.sessionStorage.getItem('travis.token')
-    hash.headers['Authorization'] ||= "token #{token}"
+    if token = Travis.sessionStorage.getItem('travis.token')
+      hash.headers['Authorization'] ||= "token #{token}"
 
     hash
 
