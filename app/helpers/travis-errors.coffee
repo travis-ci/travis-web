@@ -2,7 +2,7 @@
 
 ErrorsView = Ember.View.extend
   tagName: 'span'
-  template: Ember.Handlebars.compile("{{#each view.errors}}{{message}}{{/each}}")
+  templateName: 'helpers/travis-errors'
   classNames: ['error']
   classNameBindings: ['codes']
   attributeBindings: ['style']

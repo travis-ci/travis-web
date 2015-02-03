@@ -27,7 +27,7 @@ label = (options) ->
     options.hashTypes.for = 'STRING'
     options.hashContexts.for = this
     if options.hash.content
-      options.fn = Ember.Handlebars.compile("{{view.content}}")
+      view = view.extend(templateName: 'helpers/label')
 
   Ember.Handlebars.helpers.view.call(this, view, options)
 

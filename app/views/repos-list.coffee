@@ -6,7 +6,7 @@ View = Ember.CollectionView.extend
   tagName: 'ul'
 
   emptyView: Ember.View.extend
-    template: Ember.Handlebars.compile('<div class="loading"><span>Loading</span></div>')
+    templateName: 'repos-list/empty'
 
   itemViewClass: Ember.View.extend
     repoBinding: 'content'

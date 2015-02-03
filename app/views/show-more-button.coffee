@@ -6,7 +6,7 @@ View = Ember.View.extend
   showMore: true
   attributeBindings: ['disabled']
   isLoadingBinding: 'controller.isLoading'
-  template: Ember.Handlebars.compile('{{view.label}}')
+  templateName: 'show-more-button'
 
   disabledBinding: 'isLoading'
 
