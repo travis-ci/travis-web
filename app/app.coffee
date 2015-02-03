@@ -51,7 +51,6 @@ App = Ember.Application.extend(Ember.Evented,
       store.pushPayload(commits: [commit])
 
     if event == 'job:log'
-      console.log 'store: received job:log event', data if Log.DEBUG
       data = data.job
       job = store.recordForId('job', data.id)
       job.appendLog(number: parseInt(data.number), content: data._log, final: data.final)

@@ -38,8 +38,9 @@ TravisPusher.prototype.unsubscribe = (channel) ->
   @pusher.unsubscribe(channel) if @pusher?.channel(channel)
 
 TravisPusher.prototype.prefix = (channel) ->
-  if channel.indexOf(config.pusher.channel_prefix) != 0
-    "#{config.pusher.channel_prefix}#{channel}"
+  prefix = config.pusher.channel_prefix || ''
+  if channel.indexOf(prefix) != 0
+    "#{prefix}#{channel}"
   else
     channel
 

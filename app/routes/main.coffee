@@ -19,7 +19,7 @@ Route = TravisRoute.extend
 
   activate: ->
     # subscribe to pusher only if we're at a main route
-    if config.pusher.channels
-      @get('pusher').subscribeAll(config.pusher.channels)
+    unless config.pro
+      @get('pusher').subscribeAll(['common'])
 
 `export default Route`
