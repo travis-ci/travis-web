@@ -16,6 +16,7 @@
     "visibilityjs": "~1.2.1",
     "JavaScript-MD5": "~1.1.0",
     "moment": "~2.9.0",
-    "jquery-timeago": "~1.4.1"
+    "jquery-timeago": "~1.4.1",
+    "pusher": "~2.2.3"
   }
 }

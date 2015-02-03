@@ -16,7 +16,19 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+
+    // defaults for running travis-web
+    api_endpoint: 'https://api.travis-ci.org',
+    source_endpoint: 'https://github.com',
+    pusher: {
+      key: '5df8ac576dcccf4fd076',
+      host: 'ws.pusherapp.com'
+    },
+    pro: false,
+    enterprise: false,
+    endpoints: {},
+    intervals: { updateTimes: 1000 }
   };
 
   if (environment === 'development') {
@@ -56,9 +68,9 @@ module.exports = function(environment) {
     'default-src': "'none'",
     // TODO: for some reason unsafe-eval is needed when I use collection helper,
     //       we should probably remove it at some point
-    'script-src': "'self' 'unsafe-eval'",
+    'script-src': "'self' 'unsafe-eval' 'unsafe-inline'",
     'font-src': "'self'",
-    'connect-src': "'self' https://api.travis-ci.org",
+    'connect-src': "'self' https://api.travis-ci.org ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com",
     'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com",
     'style-src': "'self'",
     'media-src': "'self'",

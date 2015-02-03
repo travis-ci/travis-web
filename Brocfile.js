@@ -4,6 +4,7 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp();
 
+app.import('bower_components/pusher/dist/pusher.js');
 app.import('bower_components/jquery-timeago/jquery.timeago.js');
 app.import('bower_components/visibilityjs/lib/visibility.core.js');
 app.import('bower_components/visibilityjs/lib/visibility.timers.js');
