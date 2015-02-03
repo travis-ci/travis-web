@@ -11,6 +11,7 @@ initialize = (container, app) ->
 
 AuthInitializer =
   name: 'auth'
+  after: 'ember-data'
   initialize: initialize
 
 `export {initialize}`
