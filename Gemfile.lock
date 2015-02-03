@@ -15,6 +15,11 @@ GIT
       rack
       rake-pipeline (~> 0.6)
 
+PATH
+  remote: server
+  specs:
+    travis-web (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -140,5 +145,6 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   tilt
+  travis-web!
   uglifier
   yui-compressor
