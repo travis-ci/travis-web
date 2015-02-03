@@ -42,19 +42,17 @@ class Travis::Web::App
       builder.use Rack::Protection::FrameOptions
       builder.use Rack::Protection::PathTraversal
       builder.use Rack::ConditionalGet
-      builder.use Travis::Web::App::AltVersions
       builder.run new(options)
       builder.to_app
     end
   end
 
-  attr_reader :routers, :version, :age, :options, :root, :server_start
+  attr_reader :routers,  :age, :options, :root, :server_start
 
   def initialize(options = {})
     @options      = options
     @server_start = options.fetch(:server_start)
     @root         = options.fetch(:root)
-    @version      = File.read File.expand_path('version', root)
     @age          = 60 * 60 * 24 * 365
     @routers      = { default: create_router }
   end
@@ -88,8 +86,7 @@ class Travis::Web::App
           'Cache-Control'    => cache_control(file),
           'Content-Location' => path_for(file),
           'Content-Type'     => mime_type(file),
-          'Expires'          => (server_start + age).httpdate,
-          'ETag'             => %Q{"#{version}"}
+          'Expires'          => (server_start + age).httpdate
         }
       else
         set_config(content, options) if config_needed?(file)
@@ -100,7 +97,6 @@ class Travis::Web::App
           'Cache-Control'    => cache_control(file),
           'Content-Location' => path_for(file),
           'Content-Type'     => mime_type(file),
-          'ETag'             => %Q{"#{version}"},
           'Last-Modified'    => server_start.httpdate,
           'Expires'          => (server_start + age).httpdate,
           'Vary'             => vary_for(file)
@@ -130,7 +126,6 @@ class Travis::Web::App
     def cache_control(file)
       case path_for(file)
       when '/'        then "public, must-revalidate"
-      when '/version' then "no-cache"
       else "public, max-age=#{age}"
       end
     end
@@ -138,7 +133,6 @@ class Travis::Web::App
     def vary_for(file)
       case path_for(file)
       when '/'         then 'Accept'
-      when '/version'  then '*'
       else ''
       end
     end
