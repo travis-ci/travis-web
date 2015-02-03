@@ -2,23 +2,23 @@
 
 .pro.maximized
   #right
-    width: 0
-    padding: 0
-    flex: 0
-    -webkit-flex: 0
-    -moz-flex: 0
-    -ms-flex: 0
+    display: none
     *:not(#slider):not(.icon):not(.ember-view)
       display: none
 
   #slider
+    top: 45px
     left: -20px
     width: 20px
     height: 20px
     background-image: inline-image('ui/slider-open.svg')
     background-position: 6px 5px
     @include border-bottom-left-radius(4px)
-    top: 45px
+    display: none
+
+    @media #{$medium-up}
+      display: block
+
 
 #top .profile
   margin-right: 15px

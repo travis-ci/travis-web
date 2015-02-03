@@ -104,10 +104,8 @@
     .group a
       cursor: pointer
 
-  @import "app/_mixins/all"
-
   #right
-    padding-bottom: 80px
+    // padding-bottom: 80px
 
     h4
       margin: 24px 0 0 0
@@ -160,15 +158,8 @@
     text-decoration: underline
     cursor: pointer
 
-  @mixin flex($grow, $shrink, $size)
-    -webkit-flex: $grow $shrink $size
-    flex:         $grow $shrink $size
-
   #right
-    @include flex(1, 1, 300px)
-    max-width: 180px
-    padding: 25px 20px 80px 20px
-    background-color: #E9E9E7
+    background-color: $right-bg
     border-left: 1px solid $color-border-normal
 
   #settings li.env-var span.name

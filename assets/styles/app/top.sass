@@ -55,7 +55,13 @@
     li.traviscicom
       display: none
 
+  .nav-burger
+    overflow: auto
+    @media #{$medium-up}
+      display: none
+
   #burger
+    float: right
     font-size: 50px
     background: none
     border: none
@@ -65,8 +71,7 @@
     @include clearfix
     &:hover
       cursor: pointer
-    @media #{$medium-up}
-      display: none
+    
 
   &.is-open
     height: auto
@@ -118,8 +123,6 @@
       width: 30px
       height: 30px
       border-radius: 100px
-      -webkit-border-radius: 100px
-      -moz-border-radius: 100px
 
     ul
       min-width: 145px
@@ -175,13 +178,13 @@
 //   display : none
 
 #top img
-  float  : right
-  margin : 14px 0 0 10px
+  margin: 10px 10px 7px 10px
   width  : 30px
   height : 30px
   border-radius: 100px
-
-
+  @media #{$medium-up}
+    float  : right
+    margin : 14px 0 0 10px
 
 // #user ul
 //   text-align : left

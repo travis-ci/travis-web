@@ -40,11 +40,24 @@
   position: relative
   padding: 20px 30px 80px
 
+
+.wrapper
+  overflow: hidden
+  #main,
+  #left,
+  #right
+    margin-bottom: -99999px
+    padding-bottom: 100034px
+
 @media #{$medium-up}
 
   #main
     width: grid-calc(22, 24)
     margin: auto
+
+  #auth
+    #main
+      float: none
 
   #profile
     #main
@@ -55,6 +68,32 @@
     #right
       width: grid-calc(6, 24)
       float: right
+
+  .pro,
+  #profile.pro
+    .wrapper-main
+      overflow: auto
+      width: grid-calc(24, 24)
+      clear: both
+    #main
+      width: grid-calc(18, 24)
+      float: left
+      overflow: hidden
+    #right
+      width: grid-calc(6, 24)
+      float: right
+
+  .pro.maximized,
+  #profile.pro.maximized
+    .wrapper-main
+      width: grid-calc(24, 24)
+      clear: both
+    #main
+      width: grid-calc(24, 24)
+      float: none
+      overflow: hidden
+    #right
+      width: 0
 
 
 @media #{$large-up}
@@ -73,6 +112,30 @@
       float: left
     #right
       width: grid-calc(4, 24)
+
+  .pro,
+  #profile.pro
+    .wrapper-main
+      width: grid-calc(19, 24)
+      float: right
+    #main
+      width: grid-calc(19, 24)
+      float: left
+    #right
+      width: grid-calc(5, 24)
+      float: right
+
+  .pro.maximized,
+  #profile.pro.maximized
+    .wrapper-main
+      overflow: auto
+      width: grid-calc(19, 24)
+      float: right
+    #main
+      width: grid-calc(24, 24)
+      float: none
+    #right
+      width: 0
 
 .travis-lint
   background-color: $travis-lint-bg

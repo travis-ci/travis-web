@@ -1,32 +1,37 @@
-<div id="top">
-  {{render "top"}}
-</div>
+<div class="wrapper">
+  <header id="top">
+    {{render "top"}}
+  </header>
 
-<div id="left">
-  {{outlet "left"}}
-</div>
+  <div class="wrapper-main">
+    <main id="main" role="main">
+      {{render "flash"}}
+      {{yield}}
+    </main>
 
-<div id="main">
-  {{render "flash"}}
-  {{yield}}
-</div>
+    <aside id="right">
+      <div id="slider" {{action "toggle" target=Travis.slider}}>
+        <div class='icon'></div>&nbsp;
+      </div>
 
-<div id="right">
-  <div id="slider" {{action "toggle" target=Travis.slider}}>
-    <div class='icon'></div>&nbsp;
+      <div class="box">
+        <h4>Getting started?</h4>
+        <p>
+          Please read our <a href="http://docs.travis-ci.com/user/getting-started">guide</a>.
+          You'll be up and running in no time!
+        </p>
+        <p>
+          You can find detailed docs on our <a href="http://docs.travis-ci.com">documentation</a> site.
+        </p>
+        <p>
+          If you need help <a href="http://stackoverflow.com/questions/ask?tags=travis-ci">ask a question</a> or hop on <a href="irc://irc.freenode.net/#travis">#travis</a> on irc.freenode.net
+        </p>
+      </div>
+    </aside>
   </div>
 
-  <div class="box">
-    <h4>Getting started?</h4>
-    <p>
-      Please read our <a href="http://docs.travis-ci.com/user/getting-started">guide</a>.
-      You'll be up and running in no time!
-    </p>
-    <p>
-      You can find detailed docs on our <a href="http://docs.travis-ci.com">documentation</a> site.
-    </p>
-    <p>
-      If you need help <a href="http://stackoverflow.com/questions/ask?tags=travis-ci">ask a question</a> or hop on <a href="irc://irc.freenode.net/#travis">#travis</a> on irc.freenode.net
-    </p>
-  </div>
+  <aside id="left">
+    {{outlet "left"}}
+  </aside>
+
 </div>
