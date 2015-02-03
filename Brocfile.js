@@ -2,7 +2,18 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var fingerprint = {}, assetsHost;
+
+if (assetsHost = process.env.ASSETS_HOST) {
+  if (assetsHost.substr(-1) !== '/') {
+    assetsHost = assetsHost + '/'
+  }
+  fingerprint.prepend = assetsHost
+}
+
+var app = new EmberApp({
+  fingerprint: fingerprint
+});
 
 app.import('bower_components/pusher/dist/pusher.js');
 app.import('bower_components/jquery-timeago/jquery.timeago.js');
