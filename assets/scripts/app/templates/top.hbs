@@ -8,6 +8,9 @@
   <li class="home">
     {{#link-to "main"}}Home{{/link-to}}
   </li>
+  {{#if config.pro}}
+    <li><a href="http://docs.travis-ci.com">Docs</a></li>
+  {{/if}}
   {{#if config.enterprise}}
     <li><a href="http://docs.travis-ci.com">Docs</a></li>
   {{else}}
@@ -53,10 +56,6 @@
   {{/if}}
 
   {{#unless config.pro}}
-    <li>
-      <a href="https://travisci.workable.com" class="werehiring" target="_blank">We're Hiring!</a>
-    </li>
-
     <li class="traviscicom">
       <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
     </li>

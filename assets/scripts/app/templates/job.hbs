@@ -7,7 +7,7 @@
       </div>
       <div class="right">
         <div class="build-status">
-          {{#link-to "job" repo job}}#{{job.number}} {{job.state}}{{/link-to}}
+          {{#link-to "job" repo job}}#{{job.number}} {{humanize-state job.state}}{{/link-to}}
         </div>
 
         <div class="runtime">

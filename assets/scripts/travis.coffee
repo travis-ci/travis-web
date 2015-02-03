@@ -128,6 +128,7 @@ require 'helpers/travis-field'
 require 'helpers/travis-field'
 require 'helpers/filter-input'
 require 'helpers/capitalize'
+require 'helpers/humanize-state'
 require 'helpers/github-commit-link'
 require 'helpers/format-time'
 require 'helpers/format-duration'
@@ -146,6 +147,7 @@ Ember.Handlebars.registerHelper('travis-field', Travis.Handlebars.travisField)
 Ember.Handlebars.registerHelper('filter-input', Travis.Handlebars.filterInput)
 
 Ember.Handlebars.registerBoundHelper('capitalize', Travis.Handlebars.capitalize)
+Ember.Handlebars.registerBoundHelper('humanize-state', Travis.Handlebars.humanizeState)
 Ember.Handlebars.registerBoundHelper('github-commit-link', Travis.Handlebars.githubCommitLink)
 Ember.Handlebars.registerBoundHelper('format-time', Travis.Handlebars.formatTime)
 Ember.Handlebars.registerBoundHelper('format-duration', Travis.Handlebars.formatDuration)
