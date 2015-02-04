@@ -85,9 +85,7 @@ module.exports = function(environment) {
 
   ENV.contentSecurityPolicy = {
     'default-src': "'none'",
-    // TODO: for some reason unsafe-eval is needed when I use collection helper,
-    //       we should probably remove it at some point
-    'script-src': "'self' 'unsafe-eval'",
+    'script-src': "'self'",
     'font-src': "'self'",
     'connect-src': "'self' https://api.travis-ci.org ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com",
     'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com",
