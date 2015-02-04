@@ -1,5 +1,6 @@
 `import Ember from 'ember'`
 `import Model from 'travis/models/model'`
+`import config from 'travis/config/environment'`
 
 Hook = Model.extend
   name:        DS.attr()

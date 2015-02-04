@@ -1,6 +1,7 @@
 `import Ember from 'ember'`
 `import Model from 'travis/models/model'`
 `import Ajax from 'travis/utils/ajax'`
+`import config from 'travis/config/environment'`
 
 User = Model.extend
   name:        DS.attr()
