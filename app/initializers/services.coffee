@@ -5,9 +5,11 @@
 
 initialize = (container, application) ->
   application.slider = new Slider(application.storage)
-
   application.tailing = new Tailing($(window), '#tail', '#log')
   application.toTop   = new ToTop($(window), '.to-top', '#log-container')
+
+  application.register 'slider:main', application.slider, { instantiate: false }
+  application.inject('view', 'slider', 'slider:main')
 
 Initializer =
   name: 'services'

@@ -1,6 +1,6 @@
 <div id="repo" {{bind-attr class="view.className"}}>
   {{#if view.isEmpty}}
-    {{view Travis.ReposEmptyView}}
+    {{view 'repos-empty'}}
   {{else}}
     {{#if repo.isLoaded}}
       <div id="repo-header">
