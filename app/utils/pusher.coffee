@@ -58,8 +58,8 @@ TravisPusher.prototype.receive = (event, data) ->
       if job = Travis.__container__.lookup('store:main').getById('job', data.job.id)
         job.clearLog()
 
-    Ember.run.next ->
-      Travis.receive(event, data)
+    Ember.run.next =>
+      @store.receivePusherEvent(event, data)
 
 TravisPusher.prototype.processSavedCallbacks = ->
   while callback = @callbacksToProcess.shiftObject()
