@@ -1072,4 +1072,4 @@ Log.extend(Log.Renderer.prototype, {
   }
 });
 
-export default Log;
+window.Log = Log;

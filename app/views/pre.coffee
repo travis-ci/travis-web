@@ -2,7 +2,6 @@
 `import LogFolder from 'travis/utils/log-folder'`
 `import config from 'travis/config/environment'`
 `import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls'`
-`import Log from 'travis/vendor/log'`
 
 Log.DEBUG = false
 Log.LIMIT = 10000
