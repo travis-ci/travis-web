@@ -40,7 +40,6 @@
   position: relative
   padding: 20px 30px 80px
 
-
 .wrapper
   overflow: hidden
   #main,
@@ -51,7 +50,7 @@
 
 @media #{$medium-up}
 
-  #main
+  .wrapper-main
     width: grid-calc(22, 24)
     margin: auto
 
@@ -100,9 +99,12 @@
   #left
     width: grid-calc(5, 24)
     float: left
-  #main
+    margin-left: -100%
+
+  .wrapper-main
     width: grid-calc(19, 24)
-    float: right
+    float: left
+    margin-left: grid-calc(5, 24)
 
   #profile
     #left
