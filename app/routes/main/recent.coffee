@@ -4,4 +4,7 @@
 Route = MainTabRoute.extend
   reposTabName: 'recent'
 
+  activate: ->
+    @store.set('recentReposOpened', true)
+
 `export default Route`
