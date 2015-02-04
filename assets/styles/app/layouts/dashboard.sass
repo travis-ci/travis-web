@@ -78,22 +78,6 @@
   text-indent      : -9999px
   border-radius    : 100px
 
-// .org-travisci
-//   background      : url('/images/dashboard/orgs-travisci.png') no-repeat
-//   background-size : contain
-
-// .org-saltinejustine
-//   background      : url('/images/dashboard/orgs-saltinejustine.png') no-repeat
-//   background-size : contain
-
-// .org-openkarma
-//   background      : url('/images/dashboard/orgs-openkarma.png') no-repeat
-//   background-size : contain
-
-// .org-eurucamp
-//   background      : url('/images/dashboard/orgs-eurucamp.png') no-repeat
-//   background-size : contain
-
 #filters ul li ul li:hover
   background : #5e869a
   color      : $white
@@ -173,7 +157,7 @@
   margin-left  : 5px
   border-left  : 5px solid transparent
   border-right : 5px solid transparent
-  border-top   : 5px solid #9d9fa1
+  border-top   : 5px solid $dashboard-text-color
 
 #search
   float : right
@@ -206,48 +190,79 @@
 .tiles
   background  : #f4f3ea
   padding     : 30px 0 10px 0
+  .columns + .columns:last-child
+    float: left
 
 .tile
-  background    : $white
-  min-height    : 125px
-  color         : #9d9fa1
-  font-size     : 14px
+  position: relative
   margin-bottom : 20px
   padding       : 0 10px 0 0
-  border-radius         : 4px
+  min-height    : 125px
+  background    : $white
+  color         : $dashboard-text-color
+  font-size     : 14px
+  border-radius : 4px
+  overflow: hidden
 
-  .duration
-    background-image: url('/images/dashboard/time.svg')
-    background-size : 11px 11px
-    text-indent     : 15px
-    line-height     : 13px
+  &:after
+    content: ""
+    display: block
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    width: 3em
+    background: linear-gradient(90deg, rgba($white, .2), $white 50%, $white)
 
   .duration, .finished
     margin-top : 8px
     background-repeat: no-repeat
     background-position: 0 1px
+    background-size : 11px 11px
+    text-indent     : 15px
+
+  .duration
+    background-image: url('/images/dashboard/time.svg')
+    line-height     : 13px
 
   .finished
     background-image: url('/images/dashboard/cal.svg')
-    background-size : 11px 11px
-    text-indent     : 15px
     line-height     : 14px
 
   .build-status
+    margin: 5px 0 0
+
+  .build-information
+    padding: 8px 0 6px 45px
+
+  .org
+    margin : 0
+
+  .repo
+    font-size     : 20px
+    display       : inline-block
+    margin        : 0
+    max-width     : 250px
+    white-space   : nowrap
+    line-height   : 20px
+    text-overflow : ellipsis
+
+  .star-feature
+    position        : absolute
+    top             : 0
+    right           : 0
+    background      : url('/images/dashboard/star-on.svg') no-repeat 7px 10px
+    background-size : 20px 20px
+
+  .build-bar
     position: absolute
-    bottom: 25px
-    margin-bottom: 0
-
-.build-bar
-  position: absolute
-  background:
-    repeat: no-repeat
-    position: 7px 10px
-    size: 20px 20px
-
-  min-height      : 125px
-  width           : 33px
-  border-radius   : 4px 0 0 4px
+    background:
+      repeat: no-repeat
+      position: 7px 10px
+      size: 20px 20px
+    min-height      : 100%
+    width           : 33px
+    border-radius   : 4px 0 0 4px
 
 .repo a:hover,
 .build-status a:hover,
@@ -298,30 +313,6 @@
   .repo a,
   .build-status a
     color: $error-color
-
-
-.tile .build-information
-  padding-left : 45px
-  padding-top  : 8px
-
-.tile .org
-  margin : 0
-
-.tile .repo
-  font-size     : 20px
-  display       : inline-block
-  margin        : 0
-  max-width     : 250px
-  white-space   : nowrap
-  line-height   : 20px
-  text-overflow : ellipsis
-
-.tile .star-feature
-  position        : absolute
-  top             : 0
-  right           : 0
-  background      : url('/images/dashboard/star-on.svg') no-repeat 7px 10px
-  background-size : 20px 20px
 
 .if_private
   display         : inline-block
