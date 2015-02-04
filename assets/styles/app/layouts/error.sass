@@ -1,0 +1,117 @@
+/*
+ * Error Pages
+ */
+@import "app/_mixins/all"
+
+.main--error
+  min-height: 100%
+
+.error-text
+  position: absolute
+  left: 0
+  right: 0
+  z-index: 10
+  h1
+    margin: 1em 0 .4em
+    font-weight: 600
+    color: $error-heading-color
+    font-size: 40px
+    line-height: 1
+    text-align: center
+  p
+    color: $error-copy-color
+    font-size: 20px
+    text-align: center
+
+  @media #{$medium-up}
+    h1
+      margin: 1.5em 0 .4em
+      font-size: 60px
+
+/*
+ * 404
+ */
+.error-bg,
+.error-hill-left,
+.error-hill-right,
+.error-excavator,
+.error-travis
+  position: absolute
+  top: 0
+  height: 93vh
+  width: 100%
+  overflow: hidden
+  background:
+    repeat: no-repeat
+
+.error-bg
+  background: linear-gradient(0deg, $error-hill-grey, $error-hill-grey 34.9%, rgba($error-bg-gradient, 0.3) 35%, $white 60%, $white)
+
+.error-hill-left
+  background:
+    image: url(../images/error/404-hills-left.svg)
+    size: 30vw auto
+    position: 0 58%
+
+.error-hill-right
+  background:
+    image: url(../images/error/404-hills-right.svg)
+    size: 50vw auto
+    position: 99% 57%
+
+.error-excavator
+  background:
+    image: url(../images/error/excavator.svg)
+    size: 32vw auto
+    position: 71% 83%
+
+.error-travis
+  background:
+    image: url(../images/error/pensive-travis.svg)
+    size: 77vw auto
+    position: 34% 100%
+
+@media #{$medium-up}
+.error-bg,
+.error-hill-left,
+.error-hill-right,
+.error-excavator,
+.error-travis
+  height: 96vh
+
+@media #{$large-up}
+  .error-travis
+    background:
+      size: 38vw auto
+      position: 34% 100%
+
+@media screen and (max-width: 800px)
+  .error-travis
+    background:
+      size: 70vw auto
+      position: 34% 100%
+
+@media screen and (max-width: 1200px)
+  .error-travis
+    background:
+      size: 50vw auto
+      position: 34% 100%
+  .error-hill-left
+    background:
+      size: 37vw auto
+      position: 0 65%
+  .error-hill-right
+    background:
+      size: 57vw auto
+      position: 99% 60%
+
+@media screen and (orientation: portrait)
+  .error-hill-left
+    background:
+      size: 37vw auto
+      position: 0 68%
+  .error-hill-right
+    background:
+      size: 57vw auto
+      position: 99% 63%
+

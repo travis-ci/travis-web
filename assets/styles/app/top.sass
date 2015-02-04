@@ -2,16 +2,18 @@
 
 #top
   position: static
-  font-size: $font-size-small
+  font-size: $font-size-normal
   background  : $topbar-bg
   height: 55px
   overflow: hidden
 
   #logo
+    position: relative
     float        : left
     width        : 123px
     height       : 55px
     margin-right : 14px
+    z-index: 99
     text-indent  : -9999px
     background   : $logo-red inline-image('ui/travis-logo.svg') no-repeat 20px 18px
 
@@ -48,7 +50,7 @@
     ul
       line-height: 55px
       position: relative
-      top: 3px
+      top: 2px
     li
       display: inline-block
       border: none
@@ -96,7 +98,7 @@
         position: absolute
         z-index: 300
         right: 0px
-        top: 55px
+        top: 52px
         width: 100%
         background-color: $color-bg-dropdown
         li
@@ -114,8 +116,6 @@
 
   .user
     text-align: right
-    a
-      padding-right: 0
 
   .menu.profile
     .signing-in
@@ -145,10 +145,6 @@
         display: inline-block
       &.signed-in .signed-in
         display: block
-
-      // img
-      //   float: right
-      //   margin: 13px 0 0 10px
 
     &:not(.signed-in):hover ul
       display: none
@@ -186,7 +182,7 @@
   border-radius: 100px
   @media #{$medium-up}
     float  : right
-    margin : 14px 0 0 10px
+    margin : 12px 0 0 10px
 
 // #user ul
 //   text-align : left
