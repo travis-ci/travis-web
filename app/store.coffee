@@ -9,7 +9,7 @@ Store = DS.Store.extend
     [name, type] = event.split(':')
 
     auth = @container.lookup('auth:main')
-    if !@get('recentReposOpened') && event != 'job:log' && auth.get('signedIn') &&
+    if !@get('recentReposTabIsOpened') && event != 'job:log' && auth.get('signedIn') &&
         !config.pro && !config.enterprise
       # if recent repos hasn't been opened yet, we can safely
       # drop any events that doesn't belong to repos owned by
