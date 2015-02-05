@@ -4,13 +4,13 @@
   "launch_in_ci": [
     "PhantomJS",
     "SL_chrome",
-    "SL_firefox"
+    "SL_firefox",
+    "SL_safari"
   ],
   "launch_in_dev": [
     "PhantomJS",
     "Chrome",
-    "Firefox",
-    "Safari"
+    "Firefox"
   ],
   "launchers": {
     "SL_chrome": {
@@ -33,6 +33,19 @@
         "firefox",
         "-p",
         "Windows 8",
+        "--at",
+        "--no-ct",
+        "--u"
+      ],
+      "protocol": "browser"
+    },
+    "SL_safari": {
+      "exe": "./node_modules/.bin/ember-cli-sauce",
+      "args": [
+        "-b",
+        "safari",
+        "-p",
+        "Mac 10.10",
         "--at",
         "--no-ct",
         "--u"
