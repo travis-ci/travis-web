@@ -1,9 +1,10 @@
 `import Ember from 'ember'`
 `import config from './config/environment'`
+`import Location from 'travis/utils/location'`
 
 Router = Ember.Router.extend
   # TODO: we should use TravisLocation here
-  location: 'history'
+  location: if Ember.testing then 'none' else Location
 
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
