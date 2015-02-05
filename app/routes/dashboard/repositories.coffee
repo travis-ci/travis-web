@@ -12,7 +12,9 @@ Route = TravisRoute.extend
         Authorization: 'token ' + @auth.token()
       }
     }).then (response) ->
-      response.repositories.sortBy('last_build.finished_at').map( (repo) ->
+      response.repositories.sortBy('last_build.finished_at').filter( (repo) ->
+        repo.last_build
+      ).map( (repo) ->
         Ember.Object.create(repo)
       )
 
