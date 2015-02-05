@@ -1,40 +1,13 @@
 @import "app/_mixins/all"
 
-$left-width: 250px
 
-@mixin display-flex
-  display: -webkit-flex
-  display: -moz-flex
-  display: -ms-flexbox
-  display: flex
-
-@mixin flex($grow, $shrink, $size)
-  -ms-flex:     $grow $shrink $size
-  -webkit-flex: $grow $shrink $size
-  -moz-flex:    $grow $shrink $size
-  flex:         $grow $shrink $size
-
-html, body
-  min-height: 100vh
-
-body > div:first-child
-  min-height: 100vh
+.centered .row
+  max-width: 1024px
 
 .main, .profile-view
   position: relative
   width: 100%
   min-height: 100vh
-  margin-top: 40px
-  @include display-flex
-
-#top
-  position: absolute
-  top: -40px
-  left: 0
-  width: 100%
-  min-width: 930px
-  height: 55px
-  z-index: 1000
 
 #auth, #not-found, #simple
   #top
@@ -47,7 +20,6 @@ body > div:first-child
 #left, #right
   position: relative
   min-height: 100%
-  @include flex(0, 0, 25em)
 
 #left
   padding: 0 0 110px 0
@@ -64,24 +36,113 @@ body > div:first-child
   background: inline-image('ui/clock.svg') no-repeat 0px 0px
   background-size: contain
 
-
-@media screen and (max-width: 980px)
-  #left
-    max-width: 300px
-
 #main
-  -webkit-flex: 1
-  -moz-flex:    1
-  -ms-flex:     1
-  flex:         1
   position: relative
-  min-width: 539px
-  padding: 20px 40px 80px 30px
+  padding: 20px 30px 80px
+
+.wrapper
+  overflow: hidden
+  #main,
+  #left,
+  #right
+    margin-bottom: -99999px
+    padding-bottom: 100034px
+
+@media #{$medium-up}
+
+  .wrapper-main
+    width: grid-calc(22, 24)
+    margin: auto
+
+  #auth
+    #main
+      float: none
+
+  #profile
+    #main
+      width: grid-calc(18, 24)
+      float: left
+    #left
+      width: grid-calc(24, 24)
+    #right
+      width: grid-calc(6, 24)
+      float: right
+
+  .pro,
+  #profile.pro
+    .wrapper-main
+      overflow: auto
+      width: grid-calc(24, 24)
+      clear: both
+    #main
+      width: grid-calc(18, 24)
+      float: left
+      overflow: hidden
+    #right
+      width: grid-calc(6, 24)
+      float: right
+
+  .pro.maximized,
+  #profile.pro.maximized
+    .wrapper-main
+      width: grid-calc(24, 24)
+      clear: both
+    #main
+      width: grid-calc(24, 24)
+      float: none
+      overflow: hidden
+    #right
+      width: 0
+
+
+@media #{$large-up}
+  #left
+    width: grid-calc(5, 24)
+    float: left
+    margin-left: -100%
+
+  .wrapper-main
+    width: grid-calc(19, 24)
+    float: left
+    margin-left: grid-calc(5, 24)
+
+  #profile
+    #left
+      width: grid-calc(5, 24)
+    #main
+      width: grid-calc(15, 24)
+      float: left
+    #right
+      width: grid-calc(4, 24)
+
+  .pro,
+  #profile.pro
+    .wrapper-main
+      width: grid-calc(19, 24)
+      float: right
+    #main
+      width: grid-calc(19, 24)
+      float: left
+    #right
+      width: grid-calc(5, 24)
+      float: right
+
+  .pro.maximized,
+  #profile.pro.maximized
+    .wrapper-main
+      overflow: auto
+      width: grid-calc(19, 24)
+      float: right
+    #main
+      width: grid-calc(24, 24)
+      float: none
+    #right
+      width: 0
 
 .travis-lint
-  background-color: #fafafa
+  background-color: $travis-lint-bg
   width: 100%
-  color: #9b9d9e
+  color: $travis-lint-color
   margin: 10px 0 36px 0
   p
     padding: 10px
@@ -132,3 +193,14 @@ body > div:first-child
     min-width: 960px
   #tools
     display: none
+
+a
+  text-decoration : none
+
+.application,
+.dashboard
+  height: 100%
+
+
+.no-padding
+  padding : 0

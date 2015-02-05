@@ -1,18 +1,23 @@
-<div id="top">
-  {{render "top"}}
-</div>
+<div class="wrapper">
+  
+  <header id="top">
+    {{render "top"}}
+  </header>
 
-<div id="left">
-  {{outlet "left"}}
-</div>
-
-<div id="main">
-  {{render "flash"}}
-  {{yield}}
-</div>
-
-{{#if config.pro}}
-  <div id="right">
-    {{render "sidebar"}}
+  <div class="wrapper-main">
+    <main id="main" role="main">
+      {{render "flash"}}
+      {{yield}}
+    </main>
+    {{#if config.pro}}
+      <aside id="right">
+        {{render "sidebar"}}
+      </aside>
+    {{/if}}
   </div>
-{{/if}}
+
+  <aside id="left">
+    {{outlet "left"}}
+  </aside>
+
+</div>

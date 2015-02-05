@@ -1,10 +1,10 @@
 @import "app/_mixins/all"
+@import "app/foundation/scss/foundation/_settings"
 
 .tabs
-  height: 29px
+  
 
   li
-    display: inline-block
     height: 28px
     vertical-align: top
     background-color: #f8f8f8
@@ -13,16 +13,19 @@
     margin-right: 10px
     white-space: nowrap
     cursor: pointer
-
-    &:hover
-      background-color: $color-bg-tab-hover
+  @media #{$medium-up}
+    height: 29px
+    li
+      display: inline-block
+      &:hover
+        background-color: $color-bg-tab-hover
 
   .active
     background-color: $color-bg-tab-active
     border-bottom-color: $color-bg-tab-active
 
     a
-      color: #666666
+      color: $color-text
       font-weight: 600
 
   h5

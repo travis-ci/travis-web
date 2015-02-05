@@ -1,0 +1,72 @@
+/*
+ * Footer on the dashboard
+ */
+@import "app/_mixins/all"
+
+footer
+  padding          : 20px 0
+  background-color : $footer-bg-color
+  min-height       : 334px
+  font-size        : 12px
+  line-height      : 22px
+  margin-top      : -334px /* sticky footer */
+
+.wrapper
+  padding-bottom: 334px
+  min-height: 100%
+  height: auto
+@media (min-width: 640px)
+  .wrapper
+    padding-bottom: 204px
+
+  footer
+    margin-top: -204px
+    min-height: 204px
+
+
+footer h3
+  font-size   : 15px
+  margin  : 0 0 10px 0
+  padding-top : 6px
+  font-weight : 400
+  color       : $footer-h3-color
+  border-top  : solid 4px $footer-h3-corder-color
+
+footer .row p
+  display : inline-block
+  margin  : 0
+
+footer .row ul,
+footer .row li
+  display         : block
+  color           : $footer-color
+  line-height     : 22px
+  padding         : 0
+  margin-top      : 0
+  list-style-type : none
+
+footer a
+  text-decoration : none
+  display         : inline-block
+  color           : $footer-color
+
+footer a:hover,
+footer a:active
+  text-decoration : underline
+
+a 
+  text-decoration : none
+  display         : block
+  color           : $footer-color
+
+.status-circle
+  background   : $pass-color
+  display      : inline-block
+  height       : 11px
+  width        : 11px
+  text-indent  : -9999px
+  margin-right : 5px
+  border-radius         : 100px
+  -webkit-border-radius : 100px
+  -moz-border-radius    : 100px
+  vertical-align: middle

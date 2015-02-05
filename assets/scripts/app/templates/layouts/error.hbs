@@ -1,0 +1,38 @@
+<div id="top">
+  <div class="row">
+    <div class="small-2 medium-2 columns" id="logo">
+      <h1>{{#link-to "main"}}Home{{/link-to}}</h1>
+    </div>
+    <div class="nav-burger">
+      <button type="button" id="burger">&equiv;</button>
+    </div>
+    <ul>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Status</a></li>
+    <!-- <div class="small-4 medium-3 columns" id="status">
+      <div class="status-graph">Status Graph</div>
+    </div> -->
+      <li class="menu float-right user">
+        <p class="handle">
+          {{#if auth.signedOut}}
+            <a class="signed-out" href="#" {{action "signIn" target="auth"}}>Sign in with GitHub</a>
+          {{/if}}
+          {{#if auth.signedIn}}
+            {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="auth.gravatarUrl"}}/>{{auth.userName}}{{/link-to}}
+          {{/if}}
+          {{#if auth.signingIn}}
+            <span class="signing-in">Signing In</span>
+          {{/if}}
+        </p>
+        <ul>
+          <li><a href="#" title="">Help</a></li>
+          <li><a href="/" {{action "signOut" target="auth"}}>Sign Out</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<main class="main main--error" role="main">
+  {{yield}}
+</main>

@@ -1,0 +1,194 @@
+/*
+ * Dashboard
+ * @todo: split into components: filter, search
+ */
+
+@import "app/_mixins/all"
+
+
+.wrapper-dashboard
+  background-color: $wrapper-bg-color
+
+  #top
+    .user
+      a
+        padding-right: 0
+
+.current-org-avatar
+  display     : inline-block
+  height      : 20px
+  width       : 20px
+  vertical-align: top
+  margin : -5px 5px 0 0
+
+#filters-search
+  background    : $white
+  font-size     : 14px
+  padding       : 5px 0 5px 0
+  max-height    : 44px
+
+#filters
+  float : left
+
+#filters ul
+  text-align : left
+  display    : inline
+  margin     : 0
+  padding    : 0
+  list-style : none
+  z-index    : 1000
+
+#filters ul li
+  background   : $white
+  position     : relative
+  display      : inline-block
+  padding      : 10px 0 10px 0
+  margin-right : -4px
+  margin-top   : 0
+  cursor       : pointer
+  border-radius         : 0px
+
+#filters li.filters-start:hover
+  background-color : #fff
+
+#filters ul li ul
+  padding    : 0
+  position   : absolute
+  top        : 35px
+  left       : 0
+  width      : 200px
+  display    : none
+  opacity    : 0
+  visibility : hidden
+  box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
+
+#filters ul li ul li
+  display      : block
+  line-height  : 23px
+  padding-left : 20px
+
+#filters ul li ul li:first-child
+  border-top-left-radius  : 4px
+  border-top-right-radius : 4px
+
+#filters ul li ul li:last-child
+  border-bottom-left-radius  : 4px
+  border-bottom-right-radius : 4px
+
+#filters ul li ul li div
+  display          : inline-block
+  width            : 20px
+  height           : 20px
+  margin-right     : 5px
+  text-indent      : -9999px
+  border-radius    : 100px
+
+#filters ul li ul li:hover
+  background : #5e869a
+  color      : $white
+
+#filters ul li:hover ul
+  display    : block
+  opacity    : 1
+  visibility : visible
+
+#views
+  float : left
+
+#views ul
+  text-align : left
+  display    : inline
+  margin     : 0
+  padding    : 0
+  list-style : none
+  z-index    : 1000
+
+#views ul li
+  background   : $white
+  position     : relative
+  display      : inline-block
+  padding      : 10px 0 10px 0
+  margin-right : -4px
+  margin-top   : 0
+  cursor       : pointer
+  border-radius         : 0px
+  -webkit-border-radius : 0px
+  -moz-border-radius    : 0px
+
+#views li.views-start:hover
+  background-color : #fff
+
+#views ul li ul
+  padding    : 0
+  position   : absolute
+  top        : 35px
+  left       : 0
+  width      : 200px
+  display    : none
+  opacity    : 0
+  visibility : hidden
+  box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
+
+#views ul li ul li
+  display      : block
+  line-height  : 23px
+  padding-left : 20px
+
+#views ul li ul li:first-child
+  border-top-left-radius  : 4px
+  border-top-right-radius : 4px
+
+#views ul li ul li:last-child
+  border-bottom-left-radius  : 4px
+  border-bottom-right-radius : 4px
+
+#views ul li ul li:hover
+  background : #5e869a
+  color      : $white
+
+#views ul li:hover ul
+  display    : block
+  opacity    : 1
+  visibility : visible
+
+.currently-selected
+  font-weight : 600
+
+.arrow-down
+  width        : 0
+  height       : 0
+  display      : inline-block
+  padding-top  : 2px
+  margin-left  : 5px
+  border-left  : 5px solid transparent
+  border-right : 5px solid transparent
+  border-top   : 5px solid $dashboard-text-color
+
+#search
+  float : right
+
+#search ul
+  text-align   : left
+  margin       : 0
+  padding-left : 0
+  list-style   : none
+
+#search ul li
+  position     : relative
+  display      : inline-block
+  padding      : 9px 0 8px 0
+  margin-top   : 0
+  width        : 158px
+  line-height  : 17px
+
+.search-field
+  background-image   : url('/images/dashboard/search-icon.svg')
+  background-repeat  : no-repeat
+  background-position: right 5px center
+  display            : inline-block
+  float              : right
+  border             : 1px solid #666
+  padding            : 0.5em
+  width              : 300px
+  background-size    : 16px 16px
+

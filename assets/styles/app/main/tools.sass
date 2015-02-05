@@ -1,21 +1,25 @@
 @import "app/_mixins/all"
 
 #tools
+
   position: relative
-  float: right
-  top: 2px
-  width: 600px
+
+  @media #{$medium-up}
+    position: relative
+    float: right
+    top: 2px
+    width: 600px
 
   & > a.menu-popup-button
     display: inline-block
     text-align: left
-    margin-top: -31px
+    margin-top: -32px
     color: #fff
     font-size: 13px
-    padding: 3px 24px 2px 25px
+    padding: 3px 24px 0 25px
     background-image: inline-image('icons/settings.svg'), inline-image('icons/dropdown-arrow-white.svg')
     background-size: 14px 14px, 8px 8px
-    background-position: 6px 6px, right 9px center
+    background-position: 6px 7px, right 9px center
     background-color: #a6adad
     background-repeat: no-repeat
     @include border-radius(4px)
@@ -31,13 +35,14 @@
     display: none
     position: absolute
     right: 0
-    top: -3px
+    top: -4px
     width: 140px
     background-color: #a6adad
     @include border-bottom-radius(4px)
     a
       display: block
-      color: #ffffff
+      color: $white
+      font-size: $font-size-small
       padding: 5px 25px 5px 25px
       &:hover:not(.disabled)
         background-color: #909393
@@ -60,8 +65,16 @@
       margin-right: 10px
 
 #actions
-  float: right
   text-align: right
+
+  @media #{$medium-up}
+    float: right
+    position: relative
+    top: 1.8em
+    ul
+      margin-top: -27px
+    li
+      display: inline
 
   li.restart-build a, li.restart-job a
     background-image: inline-image('icons/repeat.svg')
@@ -125,9 +138,3 @@
         opacity: 0.6
         display: none
         visibility: hidden
-
-  ul
-    margin-top: -27px
-
-    li
-      display: inline
