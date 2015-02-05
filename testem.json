@@ -2,10 +2,40 @@
   "framework": "qunit",
   "test_page": "tests/index.html?hidepassed",
   "launch_in_ci": [
-    "PhantomJS"
+    "PhantomJS",
+    "SL_chrome",
+    "SL_firefox"
   ],
   "launch_in_dev": [
     "PhantomJS",
     "Chrome"
-  ]
+  ],
+  "launchers": {
+    "SL_chrome": {
+      "exe": "./node_modules/.bin/ember-cli-sauce",
+      "args": [
+        "-b",
+        "chrome",
+        "-p",
+        "Windows 8",
+        "--at",
+        "--no-ct",
+        "--u"
+      ],
+      "protocol": "browser"
+    },
+    "SL_firefox": {
+      "exe": "./node_modules/.bin/ember-cli-sauce",
+      "args": [
+        "-b",
+        "firefox",
+        "-p",
+        "Windows 8",
+        "--at",
+        "--no-ct",
+        "--u"
+      ],
+      "protocol": "browser"
+    }
+  }
 }
