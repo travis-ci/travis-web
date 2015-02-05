@@ -1,5 +1,5 @@
 `import Ember from 'ember'`
-`import colorForState from 'travis/utils/helpers'`
+`import { colorForState } from 'travis/utils/helpers'`
 
 View = Ember.CollectionView.extend
   elementId: 'repos'
@@ -17,8 +17,7 @@ View = Ember.CollectionView.extend
     ).property('controller.selectedRepo')
 
     color: (->
-      # TODO: temp comment
-      #colorForState(@get('repo.lastBuildState'))
+      colorForState(@get('repo.lastBuildState'))
     ).property('repo.lastBuildState')
 
     click: ->
