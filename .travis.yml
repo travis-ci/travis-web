@@ -1,47 +1,24 @@
-language: ruby
-rvm:
-  - 2.1.2
+---
+language: node_js
 
 sudo: false
 
 cache:
-  bundler: true
-
-matrix:
-  fast_finish: true
-  allow_failures:
-    - rvm: 2.1.2
-      env: 'TEST_SUITE=phantomjs'
-    - rvm: 2.1.2
-      env: "TEST_SUITE=saucelabs BROWSER='firefox::Windows XP'"
-
-env:
-  global:
-    - secure: "RFuCOppyjWHC4XWKtQlgS4zO4B6KVxytdX8+G5jRY3XM+OEGte8VDD88gZLM\nKDpkqMFDbNJAVTsh1kMANCTct2ONi30RTxuJWLtRyK7RE5zCcaGbAkTNZgXo\nOR5OWLEPJZbNfbh17H6J7izTy6yiLR+CsVP1wMgeVusP0eoDhCA="
-    - secure: "duqMXPALumXB3e2j/kM2uCaCGwgZsRrU0GCDY+3Zk6a+PK+s0mE9BftcXdxm\n6u87ld2PvCBO0inpe5YeS9LOZsT+OFS4jj+GGTsRI6rmGz+kok0N+ATLTdcj\nu15zhLhUUlhoKW0DZURrDv/iTiC/FKvJ0u5Rft0XbjfTY+0go/M="
-    # SAUCE_ACCESS_KEY
-    - secure: "vf+RnbxcpCZcJYCcJdlT/EbPm9go5BnyyGKHCBwdPqb3+w+k0XyYnUkO5V9pIewIFAKof50i2YlAT8DG9GiUmKrX8z54dqSDlA+R1arMxgZRCHJohLxBjcxHVZe05aVZm/9U7YMOl3DuX88gISG91XC6nr8jnmmp2xGNQR8MkaU="
-    # SAUCE_USERNAME
-    - secure: "tg6TWOS7ZtS4/SXezv4mK482rR+F2MPKCe6PCp+U4oYidm5Jj0NPw/lVog26HSVxxLpayMq35WrBJPwR+7DiNLc+RyBS+yeL8zsLnDlBdGFqSYg6L0j3QK3mVUhQi/ivgvd5NiTcxLROKBie+NJ58HKbenwFFTfvVCy/WjK+dPA="
-
-  matrix:
-    - "TEST_SUITE=ruby ARTIFACTS_S3_BUCKET=travis-web-production"
-    - "TEST_SUITE=phantomjs"
-    - "TEST_SUITE=saucelabs BROWSER='firefox::Windows XP'"
-    - "TEST_SUITE=saucelabs BROWSER='chrome::Windows XP'"
-
-script: "script/ci"
+  directories:
+    - node_modules
 
 before_install:
-  - "gem install bundler"
-before_script:
-  - "test $TEST_SUITE = \"ruby\" && gem install travis-artifacts || true"
-  - "bundle exec rakep"
-  - "phantomjs --version"
-after_script:
-  - "test $TEST_SUITE = \"ruby\" && test $TRAVIS_PULL_REQUEST = \"false\" && travis-artifacts upload --target-path assets/$TRAVIS_BRANCH --path public/scripts:scripts --path public/styles:styles || true"
+  - "npm config set spin false"
+  - "npm install -g npm@^2"
+
+install:
+  - npm install -g bower
+  - npm install
+  - bower install
+
+script:
+  - npm test
 
 notifications:
-  irc: "irc.freenode.org#travis"
   campfire:
     secure: "JJezWGD9KJY/LC2aznI3Zyohy31VTIhcTKX7RWR4C/C8YKbW9kZv3xV6Vn11\nSHxJTeZo6st2Bpv6tjlWZ+HCR09kyCNavIChedla3+oHOiuL0D4gSo+gkTNW\nUKYZz9mcQUd9RoQpTeyxvdvX+l7z62/7JwFA7txHOqxbTS8jrjc="
