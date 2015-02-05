@@ -106,7 +106,7 @@
       input, textarea {
         border: 1px solid #ddd;
         font-size: 13px;
-        @include border-radius(1px);
+        border-radius: 1px
       }
       input {
         margin-top: 4px;
@@ -183,14 +183,14 @@
         color: white;
         text-shadow: 2px 2px 0 #666;
         cursor: hand;
-        @include border-radius(6px);
+        border-radius: 6px;
         background-color: #19A509;
-        @include background-image(linear-gradient(#3f9c33 0%, #348629 100%));
+        background-image: linear-gradient(#3f9c33, #348629);
         &:hover {
-          @include background-image(linear-gradient(#1CBE0A 0%, #158F07 100%));
+          background-image: linear-gradient(#1CBE0A, #158F07);
         }
         &[disabled] {
-          @include background-image(linear-gradient(#ddd 0%, #ccc 100%));
+          background-image: linear-gradient(#ddd, #ccc);
           color: #f6f6f6;
           text-shadow: 2px 2px 0 #aaa;
         }

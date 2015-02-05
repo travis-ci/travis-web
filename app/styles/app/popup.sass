@@ -21,7 +21,7 @@
   margin: -200px 0 0 -200px
   padding: 20px
   @include popup
-  @include box-sizing(border-box)
+  box-sizing: border-box
 
   .close
     position: absolute
@@ -48,7 +48,7 @@
     background-color: $color-bg-pre
     margin: 0
     padding: 10px 20px
-    @include border-radius(4px)
+    border-radius: 4px
 
 #status-images
   display: none
@@ -67,7 +67,7 @@
       padding: 4px
       resize: vertical
       margin-bottom: 0px
-      @include border-radius(3px)
+      border-radius: 3px
 
   p:last-child
     margin-top: 10px
@@ -93,7 +93,7 @@
     border: 1px solid $color-border-light
     width: 505px
     padding: 4px
-    @include border-radius(3px)
+    border-radius: 3px
 
 #regenerate-key, #regeneration-success
   display: none
