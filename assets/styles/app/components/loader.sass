@@ -60,7 +60,6 @@
   position      : absolute
   top           : 0
   left          : 0
-  -webkit-animation : bounce 1.5s infinite ease-in-out
   animation         : bounce 1.5s infinite ease-in-out
 
 .load-circle1
@@ -68,22 +67,11 @@
 
 .load-circle2
   background-color : #bdc5c5
-  -webkit-animation-delay : -0.5s
   animation-delay         : -0.5s
-
-@-webkit-keyframes bounce
-  0%, 100%
-    -webkit-transform : scale(0.0)
-
-  60%
-    -webkit-transform : scale(1.0)
-
 
 @keyframes bounce
   0%, 100%
     transform         : scale(0.0)
-    -webkit-transform : scale(0.0)
   60%
     transform: scale(1.0)
-    -webkit-transform : scale(1.0)
 
