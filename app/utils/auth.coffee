@@ -144,4 +144,6 @@ Auth = Ember.Object.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('currentUser.gravatarId')}?s=48&d=mm"
   ).property('currentUser.gravatarId')
 
+  permissions: Ember.computed.alias('currentUser.permissions')
+
 `export default Auth`

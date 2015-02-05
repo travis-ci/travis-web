@@ -1,4 +1,5 @@
 `import DS from 'ember-data'`
+`import config from 'travis/config/environment'`
 
 Store = DS.Store.extend
   defaultAdapter: 'application'
@@ -6,6 +7,22 @@ Store = DS.Store.extend
 
   receivePusherEvent: (event, data) ->
     [name, type] = event.split(':')
+
+    auth = @container.lookup('auth:main')
+    if !@get('recentReposTabIsOpened') && event != 'job:log' && auth.get('signedIn') &&
+        !config.pro && !config.enterprise
+      # if recent repos hasn't been opened yet, we can safely
+      # drop any events that doesn't belong to repos owned by
+      # the logged in user and that aren't related to any
+      # repositories that are already opened
+
+      permissions = auth.get('permissions')
+      if name == 'job'
+        id = data.job.repository_id
+      else if name == 'build'
+        id = data.repository.id
+
+      return if !@hasRecordForId('repo', id) && !permissions.contains(id)
 
     if name == 'job' && data.job?.commit
       @pushPayload(commits: [data.job.commit])
