@@ -12,7 +12,7 @@ Router = Ember.Router.extend
   didTransition: ->
     @_super.apply @, arguments
 
-    if config.ga_code
+    if config.gaCode
       _gaq.push ['_trackPageview', location.pathname]
 
 Router.map ->

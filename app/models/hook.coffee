@@ -19,11 +19,11 @@ Hook = Model.extend
   ).property('ownerName', 'name')
 
   urlGithub: (->
-    "#{config.source_endpoint}/#{@get('slug')}"
+    "#{config.sourceEndpoint}/#{@get('slug')}"
   ).property()
 
   urlGithubAdmin: (->
-    "#{config.source_endpoint}/#{@get('slug')}/settings/hooks#travis_minibucket"
+    "#{config.sourceEndpoint}/#{@get('slug')}/settings/hooks#travis_minibucket"
   ).property()
 
   toggle: ->

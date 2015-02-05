@@ -39,7 +39,7 @@ ajax = Em.Object.create
     method = method || "GET"
     method = method.toUpperCase()
 
-    endpoint = config.api_endpoint || ''
+    endpoint = config.apiEndpoint || ''
     options = options || {}
 
     token = Travis.sessionStorage.getItem('travis.token')

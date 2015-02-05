@@ -36,7 +36,7 @@
     </li>
   {{/unless}}
 
-  {{#if config.pages_endpoint}}
+  {{#if config.pagesEndpoint}}
     <li class="menu legal">
       <p class="handle">
         <a {{bind-attr href="config.url_legal"}}>Legal</a>
@@ -77,9 +77,9 @@
       <li>
         {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
       </li>
-      {{#if config.billing_endpoint}}
+      {{#if config.billingEndpoint}}
         <li>
-          <a {{bind-attr href="config.billing_endpoint"}}>Billing</a>
+          <a {{bind-attr href="config.billingEndpoint"}}>Billing</a>
         </li>
       {{/if}}
       <li>

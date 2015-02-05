@@ -110,12 +110,12 @@ _githubReferenceRegexp = new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", '
 _githubReferenceLink = (reference, current, matched) ->
   owner = matched.owner || current.owner
   repo = matched.repo || current.repo
-  "<a href=\"#{config.source_endpoint}/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
+  "<a href=\"#{config.sourceEndpoint}/#{owner}/#{repo}/issues/#{matched.number}\">#{reference}</a>"
 
 _githubUserRegexp = new RegExp("\\B@([\\w-]+)", 'g')
 
 _githubUserLink = (reference, username) ->
-  "<a href=\"#{config.source_endpoint}/#{username}\">#{reference}</a>"
+  "<a href=\"#{config.sourceEndpoint}/#{username}\">#{reference}</a>"
 
 _githubCommitReferenceRegexp = new RegExp("([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)", 'g')
 

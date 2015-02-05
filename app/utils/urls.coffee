@@ -1,25 +1,25 @@
 `import config from 'travis/config/environment'`
 
 plainTextLog = (id) ->
-  "#{config.api_endpoint}/jobs/#{id}/log.txt?deansi=true"
+  "#{config.apiEndpoint}/jobs/#{id}/log.txt?deansi=true"
 
 githubPullRequest = (slug, pullRequestNumber) ->
-  "#{config.source_endpoint}/#{slug}/pull/#{pullRequestNumber}"
+  "#{config.sourceEndpoint}/#{slug}/pull/#{pullRequestNumber}"
 
 githubCommit = (slug, sha) ->
-  "#{config.source_endpoint}/#{slug}/commit/#{sha}"
+  "#{config.sourceEndpoint}/#{slug}/commit/#{sha}"
 
 githubRepo = (slug) ->
-  "#{config.source_endpoint}/#{slug}"
+  "#{config.sourceEndpoint}/#{slug}"
 
 githubWatchers = (slug) ->
-  "#{config.source_endpoint}/#{slug}/watchers"
+  "#{config.sourceEndpoint}/#{slug}/watchers"
 
 githubNetwork = (slug) ->
-  "#{config.source_endpoint}/#{slug}/network"
+  "#{config.sourceEndpoint}/#{slug}/network"
 
 githubAdmin = (slug) ->
-  "#{config.source_endpoint}/#{slug}/settings/hooks#travis_minibucket"
+  "#{config.sourceEndpoint}/#{slug}/settings/hooks#travis_minibucket"
 
 statusImage = (slug, branch) ->
   if config.pro
@@ -31,9 +31,9 @@ statusImage = (slug, branch) ->
 ccXml = (slug) ->
   if config.pro
     token = Travis.__container__.lookup('controller:currentUser').get('token')
-    "##{config.api_endpoint}/repos/#{slug}/cc.xml?token=#{token}"
+    "##{config.apiEndpoint}/repos/#{slug}/cc.xml?token=#{token}"
   else
-    "#{config.api_endpoint}/repos/#{slug}/cc.xml"
+    "#{config.apiEndpoint}/repos/#{slug}/cc.xml"
 
 email = (email) ->
   "mailto:#{email}"

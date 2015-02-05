@@ -23,7 +23,7 @@ User = Model.extend
   ).observes('isSyncing')
 
   urlGithub: (->
-    "#{config.source_endpoint}/#{@get('login')}"
+    "#{config.sourceEndpoint}/#{@get('login')}"
   ).property()
 
   _rawPermissions: (->

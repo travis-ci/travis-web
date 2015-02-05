@@ -1,9 +1,9 @@
 `import config from 'travis/config/environment'`
 
 initialize = (container) ->
-  if config.ga_code
+  if config.gaCode
     window._gaq = []
-    _gaq.push(['_setAccount', config.ga_code])
+    _gaq.push(['_setAccount', config.gaCode])
 
     ga = document.createElement('script')
     ga.type = 'text/javascript'

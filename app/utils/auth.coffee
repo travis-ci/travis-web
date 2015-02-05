@@ -12,7 +12,7 @@ Auth = Ember.Object.extend
     Travis.sessionStorage.getItem('travis.token')
 
   endpoint: (->
-    config.api_endpoint
+    config.apiEndpoint
   ).property(),
 
   signOut: ->

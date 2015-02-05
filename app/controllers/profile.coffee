@@ -22,7 +22,7 @@ Controller = Ember.Controller.extend
 
   billingUrl: (->
     id = if @get('account.type') == 'user' then 'user' else @get('account.login')
-    "#{@get('config').billing_endpoint}/subscriptions/#{id}"
+    "#{@get('config').billingEndpoint}/subscriptions/#{id}"
   ).property('account.login', 'account.type')
 
 `export default Controller`

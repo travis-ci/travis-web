@@ -2,7 +2,7 @@
 `import config from 'travis/config/environment'`
 
 Adapter = DS.ActiveModelAdapter.extend
-  host: config.api_endpoint
+  host: config.apiEndpoint
 
   ajaxOptions: (url, type, options) ->
     hash = @_super(url, type, options)

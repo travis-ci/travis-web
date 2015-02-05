@@ -1,11 +1,12 @@
 `import Ember from 'ember'`
 `import TravisRoute from 'travis/routes/basic'`
+`import config from 'travis/config/environment'`
 
 Route = TravisRoute.extend
   queryParams:
     filter: { replace: true }
   model: ->
-    apiEndpoint = @get('config').api_endpoint
+    apiEndpoint = config.apiEndpoint
     $.ajax(apiEndpoint + '/v3/repos?repository.active=true', {
       headers: {
         Authorization: 'token ' + @auth.token()

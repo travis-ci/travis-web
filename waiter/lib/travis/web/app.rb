@@ -166,22 +166,22 @@ class Travis::Web::App
     def set_config(string, opts = {})
       # TODO: clean up
       config = {}
-      config['api_endpoint'] = options[:api_endpoint] if options[:api_endpoint]
-      config['pages_endpoint'] = options[:pages_endpoint] if options[:pages_endpoint]
-      config['billing_endpoint'] = options[:billing_endpoint] if options[:billing_endpoint]
-      config['source_endpoint'] = options[:source_endpoint] if options[:source_endpoint]
+      config['apiEndpoint'] = options[:api_endpoint] if options[:api_endpoint]
+      config['pagesEndpoint'] = options[:pages_endpoint] if options[:pages_endpoint]
+      config['billingEndpoint'] = options[:billing_endpoint] if options[:billing_endpoint]
+      config['sourceEndpoint'] = options[:source_endpoint] if options[:source_endpoint]
       pusher = {}
       pusher['key'] = options[:pusher_key] if options[:pusher_key]
       pusher['host'] = options[:pusher_host] if options[:pusher_host]
       pusher['path'] = options[:pusher_path] if options[:pusher_path]
       config['pusher'] = pusher
 
-      config['ga_code'] = options[:ga_code] if options[:ga_code]
+      config['gaCode'] = options[:ga_code] if options[:ga_code]
       config['pro'] = options[:pro] if options[:pro]
       config['enterprise'] = options[:enterprise] if options[:enterprise]
 
-      config['code_climate'] = options[:code_climate] if options[:code_climate]
-      config['code_climate_url'] = options[:code_climate_url] if options[:code_climate_url]
+      config['codeClimate'] = options[:code_climate] if options[:code_climate]
+      config['codeClimateUrl'] = options[:code_climate_url] if options[:code_climate_url]
 
       regexp = %r(<meta name="travis/config/environment"\s+content="([^"]+)")
       string.gsub!(regexp) do
