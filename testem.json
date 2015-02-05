@@ -9,7 +9,8 @@
   "launch_in_dev": [
     "PhantomJS",
     "Chrome",
-    "Firefox"
+    "Firefox",
+    "Safari"
   ],
   "launchers": {
     "SL_chrome": {
