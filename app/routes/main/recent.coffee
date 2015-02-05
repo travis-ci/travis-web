@@ -5,9 +5,9 @@ Route = MainTabRoute.extend
   reposTabName: 'recent'
 
   activate: ->
-    @store.set('recentReposTabIsOpened', true)
+    @store.set('isRecentTabOpen', true)
 
   deactivate: ->
-    @store.set('recentReposTabIsOpened', true)
+    @store.set('isRecentTabOpen', false)
 
 `export default Route`
