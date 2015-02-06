@@ -4,8 +4,7 @@
   "launch_in_ci": [
     "PhantomJS",
     "SL_chrome",
-    "SL_firefox",
-    "SL_safari"
+    "SL_firefox"
   ],
   "launch_in_dev": [
     "PhantomJS",
