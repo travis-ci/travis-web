@@ -5,14 +5,14 @@
   </header>
 
   <div class="wrapper-main">
-    <main id="main" role="main">
+    <div id="main" role="main">
       {{render "flash"}}
       {{yield}}
-    </main>
+    </div>
     {{#if config.pro}}
-      <aside id="right">
+      <div id="right">
         {{render "sidebar"}}
-      </aside>
+      </div>
     {{/if}}
   </div>
 

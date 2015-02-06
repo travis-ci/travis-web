@@ -2,6 +2,10 @@
  * Footer on the dashboard
  */
 
+a
+  color           : $color-link
+  text-decoration : none
+
 footer
   padding          : 20px 0
   background-color : $footer-bg-color
@@ -9,6 +13,10 @@ footer
   font-size        : 12px
   line-height      : 22px
   margin-top      : -334px /* sticky footer */
+
+  a
+    display         : block
+    color           : $footer-color
 
 .wrapper
   padding-bottom: 334px
@@ -52,11 +60,6 @@ footer a
 footer a:hover,
 footer a:active
   text-decoration : underline
-
-a
-  text-decoration : none
-  display         : block
-  color           : $footer-color
 
 .status-circle
   background   : $pass-color

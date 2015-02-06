@@ -4,12 +4,12 @@
   </header>
 
   <div class="wrapper-main">
-    <main id="main" role="main">
+    <div id="main" role="main">
       {{render "flash"}}
       {{yield}}
-    </main>
+    </div>
 
-    <aside id="right">
+    <div id="right">
       <div id="slider" {{action "toggle" target=slider}}>
         <div class='icon'></div>&nbsp;
       </div>
@@ -27,7 +27,7 @@
           If you need help <a href="http://stackoverflow.com/questions/ask?tags=travis-ci">ask a question</a> or hop on <a href="irc://irc.freenode.net/#travis">#travis</a> on irc.freenode.net
         </p>
       </div>
-    </aside>
+    </div>
   </div>
 
   <aside id="left">
