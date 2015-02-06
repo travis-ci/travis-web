@@ -1,4 +1,5 @@
 `import ENV from 'travis/config/environment'`
+`import Ajax from 'travis/utils/ajax'`
 
 TravisPusher = (config) ->
   @init(config)
@@ -117,7 +118,7 @@ if ENV.pro
 
     unless channels.fetching
       channels.fetching = true
-      Travis.ajax.post Pusher.channel_auth_endpoint, { socket_id: socketId, channels: names }, (data) ->
+      Ajax.post Pusher.channel_auth_endpoint, { socket_id: socketId, channels: names }, (data) ->
         channels.fetching = false
         callback(data.channels) for callback in channels.callbacks
 
