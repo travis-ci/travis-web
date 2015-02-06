@@ -47,7 +47,7 @@ Job = Model.extend DurationCalculations,
   config: (->
     if config = @get('_config')
       compact(config)
-    else
+    else if @get('currentState.stateName') != 'root.loading'
       return if @get('isFetchingConfig')
       @set 'isFetchingConfig', true
 
