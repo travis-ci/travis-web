@@ -36,6 +36,6 @@
     "ember-export-application-global": "^1.0.0",
     "express": "^4.8.5",
     "glob": "^4.0.5",
-    "ember-cli-inline-images": "^0.0.2"
+    "ember-cli-inline-images": "^0.0.3"
   }
 }
