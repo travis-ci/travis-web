@@ -50,13 +50,13 @@
   background:
     image: url(../images/error/404-hills-left.svg)
     size: 30vw auto
-    position: 0 58%
+    position: 0 (100% - 37%)
 
 .error-hill-right
   background:
     image: url(../images/error/404-hills-right.svg)
     size: 50vw auto
-    position: 99% 57%
+    position: 99% (100% - 38%)
 
 .error-excavator
   background:
@@ -67,50 +67,8 @@
 .error-travis
   background:
     image: url(../images/error/pensive-travis.svg)
-    size: 77vw auto
+    // size: 77vw auto
+    size: 30vw auto
     position: 34% 100%
 
-@media #{$medium-up}
-.error-bg,
-.error-hill-left,
-.error-hill-right,
-.error-excavator,
-.error-travis
-  height: 96vh
-
-@media #{$large-up}
-  .error-travis
-    background:
-      size: 38vw auto
-      position: 34% 100%
-
-@media screen and (max-width: 800px)
-  .error-travis
-    background:
-      size: 70vw auto
-      position: 34% 100%
-
-@media screen and (max-width: 1200px)
-  .error-travis
-    background:
-      size: 50vw auto
-      position: 34% 100%
-  .error-hill-left
-    background:
-      size: 37vw auto
-      position: 0 65%
-  .error-hill-right
-    background:
-      size: 57vw auto
-      position: 99% 60%
-
-@media screen and (orientation: portrait)
-  .error-hill-left
-    background:
-      size: 37vw auto
-      position: 0 68%
-  .error-hill-right
-    background:
-      size: 57vw auto
-      position: 99% 63%
 
