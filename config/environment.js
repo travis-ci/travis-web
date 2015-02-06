@@ -60,7 +60,7 @@ module.exports = function(environment) {
   ENV.contentSecurityPolicy = {
     'default-src': "'none'",
     'script-src': "'self'",
-    'font-src': "'self'",
+    'font-src': "'self' https://fonts.googleapis.com/css",
     'connect-src': "'self' https://api.travis-ci.org ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com",
     'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com",
     'style-src': "'self'",

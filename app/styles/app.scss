@@ -1,4 +1,11 @@
-@import "app/app";
+@import "app/_mixins/colors";
+@import "app/_mixins/fonts";
+@import "app/_mixins/vars";
+@import "app/foundation/scss/foundation/_settings";
+@import "app/foundation/scss/foundation/components/_grid";
+
+@import "app/_mixins/mixins";
+
 @import "app/ansi";
 @import "app/auth";
 @import "app/button";
@@ -11,10 +18,7 @@
 @import "app/forms";
 @import "app/getting_started";
 @import "app/github";
-@import "app/layout";
-@import "app/layouts/dashboard";
-@import "app/layouts/error";
-@import "app/layouts/footer";
+
 @import "app/left/list";
 @import "app/left";
 @import "app/loading";
@@ -41,4 +45,9 @@
 @import "app/status";
 @import "app/tabs";
 @import "app/tipsy";
+
+@import "app/layout";
+@import "app/layouts/dashboard";
+@import "app/layouts/error";
+@import "app/layouts/footer";
 @import "app/top";
