@@ -1,7 +1,8 @@
 <ul class="navigation">
   <li>{{#link-to "settings.index"}}General Settings{{/link-to}}</li>
   <li>{{#link-to "env_vars"}}Environment Variables{{/link-to}}</li>
-  {{#if config.ssh_key_enabled}}
+
+  {{#if config.endpoints.sshKey}}
     <li>{{#link-to "ssh_key"}}SSH Key{{/link-to}}</li>
   {{/if}}
 </ul>

@@ -10,7 +10,7 @@
     <li>
       {{#link-to "requests" view.repo}}Requests{{/link-to}}
     </li>
-    {{#if config.caches_enabled}}
+    {{#if config.endpoints.caches}}
       <li>
         {{#link-to "caches" view.repo}}Caches{{/link-to}}
       </li>

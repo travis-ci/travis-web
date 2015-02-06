@@ -46,8 +46,7 @@ module.exports = function(environment) {
       ENV.endpoints = {
         sshKey: true,
         caches: true
-      }
-
+      };
     }
   }
 
