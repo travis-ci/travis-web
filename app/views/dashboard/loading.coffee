@@ -1,7 +1,5 @@
 `import Ember from 'ember'`
 
-View = Ember.View.extend
-  layoutName: 'layouts/dashboard'
-  classNames: ['dashboard']
+View = Ember.View.extend()
 
 `export default View`
