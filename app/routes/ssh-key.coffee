@@ -6,7 +6,7 @@ Route = TravisRoute.extend
   model: (params) ->
     repo = @modelFor('repo')
     self = this
-    SshKey.fetch(repo.get('id')).then ( (result) -> result unless result.get('isNew') ), (xhr) ->
+    @store.find('sshKey', repo.get('id')).then ( (result) -> result unless result.get('isNew') ), (xhr) ->
       if xhr.status == 404
         # if there is no model, just return null. I'm not sure if this is the
         # best answer, maybe we should just redirect to different route, like
