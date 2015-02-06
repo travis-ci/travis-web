@@ -31,6 +31,26 @@ module.exports = function(environment) {
     intervals: { updateTimes: 1000 }
   };
 
+  if (typeof process !== 'undefined') {
+    if (process.env.TRAVIS_PRO) {
+      // set defaults for pro if it's used
+      // TODO: we have the same defaults also in ruby process,
+      //       it would be nice to move it to one place. In theory
+      //       we could just remove it from ruby process and rely
+      //       on things set here, but I haven't tested that yet.
+      ENV.pro = true;
+      ENV.apiEndpoint = 'https://api.travis-ci.com';
+      ENV.pusher.key = '59236bc0716a551eab40';
+      ENV.pagesEndpoint = 'https://billing.travis-ci.com';
+      ENV.billingEndpoint = 'https://billing.travis-ci.com';
+      ENV.endpoints = {
+        sshKey: true,
+        caches: true
+      }
+
+    }
+  }
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -57,15 +77,20 @@ module.exports = function(environment) {
 
   }
 
+  // TODO: I insert values from ENV here, but in production
+  // this file is compiled and is not executed on runtime.
+  // We don't use CSP at the moment outside of development (ie. we don't
+  // set CSP headers), but it would be nice to do it and then we need to
+  // think about a better way to override it
   ENV.contentSecurityPolicy = {
     'default-src': "'none'",
     'script-src': "'self'",
-    'font-src': "'self' https://fonts.googleapis.com/css",
-    'connect-src': "'self' https://api.travis-ci.org ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com",
+    'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
+    'connect-src': "'self' " + ENV.apiEndpoint + " ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/",
     'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com",
-    'style-src': "'self'",
+    'style-src': "'self' https://fonts.googleapis.com",
     'media-src': "'self'",
-    'frame-src': "'self' https://api.travis-ci.org"
+    'frame-src': "'self' " + ENV.apiEndpoint
   }
 
   return ENV;
