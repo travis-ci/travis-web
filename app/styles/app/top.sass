@@ -1,6 +1,5 @@
 
 #top
-  position: static
   font-size: $font-size-small
   background  : $topbar-bg
   height: 55px
@@ -17,7 +16,7 @@
     background   : $logo-red inline-image('ui/travis-logo.svg') no-repeat 20px 18px
 
   ul
-    list-style-type: none
+    @include resetul
     line-height: 30px
 
   a, span

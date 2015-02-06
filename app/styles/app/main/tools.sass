@@ -15,7 +15,7 @@
     margin-top: -32px
     color: #fff
     font-size: 13px
-    padding: 3px 24px 2px 25px
+    padding: 4px 24px 3px 25px
     background-image: inline-image('icons/settings.svg'), inline-image('icons/dropdown-arrow-white.svg')
     background-size: 14px 14px, 8px 8px
     background-position: 6px 7px, right 9px center
@@ -30,6 +30,7 @@
       padding-left: 10px
 
   .menu
+    @include resetul
     z-index: 1000
     display: none
     position: absolute
@@ -37,7 +38,8 @@
     top: -4px
     width: 140px
     background-color: #a6adad
-    border-bottom-radius: 4px
+    border-bottom-left-radius: 4px
+    border-bottom-right-radius: 4px
     a
       display: block
       color: $white
