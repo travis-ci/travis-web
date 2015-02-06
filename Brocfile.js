@@ -2,7 +2,10 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var fingerprint = {}, assetsHost;
+var fingerprint = {
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
+    },
+    assetsHost;
 
 if (assetsHost = process.env.ASSETS_HOST) {
   if (assetsHost.substr(-1) !== '/') {
