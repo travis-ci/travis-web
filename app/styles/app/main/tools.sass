@@ -31,6 +31,7 @@
 
   .menu
     @include resetul
+    @include border-bottom-radius(4px)
     z-index: 1000
     display: none
     position: absolute
@@ -38,8 +39,6 @@
     top: -4px
     width: 140px
     background-color: #a6adad
-    border-bottom-left-radius: 4px
-    border-bottom-right-radius: 4px
     a
       display: block
       color: $white
@@ -48,7 +47,7 @@
       &:hover:not(.disabled)
         background-color: #909393
       &:last-child
-        border-bottom-radius: 4px
+        @include border-bottom-radius(4px)
       &.disabled
         cursor: default
         color: $color-link-disabled
