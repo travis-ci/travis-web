@@ -1,5 +1,5 @@
 `import Ember from 'ember'`
-`import ApplicationAdapter from 'adapters/application'`
+`import ApplicationAdapter from 'travis/adapters/application'`
 
 Adapter = ApplicationAdapter.extend
   namespace: 'settings'

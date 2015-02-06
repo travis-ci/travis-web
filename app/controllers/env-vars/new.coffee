@@ -39,6 +39,7 @@ Controller = Ember.Controller.extend Validations,
           self.transitionToRoute('env_vars')
         , =>
           @set('isSaving', false)
+      else
+        @set('isSaving', false)
 
-Travis.EnvVarsNewController = Controller
 `export default Controller`

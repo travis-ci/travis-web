@@ -1,6 +1,7 @@
 `import Ember from 'ember'`
+`import BasicView from 'travis/views/basic'`
 
-View = Ember.View.extend
+View = BasicView.extend
   templateName: 'repos/show/tools'
 
   repoBinding: 'controller.repo'
