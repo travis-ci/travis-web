@@ -87,7 +87,7 @@ class Travis::Web::App
           'Cache-Control'    => cache_control(file),
           'Content-Location' => path_for(file),
           'Content-Type'     => mime_type(file),
-          'Expires'          => (server_start + age).httpdate,
+          'Expires'          => expires(file),
           'ETag'             => fingerprint(file)
         }
       else
@@ -100,7 +100,7 @@ class Travis::Web::App
           'Content-Location' => path_for(file),
           'Content-Type'     => mime_type(file),
           'Last-Modified'    => server_start.httpdate,
-          'Expires'          => (server_start + age).httpdate,
+          'Expires'          => expires(file),
           'Vary'             => vary_for(file),
           'ETag'             => Digest::MD5.hexdigest(content)
         }
@@ -132,8 +132,15 @@ class Travis::Web::App
 
     def cache_control(file)
       case path_for(file)
-      when '/'        then "public, must-revalidate"
+      when '/'        then "public, must-revalidate, max-age=0"
       else "public, max-age=#{age}"
+      end
+    end
+
+    def expires(file)
+      case path_for(file)
+      when '/' then '0'
+      else (server_start + age).httpdate
       end
     end
 
