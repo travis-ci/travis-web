@@ -2,17 +2,19 @@
 
 <ul class="env-vars">
   {{#each vars itemController="envVar"}}
-    <li class="env-var">
-      {{#if isEditing}}
-        {{partial 'env_vars/form'}}
-      {{else}}
-        <a href="#" class="edit-var" {{action "edit"}}>Edit</a>
-        <a href="#" {{action "delete"}} {{bind-attr class=":delete-var isDeleting:deleting"}}>
-          Delete
-        </a>
-        <span class="name">{{name}}</span>
-        <span {{bind-attr class=":value :value-display public::secure"}}>{{value}}</span>
-      {{/if}}
-    </li>
+    {{#unless isNew}}
+      <li class="env-var">
+        {{#if isEditing}}
+          {{partial 'env_vars/form'}}
+        {{else}}
+          <a href="#" class="edit-var" {{action "edit"}}>Edit</a>
+          <a href="#" {{action "delete"}} {{bind-attr class=":delete-var isDeleting:deleting"}}>
+            Delete
+          </a>
+          <span class="name">{{name}}</span>
+          <span {{bind-attr class=":value :value-display public::secure"}}>{{value}}</span>
+        {{/if}}
+      </li>
+    {{/unless}}
   {{/each}}
 </ul>
