@@ -67,14 +67,17 @@
 #actions
   text-align: right
 
+  ul
+    @include resetul
+  li
+    display: inline
+
   @media #{$medium-up}
     float: right
     position: relative
     top: 1.8em
     ul
       margin-top: -27px
-    li
-      display: inline
 
   li.restart-build a, li.restart-job a
     background-image: inline-image('icons/repeat.svg')

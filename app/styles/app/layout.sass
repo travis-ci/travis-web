@@ -48,7 +48,6 @@
 
 @media #{$medium-up}
 
-
   // layout magic http://lea.verou.me/2011/01/styling-children-based-on-their-number-with-css3/
   .wrapper-main
     overflow: hidden
@@ -59,6 +58,16 @@
     & > div:first-child:nth-last-child(2) ~ div
       width: grid-calc(6, 24)
       float: right
+
+  .maximized
+    .wrapper-main
+      overflow: hidden
+      & > div:first-child:nth-last-child(2)
+        width: grid-calc(24, 24)
+        float: none
+
+      & > div:first-child:nth-last-child(2) ~ div
+        width: 0
 
 
 @media #{$large-up}

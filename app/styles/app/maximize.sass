@@ -1,7 +1,7 @@
 
 .pro.maximized
   #right
-    display: none
+    width: 0
     *:not(#slider):not(.icon):not(.ember-view)
       display: none
 
@@ -13,10 +13,9 @@
     background-image: inline-image('ui/slider-open.svg')
     background-position: 6px 5px
     border-bottom-left-radius: 4px
-    display: none
 
-    @media #{$medium-up}
-      display: block
+    // @media #{$medium-up}
+    //   display: block
 
 
 #top .profile
