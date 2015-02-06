@@ -25,6 +25,7 @@ app.import('bower_components/visibilityjs/lib/visibility.timers.js');
 app.import('bower_components/JavaScript-MD5/js/md5.js');
 app.import('vendor/ansiparse.js');
 app.import('vendor/log.js');
+app.import('vendor/customerio.js');
 app.import('bower_components/moment/moment.js');
 // Use `app.import` to add additional libraries to the generated
 // output files.

@@ -1,4 +1,4 @@
-`import config from 'travis/config/environment'`
+`import ENV from 'travis/config/environment'`
 
 TravisPusher = (config) ->
   @init(config)
@@ -38,7 +38,7 @@ TravisPusher.prototype.unsubscribe = (channel) ->
   @pusher.unsubscribe(channel) if @pusher?.channel(channel)
 
 TravisPusher.prototype.prefix = (channel) ->
-  prefix = config.pusher.channel_prefix || ''
+  prefix = ENV.pusher.channel_prefix || ''
   if channel.indexOf(prefix) != 0
     "#{prefix}#{channel}"
   else
@@ -100,9 +100,9 @@ TravisPusher.prototype.ignoreCode = (code) ->
 TravisPusher.prototype.ignoreMessage = (message) ->
   message.indexOf('Existing subscription') == 0 or message.indexOf('No current subscription') == 0
 
-Pusher.SockJSTransport.isSupported = -> false if config.pusher.host != 'ws.pusherapp.com'
+Pusher.SockJSTransport.isSupported = -> false if ENV.pusher.host != 'ws.pusherapp.com'
 
-if config.pro
+if ENV.pro
   Pusher.channel_auth_transport = 'bulk_ajax'
 
   Pusher.authorizers.bulk_ajax = (socketId, _callback) ->
@@ -110,7 +110,7 @@ if config.pro
     channels.callbacks ||= []
 
     name = this.channel.name
-    names = $.keys(channels.channels)
+    names = Object.keys(channels.channels)
 
     channels.callbacks.push (auths) ->
       _callback(false, auth: auths[name])
@@ -125,8 +125,8 @@ if config.pro
   Pusher.getDefaultStrategy = (config) ->
     [
       [":def", "ws_options", {
-        hostUnencrypted: config.wsHost + ":" + config.wsPort + (config.pusher.path && "/#{config.pusher.path}" || ''),
-        hostEncrypted: config.wsHost + ":" + config.wssPort + (config.pusher.path && "/#{config.pusher.path}" || '')
+        hostUnencrypted: config.wsHost + ":" + config.wsPort + (ENV.pusher.path && "/#{config.pusher.path}" || ''),
+        hostEncrypted: config.wsHost + ":" + config.wssPort + (ENV.pusher.path && "/#{config.pusher.path}" || '')
         path: config.path
       }],
       [":def", "sockjs_options", {

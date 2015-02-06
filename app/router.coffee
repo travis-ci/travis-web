@@ -41,7 +41,7 @@ Router.map ->
         @route 'index', path: '/'
         @resource 'env_vars', ->
           @route 'new'
-        @resource 'ssh_key' if config.endpoints.ssh_key
+        @resource 'ssh_key' if config.endpoints.sshKey
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'

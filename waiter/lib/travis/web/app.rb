@@ -190,6 +190,11 @@ class Travis::Web::App
       config['codeClimate'] = options[:code_climate] if options[:code_climate]
       config['codeClimateUrl'] = options[:code_climate_url] if options[:code_climate_url]
 
+      config['endpoints'] = {
+        'sshKey' => options[:ssh_key_enabled],
+        'caches' => options[:caches_enabled]
+      }
+
       regexp = %r(<meta name="travis/config/environment"\s+content="([^"]+)")
       string.gsub!(regexp) do
         ember_config = JSON.parse(URI.unescape($1))
