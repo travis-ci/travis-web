@@ -26,8 +26,7 @@ ExpandableRecordArray = Ember.ArrayProxy.extend
       @set 'isLoading', false
       @set 'isLoaded',  true
 
-  observe: (collection, filterWith) ->
-    @set 'filterWith', filterWith
+  observe: (collection) ->
     collection.addArrayObserver this,
       willChange: 'observedArrayWillChange'
       didChange: 'observedArraydidChange'
@@ -42,7 +41,7 @@ ExpandableRecordArray = Ember.ArrayProxy.extend
     for object in addedObjects
       # TODO: I'm not sure why deleted objects get here, but I'll just filter them
       # for now
-      if !object.get('isDeleted') && @get('filterWith').call(this, object)
+      if !object.get('isDeleted')
         @pushObject(object) unless @contains(object)
 
   pushObject: (record) ->

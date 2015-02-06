@@ -49,7 +49,9 @@ Repo = Model.extend
 
   builds: (->
     id = @get('id')
-    builds = @store.find('build', event_type: 'push', repository_id: id)
+    builds = @store.filter('build', event_type: 'push', repository_id: id, (b) ->
+      b.get('repo.id') == id && b.get('eventType') == 'push'
+    )
 
     # TODO: move to controller
     array  = ExpandableRecordArray.create
@@ -57,16 +59,16 @@ Repo = Model.extend
       content: Ember.A([])
 
     array.load(builds)
-
-    id = @get('id')
-    array.observe(@store.all('build'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && !build.get('isPullRequest') )
+    array.observe(builds)
 
     array
   ).property()
 
   pullRequests: (->
     id = @get('id')
-    builds = @store.find('build', event_type: 'pull_request', repository_id: id)
+    builds = @store.filter('build', event_type: 'pull_request', repository_id: id, (b) ->
+      b.get('repo.id') == id && b.get('eventType') == 'pull_request'
+    )
 
     # TODO: move to controller
     array  = ExpandableRecordArray.create
@@ -76,7 +78,7 @@ Repo = Model.extend
     array.load(builds)
 
     id = @get('id')
-    array.observe(@store.all('build'), (build) -> build.get('isLoaded') && build.get('repo.id') == id && build.get('isPullRequest') )
+    array.observe(builds)
 
     array
   ).property()
