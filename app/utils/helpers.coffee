@@ -144,7 +144,7 @@ _emojize = (text) ->
   if emojis isnt null
     emojis.uniq().forEach (emoji, ix) ->
       strippedEmoji = emoji.substring(1, emoji.length - 1)
-      unless EmojiDictionary.indexOf(strippedEmoji) is -1
+      unless emojiDictionary.indexOf(strippedEmoji) is -1
         image = '<img class=\'emoji\' title=\'' + emoji + '\' alt=\'' + emoji + '\' src=\'' + '/images/emoji/' + strippedEmoji + '.png\'/>'
         text = text.replace(new RegExp(emoji, 'g'), image)
   text
