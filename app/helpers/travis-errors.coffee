@@ -4,11 +4,7 @@ ErrorsView = Ember.View.extend
   tagName: 'span'
   templateName: 'helpers/travis-errors'
   classNames: ['error']
-  classNameBindings: ['codes']
-  attributeBindings: ['style']
-  style: (->
-    'display: none' unless @get('show')
-  ).property('show')
+  classNameBindings: ['codes', 'show']
   codes: (->
     @get('errors').mapBy('code')
   ).property('@errors')
