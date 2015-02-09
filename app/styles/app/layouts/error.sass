@@ -2,6 +2,11 @@
  * Error Pages
  */
 
+
+.error
+  height: 100%
+  overflow: hidden
+
 .main--error
   min-height: 100%
 
@@ -37,7 +42,7 @@
 .error-travis
   position: absolute
   top: 0
-  height: 93vh
+  height: 94vh
   width: 100%
   overflow: hidden
   background:
@@ -67,8 +72,10 @@
 .error-travis
   background:
     image: url(../images/error/pensive-travis.svg)
-    // size: 77vw auto
-    size: 30vw auto
+    size: 77vw auto
     position: 34% 100%
-
+  @media #{$medium-up}
+    background-size: 45vw auto
+  @media #{$large-up}
+    background-size: 30vw auto
 
