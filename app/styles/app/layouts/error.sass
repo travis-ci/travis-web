@@ -33,23 +33,20 @@
     font-size: 40px
     line-height: 1
     text-align: center
+    @media #{$medium-up}
+      margin: 1.5em 0 .4em
+      font-size: 70px
   p
     padding: 0 1em
     color: $error-copy-color
     font-size: 18px
     text-align: center
-
   a
     color: $error-copy-color
     &:hover,
     &:focus
       color: $error-copy-color
       text-decoration: underline
-
-  @media #{$medium-up}
-    h1
-      margin: 1.5em 0 .4em
-      font-size: 70px
 
 .icon-twitter
   display: inline-block
@@ -77,9 +74,8 @@
       background-size: 58vw auto
       background-position: 0 62%
     @media #{$large-up}
-      background-size: 49vw auto
-      background-position: 0 60%
-
+      background-size: 50vw auto
+      background-position: 0 61%
   .hill-right
     display: none
     background:
@@ -88,16 +84,11 @@
       position: 99% 63%
     @media #{$medium-up}
       display: block
-
-    @media #{$large-up}
-      
-
   .shadow-left
     background:
       image: url(../images/error/maintenance-grass-shade-left.svg)
       size: 24vw auto
       position: 6% 82%
-
   .shadow-right
     background:
       image: url(../images/error/maintenance-grass-shade-right.svg)
@@ -110,10 +101,10 @@
     size: 87vw auto
     position: 63% 87%
   @media #{$medium-up}
-    // background-size: 60vw auto
     background-size: auto 40vh
   @media #{$large-up}
     background-size: auto 40vh
+
 /*
  * 404
  */
@@ -121,30 +112,38 @@
   background: linear-gradient(0deg, $error-hill-grey, $error-hill-grey 34.9%, $error-bg-gradient 35%, $white 60%, $white)
 
 .error-hill-left
+  display: none
   background:
     image: url(../images/error/404-hills-left.svg)
     size: 30vw auto
     position: 0 (100% - 37%)
+  @media #{$medium-up}
+    display: block
 
 .error-hill-right
   background:
     image: url(../images/error/404-hills-right.svg)
-    size: 50vw auto
-    position: 99% (100% - 38%)
+    size: auto 20vw
+    position: 99% 63%
+  @media #{$medium-up}
+    background-size: 50vw auto
+    background-position: 99% 63%
+  @media #{$large-up}
+    background-position: 99% 61%
 
 .error-excavator
   background:
     image: url(../images/error/excavator.svg)
-    size: 32vw auto
+    size: auto 25vh
     position: 71% 83%
 
 .error-travis
   background:
     image: url(../images/error/pensive-travis.svg)
-    size: 77vw auto
-    position: 34% 100%
+    size: auto 60vh
+    position: 34% 92%
   @media #{$medium-up}
-    background-size: 45vw auto
+    background-size: auto 50vh
   @media #{$large-up}
-    background-size: 30vw auto
+    background-size: auto 60vh
 
