@@ -52,6 +52,7 @@ Router.map ->
       @resource 'account', path: '/:login'
       @route 'info', path: '/info'
 
+  @route 'maintenance', path: "/maintenance"
   @route 'error404', path: "/*path"
 
 `export default Router`

@@ -3,14 +3,25 @@
  */
 
 
-.error
+.error,
+.maintenance
   height: 100%
   overflow: hidden
+
+  .full-size
+    position: absolute
+    top: 0
+    height: 100%
+    width: 100%
+    overflow: hidden
+    background:
+      repeat: no-repeat
 
 .main--error
   min-height: 100%
 
-.error-text
+.error-text,
+.maintenance-text
   position: absolute
   left: 0
   right: 0
@@ -23,33 +34,91 @@
     line-height: 1
     text-align: center
   p
+    padding: 0 1em
     color: $error-copy-color
-    font-size: 20px
+    font-size: 18px
     text-align: center
+
+  a
+    color: $error-copy-color
+    &:hover,
+    &:focus
+      color: $error-copy-color
+      text-decoration: underline
 
   @media #{$medium-up}
     h1
       margin: 1.5em 0 .4em
-      font-size: 60px
+      font-size: 70px
 
+.icon-twitter
+  display: inline-block
+  width: 1.1em
+  height: 1.1em
+  background:
+    image: url(../images/error/twitter.svg)
+    size: 100% auto
+    repeat: no-repeat
+    position: 0 .2em
+
+
+/*
+ * Maintenance
+ */
+.maintenance-bg
+  background: linear-gradient(0deg, $maintenance-grass, $maintenance-grass 34.9%, $error-bg-gradient 35%, $white 60%, $white)
+
+  .hill-left
+    background:
+      image: url(../images/error/maintenance-hills-left.svg)
+      size: 80vw auto
+      position: 0 62%
+    @media #{$medium-up}
+      background-size: 58vw auto
+      background-position: 0 62%
+    @media #{$large-up}
+      background-size: 49vw auto
+      background-position: 0 60%
+
+  .hill-right
+    display: none
+    background:
+      image: url(../images/error/maintenance-hills-right.svg)
+      size: 38vw auto
+      position: 99% 63%
+    @media #{$medium-up}
+      display: block
+
+    @media #{$large-up}
+      
+
+  .shadow-left
+    background:
+      image: url(../images/error/maintenance-grass-shade-left.svg)
+      size: 24vw auto
+      position: 6% 82%
+
+  .shadow-right
+    background:
+      image: url(../images/error/maintenance-grass-shade-right.svg)
+      size: 17vw auto
+      position: 95% 89%
+
+.maintenance-tractor
+  background:
+    image: url(../images/error/maintenance-tractor.svg)
+    size: 87vw auto
+    position: 63% 87%
+  @media #{$medium-up}
+    // background-size: 60vw auto
+    background-size: auto 40vh
+  @media #{$large-up}
+    background-size: auto 40vh
 /*
  * 404
  */
-.error-bg,
-.error-hill-left,
-.error-hill-right,
-.error-excavator,
-.error-travis
-  position: absolute
-  top: 0
-  height: 94vh
-  width: 100%
-  overflow: hidden
-  background:
-    repeat: no-repeat
-
 .error-bg
-  background: linear-gradient(0deg, $error-hill-grey, $error-hill-grey 34.9%, rgba($error-bg-gradient, 0.3) 35%, $white 60%, $white)
+  background: linear-gradient(0deg, $error-hill-grey, $error-hill-grey 34.9%, $error-bg-gradient 35%, $white 60%, $white)
 
 .error-hill-left
   background:
