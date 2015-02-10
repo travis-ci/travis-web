@@ -36,7 +36,7 @@ format = (version, slug, branch) ->
   url = urlRepo(slug)
 
   switch version
-    when 'Image URL' then statusImageUrl(url, slug, branch)
+    when 'Image URL' then statusImageUrl(slug, branch)
     when 'Markdown' then markdownStatusImage(url, slug, branch)
     when 'Textile' then textileStatusImage(url, slug, branch)
     when 'Rdoc' then rdocStatusImage(url, slug, branch)

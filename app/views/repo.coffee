@@ -23,7 +23,7 @@ View = BasicView.extend
   actions:
     statusImages: () ->
       @popupCloseAll()
-      view = StatusImagesView.create(toolsView: this)
+      view = StatusImagesView.create(toolsView: this, container: @container)
       BasicView.currentPopupView = view
       view.appendTo($('body'))
       return false
