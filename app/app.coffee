@@ -3,6 +3,7 @@
 `import loadInitializers from 'ember/load-initializers'`
 `import config from './config/environment'`
 
+`import mb from 'travis/helpers/mb'`
 `import label from 'travis/helpers/label'`
 `import travisField from 'travis/helpers/travis-field'`
 `import travisErrors from 'travis/helpers/travis-errors'`
@@ -15,6 +16,7 @@ Ember.Handlebars.registerHelper('travis-errors', travisErrors)
 Ember.Handlebars.registerHelper('tipsy', tipsy)
 #Ember.Handlebars.registerHelper('input', input)
 Ember.Handlebars.registerHelper('filter-input', filterInput)
+Ember.Handlebars.registerBoundHelper('mb', mb)
 
 Ember.MODEL_FACTORY_INJECTIONS = true
 
