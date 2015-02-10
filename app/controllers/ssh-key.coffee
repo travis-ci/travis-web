@@ -18,7 +18,12 @@ Controller = Ember.ObjectController.extend Validations,
 
   actions:
     add: ->
-      model = Travis.SshKey.create(id: @get('repo.id'))
+      id = @get('repo.id')
+      model = @store.recordForId('sshKey', id)
+      if model.get('currentState.stateName') == 'root.empty'
+        @store.dematerializeRecord(model)
+
+      model = @store.createRecord('sshKey', id: id)
       @set('model', model)
       @set('isEditing', true)
 
@@ -30,10 +35,10 @@ Controller = Ember.ObjectController.extend Validations,
         @get('model').save().then =>
           @set('isEditing', false)
           @set('isSaving', false)
-        , (xhr) =>
+        , (error) =>
           @set('isSaving', false)
-          if xhr.status == 422
-            @addErrorsFromResponse(JSON.parse(xhr.response)['errors'])
+          if error.errors
+            @addErrorsFromResponse(error.errors)
       else
         @set('isSaving', false)
 
@@ -43,18 +48,18 @@ Controller = Ember.ObjectController.extend Validations,
 
       deletingDone = => @set('isDeleting', false)
 
-      # because of the bug in ember model reference is not cleared after
-      # deleting the record, so I'm doing it manually here
-      delete @get('model').constructor._referenceCache[parseInt(@get('model.id'))]
-
-      @get('model').deleteRecord().then(deletingDone, deletingDone).then =>
+      @get('model').deleteRecord()
+      @get('model').save().then(deletingDone, deletingDone).then =>
         @set('model', null)
 
     cancel: ->
       if model = @get('model')
-        if model.get('isNew')
-          @set('model', null)
-        @set('isEditing', false)
+        if model.get('currentState.stateName') == 'root.empty' ||
+             model.get('currentState.stateName').indexOf('root.loaded.created') != -1
+          @store.dematerializeRecord(model)
+
+      @set('model', null)
+      @set('isEditing', false)
 
     edit: ->
       @set('isEditing', true)
