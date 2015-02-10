@@ -1,7 +1,6 @@
 `import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
-  needsAuth: true
   setupController: ->
     @_super.apply this, arguments
 
