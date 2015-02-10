@@ -76,13 +76,12 @@ User = Model.extend
         @setWithSession('syncedAt', data.user.synced_at)
         Travis.trigger('user:synced', data.user)
 
-        # need to pass any param to trigger findQuery
-        Account.find(foo: '')
+        @store.findQuery('account', {})
 
   setWithSession: (name, value) ->
     @set(name, value)
     user = JSON.parse(Travis.sessionStorage.getItem('travis.user'))
-    user[$.underscore(name)] = @get(name)
+    user[name.underscore()] = @get(name)
     Travis.sessionStorage.setItem('travis.user', JSON.stringify(user))
 
 `export default User`

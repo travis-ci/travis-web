@@ -105,7 +105,7 @@ Auth = Ember.Object.extend
 
   loadUser: (user) ->
     @store.pushPayload(users: [user])
-    user = @store.find('user', user.id)
+    user = @store.recordForId('user', user.id)
     user.get('permissions')
     user
 
