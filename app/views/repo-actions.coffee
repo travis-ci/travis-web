@@ -2,8 +2,9 @@
 `import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls'`
 `import Job from 'travis/models/job'`
 `import config from 'travis/config/environment'`
+`import BasicView from 'travis/views/basic'`
 
-View = Ember.View.extend
+View = BasicView.extend
   templateName: 'repos/show/actions'
 
   repoBinding: 'controller.repo'
