@@ -1,19 +1,28 @@
 
+.green .build-status
+  background:
+    color: #549e54
+    image: inline-image('icons/state-passed-white.svg')
+
+.yellow .build-status
+  background:
+    color: #bcaf39
+    image: inline-image('icons/state-pending-white.svg')
+
+.red .build-status
+  background:
+    color: #b54223
+    image: inline-image('icons/state-failed-white.svg')
+
+.gray .build-status
+  background:
+    color: #a8a8a9
+    image: inline-image('icons/state-errored-white.svg')
+
 .build-status
   background-size: 14px 14px
   background-position: 12px 12px
-
-.green .build-status
-  background: #549e54 inline-image('icons/state-passed-white.svg') no-repeat
-
-.yellow .build-status
-  background: #bcaf39 inline-image('icons/state-pending-white.svg') no-repeat
-
-.red .build-status
-  background: #b54223 inline-image('icons/state-failed-white.svg') no-repeat
-
-.gray .build-status
-  background: #a8a8a9 inline-image('icons/state-errored-white.svg') no-repeat
+  background-repeat: no-repeat
 
 #new-summary
   @include clearfix
