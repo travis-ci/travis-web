@@ -17,7 +17,6 @@
     cursor: pointer
   @media #{$medium-up}
     height: 29px
-    display: inline-block
     li
       display: inline-block
       &:hover
@@ -77,7 +76,6 @@
 #main
   .tabs
     border-bottom: 3px solid #f5f5f6
-
     li
       height: 29px
       background-color: #f5f5f6
@@ -103,21 +101,21 @@
     margin-top: 15px
     ul.navigation
       @include resetul
-      height: 40px
-      line-height: 40px
       border-bottom: 1px solid #EAEAEA
-
       li
-        display: inline-block
         margin-right: 10px
-
         a
           color: #ACACAC
           font-weight: 600
           font-size: 14px
-
         a.active
           color: #55888E
+      @media #{$small-up}
+        li
+          display: inline-block
+      @media #{$medium-up}
+        height: 40px
+        line-height: 40px
 
   #builds
     a

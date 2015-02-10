@@ -63,10 +63,10 @@
 // Since the typical default browser font-size is 16px, that makes the calculation for grid size.
 // If you want your base font-size to be different and not have it affect the grid breakpoints,
 // set $rem-base to $base-font-size and make sure $base-font-size is a px value.
-$base-font-size: 13px;
+$base-font-size: $font-size-small;
 
 // The $base-font-size is 100% while $base-line-height is 150%
-// $base-line-height: 150%;
+$base-line-height: $line-height;
 
 // We use this to control whether or not CSS classes come through in the gem files.
 $include-html-classes: true;
@@ -125,7 +125,7 @@ $font-weight-normal: normal !default;
 
 // We use these to control various global styles
 // $body-bg: $white;
-// $body-font-color: $jet;
+$body-font-color: $color-text;
 // $body-font-family: $font-family-sans-serif;
 // $body-font-weight: $font-weight-normal;
 // $body-font-style: normal;
