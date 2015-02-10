@@ -7,11 +7,12 @@ ErrorsView = Ember.View.extend
   classNameBindings: ['codes', 'show']
   codes: (->
     @get('errors').mapBy('code')
-  ).property('@errors')
+  ).property('@errors', 'errors.length')
   show: Ember.computed.notEmpty('errors.[]')
 
 fn = (name, options) ->
   errors = @get('errors').for(name)
+  window[name + 'Errors'] = errors
   view = ErrorsView.create(
     controller: this
     errors: errors
