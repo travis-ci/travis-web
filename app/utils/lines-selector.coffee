@@ -31,16 +31,24 @@ class LinesSelector
 
   willDestroy: ->
     @location.setHash('')
+    @destroyed = true
 
   loadLineNumbers: (element, multiple) ->
     @setHashValueWithLine(element, multiple)
     @highlightLines()
 
-  highlightLines: ->
+  highlightLines: (tries) ->
+    tries ||= 0
     @removeAllHighlights()
 
     if lines = @getSelectedLines()
-      @element.find('p:visible').slice(lines.first - 1, lines.last).addClass('highlight')
+      elements = @element.find('p:visible').slice(lines.first - 1, lines.last)
+      if elements.length
+        elements.addClass('highlight')
+      else if tries < 4
+        Ember.run.later this, (-> @highlightLines(tries + 1) unless @destroyed) , 500
+        return
+
     @scroll.tryScroll()
     @unfoldLines()
 
