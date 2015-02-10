@@ -1,4 +1,5 @@
 `import Ember from 'ember'`
+`import Ajax from 'travis/utils/ajax'`
 
 Controller = Ember.ArrayController.extend
   isDeleting: false
@@ -15,7 +16,7 @@ Controller = Ember.ArrayController.extend
         deletingDone = => @set('isDeleting', false)
 
         repo = @get('repo')
-        Travis.ajax.ajax("/repos/#{repo.get('id')}/caches", "DELETE").then(deletingDone, deletingDone).then =>
+        Ajax.ajax("/repos/#{repo.get('id')}/caches", "DELETE").then(deletingDone, deletingDone).then =>
           @clear()
 
 `export default Controller`

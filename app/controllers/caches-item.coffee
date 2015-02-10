@@ -18,7 +18,7 @@ Controller = Ember.ObjectController.extend
         deletingDone = => @set('isDeleting', false)
 
         repo = @get('repo')
-        Ajax("/repos/#{repo.get('id')}/caches", "DELETE", data: data).then(deletingDone, deletingDone).then =>
+        Ajax.ajax("/repos/#{repo.get('id')}/caches", "DELETE", data: data).then(deletingDone, deletingDone).then =>
           model = @get('model')
           @get('parent.caches').removeObject(model)
           if @get('parent.caches.length') == 0
