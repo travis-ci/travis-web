@@ -22,5 +22,4 @@ Controller = Ember.ObjectController.extend
           model = @get('model')
           @get('controllers.caches').removeObject(model)
 
-Travis.CachesByBranchController = Controller
 `export default Controller`
