@@ -1,18 +1,11 @@
 
 #tools
-
   position: relative
-
-  @media #{$medium-up}
-    position: relative
-    float: right
-    top: 2px
-    width: 600px
+  margin-top: 5px
 
   & > a.menu-popup-button
     display: inline-block
     text-align: left
-    margin-top: -37px
     color: #fff
     font-size: 13px
     padding: 4px 24px 3px 25px
@@ -22,9 +15,7 @@
     background-color: #a6adad
     background-repeat: no-repeat
     border-radius: 4px
-
     cursor: pointer
-    float: right
     img
       width: 7px
       padding-left: 10px
@@ -32,11 +23,10 @@
   .menu
     @include resetul
     @include border-bottom-radius(4px)
+    margin-top: 1px
     z-index: 1000
     display: none
     position: absolute
-    right: 0
-    top: -9px
     width: 140px
     background-color: #a6adad
     a
@@ -51,6 +41,19 @@
       &.disabled
         cursor: default
         color: $color-link-disabled
+
+  @media screen and (min-width: 46em)
+    position: relative
+    top: 2px
+    width: 600px
+    float: right
+    & > a.menu-popup-button
+      margin-top: -37px
+      float: right
+    .menu
+      right: 0
+      top: -9px
+      margin-top: 0
 
 #code-climate
   a
