@@ -2,12 +2,14 @@
   <ul>
     {{#if view.displayCancelBuild}}
       <li class="icon cancel-build" title="Cancel Build">
-        <a href="#" {{action "cancelBuild" target=view}}></a>
+        <a href="#" {{action "cancelBuild" target=view}}
+          {{bind-attr class="view.canCancelBuild::disabled"}}></a>
       </li>
     {{/if}}
     {{#if view.displayCancelJob}}
       <li class="icon cancel-job" title="Cancel Job">
-        <a href="#" {{action "cancelJob" target=view}}></a>
+        <a href="#" {{action "cancelJob" target=view}}
+          {{bind-attr class="view.canCancelJob::disabled"}}></a>
       </li>
     {{/if}}
     {{#if view.displayRequeueBuild}}
@@ -15,7 +17,8 @@
         {{#if view.requeueing}}
           <span class="icon loading"></span>
         {{else}}
-          <a href="#" {{action "requeueBuild" target=view}}></a>
+          <a href="#" {{action "requeueBuild" target=view}}
+            {{bind-attr class="view.canRequeueBuild::disabled"}}></a>
         {{/if}}
       </li>
     {{/if}}
@@ -24,7 +27,8 @@
         {{#if view.requeueing}}
           <span class="icon loading"></span>
         {{else}}
-          <a href="#" {{action "requeueJob" target=view}}></a>
+          <a href="#" {{action "requeueJob" target=view}}
+            {{bind-attr class="view.canRequeueJob::disabled"}}></a>
         {{/if}}
       </li>
     {{/if}}
