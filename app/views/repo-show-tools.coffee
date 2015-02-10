@@ -1,5 +1,6 @@
 `import Ember from 'ember'`
 `import BasicView from 'travis/views/basic'`
+`import config from 'travis/config/environment'`
 
 View = BasicView.extend
   templateName: 'repos/show/tools'
@@ -70,6 +71,10 @@ View = BasicView.extend
 
   displaySettingsLink: (->
     @get('hasPushPermission')
+  ).property('hasPushPermission')
+
+  displayCachesLink: (->
+    @get('hasPushPermission') && config.endpoints.caches
   ).property('hasPushPermission')
 
   displayStatusImages: (->
