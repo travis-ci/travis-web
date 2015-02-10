@@ -9,7 +9,7 @@ initialize = (container, application) ->
   application.toTop   = new ToTop($(window), '.to-top', '#log-container')
 
   application.register 'slider:main', application.slider, { instantiate: false }
-  application.inject('view', 'slider', 'slider:main')
+  application.inject('controller', 'slider', 'slider:main')
 
 Initializer =
   name: 'services'
