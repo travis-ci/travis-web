@@ -37,23 +37,23 @@ View = Ember.View.extend
 
   # TODO: refactor tabs, most of the things here are not really DRY
   classJob: (->
-    'active display-inline' if @get('tab') == 'job'
+    'active' if @get('tab') == 'job'
   ).property('tab')
 
   classRequests: (->
-    'active display-inline' if @get('tab') == 'requests'
+    'active' if @get('tab') == 'requests'
   ).property('tab')
 
   classCaches: (->
-    'active display-inline' if @get('tab') == 'caches'
+    'active' if @get('tab') == 'caches'
   ).property('tab')
 
   classSettings: (->
-    'active display-inline' if @get('tab') == 'settings'
+    'active' if @get('tab') == 'settings'
   ).property('tab')
 
   classRequest: (->
-    'active display-inline' if @get('tab') == 'request'
+    'active' if @get('tab') == 'request'
   ).property('tab')
 
 `export default View`
