@@ -4,7 +4,7 @@
 
 Router = Ember.Router.extend
   # TODO: we should use TravisLocation here
-  location: if Ember.testing then 'none' else 'history'
+  location: if Ember.testing then 'none' else 'travis'
 
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
