@@ -53,11 +53,10 @@ Controller = Ember.ObjectController.extend Validations,
         @set('model', null)
 
     cancel: ->
-      model = @get('model')
-      console.log model.get('currentState.stateName')
-      if model.get('currentState.stateName') == 'root.empty' ||
-           model.get('currentState.stateName').indexOf('root.loaded.created') != -1
-        @store.dematerializeRecord(model)
+      if model = @get('model')
+        if model.get('currentState.stateName') == 'root.empty' ||
+             model.get('currentState.stateName').indexOf('root.loaded.created') != -1
+          @store.dematerializeRecord(model)
 
       @set('model', null)
       @set('isEditing', false)
