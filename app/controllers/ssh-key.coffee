@@ -56,7 +56,7 @@ Controller = Ember.ObjectController.extend Validations,
       model = @get('model')
       console.log model.get('currentState.stateName')
       if model.get('currentState.stateName') == 'root.empty' ||
-           model.get('currentState.stateName') == 'root.loaded.created.uncommitted'
+           model.get('currentState.stateName').indexOf('root.loaded.created') != -1
         @store.dematerializeRecord(model)
 
       @set('model', null)
