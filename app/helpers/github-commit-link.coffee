@@ -1,4 +1,4 @@
-`import { formatConfig, save } from 'travis/utils/helpers'`
+`import { formatCommit, safe } from 'travis/utils/helpers'`
 `import { githubCommit as githubCommitUrl } from 'travis/utils/urls'`
 
 helper = Ember.Handlebars.makeBoundHelper (slug, commitSha) ->

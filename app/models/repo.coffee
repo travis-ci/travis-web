@@ -5,6 +5,7 @@
 #       the function stops being visible inside computed properties.
 `import { durationFrom as durationFromHelper } from 'travis/utils/helpers'`
 `import Build from 'travis/models/build'`
+
 Repo = Model.extend
   slug:                DS.attr()
   description:         DS.attr()

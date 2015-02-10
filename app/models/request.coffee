@@ -14,15 +14,15 @@ Request = Model.extend
   pullRequestTitle:  DS.attr()
   pullRequestNumber: DS.attr('number')
 
-  repo:   DS.belongsTo('repo')
-  commit: DS.belongsTo('commit')
-  build:  DS.belongsTo('build')
+  repo:   DS.belongsTo('repo', async: true)
+  commit: DS.belongsTo('commit', async: true)
+  build:  DS.belongsTo('build', async: true)
 
   isAccepted: (->
     # For some reason some of the requests have a null result beside the fact that
     # the build was created. We need to look into it, but for now we can just assume
     # that if build was created, the request was accepted
-    @get('result') == 'accepted' || @get('build')
+    @get('result') == 'accepted' || @get('build.id')
   ).property('result')
 
   isPullRequest: (->
