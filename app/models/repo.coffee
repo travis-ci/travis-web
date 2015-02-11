@@ -149,7 +149,14 @@ Repo.reopenClass
     repos
 
   search: (store, query) ->
-    store.find('repo', search: query, orderBy: 'name')
+    promise = store.find('repo', search: query, orderBy: 'name')
+    result = Ember.ArrayProxy.create(content: [])
+
+    promise.then ->
+      result.pushObjects(promise.get('content').toArray())
+      result.set('isLoaded', true)
+
+    result
 
   withLastBuild: (store) ->
     repos = store.filter('repo', {}, (build) ->
