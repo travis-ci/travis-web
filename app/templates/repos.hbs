@@ -16,8 +16,10 @@
         </div>
         {{#with repo.lastBuildHash as lastBuild}}
           {{#if repo.slug}}
-            {{#link-to "build" repo lastBuild.id
-            class="last_build"}}{{lastBuild.number}}{{/link-to}}
+            {{#if lastBuild.id}}
+              {{#link-to "build" repo lastBuild.id
+                 class="last_build"}}{{lastBuild.number}}{{/link-to}}
+             {{/if}}
           {{/if}}
         {{/with}}
 
