@@ -1,22 +1,25 @@
+#global-slider
+  display: none
 
 .pro.maximized
   #right
-    width: 0
-    *:not(#slider):not(.icon):not(.ember-view)
-      display: none
+    display: none
 
-  #slider
-    top: 45px
-    left: -20px
+  #global_slider
+    position: absolute
+    background-color: $color-bg-slider
+    cursor: pointer
+    background: transparent inline-image('ui/slider-open.svg') no-repeat 6px 5px
+    border-top-left-radius: 4px
+    top: 85px
+    right: 0
     width: 20px
     height: 20px
-    background-image: inline-image('ui/slider-open.svg')
-    background-position: 6px 5px
     border-bottom-left-radius: 4px
+    display: block
 
-    // @media #{$medium-up}
-    //   display: block
-
+    &:hover
+      background-color: $color-border-slider-hover
 
 #top .profile
   margin-right: 15px
