@@ -1,7 +1,14 @@
 /*
- * Error Pages
+ * Error Pages + Maintenance
  */
 
+@mixin error-bg-gradient($color)
+  background: linear-gradient(0deg, $color, $color 38.9%, $error-bg-gradient 39%, $white 60%, $white)
+
+@mixin error-position-img($size:inherit, $pos:inherit)
+  background:
+    size: $size
+    position: $pos
 
 .error,
 .maintenance
@@ -14,8 +21,7 @@
     height: 100%
     width: 100%
     overflow: hidden
-    background:
-      repeat: no-repeat
+    background-repeat: no-repeat
 
 .main--error
   min-height: 100%
@@ -52,98 +58,85 @@
   display: inline-block
   width: 1.1em
   height: 1.1em
-  background:
-    image: url(../images/error/twitter.svg)
-    size: 100% auto
-    repeat: no-repeat
-    position: 0 .2em
+  background-image: url(../images/error/twitter.svg)
+  background-repeat: no-repeat
+  @include error-position-img(100% auto, 0 .2em)
 
-
-/*
- * Maintenance
- */
-.maintenance-bg
-  background: linear-gradient(0deg, $maintenance-grass, $maintenance-grass 34.9%, $error-bg-gradient 35%, $white 60%, $white)
-
+.error500
+  .error-bg
+    @include error-bg-gradient($error-sand)
   .hill-left
-    background:
-      image: url(../images/error/maintenance-hills-left.svg)
-      size: 80vw auto
-      position: 0 62%
-    @media #{$medium-up}
-      background-size: 58vw auto
-      background-position: 0 62%
-    @media #{$large-up}
-      background-size: 50vw auto
-      background-position: 0 61%
+    background-image: url(../images/error/500-hills-left.svg)
+    @include error-position-img(38vw auto, 0 62%)
   .hill-right
+    background-image: url(../images/error/500-hills-right.svg)
+    @include error-position-img(38vw auto, 99% 63%)
     display: none
-    background:
-      image: url(../images/error/maintenance-hills-right.svg)
-      size: 38vw auto
-      position: 99% 63%
     @media #{$medium-up}
       display: block
   .shadow-left
-    background:
-      image: url(../images/error/maintenance-grass-shade-left.svg)
-      size: 24vw auto
-      position: 6% 82%
+    background-image: url(../images/error/500-hills-shade-left.svg)
+    @include error-position-img(24vw auto, 6% 82%)
   .shadow-right
-    background:
-      image: url(../images/error/maintenance-grass-shade-right.svg)
-      size: 17vw auto
-      position: 95% 89%
+    background-image: url(../images/error/500-hills-shade-right.svg)
+    @include error-position-img(17vw auto, 95% 89%)
+  .road
+    background-image: url(../images/error/500-road.svg)
+    @include error-position-img(auto 40vh, 30% 91.3%)
 
-.maintenance-tractor
-  background:
-    image: url(../images/error/maintenance-tractor.svg)
-    size: 87vw auto
-    position: 63% 87%
-  @media #{$medium-up}
-    background-size: auto 40vh
-  @media #{$large-up}
-    background-size: auto 40vh
+.error404
+  .error-bg
+    @include error-bg-gradient($error-hill-grey)
+  .hill-left
+    display: none
+    background-image: url(../images/error/404-hills-left.svg)
+    @include error-position-img(30vw auto, 0 (100% - 37%))
+    @media #{$medium-up}
+      display: block
+  .hill-right
+    background-image: url(../images/error/404-hills-right.svg)
+    @include error-position-img(auto 20vw, 99% 63%)
+    @media #{$medium-up}
+      @include error-position-img(50vw auto, 99% 63%)
+    @media #{$large-up}
+      @include error-position-img(50vw auto, 99% 61%)
+  .error-excavator
+    background-image: url(../images/error/excavator.svg)
+    @include error-position-img(auto 25vh, 71% 83%)
+  .error-travis
+    background-image: url(../images/error/pensive-travis.svg)
+    @include error-position-img(auto 60vh, 34% 92%)
+    @media #{$medium-up}
+      background-size: auto 50vh
+    @media #{$large-up}
+      background-size: auto 60vh
 
-/*
- * 404
- */
-.error-bg
-  background: linear-gradient(0deg, $error-hill-grey, $error-hill-grey 34.9%, $error-bg-gradient 35%, $white 60%, $white)
 
-.error-hill-left
-  display: none
-  background:
-    image: url(../images/error/404-hills-left.svg)
-    size: 30vw auto
-    position: 0 (100% - 37%)
-  @media #{$medium-up}
-    display: block
-
-.error-hill-right
-  background:
-    image: url(../images/error/404-hills-right.svg)
-    size: auto 20vw
-    position: 99% 63%
-  @media #{$medium-up}
-    background-size: 50vw auto
-    background-position: 99% 63%
-  @media #{$large-up}
-    background-position: 99% 61%
-
-.error-excavator
-  background:
-    image: url(../images/error/excavator.svg)
-    size: auto 25vh
-    position: 71% 83%
-
-.error-travis
-  background:
-    image: url(../images/error/pensive-travis.svg)
-    size: auto 60vh
-    position: 34% 92%
-  @media #{$medium-up}
-    background-size: auto 50vh
-  @media #{$large-up}
-    background-size: auto 60vh
+.maintenance
+  .maintenance-bg
+    @include error-bg-gradient($maintenance-grass)
+  .hill-left
+    background-image: url(../images/error/maintenance-hills-left.svg)
+    @include error-position-img(80vw auto, 0 62%)
+    @media #{$medium-up}
+      @include error-position-img(58vw auto, 0 62%)
+    @media #{$large-up}
+      @include error-position-img(50vw auto, 0 61%)
+  .hill-right
+    background-image: url(../images/error/maintenance-hills-right.svg)
+    @include error-position-img(38vw auto, 99% 63%)
+    display: none
+    @media #{$medium-up}
+      display: block
+  .shadow-left
+    background-image: url(../images/error/maintenance-grass-shade-left.svg)
+    @include error-position-img(24vw auto, 6% 82%)
+  .shadow-right
+    background-image: url(../images/error/maintenance-grass-shade-right.svg)
+    @include error-position-img(17vw auto, 95% 89%)
+  .maintenance-tractor
+    background-image: url(../images/error/maintenance-tractor.svg)
+    @include error-position-img(87vw auto, 63% 87%)
+    @media #{$medium-up}
+      @include error-position-img(auto 40vh, 63% 87%)
 
