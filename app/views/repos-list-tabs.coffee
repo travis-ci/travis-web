@@ -6,7 +6,10 @@ View = Ember.View.extend
   currentUserBinding: 'controller.currentUser.id'
 
   classRecent: (->
-    'active' if @get('tab') == 'recent'
+    if @get('tab') == 'recent'
+      'active'
+    else if @get('tab') == 'search' && @auth.get('signedIn')
+      'hidden'
   ).property('tab')
 
   classOwned: (->
