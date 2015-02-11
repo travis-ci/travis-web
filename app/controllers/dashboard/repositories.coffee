@@ -19,7 +19,7 @@ Controller = Ember.Controller.extend
   updateFilter: () ->
     value = @get('_lastFilterValue')
     @transitionToRoute queryParams: { filter: value }
-    #@set('filter', value)
+    @set('filter', value)
 
   actions:
     updateFilter: (value) ->
