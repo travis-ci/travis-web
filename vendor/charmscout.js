@@ -138,7 +138,8 @@
   function init(){
     tab = document.createElement('a');
     tab.id = "CHARM_TAB";
-    tab.className = 'feedback-button'
+    tab.className = 'feedback-button';
+    tab.innerHTML = 'Feedback & Support';
     tab.href = "https://secure.charmhq.com/feedback/" + __CHARM.key;
     tab.onclick = function(){ show(); return false };
     document.body.appendChild(tab);
