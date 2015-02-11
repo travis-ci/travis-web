@@ -11,7 +11,7 @@ Commit = Model.extend
   authorEmail:       DS.attr()
   committerName:     DS.attr()
   committerEmail:    DS.attr()
-  commitedAt:        DS.attr()
+  committedAt:        DS.attr()
 
   build: DS.belongsTo('build')
 

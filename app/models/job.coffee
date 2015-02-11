@@ -15,6 +15,9 @@ Job = Model.extend DurationCalculations,
   _startedAt:     DS.attr()
   _finishedAt:    DS.attr()
   allowFailure:   DS.attr('boolean')
+  tags:           DS.attr()
+
+  repositoryPrivate: DS.attr()
 
   repositorySlug: DS.attr()
   repo:   DS.belongsTo('repo', async: true)
