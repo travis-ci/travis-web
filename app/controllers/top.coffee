@@ -15,6 +15,7 @@ Controller = Ember.Controller.extend
   actions: {
     toggleBurgerMenu: ->
       @toggleProperty('is-open')
+      return false
   }
 
 `export default Controller`
