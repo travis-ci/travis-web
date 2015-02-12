@@ -53,11 +53,12 @@
   .wrapper-main
     overflow: hidden
     & > div:first-child:nth-last-child(2)
-      width: grid-calc(18, 24)
+      width: grid-calc(20, 24)
       float: left
 
     & > div:first-child:nth-last-child(2) ~ div
-      width: grid-calc(6, 24)
+      width: grid-calc(4, 24)
+      max-width: 180px
       float: right
 
   .maximized
@@ -75,6 +76,7 @@
     width: grid-calc(5, 24)
     float: left
     margin-left: -100%
+    max-width: 325px
 
   .wrapper-main
     width: grid-calc(19, 24)
