@@ -2,8 +2,6 @@
 #top
   font-size: $font-size-normal
   background  : $topbar-bg
-  height: 55px
-  overflow: hidden
 
   #logo
     position: relative
@@ -20,6 +18,12 @@
   ul
     @include resetul
     line-height: 30px
+
+  #navigation
+    height: 0
+    overflow: hidden
+    &.is-open
+      height: auto
 
   a, span
     color: $white
@@ -47,6 +51,11 @@
 
   @media #{$medium-up}
     overflow: visible
+    height: 55px
+
+    #navigation
+      height: auto
+      overflow: visible
     ul
       line-height: 55px
       position: relative
@@ -76,13 +85,12 @@
     &:hover
       cursor: pointer
 
-
-  &.is-open
-    height: auto
-
   .menu
     position: relative
 
+    &.signed-out
+      ul
+        display: none
     .handle
       margin: 0
 
