@@ -4,9 +4,9 @@
       <h1>{{#link-to "main"}}Home{{/link-to}}</h1>
     </div>
     <div class="nav-burger">
-      <button type="button" id="burger">&equiv;</button>
+      <button type="button" id="burger" {{action 'toggleBurgerMenu'}}>&equiv;</button>
     </div>
-    <ul>
+    <ul id="navigation" {{bind-attr class="is-open"}}>
       <li><a href="#">Blog</a></li>
       <li><a href="#">Status</a></li>
     <!-- <div class="small-4 medium-3 columns" id="status">
