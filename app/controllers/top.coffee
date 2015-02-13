@@ -12,4 +12,10 @@ Controller = Ember.Controller.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
   ).property('user.gravatarId')
 
+  actions: {
+    toggleBurgerMenu: ->
+      @toggleProperty('is-open')
+      return false
+  }
+
 `export default Controller`

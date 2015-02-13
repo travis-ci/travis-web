@@ -5,10 +5,10 @@
 {{/link-to}}
 
 <div class="nav-burger">
-  <button type="button" id="burger">&equiv;</button>
+  <button type="button" id="burger" {{action 'toggleBurgerMenu'}}>&equiv;</button>
 </div>
 
-<ul id="navigation">
+<ul id="navigation" {{bind-attr class="is-open"}}>
   <li class="home">
     {{#link-to "main"}}Home{{/link-to}}
   </li>
