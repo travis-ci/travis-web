@@ -3,6 +3,8 @@
 `import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
+  titleToken: 'Ssh Keys'
+
   model: (params) ->
     repo = @modelFor('repo')
     self = this

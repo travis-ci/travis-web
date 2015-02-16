@@ -162,8 +162,12 @@ class Travis::Web::App
     end
 
     def set_title(content)
+      content.gsub!(/\{\{title\}\}/, title)
+    end
+
+    def title
       default_title = "Travis CI - Free Hosted Continuous Integration Platform for the Open Source Community"
-      content.gsub!(/\{\{title\}\}/, ENV['SITE_TITLE'] || default_title)
+      ENV['SITE_TITLE'] || default_title
     end
 
     def set_assets_host(content)
@@ -173,6 +177,7 @@ class Travis::Web::App
     def set_config(string, opts = {})
       # TODO: clean up
       config = {}
+      config['defaultTitle'] = title
       config['apiEndpoint'] = options[:api_endpoint] if options[:api_endpoint]
       config['pagesEndpoint'] = options[:pages_endpoint] if options[:pages_endpoint]
       config['billingEndpoint'] = options[:billing_endpoint] if options[:billing_endpoint]
