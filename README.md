@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/travis-ci/travis-web.png?branch=master)](https://travis-ci.org/travis-ci/travis-web)
 ### Running the app
 
-The app is developed using [http://ember-cli.com](Ember CLI). It requires nodejs
+The app is developed using [Ember CLI](http://ember-cli.com). It requires nodejs
 with npm installed.
 
 In order to run the app you need to install dependencies with:
