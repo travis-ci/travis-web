@@ -39,6 +39,7 @@ email = (email) ->
   "mailto:#{email}"
 
 gravatarImage = (email, size) ->
-  "https://www.gravatar.com/avatar/#{md5(email)}?s=#{size}&d=#{encodeURIComponent(config.avatarDefaultUrl)}"
+  avatarDefaultUrl = 'https://travis-ci.org/images/ui/default-avatar.png'
+  "https://www.gravatar.com/avatar/#{md5(email)}?s=#{size}&d=#{encodeURIComponent(avatarDefaultUrl)}"
 
 `export { plainTextLog, githubPullRequest, githubCommit, githubRepo, githubWatchers, githubNetwork, githubAdmin, statusImage, ccXml, email, gravatarImage }`

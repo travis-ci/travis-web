@@ -28,8 +28,7 @@ module.exports = function(environment) {
     pro: false,
     enterprise: false,
     endpoints: {},
-    intervals: { updateTimes: 1000 },
-    avatarDefaultUrl: 'https://travis-ci.org/images/ui/default-avatar.png'
+    intervals: { updateTimes: 1000 }
   };
 
   if (typeof process !== 'undefined') {
