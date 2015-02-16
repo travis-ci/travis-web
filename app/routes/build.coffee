@@ -1,6 +1,9 @@
 `import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
+  titleToken: (model) ->
+    "Build ##{model.get('number')}"
+
   serialize: (model, params) ->
     id = if model.get then model.get('id') else model
 

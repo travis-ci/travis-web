@@ -2,6 +2,9 @@
 `import Repo from 'travis/models/repo'`
 
 Route = TravisRoute.extend
+  titleToken: (model) ->
+    model.get('slug')
+
   renderTemplate: ->
     @render 'repo', into: 'main'
 

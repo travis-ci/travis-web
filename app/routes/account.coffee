@@ -1,6 +1,9 @@
 `import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
+  titleToken: (model) ->
+    model.get('name') || model.get('login')
+
   setupController: (controller, account) ->
     @_super.apply this, arguments
 

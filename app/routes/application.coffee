@@ -1,4 +1,5 @@
 `import TravisRoute from 'travis/routes/basic'`
+`import config from 'travis/config/environment'`
 
 Route = TravisRoute.extend
   needsAuth: false
@@ -11,6 +12,14 @@ Route = TravisRoute.extend
 
   activate: ->
     @get('stylesheetsManager').disable('dashboard')
+
+  title: (titleParts) ->
+    if titleParts.length
+      titleParts = titleParts.reverse()
+      titleParts.push('Travis CI')
+      titleParts.join(' - ')
+    else
+      config.defaultTitle
 
   actions:
     redirectToGettingStarted: ->

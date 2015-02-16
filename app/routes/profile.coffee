@@ -1,6 +1,8 @@
 `import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
+  titleToken: 'Profile'
+
   needsAuth: true
 
   setupController: (controller, model) ->
