@@ -1,7 +1,8 @@
 `import Auth from 'travis/utils/auth'`
+`import TestAuth from 'travis/utils/test-auth'`
 
 initialize = (container, app) ->
-  app.register 'auth:main', Auth
+  app.register 'auth:main', if Ember.testing then TestAuth else Auth
 
   app.inject('route', 'auth', 'auth:main')
   app.inject('controller', 'auth', 'auth:main')

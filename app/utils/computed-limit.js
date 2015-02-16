@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 var limit = function(dependentKey, limitKey) {
   var options = {
-    addedItem: function(array, item, changeMeta, instanceMeta) {
+    addedItem: function(array, item, changeMeta) {
       var limit = Ember.get(this, limitKey);
       if (changeMeta.index < limit) {
         array.insertAt(changeMeta.index, item);
@@ -12,7 +12,7 @@ var limit = function(dependentKey, limitKey) {
       }
       return array;
     },
-    removedItem: function(array, item, changeMeta, instanceMeta) {
+    removedItem: function(array, item, changeMeta) {
       var limit = Ember.get(this, limitKey);
       if (changeMeta.index < limit && changeMeta.index < Ember.get(array, 'length')) {
         array.removeAt(changeMeta.index, 1);
