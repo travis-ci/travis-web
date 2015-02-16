@@ -1,0 +1,77 @@
+<p class="tip">
+  {{#if config.pro}}
+  We're only showing <strong>your private repositories</strong> below.
+  You can find your <strong>public projects on <a href="https://travis-ci.org?utm_source=hooks">travis-ci.org</a></strong>.
+  {{else}}
+  We're only showing <strong>your public repositories</strong> below.
+  You can find your <strong>private projects on <a href="https://travis-ci.com?utm_source=hooks">travis-ci.com</a></strong>.
+  {{/if}}
+</p>
+
+<p class="tip">
+  Enable your projects below by flicking the switch, add a <a href="http://docs.travis-ci.com">.travis.yml</a> to your project, and push a new commit to
+  GitHub.
+</p>
+
+{{#if allHooks.isLoaded}}
+  {{#if user.isSyncing}}
+    <p class="message loading">
+      <span>Please wait while we synchronize your data from GitHub</span>
+    </p>
+  {{else}}
+    <p class="message">
+      Last synchronized from GitHub: {{format-time user.syncedAt}}
+      <a class="sync_now button" {{action "sync"}}>
+        Sync now
+      </a>
+    </p>
+
+    <ul id="hooks">
+      {{#each hook in hooks}}
+        <li {{bind-attr class="hook.active:active"}}>
+          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+          {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
+          <p class="description">{{hook.description}}</p>
+
+          <div class="controls">
+            {{#link-to "settings" hook.ownerName hook.name class="repo-settings-icon tool-tip" title="Repository settings"}}{{/link-to}}
+            {{travis-switch action="toggle" target=hook toggleAutomatically="false"}}
+          </div>
+        </li>
+      {{else}}
+        <li>
+          {{#if hooksWithoutAdmin.length}}
+            Sorry, but we can't find any repositories you have admin access to.
+          {{else}}
+            Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+
+    {{#if hooksWithoutAdmin.length}}
+      <div id="unadministerable-hooks">
+        <h3>Repositories without admin access</h3>
+
+        <p class="tip">
+          You only have pull or push access to the repositories below.
+        </p>
+
+        <ul>
+          {{#each hook in hooksWithoutAdmin}}
+            <li {{bind-attr class="hook.active:active"}}>
+              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+              <p class="description">{{hook.description}}</p>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+  {{/if}}
+{{else}}
+  <p class="message loading">
+    <span>Loading</span>
+  </p>
+{{/if}}
+
+

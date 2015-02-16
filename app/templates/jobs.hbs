@@ -1,0 +1,66 @@
+{{#if view.jobs.length}}
+  <table {{bind-attr id=view.jobTableId}} class="list">
+  {{#if view.required}}
+    <caption>
+      Build Matrix
+    </caption>
+  {{else}}
+    <caption>
+      Allowed Failures
+      <a title="What's this?" class="help open-popup"
+        name="help-allowed_failures" {{action "openHelpPopup" target=view}}></a>
+    </caption>
+  {{/if}}
+    <thead>
+      <tr>
+        {{#each key in view.build.configKeys}}
+          <th>{{key}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each job in view.jobs}}
+        {{#view 'jobs-item' context=job}}
+          <td class="number">
+            <span class="status"></span>
+            {{#if job.id}}
+              {{#if job.repo.slug}}
+                {{#link-to "job" repo job}}{{number}}{{/link-to}}
+              {{/if}}
+            {{/if}}
+          </td>
+          <td class="duration" {{bind-attr title="startedAt"}}>
+            {{format-duration duration}}
+          </td>
+          <td class="finished_at timeago" {{bind-attr title="formattedFinishedAt"}}>
+            {{format-time finishedAt}}
+          </td>
+          {{#each value in configValues}}
+            <td>{{value}}</td>
+          {{/each}}
+        {{/view}}
+      {{/each}}
+    </tbody>
+  </table>
+
+  {{#unless view.required}}
+    <div id="help-allowed_failures" class="popup">
+      <a href="#" class="close" {{action "popupClose" target=view}}></a>
+      <h4></h4>
+      <p>
+        Allowed Failures are items in your build matrix that are allowed to
+        fail without causing the entire build to be shown as failed.
+      </p>
+      <p>
+        You can define allowed failures in the build matrix as follows:
+      </p>
+      <pre>matrix:
+  allow_failures:
+    - rvm: ruby-head</pre>
+      <p>
+        This lets you add in experimental and preparatory builds to test against versions or
+        configurations that you are not ready to officially support.
+      </p>
+    </div>
+  {{/unless}}
+{{/if}}

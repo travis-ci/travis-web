@@ -1,0 +1,26 @@
+configKeysMap = {
+  go:          'Go'
+  rvm:         'Ruby'
+  gemfile:     'Gemfile'
+  env:         'ENV'
+  jdk:         'JDK'
+  otp_release: 'OTP Release'
+  php:         'PHP'
+  node_js:     'Node.js'
+  perl:        'Perl'
+  python:      'Python'
+  scala:       'Scala'
+  compiler:    'Compiler'
+  ghc:         'GHC'
+  os:          'OS'
+  ruby:        'Ruby'
+  xcode_sdk:   'Xcode SDK'
+  xcode_scheme:'Xcode Scheme'
+  d:           'D'
+  julia:       'Julia'
+  csharp:      'C#'
+  dart:        'Dart'
+  elixir:      'Elixir'
+}
+
+`export default configKeysMap`

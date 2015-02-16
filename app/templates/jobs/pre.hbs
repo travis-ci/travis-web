@@ -1,0 +1,23 @@
+<div id="log-container">
+  <a href="#" id="tail" {{action "toggleTailing" target=view}}>
+    <span class="status"></span>
+
+    <label>
+      {{#if view.job.isFinished}}
+        Scroll to End of Log
+      {{else}}
+        Follow Log
+      {{/if}}
+    </label>
+  </a>
+  <pre id="log" class="ansi"></pre>
+
+  <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
+
+  {{#if view.limited}}
+    <p class="warning">
+      This log is too long to be displayed. Please reduce the verbosity of your
+      build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
+    </p>
+  {{/if}}
+</div>

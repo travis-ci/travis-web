@@ -1,0 +1,94 @@
+{{#link-to "main"}}
+  <div id="logo">
+    <h1>Travis</h1>
+  </div>
+{{/link-to}}
+
+<div class="nav-burger">
+  <button type="button" id="burger" {{action 'toggleBurgerMenu'}}>&equiv;</button>
+</div>
+
+<ul id="navigation" {{bind-attr class="is-open"}}>
+  <li class="home">
+    {{#link-to "main"}}Home{{/link-to}}
+  </li>
+  {{#if config.pro}}
+    <li><a href="http://docs.travis-ci.com">Docs</a></li>
+  {{/if}}
+  {{#if config.enterprise}}
+    <li><a href="http://docs.travis-ci.com">Docs</a></li>
+  {{else}}
+    <li>
+      <a href="http://blog.travis-ci.com">Blog</a>
+    </li>
+    <li>
+      <a href="http://traviscistatus.com">Status</a>
+    </li>
+  {{/if}}
+  {{#unless config.pro}}
+    <li class="menu community">
+      <p class="handle">
+        <a href="#">Help</a>
+      </p>
+      <ul>
+        <li><a href="http://docs.travis-ci.com">Docs</a></li>
+        <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
+        <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
+        <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
+        <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
+      </ul>
+    </li>
+  {{/unless}}
+
+  {{#if config.pagesEndpoint}}
+    <li class="menu legal">
+      <p class="handle">
+        <a {{bind-attr href="config.url_legal"}}>Legal</a>
+      </p>
+      <ul>
+        <li>
+          <a {{bind-attr href="config.url_imprint"}}>Imprint</a>
+        </li>
+        <li>
+          <a {{bind-attr href="config.url_security"}}>Security</a>
+        </li>
+        <li>
+          <a {{bind-attr href="config.url_terms"}}>Terms</a>
+        </li>
+      </ul>
+    </li>
+  {{/if}}
+
+  {{#unless config.pro}}
+    <li class="traviscicom">
+      <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
+    </li>
+  {{/unless}}
+
+  <li {{bind-attr class="view.classProfile"}}>
+    <p class="handle">
+      {{#if auth.signedOut}}
+        <a class="signed-out" href="#" {{action "signIn" target="auth"}}>Sign in with GitHub</a>
+      {{/if}}
+      {{#if auth.signedIn}}
+        {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/link-to}}
+      {{/if}}
+      {{#if auth.signingIn}}
+        <span class="signing-in">Signing In</span>
+      {{/if}}
+    </p>
+    <ul>
+      <li>
+        {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
+      </li>
+      {{#if config.billingEndpoint}}
+        <li>
+          <a {{bind-attr href="config.billingEndpoint"}}>Billing</a>
+        </li>
+      {{/if}}
+      <li>
+        <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
+      </li>
+    </ul>
+  </li>
+</ul>

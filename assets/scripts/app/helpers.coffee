@@ -1,5 +1,0 @@
-require 'helpers/handlebars'
-require 'helpers/helpers'
-require 'helpers/urls'
-require 'helpers/status_image_formatter'
-require 'helpers/github_url_properties'

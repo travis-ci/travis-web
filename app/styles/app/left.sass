@@ -1,0 +1,20 @@
+
+#left
+  #search_box
+    height: 87px
+    padding: 35px 20px 90px 20px
+    background-color: $left-bg
+
+    input[type=text]
+      height: 28px
+      width: 100%
+      padding: 0 0 0 10px
+      color: $color-text
+      font-size: $font-size-small
+      border: 0
+      background: $color-bg-input inline-image('ui/search.svg') no-repeat 95%
+      background-size: 3%
+
+      @media #{$large-up}
+        background-size: 5%
+

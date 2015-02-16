@@ -1,0 +1,72 @@
+{{#if content.isLoaded}}
+  <table id="builds" class="list">
+    <thead>
+      <tr>
+        <th>Build</th>
+        <th>Message</th>
+        <th>
+          Commit
+        </th>
+        <th class="committer">
+          Committer
+        </th>
+        {{#if isPullRequestsList}}
+          <th>
+            PR
+          </th>
+        {{/if}}
+        <th>Duration</th>
+        <th>Finished</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each build in controller itemController="buildsItem"}}
+        <tr {{bind-attr class="build.color"}}>
+          <td class="number">
+            <span class="status"></span>
+            {{#if build.id}}
+              {{#link-to "build" build.repo build}}
+                {{build.number}}
+              {{/link-to}}
+            {{/if}}
+          </td>
+          <td class="message">
+            {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
+          </td>
+          <td class="commit">
+            <a {{bind-attr href="build.urlGithubCommit"}}>
+              {{format-commit build.commit}}
+            </a>
+          </td>
+          <td class="committer">
+            {{build.commit.committerName}}
+          </td>
+          {{#if isPullRequestsList}}
+            <td>
+              <a {{bind-attr href="build.urlGithubPullRequest"}}>
+                #{{build.pullRequestNumber}}
+              </a>
+            </td>
+          {{/if}}
+          <td class="duration" {{bind-attr title="build.duration"}}>
+            {{format-duration build.duration}}
+          </td>
+          <td class="finished_at timeago" {{bind-attr title="build.formattedFinishedAt"}}>
+            {{format-time build.finishedAt}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{#if displayShowMoreButton}}
+    <p>
+      {{view 'show-more-button'}}
+      {{#if isLoading}}
+        <span class="loading"></span>
+      {{/if}}
+    </p>
+  {{/if}}
+{{else}}
+  <div class="loading"><span>Loading</span></div>
+{{/if}}

@@ -1,0 +1,61 @@
+<div id="filters-search">
+  <div class="row">
+    <!--
+    <div class="small-6 medium-3 large-2 columns" id="filters">
+      <ul>
+        <li class="filters-start">
+          <div class="current-org-avatar org-travisci"></div>Travis CI <div class="arrow-down"></div>
+          <ul>
+            <li class="org-all">All organizations</li>
+            <li class="currently-selected"><div class="org-avatar org-travisci">Travis CI</div>Travis CI</li>
+            <li><div class="org-avatar org-saltinejustine">Justine Arreche</div>Justine Arreche</li>
+            <li><div class="org-avatar org-openkarma">Open Karma</div>Open Karma</li>
+            <li><div class="org-avatar org-eurucamp">eurucamp</div>eurucamp</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    -->
+    <!-- <div class="small-6 medium-2 large-2 columns no-padding" id="views">
+      <ul>
+        <li class="views-start">
+          View all repos <div class="arrow-down"></div>
+          <ul>
+            <li class="currently-selected">View all repos</li>
+            <li>Queued builds</li>
+            <li>Failed builds</li>
+            <li>Passed builds</li>
+          </ul>
+        </li>
+      </ul>
+    </div> -->
+    {{filter-input placeholder="Search all repositories" class="search-field"
+        action="updateFilter" on="key-up"}}
+  </div>
+</div>
+
+<div class="tiles">
+  <div class="row">
+  {{#each repo in filteredRepositories}}
+    <div class="large-4 medium-6 columns">
+      <div {{bind-attr class=":tile repo.last_build.state"}}>
+        <div class="build-bar">
+        </div>
+        <div class="build-information">
+          <p class="org">{{repo.owner.login}}</p>
+          <p class="repo">{{#link-to "repo" repo.owner.login repo.name}}{{repo.name}}{{/link-to}}</p>
+          <div class="duration">{{format-duration repo.last_build.duration}}</div>
+          <div class="finished">{{format-time repo.last_build.finished_at}}</div>
+          <p class="build-status">
+            {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+              #{{repo.last_build.number}} {{repo.last_build.state}}
+            {{/link-to}}
+          </p>
+        </div>
+        <div class="star-feature">
+        </div>
+      </div>
+    </div>
+  {{/each}}
+  </div>
+</div>

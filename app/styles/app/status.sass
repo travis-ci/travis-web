@@ -1,0 +1,97 @@
+
+.status
+  display: inline-block
+  width: 10px
+  height: 10px
+  margin-right: 2px
+  background-size: auto auto
+  background-position: 0px 0px
+
+.list .status
+  margin-left: 7px
+
+#repos .yellow,
+.yellow #summary .number,
+.list .yellow .number
+  .status
+    background-image: inline-image('icons/state-pending.svg')
+  a
+    color: $color-text-status-pending
+
+#repos .green,
+.green #summary .number,
+.list .green .number,
+#requests .accepted .request-id
+  .status
+    background-image: inline-image('icons/state-passed.svg')
+  a
+    color: $color-text-status-passed
+
+#repos .red,
+.red #summary .number,
+.list .red .number,
+#requests .rejected .request-id
+  .status
+    background-image: inline-image('icons/state-failed.svg')
+  a
+    color: $color-text-status-failed
+
+#repos .gray,
+.gray #summary .number,
+.list .gray .number
+  .status
+    background-image: inline-image('icons/state-errored.svg')
+  a
+    color: $color-text-status-gray
+
+table.list
+  tbody
+    td
+      background-color: $color-bg-job
+    tr:hover td
+      background-color: $color-bg-job-highlight
+
+  .green, .accepted
+    td
+      background-color: $color-bg-job-passed
+    &:hover td
+      background-color: $color-bg-job-passed-highlight
+    .number a, .request-id a
+      color: $color-text-status-passed
+
+  .red, .rejected
+    td
+      background-color: $color-bg-job-failed
+    &:hover td
+      background-color: $color-bg-job-failed-highlight
+    .number a, .request-id a
+      color: $color-text-status-failed
+
+  .gray
+    td
+      background-color: $color-bg-job-gray
+    &:hover td
+      background-color: $color-bg-job-gray-highlight
+    .number a
+      color: $color-text-status-gray
+
+  .number a
+    display: inline-block
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+
+#workers
+  .status
+    background-color: $color-bg-status-waiting
+
+  .waiting .status
+    background-color: $color-bg-status-waiting
+
+  .errored .status
+    background-color: $color-bg-status-errored
+
+  .stopped .status
+    background-color: $color-bg-status-stopped
+
+

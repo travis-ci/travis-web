@@ -1,0 +1,131 @@
+
+#accounts,
+#repos
+  @include resetul
+
+  &.open li .info
+    display: block
+
+  a:hover,
+  a:active
+    text-decoration: underline
+
+  a:focus
+    outline: 1px dotted
+
+  li
+    position: relative
+    font-size: $font-size-big
+    padding: 15px 20px 15px 15px
+    border-bottom: 1px solid $color-border-light
+    background-repeat: no-repeat
+    cursor: pointer
+
+    &:nth-child(odd),
+    &:nth-child(odd) .indicator span
+      background-color: $color-bg-list-odd
+    &:nth-child(even),
+    &:nth-child(even) .indicator span
+      background-color: $color-bg-list-even
+
+    .slug-and-status
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      padding-right: 35px
+      a
+        display: inline-block
+        width: 91%
+        text-overflow: ellipsis
+        overflow: hidden
+        vertical-align: top
+
+    .last_build
+      position: absolute
+      top: 15px
+      right: 20px
+      text-align: right
+      // font-size: $font-size-normal
+      // border: 1px solid #ddd
+      // @include border-radius(10px)
+
+    .summary
+      margin: 5px 0 0 0
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      color: $color-text-light
+      font-size: $font-size-small
+
+    .duration-icon
+      display: inline-block
+      width: 10px
+      height: 10px
+      margin-right: 5px
+      background-image: inline-image('ui/clock.svg')
+      background-size: cover
+
+    .finished-icon
+      display: inline-block
+      width: 10px
+      height: 10px
+      margin-right: 5px
+      background-image: inline-image('ui/cal.svg')
+      background-size: cover
+
+    .info
+      overflow: hidden
+      margin: 12px -20px -15px -45px
+      font-size: $font-size-small
+      background-color: $color-bg-list-info
+      color: $color-text-list-info
+      display: none
+      p
+        margin: 0 -10px 0 -10px
+        padding: 12px 35px 12px 73px
+        box-shadow: $color-shadow-list-info 0 1px 8px 0 inset
+
+    .indicator
+      display: none
+      position: absolute
+      top: 0
+      right: -20px
+      width: 20px
+      height: 100%
+      overflow: hidden
+
+      span
+        position: relative
+        display: block
+        top: calc(50% - 10px)
+        left: -15px
+        width: 20px
+        height: 20px
+        border: 1px solid $color-border-normal
+        transform: rotate(45deg)
+
+    &.selected .indicator
+      display: block
+
+#left .loading
+  padding: 15px 25px 15px 30px
+  background-color: $color-bg-list-odd
+  background-image: none
+
+#accounts
+  li
+    margin-left: -4px
+    padding-left: 52px
+    &.user
+      background-image: inline-image('ui/user.svg')
+      background-position: 29px 18px
+      background-size: 0.9em
+    &.organization
+      background-image: inline-image('ui/org.svg')
+      background-position: 24px 18px
+      background-size: 0.9em
+    .summary
+      margin-left: 0
+    .indicator
+      span
+        top: 32px

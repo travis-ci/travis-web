@@ -1,0 +1,157 @@
+/*
+ * It's a nightmare to overwrite this
+ * @todo refactor and get rid of all IDs
+ */
+
+
+.tabs
+  @include resetul
+  li
+    height: 28px
+    vertical-align: top
+    background-color: $tab-nav-inactive-bg
+    border-radius: 4px 4px 0px 0px
+    padding: 0 12px 0 12px
+    margin-right: 10px
+    white-space: nowrap
+    cursor: pointer
+  @media #{$medium-up}
+    height: 29px
+    li
+      display: inline-block
+      &:hover
+        background-color: $tab-nav-inactive-bg-hover
+
+  .active
+    background-color: $color-bg-tab-active
+    border-bottom-color: $color-bg-tab-active
+
+    a
+      color: $color-text
+      font-weight: 600
+
+  h5
+    margin: 0
+    font-size: $font-size-small
+    font-weight: normal
+    line-height: 30px
+    text-align: center
+
+    a
+      display: block
+      color: #a8a9ab
+
+
+#left
+
+  .tabs
+    margin: -28px 20px 0 15px
+
+  #tab_search:not(.active)
+    display: none
+
+  #tab_recent.hidden
+    display: none
+
+  #tab_owned
+    display: none
+  #tab_owned.display
+    display: inline-block
+  #tab_new
+    display: none
+    height: 25px
+    width: 26px
+    margin-top: 3px
+    float: right
+    margin-right: 0
+    padding: 0 5px 0 5px
+
+    h5
+      line-height: 25px
+
+  #tab_new.display
+    display: inline-block
+
+#main
+  .tabs
+    border-bottom: 3px solid #f5f5f6
+    li
+      height: 29px
+      background-color: #f5f5f6
+      margin-right: 0
+      overflow: hidden
+      &:hover
+        background-color: #e1e8eb
+    a
+      text-decoration: none
+
+    .active
+      display: block
+      background-color: $tab-active-bg
+      border-bottom-color: $tab-active-bg
+      &:hover
+        background-color: $tab-active-bg
+      a
+        color: #6c878e
+      @media #{$medium-up}
+        display: inline-block
+
+  .tab
+    margin-top: 15px
+    ul.navigation
+      @include resetul
+      border-bottom: 1px solid #EAEAEA
+      li
+        margin-right: 10px
+        a
+          color: #ACACAC
+          font-weight: 600
+          font-size: 14px
+        a.active
+          color: #55888E
+      @media #{$small-up}
+        li
+          display: inline-block
+      @media #{$medium-up}
+        height: 40px
+        line-height: 40px
+
+  #builds
+    a
+      display: inline
+
+.tabs--main
+  #tab_build,
+  #tab_job,
+  #tab_request,
+  #tab_requests,
+  #tab_caches,
+  #tab_settings
+    display: none
+
+#profile
+  #main
+    .tab
+      margin: 30px 0 0 12px
+
+#right
+  .tabs
+    margin-left: -3px
+
+    .active
+      background-color: $color-bg-right
+      border-bottom-color: $color-bg-right
+      h5
+        font-weight: bold
+
+@media handheld, only screen and (max-device-width: 980px)
+  #main
+    .tabs
+      margin-top: 5px
+      li
+        margin-right: 0px
+      h5
+        min-width: 0px
+        
+      #tab_branches
+        display: none

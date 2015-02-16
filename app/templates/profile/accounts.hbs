@@ -1,0 +1,19 @@
+<div id="search_box">
+</div>
+
+<ul class="tabs">
+  <li id="tab_accounts" {{bind-attr class="view.classAccounts"}}>
+    <h5><a name="accounts" href="">Accounts</a></h5>
+  </li>
+</ul>
+
+<div class="tab">
+  {{#collection "accounts-list" contentBinding="controller"}}
+    {{#link-to "account" view.account class="name"}}{{view.name}}{{/link-to}}
+    <p class="summary">
+      <span class="repos_label">Repositories:</span>
+      <abbr class="repos">{{view.account.reposCount}}</abbr>
+    </p>
+    <div class="indicator"><span></span></div>
+  {{/collection}}
+</div>

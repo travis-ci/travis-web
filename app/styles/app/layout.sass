@@ -1,0 +1,154 @@
+
+.centered .row
+  max-width: 1024px
+
+.main,
+.profile-view
+  position: relative
+  width: 100%
+  min-height: 100vh
+
+#auth, #not-found, #simple
+  #top
+    top: 0
+
+#not-found #main
+  padding: 100px 50px 0 50px
+
+#left, #right, .wrapper-main
+  position: relative
+
+#left
+  padding: 0 0 110px 0
+  background-color: #fbfbfa
+  border-right: 1px solid $color-border-normal
+
+.duration_label
+  display: inline-block
+  height: 11px
+  line-height: 13px
+  text-indent: 14px
+  margin-right: 1px
+  overflow: hidden
+  background: inline-image('ui/clock.svg') no-repeat 0px 0px
+  background-size: contain
+
+#main
+  position: relative
+  padding: 20px 30px 80px
+
+.wrapper
+  overflow: hidden
+  #main,
+  #left,
+  #right
+    margin-bottom: -99999px
+    padding-bottom: 100034px
+
+@media #{$medium-up}
+
+  // layout magic http://lea.verou.me/2011/01/styling-children-based-on-their-number-with-css3/
+  .wrapper-main
+    overflow: hidden
+    height: 100%
+    & > div:first-child:nth-last-child(2)
+      width: grid-calc(20, 24)
+      float: left
+
+    & > div:first-child:nth-last-child(2) ~ div
+      width: grid-calc(4, 24)
+      max-width: 180px
+      float: right
+
+  .maximized
+    .wrapper-main
+      & > div:first-child:nth-last-child(2)
+        width: grid-calc(24, 24)
+        float: none
+
+      & > div:first-child:nth-last-child(2) ~ div
+        display: none
+
+@media #{$large-up}
+
+  #left, #right, .wrapper-main
+    min-height: 100vh
+
+  #left
+    width: grid-calc(5, 24)
+    float: left
+    margin-left: -100%
+    max-width: 325px
+
+  .wrapper-main
+    width: grid-calc(19, 24)
+    float: left
+    margin-left: grid-calc(5, 24)
+    overflow: visible
+
+
+.travis-lint
+  background-color: $travis-lint-bg
+  width: 100%
+  color: $travis-lint-color
+  margin: 10px 0 36px 0
+  p
+    padding: 10px
+    font-weight: bold
+    margin: 0
+  a
+    margin-left: 5px
+
+@media screen and (max-width: 1400px)
+  #left .duration_label
+    display: inline-block
+    width: 11px
+    height: 11px
+    margin-right: 1px
+    text-indent: 10px
+    overflow: hidden
+    background: inline-image('ui/clock.svg') no-repeat 0px 0px
+    background-size: contain
+
+@media screen and (max-width: 1400px)
+  #left .finished_at_label
+    display: none
+
+@media screen and (max-width: 1400px)
+  table#builds .committer
+    display: none
+
+@media handheld, only screen and (max-device-width: 980px)
+  #left
+    display: none
+  #main
+    min-width: 99%
+    max-width: 99%
+    padding: 0px
+
+    .tabs
+      margin-top: 5px
+
+    p.description
+      margin: 5px 0px
+
+    #repo
+      padding: 15px 10px
+      width: 95%
+
+  #top
+    width: 100%
+    min-width: 960px
+  #tools
+    display: none
+
+a
+  text-decoration : none
+
+.application,
+.dashboard
+  height: 100%
+
+
+.no-padding
+  padding : 0

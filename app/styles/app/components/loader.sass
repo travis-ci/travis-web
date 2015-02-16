@@ -1,0 +1,77 @@
+
+
+#loader-container-large
+  margin-top: 2em
+  height     : 70px
+  text-align : center
+
+#loader-container-large .load-text
+  font-size   : 25px
+  line-height : 30px
+  font-weight : 300
+  margin-top  : 20px
+  font-weight: 400
+
+.loader-large
+  width    : 60px
+  height   : 60px
+  position : relative
+  margin   : 0 auto
+
+#loader-container-medium
+  height     : 40px
+  margin-top : 15px
+  text-align : center
+
+#loader-container-medium .load-text
+  vertical-align : 10px
+  display        : inline-block
+
+.loader-medium
+  width        : 30px
+  height       : 30px
+  position     : relative
+  display      : inline-block
+  margin       : 0 auto
+  margin-right : 10px
+
+#loader-container-small
+  height     : 20px
+  margin-top : 22px
+  text-align : center
+
+#loader-container-small .load-text
+  vertical-align : 3px
+  display        : inline-block
+
+.loader-small
+  width        : 15px
+  height       : 15px
+  position     : relative
+  display      : inline-block
+  margin       : 0 auto
+  margin-right : 5px
+
+.load-circle1, .load-circle2
+  width         : 100%
+  height        : 100%
+  border-radius : 50%
+  opacity       : 0.7
+  position      : absolute
+  top           : 0
+  left          : 0
+  animation         : bounce 1.5s infinite ease-in-out
+
+.load-circle1
+  background-color : #347389
+
+.load-circle2
+  background-color : #bdc5c5
+  animation-delay         : -0.5s
+
+@keyframes bounce
+  0%, 100%
+    transform         : scale(0.0)
+  60%
+    transform: scale(1.0)
+

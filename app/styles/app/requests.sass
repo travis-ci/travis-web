@@ -1,0 +1,23 @@
+
+#request
+  h3
+    font-size: 120%
+    padding-left: 15px
+    background-position: 0px 6px
+    background-repeat: no-repeat
+  &.accepted
+    h3
+      background-image: inline-image('icons/state-passed.svg')
+      color: $color-text-status-passed
+  &.rejected
+    h3
+      background-image: inline-image('icons/state-failed.svg')
+      color: $color-text-status-failed
+  .pr-number
+    border-bottom: dotted black 1px
+
+#requests
+  td.commit-message
+    max-width: 250px
+    overflow: hidden
+    text-overflow: ellipsis

@@ -1,0 +1,27 @@
+
+@mixin popup
+  display: none
+  position: fixed
+  z-index: 100
+  background-color: #fff
+  border: 10px solid rgba(114, 131, 139, 0.6)
+  background-clip: padding-box
+  border-radius 4px
+
+
+@mixin clearfix
+  &:before,
+  &:after
+    content: ""
+    display: table
+  &:after
+    clear: both
+
+@mixin resetul
+  margin: 0
+  padding: 0
+  list-style: none
+
+@mixin border-bottom-radius($radius)
+  border-bottom-left-radius: $radius
+  border-bottom-right-radius: $radius

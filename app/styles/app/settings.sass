@@ -1,0 +1,296 @@
+#settings
+  ul
+    @include resetul
+
+  .settings-form
+    margin: 30px 0 30px 0
+
+    p.short-settings-element
+      display: inline-block
+      vertical-align: middle
+      margin: 0 10px 0 0
+      float: left
+
+    label
+      line-height: 30px
+
+    input
+      display: inline-block
+      float: left
+      width: 60px
+      height: 18px
+      padding: 5px 18px 5px 18px
+      background-color: #F5F5F5
+      border: 1px solid #E3E1E1
+      border-radius: 4px
+      line-height: 19px
+      font-size: 11px
+      color: #999999
+      text-align: center
+
+  .field.invalid
+    input, textarea
+      border-width: 1px
+      border-color: #ffb6c1
+      background: rgb(252, 227, 230)
+
+  form.env-var, form.ssh-key
+    margin-top: 20px
+
+    .field
+      padding-bottom: 10px
+      clear: left
+      @media screen and (min-width: 47em)
+        clear: none
+    .field:after
+      visibility: hidden
+      display: block
+      font-size: 0
+      content: " "
+      clear: both
+      height: 0
+
+    .travis-switch
+      display: block
+      margin-top: 4px
+
+    label
+      display: inline-block
+
+  form.env-var
+    label
+      width: 40px
+    label.value
+      width: auto
+      line-height: 1.9em
+    .travis-switch.value
+      font-size: 10px
+  form.ssh-key
+    span.error
+      display: block
+      margin-left: 76px
+    label
+      width: 73px
+    label.value
+      float: left
+    textarea
+      margin-left: 3px
+      width: 580px
+      height: 250px
+      display: inline-block
+      padding: 0 5px 0 5px
+      background-color: #fff
+      border: 1px solid #ddd
+      line-height: 17px
+      font-size: 13px
+      color: #999999
+      text-align: left
+
+  span.error
+    display: inline-block
+    margin-left: 10px
+    color: #a80000
+
+  .env-var input[type=submit].saving, .ssh-key input[type=submit].saving,
+  .env-var .delete-var.deleting, .delete-ssh-key.deleting
+    background-color: #bbb
+    background-image: inline-image('ui/round-spinner.svg')
+    background-repeat: no-repeat
+    background-position: center
+    background-size: 20px
+    text-indent: -9999px
+
+  .env-var-name
+    span
+      font-size: 18px
+      font-weight: 600
+      color: #5e6872
+
+  span.value.value-display
+    font-size: 14px
+    background-color: #efefdf
+    border-radius: 4px
+    padding: 0 10px 0 10px
+    color: #838b8c
+    font-family: monospace
+
+  span.value.value-display.secure
+    background-image: inline-image('ui/secure.png')
+    background-position: 8px center
+    background-repeat: no-repeat
+    background-size: 0.5em
+    padding-left: 26px
+
+  .add-env-var, .add-ssh-key
+    color: $white
+    background-color: #97a3aa
+    border-radius: 4px
+    padding: 8px 12px 8px 12px
+    margin-bottom: 20px
+    font-size: 13px
+    line-height: 55px
+    cursor: pointer
+
+  .add-env-var:hover, .add-ssh-key:hover
+    background-color: #7c878d
+
+  input
+    display: inline-block
+    width: 260px
+    height: 20px
+    padding: 0 5px 0 5px
+    background-color: #fff
+    border: 1px solid #ddd
+    line-height: 17px
+    font-size: 13px
+    color: #999999
+    text-align: left
+
+  form.env-var .actions
+    margin-bottom: 35px
+
+  input.submit-env-var, input.submit-ssh-key
+    color: #ffffff
+    background-color: #7ea35a
+    border-radius: 4px
+    font-size: 13px
+    width: 60px
+    height: 32px
+    text-align: center
+    margin: 10px 6px 0 0
+    cursor: pointer
+
+  .submit-env-var:hover, .submit-ssh-key:hover
+    background-color: #6f924f
+
+  .cancel-env-var, .cancel-ssh-key
+    margin-left: 3px
+
+  .cancel-env-var:hover, .cancel-ssh-key:hover
+    text-decoration: underline
+
+  input[type="checkbox"]
+    display: inline-block
+    vertical-align: middle
+
+  .edit-var
+    display: inline-block
+    margin: 6px 10px 7px 0
+    color: #ffffff
+    background-color: #bcbcbb
+    border-radius: 4px
+    padding: 4px 15px 4px 15px
+    font-size: 13px
+    cursor: pointer
+
+  .edit-var:hover
+    background-color: #a4a5a4
+
+  .delete-var, .delete-ssh-key
+    display: inline-block
+    margin: 6px 0 7px 0
+    color: #ffffff
+    background-color: #932828
+    border-radius: 4px
+    padding: 4px 15px 4px 15px
+    font-size: 13px
+    cursor: pointer
+
+  .delete-var:hover, .delete-ssh-key:hover
+    background-color: #820b0b
+
+  form.env-var
+    width: 100%
+    margin-top: 20px
+    margin-bottom: 30px
+    border-bottom: 1px solid #f1f1f1
+
+    span.error
+      margin-left: 0
+      display: none
+
+      &.show
+        display: inline-block
+
+    label.name, label.value
+      display: none
+
+    label.public
+      width: 80%
+
+    .field.name, .field.value
+      float: left
+      padding-bottom: 0
+      min-height: 33px
+      line-height: 33px
+
+    span.equals
+      float: left
+      display: block
+      line-height: 33px
+      margin: 0 10px 0 14px
+
+    .field.name
+      width: 242px
+      margin-bottom: 10px
+      input
+        width: 97%
+    .field.value
+      width: 45%
+      input
+        width: 97%
+    .actions
+      margin-bottom: 10px
+
+  ul.env-vars
+    display: block
+  li.env-var
+    margin: 10px 40px 0 0
+    padding-bottom: 10px
+    overflow: auto
+    border-bottom: 1px solid #F1F1F1
+    width: 100%
+
+    form.env-var
+      margin-bottom: 6px
+      border-bottom: none
+
+    .var
+      font-size: 13px
+      display: inline-block
+      margin-right: 10px
+
+    .row
+      .label
+        display: inline-block
+        border: 1px solid #ddd
+        font-size: 13px
+        margin-top: 4px
+        height: 20px
+
+    .name,
+    .value
+      line-height: 20px
+      position: relative
+      font-size: 15px
+
+    .equals
+      margin: 0 10px 0 14px
+
+    .name
+      width: 250px
+      margin: 0 10px 0 20px
+      text-align: left
+
+    .value
+      display: block
+      width: auto
+      text-align: left
+      max-width: 390px
+      min-height: 25px
+      padding: 7px 12px 3px
+
+    @media #{$medium-up}
+      .value,
+      .name
+        display: inline-block

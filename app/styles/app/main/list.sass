@@ -1,0 +1,47 @@
+
+table.list
+  width: 100%
+  margin: 25px 0 0 12px
+  border-spacing: 0
+
+  a
+    text-decoration: underline
+
+  caption
+    margin-bottom: 8px
+    text-align: left
+    color: $color-text
+    font-size: $font-size-big
+    font-weight: bold
+
+  td, th
+    text-align: left
+    font-size: $font-size-small
+    padding: 5px 20px 5px 0
+    vertical-align: top
+
+  tr
+    max-height: 20px
+
+  th
+    font-size: 13px
+    color: $color-text
+    white-space: nowrap
+    border-bottom: 2px solid white
+
+  td
+    white-space: nowrap
+    border-bottom: 2px solid white
+    &.message
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: normal
+
+  td:first-child
+    border-left-radius: 4px
+
+  td:last-child
+    border-right-radius: 4px
+
+  tr.message, td.message
+    width: 100%

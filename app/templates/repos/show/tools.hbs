@@ -1,0 +1,93 @@
+<div id="tools">
+  <a href="#" {{action "menu" target=view}} class="menu-popup-button">Settings</a>
+
+  <ul class="menu">
+    {{#if view.displaySettingsLink}}
+      <li>
+        {{#link-to "settings" view.repo}}Settings{{/link-to}}
+      </li>
+    {{/if}}
+    <li>
+      {{#link-to "requests" view.repo}}Requests{{/link-to}}
+    </li>
+    {{#if view.displayCachesLink}}
+      <li>
+        {{#link-to "caches" view.repo}}Caches{{/link-to}}
+      </li>
+    {{/if}}
+
+  </ul>
+</div>
+
+<div id="regenerate-key" class="popup">
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
+  <p>
+    Do you really want to regenerate ssl keys for this repository? Please note that
+    any data, which is encrypted, such as notification services credentials or secure
+    environment variables will not be accessible during the builds until you re-encrypt
+    it with the new key.
+  </p>
+
+  <p>
+    <a class="sync_now button" {{action "regenerateKey" target=view}}>Yes, do it!</a>
+    <span class="or">or</span>
+    <a href="#" class="cancel" {{action "popupClose" target=view}}>Cancel</a>
+  </p>
+</div>
+
+<div id="regeneration-success" class="popup">
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
+  <p>
+    Key for this repository has been regenerated. If you used previous key
+    for encryption, you will need encrypt your data again with the new key.
+  </p>
+
+  <p>
+    You can read more about encryption keys <a href="http://about.travis-ci.org/docs/user/encryption-keys/">in Travis documentation</a>
+  </p>
+</div>
+
+<div id="code-climate" class="popup">
+  <img src="/images/icons/code-climate-logo.svg" id="code-climate-logo"/>
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
+  <p>
+    <b>Want test coverage for your tests?</b>
+  </p>
+  <p>
+    Integrating <a href="https://codeclimate.com">Code Climate's test coverage</a> reporting with your test
+    suite on Travis CI allows to track changes in coverage over time. If you haven't tried it out already, <a
+    {{bind-attr href=config.codeClimateUrl}}" target="_blank">sign
+    up today</a> to improve your code's quality. New customers get 20% off for the first three months!
+  </p>
+
+  <p>
+    It only takes a few steps, once you've set up your project:
+  </p>
+
+  <ol>
+    <li>
+      Add the `code-climate-reporter` gem to your Gemfile:<br/>
+
+<pre>
+gem "codeclimate-test-reporter", group: :test, require: nil
+</pre>
+    </li>
+    <li>
+      Load the reporter in your `test_helper` or `spec_helper`, putting it at the very top:
+
+<pre>
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+</pre>
+    </li>
+    <li>
+      Add the Code Climate token to your .travis.yml:
+
+<pre>
+addons:
+  code_climate:
+    repo_token: adf08323...
+</pre>
+    </li>
+  </ol>
+</div>

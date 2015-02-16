@@ -1,0 +1,149 @@
+/*
+ * Error Pages
+ */
+
+
+.error,
+.maintenance
+  height: 100%
+  overflow: hidden
+
+  .full-size
+    position: absolute
+    top: 0
+    height: 100%
+    width: 100%
+    overflow: hidden
+    background:
+      repeat: no-repeat
+
+.main--error
+  min-height: 100%
+
+.error-text,
+.maintenance-text
+  position: absolute
+  left: 0
+  right: 0
+  z-index: 10
+  h1
+    margin: 1em 0 .4em
+    font-weight: 600
+    color: $error-heading-color
+    font-size: 40px
+    line-height: 1
+    text-align: center
+    @media #{$medium-up}
+      margin: 1.5em 0 .4em
+      font-size: 70px
+  p
+    padding: 0 1em
+    color: $error-copy-color
+    font-size: 18px
+    text-align: center
+  a
+    color: $error-copy-color
+    &:hover,
+    &:focus
+      color: $error-copy-color
+      text-decoration: underline
+
+.icon-twitter
+  display: inline-block
+  width: 1.1em
+  height: 1.1em
+  background:
+    image: url(../images/error/twitter.svg)
+    size: 100% auto
+    repeat: no-repeat
+    position: 0 .2em
+
+
+/*
+ * Maintenance
+ */
+.maintenance-bg
+  background: linear-gradient(0deg, $maintenance-grass, $maintenance-grass 34.9%, $error-bg-gradient 35%, $white 60%, $white)
+
+  .hill-left
+    background:
+      image: url(../images/error/maintenance-hills-left.svg)
+      size: 80vw auto
+      position: 0 62%
+    @media #{$medium-up}
+      background-size: 58vw auto
+      background-position: 0 62%
+    @media #{$large-up}
+      background-size: 50vw auto
+      background-position: 0 61%
+  .hill-right
+    display: none
+    background:
+      image: url(../images/error/maintenance-hills-right.svg)
+      size: 38vw auto
+      position: 99% 63%
+    @media #{$medium-up}
+      display: block
+  .shadow-left
+    background:
+      image: url(../images/error/maintenance-grass-shade-left.svg)
+      size: 24vw auto
+      position: 6% 82%
+  .shadow-right
+    background:
+      image: url(../images/error/maintenance-grass-shade-right.svg)
+      size: 17vw auto
+      position: 95% 89%
+
+.maintenance-tractor
+  background:
+    image: url(../images/error/maintenance-tractor.svg)
+    size: 87vw auto
+    position: 63% 87%
+  @media #{$medium-up}
+    background-size: auto 40vh
+  @media #{$large-up}
+    background-size: auto 40vh
+
+/*
+ * 404
+ */
+.error-bg
+  background: linear-gradient(0deg, $error-hill-grey, $error-hill-grey 34.9%, $error-bg-gradient 35%, $white 60%, $white)
+
+.error-hill-left
+  display: none
+  background:
+    image: url(../images/error/404-hills-left.svg)
+    size: 30vw auto
+    position: 0 (100% - 37%)
+  @media #{$medium-up}
+    display: block
+
+.error-hill-right
+  background:
+    image: url(../images/error/404-hills-right.svg)
+    size: auto 20vw
+    position: 99% 63%
+  @media #{$medium-up}
+    background-size: 50vw auto
+    background-position: 99% 63%
+  @media #{$large-up}
+    background-position: 99% 61%
+
+.error-excavator
+  background:
+    image: url(../images/error/excavator.svg)
+    size: auto 25vh
+    position: 71% 83%
+
+.error-travis
+  background:
+    image: url(../images/error/pensive-travis.svg)
+    size: auto 60vh
+    position: 34% 92%
+  @media #{$medium-up}
+    background-size: auto 50vh
+  @media #{$large-up}
+    background-size: auto 60vh
+

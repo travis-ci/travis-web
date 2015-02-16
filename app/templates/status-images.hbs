@@ -1,0 +1,14 @@
+<a href="#" class="close" {{action "close" target=view}}></a>
+<p>
+  <label>Branch:</label>
+  {{#if view.branches.isLoaded}}
+    {{view Ember.Select contentBinding="view.branches" selectionBinding="view.statusImageBranch" optionLabelPath="content.commit.branch" optionValuePath="content.commit.branch"}}
+  {{else}}
+    <span class="loading"></span>
+  {{/if}}
+</p>
+
+<p>
+  <label>{{view Ember.Select contentBinding="view.formats" selectionBinding="view.statusImageFormat"}}</label>
+  {{view 'status-image-input' valueBinding="view.statusString" class="url" rows=3}}
+</p>

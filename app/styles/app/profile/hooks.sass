@@ -1,0 +1,76 @@
+
+#profile
+  #unadministerable-hooks
+    margin-top: 15px
+    h3
+      font-size: $font-size-big
+    .tip
+      margin-top: 5px
+
+#hooks, #unadministerable-hooks
+  
+  @include resetul
+
+  .travis-switch
+    font-size: 10px
+  margin-top: 10px
+
+  li
+    box-sizing: content-box
+    position: relative
+    height: 19px
+    padding: 10px
+    white-space: nowrap
+    overflow: hidden
+    border-bottom: 1px solid $color-border-light
+
+    &:nth-child(odd)
+      background-color: $color-bg-hooks-odd
+      .controls
+        background: $color-bg-hooks-odd
+
+    &:nth-child(even)
+      background-color: $color-bg-hooks-even
+      .controls
+        background: $color-bg-hooks-even
+
+    > a
+      float: left
+      font-size: $font-size-big
+      text-decoration: none
+
+    .description
+      display: none
+      margin-left: 10px
+      line-height: 22px
+      font-size: $font-size-smaller
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      color: $color-text-light
+
+    .controls
+      position: absolute
+      top: 8px
+      right: 0
+      white-space: nowrap
+      a
+        float: left
+        display: block
+
+    .repo-settings-icon
+      // Overriding an earlier definition above, which is probably
+      // obsolete. TODO: Remove if so.
+      position: relative
+      height: 20px
+      width: 20px
+      padding-right: 0
+      background: inline-image('ui/repo-settings.png') no-repeat 3px 4px
+
+    &:hover
+      > a
+        color: $color-link-highlight
+
+      .description
+        display: inline
+

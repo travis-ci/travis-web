@@ -1,0 +1,23 @@
+<div class="wrapper">
+  
+  <header id="top">
+    {{render "top"}}
+  </header>
+
+  <div class="wrapper-main">
+    <div id="main" role="main">
+      {{render "flash"}}
+      {{yield}}
+    </div>
+    {{#if config.pro}}
+      <div id="right">
+        {{render "sidebar"}}
+      </div>
+    {{/if}}
+  </div>
+
+  <aside id="left">
+    {{outlet "left"}}
+  </aside>
+
+</div>
