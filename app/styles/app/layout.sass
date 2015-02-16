@@ -1,6 +1,7 @@
 
-.centered .row
-  max-width: 1024px
+.centered
+  .row
+    max-width: 1024px
 
 .main,
 .profile-view
@@ -50,7 +51,6 @@
   // layout magic http://lea.verou.me/2011/01/styling-children-based-on-their-number-with-css3/
   .wrapper-main
     overflow: hidden
-    height: 100%
     & > div:first-child:nth-last-child(2)
       width: grid-calc(20, 24)
       float: left
