@@ -14,14 +14,14 @@
         {{build.pullRequestTitle}}
       {{else}}
         <small class="repo-main-branch" {{bind-attr title="build.commit.branch"}}>{{build.commit.branch}}</small>
-        {{format-message build.commit.subject repoBinding=build.repo}}
+        {{format-message build.commit.subject repo=build.repo}}
       {{/if}}
       </h2>
       <div class="repo-main-description">
         {{#if build.pullRequest}}
-          <p>{{format-message build.commit.subject repoBinding=build.repo}}</p>
+          <p>{{format-message build.commit.subject repo=build.repo}}</p>
         {{/if}}
-        <pre class="body">{{format-message build.commit.body repoBinding=build.repo pre=true}}</pre>
+        <pre class="body">{{format-message build.commit.body repo=build.repo pre=true}}</pre>
       </div>
       <div class="tile-author">
        {{#if commit.authorName}}
