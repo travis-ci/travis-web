@@ -1,3 +1,74 @@
+.feedback-button
+  display: inline-block
+  position: fixed
+  right: 0
+  left: auto
+  // top: 35%
+  bottom: 0
+  margin: 0
+  padding: 1.5em 1em .5em
+  border-radius: 4px
+  // transform: rotate(90deg) translateY(-140%)
+  will-change: transform
+  transition: transform ease 200ms
+  background: $white
+  font-size: 13px
+  color: #a2afb3
+  text-transform: uppercase
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.15)
+  z-index: 999
+
+.feedback-button:hover
+  // transform: rotate(90deg) translateY(-130%)
+
+.feedback-popup
+  position: fixed
+  top: 50%
+  left: 50%
+  width: 30em
+  transform: translate(-50%, -50%)
+  padding: 1em 1.3em
+  background-color: #ffffff
+  border-radius: 5px
+  z-index: 999
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.15)
+  h1
+    margin: 0 0 .4em
+    padding-left: .4em
+    color: #347389
+    font-size: 20px
+  textarea
+    box-sizing: border-box
+    display: block
+    width: 100%
+    height: 10em
+    margin-bottom: .8em
+    padding: .5em .6em
+    resize: vertical
+    background-color: #f4f3eb
+    font-size: 15px
+    color: #7d7e80
+    border: none
+    font-family: $font-family-sans-serif
+  .submit
+    margin-right: 1em
+    padding: .3em .7em
+    background-color: #37a766
+    color: $white
+    font-size: 15px
+    border: none
+    border-radius: 4px
+    font-family: $font-family-sans-serif
+    cursor: pointer
+  a
+    color: #7d7e80
+    font-size: 15px
+    text-decoration: none
+  a:hover
+    text-decoration: underline
+
+#CHARM_FORM_TARGET
+  display: none
 
 .feedback-button
   display: none

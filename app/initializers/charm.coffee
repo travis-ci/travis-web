@@ -6,7 +6,8 @@ initialize = (container, app) ->
       key: config.charmKey
       url: "https://charmscout.herokuapp.com/feedback"
 
-    $('head').append $('<script src="https://charmscout.herokuapp.com/charmeur.js?v=2" async defer></script>')
+    window.bootstrapCharm()
+    # $('head').append $('<script src="https://charmscout.herokuapp.com/charmeur.js?v=2" async defer></script>')
 
 Initializer =
   name: 'charm'
