@@ -2,6 +2,6 @@
 
 View = BasicView.extend
   layoutName: 'layouts/error'
-  classNames: ['error']
+  classNames: ['error error404']
 
 `export default View`
