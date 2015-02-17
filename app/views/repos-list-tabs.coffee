@@ -8,7 +8,7 @@ View = Ember.View.extend
   classRecent: (->
     if @get('tab') == 'recent'
       'active'
-    else if @get('tab') == 'search' && @auth.get('signedIn')
+    else if @get('tab') == 'search' && @get('controller').auth.get('signedIn')
       'hidden'
   ).property('tab')
 

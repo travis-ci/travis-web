@@ -47,6 +47,7 @@ module.exports = function(environment) {
         sshKey: true,
         caches: true
       };
+      ENV.charmKey = 'gy5gx7dy6dh86hxzkz1wmtvupwvievu';
     }
   }
 
