@@ -77,7 +77,7 @@ Controller = Ember.ArrayController.extend
   searchFor: (phrase) ->
     Ember.run.cancel(@searchLater) if @searchLater
     @searchLater = Ember.run.later(this, (->
-      @transitionTo('main.search', phrase)
+      @transitionTo('main.search', phrase.replace(/\//g, '%2F'))
     ), 500)
 
   noReposMessage: (->

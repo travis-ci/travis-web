@@ -14,7 +14,7 @@ Route = MainTabRoute.extend
     @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
 
   model: (params) ->
-    params.phrase
+    params.phrase.replace(/%2F/g, '/')
 
   deactivate: ->
     @_super.apply(this, arguments)
