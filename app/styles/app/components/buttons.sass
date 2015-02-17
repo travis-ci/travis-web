@@ -1,0 +1,81 @@
+/*
+ * Buttons
+ */
+
+$button-border-color: #d4d4d4
+
+.button
+  font-family: $font-family-sans-serif
+  font-size: $font-size-tiny
+  font-weight: normal
+  position: relative
+  overflow: visible
+  display: inline-block
+  padding: 5px 10px
+  border: 1px solid $button-border-color
+  margin: 0
+  background-color: #E9E9E7
+  background-clip: padding-box
+  cursor: pointer
+  outline: none
+  text-decoration: none
+  text-align: center
+  color: $gray-dark-3
+  white-space: nowrap
+
+.button:hover,
+.button:focus,
+.button:active,
+.button.active
+  border-color: $button-border-color
+  border-bottom-color: #2a65a0
+  background-color: #40454f
+  text-decoration: none
+  color: #fff
+
+.button:active,
+.button.active
+  border-color: #2a65a0
+  border-bottom-color: #2356c4
+  background-color: #40454f
+
+.show-more
+  background-color: #F2F2EB
+  display: inline-block
+  color: #666
+  padding: 6px 15px
+  text-decoration: none
+  border: 1px solid #DDD
+.show-more:hover
+  background-color: #40454F
+  color: $white
+  border: 1px solid #40454F
+  cursor: pointer
+
+
+#top #navigation // bad style, we really need to get rid of the ids in the styles
+  .button--signin
+    display: inline-block
+    padding: 0.7em 2em 0.65em 0.6em
+    color: $white
+    font-size: $font-size-small
+    line-height: 1
+    text-decoration: none
+    border-radius: 4px
+    border: none
+    vertical-align: middle
+    cursor: pointer
+    background:
+      color: #39a85b
+      image: inline-image('ui/github-signin.svg')
+      repeat: no-repeat
+      position: 95.5% 45%
+    &:hover
+      background-color: #73c78d
+      text-decoration: none
+    &.signing-in
+      background-image: inline-image('ui/spinner.svg')
+      background-position: 92% 47%
+      &:hover
+        background-color: #39a85b
+

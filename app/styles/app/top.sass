@@ -33,7 +33,7 @@
     border-top: 1px solid $topbar-bg-darker
     a, span
       display: block
-      padding: 0 12px
+      padding: 2px 12px 0
       &:hover
         color: $color-link-top-highlight
 
@@ -59,7 +59,6 @@
     ul
       line-height: 55px
       position: relative
-      top: 3px
     li
       display: inline-block
       border: none
@@ -70,6 +69,7 @@
 
   .nav-burger
     overflow: auto
+    height: 55px
     @media #{$medium-up}
       display: none
 
@@ -126,8 +126,11 @@
     text-align: right
 
   .menu.profile
-    .signing-in
-      background: inline-image('ui/spinner.svg') no-repeat 110px 22px
+    padding: 0.2em 0px 0.5em
+    @media #{$medium-up}
+      padding: 0
+      &.signed-in
+        top: 2px
 
     img
       width: 30px
@@ -190,7 +193,7 @@
   border-radius: 100px
   @media #{$medium-up}
     float  : right
-    margin : 10px 0 0 10px
+    margin : 12px 0 0 10px
 
 // #user ul
 //   text-align : left
