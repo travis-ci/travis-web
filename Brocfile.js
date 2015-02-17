@@ -2,16 +2,22 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var fingerprint = {
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
-    },
+var fingerprint,
     assetsHost;
 
-if (assetsHost = process.env.ASSETS_HOST) {
-  if (assetsHost.substr(-1) !== '/') {
-    assetsHost = assetsHost + '/'
+if (process.env.DISABLE_FINGERPRINTS) {
+  fingerprint = false;
+} else {
+  fingerprint = {
+    extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
+  };
+
+  if (assetsHost = process.env.ASSETS_HOST) {
+    if (assetsHost.substr(-1) !== '/') {
+      assetsHost = assetsHost + '/'
+    }
+    fingerprint.prepend = assetsHost
   }
-  fingerprint.prepend = assetsHost
 }
 
 var app = new EmberApp({
