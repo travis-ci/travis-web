@@ -36,7 +36,7 @@
   </div>
 </div>
 
-<div class="tiles">
+{{!-- <div class="tiles">
   <div class="row">
   {{#each repo in filteredRepositories}}
     <div class="large-4 medium-6 columns">
@@ -60,4 +60,134 @@
     </div>
   {{/each}}
   </div>
+</div> --}}
+
+<div class="dashboard">
+  <section class="dashboard-starred">
+    <div class="row">
+      <div class="dashboard--empty">
+        <p><span class="icon icon-star"></span>Want to keep an eye on certain projects? Star repositories below to add them in this section.</p>
+      </div>
+    </div>
+  </section>
+  <section class="dashboard-active">
+
+    <div class="db db--started row">
+      <div class="db-lock"><span class="icon icon-lock"></span></div>
+      <div class="db-repo column medium-3">
+        <div class="db-status">
+          <span class="icon icon-started"></span>
+          <span class="icon icon-star"></span>
+        </div>
+        <h3>travis-pro</h3>
+        <h2>travis-rubies</h2>
+      </div>
+      <p class="db-job column medium-2"><span class="icon icon-hash"></span>9874 started</p>
+      <p class="db-branch column medium-2"><span class="icon icon-branch"></span>master</p>
+      <p class="db-commit column medium-2"><span class="icon icon-github"></span>394348a</p>
+      <p class="db-timeago column medium-2"><span class="icon icon-cal"></span>in queue</p>
+      <div class="db-status column medium-1 end">
+        <span class="icon icon-burger"></span>
+        <ul class="dropdown">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="db db--fail row">
+      <div class="db-lock"><span class="icon icon-lock"></span></div>
+      <div class="db-repo column medium-3">
+        <div class="db-status">
+          <span class="icon icon-started"></span>
+          <span class="icon icon-star"></span>
+        </div>
+        <h3>travis-pro</h3>
+        <h2>travis-rubies</h2>
+      </div>
+      <p class="db-job column medium-2"><span class="icon icon-hash"></span>9874 started</p>
+      <p class="db-branch column medium-2"><span class="icon icon-branch"></span>master</p>
+      <p class="db-commit column medium-2"><span class="icon icon-github"></span>394348a</p>
+      <p class="db-timeago column medium-2"><span class="icon icon-cal"></span>25 minutes ago</p>
+      <div class="db-status column medium-1 end">
+        <span class="icon icon-burger"></span>
+        <ul class="dropdown">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="db db--error row">
+      <div class="db-lock"><span class="icon icon-lock"></span></div>
+      <div class="db-repo column medium-3">
+        <div class="db-status">
+          <span class="icon icon-started"></span>
+          <span class="icon icon-star"></span>
+        </div>
+        <h3>travis-pro</h3>
+        <h2>travis-rubies</h2>
+      </div>
+      <p class="db-job column medium-2"><span class="icon icon-hash"></span>9874 started</p>
+      <p class="db-branch column medium-2"><span class="icon icon-branch"></span>master</p>
+      <p class="db-commit column medium-2"><span class="icon icon-github"></span>394348a</p>
+      <p class="db-timeago column medium-2"><span class="icon icon-cal"></span>in queue</p>
+      <div class="db-status column medium-1 end">
+        <span class="icon icon-burger"></span>
+        <ul class="dropdown">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="db db--cancel row">
+      <div class="db-lock"><span class="icon icon-lock"></span></div>
+      <div class="db-repo column medium-3">
+        <div class="db-status">
+          <span class="icon icon-started"></span>
+          <span class="icon icon-star"></span>
+        </div>
+        <h3>travis-pro</h3>
+        <h2>travis-rubies</h2>
+      </div>
+      <p class="db-job column medium-2"><span class="icon icon-hash"></span>9874 started</p>
+      <p class="db-branch column medium-2"><span class="icon icon-branch"></span>master</p>
+      <p class="db-commit column medium-2"><span class="icon icon-github"></span>394348a</p>
+      <p class="db-timeago column medium-2"><span class="icon icon-cal"></span>in queue</p>
+      <div class="db-status column medium-1 end">
+        <span class="icon icon-burger"></span>
+        <ul class="dropdown">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="db db--pass row">
+      <div class="db-lock"><span class="icon icon-lock"></span></div>
+      <div class="db-repo column medium-3">
+        <div class="db-status">
+          <span class="icon icon-started"></span>
+          <span class="icon icon-star"></span>
+        </div>
+        <h3>travis-pro</h3>
+        <h2>travis-rubies</h2>
+      </div>
+      <p class="db-job column medium-2"><span class="icon icon-hash"></span>9874 started</p>
+      <p class="db-branch column medium-2"><span class="icon icon-branch"></span>master</p>
+      <p class="db-commit column medium-2"><span class="icon icon-github"></span>394348a</p>
+      <p class="db-timeago column medium-2"><span class="icon icon-cal"></span>in queue</p>
+      <div class="db-status column medium-1 end">
+        <span class="icon icon-burger"></span>
+        <ul class="dropdown">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+  <section class="dashboard-inactive">
+  </section>
 </div>

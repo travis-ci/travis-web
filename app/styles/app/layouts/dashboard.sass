@@ -6,144 +6,228 @@
 .wrapper-dashboard
   background-color: $wrapper-bg-color
 
-  #top
-    .user
-      a
-        padding-right: 0
 
-.current-org-avatar
-  display     : inline-block
-  height      : 20px
-  width       : 20px
-  vertical-align: top
-  margin : -5px 5px 0 0
+  // <div class="dashboard">
+  //   <section class="dashboard-starred">
+  //     <div class="row">
+  //       <div class="dashboard--empty">
+  //         <p><span class="icon icon-star"></span>Want to keep an eye on certain projects? Star repositories below to add them in this section.</p>
+  //       </div>
+  //     </div>
+  //   </section>
+  //   <section class="dashboard-active">
 
-#filters
-  float : left
+  //     <div class="db db--started row">
+  //       <div class="db-lock"><span class="icon icon-lock"></span></div>
+  //       <div class="db-repo column medium-3">
+  //         <div class="db-status">
+  //           <span class="icon icon-started"></span>
+  //           <span class="icon icon-star"></span>
+  //         </div>
+  //         <h3>travis-pro</h3>
+  //         <h2>travis-rubies</h2>
+  //       </div>
+  //       <p class="db-job column medium-2"><span class="icon icon-hash"></span>9874 started</p>
+  //       <p class="db-branch column medium-2"><span class="icon icon-branch"></span>master</p>
+  //       <p class="db-commit column medium-2"><span class="icon icon-github"></span>394348a</p>
+  //       <p class="db-timeago column medium-2"><span class="icon icon-cal"></span>in queue</p>
+  //       <div class="db-status column medium-1 end">
+  //         <span class="icon icon-burger"></span>
+  //         <ul class="dropdown">
+  //           <li><a href="#" title="">Deactivate repository</a></li>
+  //           <li><a href="#" title="">Trigger a build</a></li>
+  //         </ul>
+  //       </div>
+  //     </div>
 
-#filters ul
-  text-align : left
-  display    : inline
-  margin     : 0
-  padding    : 0
-  list-style : none
-  z-index    : 1000
 
-#filters ul li
-  background   : $white
-  position     : relative
-  display      : inline-block
-  padding      : 10px 0 10px 0
-  margin-right : -4px
-  margin-top   : 0
-  cursor       : pointer
-  border-radius         : 0px
+%br-4px
+  border-radius: 4px
 
-#filters li.filters-start:hover
-  background-color : #fff
+$db-gray: #C9C9C9
 
-#filters ul li ul
-  padding    : 0
-  position   : absolute
-  top        : 35px
-  left       : 0
-  width      : 200px
-  display    : none
-  opacity    : 0
-  visibility : hidden
-  box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
+.dashboard
 
-#filters ul li ul li
-  display      : block
-  line-height  : 23px
-  padding-left : 20px
+.dashboard-starred
+  margin: 2em 0 3em
 
-#filters ul li ul li:first-child
-  border-top-left-radius  : 4px
-  border-top-right-radius : 4px
+.dashboard-active
+  margin: 0 0 3em
+  border-bottom: dashed 1px $db-gray
 
-#filters ul li ul li:last-child
-  border-bottom-left-radius  : 4px
-  border-bottom-right-radius : 4px
+.dashboard-inactive
+  margin: 2em 0 5em
 
-#filters ul li ul li div
-  display          : inline-block
-  width            : 20px
-  height           : 20px
-  margin-right     : 5px
-  text-indent      : -9999px
-  border-radius    : 100px
+.dashboard--empty
+  padding: 2em 5em
+  background: #E8E6DE
+  color: $db-gray
+  font-size: 20px
+  text-align: center
+  @extend %br-4px
 
-#filters ul li ul li:hover
-  background : #5e869a
-  color      : $white
+.db
+  position: relative
+  height: 57px
+  margin-bottom: 1em
+  background: $white
+  @extend %br-4px
 
-#filters ul li:hover ul
-  display    : block
-  opacity    : 1
-  visibility : visible
+  h2, h3, p
+    margin: 0
+    font-weight: 400
 
-#views
-  float : left
+.db-repo
+  padding-left: 4em
+  // border-right: 1px solid $db-gray
+  transform: translateY(0.4em)
 
-#views ul
-  text-align : left
-  display    : inline
-  margin     : 0
-  padding    : 0
-  list-style : none
-  z-index    : 1000
+.db-status
+  @extend %br-4px
+  position: absolute;
+  top: 0
+  left: 0
+  height: 100%
+  width: 2.5em
+  background-color: $db-gray
 
-#views ul li
-  background   : $white
-  position     : relative
-  display      : inline-block
-  padding      : 10px 0 10px 0
-  margin-right : -4px
-  margin-top   : 0
-  cursor       : pointer
-  border-radius         : 0px
-  -webkit-border-radius : 0px
-  -moz-border-radius    : 0px
+.dropdown
+  display: none
 
-#views li.views-start:hover
-  background-color : #fff
 
-#views ul li ul
-  padding    : 0
-  position   : absolute
-  top        : 35px
-  left       : 0
-  width      : 200px
-  display    : none
-  opacity    : 0
-  visibility : hidden
-  box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
+// .current-org-avatar
+//   display     : inline-block
+//   height      : 20px
+//   width       : 20px
+//   vertical-align: top
+//   margin : -5px 5px 0 0
 
-#views ul li ul li
-  display      : block
-  line-height  : 23px
-  padding-left : 20px
+// #filters
+//   float : left
 
-#views ul li ul li:first-child
-  border-top-left-radius  : 4px
-  border-top-right-radius : 4px
+// #filters ul
+//   text-align : left
+//   display    : inline
+//   margin     : 0
+//   padding    : 0
+//   list-style : none
+//   z-index    : 1000
 
-#views ul li ul li:last-child
-  border-bottom-left-radius  : 4px
-  border-bottom-right-radius : 4px
+// #filters ul li
+//   background   : $white
+//   position     : relative
+//   display      : inline-block
+//   padding      : 10px 0 10px 0
+//   margin-right : -4px
+//   margin-top   : 0
+//   cursor       : pointer
+//   border-radius         : 0px
 
-#views ul li ul li:hover
-  background : #5e869a
-  color      : $white
+// #filters li.filters-start:hover
+//   background-color : #fff
 
-#views ul li:hover ul
-  display    : block
-  opacity    : 1
-  visibility : visible
+// #filters ul li ul
+//   padding    : 0
+//   position   : absolute
+//   top        : 35px
+//   left       : 0
+//   width      : 200px
+//   display    : none
+//   opacity    : 0
+//   visibility : hidden
+//   box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
 
-.currently-selected
-  font-weight : 600
+// #filters ul li ul li
+//   display      : block
+//   line-height  : 23px
+//   padding-left : 20px
+
+// #filters ul li ul li:first-child
+//   border-top-left-radius  : 4px
+//   border-top-right-radius : 4px
+
+// #filters ul li ul li:last-child
+//   border-bottom-left-radius  : 4px
+//   border-bottom-right-radius : 4px
+
+// #filters ul li ul li div
+//   display          : inline-block
+//   width            : 20px
+//   height           : 20px
+//   margin-right     : 5px
+//   text-indent      : -9999px
+//   border-radius    : 100px
+
+// #filters ul li ul li:hover
+//   background : #5e869a
+//   color      : $white
+
+// #filters ul li:hover ul
+//   display    : block
+//   opacity    : 1
+//   visibility : visible
+
+// #views
+//   float : left
+
+// #views ul
+//   text-align : left
+//   display    : inline
+//   margin     : 0
+//   padding    : 0
+//   list-style : none
+//   z-index    : 1000
+
+// #views ul li
+//   background   : $white
+//   position     : relative
+//   display      : inline-block
+//   padding      : 10px 0 10px 0
+//   margin-right : -4px
+//   margin-top   : 0
+//   cursor       : pointer
+//   border-radius         : 0px
+//   -webkit-border-radius : 0px
+//   -moz-border-radius    : 0px
+
+// #views li.views-start:hover
+//   background-color : #fff
+
+// #views ul li ul
+//   padding    : 0
+//   position   : absolute
+//   top        : 35px
+//   left       : 0
+//   width      : 200px
+//   display    : none
+//   opacity    : 0
+//   visibility : hidden
+//   box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
+
+// #views ul li ul li
+//   display      : block
+//   line-height  : 23px
+//   padding-left : 20px
+
+// #views ul li ul li:first-child
+//   border-top-left-radius  : 4px
+//   border-top-right-radius : 4px
+
+// #views ul li ul li:last-child
+//   border-bottom-left-radius  : 4px
+//   border-bottom-right-radius : 4px
+
+// #views ul li ul li:hover
+//   background : #5e869a
+//   color      : $white
+
+// #views ul li:hover ul
+//   display    : block
+//   opacity    : 1
+//   visibility : visible
+
+// .currently-selected
+//   font-weight : 600
 
 .arrow-down
   width        : 0
