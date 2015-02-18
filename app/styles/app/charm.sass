@@ -1,14 +1,22 @@
+
+.feedback-button
+  display: none
+
+.pro
+  .feedback-button
+    display: inline-block
+
 .feedback-button
   display: inline-block
   position: fixed
-  right: 0
+  right: 1%
   left: auto
-  // top: 35%
   bottom: 0
   margin: 0
-  padding: 1.5em 1em .5em
+  padding: .5em 1em .5em
   border-radius: 4px
   // transform: rotate(90deg) translateY(-140%)
+  transform: translateY(20%)
   will-change: transform
   transition: transform ease 200ms
   background: $white
@@ -17,9 +25,12 @@
   text-transform: uppercase
   box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.15)
   z-index: 999
+  &.hidden
+    display: none
 
 .feedback-button:hover
   // transform: rotate(90deg) translateY(-130%)
+  transform: translateY(0)
 
 .feedback-popup
   position: fixed
@@ -67,12 +78,9 @@
   a:hover
     text-decoration: underline
 
+  .closed &
+    display: none
+
 #CHARM_FORM_TARGET
   display: none
 
-.feedback-button
-  display: none
-
-.pro
-  .feedback-button
-    display: inline-block

@@ -221,17 +221,14 @@ window.bootstrapCharm = function(){
     if(!shown) return;
     shown = false;
     box.className = 'closed' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
-    setTimeout(function(){
-      css(box, 'display:none');
-    }, 260);
   }
 
   function hideTab(){
-    tab.className = 'hidden';
+    tab.classList.add('hidden');
   }
 
   function showTab(){
-    tab.className = '';
+    tab.classList.remove('hidden');
   }
   
   function after(){
