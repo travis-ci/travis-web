@@ -1,4 +1,4 @@
-<div id="filters-search">
+<div id="filters-search" class="section section--white section--maxheight">
   <div class="row">
     <!--
     <div class="small-6 medium-3 large-2 columns" id="filters">
@@ -29,8 +29,10 @@
         </li>
       </ul>
     </div> -->
-    {{filter-input placeholder="Search all repositories" class="search-field"
-        action="updateFilter" on="key-up"}}
+    <div class="search">
+      {{filter-input placeholder="Search all repositories" class="search-field"
+          action="updateFilter" on="key-up"}}
+    </div>
   </div>
 </div>
 
