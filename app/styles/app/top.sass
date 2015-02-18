@@ -1,29 +1,21 @@
 
-#top
+$top-height: 55px
+
+.top
   font-size: $font-size-normal
-  background  : $topbar-bg
+  background: $topbar-bg
 
-  #logo
-    position: relative
-    float        : left
-    width        : 123px
-    height       : 55px
-    margin-right : 14px
-    z-index: 999
-    text-indent  : -9999px
-    background   : $logo-red inline-image('ui/travis-logo.svg') no-repeat 20px 18px
-    a
-      display: block
-
-  ul
+  .navigation
     @include resetul
-    line-height: 30px
-
-  #navigation
     height: 0
     overflow: hidden
+    line-height: $top-height
     &.is-open
       height: auto
+
+    ul
+      @include resetul
+      line-height: 30px
 
   a, span
     color: $white
@@ -36,6 +28,15 @@
       padding: 2px 12px 0
       &:hover
         color: $color-link-top-highlight
+
+  img
+    margin: 10px 10px 7px 10px
+    width  : 30px
+    height : 30px
+    border-radius: 100px
+    @media #{$medium-up}
+      float  : right
+      margin : 12px 0 0 10px
 
   a.werehiring
     background-color: $topbar-bg-darker
@@ -51,13 +52,13 @@
 
   @media #{$medium-up}
     overflow: visible
-    height: 55px
+    height: $top-height
 
-    #navigation
+    .navigation
       height: auto
       overflow: visible
     ul
-      line-height: 55px
+      line-height: $top-height
       position: relative
     li
       display: inline-block
@@ -66,24 +67,6 @@
   @media #{$medium-only}
     li.traviscicom
       display: none
-
-  .nav-burger
-    overflow: auto
-    height: 55px
-    @media #{$medium-up}
-      display: none
-
-  #burger
-    float: right
-    font-size: 50px
-    background: none
-    border: none
-    line-height: 1
-    color: $white
-    outline: none !important
-    @include clearfix
-    &:hover
-      cursor: pointer
 
   .menu
     position: relative
@@ -122,9 +105,6 @@
   .menu.community
     min-width: 120px
 
-  .user
-    text-align: right
-
   .menu.profile
     padding: 0.2em 0px 0.5em
     @media #{$medium-up}
@@ -161,81 +141,33 @@
       display: none
 
 
-#home #navigation .home,
-#stats #navigation .stats,
-#profile #navigation .profile
-  background-color: transparent
+.logo
+  position: relative
+  float        : left
+  width        : 123px
+  height       : $top-height
+  margin-right : 14px
+  z-index: 999
+  text-indent  : -9999px
+  background   : $logo-red inline-image('ui/travis-logo.svg') no-repeat 20px 18px
   a
-    color: #ffffff
-  a:hover
-    color: $color-link-top-highlight
+    display: block
 
 
-// .status-graph
-//   background  : url('/images/dashboard/health-stats.svg') no-repeat
-//   background  : contain
-//   margin-top  : 17px
-//   height      : 18px
-//   width       : 78px
-//   text-indent : -9999px
-
-// #user
-//   text-align : right
-//   cursor     : pointer
-
-// #user p
-//   display : none
-
-#top img
-  margin: 10px 10px 7px 10px
-  width  : 30px
-  height : 30px
-  border-radius: 100px
+.burger
+  overflow: auto
+  height: $top-height
   @media #{$medium-up}
-    float  : right
-    margin : 12px 0 0 10px
+    display: none
 
-// #user ul
-//   text-align : left
-//   display    : inline
-//   margin     : 0
-//   padding    : 15px 0 17px 0
-//   list-style : none
-//   z-index    : 1000
-
-// #user ul li ul
-//   padding    : 0
-//   position   : absolute
-//   top        : 55px
-//   right      : 0
-//   width      : 150px
-//   display    : none
-//   opacity    : 0
-//   visibility : hidden
-
-// #user ul li ul li
-//   background  : $topbar-bg
-//   color       : $white
-//   display     : block
-//   line-height : 18px
-//   padding     : 8px 18px
-//   margin      : 0
-
-// #user ul li ul li:last-child
-//   border-bottom-left-radius  : 4px
-//   border-bottom-right-radius : 4px
-
-// #user ul li ul li:hover
-//   background : #5e869a
-//   color      : $white
-//   a
-//     color: $white
-
-
-// #user ul li:hover ul
-//   display    : block
-//   opacity    : 1
-//   visibility : visible
-// #user .handle a
-//   display: inline
-
+  .burger-btn
+    float: right
+    font-size: 50px
+    background: none
+    border: none
+    line-height: 1
+    color: $white
+    outline: none !important
+    @include clearfix
+    &:hover
+      cursor: pointer
