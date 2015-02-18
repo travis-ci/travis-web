@@ -22,8 +22,8 @@ window.bootstrapCharm = function(){
       cancel: 'cancel',
       your_email: 'Your email address:',
       your_comment: 'Your message:',
-      feedback_sending: 'Sending...',
-      feedback_sent: 'Your feedback was sent!<br/>We will get back to you as soon as possible!',
+      feedback_sending: '<p>Sending...</p>',
+      feedback_sent: '<h1>Your feedback was sent!</h1><p>We will get back to you as soon as possible!</p>',
       feedback_error: 'There was a problem sending your message.<br/>Please contact support directly.<br/><br/>close this message'
     };
 
@@ -201,7 +201,7 @@ window.bootstrapCharm = function(){
     msg.id = "CHARM_MESSAGE";
     msg.innerHTML = template((id in __CHARM) ? __CHARM[id] : DEFAULTS[id]);
     document.body.appendChild(msg);
-    msg.className = 'open';
+    msg.className = 'feedback-popup open';
     msg.onclick = function(){ closeMessage(msg); };
     if(autoclose === undefined || !autoclose === false)
       setTimeout(function(){ closeMessage(msg); }, 4000);
