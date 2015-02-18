@@ -77,19 +77,68 @@ $db-gray: #C9C9C9
     margin: 0
     font-weight: 400
 
+  .icon
+    position: absolute
+    left: 0
+    top: 0
+    bottom: 0
+    margin: auto
+    width: 1.5em
+    height: 1.5em
+    background: pink
+    display: inline-block
+
 .db-repo
   padding-left: 4em
-  // border-right: 1px solid $db-gray
   transform: translateY(0.4em)
 
 .db-status
-  @extend %br-4px
   position: absolute;
   top: 0
   left: 0
   height: 100%
   width: 2.5em
   background-color: $db-gray
+  border-top-left-radius: 4px
+  border-bottom-left-radius: 4px
+
+  .icon-status
+    left: 0
+    right: 0
+    margin: auto
+    top: -2em
+
+  .icon-star
+    left: 0
+    right: 0
+    margin: auto
+    bottom: -2em
+
+.db-job,
+.db-branch,
+.db-commit,
+.db-timeago
+  position: relative
+  padding-left: 2.2em
+  transform: translateY(24%)
+  line-height: 3em
+
+.db-job
+  border-left: 1px solid $db-gray
+
+.db-lock
+  position: absolute
+  left: -2.1em;
+  top: 1.2em;
+
+
+.db-burger
+  height: 100%
+  .icon
+    width: 2em
+    height: 2em
+    left: 0
+    right: 0
 
 .dropdown
   display: none
