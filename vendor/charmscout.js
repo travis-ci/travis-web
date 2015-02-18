@@ -8,7 +8,7 @@ window.bootstrapCharm = function(){
       '<div class="feedback-popup">' +
       '<h1>Have feedback or questions?</h1>' +
       '<iframe id="CHARM_FORM_TARGET" name="CHARM_FORM_TARGET" src="javascript:void(0)" onload="__CHARM&&__CHARM.iFrameLoaded&&__CHARM.iFrameLoaded()" onerror="__CHARM&&__CHARM.iFrameError&&__CHARM.iFrameError()"></iframe>' +
-      '<form id="CHARM_FORM" action="https://secure.charmhq.com/feedback" method="POST" accept-charset="utf-8">' +
+      '<form id="CHARM_FORM" target="CHARM_FORM_TARGET" method="POST" accept-charset="utf-8">'+
       '<div id="CHARM_YOUR_EMAIL"></div>'+
       '<div id="CHARM_YOUR_COMMENT"></div>'+
       '<textarea id="CHARM_COMMENT" name="content" class="ignore-return-pressed" placeholder="Let us know and we will get right back to you by email"></textarea>' +
@@ -95,6 +95,7 @@ window.bootstrapCharm = function(){
     if(!box) {
       box = document.createElement('div');
       box.id = "CHARM_BOX";
+      box.className = 'feedback-popup';
       box.innerHTML = BOX;
       document.body.appendChild(box);
       
@@ -107,7 +108,7 @@ window.bootstrapCharm = function(){
         customize('your_email');
         customize('your_comment');
         $('CHARM_YOUR_EMAIL').appendChild(email);
-        box.className = 'closed' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
+        box.className = 'feedback-popup closed' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
       } else {
         $('CHARM_YOUR_EMAIL').parentNode.removeChild($('CHARM_YOUR_EMAIL'));
         $('CHARM_YOUR_COMMENT').parentNode.removeChild($('CHARM_YOUR_COMMENT'));
@@ -131,14 +132,12 @@ window.bootstrapCharm = function(){
       data('user_agent', navigator.userAgent);
       data('local_time', (new Date).toString());
 
-      if('charm_url' in __CHARM){
-        $('CHARM_FORM').action = __CHARM['charm_url'];
-      }
+      $('CHARM_FORM').action = __CHARM['url'];
 
       setTimeout(function(){
         var scrollTop = document.body.scrollTop;
         
-        box.className = 'open' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
+        box.className = 'feedback-popup open' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
         $('CHARM_FORM').onsubmit = function(){ 
           var ok = !($('CHARM_COMMENT').value.replace(/^\s+/, '').replace(/\s+$/, '') == "");
           if(ok){
@@ -162,7 +161,7 @@ window.bootstrapCharm = function(){
       return;
     }
     box.offsetLeft;
-    box.className = 'open' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
+    box.className = 'feedback-popup open' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
     if($('CHARM_EMAIL'))
       $('CHARM_EMAIL').focus();
     else
