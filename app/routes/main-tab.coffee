@@ -17,6 +17,9 @@ Route = TravisRoute.extend
   deactivate: ->
     @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
 
+  resetController: ->
+    @controllerFor('repos').removeObserver('firstObject', this, 'currentRepoDidChange')
+
   currentRepoDidChange: ->
     if repo = @controllerFor('repos').get('firstObject')
       @controllerFor('repo').set('repo', repo)
