@@ -8,6 +8,13 @@
 
 $db-gray: #C9C9C9
 
+.dashboard
+  hr
+    max-width: 1024px
+    margin: auto
+    border-top: none
+    border-bottom: $db-gray dashed 1px
+
 .wrapper-dashboard
   background-color: $wrapper-bg-color
 
@@ -15,17 +22,20 @@ $db-gray: #C9C9C9
   margin: 2em 0 3em
 
 .dashboard-active
-  margin: 0 0 3em
-  border-bottom: dashed 1px $db-gray
+  margin-bottom: 3em
 
 .dashboard-inactive
-  margin: 2em 0 5em
+  margin: 1.5em 0 5em
+  .db
+    h2, h3, p, button, .db-status
+      opacity: .7
 
 .dashboard--empty
   padding: 2em 5em
   background: #E8E6DE
   color: $db-gray
   font-size: 20px
+  font-weight: 300
   text-align: center
   @extend %br-4px
 
@@ -46,10 +56,6 @@ $db-gray: #C9C9C9
     top: 0
     bottom: 0
     margin: auto
-    width: 1.5em
-    height: 1.5em
-    background: pink
-    display: inline-block
 
 .db-repo
   padding-left: 4em
@@ -65,6 +71,10 @@ $db-gray: #C9C9C9
   border-top-left-radius: 4px
   border-bottom-left-radius: 4px
 
+  .icon
+    width: 1.1em
+    height: 1.1em
+
   .icon-status
     left: 0
     right: 0
@@ -76,6 +86,22 @@ $db-gray: #C9C9C9
     right: 0
     margin: auto
     bottom: -2em
+    opacity: .9
+
+.db-controls
+  position: relative
+  transform: translateY(24%)
+  line-height: 3em
+  border-left: 1px solid $db-gray
+  p,
+  button
+    display: inline-block
+  button
+    margin-left: 1em
+
+  .icon
+    width: 1.6em
+    height: 1.6em
 
 .db-job,
 .db-branch,
@@ -83,20 +109,25 @@ $db-gray: #C9C9C9
 .db-timeago
   position: relative
   padding-left: 2.2em
-  transform: translateY(24%)
-  line-height: 3em
-
-.db-job
-  border-left: 1px solid $db-gray
 
 .db-lock
   position: absolute
   left: -2.1em;
   top: 1.2em;
+  .icon
+    width: 1em
+    height: 1em
 
+.db-activation
+  text-align: right
+  padding-right: 0
 
 .db-burger
+  position: absolute;
+  top: 0
+  right: 0
   height: 100%
+  width: 4em
   .icon
     width: 2em
     height: 2em
@@ -106,6 +137,30 @@ $db-gray: #C9C9C9
 .dropdown
   display: none
 
+
+@mixin colorDbelements($color)
+  .db-status
+    background-color: $color
+  .db-repo
+    h2, h3, a
+      color: $color
+  .db-job
+    color: $color
+    a
+      color: $color
+
+.db--started
+  @include colorDbelements($start-color)
+.db--fail
+  @include colorDbelements($fail-color)
+.db--error
+  @include colorDbelements($error-color)
+.db--cancel
+  @include colorDbelements($cancel-color)
+.db--pass
+  @include colorDbelements($pass-color)
+.db--inactive
+  @include colorDbelements($cancel-color)
 
 // .current-org-avatar
 //   display     : inline-block
