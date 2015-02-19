@@ -138,9 +138,10 @@ class Travis::Web::App
     end
 
     def expires(file)
-      case path_for(file)
-      when '/' then '0'
-      else (server_start + age).httpdate
+      if fingerprinted?(file)
+        (server_start + age).httpdate 
+      else
+        '0'
       end
     end
 
