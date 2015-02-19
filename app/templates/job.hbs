@@ -1,8 +1,8 @@
 {{#if job.isLoaded}}
   <div {{bind-attr class="view.color"}}>
     <div id="new-summary">
-      <div class="request-kind">
-        <div {{bind-attr class=":kind-icon job.build.eventType"}}>
+      <div {{bind-attr class=":request-kind job.build.eventType"}}>
+        <div class="kind-icon">
         </div>
       </div>
       <div class="right">
