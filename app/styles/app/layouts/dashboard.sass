@@ -128,14 +128,28 @@ $db-gray: #C9C9C9
   right: 0
   height: 100%
   width: 4em
+  cursor: pointer
   .icon
     width: 2em
     height: 2em
     left: 0
     right: 0
 
-.dropdown
-  display: none
+  .dropdown
+    @include resetul
+    position: absolute
+    z-index: 50
+    width: 10em;
+    right: 0;
+    top: 3em;
+    border: solid;
+    background-color: $white
+
+    //display: none
+
+  // &:hover
+  //   .dropdown
+  //     display: block
 
 
 @mixin colorDbelements($color)
