@@ -89,7 +89,7 @@ $db-gray: #C9C9C9
     opacity: .9
 
 .db-controls
-  position: relative
+  // position: relative
   transform: translateY(24%)
   line-height: 3em
   border-left: 1px solid $db-gray
@@ -109,6 +109,7 @@ $db-gray: #C9C9C9
 .db-timeago
   position: relative
   padding-left: 2.2em
+  z-index: 30
 
 .db-lock
   position: absolute
@@ -129,27 +130,43 @@ $db-gray: #C9C9C9
   height: 100%
   width: 4em
   cursor: pointer
+  z-index: 30
   .icon
     width: 2em
     height: 2em
     left: 0
     right: 0
 
-  .dropdown
-    @include resetul
+.db-burger:hover ~ .dropdown
+  display: block
+
+.dropdown
+  @include resetul
+  @extend %br-4px
+  position: absolute
+  padding: .5em
+  z-index: 90
+  width: 15em;
+  right: 0;
+  top: 4em;
+  border: 2px $dropdown-color solid;
+  background-color: $white
+  &:before
+    content: ""
+    width: 1.2em
+    height: 1.2em
+    display: block
     position: absolute
-    z-index: 50
-    width: 10em;
-    right: 0;
-    top: 3em;
-    border: solid;
+    top: -0.7em;
+    right: 1.1em;
     background-color: $white
+    
+    background-color: #fff;
+    border-top: solid 2px $dropdown-color;
+    border-left: solid 2px $dropdown-color;
+    transform: rotate(45deg);
 
-    //display: none
-
-  // &:hover
-  //   .dropdown
-  //     display: block
+  display: none
 
 
 @mixin colorDbelements($color)
