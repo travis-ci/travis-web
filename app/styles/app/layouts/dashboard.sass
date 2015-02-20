@@ -38,6 +38,10 @@ $db-gray: #C9C9C9
   font-weight: 300
   text-align: center
   @extend %br-4px
+  p .icon
+    width: 1.5em
+    height: 1.5em
+    transform: translate(-20%, 18%)
 
 .db
   position: relative
@@ -137,20 +141,27 @@ $db-gray: #C9C9C9
     left: 0
     right: 0
 
-.db-burger:hover ~ .dropdown
+.db-burger:hover ~ .dropdown,
+.dropdown:hover
   display: block
 
 .dropdown
   @include resetul
   @extend %br-4px
   position: absolute
-  padding: .5em
+  padding: .8em .5em
   z-index: 90
-  width: 15em;
+  width: 12.5em;
   right: 0;
   top: 4em;
-  border: 2px $dropdown-color solid;
+  border: 2px #C3D9DB solid;
   background-color: $white
+  a
+    display: block
+    padding: 0.4em 1em .2em
+    &:hover
+      background-color: $dropdown-color
+      color: $white
   &:before
     content: ""
     width: 1.2em
@@ -162,8 +173,8 @@ $db-gray: #C9C9C9
     background-color: $white
     
     background-color: #fff;
-    border-top: solid 2px $dropdown-color;
-    border-left: solid 2px $dropdown-color;
+    border-top: solid 2px #C3D9DB;
+    border-left: solid 2px #C3D9DB;
     transform: rotate(45deg);
 
   display: none
@@ -327,14 +338,14 @@ $db-gray: #C9C9C9
 // .currently-selected
 //   font-weight : 600
 
-.arrow-down
-  width        : 0
-  height       : 0
-  display      : inline-block
-  padding-top  : 2px
-  margin-left  : 5px
-  border-left  : 5px solid transparent
-  border-right : 5px solid transparent
-  border-top   : 5px solid $dashboard-text-color
+// .arrow-down
+//   width        : 0
+//   height       : 0
+//   display      : inline-block
+//   padding-top  : 2px
+//   margin-left  : 5px
+//   border-left  : 5px solid transparent
+//   border-right : 5px solid transparent
+//   border-top   : 5px solid $dashboard-text-color
 
 
