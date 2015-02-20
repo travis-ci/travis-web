@@ -1,5 +1,7 @@
 
 #top
+  position: relative
+  z-index: 999
   font-size: $font-size-normal
   background  : $topbar-bg
 
@@ -7,7 +9,7 @@
     position: relative
     float        : left
     width        : 123px
-    height       : 55px
+    height       : $topbar-height
     margin-right : 14px
     z-index: 999
     text-indent  : -9999px
@@ -51,13 +53,13 @@
 
   @media #{$medium-up}
     overflow: visible
-    height: 55px
+    height: $topbar-height
 
     #navigation
       height: auto
       overflow: visible
     ul
-      line-height: 55px
+      line-height: $topbar-height
       position: relative
     li
       display: inline-block
@@ -69,7 +71,7 @@
 
   .nav-burger
     overflow: auto
-    height: 55px
+    height: $topbar-height
     @media #{$medium-up}
       display: none
 
@@ -206,7 +208,7 @@
 // #user ul li ul
 //   padding    : 0
 //   position   : absolute
-//   top        : 55px
+//   top        : $topbar-height
 //   right      : 0
 //   width      : 150px
 //   display    : none

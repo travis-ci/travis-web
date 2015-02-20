@@ -15,7 +15,8 @@ window.bootstrapCharm = function(){
       '<input id="CHARM_SUBMIT" type="submit" class="submit" value="Send Feedback">' +
       '<a href="#" title="" id="CHARM_CANCEL">cancel</a>' +
       '</form>' +
-      '</div>',
+      '</div>' +
+      '<div class="feedback-overlay"></div>',
     DEFAULTS = {
       text: '',
       submit: 'Send feedback',
@@ -95,7 +96,7 @@ window.bootstrapCharm = function(){
     if(!box) {
       box = document.createElement('div');
       box.id = "CHARM_BOX";
-      box.className = 'feedback-popup';
+      //box.className = 'feedback-popup';
       box.innerHTML = BOX;
       document.body.appendChild(box);
       
@@ -137,7 +138,7 @@ window.bootstrapCharm = function(){
       setTimeout(function(){
         var scrollTop = document.body.scrollTop;
         
-        box.className = 'feedback-popup open' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
+        box.className = 'open' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
         $('CHARM_FORM').onsubmit = function(){ 
           var ok = !($('CHARM_COMMENT').value.replace(/^\s+/, '').replace(/\s+$/, '') == "");
           if(ok){
@@ -161,7 +162,7 @@ window.bootstrapCharm = function(){
       return;
     }
     box.offsetLeft;
-    box.className = 'feedback-popup open' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
+    box.className = 'open' + ($('CHARM_YOUR_EMAIL') ? ' with-email' : '');
     if($('CHARM_EMAIL'))
       $('CHARM_EMAIL').focus();
     else
