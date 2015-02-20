@@ -41,6 +41,8 @@ Log = Ember.Object.extend
   isLoaded: false
   length: 0
 
+  hasContent: Ember.computed.gt('parts.length', 0)
+
   fetchMissingParts: (partNumbers, after) ->
     return if @get('notStarted')
 

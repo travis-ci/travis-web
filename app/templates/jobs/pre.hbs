@@ -12,7 +12,9 @@
   </a>
   <pre id="log" class="ansi"></pre>
 
-  <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
+  {{#if view.log.hasContent}}
+    <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
+  {{/if}}
 
   {{#if view.limited}}
     <p class="warning">
