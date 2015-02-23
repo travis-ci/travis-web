@@ -89,7 +89,7 @@ Build = Model.extend DurationCalculations,
   ).property('rawConfigKeys.length')
 
   canCancel: (->
-    @get('jobs').filter( (j) -> j.get('canCancel') ).get('length') > 0
+    @get('jobs').filterBy('canCancel').length
   ).property('jobs.@each.canCancel')
 
   cancel: (->
