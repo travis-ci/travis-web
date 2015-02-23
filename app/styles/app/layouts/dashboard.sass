@@ -20,18 +20,6 @@ $db-text-color: #ACAAAA
 .wrapper-dashboard
   background-color: $wrapper-bg-color
 
-.dashboard-starred
-  margin: 2em 0 3em
-
-.dashboard-active
-  margin-bottom: 3em
-
-.dashboard-inactive
-  margin: 1.5em 0 5em
-  .db
-    h2, h3, p, button, .db-status
-      opacity: .7
-
 .dashboard--empty
   padding: 2em 5em
   background: #E8E6DE
@@ -50,8 +38,6 @@ $db-text-color: #ACAAAA
   margin-bottom: 1em
   background: $white
   @extend %br-4px
-  @media #{$medium-up}
-    height: 57px
 
   h2, h3, p
     margin: 0
@@ -66,9 +52,10 @@ $db-text-color: #ACAAAA
     margin: auto
 
 .db-repo
-  padding-left: 4em
+  padding-left: 3em
   transform: translateY(0.4em)
   overflow: hidden
+  margin-bottom: 1em
   &:after
     content: ""
     display: block
@@ -97,23 +84,17 @@ $db-text-color: #ACAAAA
     left: 0
     right: 0
     margin: auto
-    top: -2em
+    top: -6em
 
   .icon-star
     left: 0
     right: 0
     margin: auto
-    bottom: -2em
+    top: -2em
     opacity: .9
 
 .db-controls
-  // position: relative
-  padding-left: 4em
-  transform: translateY(24%)
-  line-height: 3em
-  border-left: 1px solid $db-gray
-  @media #{$medium-up}
-    padding-left: 0
+  line-height: 2.2
   p,
   button
     display: inline-block
@@ -157,8 +138,6 @@ $db-text-color: #ACAAAA
     height: 2em
     left: 0
     right: 0
-  @media #{$medium-up}
-    height: 100%
 
 .db-burger:hover ~ .dropdown,
 .dropdown:hover
@@ -197,6 +176,43 @@ $db-text-color: #ACAAAA
     transform: rotate(45deg);
 
   display: none
+
+.dashboard-starred
+  margin: 2em 0 3em
+  .db
+    padding-bottom: .2em
+  .db-controls
+    padding-left: 3em
+
+.dashboard-active,
+.dashboard-inactive
+  margin-bottom: 3em
+  .db-controls
+    padding-left: 4em
+  @media #{$medium-up}
+    .db
+      height: 57px
+    .db-repo
+      padding-left: 4em
+    .db-controls
+      padding-left: 2em
+      line-height: 3em
+      transform: translateY(26%)
+      border-left: 1px solid $db-gray
+    .db-burger
+      height: 100%
+    .db-status
+      .icon-status
+        top: -2em
+
+      .icon-star
+        bottom: -4em
+
+.dashboard-inactive
+  margin: 1.5em 0 5em
+  .db
+    h2, h3, p, button, .db-status
+      opacity: .7
 
 
 @mixin colorDbelements($color)

@@ -64,13 +64,62 @@
 
 <div class="dashboard">
   <section class="dashboard-starred">
+    <div class="row">
+      <div class="db db--pass column medium-5">
+        <div class="db-status">
+          <span class="icon icon-status icon-started"></span>
+          <span class="icon icon-star"></span>
+        </div>
+        <div class="db-repo column">
+          <h3>travis-pro</h3>
+          <h2>travis-rubies</h2>
+        </div>
+        <div class="db-controls column end">
+          <p class="db-job column small-6"><span class="icon icon-hash"></span>9874 started</p>
+          <p class="db-commit column small-6"><span class="icon icon-github"></span>394348a</p>
+          <p class="db-timeago column small-6"><span class="icon icon-cal"></span>in queue</p>
+          <p class="db-branch column small-6"><span class="icon icon-branch"></span>master</p>
+        </div>
+        <div class="db-burger">
+          <span class="icon icon-burger"></span>
+        </div>
+        <ul class="dropdown">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div>
+
+      <div class="db db--error column medium-5">
+        <div class="db-lock"><span class="icon icon-lock"></span></div>
+        <div class="db-status">
+          <span class="icon icon-status icon-started"></span>
+          <span class="icon icon-star"></span>
+        </div>
+        <div class="db-repo column">
+          <h3>travis-pro</h3>
+          <h2>travis-rubies</h2>
+        </div>
+        <div class="db-controls column end">
+          <p class="db-job column small-6"><span class="icon icon-hash"></span>9874 started</p>
+          <p class="db-commit column small-6"><span class="icon icon-github"></span>394348a</p>
+          <p class="db-timeago column small-6"><span class="icon icon-cal"></span>in queue</p>
+          <p class="db-branch column small-6"><span class="icon icon-branch"></span>master</p>
+        </div>
+        <div class="db-burger">
+          <span class="icon icon-burger"></span>
+        </div>
+        <ul class="dropdown">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div>
+    </div>
     {{!-- <div class="row">
       <div class="dashboard--empty">
         <p><span class="icon icon-star"></span>Want to keep an eye on certain projects? Star repositories below to add them in this section.</p>
       </div>
     </div> --}}
 
-    <div></div>
   </section>
   <section class="dashboard-active">
 
