@@ -3,6 +3,17 @@
  * @todo: split into components: filter, search
  */
 
+@mixin colorDbelements($color)
+ .db-status
+   background-color: $color
+ .db-repo
+   h2, h3, a
+     color: $color
+ .db-job
+   color: $color
+   a
+     color: $color
+
 %br-4px
  border-radius: 4px
 
@@ -52,6 +63,19 @@ $dropdown-border: #C3D9DB
     bottom: 0
     margin: auto
 
+  &.started
+    @include colorDbelements($start-color)
+  &.failed
+    @include colorDbelements($fail-color)
+  &.errored
+    @include colorDbelements($error-color)
+  &.canceled
+    @include colorDbelements($cancel-color)
+  &.passed
+    @include colorDbelements($pass-color)
+  &.inactive
+    @include colorDbelements($cancel-color)
+
 .db-repo
   padding-left: 3em
   transform: translateY(0.4em)
@@ -73,7 +97,7 @@ $dropdown-border: #C3D9DB
   left: 0
   height: 100%
   width: 2.5em
-  background-color: $db-gray
+  // background-color: $db-gray
   border-top-left-radius: 4px
   border-bottom-left-radius: 4px
 
@@ -220,30 +244,6 @@ $dropdown-border: #C3D9DB
     h2, h3, p, button, .db-status
       opacity: .7
 
-
-@mixin colorDbelements($color)
-  .db-status
-    background-color: $color
-  .db-repo
-    h2, h3, a
-      color: $color
-  .db-job
-    color: $color
-    a
-      color: $color
-
-.db--started
-  @include colorDbelements($start-color)
-.db--fail
-  @include colorDbelements($fail-color)
-.db--error
-  @include colorDbelements($error-color)
-.db--cancel
-  @include colorDbelements($cancel-color)
-.db--pass
-  @include colorDbelements($pass-color)
-.db--inactive
-  @include colorDbelements($cancel-color)
 
 // .current-org-avatar
 //   display     : inline-block
