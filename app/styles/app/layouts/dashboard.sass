@@ -8,6 +8,7 @@
 
 $db-gray: #C9C9C9
 $db-text-color: #ACAAAA
+$dropdown-border: #C3D9DB
 
 .dashboard
   color: $db-text-color
@@ -79,17 +80,10 @@ $db-text-color: #ACAAAA
   .icon
     width: 1.1em
     height: 1.1em
-
+    right: 0
   .icon-status
-    left: 0
-    right: 0
-    margin: auto
     top: -6em
-
   .icon-star
-    left: 0
-    right: 0
-    margin: auto
     top: -2em
     opacity: .9
 
@@ -140,7 +134,6 @@ $db-text-color: #ACAAAA
   .icon
     width: 2em
     height: 2em
-    left: 0
     right: 0
 
 .db-burger:hover ~ .dropdown,
@@ -156,8 +149,9 @@ $db-text-color: #ACAAAA
   width: 12.5em;
   right: 0;
   top: 4em;
-  border: 2px #C3D9DB solid;
+  border: 2px $dropdown-border solid;
   background-color: $white
+  display: none
   a
     display: block
     padding: 0.4em 1em .2em
@@ -173,17 +167,17 @@ $db-text-color: #ACAAAA
     top: -0.7em;
     right: 1.1em;
     background-color: $white
-    
-    background-color: #fff;
-    border-top: solid 2px #C3D9DB;
-    border-left: solid 2px #C3D9DB;
+    border-top: solid 2px $dropdown-border;
+    border-left: solid 2px $dropdown-border;
     transform: rotate(45deg);
 
-  display: none
+.dashboard-starred,
+.dashboard-active,
+.dashboard-inactive
+  padding: 0 3em
+  margin: 3em 0 3em
 
 .dashboard-starred
-  padding: 0 3em
-  margin: 2em 0 3em
   .db
     padding-bottom: .2em
     @media #{$medium-up}
@@ -193,8 +187,6 @@ $db-text-color: #ACAAAA
 
 .dashboard-active,
 .dashboard-inactive
-  padding: 0 3em
-  margin-bottom: 3em
   .db
     padding-bottom: 0.2em;
   .db-repo,
@@ -215,12 +207,11 @@ $db-text-color: #ACAAAA
     .db-status
       .icon-status
         top: -2em
-
       .icon-star
         bottom: -4em
 
 .dashboard-inactive
-  margin: 1.5em 0 5em
+  margin-bottom: 5em
   .db
     h2, h3, p, button, .db-status
       opacity: .7
