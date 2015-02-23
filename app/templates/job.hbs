@@ -1,8 +1,8 @@
 {{#if job.isLoaded}}
   <div {{bind-attr class="view.color"}}>
     <div id="new-summary">
-      <div class="request-kind">
-        <div {{bind-attr class=":kind-icon job.build.eventType"}}>
+      <div {{bind-attr class=":request-kind job.build.eventType"}}>
+        <div class="kind-icon">
         </div>
       </div>
       <div class="right">
@@ -38,12 +38,13 @@
         </div>
       </div>
 
-      <div class="branch" {{bind-attr title="job.commit.branch"}}>
-        {{job.commit.branch}}
-      </div>
-
-      <div class="subject">
-        - {{format-message job.commit.subject repoBinding=job.repo}}
+      <div class="mainline">
+        <div class="branch" {{bind-attr title="job.commit.branch"}}>
+          {{job.commit.branch}}
+        </div>
+        <div class="subject">
+          - {{format-message job.commit.subject repoBinding=job.repo}}
+        </div>
       </div>
 
       <pre class="body">{{format-message job.commit.body repoBinding=job.repo pre=true}}</pre>
