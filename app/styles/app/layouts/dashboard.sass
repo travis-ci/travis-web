@@ -7,8 +7,10 @@
  border-radius: 4px
 
 $db-gray: #C9C9C9
+$db-text-color: #ACAAAA
 
 .dashboard
+  color: $db-text-color
   hr
     max-width: 1024px
     margin: auto
@@ -45,14 +47,16 @@ $db-gray: #C9C9C9
 
 .db
   position: relative
-  height: 57px
   margin-bottom: 1em
   background: $white
   @extend %br-4px
+  @media #{$medium-up}
+    height: 57px
 
   h2, h3, p
     margin: 0
     font-weight: 400
+    white-space: nowrap
 
   .icon
     position: absolute
@@ -64,6 +68,16 @@ $db-gray: #C9C9C9
 .db-repo
   padding-left: 4em
   transform: translateY(0.4em)
+  overflow: hidden
+  &:after
+    content: ""
+    display: block
+    position: absolute
+    top: 0
+    right: 0
+    height: 100%
+    width: 3em
+    background: linear-gradient(-90deg, $white 40%, rgba($white, 0))
 
 .db-status
   position: absolute;
@@ -94,9 +108,12 @@ $db-gray: #C9C9C9
 
 .db-controls
   // position: relative
+  padding-left: 4em
   transform: translateY(24%)
   line-height: 3em
   border-left: 1px solid $db-gray
+  @media #{$medium-up}
+    padding-left: 0
   p,
   button
     display: inline-block
@@ -131,7 +148,7 @@ $db-gray: #C9C9C9
   position: absolute;
   top: 0
   right: 0
-  height: 100%
+  height: 4em
   width: 4em
   cursor: pointer
   z-index: 30
@@ -140,6 +157,8 @@ $db-gray: #C9C9C9
     height: 2em
     left: 0
     right: 0
+  @media #{$medium-up}
+    height: 100%
 
 .db-burger:hover ~ .dropdown,
 .dropdown:hover
