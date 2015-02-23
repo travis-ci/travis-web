@@ -182,6 +182,10 @@ $dropdown-border: #C3D9DB
     padding-bottom: .2em
     @media #{$medium-up}
       width: grid-calc(17, 36)
+      &:nth-child(2n)
+        float: right
+      &:nth-child(2n + 1)
+        float: left
   .db-controls
     padding-left: 3em
 
