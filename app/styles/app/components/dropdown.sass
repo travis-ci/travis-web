@@ -1,0 +1,113 @@
+/*
+ * Dashboard Activation Dropdown
+ */
+
+$dropdown-border: #C3D9DB
+
+.dropdown--db
+  @include resetul
+  @extend %br-4px
+  position: absolute
+  padding: .8em .5em
+  z-index: 90
+  width: 12.5em;
+  right: 0;
+  top: 4em;
+  border: 2px $dropdown-border solid;
+  background-color: $white
+  display: none
+  a
+    display: block
+    padding: 0.4em 1em .2em
+    &:hover
+      background-color: $dropdown-color
+      color: $white
+  &:before
+    content: ""
+    width: 1.2em
+    height: 1.2em
+    display: block
+    position: absolute
+    top: -0.7em;
+    right: 1.1em;
+    background-color: $white
+    border-top: solid 2px $dropdown-border;
+    border-left: solid 2px $dropdown-border;
+    transform: rotate(45deg);
+
+
+/*
+ * Dashboard Organizations Dropdown
+ */
+
+.current-org-avatar
+  display     : inline-block
+  height      : 20px
+  width       : 20px
+  vertical-align: top
+  margin : -5px 5px 0 0
+
+.dropdown--org
+  float : left
+
+.dropdown--org ul
+  text-align : left
+  display    : inline
+  margin     : 0
+  padding    : 0
+  list-style : none
+  z-index    : 1000
+
+.dropdown--org ul li
+  background   : $white
+  position     : relative
+  display      : inline-block
+  padding      : 10px 0 10px 0
+  margin-right : -4px
+  margin-top   : 0
+  cursor       : pointer
+  border-radius         : 0px
+
+.dropdown--org li.filters-start:hover
+  background-color : #fff
+
+.dropdown--org ul li ul
+  padding    : 0
+  position   : absolute
+  top        : 35px
+  left       : 0
+  width      : 200px
+  display    : none
+  opacity    : 0
+  visibility : hidden
+  box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
+
+.dropdown--org ul li ul li
+  display      : block
+  line-height  : 23px
+  padding-left : 20px
+
+.dropdown--org ul li ul li:first-child
+  border-top-left-radius  : 4px
+  border-top-right-radius : 4px
+
+.dropdown--org ul li ul li:last-child
+  border-bottom-left-radius  : 4px
+  border-bottom-right-radius : 4px
+
+.dropdown--org ul li ul li div
+  display          : inline-block
+  width            : 20px
+  height           : 20px
+  margin-right     : 5px
+  text-indent      : -9999px
+  border-radius    : 100px
+
+.dropdown--org ul li ul li:hover
+  background : #5e869a
+  color      : $white
+
+.dropdown--org ul li:hover ul
+  display    : block
+  opacity    : 1
+  visibility : visible

@@ -1,7 +1,6 @@
 <div id="filters-search" class="section section--white section--maxheight">
   <div class="row">
-    <!--
-    <div class="small-6 medium-3 large-2 columns" id="filters">
+    <div class="small-6 medium-3 large-2 columns dropdown--org" id="filters">
       <ul>
         <li class="filters-start">
           <div class="current-org-avatar org-travisci"></div>Travis CI <div class="arrow-down"></div>
@@ -15,8 +14,7 @@
         </li>
       </ul>
     </div>
-    -->
-    <!-- <div class="small-6 medium-2 large-2 columns no-padding" id="views">
+{{!--     <div class="small-6 medium-2 large-2 columns no-padding" id="views">
       <ul>
         <li class="views-start">
           View all repos <div class="arrow-down"></div>
@@ -28,7 +26,7 @@
           </ul>
         </li>
       </ul>
-    </div> -->
+    </div> --}}
     <div class="search">
       {{filter-input placeholder="Search all repositories" class="search-field"
           action="updateFilter" on="key-up"}}
@@ -57,7 +55,7 @@
         <div class="db-burger">
           <span class="icon icon-burger"></span>
         </div>
-        <ul class="dropdown">
+        <ul class="dropdown--db">
           <li><a href="#" title="">Deactivate repository</a></li>
           <li><a href="#" title="">Trigger a build</a></li>
         </ul>
@@ -97,7 +95,7 @@
         <div class="db-burger">
           <span class="icon icon-burger"></span>
         </div>
-        <ul class="dropdown">
+        <ul class="dropdown--db">
           <li><a href="#" title="">Deactivate repository</a></li>
           <li><a href="#" title="">Trigger a build</a></li>
         </ul>
@@ -123,7 +121,7 @@
       <div class="db-burger">
         <span class="icon icon-burger"></span>
       </div>
-      <ul class="dropdown">
+      <ul class="dropdown--db">
         <li><a href="#" title="">Deactivate repository</a></li>
         <li><a href="#" title="">Trigger a build</a></li>
       </ul>
