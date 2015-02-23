@@ -102,8 +102,8 @@ $db-text-color: #ACAAAA
     margin-left: 1em
 
   .icon
-    width: 1.6em
-    height: 1.6em
+    width: 1.4em
+    height: 1.4em
 
 .db-job,
 .db-branch,
@@ -112,6 +112,7 @@ $db-text-color: #ACAAAA
   position: relative
   padding-left: 2.2em
   z-index: 30
+  overflow: hidden
 
 .db-lock
   position: absolute
@@ -122,8 +123,11 @@ $db-text-color: #ACAAAA
     height: 1em
 
 .db-activation
+  margin: 1em 0 .5em
   text-align: right
   padding-right: 0
+  @media #{$medium-up}
+    margin: 0
 
 .db-burger
   position: absolute;
@@ -178,15 +182,22 @@ $db-text-color: #ACAAAA
   display: none
 
 .dashboard-starred
+  padding: 0 3em
   margin: 2em 0 3em
   .db
     padding-bottom: .2em
+    @media #{$medium-up}
+      width: grid-calc(17, 36)
   .db-controls
     padding-left: 3em
 
 .dashboard-active,
 .dashboard-inactive
+  padding: 0 3em
   margin-bottom: 3em
+  .db
+    padding-bottom: 0.2em;
+  .db-repo,
   .db-controls
     padding-left: 4em
   @media #{$medium-up}
