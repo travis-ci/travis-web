@@ -89,8 +89,8 @@ Build = Model.extend DurationCalculations,
   ).property('rawConfigKeys.length')
 
   canCancel: (->
-    !@get('isFinished') && @get('jobs').filter( (j) -> j.get('canCancel') ).get('length') > 0
-  ).property('isFinished', 'jobs.@each.canCancel')
+    @get('jobs').filter( (j) -> j.get('canCancel') ).get('length') > 0
+  ).property('jobs.@each.canCancel')
 
   cancel: (->
     Ajax.post "/builds/#{@get('id')}/cancel"
