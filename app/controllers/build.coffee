@@ -8,6 +8,7 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
   commitBinding: 'build.commit'
   currentUserBinding: 'controllers.repo.currentUser'
   tabBinding: 'controllers.repo.tab'
+  sendFaviconStateChanges: true
 
   currentItemBinding: 'build'
 
@@ -24,7 +25,8 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
   ).property('commit.authorEmail')
 
   buildStateDidChange: (->
-    @send('faviconStateDidChange', @get('build.state'))
+    if @get('sendFaviconStateChanges')
+      @send('faviconStateDidChange', @get('build.state'))
   ).observes('build.state')
 
 `export default Controller`

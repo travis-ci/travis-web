@@ -20,13 +20,24 @@ Route = TravisRoute.extend
 
     if build = model.get('build')
       build = @store.recordForId('build', build.get('id'))
-      @controllerFor('build').set('build', build)
+      buildController = @controllerFor('build')
+
+      # this is a hack to not set favicon changes from build
+      # controller while we're viewing job, this should go away
+      # after refactoring of controllers
+      buildController.set('sendFaviconStateChanges', false)
+
+      buildController.set('build', build)
 
   model: (params) ->
     @store.find('job', params.job_id)
 
   deactivate: ->
+    buildController = @controllerFor('build')
+    buildController.set('sendFaviconStateChanges', true)
     @controllerFor('build').set('build', null)
     @controllerFor('job').set('job', null)
+
+    @_super.apply(this, arguments)
 
 `export default Route`
