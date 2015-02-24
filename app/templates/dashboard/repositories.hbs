@@ -1,32 +1,16 @@
-<div id="filters-search" class="section section--white section--maxheight">
+<div id="filters" class="section section--white section--maxheight">
   <div class="row">
-    <div class="small-6 medium-3 large-2 columns dropdown--org" id="filters">
-      <ul>
-        <li class="filters-start">
-          <div class="current-org-avatar org-travisci"></div>Travis CI <div class="arrow-down"></div>
-          <ul>
-            <li class="org-all">All organizations</li>
-            <li class="currently-selected"><div class="org-avatar org-travisci">Travis CI</div>Travis CI</li>
-            <li><div class="org-avatar org-saltinejustine">Justine Arreche</div>Justine Arreche</li>
-            <li><div class="org-avatar org-openkarma">Open Karma</div>Open Karma</li>
-            <li><div class="org-avatar org-eurucamp">eurucamp</div>eurucamp</li>
-          </ul>
-        </li>
-      </ul>
+      <div class="filter filter--org">
+        <div class="filter-current">
+          <img src="https://placehold.it/30x30" alt="">something else</a><span class="icon-arrow-down"></span>
+        </div>
+        <ul class="filter-dropdown">
+          <li><a href="#" title="">All organizations</a></li>
+          <li class="is-selected"><a href="#" title=""><img src="https://placehold.it/30x30" alt="">something else</a></li>
+          <li><a href="#" title=""><img src="https://placehold.it/30x30" alt="">something</a></li>
+          <li><a href="#" title=""><img src="https://placehold.it/30x30" alt="">eurucamp</a></li>
+        </ul>
     </div>
-{{!--     <div class="small-6 medium-2 large-2 columns no-padding" id="views">
-      <ul>
-        <li class="views-start">
-          View all repos <div class="arrow-down"></div>
-          <ul>
-            <li class="currently-selected">View all repos</li>
-            <li>Queued builds</li>
-            <li>Failed builds</li>
-            <li>Passed builds</li>
-          </ul>
-        </li>
-      </ul>
-    </div> --}}
     <div class="search">
       {{filter-input placeholder="Search all repositories" class="search-field"
           action="updateFilter" on="key-up"}}
