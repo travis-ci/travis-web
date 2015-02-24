@@ -10,6 +10,7 @@ Route = AbstractBuildsRoute.extend(
     this.controllerFor('builds').set('isPullRequestsList', true)
 
   deactivate: ->
+    @_super.apply(this, arguments)
     this.controllerFor('builds').set('isPullRequestsList', false)
 )
 

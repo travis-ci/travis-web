@@ -16,4 +16,8 @@ Controller = Ember.Controller.extend
     githubCommit(@get('repo.slug'), @get('commit.sha'))
   ).property('repo.slug', 'commit.sha')
 
+  jobStateDidChange: (->
+    @send('faviconStateDidChange', @get('job.state'))
+  ).observes('job.state')
+
 `export default Controller`

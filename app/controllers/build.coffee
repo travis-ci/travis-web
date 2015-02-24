@@ -23,4 +23,8 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
     gravatarImage(@get('commit.authorEmail'), 40)
   ).property('commit.authorEmail')
 
+  buildStateDidChange: (->
+    @send('faviconStateDidChange', @get('build.state'))
+  ).observes('build.state')
+
 `export default Controller`
