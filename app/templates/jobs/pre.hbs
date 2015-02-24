@@ -1,4 +1,8 @@
-<div id="log-container">
+<section id="log-container" class="log">
+  <menu class="log-header">
+    <button class="button button--grey button--removeLog">Remove Log</button>
+    <button class="button button--grey button--downloadLog">Download Log</button>
+  </menu>
   <a href="#" id="tail" {{action "toggleTailing" target=view}}>
     <span class="status"></span>
 
@@ -10,7 +14,7 @@
       {{/if}}
     </label>
   </a>
-  <pre id="log" class="ansi"></pre>
+  <pre id="log" class="ansi log-body"></pre>
 
   {{#if view.log.hasContent}}
     <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
@@ -22,4 +26,4 @@
       build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
     </p>
   {{/if}}
-</div>
+</section>

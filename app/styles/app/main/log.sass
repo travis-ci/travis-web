@@ -13,7 +13,6 @@ pre#log
   white-space: pre-wrap
   word-wrap: break-word
   background-color: #2a2a2a
-  border-radius: 4px
   counter-reset: line-numbering
 
   .cut
@@ -166,3 +165,15 @@ pre#log
     text-align: right
     color: #999
     background: inline-image('ui/workers-close.svg') no-repeat right 6px
+
+
+.log
+
+.log-header
+  background-color: $log-header-bg
+  height: 40px
+  @extend %border-top-4px
+
+.log-body
+  @extend %border-bottom-4px
+  margin: 0
