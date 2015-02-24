@@ -135,10 +135,10 @@ View = BasicView.extend
             Travis.flash(error: 'An error occured when removing the log')
 
     removeLogPopup: ->
-      # if @get('canRemoveLog')
-      @set('active', true)
-      @popup('remove-log-popup')
-      return false
+      if @get('canRemoveLog')
+        @set('active', true)
+        @popup('remove-log-popup')
+        return false
 
   noop: -> # TODO required?
 
