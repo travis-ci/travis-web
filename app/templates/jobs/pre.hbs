@@ -1,7 +1,9 @@
 <section id="log-container" class="log">
   <menu class="log-header">
-    <button class="button button--grey button--removeLog">Remove Log</button>
-    <button class="button button--grey button--downloadLog">Download Log</button>
+    {{#if view.canRemoveLog}}
+      <button class="button button--grey" {{action "removeLogPopup" target=view}}><span class="icon icon--removeLog"></span> Remove Log</button>
+    {{/if}}
+    <a class="button button--grey" {{bind-attr href="view.plainTextLogUrl"}}><span class="icon icon--downloadLog"></span> Download Log</a>
   </menu>
   <div class="log-body">
     <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>

@@ -83,3 +83,14 @@ $button-border-color: #d4d4d4
 #auth #navigation .button--signin
   display: none
 
+.button--grey
+  height: 24px
+  padding: 0 10px 0 10px
+  background-color: #696867
+  color: #f2f2f2
+  font-size: $font-size-small
+  border: none
+  @extend %border-radius-4px
+  &:hover,
+  &:active
+    background-color: lighten(#696867, 10)

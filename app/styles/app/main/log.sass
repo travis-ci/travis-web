@@ -67,10 +67,28 @@
     background: inline-image('ui/workers-close.svg') no-repeat right 6px
 
 .log-header
-  height: 40px
+  height: 44px
   margin: 0
+  padding: .8em
+  text-align: right
   background-color: $log-header-bg
   @extend %border-top-4px
+  .icon
+    display: inline-block
+    background:
+      size: 100%
+      repeat: no-repeat
+    width: 1.3em
+    height: 1.2em
+    margin-right: 6px
+    vertical-align: middle
+  .icon--downloadLog
+    background-image: inline-image('icons/download-log-icon.svg')
+  .icon--removeLog
+    background-image: inline-image('icons/remove-log-icon.svg')
+  button
+    margin-left: .4em
+
 
 .log-body
   position: relative
