@@ -49,6 +49,12 @@ module.exports = function(environment) {
         caches: true
       };
       ENV.charmKey = 'gy5gx7dy6dh86hxzkz1wmtvupwvievu';
+      ENV.urls = {
+        legal: ENV.billingEndpoint + "/pages/legal",
+        imprint: ENV.billingEndpoint + "/pages/imprint",
+        security: ENV.billingEndpoint + "/pages/security",
+        terms: ENV.billingEndpoint + "/pages/terms"
+      }
     }
   }
 
