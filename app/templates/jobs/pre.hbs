@@ -1,23 +1,33 @@
-<div id="log-container">
-  <a href="#" id="tail" {{action "toggleTailing" target=view}}>
-    <span class="status"></span>
+<section id="log-container" class="log">
+  <menu class="log-header">
+    {{#if view.canRemoveLog}}
+      <a href="#" class="button button--grey open-popup" {{action "removeLogPopup" target=view}}><span class="icon icon--removeLog"></span> Remove Log</a>
+    {{/if}}
+    <a class="button button--grey" {{bind-attr href="view.plainTextLogUrl"}}><span class="icon icon--downloadLog"></span> Download Log</a>
+  </menu>
+  <div class="log-body">
+    <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>
+      <span class="status"></span>
 
-    <label>
-      {{#if view.job.isFinished}}
-        Scroll to End of Log
-      {{else}}
-        Follow Log
-      {{/if}}
-    </label>
-  </a>
-  <pre id="log" class="ansi"></pre>
+      <label>
+        {{#if view.job.isFinished}}
+          Scroll to End of Log
+        {{else}}
+          Follow Log
+        {{/if}}
+      </label>
+    </a>
+    <pre id="log" class="ansi"></pre>
 
-  <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
+    {{#if view.log.hasContent}}
+      <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
+    {{/if}}
 
-  {{#if view.limited}}
-    <p class="warning">
-      This log is too long to be displayed. Please reduce the verbosity of your
-      build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
-    </p>
-  {{/if}}
-</div>
+    {{#if view.limited}}
+      <p class="warning">
+        This log is too long to be displayed. Please reduce the verbosity of your
+        build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
+      </p>
+    {{/if}}
+  </div>
+</section>

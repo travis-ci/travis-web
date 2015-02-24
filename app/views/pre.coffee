@@ -2,6 +2,7 @@
 `import LogFolder from 'travis/utils/log-folder'`
 `import config from 'travis/config/environment'`
 `import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls'`
+`import BasicView from 'travis/views/basic'`
 
 Log.DEBUG = false
 Log.LIMIT = 10000
@@ -22,8 +23,9 @@ Log.Scroll.prototype = $.extend new Log.Listener,
       $('#main').scrollTop(0)
       $('html, body').scrollTop(element.offset()?.top - (window.innerHeight / 3)) # weird, html works in chrome, body in firefox
 
-View = Ember.View.extend
+View = BasicView.extend
   templateName: 'jobs/pre'
+  currentUserBinding: 'controller.currentUser'
 
   logWillChange: (->
     console.log 'log view: log will change' if Log.DEBUG
@@ -99,6 +101,16 @@ View = Ember.View.extend
       url
   ).property('job.log.id', 'job.log.token')
 
+  hasPermission: (->
+    if permissions = @get('currentUser.permissions')
+      permissions.contains parseInt(@get('job.repo.id'))
+  ).property('currentUser.permissions.length', 'job.repo.id')
+
+  canRemoveLog: (->
+    if job = @get('job')
+      job.get('canRemoveLog') && @get('hasPermission')
+  ).property('job.canRemoveLog', 'hasPermission')
+
   actions:
     toTop: () ->
       $(window).scrollTop(0)
@@ -107,6 +119,26 @@ View = Ember.View.extend
       Travis.tailing.toggle()
       @engine.autoCloseFold = !Travis.tailing.isActive()
       event.preventDefault()
+
+    removeLog: ->
+      @popupCloseAll()
+      if @get('canRemoveLog')
+        job = @get('_job') || @get('build.jobs.firstObject')
+        job.removeLog().then ->
+          Travis.flash(success: 'Log has been successfully removed.')
+        , (xhr) ->
+          if xhr.status == 409
+            Travis.flash(error: 'Log can\'t be removed')
+          else if xhr.status == 401
+            Travis.flash(error: 'You don\'t have sufficient access to remove the log')
+          else
+            Travis.flash(error: 'An error occured when removing the log')
+
+    removeLogPopup: ->
+      if @get('canRemoveLog')
+        @set('active', true)
+        @popup('remove-log-popup')
+        return false
 
   noop: -> # TODO required?
 

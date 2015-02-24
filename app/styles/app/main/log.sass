@@ -1,20 +1,110 @@
 
-pre#log
+.log
   position: relative
-  clear: left
-  min-height: 12px
-  margin-top: 25px
-  margin-top: 1em
-  padding: 15px 0
-  color: $color-text-log
-  font-family: monospace
-  font-size: $font-size-log
-  line-height: $line-height-log
-  white-space: pre-wrap
-  word-wrap: break-word
-  background-color: #2a2a2a
-  border-radius: 4px
-  counter-reset: line-numbering
+  margin-top: 35px
+
+  .log-tail
+    z-index: 99
+    position: absolute
+    display: block
+    top: 0
+    right: 2px
+    margin: 13px 10px 0 0
+    padding: 0 2px 0 3px
+    color: #666
+    text-shadow: 0px 1px 0px #fff
+    font-family: "Source Sans Pro", Helvetica, sans-serif
+    font-size: $font-size-tiny
+    line-height: 14px
+    text-decoration: none
+    white-space: nowrap
+    border: 1px solid #bbb
+    border-top-color: #ddd
+    border-bottom-color: #bbb
+    border-radius: 8px
+    background: linear-gradient(#fff, #e0e0e0)
+
+    label
+      display: none
+      cursor: pointer
+
+    &:hover
+      padding: 1px 4px 1px 6px
+      label
+        display: inline
+
+    &.scrolling
+      position: fixed
+      right: 32px
+
+    &.bottom
+      bottom: 45px
+      top: inherit
+
+    .status
+      display: inline-block
+      margin-right: 1px
+      width: 8px
+      height: 8px
+      background-color: #aaa
+      border-radius: 4px
+      box-shadow: $white 1px 1px 2px
+
+    &.active .status
+      background-color: #6b0
+
+  .to-top
+    z-index: 99
+    position: absolute
+    display: block
+    bottom: 2px
+    right: 2px
+
+    margin-right: 2px
+    padding-right: 16px
+    text-align: right
+    color: #999
+    background: inline-image('ui/workers-close.svg') no-repeat right 6px
+
+.log-header
+  height: 44px
+  margin: 0
+  padding: .9em .8em .6em
+  text-align: right
+  background-color: $log-header-bg
+  @extend %border-top-4px
+  .icon
+    display: inline-block
+    background:
+      size: 100%
+      repeat: no-repeat
+    width: 1.3em
+    height: 1.1em
+    margin-right: 6px
+    vertical-align: middle
+  .icon--downloadLog
+    background-image: inline-image('icons/download-log-icon.svg')
+  .icon--removeLog
+    background-image: inline-image('icons/remove-log-icon.svg')
+  a
+    margin-left: .4em
+
+.log-body
+  position: relative
+  pre
+    clear: left
+    min-height: 42px
+    padding: 15px 0
+    color: $color-text-log
+    font-family: monospace
+    font-size: $font-size-log
+    line-height: $line-height-log
+    white-space: pre-wrap
+    word-wrap: break-word
+    background-color: #2a2a2a
+    counter-reset: line-numbering
+    margin-top: 0
+    @extend %border-bottom-4px
 
   .cut
     padding: 20px 15px 0 55px
@@ -95,74 +185,5 @@ pre#log
     border-radius: 6px
     color: #bbb
 
-
-#log.loading
-  padding: 25px 0 0 10px
-
-#log-container
-  position: relative
-  margin-top: 35px
-
-#log-container
-  #tail
-    z-index: 99
-    position: absolute
-    display: block
-    top: 0
-    right: 2px
-    margin: 13px 10px 0 0
-    padding: 0 2px 0 3px
-    color: #666
-    text-shadow: 0px 1px 0px #fff
-    font-family: "Source Sans Pro", Helvetica, sans-serif
-    font-size: $font-size-tiny
-    line-height: 14px
-    text-decoration: none
-    white-space: nowrap
-    border: 1px solid #bbb
-    border-top-color: #ddd
-    border-bottom-color: #bbb
-    border-radius: 8px
-    background: linear-gradient(#fff, #e0e0e0)
-
-    label
-      display: none
-      cursor: pointer
-
-    &:hover
-      padding: 1px 4px 1px 6px
-      label
-        display: inline
-
-    &.scrolling
-      position: fixed
-      right: 32px
-
-    &.bottom
-      bottom: 45px
-      top: inherit
-
-    .status
-      display: inline-block
-      margin-right: 1px
-      width: 8px
-      height: 8px
-      background-color: #aaa
-      border-radius: 4px
-      box-shadow: $white 1px 1px 2px
-
-    &.active .status
-      background-color: #6b0
-
-  .to-top
-    z-index: 99
-    position: absolute
-    display: block
-    bottom: 2px
-    right: 2px
-
-    margin-right: 2px
-    padding-right: 16px
-    text-align: right
-    color: #999
-    background: inline-image('ui/workers-close.svg') no-repeat right 6px
+  .loading
+    padding: 25px 0 0 10px
