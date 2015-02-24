@@ -3,27 +3,29 @@
     <button class="button button--grey button--removeLog">Remove Log</button>
     <button class="button button--grey button--downloadLog">Download Log</button>
   </menu>
-  <a href="#" id="tail" {{action "toggleTailing" target=view}}>
-    <span class="status"></span>
+  <div class="log-body">
+    <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>
+      <span class="status"></span>
 
-    <label>
-      {{#if view.job.isFinished}}
-        Scroll to End of Log
-      {{else}}
-        Follow Log
-      {{/if}}
-    </label>
-  </a>
-  <pre id="log" class="ansi log-body"></pre>
+      <label>
+        {{#if view.job.isFinished}}
+          Scroll to End of Log
+        {{else}}
+          Follow Log
+        {{/if}}
+      </label>
+    </a>
+    <pre id="log" class="ansi"></pre>
 
-  {{#if view.log.hasContent}}
-    <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
-  {{/if}}
+    {{#if view.log.hasContent}}
+      <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
+    {{/if}}
 
-  {{#if view.limited}}
-    <p class="warning">
-      This log is too long to be displayed. Please reduce the verbosity of your
-      build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
-    </p>
-  {{/if}}
+    {{#if view.limited}}
+      <p class="warning">
+        This log is too long to be displayed. Please reduce the verbosity of your
+        build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
+      </p>
+    {{/if}}
+  </div>
 </section>
