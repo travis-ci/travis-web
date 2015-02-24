@@ -84,13 +84,16 @@ $button-border-color: #d4d4d4
   display: none
 
 .button--grey
-  height: 24px
+  height: 22px
   padding: 0 10px 0 10px
   background-color: #696867
   color: #f2f2f2
+  // line-height: 1.45
   font-size: $font-size-small
   border: none
   @extend %border-radius-4px
   &:hover,
   &:active
     background-color: lighten(#696867, 10)
+  &:focus
+    background-color: #696867

@@ -32,22 +32,6 @@
         {{/if}}
       </li>
     {{/if}}
-    {{#if view.jobIdForLog}}
-      {{#if view.showDownloadLog}}
-        <li class="icon download-log" title="Download Log">
-          <a class="download-log" {{bind-attr href="view.plainTextLogUrl"}}></a>
-        </li>
-      {{/if}}
-    {{/if}}
-    {{! the next if is a hack for refreshing displayRemoveLog when we change
-    views, it sometimes doesn't work properly }}
-    {{#if view.jobIdForLog}}
-      {{#if view.displayRemoveLog}}
-        <li class="icon remove-log" title="Remove Log">
-          <a href="#" name="remove-log-popup" class="open-popup" {{action "removeLogPopup" target=view}}></a>
-        </li>
-      {{/if}}
-    {{/if}}
     {{#if view.displayCodeClimate}}
       <li class="icon code-climate" title="Test Coverage with Code Climate">
         <a href="#" name="code-climate"
