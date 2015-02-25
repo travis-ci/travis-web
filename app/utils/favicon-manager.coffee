@@ -16,7 +16,11 @@ manager.prototype.setFavicon = (href) ->
 
   link = @createLinkTag()
   head.appendChild(link)
+
   link.setAttribute('href', href)
+  setTimeout ->
+    link.setAttribute('href', href)
+  , 1
 
 manager.prototype.getLinkTag = ->
   links = @getHeadTag().getElementsByTagName('link')
