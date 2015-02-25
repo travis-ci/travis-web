@@ -9,30 +9,26 @@ manager.prototype.getHeadTag = ->
   @headTag || document.getElementsByTagName('head')[0]
 
 manager.prototype.setFavicon = (href) ->
-  link = @getLinkTag()
+  head = @getHeadTag()
 
-  if !link
-    oldLink = link
-    link = @createLinkTag()
-    head = @getHeadTag()
-    head.appendChild(link)
-
-  link.setAttribute('href', href)
-
-  if oldLink
+  if oldLink = @getLinkTag()
     head.removeChild(oldLink)
 
+  link = @createLinkTag()
+  head.appendChild(link)
+  link.setAttribute('href', href)
+
 manager.prototype.getLinkTag = ->
-  links = document.getElementsByTagName('head')[0].getElementsByTagName('link')
+  links = @getHeadTag().getElementsByTagName('link')
   if links.length
     for link in links
-      if link.getAttribute('rel').trim() == 'icon'
+      if (link.getAttribute('rel') || '').trim() == 'icon'
         return link
 
 manager.prototype.createLinkTag = ->
   link = document.createElement('link')
   link.setAttribute('rel', 'icon')
   link.setAttribute('type', 'image/png')
-  document.getElementsByTagName('head')[0].appendChild(link)
+  @getHeadTag().appendChild(link)
 
 `export default manager`
