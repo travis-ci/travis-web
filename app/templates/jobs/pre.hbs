@@ -1,32 +1,37 @@
 <section id="log-container" class="log">
-  <menu class="log-header">
-    {{#if view.canRemoveLog}}
-      <a href="#" class="button button--grey open-popup" {{action "removeLogPopup" target=view}}><span class="icon icon--removeLog"></span> Remove Log</a>
-    {{/if}}
-    <a class="button button--grey" {{bind-attr href="view.plainTextLogUrl"}}><span class="icon icon--downloadLog"></span> Download Log</a>
-  </menu>
-  <div class="log-body">
-    <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>
-      <span class="tail-status"></span>
-      <span class="tail-label button button--grey"><span class="icon icon--down"></span>
-        {{#if view.job.isFinished}}
-          Scroll to End of Log
-        {{else}}
-          Follow Log
-        {{/if}}
-      </span>
-    </a>
-    <pre id="log" class="ansi"></pre>
+  {{#if view.job.notStarted}}
+    <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
+  {{/if}}
+  <div {{bind-attr class="view.job.notStarted:hidden"}}>
+    <menu class="log-header">
+      {{#if view.canRemoveLog}}
+        <a href="#" class="button button--grey open-popup" {{action "removeLogPopup" target=view}}><span class="icon icon--removeLog"></span> Remove Log</a>
+      {{/if}}
+      <a class="button button--grey" {{bind-attr href="view.plainTextLogUrl"}}><span class="icon icon--downloadLog"></span> Download Log</a>
+    </menu>
+    <div class="log-body">
+      <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>
+        <span class="tail-status"></span>
+        <span class="tail-label button button--grey"><span class="icon icon--down"></span>
+          {{#if view.job.isFinished}}
+            Scroll to End of Log
+          {{else}}
+            Follow Log
+          {{/if}}
+        </span>
+      </a>
+      <pre id="log" class="ainsi"></pre>
 
-    {{#if view.log.hasContent}}
-      <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
-    {{/if}}
+      {{#if view.log.hasContent}}
+        <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
+      {{/if}}
 
-    {{#if view.limited}}
-      <p class="warning">
-        This log is too long to be displayed. Please reduce the verbosity of your
-        build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
-      </p>
-    {{/if}}
+      {{#if view.limited}}
+        <p class="warning">
+          This log is too long to be displayed. Please reduce the verbosity of your
+          build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
+        </p>
+      {{/if}}
+    </div>
   </div>
 </section>
