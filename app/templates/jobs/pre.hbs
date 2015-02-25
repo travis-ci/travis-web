@@ -7,15 +7,14 @@
   </menu>
   <div class="log-body">
     <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>
-      <span class="status"></span>
-
-      <label>
+      <span class="tail-status"></span>
+      <span class="tail-label button button--grey"><span class="icon icon--down"></span>
         {{#if view.job.isFinished}}
           Scroll to End of Log
         {{else}}
           Follow Log
         {{/if}}
-      </label>
+      </span>
     </a>
     <pre id="log" class="ansi"></pre>
 

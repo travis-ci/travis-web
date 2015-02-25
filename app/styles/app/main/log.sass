@@ -8,30 +8,18 @@
     position: absolute
     display: block
     top: 0
-    right: 2px
+    right: 0
     margin: 13px 10px 0 0
-    padding: 0 2px 0 3px
-    color: #666
-    text-shadow: 0px 1px 0px #fff
-    font-family: "Source Sans Pro", Helvetica, sans-serif
-    font-size: $font-size-tiny
-    line-height: 14px
-    text-decoration: none
-    white-space: nowrap
-    border: 1px solid #bbb
-    border-top-color: #ddd
-    border-bottom-color: #bbb
-    border-radius: 8px
-    background: linear-gradient(#fff, #e0e0e0)
 
-    label
+    .tail-label
       display: none
       cursor: pointer
 
     &:hover
-      padding: 1px 4px 1px 6px
-      label
-        display: inline
+      .tail-label
+        display: inline-block
+      .tail-status
+        display: none
 
     &.scrolling
       position: fixed
@@ -41,16 +29,24 @@
       bottom: 45px
       top: inherit
 
-    .status
+    .tail-status
+      position: relative
       display: inline-block
-      margin-right: 1px
-      width: 8px
-      height: 8px
-      background-color: #aaa
-      border-radius: 4px
-      box-shadow: $white 1px 1px 2px
+      height: 20px;
+      width: 20px;
+      vertical-align: middle
+      background-color: #696867;
+      border-radius: 50%;
+      &:after
+        content: ""
+        display: block
+        height: 10px;
+        width: 10px;
+        background: #F2F2F2;
+        border-radius: 50%;
+        @extend %absolute-center
 
-    &.active .status
+    &.active .tail-status
       background-color: #6b0
 
   .to-top
@@ -73,21 +69,27 @@
   text-align: right
   background-color: $log-header-bg
   @extend %border-top-4px
-  .icon
-    display: inline-block
-    background:
-      size: 100%
-      repeat: no-repeat
-    width: 1.3em
-    height: 1.1em
-    margin-right: 6px
-    vertical-align: middle
-  .icon--downloadLog
-    background-image: inline-image('icons/download-log-icon.svg')
-  .icon--removeLog
-    background-image: inline-image('icons/remove-log-icon.svg')
   a
     margin-left: .4em
+
+.icon
+  display: inline-block
+  background:
+    size: 100%
+    repeat: no-repeat
+  width: 1.3em
+  height: 1.1em
+  margin-right: 6px
+  vertical-align: middle
+.icon--downloadLog
+  background-image: inline-image('icons/download-log-icon.svg')
+.icon--removeLog
+  background-image: inline-image('icons/remove-log-icon.svg')
+.icon--down
+  width: 0.7em
+  height: 0.9em
+  margin-right: 4px
+  background-image: inline-image('icons/end-of-log-icon.svg')
 
 .log-body
   position: relative
