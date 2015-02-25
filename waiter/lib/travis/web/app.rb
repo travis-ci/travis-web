@@ -4,10 +4,12 @@ require 'rack/protection'
 require 'delegate'
 require 'time'
 require 'json'
+require 'travis/utils/deep_merge'
 
 class Travis::Web::App
   autoload :AltVersions,    'travis/web/app/alt_versions'
   autoload :MobileRedirect, 'travis/web/app/mobile_redirect'
+  include Travis::DeepMerge
 
   S3_URL = 'https://s3.amazonaws.com/travis-web-production/assets'
 
@@ -206,7 +208,7 @@ class Travis::Web::App
       string.gsub!(regexp) do
         ember_config = JSON.parse(URI.unescape($1))
 
-        config = ember_config.merge config
+        config = deep_merge ember_config, config
         config = URI.escape config.to_json
 
         %(<meta name="travis/config/environment" content="#{config}")
