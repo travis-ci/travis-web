@@ -51,7 +51,7 @@ Build = Model.extend DurationCalculations,
   ).property('state')
 
   notStarted: (->
-    @get('state') in ['queued', 'created']
+    @get('state') in ['queued', 'created', 'received']
   ).property('state')
 
   startedAt: (->
