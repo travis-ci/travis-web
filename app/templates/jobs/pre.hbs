@@ -10,7 +10,14 @@
       {{/if}}
     </label>
   </a>
-  <pre id="log" class="ansi"></pre>
+
+  {{! we need to have this element for log engine to work properly, but we
+      can hide it with css }}
+  <pre id="log" {{bind-attr class=":ansi view.job.notStarted:hidden"}}></pre>
+
+  {{#if view.job.notStarted}}
+    <div>NOT STARTED</div>
+  {{/if}}
 
   {{#if view.log.hasContent}}
     <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
