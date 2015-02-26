@@ -84,7 +84,7 @@ View = BasicView.extend
 
   canRequeueBuild: (->
     @get('displayRequeueBuild') && @get('hasPermission')
-  ).property('displayRequireBuild', 'hasPermission')
+  ).property('displayRequeueBuild', 'hasPermission')
 
   displayRequeueJob: (->
     @get('isJobTab') && @get('job.isFinished')
