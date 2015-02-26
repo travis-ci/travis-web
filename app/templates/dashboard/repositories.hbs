@@ -1,20 +1,13 @@
 <div id="filters" class="section section--white section--maxheight">
   <div class="row">
-      <div class="filter filter--org">
-        <div class="filter-current">
-          <img src="https://placehold.it/30x30" alt="">something else</a><span class="icon-arrow-down"></span>
-        </div>
-        <ul class="filter-dropdown">
-          <li><a href="#" title="">All organizations</a></li>
-          <li class="is-selected"><a href="#" title=""><img src="https://placehold.it/30x30" alt="">something else</a></li>
-          <li><a href="#" title=""><img src="https://placehold.it/30x30" alt="">something</a></li>
-          <li><a href="#" title=""><img src="https://placehold.it/30x30" alt="">eurucamp</a></li>
-        </ul>
+      {{orgs-filter orgs=orgs selected=selectedOrg action="selectOrg"}}
+    <div class="">
+      {{sync-button user=auth.currentUser}}
     </div>
-    <div class="search">
+    {{!-- <div class="search">
       {{filter-input placeholder="Search all repositories" class="search-field"
           action="updateFilter" on="key-up"}}
-    </div>
+    </div> --}}
   </div>
 </div>
 

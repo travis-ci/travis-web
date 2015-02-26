@@ -1,0 +1,28 @@
+<div class="filter filter--org">
+  <div class="filter-current">
+    {{#if orgs.isLoading}}
+      <span class="loading"></span>
+    {{else}}
+      <a href="" title="">
+        {{#if selected }}<img src="https://placehold.it/30x30" alt="">{{selected.name}} {{else}} All organizations {{/if}}
+      </a><span class="icon-arrow-down"></span>
+    {{/if}}
+  </div>
+  <ul class="filter-dropdown">
+    {{#if selected }}
+      <li><a href="#" title="" {{action 'select'}}>All organizations</a></li>
+    {{/if}}
+    {{#each org in orgs}}
+      <li>
+        <a href="#" title="" {{action 'select' org}}><img src="https://placehold.it/30x30" alt="">
+          {{#if org.name }}
+            {{org.name}}
+          {{else}}
+            {{org.login}}
+          {{/if}}
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+
