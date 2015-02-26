@@ -8,6 +8,7 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
   commitBinding: 'build.commit'
   currentUserBinding: 'controllers.repo.currentUser'
   tabBinding: 'controllers.repo.tab'
+  sendFaviconStateChanges: true
 
   currentItemBinding: 'build'
 
@@ -22,5 +23,10 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
   urlAuthorGravatarImage: (->
     gravatarImage(@get('commit.authorEmail'), 40)
   ).property('commit.authorEmail')
+
+  buildStateDidChange: (->
+    if @get('sendFaviconStateChanges')
+      @send('faviconStateDidChange', @get('build.state'))
+  ).observes('build.state')
 
 `export default Controller`

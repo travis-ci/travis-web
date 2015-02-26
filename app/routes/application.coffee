@@ -1,7 +1,8 @@
 `import TravisRoute from 'travis/routes/basic'`
 `import config from 'travis/config/environment'`
+`import BuildFaviconMixin from 'travis/mixins/build-favicon'`
 
-Route = TravisRoute.extend
+Route = TravisRoute.extend BuildFaviconMixin,
   needsAuth: false
 
   renderTemplate: ->

@@ -16,4 +16,6 @@ Route = TravisRoute.extend
     @controllerFor('build').set('build', null)
     @controllerFor('job').set('job', null)
 
+    @_super.apply(this, arguments)
+
 `export default Route`

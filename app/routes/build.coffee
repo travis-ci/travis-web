@@ -22,6 +22,7 @@ Route = TravisRoute.extend
     @store.find('build', params.build_id)
 
   deactivate: ->
+    @_super.apply(this, arguments)
     @controllerFor('job').set('job', null)
     @controllerFor('build').set('build', null)
 
