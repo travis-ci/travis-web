@@ -15,7 +15,7 @@
     {{#if view.displayRequeueBuild}}
       <li class="icon restart-build" title="Restart Build">
         {{#if view.requeueing}}
-          <span class="icon loading"></span>
+          <span class="loading"></span>
         {{else}}
           <a href="#" {{action "requeueBuild" target=view}}
             {{bind-attr class="view.canRequeueBuild::disabled"}}></a>
@@ -25,7 +25,7 @@
     {{#if view.displayRequeueJob}}
       <li class="icon restart-job" title="Restart Job">
         {{#if view.requeueing}}
-          <span class="icon loading"></span>
+          <span class="loading"></span>
         {{else}}
           <a href="#" {{action "requeueJob" target=view}}
             {{bind-attr class="view.canRequeueJob::disabled"}}></a>
