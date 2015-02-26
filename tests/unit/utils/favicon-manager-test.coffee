@@ -25,9 +25,13 @@ test 'set favicon if there is no link tag in head', ->
   link = fakeHead.find('link')[0]
 
   ok link, 'link tag should be added by favicon manager'
-  equal link.getAttribute('href'), 'foobar', 'href attribute for the link should be properly set'
-  equal link.getAttribute('rel'), 'icon', 'rel attribute for the link should be properly set'
-  equal link.getAttribute('type'), 'image/png', 'type attribute for the link should be properly set'
+  stop()
+  setTimeout ->
+    start()
+    equal link.getAttribute('href'), 'foobar', 'href attribute for the link should be properly set'
+    equal link.getAttribute('rel'), 'icon', 'rel attribute for the link should be properly set'
+    equal link.getAttribute('type'), 'image/png', 'type attribute for the link should be properly set'
+  , 20
 
 test 'replace exisiting link tag', ->
   fakeHead.append($('<link id="foo" rel="icon"></link>'))
@@ -42,9 +46,13 @@ test 'replace exisiting link tag', ->
   link = links[0]
 
   ok !link.getAttribute('id'), 'existing link should be replaced with a new one'
-  equal link.getAttribute('href'), 'foobar', 'href attribute for the link should be properly set'
-  equal link.getAttribute('rel'), 'icon', 'rel attribute for the link should be properly set'
-  equal link.getAttribute('type'), 'image/png', 'type attribute for the link should be properly set'
+  stop()
+  setTimeout ->
+    start()
+    equal link.getAttribute('href'), 'foobar', 'href attribute for the link should be properly set'
+    equal link.getAttribute('rel'), 'icon', 'rel attribute for the link should be properly set'
+    equal link.getAttribute('type'), 'image/png', 'type attribute for the link should be properly set'
+  , 20
 
 test 'find link with rel=icon only', ->
   fakeHead.append($('<link id="foo" rel="foo"></link>'))
