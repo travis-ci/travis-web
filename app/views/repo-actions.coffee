@@ -68,12 +68,6 @@ View = BasicView.extend
       @popup('code-climate')
       return false
 
-    removeLogPopup: ->
-      if @get('canRemoveLog')
-        @set('active', true)
-        @popup('remove-log-popup')
-        return false
-
   hasPermission: (->
     if permissions = @get('currentUser.permissions')
       permissions.contains parseInt(@get('repo.id'))
