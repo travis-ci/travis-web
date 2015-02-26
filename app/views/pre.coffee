@@ -113,6 +113,7 @@ View = BasicView.extend
 
   actions:
     toTop: () ->
+      Travis.tailing.stop()
       $(window).scrollTop(0)
 
     toggleTailing: ->
