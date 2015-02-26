@@ -1,191 +1,215 @@
 /*
- * Dashboard
- * @todo: split into components: filter, search
+ * Dashboard List 
  */
+
+@mixin colorDbelements($color)
+ .db-status
+   background-color: $color
+ .db-repo
+   h2, h3, a
+     color: $color
+ .db-job
+   color: $color
+   a
+     color: $color
+
+%br-4px
+ border-radius: 4px
+
+$db-gray: #C9C9C9
+$db-text-color: #ACAAAA
+
+.dashboard
+  color: $db-text-color
+  hr
+    max-width: 1024px
+    margin: auto
+    border-top: none
+    border-bottom: $db-gray dashed 1px
 
 .wrapper-dashboard
   background-color: $wrapper-bg-color
 
-  #top
-    .user
-      a
-        padding-right: 0
+.dashboard--empty
+  padding: 2em 5em
+  background: #E8E6DE
+  color: $db-gray
+  font-size: 20px
+  font-weight: 300
+  text-align: center
+  @extend %br-4px
+  p .icon
+    width: 1.5em
+    height: 1.5em
+    transform: translate(-20%, 18%)
 
-.current-org-avatar
-  display     : inline-block
-  height      : 20px
-  width       : 20px
-  vertical-align: top
-  margin : -5px 5px 0 0
+.db
+  position: relative
+  margin-bottom: 1em
+  background: $white
+  @extend %br-4px
 
-#filters-search
-  background    : $white
-  font-size     : 14px
-  padding       : 5px 0 5px 0
-  max-height    : 44px
+  h2, h3, p
+    margin: 0
+    font-weight: 400
+    white-space: nowrap
 
-#filters
-  float : left
+  .icon
+    position: absolute
+    left: 0
+    top: 0
+    bottom: 0
+    margin: auto
 
-#filters ul
-  text-align : left
-  display    : inline
-  margin     : 0
-  padding    : 0
-  list-style : none
-  z-index    : 1000
+  &.started
+    @include colorDbelements($start-color)
+  &.failed
+    @include colorDbelements($fail-color)
+  &.errored
+    @include colorDbelements($error-color)
+  &.canceled
+    @include colorDbelements($cancel-color)
+  &.passed
+    @include colorDbelements($pass-color)
+  &.inactive
+    @include colorDbelements($cancel-color)
 
-#filters ul li
-  background   : $white
-  position     : relative
-  display      : inline-block
-  padding      : 10px 0 10px 0
-  margin-right : -4px
-  margin-top   : 0
-  cursor       : pointer
-  border-radius         : 0px
+.db-repo
+  padding-left: 3em
+  transform: translateY(0.4em)
+  overflow: hidden
+  margin-bottom: 1em
+  &:after
+    content: ""
+    display: block
+    position: absolute
+    top: 0
+    right: 0
+    height: 100%
+    width: 3em
+    background: linear-gradient(-90deg, $white 40%, rgba($white, 0))
 
-#filters li.filters-start:hover
-  background-color : #fff
+.db-status
+  position: absolute;
+  top: 0
+  left: 0
+  height: 100%
+  width: 2.5em
+  border-top-left-radius: 4px
+  border-bottom-left-radius: 4px
 
-#filters ul li ul
-  padding    : 0
-  position   : absolute
-  top        : 35px
-  left       : 0
-  width      : 200px
-  display    : none
-  opacity    : 0
-  visibility : hidden
-  box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
+  .icon
+    width: 1.1em
+    height: 1.1em
+    right: 0
+  .icon-status
+    top: -6em
+  .icon-star
+    top: -2em
+    opacity: .9
 
-#filters ul li ul li
-  display      : block
-  line-height  : 23px
-  padding-left : 20px
+.db-controls
+  line-height: 2.2
+  p,
+  button
+    display: inline-block
+  button
+    margin-left: 1em
 
-#filters ul li ul li:first-child
-  border-top-left-radius  : 4px
-  border-top-right-radius : 4px
+  .icon
+    width: 1.4em
+    height: 1.4em
 
-#filters ul li ul li:last-child
-  border-bottom-left-radius  : 4px
-  border-bottom-right-radius : 4px
+.db-job,
+.db-branch,
+.db-commit,
+.db-timeago
+  position: relative
+  padding-left: 2.2em
+  z-index: 30
+  overflow: hidden
 
-#filters ul li ul li div
-  display          : inline-block
-  width            : 20px
-  height           : 20px
-  margin-right     : 5px
-  text-indent      : -9999px
-  border-radius    : 100px
+.db-lock
+  position: absolute
+  left: -2.1em;
+  top: 1.2em;
+  .icon
+    width: 1em
+    height: 1em
 
-#filters ul li ul li:hover
-  background : #5e869a
-  color      : $white
+.db-activation
+  margin: 1em 0 .5em
+  text-align: right
+  padding-right: 0
+  @media #{$medium-up}
+    margin: 0
 
-#filters ul li:hover ul
-  display    : block
-  opacity    : 1
-  visibility : visible
+.db-burger
+  position: absolute;
+  top: 0
+  right: 0
+  height: 4em
+  width: 4em
+  cursor: pointer
+  z-index: 30
+  .icon
+    width: 2em
+    height: 2em
+    right: 0
 
-#views
-  float : left
+.dropdown--db
+  display: none
 
-#views ul
-  text-align : left
-  display    : inline
-  margin     : 0
-  padding    : 0
-  list-style : none
-  z-index    : 1000
+.db-burger:hover ~ .dropdown--db,
+.dropdown--db:hover
+  display: block
 
-#views ul li
-  background   : $white
-  position     : relative
-  display      : inline-block
-  padding      : 10px 0 10px 0
-  margin-right : -4px
-  margin-top   : 0
-  cursor       : pointer
-  border-radius         : 0px
-  -webkit-border-radius : 0px
-  -moz-border-radius    : 0px
+.dashboard-starred,
+.dashboard-active,
+.dashboard-inactive
+  padding: 0 3em
+  margin: 3em 0 3em
 
-#views li.views-start:hover
-  background-color : #fff
+.dashboard-starred
+  .db
+    padding-bottom: .2em
+    @media #{$medium-up}
+      width: grid-calc(17, 36)
+      &:nth-child(2n)
+        float: right
+      &:nth-child(2n + 1)
+        float: left
+  .db-controls
+    padding-left: 3em
 
-#views ul li ul
-  padding    : 0
-  position   : absolute
-  top        : 35px
-  left       : 0
-  width      : 200px
-  display    : none
-  opacity    : 0
-  visibility : hidden
-  box-shadow         : 2px 1px 4px 0px rgba(148,145,138,0.4)
+.dashboard-active,
+.dashboard-inactive
+  .db
+    padding-bottom: 0.2em;
+  .db-repo,
+  .db-controls
+    padding-left: 4em
+  @media #{$medium-up}
+    .db
+      height: 57px
+    .db-repo
+      padding-left: 4em
+    .db-controls
+      padding-left: 2em
+      line-height: 3em
+      transform: translateY(26%)
+      border-left: 1px solid $db-gray
+    .db-burger
+      height: 100%
+    .db-status
+      .icon-status
+        top: -2em
+      .icon-star
+        bottom: -4em
 
-#views ul li ul li
-  display      : block
-  line-height  : 23px
-  padding-left : 20px
-
-#views ul li ul li:first-child
-  border-top-left-radius  : 4px
-  border-top-right-radius : 4px
-
-#views ul li ul li:last-child
-  border-bottom-left-radius  : 4px
-  border-bottom-right-radius : 4px
-
-#views ul li ul li:hover
-  background : #5e869a
-  color      : $white
-
-#views ul li:hover ul
-  display    : block
-  opacity    : 1
-  visibility : visible
-
-.currently-selected
-  font-weight : 600
-
-.arrow-down
-  width        : 0
-  height       : 0
-  display      : inline-block
-  padding-top  : 2px
-  margin-left  : 5px
-  border-left  : 5px solid transparent
-  border-right : 5px solid transparent
-  border-top   : 5px solid $dashboard-text-color
-
-#search
-  float : right
-
-#search ul
-  text-align   : left
-  margin       : 0
-  padding-left : 0
-  list-style   : none
-
-#search ul li
-  position     : relative
-  display      : inline-block
-  padding      : 9px 0 8px 0
-  margin-top   : 0
-  width        : 158px
-  line-height  : 17px
-
-.search-field
-  background-image   : url('/images/dashboard/search-icon.svg')
-  background-repeat  : no-repeat
-  background-position: right 5px center
-  display            : inline-block
-  float              : right
-  border             : 1px solid #666
-  padding            : 0.5em
-  width              : 300px
-  background-size    : 16px 16px
+.dashboard-inactive
+  margin-bottom: 5em
+  .db
+    h2, h3, p, button, .db-status
+      opacity: .7
 

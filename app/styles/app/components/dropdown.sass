@@ -1,0 +1,83 @@
+/*
+ * Dashboard Activation Dropdown
+ */
+
+$dropdown-border: #C3D9DB
+
+.dropdown--db
+  @include resetul
+  @extend %br-4px
+  position: absolute
+  padding: .8em .5em
+  z-index: 90
+  width: 12.5em;
+  right: 0;
+  top: 4em;
+  border: 2px $dropdown-border solid;
+  background-color: $white
+  display: none
+  a
+    display: block
+    padding: 0.4em 1em .2em
+    &:hover
+      background-color: $dropdown-color
+      color: $white
+  &:before
+    content: ""
+    width: 1.2em
+    height: 1.2em
+    display: block
+    position: absolute
+    top: -0.7em;
+    right: 1.1em;
+    background-color: $white
+    border-top: solid 2px $dropdown-border;
+    border-left: solid 2px $dropdown-border;
+    transform: rotate(45deg);
+
+
+/*
+ * Dashboard Organizations Dropdown
+ */
+.filter
+  position: relative
+  img
+    max-width: 20px
+    max-height: 20px
+    margin-right: .5em
+    margin-top: -0.1em
+    border-radius: 50%
+    overflow: hidden
+
+.filter--org
+  float: left
+
+.filter-current
+  padding: .9em 0
+  cursor: pointer
+
+.filter-dropdown
+  @include resetul
+  position: absolute
+  top: 3em
+  min-width: 12em
+  background-color: $white
+  border-radius: 4px
+  overflow: hidden
+  box-shadow: 2px 1px 4px 0px rgba(148,145,138,0.4)
+  z-index: 40
+  display: none
+  a
+    display: inline-block
+    width: 100%
+    padding: 10px 10px 10px 20px
+    &:hover
+      color: $white
+      background : #5e869a
+  .is-selected
+    a
+      font-weight: 600
+
+.filter-current:hover ~ .filter-dropdown,
+.filter-dropdown:hover
+  display: block

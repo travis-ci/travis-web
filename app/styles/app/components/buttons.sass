@@ -57,6 +57,7 @@ $button-border-color: #d4d4d4
   .button--signin
     display: inline-block
     padding: 0.7em 2em 0.65em 0.6em
+    margin-right: 1em
     color: $white
     font-size: $font-size-small
     line-height: 1
@@ -66,7 +67,7 @@ $button-border-color: #d4d4d4
     vertical-align: middle
     cursor: pointer
     background:
-      color: #39a85b
+      color: $pass-color
       image: inline-image('ui/github-signin.svg')
       repeat: no-repeat
       position: 95.5% 45%
@@ -77,7 +78,20 @@ $button-border-color: #d4d4d4
       background-image: inline-image('ui/spinner.svg')
       background-position: 92% 47%
       &:hover
-        background-color: #39a85b
+        background-color: $pass-color
+
+
+.button
+  border-radius: 4px
+.button--green
+  border: none
+  font-size: $font-size-small
+  color: $white
+  background-color: $pass-color
+  &:hover
+    background-color: #73c78d
+.button--fixedwidth
+  width: 8em
 
 // temp
 #auth #navigation .button--signin

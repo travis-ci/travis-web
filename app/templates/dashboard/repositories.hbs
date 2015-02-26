@@ -1,61 +1,153 @@
-<div id="filters-search">
+<div id="filters" class="section section--white section--maxheight">
   <div class="row">
-    <!--
-    <div class="small-6 medium-3 large-2 columns" id="filters">
-      <ul>
-        <li class="filters-start">
-          <div class="current-org-avatar org-travisci"></div>Travis CI <div class="arrow-down"></div>
-          <ul>
-            <li class="org-all">All organizations</li>
-            <li class="currently-selected"><div class="org-avatar org-travisci">Travis CI</div>Travis CI</li>
-            <li><div class="org-avatar org-saltinejustine">Justine Arreche</div>Justine Arreche</li>
-            <li><div class="org-avatar org-openkarma">Open Karma</div>Open Karma</li>
-            <li><div class="org-avatar org-eurucamp">eurucamp</div>eurucamp</li>
-          </ul>
-        </li>
-      </ul>
+      <div class="filter filter--org">
+        <div class="filter-current">
+          <img src="https://placehold.it/30x30" alt="">something else</a><span class="icon-arrow-down"></span>
+        </div>
+        <ul class="filter-dropdown">
+          <li><a href="#" title="">All organizations</a></li>
+          <li class="is-selected"><a href="#" title=""><img src="https://placehold.it/30x30" alt="">something else</a></li>
+          <li><a href="#" title=""><img src="https://placehold.it/30x30" alt="">something</a></li>
+          <li><a href="#" title=""><img src="https://placehold.it/30x30" alt="">eurucamp</a></li>
+        </ul>
     </div>
-    -->
-    <!-- <div class="small-6 medium-2 large-2 columns no-padding" id="views">
-      <ul>
-        <li class="views-start">
-          View all repos <div class="arrow-down"></div>
-          <ul>
-            <li class="currently-selected">View all repos</li>
-            <li>Queued builds</li>
-            <li>Failed builds</li>
-            <li>Passed builds</li>
-          </ul>
-        </li>
-      </ul>
-    </div> -->
-    {{filter-input placeholder="Search all repositories" class="search-field"
-        action="updateFilter" on="key-up"}}
+    <div class="search">
+      {{filter-input placeholder="Search all repositories" class="search-field"
+          action="updateFilter" on="key-up"}}
+    </div>
   </div>
 </div>
 
-<div class="tiles">
-  <div class="row">
-  {{#each repo in filteredRepositories}}
-    <div class="large-4 medium-6 columns">
-      <div {{bind-attr class=":tile repo.last_build.state"}}>
-        <div class="build-bar">
+<div class="dashboard">
+  <section class="dashboard-starred">
+    <div class="row">
+      {{!-- <div class="db db--pass column">
+        <div class="db-status">
+          <span class="icon icon-status icon-started"></span>
+          <span class="icon icon-star"></span>
         </div>
-        <div class="build-information">
-          <p class="org">{{repo.owner.login}}</p>
-          <p class="repo">{{#link-to "repo" repo.owner.login repo.name}}{{repo.name}}{{/link-to}}</p>
-          <div class="duration">{{format-duration repo.last_build.duration}}</div>
-          <div class="finished">{{format-time repo.last_build.finished_at}}</div>
-          <p class="build-status">
+        <div class="db-repo column">
+          <h3>travis-pro</h3>
+          <h2>travis-rubies</h2>
+        </div>
+        <div class="db-controls column end">
+          <p class="db-job column small-6"><span class="icon icon-hash"></span>9874 started</p>
+          <p class="db-commit column small-6"><span class="icon icon-github"></span>394348a</p>
+          <p class="db-timeago column small-6"><span class="icon icon-cal"></span>in queue</p>
+          <p class="db-branch column small-6"><span class="icon icon-branch"></span>master</p>
+        </div>
+        <div class="db-burger">
+          <span class="icon icon-burger"></span>
+        </div>
+        <ul class="dropdown--db">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div> --}}
+
+
+      <div class="dashboard--empty">
+        <p><span class="icon icon-star"></span>Want to keep an eye on certain projects? Star repositories below to add them in this section.</p>
+      </div>
+    </div>
+
+  </section>
+  <section class="dashboard-active">
+
+    {{#each repo in filteredRepositories}}
+      <div {{bind-attr class=":db :row repo.last_build.state"}}>
+        {{#if repo.private }}
+          <div class="db-lock"><span class="icon icon-lock"></span></div>
+        {{/if}}
+        <div class="db-status">
+          <span {{bind-attr class=":icon :icon-status repo.last_build.state"}}></span>
+          <span class="icon icon-star"></span>
+        </div>
+        <div class="db-repo column medium-3 small-12">
+          <h3>{{repo.owner.login}}</h3>
+          <h2>{{#link-to "repo" repo.owner.login repo.name}}{{repo.name}}{{/link-to}}</h2>
+        </div>
+        <div class="db-controls column medium-9 small-12 end">
+          <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
             {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
-              #{{repo.last_build.number}} {{repo.last_build.state}}
-            {{/link-to}}
-          </p>
+              {{repo.last_build.number}} {{repo.last_build.state}}
+            {{/link-to}}</p>
+          <p class="db-branch column medium-3 small-6"><span class="icon icon-branch"></span>master</p>
+          <p class="db-commit column medium-3 small-6"><span class="icon icon-github"></span>394348a</p>
+          <p class="db-timeago column medium-3 small-6"><span class="icon icon-cal"></span>{{format-time repo.last_build.finished_at}}</p>
         </div>
-        <div class="star-feature">
+        <div class="db-burger">
+          <span class="icon icon-burger"></span>
+        </div>
+        <ul class="dropdown--db">
+          <li><a href="#" title="">Deactivate repository</a></li>
+          <li><a href="#" title="">Trigger a build</a></li>
+        </ul>
+      </div>
+    {{/each}}
+
+{{!--     <div class="db db--pass row">
+      <div class="db-lock"><span class="icon icon-lock"></span></div>
+      <div class="db-status">
+        <span class="icon icon-status icon-pass"></span>
+        <span class="icon icon-star"></span>
+      </div>
+      <div class="db-repo column medium-3 small-12">
+        <h3>travis-pro</h3>
+        <h2>bubblewrap-mac-test</h2>
+      </div>
+      <div class="db-controls column medium-9 small-12 end">
+        <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>9874 passed</p>
+        <p class="db-branch column medium-3 small-6"><span class="icon icon-branch"></span>master</p>
+        <p class="db-commit column medium-3 small-6"><span class="icon icon-github"></span>394348a</p>
+        <p class="db-timeago column medium-3 small-6"><span class="icon icon-cal"></span>2 days ago</p>
+      </div>
+      <div class="db-burger">
+        <span class="icon icon-burger"></span>
+      </div>
+      <ul class="dropdown--db">
+        <li><a href="#" title="">Deactivate repository</a></li>
+        <li><a href="#" title="">Trigger a build</a></li>
+      </ul>
+    </div> --}}
+
+  </section>
+  <hr>
+  <section class="dashboard-inactive">
+    <div class="db db--pass db--inactive row">
+      <div class="db-status">
+        <span class="icon icon-status icon-pass"></span>
+      </div>
+      <div class="db-repo column medium-3 small-12">
+        <h3>travis-pro</h3>
+        <h2>travis-gatekeeper</h2>
+      </div>
+      <div class="db-controls column medium-9 small-12 end">
+        <p class="db-job column medium-2 small-4"><span class="icon icon-hash"></span>9874</p>
+        <p class="db-commit column medium-2 small-4"><span class="icon icon-github"></span>394348a</p>
+        <p class="db-timeago column medium-2 small-4"><span class="icon icon-cal"></span>3 hours ago</p>
+        <div class="db-activation column medium-5 push-1 small-12 end">
+          <p>Not active</p>
+          <button class="button button--green button--fixedwidth">Activate</button>
         </div>
       </div>
     </div>
-  {{/each}}
-  </div>
+
+    <div class="db db--inactive row">
+      <div class="db-status">
+        <span class="icon icon-status"></span>
+      </div>
+      <div class="db-repo column medium-3 small-12">
+        <h3>travis-pro</h3>
+        <h2>bubblewrap-mac-test</h2>
+      </div>
+      <div class="db-controls column medium-9 small-12 end">
+        <div class="db-activation column float-right medium-4">
+          <p>Active</p>
+          <button class="button button--green button--fixedwidth">Trigger a build</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
 </div>
