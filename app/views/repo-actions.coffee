@@ -1,4 +1,5 @@
 `import Ember from 'ember'`
+`import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls'`
 `import Job from 'travis/models/job'`
 `import config from 'travis/config/environment'`
 `import BasicView from 'travis/views/basic'`
@@ -34,6 +35,20 @@ View = BasicView.extend
           else
             Travis.flash(error: 'An error occured when canceling the build')
 
+
+    removeLog: ->
+      @popupCloseAll()
+      if @get('canRemoveLog')
+        job = @get('_job') || @get('build.jobs.firstObject')
+        job.removeLog().then ->
+          Travis.flash(success: 'Log has been successfully removed.')
+        , (xhr) ->
+          if xhr.status == 409
+            Travis.flash(error: 'Log can\'t be removed')
+          else if xhr.status == 401
+            Travis.flash(error: 'You don\'t have sufficient access to remove the log')
+          else
+            Travis.flash(error: 'An error occured when removing the log')
 
     cancelJob: ->
       if @get('canCancelJob')
@@ -78,6 +93,44 @@ View = BasicView.extend
   canRequeueJob: (->
     @get('displayRequeueJob') && @get('hasPermission')
   ).property('displayRequeueJob', 'hasPermission')
+
+  showDownloadLog: (->
+    @get('jobIdForLog') && (@get('isJobTab') || @get('isBuildTab'))
+  ).property('jobIdForLog', 'isJobTab', 'isBuildTab')
+
+  _job: (->
+    if id = @get('jobIdForLog')
+      store =Travis.__container__.lookup('store:main')
+      store.find('job', id)
+      store.recordForId('job', id)
+  ).property('jobIdForLog')
+
+  jobIdForLog: (->
+    job = @get('job.id')
+    unless job
+      if @get('build.jobs.length') == 1
+        job = @get('build.jobs').objectAt?(0).get?('id')
+    job
+  ).property('job.id', 'build.jobs.firstObject.id', 'build.jobs.length')
+
+  plainTextLogUrl: (->
+    if id = @get('jobIdForLog')
+      url = plainTextLogUrl(id)
+      if config.pro
+        token = @get('job.log.token') || @get('build.jobs.firstObject.log.token')
+        url += "&access_token=#{token}"
+      url
+  ).property('jobIdForLog', 'job.log.token', 'build.jobs.firstObject.log.token')
+
+  canRemoveLog: (->
+    @get('displayRemoveLog')
+  ).property('displayRemoveLog')
+
+  displayRemoveLog: (->
+    if job = @get('_job')
+      (@get('isJobTab') || (@get('isBuildTab') && @get('build.jobs.length') == 1)) &&
+        job.get('canRemoveLog') && @get('hasPermission')
+  ).property('isJobTab', 'isBuildTab', 'build.jobs.length', '_job.canRemoveLog', 'jobIdForLog', 'canRemoveLog', 'hasPermission')
 
   canCancelBuild: (->
     @get('displayCancelBuild') && @get('hasPermission')
