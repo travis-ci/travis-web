@@ -62,6 +62,16 @@
     color: #999
     background: inline-image('ui/workers-close.svg') no-repeat right 6px
 
+  .icon
+    width: 1.3em
+    height: 1.1em
+    margin-right: 6px
+    vertical-align: middle
+  .icon--down
+    width: 0.7em
+    height: 0.9em
+    margin-right: 4px
+
 .log-header
   height: 44px
   margin: 0
@@ -71,25 +81,6 @@
   @extend %border-top-4px
   a
     margin-left: .4em
-
-.icon
-  display: inline-block
-  background:
-    size: 100%
-    repeat: no-repeat
-  width: 1.3em
-  height: 1.1em
-  margin-right: 6px
-  vertical-align: middle
-.icon--downloadLog
-  background-image: inline-image('icons/download-log-icon.svg')
-.icon--removeLog
-  background-image: inline-image('icons/remove-log-icon.svg')
-.icon--down
-  width: 0.7em
-  height: 0.9em
-  margin-right: 4px
-  background-image: inline-image('icons/end-of-log-icon.svg')
 
 .log-body
   position: relative

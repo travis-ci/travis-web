@@ -42,14 +42,16 @@
 @import "app/tabs";
 @import "app/tipsy";
 
-@import "app/components/section";
-@import "app/components/loader";
-// @import "app/components/tiles";
 @import "app/components/travis-switch";
-@import "app/components/buttons";
-@import "app/components/icons";
-@import "app/components/search";
-@import "app/components/dropdown";
+@import "app/components/sync-button";
+
+@import "app/modules/section";
+@import "app/modules/loader";
+// @import "app/modules/tiles";
+@import "app/modules/buttons";
+@import "app/modules/icons";
+@import "app/modules/search";
+@import "app/modules/dropdown";
 
 @import "app/layout";
 @import "app/layouts/dashboard";
