@@ -3,8 +3,7 @@
 Component = Ember.Component.extend
   actions: {
     sync: ->
-        console.log(@get('user'));
+      @get('user').sync()
   }
-  
 
 `export default Component`

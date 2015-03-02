@@ -1,11 +1,14 @@
 <div class="sync-button">
-  <p class="sync-last">last synced {{user.syncedAt}}</p>
-  <button {{action sync}} class="button">
-    <span class="icon icon-sync"></span>Sync account
-  </button>
-  <button class="button is-syncing">
-    <span class="sync-spinner"><i></i><i></i><i></i></span>Syncing from Github
-  </button>
+  {{#if user.isSyncing }}
+    <button class="button is-syncing">
+      <span class="sync-spinner"><i></i><i></i><i></i></span>Syncing from Github
+    </button>
+  {{else}}
+    <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
+    <button {{action sync}} class="button">
+      <span class="icon icon-sync"></span>Sync account
+    </button>
+  {{/if}}
 </div>
 
 
