@@ -4,7 +4,16 @@
       <span class="loading"></span>
     {{else}}
       <a href="" title="">
-        {{#if selected }}<img src="https://placehold.it/30x30" alt="">{{selected.name}} {{else}} All organizations {{/if}}
+        {{#if selected }}
+          <img src="https://placehold.it/30x30" alt="">
+          {{#if selected.name}}
+            {{selected.name}}
+          {{else}}
+            {{selected.login}}
+          {{/if}}
+        {{else}}
+          All organizations
+        {{/if}}
       </a><span class="icon-arrow-down"></span>
     {{/if}}
   </div>
