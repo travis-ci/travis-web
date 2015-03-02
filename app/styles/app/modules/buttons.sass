@@ -52,11 +52,10 @@ $button-border-color: #d4d4d4
   border: 1px solid #40454F
   cursor: pointer
 
-
-#top #navigation // bad style, we really need to get rid of the ids in the styles
-  .button--signin
+#top
+  .button--signin,
+  .button--signingin
     display: inline-block
-    padding: 0.7em 2em 0.65em 0.6em
     margin-right: 1em
     color: $white
     font-size: $font-size-small
@@ -65,21 +64,27 @@ $button-border-color: #d4d4d4
     border-radius: 4px
     border: none
     vertical-align: middle
-    cursor: pointer
     background:
       color: $pass-color
+
+  .button--signin
+    padding: 0.6em 2em 0.55em 0.6em
+    cursor: pointer
+    background:
       image: inline-image('ui/github-signin.svg')
       repeat: no-repeat
       position: 95.5% 45%
     &:hover
       background-color: #73c78d
       text-decoration: none
-    &.signing-in
-      background-image: inline-image('ui/spinner.svg')
-      background-position: 92% 47%
-      &:hover
-        background-color: $pass-color
 
+  .button--signingin
+    padding: 0.6em 0.6em 0.45em
+    span
+      display: inline-block
+      padding: 0 .2em
+      position: relative
+      top: -0.2em
 
 .button
   border-radius: 4px

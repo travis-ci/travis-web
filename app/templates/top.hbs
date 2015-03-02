@@ -75,7 +75,7 @@
           {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
-          <button class="signing-in button--signin">Signing In</button>
+          <button class="signing-in button--signingin">Signing In <span class="sync-spinner"><i></i><i></i><i></i></span></button>
         {{/if}}
       </p>
       <ul>
