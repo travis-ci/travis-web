@@ -1,0 +1,3262 @@
+/* line 1, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-version {
+  font-family: "/5.5.0/";
+}
+
+/* line 4, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-small {
+  font-family: "/only screen/";
+  width: 0;
+}
+
+/* line 8, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-small-only {
+  font-family: "/only screen and (max-width: 40em)/";
+  width: 0;
+}
+
+/* line 12, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-medium {
+  font-family: "/only screen and (min-width:40.063em)/";
+  width: 40.063em;
+}
+
+/* line 16, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-medium-only {
+  font-family: "/only screen and (min-width:40.063em) and (max-width:64em)/";
+  width: 40.063em;
+}
+
+/* line 20, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-large {
+  font-family: "/only screen and (min-width:64.063em)/";
+  width: 64.063em;
+}
+
+/* line 24, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-large-only {
+  font-family: "/only screen and (min-width:64.063em) and (max-width:90em)/";
+  width: 64.063em;
+}
+
+/* line 28, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-xlarge {
+  font-family: "/only screen and (min-width:90.063em)/";
+  width: 90.063em;
+}
+
+/* line 32, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-xlarge-only {
+  font-family: "/only screen and (min-width:90.063em) and (max-width:120em)/";
+  width: 90.063em;
+}
+
+/* line 36, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-mq-xxlarge {
+  font-family: "/only screen and (min-width:120.063em)/";
+  width: 120.063em;
+}
+
+/* line 40, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+meta.foundation-data-attribute-namespace {
+  font-family: false;
+}
+
+/* line 43, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 46, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 53, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+html,
+body {
+  font-size: 100%;
+}
+
+/* line 57, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+body {
+  background: #fff;
+  color: #5e6872;
+  padding: 0;
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.5;
+  position: relative;
+  cursor: auto;
+}
+
+/* line 69, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+a:hover {
+  cursor: pointer;
+}
+
+/* line 72, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* line 76, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+img {
+  -ms-interpolation-mode: bicubic;
+}
+
+/* line 79, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+#map_canvas img,
+#map_canvas embed,
+#map_canvas object,
+.map_canvas img,
+.map_canvas embed,
+.map_canvas object {
+  max-width: none !important;
+}
+
+/* line 87, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.left {
+  float: left !important;
+}
+
+/* line 90, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.right {
+  float: right !important;
+}
+
+/* line 93, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+
+/* line 96, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.clearfix:after {
+  clear: both;
+}
+
+/* line 99, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.hide {
+  display: none !important;
+  visibility: hidden;
+}
+
+/* line 103, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.invisible {
+  visibility: hidden;
+}
+
+/* line 106, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* line 110, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* line 114, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+textarea {
+  height: auto;
+  min-height: 50px;
+}
+
+/* line 118, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+select {
+  width: 100%;
+}
+
+/* line 121, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 1024px;
+}
+
+/* line 128, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row:before, .row:after {
+  content: " ";
+  display: table;
+}
+
+/* line 131, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row:after {
+  clear: both;
+}
+
+/* line 133, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row.collapse > .column,
+.row.collapse > .columns {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* line 137, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row.collapse .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* line 140, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row .row {
+  width: auto;
+  margin-left: -0.9375em;
+  margin-right: -0.9375em;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: none;
+}
+
+/* line 147, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row .row:before, .row .row:after {
+  content: " ";
+  display: table;
+}
+
+/* line 150, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row .row:after {
+  clear: both;
+}
+
+/* line 152, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row .row.collapse {
+  width: auto;
+  margin: 0;
+  max-width: none;
+}
+
+/* line 156, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row .row.collapse:before, .row .row.collapse:after {
+  content: " ";
+  display: table;
+}
+
+/* line 159, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.row .row.collapse:after {
+  clear: both;
+}
+
+/* line 162, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.column,
+.columns {
+  padding-left: 0.9375em;
+  padding-right: 0.9375em;
+  width: 100%;
+  float: left;
+}
+
+/* line 169, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+[class*="column"] + [class*="column"]:last-child {
+  float: right;
+}
+
+/* line 172, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+[class*="column"] + [class*="column"].end {
+  float: left;
+}
+
+@media only screen {
+  /* line 176, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-0 {
+    position: relative;
+    left: 0%;
+    right: auto;
+  }
+
+  /* line 181, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-0 {
+    position: relative;
+    right: 0%;
+    left: auto;
+  }
+
+  /* line 186, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-1 {
+    position: relative;
+    left: 8.33333%;
+    right: auto;
+  }
+
+  /* line 191, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-1 {
+    position: relative;
+    right: 8.33333%;
+    left: auto;
+  }
+
+  /* line 196, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-2 {
+    position: relative;
+    left: 16.66667%;
+    right: auto;
+  }
+
+  /* line 201, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-2 {
+    position: relative;
+    right: 16.66667%;
+    left: auto;
+  }
+
+  /* line 206, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-3 {
+    position: relative;
+    left: 25%;
+    right: auto;
+  }
+
+  /* line 211, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-3 {
+    position: relative;
+    right: 25%;
+    left: auto;
+  }
+
+  /* line 216, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-4 {
+    position: relative;
+    left: 33.33333%;
+    right: auto;
+  }
+
+  /* line 221, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-4 {
+    position: relative;
+    right: 33.33333%;
+    left: auto;
+  }
+
+  /* line 226, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-5 {
+    position: relative;
+    left: 41.66667%;
+    right: auto;
+  }
+
+  /* line 231, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-5 {
+    position: relative;
+    right: 41.66667%;
+    left: auto;
+  }
+
+  /* line 236, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-6 {
+    position: relative;
+    left: 50%;
+    right: auto;
+  }
+
+  /* line 241, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-6 {
+    position: relative;
+    right: 50%;
+    left: auto;
+  }
+
+  /* line 246, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-7 {
+    position: relative;
+    left: 58.33333%;
+    right: auto;
+  }
+
+  /* line 251, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-7 {
+    position: relative;
+    right: 58.33333%;
+    left: auto;
+  }
+
+  /* line 256, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-8 {
+    position: relative;
+    left: 66.66667%;
+    right: auto;
+  }
+
+  /* line 261, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-8 {
+    position: relative;
+    right: 66.66667%;
+    left: auto;
+  }
+
+  /* line 266, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-9 {
+    position: relative;
+    left: 75%;
+    right: auto;
+  }
+
+  /* line 271, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-9 {
+    position: relative;
+    right: 75%;
+    left: auto;
+  }
+
+  /* line 276, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-10 {
+    position: relative;
+    left: 83.33333%;
+    right: auto;
+  }
+
+  /* line 281, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-10 {
+    position: relative;
+    right: 83.33333%;
+    left: auto;
+  }
+
+  /* line 286, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-push-11 {
+    position: relative;
+    left: 91.66667%;
+    right: auto;
+  }
+
+  /* line 291, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-pull-11 {
+    position: relative;
+    right: 91.66667%;
+    left: auto;
+  }
+
+  /* line 296, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column,
+  .columns {
+    position: relative;
+    padding-left: 0.9375em;
+    padding-right: 0.9375em;
+    float: left;
+  }
+
+  /* line 303, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-1 {
+    width: 8.33333%;
+  }
+
+  /* line 306, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-2 {
+    width: 16.66667%;
+  }
+
+  /* line 309, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-3 {
+    width: 25%;
+  }
+
+  /* line 312, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-4 {
+    width: 33.33333%;
+  }
+
+  /* line 315, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-5 {
+    width: 41.66667%;
+  }
+
+  /* line 318, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-6 {
+    width: 50%;
+  }
+
+  /* line 321, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-7 {
+    width: 58.33333%;
+  }
+
+  /* line 324, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-8 {
+    width: 66.66667%;
+  }
+
+  /* line 327, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-9 {
+    width: 75%;
+  }
+
+  /* line 330, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-10 {
+    width: 83.33333%;
+  }
+
+  /* line 333, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-11 {
+    width: 91.66667%;
+  }
+
+  /* line 336, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-12 {
+    width: 100%;
+  }
+
+  /* line 339, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-0 {
+    margin-left: 0% !important;
+  }
+
+  /* line 342, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-1 {
+    margin-left: 8.33333% !important;
+  }
+
+  /* line 345, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-2 {
+    margin-left: 16.66667% !important;
+  }
+
+  /* line 348, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-3 {
+    margin-left: 25% !important;
+  }
+
+  /* line 351, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-4 {
+    margin-left: 33.33333% !important;
+  }
+
+  /* line 354, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-5 {
+    margin-left: 41.66667% !important;
+  }
+
+  /* line 357, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-6 {
+    margin-left: 50% !important;
+  }
+
+  /* line 360, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-7 {
+    margin-left: 58.33333% !important;
+  }
+
+  /* line 363, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-8 {
+    margin-left: 66.66667% !important;
+  }
+
+  /* line 366, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-9 {
+    margin-left: 75% !important;
+  }
+
+  /* line 369, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-10 {
+    margin-left: 83.33333% !important;
+  }
+
+  /* line 372, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-offset-11 {
+    margin-left: 91.66667% !important;
+  }
+
+  /* line 375, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-reset-order {
+    margin-left: 0;
+    margin-right: 0;
+    left: auto;
+    right: auto;
+    float: left;
+  }
+
+  /* line 382, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.small-centered,
+  .columns.small-centered {
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+  }
+
+  /* line 388, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.small-uncentered,
+  .columns.small-uncentered {
+    margin-left: 0;
+    margin-right: 0;
+    float: left;
+  }
+
+  /* line 394, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.small-centered:last-child,
+  .columns.small-centered:last-child {
+    float: none;
+  }
+
+  /* line 398, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.small-uncentered:last-child,
+  .columns.small-uncentered:last-child {
+    float: left;
+  }
+
+  /* line 402, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.small-uncentered.opposite,
+  .columns.small-uncentered.opposite {
+    float: right;
+  }
+
+  /* line 406, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.small-collapse > .column,
+  .row.small-collapse > .columns {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* line 410, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.small-collapse .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* line 413, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.small-uncollapse > .column,
+  .row.small-uncollapse > .columns {
+    padding-left: 0.9375em;
+    padding-right: 0.9375em;
+    float: left;
+  }
+}
+@media only screen and (min-width: 40.063em) {
+  /* line 419, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-0 {
+    position: relative;
+    left: 0%;
+    right: auto;
+  }
+
+  /* line 424, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-0 {
+    position: relative;
+    right: 0%;
+    left: auto;
+  }
+
+  /* line 429, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-1 {
+    position: relative;
+    left: 8.33333%;
+    right: auto;
+  }
+
+  /* line 434, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-1 {
+    position: relative;
+    right: 8.33333%;
+    left: auto;
+  }
+
+  /* line 439, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-2 {
+    position: relative;
+    left: 16.66667%;
+    right: auto;
+  }
+
+  /* line 444, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-2 {
+    position: relative;
+    right: 16.66667%;
+    left: auto;
+  }
+
+  /* line 449, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-3 {
+    position: relative;
+    left: 25%;
+    right: auto;
+  }
+
+  /* line 454, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-3 {
+    position: relative;
+    right: 25%;
+    left: auto;
+  }
+
+  /* line 459, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-4 {
+    position: relative;
+    left: 33.33333%;
+    right: auto;
+  }
+
+  /* line 464, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-4 {
+    position: relative;
+    right: 33.33333%;
+    left: auto;
+  }
+
+  /* line 469, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-5 {
+    position: relative;
+    left: 41.66667%;
+    right: auto;
+  }
+
+  /* line 474, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-5 {
+    position: relative;
+    right: 41.66667%;
+    left: auto;
+  }
+
+  /* line 479, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-6 {
+    position: relative;
+    left: 50%;
+    right: auto;
+  }
+
+  /* line 484, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-6 {
+    position: relative;
+    right: 50%;
+    left: auto;
+  }
+
+  /* line 489, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-7 {
+    position: relative;
+    left: 58.33333%;
+    right: auto;
+  }
+
+  /* line 494, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-7 {
+    position: relative;
+    right: 58.33333%;
+    left: auto;
+  }
+
+  /* line 499, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-8 {
+    position: relative;
+    left: 66.66667%;
+    right: auto;
+  }
+
+  /* line 504, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-8 {
+    position: relative;
+    right: 66.66667%;
+    left: auto;
+  }
+
+  /* line 509, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-9 {
+    position: relative;
+    left: 75%;
+    right: auto;
+  }
+
+  /* line 514, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-9 {
+    position: relative;
+    right: 75%;
+    left: auto;
+  }
+
+  /* line 519, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-10 {
+    position: relative;
+    left: 83.33333%;
+    right: auto;
+  }
+
+  /* line 524, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-10 {
+    position: relative;
+    right: 83.33333%;
+    left: auto;
+  }
+
+  /* line 529, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-push-11 {
+    position: relative;
+    left: 91.66667%;
+    right: auto;
+  }
+
+  /* line 534, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-pull-11 {
+    position: relative;
+    right: 91.66667%;
+    left: auto;
+  }
+
+  /* line 539, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column,
+  .columns {
+    position: relative;
+    padding-left: 0.9375em;
+    padding-right: 0.9375em;
+    float: left;
+  }
+
+  /* line 546, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-1 {
+    width: 8.33333%;
+  }
+
+  /* line 549, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-2 {
+    width: 16.66667%;
+  }
+
+  /* line 552, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-3 {
+    width: 25%;
+  }
+
+  /* line 555, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-4 {
+    width: 33.33333%;
+  }
+
+  /* line 558, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-5 {
+    width: 41.66667%;
+  }
+
+  /* line 561, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-6 {
+    width: 50%;
+  }
+
+  /* line 564, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-7 {
+    width: 58.33333%;
+  }
+
+  /* line 567, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-8 {
+    width: 66.66667%;
+  }
+
+  /* line 570, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-9 {
+    width: 75%;
+  }
+
+  /* line 573, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-10 {
+    width: 83.33333%;
+  }
+
+  /* line 576, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-11 {
+    width: 91.66667%;
+  }
+
+  /* line 579, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-12 {
+    width: 100%;
+  }
+
+  /* line 582, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-0 {
+    margin-left: 0% !important;
+  }
+
+  /* line 585, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-1 {
+    margin-left: 8.33333% !important;
+  }
+
+  /* line 588, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-2 {
+    margin-left: 16.66667% !important;
+  }
+
+  /* line 591, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-3 {
+    margin-left: 25% !important;
+  }
+
+  /* line 594, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-4 {
+    margin-left: 33.33333% !important;
+  }
+
+  /* line 597, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-5 {
+    margin-left: 41.66667% !important;
+  }
+
+  /* line 600, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-6 {
+    margin-left: 50% !important;
+  }
+
+  /* line 603, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-7 {
+    margin-left: 58.33333% !important;
+  }
+
+  /* line 606, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-8 {
+    margin-left: 66.66667% !important;
+  }
+
+  /* line 609, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-9 {
+    margin-left: 75% !important;
+  }
+
+  /* line 612, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-10 {
+    margin-left: 83.33333% !important;
+  }
+
+  /* line 615, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-offset-11 {
+    margin-left: 91.66667% !important;
+  }
+
+  /* line 618, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-reset-order {
+    margin-left: 0;
+    margin-right: 0;
+    left: auto;
+    right: auto;
+    float: left;
+  }
+
+  /* line 625, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.medium-centered,
+  .columns.medium-centered {
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+  }
+
+  /* line 631, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.medium-uncentered,
+  .columns.medium-uncentered {
+    margin-left: 0;
+    margin-right: 0;
+    float: left;
+  }
+
+  /* line 637, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.medium-centered:last-child,
+  .columns.medium-centered:last-child {
+    float: none;
+  }
+
+  /* line 641, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.medium-uncentered:last-child,
+  .columns.medium-uncentered:last-child {
+    float: left;
+  }
+
+  /* line 645, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.medium-uncentered.opposite,
+  .columns.medium-uncentered.opposite {
+    float: right;
+  }
+
+  /* line 649, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.medium-collapse > .column,
+  .row.medium-collapse > .columns {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* line 653, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.medium-collapse .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* line 656, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.medium-uncollapse > .column,
+  .row.medium-uncollapse > .columns {
+    padding-left: 0.9375em;
+    padding-right: 0.9375em;
+    float: left;
+  }
+
+  /* line 662, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-0 {
+    position: relative;
+    left: 0%;
+    right: auto;
+  }
+
+  /* line 667, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-0 {
+    position: relative;
+    right: 0%;
+    left: auto;
+  }
+
+  /* line 672, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-1 {
+    position: relative;
+    left: 8.33333%;
+    right: auto;
+  }
+
+  /* line 677, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-1 {
+    position: relative;
+    right: 8.33333%;
+    left: auto;
+  }
+
+  /* line 682, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-2 {
+    position: relative;
+    left: 16.66667%;
+    right: auto;
+  }
+
+  /* line 687, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-2 {
+    position: relative;
+    right: 16.66667%;
+    left: auto;
+  }
+
+  /* line 692, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-3 {
+    position: relative;
+    left: 25%;
+    right: auto;
+  }
+
+  /* line 697, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-3 {
+    position: relative;
+    right: 25%;
+    left: auto;
+  }
+
+  /* line 702, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-4 {
+    position: relative;
+    left: 33.33333%;
+    right: auto;
+  }
+
+  /* line 707, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-4 {
+    position: relative;
+    right: 33.33333%;
+    left: auto;
+  }
+
+  /* line 712, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-5 {
+    position: relative;
+    left: 41.66667%;
+    right: auto;
+  }
+
+  /* line 717, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-5 {
+    position: relative;
+    right: 41.66667%;
+    left: auto;
+  }
+
+  /* line 722, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-6 {
+    position: relative;
+    left: 50%;
+    right: auto;
+  }
+
+  /* line 727, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-6 {
+    position: relative;
+    right: 50%;
+    left: auto;
+  }
+
+  /* line 732, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-7 {
+    position: relative;
+    left: 58.33333%;
+    right: auto;
+  }
+
+  /* line 737, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-7 {
+    position: relative;
+    right: 58.33333%;
+    left: auto;
+  }
+
+  /* line 742, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-8 {
+    position: relative;
+    left: 66.66667%;
+    right: auto;
+  }
+
+  /* line 747, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-8 {
+    position: relative;
+    right: 66.66667%;
+    left: auto;
+  }
+
+  /* line 752, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-9 {
+    position: relative;
+    left: 75%;
+    right: auto;
+  }
+
+  /* line 757, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-9 {
+    position: relative;
+    right: 75%;
+    left: auto;
+  }
+
+  /* line 762, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-10 {
+    position: relative;
+    left: 83.33333%;
+    right: auto;
+  }
+
+  /* line 767, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-10 {
+    position: relative;
+    right: 83.33333%;
+    left: auto;
+  }
+
+  /* line 772, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-11 {
+    position: relative;
+    left: 91.66667%;
+    right: auto;
+  }
+
+  /* line 777, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-11 {
+    position: relative;
+    right: 91.66667%;
+    left: auto;
+  }
+}
+@media only screen and (min-width: 64.063em) {
+  /* line 782, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-0 {
+    position: relative;
+    left: 0%;
+    right: auto;
+  }
+
+  /* line 787, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-0 {
+    position: relative;
+    right: 0%;
+    left: auto;
+  }
+
+  /* line 792, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-1 {
+    position: relative;
+    left: 8.33333%;
+    right: auto;
+  }
+
+  /* line 797, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-1 {
+    position: relative;
+    right: 8.33333%;
+    left: auto;
+  }
+
+  /* line 802, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-2 {
+    position: relative;
+    left: 16.66667%;
+    right: auto;
+  }
+
+  /* line 807, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-2 {
+    position: relative;
+    right: 16.66667%;
+    left: auto;
+  }
+
+  /* line 812, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-3 {
+    position: relative;
+    left: 25%;
+    right: auto;
+  }
+
+  /* line 817, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-3 {
+    position: relative;
+    right: 25%;
+    left: auto;
+  }
+
+  /* line 822, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-4 {
+    position: relative;
+    left: 33.33333%;
+    right: auto;
+  }
+
+  /* line 827, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-4 {
+    position: relative;
+    right: 33.33333%;
+    left: auto;
+  }
+
+  /* line 832, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-5 {
+    position: relative;
+    left: 41.66667%;
+    right: auto;
+  }
+
+  /* line 837, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-5 {
+    position: relative;
+    right: 41.66667%;
+    left: auto;
+  }
+
+  /* line 842, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-6 {
+    position: relative;
+    left: 50%;
+    right: auto;
+  }
+
+  /* line 847, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-6 {
+    position: relative;
+    right: 50%;
+    left: auto;
+  }
+
+  /* line 852, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-7 {
+    position: relative;
+    left: 58.33333%;
+    right: auto;
+  }
+
+  /* line 857, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-7 {
+    position: relative;
+    right: 58.33333%;
+    left: auto;
+  }
+
+  /* line 862, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-8 {
+    position: relative;
+    left: 66.66667%;
+    right: auto;
+  }
+
+  /* line 867, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-8 {
+    position: relative;
+    right: 66.66667%;
+    left: auto;
+  }
+
+  /* line 872, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-9 {
+    position: relative;
+    left: 75%;
+    right: auto;
+  }
+
+  /* line 877, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-9 {
+    position: relative;
+    right: 75%;
+    left: auto;
+  }
+
+  /* line 882, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-10 {
+    position: relative;
+    left: 83.33333%;
+    right: auto;
+  }
+
+  /* line 887, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-10 {
+    position: relative;
+    right: 83.33333%;
+    left: auto;
+  }
+
+  /* line 892, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-push-11 {
+    position: relative;
+    left: 91.66667%;
+    right: auto;
+  }
+
+  /* line 897, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-pull-11 {
+    position: relative;
+    right: 91.66667%;
+    left: auto;
+  }
+
+  /* line 902, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column,
+  .columns {
+    position: relative;
+    padding-left: 0.9375em;
+    padding-right: 0.9375em;
+    float: left;
+  }
+
+  /* line 909, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-1 {
+    width: 8.33333%;
+  }
+
+  /* line 912, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-2 {
+    width: 16.66667%;
+  }
+
+  /* line 915, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-3 {
+    width: 25%;
+  }
+
+  /* line 918, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-4 {
+    width: 33.33333%;
+  }
+
+  /* line 921, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-5 {
+    width: 41.66667%;
+  }
+
+  /* line 924, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-6 {
+    width: 50%;
+  }
+
+  /* line 927, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-7 {
+    width: 58.33333%;
+  }
+
+  /* line 930, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-8 {
+    width: 66.66667%;
+  }
+
+  /* line 933, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-9 {
+    width: 75%;
+  }
+
+  /* line 936, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-10 {
+    width: 83.33333%;
+  }
+
+  /* line 939, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-11 {
+    width: 91.66667%;
+  }
+
+  /* line 942, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-12 {
+    width: 100%;
+  }
+
+  /* line 945, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-0 {
+    margin-left: 0% !important;
+  }
+
+  /* line 948, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-1 {
+    margin-left: 8.33333% !important;
+  }
+
+  /* line 951, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-2 {
+    margin-left: 16.66667% !important;
+  }
+
+  /* line 954, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-3 {
+    margin-left: 25% !important;
+  }
+
+  /* line 957, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-4 {
+    margin-left: 33.33333% !important;
+  }
+
+  /* line 960, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-5 {
+    margin-left: 41.66667% !important;
+  }
+
+  /* line 963, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-6 {
+    margin-left: 50% !important;
+  }
+
+  /* line 966, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-7 {
+    margin-left: 58.33333% !important;
+  }
+
+  /* line 969, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-8 {
+    margin-left: 66.66667% !important;
+  }
+
+  /* line 972, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-9 {
+    margin-left: 75% !important;
+  }
+
+  /* line 975, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-10 {
+    margin-left: 83.33333% !important;
+  }
+
+  /* line 978, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-offset-11 {
+    margin-left: 91.66667% !important;
+  }
+
+  /* line 981, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-reset-order {
+    margin-left: 0;
+    margin-right: 0;
+    left: auto;
+    right: auto;
+    float: left;
+  }
+
+  /* line 988, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.large-centered,
+  .columns.large-centered {
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+  }
+
+  /* line 994, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.large-uncentered,
+  .columns.large-uncentered {
+    margin-left: 0;
+    margin-right: 0;
+    float: left;
+  }
+
+  /* line 1000, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.large-centered:last-child,
+  .columns.large-centered:last-child {
+    float: none;
+  }
+
+  /* line 1004, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.large-uncentered:last-child,
+  .columns.large-uncentered:last-child {
+    float: left;
+  }
+
+  /* line 1008, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .column.large-uncentered.opposite,
+  .columns.large-uncentered.opposite {
+    float: right;
+  }
+
+  /* line 1012, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.large-collapse > .column,
+  .row.large-collapse > .columns {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* line 1016, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.large-collapse .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* line 1019, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .row.large-uncollapse > .column,
+  .row.large-uncollapse > .columns {
+    padding-left: 0.9375em;
+    padding-right: 0.9375em;
+    float: left;
+  }
+
+  /* line 1025, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-0 {
+    position: relative;
+    left: 0%;
+    right: auto;
+  }
+
+  /* line 1030, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-0 {
+    position: relative;
+    right: 0%;
+    left: auto;
+  }
+
+  /* line 1035, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-1 {
+    position: relative;
+    left: 8.33333%;
+    right: auto;
+  }
+
+  /* line 1040, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-1 {
+    position: relative;
+    right: 8.33333%;
+    left: auto;
+  }
+
+  /* line 1045, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-2 {
+    position: relative;
+    left: 16.66667%;
+    right: auto;
+  }
+
+  /* line 1050, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-2 {
+    position: relative;
+    right: 16.66667%;
+    left: auto;
+  }
+
+  /* line 1055, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-3 {
+    position: relative;
+    left: 25%;
+    right: auto;
+  }
+
+  /* line 1060, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-3 {
+    position: relative;
+    right: 25%;
+    left: auto;
+  }
+
+  /* line 1065, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-4 {
+    position: relative;
+    left: 33.33333%;
+    right: auto;
+  }
+
+  /* line 1070, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-4 {
+    position: relative;
+    right: 33.33333%;
+    left: auto;
+  }
+
+  /* line 1075, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-5 {
+    position: relative;
+    left: 41.66667%;
+    right: auto;
+  }
+
+  /* line 1080, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-5 {
+    position: relative;
+    right: 41.66667%;
+    left: auto;
+  }
+
+  /* line 1085, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-6 {
+    position: relative;
+    left: 50%;
+    right: auto;
+  }
+
+  /* line 1090, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-6 {
+    position: relative;
+    right: 50%;
+    left: auto;
+  }
+
+  /* line 1095, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-7 {
+    position: relative;
+    left: 58.33333%;
+    right: auto;
+  }
+
+  /* line 1100, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-7 {
+    position: relative;
+    right: 58.33333%;
+    left: auto;
+  }
+
+  /* line 1105, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-8 {
+    position: relative;
+    left: 66.66667%;
+    right: auto;
+  }
+
+  /* line 1110, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-8 {
+    position: relative;
+    right: 66.66667%;
+    left: auto;
+  }
+
+  /* line 1115, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-9 {
+    position: relative;
+    left: 75%;
+    right: auto;
+  }
+
+  /* line 1120, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-9 {
+    position: relative;
+    right: 75%;
+    left: auto;
+  }
+
+  /* line 1125, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-10 {
+    position: relative;
+    left: 83.33333%;
+    right: auto;
+  }
+
+  /* line 1130, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-10 {
+    position: relative;
+    right: 83.33333%;
+    left: auto;
+  }
+
+  /* line 1135, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .push-11 {
+    position: relative;
+    left: 91.66667%;
+    right: auto;
+  }
+
+  /* line 1140, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .pull-11 {
+    position: relative;
+    right: 91.66667%;
+    left: auto;
+  }
+}
+/* line 1144, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.inline-list {
+  margin: 0 auto 1.0625rem auto;
+  margin-left: -1.375rem;
+  margin-right: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+
+/* line 1151, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.inline-list > li {
+  list-style: none;
+  float: left;
+  margin-left: 1.375rem;
+  display: block;
+}
+
+/* line 1156, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.inline-list > li > * {
+  display: block;
+}
+
+/* Tooltips */
+/* line 1160, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.has-tip {
+  border-bottom: dotted 1px #CCCCCC;
+  cursor: help;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* line 1165, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.has-tip:hover, .has-tip:focus {
+  border-bottom: dotted 1px #17343e;
+  color: #347389;
+}
+
+/* line 1168, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.has-tip.tip-left, .has-tip.tip-right {
+  float: none !important;
+}
+
+/* line 1171, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.tooltip {
+  display: none;
+  position: absolute;
+  z-index: 1006;
+  font-weight: normal;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  padding: 0.75rem;
+  max-width: 300px;
+  left: 50%;
+  width: 100%;
+  color: #FFFFFF;
+  background: #333333;
+}
+
+/* line 1184, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.tooltip > .nub {
+  display: block;
+  left: 5px;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: solid 5px;
+  border-color: transparent transparent #333333 transparent;
+  top: -10px;
+  pointer-events: none;
+}
+
+/* line 1194, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.tooltip > .nub.rtl {
+  left: auto;
+  right: 5px;
+}
+
+/* line 1197, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.tooltip.radius {
+  border-radius: 3px;
+}
+
+/* line 1199, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.tooltip.round {
+  border-radius: 1000px;
+}
+
+/* line 1201, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.tooltip.round > .nub {
+  left: 2rem;
+}
+
+/* line 1203, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.tooltip.opened {
+  color: #347389 !important;
+  border-bottom: dotted 1px #17343e !important;
+}
+
+/* line 1207, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+.tap-to-close {
+  display: block;
+  font-size: 0.625rem;
+  color: #777777;
+  font-weight: normal;
+}
+
+@media only screen and (min-width: 40.063em) {
+  /* line 1214, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .tooltip > .nub {
+    border-color: transparent transparent #333333 transparent;
+    top: -10px;
+  }
+
+  /* line 1217, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .tooltip.tip-top > .nub {
+    border-color: #333333 transparent transparent transparent;
+    top: auto;
+    bottom: -10px;
+  }
+
+  /* line 1221, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .tooltip.tip-left, .tooltip.tip-right {
+    float: none !important;
+  }
+
+  /* line 1223, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .tooltip.tip-left > .nub {
+    border-color: transparent transparent transparent #333333;
+    right: -10px;
+    left: auto;
+    top: 50%;
+    margin-top: -5px;
+  }
+
+  /* line 1229, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .tooltip.tip-right > .nub {
+    border-color: transparent #333333 transparent transparent;
+    right: auto;
+    left: -10px;
+    top: 50%;
+    margin-top: -5px;
+  }
+}
+/* line 1235, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+[class*="block-grid-"] {
+  display: block;
+  padding: 0;
+  margin: 0 -0.625rem;
+}
+
+/* line 1239, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+[class*="block-grid-"]:before, [class*="block-grid-"]:after {
+  content: " ";
+  display: table;
+}
+
+/* line 1242, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+[class*="block-grid-"]:after {
+  clear: both;
+}
+
+/* line 1244, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+[class*="block-grid-"] > li {
+  display: block;
+  height: auto;
+  float: left;
+  padding: 0 0.625rem 1.25rem;
+}
+
+@media only screen {
+  /* line 1251, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-1 > li {
+    width: 100%;
+    list-style: none;
+  }
+
+  /* line 1254, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-1 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1256, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-1 > li:nth-of-type(1n+1) {
+    clear: both;
+  }
+
+  /* line 1259, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-2 > li {
+    width: 50%;
+    list-style: none;
+  }
+
+  /* line 1262, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-2 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1264, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-2 > li:nth-of-type(2n+1) {
+    clear: both;
+  }
+
+  /* line 1267, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-3 > li {
+    width: 33.33333%;
+    list-style: none;
+  }
+
+  /* line 1270, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-3 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1272, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-3 > li:nth-of-type(3n+1) {
+    clear: both;
+  }
+
+  /* line 1275, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-4 > li {
+    width: 25%;
+    list-style: none;
+  }
+
+  /* line 1278, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-4 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1280, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-4 > li:nth-of-type(4n+1) {
+    clear: both;
+  }
+
+  /* line 1283, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-5 > li {
+    width: 20%;
+    list-style: none;
+  }
+
+  /* line 1286, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-5 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1288, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-5 > li:nth-of-type(5n+1) {
+    clear: both;
+  }
+
+  /* line 1291, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-6 > li {
+    width: 16.66667%;
+    list-style: none;
+  }
+
+  /* line 1294, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-6 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1296, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-6 > li:nth-of-type(6n+1) {
+    clear: both;
+  }
+
+  /* line 1299, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-7 > li {
+    width: 14.28571%;
+    list-style: none;
+  }
+
+  /* line 1302, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-7 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1304, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-7 > li:nth-of-type(7n+1) {
+    clear: both;
+  }
+
+  /* line 1307, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-8 > li {
+    width: 12.5%;
+    list-style: none;
+  }
+
+  /* line 1310, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-8 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1312, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-8 > li:nth-of-type(8n+1) {
+    clear: both;
+  }
+
+  /* line 1315, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-9 > li {
+    width: 11.11111%;
+    list-style: none;
+  }
+
+  /* line 1318, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-9 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1320, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-9 > li:nth-of-type(9n+1) {
+    clear: both;
+  }
+
+  /* line 1323, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-10 > li {
+    width: 10%;
+    list-style: none;
+  }
+
+  /* line 1326, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-10 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1328, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-10 > li:nth-of-type(10n+1) {
+    clear: both;
+  }
+
+  /* line 1331, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-11 > li {
+    width: 9.09091%;
+    list-style: none;
+  }
+
+  /* line 1334, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-11 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1336, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-11 > li:nth-of-type(11n+1) {
+    clear: both;
+  }
+
+  /* line 1339, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-12 > li {
+    width: 8.33333%;
+    list-style: none;
+  }
+
+  /* line 1342, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-12 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1344, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .small-block-grid-12 > li:nth-of-type(12n+1) {
+    clear: both;
+  }
+}
+@media only screen and (min-width: 40.063em) {
+  /* line 1347, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-1 > li {
+    width: 100%;
+    list-style: none;
+  }
+
+  /* line 1350, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-1 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1352, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-1 > li:nth-of-type(1n+1) {
+    clear: both;
+  }
+
+  /* line 1355, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-2 > li {
+    width: 50%;
+    list-style: none;
+  }
+
+  /* line 1358, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-2 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1360, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-2 > li:nth-of-type(2n+1) {
+    clear: both;
+  }
+
+  /* line 1363, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-3 > li {
+    width: 33.33333%;
+    list-style: none;
+  }
+
+  /* line 1366, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-3 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1368, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-3 > li:nth-of-type(3n+1) {
+    clear: both;
+  }
+
+  /* line 1371, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-4 > li {
+    width: 25%;
+    list-style: none;
+  }
+
+  /* line 1374, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-4 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1376, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-4 > li:nth-of-type(4n+1) {
+    clear: both;
+  }
+
+  /* line 1379, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-5 > li {
+    width: 20%;
+    list-style: none;
+  }
+
+  /* line 1382, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-5 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1384, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-5 > li:nth-of-type(5n+1) {
+    clear: both;
+  }
+
+  /* line 1387, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-6 > li {
+    width: 16.66667%;
+    list-style: none;
+  }
+
+  /* line 1390, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-6 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1392, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-6 > li:nth-of-type(6n+1) {
+    clear: both;
+  }
+
+  /* line 1395, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-7 > li {
+    width: 14.28571%;
+    list-style: none;
+  }
+
+  /* line 1398, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-7 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1400, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-7 > li:nth-of-type(7n+1) {
+    clear: both;
+  }
+
+  /* line 1403, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-8 > li {
+    width: 12.5%;
+    list-style: none;
+  }
+
+  /* line 1406, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-8 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1408, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-8 > li:nth-of-type(8n+1) {
+    clear: both;
+  }
+
+  /* line 1411, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-9 > li {
+    width: 11.11111%;
+    list-style: none;
+  }
+
+  /* line 1414, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-9 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1416, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-9 > li:nth-of-type(9n+1) {
+    clear: both;
+  }
+
+  /* line 1419, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-10 > li {
+    width: 10%;
+    list-style: none;
+  }
+
+  /* line 1422, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-10 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1424, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-10 > li:nth-of-type(10n+1) {
+    clear: both;
+  }
+
+  /* line 1427, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-11 > li {
+    width: 9.09091%;
+    list-style: none;
+  }
+
+  /* line 1430, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-11 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1432, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-11 > li:nth-of-type(11n+1) {
+    clear: both;
+  }
+
+  /* line 1435, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-12 > li {
+    width: 8.33333%;
+    list-style: none;
+  }
+
+  /* line 1438, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-12 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1440, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .medium-block-grid-12 > li:nth-of-type(12n+1) {
+    clear: both;
+  }
+}
+@media only screen and (min-width: 64.063em) {
+  /* line 1443, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-1 > li {
+    width: 100%;
+    list-style: none;
+  }
+
+  /* line 1446, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-1 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1448, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-1 > li:nth-of-type(1n+1) {
+    clear: both;
+  }
+
+  /* line 1451, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-2 > li {
+    width: 50%;
+    list-style: none;
+  }
+
+  /* line 1454, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-2 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1456, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-2 > li:nth-of-type(2n+1) {
+    clear: both;
+  }
+
+  /* line 1459, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-3 > li {
+    width: 33.33333%;
+    list-style: none;
+  }
+
+  /* line 1462, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-3 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1464, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-3 > li:nth-of-type(3n+1) {
+    clear: both;
+  }
+
+  /* line 1467, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-4 > li {
+    width: 25%;
+    list-style: none;
+  }
+
+  /* line 1470, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-4 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1472, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-4 > li:nth-of-type(4n+1) {
+    clear: both;
+  }
+
+  /* line 1475, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-5 > li {
+    width: 20%;
+    list-style: none;
+  }
+
+  /* line 1478, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-5 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1480, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-5 > li:nth-of-type(5n+1) {
+    clear: both;
+  }
+
+  /* line 1483, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-6 > li {
+    width: 16.66667%;
+    list-style: none;
+  }
+
+  /* line 1486, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-6 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1488, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-6 > li:nth-of-type(6n+1) {
+    clear: both;
+  }
+
+  /* line 1491, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-7 > li {
+    width: 14.28571%;
+    list-style: none;
+  }
+
+  /* line 1494, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-7 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1496, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-7 > li:nth-of-type(7n+1) {
+    clear: both;
+  }
+
+  /* line 1499, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-8 > li {
+    width: 12.5%;
+    list-style: none;
+  }
+
+  /* line 1502, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-8 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1504, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-8 > li:nth-of-type(8n+1) {
+    clear: both;
+  }
+
+  /* line 1507, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-9 > li {
+    width: 11.11111%;
+    list-style: none;
+  }
+
+  /* line 1510, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-9 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1512, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-9 > li:nth-of-type(9n+1) {
+    clear: both;
+  }
+
+  /* line 1515, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-10 > li {
+    width: 10%;
+    list-style: none;
+  }
+
+  /* line 1518, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-10 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1520, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-10 > li:nth-of-type(10n+1) {
+    clear: both;
+  }
+
+  /* line 1523, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-11 > li {
+    width: 9.09091%;
+    list-style: none;
+  }
+
+  /* line 1526, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-11 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1528, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-11 > li:nth-of-type(11n+1) {
+    clear: both;
+  }
+
+  /* line 1531, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-12 > li {
+    width: 8.33333%;
+    list-style: none;
+  }
+
+  /* line 1534, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-12 > li:nth-of-type(1n) {
+    clear: none;
+  }
+
+  /* line 1536, /Users/justine/Projects/travis-web/assets/styles/dashboard/foundation.scss */
+  .large-block-grid-12 > li:nth-of-type(12n+1) {
+    clear: both;
+  }
+}
+/* line 1, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+html, body {
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.2em;
+  color: #838b8c;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 10, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 14, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.application,
+.dashboard {
+  height: 100%;
+}
+
+/* line 20, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.no-padding {
+  padding: 0;
+}
+
+/* line 24, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#top {
+  position: static;
+  height: 55px;
+  font-size: 15px;
+  color: #e9e9e9;
+  line-height: 28px;
+  background: #404650;
+  overflow: hidden;
+}
+
+/* line 34, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#logo {
+  float: left;
+  width: 123px;
+  height: 55px;
+  margin-right: 14px;
+  text-indent: -9999px;
+  background: #dc4136 url("/images/dashboard/travis-logo.svg") no-repeat 20px 18px;
+}
+
+/* line 43, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.status-graph {
+  background: url("/images/dashboard/health-stats.svg") no-repeat;
+  background: contain;
+  margin-top: 17px;
+  height: 18px;
+  width: 78px;
+  text-indent: -9999px;
+}
+
+/* line 52, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#top #nav {
+  margin-top: 9px;
+}
+
+/* line 56, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#top #nav li {
+  margin-right: 15px;
+}
+
+/* line 60, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#top ul, li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0;
+  line-height: 14px;
+  margin-top: 6px;
+}
+
+/* line 68, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#top a {
+  color: #ffffff;
+}
+
+/* line 72, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#top a:hover {
+  color: #ADC7D0;
+}
+
+/* line 76, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#top p {
+  display: inline-block;
+}
+
+/* line 80, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#user {
+  text-align: right;
+  cursor: pointer;
+}
+
+/* line 85, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#user p {
+  display: none;
+}
+
+/* line 89, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#top img {
+  float: right;
+  margin: 5px 10px 0 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+}
+
+/* line 99, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#user ul {
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 15px 0 17px 0;
+  list-style: none;
+  z-index: 1000;
+}
+
+/* line 108, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#user ul li ul {
+  padding: 0;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 150px;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* line 119, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#user ul li ul li {
+  background: #404650;
+  color: #ffffff;
+  display: block;
+  line-height: 18px;
+  padding: 8px 18px;
+  margin: 0;
+}
+
+/* line 128, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#user ul li ul li:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 133, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#user ul li ul li:hover {
+  background: #5e869a;
+  color: #ffffff;
+}
+
+/* line 138, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#user ul li:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* line 144, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.current-org-avatar {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  vertical-align: top;
+  margin: -5px 5px 0 0;
+}
+
+/* line 152, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters-search {
+  background: #ffffff;
+  font-size: 14px;
+  padding: 5px 0 5px 0;
+  max-height: 44px;
+}
+
+/* line 159, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters {
+  float: left;
+}
+
+/* line 163, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul {
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 1000;
+}
+
+/* line 172, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul li {
+  background: #fff;
+  position: relative;
+  display: inline-block;
+  padding: 10px 0 10px 0;
+  margin-right: -4px;
+  margin-top: 0;
+  cursor: pointer;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+}
+
+/* line 185, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters li.filters-start:hover {
+  background-color: #fff;
+}
+
+/* line 189, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul li ul {
+  padding: 0;
+  position: absolute;
+  top: 35px;
+  left: 0;
+  width: 200px;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 2px 1px 4px 0px rgba(148, 145, 138, 0.4);
+  -webkit-box-shadow: 2px 1px 4px 0px rgba(148, 145, 138, 0.4);
+  -moz-box-shadow: 2px 1px 4px 0px rgba(148, 145, 138, 0.4);
+}
+
+/* line 203, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul li ul li {
+  display: block;
+  line-height: 23px;
+  padding-left: 20px;
+}
+
+/* line 209, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul li ul li:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* line 214, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul li ul li:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 219, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul li ul li div {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  text-indent: -9999px;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+}
+
+/* line 230, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.org-travisci {
+  background: url("/images/dashboard/orgs-travisci.png") no-repeat;
+  background-size: contain;
+}
+
+/* line 235, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.org-saltinejustine {
+  background: url("/images/dashboard/orgs-saltinejustine.png") no-repeat;
+  background-size: contain;
+}
+
+/* line 240, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.org-openkarma {
+  background: url("/images/dashboard/orgs-openkarma.png") no-repeat;
+  background-size: contain;
+}
+
+/* line 245, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.org-eurucamp {
+  background: url("/images/dashboard/orgs-eurucamp.png") no-repeat;
+  background-size: contain;
+}
+
+/* line 250, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul li ul li:hover {
+  background: #5e869a;
+  color: #ffffff;
+}
+
+/* line 255, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#filters ul li:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* line 261, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views {
+  float: left;
+}
+
+/* line 265, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views ul {
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 1000;
+}
+
+/* line 274, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views ul li {
+  background: #fff;
+  position: relative;
+  display: inline-block;
+  padding: 10px 0 10px 0;
+  margin-right: -4px;
+  margin-top: 0;
+  cursor: pointer;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+}
+
+/* line 287, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views li.views-start:hover {
+  background-color: #fff;
+}
+
+/* line 291, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views ul li ul {
+  padding: 0;
+  position: absolute;
+  top: 35px;
+  left: 0;
+  width: 200px;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 2px 1px 4px 0px rgba(148, 145, 138, 0.4);
+}
+
+/* line 303, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views ul li ul li {
+  display: block;
+  line-height: 23px;
+  padding-left: 20px;
+}
+
+/* line 309, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views ul li ul li:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* line 314, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views ul li ul li:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 319, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views ul li ul li:hover {
+  background: #5e869a;
+  color: #ffffff;
+}
+
+/* line 324, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#views ul li:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* line 330, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.currently-selected {
+  font-weight: 600;
+}
+
+/* line 334, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.arrow-down {
+  width: 0;
+  height: 0;
+  display: inline-block;
+  padding-top: 2px;
+  margin-left: 5px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #9d9fa1;
+}
+
+/* line 345, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#search {
+  float: right;
+}
+
+/* line 349, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#search ul {
+  text-align: left;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* line 356, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#search ul li {
+  position: relative;
+  display: inline-block;
+  padding: 9px 0 8px 0;
+  margin-top: 0;
+  width: 158px;
+  line-height: 17px;
+}
+
+/* line 365, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.search-field {
+  background-image: url("/images/dashboard/search-icon.svg");
+  background-repeat: no-repeat;
+  background-position: right center;
+  display: inline-block;
+  float: right;
+  border: 1px solid #666;
+  padding: 0.5em;
+  width: 100px;
+}
+
+/* line 376, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.tiles {
+  background: #f4f3ea;
+  padding: 30px 0 10px 0;
+}
+
+/* line 381, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.tile {
+  background: #fff;
+  min-height: 125px;
+  color: #9d9fa1;
+  font-size: 14px;
+  margin-bottom: 20px;
+  padding: 0 10px 0 0;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+
+/* line 393, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.build-bar {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: 7px 10px;
+  background-size: 20px 20px;
+  min-height: 125px;
+  width: 33px;
+  border-radius: 4px 0 0 4px;
+}
+
+/* line 405, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.repo a:hover,
+.build-status a:hover,
+.repo a:active,
+.build-status a:active {
+  text-decoration: underline;
+}
+
+/* line 411, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.repo a:focus,
+.build-status a:focus {
+  outline: 1px dotted;
+}
+
+/* line 417, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.passed .build-bar {
+  background-color: #3ba85d;
+  background-image: url("/images/dashboard/status-passed.svg");
+}
+/* line 423, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.passed .org,
+.passed .repo a,
+.passed .build-status a {
+  color: #3ba85d;
+}
+
+/* line 431, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.failed .build-bar {
+  background-color: #d04729;
+  background-image: url("/images/dashboard/status-failed.svg");
+}
+/* line 437, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.failed .org,
+.failed .repo a,
+.failed .build-status a {
+  color: #d04729;
+}
+
+/* line 445, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.started .build-bar {
+  background-color: #D2CA24;
+  background-image: url("/images/dashboard/status-pending.svg");
+}
+/* line 451, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.started .org,
+.started .repo a,
+.started .build-status a {
+  color: #848032;
+}
+
+/* line 459, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.errored .build-bar {
+  background-color: #999999;
+  background-image: url("/images/dashboard/status-errored.svg");
+}
+/* line 465, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.errored .org,
+.errored .repo a,
+.errored .build-status a {
+  color: #999999;
+}
+
+/* line 472, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.tile .build-information {
+  padding-left: 45px;
+  padding-top: 8px;
+}
+
+/* line 477, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.tile .org {
+  margin: 0;
+}
+
+/* line 481, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.tile .repo {
+  font-size: 20px;
+  display: inline-block;
+  margin: 0;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* line 491, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.duration, .finished {
+  margin-top: 8px;
+  background-repeat: no-repeat;
+  background-position: 0 1px;
+}
+
+/* line 497, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.duration {
+  background-image: url("/images/dashboard/time.svg");
+  background-size: 11px 11px;
+  text-indent: 15px;
+  line-height: 13px;
+}
+
+/* line 504, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.finished {
+  background-image: url("/images/dashboard/cal.svg");
+  background-size: 11px 11px;
+  text-indent: 15px;
+  line-height: 14px;
+}
+
+/* line 511, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.build-status {
+  position: absolute;
+  bottom: 25px;
+  margin-bottom: 0;
+}
+
+/* line 517, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.tile .star-feature {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url("/images/dashboard/star-on.svg") no-repeat 7px 10px;
+  background-size: 20px 20px;
+}
+
+/* line 525, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.if_private {
+  display: inline-block;
+  background: url("/images/dashboard/private-icon.svg") no-repeat 0 0;
+  background-size: contain;
+  height: 12px;
+  width: 9px;
+  margin-left: 5px;
+  text-indent: -9999px;
+}
+
+/* line 535, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+footer {
+  padding: 20px 0;
+  background-color: #e0e0e0;
+  min-height: 334px;
+  font-size: 12px;
+  line-height: 22px;
+  margin-top: -334px;
+  /* sticky footer */
+}
+
+/* line 544, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.wrapper {
+  padding-bottom: 334px;
+  min-height: 100%;
+  height: auto;
+  background-color: #f4f3ea;
+}
+
+@media (min-width: 640px) {
+  /* line 551, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+  .wrapper {
+    padding-bottom: 204px;
+  }
+
+  /* line 554, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+  footer {
+    margin-top: -204px;
+    min-height: 204px;
+  }
+}
+/* line 560, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+footer h3 {
+  font-size: 15px;
+  margin: 0 0 10px 0;
+  padding-top: 6px;
+  font-weight: 400;
+  color: #8f9ba2;
+  border-top: solid 4px #ccd0d5;
+}
+
+/* line 569, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+footer .row p {
+  display: inline-block;
+  margin: 0;
+}
+
+/* line 574, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+footer .row ul,
+footer .row li {
+  display: block;
+  color: #404650;
+  line-height: 22px;
+  padding: 0;
+  margin-top: 0;
+  list-style-type: none;
+}
+
+/* line 584, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+footer a {
+  text-decoration: none;
+  display: inline-block;
+  color: #404650;
+}
+
+/* line 590, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+footer a:hover,
+footer a:active {
+  text-decoration: underline;
+}
+
+/* line 595, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+a {
+  text-decoration: none;
+  display: block;
+  color: #404650;
+}
+
+/* line 601, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.status-circle {
+  background: #3ba85d;
+  display: inline-block;
+  height: 11px;
+  width: 11px;
+  text-indent: -9999px;
+  margin-right: 5px;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  vertical-align: middle;
+}
+
+@media only screen and (min-width: 64.063em) {
+  /* line 616, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+  #top img {
+    margin: 5px 0 0 10px;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 622, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+  #top #status li {
+    display: inline-block;
+  }
+
+  /* line 626, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+  #user p {
+    display: inline-block;
+  }
+
+  /* line 630, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+  #search {
+    float: right;
+  }
+}
+/* line 637, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#loader-container-large {
+  margin-top: 2em;
+  height: 70px;
+  text-align: center;
+}
+
+/* line 643, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#loader-container-large .load-text {
+  font-size: 25px;
+  line-height: 30px;
+  font-weight: 300;
+  margin-top: 20px;
+  font-weight: 400;
+}
+
+/* line 651, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.loader-large {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  margin: 0 auto;
+}
+
+/* line 658, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#loader-container-medium {
+  height: 40px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* line 664, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#loader-container-medium .load-text {
+  vertical-align: 10px;
+  display: inline-block;
+}
+
+/* line 669, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.loader-medium {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  margin-right: 10px;
+}
+
+/* line 678, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#loader-container-small {
+  height: 20px;
+  margin-top: 22px;
+  text-align: center;
+}
+
+/* line 684, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+#loader-container-small .load-text {
+  vertical-align: 3px;
+  display: inline-block;
+}
+
+/* line 689, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.loader-small {
+  width: 15px;
+  height: 15px;
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  margin-right: 5px;
+}
+
+/* line 698, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.load-circle1, .load-circle2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: bounce 1.5s infinite ease-in-out;
+  animation: bounce 1.5s infinite ease-in-out;
+}
+
+/* line 710, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.load-circle1 {
+  background-color: #347389;
+}
+
+/* line 714, /Users/justine/Projects/travis-web/assets/styles/dashboard/dashboard.scss */
+.load-circle2 {
+  background-color: #bdc5c5;
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+
+@-webkit-keyframes bounce {
+  0%, 100% {
+    -webkit-transform: scale(0);
+  }
+  60% {
+    -webkit-transform: scale(1);
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  60% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
