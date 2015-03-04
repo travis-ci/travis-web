@@ -24,7 +24,7 @@
 @import "app/main/repository";
 @import "app/main/sponsors";
 @import "app/main/summary";
-@import "app/main/tools";
+// @import "app/main/tools";
 @import "app/main";
 @import "app/maximize";
 @import "app/misc";
@@ -47,14 +47,16 @@
 
 @import "app/modules/section";
 @import "app/modules/loader";
-// @import "app/modules/tiles";
+@import "app/modules/tiles";
 @import "app/modules/buttons";
 @import "app/modules/icons";
 @import "app/modules/search";
 @import "app/modules/dropdown";
+@import "app/modules/tabs";
 
 @import "app/layout";
 @import "app/layouts/dashboard";
 @import "app/layouts/error";
 @import "app/layouts/footer";
+@import "app/layouts/buildheader";
 @import "app/top";

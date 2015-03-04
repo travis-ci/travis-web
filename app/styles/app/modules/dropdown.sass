@@ -83,3 +83,42 @@ $dropdown-border: #C3D9DB
 .filter-current:hover ~ .filter-dropdown,
 .filter-dropdown:hover
   display: block
+
+
+
+.dropdown
+  position: relative
+.dropdown--classic
+  width: 10.7rem
+  overflow: auto
+
+.dropdown-button
+  background-color: $grey
+  border: none
+  color: $white
+  font-size: $font-size-normal
+  &:hover
+    background-color: darken($grey, 10)
+  .icon-arrow-down
+    border-top-color: $white
+
+  @media #{$medium-up}
+    float: right
+
+.dropdown-menu
+  @include resetul
+  @include border-bottom-radius(4px)
+  position: absolute
+  top: 29px // height of the button
+  width: 100%
+  overflow: hidden
+  background-color: $grey
+  a
+    @extend %inline-block
+    width: 100%
+    padding: .4em 2em
+    color: $white
+    &:hover
+      background-color: darken($grey, 10)
+
+  display: none

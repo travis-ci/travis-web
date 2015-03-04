@@ -1,4 +1,40 @@
-<div id="actions">
+<div id="actions" class="repo-main-tools">
+  <a href="#" title="" class="button-circle"><span class="icon icon--trigger"></span></a>
+  <a href="#" title="" class="button-circle"><span class="icon icon--codeclimate"></span></a>
+
+  {{#if view.displayCancelBuild}}
+      <a href="#" {{action "cancelBuild" target=view}}
+        {{bind-attr class="view.canCancelBuild::disabled"}} title="Cancel Build"></a>
+  {{/if}}
+  {{#if view.displayCancelJob}}
+      <a href="#" {{action "cancelJob" target=view}}
+        {{bind-attr class="view.canCancelJob::disabled"}} title="Cancel Job"></a>
+  {{/if}}
+  {{#if view.displayRequeueBuild}}
+      {{#if view.requeueing}}
+        <span class="loading"></span>
+      {{else}}
+        <a href="#" {{action "requeueBuild" target=view}}
+          {{bind-attr class="view.canRequeueBuild::disabled"}} title="Restart Build"></a>
+      {{/if}}
+  {{/if}}
+  {{#if view.displayRequeueJob}}
+      {{#if view.requeueing}}
+        <span class="loading"></span>
+      {{else}}
+        <a href="#" {{action "requeueJob" target=view}}
+          {{bind-attr class="view.canRequeueJob::disabled"}} title="Restart Job"></a>
+      {{/if}}
+  {{/if}}
+  {{#if view.displayCodeClimate}}
+      <a href="#" name="code-climate"
+        {{action "codeClimatePopup" target=view}}
+        {{bind-attr class=":open-popup"}} title="Test Coverage with Code Climate"></a>
+  {{/if}}
+</div>
+
+
+{{!-- <div id="actions">
   <ul>
     {{#if view.displayCancelBuild}}
       <li class="icon cancel-build" title="Cancel Build">
@@ -41,7 +77,7 @@
     {{/if}}
 
   </ul>
-</div>
+</div> --}}
 
 <div id="remove-log-popup" class="popup">
   <a href="#" class="close" {{action "popupClose" target=view}}></a>

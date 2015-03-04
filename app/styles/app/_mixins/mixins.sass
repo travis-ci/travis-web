@@ -48,3 +48,13 @@
   left: 0
   bottom: 0
   margin: auto
+
+%inline-block
+  display: inline-block
+
+@mixin colorTiles($color)
+  .tile-status
+    background-color: $color
+  .repo-header-title a,
+  .repo-build-status
+    color: $color

@@ -1,0 +1,100 @@
+
+.repo
+  font-size: $font-size-normal
+  color: $grey
+  a
+    color: $grey
+
+.repo-header
+  header
+    margin: 1rem 0 2rem
+    > *
+      vertical-align: middle
+
+  &.started,
+  &.created
+    @include colorTiles($start-color)
+  &.failed
+    @include colorTiles($fail-color)
+  &.errored
+    @include colorTiles($error-color)
+  &.canceled
+    @include colorTiles($cancel-color)
+  &.passed
+    @include colorTiles($pass-color)
+  &.inactive
+    @include colorTiles($cancel-color)
+
+.repo-header-title
+  @extend %inline-block
+  margin: 0
+  font-weight: 400
+  font-size: $font-size-xxl
+
+
+.repo-header-icons
+  a
+    @extend %inline-block
+    height: 1.7em
+  .icon
+    width: 1.7em
+    height: 100%
+
+  @media #{$medium-up}
+    @extend %inline-block
+
+.repo-menus
+
+  @media #{$medium-up}
+    .dropdown
+      float: right
+    .tabnav
+      float: left
+    .tabbody
+      clear: both
+      margin-top: 4px
+
+.repo-main-commit
+  &,
+  small
+    margin: 0
+    font-weight: 400
+    font-size: $font-size-big
+    color: #818181
+    line-height: 1
+  small
+    margin-right: .3em
+    font-weight: 600
+
+.repo-main-author
+  @media #{$medium-up}
+    position: absolute
+    bottom: 0
+
+.repo-main-info
+  @include resetul
+  padding-right: 2em
+  margin-right: 1.4em
+  border-right: $cream-dark 1px solid
+  line-height: 1.8
+  .icon
+    margin-right: .3em
+
+.repo-main-tools
+  position: absolute
+  top: 0
+  bottom: 0
+  right: 0
+  a
+    display: block
+    margin-bottom: .5em
+    text-align: center
+    background-color: $grey
+    &:hover
+      background-color: darken($grey, 10)
+  .icon
+    width: 1em
+    height: 1.4em
+    vertical-align: middle
+  .icon--codeclimate
+    width: 1.2em

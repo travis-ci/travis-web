@@ -1,4 +1,13 @@
-<ul class="tabs tabs--main">
+<div class="tabnav" role="tablist">
+  <ul>
+    <li role="presentation" class="active"><a href="#" title="" role="tab" aria-selected="true" id="tab1" aria-controls="panel1">Current</a></li>
+    <li role="presentation"><a href="#" title="" role="tab" aria-selected="false">Build History</a></li>
+    <li role="presentation"><a href="#" title="" role="tab" aria-selected="false">Pull Requests</a></li>
+    <li role="presentation"><a href="#" title="" role="tab" aria-selected="false">Branch Summary</a></li>
+  </ul>
+</div>
+
+{{!-- <ul class="tabs tabs--main">
   <li id="tab_current" {{bind-attr class="view.classCurrent"}}>
     <h5>
       {{#if repo.slug}}
@@ -99,3 +108,4 @@
     </h5>
   </li>
 </ul>
+ --}}

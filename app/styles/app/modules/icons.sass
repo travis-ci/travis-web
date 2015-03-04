@@ -1,20 +1,37 @@
 .icon
+  width: 1em
+  height: 1em
   display: inline-block
   background:
     size: 100%
     repeat: no-repeat
 
-.icon-cal
+.icon-cal,
+.icon--cal
   background-image: inline-image('dashboard/cal.svg')
 
-.icon-github
+.icon-clock,
+.icon--clock
+  background-image: inline-image('ui/clock.svg')
+
+.icon-github,
+.icon--github
   background-image: inline-image('dashboard/github.svg')
 
-.icon-branch
+.icon--github-circle
+  background-image: inline-image('icons/github.svg')
+
+.icon-branch,
+.icon--branch
   background-image: inline-image('dashboard/branch.svg')
 
-.icon-hash
+.icon-hash,
+.icon--hash
   background-image: inline-image('dashboard/hash.svg')
+
+.icon-cog,
+.icon--cog
+  background-image: inline-image('icons/settings.svg')
 
 .icon-star
   background-image: inline-image('dashboard/star-off.svg')
@@ -34,6 +51,9 @@
 .icon.started
   background-image: inline-image('dashboard/status-pending.svg')
 
+.icon.push
+  background-image: inline-image('icons/push.svg')
+
 .icon-lock
   background-image: inline-image('dashboard/private-icon.svg')
 
@@ -41,6 +61,20 @@
   background-image: inline-image('dashboard/burger.svg')
   &:hover
     background-image: inline-image('dashboard/burger-hover.svg')
+
+.icon-sync,
+.icon--trigger
+  background-image: inline-image('icons/sync-account-icon.svg')
+
+.icon--downloadLog
+  background-image: inline-image('icons/download-log-icon.svg')
+.icon--removeLog
+  background-image: inline-image('icons/remove-log-icon.svg')
+.icon--down
+  background-image: inline-image('icons/end-of-log-icon.svg')
+
+.icon--codeclimate
+  background-image: inline-image('icons/code-climate-icon.svg')
 
 .icon-arrow-down
   width        : 0
@@ -51,13 +85,3 @@
   border-left  : 5px solid transparent
   border-right : 5px solid transparent
   border-top   : 5px solid $dashboard-text-color
-
-.icon-sync
-  background-image: inline-image('icons/sync-account-icon.svg')
-
-.icon--downloadLog
-  background-image: inline-image('icons/download-log-icon.svg')
-.icon--removeLog
-  background-image: inline-image('icons/remove-log-icon.svg')
-.icon--down
-  background-image: inline-image('icons/end-of-log-icon.svg')

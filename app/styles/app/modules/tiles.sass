@@ -1,139 +1,43 @@
-/*
- * tile component as seen on dashboard
- */
-
-.tiles
-  background  : #f4f3ea
-  padding     : 30px 0 10px 0
-  .columns + .columns:last-child
-    float: left
-
 .tile
+  @extend border-radius-4px
   position: relative
-  margin-bottom : 20px
-  padding       : 0 10px 0 0
-  min-height    : 125px
-  background    : $white
-  color         : $dashboard-text-color
-  font-size     : 14px
-  border-radius : 4px
-  overflow: hidden
+  padding: .8rem .8rem .8rem 3rem
+  background-color: $cream-light
 
-  &:after
-    content: ""
+  @media #{$medium-up}
+    height: 145px
+
+  .tile-main
+    height: 100%
+    img
+      width: 16px
+      height: 16px
+
+// todo refactor
+.tile-main
+  @media #{$xlarge-up}
+    @include grid-column(9)
+
+.tile-additional
+  @media #{$xlarge-up}
+    @include grid-column(3)
+
+
+.tile-status
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  width: 2.5em
+  height: 100%
+  border-top-left-radius: 4px
+  border-bottom-left-radius: 4px
+  .icon
     display: block
-    position: absolute
-    top: 0
-    right: 0
-    bottom: 0
-    width: 3em
-    background: linear-gradient(90deg, rgba($white, .2), $white 50%, $white)
-
-  .duration, .finished
-    margin-top : 8px
-    background-repeat: no-repeat
-    background-position: 0 1px
-    background-size : 11px 11px
-    text-indent     : 15px
-
-  .duration
-    background-image: url('/images/dashboard/time.svg')
-    line-height     : 13px
-
-  .finished
-    background-image: url('/images/dashboard/cal.svg')
-    line-height     : 14px
-
-  .build-status
-    margin: 5px 0 0
-
-  .build-information
-    padding: 8px 0 6px 45px
-
-  .org
-    margin : 0
-
-  .repo
-    font-size     : 20px
-    display       : inline-block
-    margin        : 0
-    max-width     : 250px
-    white-space   : nowrap
-    line-height   : 20px
-    text-overflow : ellipsis
-
-  .star-feature
-    position        : absolute
-    top             : 0
-    right           : 0
-    background      : url('/images/dashboard/star-on.svg') no-repeat 7px 10px
-    background-size : 20px 20px
-
-  .build-bar
-    position: absolute
-    background:
-      repeat: no-repeat
-      position: 7px 10px
-      size: 20px 20px
-    min-height      : 100%
-    width           : 33px
-    border-radius   : 4px 0 0 4px
-
-.repo a:hover,
-.build-status a:hover,
-.repo a:active,
-.build-status a:active
-  text-decoration: underline
-.repo a:focus,
-.build-status a:focus
-  outline: 1px dotted
-
-.passed
-  .build-bar
-    background:
-      color: $pass-color
-      image: url('/images/dashboard/status-passed.svg')
-  .org,
-  .repo a,
-  .build-status a
-    color: $pass-color
-
-.failed
-  .build-bar
-    background:
-      color: $fail-color
-      image: url('/images/dashboard/status-failed.svg')
-  .org,
-  .repo a,
-  .build-status a
-    color: $fail-color
-
-.started
-  .build-bar
-    background:
-      color: $start-bg-color
-      image: url('/images/dashboard/status-pending.svg')
-  .org,
-  .repo a,
-  .build-status a
-    color: $start-color
+    width: 1.1em
+    height: 1.1em
+    margin: .5em auto 1.1em
 
 
-.errored
-  .build-bar
-    background:
-      color: $error-color
-      image: url('/images/dashboard/status-errored.svg')
-  .org,
-  .repo a,
-  .build-status a
-    color: $error-color
-
-.if_private
-  display         : inline-block
-  background      : url('/images/dashboard/private-icon.svg') no-repeat 0 0
-  background-size : contain
-  height          : 12px
-  width           : 9px
-  margin-left     : 5px
-  text-indent     : -9999px
+.tile-additional
+  position: relative
