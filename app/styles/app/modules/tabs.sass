@@ -6,7 +6,6 @@
     width: 100%
     background-color: $cream-light
     clear: both
-    overflow: auto
     @media #{$small-only}
       margin-top: 2em
   li
@@ -34,14 +33,15 @@
      @extend %inline-block
     li
       float: left
-    a
-      &:after
-        content: ""
-        position: relative
-        left: 1.3em
-        display: inline-block
-        width: 2px
-        height: 10px
-        background-color: $cream-dark
-    li:last-child a:after
-        content: none
+      // &:last-child 
+      //   a:after
+      //     content: none
+    // a
+      // &:after
+      //   content: ""
+      //   position: relative
+      //   left: 1.3em
+      //   display: inline-block
+      //   width: 2px
+      //   height: 10px
+      //   background-color: $cream-dark
