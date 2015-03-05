@@ -1,15 +1,6 @@
-<div class="dropdown dropdown--classic">
-  <button class="dropdown-button button" type=""><span class="icon icon--cog"></span> Settings <span class="icon icon-arrow-down"></span></button>
-  <ul id="tools" class="dropdown-menu">
-    <li><a href="#" title="">Settings</a></li>
-    <li><a href="#" title="">Requests</a></li>
-  </ul>
-</div>
-
-{{!-- <div id="tools">
-  <a href="#" {{action "menu" target=view}} class="menu-popup-button">Settings</a>
-
-  <ul class="menu">
+<div class="dropdown dropdown--classic" id="tools">
+  <a href="#" {{action "menu" target=view}} class="menu-popup-button dropdown-button button" type=""><span class="icon icon--cog"></span> Settings <span class="icon icon-arrow-down"></span></a>
+  <ul class="dropdown-menu menu">
     {{#if view.displaySettingsLink}}
       <li>
         {{#link-to "settings" view.repo}}Settings{{/link-to}}
@@ -23,9 +14,9 @@
         {{#link-to "caches" view.repo}}Caches{{/link-to}}
       </li>
     {{/if}}
-
   </ul>
 </div>
+
 
 <div id="regenerate-key" class="popup">
   <a href="#" class="close" {{action "popupClose" target=view}}></a>
@@ -99,4 +90,3 @@ addons:
     </li>
   </ol>
 </div>
- --}}

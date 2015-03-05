@@ -1,9 +1,10 @@
 <div id="repo" {{bind-attr class="view.className :repo"}}>
+
   {{#if view.isEmpty}}
     {{view 'repos-empty'}}
   {{else}}
-    {{#if repo.isLoaded}}
 
+    {{#if repo.isLoaded}}
       <article id="repo-header" class="repo-header passed">
         <header>
           <h1 class="repo-header-title">{{#link-to "repo" repo}}{{repo.slug}}{{/link-to}}</h1>
@@ -22,61 +23,14 @@
           {{view 'repo-show-tabs'}}
 
           <div class="tabbody repo-main">
-            <section class="tile tile--pass row" role="tabpanel" aria-labelledby="tab1" id="panel1">
-              <div class="tile-status">
-                <span class="icon icon-status passed"></span>
-                <span class="icon push"></span>
-              </div>
-
-              <div class="tile-main medium-8 columns">
-                <h2 class="repo-main-commit"><small class="repo-main-branch">master</small> Merge pull request #398 from craigcitro/quieter-mac</h2>
-                <div class="repo-main-description">
-                  Something someting something
-                </div>
-                <div class="repo-main-author">
-                  <img src="" alt=""> Hiro Asari authored and commited
-                </div>
-              </div>
-
-              <div class="tile-additional medium-4 columns end">
-                <ul class="repo-main-info">
-                  <li class="repo-build-status"><span class="icon icon--hash"></span>234 passed</li>
-                  <li><span class="icon icon--github"></span>Commit 324eabf2</li>
-                  <li><span class="icon icon--github"></span>Compare 22323...233</li>
-                  <li><span class="icon icon--clock"></span>ran for 16 sec</li>
-                  <li><span class="icon icon--cal"></span>12 minutes ago</li>
-                </ul>
-
-                {{view 'repo-actions'}}
-
-              </div>
-            </section>
+            {{outlet}}
           </div>
         </div>
-
       </article>
-      {{!-- <div id="repo-header">
-        <h3>{{#link-to "repo" repo}}{{repo.slug}}{{/link-to}}</h3>
-        <div class="github-icon"><a {{bind-attr href="controller.urlGithub"}}><img src="/images/icons/github.svg" width="21" height="21"/></a></div>
-        <div class="status-image">
-          <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target=view}}>
-          <img {{bind-attr src="view.statusImageUrl"}} title="Build Status Images"/>
-          </a>
-        </div>
 
-        {{view 'repo-show-tools'}}
-      </div>
-
-      <p class="description">{{description}}</p>
-
-      {{view 'repo-actions'}}
-      {{view 'repo-show-tabs'}}
-
-      <div class="tab tab--main">
-        {{outlet}}
-      </div> --}}
     {{else}}
       <span class="sync-spinner"><i></i><i></i><i></i></span>
     {{/if}}
+
   {{/if}}
 </div>

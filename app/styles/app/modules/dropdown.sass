@@ -90,15 +90,15 @@ $dropdown-border: #C3D9DB
   position: relative
 .dropdown--classic
   width: 10.7rem
-  overflow: auto
 
 .dropdown-button
+  height: 30px
   background-color: $grey
   border: none
   color: $white
   font-size: $font-size-normal
   &:hover
-    background-color: darken($grey, 10)
+    background-color: lighten($grey, 10)
   .icon-arrow-down
     border-top-color: $white
 
@@ -109,10 +109,12 @@ $dropdown-border: #C3D9DB
   @include resetul
   @include border-bottom-radius(4px)
   position: absolute
-  top: 29px // height of the button
+  top: 31px // height of the button +1
   width: 100%
+  z-index: 70
   overflow: hidden
   background-color: $grey
+  display: none
   a
     @extend %inline-block
     width: 100%
@@ -120,5 +122,5 @@ $dropdown-border: #C3D9DB
     color: $white
     &:hover
       background-color: darken($grey, 10)
-
-  display: none
+  &.display
+    display: block

@@ -1,51 +1,34 @@
 <div class="tabnav" role="tablist">
-  <ul>
-    <li role="presentation" class="active"><a href="#" title="" role="tab" aria-selected="true" id="tab1" aria-controls="panel1">Current</a></li>
-    <li role="presentation"><a href="#" title="" role="tab" aria-selected="false">Build History</a></li>
-    <li role="presentation"><a href="#" title="" role="tab" aria-selected="false">Pull Requests</a></li>
-    <li role="presentation"><a href="#" title="" role="tab" aria-selected="false">Branch Summary</a></li>
-  </ul>
-</div>
-
-{{!-- <ul class="tabs tabs--main">
-  <li id="tab_current" {{bind-attr class="view.classCurrent"}}>
-    <h5>
+  <ul class="tab tabs--main">
+    <li id="tab_current" {{bind-attr class="view.classCurrent"}}>
       {{#if repo.slug}}
         {{#link-to "repo" repo current-when="repo.index"}}
           Current
         {{/link-to}}
       {{/if}}
-    </h5>
-  </li>
-  <li id="tab_builds" {{bind-attr class="view.classBuilds"}}>
-    <h5>
+    </li>
+    <li id="tab_builds" {{bind-attr class="view.classBuilds"}}>
       {{#if repo.slug}}
         {{#link-to "builds" repo}}
           Build History
         {{/link-to}}
       {{/if}}
-    </h5>
-  </li>
-  <li id="tab_pull_requests" {{bind-attr class="view.classPullRequests"}}>
-    <h5>
+    </li>
+    <li id="tab_pull_requests" {{bind-attr class="view.classPullRequests"}}>
       {{#if repo.slug}}
         {{#link-to "pullRequests" repo}}
           Pull Requests
         {{/link-to}}
       {{/if}}
-    </h5>
-  </li>
-  <li id="tab_branches" {{bind-attr class="view.classBranches"}}>
-    <h5>
+    </li>
+    <li id="tab_branches" {{bind-attr class="view.classBranches"}}>
       {{#if repo.slug}}
         {{#link-to "branches" repo}}
           Branch Summary
         {{/link-to}}
       {{/if}}
-    </h5>
-  </li>
-  <li id="tab_build" {{bind-attr class="view.classBuild"}}>
-    <h5>
+    </li>
+    <li id="tab_build" {{bind-attr class="view.classBuild"}}>
       {{#if build.id}}
         {{#if repo.slug}}
           {{#link-to "build" repo build}}
@@ -53,10 +36,8 @@
           {{/link-to}}
         {{/if}}
       {{/if}}
-    </h5>
-  </li>
-  <li id="tab_job" {{bind-attr class="view.classJob"}}>
-    <h5>
+    </li>
+    <li id="tab_job" {{bind-attr class="view.classJob"}}>
       {{#if job.id}}
         {{#if repo.slug}}
           {{#link-to "job" repo job}}
@@ -64,40 +45,32 @@
           {{/link-to}}
         {{/if}}
       {{/if}}
-    </h5>
-  </li>
-  <li id="tab_settings" {{bind-attr class="view.classSettings"}}>
-    <h5>
+    </li>
+    <li id="tab_settings" {{bind-attr class="view.classSettings"}}>
       {{#if repo.slug}}
         {{#link-to "settings" repo}}
           Settings
         {{/link-to}}
       {{/if}}
-    </h5>
-  </li>
-  <li id="tab_requests" {{bind-attr class="view.classRequests"}}>
-    <h5>
+    </li>
+    <li id="tab_requests" {{bind-attr class="view.classRequests"}}>
       {{#if repo.slug}}
         {{#link-to "requests" repo}}
           Requests
         {{/link-to}}
       {{/if}}
-    </h5>
-  </li>
-  {{#if config.caches_enabled}}
-    <li id="tab_caches" {{bind-attr class="view.classCaches"}}>
-      <h5>
+    </li>
+    {{#if config.caches_enabled}}
+      <li id="tab_caches" {{bind-attr class="view.classCaches"}}>
         {{#if repo.slug}}
           {{#link-to "caches" repo}}
             Caches
           {{/link-to}}
         {{/if}}
-      </h5>
-    </li>
-  {{/if}}
+      </li>
+    {{/if}}
 
-  <li id="tab_request" {{bind-attr class="view.classRequest"}}>
-    <h5>
+    <li id="tab_request" {{bind-attr class="view.classRequest"}}>
       {{#if request.id}}
         {{#if repo.slug}}
           {{#link-to "request" repo request}}
@@ -105,7 +78,6 @@
           {{/link-to}}
         {{/if}}
       {{/if}}
-    </h5>
-  </li>
-</ul>
- --}}
+    </li>
+  </ul>
+</div>
