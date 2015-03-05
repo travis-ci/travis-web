@@ -19,6 +19,7 @@ configKeysMap = {
   d:           'D'
   julia:       'Julia'
   csharp:      'C#'
+  mono:        'Mono'
   dart:        'Dart'
   elixir:      'Elixir'
 }
