@@ -5,13 +5,14 @@
   {{else}}
 
     {{#if repo.isLoaded}}
-      <article id="repo-header" class="repo-header passed">
+      <article id="repo-header" {{bind-attr class=":repo-header :passed"}}>
         <header>
           <h1 class="repo-header-title">{{#link-to "repo" repo}}{{repo.slug}}{{/link-to}}</h1>
           <div class="repo-header-icons">
             <a {{bind-attr href="controller.urlGithub"}}><span class="icon icon--github-circle"></span></a>
             <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target=view}}>
-              <img {{bind-attr src="view.statusImageUrl"}} title="Build Status Images"/>
+              {{!-- <img {{bind-attr src="view.statusImageUrl"}} title="Build Status Images"/> --}}
+              <img src="https://travis-ci.org/travis-ci/travis-images-specs.svg" alt="">
             </a>
           </div>
           <p class="description">{{description}}</p>

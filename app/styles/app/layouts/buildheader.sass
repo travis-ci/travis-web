@@ -1,3 +1,10 @@
+@mixin colorTiles($color)
+  .tile-status
+    background-color: $color
+  .repo-header-title a,
+  .repo-build-status a
+    color: $color
+
 
 .repo
   font-size: $font-size-normal
@@ -30,15 +37,21 @@
   margin: 0
   font-weight: 400
   font-size: $font-size-xxl
-
+  &:hover
+    text-decoration: underline
 
 .repo-header-icons
+  line-height: 1
+  vertical-align: middle
   a
     @extend %inline-block
     height: 1.7em
+    margin-left: .7em
   .icon
-    width: 1.7em
+    width: 1.5em
     height: 100%
+    position: relative
+    top: 0.65em
 
   @media #{$medium-up}
     @extend %inline-block
@@ -49,9 +62,9 @@
       float: right
     .tabnav
       float: left
+      margin-bottom: .5em
     .tabbody
       clear: both
-      margin-top: 4px
 
 .repo-main-commit
   &,
@@ -67,6 +80,8 @@
 
 .repo-main-author
   img
+    width: 21px
+    height: 21px
     margin-right: .4em
     vertical-align: middle
     border-radius: 50%
@@ -80,6 +95,11 @@
   margin-right: 1.4em
   border-right: $cream-dark 1px solid
   line-height: 1.8
+  a
+    color: $grey
+    &:hover
+      text-decoration: underline
+
   .icon
     margin-right: .3em
     height: 1.3em
