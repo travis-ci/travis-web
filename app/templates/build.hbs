@@ -3,7 +3,7 @@
 {{else}}
   <section class="tile tile--pass row" {{!-- id="new-summary" --}}>
     <div class="tile-status">
-      <span class="icon icon-status passed"></span>
+      <span {{bind-attr class=":icon :icon-status build.state"}}></span>
       <span {{bind-attr class=":request-kind build.eventType :icon"}}></span>
     </div>
 
