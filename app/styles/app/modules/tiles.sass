@@ -3,6 +3,9 @@
   position: relative
   padding: .8rem .8rem .8rem 3rem
   background-color: $cream-light
+  p
+    margin: 0
+    white-space: nowrap
 
   @media #{$medium-up}
     height: 145px
@@ -10,12 +13,42 @@
   .tile-main
     height: 100%
 
+
+.tile--small
+  margin-bottom: 1em
+  @media #{$medium-up}
+    height: 70px
+    overflow: hidden
+
 // todo refactor
 .tile-main
+  h2,
+  small
+    margin: 0
+    font-weight: 400
+    font-size: 15px
+    color: $grey3
+    line-height: 1
+  small
+    margin-right: .3em
+    font-weight: 600
+
   @media #{$xlarge-up}
     @include grid-column(9)
 
 .tile-additional
+  position: relative
+  p, li
+    padding: .1em 0
+    .icon
+      margin-right: .3em
+      height: 1.3em
+      vertical-align: middle
+  a
+    color: $grey1
+    &:hover
+      color: $grey1
+      text-decoration: underline
   @media #{$small-only}
     margin-top: 1em
   @media #{$xlarge-up}
@@ -35,13 +68,35 @@
     display: block
     width: 1.1em
     height: 1.2em
-    margin: .5em auto 1.1em
+    margin: .8em auto 1.1em
   .request-kind
     display: block
     width: 1.4em
     height: 1.1em
     margin: .5em auto 1.1em
 
+.tile-author
+  img
+    width: 22px
+    height: 22px
+    margin-right: .4em
+    vertical-align: top
+    border-radius: 50%
+  @media #{$medium-up}
+    position: absolute
+    bottom: 0
 
-.tile-additional
-  position: relative
+
+// repo header
+.tile--repo
+
+// build history etc
+.tile--build
+  .tile-main
+    @media #{$medium-up}
+      border-right: solid 1px $grey1
+    @media #{$xlarge-up}
+      @include grid-column(8)
+  .tile-additional
+    @media #{$xlarge-up}
+      @include grid-column(4)

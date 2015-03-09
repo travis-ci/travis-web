@@ -1,72 +1,62 @@
 {{#if content.isLoaded}}
-  <table id="builds" class="list">
-    <thead>
-      <tr>
-        <th>Build</th>
-        <th>Message</th>
-        <th>
-          Commit
-        </th>
-        <th class="committer">
-          Committer
-        </th>
-        {{#if isPullRequestsList}}
-          <th>
-            PR
-          </th>
-        {{/if}}
-        <th>Duration</th>
-        <th>Finished</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {{#each build in controller itemController="buildsItem"}}
-        <tr {{bind-attr class="build.color"}}>
-          <td class="number">
-            <span class="status"></span>
+{{!-- <table id="builds" class="list"> --}}
+  {{#each build in controller itemController="buildsItem"}}
+    <div {{bind-attr class="build.color :tile :tile--small :tile--build :row"}}>
+      <div class="tile-status">
+        <span class="icon icon-status passed"></span>
+        <span class="icon request-kind push"></span>
+      </div>
+      <div class="column tile-main medium-6">
+        <h2>
+          {{#if isPullRequestsList}}
+            <small>PR #{{build.pullRequestNumber}}</small>
+          {{else}}
+            <a {{bind-attr href="build.urlGithubPullRequest"}}>
+              <small>insert branch</small>
+            </a>
+          {{/if}}
+          {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
+        </h2>
+        <p class="tile-author"><img src="//placehold.it/25x25" alt=""> {{build.commit.committerName}} commited</p>
+      </div>
+      <div class="column tile-additional medium-6 end">
+        <div class="column small-6">
+          <p class="build-id">
             {{#if build.id}}
               {{#link-to "build" build.repo build}}
-                {{build.number}}
+                <span class="icon icon-hash"></span>
+                {{build.number}} {{build.status}}
               {{/link-to}}
             {{/if}}
-          </td>
-          <td class="message">
-            {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
-          </td>
-          <td class="commit">
+          </p>
+          <p class="">
             <a {{bind-attr href="build.urlGithubCommit"}}>
+              <span class="icon icon-github"></span>
               {{format-commit build.commit}}
             </a>
-          </td>
-          <td class="committer">
-            {{build.commit.committerName}}
-          </td>
-          {{#if isPullRequestsList}}
-            <td>
-              <a {{bind-attr href="build.urlGithubPullRequest"}}>
-                #{{build.pullRequestNumber}}
-              </a>
-            </td>
-          {{/if}}
-          <td class="duration" {{bind-attr title="build.duration"}}>
+          </p>
+        </div>
+        <div class="column small-6">
+          <p class="" {{bind-attr title="build.duration"}}>
+            <span class="icon icon-clock"></span>
             {{format-duration build.duration}}
-          </td>
-          <td class="finished_at timeago" {{bind-attr title="build.formattedFinishedAt"}}>
+          </p>
+          <p class="" {{bind-attr title="build.formattedFinishedAt"}}>
+            <span class="icon icon-cal"></span>
             {{format-time build.finishedAt}}
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
+          </p>
+        </div>
+      </div>
+    </div>
+  {{/each}}
   {{#if displayShowMoreButton}}
     <p>
       {{view 'show-more-button'}}
       {{#if isLoading}}
-        <span class="loading"></span>
+        <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
       {{/if}}
     </p>
   {{/if}}
 {{else}}
-  <div class="loading"><span>Loading</span></div>
+  <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
 {{/if}}

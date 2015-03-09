@@ -15,7 +15,7 @@
       <div class="repo-main-description">
         <pre class="body">{{format-message build.commit.body repoBinding=build.repo pre=true}}</pre>
       </div>
-      <div class="repo-main-author">
+      <div class="tile-author">
        {{#if commit.authorName}}
          <img {{bind-attr src="urlAuthorGravatarImage"}}>{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}
        {{/if}}
