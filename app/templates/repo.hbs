@@ -17,15 +17,14 @@
           <p class="description">{{description}}</p>
         </header>
         <div class="repo-menus">
-
-          {{view 'repo-show-tools'}}
-          
-          {{view 'repo-show-tabs'}}
-
+          <div class="repo-menu-header">
+            {{view 'repo-show-tools'}}
+            
+            {{view 'repo-show-tabs'}}
+          </div>
           <div class="tabbody repo-main">
             {{outlet}}
           </div>
-        </div>
       </article>
 
     {{else}}
