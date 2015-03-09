@@ -1,5 +1,6 @@
 
 .tabnav
+  color: $grey2
   ul
     @include resetul
     width: 100%
@@ -24,7 +25,7 @@
         content: ""
         position: absolute
         left: 0
-        bottom: -4px
+        bottom: -3px
         width: 100%
         height: 2px
         background-color: $teal2
@@ -36,3 +37,21 @@
     li
       float: left
       padding-right: 2em
+
+.tabbody
+  position: relative
+  .tabnav-sub
+    @include resetul
+    @extend %inline-block
+    overflow: auto
+    a
+      color: $grey2
+      padding: .5em 0
+    .active
+      color: $teal2
+
+    @media #{$medium-up}
+      border-bottom: solid $cream-dark 2px
+      li
+        float: left
+        margin-right: 1em
