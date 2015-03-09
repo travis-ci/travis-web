@@ -36,7 +36,7 @@
   @extend %inline-block
   margin: 0
   font-weight: 400
-  font-size: $font-size-xxl
+  font-size: 35px
   &:hover
     text-decoration: underline
 
@@ -62,7 +62,7 @@
       float: right
     .tabnav
       float: left
-      margin-bottom: .5em
+      margin-bottom: .7em
     .tabbody
       clear: both
 
@@ -72,7 +72,7 @@
     margin: 0
     font-weight: 400
     font-size: $font-size-big
-    color: #818181
+    color: $grey3
     line-height: 1
   small
     margin-right: .3em
@@ -81,17 +81,18 @@
 .repo-main-description
   .body
     display: block
-    font-size: 12px
-    font-family: Monaco, 'Liberation Mono', Courier, monospace
+    font-size: 13px
+    font-family: Monaco, monospace
     margin-top: 0.6em
     overflow: hidden
     word-break: break-word
     white-space: pre-wrap
+    color: $grey2
 
 .repo-main-author
   img
-    width: 21px
-    height: 21px
+    width: 22px
+    height: 22px
     margin-right: .4em
     vertical-align: middle
     border-radius: 50%
@@ -107,6 +108,7 @@
   line-height: 1.8
   a
     color: $grey
+    white-space: nowrap
     &:hover
       text-decoration: underline
 
@@ -124,7 +126,7 @@
     display: block
     margin-bottom: .5em
     text-align: center
-    background-color: $grey
+    background-color: $grey1
     &:hover
       background-color: darken($grey, 10)
   .icon
