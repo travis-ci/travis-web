@@ -2,11 +2,15 @@
 
   {{#if view.displayCancelBuild}}
       <a href="#" {{action "cancelBuild" target=view}} class="button-circle"
-        {{bind-attr class="view.canCancelBuild::disabled"}} title="Cancel Build"></a>
+        {{bind-attr class="view.canCancelBuild::disabled"}} title="Cancel Build">
+        <span class="icon icon--cancel"></span>
+      </a>
   {{/if}}
   {{#if view.displayCancelJob}}
       <a href="#" {{action "cancelJob" target=view}} class="button-circle"
-        {{bind-attr class="view.canCancelJob::disabled"}} title="Cancel Job"></a>
+        {{bind-attr class="view.canCancelJob::disabled"}} title="Cancel Job">
+        <span class="icon icon--cancel"></span>
+      </a>
   {{/if}}
   {{#if view.displayRequeueBuild}}
       {{#if view.requeueing}}
