@@ -114,6 +114,7 @@ $button-border-color: #d4d4d4
   @extend %border-radius-4px
   &:hover,
   &:active
+    border: none
     background-color: lighten(#696867, 10)
   &:focus
     background-color: #696867
@@ -122,3 +123,14 @@ $button-border-color: #d4d4d4
   width: 1.7em
   height: 1.7em
   border-radius: 50%
+
+.button--showmore
+  height: auto
+  padding: 0.3em 0.7em
+  font-size: $font-size-m
+  .icon
+    width: 1.1em
+    height: 0.65em
+    margin-right: .5em
+
+

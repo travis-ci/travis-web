@@ -2,6 +2,7 @@
 
 View = Ember.View.extend
   tagName: 'button'
+  classNames: ['button button--grey button--showmore']
   classNameBindings: ['isLoading', 'showMore']
   showMore: true
   attributeBindings: ['disabled']
