@@ -1,3 +1,10 @@
+@mixin colorTiles($color)
+  .tile-status
+    background-color: $color
+  .repo-header-title a,
+  .repo-build-status a
+    color: $color
+
 .tile
   @extend border-radius-4px
   position: relative
@@ -6,6 +13,20 @@
   p
     margin: 0
     white-space: nowrap
+
+  &.started,
+  &.created
+    @include colorTiles($start-color)
+  &.failed
+    @include colorTiles($fail-color)
+  &.errored
+    @include colorTiles($error-color)
+  &.canceled
+    @include colorTiles($cancel-color)
+  &.passed
+    @include colorTiles($pass-color)
+  &.inactive
+    @include colorTiles($cancel-color)
 
   @media #{$medium-up}
     height: 145px

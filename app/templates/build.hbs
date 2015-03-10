@@ -1,7 +1,7 @@
 {{#if loading}}
   <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
 {{else}}
-  <section class="tile tile--pass row" {{!-- id="new-summary" --}}>
+  <section {{bind-attr class=":tile :tile--pass :row build.state"}} {{!-- id="new-summary" --}}>
     <div class="tile-status">
       <span {{bind-attr class=":icon :icon-status build.state"}}></span>
       <span {{bind-attr class=":request-kind build.eventType :icon"}}></span>

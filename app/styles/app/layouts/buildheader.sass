@@ -1,9 +1,3 @@
-@mixin colorTiles($color)
-  .tile-status
-    background-color: $color
-  .repo-header-title a,
-  .repo-build-status a
-    color: $color
 
 .repo
   font-size: $font-size-m
@@ -14,20 +8,6 @@
     margin: 1rem 0 3rem
     > *
       vertical-align: middle
-
-  &.started,
-  &.created
-    @include colorTiles($start-color)
-  &.failed
-    @include colorTiles($fail-color)
-  &.errored
-    @include colorTiles($error-color)
-  &.canceled
-    @include colorTiles($cancel-color)
-  &.passed
-    @include colorTiles($pass-color)
-  &.inactive
-    @include colorTiles($cancel-color)
 
 .repo-header-title
   @extend %inline-block
