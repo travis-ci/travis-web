@@ -41,7 +41,7 @@
         </li>
         <li>
           {{#if build.pullRequest}}
-            <a class="compare" {{bind-attr href="build.commit.compareUrl"}}>#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a>
+            <a class="compare" {{bind-attr href="build.commit.compareUrl"}}><span class="icon icon--github"></span> #{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a>
           {{else}}
             {{#if build.commit.compareUrl}}
               <a class="compare" {{bind-attr href="build.commit.compareUrl"}}>

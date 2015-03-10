@@ -5,9 +5,8 @@
   .repo-build-status a
     color: $color
 
-
 .repo
-  font-size: $font-size-normal
+  font-size: $font-size-m
   color: $grey
 
 .repo-header
@@ -58,12 +57,12 @@
   @media #{$medium-up}
     .dropdown
       position: absolute
-      top: -1.1em
+      top: -0.8em
       right: 0
       z-index: 50
     .tabnav
       position: absolute
-      top: -0.6em
+      top: -0.4em
     .repo-menu-header
       position: relative
       height: 1.6em
@@ -75,7 +74,7 @@
   small
     margin: 0
     font-weight: 400
-    font-size: $font-size-big
+    font-size: $font-size-m
     color: $grey3
     line-height: 1
   small
@@ -83,6 +82,14 @@
     font-weight: 600
 
 .repo-main-description
+
+  @media #{$medium-up}
+    position: relative
+    max-height: 4.9em
+    overflow: hidden
+    &:after
+      @include fadeOut(bottom, 0deg, $cream-light)
+
   .body
     display: block
     font-size: 13px
@@ -95,10 +102,13 @@
 
 .repo-main-info
   @include resetul
+  position: relative
   padding-right: 2em
   margin-right: 1.4em
   border-right: $cream-dark 1px solid
-  line-height: 1.8
+  line-height: $line-height-m
+  &:after
+    @include fadeOut(right, -90deg, $cream-light)
   a
     color: $grey
     white-space: nowrap
@@ -118,10 +128,11 @@
     &:hover
       background-color: darken($grey, 10)
   .icon
-    width: 1em
-    height: 1.4em
-    vertical-align: middle
-  .icon--cancel
+    width: .9em
     height: 1.1em
+    vertical-align: bottom
+  .icon--cancel
+    width: 1em
+    height: 1.05em
   .icon--codeclimate
     width: 1.2em

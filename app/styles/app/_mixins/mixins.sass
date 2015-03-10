@@ -8,6 +8,22 @@
   background-clip: padding-box
   border-radius 4px
 
+@mixin fadeOut($position, $angle, $color)
+  content: ""
+  display: block
+  position: absolute
+
+  @if $position == bottom
+    bottom: 0
+    width: 100%
+    height: 2em
+  @else if $position == right
+    top: 0
+    right: 0
+    width: 2em
+    height: 100%
+
+  background: linear-gradient($angle, rgba($color, 1) 0%, rgba($color, 0) 100%)
 
 @mixin clearfix
   &:before,
