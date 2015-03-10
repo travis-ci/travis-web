@@ -17,7 +17,7 @@
           {{/if}}
           {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
         </h2>
-        <p class="tile-author"><img src="//placehold.it/25x25" alt=""> {{build.commit.committerName}} commited</p>
+        <p class="tile-author"><img {{bind-attr src="build.urlAuthorGravatarImage"}} alt="">{{build.commit.committerName}} commited</p>
       </div>
       <div class="column tile-additional medium-6 end">
         <div class="column small-6">
@@ -32,7 +32,7 @@
           <p class="">
             <a {{bind-attr href="build.urlGithubCommit"}}>
               <span class="icon icon-github"></span>
-              {{format-commit build.commit}}
+              {{format-sha build.commit.sha}}
             </a>
           </p>
         </div>

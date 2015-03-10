@@ -2,9 +2,8 @@
 `import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
-  classNameBindings: ['color', 'loading']
+  classNameBindings: ['color']
   buildBinding: 'controller.build'
-  loadingBinding: 'controller.loading'
 
   color: (->
     colorForState(@get('build.state'))

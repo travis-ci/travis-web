@@ -65,6 +65,7 @@ View = BasicView.extend
 
     codeClimatePopup: ->
       @popupCloseAll()
+      console.log('repo-actions view')
       @popup('code-climate')
       return false
 

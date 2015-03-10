@@ -98,8 +98,16 @@
 // build history etc
 .tile--build
   .tile-main
+    @media #{$small-only}
+      h2
+        line-height: $line-height-m
+        margin-bottom: 1em
     @media #{$medium-up}
+      white-space: nowrap
+      overflow: hidden
       border-right: solid 1px $grey4
+      &:after
+        @include fadeOut(right, -90deg, $cream-light)
     @media #{$xlarge-up}
       @include grid-column(8)
   .tile-additional
