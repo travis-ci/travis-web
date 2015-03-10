@@ -26,7 +26,7 @@
   small
     margin: 0
     font-weight: 400
-    font-size: 15px
+    font-size: $font-size-m
     color: $grey3
     line-height: 1
   small
@@ -69,11 +69,16 @@
     width: 1.1em
     height: 1.2em
     margin: .7em auto 1em
-  .request-kind
+  .icon.push
     display: block
     width: 1.4em
     height: 1.1em
-    margin: .5em auto 1.1em
+    margin: -0.2em auto 0
+  .icon.pull_request
+    display: block
+    width: 1.1em
+    height: 1.6em
+    margin: -0.5em auto 0
 
 .tile-author
   img
@@ -94,7 +99,7 @@
 .tile--build
   .tile-main
     @media #{$medium-up}
-      border-right: solid 1px $grey1
+      border-right: solid 1px $grey4
     @media #{$xlarge-up}
       @include grid-column(8)
   .tile-additional

@@ -4,7 +4,7 @@
     <div {{bind-attr class="build.color :tile :tile--small :tile--build :row"}}>
       <div class="tile-status">
         <span class="icon icon-status passed"></span>
-        <span class="icon request-kind push"></span>
+        <span {{bind-attr class=":request-kind build.eventType :icon"}}></span>
       </div>
       <div class="column tile-main medium-6">
         <h2>
