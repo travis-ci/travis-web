@@ -7,6 +7,13 @@
         {{/link-to}}
       {{/if}}
     </li>
+    <li id="tab_branches" {{bind-attr class="view.classBranches"}}>
+      {{#if repo.slug}}
+        {{#link-to "branches" repo}}
+          Branches
+        {{/link-to}}
+      {{/if}}
+    </li>
     <li id="tab_builds" {{bind-attr class="view.classBuilds"}}>
       {{#if repo.slug}}
         {{#link-to "builds" repo}}
@@ -18,13 +25,6 @@
       {{#if repo.slug}}
         {{#link-to "pullRequests" repo}}
           Pull Requests
-        {{/link-to}}
-      {{/if}}
-    </li>
-    <li id="tab_branches" {{bind-attr class="view.classBranches"}}>
-      {{#if repo.slug}}
-        {{#link-to "branches" repo}}
-          Branch Summary
         {{/link-to}}
       {{/if}}
     </li>
