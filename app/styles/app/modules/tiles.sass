@@ -2,7 +2,8 @@
   .tile-status
     background-color: $color
   .repo-header-title a,
-  .repo-build-status a
+  .repo-build-status a,
+  .build-status a
     color: $color
 
 .tile
@@ -53,6 +54,8 @@
   small
     margin-right: .3em
     font-weight: 600
+  a:hover
+    text-decoration: underline
 
   @media #{$xlarge-up}
     @include grid-column(9)

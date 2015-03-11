@@ -15,13 +15,15 @@
               <small>{{build.commit.branch}}</small>
             {{!-- </a> --}}
           {{/if}}
-          {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
+          {{#link-to "build" build.repo build}}
+            {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
+          {{/link-to}}
         </h2>
         <p class="tile-author"><img {{bind-attr src="build.urlAuthorGravatarImage"}} alt="">{{build.commit.committerName}} commited</p>
       </div>
       <div class="column tile-additional medium-6 end">
         <div class="column small-6">
-          <p class="build-id">
+          <p class="build-status">
             {{#if build.id}}
               {{#link-to "build" build.repo build}}
                 <span class="icon icon-hash"></span>
