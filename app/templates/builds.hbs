@@ -11,9 +11,9 @@
           {{#if isPullRequestsList}}
             <small>PR #{{build.pullRequestNumber}}</small>
           {{else}}
-            <a {{bind-attr href="build.urlGithubPullRequest"}}>
-              <small>insert branch</small>
-            </a>
+            {{!-- <a {{bind-attr href="build.urlGithubPullRequest"}}> --}}
+              <small>{{build.commit.branch}}</small>
+            {{!-- </a> --}}
           {{/if}}
           {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
         </h2>
