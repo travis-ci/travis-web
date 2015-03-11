@@ -1,74 +1,71 @@
 {{#if job.isLoaded}}
-  <div {{bind-attr class="view.color"}}>
-    <div id="new-summary">
-      <div {{bind-attr class=":request-kind job.build.eventType"}}>
-        <div class="kind-icon">
-        </div>
-      </div>
-      <div class="right">
-        <div class="build-status">
-          {{#link-to "job" repo job}}#{{job.number}} {{humanize-state job.state}}{{/link-to}}
-        </div>
 
-        <div class="runtime">
-           {{#if job.isFinished}}ran{{else}}running{{/if}} for {{format-duration job.duration}}
-        </div>
-
-        <div class="finished">
-          {{format-time job.finishedAt}}
-        </div>
-
-        {{#if job.tagName}}
-          <div class="tags">
-            {{job.tagName}}
-          </div>
-        {{/if}}
-
-        <div class="commit-changes">
-          <div class="text"><a class="commit" {{bind-attr href="controller.urlGithubCommit"}}>Commit {{format-sha job.commit.sha}}</a></div>
-        </div>
-        <div class="commit-changes">
-          {{#if job.build.pullRequest}}
-            <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>#{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
-          {{else}}
-            {{#if job.build.commit.compareUrl}}
-              <div class="text"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}>Compare {{short-compare-shas job.build.commit.compareUrl}}</a></div>
-            {{/if}}
-          {{/if}}
-        </div>
-      </div>
-
-      <div class="mainline">
-        <div class="branch" {{bind-attr title="job.commit.branch"}}>
-          {{job.commit.branch}}
-        </div>
-        <div class="subject">
-          - {{format-message job.commit.subject repoBinding=job.repo}}
-        </div>
-      </div>
-
-      <pre class="body">{{format-message job.commit.body repoBinding=job.repo pre=true}}</pre>
-
-      <div class="footer">
-        <div class="author">
-          {{#if job.commit.authorName}}
-            <div class="authored"><img {{bind-attr src="view.urlAuthorGravatarImage"}}/><div class="text">{{job.commit.authorName}} authored{{#if job.commit.authorIsCommitter}} and committed{{/if}}</div></div>
-          {{/if}}
-          {{#unless job.commit.authorIsCommitter}}
-            {{#if job.commit.committerName}}
-              <div class="committed"><img {{bind-attr src="view.urlCommitterGravatarImage"}}/><div class="text">{{job.commit.committerName}} committed</div></div>
-            {{/if}}
-          {{/unless}}
-        </div>
-      </div>
-    </div>
-
-    {{view 'annotations' annotations=view.annotations}}
-
-    {{view 'log' job=job}}
+<section {{bind-attr class=":tile :tile--pass :row job.state"}} {{!-- id="new-summary" --}}>
+  <div class="tile-status">
+    <span {{bind-attr class=":icon :icon-status job.state"}}></span>
+    <span {{bind-attr class=":request-kind job.build.eventType :icon"}}></span>
   </div>
+
+  <div class="tile-main medium-8 columns">
+    <h2 class="repo-main-commit">
+      <small class="repo-main-branch" {{bind-attr title="job.commit.branch"}}>{{job.commit.branch}}</small>
+      {{format-message job.commit.subject repoBinding=job.repo}}
+    </h2>
+    <div class="repo-main-description">
+      <pre class="body">{{format-message job.commit.body repoBinding=job.repo pre=true}}</pre>
+    </div>
+    <div class="tile-author">
+     {{#if job.commit.authorName}}
+       <img {{bind-attr src="view.urlAuthorGravatarImage"}}/>{{job.commit.authorName}} authored{{#if job.commit.authorIsCommitter}} and committed{{/if}}
+     {{/if}}
+     {{#unless job.commit.authorIsCommitter}}
+       {{#if job.commit.committerName}}
+         <img {{bind-attr src="view.urlCommitterGravatarImage"}}/>{{job.commit.committerName}} committed
+       {{/if}}
+     {{/unless}}
+    </div>
+  </div>
+
+  <div class="tile-additional medium-4 columns end">
+    <ul class="repo-main-info">
+      <li class="repo-build-status">
+        {{#link-to "job" repo job}}
+          <span class="icon icon--hash"></span>
+          {{job.number}} {{humanize-state job.state}}
+        {{/link-to}}
+      </li>
+      <li>
+        <a class="commit" {{bind-attr href="controller.urlGithubCommit"}}><span class="icon icon--github"></span> Commit {{format-sha job.commit.sha}}</a>
+      </li>
+      <li>
+        {{#if job.build.pullRequest}}
+          <div class="compare"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}><span class="icon icon--github"></span> #{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
+        {{else}}
+          {{#if job.build.commit.compareUrl}}
+            <div class="compare"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}><span class="icon icon--github"></span> Compare {{short-compare-shas job.build.commit.compareUrl}}</a></div>
+          {{/if}}
+        {{/if}}
+      </li>
+      <li>
+        <span class="icon icon--clock"></span>
+        {{#if job.isFinished}}ran{{else}}running{{/if}} for {{format-duration job.duration}}
+      <li>
+        <span class="icon icon--cal"></span>
+        {{format-time job.finishedAt}}
+      </li>
+    </ul>
+
+    {{view 'repo-actions'}}
+
+  </div>
+</section>
+
+  {{view 'annotations' annotations=view.annotations}}
+
+  {{view 'log' job=job}}
+
 {{else}}
-  <div id="job" class="loading">
-    <span>Loading</span>
+  <div id="job">
+    <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
   </div>
 {{/if}}
