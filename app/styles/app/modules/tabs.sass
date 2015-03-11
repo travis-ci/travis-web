@@ -32,14 +32,29 @@
   .active a
     font-weight: 600
 
-
-
   @media #{$medium-up}
     ul
      @extend %inline-block
     li
       float: left
       padding-right: 2em
+
+// todo: switch to icon
+#tab_build
+  position: relative
+  padding-left: 1em
+  &:before
+    content: "\003E"
+    display: block
+    position: absolute
+    color: $grey4
+    left: -0.5em
+    width: .6em
+    height:  1em
+    font-size: 29px
+    line-height: 1
+    transform: scale(0.6, 1.6)
+
 
 .tabbody
   position: relative
