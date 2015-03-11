@@ -14,6 +14,11 @@
   p
     margin: 0
     white-space: nowrap
+  .icon
+    vertical-align: middle
+  .icon--lang
+    width: 1.2em
+    height: 0.9em
 
   &.started,
   &.created
@@ -137,3 +142,25 @@
   .tile-additional
     @media #{$xlarge-up}
       @include grid-column(4)
+
+// job matrix
+.tile--jobs
+  margin-bottom: 0.8em
+  .tile-main
+    .icon
+      margin-right: .3em
+    p
+      padding: .1em 0
+    @media #{$medium-up}
+      white-space: nowrap
+      overflow: hidden
+      border-right: solid 1px $grey4
+      &:after
+        @include fadeOut(right, -90deg, $cream-light)
+    @media #{$xlarge-up}
+      @include grid-column(5)
+  .tile-additional
+    p
+      padding: 1em 0
+    @media #{$xlarge-up}
+      @include grid-column(7)

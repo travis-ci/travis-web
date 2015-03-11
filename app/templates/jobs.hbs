@@ -1,47 +1,53 @@
 {{#if view.jobs.length}}
-  <table {{bind-attr id=view.jobTableId}} class="list">
+  <section {{bind-attr id=view.jobTableId}}>
+
   {{#if view.required}}
-    <caption>
-      Build Matrix
-    </caption>
+    <h2 class="build-title">Build Jobs</h2>
   {{else}}
-    <caption>
-      Allowed Failures
-      <a title="What's this?" class="help open-popup"
-        name="help-allowed_failures" {{action "openHelpPopup" target=view}}></a>
-    </caption>
+    <h2 class="build-title">Allowed Failures
+      <a title="What's this?" class="open-popup" name="help-allowed_failures" {{action "openHelpPopup" target=view}}>
+        <span class="icon icon--env"></span>
+      </a>
+    </h2>
   {{/if}}
-    <thead>
-      <tr>
-        {{#each key in view.build.configKeys}}
-          <th>{{key}}</th>
-        {{/each}}
-      </tr>
-    </thead>
-    <tbody>
-      {{#each job in view.jobs}}
-        {{#view 'jobs-item' context=job}}
-          <td class="number">
-            <span class="status"></span>
-            {{#if job.id}}
-              {{#if job.repo.slug}}
-                {{#link-to "job" repo job}}{{number}}{{/link-to}}
+
+    {{#each job in view.jobs}}
+      {{#view 'jobs-item' context=job}}
+        <div class="tile tile--small tile--jobs row">
+          <div class="tile-status tile-status--job">
+            <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+          </div>
+
+          <div class="tile-main medium-4 columns">
+            <p class="build-env"><span class="icon icon--env"></span>insert env</p>
+            <p class="build-lang"><span class="icon icon--lang"></span>insert language</p>
+          </div>
+
+          <div class="tile-additional medium-8 columns end">
+            <p class="columns small-6 medium-2">
+              <span class="icon icon--hash"></span>
+              {{#if job.id}}
+                {{#if job.repo.slug}}
+                  {{#link-to "job" repo job}}{{number}}{{/link-to}}
+                {{/if}}
               {{/if}}
-            {{/if}}
-          </td>
-          <td class="duration" {{bind-attr title="startedAt"}}>
-            {{format-duration duration}}
-          </td>
-          <td class="finished_at timeago" {{bind-attr title="formattedFinishedAt"}}>
-            {{format-time finishedAt}}
-          </td>
-          {{#each value in configValues}}
-            <td>{{value}}</td>
-          {{/each}}
-        {{/view}}
-      {{/each}}
-    </tbody>
-  </table>
+            </p>
+            <p class="columns small-6 medium-4" {{bind-attr title="startedAt"}}>
+              <span class="icon icon--clock"></span>
+              {{format-duration duration}}
+            </p>
+            <p class="columns small-6 medium-5" {{bind-attr title="formattedFinishedAt"}}>
+              <span class="icon icon--cal"></span>
+              {{format-time finishedAt}}
+            </p>
+            <p class="columns small-6 medium-1"><span {{bind-attr class=":icon :icon--linux configValues.[2]"}}></span>{{configValues.[2]}}</p>
+          </div>
+        </div>
+
+      {{/view}}
+      {{job.configKeys}}
+    {{/each}}
+  </section>
 
   {{#unless view.required}}
     <div id="help-allowed_failures" class="popup">

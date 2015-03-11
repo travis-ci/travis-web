@@ -2,7 +2,7 @@
 `import { colorForState } from 'travis/utils/helpers'`
 
 View = BasicView.extend
-    tagName: 'tr'
+    tagName: 'div'
     classNameBindings: ['color']
     repoBinding: 'context.repo'
     jobBinding: 'context'
