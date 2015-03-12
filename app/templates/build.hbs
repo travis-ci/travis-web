@@ -1,7 +1,7 @@
 {{#if loading}}
   <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
 {{else}}
-  <section {{bind-attr class=":tile :tile--pass :row build.state"}} {{!-- id="new-summary" --}}>
+  <section {{bind-attr class=":tile :tile--pass :row build.state"}}>
     <div class="tile-status">
       <span {{bind-attr class=":icon :icon-status build.state"}}></span>
       <span {{bind-attr class=":request-kind build.eventType :icon"}}></span>
@@ -9,10 +9,16 @@
 
     <div class="tile-main medium-8 columns">
       <h2 class="repo-main-commit">
+      {{#if build.pullRequest}}
+        <small class="repo-main-branch" {{bind-attr title="build.pullRequestTitle"}}>Pull Request #{{build.pullRequestNumber}}</small>
+        {{build.pullRequestTitle}}
+      {{else}}
         <small class="repo-main-branch" {{bind-attr title="build.commit.branch"}}>{{build.commit.branch}}</small>
         {{format-message build.commit.subject repoBinding=build.repo}}
+      {{/if}}
       </h2>
       <div class="repo-main-description">
+        <p>{{format-message build.commit.subject repoBinding=build.repo}}</p>
         <pre class="body">{{format-message build.commit.body repoBinding=build.repo pre=true}}</pre>
       </div>
       <div class="tile-author">
