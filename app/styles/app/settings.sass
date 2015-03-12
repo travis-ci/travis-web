@@ -52,7 +52,6 @@
 
     .travis-switch
       display: block
-      margin-top: 4px
 
     label
       display: inline-block
@@ -222,16 +221,15 @@
       float: left
       padding-bottom: 0
       min-height: 33px
-      line-height: 33px
+      line-height: 2
 
     span.equals
       float: left
       display: block
-      line-height: 33px
+      line-height: 2
       margin: 0 10px 0 14px
 
     .field.name
-      width: 242px
       margin-bottom: 10px
       input
         width: 97%
@@ -241,6 +239,7 @@
         width: 97%
     .actions
       margin-bottom: 10px
+      clear: both
 
   ul.env-vars
     display: block
@@ -279,7 +278,6 @@
 
     .name
       width: 250px
-      margin: 0 10px 0 20px
       text-align: left
 
     .value
@@ -294,3 +292,15 @@
       .value,
       .name
         display: inline-block
+        vertical-align: middle
+
+  .field--switch
+    display: inline-block
+    vertical-align: middle
+    label.public
+      width: auto
+      line-height: 1.8
+
+  .value--extra
+    padding: 0 !important
+    width: 250px !important

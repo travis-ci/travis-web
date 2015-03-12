@@ -5,16 +5,17 @@
   {{/travis-field}}
   <span class="equals">=</span>
   {{#if showValueField}}
-    <div class="field value">
+    <div class="field value value--extra">
       {{#label for="value" class="value"}}Value:{{/label}}
       {{input value=value class="env-value" placeholder="Value"}}
     </div>
   {{else}}
-    <span class="value value-display secure">{{value}}</span>
+    <div class="field name">
+      <span class="value value-display secure">{{value}}</span>
+    </div>
   {{/if}}
-  <div class="clear"></div>
-  <div class="field">
-    {{travis-switch active=public class="value"}}
+  <div class="field field--switch">
+    {{travis-switch active=public}}
     {{#label for="secure" class="public"}}Display value in build logs{{/label}}
   </div>
 
