@@ -19,8 +19,8 @@
           </div>
 
           <div class="tile-main medium-4 columns">
-            <p class="build-env"><span class="icon icon--env"></span>insert env</p>
-            <p class="build-lang"><span class="icon icon--lang"></span>insert language</p>
+            <p class="build-env"><span class="icon icon--env"></span>{{config.global_env}} {{config.env}}</p>
+            <p class="build-lang"><span class="icon icon--lang"></span>{{config.language}}</p>
           </div>
 
           <div class="tile-additional medium-8 columns end">
@@ -40,7 +40,7 @@
               <span class="icon icon--cal"></span>
               {{format-time finishedAt}}
             </p>
-            <p class="columns small-6 medium-1"><span {{bind-attr class=":icon :icon--linux configValues.[2]"}}></span>{{configValues.[2]}}</p>
+            <p class="columns small-6 medium-1"><span {{bind-attr class=":icon :icon--linux config.os"}}></span>{{config.os}}</p>
           </div>
         </div>
 
