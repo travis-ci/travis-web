@@ -73,7 +73,7 @@
     margin: .5em 0 0
   @media #{$medium-up}
     position: relative
-    max-height: 4.9em
+    height: 4.9em
     overflow: hidden
     &:after
       @include fadeOut(bottom, 0deg, $cream-light)
@@ -103,6 +103,8 @@
     white-space: nowrap
     &:hover
       text-decoration: underline
+  li
+    white-space: nowrap
 
 .repo-main-tools
   position: absolute

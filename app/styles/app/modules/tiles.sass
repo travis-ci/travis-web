@@ -44,6 +44,7 @@
 
 // todo refactor
 .tile-main
+  position: relative
   h2,
   small
     margin: 0
@@ -51,11 +52,15 @@
     font-size: $font-size-m
     color: $grey3
     line-height: 1
+    white-space: nowrap
   small
     margin-right: .3em
     font-weight: 600
   a:hover
     text-decoration: underline
+  h2
+    @media #{$medium-up}
+      @include fadeOut(right, -90deg, $cream-light)
 
   @media #{$xlarge-up}
     @include grid-column(9)
