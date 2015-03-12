@@ -5,6 +5,7 @@
 `import Model from 'travis/models/model'`
 `import Log from 'travis/models/log'`
 `import DurationCalculations from 'travis/utils/duration-calculations'`
+`import languageConfigKeys from 'travis/utils/keys-map';`
 
 Job = Model.extend DurationCalculations,
   logId:          DS.attr()

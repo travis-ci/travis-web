@@ -1,21 +1,11 @@
-configKeysMap = {
+languageConfigKeys = {
   go:          'Go'
-  rvm:         'Ruby'
-  gemfile:     'Gemfile'
-  env:         'ENV'
-  jdk:         'JDK'
-  otp_release: 'OTP Release'
   php:         'PHP'
   node_js:     'Node.js'
   perl:        'Perl'
   python:      'Python'
   scala:       'Scala'
-  compiler:    'Compiler'
-  ghc:         'GHC'
-  os:          'OS'
   ruby:        'Ruby'
-  xcode_sdk:   'Xcode SDK'
-  xcode_scheme:'Xcode Scheme'
   d:           'D'
   julia:       'Julia'
   csharp:      'C#'
@@ -24,4 +14,20 @@ configKeysMap = {
   elixir:      'Elixir'
 }
 
+configKeys = {
+  env:         'ENV'
+  rvm:         'Ruby'
+  gemfile:     'Gemfile'
+  jdk:         'JDK'
+  otp_release: 'OTP Release'
+  xcode_sdk:   'Xcode SDK'
+  xcode_scheme:'Xcode Scheme'
+  compiler:    'Compiler'
+  ghc:         'GHC'
+  os:          'OS'
+}
+
+configKeysMap = Ember.merge configKeys, languageConfigKeys
+
 `export default configKeysMap`
+`export { languageConfigKeys, configKeys }`
