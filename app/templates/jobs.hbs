@@ -13,7 +13,7 @@
 
     {{#each job in view.jobs}}
       {{#view 'jobs-item' context=job}}
-        <div class="tile tile--small tile--jobs row">
+        <div {{bind-attr class=":tile :tile--small :tile--jobs :row job.state" }}>
           <div class="tile-status tile-status--job">
             <span {{bind-attr class=":icon :icon--job job.state"}}></span>
           </div>
@@ -24,7 +24,7 @@
           </div>
 
           <div class="tile-additional medium-8 columns end">
-            <p class="columns small-6 medium-2">
+            <p class="columns small-6 medium-2 build-status">
               <span class="icon icon--hash"></span>
               {{#if job.id}}
                 {{#if job.repo.slug}}

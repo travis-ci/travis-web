@@ -6,6 +6,10 @@
   .build-status a
     color: $color
 
+@mixin colorJobs($color)
+  .build-status a
+    color: $color
+
 .tile
   @extend border-radius-4px
   overflow: hidden
@@ -21,19 +25,28 @@
     width: 1.2em
     height: 0.9em
 
-  &.started,
-  &.created
-    @include colorTiles($start-color)
-  &.failed
-    @include colorTiles($fail-color)
-  &.errored
-    @include colorTiles($error-color)
-  &.canceled
-    @include colorTiles($cancel-color)
-  &.passed
-    @include colorTiles($pass-color)
-  &.inactive
-    @include colorTiles($cancel-color)
+  &:not(.tile--jobs)
+    &.started,
+    &.created
+      @include colorTiles($start-color)
+    &.failed
+      @include colorTiles($fail-color)
+    &.errored
+      @include colorTiles($error-color)
+    &.canceled
+      @include colorTiles($cancel-color)
+    &.passed
+      @include colorTiles($pass-color)
+    &.inactive
+      @include colorTiles($cancel-color)
+
+  &.tile--jobs
+    &.failed
+      @include colorJobs($fail-color)
+    &.errored
+      @include colorJobs($cancel-color)
+    &.passed
+      @include colorJobs($pass-color)
 
   @media #{$medium-up}
     height: 145px
