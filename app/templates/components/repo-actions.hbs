@@ -1,0 +1,33 @@
+<div id="actions" class="repo-main-tools">
+
+  {{! TODO: when `component` helper is available we could just use
+            with a component name based on type that is passed here }}
+  {{#if job}}
+    {{job-repo-actions job=job user=user repo=repo}}
+  {{else}}
+    {{build-repo-actions build=build user=user repo=repo}}
+  {{/if}}
+
+  {{#if displayCodeClimate}}
+    <a href="#" name="code-climate"
+      {{action "codeClimatePopup"}} class="button-circle open-popup"
+      {{bind-attr class=":open-popup"}} title="Test Coverage with Code Climate">
+      <span class="icon icon--codeclimate"></span>
+    </a>
+  {{/if}}
+
+</div>
+
+
+<div id="remove-log-popup" class="popup">
+  <a href="#" class="close" {{action "popupClose" target=view}}></a>
+  <p><strong>This action will remove the log permanently!</strong></p>
+  <p>Do you want to continue?</p>
+  <p>
+    <a class="sync_now button" {{action "removeLog" target="view"}}>Yes, please!</a>
+    <span class="or">or</span>
+    <a href="#" class="cancel" {{action "popupClose" target=view}}>Cancel</a>
+  </p>
+</div>
+
+{{code-climate-popup}}
