@@ -121,23 +121,8 @@ View = BasicView.extend
       @engine.autoCloseFold = !Travis.tailing.isActive()
       event.preventDefault()
 
-    removeLog: ->
-      @popupCloseAll()
-      if @get('canRemoveLog')
-        job = @get('_job') || @get('build.jobs.firstObject')
-        job.removeLog().then ->
-          Travis.flash(success: 'Log has been successfully removed.')
-        , (xhr) ->
-          if xhr.status == 409
-            Travis.flash(error: 'Log can\'t be removed')
-          else if xhr.status == 401
-            Travis.flash(error: 'You don\'t have sufficient access to remove the log')
-          else
-            Travis.flash(error: 'An error occured when removing the log')
-
     removeLogPopup: ->
       if @get('canRemoveLog')
-        @set('active', true)
         @popup('remove-log-popup')
         return false
 
