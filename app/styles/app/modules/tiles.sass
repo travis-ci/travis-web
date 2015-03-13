@@ -58,7 +58,7 @@
 .tile--small
   margin-bottom: 1em
   @media #{$medium-up}
-    height: 70px
+    height: 60px
     overflow: hidden
 
 // todo refactor
@@ -163,12 +163,14 @@
 
 // job matrix
 .tile--jobs
-  margin-bottom: 0.5em
+  margin-bottom: 0.3em
   .tile-main
     .icon
       margin-right: .3em
+    .icon.mac
+      height: 1.6em
     .tile-double-line
-      padding: .1em 0
+      padding: 0
     @media #{$medium-up}
       white-space: nowrap
       overflow: hidden
@@ -182,7 +184,7 @@
       @include grid-column(7)
 
 p.tile-single-line
-  padding: 1em 0
+  padding: .6em 0
   .icon--code
     width: 1.3em
     height: 1.1em
