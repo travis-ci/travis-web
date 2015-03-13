@@ -92,11 +92,13 @@ Build = Model.extend DurationCalculations,
     @get('jobs').filterBy('canCancel').length
   ).property('jobs.@each.canCancel')
 
+  canRestart: Ember.computed.alias('isFinished')
+
   cancel: (->
     Ajax.post "/builds/#{@get('id')}/cancel"
   )
 
-  requeue: ->
+  restart: ->
     Ajax.post "/builds/#{@get('id')}/restart"
 
   formattedFinishedAt: (->

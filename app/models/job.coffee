@@ -91,6 +91,8 @@ Job = Model.extend DurationCalculations,
     !@get('isFinished')
   ).property('state')
 
+  canRestart: Ember.computed.alias('isFinished')
+
   cancel: (->
     Ajax.post "/jobs/#{@get('id')}/cancel"
   )
@@ -103,7 +105,7 @@ Job = Model.extend DurationCalculations,
     @clearLog()
     @get('log').fetch()
 
-  requeue: ->
+  restart: ->
     Ajax.post "/jobs/#{@get('id')}/restart"
 
   appendLog: (part) ->

@@ -54,6 +54,12 @@ User = Model.extend
     permissions
   ).property()
 
+  hasAccessToRepo: (repo) ->
+    id = if repo.get then repo.get('id') else repo
+
+    if permissions = @get('permissions')
+      permissions.contains parseInt(id)
+
   type: (->
     'user'
   ).property()
