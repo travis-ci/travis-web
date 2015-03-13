@@ -167,8 +167,8 @@
   .tile-main
     .icon
       margin-right: .3em
-    p
-      padding: .1em 0
+    // p:not(.tile-single-line)
+    //   padding: .1em 0
     @media #{$medium-up}
       white-space: nowrap
       overflow: hidden
@@ -178,7 +178,8 @@
     @media #{$xlarge-up}
       @include grid-column(5)
   .tile-additional
-    p
-      padding: 1em 0
     @media #{$xlarge-up}
       @include grid-column(7)
+
+p.tile-single-line
+  padding: .9em 0

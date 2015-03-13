@@ -19,12 +19,16 @@
           </div>
 
           <div class="tile-main medium-4 columns">
+          {{#if config.env}}
             <p class="build-env"><span class="icon icon--env"></span>{{config.global_env}} {{config.env}}</p>
             <p class="build-lang"><span class="icon icon--lang"></span>{{view.languages}}</p>
+          {{else}}
+            <p class="build-lang tile-single-line"><span class="icon icon--lang"></span>{{view.languages}}</p>
+          {{/if}}
           </div>
 
           <div class="tile-additional medium-8 columns end">
-            <p class="columns small-6 medium-2 large-3 build-status">
+            <p class="columns small-6 medium-2 large-3 tile-single-line build-status">
               <span class="icon icon--hash"></span>
               {{#if job.id}}
                 {{#if job.repo.slug}}
@@ -32,15 +36,15 @@
                 {{/if}}
               {{/if}}
             </p>
-            <p class="columns small-6 medium-4 large-3" {{bind-attr title="startedAt"}}>
+            <p class="columns small-6 medium-4 large-3 tile-single-line" {{bind-attr title="startedAt"}}>
               <span class="icon icon--clock"></span>
               {{format-duration duration}}
             </p>
-            <p class="columns small-6 medium-5 large-5" {{bind-attr title="formattedFinishedAt"}}>
+            <p class="columns small-6 medium-5 large-5 tile-single-line" {{bind-attr title="formattedFinishedAt"}}>
               <span class="icon icon--cal"></span>
               {{format-time finishedAt}}
             </p>
-            <p class="columns small-6 medium-1 large-1"><span {{bind-attr class=":icon :icon--linux config.os"}}></span>{{config.os}}</p>
+            <p class="columns small-6 medium-1 large-1 tile-single-line"><span {{bind-attr class=":icon :icon--linux config.os"}}></span>{{config.os}}</p>
           </div>
         </div>
 

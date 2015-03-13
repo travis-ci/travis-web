@@ -14,10 +14,11 @@ View = BasicView.extend
 
     languages: (->
       output = []
-      config = @get('job.config')
-      for key, languageName of languageConfigKeys
-        if version = config[key]
-          output.push(languageName + ' ' + version)
+
+      if config = @get('job.config')
+        for key, languageName of languageConfigKeys
+          if version = config[key]
+            output.push(languageName + ': ' + version)
 
       output.join(' ')
     ).property()
