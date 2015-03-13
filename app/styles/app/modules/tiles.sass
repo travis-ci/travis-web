@@ -47,6 +47,9 @@
       @include colorJobs($cancel-color)
     &.passed
       @include colorJobs($pass-color)
+    &.started,
+    &.created
+      @include colorJobs($start-color)
 
   @media #{$medium-up}
     height: 145px
@@ -58,7 +61,7 @@
 .tile--small
   margin-bottom: 1em
   @media #{$medium-up}
-    height: 60px
+    height: 70px
     overflow: hidden
 
 // todo refactor
@@ -124,8 +127,6 @@
     margin: -0.5em auto 0
   .icon--job
     @extend %absolute-center
-  .errored
-    width: .5em
 
 .tile-author
   img
@@ -164,6 +165,16 @@
 // job matrix
 .tile--jobs
   margin-bottom: 0.3em
+  @media #{$medium-up}
+    height: 60px
+  .icon.errored
+    width: .5em
+  .icon.started,
+  .icon.created
+    &:after
+      width: .8em
+      color: $start-color
+      margin-top: -0.3em
   .tile-main
     .icon
       margin-right: .3em
