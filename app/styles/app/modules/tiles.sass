@@ -8,6 +8,7 @@
 
 .tile
   @extend border-radius-4px
+  overflow: hidden
   position: relative
   padding: .8rem .8rem .8rem 3rem
   background-color: $cream-light
@@ -110,6 +111,8 @@
     margin: -0.5em auto 0
   .icon--job
     @extend %absolute-center
+  .errored
+    width: .5em
 
 .tile-author
   img
