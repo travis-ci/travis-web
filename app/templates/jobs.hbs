@@ -6,7 +6,7 @@
   {{else}}
     <h2 class="build-title">Allowed Failures
       <a title="What's this?" class="open-popup" name="help-allowed_failures" {{action "openHelpPopup" target=view}}>
-        <span class="icon icon--env"></span>
+        <span class="btn button-circle button--help"><span class="icon icon--question"></span></span>
       </a>
     </h2>
   {{/if}}
@@ -24,7 +24,7 @@
           </div>
 
           <div class="tile-additional medium-8 columns end">
-            <p class="columns small-6 medium-2 build-status">
+            <p class="columns small-6 medium-2 large-3 build-status">
               <span class="icon icon--hash"></span>
               {{#if job.id}}
                 {{#if job.repo.slug}}
@@ -32,15 +32,15 @@
                 {{/if}}
               {{/if}}
             </p>
-            <p class="columns small-6 medium-4" {{bind-attr title="startedAt"}}>
+            <p class="columns small-6 medium-4 large-3" {{bind-attr title="startedAt"}}>
               <span class="icon icon--clock"></span>
               {{format-duration duration}}
             </p>
-            <p class="columns small-6 medium-5" {{bind-attr title="formattedFinishedAt"}}>
+            <p class="columns small-6 medium-5 large-5" {{bind-attr title="formattedFinishedAt"}}>
               <span class="icon icon--cal"></span>
               {{format-time finishedAt}}
             </p>
-            <p class="columns small-6 medium-1"><span {{bind-attr class=":icon :icon--linux config.os"}}></span>{{config.os}}</p>
+            <p class="columns small-6 medium-1 large-1"><span {{bind-attr class=":icon :icon--linux config.os"}}></span>{{config.os}}</p>
           </div>
         </div>
 
