@@ -111,6 +111,11 @@ View = BasicView.extend
       job.get('canRemoveLog') && @get('hasPermission')
   ).property('job.canRemoveLog', 'hasPermission')
 
+  showToTop: (->
+    @get('log.hasContent') && @get('job.canRemoveLog')
+  ).property('log.hasContent', 'job.canRemoveLog')
+  showTailing: Ember.computed.alias('showToTop')
+
   actions:
     toTop: () ->
       Travis.tailing.stop()

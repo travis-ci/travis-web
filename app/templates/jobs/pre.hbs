@@ -12,19 +12,22 @@
       <a class="button button--grey" {{bind-attr href="view.plainTextLogUrl"}}><span class="icon icon--downloadLog"></span> Download Log</a>
     </menu>
     <div class="log-body">
-      <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>
-        <span class="tail-status"></span>
-        <span class="tail-label button button--grey"><span class="icon icon--down"></span>
-          {{#if view.job.isFinished}}
-            Scroll to End of Log
-          {{else}}
-            Follow Log
-          {{/if}}
-        </span>
-      </a>
+      {{#if view.showTailing}}
+        <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>
+          <span class="tail-status"></span>
+          <span class="tail-label button button--grey"><span class="icon icon--down"></span>
+            {{#if view.job.isFinished}}
+              Scroll to End of Log
+            {{else}}
+              Follow Log
+            {{/if}}
+          </span>
+        </a>
+      {{/if}}
+
       <pre id="log" class="ansi"></pre>
 
-      {{#if view.log.hasContent}}
+      {{#if view.showToTop}}
         <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
       {{/if}}
 
