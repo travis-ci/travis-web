@@ -12,18 +12,18 @@ languageConfigKeys = {
   mono:        'Mono'
   dart:        'Dart'
   elixir:      'Elixir'
+  ghc:         'GHC'
+  jdk:         'JDK'
+  rvm:         'Ruby'
+  otp_release: 'OTP Release'
 }
 
 configKeys = {
   env:         'ENV'
-  rvm:         'Ruby'
   gemfile:     'Gemfile'
-  jdk:         'JDK'
-  otp_release: 'OTP Release'
   xcode_sdk:   'Xcode SDK'
   xcode_scheme:'Xcode Scheme'
   compiler:    'Compiler'
-  ghc:         'GHC'
   os:          'OS'
 }
 
