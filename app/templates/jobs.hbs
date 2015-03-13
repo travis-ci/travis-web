@@ -20,8 +20,8 @@
 
           <div class="tile-main medium-4 columns">
           {{#if config.env}}
-            <p class="build-env"><span class="icon icon--env"></span>{{config.global_env}} {{config.env}}</p>
-            <p class="build-lang"><span class="icon icon--lang"></span>{{view.languages}}</p>
+            <p class="build-env tile-double-line"><span class="icon icon--env"></span>{{config.global_env}} {{config.env}}</p>
+            <p class="build-lang tile-double-line"><span class="icon icon--lang"></span>{{view.languages}}</p>
           {{else}}
             <p class="build-lang tile-single-line"><span class="icon icon--lang"></span>{{view.languages}}</p>
           {{/if}}
@@ -44,7 +44,7 @@
               <span class="icon icon--cal"></span>
               {{format-time finishedAt}}
             </p>
-            <p class="columns small-6 medium-1 large-1 tile-single-line"><span {{bind-attr class=":icon :icon--linux config.os"}}></span>{{config.os}}</p>
+            <p class="columns small-6 medium-1 large-1 tile-single-line"><span {{bind-attr class=":icon config.os"}}></span>{{config.os}}</p>
           </div>
         </div>
 

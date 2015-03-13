@@ -163,12 +163,12 @@
 
 // job matrix
 .tile--jobs
-  margin-bottom: 0.8em
+  margin-bottom: 0.5em
   .tile-main
     .icon
       margin-right: .3em
-    // p:not(.tile-single-line)
-    //   padding: .1em 0
+    .tile-double-line
+      padding: .1em 0
     @media #{$medium-up}
       white-space: nowrap
       overflow: hidden
@@ -182,4 +182,7 @@
       @include grid-column(7)
 
 p.tile-single-line
-  padding: .9em 0
+  padding: 1em 0
+  .icon--code
+    width: 1.3em
+    height: 1.1em
