@@ -6,28 +6,51 @@
   .build-status a
     color: $color
 
+@mixin colorJobs($color)
+  .build-status a
+    color: $color
+
 .tile
   @extend border-radius-4px
+  overflow: hidden
   position: relative
   padding: .8rem .8rem .8rem 3rem
   background-color: $cream-light
   p
     margin: 0
     white-space: nowrap
+  .icon
+    vertical-align: middle
+  .icon--lang
+    width: 1.2em
+    height: 0.9em
 
-  &.started,
-  &.created
-    @include colorTiles($start-color)
-  &.failed
-    @include colorTiles($fail-color)
-  &.errored
-    @include colorTiles($error-color)
-  &.canceled
-    @include colorTiles($cancel-color)
-  &.passed
-    @include colorTiles($pass-color)
-  &.inactive
-    @include colorTiles($cancel-color)
+  &:not(.tile--jobs)
+    &.started,
+    &.created
+      @include colorTiles($start-color)
+    &.failed
+      @include colorTiles($fail-color)
+    &.errored
+      @include colorTiles($error-color)
+    &.canceled
+      @include colorTiles($cancel-color)
+    &.passed
+      @include colorTiles($pass-color)
+    &.inactive
+      @include colorTiles($cancel-color)
+
+  &.tile--jobs
+    &.failed
+      @include colorJobs($fail-color)
+    &.errored
+      @include colorJobs(#939292)
+    &.passed
+      @include colorJobs($pass-color)
+    &.started,
+    &.created,
+    &.received
+      @include colorJobs($created-color)
 
   @media #{$medium-up}
     height: 145px
@@ -103,6 +126,8 @@
     width: 1.1em
     height: 1.6em
     margin: -0.5em auto 0
+  .icon--job
+    @extend %absolute-center
 
 .tile-author
   img
@@ -137,3 +162,45 @@
   .tile-additional
     @media #{$xlarge-up}
       @include grid-column(4)
+
+// job matrix
+.tile--jobs
+  margin-bottom: 0.3em
+  @media #{$medium-up}
+    height: 64px
+  .tile-main
+    color: #7d8282
+    // variations if env and/or code are set
+    p.tile-single-line
+      padding: 0
+      line-height: 1.4
+      &:only-of-type
+        padding: .7em 0
+        .icon--env
+          height: 1.2em
+        .icon--code
+          width: 1.3em
+          height: 1.2em
+    .icon
+      margin-right: .3em
+    .icon.mac
+      height: 1.6em
+    @media #{$medium-up}
+      margin-left: -0.3em
+      white-space: nowrap
+      overflow: hidden
+      border-right: solid 1px $grey4
+      &:after
+        @include fadeOut(right, -90deg, $cream-light)
+    @media #{$xlarge-up}
+      @include grid-column(5)
+  .tile-additional
+    @media #{$xlarge-up}
+      @include grid-column(7)
+
+
+p.tile-single-line
+  padding: .7em 0
+  .icon--code
+    width: 1.3em
+    height: 1.1em

@@ -23,7 +23,7 @@
 @import "app/main/log";
 // @import "app/main/repository";
 @import "app/main/sponsors";
-@import "app/main/summary";
+// @import "app/main/summary";
 // @import "app/main/tools";
 @import "app/main";
 @import "app/maximize";
@@ -37,7 +37,7 @@
 @import "app/right/sponsors";
 @import "app/right";
 @import "app/settings";
-@import "app/stats";
+// @import "app/stats";
 @import "app/status";
 @import "app/tabs";
 @import "app/tipsy";
@@ -53,6 +53,7 @@
 @import "app/modules/search";
 @import "app/modules/dropdown";
 @import "app/modules/tabs";
+@import "app/modules/tooltips";
 
 @import "app/layout";
 @import "app/layouts/dashboard";

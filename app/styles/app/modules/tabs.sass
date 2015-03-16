@@ -44,16 +44,18 @@
   position: relative
   padding-left: 1em
   &:before
-    content: "\003E"
+    content: ""
     display: block
     position: absolute
     color: $grey4
-    left: -0.5em
-    width: .6em
-    height:  1em
-    font-size: 29px
-    line-height: 1
-    transform: scale(0.6, 1.6)
+    top: 0.4em
+    left: -0.7em
+    width: .7em
+    height:  1.3em
+    background:
+      size: 100%
+      repeat: no-repeat
+    @extend .icon-tab-arrow
 
 
 .tabbody
