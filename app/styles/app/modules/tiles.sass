@@ -170,13 +170,21 @@
     height: 64px
   .tile-main
     color: #7d8282
+    // variations if env and/or code are set
+    p.tile-single-line
+      padding: 0
+      line-height: 1.4
+      &:only-of-type
+        padding: .7em 0
+        .icon--env
+          height: 1.2em
+        .icon--code
+          width: 1.3em
+          height: 1.2em
     .icon
       margin-right: .3em
     .icon.mac
       height: 1.6em
-    .tile-double-line
-      padding: 0
-      line-height: 1.4
     @media #{$medium-up}
       white-space: nowrap
       overflow: hidden
