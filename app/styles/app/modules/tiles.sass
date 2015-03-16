@@ -44,12 +44,13 @@
     &.failed
       @include colorJobs($fail-color)
     &.errored
-      @include colorJobs($cancel-color)
+      @include colorJobs(#939292)
     &.passed
       @include colorJobs($pass-color)
     &.started,
-    &.created
-      @include colorJobs($start-color)
+    &.created,
+    &.received
+      @include colorJobs($created-color)
 
   @media #{$medium-up}
     height: 145px
@@ -167,15 +168,8 @@
   margin-bottom: 0.3em
   @media #{$medium-up}
     height: 64px
-  .icon.errored
-    width: .5em
-  .icon.started,
-  .icon.created
-    &:after
-      width: .8em
-      color: $start-color
-      margin-top: -0.3em
   .tile-main
+    color: #7d8282
     .icon
       margin-right: .3em
     .icon.mac
