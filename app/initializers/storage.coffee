@@ -19,8 +19,8 @@ sessionStorage = (->
   try
     # firefox will not throw error on access for sessionStorage var,
     # you need to actually get something from session
-    sessionStorage.getItem('foo')
-    storage = sessionStorage
+    window.sessionStorage.getItem('foo')
+    storage = window.sessionStorage
   catch err
     storage = Storage.create()
 
