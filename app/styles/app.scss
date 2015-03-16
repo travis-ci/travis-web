@@ -15,8 +15,8 @@
 @import "app/getting_started";
 @import "app/github";
 
-@import "app/left/list";
-@import "app/left";
+// @import "app/left/list";
+// @import "app/left";
 @import "app/loading";
 @import "app/main/annotations";
 @import "app/main/list";
@@ -38,8 +38,8 @@
 @import "app/right";
 @import "app/settings";
 // @import "app/stats";
-@import "app/status";
-@import "app/tabs";
+// @import "app/status";
+// @import "app/tabs";
 @import "app/tipsy";
 
 @import "app/components/travis-switch";
@@ -61,4 +61,5 @@
 @import "app/layouts/footer";
 @import "app/layouts/buildheader";
 @import "app/layouts/build-job";
+@import "app/layouts/sidebar";
 @import "app/top";
