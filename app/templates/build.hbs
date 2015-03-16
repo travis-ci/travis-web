@@ -18,7 +18,9 @@
       {{/if}}
       </h2>
       <div class="repo-main-description">
-        <p>{{format-message build.commit.subject repoBinding=build.repo}}</p>
+        {{#if build.pullRequest}}
+          <p>{{format-message build.commit.subject repoBinding=build.repo}}</p>
+        {{/if}}
         <pre class="body">{{format-message build.commit.body repoBinding=build.repo pre=true}}</pre>
       </div>
       <div class="tile-author">
