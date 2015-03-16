@@ -1,19 +1,23 @@
-<ul class="tabs">
-  <li id="tab_owned" {{bind-attr class="view.classOwned"}}>
-    <h5>{{#link-to "main.repositories"}}My Repositories{{/link-to}}</h5>
-  </li>
-
-  {{#unless config.pro}}
-    <li id="tab_recent" {{bind-attr class="view.classRecent"}}>
-      <h5>{{#link-to "main.recent"}}Recent{{/link-to}}</h5>
+<div class="tabnav tabnav--sidebar" role="tablist">
+  <ul class="tab tabs--sidebar">
+    <li id="tab_owned" {{bind-attr class="view.classOwned"}}>
+      {{#link-to "main.repositories"}}My Repositories{{/link-to}}
     </li>
-  {{/unless}}
 
-  <li id="tab_search" {{bind-attr class="view.classSearch"}}>
-    <h5>Search</h5>
-  </li>
+{{!--     {{#unless config.pro}}
+      <li id="tab_recent" {{bind-attr class="view.classRecent"}}>
+        <h5>{{#link-to "main.recent"}}Recent{{/link-to}}</h5>
+      </li>
+    {{/unless}} --}}
 
-  <li id="tab_new" {{bind-attr class="view.classNew"}}>
-    <h5>{{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}+{{/link-to}}</h5>
-  </li>
-</ul>
+    {{!-- <li id="tab_search" {{bind-attr class="view.classSearch"}}>
+      <h5>Search</h5>
+    </li> --}}
+
+    <li id="tab_new" {{bind-attr class="view.classNew :float-right"}}>
+      {{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}
+        <span class="icon icon--plus"></span>
+      {{/link-to}}
+    </li>
+  </ul>
+</div>

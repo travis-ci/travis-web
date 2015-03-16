@@ -1,48 +1,96 @@
 <div id="search_box" class="search search--sidebar">
-  {{input value=controller.search placeholder="Search all repositories"}}
+  <div class="search-inner">
+    {{input value=controller.search placeholder="Search all repositories"}}
+  </div>
 </div>
 
 {{view 'repos-list-tabs'}}
 
-<div class="tab">
+
+<div class="tabbody sidebar-list">
+
   {{#if isLoaded}}
     {{#collection 'repos-list' content=this}}
       {{#with view.repo as repo}}
-        <div class="slug-and-status">
-          <span class="status"></span>
-          {{#if repo.slug}}
-            {{#link-to "repo" repo class="slug"}}{{repo.slug}}{{/link-to}}
-          {{/if}}
+        <div class="tile tile--sidebar">
+          <h2 class="tile-title">
+            {{#if repo.slug}}
+              {{#link-to "repo" repo class="slug"}}{{repo.slug}}{{/link-to}}
+            {{/if}}
+          </h2>
+          {{#with repo.lastBuildHash as lastBuild}}
+            {{#if repo.slug}}
+              {{#if lastBuild.id}}
+              <p class="tile-title float-right">
+                {{#link-to "build" repo lastBuild.id
+                   class="last_build"}}{{lastBuild.number}}{{/link-to}}
+              </p>
+              {{/if}}
+            {{/if}}
+          {{/with}}
+          <p>
+            <span class="icon icon--clock"></span>
+            Duration: 
+            <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>
+              {{format-duration repo.lastBuildDuration}}
+            </abbr>
+          </p>
+          <p>
+            <span class="icon icon--cal"></span>
+            Finished: 
+            <abbr clas  s="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>
+              {{format-time repo.lastBuildFinishedAt}}
+            </abbr>
+          </p>
         </div>
-        {{#with repo.lastBuildHash as lastBuild}}
-          {{#if repo.slug}}
-            {{#if lastBuild.id}}
-              {{#link-to "build" repo lastBuild.id
-                 class="last_build"}}{{lastBuild.number}}{{/link-to}}
-             {{/if}}
-          {{/if}}
-        {{/with}}
-
-        {{#if repo.lastBuildHash.number }}
-        <p class="summary">
-          <span class="duration_label">Duration:</span>
-          <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>
-            {{format-duration repo.lastBuildDuration}}
-          </abbr>
-        </p>
-        <p class="summary">
-          <span class="finished-icon"></span><span class="finished_at_label">Finished:</span>
-          <abbr class="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>
-            {{format-time repo.lastBuildFinishedAt}}
-          </abbr>
-        </p>
-        {{/if}}
-
-        <div class="indicator"><span></span></div>
       {{/with}}
     {{else}}
       <p class="empty">{{noReposMessage}}</p>
     {{/collection}}
+
+  {{!-- <div class="tab">
+    {{#if isLoaded}}
+      {{#collection 'repos-list' content=this}}
+        {{#with view.repo as repo}}
+          <div class="slug-and-status">
+            <span class="status"></span>
+            {{#if repo.slug}}
+              {{#link-to "repo" repo class="slug"}}{{repo.slug}}{{/link-to}}
+            {{/if}}
+          </div>
+          {{#with repo.lastBuildHash as lastBuild}}
+            {{#if repo.slug}}
+              {{#if lastBuild.id}}
+                {{#link-to "build" repo lastBuild.id
+                   class="last_build"}}{{lastBuild.number}}{{/link-to}}
+               {{/if}}
+            {{/if}}
+          {{/with}}
+
+          {{#if repo.lastBuildHash.number }}
+          <p class="summary">
+            <span class="duration_label">Duration:</span>
+            <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>
+              {{format-duration repo.lastBuildDuration}}
+            </abbr>
+          </p>
+          <p class="summary">
+            <span class="finished-icon"></span><span class="finished_at_label">Finished:</span>
+            <abbr class="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>
+              {{format-time repo.lastBuildFinishedAt}}
+            </abbr>
+          </p>
+          {{/if}}
+
+          <div class="indicator"><span></span></div>
+        {{/with}}
+      {{else}}
+        <p class="empty">{{noReposMessage}}</p>
+      {{/collection}}
+    {{else}}
+      <div class="loading"><span>Loading</span></div>
+    {{/if}}
+  </div> --}}
   {{else}}
     <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
   {{/if}}

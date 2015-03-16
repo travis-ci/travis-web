@@ -15,7 +15,7 @@ View = Ember.View.extend
   classOwned: (->
     classes = []
     classes.push('active')  if @get('tab') == 'owned'
-    classes.push('display-inline') if @get('currentUser')
+    # classes.push('display-inline') if @get('currentUser')
     classes.join(' ')
   ).property('tab', 'currentUser')
 

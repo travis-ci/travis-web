@@ -30,8 +30,22 @@
 
 
 .search--sidebar
-  background-color: $white;
-  border: solid 1px #f2f2f2
-  color: #a6adad
-  font-size: 14px
-  height: 28px
+  position: relative
+  height: 10em
+  .search-inner
+    @extend %absolute-center
+    width: 90%
+    height: 33px
+    input
+      @extend .icon--search
+      display: inline-block
+      width: 100%
+      padding: .5em
+      color: #a6adad
+      font-size: 14px
+      border: solid 1px #f2f2f2
+      border-radius: 4px
+      background:
+        repeat: no-repeat
+        position: 98% 6px
+        size: 17px 17px
