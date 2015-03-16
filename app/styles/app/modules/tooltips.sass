@@ -1,0 +1,42 @@
+
+$tooltip-grey: #6A6C6D
+
+.tooltip
+  position: relative
+  display: none
+
+.tooltip-inner
+  position: absolute
+  bottom: 0
+  right: 0
+  background: $tooltip-grey
+  color: $white
+  font-size: $font-size-small
+  line-height: 18px
+  text-align: center
+  padding: 8px 5px
+  @extend %border-radius-4px
+  
+  &:after
+    content: ''
+    position: absolute
+    top: 98%
+    right: 3em
+    width: 0
+    height: 0
+    border-top: 13px solid $tooltip-grey
+    border-right: 13px solid transparent
+    border-left: 13px solid transparent
+
+  @media #{$small-only}
+    bottom: -2.5em  
+
+  @media #{$medium-up}
+    width: 25rem
+
+.tooltip-inner
+  height: 4.1em
+  top: -8em
+  left: 4em
+  &:after
+    left: 4.1em

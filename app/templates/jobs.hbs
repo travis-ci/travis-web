@@ -5,9 +5,10 @@
     <h2 class="build-title">Build Jobs</h2>
   {{else}}
     <h2 class="build-title">Allowed Failures
-      <a title="What's this?" class="open-popup" name="help-allowed_failures" {{action "openHelpPopup" target=view}}>
-        <span class="btn button-circle button--help"><span class="icon icon--question"></span></span>
-      </a>
+      <span class="btn button-circle button--help"><span class="icon icon--question"></span></span>
+      <div class="tooltip">
+        <p class="tooltip-inner">These are instances you can allow to fail without failing your entire build</p>
+      </div>
     </h2>
   {{/if}}
 
@@ -52,25 +53,4 @@
       {{job.configKeys}}
     {{/each}}
   </section>
-
-  {{#unless view.required}}
-    <div id="help-allowed_failures" class="popup">
-      <a href="#" class="close" {{action "popupClose" target=view}}></a>
-      <h4></h4>
-      <p>
-        Allowed Failures are items in your build matrix that are allowed to
-        fail without causing the entire build to be shown as failed.
-      </p>
-      <p>
-        You can define allowed failures in the build matrix as follows:
-      </p>
-      <pre>matrix:
-  allow_failures:
-    - rvm: ruby-head</pre>
-      <p>
-        This lets you add in experimental and preparatory builds to test against versions or
-        configurations that you are not ready to officially support.
-      </p>
-    </div>
-  {{/unless}}
 {{/if}}
