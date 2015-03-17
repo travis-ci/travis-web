@@ -13,7 +13,8 @@ $sb-font-size: 14px
   background-color: $white
   border-radius: 0
   border-left: 8px solid
-
+  li:last-child &
+    margin-bottom: 0
 
   &.failed,
   &.errored
@@ -25,15 +26,33 @@ $sb-font-size: 14px
   &.received
     @include colorSidebarTiles($created-color)
 
-
   h2, p
     margin: 0
     font-size: $sb-font-size
     font-weight: 400
   h2
+    position: relative
     display: inline-block
+    margin-bottom: .7em
+    @media #{$medium-up}
+      width: 78%
+      white-space: nowrap
+      overflow: hidden
+      &:after
+        @include fadeOut(right, -90deg, $white)
+  p.tile-title
+    width: 22%
+    @media #{$xlarge-up}
+      width: 17%
   a:hover
     text-decoration: underline
+  .icon:not(.icon--hash)
+    width: 0.9em
+    height: 1.1em
+    margin-right: .3em
+  .icon--hash
+    width: 1.1em
+    height: 1.3em
 
 
 .tabnav--sidebar
@@ -45,14 +64,18 @@ $sb-font-size: 14px
     height: 1.7em
   li.float-right
     padding-right: 0
-  .icon--plus:hover
+  .icon--plus
     &:after
-      color: $teal1
+      transform: translateX(35%)
+      display: inline-block
+  a:hover .icon--plus:after
+    color: $teal1
 
 .sidebar-list
   margin-top: 1.4rem
   ul
     @include resetul
-    background-color: #FAF9F7 
+    border-bottom: .46rem solid #FAF9F7
+    background-color: #FAF9F7
 
 
