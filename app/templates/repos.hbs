@@ -12,7 +12,7 @@
   {{#if isLoaded}}
     {{#collection 'repos-list' content=this}}
       {{#with view.repo as repo}}
-        <div class="tile tile--sidebar">
+        <div {{bind-attr class=":tile :tile--sidebar repo.lastBuildState"}}>
           <h2 class="tile-title">
             {{#if repo.slug}}
               <span {{bind-attr class=":icon :icon--job repo.lastBuildState"}}></span>
