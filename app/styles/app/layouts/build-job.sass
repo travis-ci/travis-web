@@ -1,0 +1,49 @@
+@mixin colorJobs($color)
+  .build-status a
+    color: $color
+
+// job matrix
+.tile--jobs
+  padding-left: 2.7rem
+  margin-bottom: 0.35rem
+  @media #{$medium-up}
+    height: 38px
+  .tile-main
+    color: #7d8282
+    // variations if env and/or code are set
+    p.tile-single-line
+      padding: 0
+      line-height: 1.4
+      &:only-of-type
+        padding: .7em 0
+        .icon--env
+          height: 1.2em
+        .icon--code
+          width: 1.3em
+          height: 1.2em
+    .icon
+      margin-right: .3em
+    .icon.mac
+      height: 1.6em
+    @media #{$medium-up}
+      white-space: nowrap
+      overflow: hidden
+      border-right: solid 1px $grey4
+      &:after
+        @include fadeOut(right, -90deg, $cream-light)
+    @media #{$xlarge-up}
+      @include grid-column(5)
+  .tile-additional
+    @media #{$xlarge-up}
+      @include grid-column(7)
+
+  &.failed
+    @include colorJobs($fail-color)
+  &.errored
+    @include colorJobs(#939292)
+  &.passed
+    @include colorJobs($pass-color)
+  &.started,
+  &.created,
+  &.received
+    @include colorJobs($created-color)
