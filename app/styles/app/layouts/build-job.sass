@@ -3,7 +3,7 @@
     color: $color
   &:hover
     background-color: $color-bg
-    .job-env,
+    // .job-env,
     .job-lang
       &:after
         @include fadeOut(right, -90deg, $color-bg)
@@ -12,10 +12,10 @@
 .tile--jobs
   padding: 0.5em 0.4em 0.4em 3.5rem
   margin-bottom: 0.35rem
-  
+
   @media #{$medium-up}
     height: 38px
-  
+
   a
     color: $grey1
   .tile-status--job
@@ -31,7 +31,9 @@
     .icon--lang
       height: 1em
       width: 1.4em
+      margin-right: .4em
     .icon--env
+      margin-right: .4em
       width: 1.1em
 
   @media #{$medium-up}
@@ -40,34 +42,41 @@
       float: left
       white-space: nowrap
       padding: 0
+      overflow: hidden
     .job-id
       width: grid-calc(3, 24)
+      border-right: solid 1px $grey4
       max-width: 82px
     .job-os
       width: grid-calc(1, 24)
+      text-align: center
       max-width: 30px
     .job-lang
-      width: grid-calc(5, 24)
+      width: grid-calc(6, 24)
       max-width: 180px
       &:after
         @include fadeOut(right, -90deg, $cream-light)
     .job-env
-      width: grid-calc(9, 24)
+      width: grid-calc(8, 24)
       max-width: 395px
-      &:after
-        @include fadeOut(right, -90deg, $cream-light)
+      // &:after
+      //   @include fadeOut(right, -90deg, $cream-light)
     .job-duration
       width: grid-calc(6, 24)
       max-width: 165px
+      float: right
+
   @media #{$xlarge-up}
     .job-id
       width: grid-calc(2, 24)
     .job-os
       width: grid-calc(1, 24)
+      margin: 0 1.5em
     .job-lang
-      width: grid-calc(5, 24)
+      width: grid-calc(8, 24)
+      margin-right: 2em
     .job-env
-      width: grid-calc(11, 24)
+      width: grid-calc(9, 24)
     .job-duration
       width: grid-calc(4, 24)
 
@@ -82,4 +91,4 @@
     @include colorJobs($created-color, #f4efd8)
 
 .is-empty
-  opacity: .4
+  opacity: .3
