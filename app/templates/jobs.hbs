@@ -14,6 +14,7 @@
 
     {{#each job in view.jobs}}
       {{#view 'jobs-item' context=job}}
+<<<<<<< HEAD
         <div {{bind-attr class=":tile :tile--jobs :row job.state" }}>
           {{#if job.config}}
             {{#link-to "job" job.repo job}}
@@ -77,6 +78,64 @@
           {{else}}
             <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
           {{/if}}
+=======
+        <div {{bind-attr class=":tile :tile--small :tile--jobs :row job.state" }}>
+          {{#link-to "job" repo job}}
+
+            <div class="tile-status tile-status--job">
+              <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+            </div>
+
+            <p class="job-id build-status">
+              <span class="icon icon--hash"></span>
+              {{#if job.id}}
+                {{#if job.repo.slug}}
+                  {{number}}
+                {{/if}}
+              {{/if}}
+            </p>
+
+            <p {{bind-attr class=":job-os :build-os config.os"}}>
+              <span {{bind-attr class=":icon config.os"}}></span>
+              {{config.os}}
+            </p>
+
+            {{#if view.languages}}
+              <p class="job-lang build-lang">
+                <span class="icon icon--lang"></span>
+                {{view.languages}}
+              </p>
+            {{else}}
+              <p class="job-lang build-lang is-empty">
+                <span class="icon icon--lang"></span>
+                no language set
+              </p>
+            {{/if}}
+            
+            {{#if config.env}}
+              <p class="job-env build-env">
+                <span class="icon icon--env"></span>
+                {{config.env}}
+              </p>
+            {{else}}
+              <p class="job-lang build-lang is-empty">
+                <span class="icon icon--env"></span>
+                no environments set
+              </p>
+            {{/if}}
+
+            <p class="job-duration" {{bind-attr title="startedAt"}}>
+              <span class="icon icon--clock"></span>
+              {{format-duration duration}}
+            </p>
+
+            {{!-- <p class="" {{bind-attr title="formattedFinishedAt"}}>
+              <span class="icon icon--cal"></span>
+              {{format-time finishedAt}}
+            </p> --}}
+
+          {{/link-to}}
+>>>>>>> prepare and change jobs markup
         </div>
       {{/view}}
       {{!-- {{job.configKeys}} --}}
