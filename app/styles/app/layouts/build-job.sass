@@ -31,12 +31,13 @@
     .icon--lang
       height: 1em
       width: 1.4em
-      margin-right: .4em
     .icon--env
-      margin-right: .4em
       width: 1.1em
 
   @media #{$medium-up}
+    .icon--lang,
+    .icon--env
+      margin-right: .4em
     .jobs-item
       position: relative
       float: left
@@ -46,21 +47,18 @@
     .job-id
       width: grid-calc(3, 24)
       border-right: solid 1px $grey4
-      max-width: 82px
+      // max-width: 82px
     .job-os
       width: grid-calc(1, 24)
       text-align: center
-      max-width: 30px
     .job-lang
       width: grid-calc(6, 24)
-      max-width: 180px
+      // max-width: 180px
       &:after
         @include fadeOut(right, -90deg, $cream-light)
     .job-env
       width: grid-calc(8, 24)
-      max-width: 395px
-      // &:after
-      //   @include fadeOut(right, -90deg, $cream-light)
+      // max-width: 395px
     .job-duration
       width: grid-calc(6, 24)
       max-width: 165px
@@ -71,12 +69,12 @@
       width: grid-calc(2, 24)
     .job-os
       width: grid-calc(1, 24)
-      margin: 0 1.5em
+      margin: 0 1em
     .job-lang
-      width: grid-calc(8, 24)
+      width: grid-calc(4, 24)
       margin-right: 2em
     .job-env
-      width: grid-calc(9, 24)
+      width: grid-calc(10, 24)
     .job-duration
       width: grid-calc(4, 24)
 
