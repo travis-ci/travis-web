@@ -15,6 +15,7 @@
         <div class="tile tile--sidebar">
           <h2 class="tile-title">
             {{#if repo.slug}}
+              <span {{bind-attr class=":icon :icon--job repo.lastBuildState"}}></span>
               {{#link-to "repo" repo class="slug"}}{{repo.slug}}{{/link-to}}
             {{/if}}
           </h2>
@@ -22,6 +23,7 @@
             {{#if repo.slug}}
               {{#if lastBuild.id}}
               <p class="tile-title float-right">
+                <span class="icon icon--hash"></span>
                 {{#link-to "build" repo lastBuild.id
                    class="last_build"}}{{lastBuild.number}}{{/link-to}}
               </p>
