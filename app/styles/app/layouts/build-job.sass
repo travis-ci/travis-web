@@ -1,49 +1,85 @@
-@mixin colorJobs($color)
-  .build-status a
+@mixin colorJobs($color, $color-bg)
+  .job-id
     color: $color
+  &:hover
+    background-color: $color-bg
+    .job-env,
+    .job-lang
+      &:after
+        @include fadeOut(right, -90deg, $color-bg)
 
 // job matrix
 .tile--jobs
-  padding-left: 2.7rem
+  padding: 0.5em 0.4em 0.4em 3.5rem
   margin-bottom: 0.35rem
+  
   @media #{$medium-up}
     height: 38px
-  .tile-main
-    color: #7d8282
-    // variations if env and/or code are set
-    p.tile-single-line
-      padding: 0
-      line-height: 1.4
-      &:only-of-type
-        padding: .7em 0
-        .icon--env
-          height: 1.2em
-        .icon--code
-          width: 1.3em
-          height: 1.2em
+  
+  a
+    color: $grey1
+  .tile-status--job
+    width: 2em
+
+  .jobs-item
+    padding: .1em 0
     .icon
-      margin-right: .3em
-    .icon.mac
-      height: 1.6em
-    @media #{$medium-up}
+      height: 1.2em
+      margin-right: .1em
+    .job-os .icon
+      height: 1.3em
+    .icon--lang
+      height: 1em
+      width: 1.4em
+    .icon--env
+      width: 1.1em
+
+  @media #{$medium-up}
+    .jobs-item
+      position: relative
+      float: left
       white-space: nowrap
-      overflow: hidden
-      border-right: solid 1px $grey4
+      padding: 0
+    .job-id
+      width: grid-calc(3, 24)
+      max-width: 82px
+    .job-os
+      width: grid-calc(1, 24)
+      max-width: 30px
+    .job-lang
+      width: grid-calc(5, 24)
+      max-width: 180px
       &:after
         @include fadeOut(right, -90deg, $cream-light)
-    @media #{$xlarge-up}
-      @include grid-column(5)
-  .tile-additional
-    @media #{$xlarge-up}
-      @include grid-column(7)
+    .job-env
+      width: grid-calc(9, 24)
+      max-width: 395px
+      &:after
+        @include fadeOut(right, -90deg, $cream-light)
+    .job-duration
+      width: grid-calc(6, 24)
+      max-width: 165px
+  @media #{$xlarge-up}
+    .job-id
+      width: grid-calc(2, 24)
+    .job-os
+      width: grid-calc(1, 24)
+    .job-lang
+      width: grid-calc(5, 24)
+    .job-env
+      width: grid-calc(11, 24)
+    .job-duration
+      width: grid-calc(4, 24)
 
-  &.failed
-    @include colorJobs($fail-color)
+  &.failed,
   &.errored
-    @include colorJobs(#939292)
+    @include colorJobs($fail-color, #fbebe6)
   &.passed
-    @include colorJobs($pass-color)
+    @include colorJobs($pass-color, #e5efe4)
   &.started,
   &.created,
   &.received
-    @include colorJobs($created-color)
+    @include colorJobs($created-color, #f4efd8)
+
+.is-empty
+  opacity: .4
