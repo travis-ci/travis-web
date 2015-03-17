@@ -2,7 +2,7 @@
 `import { colorForState } from 'travis/utils/helpers'`
 
 View = Ember.CollectionView.extend
-  elementId: 'repos'
+  elementId: ''
   tagName: 'ul'
 
   emptyView: Ember.View.extend
