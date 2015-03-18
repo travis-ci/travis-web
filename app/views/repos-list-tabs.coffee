@@ -12,6 +12,12 @@ View = Ember.View.extend
       'hidden'
   ).property('tab')
 
+  classRunning: (->
+    classes = []
+    classes.push('active')  if @get('tab') == 'running'
+    classes.join(' ')
+  ).property('tab')
+
   classOwned: (->
     classes = []
     classes.push('active')  if @get('tab') == 'owned'
