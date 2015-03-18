@@ -1,28 +1,30 @@
 {{#if isLoaded}}
-{{#if length}}
-  {{#each job in controller}}
-    <div {{bind-attr class=":tile :tile--sidebar job.state"}}>
-        {{#if job.repo.slug}}
-          <span {{bind-attr class=":icon :icon--job job.state"}}></span>
-          {{#link-to "job" job.repo job}}{{job.repo.slug}}{{/link-to}}
-        {{/if}}
-      </h2>
+  {{#if length}}
+    {{#each job in controller}}
+      <div {{bind-attr class=":tile :tile--sidebar job.state"}}>
+          {{#if job.repo.slug}}
+            <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+            {{#link-to "job" job.repo job}}{{job.repo.slug}}{{/link-to}}
+          {{/if}}
+        </h2>
 
-      <p class="tile-title float-right">
-        <span class="icon icon--hash"></span>
-        {{#link-to "job" job.repo job}}{{job.number}}{{/link-to}}
-      </p>
+        <p class="tile-title float-right">
+          <span class="icon icon--hash"></span>
+          {{#link-to "job" job.repo job}}{{job.number}}{{/link-to}}
+        </p>
 
-      <p>
-        <span class="icon icon--clock"></span> Queued
-      </p>
+        <p>
+          <span class="icon icon--clock"></span> Queued
+        </p>
 
-    </div>
+      </div>
 
-  {{/each}}
+    {{/each}}
+  {{else}}
+    <div class="spinner-container">There are no jobs queued</div>
+  {{/if}}
 {{else}}
-  <div class="spinner-container">There are no jobs queued</div>
-{{/if}}
-{{else}}
-  <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+  <div class="spinner-container">
+    <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+  </div>
 {{/if}}
