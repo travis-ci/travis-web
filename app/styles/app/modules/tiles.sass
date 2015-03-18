@@ -23,7 +23,9 @@
 
   &:not(.tile--jobs)
     &.started,
-    &.created
+    &.created,
+    &.received,
+    &.queued
       @include colorTiles($start-color)
     &.failed
       @include colorTiles($fail-color)
