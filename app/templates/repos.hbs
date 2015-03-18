@@ -9,13 +9,14 @@
 {{#if showRunningJobs}}
   <div class="tabbody sidebar-list">
     {{render "runningJobs"}}
-
+  Hello
     {{render "queue"}}
   </div>
 {{else}}
   <div class="tabbody sidebar-list">
     {{#if isLoaded}}
       {{#collection 'repos-list' content=this}}
+
         {{#with view.repo as repo}}
           <div {{bind-attr class=":tile :tile--sidebar repo.lastBuildState"}}>
             <h2 class="tile-title">
@@ -36,7 +37,6 @@
               {{/if}}
             {{/with}}
 
-          {{#if repo.lastBuildHash.number }}
             <p>
               <span class="icon icon--clock"></span>
               Duration: 
@@ -54,6 +54,7 @@
             </p>
           </div>
         {{/with}}
+
       {{else}}
         <p class="empty">{{noReposMessage}}</p>
       {{/collection}}

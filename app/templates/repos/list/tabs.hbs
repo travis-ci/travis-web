@@ -5,14 +5,14 @@
     </li>
 
     {{#unless config.pro}}
-      {{!-- <li id="tab_recent" {{bind-attr class="view.classRecent"}}>
+      <li id="tab_recent" {{bind-attr class="view.classRecent"}}>
         {{#link-to "main.recent"}}Recent{{/link-to}}
-      </li> --}}
-
-      <li id="tab_running" {{bind-attr class="view.classRunning"}}>
-        <a href="#" {{action "showRunningJobs"}}>Running</a>
       </li>
     {{/unless}}
+
+    <li id="tab_running" {{bind-attr class="view.classRunning"}}>
+      <a href="#" {{action "showRunningJobs"}}>Running</a>
+    </li>
 
     <li id="tab_new" {{bind-attr class="view.classNew :float-right"}}>
       {{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}
