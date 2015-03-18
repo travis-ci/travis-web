@@ -1,5 +1,6 @@
 {{!-- <h4>Running Jobs ({{controller.length}})</h4> --}}
 
+{{#if isLoaded}}
 {{#if controller.length}}
   {{#each job in controller}}
     <div {{bind-attr class=":tile :tile--sidebar job.state"}}>
@@ -27,4 +28,7 @@
   {{/each}}
 {{else}}
   <div class="spinner-container">There are no jobs running</div>
+{{/if}}
+{{else}}
+  <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
 {{/if}}

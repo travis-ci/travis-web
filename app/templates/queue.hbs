@@ -1,4 +1,4 @@
-
+{{#if isLoaded}}
 {{#if length}}
   {{#each job in controller}}
     <div {{bind-attr class=":tile :tile--sidebar job.state"}}>
@@ -22,4 +22,7 @@
   {{/each}}
 {{else}}
   <div class="spinner-container">There are no jobs queued</div>
+{{/if}}
+{{else}}
+  <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
 {{/if}}
