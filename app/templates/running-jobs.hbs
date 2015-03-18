@@ -1,17 +1,30 @@
-<h4>Running Jobs ({{controller.length}})</h4>
+{{!-- <h4>Running Jobs ({{controller.length}})</h4> --}}
 
-<ul class="jobs">
-  {{#if controller.length}}
-    {{#each job in controller}}
-      <li {{bind-attr title="job.slug"}}">
+{{#if controller.length}}
+  {{#each job in controller}}
+    <div {{bind-attr class=":tile :tile--sidebar job.state"}}>
         {{#if job.repo.slug}}
-          {{#link-to "job" job.repo job}}
-            {{job.repo.slug}} #{{job.number}}
-          {{/link-to}}
+          <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+          {{#link-to "job" job.repo job}}{{job.repo.slug}}{{/link-to}}
         {{/if}}
-      </li>
-    {{/each}}
-  {{else}}
-    There are no jobs
-  {{/if}}
-</ul>
+      </h2>
+
+      <p class="tile-title float-right">
+        <span class="icon icon--hash"></span>
+        {{#link-to "job" job.repo job}}{{job.number}}{{/link-to}}
+      </p>
+
+      <p>
+        <span class="icon icon--clock"></span>
+        Duration: 
+        <abbr class="duration" {{bind-attr title="job.startedAt"}}>
+          {{format-duration job.startedAt}}
+        </abbr>
+      </p>
+
+    </div>
+
+  {{/each}}
+{{else}}
+  <div class="spinner-container">There are no jobs running</div>
+{{/if}}

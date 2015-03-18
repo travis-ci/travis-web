@@ -8,9 +8,13 @@
 
 {{#if showRunningJobs}}
   <div class="tabbody sidebar-list">
-    {{render "runningJobs"}}
-  Hello
-    {{render "queue"}}
+    <div>
+      {{render "runningJobs"}}
+    </div>
+    <hr class="sidebar-seperator">
+    <div>
+      {{render "queue"}}
+    </div>
   </div>
 {{else}}
   <div class="tabbody sidebar-list">
