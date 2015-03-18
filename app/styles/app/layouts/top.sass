@@ -1,0 +1,21 @@
+$top-height: 55px
+
+
+
+.topbar
+  background-color: $cream-light
+  color: $grey1
+
+  a
+    color: $grey1
+
+  @media #{$medium-up}
+    height: $top-height
+
+    .burger
+      display: none
+
+
+    .navigation
+      li
+        @extend %inline-block
