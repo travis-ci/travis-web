@@ -7,6 +7,13 @@ Controller = Ember.ArrayController.extend
     activate: (name) ->
       @activate(name)
 
+    showRunningJobs: ->
+      @activate('running')
+
+    showMyRepositories: ->
+      @activate('owned')
+
+
   tabOrIsLoadedDidChange: (->
     @possiblyRedirectToGettingStartedPage()
   ).observes('isLoaded', 'tab', 'length')
@@ -57,6 +64,8 @@ Controller = Ember.ArrayController.extend
   viewOwned: ->
     @set('content', @get('userRepos'))
 
+  viewRunning: ->
+
   userRepos: (->
     if login = @get('currentUser.login')
       Repo.accessibleBy(@store, login)
@@ -89,6 +98,10 @@ Controller = Ember.ArrayController.extend
     'Repositories could not be loaded'
    else
     'Could not find any repos'
+  ).property('tab')
+
+  showRunningJobs: (->
+    @get('tab') == 'running'
   ).property('tab')
 
 `export default Controller`

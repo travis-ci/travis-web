@@ -1,6 +1,6 @@
 <ul class="tabs">
   <li id="tab_owned" {{bind-attr class="view.classOwned"}}>
-    <h5>{{#link-to "main.repositories"}}My Repositories{{/link-to}}</h5>
+    <h5><a href="#" {{action "showMyRepositories"}}>My Repositories</a></h5>
   </li>
 
   {{#unless config.pro}}
@@ -9,9 +9,10 @@
     </li>
   {{/unless}}
 
-  <li id="tab_search" {{bind-attr class="view.classSearch"}}>
-    <h5>Search</h5>
+  <li id="tab_running" {{bind-attr class="view.classRunning"}}>
+    <h5><a href="#" {{action "showRunningJobs"}}>Run</a></h5>
   </li>
+
 
   <li id="tab_new" {{bind-attr class="view.classNew"}}>
     <h5>{{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}+{{/link-to}}</h5>
