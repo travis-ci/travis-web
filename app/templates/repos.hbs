@@ -6,7 +6,9 @@
 
 {{#if showRunningJobs}}
   <div class="tab">
-    Running jobs will go here
+    {{render "runningJobs"}}
+
+    {{render "queue"}}
   </div>
 {{else}}
   <div class="tab">
