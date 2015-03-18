@@ -31,23 +31,24 @@
                 {{/if}}
               </p>
 
-              <p {{bind-attr class=":job-os :jobs-item :build-os config.os"}}>
-                <span {{bind-attr class=":icon config.os"}}></span>
-                {{!-- {{config.os}} --}}
-              </p>
+            <p {{bind-attr class=":job-os :jobs-item :build-os config.os"}}>
+              <span {{bind-attr class=":icon config.os"}}></span>
+              {{!-- {{config.os}} --}}
+            </p>
 
-              {{#if view.languages}}
-                <p class="job-lang jobs-item build-lang">
-                  <span class="icon icon--lang"></span>
-                  {{view.languages}}
-                </p>
-              {{else}}
-                <p class="job-lang jobs-item build-lang is-empty">
-                  <span class="icon icon--lang"></span>
-                  no language set
-                </p>
-              {{/if}}
-              
+            {{#if view.languages}}
+              <p class="job-lang jobs-item build-lang">
+                <span class="icon icon--lang"></span>
+                {{view.languages}}
+              </p>
+            {{else}}
+              <p class="job-lang jobs-item build-lang is-empty">
+                <span class="icon icon--lang"></span>
+                no language set
+              </p>
+            {{/if}}
+            
+            <div class="job-anchor jobs-item">
               {{#if config.env}}
                 <p class="job-env jobs-item build-env">
                   <span class="icon icon--env"></span>
@@ -64,6 +65,8 @@
                 <span class="icon icon--clock"></span>
                 {{format-duration duration}}
               </p>
+
+            </div>
 
               {{!-- <p class="" {{bind-attr title="formattedFinishedAt"}}>
                 <span class="icon icon--cal"></span>

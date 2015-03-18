@@ -3,19 +3,22 @@
     color: $color
   &:hover
     background-color: $color-bg
-    // .job-env,
+    .job-env,
     .job-lang
+      background-color: $color-bg
       &:after
         @include fadeOut(right, -90deg, $color-bg)
+
+
+.job-anchor
+  position: relative
 
 // job matrix
 .tile--jobs
   padding: 0.5em 0.4em 0.4em 3.5rem
   margin-bottom: 0.35rem
-
-  @media #{$medium-up}
-    height: 38px
-
+  p
+    white-space: normal
   a
     color: $grey1
   .tile-status--job
@@ -35,6 +38,9 @@
       width: 1.1em
 
   @media #{$medium-up}
+    height: 38px
+    p
+      white-space: nowrap
     .icon--lang,
     .icon--env
       margin-right: .4em
@@ -56,11 +62,20 @@
       // max-width: 180px
       &:after
         @include fadeOut(right, -90deg, $cream-light)
+    
+    .job-anchor
+      width: grid-calc(14, 24)
     .job-env
-      width: grid-calc(8, 24)
+      width: grid-calc(14, 24)
       // max-width: 395px
+      &:after
+        @include fadeOut(right, -90deg, $cream-light)
+      &:hover
+        position: absolute
+        width: 100%
+        z-index: 999
     .job-duration
-      width: grid-calc(6, 24)
+      width: grid-calc(9, 24)
       max-width: 165px
       float: right
 
@@ -68,15 +83,10 @@
     .job-id
       width: grid-calc(2, 24)
     .job-os
-      width: grid-calc(1, 24)
       margin: 0 1em
     .job-lang
       width: grid-calc(4, 24)
       margin-right: 2em
-    .job-env
-      width: grid-calc(10, 24)
-    .job-duration
-      width: grid-calc(4, 24)
 
   &.failed,
   &.errored
