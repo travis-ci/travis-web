@@ -24,7 +24,7 @@ Controller = Ember.ArrayController.extend
         @container.lookup('router:main').send('redirectToGettingStarted')
 
   isLoadedBinding: 'content.isLoaded'
-  needs: ['currentUser', 'repo']
+  needs: ['currentUser', 'repo', 'runningJobs', 'queue']
   currentUserBinding: 'controllers.currentUser'
   selectedRepo: (->
     # we need to observe also repo.content here, because we use
@@ -32,6 +32,11 @@ Controller = Ember.ArrayController.extend
     # TODO: get rid of ObjectProxy there
     @get('controllers.repo.repo.content') || @get('controllers.repo.repo')
   ).property('controllers.repo.repo', 'controllers.repo.repo.content')
+
+  startedJobsCount: Ember.computed.alias('controllers.runningJobs.length')
+  allJobsCount: (->
+    @get('startedJobsCount') + @get('controllers.queue.length')
+  ).property('startedJobsCount', 'controllers.queue.length')
 
   init: ->
     @_super.apply this, arguments

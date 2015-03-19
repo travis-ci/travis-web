@@ -12,7 +12,7 @@
 
     {{#if config.pro}}
       <li id="tab_running" {{bind-attr class="view.classRunning"}}>
-        <a href="#" {{action "showRunningJobs"}}>Running (2/3)</a>
+        <a href="#" {{action "showRunningJobs"}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
       </li>
     {{/if}}
 
