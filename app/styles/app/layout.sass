@@ -41,33 +41,9 @@
 .wrapper
   overflow: hidden
   #main,
-  #left,
-  #right
+  #left
     margin-bottom: -99999px
     padding-bottom: 100034px
-
-@media #{$medium-up}
-
-  // layout magic http://lea.verou.me/2011/01/styling-children-based-on-their-number-with-css3/
-  .wrapper-main
-    overflow: hidden
-    & > div:first-child:nth-last-child(2)
-      width: grid-calc(20, 24)
-      float: left
-
-    & > div:first-child:nth-last-child(2) ~ div
-      width: grid-calc(4, 24)
-      max-width: 180px
-      float: right
-
-  .maximized
-    .wrapper-main
-      & > div:first-child:nth-last-child(2)
-        width: grid-calc(24, 24)
-        float: none
-
-      & > div:first-child:nth-last-child(2) ~ div
-        display: none
 
 @media #{$large-up}
 
