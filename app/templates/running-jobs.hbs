@@ -10,14 +10,16 @@
 
         <p class="tile-title float-right">
           <span class="icon icon--hash"></span>
-          {{#link-to "job" job.repo job}}{{job.number}}{{/link-to}}
+          {{#if job.repo.slug}}
+            {{#link-to "job" job.repo job}}{{job.number}}{{/link-to}}
+          {{/if}}
         </p>
 
         <p>
           <span class="icon icon--clock"></span>
-          Duration: 
+          Duration:
           <abbr class="duration" {{bind-attr title="job.startedAt"}}>
-            {{format-duration job.startedAt}}
+            {{format-duration job.duration}}
           </abbr>
         </p>
 
