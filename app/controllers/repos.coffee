@@ -11,7 +11,13 @@ Controller = Ember.ArrayController.extend
       @activate('running')
 
     showMyRepositories: ->
-      @activate('owned')
+      # this is a bit of a hack. I don't want to switch URL for 'running'
+      # so depending on current state I'm either just switching back or 
+      # redirecting
+      if @get('tab') == 'running'
+        @activate('owned')
+      else
+        @transitionToRoute('main.repositories')
 
 
   tabOrIsLoadedDidChange: (->
