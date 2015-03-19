@@ -60,10 +60,11 @@ $sb-font-size: 14px
   border-bottom: solid 2px $sb-grey
   width: 90%
   margin: auto
-  ul
-    height: 1.7em
-  li.float-right
-    padding-right: 0
+
+  .active a:after,
+  a:hover:after
+    bottom: -4px
+
   .icon--plus
     &:after
       transform: translateX(35%)
@@ -73,7 +74,21 @@ $sb-font-size: 14px
       .icon--plus:after
         color: $teal1
       &:after
-        bottom: 0.05em
+        bottom: 0
+
+  @media (min-width: #{upper-bound($large-range)})
+    ul
+        height: 1.7em
+    li
+      padding-right: 1.5em
+
+  @media (max-width: #{upper-bound($large-range)})
+    li
+      display: block !important
+      float: none
+    a
+      padding: 0 0 .35em
+      margin-bottom: .8em
 
 
 .sidebar-list
