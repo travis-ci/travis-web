@@ -1,7 +1,7 @@
 <div class="tabnav tabnav--sidebar" role="tablist">
   <ul class="tab tabs--sidebar">
     <li id="tab_owned" {{bind-attr class="view.classOwned"}}>
-      {{#link-to "main.repositories"}}My Repositories{{/link-to}}
+      <a href="#" {{action "showMyRepositories"}}>My Repositories</a>
     </li>
 
     {{#unless config.pro}}
@@ -10,11 +10,13 @@
       </li>
     {{/unless}}
 
-    {{!-- <li id="tab_search" {{bind-attr class="view.classSearch"}}>
-      <h5>Search</h5>
-    </li> --}}
+    {{#if config.pro}}
+      <li id="tab_running" {{bind-attr class="view.classRunning"}}>
+        <a href="#" {{action "showRunningJobs"}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
+      </li>
+    {{/if}}
 
-    <li id="tab_new" {{bind-attr class="view.classNew :float-right"}}>
+    <li id="tab_new" {{bind-attr class="view.classNew"}}>
       {{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}
         <span class="icon icon--plus"></span>
       {{/link-to}}
