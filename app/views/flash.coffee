@@ -2,7 +2,7 @@
 
 View = BasicView.extend
   classNames: ['flash']
-  tagname: 'ul'
+  tagName: 'ul'
   templateName: 'layouts/flash'
 
 `export default View`
