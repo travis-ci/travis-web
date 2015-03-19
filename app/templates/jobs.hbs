@@ -23,7 +23,7 @@
               </div>
 
               <p class="job-id jobs-item build-status">
-                <span class="icon icon--hash"></span>
+                <span class="icon icon--hash-dark"></span>
                 {{#if job.id}}
                   {{#if job.repo.slug}}
                     {{number}}
@@ -62,7 +62,7 @@
               {{/if}}
 
               <p class="job-duration jobs-item" {{bind-attr title="startedAt"}}>
-                <span class="icon icon--clock"></span>
+                <span class="icon icon--clock-dark"></span>
                 {{format-duration duration}}
               </p>
 
