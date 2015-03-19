@@ -77,13 +77,17 @@ $sb-font-size: 14px
       &:after
         bottom: 0
 
-  @media (min-width: #{upper-bound($large-range)})
+  @media (min-width: #{lower-bound($large-range)})
     ul
         height: 1.7em
     li
-      padding-right: 1.5em
+      padding-right: 1em
 
-  @media (max-width: #{upper-bound($large-range)})
+  @media #{$xxlarge-up}
+    li
+      padding-right: 2em
+
+  @media (max-width: #{lower-bound($large-range)})
     li
       display: block !important
       float: none
