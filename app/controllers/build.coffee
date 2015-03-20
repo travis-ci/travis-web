@@ -12,6 +12,11 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
 
   currentItemBinding: 'build'
 
+  jobsLoaded: (->
+    if jobs = @get('build.jobs')
+      jobs.everyBy('config')
+  ).property('build.jobs.@each.config')
+
   loading: (->
     @get('build.isLoading')
   ).property('build.isLoading')
