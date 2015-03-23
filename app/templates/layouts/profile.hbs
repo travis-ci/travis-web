@@ -1,18 +1,15 @@
-<div class="wrapper">
-  <header id="top" class="top">
-    {{render "top"}}
-  </header>
+<div class="centered">
+  <div class="wrapper wrapper-profile">
+    <header id="top" class="top">
+      {{render "top"}}
+    </header>
 
-  {{render "flash"}}
+    {{render "flash"}}
 
-  <div class="wrapper-main">
-    <div id="main" role="main">
+    <div id="main" class="main" role="main">
       {{yield}}
+
+      {{outlet "left"}}
     </div>
   </div>
-
-  <aside id="left">
-    {{outlet "left"}}
-  </aside>
-
 </div>
