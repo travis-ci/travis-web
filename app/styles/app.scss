@@ -15,8 +15,8 @@
 @import "app/getting_started";
 @import "app/github";
 
-@import "app/left/list";
-@import "app/left";
+// @import "app/left/list";
+// @import "app/left";
 @import "app/loading";
 @import "app/main/annotations";
 @import "app/main/list";
@@ -27,17 +27,17 @@
 @import "app/misc";
 @import "app/popup";
 @import "app/pro";
-@import "app/profile/hooks";
-@import "app/profile";
+// @import "app/profile/hooks";
+// @import "app/profile";
 @import "app/requests";
 // @import "app/right/lists";
 // @import "app/right/sponsors";
 // @import "app/right";
 @import "app/settings";
-@import "app/tabs";
+// @import "app/tabs";
 @import "app/tipsy";
 
-@import "app/components/travis-switch";
+// @import "app/components/travis-switch";
 @import "app/components/sync-button";
 
 @import "app/modules/section";
@@ -50,6 +50,8 @@
 @import "app/modules/tabs";
 @import "app/modules/tooltips";
 @import "app/modules/flash";
+@import "app/modules/media";
+@import "app/modules/switch";
 
 @import "app/layout";
 @import "app/layouts/dashboard";
@@ -61,3 +63,4 @@
 @import "app/layouts/build-job";
 @import "app/layouts/sidebar";
 @import "app/top";
+@import "app/layouts/profile";
