@@ -28,8 +28,8 @@ podStatusImage = ( (url, slug, branch) ->
   "=for HTML <a href=\"#{url}\"><img src=\"#{statusImageUrl(slug, branch)}\"></a>"
 )
 
-ccxmlStatusUrl = ( (slug) ->
-  ccXmlUrl(slug)
+ccxmlStatusUrl = ( (slug, branch) ->
+  ccXmlUrl(slug, branch)
 )
 
 format = (version, slug, branch) ->
@@ -43,7 +43,7 @@ format = (version, slug, branch) ->
     when 'AsciiDoc' then asciidocStatusImage(url, slug, branch)
     when 'Rst' then rstStatusImage(url, slug, branch)
     when 'Pod' then podStatusImage(url, slug, branch)
-    when 'CCTray' then ccxmlStatusUrl(url, slug, branch)
+    when 'CCTray' then ccxmlStatusUrl(slug, branch)
 
 
 `export default format`
