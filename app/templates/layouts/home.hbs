@@ -1,5 +1,5 @@
 <div class="wrapper">
-  
+
   <header id="top" class="top">
     {{render "top"}}
   </header>
@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <aside id="left">
+  <aside id="left" {{bind-attr class="auth.signedIn::hidden"}}>
     {{outlet "left"}}
   </aside>
 

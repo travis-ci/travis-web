@@ -50,14 +50,10 @@ Controller = Ember.ArrayController.extend
       Visibility.every @config.intervals.updateTimes, @updateTimes.bind(this)
 
   recentRepos: (->
-    Ember.ArrayProxy.extend(
-      isLoadedBinding: 'repos.isLoaded'
-      repos: Repo.withLastBuild(@store)
-      sorted: Ember.computed.sort('repos', 'sortedReposKeys')
-      content: limit('sorted', 'limit')
-      sortedReposKeys: ['sortOrder:asc']
-      limit: 30
-    ).create()
+    # I return an empty array here, because we're removing left sidebar, but
+    # I don't want to refactor too much code (it will be all changed anyway
+    # when we switch to new dashboard)
+    []
   ).property()
 
   updateTimes: ->
