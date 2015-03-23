@@ -61,6 +61,7 @@
         <li>
           <span class="icon icon--clock"></span>
           {{#if build.isFinished}}ran{{else}}running{{/if}} for {{format-duration build.duration}}
+        </li>
         <li {{bind-attr title="build.finishedAt"}}>
           <span class="icon icon--cal"></span>
           {{format-time build.finishedAt}}
