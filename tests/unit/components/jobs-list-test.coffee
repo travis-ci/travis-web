@@ -12,9 +12,9 @@ test 'it renders a list of jobs', ->
   @append()
 
   equal component.$('.build-title').text().trim(), 'Build Jobs'
-  equal component.$('li').length, 2, 'there should be 2 job items'
-  ok component.$('li:nth(0)').hasClass('passed'), 'passed class should be applied to a job'
-  ok component.$('li:nth(1)').hasClass('failed'), 'failed class should be applied to a job'
+  equal component.$('.tile--jobs').length, 2, 'there should be 2 job items'
+  ok component.$('.tile--jobs:nth(0)').hasClass('passed'), 'passed class should be applied to a job'
+  ok component.$('.tile--jobs:nth(1)').hasClass('failed'), 'failed class should be applied to a job'
 
 test 'it renders "Allowed Failures" version without a `required` property', ->
   jobs = [Ember.Object.create(id: 1)]

@@ -3,7 +3,7 @@
 `import { languageConfigKeys } from 'travis/utils/keys-map';`
 
 JobsItemComponent = Ember.Component.extend
-  tagName: 'li'
+  tagName: 'div'
   classNameBindings: ['job.state']
   classNames: ['tile', 'tile--jobs', 'row']
 
