@@ -1,25 +1,70 @@
-<h3>{{view.name}}</h3>
+<article class="columns medium-8 float-right">
+  <header>
+    <h1>{{view.name}}</h1>
+    {{sync-button user=auth.currentUser}}
+    <p>We're only showing you public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.ocm">travis-ci.com</a>.</p>
+  </header>
+  <section class="profile-getstarted">
+    <a href="#" class=""><span class="icon icon--close"></span></a>
+    <ol>
+      <li>
+        <figure>
+          <img src="" alt="">
+          <figcaption>Flick the repository switch on</figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="" alt="">
+          <figcaption>Add .travis.yml file to your repository</figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="" alt="">
+          <figcaption>Trigger your first build with a git push</figcaption>
+        </figure>
+      </li>
+    </ol>
+  </section>
+  <div>
+    <ul class="profile-hooklist">
+      <li>
+        <button class="switch is-on"></button>
+        <a href="#"><span class="icon icon--cog"></span></a>
+        <a href="#">travis-ci/build-email <span>Lorem ipsum dolor sit amet</span></a>
+      </li>
+      <li>
+        <button class="switch"></button>
+        <a href="#"><span class="icon icon--cog"></span></a>
+        <a href="#">travis-ci/lorem <span>Lorem ipsum dolor sit amet</span></a>
+      </li>
+    </ul>
+  </div>
 
-{{#if config.billingEndpoint}}
-  {{#if view.subscribed}}
-    <a class="button activated" {{bind-attr href="billingUrl"}}>
-      Subscription active!
-    </a>
-  {{else}}
-    {{#if view.education}}
+  {{!-- <h3>{{view.name}}</h3>
+
+  {{#if config.billingEndpoint}}
+    {{#if view.subscribed}}
       <a class="button activated" {{bind-attr href="billingUrl"}}>
-        Educational account!
+        Subscription active!
       </a>
     {{else}}
-      <a class="button activate" {{bind-attr href="billingUrl"}}>
-        Sign up this account!
-      </a>
+      {{#if view.education}}
+        <a class="button activated" {{bind-attr href="billingUrl"}}>
+          Educational account!
+        </a>
+      {{else}}
+        <a class="button activate" {{bind-attr href="billingUrl"}}>
+          Sign up this account!
+        </a>
+      {{/if}}
     {{/if}}
   {{/if}}
-{{/if}}
 
-{{view 'profile-tabs'}}
+  {{view 'profile-tabs'}}
 
-<div class="tab">
-  {{outlet}}
-</div>
+  <div class="tab">
+    {{outlet}}
+  </div> --}}
+</article>
