@@ -1,0 +1,36 @@
+
+$switch-height: 28px
+$switch-inner-height: 22px
+$switch-width: 62px
+$switch-inner-width: 27px
+
+.switch
+  position: relative
+  width: $switch-width
+  height: $switch-height
+  background-color: #d1d1d1
+  border: none
+  cursor: pointer
+  @extend %border-radius-4px
+  &:after
+    content: ""
+    display: block
+    position: absolute
+    top: ($switch-height - $switch-inner-height) / 2
+    right: ($switch-width - ($switch-inner-width * 2)) / 2
+    height: $switch-inner-height
+    width: $switch-inner-width
+    background-color: #919191
+    background-repeat: no-repeat
+    background-size: 14px 14px
+    background-position: 6px
+    transition: right 200ms ease
+    @extend .icon-hook-off
+    @extend %border-radius-4px
+
+  &.is-on
+    background-color: #b6d5b6
+    &:after
+      right: $switch-width - $switch-inner-width - (($switch-width - ($switch-inner-width * 2)) / 2)
+      background-color: #39a85b
+      @extend .icon-hook-on

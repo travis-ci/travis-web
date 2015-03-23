@@ -34,7 +34,7 @@
   @extend %border-radius-4px
   ol
     @include resetul
-    padding-bottom: 1em
+    padding: 1em 0
   figure
     margin: 0
   figcaption
@@ -47,8 +47,10 @@
 
   .dismiss
     position: absolute
-    top: .5em
-    right: .5em
+    top: 0
+    right: 0
+    padding: .5em
+    z-index: 99
   @media #{$medium-up}
     li:not(:last-child)
       img
