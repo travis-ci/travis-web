@@ -1,0 +1,46 @@
+{{#link-to "job" job.repo job}}
+  <div class="tile-status tile-status--job">
+    <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+  </div>
+
+  <p class="job-id jobs-item build-status">
+    <span class="icon icon--hash-dark"></span>
+    {{job.number}}
+  </p>
+
+  <p {{bind-attr class=":job-os :jobs-item :build-os job.config.os"}}>
+    <span {{bind-attr class=":icon job.config.os"}}></span>
+  </p>
+
+  {{#if languages}}
+    <p class="job-lang jobs-item build-lang">
+      <span class="icon icon--lang"></span>
+      {{languages}}
+    </p>
+  {{else}}
+    <p class="job-lang jobs-item build-lang is-empty">
+      <span class="icon icon--lang"></span>
+      no language set
+    </p>
+  {{/if}}
+
+  <div class="job-anchor jobs-item">
+    {{#if job.config.env}}
+      <p class="job-env jobs-item build-env">
+        <span class="icon icon--env"></span>
+        {{job.config.env}}
+      </p>
+    {{else}}
+      <p class="job-env jobs-item build-env is-empty">
+        <span class="icon icon--env"></span>
+        no environment variables set
+      </p>
+    {{/if}}
+
+    <p class="job-duration jobs-item" {{bind-attr title="job.startedAt"}}>
+      <span class="icon icon--clock-dark"></span>
+      {{format-duration job.duration}}
+    </p>
+
+  </div>
+{{/link-to}}

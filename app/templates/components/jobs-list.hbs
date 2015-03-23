@@ -1,0 +1,21 @@
+{{#if jobs.length}}
+  <section>
+
+  {{#if required}}
+    <h2 class="build-title">Build Jobs</h2>
+  {{else}}
+    <h2 class="build-title">Allowed Failures
+      <span class="icon icon--question"></span>
+      <div class="tooltip">
+        <p class="tooltip-inner">These are jobs you can allow to fail without failing your entire build</p>
+      </div>
+    </h2>
+  {{/if}}
+
+    <ul>
+    {{#each job in jobs}}
+      {{jobs-item job=job}}
+    {{/each}}
+    </ul>
+  </section>
+{{/if}}
