@@ -1,27 +1,27 @@
-<article class="columns medium-8 float-right">
+<article class="columns medium-8 float-right profile-main">
   <header>
     <h1>{{view.name}}</h1>
     {{sync-button user=auth.currentUser}}
     <p>We're only showing you public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.ocm">travis-ci.com</a>.</p>
   </header>
   <section class="profile-getstarted">
-    <a href="#" class=""><span class="icon icon--close"></span></a>
-    <ol>
-      <li>
+    <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a>
+    <ol class="row">
+      <li class="columns medium-4">
         <figure>
-          <img src="" alt="">
+          <img src="/images/svg/hooks-step-1-01.svg" alt="">
           <figcaption>Flick the repository switch on</figcaption>
         </figure>
       </li>
-      <li>
+      <li class="columns medium-4">
         <figure>
-          <img src="" alt="">
+          <img src="/images/svg/hooks-step-2-01.svg" alt="">
           <figcaption>Add .travis.yml file to your repository</figcaption>
         </figure>
       </li>
-      <li>
+      <li class="columns medium-4">
         <figure>
-          <img src="" alt="">
+          <img src="/images/svg/hooks-step-3-01.svg" alt="">
           <figcaption>Trigger your first build with a git push</figcaption>
         </figure>
       </li>

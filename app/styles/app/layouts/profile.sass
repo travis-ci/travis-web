@@ -3,6 +3,57 @@
   font-weight: 400
 
 
+.profile-main
+
+  header
+    h1
+      margin: 0 1.7rem 0 0
+      color: #808080
+      font-size: 35px
+      font-weight: 400
+      line-height: 1.45
+    p:not(.sync-last)
+      font-size: $font-size-sm
+      color: #adaaab
+      margin: 2rem 0 1rem 0
+    a
+      color: #adaaab
+      text-decoration: underline
+    @media #{$medium-up}
+      h1, .sync-button, .ember-view
+        display: inline-block
+        vertical-align: middle
+      .sync-button
+        margin-top: .5em
+
+
+.profile-getstarted
+  position: relative
+  margin-bottom: 3rem
+  background-color: $cream-light
+  @extend %border-radius-4px
+  ol
+    @include resetul
+    padding-bottom: 1em
+  figure
+    margin: 0
+  figcaption
+    width: 90%
+    margin: auto
+    padding: 0 0 0 2.8em
+  img
+    display: block
+    margin: 0 auto 1em
+
+  .dismiss
+    position: absolute
+    top: .5em
+    right: .5em
+  @media #{$medium-up}
+    li:not(:last-child)
+      img
+        padding: 0 3.2em
+        border-right: solid 2px #f3f2f2
 
 
 .profile-orgs,
