@@ -1,0 +1,49 @@
+.profile
+  font-size: $font-size-sm
+  font-weight: 400
+
+
+
+
+.profile-orgs,
+.profile-user
+
+  .media-elem
+    width: 12%
+    img
+      width: 2rem
+      height: 2rem
+      border-radius: 50%
+  .media-body
+    width: 88%
+  p
+    margin: 0
+  ul
+    @include resetul
+  li
+    margin: 1.5rem 0 2.5rem
+  a
+    @extend %inline-block
+    width: 100%
+    &:hover
+      h1, h2
+        text-decoration: underline
+
+.profile-user h1,
+.profile-orgs h2
+  font-size: $font-size-sm
+  margin: 0
+  font-weight: 600
+  line-height: 1
+
+.profile-orgs
+  h1
+    color: #898b8c
+    font-size: $font-size-sm
+    border-bottom: solid 2px #f3f2f2
+
+.profile-user
+  margin-bottom: 2rem
+
+p.profile-user-last
+  margin-top: .5em

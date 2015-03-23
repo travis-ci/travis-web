@@ -2,33 +2,29 @@
   <section class="profile-user">
     <div class="media">
       <div class="media-elem">
-        <img src="" alt="">
+        <img src="//placehold.it/50x50" alt="">
       </div>
       <div class="media-body">
         <h1>Justiine Arreche</h1>
         <p>Repositories <strong>12</strong></p>
-        <p>Token: <strong>dfigsd90u34r2hwa9ru239ur2</strong></p>
+        <p class="profile-user-last">Token: <strong>dfigsd90u34r2hwa9ru239ur2</strong></p>
       </div>
     </div>
   </section>
   <section class="profile-orgs">
-    <h1>Organiszations</h1>
-    <ul class="profile-orglist">
-      {{#collection "accounts-list" contentBinding="controller"}}
-        <li {{bind-attr class="view.classAccounts"}}>
-          {{#link-to "account" view.account class="name"}}
-            <div class="media">
-              <div class="media-elem">
-                <img src="" alt="">
-              </div>
-              <div class="media-body">
-                <h2>{{view.name}}</h2>
-                <p>Repositories <strong>{{view.account.reposCount}}</strong></p>
-              </div>
-            </div>
-          {{/link-to}}
-        </li>
-      {{/collection}}
-    </ul>
+    <h1>Organizations</h1>
+    {{#collection "accounts-list" contentBinding="controller"}}
+      {{#link-to "account" view.account class="name"}}
+        <div class="media">
+          <div class="media-elem">
+            <img src="//placehold.it/50x50" alt="">
+          </div>
+          <div class="media-body">
+            <h2>{{view.name}}</h2>
+            <p>Repositories <strong>{{view.account.reposCount}}</strong></p>
+          </div>
+        </div>
+      {{/link-to}}
+    {{/collection}}
   </section>
 </aside>
