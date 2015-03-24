@@ -3,49 +3,47 @@
 
     <h1>{{view.name}}</h1>
     {{!-- {{sync-button user=auth.currentUser}} --}}
-
-    {{#if config.pro}}
-    <p>We're only showing you private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+    {{#if user.isSyncing}}
+      <p class="message loading">
+        <span>Please wait while we synchronize your data from GitHub</span>
+      </p>
     {{else}}
-    <p>We're only showing you public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
-    {{/if}}
-  </header>
-  <section class="profile-getstarted">
-    <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a>
-    <ol class="row">
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/svg/hooks-step-1-01.svg" alt="">
-          <figcaption>Flick the repository switch on</figcaption>
-        </figure>
-      </li>
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/svg/hooks-step-2-01.svg" alt="">
-          <figcaption>Add .travis.yml file to your repository</figcaption>
-        </figure>
-      </li>
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/svg/hooks-step-3-01.svg" alt="">
-          <figcaption>Trigger your first build with a git push</figcaption>
-        </figure>
-      </li>
-    </ol>
-  </section>
+      <p class="message">
+        Last synchronized from GitHub: {{format-time user.syncedAt}}
+        <a class="sync_now button" {{action "sync"}}>
+          Sync now
+        </a>
+      </p>
+      {{#if config.pro}}
+      <p>We're only showing you private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+      {{else}}
+      <p>We're only showing you public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+      {{/if}}
+    </header>
 
-
-  {{#if user.isSyncing}}
-    <p class="message loading">
-      <span>Please wait while we synchronize your data from GitHub</span>
-    </p>
-  {{else}}
-    <p class="message">
-      Last synchronized from GitHub: {{format-time user.syncedAt}}
-      <a class="sync_now button" {{action "sync"}}>
-        Sync now
-      </a>
-    </p>
+    <section class="profile-getstarted">
+      <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a>
+      <ol class="row">
+        <li class="columns medium-4">
+          <figure>
+            <img src="/images/svg/hooks-step-1-01.svg" alt="">
+            <figcaption>Flick the repository switch on</figcaption>
+          </figure>
+        </li>
+        <li class="columns medium-4">
+          <figure>
+            <img src="/images/svg/hooks-step-2-01.svg" alt="">
+            <figcaption>Add .travis.yml file to your repository</figcaption>
+          </figure>
+        </li>
+        <li class="columns medium-4">
+          <figure>
+            <img src="/images/svg/hooks-step-3-01.svg" alt="">
+            <figcaption>Trigger your first build with a git push</figcaption>
+          </figure>
+        </li>
+      </ol>
+    </section>
 
     <div>
       <ul class="profile-hooklist">
@@ -72,27 +70,25 @@
       </ul>
     </div>
 
+      {{!-- {{#if hooksWithoutAdmin.length}}
+        <div id="unadministerable-hooks">
+          <h3>Repositories without admin access</h3>
 
+          <p class="tip">
+            You only have pull or push access to the repositories below.
+          </p>
 
-    {{!-- {{#if hooksWithoutAdmin.length}}
-      <div id="unadministerable-hooks">
-        <h3>Repositories without admin access</h3>
-
-        <p class="tip">
-          You only have pull or push access to the repositories below.
-        </p>
-
-        <ul>
-          {{#each hook in hooksWithoutAdmin}}
-            <li {{bind-attr class="hook.active:active"}}>
-              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
-              <p class="description">{{hook.description}}</p>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-    {{/if}} --}}
-  {{/if}}
+          <ul>
+            {{#each hook in hooksWithoutAdmin}}
+              <li {{bind-attr class="hook.active:active"}}>
+                <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+                <p class="description">{{hook.description}}</p>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}} --}}
+    {{/if}}
 {{else}}
   <p class="message loading">
     <span>Loading</span>
