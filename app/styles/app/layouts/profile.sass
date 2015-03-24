@@ -4,7 +4,6 @@
 
 
 .profile-main
-
   header
     h1
       margin: 0 1.7rem 0 0
@@ -100,6 +99,12 @@ p.profile-user-last
   margin-top: .5em
 
 
+.profile-orglist
+  @media #{$large-up}
+    padding-right: 10em
+    aside
+      padding: 0
+
 .profile-hooklist
   @include resetul
   font-size: $font-size-m
@@ -132,6 +137,7 @@ p.profile-user-last
   width: grid-calc(14, 24)
   padding: .25em .5em .3em
   white-space: nowrap
+  overflow: hidden
   span
     display: none
     margin-left: 2rem
