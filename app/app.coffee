@@ -15,7 +15,7 @@ Ember.HTMLBars._registerHelper('travis-field', travisField)
 Ember.HTMLBars._registerHelper('travis-errors', travisErrors)
 Ember.Handlebars.registerHelper('tipsy', tipsy)
 #Ember.Handlebars.registerHelper('input', input)
-Ember.Handlebars.registerHelper('filter-input', filterInput)
+Ember.HTMLBars._registerHelper('filter-input', filterInput)
 Ember.Handlebars.registerBoundHelper('mb', mb)
 
 Ember.MODEL_FACTORY_INJECTIONS = true
