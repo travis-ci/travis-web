@@ -76,19 +76,21 @@
     </ul>
   </div>
 
-    {{!-- {{#if hooksWithoutAdmin.length}}
+{{!--     {{#if hooksWithoutAdmin.length}}
       <div id="unadministerable-hooks">
-        <h3>Repositories without admin access</h3>
+        <p>Repositories without admin access</p>
 
         <p class="tip">
           You only have pull or push access to the repositories below.
         </p>
 
-        <ul>
+        <ul class="profile-hooklist">
           {{#each hook in hooksWithoutAdmin}}
-            <li {{bind-attr class="hook.active:active"}}>
-              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
-              <p class="description">{{hook.description}}</p>
+            <li {{bind-attr class="hook.active:active :row"}}>
+              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
+                {{hook.slug}}
+                <span>{{hook.description}}</span>
+              </a>
             </li>
           {{/each}}
         </ul>
