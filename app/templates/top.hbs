@@ -56,19 +56,21 @@
           <button class="signing-in button--signingin">Signing In <span class="sync-spinner"><i></i><i></i><i></i></span></button>
         {{/if}}
       </p>
-      <ul class="navigation-nested">
-        <li>
-          {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
-        </li>
-        {{#if config.billingEndpoint}}
+      {{#if auth.signedIn}}
+        <ul class="navigation-nested">
           <li>
-            <a {{bind-attr href="config.billingEndpoint"}}>Billing</a>
+            {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
           </li>
-        {{/if}}
-        <li>
-          <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
-        </li>
-      </ul>
+          {{#if config.billingEndpoint}}
+            <li>
+              <a {{bind-attr href="config.billingEndpoint"}}>Billing</a>
+            </li>
+          {{/if}}
+          <li>
+            <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
+          </li>
+        </ul>
+      {{/if}}
     </li>
   </ul>
 </div>
