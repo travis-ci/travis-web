@@ -26,7 +26,6 @@
       .sync-button
         margin-top: .5em
 
-
 .profile-getstarted
   position: relative
   margin-bottom: 3rem
@@ -56,7 +55,6 @@
       img
         padding: 0 3.2em
         border-right: solid 2px #f3f2f2
-
 
 .profile-orgs,
 .profile-user
@@ -100,3 +98,47 @@
 
 p.profile-user-last
   margin-top: .5em
+
+
+.profile-hooklist
+  @include resetul
+  font-size: $font-size-m
+  color: #7a7a7a
+  li
+    clear: both
+    margin-bottom: .8em
+    overflow: auto
+    > div
+      width: grid-calc(5, 24)
+  .switch
+    display: inline-block
+  .profile-settings
+    display: inline-block
+    margin-left: 1rem;
+    padding: .2em .2em .2em .5em;
+    height: 28px;
+    vertical-align: bottom;
+    .icon
+      width: 14px
+      height: 14px
+
+.profile-repo
+  @extend %border-radius-4px
+  width: grid-calc(19, 24)
+  padding: .25em .5em .3em
+  span
+    display: none
+    margin-left: 2rem
+    font-size: $font-size-sm
+    color: #484849
+  &:hover
+    background-color: #ededec
+    span
+      display: inline-block
+  .is-active &:hover
+    background-color: #e2eee2
+  @media #{$medium-up}
+    height: 30px
+
+
+
