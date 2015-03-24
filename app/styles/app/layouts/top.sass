@@ -61,7 +61,7 @@ $top-height: 55px
   .navigation-handle
     position: relative
     margin: 0
-  
+
   .navigation--profile
     img
       border-radius: 50%;
@@ -70,10 +70,11 @@ $top-height: 55px
       margin-left: 1rem;
       transform: translateY(-0.1rem);
 
+  .navigation-sub
+    position: relative
 
   @media #{$medium-up}
     height: $top-height
-    // padding: 0 0 0 1rem
 
     .navigation
       height: $top-height
@@ -96,20 +97,20 @@ $top-height: 55px
 
     .navigation-nested
       display: none
+      position: absolute
+      top: $top-height
+      left: -1em
+      z-index: 90
+      background-color: #eff0ec
       a
         height: 35px
         line-height: 35px
         padding: 0 2em
+        white-space: nowrap
         &:hover
           text-decoration: none
           background-color: $cream-light
 
-    .navigation--profile.signed-in
-      .navigation-handle:hover + .navigation-nested,
-      .navigation-nested:hover
-        position: absolute
-        top: $top-height
-        right: 1rem
-        display: block
-        z-index: 90
-        background-color: #eff0ec 
+    .navigation-handle:hover + .navigation-nested,
+    .navigation-nested:hover
+      display: block

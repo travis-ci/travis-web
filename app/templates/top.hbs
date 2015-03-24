@@ -6,13 +6,43 @@
 
   <ul id="navigation" {{bind-attr class=":navigation is-open"}}>
     <li><a href="http://blog.travis-ci.com">Blog</a></li>
-    <li><a href="http://docs.travis-ci.com">Docs</a></li>
+   {{!--  <li><a href="http://docs.travis-ci.com">Help</a></li> --}}
+   <li><a href="http://www.traviscistatus.com/">Status</a></li>
 
-{{!--     {{#unless config.pro}}
-      <li class="traviscicom navigation--traviscicom">
-        <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
+    {{#unless config.pro}}
+      <li class="navigation-sub navigation--community">
+        <p class="handle navigation-handle">
+          <a href="#">Help</a>
+        </p>
+        <ul class="navigation-nested">
+          <li><a href="http://docs.travis-ci.com">Docs</a></li>
+          <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
+          <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
+          <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
+          <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
+        </ul>
       </li>
-    {{/unless}} --}}
+    {{/unless}}
+
+    {{#if config.pro}}
+      <li><a href="http://docs.travis-ci.com">Docs</a></li>
+      <li class="navigation-sub navigation--legal">
+        <p class="handle navigation-handle">
+          <a {{bind-attr href="config.url_legal"}}>Legal</a>
+        </p>
+        <ul class="navigation-nested">
+          <li>
+            <a {{bind-attr href="config.url_imprint"}}>Imprint</a>
+          </li>
+          <li>
+            <a {{bind-attr href="config.url_security"}}>Security</a>
+          </li>
+          <li>
+            <a {{bind-attr href="config.url_terms"}}>Terms</a>
+          </li>
+        </ul>
+      </li>
+    {{/if}}
 
     <li {{bind-attr class="view.classProfile :navigation-sub :navigation--profile"}}>
       <p class="handle navigation-handle">
