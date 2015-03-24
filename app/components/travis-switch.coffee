@@ -2,7 +2,7 @@
 
 Component = Ember.Component.extend
   tagName: 'a'
-  classNames: ['travis-switch']
+  classNames: ['travis-switch', 'switch']
   classNameBindings: ['_active:active']
 
   # TODO: how to handle overriding properties to
