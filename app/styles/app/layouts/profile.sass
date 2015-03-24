@@ -16,9 +16,9 @@
       font-size: $font-size-sm
       color: #adaaab
       margin: 2rem 0 1rem 0
-    a
-      color: #adaaab
-      text-decoration: underline
+      a
+        color: #adaaab
+        text-decoration: underline
     @media #{$medium-up}
       h1, .sync-button, .ember-view
         display: inline-block
@@ -114,8 +114,6 @@ p.profile-user-last
         width: grid-calc(7, 24)
       @media #{$large-up}
         width: grid-calc(5, 24)
-  a
-    text-decoration: none
   .switch
     display: inline-block
   .profile-settings
@@ -130,8 +128,10 @@ p.profile-user-last
 
 .profile-repo
   @extend %border-radius-4px
+  position: relative
   width: grid-calc(14, 24)
   padding: .25em .5em .3em
+  white-space: nowrap
   span
     display: none
     margin-left: 2rem
@@ -139,8 +139,14 @@ p.profile-user-last
     color: #484849
   &:hover
     background-color: #ededec
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, #ededec)
   .active &:hover
     background-color: #e2eee2
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, #e2eee2)
   @media #{$medium-up}
     width: grid-calc(17, 24)
     height: 30px

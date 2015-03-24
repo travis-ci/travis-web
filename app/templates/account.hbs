@@ -24,75 +24,76 @@
       {{else}}
       <p>We're only showing you public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
     {{/if}}
+
   </header>
 
-    <section class="profile-getstarted">
-      <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a>
-      <ol class="row">
-        <li class="columns medium-4">
-          <figure>
-            <img src="/images/svg/hooks-step-1-01.svg" alt="">
-            <figcaption>Flick the repository switch on</figcaption>
-          </figure>
+  <section class="profile-getstarted">
+    <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a>
+    <ol class="row">
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-1-01.svg" alt="">
+          <figcaption>Flick the repository switch on</figcaption>
+        </figure>
+      </li>
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-2-01.svg" alt="">
+          <figcaption>Add .travis.yml file to your repository</figcaption>
+        </figure>
+      </li>
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-3-01.svg" alt="">
+          <figcaption>Trigger your first build with a git push</figcaption>
+        </figure>
+      </li>
+    </ol>
+  </section>
+
+  <div>
+    <ul class="profile-hooklist">
+      {{#each hook in hooks}}
+        <li {{bind-attr class="hook.active:active :row"}}>
+          <div class="columns">
+            {{travis-switch action="toggle" target=hook toggleAutomatically="false"}}
+            {{!-- <button class="switch is-on"></button> --}}
+            {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
+          </div>
+          {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
+          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">{{hook.slug}}
+            <span>{{hook.description}}</span></a>
         </li>
-        <li class="columns medium-4">
-          <figure>
-            <img src="/images/svg/hooks-step-2-01.svg" alt="">
-            <figcaption>Add .travis.yml file to your repository</figcaption>
-          </figure>
+      {{else}}
+        <li>
+          {{#if hooksWithoutAdmin.length}}
+            Sorry, but we can't find any repositories you have admin access to.
+          {{else}}
+            Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
+          {{/if}}
         </li>
-        <li class="columns medium-4">
-          <figure>
-            <img src="/images/svg/hooks-step-3-01.svg" alt="">
-            <figcaption>Trigger your first build with a git push</figcaption>
-          </figure>
-        </li>
-      </ol>
-    </section>
+      {{/each}}
+    </ul>
+  </div>
 
-    <div>
-      <ul class="profile-hooklist">
-        {{#each hook in hooks}}
-          <li {{bind-attr class="hook.active:active :row"}}>
-            <div class="columns">
-              {{travis-switch action="toggle" target=hook toggleAutomatically="false"}}
-              {{!-- <button class="switch is-on"></button> --}}
-              {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
-            </div>
-            {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
-            <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">{{hook.slug}}
-              <span>{{hook.description}}</span></a>
-          </li>
-        {{else}}
-          <li>
-            {{#if hooksWithoutAdmin.length}}
-              Sorry, but we can't find any repositories you have admin access to.
-            {{else}}
-              Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
-            {{/if}}
-          </li>
-        {{/each}}
-      </ul>
-    </div>
+    {{!-- {{#if hooksWithoutAdmin.length}}
+      <div id="unadministerable-hooks">
+        <h3>Repositories without admin access</h3>
 
-      {{!-- {{#if hooksWithoutAdmin.length}}
-        <div id="unadministerable-hooks">
-          <h3>Repositories without admin access</h3>
+        <p class="tip">
+          You only have pull or push access to the repositories below.
+        </p>
 
-          <p class="tip">
-            You only have pull or push access to the repositories below.
-          </p>
-
-          <ul>
-            {{#each hook in hooksWithoutAdmin}}
-              <li {{bind-attr class="hook.active:active"}}>
-                <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
-                <p class="description">{{hook.description}}</p>
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      {{/if}} --}}
+        <ul>
+          {{#each hook in hooksWithoutAdmin}}
+            <li {{bind-attr class="hook.active:active"}}>
+              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
+              <p class="description">{{hook.description}}</p>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}} --}}
   {{/if}}
 {{else}}
   <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
