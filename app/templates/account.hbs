@@ -1,19 +1,40 @@
-<p class="tip">
-  {{#if config.pro}}
-  We're only showing <strong>your private repositories</strong> below.
-  You can find your <strong>public projects on <a href="https://travis-ci.org?utm_source=hooks">travis-ci.org</a></strong>.
-  {{else}}
-  We're only showing <strong>your public repositories</strong> below.
-  You can find your <strong>private projects on <a href="https://travis-ci.com?utm_source=hooks">travis-ci.com</a></strong>.
-  {{/if}}
-</p>
-
-<p class="tip">
-  Enable your projects below by flicking the switch, add a <a href="http://docs.travis-ci.com">.travis.yml</a> to your project, and push a new commit to
-  GitHub.
-</p>
-
 {{#if allHooks.isLoaded}}
+  <header>
+
+    <h1>{{view.name}}</h1>
+    {{!-- {{sync-button user=auth.currentUser}} --}}
+
+    {{#if config.pro}}
+    <p>We're only showing you private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+    {{else}}
+    <p>We're only showing you public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+    {{/if}}
+  </header>
+  <section class="profile-getstarted">
+    <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a>
+    <ol class="row">
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-1-01.svg" alt="">
+          <figcaption>Flick the repository switch on</figcaption>
+        </figure>
+      </li>
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-2-01.svg" alt="">
+          <figcaption>Add .travis.yml file to your repository</figcaption>
+        </figure>
+      </li>
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-3-01.svg" alt="">
+          <figcaption>Trigger your first build with a git push</figcaption>
+        </figure>
+      </li>
+    </ol>
+  </section>
+
+
   {{#if user.isSyncing}}
     <p class="message loading">
       <span>Please wait while we synchronize your data from GitHub</span>
@@ -26,30 +47,34 @@
       </a>
     </p>
 
-    <ul id="hooks">
-      {{#each hook in hooks}}
-        <li {{bind-attr class="hook.active:active"}}>
-          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
-          {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
-          <p class="description">{{hook.description}}</p>
+    <div>
+      <ul class="profile-hooklist">
+        {{#each hook in hooks}}
+          <li {{bind-attr class="hook.active:active :row"}}>
+            <div class="columns">
+              {{travis-switch action="toggle" target=hook toggleAutomatically="false"}}
+              {{!-- <button class="switch is-on"></button> --}}
+              {{#link-to "settings" hook.ownerName hook.name class=":profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
+            </div>
+            {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
+            <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">{{hook.slug}}
+              <span>{{hook.description}}</span></a>
+          </li>
+        {{else}}
+          <li>
+            {{#if hooksWithoutAdmin.length}}
+              Sorry, but we can't find any repositories you have admin access to.
+            {{else}}
+              Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
 
-          <div class="controls">
-            {{#link-to "settings" hook.ownerName hook.name class="repo-settings-icon tool-tip" title="Repository settings"}}{{/link-to}}
-            {{travis-switch action="toggle" target=hook toggleAutomatically="false"}}
-          </div>
-        </li>
-      {{else}}
-        <li>
-          {{#if hooksWithoutAdmin.length}}
-            Sorry, but we can't find any repositories you have admin access to.
-          {{else}}
-            Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
-          {{/if}}
-        </li>
-      {{/each}}
-    </ul>
 
-    {{#if hooksWithoutAdmin.length}}
+
+    {{!-- {{#if hooksWithoutAdmin.length}}
       <div id="unadministerable-hooks">
         <h3>Repositories without admin access</h3>
 
@@ -66,7 +91,7 @@
           {{/each}}
         </ul>
       </div>
-    {{/if}}
+    {{/if}} --}}
   {{/if}}
 {{else}}
   <p class="message loading">

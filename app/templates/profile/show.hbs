@@ -1,50 +1,4 @@
 <article class="columns medium-8 float-right profile-main">
-  <header>
-    <h1>{{view.name}}</h1>
-    {{sync-button user=auth.currentUser}}
-    <p>We're only showing you public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.ocm">travis-ci.com</a>.</p>
-  </header>
-  <section class="profile-getstarted">
-    <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a>
-    <ol class="row">
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/svg/hooks-step-1-01.svg" alt="">
-          <figcaption>Flick the repository switch on</figcaption>
-        </figure>
-      </li>
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/svg/hooks-step-2-01.svg" alt="">
-          <figcaption>Add .travis.yml file to your repository</figcaption>
-        </figure>
-      </li>
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/svg/hooks-step-3-01.svg" alt="">
-          <figcaption>Trigger your first build with a git push</figcaption>
-        </figure>
-      </li>
-    </ol>
-  </section>
-  <div>
-    <ul class="profile-hooklist">
-      <li class="row is-active">
-        <div class="columns">
-          <button class="switch is-on"></button>
-          <a href="#" class="profile-settings"><span class="icon icon--cog"></span></a>
-        </div>
-        <a href="#" class="profile-repo columns">travis-ci/build-email <span>Lorem ipsum dolor sit amet</span></a>
-      </li>
-      <li class="row">
-        <div class="columns">
-          <button class="switch"></button>
-          <a href="#" class="profile-settings"><span class="icon icon--cog"></span></a>
-        </div>
-        <a href="#" class="profile-repo columns">travis-ci/lorem <span>Lorem ipsum dolor sit amet</span></a>
-      </li>
-    </ul>
-  </div>
 
   {{#if config.billingEndpoint}}
     {{#if view.subscribed}}
@@ -64,9 +18,9 @@
     {{/if}}
   {{/if}}
 
-{{!--   {{view 'profile-tabs'}} --}}
-{{!-- 
+  {{!-- {{view 'profile-tabs'}} --}}
+
   <div class="tab">
     {{outlet}}
-  </div> --}}
+  </div>
 </article>
