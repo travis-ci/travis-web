@@ -28,12 +28,17 @@ statusImage = (slug, branch) ->
   else
     "#{location.protocol}//#{location.host}/#{slug}.svg" + if branch then "?branch=#{encodeURIComponent(branch)}" else ''
 
-ccXml = (slug) ->
+ccXml = (slug, branch) ->
+  url = "##{config.apiEndpoint}/repos/#{slug}/cc.xml"
+  if branch
+    url = "#{url}?branch=#{branch}"
+
   if config.pro
+    delimiter = if url.indexOf('?') == -1 then '?' else '&'
     token = Travis.__container__.lookup('controller:currentUser').get('token')
-    "##{config.apiEndpoint}/repos/#{slug}/cc.xml?token=#{token}"
-  else
-    "#{config.apiEndpoint}/repos/#{slug}/cc.xml"
+    url = "#{url}#{delimiter}token=#{token}"
+
+  url
 
 email = (email) ->
   "mailto:#{email}"

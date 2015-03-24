@@ -7,6 +7,19 @@ Controller = Ember.ArrayController.extend
     activate: (name) ->
       @activate(name)
 
+    showRunningJobs: ->
+      @activate('running')
+
+    showMyRepositories: ->
+      # this is a bit of a hack. I don't want to switch URL for 'running'
+      # so depending on current state I'm either just switching back or 
+      # redirecting
+      if @get('tab') == 'running'
+        @activate('owned')
+      else
+        @transitionToRoute('main.repositories')
+
+
   tabOrIsLoadedDidChange: (->
     @possiblyRedirectToGettingStartedPage()
   ).observes('isLoaded', 'tab', 'length')
@@ -17,7 +30,7 @@ Controller = Ember.ArrayController.extend
         @container.lookup('router:main').send('redirectToGettingStarted')
 
   isLoadedBinding: 'content.isLoaded'
-  needs: ['currentUser', 'repo']
+  needs: ['currentUser', 'repo', 'runningJobs', 'queue']
   currentUserBinding: 'controllers.currentUser'
   selectedRepo: (->
     # we need to observe also repo.content here, because we use
@@ -25,6 +38,11 @@ Controller = Ember.ArrayController.extend
     # TODO: get rid of ObjectProxy there
     @get('controllers.repo.repo.content') || @get('controllers.repo.repo')
   ).property('controllers.repo.repo', 'controllers.repo.repo.content')
+
+  startedJobsCount: Ember.computed.alias('controllers.runningJobs.length')
+  allJobsCount: (->
+    @get('startedJobsCount') + @get('controllers.queue.length')
+  ).property('startedJobsCount', 'controllers.queue.length')
 
   init: ->
     @_super.apply this, arguments
@@ -56,6 +74,8 @@ Controller = Ember.ArrayController.extend
 
   viewOwned: ->
     @set('content', @get('userRepos'))
+
+  viewRunning: ->
 
   userRepos: (->
     if login = @get('currentUser.login')
@@ -89,6 +109,10 @@ Controller = Ember.ArrayController.extend
     'Repositories could not be loaded'
    else
     'Could not find any repos'
+  ).property('tab')
+
+  showRunningJobs: (->
+    @get('tab') == 'running'
   ).property('tab')
 
 `export default Controller`

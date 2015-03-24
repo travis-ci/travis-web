@@ -7,7 +7,7 @@
     <h2 class="build-title">Allowed Failures
       <span class="icon icon--question"></span>
       <div class="tooltip">
-        <p class="tooltip-inner">These are jobs you can allow to fail without failing your entire build</p>
+        <p class="tooltip-inner">These are jobs are allowed to fail, without failing your entire build.</p>
       </div>
     </h2>
   {{/if}}
@@ -23,7 +23,7 @@
               </div>
 
               <p class="job-id jobs-item build-status">
-                <span class="icon icon--hash"></span>
+                <span class="icon icon--hash-dark"></span>
                 {{#if job.id}}
                   {{#if job.repo.slug}}
                     {{number}}
@@ -57,12 +57,12 @@
               {{else}}
                 <p class="job-env jobs-item build-env is-empty">
                   <span class="icon icon--env"></span>
-                  no environments set
+                  no environment variables set
                 </p>
               {{/if}}
 
               <p class="job-duration jobs-item" {{bind-attr title="startedAt"}}>
-                <span class="icon icon--clock"></span>
+                <span class="icon icon--clock-dark"></span>
                 {{format-duration duration}}
               </p>
 

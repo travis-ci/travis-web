@@ -10,7 +10,7 @@
 @import "app/auth";
 @import "app/caches";
 @import "app/charm";
-@import "app/flash";
+// @import "app/flash";
 @import "app/forms";
 @import "app/getting_started";
 @import "app/github";
@@ -21,24 +21,19 @@
 @import "app/main/annotations";
 @import "app/main/list";
 @import "app/main/log";
-// @import "app/main/repository";
 @import "app/main/sponsors";
-// @import "app/main/summary";
-// @import "app/main/tools";
 @import "app/main";
-@import "app/maximize";
+// @import "app/maximize";
 @import "app/misc";
 @import "app/popup";
 @import "app/pro";
 @import "app/profile/hooks";
 @import "app/profile";
 @import "app/requests";
-@import "app/right/lists";
-@import "app/right/sponsors";
-@import "app/right";
+// @import "app/right/lists";
+// @import "app/right/sponsors";
+// @import "app/right";
 @import "app/settings";
-// @import "app/stats";
-// @import "app/status";
 @import "app/tabs";
 @import "app/tipsy";
 
@@ -54,6 +49,7 @@
 @import "app/modules/dropdown";
 @import "app/modules/tabs";
 @import "app/modules/tooltips";
+@import "app/modules/flash";
 
 @import "app/layout";
 @import "app/layouts/dashboard";

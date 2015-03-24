@@ -34,7 +34,7 @@
   p
     white-space: normal
   a
-    color: $grey1
+    color: $grey2
   .tile-status--job
     width: 2em
 
@@ -120,4 +120,8 @@
     @include colorJobs($created-color, #f4efd8)
 
 .is-empty
-  opacity: .3
+  opacity: .5
+
+.jobs-list
+  @include resetul
+

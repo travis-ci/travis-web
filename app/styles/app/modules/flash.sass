@@ -1,0 +1,52 @@
+.flash
+  @include resetul
+  font-size: 18px
+  text-align: center
+  li
+    opacity: 0
+    position: relative
+    max-height: 3.5rem
+    height: 0
+    animation: comeIn 7s 1 ease
+
+  .close
+    @extend .icon
+    position: absolute
+    top: 1em
+    right: 1em
+    width: 1.1rem
+    height: 1.1rem
+
+  p
+    padding: .7em 0
+    margin: 0
+
+  .success,
+  .notice
+    color: #3ba85b
+    background-color: #deebdd
+    .close
+      @extend .icon--dismiss-green
+
+  .error
+    color: #de4248
+    background-color: #f1b6ad
+    .close
+      @extend .icon--dismiss-red
+
+@keyframes comeIn
+  0%
+    opacity: 1
+    height: 0
+    top: -10em
+  5%
+    height: 3.5rem
+    top: 0
+  95%
+    height: 3.5rem
+    opacity: 1
+  99%
+    height: 3.5em
+  100%
+    height: 0
+    opacity: 0

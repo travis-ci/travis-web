@@ -8,7 +8,7 @@ Controller = Ember.ArrayController.extend
 
   init: ->
     @_super.apply this, arguments
-    @set('flashes', LimitedArray.create(limit: 2, content: []))
+    @set('flashes', LimitedArray.create(limit: 1, content: []))
 
   model: (->
     broadcasts = @get('unseenBroadcasts')
