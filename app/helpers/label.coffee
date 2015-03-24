@@ -7,15 +7,16 @@ LabelView = Ember.View.extend(
   classNameBindings: ['class']
 )
 
-label = (options) ->
+label = (params, hash, options, env) ->
   view = LabelView
 
-  name = options.hash.for
+  controller = env.data.view.get('controller')
+  name = hash.for
   if name
-    labels = @get('_labels')
+    labels = controller.get('_labels')
     unless labels
       labels = Ember.Object.create()
-      @set('_labels', labels)
+      controller.set('_labels', labels)
 
     # for now I support only label + input in their own context
     id = labels.get(name)
@@ -23,12 +24,10 @@ label = (options) ->
       id = "#{name}-#{Math.round(Math.random() * 1000000)}"
       labels.set(name, id)
 
-    options.hash.for = id
-    options.hashTypes.for = 'STRING'
-    options.hashContexts.for = this
-    if options.hash.content
+    hash.for = id
+    if hash.content
       view = view.extend(templateName: 'helpers/label')
 
-  Ember.Handlebars.helpers.view.call(this, view, options)
+  env.helpers.view.helperFunction.call(this, [view], hash, options, env)
 
 `export default label`
