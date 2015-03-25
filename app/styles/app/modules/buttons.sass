@@ -97,6 +97,25 @@ $button-border-color: #d4d4d4
 .button--fixedwidth
   width: 8em
 
+.btn-activate,
+.btn-activated
+  font-size: $font-size-sm
+  border: none
+  // padding-right: 2.5em
+  &:hover
+    background-color: $grey2
+
+.btn-activated
+  background-color: #39a85b
+  color: $white
+  // @extend .icon-hook-on
+  // background:
+  //   repeat: no-repeat
+  //   position: 92% 45%
+  &:hover
+    background-color: darken(#39a85b, 10)
+
+
 // temp
 #auth #navigation .button--signin,
 #auth #navigation .button--signingin

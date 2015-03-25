@@ -1,22 +1,24 @@
 <article class="columns medium-8 float-right profile-main">
 
-  {{#if config.billingEndpoint}}
-    {{#if view.subscribed}}
-      <a class="button activated" {{bind-attr href="billingUrl"}}>
-        Subscription active!
-      </a>
-    {{else}}
-      {{#if view.education}}
-        <a class="button activated" {{bind-attr href="billingUrl"}}>
-          Educational account!
+{{!--   {{#if config.billingEndpoint}}
+    <div class="row">
+      {{#if view.subscribed}}
+        <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
+          Subscription active!
         </a>
       {{else}}
-        <a class="button activate" {{bind-attr href="billingUrl"}}>
-          Sign up this account!
-        </a>
+        {{#if view.education}}
+          <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
+            Educational account!
+          </a>
+        {{else}}
+          <a class="btn btn-activate" {{bind-attr href="billingUrl"}}>
+            Sign up this account!
+          </a>
+        {{/if}}
       {{/if}}
-    {{/if}}
-  {{/if}}
+    </div>
+  {{/if}} --}}
 
   {{!-- {{view 'profile-tabs'}} --}}
 
