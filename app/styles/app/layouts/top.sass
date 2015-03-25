@@ -1,0 +1,117 @@
+$top-height: 55px
+
+.logo
+  position: relative
+  margin: 0 1.5rem 0 1.3rem
+  float: left
+  a
+    display: block
+    width: 100px
+    height: $top-height
+    z-index: 999
+    border: none !important
+    text-indent  : -9999px
+    transition: background-color 200ms ease
+    background   : inline-image('svg/travis-ci-logo.svg') no-repeat  0 50%
+    &:hover
+      background   : $cream-light inline-image('svg/travis-ci-logo-hover.svg') no-repeat 50%
+
+.burger
+  overflow: auto
+  height: $top-height
+  @media #{$medium-up}
+    display: none
+
+  .burger-btn
+    float: right
+    font-size: 50px
+    background: none
+    border: none
+    line-height: 1
+    color: $grey1
+    outline: none !important
+    @include clearfix
+    &:hover
+      cursor: pointer
+
+
+.topbar
+  font-size: $font-size-m
+  background-color: #eff0ec 
+  color: $grey1
+
+  a
+    display: block
+    color: #898989
+    border-bottom: solid 1px #eff0ec
+    padding: 0 .2em
+
+  @media #{$small-only}
+    .navigation
+      height: 0
+      overflow: hidden
+      &.is-open
+        height: auto
+      a
+        padding: .5em 1em
+
+  .navigation,
+  .navigation-nested
+    @include resetul
+
+  .navigation-handle
+    position: relative
+    margin: 0
+
+  .navigation--profile
+    img
+      border-radius: 50%;
+      width: 2.7rem;
+      height: 2.7rem;
+      margin-left: 1rem;
+      transform: translateY(-0.1rem);
+
+  .navigation-sub
+    position: relative
+
+  @media #{$medium-up}
+    height: $top-height
+
+    .navigation
+      height: $top-height
+      > li
+        display: inline-block
+        margin-right: 1rem  
+      a
+        height: $top-height
+        line-height: $top-height + 2px
+        border: none
+        &:hover
+          text-decoration: underline
+
+    .navigation--profile
+      float: right
+
+    .navigation--profile.signed-out,
+    .navigation--profile.signing-in
+      line-height: $top-height - 5px
+
+    .navigation-nested
+      display: none
+      position: absolute
+      top: $top-height
+      left: -1em
+      z-index: 90
+      background-color: #eff0ec
+      a
+        height: 35px
+        line-height: 35px
+        padding: 0 2em
+        white-space: nowrap
+        &:hover
+          text-decoration: none
+          background-color: $cream-light
+
+    .navigation-handle:hover + .navigation-nested,
+    .navigation-nested:hover
+      display: block
