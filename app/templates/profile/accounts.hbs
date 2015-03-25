@@ -14,6 +14,10 @@
   <section class="profile-orgs">
     <h1>Organizations</h1>
     {{#collection "accounts-list" contentBinding="controller"}}
+
+      {{#if view.account.type == user}}
+        hello user
+      {{/if}}
       {{#link-to "account" view.account class="name"}}
         <div class="media">
           <div class="media-elem">

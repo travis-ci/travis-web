@@ -21,6 +21,10 @@ View = Ember.CollectionView.extend
       @get('content.name') || @get('content.login')
     ).property('content.login', 'content.name')
 
+    isUser: (->
+      @get('content.type')
+    ).property('content.type')
+
     urlAccount: (->
       accountUrl(@get('account.login'))
     ).property('account.login')
