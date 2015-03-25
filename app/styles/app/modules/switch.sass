@@ -34,3 +34,15 @@ $switch-inner-width: 27px
       right: $switch-width - $switch-inner-width - (($switch-width - ($switch-inner-width * 2)) / 2)
       background-color: #39a85b
       @extend .icon-hook-on
+
+  &.disabled
+    cursor: default
+    pointer-events: none
+    opacity: .5
+
+  .active &.disabled
+    background-color: #b6d5b6
+    &:after
+      right: $switch-width - $switch-inner-width - (($switch-width - ($switch-inner-width * 2)) / 2)
+      background-color: #39a85b
+      @extend .icon-hook-on

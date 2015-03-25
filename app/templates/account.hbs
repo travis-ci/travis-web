@@ -20,9 +20,9 @@
     </div>
 
     {{#if config.pro}}
-      <p>We're only showing you private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+      <p>We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
       {{else}}
-      <p>We're only showing you public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+      <p>We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
     {{/if}}
 
   </header>
@@ -67,9 +67,9 @@
       {{else}}
         <li>
           {{#if hooksWithoutAdmin.length}}
-            <p>Sorry, but we can't find any repositories you have admin access to.</p>
+            Sorry, but we can't find any repositories you have admin access to.
           {{else}}
-            <p>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</p>
+            Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
           {{/if}}
         </li>
       {{/each}}
@@ -78,11 +78,14 @@
 
     {{#if hooksWithoutAdmin.length}}
       <div id="unadministerable-hooks">
-        <p>Repositories without admin access</p>
+        <p>You require admin rights to enable these repositories</p>
 
         <ul class="profile-hooklist">
           {{#each hook in hooksWithoutAdmin}}
             <li {{bind-attr class="hook.active:active :row"}}>
+              <div class="columns">
+                <button class="switch disabled"></button>
+              </div>
               <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
                 {{hook.slug}}
                 <span>{{hook.description}}</span>
