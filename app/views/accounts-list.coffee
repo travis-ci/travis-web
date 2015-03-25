@@ -25,6 +25,10 @@ View = Ember.CollectionView.extend
       accountUrl(@get('account.login'))
     ).property('account.login')
 
+    avatarUrl: (->
+      @get('account.avatarUrl') || "//placehold.it/50x50"
+    ).property('account.avatarUrl')
+
     click: ->
       @get('controller').transitionToRoute("account", @get('account.login'))
 

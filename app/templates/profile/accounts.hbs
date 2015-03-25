@@ -19,7 +19,7 @@
       {{#link-to "account" view.account class="name"}}
         <div class="media">
           <div class="media-elem">
-            <img src="//placehold.it/50x50" alt="">
+            <img {{bind-attr src="view.avatarUrl"}} alt="">
           </div>
           <div class="media-body">
             <h2>{{view.name}}</h2>
