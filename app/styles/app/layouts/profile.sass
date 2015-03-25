@@ -19,11 +19,19 @@
         color: #adaaab
         text-decoration: underline
     @media #{$medium-up}
-      h1, .sync-button, .ember-view
+      .profile-header, .sync-button, .ember-view
         display: inline-block
         vertical-align: middle
       .sync-button
         margin-top: .5em
+    @media #{$large-up}
+      .profile-header
+        position: relative
+        white-space: nowrap;
+        max-width: 77%;
+        overflow: hidden;
+        &:after
+          @include fadeOut(right, -90deg, $white)
 
   .cta-btn
     text-align: right

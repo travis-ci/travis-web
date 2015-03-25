@@ -1,8 +1,9 @@
 {{#if allHooks.isLoaded}}
   <header>
 
+  <div class="profile-header">
     <h1>{{view.name}}</h1>
-    {{!-- {{sync-button user=auth.currentUser}} --}}
+  </div>
 
   {{#if user.isSyncing}}
     <div class="sync-button">
