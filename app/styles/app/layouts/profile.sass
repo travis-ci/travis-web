@@ -153,11 +153,13 @@ p.profile-user-last
   padding: .25em .5em .3em
   white-space: nowrap
   overflow: hidden
-  span
+  span:not(.sync-spinner)
     display: none
     margin-left: 2rem
     font-size: $font-size-sm
     color: #484849
+  .sync-spinner
+    vertical-align: top
   &:hover
     background-color: #ededec
     &:after

@@ -79,8 +79,11 @@
             {{!-- <button class="switch is-on"></button> --}}
             {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
           </div>
-          {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
-          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">{{hook.slug}}
+          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
+            {{#if hook.isSaving}}
+              <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+            {{/if}}
+            {{hook.slug}}
             <span>{{hook.description}}</span></a>
         </li>
       {{else}}
