@@ -3,11 +3,12 @@
     <div class="media">
       <div class="media-elem">
         <img {{bind-attr src="auth.gravatarUrl"}} alt="">
-
       </div>
       <div class="media-body">
-        <h1>{{userName}}</h1>
-        <p>Repositories <strong>{{user.reposCount}}</strong></p>
+        {{#link-to 'profile'}}
+          <h1>{{userName}}</h1>
+          <p>Repositories <strong>{{user.reposCount}}</strong></p>
+        {{/link-to}}
         <p class="profile-user-last">Token: <strong>{{auth.currentUser.token}}</strong></p>
       </div>
     </div>
