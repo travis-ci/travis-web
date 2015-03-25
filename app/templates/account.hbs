@@ -67,22 +67,18 @@
       {{else}}
         <li>
           {{#if hooksWithoutAdmin.length}}
-            Sorry, but we can't find any repositories you have admin access to.
+            <p>Sorry, but we can't find any repositories you have admin access to.</p>
           {{else}}
-            Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
+            <p>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</p>
           {{/if}}
         </li>
       {{/each}}
     </ul>
   </div>
 
-{{!--     {{#if hooksWithoutAdmin.length}}
+    {{#if hooksWithoutAdmin.length}}
       <div id="unadministerable-hooks">
         <p>Repositories without admin access</p>
-
-        <p class="tip">
-          You only have pull or push access to the repositories below.
-        </p>
 
         <ul class="profile-hooklist">
           {{#each hook in hooksWithoutAdmin}}
@@ -95,7 +91,7 @@
           {{/each}}
         </ul>
       </div>
-    {{/if}} --}}
+    {{/if}}
   {{/if}}
 {{else}}
   <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
