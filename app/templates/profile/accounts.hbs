@@ -5,15 +5,15 @@
         <img src="//placehold.it/50x50" alt="">
       </div>
       <div class="media-body">
-        <h1>Justine Arreche</h1>
-        <p>Repositories <strong>12</strong></p>
-        <p class="profile-user-last">Token: <strong>dfigsd90u34r2hwa9ru239ur2</strong></p>
+        <h1>{{userName}}</h1>
+        <p>Repositories <strong>{{user.reposCount}}</strong></p>
+        <p class="profile-user-last">Token: <strong>{{user.token}}</strong></p>
       </div>
     </div>
   </section>
   <section class="profile-orgs">
     <h1>Organizations</h1>
-    {{#collection "accounts-list" contentBinding="controller"}}
+    {{#collection "accounts-list" contentBinding="organizations"}}
       {{#link-to "account" view.account class="name"}}
         <div class="media">
           <div class="media-elem">
