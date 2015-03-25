@@ -14,7 +14,7 @@
   {{else}}
     <div class="sync-button">
       <button {{action sync}} class="button">
-        <span class="icon icon-sync"></span>Sync for all users
+        <span class="icon icon-sync"></span>Sync
       </button>
       <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
     </div>
@@ -28,7 +28,7 @@
   </header>
 
   <section class="profile-getstarted">
-    <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a>
+    {{!-- <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a> --}}
     <ol class="row">
       <li class="columns medium-4">
         <figure>
