@@ -2,7 +2,8 @@
   <section class="profile-user">
     <div class="media">
       <div class="media-elem">
-        <img src="//placehold.it/50x50" alt="">
+        <img {{bind-attr src="auth.gravatarUrl"}} alt="">
+
       </div>
       <div class="media-body">
         <h1>{{userName}}</h1>
