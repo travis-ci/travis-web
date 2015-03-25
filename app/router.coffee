@@ -45,7 +45,8 @@ Router.map ->
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
-  @route 'auth', path: '/auth'
+  @route 'auth'
+  @route 'home'
 
   @resource 'profile', path: '/profile', ->
     @resource 'accounts', path: '/', ->
