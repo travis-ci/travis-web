@@ -2,7 +2,10 @@
 
 Route = TravisRoute.extend
   titleToken: (model) ->
-    model.get('name') || model.get('login')
+    if model
+      model.get('name') || model.get('login')
+    else
+      'Account'
 
   setupController: (controller, account) ->
     @_super.apply this, arguments
