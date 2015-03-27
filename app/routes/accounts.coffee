@@ -11,6 +11,8 @@ Route = TravisRoute.extend
     controller.set('user', user)
     controller.set('organizations', orgs)
 
+    controller.set('model', model)
+
   renderTemplate: ->
     @_super.apply(this, arguments)
     @render 'profile_accounts', outlet: 'left', into: 'profile'
