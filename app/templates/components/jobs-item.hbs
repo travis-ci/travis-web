@@ -25,10 +25,10 @@
   {{/if}}
 
   <div class="job-anchor jobs-item">
-    {{#if job.config.env}}
+    {{#if environment}}
       <p class="job-env jobs-item build-env">
         <span class="icon icon--env"></span>
-        {{job.config.env}}
+        {{environment}}
       </p>
     {{else}}
       <p class="job-env jobs-item build-env is-empty">
