@@ -1,42 +1,90 @@
-<p class="tip">
-  {{#if config.pro}}
-  We're only showing <strong>your private repositories</strong> below.
-  You can find your <strong>public projects on <a href="https://travis-ci.org?utm_source=hooks">travis-ci.org</a></strong>.
-  {{else}}
-  We're only showing <strong>your public repositories</strong> below.
-  You can find your <strong>private projects on <a href="https://travis-ci.com?utm_source=hooks">travis-ci.com</a></strong>.
-  {{/if}}
-</p>
-
-<p class="tip">
-  Enable your projects below by flicking the switch, add a <a href="http://docs.travis-ci.com">.travis.yml</a> to your project, and push a new commit to
-  GitHub.
-</p>
-
 {{#if allHooks.isLoaded}}
+  <header>
+
+  <div class="profile-header">
+    <h1>{{view.name}}</h1>
+  </div>
+
   {{#if user.isSyncing}}
-    <p class="message loading">
-      <span>Please wait while we synchronize your data from GitHub</span>
-    </p>
+    <div class="sync-button">
+      <button class="button is-syncing">
+        <span class="sync-spinner"><i></i><i></i><i></i></span>Syncing from Github
+      </button>
+    </div>
+  </header>
   {{else}}
-    <p class="message">
-      Last synchronized from GitHub: {{format-time user.syncedAt}}
-      <a class="sync_now button" {{action "sync"}}>
-        Sync now
-      </a>
-    </p>
+    <div class="sync-button">
+      <button {{action sync}} class="button">
+        <span class="icon icon-sync"></span>Sync
+      </button>
+      <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
+    </div>
+    {{#if config.billingEndpoint}}
+      <div class="cta-btn">
+      {{#if view.subscribed}}
+        <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
+          Subscription active!
+        </a>
+      {{else}}
+        {{#if view.education}}
+          <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
+            Educational account!
+          </a>
+        {{else}}
+          <a class="btn btn-activate" {{bind-attr href="billingUrl"}}>
+            Sign up this account!
+          </a>
+        {{/if}}
+      {{/if}}
+      </div>
+    {{/if}}
+    {{#if config.pro}}
+      <p>We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+      {{else}}
+      <p>We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+    {{/if}}
 
-    <ul id="hooks">
+  </header>
+
+  <section class="profile-getstarted">
+    {{!-- <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a> --}}
+    <ol class="row">
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-1-01.svg" alt="">
+          <figcaption>Flick the repository switch on</figcaption>
+        </figure>
+      </li>
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-2-01.svg" alt="">
+          <figcaption>Add .travis.yml file to your repository</figcaption>
+        </figure>
+      </li>
+      <li class="columns medium-4">
+        <figure>
+          <img src="/images/svg/hooks-step-3-01.svg" alt="">
+          <figcaption>Trigger your first build with a git push</figcaption>
+        </figure>
+      </li>
+    </ol>
+  </section>
+
+  <div>
+    <ul class="profile-hooklist">
       {{#each hook in hooks}}
-        <li {{bind-attr class="hook.active:active"}}>
-          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
-          {{#if hook.isSaving}}<span class="loading"></span>{{/if}}
-          <p class="description">{{hook.description}}</p>
-
-          <div class="controls">
-            {{#link-to "settings" hook.ownerName hook.name class="repo-settings-icon tool-tip" title="Repository settings"}}{{/link-to}}
+        <li {{bind-attr class="hook.active:active :row"}}>
+          <div class="columns">
             {{travis-switch action="toggle" target=hook toggleAutomatically="false"}}
+            {{!-- <button class="switch is-on"></button> --}}
+            {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
           </div>
+          <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
+            {{#if hook.isSaving}}
+              <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+            {{/if}}
+            {{hook.slug}}
+            <span>{{hook.description}}</span></a>
         </li>
       {{else}}
         <li>
@@ -48,20 +96,22 @@
         </li>
       {{/each}}
     </ul>
+  </div>
 
     {{#if hooksWithoutAdmin.length}}
       <div id="unadministerable-hooks">
-        <h3>Repositories without admin access</h3>
+        <p>You require admin rights to enable these repositories</p>
 
-        <p class="tip">
-          You only have pull or push access to the repositories below.
-        </p>
-
-        <ul>
+        <ul class="profile-hooklist">
           {{#each hook in hooksWithoutAdmin}}
-            <li {{bind-attr class="hook.active:active"}}>
-              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow">{{hook.slug}}</a>
-              <p class="description">{{hook.description}}</p>
+            <li {{bind-attr class="hook.active:active :row"}}>
+              <div class="columns">
+                <button class="switch disabled"></button>
+              </div>
+              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
+                {{hook.slug}}
+                <span>{{hook.description}}</span>
+              </a>
             </li>
           {{/each}}
         </ul>
@@ -69,9 +119,7 @@
     {{/if}}
   {{/if}}
 {{else}}
-  <p class="message loading">
-    <span>Loading</span>
-  </p>
+  <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
 {{/if}}
 
 

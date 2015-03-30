@@ -1,18 +1,14 @@
-<div class="wrapper">
-  <header id="top" class="top">
+<header id="top" class="topbar">
+  <div class="centered">
     {{render "top"}}
-  </header>
-
-  {{render "flash"}}
-
-  <div class="wrapper-main">
-    <div id="main" role="main">
-      {{yield}}
-    </div>
   </div>
+</header>
 
-  <aside id="left">
+<div class="centered">
+  {{render "flash"}}
+  <div id="main" class="main" role="main">
+    {{yield}}
+
     {{outlet "left"}}
-  </aside>
-
+  </div>
 </div>

@@ -1,0 +1,183 @@
+.profile
+  font-size: $font-size-sm
+  font-weight: 400
+
+
+.profile-main
+  header
+    h1
+      margin: 0 1.7rem 0 0
+      color: #808080
+      font-size: 35px
+      font-weight: 400
+      line-height: 1.45
+    p:not(.sync-last)
+      font-size: $font-size-sm
+      color: #adaaab
+      margin: 2rem 0 1rem 0
+      a
+        color: #adaaab
+        text-decoration: underline
+    @media #{$medium-up}
+      .profile-header, .sync-button, .ember-view
+        display: inline-block
+        vertical-align: middle
+      .sync-button
+        margin-top: .5em
+    @media #{$large-up}
+      .profile-header
+        position: relative
+        white-space: nowrap;
+        max-width: 77%;
+        overflow: hidden;
+        &:after
+          @include fadeOut(right, -90deg, $white)
+
+  .cta-btn
+    text-align: right
+    @media #{$large-up}
+      position: absolute
+      top: 1rem
+      right: 0
+
+.profile-getstarted
+  position: relative
+  margin-bottom: 3rem
+  background-color: $cream-light
+  @extend %border-radius-4px
+  ol
+    @include resetul
+    padding: 1em 0
+  figure
+    margin: 0
+  figcaption
+    width: 90%
+    margin: auto
+    padding: 0 0 0 2.8em
+  img
+    display: block
+    margin: 0 auto 1em
+
+  .dismiss
+    position: absolute
+    top: 0
+    right: 0
+    padding: .5em
+    z-index: 99
+  @media #{$medium-up}
+    li:not(:last-child)
+      img
+        padding: 0 3.2em
+        border-right: solid 2px #f3f2f2
+
+.profile-orgs,
+.profile-user
+
+  .media-elem
+    width: 14%
+    img
+      width: 2.6rem
+      height: 2.6rem
+      border-radius: 50%
+  .media-body
+    width: 86%
+  p
+    margin: 0
+  ul
+    @include resetul
+  li
+    margin: 1.5rem 0 2.5rem
+  a
+    @extend %inline-block
+    width: 100%
+    &:hover
+      h1, h2
+        text-decoration: underline
+
+.profile-user h1,
+.profile-orgs h2
+  font-size: $font-size-sm
+  margin: 0
+  font-weight: 600
+  line-height: 1
+
+.profile-orgs
+  h1
+    color: #898b8c
+    font-size: $font-size-sm
+    border-bottom: solid 2px #f3f2f2
+
+.profile-user
+  margin: 1rem 0 2rem
+
+p.profile-user-last
+  margin-top: .5em
+
+
+.profile-orglist
+  @media #{$large-up}
+    padding-right: 10em
+    aside
+      padding: 0
+
+.profile-hooklist
+  @include resetul
+  font-size: $font-size-m
+  color: #7a7a7a
+  li
+    clear: both
+    margin-bottom: .8em
+    overflow: auto
+    > div
+      width: grid-calc(10, 24)
+      @media #{$medium-up}
+        width: grid-calc(7, 24)
+      @media #{$large-up}
+        width: grid-calc(5, 24)
+  .switch
+    display: inline-block
+  .profile-settings
+    display: inline-block
+    margin-left: 1rem;
+    padding: .2em .2em .2em .5em;
+    height: 28px;
+    vertical-align: bottom;
+    .icon
+      width: 14px
+      height: 14px
+
+.profile-repo
+  @extend %border-radius-4px
+  position: relative
+  width: grid-calc(14, 24)
+  padding: .25em .5em .3em
+  white-space: nowrap
+  overflow: hidden
+  span:not(.sync-spinner)
+    display: none
+    margin-left: 2rem
+    font-size: $font-size-sm
+    color: #484849
+  .sync-spinner
+    vertical-align: top
+  &:hover
+    background-color: #ededec
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, #ededec)
+  .active &:hover
+    background-color: #e2eee2
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, #e2eee2)
+  @media #{$medium-up}
+    width: grid-calc(17, 24)
+    height: 30px
+    &:hover
+      span
+        display: inline-block
+  @media #{$large-up}
+    width: grid-calc(19, 24)
+
+
+

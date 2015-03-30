@@ -1,52 +1,33 @@
-<div class="row">
-  {{#link-to "main"}}
-    <div id="logo" class="logo">
-      <h1>Travis</h1>
-    </div>
-  {{/link-to}}
-
+<div class="row topbar">
+  <h1 id="logo" class="logo">{{#link-to "main"}}Travis{{/link-to}}</h1>
   <div class="burger">
     <button type="button" id="burger" class="burger-btn" {{action 'toggleBurgerMenu'}}>&equiv;</button>
   </div>
 
   <ul id="navigation" {{bind-attr class=":navigation is-open"}}>
-    <li class="home">
-      {{#link-to "main"}}Home{{/link-to}}
-    </li>
-    {{#if config.pro}}
-      <li><a href="http://docs.travis-ci.com">Docs</a></li>
-    {{/if}}
-    {{#if config.enterprise}}
-      <li><a href="http://docs.travis-ci.com">Docs</a></li>
-    {{else}}
-      <li>
-        <a href="http://blog.travis-ci.com">Blog</a>
-      </li>
-      <li>
-        <a href="http://traviscistatus.com">Status</a>
-      </li>
-    {{/if}}
-    {{#unless config.pro}}
-      <li class="menu community">
-        <p class="handle">
-          <a href="#">Help</a>
-        </p>
-        <ul>
-          <li><a href="http://docs.travis-ci.com">Docs</a></li>
-          <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
-          <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
-          <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
-          <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
-        </ul>
-      </li>
-    {{/unless}}
+    <li><a href="http://blog.travis-ci.com">Blog</a></li>
+    {{!--  <li><a href="http://docs.travis-ci.com">Help</a></li> --}}
+    <li><a href="http://www.traviscistatus.com/">Status</a></li>
 
-    {{#if config.pagesEndpoint}}
-      <li class="menu legal">
-        <p class="handle">
+    <li class="navigation-sub navigation--community">
+      <p class="handle navigation-handle">
+        <a href="#">Help</a>
+      </p>
+      <ul class="navigation-nested">
+        <li><a href="http://docs.travis-ci.com">Docs</a></li>
+        <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
+        <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
+        <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
+        <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
+      </ul>
+    </li>
+
+    {{#if config.pro}}
+      <li class="navigation-sub navigation--legal">
+        <p class="handle navigation-handle">
           <a {{bind-attr href="config.url_legal"}}>Legal</a>
         </p>
-        <ul>
+        <ul class="navigation-nested">
           <li>
             <a {{bind-attr href="config.url_imprint"}}>Imprint</a>
           </li>
@@ -60,37 +41,33 @@
       </li>
     {{/if}}
 
-    {{#unless config.pro}}
-      <li class="traviscicom">
-        <a href="http://travis-ci.com">Travis CI for Private Repositories</a>
-      </li>
-    {{/unless}}
-
-    <li {{bind-attr class="view.classProfile"}}>
-      <p class="handle">
+    <li {{bind-attr class="view.classProfile :navigation-sub :navigation--profile"}}>
+      <p class="handle navigation-handle">
         {{#if auth.signedOut}}
           <button class="signed-out button--signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
-          {{#link-to "profile" class="signed-in"}}<img {{bind-attr src="gravatarUrl"}}/>{{userName}}{{/link-to}}
+          {{#link-to "profile" class="signed-in"}}{{userName}}<img {{bind-attr src="gravatarUrl"}}/>{{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
           <button class="signing-in button--signingin">Signing In <span class="sync-spinner"><i></i><i></i><i></i></span></button>
         {{/if}}
       </p>
-      <ul>
-        <li>
-          {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
-        </li>
-        {{#if config.billingEndpoint}}
+      {{#if auth.signedIn}}
+        <ul class="navigation-nested">
           <li>
-            <a {{bind-attr href="config.billingEndpoint"}}>Billing</a>
+            {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
           </li>
-        {{/if}}
-        <li>
-          <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
-        </li>
-      </ul>
+          {{#if config.billingEndpoint}}
+            <li>
+              <a {{bind-attr href="config.billingEndpoint"}}>Billing</a>
+            </li>
+          {{/if}}
+          <li>
+            <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
+          </li>
+        </ul>
+      {{/if}}
     </li>
   </ul>
 </div>

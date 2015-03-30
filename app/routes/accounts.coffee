@@ -4,6 +4,15 @@ Route = TravisRoute.extend
   model: ->
     @store.find('account', { all: true })
 
+  setupController: (controller, model) ->
+    user = model.filterBy('type', 'user')[0]
+    orgs = model.filterBy('type', 'organization')
+
+    controller.set('user', user)
+    controller.set('organizations', orgs)
+
+    controller.set('model', model)
+
   renderTemplate: ->
     @_super.apply(this, arguments)
     @render 'profile_accounts', outlet: 'left', into: 'profile'
