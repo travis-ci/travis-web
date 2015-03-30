@@ -65,9 +65,6 @@ Controller = Ember.ArrayController.extend
     @set('tab', tab)
     this["view_#{tab}".camelize()](params)
 
-  viewRecent: ->
-    @set('content', @get('recentRepos'))
-
   viewOwned: ->
     @set('content', @get('userRepos'))
 

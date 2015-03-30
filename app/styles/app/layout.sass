@@ -63,30 +63,35 @@
     margin-left: -100%
     max-width: 325px
 
-  .wrapper-main
+  .wrapper-main.non-centered
     width: grid-calc(18, 24)
     float: left
     margin-left: grid-calc(6, 24)
     overflow: visible
 
+  .wrapper-main.centered
+    max-width: 1024px
+    margin-left: auto
+    margin-right: auto
+
 @media #{$xlarge-up}
   #left
     width: grid-calc(7, 36)
-  .wrapper-main
+  .wrapper-main.non-centered
     width: grid-calc(29, 36)
     margin-left: grid-calc(7, 36)
 
 @media #{$xxlarge-up}
   #left
     width: grid-calc(6, 36)
-  .wrapper-main
+  .wrapper-main.non-centered
     width: grid-calc(30, 36)
     margin-left: grid-calc(6, 36)
 
 @media screen and (min-width: 2200px)
   #left
     width: grid-calc(5, 36)
-  .wrapper-main
+  .wrapper-main.non-centered
     width: grid-calc(31, 36)
     margin-left: grid-calc(5, 36)
 

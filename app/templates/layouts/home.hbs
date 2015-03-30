@@ -6,7 +6,7 @@
 
   {{render "flash"}}
 
-  <div class="wrapper-main">
+  <div {{bind-attr class=":wrapper-main auth.signedIn:non-centered:centered"}}>
     <div id="main" role="main">
       {{yield}}
     </div>
