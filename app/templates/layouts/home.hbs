@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div {{bind-attr class=":wrapper auth.signedIn:non-centered:centered"}}>
 
   <header id="top" class="top">
     {{render "top"}}
@@ -6,7 +6,7 @@
 
   {{render "flash"}}
 
-  <div {{bind-attr class=":wrapper-main auth.signedIn:non-centered:centered"}}>
+  <div class="wrapper-main">
     <div id="main" role="main">
       {{yield}}
     </div>
