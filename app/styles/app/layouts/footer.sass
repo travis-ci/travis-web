@@ -62,7 +62,6 @@ footer a:active
   text-decoration : underline
 
 .status-circle
-  background   : $pass-color
   display      : inline-block
   height       : 11px
   width        : 11px
@@ -72,3 +71,15 @@ footer a:active
   -webkit-border-radius : 100px
   -moz-border-radius    : 100px
   vertical-align: middle
+
+.status-circle.none
+  background: #2fcc66
+
+.status-circle.degraded
+  background: #f1c40f
+
+.status-circle.minor
+  background: #e67e22
+
+.status-circle.major
+  background: #e74c3c
