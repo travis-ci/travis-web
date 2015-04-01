@@ -11,9 +11,13 @@ Route = BasicRoute.extend
     @_super.apply(this, arguments)
     @store.set('isLandingPageOpened', true)
 
+    @controllerFor('top').set('landingPage', true)
+
   deactivate: ->
     @_super.apply(this, arguments)
     @store.set('isLandingPageOpened', false)
+
+    @controllerFor('top').set('landingPage', false)
 
   setupController: (controller, model) ->
     repos = Ember.ArrayProxy.extend(
