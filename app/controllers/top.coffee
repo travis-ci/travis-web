@@ -18,4 +18,8 @@ Controller = Ember.Controller.extend
       return false
   }
 
+  showCta: (->
+    !@get('auth.signedIn') && !@get('config.pro')
+  ).property('auth.signedIn')
+
 `export default Controller`
