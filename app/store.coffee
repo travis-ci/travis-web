@@ -5,8 +5,19 @@ Store = DS.Store.extend
   defaultAdapter: 'application'
   adapter: 'application'
 
-  receivePusherEvent: (event, data) ->
-    [name, type] = event.split(':')
+  init: ->
+    @_super.apply(this, arguments)
+
+    # we will let one start event every 5 seconds to populate some repos for
+    # landing page
+    setInterval =>
+      @set('allowMoreLandingPageRepos', true)
+    , 5000
+
+  canHandleEvent: (event, data) ->
+    if @get('isLandingPageOpened') && @get('allowMoreLandingPageRepos') && event == 'build:started'
+      @set('allowMoreLandingPageRepos', false)
+      return true
 
     auth = @container.lookup('auth:main')
     if !@get('isRecentTabOpen') && event != 'job:log' && auth.get('signedIn') &&
@@ -23,6 +34,11 @@ Store = DS.Store.extend
         id = data.repository.id
 
       return if !@hasRecordForId('repo', id) && !permissions.contains(id)
+
+  receivePusherEvent: (event, data) ->
+    [name, type] = event.split(':')
+
+    return unless @canHandleEvent(event, data)
 
     if name == 'job' && data.job?.commit
       @pushPayload(commits: [data.job.commit])

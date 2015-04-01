@@ -62,9 +62,16 @@
 		        <p>Here are just a few projects<br>currently running on Travis CI</p>
 		      </div>
 		      <div class="medium-6 columns">
-		      	<img src="../images/landing-page/temp-repo-green.svg">
-		      	<img src="../images/landing-page/temp-repo-red.svg">
-		      	<img src="../images/landing-page/temp-repo-yellow.svg">
+            <ul class="repos">
+            {{#each repo in repos}}
+              <li {{bind-attr class=":repo repo.lastBuildState"}}>
+                {{repo.owner}}<br/>
+                {{repo.name}}<br/>
+                #{{repo.lastBuildNumber}}<br/>
+                {{landing-page-last-build-time repo.lastBuildFinishedAt}}<br/>
+              </li>
+            {{/each}}
+            </ul>
 		      </div>
 		    </div>
 	    </div>
