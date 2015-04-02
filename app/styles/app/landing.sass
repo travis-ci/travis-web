@@ -78,9 +78,6 @@
     border: 2px solid #d8dadc
     border-radius: 2px
 
-  .laptop-wrapper-mobile
-    display: none
-
   .hero
     background-color: #faf9f6
     h1
@@ -207,6 +204,8 @@
       font-weight: 300
       color: #413c3c
       text-align: center
+      margin-bottom: 35px
+      padding-top: 40px
 
     p
       font-size: 1.15em
@@ -220,11 +219,28 @@
     .features-callouts
       text-align: center
 
+    #f-co-1, #f-co-2, #f-co-3, #f-co-4
+      background-repeat: no-repeat;
+      background-position: 50% 0
+      height: 32px
+
+    #f-co-1, #f-co-2, #f-co-3, #f-co-4
+      background-image: url('../images/landing-page/features-callouts-1.svg')
+
+    #f-co-2
+      background-image: url('../images/landing-page/features-callouts-2.svg')
+
+    #f-co-3
+      background-image: url('../images/landing-page/features-callouts-3.svg')
+
+    #f-co-4
+      background-image: url('../images/landing-page/features-callouts-4.svg')
+
     .features-checked
       padding-left: 30px
 
     ul
-      list-style-image: url('../images/landing-page/features-check.svg')
+      list-style-image: url('../images/landing-page/features-check.svg') 
       padding-left: 1.5em
 
     li
@@ -280,25 +296,12 @@
       width: 100%
 
   @media (max-width: 886px)
-    .laptop-wrapper-mobile
-      display: block
-      width: 100%
-
-    .hero .laptop-wrapper-mobile #laptop img
-      width: 80%
-      margin-left: 9%
-
-    .laptop-wrapper
-      display: none
-
     #hero-copy
       display: block
       width: 100%
       text-align: center
 
     .hero h1
-      margin-top: 40px
-      text-align: center
       max-width: 100%
 
     .hero p
