@@ -53,7 +53,7 @@
     font-weight: 300
 
   .hero, .oss-testing, .customers, .recent-builds, .free-for-oss, .private-repos, .features-list, .build-flows, .user-testimonials
-    padding: 70px 0 70px 0
+    padding: 90px 0 90px 0
 
     h1, h2
       margin-top: 0
@@ -65,11 +65,8 @@
     max-width: 1024px
     margin: 0 auto
 
-  .medium-6.columns.laptop-wrapper
-    margin-left: -100px
-
-  #laptop
-    width: 200%
+  .laptop-wrapper-mobile
+    display: none
 
   .hero
     background-color: #f8f7f4
@@ -109,6 +106,9 @@
       margin-top: 0.5em
       margin-bottom: 2em
 
+    br.mobile-break
+      display: none
+
   .customers
     text-align: center
 
@@ -132,6 +132,9 @@
     img
       margin-bottom: 20px
 
+    ul
+      padding-left: 0
+
     li
       background-color: #fff
       border-radius: 4px
@@ -152,6 +155,9 @@
       font-weight: 600
       font-style: italic
 
+    br.mobile-no-break
+      display: inline-block
+
   .private-repos
     text-align: center
 
@@ -164,6 +170,12 @@
       margin-top: 0.5em
       margin-bottom: 2em
       text-align: right
+
+    .mobile-envelope
+      display: none
+
+    .desktop-envelope
+      display: inline-block
 
   .features-list
     background-color: #f7f7f1
@@ -183,6 +195,12 @@
       color: #606162
       text-align: center
 
+    br.mobile-break
+      display: none
+
+    .features-checked
+      padding-left: 30px;
+
     ul
       list-style-image: url('../images/landing-page/features-check.svg')
       padding-left: 1.5em
@@ -198,6 +216,9 @@
 
     h2
       color: #909295
+      
+    h2#pr-bf-margin
+      margin-top: 90px
 
     .branch-bf
       .bf
@@ -225,3 +246,48 @@
       font-size: 1.15em
       font-weight: 300
       color: #606162
+
+  @media (max-width: 900px)
+    .oss-testing br.mobile-break
+      display: inline-block
+
+    .landing-centered-wrapper
+      width: 100%
+
+  @media (max-width: 797px)
+    .laptop-wrapper-mobile
+      display: block
+
+    .laptop-wrapper
+      display: none
+
+    .customers .left
+      text-align: center
+
+    .recent-builds h2
+      text-align: center
+
+    .recent-builds p
+      text-align: center
+
+    .free-for-oss br.mobile-no-break
+      display: none
+
+    .private-repos .desktop-envelope
+      display: none
+
+    .private-repos .mobile-envelope
+      display: inline-block
+
+    .private-repos h2
+      text-align: center
+
+    .private-repos p
+      text-align: center
+
+    .features-list .features-checked
+      padding: 0 60px 0 60px
+
+  @media (max-width: 608px)
+    br.mobile-break
+      display: inline-break
