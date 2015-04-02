@@ -69,7 +69,7 @@
     display: none
 
   .hero
-    background-color: #f8f7f4
+    background-color: #faf9f6
     h1
       color: #339999
       line-height: 1.2em
@@ -116,7 +116,7 @@
       text-align: left
 
   .recent-builds
-    background-color: #f4f3eb
+    background-color: #faf9f6
     text-align: center
 
     h2
@@ -178,7 +178,7 @@
       display: inline-block
 
   .features-list
-    background-color: #f7f7f1
+    background-color: #faf9f6
 
     h2
       margin: 0
@@ -230,12 +230,15 @@
           line-height: 1.5em
           color: #5f6062
 
-    .divider-line
+    .divider-line-horizontal
       width: 50px
       height: 3px
       background: #eaeaec
       display: inline-block
       margin-bottom: 75px
+
+    .divider-line-vertical
+      display: none
 
   .user-testimonials
     h2
@@ -253,6 +256,29 @@
 
     .landing-centered-wrapper
       width: 100%
+
+  @media (max-width: 846px)
+    .build-flows .branch-bf .bf
+      width: 100%
+      display: block
+      clear: all
+
+    .build-flows .branch-bf .bf img
+      width: 120px
+      height: 120px
+
+    .build-flows .branch-bf .bf p
+      font-size: 1.5em
+
+    .build-flows .branch-bf .divider-line-horizontal
+      display: none
+
+    .build-flows .branch-bf .divider-line-vertical
+      width: 3px
+      height: 40px
+      background: #eaeaec
+      display: inline-block
+      margin-bottom: 10px
 
   @media (max-width: 797px)
     .laptop-wrapper-mobile
