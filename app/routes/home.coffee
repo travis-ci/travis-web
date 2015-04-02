@@ -4,10 +4,12 @@
 
 Route = BasicRoute.extend
   init: ->
+    store = @store
     repos = Ember.ArrayProxy.extend(
       isLoadedBinding: 'repos.isLoaded'
       repos: @store.filter 'repo', (repo) ->
-        repo.get('lastBuildId')
+        buildId = repo.get('lastBuildId')
+        store.hasRecordForId('build', buildId)
       sorted: Ember.computed.sort('repos', 'sortedReposKeys')
       content: limit('sorted', 'limit')
       sortedReposKeys: ['sortOrder:asc']
