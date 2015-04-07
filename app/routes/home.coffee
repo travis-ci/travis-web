@@ -9,10 +9,14 @@ Route = BasicRoute.extend
       isLoadedBinding: 'repos.isLoaded'
       repos: @store.filter 'repo', (repo) ->
         buildId = repo.get('lastBuildId')
-        store.hasRecordForId('build', buildId)
-      sorted: Ember.computed.sort('repos', 'sortedReposKeys')
+        if store.hasRecordForId('build', buildId)
+          state = repo.get('lastBuild.state')
+          state == 'passed' || state == 'failed'
+      external: []
+      withExternal: Ember.computed.union('repos', 'external')
+      sorted: Ember.computed.sort('withExternal', 'sortedReposKeys')
       content: limit('sorted', 'limit')
-      sortedReposKeys: ['sortOrder:asc']
+      sortedReposKeys: ['sortOrder:desc']
       limit: 3
     ).create()
 
@@ -21,6 +25,12 @@ Route = BasicRoute.extend
     setInterval =>
       @set('letMoreReposThrough', true)
     , 5000
+
+    setTimeout =>
+      unless repos.get('length')
+        @store.find('repo').then (reposFromRequest) ->
+          repos.get('external').pushObjects reposFromRequest.toArray().slice(0, 3)
+    , 10000
 
     @_super.apply this, arguments
 
@@ -40,7 +50,9 @@ Route = BasicRoute.extend
     if @get('repos.length') < 3
       return true
 
-    if event == 'build:started' && @get('letMoreReposThrough')
+    if event == 'build:finished' &&
+         ['passed', 'failed'].indexOf(data.build.state) != -1 &&
+         @get('letMoreReposThrough')
       @set('letMoreReposThrough', false)
       return true
 

@@ -340,14 +340,20 @@
       padding-left: 30px
 
     ul
-      list-style-image: url('../images/landing-page/features-check.svg') 
-      padding-left: 1.5em
+      @include resetul
+      margin-top: 1.6rem;
 
     li
       font-color: #606162
       font-size: 1.7em
       line-height: 1.7em
-      font-weight: 300
+      &:before
+        @extend %icon
+        content: ""
+        background-image: url('../images/landing-page/features-check.svg')
+        width: 0.7em
+        height: 0.7em
+        margin-right: .3em
 
   .build-flows
     text-align: center
