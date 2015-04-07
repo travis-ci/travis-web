@@ -319,6 +319,8 @@
 
     .features-callouts
       text-align: center
+      @media #{$medium-only}
+        float: none
 
     #f-co-1, #f-co-2, #f-co-3, #f-co-4
       background-repeat: no-repeat;
@@ -339,6 +341,17 @@
 
     .features-checked
       padding-left: 30px
+      @media #{$medium-only}
+        float: none
+
+      h2
+        @media #{$medium-only}
+          width: grid-calc(8, 12)
+          margin: 1em auto
+      ul
+        @media #{$medium-only}
+          width: grid-calc(5, 12)
+          margin: auto
 
     ul
       @include resetul
