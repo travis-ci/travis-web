@@ -108,12 +108,12 @@ Repo = Model.extend
   ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
   sortOrder: (->
-    # cuz sortAscending seems buggy when set to false
-    if lastBuildFinishedAt = @get('lastBuildFinishedAt')
-      - new Date(lastBuildFinishedAt).getTime()
+    state = @get('lastBuildState')
+    if state != 'passed' && state != 'failed'
+      0
     else
-      - new Date('9999').getTime() - parseInt(@get('lastBuildId'))
-  ).property('lastBuildFinishedAt', 'lastBuildId')
+      parseInt(@get('lastBuildId'))
+  ).property('lastBuildId', 'lastBuildState')
 
   stats: (->
     if @get('slug')
