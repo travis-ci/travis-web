@@ -44,12 +44,21 @@
       <div class="medium-6 columns">
         <ul class="repos">
         {{#each repo in repos}}
-          <li {{bind-attr class=":repo repo.lastBuildState"}}>
-            {{repo.owner}}<br/>
-            {{repo.name}}<br/>
-            #{{repo.lastBuildNumber}}<br/>
-            {{landing-page-last-build-time repo.lastBuildFinishedAt}}<br/>
+          <li {{bind-attr class=":repo repo.lastBuild.state"}}>
+            <span class="tile-status">
+              <span {{bind-attr class=":icon :icon-status repo.lastBuild.state"}}></span>
+            </span>
+            <span class="owner">{{repo.owner}}</span>
+            <span class="name">{{repo.name}}</span>
+            {{#link-to "build" repo repo.lastBuild.id class="number"}}{{repo.lastBuild.number}} <span class="state">{{repo.lastBuild.state}}</span>{{/link-to}}
+            <span class="commit">{{format-sha repo.lastBuild.commit.sha}}</span>
+            <span class="branch">{{repo.lastBuild.branch}}</span>
+            <span class="finished-at">
+              {{landing-page-last-build-time repo.lastBuild.finishedAt}}
+            </span>
           </li>
+        {{else}}
+        <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
         {{/each}}
         </ul>
       </div>

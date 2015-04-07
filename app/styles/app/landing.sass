@@ -157,6 +157,102 @@
       color: #828282
       margin-bottom: 20px
       list-style-type: none
+      position: relative
+      height: 120px
+      width: 400px
+      padding: 10px 0 0 60px
+      text-align: left
+
+      .tile-status
+        position: absolute
+        top: 0
+        left: 0
+        bottom: 0
+
+      .owner, .name
+        display: block
+
+      .owner
+        font-size: 14px
+        line-height: 1.8em
+      .name
+        font-size: 22px
+
+      .state
+        display: inline-block
+        margin-left: 4px
+
+      .commit, .number, .branch, .finished-at
+        position: absolute
+        display: block
+        background-repeat: no-repeat
+        background-position: left center
+        padding-left: 23px
+
+      .number
+        left: 60px
+        top: 65px
+        background-image: inline-image('svg/build-number-icon.svg')
+
+      .commit
+        left: 250px
+        top: 65px
+        background-image: inline-image('svg/commit-icon.svg')
+
+      .branch
+        left: 250px
+        top: 90px
+        background-image: inline-image('dashboard/branch.svg')
+        background-size: 19px 19px
+
+      .finished-at
+        left: 60px
+        top: 90px
+        background-image: inline-image('svg/finished-icon.svg')
+        background-size: 19px 19px
+
+      &.started .tile-status,
+      &.created .tile-status,
+      &.received .tile-status,
+      &.queued .tile-status
+        background-color: $start-color
+      &.failed .tile-status
+        background-color: $fail-color
+      &.errored .tile-status
+        background-color: $error-color
+      &.canceled .tile-status
+        background-color: $cancel-color
+      &.passed .tile-status
+        background-color: $pass-color
+      &.inactive .tile-status
+        background-color: $cancel-color
+
+      &.started .owner,
+      &.started .name,
+      &.created .owner,
+      &.created .name,
+      &.received .owner,
+      &.received .name,
+      &.queued .owner,
+      &.queued .name
+        color: $start-color
+      &.failed .owner,
+      &.failed .name
+        color: $fail-color
+      &.errored .owner,
+      &.errored .name
+        color: $error-color
+      &.canceled .owner,
+      &.canceled .name
+        color: $cancel-color
+      &.passed .owner,
+      &.passed .name
+        color: $pass-color
+      &.inactive .owner,
+      &.inactive .name
+        color: $cancel-color
+
+
 
   .free-for-oss
     text-align: center

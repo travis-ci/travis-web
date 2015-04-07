@@ -7,20 +7,18 @@ Store = DS.Store.extend
 
   init: ->
     @_super.apply(this, arguments)
+    @set('pusherEventHandlerGuards', {})
 
-    # we will let one start event every 5 seconds to populate some repos for
-    # landing page
-    setInterval =>
-      @set('allowMoreLandingPageRepos', true)
-    , 5000
+  addPusherEventHandlerGuard: (name, callback) ->
+    @get('pusherEventHandlerGuards')[name] = callback
+
+  removePusherEventHandlerGuard: (name) ->
+    delete @get('pusherEventHandlerGuards')[name]
 
   canHandleEvent: (event, data) ->
-    if @get('isLandingPageOpened') && @get('allowMoreLandingPageRepos') && event == 'build:started'
-      @set('allowMoreLandingPageRepos', false)
-      return true
-
+    [name, type] = event.split(':')
     auth = @container.lookup('auth:main')
-    if !@get('isRecentTabOpen') && event != 'job:log' && auth.get('signedIn') &&
+    if event != 'job:log' && auth.get('signedIn') &&
         !config.pro && !config.enterprise
       # if recent repos hasn't been opened yet, we can safely
       # drop any events that doesn't belong to repos owned by
@@ -33,7 +31,13 @@ Store = DS.Store.extend
       else if name == 'build'
         id = data.repository.id
 
-      return if !@hasRecordForId('repo', id) && !permissions.contains(id)
+      return @hasRecordForId('repo', id) || permissions.contains(id)
+
+    for name, callback of @get('pusherEventHandlerGuards')
+      unless callback(event, data)
+        return false
+
+    return true
 
   receivePusherEvent: (event, data) ->
     [name, type] = event.split(':')

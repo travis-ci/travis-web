@@ -1,34 +1,56 @@
 `import BasicRoute from 'travis/routes/basic'`
 `import config from 'travis/config/environment'`
-`import Repo from 'travis/models/repo'`
 `import limit from 'travis/utils/computed-limit'`
 
 Route = BasicRoute.extend
-  activate: ->
-    if !config.pro && @pusher
-      @pusher.subscribeAll(['common'])
-
-    @_super.apply(this, arguments)
-    @store.set('isLandingPageOpened', true)
-
-    @controllerFor('top').set('landingPage', true)
-
-  deactivate: ->
-    @_super.apply(this, arguments)
-    @store.set('isLandingPageOpened', false)
-
-    @controllerFor('top').set('landingPage', false)
-
-  setupController: (controller, model) ->
+  init: ->
+    store = @store
     repos = Ember.ArrayProxy.extend(
       isLoadedBinding: 'repos.isLoaded'
-      repos: Repo.withLastBuild(@store)
+      repos: @store.filter 'repo', (repo) ->
+        buildId = repo.get('lastBuildId')
+        store.hasRecordForId('build', buildId)
       sorted: Ember.computed.sort('repos', 'sortedReposKeys')
       content: limit('sorted', 'limit')
       sortedReposKeys: ['sortOrder:asc']
       limit: 3
     ).create()
 
-    controller.set('repos', repos)
+    @set('repos', repos)
+
+    setInterval =>
+      @set('letMoreReposThrough', true)
+    , 5000
+
+    @_super.apply this, arguments
+
+  activate: ->
+    if !config.pro && @pusher
+      @pusher.subscribeAll(['common'])
+
+    @store.addPusherEventHandlerGuard('landing-page', (event, data) =>
+      @allowMoreRepos(event, data)
+    )
+
+    @_super.apply(this, arguments)
+
+    @controllerFor('top').set('landingPage', true)
+
+  allowMoreRepos: (event, data) ->
+    if @get('repos.length') < 3
+      return true
+
+    if event == 'build:started' && @get('letMoreReposThrough')
+      @set('letMoreReposThrough', false)
+      return true
+
+  deactivate: ->
+    @_super.apply(this, arguments)
+
+    @store.removePusherEventHandlerGuard('landing-page')
+    @controllerFor('top').set('landingPage', false)
+
+  setupController: (controller, model) ->
+    controller.set('repos', @get('repos'))
 
 `export default Route`
