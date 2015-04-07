@@ -4,7 +4,7 @@
   </div>
 </header>
 
-<div class="centered">
+<div class="wrapper centered">
   {{render "flash"}}
   <div id="main" class="main" role="main">
     {{yield}}
@@ -12,3 +12,7 @@
     {{outlet "left"}}
   </div>
 </div>
+
+<footer>
+  {{render "footer"}}
+</footer>
