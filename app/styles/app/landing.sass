@@ -71,6 +71,11 @@
     max-width: 1024px
     margin: 0 auto
 
+    > .columns.medium-6:first-child
+      padding-right: 2em
+    > .columns.medium-6:last-child
+      padding-left: 2em
+
   #laptop
     margin-bottom: -192px
 
@@ -134,6 +139,7 @@
   .recent-builds
     background-color: #faf9f6
     text-align: center
+    min-height: 44rem
 
     h2
       color: #db4141
@@ -252,8 +258,6 @@
       &.inactive .owner,
       &.inactive .name
         color: $cancel-color
-
-
 
   .free-for-oss
     text-align: center
@@ -495,3 +499,13 @@
   @media (max-width: 608px)
     br.mobile-break
       display: inline-break
+
+.landing-vert-center-m
+  @media #{$medium-up}
+    position: relative
+    transform: translateY(65%)
+.landing-vert-center-s
+  @media #{$medium-up}
+    position: relative
+    overflow: auto
+    transform: translateY(7%)
