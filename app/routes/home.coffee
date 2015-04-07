@@ -9,7 +9,9 @@ Route = BasicRoute.extend
       isLoadedBinding: 'repos.isLoaded'
       repos: @store.filter 'repo', (repo) ->
         buildId = repo.get('lastBuildId')
-        store.hasRecordForId('build', buildId)
+        if store.hasRecordForId('build', buildId)
+          state = repo.get('lastBuild.state')
+          state == 'passed' || state == 'failed'
       sorted: Ember.computed.sort('repos', 'sortedReposKeys')
       content: limit('sorted', 'limit')
       sortedReposKeys: ['sortOrder:asc']
@@ -40,7 +42,7 @@ Route = BasicRoute.extend
     if @get('repos.length') < 3
       return true
 
-    if event == 'build:started' && @get('letMoreReposThrough')
+    if event == 'build:finished' && @get('letMoreReposThrough')
       @set('letMoreReposThrough', false)
       return true
 
