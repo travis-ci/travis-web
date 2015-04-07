@@ -25,7 +25,7 @@ footer
   height: auto
 @media (min-width: 640px)
   .wrapper
-    padding-bottom: 204px
+    padding-bottom: 244px //footer height plus some extra padding
 
   footer
     margin-top: -204px
@@ -86,3 +86,6 @@ footer a:active
 
 .status-circle.major
   background: #e74c3c
+
+.wrapper:not(.centered) ~ footer
+  display: none
