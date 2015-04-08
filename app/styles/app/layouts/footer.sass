@@ -2,6 +2,8 @@
  * Footer on the dashboard
  */
 
+$footer-height: 204px
+
 a
   color           : $color-link
   text-decoration : none
@@ -25,11 +27,11 @@ footer
   height: auto
 @media (min-width: 640px)
   .wrapper
-    padding-bottom: 244px //footer height plus some extra padding
+    padding-bottom: $footer-height + 50
 
   footer
-    margin-top: -204px
-    min-height: 204px
+    margin-top: - $footer-height
+    min-height: $footer-height
 
 footer h3
   font-size   : 15px
@@ -87,5 +89,3 @@ footer a:active
 .status-circle.major
   background: #e74c3c
 
-.wrapper:not(.centered) ~ footer
-  display: none

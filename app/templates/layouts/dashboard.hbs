@@ -1,14 +1,15 @@
-<div class="centered">
-  <div class="wrapper wrapper-dashboard">
-    <header id="top" class="top">
+<div class="wrapper wrapper-dashboard">
+  <header id="top" class="top">
+    <div class="centered">
       {{render "top"}}
-    </header>
+    </div>
+  </header>
 
+  <div class="centered">
     {{yield}}
-
   </div>
-
-  <footer>
-    {{render "footer"}}
-  </footer>
 </div>
+
+<footer>
+  {{render "footer"}}
+</footer>
