@@ -27,10 +27,14 @@
           </div>
         </div>
       {{/link-to}}
+    {{else}}
+      <p class="profile-text">You are not currently a member of <br> any organization.</p>
     {{/collection}}
   </section>
+{{#if config.githubOrgsSettingsUrl}}
   <section class="profile-additional">
     <p>Is an organization missing?<br>
       <a {{bind-attr href="config.githubOrgsSettingsUrl"}} title="Organization settings on GitHub">Review and add</a> your authorized Orgs.</p>
   </section>
+{{/if}}
 </aside>
