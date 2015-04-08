@@ -169,7 +169,7 @@ class Travis::Web::App
     end
 
     def title
-      default_title = "Travis CI - Test and deploy your code in confidence"
+      default_title = "Travis CI - Test and deploy your code with confidence"
       ENV['SITE_TITLE'] || default_title
     end
 
