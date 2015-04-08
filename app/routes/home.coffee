@@ -16,7 +16,7 @@ Route = BasicRoute.extend
       withExternal: Ember.computed.union('repos', 'external')
       sorted: Ember.computed.sort('withExternal', 'sortedReposKeys')
       content: limit('sorted', 'limit')
-      sortedReposKeys: ['sortOrder:desc']
+      sortedReposKeys: ['sortOrderForLandingPage:desc']
       limit: 3
     ).create()
 
