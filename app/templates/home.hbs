@@ -55,20 +55,20 @@
 							<h2>{{repo.name}}</h2>
 						</div>
 						<div class="db-controls column end">
-							<p class="db-job column small-6">
+							<p class="db-job column medium-6">
 								{{#link-to "build" repo repo.lastBuild.id}}
 									<span class="icon icon-hash"></span>
 									{{repo.lastBuild.number}}
 									{{repo.lastBuild.state}}
 								{{/link-to}}
 							</p>
-							<p class="db-commit column small-6">
+							<p class="db-commit column medium-6">
 								<span class="icon icon-github"></span>
 								{{format-sha repo.lastBuild.commit.sha}}</p>
-							<p class="db-timeago column small-6">
+							<p class="db-timeago column medium-6">
 								<span class="icon icon-cal"></span>
 								{{landing-page-last-build-time repo.lastBuild.finishedAt}}</p>
-							<p class="db-branch column small-6">
+							<p class="db-branch column medium-6">
 								<span class="icon icon-branch"></span>
 								{{repo.lastBuild.branch}}</p>
 						</div>
