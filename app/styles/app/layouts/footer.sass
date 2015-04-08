@@ -2,11 +2,14 @@
  * Footer on the dashboard
  */
 
+$footer-height: 204px
+
 a
   color           : $color-link
   text-decoration : none
 
 footer
+  position: relative
   padding          : 20px 0
   background-color : $footer-bg-color
   min-height       : 334px
@@ -24,12 +27,11 @@ footer
   height: auto
 @media (min-width: 640px)
   .wrapper
-    padding-bottom: 204px
+    padding-bottom: $footer-height + 50
 
   footer
-    margin-top: -204px
-    min-height: 204px
-
+    margin-top: - $footer-height
+    min-height: $footer-height
 
 footer h3
   font-size   : 15px
@@ -42,6 +44,9 @@ footer h3
 footer .row p
   display : inline-block
   margin  : 0
+
+footer .row
+  max-width: 1024px
 
 footer .row ul,
 footer .row li
@@ -62,7 +67,6 @@ footer a:active
   text-decoration : underline
 
 .status-circle
-  background   : $pass-color
   display      : inline-block
   height       : 11px
   width        : 11px
@@ -72,3 +76,16 @@ footer a:active
   -webkit-border-radius : 100px
   -moz-border-radius    : 100px
   vertical-align: middle
+
+.status-circle.none
+  background: #2fcc66
+
+.status-circle.degraded
+  background: #f1c40f
+
+.status-circle.minor
+  background: #e67e22
+
+.status-circle.major
+  background: #e74c3c
+

@@ -1,5 +1,5 @@
-<div class="wrapper">
-  
+<div {{bind-attr class=":wrapper auth.signedIn:non-centered:centered"}}>
+
   <header id="top" class="top">
     {{render "top"}}
   </header>
@@ -12,8 +12,11 @@
     </div>
   </div>
 
-  <aside id="left">
+  <aside id="left" {{bind-attr class="auth.signedIn::hidden"}}>
     {{outlet "left"}}
   </aside>
-
 </div>
+
+<footer {{bind-attr class="auth.signedIn:hidden"}}>
+  {{render "footer"}}
+</footer>

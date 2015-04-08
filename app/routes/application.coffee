@@ -51,6 +51,6 @@ Route = TravisRoute.extend BuildFaviconMixin,
       if @get('config').pro
         @transitionTo('auth')
       else
-        @transitionTo('main')
+        @transitionTo('home')
 
 `export default Route`

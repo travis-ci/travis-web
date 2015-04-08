@@ -3,8 +3,26 @@
 `import Location from 'travis/utils/location'`
 
 Router = Ember.Router.extend
-  # TODO: we should use TravisLocation here
-  location: if Ember.testing then 'none' else 'travis'
+  location: (->
+    if Ember.testing
+      'none'
+    else
+      # this is needed, because in the location
+      # we need to decide if repositories or home needs
+      # to be displayed, based on the current login status
+      #
+      # we should probably think about a more general way to
+      # do this, location should not know about auth status
+      Location.create(auth: @container.lookup('auth:main'))
+  ).property()
+
+  # TODO: this is needed, because in the original version
+  # the router tries to run `this.location`, which fails
+  # with computed properties. It can be removed once this is
+  # changed in Ember.js
+  generate: ->
+    url = this.router.generate.apply(this.router, arguments)
+    return this.get('location').formatURL(url)
 
   handleURL: (url) ->
     url = url.replace(/#.*?$/, '')
@@ -45,7 +63,8 @@ Router.map ->
 
   @route 'first_sync'
   @route 'insufficient_oauth_permissions'
-  @route 'auth', path: '/auth'
+  @route 'auth'
+  @route 'home'
 
   @resource 'profile', path: '/profile', ->
     @resource 'accounts', path: '/', ->

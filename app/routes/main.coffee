@@ -14,8 +14,7 @@ Route = TravisRoute.extend
 
   setupController: (controller)->
     # TODO: this is redundant with repositories and recent routes
-    toActivate = if @signedIn() then 'owned' else 'recent'
-    @container.lookup('controller:repos').activate(toActivate)
+    @container.lookup('controller:repos').activate('owned')
 
   activate: ->
     # subscribe to pusher only if we're at a main route

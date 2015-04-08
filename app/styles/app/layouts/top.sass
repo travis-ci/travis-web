@@ -1,5 +1,35 @@
 $top-height: 55px
 
+#auth #top .cta
+  display: none
+
+#top .cta
+  border-bottom: 2px solid #E4E4E4
+  border-top: 2px solid #E4E4E4
+  line-height: 2.7em
+  font-size: 16px
+  color: #71AE76
+  text-align: right
+  padding-right: 20px
+  background-color: #fff
+
+  p
+    position: relative
+    margin-top: 0
+    margin-bottom: 0
+    padding-top: 0
+    padding-bottom: 0
+
+  .arrow
+    display: block
+    position: absolute
+    top: -11px
+    right: 66px
+    background-image: inline-image('cta-arrow.svg')
+    background-repeat: no-repeat
+    width: 20px
+    height: 12px
+
 .logo
   position: relative
   margin: 0 1.5rem 0 1.3rem
@@ -39,7 +69,7 @@ $top-height: 55px
 
 .topbar
   font-size: $font-size-m
-  background-color: #eff0ec 
+  background-color: #eff0ec
   color: $grey1
 
   a
@@ -84,7 +114,7 @@ $top-height: 55px
       height: $top-height
       > li
         display: inline-block
-        margin-right: 1rem  
+        margin-right: 1rem
       a
         height: $top-height
         line-height: $top-height + 2px

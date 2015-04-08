@@ -4,12 +4,6 @@
       <a href="#" {{action "showMyRepositories"}}>My Repositories</a>
     </li>
 
-    {{#unless config.pro}}
-      <li id="tab_recent" {{bind-attr class="view.classRecent"}}>
-        {{#link-to "main.recent"}}Recent{{/link-to}}
-      </li>
-    {{/unless}}
-
     {{#if config.pro}}
       <li id="tab_running" {{bind-attr class="view.classRunning"}}>
         <a href="#" {{action "showRunningJobs"}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="small-6 medium-4 large-4 columns">
+  <div class="small-6 medium-6 large-6 columns">
     <img src="/images/dashboard/footer-logo.svg">
   </div>
   <div class="small-6 medium-2 large-2 columns">
@@ -16,7 +16,7 @@
       <li><a href="http://docs.travis-ci.com/">Documentation</a></li>
       <li><a href="http://blog.travis-ci.com/">Blog</a></li>
       <li><a href="mailto:support@travis-ci.com">Email</a></li>
-      <li><a href="https://travisci.campfirenow.com">Live Chat</a></li>
+      <li><a href="https://chat.travis-ci.com">Live Chat</a></li>
       <li><a href="https://twitter.com/travisci">Twitter</a></li>
     </ul>
   </div>
@@ -31,11 +31,6 @@
   </div>
 {{/if}}
   <div class="small-6 medium-2 large-2 columns">
-    <h3>Travis CI Status</h3>
-    <ul>
-      <li><div class="status-circle">Status:</div>
-          <a href="http://www.traviscistatus.com/">Travis CI Status</a>
-      </li>
-    </ul>
+    {{travis-status}}
   </div>
 </div>

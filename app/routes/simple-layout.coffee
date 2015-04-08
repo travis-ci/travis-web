@@ -3,8 +3,7 @@
 Route = TravisRoute.extend
   setupController: ->
     $('body').attr('id', 'simple')
-    toActivate = if @signedIn() then 'owned' else 'recent'
-    @container.lookup('controller:repos').activate(toActivate)
+    @container.lookup('controller:repos').activate('owned')
     @_super.apply(this, arguments)
 
   renderTemplate: ->

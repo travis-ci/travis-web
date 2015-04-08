@@ -2,7 +2,9 @@
 
 Route = TravisRoute.extend
   redirect: ->
-    target = if @signedIn() then 'repositories' else 'recent'
-    @transitionTo("main.#{target}")
+    if @signedIn()
+      @transitionTo('main.repositories')
+    else
+      @transitionTo('home')
 
 `export default Route`

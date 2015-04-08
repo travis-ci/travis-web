@@ -29,7 +29,8 @@ module.exports = function(environment) {
     pro: false,
     enterprise: false,
     endpoints: {},
-    intervals: { updateTimes: 1000 }
+    intervals: { updateTimes: 1000 },
+    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
   };
 
   if (typeof process !== 'undefined') {

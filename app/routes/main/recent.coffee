@@ -1,15 +1,7 @@
-`import TravisRoute from 'travis/routes/basic'`
-`import MainTabRoute from 'travis/routes/main-tab'`
+`import Ember from 'ember'`
 
-Route = MainTabRoute.extend
-  reposTabName: 'recent'
-
-  activate: ->
-    @_super.apply(this, arguments)
-    @store.set('isRecentTabOpen', true)
-
-  deactivate: ->
-    @_super.apply(this, arguments)
-    @store.set('isRecentTabOpen', false)
+Route = Ember.Route.extend
+  redirect: ->
+    @transitionTo('main')
 
 `export default Route`

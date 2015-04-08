@@ -5,11 +5,20 @@ Store = DS.Store.extend
   defaultAdapter: 'application'
   adapter: 'application'
 
-  receivePusherEvent: (event, data) ->
-    [name, type] = event.split(':')
+  init: ->
+    @_super.apply(this, arguments)
+    @set('pusherEventHandlerGuards', {})
 
+  addPusherEventHandlerGuard: (name, callback) ->
+    @get('pusherEventHandlerGuards')[name] = callback
+
+  removePusherEventHandlerGuard: (name) ->
+    delete @get('pusherEventHandlerGuards')[name]
+
+  canHandleEvent: (event, data) ->
+    [name, type] = event.split(':')
     auth = @container.lookup('auth:main')
-    if !@get('isRecentTabOpen') && event != 'job:log' && auth.get('signedIn') &&
+    if event != 'job:log' && auth.get('signedIn') &&
         !config.pro && !config.enterprise
       # if recent repos hasn't been opened yet, we can safely
       # drop any events that doesn't belong to repos owned by
@@ -22,7 +31,18 @@ Store = DS.Store.extend
       else if name == 'build'
         id = data.repository.id
 
-      return if !@hasRecordForId('repo', id) && !permissions.contains(id)
+      return @hasRecordForId('repo', id) || permissions.contains(id)
+
+    for name, callback of @get('pusherEventHandlerGuards')
+      unless callback(event, data)
+        return false
+
+    return true
+
+  receivePusherEvent: (event, data) ->
+    [name, type] = event.split(':')
+
+    return unless @canHandleEvent(event, data)
 
     if name == 'job' && data.job?.commit
       @pushPayload(commits: [data.job.commit])
