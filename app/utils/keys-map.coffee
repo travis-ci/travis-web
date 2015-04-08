@@ -13,6 +13,7 @@ languageConfigKeys = {
   dart:        'Dart'
   elixir:      'Elixir'
   ghc:         'GHC'
+  haxe:        'Haxe'
   jdk:         'JDK'
   rvm:         'Ruby'
   otp_release: 'OTP Release'
