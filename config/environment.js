@@ -31,7 +31,7 @@ module.exports = function(environment) {
     endpoints: {},
     intervals: { updateTimes: 1000 },
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
-    githubOrgsSettingsUrl: 'https://github.com/settings/connections/4753903'
+    githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/4753903'
   };
 
   if (typeof process !== 'undefined') {
@@ -58,7 +58,7 @@ module.exports = function(environment) {
         security: ENV.billingEndpoint + "/pages/security",
         terms: ENV.billingEndpoint + "/pages/terms"
       };
-      ENV.githubOrgsSettingsUrl = 'https://github.com/settings/connections/4753903'
+      ENV.githubOrgsOauthAccessSettingsUrl = 'https://github.com/settings/connections/4753903'
     }
   }
 
