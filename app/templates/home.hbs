@@ -51,7 +51,7 @@
 							<span {{bind-attr class=":icon :icon-status repo.lastBuild.state"}}></span>
 						</span>
 						<span class="owner">{{repo.owner}}</span>
-						<span class="name">{{repo.name}}</span>
+            {{#link-to "repo" repo class="name"}}{{repo.name}}{{/link-to}}
 						{{#link-to "build" repo repo.lastBuild.id class="number"}}{{repo.lastBuild.number}} <span class="state">{{repo.lastBuild.state}}</span>{{/link-to}}
 						<span class="commit">{{format-sha repo.lastBuild.commit.sha}}</span>
 						<span class="branch">{{repo.lastBuild.branch}}</span>
