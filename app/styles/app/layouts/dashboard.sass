@@ -44,6 +44,7 @@ $db-text-color: #ACAAAA
     transform: translate(-20%, 18%)
 
 .db
+  @include resetul
   position: relative
   margin-bottom: 1em
   background: $white
@@ -129,6 +130,12 @@ $db-text-color: #ACAAAA
   padding-left: 2.2em
   z-index: 30
   overflow: hidden
+
+.db-branch
+  position: relative
+  &:after
+    content: ""
+    @include fadeOut(right, -90deg, $white)
 
 .db-lock
   position: absolute

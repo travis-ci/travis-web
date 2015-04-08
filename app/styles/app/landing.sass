@@ -29,7 +29,7 @@
 .wrapper.non-centered .topbar
   background-color: #eff0ec
 
-#landing
+.landing
   margin: 0 auto 170px auto
   font-weight: 300
   overflow: hidden
@@ -41,25 +41,24 @@
     color: #8f9294
     margin-bottom: 0
 
-  h2
-    font-size: 3.3em
-    line-height: 1.15em
-    font-weight: 300
-    color: #39a85b
-
-  p
-    font-color: #606162
-    font-size: 1.7em
-    font-weight: 300
-
   .hero, .oss-testing, .customers, .recent-builds, .free-for-oss, .private-repos, .features-list, .build-flows, .user-testimonials
     padding: 70px 0 70px 0
+
+  .hero, .oss-testing, .customers, .recent-builds-text, .free-for-oss, .private-repos, .features-list, .build-flows, .user-testimonials
 
     h1, h2
       margin-top: 0
 
+    h2
+      font-size: 3.3em
+      line-height: 1.15em
+      font-weight: 300
+      color: #39a85b
+
     p
       line-height: 1.5em
+      font-color: #606162
+      font-size: 1.7em
 
   .hero.z-1
     text-align: center
@@ -138,9 +137,10 @@
 
   .recent-builds
     background-color: #faf9f6
-    text-align: center
     min-height: 44rem
 
+  .recent-builds-text
+    text-align: center
     h2
       color: #db4141
       text-align: right
@@ -172,95 +172,6 @@
       width: 100%
       padding: 10px 0 0 60px
       text-align: left
-
-      .tile-status
-        position: absolute
-        top: 0
-        left: 0
-        bottom: 0
-
-      .owner, .name
-        display: block
-
-      .owner
-        font-size: 14px
-        line-height: 1.8em
-      .name
-        font-size: 22px
-
-      .state
-        display: inline-block
-        margin-left: 4px
-
-      .commit, .number, .branch, .finished-at
-        position: absolute
-        display: block
-        background-repeat: no-repeat
-        background-position: left center
-        padding-left: 23px
-
-      .number
-        left: 60px
-        top: 65px
-        background-image: inline-image('svg/build-number-icon.svg')
-
-      .commit
-        left: 251px
-        top: 65px
-        background-image: inline-image('svg/commit-icon.svg')
-
-      .branch
-        left: 250px
-        top: 90px
-        background-image: inline-image('dashboard/branch.svg')
-        background-size: 19px 19px
-
-      .finished-at
-        left: 60px
-        top: 90px
-        background-image: inline-image('svg/finished-icon.svg')
-        background-size: 19px 19px
-
-      &.started .tile-status,
-      &.created .tile-status,
-      &.received .tile-status,
-      &.queued .tile-status
-        background-color: $start-color
-      &.failed .tile-status
-        background-color: $fail-color
-      &.errored .tile-status
-        background-color: $error-color
-      &.canceled .tile-status
-        background-color: $cancel-color
-      &.passed .tile-status
-        background-color: $pass-color
-      &.inactive .tile-status
-        background-color: $cancel-color
-
-      &.started .owner,
-      &.started .name,
-      &.created .owner,
-      &.created .name,
-      &.received .owner,
-      &.received .name,
-      &.queued .owner,
-      &.queued .name
-        color: $start-color
-      &.failed .owner,
-      &.failed .name
-        color: $fail-color
-      &.errored .owner,
-      &.errored .name
-        color: $error-color
-      &.canceled .owner,
-      &.canceled .name
-        color: $cancel-color
-      &.passed .owner,
-      &.passed .name
-        color: $pass-color
-      &.inactive .owner,
-      &.inactive .name
-        color: $cancel-color
 
   .free-for-oss
     text-align: center
@@ -432,8 +343,6 @@
 
     .title
       margin: 0 0 20px 0
-
-
     a
       font-size: 1.2em
 
@@ -552,3 +461,36 @@
     position: relative
     overflow: auto
     transform: translateY(7%)
+
+
+.tiles-landing
+  .db
+    padding: .4em 0
+    p
+      font-size: $font-size-m
+      line-height: 1.6
+      color: #828282
+  .db-controls
+    padding-left: 3.7rem
+    .icon
+      width: 1em
+      height: 1.1em
+    .icon-branch
+      width: 1.2em
+      height: .7em
+  .db-status
+    .icon
+      width: 1.2em
+      height: 1.2em
+  .db-repo
+    padding-left: 3.7rem
+    h2
+      font-size: 22px
+      line-height: 25px
+  .db-job, .db-branch, .db-commit, .db-timeago
+    padding-left: 1.4em
+  .db-job a
+    color: #828282 !important
+    &:hover
+      text-decoration: underline
+

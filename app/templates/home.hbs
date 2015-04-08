@@ -1,4 +1,4 @@
-<div id="landing">
+<div id="landing" class="landing">
 	<div class="row hero z-1">
 		<div class="landing-centered-wrapper">
 			<div class="large-12 columns" id="hero-copy">
@@ -37,27 +37,41 @@
 
 	<div class="row recent-builds">
 		<div class="landing-centered-wrapper">
-			<div class="medium-6 columns">
+			<div class="medium-6 columns recent-builds-text">
 				<div class="landing-vert-center-m">
 					<h2>Every minute there’s<br>a new build being run</h2>
 					<p>Here are just a few projects<br>currently running on Travis CI</p>
 				</div>
 			</div>
 			<div class="medium-6 columns">
-				<ul class="repos">
+				<ul class="tiles-landing">
 				{{#each repo in repos}}
-					<li {{bind-attr class=":repo repo.lastBuild.state"}}>
-						<span class="tile-status">
+					<li {{bind-attr class=":db :column repo.lastBuild.state"}}>
+						<div class="db-status">
 							<span {{bind-attr class=":icon :icon-status repo.lastBuild.state"}}></span>
-						</span>
-						<span class="owner">{{repo.owner}}</span>
-						<span class="name">{{repo.name}}</span>
-						{{#link-to "build" repo repo.lastBuild.id class="number"}}{{repo.lastBuild.number}} <span class="state">{{repo.lastBuild.state}}</span>{{/link-to}}
-						<span class="commit">{{format-sha repo.lastBuild.commit.sha}}</span>
-						<span class="branch">{{repo.lastBuild.branch}}</span>
-						<span class="finished-at">
-							{{landing-page-last-build-time repo.lastBuild.finishedAt}}
-						</span>
+						</div>
+						<div class="db-repo column">
+							<h3>{{repo.owner}}</h3>
+							<h2>{{repo.name}}</h2>
+						</div>
+						<div class="db-controls column end">
+							<p class="db-job column small-6">
+								{{#link-to "build" repo repo.lastBuild.id}}
+									<span class="icon icon-hash"></span>
+									{{repo.lastBuild.number}}
+									{{repo.lastBuild.state}}
+								{{/link-to}}
+							</p>
+							<p class="db-commit column small-6">
+								<span class="icon icon-github"></span>
+								{{format-sha repo.lastBuild.commit.sha}}</p>
+							<p class="db-timeago column small-6">
+								<span class="icon icon-cal"></span>
+								{{landing-page-last-build-time repo.lastBuild.finishedAt}}</p>
+							<p class="db-branch column small-6">
+								<span class="icon icon-branch"></span>
+								{{repo.lastBuild.branch}}</p>
+						</div>
 					</li>
 				{{else}}
 				<span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
@@ -217,39 +231,39 @@
 		</div>
 	</div>
 
-  <div class="row user-testimonials">
-  	<div class="landing-centered-wrapper">
-      <div class="medium-6 columns">
-        <h2>Some people have said some pretty nice things about us</h2>
-      </div>
-      <div class="medium-6 columns">
-        <div class="small-3 columns">
-          <img src="../images/landing-page/dhh.png" class="avatar">
-        </div>
-        <div class="small-9 columns">
-          <p>Travis CI makes it so much easier for us to coordinate the thousands of commits and contributors that flow through the Rails code base. The test suite for such a large project is vast, and we wouldn’t be catching issues as quickly or smoothly without the help of Travis.</p>
-          <p class="author">David Heinemeier Hansson</p> <img src="../images/landing-page/twitter.svg" class="social"><a href="https://twitter.com/dhh" alt="DHH Twitter" target="_blank">dhh</a>
-          <p class="title">Creator of Ruby on Rails</p>
-        </div>
+	<div class="row user-testimonials">
+		<div class="landing-centered-wrapper">
+			<div class="medium-6 columns">
+				<h2>Some people have said some pretty nice things about us</h2>
+			</div>
+			<div class="medium-6 columns">
+				<div class="small-3 columns">
+					<img src="../images/landing-page/dhh.png" class="avatar">
+				</div>
+				<div class="small-9 columns">
+					<p>Travis CI makes it so much easier for us to coordinate the thousands of commits and contributors that flow through the Rails code base. The test suite for such a large project is vast, and we wouldn’t be catching issues as quickly or smoothly without the help of Travis.</p>
+					<p class="author">David Heinemeier Hansson</p> <img src="../images/landing-page/twitter.svg" class="social"><a href="https://twitter.com/dhh" alt="DHH Twitter" target="_blank">dhh</a>
+					<p class="title">Creator of Ruby on Rails</p>
+				</div>
 
-        <div class="small-3 columns">
-          <img src="../images/landing-page/chris.png" class="avatar">
-        </div>
-        <div class="small-9 columns">
-          <p>We love Travis CI at @TwitterOSS and use it for the majority of our open source projects on GitHub. Travis CI is simple to use, we love their API to build  tooling and adore the new container infrastructure for speedier builds.</p>
-          <p class="author">Chris Aniszczyk</p> <img src="../images/landing-page/twitter.svg" class="social"><a href="https://twitter.com/cra" alt="Chris Twitter" target="_blank">cra</a>
-          <p class="title">Head of Open Source at Twitter</p>
-        </div>
+				<div class="small-3 columns">
+					<img src="../images/landing-page/chris.png" class="avatar">
+				</div>
+				<div class="small-9 columns">
+					<p>We love Travis CI at @TwitterOSS and use it for the majority of our open source projects on GitHub. Travis CI is simple to use, we love their API to build  tooling and adore the new container infrastructure for speedier builds.</p>
+					<p class="author">Chris Aniszczyk</p> <img src="../images/landing-page/twitter.svg" class="social"><a href="https://twitter.com/cra" alt="Chris Twitter" target="_blank">cra</a>
+					<p class="title">Head of Open Source at Twitter</p>
+				</div>
 
-        <div class="small-3 columns">
-          <img src="../images/landing-page/alex.png" class="avatar">
-        </div>
-        <div class="small-9 columns">
-          <p>Not only is Travis CI the best way to test your software, it is the right way. rm -rf jenkins &amp;&amp; touch .travis.yml</p>
-          <p class="author">Alex Gaynor</p> <img src="../images/landing-page/github.svg" class="social"><a href="https://github.com/alex" alt="Alex github" target="_blank">alex</a>
-          <p class="title">PyPy and Python Core Team Member</p>
-        </div>
-      </div>
-    </div>
-  </div>
+				<div class="small-3 columns">
+					<img src="../images/landing-page/alex.png" class="avatar">
+				</div>
+				<div class="small-9 columns">
+					<p>Not only is Travis CI the best way to test your software, it is the right way. rm -rf jenkins &amp;&amp; touch .travis.yml</p>
+					<p class="author">Alex Gaynor</p> <img src="../images/landing-page/github.svg" class="social"><a href="https://github.com/alex" alt="Alex github" target="_blank">alex</a>
+					<p class="title">PyPy and Python Core Team Member</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
