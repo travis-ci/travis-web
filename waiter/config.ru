@@ -70,5 +70,6 @@ run Travis::Web::App.build(
   enterprise: ENV['TRAVIS_ENTERPRISE'],
   code_climate: ENV['CODE_CLIMATE'],
   code_climate_url: ENV['CODE_CLIMATE_URL'],
-  assets_host: ENV['ASSETS_HOST']
+  assets_host: ENV['ASSETS_HOST'],
+  github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
 )

@@ -198,6 +198,7 @@ class Travis::Web::App
       config['codeClimate'] = options[:code_climate] if options[:code_climate]
       config['codeClimateUrl'] = options[:code_climate_url] if options[:code_climate_url]
       config['charmKey'] = options[:charm_key] if options[:charm_key]
+      config['githubOrgsOauthAccessSettingsUrl'] = options[:github_orgs_oauth_access_settings_url]
 
       config['endpoints'] = {
         'sshKey' => options[:ssh_key_enabled],
