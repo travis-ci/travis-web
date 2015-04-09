@@ -1,0 +1,261 @@
+{{!-- {{outlet}} --}}
+
+<header class="row">
+  <section class="columns large-4">
+    <div class="media">
+      <div class="media-elem">
+        <img src="//placehold.it/120x120" alt="">
+      </div>
+      <div class="media-body">
+        <h1>Travis CI GmbH</h1>
+        <p><a href="//gtihub" title=""><span class="icon icon--github"></span> travis-pro</a></p>
+        {{sync-button}}
+      </div>
+    </div>
+  </section>
+</header>
+<div class="row">
+  <nav class="tabnav" role="tablist">
+    <ul class="tab tabs--owner">
+      <li role="presentational"><a href="#" title="" role="tab">All Repositories</a></li>
+      <li role="presentational"><a href="#" title="" role="tab">Running Builds (2/5)</a></li>
+      <li role="presentational"><a href="#" title="" role="tab">Members</a></li>
+    </ul>
+  </nav>
+  <div class="tabbody">
+    <section role="tabpanel">
+      <ul>
+        <li {{bind-attr class=":db :row repo.last_build.state :passed"}}>
+          {{#if repo.private }}
+            <div class="db-lock"><span class="icon icon-lock"></span></div>
+          {{/if}}
+          <div class="db-status">
+            <span {{bind-attr class=":icon :icon-status repo.last_build.state :passed"}}></span>
+          </div>
+          <div class="db-repo column medium-3 small-12">
+            <h3>owner</h3>
+            <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
+          </div>
+          <div class="db-controls column medium-9 small-12 end">
+            <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
+              {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+                {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
+                1234 passed
+              {{/link-to}}</p>
+            <p class="db-commit column medium-3 small-6">
+              <span class="icon icon-github"></span>394348a</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-clock"></span>ran for 3 min 23 sec</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-cal"></span>3 days ago{{!-- {{format-time repo.last_build.finished_at}} --}}</p>
+          </div>
+        </li>
+        <li {{bind-attr class=":db :row repo.last_build.state :started"}}>
+          {{#if repo.private }}
+            <div class="db-lock"><span class="icon icon-lock"></span></div>
+          {{/if}}
+          <div class="db-status">
+            <span {{bind-attr class=":icon :icon-status repo.last_build.state :started"}}></span>
+          </div>
+          <div class="db-repo column medium-3 small-12">
+            <h3>owner</h3>
+            <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
+          </div>
+          <div class="db-controls column medium-9 small-12 end">
+            <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
+              {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+                {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
+                1234 passed
+              {{/link-to}}</p>
+            <p class="db-commit column medium-3 small-6">
+              <span class="icon icon-github"></span>394348a</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-clock"></span>ran for 3 min 23 sec</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-cal"></span>3 days ago{{!-- {{format-time repo.last_build.finished_at}} --}}</p>
+          </div>
+        </li>
+        <li {{bind-attr class=":db :row repo.last_build.state :failed"}}>
+          {{#if repo.private }}
+            <div class="db-lock"><span class="icon icon-lock"></span></div>
+          {{/if}}
+          <div class="db-status">
+            <span {{bind-attr class=":icon :icon-status repo.last_build.state :failed"}}></span>
+          </div>
+          <div class="db-repo column medium-3 small-12">
+            <h3>owner</h3>
+            <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
+          </div>
+          <div class="db-controls column medium-9 small-12 end">
+            <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
+              {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+                {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
+                1234 passed
+              {{/link-to}}</p>
+            <p class="db-commit column medium-3 small-6">
+              <span class="icon icon-github"></span>394348a</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-clock"></span>ran for 3 min 23 sec</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-cal"></span>3 days ago{{!-- {{format-time repo.last_build.finished_at}} --}}</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section role="tabpanel">
+      <ul>
+        <li {{bind-attr class=":db :row repo.last_build.state :started"}}>
+          {{#if repo.private }}
+            <div class="db-lock"><span class="icon icon-lock"></span></div>
+          {{/if}}
+          <div class="db-status">
+            <span {{bind-attr class=":icon :icon-status repo.last_build.state :started"}}></span>
+          </div>
+          <div class="db-repo column medium-3 small-12">
+            <h3>owner</h3>
+            <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
+          </div>
+          <div class="db-controls column medium-9 small-12 end">
+            <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
+              {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+                {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
+                1234 passed
+              {{/link-to}}</p>
+            <p class="db-commit column medium-3 small-6">
+              <span class="icon icon-github"></span>394348a</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-clock"></span>currently running</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-cal"></span>in queue{{!-- {{format-time repo.last_build.finished_at}} --}}</p>
+          </div>
+        </li>
+        <li {{bind-attr class=":db :row repo.last_build.state :started"}}>
+          {{#if repo.private }}
+            <div class="db-lock"><span class="icon icon-lock"></span></div>
+          {{/if}}
+          <div class="db-status">
+            <span {{bind-attr class=":icon :icon-status repo.last_build.state :started"}}></span>
+          </div>
+          <div class="db-repo column medium-3 small-12">
+            <h3>owner</h3>
+            <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
+          </div>
+          <div class="db-controls column medium-9 small-12 end">
+            <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
+              {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+                {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
+                1234 passed
+              {{/link-to}}</p>
+            <p class="db-commit column medium-3 small-6">
+              <span class="icon icon-github"></span>394348a</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-clock"></span>currently running</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-cal"></span>in queue{{!-- {{format-time repo.last_build.finished_at}} --}}</p>
+          </div>
+        </li>
+        <li {{bind-attr class=":db :row repo.last_build.state :started"}}>
+          {{#if repo.private }}
+            <div class="db-lock"><span class="icon icon-lock"></span></div>
+          {{/if}}
+          <div class="db-status">
+            <span {{bind-attr class=":icon :icon-status repo.last_build.state :started"}}></span>
+          </div>
+          <div class="db-repo column medium-3 small-12">
+            <h3>owner</h3>
+            <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
+          </div>
+          <div class="db-controls column medium-9 small-12 end">
+            <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
+              {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+                {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
+                1234 queued
+              {{/link-to}}</p>
+            <p class="db-commit column medium-3 small-6">
+              <span class="icon icon-github"></span>394348a</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-clock"></span>currently running</p>
+            <p class="db-timeago column medium-3 small-6">
+              <span class="icon icon-cal"></span>in queue{{!-- {{format-time repo.last_build.finished_at}} --}}</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section role="tabpanel">
+      <ul class="members">
+        <li class="columns medium-6 large-4">
+          <div class="media">
+            <img src="//placehold.it/50x50" alt="" class="media-elem">
+            <div class="media-body">
+              <h2>Firstname Lastname</h2>
+              <p>githubhandle</p>
+            </div>
+          </div>
+        </li>
+        <li class="columns medium-6 large-4">
+          <div class="media">
+            <img src="//placehold.it/50x50" alt="" class="media-elem">
+            <div class="media-body">
+              <h2>Firstname Lastname</h2>
+              <p>githubhandle</p>
+            </div>
+          </div>
+        </li>
+        <li class="columns medium-6 large-4">
+          <div class="media">
+            <img src="//placehold.it/50x50" alt="" class="media-elem">
+            <div class="media-body">
+              <h2>Firstname Lastname</h2>
+              <p>githubhandle</p>
+            </div>
+          </div>
+        </li>
+        <li class="columns medium-6 large-4">
+          <div class="media">
+            <img src="//placehold.it/50x50" alt="" class="media-elem">
+            <div class="media-body">
+              <h2>Firstname Lastname</h2>
+              <p>githubhandle</p>
+            </div>
+          </div>
+        </li>
+        <li class="columns medium-6 large-4">
+          <div class="media">
+            <img src="//placehold.it/50x50" alt="" class="media-elem">
+            <div class="media-body">
+              <h2>Firstname Lastname</h2>
+              <p>githubhandle</p>
+            </div>
+          </div>
+        </li>
+        <li class="columns medium-6 large-4">
+          <div class="media">
+            <img src="//placehold.it/50x50" alt="" class="media-elem">
+            <div class="media-body">
+              <h2>Firstname Lastname</h2>
+              <p>githubhandle</p>
+            </div>
+          </div>
+        </li>
+        <li class="columns medium-6 large-4">
+          <div class="media">
+            <img src="//placehold.it/50x50" alt="" class="media-elem">
+            <div class="media-body">
+              <h2>Firstname Lastname</h2>
+              <p>githubhandle</p>
+            </div>
+          </div>
+        </li>
+        <li class="columns medium-6 large-4">
+          <div class="media">
+            <img src="//placehold.it/50x50" alt="" class="media-elem">
+            <div class="media-body">
+              <h2>Firstname Lastname</h2>
+              <p>githubhandle</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>

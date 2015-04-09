@@ -71,6 +71,8 @@ Router.map ->
       @resource 'account', path: '/:login'
       @route 'info', path: '/info'
 
+  @route 'ownerpage', path: 'ownerpage'
+
   @route 'error404', path: '/*path'
 
 `export default Router`
