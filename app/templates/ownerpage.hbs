@@ -15,8 +15,8 @@
   </section>
 </header>
 
-<div class="row">
-  <nav class="tabnav" role="tablist">
+<div>
+  <nav class="tabnav row" role="tablist">
     <ul class="tab tabs--owner">
       <li role="presentational"><a href="#" title="" role="tab">All Repositories</a></li>
       <li role="presentational"><a href="#" title="" role="tab">Running Builds (2/5)</a></li>
@@ -27,29 +27,30 @@
   <div class="tabbody">
 
     <section role="tabpanel">
-      <ul>
-        <li {{bind-attr class=":db :row repo.last_build.state :passed"}}>
+      <ul class="owner-tiles">
+        <li {{bind-attr class=":tile :tile--small :row repo.last_build.state :passed"}}>
           {{#if repo.private }}
-            <div class="db-lock"><span class="icon icon-lock"></span></div>
+            <div class="tile-lock"><span class="icon icon-lock"></span></div>
           {{/if}}
-          <div class="db-status">
+          <div class="tile-status">
             <span {{bind-attr class=":icon :icon-status repo.last_build.state :passed"}}></span>
+            <span {{bind-attr class=":icon :request-kind repo.last_build.state :push"}}></span>
           </div>
-          <div class="db-repo column medium-3 small-12">
+          <div class="tile-main tile-header column medium-3 small-12">
             <h3>owner</h3>
-            <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
+            <h2>{{#link-to "repo" repo.owner.login repo.name}}repo namerepo namerepo namerepo namerepo namerepo namerepo name{{/link-to}}</h2>
           </div>
-          <div class="db-controls column medium-9 small-12 end">
-            <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
+          <div class="tile-additional tile-single column medium-9 small-12 end">
+            <p class="tile-job build-status column medium-3 small-6"><span class="icon icon-hash"></span>
               {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
                 {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
                 1234 passed
               {{/link-to}}</p>
-            <p class="db-commit column medium-3 small-6">
-              <span class="icon icon-github"></span>394348a</p>
-            <p class="db-timeago column medium-3 small-6">
+            <p class="tile-commit column medium-3 small-6">
+              <span class="icon icon-github"></span><a href="#">394348a</a></p>
+            <p class="tile-timeago column medium-3 small-6">
               <span class="icon icon-clock"></span>ran for 3 min 23 sec</p>
-            <p class="db-timeago column medium-3 small-6">
+            <p class="tile-timeago column medium-2 small-6">
               <span class="icon icon-cal"></span>3 days ago{{!-- {{format-time repo.last_build.finished_at}} --}}</p>
           </div>
         </li>
@@ -57,29 +58,30 @@
     </section>
 
     <section role="tabpanel">
-      <ul>
-        <li {{bind-attr class=":db :row repo.last_build.state :started"}}>
+      <ul class="owner-tiles">
+        <li {{bind-attr class=":tile :tile--small :row repo.last_build.state :started"}}>
           {{#if repo.private }}
-            <div class="db-lock"><span class="icon icon-lock"></span></div>
+            <div class="tile-lock"><span class="icon icon-lock"></span></div>
           {{/if}}
-          <div class="db-status">
+          <div class="tile-status">
             <span {{bind-attr class=":icon :icon-status repo.last_build.state :started"}}></span>
+            <span {{bind-attr class=":icon :request-kind repo.last_build.state :push"}}></span>
           </div>
-          <div class="db-repo column medium-3 small-12">
+          <div class="tile-main tile-header column medium-3 small-12">
             <h3>owner</h3>
             <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
           </div>
-          <div class="db-controls column medium-9 small-12 end">
-            <p class="db-job column medium-3 small-6"><span class="icon icon-hash"></span>
+          <div class="tile-additional tile-single column medium-9 small-12 end">
+            <p class="tile-job build-status column medium-3 small-6"><span class="icon icon-hash"></span>
               {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
                 {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
                 1234 passed
               {{/link-to}}</p>
-            <p class="db-commit column medium-3 small-6">
-              <span class="icon icon-github"></span>394348a</p>
-            <p class="db-timeago column medium-3 small-6">
+            <p class="tile-commit column medium-3 small-6">
+              <span class="icon icon-github"></span><a href="#">394348a</a></p>
+            <p class="tile-timeago column medium-3 small-6">
               <span class="icon icon-clock"></span>currently running</p>
-            <p class="db-timeago column medium-3 small-6">
+            <p class="tile-timeago column medium-2 small-6">
               <span class="icon icon-cal"></span>in queue{{!-- {{format-time repo.last_build.finished_at}} --}}</p>
           </div>
         </li>

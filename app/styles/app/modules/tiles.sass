@@ -3,7 +3,9 @@
     background-color: $color
   .repo-header-title a,
   .repo-build-status a,
-  .build-status a
+  .build-status a,
+  .tile-header,
+  .tile-header a
     color: $color
 
 .tile
@@ -133,7 +135,8 @@
     bottom: 0
 
 // build history etc
-.tile--build
+.tile--build,
+.owner-tiles
   .tile-main
     @media #{$small-only}
       h2
