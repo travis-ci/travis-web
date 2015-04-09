@@ -10,9 +10,9 @@ Controller = Ember.ObjectController.extend
 
   type: (->
     if @get('isPullRequest')
-      'Pull request'
+      'pull_request'
     else
-      'Push'
+      'push'
   ).property('isPullRequest')
 
   status: (->

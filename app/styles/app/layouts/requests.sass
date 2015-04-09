@@ -1,0 +1,15 @@
+.requests
+  @include resetul
+  
+  .requests-commit
+    position: relative
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, $cream-light)
+
+  .requests-time
+    border-left: 1px solid $grey4
+    padding-left: 1em
+
+  .tile--jobs
+    padding-left: 2.5em
