@@ -42,11 +42,11 @@
             <span {{bind-attr class=":icon :icon-status repo.last_build.state :passed"}}></span>
             <span {{bind-attr class=":icon :request-kind repo.last_build.state :push"}}></span>
           </div>
-          <div class="tile-main tile-header column medium-3 small-12">
+          <div class="tile-main tile-header column medium-3">
             <h3>owner</h3>
             <h2>{{#link-to "repo" repo.owner.login repo.name}}repo namerepo namerepo namerepo namerepo namerepo namerepo name{{/link-to}}</h2>
           </div>
-          <div class="tile-additional tile-single column medium-9 small-12 end">
+          <div class="tile-additional tile-single column medium-9 end">
             <p class="tile-job build-status column medium-3 small-6"><span class="icon icon-hash"></span>
               {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
                 {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
@@ -73,11 +73,11 @@
             <span {{bind-attr class=":icon :icon-status repo.last_build.state :started"}}></span>
             <span {{bind-attr class=":icon :request-kind repo.last_build.state :push"}}></span>
           </div>
-          <div class="tile-main tile-header column medium-3 small-12">
+          <div class="tile-main tile-header column medium-3">
             <h3>owner</h3>
             <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
           </div>
-          <div class="tile-additional tile-single column medium-9 small-12 end">
+          <div class="tile-additional tile-single column medium-9 end">
             <p class="tile-job build-status column medium-3 small-6"><span class="icon icon-hash"></span>
               {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
                 {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
