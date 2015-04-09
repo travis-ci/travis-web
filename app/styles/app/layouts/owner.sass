@@ -1,3 +1,32 @@
+
+.owner-header
+  margin-bottom: 3rem
+  color: #969496
+  a
+    color: #969496
+  .owner-title
+    margin: .3em 0 .1em
+    font-size: 23px
+    font-weight: 400
+  .owner-handle
+    margin: 0
+    font-size: $font-size-sm
+    .icon
+      width: 1.2em
+      height: 1.3em
+      vertical-align: middle
+  img
+    border-radius: 50%
+
+  .sync-button
+    margin-top: .8rem
+    p, button
+      margin: 0
+  .sync-last
+    color: #969496
+    font-size: $font-size-sm
+
+
 .owner-tiles
   @extend .repo-main
   @include resetul
@@ -11,8 +40,9 @@
     font-size: 20px
 
   .tile-additional
-    padding-left: 2em
     font-size: $font-size-m;
+    @media #{$medium-up}
+      padding-left: 2em
 
   .tile-status .icon-status
     margin-top: 1.3em
@@ -24,6 +54,17 @@
       width: .9em
       height: 1.2em
 
-  .tile-single
+  .tile-single,
+  .tile-single a
     line-height: 3em
     color: #969496
+
+
+.tabs--owner
+  padding : 0 $column-gutter/2
+
+.tabnav--owner
+  margin-bottom: 1.5rem
+  @media #{$medium-up}
+    height: 2.2em
+    border-bottom: solid 2px $grey4

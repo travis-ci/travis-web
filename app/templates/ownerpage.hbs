@@ -1,23 +1,29 @@
 {{!-- {{outlet}} --}}
 
-<header class="row">
-  <section class="columns large-4">
+<header class="owner-header row">
+  <section class="columns small-10 medium-5 large-4">
     <div class="media">
       <div class="media-elem">
         <img src="//placehold.it/120x120" alt="">
       </div>
       <div class="media-body">
-        <h1>Travis CI GmbH</h1>
-        <p><a href="//gtihub" title=""><span class="icon icon--github"></span> travis-pro</a></p>
-        {{sync-button}}
+        <h1 class="owner-title">Travis CI GmbH</h1>
+        <p class="owner-handle"><a href="//gtihub" title=""><span class="icon icon--github-circle"></span> travis-pro</a></p>
+        <div class="sync-button">
+          <p>
+            <button {{action sync}} class="button">
+            <span class="icon icon-sync"></span>Sync account</button>
+          </p>
+          <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
+        </div>
       </div>
     </div>
   </section>
 </header>
 
-<div>
-  <nav class="tabnav row" role="tablist">
-    <ul class="tab tabs--owner">
+<div class="tabs--owner">
+  <nav class="tabnav tabnav--owner row" role="tablist">
+    <ul class="tab">
       <li role="presentational"><a href="#" title="" role="tab">All Repositories</a></li>
       <li role="presentational"><a href="#" title="" role="tab">Running Builds (2/5)</a></li>
       <li role="presentational"><a href="#" title="" role="tab">Members</a></li>
