@@ -20,9 +20,9 @@
     <p class="jobs-item requests-branch column medium-2">
       <span {{bind-attr class=":icon :icon--grey type"}}></span>
       {{#if isPullRequest}}
-        #{{pullRequestNumber}}
+        <strong>#{{pullRequestNumber}}</strong>
       {{else}}
-        {{branchName}}
+        <strong>{{branchName}}</strong>
       {{/if}}
       {{github-commit-link repo.slug commit.sha}}
     </p>

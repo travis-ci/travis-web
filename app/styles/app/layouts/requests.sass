@@ -1,14 +1,30 @@
+@mixin colorRequests($color-bg)
+  &:hover
+    background-color: $color-bg
+    .requests-commit,
+    .requests-branch
+      &:after
+        @include fadeOut(right, -90deg, $color-bg, 30%)
+
+
 .requests
   @include resetul
 
+  .accepted:hover
+    @include colorRequests(#e5efe4)
+  .rejected:hover
+    @include colorRequests(#fbebe6)
+
   color: #969496
+  a:hover
+    text-decoration: underline
   
   .requests-commit,
   .requests-branch
     position: relative
     &:after
       content: ""
-      @include fadeOut(right, -90deg, $cream-light, 20%)
+      @include fadeOut(right, -90deg, $cream-light, 30%)
 
   .requests-time
     @media #{$medium-up}
