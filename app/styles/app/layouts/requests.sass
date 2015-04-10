@@ -1,15 +1,19 @@
 .requests
   @include resetul
+
+  color: #969496
   
-  .requests-commit
+  .requests-commit,
+  .requests-branch
     position: relative
     &:after
       content: ""
-      @include fadeOut(right, -90deg, $cream-light)
+      @include fadeOut(right, -90deg, $cream-light, 20%)
 
   .requests-time
-    border-left: 1px solid $grey4
-    padding-left: 1em
+    @media #{$medium-up}
+      padding-left: 2em
+      border-left: 1px solid $grey4
 
   .tile--jobs
     padding-left: 2.5em
