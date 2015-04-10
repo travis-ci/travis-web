@@ -9,38 +9,36 @@
 <ul class="requests">
   {{#each controller itemController="request"}}
     <div {{bind-attr class=":tile :tile--jobs :row requestClass" }}>
+      <div class="tile-status tile-status--job">
+        <span {{bind-attr class=":icon :icon--job requestClass"}}></span>
+      </div>
 
-    {{!-- icon --}}
-    <div class="tile-status tile-status--job">
-      <span {{bind-attr class=":icon :icon--job requestClass"}}></span>
-    </div>
-    {{!-- time --}}
-    <p class="jobs-item requests-time column medium-2">{{format-time created_at}}</p>
-    {{!-- request branch commit --}}
-    <p class="jobs-item requests-branch column medium-2">
-      <span {{bind-attr class=":icon :icon--grey type"}}></span>
-      {{#if isPullRequest}}
-        <strong>#{{pullRequestNumber}}</strong>
-      {{else}}
-        <strong>{{branchName}}</strong>
-      {{/if}}
-      {{github-commit-link repo.slug commit.sha}}
-    </p>
-    {{!-- commit message --}}
-    <p class="jobs-item requests-commit column medium-5">{{{format-message commit.message short="true" repoBinding=build.repo}}}</p>
-    {{!-- job id --}}
-    <p class="jobs-item column medium-1">
-      {{#if build}}
-        <span class="icon icon-hash"></span>
-        {{#link-to "build" build}}
-          {{build.number}}{{/link-to}}
-      {{else}}
-        -
-      {{/if}}
-    </p>
-    {{!-- comment --}}
-    <p class="jobs-item column medium-2">{{message}}</p>
+      <p class="jobs-item requests-time column medium-2">{{format-time created_at}}</p>
 
+      <p class="jobs-item requests-branch column medium-2">
+        <span {{bind-attr class=":icon :icon--grey type"}}></span>
+        {{#if isPullRequest}}
+          <strong>#{{pullRequestNumber}}</strong>
+        {{else}}
+          <strong>{{branchName}}</strong>
+        {{/if}}
+        {{github-commit-link repo.slug commit.sha}}
+      </p>
+
+      <p class="jobs-item requests-commit column medium-5 large-4">
+        {{{format-message commit.message short="true" repoBinding=build.repo}}}
+        </p>
+
+      <p class="jobs-item column medium-1">
+        {{#if build}}
+          <span class="icon icon-hash"></span>
+          {{#link-to "build" build}}
+            {{build.number}}{{/link-to}}
+        {{else}}
+          -
+        {{/if}}
+      </p>
+      <p class="jobs-item column medium-2 large-3">{{message}}</p>
     </div>
   {{/each}}
 </ul>
