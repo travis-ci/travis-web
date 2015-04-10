@@ -4,7 +4,14 @@
 			<div class="large-12 columns" id="hero-copy">
 				<h1>Test and Deploy with Confidence</h1>
 				<p>Easily sync your GitHub projects with Travis CI<br class="mobile-break"> and you’ll be testing your code in minutes!</p>
-				<a href="#" class="button"><img src="../images/landing-page/sign-in-mascot.svg" class="sign-in-mascot">Sign Up</a>
+
+				{{#if auth.signedOut}}
+				  <button {{action "signIn" target="auth"}} class="button"><img src="../images/landing-page/sign-in-mascot.svg" class="sign-in-mascot">Sign Up</button>
+				{{/if}}
+				{{#if auth.signingIn}}
+					<button class="button"><span class="sync-spinner"><i></i><i></i><i></i></span>Signing In</button>
+				{{/if}}
+
 			</div>
 			<div class="large-12 columns laptop-wrapper">
 				<div id="laptop">
