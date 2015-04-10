@@ -18,7 +18,7 @@
     <p class="jobs-item requests-time column medium-2">{{format-time created_at}}</p>
     {{!-- request branch commit --}}
     <p class="jobs-item column medium-2">
-      <span {{bind-attr class=":icon type"}}></span>
+      <span {{bind-attr class=":icon :icon--grey type"}}></span>
       {{github-commit-link repo.slug commit.sha}}
     </p>
     {{!-- commit message --}}
