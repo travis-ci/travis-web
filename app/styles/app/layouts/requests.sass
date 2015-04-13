@@ -3,7 +3,8 @@
     background-color: $color-bg
     .requests-commit,
     .requests-branch,
-    .requests-message
+    .requests-message,
+    .requests-time
       &:after
         @include fadeOut(right, -90deg, $color-bg, 30%)
 
@@ -23,7 +24,8 @@
   
   .requests-commit,
   .requests-branch,
-  .requests-message
+  .requests-message,
+  .requests-time
     position: relative
     &:after
       content: ""
@@ -53,9 +55,4 @@
     .requests-build
       width: grid-calc(2, 24)
     .requests-message
-      width: grid-calc(5, 24)
-  @media #{$large-up}
-    .requests-time
-      width: grid-calc(3, 24)
-    .requests-branch
       width: grid-calc(5, 24)
