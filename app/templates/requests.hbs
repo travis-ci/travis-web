@@ -13,9 +13,9 @@
         <span {{bind-attr class=":icon :icon--job requestClass"}}></span>
       </div>
 
-      <p class="jobs-item requests-time column medium-2">{{format-time created_at}}</p>
+      <p class="jobs-item requests-time column">{{format-time created_at}}</p>
 
-      <p class="jobs-item requests-branch column medium-2">
+      <p class="jobs-item requests-branch column">
         <span {{bind-attr class=":icon :icon--grey type"}}></span>
         {{#if isPullRequest}}
           <strong>#{{pullRequestNumber}}</strong>
@@ -25,11 +25,11 @@
         {{github-commit-link repo.slug commit.sha}}
       </p>
 
-      <p class="jobs-item requests-commit column medium-5 large-4">
+      <p class="jobs-item requests-commit column">
         {{{format-message commit.message short="true" repoBinding=build.repo}}}
         </p>
 
-      <p class="jobs-item column medium-1">
+      <p class="jobs-item requests-build column">
         {{#if build}}
           <span class="icon icon-hash"></span>
           {{#link-to "build" build}}
@@ -38,7 +38,7 @@
           -
         {{/if}}
       </p>
-      <p class="jobs-item requests-message column medium-2 large-3">{{message}}</p>
+      <p class="jobs-item requests-message column">{{message}}</p>
     </div>
   {{/each}}
 </ul>

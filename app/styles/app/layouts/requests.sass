@@ -16,6 +16,7 @@
   .rejected:hover
     @include colorRequests(#fbebe6)
 
+  margin-top: 2.5rem
   color: #969496
   a:hover
     text-decoration: underline
@@ -32,18 +33,6 @@
     @media #{$medium-up}
       padding-left: 2em
       border-left: 1px solid $grey4
-    @media #{$xlarge-up}
-      width: grid-calc(3, 24)
-
-  .requests-branch
-    @media #{$medium-only}
-      strong
-        display: none
-    @media #{$large-only}
-      strong
-        display: none
-    @media #{$xlarge-up}
-      width: grid-calc(5, 24)
 
   .tile--jobs
     padding-left: 2.5em
@@ -53,3 +42,20 @@
     height: .8em
   .icon.pull_request
     height: 1.5em
+
+  @media #{$medium-up}
+    .requests-time
+      width: grid-calc(4, 24)
+    .requests-branch
+      width: grid-calc(4, 24)
+    .requests-commit
+      width: grid-calc(9, 24)
+    .requests-build
+      width: grid-calc(2, 24)
+    .requests-message
+      width: grid-calc(5, 24)
+  @media #{$large-up}
+    .requests-time
+      width: grid-calc(3, 24)
+    .requests-branch
+      width: grid-calc(5, 24)
