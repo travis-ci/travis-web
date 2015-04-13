@@ -1,2 +1,34 @@
 .caches
   @include resetul
+  font-size: $font-size-sm
+  color: $grey3
+
+  .tile-xs
+    padding-left: 0
+
+  .icon.push
+    width: 1.2em;
+    height: 0.8em;
+    margin-right: .3em
+
+  .button--delete
+    transform: translateY(-0.2em);
+
+  @media #{$medium-up}
+    .caches-branch
+      position: relative
+      overflow: hidden
+      width: grid-calc(4, 13)
+      &:after
+        content: ""
+        @include fadeOut(right, -90deg, $cream-light)
+    .caches-date
+      width: grid-calc(4, 13)
+    .caches-size
+      width: grid-calc(4, 13)
+    .caches-button
+      text-align: right
+      width: grid-calc(1, 13)
+
+.delete-repo-caches
+  margin-top: 1rem

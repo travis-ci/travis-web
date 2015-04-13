@@ -1,5 +1,5 @@
 {{#if length}}
-  <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches"}}>
+  <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches :button--delete"}}>
     Delete all repository caches
   </a>
 
@@ -8,20 +8,20 @@
   <ul id="caches" class="caches">
     {{#each controller itemController="cachesByBranch"}}
       {{#each cache in caches itemController="cachesItem"}}
-        <li {{bind-attr class=":tile :tile--small :row" }}>
+        <li {{bind-attr class=":tile :tile--xs :tile :row" }}>
 
-          <p class="tile-item column">
-            <span {{bind-attr class=":icon :icon--grey push"}}></span>
+          <p class="tile-item caches-branch column">
+            <span {{bind-attr class=":icon :icon--grey :push"}}></span>
             {{cache.branch}}
           </p>
 
-          <p class="tile-item column">{{cache.last_modified}}</p>
+          <p class="tile-item caches-date column">{{cache.last_modified}}</p>
 
-          <p class="tile-item column">{{mb cache.size}}MB</p>
+          <p class="tile-item caches-size column">{{mb cache.size}}MB</p>
 
-          <p class="tile-item">
+          <p class="tile-item caches-button column">
             <a href="#" {{action "delete"}} {{bind-attr class="isDeleting:deleting :delete-by-slug :delete :button--delete"}}>
-              delete
+              Delete
             </a>
           </p>
         </li>
@@ -31,9 +31,9 @@
 
   <h2 class="build-title">Pull Requests</h2>
   <ul class="caches">
-    {{#each controller itemController="cachesByBranch"}}
+{{!--     {{#each controller itemController="cachesByBranch"}}
       {{#each cache in caches itemController="cachesItem"}}
-        <li {{bind-attr class=":tile :tile--small :row" }}>
+        <li {{bind-attr class=":tile :tile--xs :tile :row" }}>
 
           <p class="tile-item column">
             <span {{bind-attr class=":icon :icon--grey pull_request"}}></span>
@@ -44,14 +44,14 @@
 
           <p class="tile-item column">{{mb cache.size}}MB</p>
 
-          <p class="tile-item">
+          <p class="tile-item column">
             <a href="#" {{action "delete"}} {{bind-attr class="isDeleting:deleting :delete-by-slug :delete :button--delete"}}>
               delete
             </a>
           </p>
         </li>
       {{/each}}
-    {{/each}}
+    {{/each}} --}}
   </ul>
 {{else}}
   There are no caches for this repository.

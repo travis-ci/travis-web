@@ -86,7 +86,7 @@ $button-border-color: #d4d4d4
 
 .btn
   @extend .button
-  border-radius: 4px
+  @extend %border-radius-4px
 .button--green
   border: none
   font-size: $font-size-small
@@ -149,3 +149,15 @@ $button-border-color: #d4d4d4
     width: 1.1em
     height: 0.7em
     margin-right: .5em
+
+.button--delete
+  @extend .button
+  @extend %border-radius-4px
+  border: none
+  font-size: $font-size-small
+  color: $white
+  background-color: #CD3A36
+  font-weight: 300;
+  padding: 4px 10px 2px
+  &:hover
+    background-color: lighten(#CD3A36, 10)
