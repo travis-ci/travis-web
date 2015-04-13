@@ -2,7 +2,8 @@
   &:hover
     background-color: $color-bg
     .requests-commit,
-    .requests-branch
+    .requests-branch,
+    .requests-message
       &:after
         @include fadeOut(right, -90deg, $color-bg, 30%)
 
@@ -20,7 +21,8 @@
     text-decoration: underline
   
   .requests-commit,
-  .requests-branch
+  .requests-branch,
+  .requests-message
     position: relative
     &:after
       content: ""
@@ -34,6 +36,12 @@
       width: grid-calc(3, 24)
 
   .requests-branch
+    @media #{$medium-only}
+      strong
+        display: none
+    @media #{$large-only}
+      strong
+        display: none
     @media #{$xlarge-up}
       width: grid-calc(5, 24)
 
