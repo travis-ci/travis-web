@@ -10,9 +10,9 @@ Controller = Ember.ObjectController.extend
 
   type: (->
     if @get('isPullRequest')
-      'Pull request'
+      'pull_request'
     else
-      'Push'
+      'push'
   ).property('isPullRequest')
 
   status: (->
@@ -26,6 +26,8 @@ Controller = Ember.ObjectController.extend
     message = @get('model.message')
     if @config.pro && message == "private repository"
       ''
+    else if !message
+      'Build created successfully '
     else
       message
   ).property('model.message')

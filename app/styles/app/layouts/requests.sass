@@ -1,0 +1,58 @@
+@mixin colorRequests($color-bg)
+  &:hover
+    background-color: $color-bg
+    .requests-commit,
+    .requests-branch,
+    .requests-message,
+    .requests-time
+      &:after
+        @include fadeOut(right, -90deg, $color-bg, 30%)
+
+
+.requests
+  @include resetul
+
+  .accepted:hover
+    @include colorRequests(#e5efe4)
+  .rejected:hover
+    @include colorRequests(#fbebe6)
+
+  margin-top: 2.5rem
+  color: #969496
+  a:hover
+    text-decoration: underline
+  
+  .requests-commit,
+  .requests-branch,
+  .requests-message,
+  .requests-time
+    position: relative
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, $cream-light, 30%)
+
+  .requests-time
+    @media #{$medium-up}
+      padding-left: 2em
+      border-left: 1px solid $grey4
+
+  .tile--jobs
+    padding-left: 2.5em
+
+  .icon.push
+    width: 1.2em
+    height: .8em
+  .icon.pull_request
+    height: 1.5em
+
+  @media #{$medium-up}
+    .requests-time
+      width: grid-calc(4, 24)
+    .requests-branch
+      width: grid-calc(4, 24)
+    .requests-commit
+      width: grid-calc(9, 24)
+    .requests-build
+      width: grid-calc(2, 24)
+    .requests-message
+      width: grid-calc(5, 24)

@@ -6,37 +6,39 @@
 </div>
 {{/if}}
 
-<table id="requests" class="list">
-  <thead>
-    <tr>
-      <th>Request</th>
-      <th>Commit</th>
-      <th>Build</th>
-      <th>Commit message</th>
-      <th>Type</th>
-      <th>Message</th>
-    </tr>
-  </thead>
+<ul class="requests">
+  {{#each controller itemController="request"}}
+    <div {{bind-attr class=":tile :tile--jobs :row requestClass" }}>
+      <div class="tile-status tile-status--job">
+        <span {{bind-attr class=":icon :icon--job requestClass"}}></span>
+      </div>
 
-  <tbody>
-    {{#each controller itemController="request"}}
-      <tr {{bind-attr class="requestClass"}}>
-        <td class="request-id">
-          <span class="status"></span>
-          {{id}}
-        </td>
-        <td>{{github-commit-link repo.slug commit.sha}}</td>
-        <td>
-          {{#if build}}
-            {{#link-to "build" build}}#{{build.number}}{{/link-to}}
-          {{else}}
-            -
-          {{/if}}
-        </td>
-        <td class="commit-message">{{{format-message commit.message short="true" repoBinding=build.repo}}}</td>
-        <td>{{type}}</td>
-        <td>{{message}}</td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+      <p class="jobs-item requests-time column">{{format-time created_at}}</p>
+
+      <p class="jobs-item requests-branch column">
+        <span {{bind-attr class=":icon :icon--grey type"}}></span>
+        {{#if isPullRequest}}
+          <strong>#{{pullRequestNumber}}</strong>
+        {{else}}
+          <strong>{{branchName}}</strong>
+        {{/if}}
+        {{github-commit-link repo.slug commit.sha}}
+      </p>
+
+      <p class="jobs-item requests-commit column">
+        {{{format-message commit.message short="true" repoBinding=build.repo}}}
+        </p>
+
+      <p class="jobs-item requests-build column">
+        {{#if build}}
+          <span class="icon icon-hash"></span>
+          {{#link-to "build" build}}
+            {{build.number}}{{/link-to}}
+        {{else}}
+          -
+        {{/if}}
+      </p>
+      <p class="jobs-item requests-message column">{{message}}</p>
+    </div>
+  {{/each}}
+</ul>
