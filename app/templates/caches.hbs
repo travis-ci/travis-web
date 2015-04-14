@@ -1,10 +1,10 @@
 {{#if length}}
-  <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches :button--delete"}}>
-    Delete all repository caches
-  </a>
-
-
-  <h2 class="build-title">Pushes</h2>
+  <div class="align-right">
+    <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches :button--delete"}}>
+      Delete all repository caches
+    </a>
+  </div>
+  {{!-- <h2 class="build-title">Pushes</h2> --}}
   <ul id="caches" class="caches">
     {{#each controller itemController="cachesByBranch"}}
       {{#each cache in caches itemController="cachesItem"}}
@@ -29,9 +29,9 @@
     {{/each}}
   </ul>
 
-  <h2 class="build-title">Pull Requests</h2>
+{{!--   <h2 class="build-title">Pull Requests</h2>
   <ul class="caches">
-{{!--     {{#each controller itemController="cachesByBranch"}}
+    {{#each controller itemController="cachesByBranch"}}
       {{#each cache in caches itemController="cachesItem"}}
         <li {{bind-attr class=":tile :tile--xs :tile :row" }}>
 
