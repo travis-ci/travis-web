@@ -1,5 +1,7 @@
 {{#if length}}
+  h1  
   <div class="align-right">
+
     <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches :button--delete"}}>
       Delete all repository caches
     </a>
@@ -54,5 +56,5 @@
     {{/each}} --}}
   </ul>
 {{else}}
-  <p>No caches have been created yet, <a href="http://docs.travis-ci.com/user/caching/" title="">read more</a> on how to setup caching with your build</p>
+  <p>No caches have been created yet,<br>read more on <a href="http://docs.travis-ci.com/user/caching/" title="">how to setup caching with your build</a>.</p>
 {{/if}}
