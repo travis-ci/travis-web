@@ -8,11 +8,10 @@
   {{!-- <h2 class="build-title">Pushes</h2> --}}
   <ul id="caches" class="caches">
     {{#each controller itemController="cachesByBranch"}}
-      {{#each cache in caches itemController="cachesItem"}}
-        <li {{bind-attr class=":tile :tile--xs :tile :row" }}>
-
+      <li {{bind-attr class=":tile :tile--xs :tile :row controller.type" }}>
+        {{#each cache in caches itemController="cachesItem"}}
           <p class="tile-item caches-branch column">
-            <span {{bind-attr class=":icon :icon--grey :push"}}></span>
+            <span {{bind-attr class=":icon :icon--grey"}}></span>
             {{cache.branch}}
           </p>
 
@@ -25,8 +24,8 @@
               Delete
             </a>
           </p>
-        </li>
-      {{/each}}
+        {{/each}}
+      </li>
     {{/each}}
   </ul>
 

@@ -7,9 +7,19 @@
   .tile-xs
     padding-left: 0
 
-  .icon.push
-    width: 1.2em;
-    height: 0.8em;
+
+  .push
+    .icon--grey
+      @extend .icon--grey.push
+      width: 1.2em;
+      height: 0.8em;
+  .pull_request
+    .icon--grey
+      @extend .icon--grey.pull_request
+      width: 1em;
+      height: 1.5em;
+
+  .icon--grey
     margin-right: .3em
 
   .button--delete

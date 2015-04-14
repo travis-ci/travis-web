@@ -25,6 +25,10 @@ Route = TravisRoute.extend
 
       result = []
       for branch, caches of groups
+        if /PR./.test(branch)
+          caches.set('type', 'pull_request')
+        else
+          caches.set('type', 'push')
         result.push caches
 
       result
