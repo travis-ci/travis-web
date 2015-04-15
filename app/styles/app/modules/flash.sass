@@ -29,12 +29,17 @@
     padding: .7em 5em
 
   .success,
-  .notice,
-  .broadcast
+  .notice
     color: #3ba85b
     background-color: #deebdd
     .close
       @extend .icon--dismiss-green
+
+  .broadcast
+    color: #D8C500
+    background-color: #FFFBD7
+    .close
+      @extend .icon--dismiss-yellow
 
   .error
     color: #de4248
