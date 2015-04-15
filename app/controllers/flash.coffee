@@ -14,17 +14,24 @@ Controller = Ember.ArrayController.extend
     broadcasts = @get('unseenBroadcasts')
     flashes = @get('flashes')
     model = []
-    model = model.concat(broadcasts.toArray()) if broadcasts
-    model = model.concat(flashes.toArray().reverse())    if flashes
+    model.pushObjects(broadcasts) if broadcasts
+    model.pushObjects(flashes.toArray().reverse())    if flashes
     model.uniq()
-  ).property('unseenBroadcasts.length', 'flashes.length')
+  ).property('unseenBroadcasts.[]', 'flashes.[]')
 
   unseenBroadcasts: (->
-    @get('broadcasts').filterProperty('isSeen', false)
-  ).property('broadcasts.isLoaded', 'broadcasts.length')
+    @get('broadcasts').filter (broadcast) ->
+      !broadcast.get('isSeen')
+  ).property('broadcasts.[]')
 
   broadcasts: (->
-    if @get('currentUser.id') then @store.find('broadcast') else Ember.A()
+    broadcasts = Ember.ArrayProxy.create(content: [])
+
+    if @get('currentUser.id')
+      @store.find('broadcast').then (result) ->
+        broadcasts.pushObjects(result.toArray())
+
+    broadcasts
   ).property('currentUser.id')
 
   loadFlashes: (msgs) ->

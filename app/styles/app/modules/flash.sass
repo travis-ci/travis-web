@@ -3,11 +3,15 @@
   font-size: 18px
   text-align: center
   li
-    opacity: 0
+    top: 0
     position: relative
+  li.notice, li.success, li.error
+    opacity: 0
     max-height: 3.5rem
     height: 0
     animation: comeIn 7s 1 ease
+  li.broadcast
+    height: auto
 
   .close
     @extend .icon
@@ -22,7 +26,8 @@
     margin: 0
 
   .success,
-  .notice
+  .notice,
+  .broadcast
     color: #3ba85b
     background-color: #deebdd
     .close

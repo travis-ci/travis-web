@@ -8,12 +8,12 @@ Broadcast = Model.extend
     { type: 'broadcast', id: @get('id'), message: @get('message') }
 
   isSeen: (->
-    @get('id') in Broadcast.get('seen')
+    @get('id') in Ember.get(Broadcast, 'seen')
   ).property()
 
   setSeen: ->
-    Broadcast.get('seen').pushObject(@get('id'))
-    Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(Broadcast.get('seen')))
+    Ember.get(Broadcast, 'seen').pushObject(@get('id'))
+    Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(Ember.get(Broadcast, 'seen')))
     @notifyPropertyChange('isSeen')
 
 Broadcast.reopenClass
