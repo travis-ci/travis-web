@@ -1,4 +1,5 @@
 `import Ember from 'ember'`
+`import config from 'travis/config/environment'`
 
 Location = Ember.HistoryLocation.extend
   init: ->
@@ -12,11 +13,12 @@ Location = Ember.HistoryLocation.extend
 
   getURL: ->
     url = this._super.apply(this, arguments)
-    if location.pathname == '/'
-      if @get('auth.signedIn')
-        return '/repositories'
-      else
-        return '/home'
+    unless config.pro
+      if location.pathname == '/'
+        if @get('auth.signedIn')
+          return '/repositories'
+        else
+          return '/home'
 
     url
 
