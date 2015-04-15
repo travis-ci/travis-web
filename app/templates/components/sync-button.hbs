@@ -1,7 +1,7 @@
 <div class="sync-button">
   {{#if user.isSyncing }}
     <button class="button is-syncing">
-      <span class="sync-spinner"><i></i><i></i><i></i></span>Syncing from Github
+      <span class="sync-spinner"><i></i><i></i><i></i></span>Syncing from GitHub
     </button>
   {{else}}
     <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
