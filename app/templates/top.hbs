@@ -25,17 +25,17 @@
     {{#if config.pro}}
       <li class="navigation-sub navigation--legal">
         <p class="handle navigation-handle">
-          <a {{bind-attr href="config.url_legal"}}>Legal</a>
+          <a>Legal</a>
         </p>
         <ul class="navigation-nested">
           <li>
-            <a {{bind-attr href="config.url_imprint"}}>Imprint</a>
+            <a {{bind-attr href="config.urls.imprint"}}>Imprint</a>
           </li>
           <li>
-            <a {{bind-attr href="config.url_security"}}>Security</a>
+            <a {{bind-attr href="config.urls.security"}}>Security</a>
           </li>
           <li>
-            <a {{bind-attr href="config.url_terms"}}>Terms</a>
+            <a {{bind-attr href="config.urls.terms"}}>Terms</a>
           </li>
         </ul>
       </li>
