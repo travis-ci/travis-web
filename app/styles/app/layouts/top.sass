@@ -15,10 +15,8 @@ $top-height: 55px
 
   p
     position: relative
-    margin-top: 0
-    margin-bottom: 0
-    padding-top: 0
-    padding-bottom: 0
+    margin: 0
+    padding: 0
 
   .arrow
     display: block
@@ -69,27 +67,18 @@ $top-height: 55px
     &:hover
       cursor: pointer
 
-
 .topbar
   font-size: $font-size-m
   background-color: #eff0ec
   color: $grey1
 
-  a
-    display: block
-    color: #898989
-    border-bottom: solid 1px #eff0ec
-    padding: 0 .2em
-    font-size: $font-size-m
-
-  @media #{$small-only}
-    .navigation
-      height: 0
-      overflow: hidden
-      &.is-open
-        height: auto
-      a
-        padding: .5em 1em
+  .navigation
+    height: 0
+    overflow: hidden
+    &.is-open
+      height: auto
+    a
+      padding: .5em 1em
 
   .navigation,
   .navigation-nested
@@ -99,6 +88,22 @@ $top-height: 55px
     position: relative
     margin: 0
 
+  .navigation-sub
+    position: relative
+
+  a,
+  .navigation-handle span
+    display: block
+    color: #898989
+    border-bottom: solid 1px #eff0ec
+    font-size: $font-size-m
+    cursor: pointer
+    height: $top-height
+    line-height: $top-height + 2px
+    border: none
+    &:hover
+      text-decoration: underline
+
   .navigation--profile
     img
       border-radius: 50%;
@@ -107,14 +112,12 @@ $top-height: 55px
       margin-left: 1rem;
       transform: translateY(-0.1rem);
 
-  .navigation-sub
-    position: relative
-
   @media #{$medium-up}
     height: $top-height
 
     .navigation
       height: $top-height
+      overflow: visible
       > li
         display: inline-block
         margin-right: 1rem
@@ -122,12 +125,10 @@ $top-height: 55px
       .centered & li.signed-in
       .centered & li.signing-in
         margin-right: 0
-      a
-        height: $top-height
-        line-height: $top-height + 2px
-        border: none
-        &:hover
-          text-decoration: underline
+
+      a,
+      .navigation-handle span
+        padding: 0 .2em
 
     .navigation--profile
       float: right
