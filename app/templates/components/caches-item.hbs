@@ -1,0 +1,14 @@
+<p class="tile-item caches-branch column">
+  <span {{bind-attr class=":icon :icon--grey"}}></span>
+  {{cache.branch}}
+</p>
+
+<p class="tile-item caches-date column">{{format-time cache.last_modified}}</p>
+
+<p class="tile-item caches-size column">{{mb cache.size}}MB</p>
+
+<p class="tile-item caches-button column">
+  <a href="#" {{action "delete"}} {{bind-attr class="isDeleting:deleting :delete-by-slug :delete :button--delete"}}>
+    Delete
+  </a>
+</p>

@@ -4,34 +4,44 @@
 
 Route = TravisRoute.extend
   needsAuth: true
-  setupController: ->
+  setupController: (controller) ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('caches')
+    controller.set('repo', @controllerFor('repo').get('repo'))
 
   model: ->
     repo = @modelFor('repo')
     Ajax.get("/repos/#{repo.get('id')}/caches").then( (data) ->
-      groups = {}
-      counter = 1
+      caches = {}
+      
       data["caches"].forEach (cacheData) ->
-        branch = cacheData["branch"]
-        group = groups[branch]
-        unless group
-          group = groups[branch] = Ember.Object.create(branch: branch, caches: [])
+        branch = cacheData.branch
+        cache = caches[branch]
+          
+        if cache
+          cache.size += cacheData.size
 
-          cache = Ember.Object.create(cacheData)
-          cache.set('parent', group)
-          group.get('caches').pushObject(cache)
-
-      result = []
-      for branch, caches of groups
-        if /PR./.test(branch)
-          caches.set('type', 'pull_request')
+          if cache.last_modified < cacheData.last_modified
+            cache.last_modified = cacheData.last_modified
         else
-          caches.set('type', 'push')
-        result.push caches
+          caches[branch] = cacheData
 
-      result
+      pushes = []
+      pullRequests = []
+
+      
+      for branch, cache of caches
+        if /PR./.test(branch)
+          cache.type = "pull_request"
+          pullRequests.push cache
+        else
+          cache.type = "push"
+          pushes.push cache
+
+      {
+        pushes: pushes,
+        pullRequests: pullRequests
+      }
     )
 
 `export default Route`

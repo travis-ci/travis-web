@@ -1,58 +1,25 @@
-{{#if length}}
+{{#if model.pushes.length}}
+
   <div class="caches-header">
     <h1 class="build-title">All caches <small>(<a href="http://docs.travis-ci.com/user/caching/" title="">documentation</a>)</small></h1>
     <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches :button--delete"}}>
       Delete all repository caches
     </a>
   </div>
-  {{!-- <h2 class="build-title">Pushes</h2> --}}
+  <h2 class="build-title">Pushes</h2>
   <ul id="caches" class="caches">
-    {{#each controller itemController="cachesByBranch"}}
-      <li {{bind-attr class=":tile :tile--xs :tile :row controller.type" }}>
-        {{#each cache in caches itemController="cachesItem"}}
-          <p class="tile-item caches-branch column">
-            <span {{bind-attr class=":icon :icon--grey"}}></span>
-            {{cache.branch}}
-          </p>
-
-          <p class="tile-item caches-date column">{{format-time cache.last_modified}}</p>
-
-          <p class="tile-item caches-size column">{{mb cache.size}}MB</p>
-
-          <p class="tile-item caches-button column">
-            <a href="#" {{action "delete"}} {{bind-attr class="isDeleting:deleting :delete-by-slug :delete :button--delete"}}>
-              Delete
-            </a>
-          </p>
-        {{/each}}
-      </li>
+    {{#each cache in model.pushes }}
+      {{caches-item cache=cache repo=repo caches=model.pushes}}
     {{/each}}
   </ul>
 
-{{!--   <h2 class="build-title">Pull Requests</h2>
+  <h2 class="build-title">Pull Requests</h2>
   <ul class="caches">
-    {{#each controller itemController="cachesByBranch"}}
-      {{#each cache in caches itemController="cachesItem"}}
-        <li {{bind-attr class=":tile :tile--xs :tile :row" }}>
-
-          <p class="tile-item column">
-            <span {{bind-attr class=":icon :icon--grey pull_request"}}></span>
-            {{cache.branch}}
-          </p>
-
-          <p class="tile-item column">{{format-time cache.last_modified}}</p>
-
-          <p class="tile-item column">{{mb cache.size}}MB</p>
-
-          <p class="tile-item column">
-            <a href="#" {{action "delete"}} {{bind-attr class="isDeleting:deleting :delete-by-slug :delete :button--delete"}}>
-              delete
-            </a>
-          </p>
-        </li>
-      {{/each}}
-    {{/each}} --}}
+    {{#each cache in model.pullRequests }}
+      {{caches-item cache=cache repo=repo caches=model.pullRequests}}
+    {{/each}}
   </ul>
+
 {{else}}
   <p>No caches have been created yet,<br>read more on <a href="http://docs.travis-ci.com/user/caching/" title="">how to setup caching with your build</a>.</p>
 {{/if}}
