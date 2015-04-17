@@ -7,7 +7,6 @@ Route = TravisRoute.extend
   setupController: (controller) ->
     @_super.apply this, arguments
     @controllerFor('repo').activate('caches')
-    controller.set('repo', @controllerFor('repo').get('repo'))
 
   model: ->
     repo = @modelFor('repo')

@@ -1,17 +1,23 @@
 `import { test, moduleForComponent } from 'ember-qunit'`
 
 moduleForComponent 'caches-item', 'CachesItemComponent', {
-  # specify the other units that are required for this test
-  # needs: ['component:foo', 'helper:bar']
+  needs: ['helper:format-time', 'helper:mb']
 }
 
 test 'it renders', ->
-  expect 2
 
-  # creates the component instance
-  component = @subject()
-  equal component._state, 'preRender'
+  attributes = {
+    repository_id: 10,
+    size: 1024 * 1024,
+    branch: "master",
+    last_modified: "2015-04-16T11:25:00Z",
+    type: "push"
+  }
 
-  # appends the component to the page
+  component = @subject(cache: attributes)
   @append()
-  equal component._state, 'inDOM'
+
+  ok component.$().hasClass('push'), 'component should have a type class (push)'
+  equal component.$('.caches-branch').text().trim(), 'master', 'branch name should be displayed'
+  # equal component.$('.caches-date').text().trim(), '', ''
+  equal component.$('.caches-size').text().trim(), '1.00MB', 'size should be displayed'
