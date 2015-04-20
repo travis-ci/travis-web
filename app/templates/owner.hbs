@@ -4,12 +4,14 @@
   <section class="columns small-10 medium-5 large-4">
     <div class="media">
       <div class="media-elem">
-        <img src="//placehold.it/120x120" alt="">
+        <img {{bind-attr src="avatarURL"}} alt="">
       </div>
       <div class="media-body">
-        <h1 class="owner-title">Travis CI GmbH</h1>
-        <p class="owner-handle"><a href="//gtihub" title=""><span class="icon icon--github-circle"></span> travis-pro</a></p>
-        {{ownerpage-sync-button}}
+        <h1 class="owner-title">{{owner.name}}</h1>
+
+        {{!-- TODO: only sync btn if user part of org --}}
+        <p class="owner-handle"><a {{bind-attr href="githubProfile"}} title=""><span class="icon icon--github-circle"></span> {{owner.login}}</a></p>
+        {{owner-sync-button owner=owner}}
       </div>
     </div>
   </section>

@@ -2,6 +2,6 @@
 
 View = Ember.View.extend
   layoutName: 'layouts/profile'
-  classNames: ['ownerpage']
+  classNames: ['owner']
 
 `export default View`
