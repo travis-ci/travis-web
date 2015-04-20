@@ -38,27 +38,38 @@
 
   h2
     font-size: 20px
-
-  .tile-additional
-    font-size: $font-size-m;
-    @media #{$medium-up}
-      padding-left: 2em
+    white-space: nowrap
 
   .tile-status .icon-status
     margin-top: 1.3em
 
-  p .icon
-    width: 1em
-    height: 1em
-    &.icon-github
-      width: .9em
-      height: 1.2em
+  .tile-single
+    position: relative
+    color: $grey1
+    p
+      padding: .1em 0
+      line-height: 3em
+      font-size: $font-size-m
+      .icon
+        margin-right: .3em
+        width: 1em
+        height: 1.1em
+        vertical-align: middle
+        &.icon-github
+          width: .9em
+          height: 1.2em
+    a
+      color: $grey1
+      &:hover
+        color: $grey1
+        text-decoration: underline
 
-  .tile-single,
-  .tile-single a
-    line-height: 3em
-    color: #969496
-
+  .tile-main
+    position: relative
+    overflow: hidden
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, $cream-light)
 
 .tabs--owner
   padding : 0 $column-gutter/2

@@ -42,7 +42,7 @@
             <h3>owner</h3>
             <h2>{{#link-to "repo" repo.owner.login repo.name}}repo namerepo namerepo namerepo namerepo namerepo namerepo name{{/link-to}}</h2>
           </div>
-          <div class="tile-additional tile-single column medium-9 end">
+          <div class="tile-single column medium-9 end">
             <p class="tile-job build-status column medium-3 small-6"><span class="icon icon-hash"></span>
               {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
                 {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
@@ -73,7 +73,7 @@
             <h3>owner</h3>
             <h2>{{#link-to "repo" repo.owner.login repo.name}}repo name{{/link-to}}</h2>
           </div>
-          <div class="tile-additional tile-single column medium-9 end">
+          <div class="tile-single column medium-9 end">
             <p class="tile-job build-status column medium-3 small-6"><span class="icon icon-hash"></span>
               {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
                 {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
