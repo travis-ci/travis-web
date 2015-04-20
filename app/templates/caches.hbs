@@ -1,25 +1,27 @@
 {{#if model.pushes.length}}
 
   <div class="caches-header">
-    <h1 class="build-title">All caches <small>(<a href="http://docs.travis-ci.com/user/caching/" title="">documentation</a>)</small></h1>
+    <h1 class="caches-title">All caches <small>(<a href="http://docs.travis-ci.com/user/caching/" title="">documentation</a>)</small></h1>
     <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches :button--delete"}}>
       Delete all repository caches
     </a>
   </div>
-  <h2 class="build-title">Pushes</h2>
+  <h2 class="caches-title">Pushes</h2>
   <ul id="caches" class="caches">
     {{#each cache in model.pushes }}
       {{caches-item cache=cache repo=repo caches=model.pushes}}
     {{/each}}
   </ul>
 
-  <h2 class="build-title">Pull Requests</h2>
-  <ul class="caches">
-    {{#each cache in model.pullRequests }}
-      {{caches-item cache=cache repo=repo caches=model.pullRequests}}
-    {{/each}}
-  </ul>
+  {{#if model.pullRequests.length}}
+    <h2 class="caches-title">Pull Requests</h2>
+    <ul class="caches">
+      {{#each cache in model.pullRequests }}
+        {{caches-item cache=cache repo=repo caches=model.pullRequests}}
+      {{/each}}
+    </ul>
+  {{/if}}
 
 {{else}}
-  <p>No caches have been created yet,<br>read more on <a href="http://docs.travis-ci.com/user/caching/" title="">how to setup caching with your build</a>.</p>
+  <p class="caches-helptext">No caches have been created yet,<br>read more on <a href="http://docs.travis-ci.com/user/caching/" title="">how to setup caching with your build</a>.</p>
 {{/if}}
