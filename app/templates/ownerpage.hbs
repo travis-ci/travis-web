@@ -9,13 +9,7 @@
       <div class="media-body">
         <h1 class="owner-title">Travis CI GmbH</h1>
         <p class="owner-handle"><a href="//gtihub" title=""><span class="icon icon--github-circle"></span> travis-pro</a></p>
-        <div class="sync-button">
-          <p>
-            <button {{action sync}} class="button">
-            <span class="icon icon-sync"></span>Sync account</button>
-          </p>
-          <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
-        </div>
+        {{ownerpage-sync-button}}
       </div>
     </div>
   </section>
