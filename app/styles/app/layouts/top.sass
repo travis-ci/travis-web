@@ -15,7 +15,7 @@ $top-height: 55px
 
   p
     position: relative
-    margin: 0
+    margin: auto
     padding: 0
 
   .arrow
@@ -92,7 +92,7 @@ $top-height: 55px
     position: relative
 
   a,
-  .navigation-handle span
+  .navigation-handle span:not(.sync-spinner)
     display: block
     color: #898989
     border-bottom: solid 1px #eff0ec
@@ -127,7 +127,7 @@ $top-height: 55px
         margin-right: 0
 
       a,
-      .navigation-handle span
+      .navigation-handle span:not(.sync-spinner)
         padding: 0 .2em
 
     .navigation--profile
