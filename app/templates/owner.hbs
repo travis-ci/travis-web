@@ -2,18 +2,15 @@
 
 <header class="owner-header row">
   <section class="columns small-10 medium-5 large-4">
-    <div class="media">
-      <div class="media-elem">
+      <div class="owner-avatar">
         <img {{bind-attr src="avatarURL"}} alt="">
       </div>
-      <div class="media-body">
+      <div class="owner-info">
         <h1 class="owner-title">{{owner.name}}</h1>
-
         {{!-- TODO: only sync btn if user part of org --}}
         <p class="owner-handle"><a {{bind-attr href="githubProfile"}} title=""><span class="icon icon--github-circle"></span> {{owner.login}}</a></p>
         {{owner-sync-button owner=owner}}
       </div>
-    </div>
   </section>
 </header>
 

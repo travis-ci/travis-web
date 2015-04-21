@@ -26,6 +26,11 @@
     color: #969496
     font-size: $font-size-sm
 
+.owner-avatar,
+.owner-info
+  @extend %inline-block
+  vertical-align: middle
+  margin-right: 1.5em
 
 .owner-tiles
   @extend .repo-main
@@ -69,7 +74,11 @@
     overflow: hidden
     &:after
       content: ""
-      @include fadeOut(right, -90deg, $cream-light)
+      @include fadeOut(right, -90deg, $cream-light, 20%)
+    & ~ .tile-single
+      @media #{$medium-up}
+        padding-left: 2em
+        border-left: 1px solid $grey4
 
 .tabs--owner
   padding : 0 $column-gutter/2
