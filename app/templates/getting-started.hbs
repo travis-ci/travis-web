@@ -1,77 +1,52 @@
-<div id="getting-started">
-  <h3>Welcome to Travis CI!</h3>
+<div id="getting-started" class="getting-started">
 
-  <h2>Hey, it looks like you're new around here and have yet to set up your first<br>repository on Travis CI. We're here to help you get started, it's easy!</h2>
+  <h1 class="">First time here? Let's get you started!</h1>
 
-  <div class="getting-started-row">
-    <div class="column">
-      <img src="/images/getting-started/project-switch.png">
-    </div>
+  <ol class="getting-started-steps">
+    <li class="media row">
+      <div class="media-elem column medium-3">
+        <img src="http://placehold.it/228x228" alt="">
+      </div>
+      <div class="media-body column medium-9">
+        <h2>Activate GitHub Repositories</h2>
+        <p>Once you're signed in, and we've initially synchronized your repositories from GitHub, go to your {{#link-to "profile"}}profile{{/link-to}} page for open source or for your private projects.</p>
+        <p>You'll see all the organizations you're a member of and all the repositories you have access to. The ones you administrative access to are the ones you can enable the service hook for.</p>
+        <p>Flip the switch to on for all repositories you'd like to enable.</p>
+      </div>
+    </li>
+    <li class="media media--right row">
+      <div class="media-elem column medium-3">
+        <img src="http://placehold.it/228x228" alt="">
+      </div>
+      <div class="media-body column medium-9">
+        <h2>Add .travis.yml file to your repository</h2>
+        <p>In order for Travis CI to build your project, you need to tell the systems a little bit about it. You'll need to add a file named .travis.yml to the root of your repository.</p>
+        <p>If .travis.yml is not in the repository, is misspelled or is not valid YAML, Travis CI will ignore it.</p>
+        <p class="note note--info">
+          <strong>Note:</strong> The <code>language</code> value is case-sensitive. If you set <code>language: C</code>, for example, your project will be considered a Ruby project.
+        </p>
+        <p>Here you can find some of our basic <a href="#" title="">language examples</a>.</p>
+      </div>
+    </li>
+    <li class="media row">
+      <div class="media-elem column medium-3">
+        <img src="http://placehold.it/228x228" alt="">
+      </div>
+      <div class="media-body column medium-9">
+        <h2>Trigger your first build with a git push</h2>
+        <p>Once GitHub hook is set up, push your commit that adds .travis.yml to your repository. That should ass a build into one of the queues on Travis CI and your build will start as soon as one worker for your language is available.</p>
+        <p>To start a build, perform one of the following:</p>
+        <ul>
+          <li>Commit and push something to your repository</li>
+          <li>Go to your repository's settings page, click on "Webhooks & Services" on the left menu, choose "Travis CI" in the "Services", and use the "Test service" button.</li>
+        </ul>
+        <p class="note note--info">
+          <strong>Note:</strong> You cannot trigger your first build using Test Hook button. It has to be triggered by a push to your repository.
+        </p>
+      </div>
+    </li>
+  </ol>
+  <h2>That's pretty much it!</h2>
+  <p>Want to read more? Head to our <a href="http://docs.travis-ci.com">docs</a>.</p>
 
-    <div class="column-right">
-      <span class="steps">Step 1: &nbsp; Enabling your projects</span>
-      <p>
-        Start by going to your {{#link-to "profile"}}profile{{/link-to}} and enable one of your projects. We've been
-        synchronizing all repositories you have administrative access to. Pick one and flip the switch next to it.
-      </p>
-    </div>
-  </div>
-
-  <div class="getting-started-row">
-    <div class="column">
-      <img src="/images/getting-started/first-build.png">
-    </div>
-
-    <div class="column-right">
-      <span class="steps">Step 2: &nbsp; Adding Travis</span>
-      <p>
-        Once you've enabled one of your projects, add a <a
-        href="http://about.travis-ci.org/docs/user/build-configuration/#.travis.yml-file%3A-what-it-is-and-how-it-is-used"><code>.travis.yml</code></a> to your project, push some code, and we'll start processing your builds. Wait a
-        whee while and reload the page, and your newly setup and built project will show up on the right.
-      </p>
-    </div>
-  </div>
-
-  <div class="getting-started-row">
-    <div class="column">
-      <img src="/images/getting-started/build-email.png">
-    </div>
-
-    <div class="column-right">
-      <span class="steps">Step 3: &nbsp; Wait for your build to finish</span>
-      <p>
-        We'll be sending you an email once the build has finished. Then, it's up to you to do the happy dance.
-      </p>
-    </div>
-  </div>
-
-  <div class="getting-started-row">
-    <span class="after-steps steps">Build Configuration</span>
-    <p>
-      We use sensible defaults for <a href="http://about.travis-ci.org/docs/">most languages</a>, but you can customize
-      both the <a href="http://about.travis-ci.org/docs/user/build-configuration/">build process</a> and the <a
-      href="http://about.travis-ci.org/docs/user/build-configuration/">build
-      environment</a> to fit your project's needs.
-    </p>
-
-    <span class="steps">Notifications</span>
-    <p>
-      You can also configure how you want to be notified of build results. Email is only one channel you can use. We
-      support <a href="http://about.travis-ci.org/docs/user/notifications/#Campfire-notification">Campfire</a>, <a
-      href="http://about.travis-ci.org/docs/user/notifications/#HipChat-notification">HipChat</a>, <a
-      href="http://about.travis-ci.org/docs/user/notifications/#Flowdock-notification">Flowdock</a>, <a
-      href="http://about.travis-ci.org/docs/user/notifications/#IRC-notification">IRC</a>, and <a
-      href="http://about.travis-ci.org/docs/user/notifications/#Webhook-notification">webhooks</a>. To avoid
-      exposing any private credentials, you can shield them from the public using <a
-      href="http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables">encrypted
-      configuration settings</a>.
-    </p>
-
-    <span class="steps">Questions</span>
-    <p>
-      Should you have any questions or issues, have a look at <a href="http://about.travis-ci.org/docs/" location="_top">our
-      documentation</a>, <a href="https://github.com/travis-ci/travis-ci/issues/new" location="_top">open an issue</a> or
-      <a href="mailto:support@travis-ci.com">send us an email</a>.
-    </p>
-  </div>
 </div>

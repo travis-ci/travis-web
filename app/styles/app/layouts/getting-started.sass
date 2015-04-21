@@ -1,0 +1,42 @@
+
+.getting-started
+  h1
+    color: #808080
+    font-size: 35px
+    margin-bottom: 1em
+    font-weight: 400
+
+  h2
+    color: #35a764
+    font-size: 22px
+    margin-bottom: 1em
+    font-weight: 400
+
+.getting-started-steps
+  @include resetul
+
+  h2:before
+    width: 1.5em
+    height: 1.5em
+    margin-right: .5em
+    font-size: $font-size-m
+    background-color: #35a764
+    color: $white
+    display: inline-block
+    border-radius: 50%
+    text-align: center
+    vertical-align: top
+  li:nth-child(1)
+    h2:before
+      content: "1"
+  li:nth-child(2)
+    h2:before
+      content: "2"
+  li:nth-child(3)
+    h2:before
+      content: "3"
+
+
+.note
+
+.note--info
