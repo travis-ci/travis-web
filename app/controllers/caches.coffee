@@ -2,6 +2,9 @@
 `import Ajax from 'travis/utils/ajax'`
 
 Controller = Ember.Controller.extend
+  needs: ['repo']
+  repo: Ember.computed.alias('controllers.repo.repo')
+
   isDeleting: false
 
   actions:
