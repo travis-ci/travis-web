@@ -10,10 +10,8 @@ Route = TravisRoute.extend
     owner = {}
 
     $.get("https://api-staging.travis-ci.org/v3/owner/#{params.owner}").then( (data) ->
-      console.log('******************')
-
       owner = data
-      console.log(owner)
+
       owner
     )
 
