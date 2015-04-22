@@ -17,7 +17,7 @@ Controller = Ember.Controller.extend
         deletingDone = => @set('isDeleting', false)
 
         repo = @get('repo')
-        Ajax.ajax("/repos/#{@get('cache.repository_id')}/caches", "DELETE").then(deletingDone, deletingDone).then =>
+        Ajax.ajax("/repos/#{@get('repo.repository_id')}/caches", "DELETE").then(deletingDone, deletingDone).then =>
           @set('model', {})
 
 `export default Controller`
