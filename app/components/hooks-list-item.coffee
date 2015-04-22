@@ -8,4 +8,7 @@ HooksListItemComponent = Ember.Component.extend
     handleToggleError: ->
       @set("errorMessage", "There was an error")
 
+    close: ->
+      @set("errorMessage", null)
+
 `export default HooksListItemComponent`

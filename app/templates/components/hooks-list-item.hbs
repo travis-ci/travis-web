@@ -13,6 +13,8 @@
 
 {{#if errorMessage}}
   <div class="error">
-    <p>{{errorMessage}}</p>
+    <p>
+      {{errorMessage}}
+      <a class="close" {{action "close" target=view}}></a></p>
   </div>
 {{/if}}
