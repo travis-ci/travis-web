@@ -1,47 +1,47 @@
 {{#if allHooks.isLoaded}}
   <header>
 
-  <div class="profile-header">
-    <h1>{{view.name}}</h1>
-  </div>
+    <div class="profile-header">
+      <h1>{{view.name}}</h1>
+    </div>
 
-  {{#if user.isSyncing}}
-    <div class="sync-button">
-      <button class="button is-syncing">
-        <span class="sync-spinner"><i></i><i></i><i></i></span>Syncing from GitHub
-      </button>
-    </div>
-  </header>
-  {{else}}
-    <div class="sync-button">
-      <button {{action sync}} class="button">
-        <span class="icon icon-sync"></span>Sync
-      </button>
-      <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
-    </div>
-    {{#if config.billingEndpoint}}
-      <div class="cta-btn">
-      {{#if view.subscribed}}
-        <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
-          Subscription active!
-        </a>
-      {{else}}
-        {{#if view.education}}
+    {{#if user.isSyncing}}
+      <div class="sync-button">
+        <button class="button is-syncing">
+          <span class="sync-spinner"><i></i><i></i><i></i></span>Syncing from GitHub
+        </button>
+      </div>
+    {{else}}
+      <div class="sync-button">
+        <button {{action sync}} class="button">
+          <span class="icon icon-sync"></span>Sync
+        </button>
+        <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
+      </div>
+      {{#if config.billingEndpoint}}
+        <div class="cta-btn">
+        {{#if view.subscribed}}
           <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
-            Educational account!
+            Subscription active!
           </a>
         {{else}}
-          <a class="btn btn-activate" {{bind-attr href="billingUrl"}}>
-            Sign up this account!
-          </a>
+          {{#if view.education}}
+            <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
+              Educational account!
+            </a>
+          {{else}}
+            <a class="btn btn-activate" {{bind-attr href="billingUrl"}}>
+              Sign up this account!
+            </a>
+          {{/if}}
         {{/if}}
+        </div>
       {{/if}}
-      </div>
-    {{/if}}
-    {{#if config.pro}}
-      <p>We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
-      {{else}}
-      <p>We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+      {{#if config.pro}}
+        <p>We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+        {{else}}
+        <p>We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+      {{/if}}
     {{/if}}
 
   </header>
@@ -86,26 +86,26 @@
     </ul>
   </div>
 
-    {{#if hooksWithoutAdmin.length}}
-      <div id="unadministerable-hooks">
-        <p>You require admin rights to enable these repositories</p>
+  {{#if hooksWithoutAdmin.length}}
+    <div id="unadministerable-hooks">
+      <p>You require admin rights to enable these repositories</p>
 
-        <ul class="profile-hooklist">
-          {{#each hook in hooksWithoutAdmin}}
-            <li {{bind-attr class="hook.active:active :row"}}>
-              <div class="columns">
-                <button class="switch disabled"></button>
-              </div>
-              <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
-                {{hook.slug}}
-                <span>{{hook.description}}</span>
-              </a>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-    {{/if}}
+      <ul class="profile-hooklist">
+        {{#each hook in hooksWithoutAdmin}}
+          <li {{bind-attr class="hook.active:active :row"}}>
+            <div class="columns">
+              <button class="switch disabled"></button>
+            </div>
+            <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
+              {{hook.slug}}
+              <span>{{hook.description}}</span>
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
   {{/if}}
+
 {{else}}
   <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
 {{/if}}

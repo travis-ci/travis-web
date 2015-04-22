@@ -128,12 +128,12 @@ p.profile-user-last
     clear: both
     margin-bottom: .8em
     overflow: auto
-    > div
-      width: grid-calc(10, 24)
-      @media #{$medium-up}
-        width: grid-calc(7, 24)
-      @media #{$large-up}
-        width: grid-calc(5, 24)
+  .profile-hooks
+    width: grid-calc(10, 24)
+    @media #{$medium-up}
+      width: grid-calc(7, 24)
+    @media #{$large-up}
+      width: grid-calc(5, 24)
   .switch
     display: inline-block
   .profile-settings
@@ -195,3 +195,21 @@ p.profile-user-last
   a
     color: #adaaab
     text-decoration: underline
+
+.error
+  width: 100%;
+  padding: 0 $column-gutter/2;
+  p
+    position: relative
+    padding: $column-gutter/2;
+    color: #de4248
+    background-color: #f1b6ad
+    &:after
+      content: ""
+      position: absolute
+      top: -0.5em
+      left: 1.5em
+      width: 1.2em
+      height: 1.2em
+      background: #f1b6ad
+      transform: rotate(45deg)
