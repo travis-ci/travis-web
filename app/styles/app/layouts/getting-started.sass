@@ -1,16 +1,31 @@
-
 .getting-started
+
+  max-width: 900px
+  margin: auto
+
   h1
     color: #808080
     font-size: 35px
     margin-bottom: 1em
     font-weight: 400
+    line-height: 1.1
 
   h2
     color: #35a764
     font-size: 22px
     margin-bottom: 1em
     font-weight: 400
+
+  a
+    color: #5aa4a3
+    font-weight: 600
+    &:hover
+      text-decoration: underline
+
+  p, li
+    color: #828b8b
+    font-size: $font-size-m
+    line-height: 25px
 
 .getting-started-steps
   @include resetul
@@ -36,7 +51,41 @@
     h2:before
       content: "3"
 
+  > li
+    margin-bottom: 5rem
+  ul
+    @include resetul 
+    li
+      padding-left: .9em
+      &:before
+        content: "\2022"
+        display: inline-block
+        margin-right: .3em
+        margin-left: -.7em
+        font-size: 20px
 
 .note
+  padding: .4em .5em
+  font-size: $font-size-m
+  @extend %border-radius-4px
+  font-style: italic
+  code
+    display: inline-block
+    margin: 0 0 0 .3em
+    padding: 0em 0.4em
+    border: 1px solid
+    border-radius: 3px
+    font-family: monaco
+    font-size: 11px
+    font-style: normal
+    line-height: 1.7
+  strong
+    text-transform: uppercase
+    font-style: normal
 
 .note--info
+  background-color: #e7eeee
+  color: #3e8987
+  code
+    color: #267c8d
+    background-color: $white
