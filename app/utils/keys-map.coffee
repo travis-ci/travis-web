@@ -18,6 +18,11 @@ languageConfigKeys = {
   rvm:         'Ruby'
   otp_release: 'OTP Release'
   rust:        'Rust'
+  c:           'C'
+  cpp:         'C++'
+  clojure:     'Clojure'
+  lein:        'Lein'
+  compiler:    'Compiler'
 }
 
 configKeys = {
