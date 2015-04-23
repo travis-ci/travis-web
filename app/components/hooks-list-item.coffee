@@ -13,6 +13,9 @@ HooksListItemComponent = Ember.Component.extend
       @set("showError", true)
 
     close: ->
+      @send('resetErrors')
+
+    resetErrors: ->
       @set("showError", false)
 
 `export default HooksListItemComponent`

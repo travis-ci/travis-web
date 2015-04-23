@@ -1,5 +1,5 @@
 <div class="profile-hooks columns">
-  {{hook-switch hook=hook onToggleError="handleToggleError"}}
+  {{hook-switch hook=hook onToggleError="handleToggleError" onToggle="resetErrors"}}
   {{!-- <button class="switch is-on"></button> --}}
   {{#if hook.isSaving}}
     <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>

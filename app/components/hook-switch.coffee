@@ -7,6 +7,7 @@ HookSwitchComponent = Ember.Component.extend
   activeBinding: "hook.active"
 
   click: ->
+    @sendAction('onToggle')
     hook = @get('hook')
     hook.toggle().then( (->), =>
       @toggleProperty('hook.active')
