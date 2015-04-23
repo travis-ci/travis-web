@@ -27,12 +27,14 @@
     overflow: hidden
     background-repeat: no-repeat
 
+
 .main--error
   min-height: 100%
 
 .error-text,
 .maintenance-text
   position: absolute
+  top: 6%
   left: 0
   right: 0
   z-index: 10
@@ -93,6 +95,13 @@
       @include error-position-img(auto 40vh, 42% 91.3%)
 
 .error404
+
+  .top
+    position: absolute
+    top: 0
+    width: 100%
+    z-index: 99
+
   .error-bg
     @include error-bg-gradient($error-hill-grey)
   .hill-left
@@ -113,7 +122,7 @@
     @include error-position-img(auto 25vh, 71% 83%)
   .error-travis
     background-image: url(../images/error/pensive-travis.svg)
-    @include error-position-img(auto 60vh, 34% 92%)
+    @include error-position-img(auto 60vh, 34% 100%)
     @media #{$medium-up}
       background-size: auto 50vh
     @media #{$large-up}

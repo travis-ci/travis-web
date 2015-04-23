@@ -12,6 +12,7 @@ $top-height: 55px
   text-align: right
   padding-right: 1rem
   background-color: #fff
+  display: none
 
   p
     position: relative
@@ -27,6 +28,9 @@ $top-height: 55px
     background-repeat: no-repeat
     width: 20px
     height: 12px
+
+  @media #{$medium-up}
+    display: block
 
 .centered .cta
   padding-right: 0
