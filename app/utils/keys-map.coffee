@@ -17,6 +17,7 @@ languageConfigKeys = {
   jdk:         'JDK'
   rvm:         'Ruby'
   otp_release: 'OTP Release'
+  rust:        'Rust'
 }
 
 configKeys = {
