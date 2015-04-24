@@ -11,6 +11,7 @@ ErrorsView = Ember.View.extend
   show: Ember.computed.notEmpty('errors.[]')
 
 fn = (params, hash, options, env) ->
+  name = params[0]
   controller = env.data.view.get('controller')
   errors = controller.get('errors').for(name)
   view = ErrorsView.create(
