@@ -11,6 +11,7 @@ Route = TravisRoute.extend
     @controllerFor('repo').activate(@get('contentType'))
     @contentDidChange()
     @controllerFor('repo').addObserver(@get('path'), this, 'contentDidChange')
+    @controllerFor('build').set('contentType', @get('contentType'))
 
   deactivate: ->
     @controllerFor('repo').removeObserver(@get('path'), this, 'contentDidChange')
