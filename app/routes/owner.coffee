@@ -9,7 +9,7 @@ Route = TravisRoute.extend
   model: (params) ->
     owner = {}
 
-    $.get("https://api-staging.travis-ci.org/v3/owner/#{params.owner}").then( (data) ->
+    $.get("https://api.travis-ci.org/v3/owner/#{params.owner}?include=user.repositories,organization.repositories").then( (data) ->
       owner = data
 
       owner
