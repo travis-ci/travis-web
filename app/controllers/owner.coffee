@@ -34,9 +34,19 @@ Controller = Ember.Controller.extend
 
     repos = data.repositories.filter (item, index) -> 
       if item.active && item.default_branch.last_build != null
-        item.active
+        item
+    repos
 
-    console.log(repos)
+  ).property('model')
+
+  running: (->
+    data = @get('model')
+
+    repos = data.repositories.filter (item, index) -> 
+      if item.active 
+        if item.default_branch.last_build != null 
+          if item.default_branch.last_build.state == 'started'
+            item
     repos
 
   ).property('model')

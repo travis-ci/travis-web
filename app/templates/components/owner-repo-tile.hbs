@@ -18,7 +18,7 @@
       {{/link-to}}</p>
     <p class="tile-commit column medium-3 small-6">
       <span class="icon icon-github"></span><a {{bind-attr href="repo.default_branch.last_build.commit.compare_url"}}>{{format-sha repo.default_branch.last_build.commit.sha}}</a></p>
-    <p class="tile-timeago column medium-3 small-6">
+    <p class="tile-duration column medium-3 small-6">
       <span class="icon icon-clock"></span>
       {{format-duration repo.default_branch.last_build.duration}}</p>
     <p class="tile-timeago column medium-2 small-6">
