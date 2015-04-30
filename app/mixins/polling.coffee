@@ -25,9 +25,15 @@ mixin = Ember.Mixin.create
     @stopPollingModel(key)
 
   pollModel: (property) ->
-    model = @get(property)
+    addToPolling = (model) =>
+      @get('polling').startPolling(model)
 
-    @get('polling').startPolling(model)
+    if model = @get(property)
+      if model.then
+        model.then (resolved) ->
+          addToPolling(resolved)
+      else
+        addToPolling(model)
 
   stopPollingModel: (property) ->
     model = @get(property)
