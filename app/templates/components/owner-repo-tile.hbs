@@ -1,0 +1,30 @@
+{{#if repo.private }}
+  <div class="tile-lock"><span class="icon icon-lock"></span></div>
+{{/if}}
+<div class="tile-status">
+  <span {{bind-attr class=":icon :icon-status repo.default_branch.last_build.state"}}></span>
+  <span {{bind-attr class=":icon :request-kind repo.default_branch.last_build.event_type"}}></span>
+</div>
+<div class="tile-main tile-header column medium-3">
+  <h3>{{ownerName}}</h3>
+  <h2>{{#link-to "repo" ownerName repoName }}{{repoName}}{{/link-to}}</h2>
+</div>
+<div class="tile-single column medium-9 end">
+  {{#if repo.default_branch.last_build}}
+    <p class="tile-job build-status column medium-3 small-6"><span class="icon icon-hash"></span>
+      {{#link-to "build" ownerName repoName repo.default_branch.last_build.number}}
+        {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
+        {{repo.default_branch.last_build.number}} {{repo.default_branch.last_build.state}}
+      {{/link-to}}</p>
+    <p class="tile-commit column medium-3 small-6">
+      <span class="icon icon-github"></span><a {{bind-attr href="repo.default_branch.last_build.commit.compare_url"}}>{{format-sha repo.default_branch.last_build.commit.sha}}</a></p>
+    <p class="tile-timeago column medium-3 small-6">
+      <span class="icon icon-clock"></span>
+      {{format-duration repo.default_branch.last_build.duration}}</p>
+    <p class="tile-timeago column medium-2 small-6">
+      <span class="icon icon-cal"></span>
+      {{format-time repo.default_branch.last_build.finished_at}}</p>
+  {{else}}
+    <p>there is no build</p>
+  {{/if}}
+</div>

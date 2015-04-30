@@ -16,7 +16,29 @@ Controller = Ember.Controller.extend
   ).property()
 
   owner: (->
-    @get('model')
+    data = @get('model')
+    console.log(data)
+
+    {
+      login: data.login
+      name: data.name
+      isSyncing: data.is_syncing
+      avatarUrl: data.avatar_url
+      syncedAt: data.synced_at
+    }
+
+  ).property('model')
+
+  repos: (->
+    data = @get('model')
+
+    repos = data.repositories.filter (item, index) -> 
+      if item.active && item.default_branch.last_build != null
+        item.active
+
+    console.log(repos)
+    repos
+
   ).property('model')
 
 `export default Controller`
