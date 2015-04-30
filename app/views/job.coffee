@@ -4,7 +4,7 @@
 `import Polling from 'travis/mixins/polling'`
 
 View = Ember.View.extend Polling,
-  pollModels: 'controller.job'
+  pollModels: 'controller.job.build'
 
   repoBinding: 'controller.repo'
   jobBinding: 'controller.job'
