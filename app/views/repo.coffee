@@ -4,7 +4,7 @@
 `import config from 'travis/config/environment'`
 `import Polling from 'travis/mixins/polling'`
 
-View = BasicView.extend
+View = BasicView.extend Polling,
   reposBinding: 'controllers.repos'
   repoBinding: 'controller.repo'
   buildBinding: 'controller.build'

@@ -2,7 +2,7 @@
 
 moduleForComponent 'running-jobs-item', {
   # specify the other units that are required for this test
-  # needs: ['component:foo', 'helper:bar']
+  needs: ['mixin:polling', 'service:polling']
 }
 
 test 'it renders', (assert) ->
