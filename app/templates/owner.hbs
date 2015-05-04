@@ -7,10 +7,8 @@
       </div>
       <div class="owner-info">
         <h1 class="owner-title">{{owner.name}}</h1>
-        
-          <p class="owner-handle"><a {{bind-attr href="githubProfile"}} title=""><span class="icon icon--github-circle"></span> {{owner.login}}</a></p>
-          {{owner-sync-button owner=owner}}
-        
+        <p class="owner-handle"><a {{bind-attr href="githubProfile"}} title=""><span class="icon icon--github-circle"></span> {{owner.login}}</a></p>
+        {{!-- {{owner-sync-button owner=owner}} --}}
       </div>
   </section>
 </header>
@@ -18,9 +16,9 @@
 <div class="tabs--owner">
   <nav class="tabnav tabnav--owner row" role="tablist">
     <ul class="tab">
-      <li role="presentational"><a href="#" title="" role="tab">All Repositories</a></li>
-      <li role="presentational"><a href="#" title="" role="tab">Running Builds (2/5)</a></li>
-      <li role="presentational"><a href="#" title="" role="tab">Members</a></li>
+      <li role="presentational">{{!-- <a href="#" title="" role="tab">--}}All Repositories{{!-- </a> --}}</li>
+{{!--       <li role="presentational"><a href="#" title="" role="tab">Running Builds (2/5)</a></li>
+      <li role="presentational"><a href="#" title="" role="tab">Members</a></li> --}}
     </ul>
   </nav>
 
@@ -36,7 +34,7 @@
       </ul>
     </section>
 
-    <section role="tabpanel">
+{{!--     <section role="tabpanel">
       <ul class="owner-tiles">
         {{#each repo in running}}
           {{owner-repo-tile repo=repo}}
@@ -45,8 +43,8 @@
         {{/each}}
       </ul>
     </section>
-
-    <section role="tabpanel">
+ --}}
+    {{!-- <section role="tabpanel">
       <ul class="memberlist">
         <li class="columns small-6 large-4">
           <img src="//placehold.it/50x50" alt="">
@@ -56,6 +54,6 @@
           </div>
         </li>
       </ul>
-    </section>
+    </section> --}}
   </div>
 </div>
