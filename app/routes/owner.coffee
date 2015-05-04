@@ -3,7 +3,7 @@
 `import Ajax from 'travis/utils/ajax'`
 
 Route = TravisRoute.extend
-  needsAuth: true
+  needsAuth: false
   # controllerName: 'owner'
 
   model: (params) ->
