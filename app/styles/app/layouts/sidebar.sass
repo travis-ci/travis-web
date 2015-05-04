@@ -43,8 +43,11 @@ $sb-font-size: 14px
         @include fadeOut(right, -90deg, $white)
   p.tile-title
     width: 22%
+    @media #{$medium-up}
+      white-space: nowrap
+      overflow: hidden
     @media #{$xlarge-up}
-      width: 17%
+      width: 18%
   a:hover
     text-decoration: underline
   .icon:not(.icon--hash)
