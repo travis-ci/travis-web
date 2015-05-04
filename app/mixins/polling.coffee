@@ -13,11 +13,6 @@ mixin = Ember.Mixin.create
 
     @stopPolling()
 
-  willDestroy: ->
-    @_super.apply(this, arguments)
-
-    @stopPolling()
-
   pollModelDidChange: (sender, key, value) ->
     @pollModel(key)
 
@@ -36,15 +31,14 @@ mixin = Ember.Mixin.create
         addToPolling(model)
 
   stopPollingModel: (property) ->
-    model = @get(property)
-
-    @get('polling').stopPolling(model)
+    if model = @get(property)
+      @get('polling').stopPolling(model)
 
   startPolling: ->
     pollModels = @get('pollModels')
 
     if pollModels
-      pollModels = [pollModels] unless pollModels.forEeach
+      pollModels = [pollModels] unless Ember.isArray(pollModels)
 
       pollModels.forEach (property) =>
         @pollModel(property)
@@ -57,7 +51,7 @@ mixin = Ember.Mixin.create
     pollModels = @get('pollModels')
     return unless pollModels
 
-    pollModels = [pollModels] unless pollModels.forEeach
+    pollModels = [pollModels] unless Ember.isArray(pollModels)
 
     pollModels.forEach (property) =>
       @stopPollingModel(property)

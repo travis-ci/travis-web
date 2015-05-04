@@ -1,6 +1,8 @@
 `import Ember from 'ember'`
 
-service = Ember.Object.extend
+service = Ember.Service.extend
+  pollingInterval: 30000
+
   init: ->
     @_super.apply(this, arguments)
 
@@ -9,7 +11,7 @@ service = Ember.Object.extend
 
     interval = setInterval =>
       @poll()
-    , 30000
+    , @get('pollingInterval')
 
     @set('interval', interval)
 
@@ -41,7 +43,7 @@ service = Ember.Object.extend
       model.reload()
 
     @get('sources').forEach (source) =>
-      if source.get('destroyed')
+      if Ember.get(source, 'isDestroyed')
         @get('sources').removeObject(source)
       else
         source.pollHook()
