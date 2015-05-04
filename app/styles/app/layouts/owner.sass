@@ -48,28 +48,37 @@
     white-space: nowrap
 
   .tile-status .icon-status
-    margin-top: 1.3em
+    margin-top: 2.1em
+    width: 1.2em
+    height: 1.3em
 
-  .tile-single
-    position: relative
+  .tile-single,
+  .tile-double
     color: $grey1
-    p
-      padding: .1em 0
-      line-height: 3em
-      font-size: $font-size-m
-      .icon
-        margin-right: .3em
-        width: 1em
-        height: 1.1em
-        vertical-align: middle
-        &.icon-github
-          width: .9em
-          height: 1.2em
+    padding: .1em 0
+    font-size: $font-size-m
+    .icon
+      margin-right: .3em
+      width: 1em
+      height: 1.1em
+      vertical-align: middle
+      &.icon-github
+        width: .9em
+        height: 1.2em
+      &.push
+        width: 1.1em
+        height: .6em
+        margin: 0
     a
       color: $grey1
       &:hover
         color: $grey1
         text-decoration: underline
+
+  .tile-single
+    line-height: 3em
+  .tile-double
+    line-height: 1.5em
 
   .tile-main
     position: relative
@@ -77,7 +86,7 @@
     &:after
       content: ""
       @include fadeOut(right, -90deg, $cream-light, 20%)
-    & ~ .tile-single
+    & ~ div
       @media #{$medium-up}
         padding-left: 2em
         border-left: 1px solid $grey4
