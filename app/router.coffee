@@ -71,7 +71,7 @@ Router.map ->
       @resource 'account', path: '/:login'
       @route 'info', path: '/info'
 
-  @resource 'owner', path: 'owner/:owner'
+  @resource 'owner', path: '/:owner'
 
   @route 'error404', path: '/*path'
 
