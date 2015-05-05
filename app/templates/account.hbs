@@ -33,7 +33,7 @@
       </div>
     {{else}}
       <div class="sync-button">
-        <button {{action sync}} class="button">
+        <button {{action 'sync'}} class="button">
           <span class="icon icon-sync"></span>Sync
         </button>
         <p class="sync-last">last synced {{format-time user.syncedAt}}</p>

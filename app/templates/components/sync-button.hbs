@@ -5,7 +5,7 @@
     </button>
   {{else}}
     <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
-    <button {{action sync}} class="button">
+    <button {{action 'sync'}} class="button">
       <span class="icon icon-sync"></span>Sync account
     </button>
   {{/if}}
