@@ -5,7 +5,9 @@
 
 Route = TravisRoute.extend
   needsAuth: false
-  # controllerName: 'owner'
+
+  titleToken: (model) ->
+    "#{model.name}"
 
   renderTemplate: ->
     @render 'owner', into: 'main'
