@@ -37,7 +37,6 @@ test 'it renders', ->
   ok component.$().hasClass('passed'), 'component should have state class (passed)'
   ok component.$('.icon-status').hasClass('passed'), 'status icon should have state class (passed)'
   ok component.$('.request-kind').hasClass('push'), 'reuqest icon should have event type class (push)'
-  equal component.$('.tile-main h3').text().trim(), 'travis-ci', 'should display correct owner name'
   equal component.$('.tile-main h2 a').text().trim(), 'travis-chat', 'should display correct repo name'
   equal component.$('.build-status a').text().trim(), '25 passed', 'should display correct build number and state'
   equal component.$('.tile-commit a').text().trim(), '16fff34', 'should display correct commit sha'
