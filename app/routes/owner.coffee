@@ -13,10 +13,10 @@ Route = TravisRoute.extend
     @render 'owner', into: 'main'
 
   activate: ->
-    @controllerFor('home').set('ownersPage', true)
+    @controllerFor('main').set('ownersPage', true)
 
   deactivate: ->
-    @controllerFor('home').set('ownersPage', false)
+    @controllerFor('main').set('ownersPage', false)
 
   model: (params) ->
     owner = {}
