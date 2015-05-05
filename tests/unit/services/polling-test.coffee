@@ -15,7 +15,7 @@ test 'polls for each of the models', ->
   history = []
 
   service = Polling.create(
-    pollingInterval: 10
+    pollingInterval: 20
   )
 
   model1 = {
@@ -42,13 +42,13 @@ test 'polls for each of the models', ->
 
     Ember.run ->
       service.destroy()
-  , 15
+  , 30
 
 test 'it will stop running any reloads after it is destroyed', ->
   expect(1)
 
   service = Polling.create(
-    pollingInterval: 10
+    pollingInterval: 20
   )
 
   model = {
@@ -63,11 +63,11 @@ test 'it will stop running any reloads after it is destroyed', ->
   setTimeout ->
     Ember.run ->
       service.destroy()
-  , 15
+  , 30
 
   setTimeout ->
     start()
-  , 30
+  , 50
 
 test 'it stops reloading models after they were removed from polling', ->
   expect(4)
@@ -75,7 +75,7 @@ test 'it stops reloading models after they were removed from polling', ->
   history = []
 
   service = Polling.create(
-    pollingInterval: 10
+    pollingInterval: 30
   )
 
   model1 = {
@@ -105,8 +105,8 @@ test 'it stops reloading models after they were removed from polling', ->
       start()
 
       deepEqual history, ['model1', 'model2', 'model1']
-    , 10
-  , 12
+    , 30
+  , 40
 
 test 'it runs a hook on each interval', ->
   expect(1)
@@ -114,7 +114,7 @@ test 'it runs a hook on each interval', ->
   history = []
 
   service = Polling.create(
-    pollingInterval: 10
+    pollingInterval: 20
   )
 
   source = {
@@ -135,7 +135,7 @@ test 'it runs a hook on each interval', ->
 
       start()
     , 10
-  , 12
+  , 30
 
 test 'it will not run pollHook if the source is destroyed', ->
   expect(1)
@@ -143,7 +143,7 @@ test 'it will not run pollHook if the source is destroyed', ->
   history = []
 
   service = Polling.create(
-    pollingInterval: 10
+    pollingInterval: 20
   )
 
   source = Ember.Object.extend(
@@ -164,5 +164,5 @@ test 'it will not run pollHook if the source is destroyed', ->
         service.destroy()
 
       start()
-    , 30
-  , 12
+    , 35
+  , 30
