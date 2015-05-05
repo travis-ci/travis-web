@@ -1,4 +1,4 @@
-<div {{bind-attr class=":wrapper view.sidebarVisible:non-centered:centered"}}>
+<div {{bind-attr class=":wrapper auth.signedIn:non-centered:centered"}}>
 
   <header id="top" class="top">
     {{render "top"}}
@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <aside id="left" {{bind-attr class="view.sidebarVisible:visible:hidden"}}>
+  <aside id="left" {{bind-attr class="auth.signedIn::hidden"}}>
     {{outlet "left"}}
   </aside>
 </div>

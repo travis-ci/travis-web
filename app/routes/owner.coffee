@@ -9,15 +9,6 @@ Route = TravisRoute.extend
   titleToken: (model) ->
     "#{model.name}"
 
-  renderTemplate: ->
-    @render 'owner', into: 'main'
-
-  activate: ->
-    @controllerFor('home').set('ownersPage', true)
-
-  deactivate: ->
-    @controllerFor('home').set('ownersPage', false)
-
   model: (params) ->
     owner = {}
 

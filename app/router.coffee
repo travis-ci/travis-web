@@ -39,7 +39,6 @@ Router.map ->
     @route 'repositories', path: '/'
 
   @resource 'main', path: '/', ->
-    @resource 'owner', path: '/:owner'
     @resource 'getting_started'
     @route 'recent'
     @route 'repositories'
@@ -71,6 +70,8 @@ Router.map ->
     @resource 'accounts', path: '/', ->
       @resource 'account', path: '/:login'
       @route 'info', path: '/info'
+
+  @resource 'owner', path: '/:owner'
 
   @route 'error404', path: '/*path'
 
