@@ -10,15 +10,13 @@ Controller = Ember.Controller.extend
 
   avatarURL: (->
     if @get('model.avatar_url')
-      "#{@get('model.avatar_url')}?s=128"
+      "#{@get('model.avatar_url')}?s=125"
     else
-      'https://secure.gravatar.com/avatar/?d=mm&s=128'
+      'https://secure.gravatar.com/avatar/?d=mm&s=125'
   ).property()
 
   owner: (->
     data = @get('model')
-    console.log(data)
-
     {
       login: data.login
       name: data.name
