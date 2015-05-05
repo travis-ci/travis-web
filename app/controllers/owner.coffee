@@ -31,7 +31,7 @@ Controller = Ember.Controller.extend
     data = @get('model')
 
     repos = data.repositories.filter (item, index) -> 
-      if item.active && item.default_branch.last_build
+      if item.default_branch.last_build
         item
     repos.sortBy('default_branch.last_build.finished_at').reverse()
 
@@ -41,10 +41,9 @@ Controller = Ember.Controller.extend
     data = @get('model')
 
     repos = data.repositories.filter (item, index) -> 
-      if item.active 
-        if item.default_branch.last_build != null 
-          if item.default_branch.last_build.state == 'started'
-            item
+      if item.default_branch.last_build != null 
+        if item.default_branch.last_build.state == 'started'
+          item
     repos
 
   ).property('model')
