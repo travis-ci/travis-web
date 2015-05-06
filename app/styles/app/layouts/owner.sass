@@ -1,5 +1,6 @@
 
 .owner-header
+  padding: 0 $column-gutter/2
   margin-bottom: 3rem
   color: #969496
   a
@@ -8,6 +9,9 @@
     margin: .3em 0 .2em
     font-size: 36px
     font-weight: 400
+    line-height: .9
+    @media #{$medium-up}
+      white-space: nowrap
   .owner-handle
     margin: 0
     font-size: $font-size-ml
@@ -17,8 +21,8 @@
       vertical-align: middle
     a:hover
       text-decoration: underline
-  // img
-  //   border-radius: 50%
+  img
+    border-radius: 50%
 
   .sync-button
     margin-top: .8rem
@@ -32,16 +36,26 @@
 .owner-info
   @extend %inline-block
   vertical-align: middle
-  margin-right: 1.5em
+  
+.owner-avatar
+  width: grid-calc(4, 12)
+  @media #{$medium-up}
+    width: grid-calc(2, 12)
+
+.owner-info
+  width: grid-calc(7, 12)
+  @media #{$medium-up}
+    width: grid-calc(9, 12)
+    position: relative
+    overflow: hidden
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, $white)
+
 
 .owner-tiles
   @extend .repo-main
   @include resetul
-
-  // h3
-  //   margin: 0
-  //   font-size: $font-size-m;
-  //   font-weight: 400
 
   h2
     font-size: 20px
