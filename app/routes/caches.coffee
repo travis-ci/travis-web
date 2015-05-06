@@ -12,11 +12,11 @@ Route = TravisRoute.extend
     repo = @modelFor('repo')
     Ajax.get("/repos/#{repo.get('id')}/caches").then( (data) ->
       caches = {}
-      
+
       data["caches"].forEach (cacheData) ->
         branch = cacheData.branch
         cache = caches[branch]
-          
+
         if cache
           cache.size += cacheData.size
 
@@ -28,7 +28,7 @@ Route = TravisRoute.extend
       pushes = []
       pullRequests = []
 
-      
+
       for branch, cache of caches
         if /PR./.test(branch)
           cache.type = "pull_request"

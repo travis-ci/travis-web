@@ -7,6 +7,10 @@ Controller = Ember.Controller.extend
 
   isDeleting: false
 
+  cachesExist: (->
+    @get('model.pushes.length') || @get('model.pullRequests.length')
+  ).property('model.pushes.length', 'model.pullRequests.length')
+
   actions:
     deleteRepoCache: ->
       return if @get('isDeleting')

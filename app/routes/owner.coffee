@@ -10,10 +10,6 @@ Route = TravisRoute.extend
     "#{model.name}"
 
   model: (params) ->
-    owner = {}
-
-    $.get(config.apiEndpoint + "/v3/owner/#{params.owner}?include=user.repositories,organization.repositories,build.commit,repository.active").then( (data) ->
-      data
-    )
+    $.get(config.apiEndpoint + "/v3/owner/#{params.owner}?include=user.repositories,organization.repositories,build.commit,repository.active")
 
 `export default Route`

@@ -1,17 +1,18 @@
-{{#if model.pushes.length}}
-
+{{#if cachesExist}}
   <div class="caches-header">
     <h1 class="caches-title">All caches <small>(<a href="http://docs.travis-ci.com/user/caching/" title="">documentation</a>)</small></h1>
     <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches :button--delete"}}>
       Delete all repository caches
     </a>
   </div>
-  <h2 class="caches-title">Pushes</h2>
-  <ul id="caches" class="caches">
-    {{#each cache in model.pushes }}
-      {{caches-item cache=cache repo=repo caches=model.pushes}}
-    {{/each}}
-  </ul>
+  {{#if model.pushes.length}}
+    <h2 class="caches-title">Pushes</h2>
+    <ul id="caches" class="caches">
+      {{#each cache in model.pushes }}
+        {{caches-item cache=cache repo=repo caches=model.pushes}}
+      {{/each}}
+    </ul>
+  {{/if}}
 
   {{#if model.pullRequests.length}}
     <h2 class="caches-title">Pull Requests</h2>
