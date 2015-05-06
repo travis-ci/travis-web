@@ -13,14 +13,11 @@
    a
      color: $color
 
-%br-4px
- border-radius: 4px
-
 $db-gray: #C9C9C9
 $db-text-color: #ACAAAA
 
 .dashboard
-  color: $db-text-color
+  color: #6D6E70
   hr
     max-width: 1024px
     margin: auto
@@ -30,11 +27,11 @@ $db-text-color: #ACAAAA
 .dashboard--empty
   padding: 2em 5em
   background: $cream-light
-  color: $db-gray
+  color: #979597
   font-size: 20px
-  font-weight: 300
+  font-weight: 400
   text-align: center
-  @extend %br-4px
+  @extend border-radius-4px
   p .icon
     width: 1.5em
     height: 1.5em
@@ -46,12 +43,15 @@ $db-text-color: #ACAAAA
   position: relative
   margin-bottom: 1em
   background: $cream-light
-  @extend %br-4px
+  @extend border-radius-4px
 
   h2, h3, p
     margin: 0
     font-weight: 400
     white-space: nowrap
+
+  p
+    font-size: $font-size-m
 
   .icon
     position: absolute
@@ -81,13 +81,7 @@ $db-text-color: #ACAAAA
   margin-bottom: 1em
   &:after
     content: ""
-    display: block
-    position: absolute
-    top: 0
-    right: 0
-    height: 100%
-    width: 3em
-    background: linear-gradient(-90deg, $white 40%, rgba($white, 0))
+    @include fadeOut(right, -90deg, $cream-light)
 
 .db-status
   position: absolute;
@@ -115,17 +109,22 @@ $db-text-color: #ACAAAA
     display: inline-block
   button
     margin-left: 1em
+  a:hover
+    text-decoration: underline
 
   .icon
-    width: 1.4em
-    height: 1.4em
+    width: 1em
+    height: 1.1em
+  .icon-branch
+    width: 1.3em
+    height: .8em
 
 .db-job,
 .db-branch,
 .db-commit,
 .db-timeago
   position: relative
-  padding-left: 2.2em
+  padding-left: 1.5em
   z-index: 30
   overflow: hidden
 
@@ -133,7 +132,7 @@ $db-text-color: #ACAAAA
   position: relative
   &:after
     content: ""
-    @include fadeOut(right, -90deg, $white)
+    @include fadeOut(right, -90deg, $cream-light)
 
 .db-lock
   position: absolute
@@ -201,10 +200,10 @@ $db-text-color: #ACAAAA
     .db-repo
       padding-left: 4em
     .db-controls
-      padding-left: 2em
+      padding: 0 4em 0 2em
       line-height: 3em
       transform: translateY(26%)
-      border-left: 1px solid $db-gray
+      border-left: 1px solid $grey4
     .db-burger
       height: 100%
     .db-status
@@ -214,7 +213,7 @@ $db-text-color: #ACAAAA
         bottom: -4em
 
 .dashboard-inactive
-  margin-bottom: 5em
+  margin-bottom: 5e3
   .db
     h2, h3, p, button, .db-status
       opacity: .7
