@@ -17,6 +17,7 @@ Build = Model.extend DurationCalculations,
   pullRequest:       DS.attr('boolean')
   pullRequestTitle:  DS.attr()
   pullRequestNumber: DS.attr('number')
+  eventType:         DS.attr('string')
 
   repo:   DS.belongsTo('repo', async: true)
   commit: DS.belongsTo('commit', async: true)
@@ -32,11 +33,6 @@ Build = Model.extend DurationCalculations,
 
       @reload()
   ).property('_config')
-
-  # TODO add eventType to the api for api build requests
-  eventType: (->
-    if @get('pullRequest') then 'pull_request' else 'push'
-  ).property('pullRequest')
 
   isPullRequest: (->
     @get('eventType') == 'pull_request' || @get('pullRequest')
