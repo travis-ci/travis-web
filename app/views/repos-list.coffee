@@ -23,7 +23,13 @@ View = Ember.CollectionView.extend
       colorForState(@get('repo.lastBuildState'))
     ).property('repo.lastBuildState')
 
+    scrollTop: (->
+      if (window.scrollY > 0)
+        $('html, body').animate({scrollTop: 0}, 200)
+    )
+
     click: ->
+      @scrollTop()
       @get('controller').transitionToRoute('/' + @get('repo.slug'))
 
 `export default View`
