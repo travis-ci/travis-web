@@ -21,7 +21,12 @@ if (process.env.DISABLE_FINGERPRINTS) {
 }
 
 var app = new EmberApp({
-  fingerprint: fingerprint
+  fingerprint: fingerprint,
+  vendorFiles: {
+    // next line is needed to prevent ember-cli to load
+    // handlebars (it happens automatically in 0.1.x)
+    'handlebars.js': null
+  }
 });
 
 app.import('bower_components/pusher/dist/pusher.js');

@@ -20,8 +20,14 @@ Controller = Ember.ObjectController.extend Validations,
     add: ->
       id = @get('repo.id')
       model = @store.recordForId('sshKey', id)
-      if model.get('currentState.stateName') == 'root.empty'
+      # TODO: this can be removed in favor of simply unloading record
+      # once https://github.com/emberjs/data/pull/2867
+      # and https://github.com/emberjs/data/pull/2870 are merged
+      if model
         @store.dematerializeRecord(model)
+        typeMap = @store.typeMapFor('sshKey')
+        idToRecord = typeMap.idToRecord
+        delete idToRecord[id]
 
       model = @store.createRecord('sshKey', id: id)
       @set('model', model)

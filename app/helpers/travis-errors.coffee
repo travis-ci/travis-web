@@ -10,14 +10,15 @@ ErrorsView = Ember.View.extend
   ).property('@errors', 'errors.length')
   show: Ember.computed.notEmpty('errors.[]')
 
-fn = (name, options) ->
-  errors = @get('errors').for(name)
-  window[name + 'Errors'] = errors
+fn = (params, hash, options, env) ->
+  name = params[0]
+  controller = env.data.view.get('controller')
+  errors = controller.get('errors').for(name)
   view = ErrorsView.create(
-    controller: this
+    controller: controller
     errors: errors
   )
 
-  Ember.Handlebars.helpers.view.call(this, view, options)
+  env.helpers.view.helperFunction.call(this, [view], hash, options, env)
 
 `export default fn`

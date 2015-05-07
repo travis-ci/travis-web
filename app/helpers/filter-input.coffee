@@ -7,12 +7,12 @@ TextField = Ember.TextField.extend
   _elementValueDidChange: ->
     @set('_value', @$().val());
 
-fn = (options) ->
-  Ember.assert('You can only pass attributes to the `input` helper, not arguments', arguments.length < 2)
+fn = (params, hash, options, env) ->
+  Ember.assert('You can only pass attributes to the `input` helper, not arguments', params.length)
 
-  onEvent = options.hash.on
-  delete options.hash.on
-  options.hash.onEvent = onEvent || 'enter'
-  return Ember.Handlebars.helpers.view.call(this, TextField, options)
+  onEvent = hash.on
+  delete hash.on
+  hash.onEvent = onEvent || 'enter'
+  env.helpers.view.helperFunction.call(this, [TextField], hash, options, env)
 
 `export default fn`

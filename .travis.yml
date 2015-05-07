@@ -2,6 +2,20 @@
 language: node_js
 node_js: "0.10.36"
 
+env:
+  - EMBER_VERSION=default
+  - EMBER_VERSION=release
+  - EMBER_VERSION=beta
+  - EMBER_VERSION=canary
+
+matrix:
+  allow_failures:
+    - env: EMBER_VERSION=release
+    - env: EMBER_VERSION=beta
+    - env: EMBER_VERSION=canary
+
+  fast_finish: true
+
 addons:
   sauce_connect: true
 
@@ -21,7 +35,7 @@ install:
   - bower install
 
 script:
-  - npm test
+  - ember try $EMBER_VERSION
 
 notifications:
   campfire:
@@ -42,3 +56,6 @@ deploy:
   acl: public_read
   local_dir: dist
   region: us-east-1
+  on:
+    branch: master
+    condition: "$EMBER_VERSION = default"

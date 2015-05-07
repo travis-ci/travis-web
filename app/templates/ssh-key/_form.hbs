@@ -9,7 +9,7 @@
   {{/travis-field}}
 
   <div class="actions">
-    <input type="submit" {{bind-attr value=actionType class=":submit-ssh-key isSaving:saving" disabled=isSaving}} />
+    <input type="submit" value="Add" class="submit-ssh-key {{if isSaving 'saving'}}" {{if isSaving 'dsabled="disabled"'}} />
     <span class="or">or</span>
     <a href="#" class="cancel-ssh-key" {{action "cancel"}}>Cancel</a>
   </div>

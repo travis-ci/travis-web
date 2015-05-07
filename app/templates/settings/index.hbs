@@ -15,7 +15,7 @@
   </p>
 
   <p class="settings-row">
-    <p class="short-settings-element" {{bind-attr class="settings.maximum_number_of_builds_valid"}}>
+    <p {{bind-attr class=":short-settings-element settings.maximum_number_of_builds_valid"}}>
       {{input value=settings.maximum_number_of_builds size="4" pattern='/^[0-9]+$/'}}
     </p>
     <label>

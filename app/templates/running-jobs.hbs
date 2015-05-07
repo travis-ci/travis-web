@@ -2,11 +2,10 @@
   {{#if controller.length}}
     {{#each job in controller}}
       <div {{bind-attr class=":tile :tile--sidebar job.state"}}>
-          {{#if job.repo.slug}}
-            <span {{bind-attr class=":icon :icon--job job.state"}}></span>
-            {{#link-to "job" job.repo job}}{{job.repo.slug}}{{/link-to}}
-          {{/if}}
-        </h2>
+        {{#if job.repo.slug}}
+          <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+          {{#link-to "job" job.repo job}}{{job.repo.slug}}{{/link-to}}
+        {{/if}}
 
         <p class="tile-title float-right">
           <span class="icon icon--hash"></span>

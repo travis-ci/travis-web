@@ -5,19 +5,21 @@ FormFieldRowView = Ember.View.extend
   classNameBindings: ['invalid']
   classNames: 'field'
 
-fn = (name, options) ->
-  errors = @get('errors').for(name)
-  template = options.fn
-  delete options.fn
+fn = (params, hash, options, env) ->
+  name = params[0]
+  controller = env.data.view.get('controller')
+  errors = controller.get('errors').for(name)
+  template = options.template
+  delete options.template
 
   view = FormFieldRowView.create(
-    controller: this
+    controller: controller
     template: template
     errors: errors
     name: name
     classNameBindings: ['name']
   )
 
-  Ember.Handlebars.helpers.view.call(this, view, options)
+  env.helpers.view.helperFunction.call(this, [view], hash, options, env)
 
 `export default fn`
