@@ -1,9 +1,18 @@
-<div id="top" class="top">
-  {{render "top"}}
+<div class="wrapper">
+  <header id="top" class="topbar">
+    <div class="centered">
+      {{render "top"}}
+    </div>
+  </header>
+
+  <div class="centered">
+    {{render "flash"}}
+    <div id="main" class="main" role="main">
+      {{yield}}
+    </div>
+  </div>
 </div>
 
-{{render "flash"}}
-
-<div id="main">
-  {{yield}}
-</div>
+<footer>
+  {{render "footer"}}
+</footer>
