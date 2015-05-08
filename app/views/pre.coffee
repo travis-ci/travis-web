@@ -25,7 +25,7 @@ Log.Scroll.prototype = $.extend new Log.Listener,
 
 View = BasicView.extend
   templateName: 'jobs/pre'
-  currentUserBinding: 'controller.currentUser'
+  currentUserBinding: 'controller.currentUser.model'
 
   logWillChange: (->
     console.log 'log view: log will change' if Log.DEBUG

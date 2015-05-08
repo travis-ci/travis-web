@@ -4,7 +4,7 @@ Controller = Ember.Controller.extend
   name: 'profile'
 
   needs: ['currentUser', 'accounts', 'account']
-  userBinding: 'controllers.currentUser'
+  userBinding: 'controllers.currentUser.model'
   accountBinding: 'controllers.account.model'
 
   activate: (action, params) ->

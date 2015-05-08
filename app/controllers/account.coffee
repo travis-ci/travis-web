@@ -3,7 +3,7 @@
 Controller = Ember.Controller.extend
   allHooks: []
   needs: ['currentUser']
-  userBinding: 'controllers.currentUser'
+  userBinding: 'controllers.currentUser.model'
 
   init: ->
     @_super.apply this, arguments

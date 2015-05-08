@@ -2,7 +2,7 @@
 
 Controller = Ember.Controller.extend
   needs: ['currentUser']
-  userBinding: 'controllers.currentUser'
+  userBinding: 'controllers.currentUser.model'
 
   userName: (->
     @get('user.name') || @get('user.login')

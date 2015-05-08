@@ -1,7 +1,8 @@
 <div class="tile-status">
-  <span {{bind-attr class=":icon :icon-status build.state"}}></span>
-  <span {{bind-attr class=":request-kind build.eventType :icon"}}></span>
+  <span class="icon icon-status {{build.state}}"></span>
+  <span class="request-kind icon {{build.eventType}}"></span>
 </div>
+
 <div class="column tile-main medium-6">
   <h2>
     {{#if build.isPullRequest}}
@@ -16,7 +17,9 @@
       {{/link-to}}
     {{/if}}
   </h2>
-  <p class="tile-author"><img {{bind-attr src="urlAuthorGravatarImage"}} alt="">{{build.commit.committerName}} committed</p>
+  <p class="tile-author"><img {{bind-attr src="urlAuthorGravatarImage"}} alt="">
+    {{build.commit.committerName}} committed
+  </p>
 </div>
 <div class="column tile-additional medium-6 end">
   <div class="column small-6">
@@ -35,6 +38,7 @@
       </a>
     </p>
   </div>
+
   <div class="column small-6">
     <p class="" {{bind-attr title="build.duration"}}>
       <span class="icon icon-clock"></span>

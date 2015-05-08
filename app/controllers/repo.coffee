@@ -3,7 +3,7 @@
 
 Controller = Ember.Controller.extend
   needs: ['repos', 'currentUser', 'build', 'request', 'job']
-  currentUserBinding: 'controllers.currentUser'
+  currentUserBinding: 'controllers.currentUser.model'
 
   build: Ember.computed.alias('controllers.build.build')
   job: Ember.computed.alias('controllers.job.job')

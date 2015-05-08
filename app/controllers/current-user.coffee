@@ -1,4 +1,4 @@
-Controller = Ember.ObjectController.extend
+Controller = Ember.Controller.extend
   sync: ->
     @get('model').sync()
 
