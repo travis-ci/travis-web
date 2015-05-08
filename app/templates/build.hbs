@@ -78,8 +78,8 @@
 
   {{#if build.isMatrix}}
     {{#if jobsLoaded}}
-      {{jobs-list jobs=build.requiredJobs required="true"}}
-      {{jobs-list jobs=build.allowedFailureJobs}}
+      {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
+      {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
     {{else}}
       <div class="spinner-container">
         <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
