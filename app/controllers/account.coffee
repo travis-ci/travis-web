@@ -1,6 +1,6 @@
 `import Ember from 'ember'`
 
-Controller = Ember.ObjectController.extend
+Controller = Ember.Controller.extend
   allHooks: []
   needs: ['currentUser']
   userBinding: 'controllers.currentUser'
@@ -21,7 +21,7 @@ Controller = Ember.ObjectController.extend
       hook.toggle()
 
   reloadHooks: ->
-    if login = @get('login')
+    if login = @get('model.login')
       hooks = @store.find('hook', all: true, owner_name: login)
 
       hooks.then () ->
@@ -49,7 +49,7 @@ Controller = Ember.ObjectController.extend
 
   billingUrl: (->
     id = if @get('model.type') == 'user' then 'user' else @get('model.login')
-    "#{@get('config').billingEndpoint}/subscriptions/#{id}"
+    "#{@config.billingEndpoint}/subscriptions/#{id}"
   ).property('model.login', 'model.type')
 
 `export default Controller`

@@ -5,7 +5,7 @@ Controller = Ember.Controller.extend
 
   needs: ['currentUser', 'accounts', 'account']
   userBinding: 'controllers.currentUser'
-  accountBinding: 'controllers.account'
+  accountBinding: 'controllers.account.model'
 
   activate: (action, params) ->
     this["view_#{action}".camelize()]()
