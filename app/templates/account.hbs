@@ -94,10 +94,8 @@
       <ul class="profile-hooklist">
         {{#each hook in hooksWithoutAdmin}}
           <li {{bind-attr class="hook.active:active :row"}}>
-            <div class="columns">
-              <button class="switch disabled"></button>
-            </div>
-            <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
+            <button class="switch disabled"></button>
+            <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo">
               {{hook.slug}}
               <span>{{hook.description}}</span>
             </a>
