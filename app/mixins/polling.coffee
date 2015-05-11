@@ -48,15 +48,13 @@ mixin = Ember.Mixin.create
     @get('polling').startPollingHook(this) if @pollHook
 
   stopPolling: ->
-    pollModels = @get('pollModels')
-    return unless pollModels
+    if pollModels = @get('pollModels') 
+      pollModels = [pollModels] unless Ember.isArray(pollModels)
 
-    pollModels = [pollModels] unless Ember.isArray(pollModels)
-
-    pollModels.forEach (property) =>
-      @stopPollingModel(property)
-      @removeObserver(property, this, 'pollModelDidChange')
-      Ember.removeBeforeObserver(this, property, this, 'pollModelWillChange')
+      pollModels.forEach (property) =>
+        @stopPollingModel(property)
+        @removeObserver(property, this, 'pollModelDidChange')
+        Ember.removeBeforeObserver(this, property, this, 'pollModelWillChange')
 
     @get('polling').stopPollingHook(this)
 

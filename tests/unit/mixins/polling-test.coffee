@@ -47,6 +47,21 @@ moduleForComponent 'polling-test', 'PollingTestComponent', {
     pollingChangesHistory = []
 }
 
+test 'it properly stops polling hook without any models', ->
+  component = @subject(pollModels: null)
+  @append()
+
+  Ember.run ->
+    component.destroy()
+
+  expected = [
+    { type: 'start-hook', source: '<PollingTestingComponent>' },
+    { type: 'stop-hook', source: '<PollingTestingComponent>' }
+  ]
+
+  deepEqual pollingChangesHistory, expected
+
+
 test 'it works even if one of the model is null', ->
   component = @subject(model1: { name: 'model1' })
   @append()
