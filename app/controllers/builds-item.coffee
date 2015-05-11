@@ -6,15 +6,15 @@
 Controller = Ember.ObjectController.extend(GithubUrlProperties,
   needs: ['builds']
   isPullRequestsListBinding: 'controllers.builds.isPullRequestsList'
-  buildBinding: 'content'
+  buildBinding: 'model'
 
   color: (->
     colorForState(@get('build.state'))
   ).property('build.state')
 
   urlAuthorGravatarImage: (->
-    gravatarImage(@get('commit.authorEmail'), 40)
-  ).property('commit.authorEmail')
+    gravatarImage(@get('build.commit.authorEmail'), 40)
+  ).property('build.commit.authorEmail')
 )
 
 `export default Controller`

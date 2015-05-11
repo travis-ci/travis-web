@@ -12,7 +12,8 @@ Controller = Ember.ArrayController.extend
 
   isLoaded: false
   content: (->
-    result = @store.filter('job', { state: 'started' }, (job) ->
+    # TODO: this should also query for received jobs
+    result = @store.filter('job', {}, (job) ->
       ['started', 'received'].indexOf(job.get('state')) != -1
     )
     result.then =>

@@ -1,5 +1,6 @@
 `import Ember from 'ember'`
 `import { colorForState } from 'travis/utils/helpers'`
+`import Polling from 'travis/mixins/polling'`
 
 View = Ember.CollectionView.extend
   elementId: ''
@@ -8,7 +9,9 @@ View = Ember.CollectionView.extend
   emptyView: Ember.View.extend
     templateName: 'repos-list/empty'
 
-  itemViewClass: Ember.View.extend
+  itemViewClass: Ember.View.extend Polling,
+    pollModels: 'repo'
+
     repoBinding: 'content'
     classNames: ['repo']
     classNameBindings: ['color', 'selected']

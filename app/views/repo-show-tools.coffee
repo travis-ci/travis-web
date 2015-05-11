@@ -9,7 +9,7 @@ View = BasicView.extend
   buildBinding: 'controller.build'
   jobBinding: 'controller.job'
   tabBinding: 'controller.tab'
-  currentUserBinding: 'controller.currentUser'
+  currentUserBinding: 'controller.currentUser.model'
   slugBinding: 'controller.repo.slug'
 
 

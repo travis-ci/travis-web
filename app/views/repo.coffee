@@ -2,13 +2,16 @@
 `import StatusImagesView from 'travis/views/status-images'`
 `import BasicView from 'travis/views/basic'`
 `import config from 'travis/config/environment'`
+`import Polling from 'travis/mixins/polling'`
 
-View = BasicView.extend
+View = BasicView.extend Polling,
   reposBinding: 'controllers.repos'
   repoBinding: 'controller.repo'
   buildBinding: 'controller.build'
   jobBinding: 'controller.job'
   tabBinding: 'controller.tab'
+
+  pollModels: 'controller.repo'
 
   classNameBindings: ['controller.isLoading:loading']
 

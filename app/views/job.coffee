@@ -1,8 +1,11 @@
 `import Ember from 'ember'`
 `import { colorForState } from 'travis/utils/helpers'`
 `import { githubCommit, gravatarImage } from 'travis/utils/urls'`
+`import Polling from 'travis/mixins/polling'`
 
-View = Ember.View.extend
+View = Ember.View.extend Polling,
+  pollModels: 'controller.job.build'
+
   repoBinding: 'controller.repo'
   jobBinding: 'controller.job'
   commitBinding: 'job.commit'
