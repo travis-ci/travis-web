@@ -2,16 +2,18 @@
  * Dashboard List 
  */
 
-@mixin colorDbelements($color)
- .db-status
-   background-color: $color
- .db-repo
-   h2, h3, a
-     color: $color
- .db-job
-   color: $color
-   a
-     color: $color
+@mixin colorDbelements($color, $icon)
+  .db-status
+    background-color: $color
+  .icon-star
+    @extend %icon-star-#{$icon}
+  .db-repo
+    h2, h3, a
+      color: $color
+  .db-job
+    color: $color
+    a
+      color: $color
 
 $db-gray: #C9C9C9
 $db-text-color: #ACAAAA
@@ -36,6 +38,8 @@ $db-text-color: #ACAAAA
     width: 1.5em
     height: 1.5em
     transform: translate(-20%, 18%)
+  .icon-star
+    @extend %icon-star-grey
 
 .db
   @include resetul
@@ -62,17 +66,17 @@ $db-text-color: #ACAAAA
 
   &.started,
   &.created
-    @include colorDbelements($start-color)
+    @include colorDbelements($start-color, yellow)
   &.failed
-    @include colorDbelements($fail-color)
+    @include colorDbelements($fail-color, red)
   &.errored
-    @include colorDbelements($error-color)
+    @include colorDbelements($error-color, red)
   &.canceled
-    @include colorDbelements($cancel-color)
+    @include colorDbelements($cancel-color, grey)
   &.passed
-    @include colorDbelements($pass-color)
+    @include colorDbelements($pass-color, green)
   &.inactive
-    @include colorDbelements($cancel-color)
+    @include colorDbelements($cancel-color, grey)
 
 .db-repo
   padding-left: 3em
@@ -82,6 +86,8 @@ $db-text-color: #ACAAAA
   &:after
     content: ""
     @include fadeOut(right, -90deg, $cream-light)
+  @media #{$medium-up}
+    margin-bottom: 0
 
 .db-status
   position: absolute;
@@ -99,7 +105,7 @@ $db-text-color: #ACAAAA
   .icon-status
     top: -6em
   .icon-star
-    top: -2em
+    top: 1.7em
     opacity: .9
 
 .db-controls
@@ -189,8 +195,6 @@ $db-text-color: #ACAAAA
 
 .dashboard-active,
 .dashboard-inactive
-  .db
-    padding-bottom: 0.2em;
   .db-repo,
   .db-controls
     padding-left: 4em
@@ -209,8 +213,6 @@ $db-text-color: #ACAAAA
     .db-status
       .icon-status
         top: -2em
-      .icon-star
-        bottom: -4em
 
 .dashboard-inactive
   margin-bottom: 5e3
