@@ -1,5 +1,3 @@
-{{!-- {{outlet}} --}}
-
 <header class="owner-header row">
   <div class="owner-avatar">
     <img {{bind-attr src="avatarURL"}} alt="" width="125" height="125">
@@ -14,9 +12,9 @@
 <div class="tabs--owner">
   <nav class="tabnav tabnav--owner row" role="tablist">
     <ul class="tab">
-      <li role="presentational">{{!-- <a href="#" title="" role="tab">--}}All Repositories{{!-- </a> --}}</li>
-{{!--       <li role="presentational"><a href="#" title="" role="tab">Running Builds (2/5)</a></li>
-      <li role="presentational"><a href="#" title="" role="tab">Members</a></li> --}}
+      <li role="presentational">{{#link-to 'owner' owner.login}}All Repositories{{/link-to}}</li>
+      <li role="presentational">{{#link-to 'owner.running' owner.login}}Running Builds (2/5){{/link-to}}</li>
+      {{!-- <li role="presentational"><a href="#" title="" role="tab">Members</a></li> --}}
     </ul>
   </nav>
 
