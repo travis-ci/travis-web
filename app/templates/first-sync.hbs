@@ -1,30 +1,25 @@
-<div id="first_sync">
+<div id="first_sync" class="row first-sync">
+  <div class="column medium-6 medium-centered">
   {{#if isSyncing}}
-  <img src="/images/getting-started/mustache-spinner.gif" class="spinner" width="300">
-  <p class="first-sync-head">One more thing</p>
-  <p class="few-more">Just a few more seconds as we talk to GitHub to find out which repositories belong to you.</p>
-  <div class="sync-row">
-    <div class="sync-column">
-      <p class="align-right">
-        If you're part of an organization that already has repositories set up on Travis CI, we'll take you to the list once we're done.
-      </p>
-    </div>
-
-    <div class="sync-column">
-      <p>
-        If you're not part of any existing organizations yet, we'll take you to a handy getting started guide to get you off the ground quickly.
-      </p>
-    </div>
-  </div>
+    <img src="/images/getting-started/mustache-spinner.gif" class="spinner" width="300">
+    <h1 class="first-sync-head great-news">One more thing</h1>
+    <p class="few-more">Just a few more seconds as we talk to GitHub to find out which repositories belong to you.</p>
+    <p class="align-right">
+      If you're part of an organization that already has repositories set up on Travis CI, we'll take you to the list once we're done.
+    </p>
+    <p>
+      If you're not part of any existing organizations yet, we'll take you to a handy getting started guide to get you off the ground quickly.
+    </p>
   {{/if}}
 
   {{#unless isSyncing}}
-  <div class="sync-row">
-      <img src="/images/getting-started/mustache-no-spin.png" class="spinner" width="100">
-      <p class="great-news">Great news!</p>
-      <p>
-        We've successfully synchronized your details from GitHub. We will redirect you to your profile in a few seconds.
-      </p>
-  </div>
+    <figure>
+      <span class="mascot"></span>
+    </figure>
+    <h1 class="great-news">Great news!</h1>
+    <p>
+      We've successfully synchronized your details from GitHub.<br>We will redirect you to your profile in a few seconds.
+    </p>
   {{/unless}}
+  </div>
 </div>
