@@ -2,7 +2,6 @@
   font-size: $font-size-sm
   font-weight: 400
 
-
 .profile-main
   header
     h1
@@ -32,6 +31,9 @@
         overflow: hidden;
         &:after
           @include fadeOut(right, -90deg, $white)
+  p
+    font-size: $font-size-m
+    color: #7a7a7a
 
   .cta-btn
     text-align: right
@@ -132,6 +134,7 @@ p.profile-user-last
       width: grid-calc(5, 24)
   .switch
     display: inline-block
+    vertical-align: middle
   .profile-settings
     display: inline-block
     margin-left: 1rem;
@@ -155,6 +158,7 @@ p.profile-user-last
   padding: .25em .5em .3em
   white-space: nowrap
   overflow: hidden
+  vertical-align: middle
   span:not(.sync-spinner)
     display: none
     margin-left: 2rem
@@ -219,3 +223,8 @@ p.profile-user-last
     top: 1em
     right: 1em
     @extend .icon--dismiss-red
+
+
+#unadministerable-hooks
+  p
+    margin-top: 2em
