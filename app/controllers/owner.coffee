@@ -24,10 +24,6 @@ Controller = Ember.Controller.extend
       isSyncing: data.is_syncing
       avatarUrl: data.avatar_url
       syncedAt: data.synced_at
-      builds: {
-        all: 'nope'
-        started: 'nope'
-      }
     }
 
   ).property('model')
