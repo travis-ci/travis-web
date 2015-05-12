@@ -50,8 +50,8 @@ Repo = Model.extend
 
   builds: (->
     id = @get('id')
-    builds = @store.filter('build', event_type: ['push', 'api'], repository_id: id, (b) ->
-      b.get('repo.id') == id && (b.get('eventType') == 'push' || b.get('eventType') == 'api')
+    builds = @store.filter('build', event_type: 'push', repository_id: id, (b) ->
+      b.get('repo.id') == id && b.get('eventType') == 'push'
     )
 
     # TODO: move to controller
