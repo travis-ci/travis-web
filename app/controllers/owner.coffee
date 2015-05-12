@@ -17,34 +17,18 @@ Controller = Ember.Controller.extend
 
   owner: (->
     data = @get('model')
+
     {
       login: data.login
       name: data.name
       isSyncing: data.is_syncing
       avatarUrl: data.avatar_url
       syncedAt: data.synced_at
+      builds: {
+        all: 'nope'
+        started: 'nope'
+      }
     }
-
-  ).property('model')
-
-  repos: (->
-    data = @get('model')
-
-    repos = data.repositories.filter (item, index) -> 
-      if item.default_branch.last_build
-        item
-    repos.sortBy('default_branch.last_build.finished_at').reverse()
-
-  ).property('model')
-
-  running: (->
-    data = @get('model')
-
-    repos = data.repositories.filter (item, index) -> 
-      if item.default_branch.last_build != null 
-        if item.default_branch.last_build.state == 'started'
-          item
-    repos
 
   ).property('model')
 

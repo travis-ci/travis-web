@@ -12,34 +12,17 @@
 <div class="tabs--owner">
   <nav class="tabnav tabnav--owner row" role="tablist">
     <ul class="tab">
-      <li role="presentational">{{#link-to 'owner' owner.login}}All Repositories{{/link-to}}</li>
-      <li role="presentational">{{#link-to 'owner.running' owner.login}}Running Builds (2/5){{/link-to}}</li>
+      <li role="presentational">{{#link-to 'owner.repositories' owner.login}}All Repositories{{/link-to}}</li>
+      <li role="presentational">{{#link-to 'owner.running' owner.login}}Running Builds ({{owner.builds.started}}/{{owner.builds.all}}){{/link-to}}</li>
       {{!-- <li role="presentational"><a href="#" title="" role="tab">Members</a></li> --}}
     </ul>
   </nav>
 
   <div class="tabbody">
-
     <section role="tabpanel">
-      <ul class="owner-tiles">
-        {{#each repo in repos}}
-          {{owner-repo-tile repo=repo}}
-        {{else}}
-          <li>No active repos</li>
-        {{/each}}
-      </ul>
+      {{outlet}}
     </section>
 
-{{!--     <section role="tabpanel">
-      <ul class="owner-tiles">
-        {{#each repo in running}}
-          {{owner-repo-tile repo=repo}}
-        {{else}}
-          <li>No running builds</li>
-        {{/each}}
-      </ul>
-    </section>
- --}}
     {{!-- <section role="tabpanel">
       <ul class="memberlist">
         <li class="columns small-6 large-4">

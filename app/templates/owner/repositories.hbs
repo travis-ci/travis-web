@@ -1,7 +1,7 @@
 <ul class="owner-tiles">
-  {{#each repo in running}}
+  {{#each repo in repos}}
     {{owner-repo-tile repo=repo}}
   {{else}}
-    <li>No running builds</li>
+    <li>No active repos</li>
   {{/each}}
 </ul>
