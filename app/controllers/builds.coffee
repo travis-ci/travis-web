@@ -16,7 +16,8 @@ Controller = Ember.ArrayController.extend
   showMore: ->
     id     = @get('repo.id')
     number = @get('lastObject.number')
-    @get('content').load @olderThanNumber(id, number, @get('tab'))
+    type   = if @get('tab') == "builds" then 'push' else 'pull_request'
+    @get('content').load @olderThanNumber(id, number, type)
 
   displayShowMoreButton: (->
     @get('tab') != 'branches' and parseInt(@get('lastObject.number')) > 1
