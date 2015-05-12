@@ -1,10 +1,15 @@
 `import Ember from 'ember'`
 `import Polling from 'travis/services/polling'`
+`import config from 'travis/config/environment'`
 
 service = null
 
 module 'PollingService',
+  setup: ->
+    config.ajaxPolling = true
+
   teardown: ->
+    config.ajaxPolling = false
     unless service.get('isDestroyed')
       Ember.run ->
         service.destroy()

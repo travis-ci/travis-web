@@ -1,5 +1,4 @@
 `import Ember from 'ember'`
-`import config from 'travis/config/environment'`
 
 mixin = Ember.Mixin.create
   polling: Ember.inject.service()
@@ -7,13 +6,11 @@ mixin = Ember.Mixin.create
   didInsertElement: ->
     @_super.apply(this, arguments)
 
-    return unless config.ajaxPolling
     @startPolling()
 
   willDestroyElement: ->
     @_super.apply(this, arguments)
 
-    return unless config.ajaxPolling
     @stopPolling()
 
   pollModelDidChange: (sender, key, value) ->

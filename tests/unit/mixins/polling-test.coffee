@@ -38,7 +38,7 @@ define('travis/components/polling-test', [], ->
 
 # I want to test this mixin in context of component, so I'm using
 # modelForComponent
-moduleForComponent 'polling-test', 'PollingTestComponent', {
+moduleForComponent 'polling-test', 'PollingMixin', {
   # specify the other units that are required for this test
   needs: []
 

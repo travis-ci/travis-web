@@ -3,6 +3,7 @@
 
 service = Ember.Service.extend
   pollingInterval: 30000
+  ajaxPolling: true
 
   init: ->
     @_super.apply(this, arguments)
@@ -10,9 +11,8 @@ service = Ember.Service.extend
     @set('watchedModels', [])
     @set('sources', [])
 
-    return unless config.ajaxPolling
-
     interval = setInterval =>
+      return unless config.ajaxPolling
       @poll()
     , @get('pollingInterval')
 
