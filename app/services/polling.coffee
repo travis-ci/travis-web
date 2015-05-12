@@ -1,4 +1,5 @@
 `import Ember from 'ember'`
+`import config from 'travis/config/environment'`
 
 service = Ember.Service.extend
   pollingInterval: 30000
@@ -9,6 +10,8 @@ service = Ember.Service.extend
     @set('watchedModels', [])
     @set('sources', [])
 
+    return unless config.ajaxPolling
+
     interval = setInterval =>
       @poll()
     , @get('pollingInterval')
@@ -18,7 +21,8 @@ service = Ember.Service.extend
   willDestroy: ->
     @_super.apply(this, arguments)
 
-    clearInterval(@get('interval'))
+    if interval = @get('interval')
+      clearInterval(interval)
 
   startPollingHook: (source) ->
     sources = @get('sources')

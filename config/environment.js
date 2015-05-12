@@ -31,7 +31,8 @@ module.exports = function(environment) {
     endpoints: {},
     intervals: { updateTimes: 1000 },
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
-    githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27'
+    githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
+    ajaxPolling: false
   };
 
   if (typeof process !== 'undefined') {
