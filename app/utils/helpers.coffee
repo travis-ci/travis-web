@@ -10,7 +10,7 @@ colors = {
   default:  'yellow'
   passed:   'green'
   failed:   'red'
-  errored:  'gray'
+  errored:  'red'
   canceled: 'gray'
 }
 
