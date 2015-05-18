@@ -13,7 +13,7 @@ Controller = Ember.ObjectController.extend(GithubUrlProperties,
   ).property('build.state')
 
   urlAuthorGravatarImage: (->
-    gravatarImage(@get('build.commit.authorEmail'), 40)
+    gravatarImage(@get('build.commit.committerEmail'), 40)
   ).property('build.commit.authorEmail')
 )
 
