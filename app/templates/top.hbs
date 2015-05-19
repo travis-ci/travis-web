@@ -16,7 +16,7 @@
       <ul class="navigation-nested">
         <li><a href="http://docs.travis-ci.com">Docs</a></li>
         <li><a href="http://stackoverflow.com/questions/ask?tags=travis-ci">Ask a Question</a></li>
-        <li><a href="irc://irc.freenode.net/#travis">IRC</a></li>
+        <li><a href="https://chat.travis-ci.com/">Live Chat</a></li>
         <li><a href="mailto:support@travis-ci.com">E-Mail us</a></li>
         <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
       </ul>
@@ -41,7 +41,7 @@
       </li>
     {{/if}}
 
-    <li {{bind-attr class="view.classProfile :navigation-sub :navigation--profile"}}>
+    <li {{bind-attr class="view.classProfile :navigation-sub"}}>
       <p class="handle navigation-handle">
         {{#if auth.signedOut}}
           <button class="signed-out button--signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>

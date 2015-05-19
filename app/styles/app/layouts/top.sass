@@ -44,12 +44,13 @@ $top-height: 55px
     width: 100px
     height: $top-height
     z-index: 999
-    border: none !important
-    text-indent  : -9999px
+    outline: none
+    text-indent: -9999px
     transition: background-color 200ms ease
-    background   : inline-image('svg/travis-ci-logo.svg') no-repeat  0 50%
+    background: inline-image('svg/travis-ci-logo.svg') no-repeat 0 50%
+
     &:hover
-      background   : $cream-light inline-image('svg/travis-ci-logo-hover.svg') no-repeat 50%
+      background: $cream-light inline-image('svg/travis-ci-logo-hover.svg') no-repeat 50%
   .centered &
     margin-left: 0
 
@@ -80,16 +81,13 @@ $top-height: 55px
   color: $grey1
 
   .navigation
+    padding: 0 $column-gutter/2
+    margin: 0
     height: 0
+    list-style: none
     overflow: hidden
     &.is-open
       height: auto
-    a
-      padding: .5em 1em
-
-  .navigation,
-  .navigation-nested
-    @include resetul
 
   .navigation-handle
     position: relative
@@ -98,11 +96,13 @@ $top-height: 55px
   .navigation-sub
     position: relative
 
+  .navigation-nested
+    @include resetul
+
   a,
-  .navigation-handle span:not(.sync-spinner)
+  .navigation-handle
     display: block
     color: #898989
-    border-bottom: solid 1px #eff0ec
     font-size: $font-size-m
     cursor: pointer
     height: $top-height
@@ -111,7 +111,8 @@ $top-height: 55px
     &:hover
       text-decoration: underline
 
-  .navigation--profile
+  .profile
+    float: right
     img
       border-radius: 50%;
       width: 2.7rem;
@@ -124,6 +125,7 @@ $top-height: 55px
       height: $top-height
 
     .navigation
+      padding: 0
       height: $top-height
       overflow: visible
       > li
@@ -137,13 +139,6 @@ $top-height: 55px
       a,
       .navigation-handle span:not(.sync-spinner)
         padding: 0 .2em
-
-    .navigation--profile
-      float: right
-
-    .navigation--profile.signed-out,
-    .navigation--profile.signing-in
-      line-height: $top-height - 5px
 
     .navigation-nested
       display: none
