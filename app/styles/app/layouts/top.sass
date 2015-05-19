@@ -44,12 +44,13 @@ $top-height: 55px
     width: 100px
     height: $top-height
     z-index: 999
-    border: none !important
-    text-indent  : -9999px
+    outline: none
+    text-indent: -9999px
     transition: background-color 200ms ease
-    background   : inline-image('svg/travis-ci-logo.svg') no-repeat  0 50%
+    background: inline-image('svg/travis-ci-logo.svg') no-repeat 0 50%
+
     &:hover
-      background   : $cream-light inline-image('svg/travis-ci-logo-hover.svg') no-repeat 50%
+      background: $cream-light inline-image('svg/travis-ci-logo-hover.svg') no-repeat 50%
   .centered &
     margin-left: 0
 
