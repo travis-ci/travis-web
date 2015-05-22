@@ -5,19 +5,11 @@
 `import Polling from 'travis/mixins/polling'`
 
 View = BasicView.extend Polling,
-  reposBinding: 'controllers.repos'
   repoBinding: 'controller.repo'
-  buildBinding: 'controller.build'
-  jobBinding: 'controller.job'
-  tabBinding: 'controller.tab'
 
   pollModels: 'controller.repo'
 
   classNameBindings: ['controller.isLoading:loading']
-
-  isEmpty: (->
-    @get('repos.isLoaded') && @get('repos.length') == 0
-  ).property('repos.isLoaded', 'repos.length')
 
   statusImageUrl: (->
     statusImage(@get('controller.repo.slug'))
@@ -30,13 +22,5 @@ View = BasicView.extend Polling,
       BasicView.currentPopupView = view
       view.appendTo($('body'))
       return false
-
-  ReposEmptyView: BasicView.extend
-    template: (->
-      if config.pro
-        'pro/repos/show/empty'
-      else
-        ''
-    ).property()
 
 `export default View`
