@@ -130,7 +130,7 @@ Repo.reopenClass
   recent: ->
     @find()
 
-  accessibleBy: (store, login) ->
+  myRepositories: (store) ->
     repos = store.find('repo', { "repository.active": "true" })
 
     repos.then () ->

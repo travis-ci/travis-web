@@ -70,8 +70,8 @@ Controller = Ember.Controller.extend
   viewRunning: ->
 
   userRepos: (->
-    if login = @get('currentUser.login')
-      Repo.accessibleBy(@store, login)
+    if login = @get('currentUser.id')
+      Repo.myRepositories(@store)
     else
       []
   ).property('currentUser.login')
