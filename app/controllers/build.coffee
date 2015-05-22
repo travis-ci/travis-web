@@ -18,8 +18,8 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
   ).property('build.jobs.@each.config')
 
   loading: (->
-    @get('build.isLoading')
-  ).property('build.isLoading')
+    @get('build.isLoading') || !@get('build.commit.id')
+  ).property('build.isLoading', 'build.commit.id')
 
   urlCommitterGravatarImage: (->
     gravatarImage(@get('commit.committerEmail'), 40)

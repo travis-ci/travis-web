@@ -18,7 +18,7 @@ Build = Model.extend DurationCalculations,
   pullRequestTitle:  DS.attr()
   pullRequestNumber: DS.attr('number')
 
-  repo:   DS.belongsTo('repo', async: true)
+  repo:   DS.belongsTo('repo', async: true, inverse: '_builds')
   commit: DS.belongsTo('commit', async: true)
   jobs:   DS.hasMany('job', async: true)
 

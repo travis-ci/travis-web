@@ -10,31 +10,13 @@ Repo = Model.extend
   slug:                DS.attr()
   description:         DS.attr()
   private:             DS.attr('boolean')
-  lastBuildNumber:     DS.attr('number')
-  lastBuildState:      DS.attr()
-  lastBuildStartedAt:  DS.attr()
-  lastBuildFinishedAt: DS.attr()
   githubLanguage:      DS.attr()
-  _lastBuildDuration:  DS.attr('number')
-  lastBuildLanguage:   DS.attr()
   active:              DS.attr()
-  lastBuildId:         DS.attr('number')
-  lastBuildHash: (->
-    {
-      id: @get('lastBuildId')
-      number: @get('lastBuildNumber')
-      repo: this
-    }
-  ).property('lastBuildId', 'lastBuildNumber')
 
-  lastBuild: (->
-    if id = @get('lastBuildId')
-      @store.find('build', id)
-      @store.recordForId('build', id)
-  ).property('lastBuildId')
-
-  withLastBuild: ->
-    @filter( (repo) -> repo.get('lastBuildId') )
+  lastBuild: DS.belongsTo('build', async: false)
+  # For some reason belongsTo('repo') relationship doesn't load properly
+  # without inverse
+  _builds: DS.hasMany('build', inverse: 'repo', async: true)
 
   sshKey: (->
     @store.find('ssh_key', @get('id'))
@@ -108,20 +90,19 @@ Repo = Model.extend
   ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
 
   sortOrderForLandingPage: (->
-    state = @get('lastBuildState')
+    state = @get('lastBuild.state')
     if state != 'passed' && state != 'failed'
       0
     else
-      parseInt(@get('lastBuildId'))
-  ).property('lastBuildId', 'lastBuildState')
+      parseInt(@get('lastBuild.id'))
+  ).property('lastBuild.id', 'lastBuild.state')
 
   sortOrder: (->
-    # cuz sortAscending seems buggy when set to false
-    if lastBuildFinishedAt = @get('lastBuildFinishedAt')
-      - new Date(lastBuildFinishedAt).getTime()
+    if lastBuildFinishedAt = @get('lastBuild.finishedAt')
+      new Date(lastBuildFinishedAt).getTime()
     else
-      - new Date('9999').getTime() - parseInt(@get('lastBuildId'))
-  ).property('lastBuildFinishedAt', 'lastBuildId')
+      - 999999999 + parseInt(@get('lastBuild.id'))
+  ).property('lastBuild.finishedAt', 'lastBuild.id')
 
   stats: (->
     if @get('slug')
@@ -132,7 +113,8 @@ Repo = Model.extend
   ).property('slug')
 
   updateTimes: ->
-    @notifyPropertyChange 'lastBuildDuration'
+    if build = @get('lastBuild')
+      build.notifyPropertyChange 'duration'
 
   regenerateKey: (options) ->
     Ajax.ajax '/repos/' + @get('id') + '/key', 'post', options
@@ -149,7 +131,7 @@ Repo.reopenClass
     @find()
 
   accessibleBy: (store, login) ->
-    repos = store.find('repo', { member: login, orderBy: 'name' })
+    repos = store.find('repo', { "repository.active": "true" })
 
     repos.then () ->
       repos.set('isLoaded', true)
@@ -181,18 +163,24 @@ Repo.reopenClass
     repos = store.all('repo').filterBy('slug', slug)
     if repos.get('length') > 0
       repos
-    else
-      store.find('repo', { slug: slug })
 
   fetchBySlug: (store, slug) ->
     repos = @bySlug(store, slug)
-    if repos.get('length') > 0
+    if repos
       repos.get('firstObject')
     else
-      repos.then (repos) ->
+      # TODO: is there a better way to fetch a record by slug
+      #       without having a list endpoint filtered by slug?
+      headers = {
+        Accept: 'application/vnd.travis-ci.3+json'
+      }
+      Ajax.ajax("/repo/#{slug.split('/').join('%2F')}", 'GET', headers: headers).then (data) ->
+        store.pushPayload 'repo', repositories: [data]
+        store.recordForId 'repo', data.id
+      , ->
         error = new Error('repo not found')
         error.slug = slug
-        Ember.get(repos, 'firstObject') || throw(error)
+        throw(error)
 
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'

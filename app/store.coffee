@@ -9,6 +9,10 @@ Store = DS.Store.extend
     @_super.apply(this, arguments)
     @set('pusherEventHandlerGuards', {})
 
+  modelFactoryFor: (key) ->
+    unless key.startsWith('@')
+      @_super.apply(this, arguments)
+
   addPusherEventHandlerGuard: (name, callback) ->
     @get('pusherEventHandlerGuards')[name] = callback
 
