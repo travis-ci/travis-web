@@ -1,7 +1,7 @@
-<div class="profile-hooks columns">
+<div class="profile-hooks profile-switch columns">
   {{hook-switch hook=hook onToggleError="handleToggleError" onToggle="resetErrors"}}
   {{#if hook.isSaving}}
-    <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+    {{loading-indicator}}
   {{else}}
     {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
   {{/if}}

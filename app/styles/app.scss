@@ -11,7 +11,7 @@
 @import "app/charm";
 @import "app/forms";
 @import "app/github";
-@import "app/loading";
+// @import "app/loading";
 @import "app/main/annotations";
 
 @import "app/main/list";
@@ -25,6 +25,7 @@
 
 @import "app/components/travis-switch";
 @import "app/components/sync-button";
+@import "app/components/loading-indicator";
 
 @import "app/modules/section";
 @import "app/modules/loader";

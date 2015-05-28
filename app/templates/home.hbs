@@ -9,7 +9,7 @@
 				  <button {{action "signIn" target="auth"}} class="button"><img src="../images/landing-page/sign-in-mascot.svg" class="sign-in-mascot">Sign Up</button>
 				{{/if}}
 				{{#if auth.signingIn}}
-					<button class="button"><span class="sync-spinner"><i></i><i></i><i></i></span>Signing In</button>
+					<button class="button"><span class="loading-indicator--white"><i></i><i></i><i></i></span>Signing In</button>
 				{{/if}}
 
 			</div>
@@ -81,7 +81,7 @@
 						</div>
 					</li>
 				{{else}}
-				<span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+					{{loading-indicator}}
 				{{/each}}
 				</ul>
 			</div>

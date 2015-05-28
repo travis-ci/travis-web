@@ -28,7 +28,7 @@
     {{#if user.isSyncing}}
       <div class="sync-button">
         <button class="button is-syncing">
-          <span class="sync-spinner"><i></i><i></i><i></i></span>Syncing from GitHub
+          <span class="loading-indicator--white"><i></i><i></i><i></i></span>Syncing from GitHub
         </button>
       </div>
     {{else}}
@@ -94,7 +94,7 @@
       <ul class="profile-hooklist">
         {{#each hook in hooksWithoutAdmin}}
           <li {{bind-attr class="hook.active:active :row"}}>
-            <button class="switch disabled"></button>
+            <button class="profile-switch disabled"></button>
             <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo">
               {{hook.slug}}
               <span>{{hook.description}}</span>
@@ -106,7 +106,7 @@
   {{/if}}
 
 {{else}}
-  <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+  {{loading-indicator}}
 {{/if}}
 
 

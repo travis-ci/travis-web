@@ -1,5 +1,5 @@
 {{#if loading}}
-  <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+  {{loading-indicator}}
 {{else}}
   <section {{bind-attr class=":tile :tile--pass :row build.state"}}>
     <div class="tile-status">
@@ -81,9 +81,7 @@
       {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
       {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
     {{else}}
-      <div class="spinner-container">
-        <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
-      </div>
+      {{loading-indicator center=true}}
     {{/if}}
   {{else}}
     {{view 'log' job=build.jobs.firstObject}}

@@ -22,10 +22,8 @@
 
     {{/each}}
   {{else}}
-    <div class="spinner-container">There are no jobs queued</div>
+    <div class="loading-container">There are no jobs queued</div>
   {{/if}}
 {{else}}
-  <div class="spinner-container">
-    <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
-  </div>
+  {{loading-indicator center=true}}
 {{/if}}

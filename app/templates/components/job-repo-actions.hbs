@@ -1,6 +1,6 @@
 {{#if canCancel}}
   {{#if cancelling}}
-    <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+    {{loading-indicator}}
   {{else}}
     <a href="#" {{action "cancel"}} class="button-circle" title="Cancel Job">
       <span class="icon icon--cancel"></span>
@@ -10,7 +10,7 @@
 
 {{#if canRestart}}
   {{#if restarting}}
-    <span class="sync-spinner sync-spinner--grey"><i></i><i></i><i></i></span>
+    {{loading-indicator}}
   {{else}}
     <a href="#" {{action "restart"}} class="button-circle" title="Restart Job">
       <span class="icon icon--trigger"></span>
