@@ -1,6 +1,6 @@
 `import Ember from 'ember'`
 
-Controller = Ember.ObjectController.extend
+Controller = Ember.Controller.extend
   settings: Ember.computed.alias('model.settings')
 
   settingsChanged: (->

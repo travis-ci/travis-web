@@ -1,8 +1,6 @@
 `import Ember from 'ember'`
 
 Controller = Ember.ArrayController.extend
-  isPullRequestsList: false
-
   sortAscending: false
   sortProperties: ['number']
 

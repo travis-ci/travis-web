@@ -1,0 +1,30 @@
+<div class="tile-status tile-status--job">
+  <span class="icon icon--job {{requestClass}}"></span>
+</div>
+
+<p class="jobs-item requests-time column">{{format-time request.created_at}}</p>
+
+<p class="jobs-item requests-branch column">
+  <span class="icon icon--grey {{type}}"></span>
+  {{#if request.isPullRequest}}
+    <strong>#{{request.pullRequestNumber}}</strong>
+  {{else}}
+    <strong>{{request.branchName}}</strong>
+  {{/if}}
+  {{github-commit-link request.repo.slug request.commit.sha}}
+</p>
+
+<p class="jobs-item requests-commit column">
+  {{{format-message request.commit.message short="true" repoBinding=request.build.repo}}}
+  </p>
+
+<p class="jobs-item requests-build column">
+  {{#if request.build}}
+    <span class="icon icon-hash"></span>
+    {{#link-to "build" request.build}}
+      {{request.build.number}}{{/link-to}}
+  {{else}}
+    -
+  {{/if}}
+</p>
+<p class="jobs-item requests-message column">{{message}}</p>

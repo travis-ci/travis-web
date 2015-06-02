@@ -3,7 +3,7 @@
 View = Ember.View.extend
   templateName: 'repos/list/tabs'
   tabBinding: 'controller.tab'
-  currentUserBinding: 'controller.currentUser.id'
+  currentUserBinding: 'controller.currentUser.model'
 
   classRecent: (->
     if @get('tab') == 'recent'

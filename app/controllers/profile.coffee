@@ -4,8 +4,8 @@ Controller = Ember.Controller.extend
   name: 'profile'
 
   needs: ['currentUser', 'accounts', 'account']
-  userBinding: 'controllers.currentUser'
-  accountBinding: 'controllers.account'
+  userBinding: 'controllers.currentUser.model'
+  accountBinding: 'controllers.account.model'
 
   activate: (action, params) ->
     this["view_#{action}".camelize()]()

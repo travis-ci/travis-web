@@ -23,7 +23,7 @@ githubAdmin = (slug) ->
 
 statusImage = (slug, branch) ->
   if config.pro
-    token = Travis.__container__.lookup('controller:currentUser').get('token')
+    token = Travis.__container__.lookup('controller:currentUser').get('model.token')
     "#{location.protocol}//#{location.host}/#{slug}.svg?token=#{token}" + if branch then "&branch=#{branch}" else ''
   else
     "#{location.protocol}//#{location.host}/#{slug}.svg" + if branch then "?branch=#{encodeURIComponent(branch)}" else ''
@@ -35,7 +35,7 @@ ccXml = (slug, branch) ->
 
   if config.pro
     delimiter = if url.indexOf('?') == -1 then '?' else '&'
-    token = Travis.__container__.lookup('controller:currentUser').get('token')
+    token = Travis.__container__.lookup('controller:currentUser').get('model.token')
     url = "#{url}#{delimiter}token=#{token}"
 
   url

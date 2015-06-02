@@ -2,7 +2,7 @@
 
 Controller = Ember.Controller.extend
   needs: ['currentUser']
-  user: Ember.computed.alias('controllers.currentUser')
+  user: Ember.computed.alias('controllers.currentUser.model')
 
   isSyncing: Ember.computed.alias('user.isSyncing')
 

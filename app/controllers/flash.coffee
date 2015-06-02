@@ -4,7 +4,7 @@
 
 Controller = Ember.ArrayController.extend
   needs: ['currentUser']
-  currentUserBinding: 'controllers.currentUser'
+  currentUserBinding: 'controllers.currentUser.model'
 
   init: ->
     @_super.apply this, arguments

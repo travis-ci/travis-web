@@ -31,7 +31,7 @@ Controller = Ember.ArrayController.extend
 
   isLoadedBinding: 'content.isLoaded'
   needs: ['currentUser', 'repo', 'runningJobs', 'queue']
-  currentUserBinding: 'controllers.currentUser'
+  currentUserBinding: 'controllers.currentUser.model'
   selectedRepo: (->
     # we need to observe also repo.content here, because we use
     # ObjectProxy in repo controller

@@ -1,56 +1,7 @@
 {{#if content.isLoaded}}
 {{!-- <table id="builds" class="list"> --}}
-  {{#each build in controller itemController="buildsItem"}}
-    <div {{bind-attr class="build.state :tile :tile--small :tile--build :row"}}>
-      <div class="tile-status">
-        <span {{bind-attr class=":icon :icon-status build.state"}}></span>
-        <span {{bind-attr class=":request-kind build.eventType :icon"}}></span>
-      </div>
-      <div class="column tile-main medium-6">
-        <h2>
-          {{#if isPullRequestsList}}
-            <small>PR #{{build.pullRequestNumber}}</small>
-            {{#link-to "build" build.repo build}}
-              {{{format-message build.pullRequestTitle short="true" repoBinding=build.repo}}}
-            {{/link-to}}
-          {{else}}
-            <small>{{build.commit.branch}}</small>
-            {{#link-to "build" build.repo build}}
-              {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
-            {{/link-to}}
-          {{/if}}
-        </h2>
-        <p class="tile-author"><img {{bind-attr src="build.urlAuthorGravatarImage"}} alt="">{{build.commit.committerName}} committed</p>
-      </div>
-      <div class="column tile-additional medium-6 end">
-        <div class="column small-6">
-          <p class="build-status">
-            {{#if build.id}}
-              {{#link-to "build" build.repo build}}
-                <span class="icon icon-hash"></span>
-                {{build.number}} {{build.state}}
-              {{/link-to}}
-            {{/if}}
-          </p>
-          <p class="">
-            <a {{bind-attr href="build.urlGithubCommit"}}>
-              <span class="icon icon-github"></span>
-              {{format-sha build.commit.sha}}
-            </a>
-          </p>
-        </div>
-        <div class="column small-6">
-          <p class="" {{bind-attr title="build.duration"}}>
-            <span class="icon icon-clock"></span>
-            {{format-duration build.duration}}
-          </p>
-          <p class="" {{bind-attr title="build.formattedFinishedAt"}}>
-            <span class="icon icon-cal"></span>
-            {{format-time build.finishedAt}}
-          </p>
-        </div>
-      </div>
-    </div>
+  {{#each controller as |build|}}
+    {{builds-item build=build}}
   {{/each}}
   {{#if displayShowMoreButton}}
     <p>

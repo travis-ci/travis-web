@@ -29,7 +29,7 @@ test 'it renders', ->
   ok component.$('.job-os').hasClass('linux'), 'OS class should be added for OS icon'
   equal component.$('.job-duration').text().trim(), '1 min 40 sec', 'duration should be displayed'
 
-test 'ouputs info on not set properties', ->
+test 'outputs info on not set properties', ->
   job = Ember.Object.create()
 
   component = @subject(job: job)
