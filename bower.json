@@ -18,6 +18,7 @@
     "moment": "~2.9.0",
     "jquery-timeago": "~1.4.1",
     "pusher": "~2.2.3",
-    "pretender": "0.1.0"
+    "pretender": "0.1.0",
+    "jquery-mockjax": "~1.6.2"
   }
 }
