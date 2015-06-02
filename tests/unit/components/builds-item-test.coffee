@@ -1,8 +1,8 @@
 `import { test, moduleForComponent } from 'ember-qunit'`
 
 moduleForComponent 'builds-item', {
-  # specify the other units that are required for this test
-  # needs: ['component:foo', 'helper:bar']
+  needs: ['helper:format-sha', 'helper:format-duration', 'helper:format-time',
+          'helper:format-message']
 }
 
 test 'it renders', (assert) ->
