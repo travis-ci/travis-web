@@ -28,8 +28,10 @@ Route = BasicRoute.extend
 
     setTimeout =>
       unless repos.get('length')
-        @store.find('repo').then (reposFromRequest) ->
-          repos.get('external').pushObjects reposFromRequest.toArray().slice(0, 3)
+        @store.find('build').then (builds) =>
+          repoIds = builds.mapBy('data.repo').uniq().slice(0, 3)
+          @store.find('repo', ids: repoIds).then (reposFromRequest) ->
+            repos.get('external').pushObjects reposFromRequest.toArray()
     , 10000
 
     @_super.apply this, arguments
