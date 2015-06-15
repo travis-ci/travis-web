@@ -2,8 +2,8 @@
 
 <section {{bind-attr class=":tile :tile--pass :row job.state"}} {{!-- id="new-summary" --}}>
   <div class="tile-status">
-    <span {{bind-attr class=":icon :icon-status job.state"}}></span>
-    <span {{bind-attr class=":request-kind job.build.eventType :icon"}}></span>
+    <span {{bind-attr class=":icon :icon-status job.state"}} {{bind-attr title="job.state"}}></span>
+    <span {{bind-attr class=":request-kind job.build.eventType :icon"}} {{bind-attr title="job.build.eventType"}}></span>
   </div>
 
   <div class="tile-main medium-8 columns">
