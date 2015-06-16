@@ -52,11 +52,16 @@ Auth = Ember.Object.extend
       null
 
   validateUser: (user) ->
-    fieldsToValidate = ['id', 'login', 'token', 'correct_scopes']
+    fieldsToValidate = ['id', 'login', 'token']
+    isTravisBecome = sessionStorage.getItem('travis.become')
+
+    unless isTravisBecome
+      fieldsToValidate.push 'correct_scopes'
+
     if config.pro
       fieldsToValidate.push 'channels'
 
-    fieldsToValidate.every( (field) => @validateHas(field, user) ) && user.correct_scopes
+    fieldsToValidate.every( (field) => @validateHas(field, user) ) && (isTravisBecome || user.correct_scopes)
 
   validateHas: (field, user) ->
     if user[field]
