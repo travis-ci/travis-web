@@ -48,4 +48,6 @@ Auth = Ember.Object.extend
     if @get('state') == 'signed-in'
       'a-token'
 
+  refreshUserData: (->)
+
 `export default Auth`
