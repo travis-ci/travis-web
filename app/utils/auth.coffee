@@ -52,11 +52,16 @@ Auth = Ember.Object.extend
       null
 
   validateUser: (user) ->
-    fieldsToValidate = ['id', 'login', 'token', 'correct_scopes']
+    fieldsToValidate = ['id', 'login', 'token']
+    isTravisBecome = sessionStorage.getItem('travis.become')
+
+    unless isTravisBecome
+      fieldsToValidate.push 'correct_scopes'
+
     if config.pro
       fieldsToValidate.push 'channels'
 
-    fieldsToValidate.every( (field) => @validateHas(field, user) ) && user.correct_scopes
+    fieldsToValidate.every( (field) => @validateHas(field, user) ) && (isTravisBecome || user.correct_scopes)
 
   validateHas: (field, user) ->
     if user[field]
@@ -74,18 +79,26 @@ Auth = Ember.Object.extend
     @set('state', 'signed-in')
     Travis.trigger('user:signed_in', data.user)
     @sendToApp('afterSignIn')
-    @refreshUserData(data.user)
 
   refreshUserData: (user) ->
-    Ajax.get "/users/#{user.id}", (data) =>
-      @store.pushPayload(users: [data.user])
-      # if user is still signed in, update saved data
-      if @get('signedIn')
-        data.user.token = user.token
-        @storeData(data, @sessionStorage)
-        @storeData(data, @storage)
-    , (status, xhr) =>
-      @signOut() if status == 403
+    unless user
+      if data = @userDataFrom(@sessionStorage) || @userDataFrom(@storage)
+        user = data.user
+
+    if user
+      Ajax.get "/users/#{user.id}", (data) =>
+        if data.user.correct_scopes
+          userRecord = @loadUser(data.user)
+          userRecord.get('permissions')
+          # if user is still signed in, update saved data
+          if @get('signedIn')
+            data.user.token = user.token
+            @storeData(data, @sessionStorage)
+            @storeData(data, @storage)
+        else
+          @signOut()
+      , (status, xhr) =>
+        @signOut() if status == 403
 
   signedIn: (->
     @get('state') == 'signed-in'
@@ -105,9 +118,7 @@ Auth = Ember.Object.extend
 
   loadUser: (user) ->
     @store.pushPayload(users: [user])
-    user = @store.recordForId('user', user.id)
-    user.get('permissions')
-    user
+    @store.recordForId('user', user.id)
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()
@@ -129,9 +140,9 @@ Auth = Ember.Object.extend
     #         as a direct response to either manual sign in or autoSignIn (right now
     #         we treat both cases behave the same in terms of sent events which I think
     #         makes it more complicated than it should be).
-    controller = @container.lookup('controller:auth')
+    router = @container.lookup('router:main')
     try
-      controller.send(name)
+      router.send(name)
     catch error
       unless error.message =~ /Can't trigger action/
         throw error

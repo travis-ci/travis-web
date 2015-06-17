@@ -3,8 +3,8 @@
 {{else}}
   <section {{bind-attr class=":tile :tile--pass :row build.state"}}>
     <div class="tile-status">
-      <span {{bind-attr class=":icon :icon-status build.state"}}></span>
-      <span {{bind-attr class=":request-kind build.eventType :icon"}}></span>
+      <span {{bind-attr class=":icon :icon-status build.state"}} {{bind-attr title="build.state"}}></span>
+      <span {{bind-attr class=":request-kind build.eventType :icon"}} {{bind-attr title="build.eventType"}}></span>
     </div>
 
     <div class="tile-main medium-8 columns">

@@ -5,6 +5,11 @@
 Route = TravisRoute.extend BuildFaviconMixin,
   needsAuth: false
 
+  beforeModel: ->
+    @_super.apply(this, arguments)
+
+    @get('auth').refreshUserData()
+
   renderTemplate: ->
     if @get('config').pro
       $('body').addClass('pro')
