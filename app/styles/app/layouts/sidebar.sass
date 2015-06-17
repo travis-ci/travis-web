@@ -36,18 +36,19 @@ $sb-font-size: 14px
     display: inline-block
     margin-bottom: .7em
     @media #{$medium-up}
-      width: 78%
+      width: 75%
       white-space: nowrap
       overflow: hidden
       &:after
         @include fadeOut(right, -90deg, $white)
   p.tile-title
-    width: 22%
+    width: 10%
     @media #{$medium-up}
+      width: 25%
       white-space: nowrap
       overflow: hidden
     @media #{$xlarge-up}
-      width: 18%
+      width: 22%
   a:hover
     text-decoration: underline
   .icon:not(.icon--hash)
