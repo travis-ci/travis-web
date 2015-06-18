@@ -52,6 +52,9 @@ App = Ember.Application.extend(Ember.Evented,
     @on 'user:signed_in', (user) ->
       Travis.onUserUpdate(user)
 
+    @on 'user:refreshed', (user) ->
+      Travis.onUserUpdate(user)
+
     @on 'user:synced', (user) ->
       Travis.onUserUpdate(user)
 
@@ -61,16 +64,20 @@ App = Ember.Application.extend(Ember.Evented,
   onUserUpdate: (user) ->
     if config.pro
       @identifyCustomer(user)
-      @subscribePusher(user)
       @setupCharm(user)
 
+    @subscribePusher(user)
+
   subscribePusher: (user) ->
+    return unless user.channels
     channels = user.channels
-    channels = channels.map (channel) ->
-      if channel.match /^private-/
-        channel
-      else
-        "private-#{channel}"
+    if config.pro
+      channels = channels.map (channel) ->
+        if channel.match /^private-/
+          channel
+        else
+          "private-#{channel}"
+
     Travis.pusher.subscribeAll(channels)
 
   setupCharm: (user) ->

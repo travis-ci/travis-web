@@ -19,6 +19,24 @@ Route = TravisRoute.extend BuildFaviconMixin,
   activate: ->
     @get('stylesheetsManager').disable('dashboard')
 
+    if !config.pro
+      repos = @get('store').all('repo')
+      repos.forEach (repo) =>
+        @subscribeToRepo(repo)
+
+      repos.addArrayObserver(this, willChange: 'reposWillChange', didChange: 'reposDidChange')
+
+  reposWillChange: (->)
+
+  reposDidChange: (array, start, removedCount, addedCount) ->
+    addedRepos = array.slice(start, start + addedCount)
+    addedRepos.forEach (repo) =>
+      @subscribeToRepo(repo)
+
+  subscribeToRepo: (repo) ->
+    if @pusher
+      @pusher.subscribe "repo-#{repo.get('id')}"
+
   title: (titleParts) ->
     if titleParts.length
       titleParts = titleParts.reverse()

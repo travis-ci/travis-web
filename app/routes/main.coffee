@@ -16,9 +16,4 @@ Route = TravisRoute.extend
     # TODO: this is redundant with repositories and recent routes
     @container.lookup('controller:repos').activate('owned')
 
-  activate: ->
-    # subscribe to pusher only if we're at a main route
-    if !config.pro && @pusher
-      @pusher.subscribeAll(['common'])
-
 `export default Route`

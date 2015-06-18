@@ -95,6 +95,7 @@ Auth = Ember.Object.extend
             data.user.token = user.token
             @storeData(data, @sessionStorage)
             @storeData(data, @storage)
+            Travis.trigger('user:refreshed', data.user)
         else
           @signOut()
       , (status, xhr) =>
