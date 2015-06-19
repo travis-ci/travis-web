@@ -19,23 +19,20 @@
     <li>
       <p>Add the `code-climate-reporter` gem to your Gemfile:</p>
 
-<pre>
-gem "codeclimate-test-reporter", group: :test, require: nil
+<pre>gem "codeclimate-test-reporter", group: :test, require: nil
 </pre>
     </li>
     <li>
       <p>Load the reporter in your `test_helper` or `spec_helper`, putting it at the very top:</p>
 
-<pre>
-require "codeclimate-test-reporter"
+<pre>require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 </pre>
     </li>
     <li>
       <p>Add the Code Climate token to your .travis.yml:</p>
 
-<pre>
-addons:
+<pre>addons:
   code_climate:
     repo_token: adf08323...
 </pre>

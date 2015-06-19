@@ -1,3 +1,15 @@
+%popup
+  width: 29em
+  height: auto
+  position: fixed
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  padding: 2.5em 2em
+  color: #565656
+  z-index: 99
+  background-color: $white
+  @extend %border-radius-4px
 
 .help
   display: inline-block
@@ -14,13 +26,14 @@
   cursor: pointer
 
 .popup
-  top: 50%
-  left: 50%
+  @extend %popup
+  display: none
   width: 400px
-  margin: -200px 0 0 -200px
-  padding: 20px
-  @include popup
-  box-sizing: border-box
+  background-color: #fff
+  border: solid 10px $cream-dark
+
+  &:before
+    content: ""
 
   .close
     position: absolute
@@ -29,11 +42,8 @@
     top: 10px
     width: 16px
     height: 16px
-    background:
-      image: inline-image('ui/close.svg')
-      repeat: no-repeat
-      size: 100%
-
+    @extend .icon
+    @extend .icon--dismiss-grey
   h4
     margin-top: 0
     font-size: 18px
@@ -41,20 +51,20 @@
     color: $color-text
 
   p
-    font-size: $font-size-normal
+    font-size: $font-size-sm
     word-wrap: normal
 
   pre
     background-color: $color-bg-pre
     margin: 0
-    padding: 10px 20px
+    padding: 5px 10px
     border-radius: 4px
     overflow-x: scroll
 
 #status-images
-  display: none
-  width: 600px
-  margin: -95px 0 0 -300px
+  width: 100%
+  @media #{$medium-up}
+    width: 600px
 
   p
     margin: 0
@@ -97,19 +107,11 @@
     border-radius: 3px
 
 #regenerate-key, #regeneration-success
-  display: none
   width: 400px
 
 #code-climate
-  width: 500px
-  padding: 5px 20px
-  margin-left: -250px
-
-  pre
-    padding: 5px 10px
-
+  width: 100%
   ol
-    padding-left: 15px
-  img#code-climate-logo
-    margin-right: 50px
-
+    padding-left: 1.2em
+  @media #{$medium-up}
+    width: 550px
