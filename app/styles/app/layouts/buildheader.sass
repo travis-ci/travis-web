@@ -2,10 +2,6 @@
 .repo
   font-size: $font-size-m
   color: $grey-medium
-  a
-    color: $grey-medium
-    &:hover
-      color: $grey-medium
 
 .repo-header
   header
@@ -65,16 +61,20 @@
     font-weight: 400
     & span:hover + .tooltip
       display: block
+  a:not(.button)
+    color: $grey-medium
+    &:hover
+      color: $grey-medium
 
 .repo-main-commit
   position: relative
   padding-bottom: 0.5em
   font-weight: 400
+  color: $grey-dark
   &,
   small
     margin: 0
     font-size: $font-size-m
-    color: $grey-medium
     line-height: 1
   small
     margin-right: .3em
@@ -130,7 +130,7 @@
     display: block
     margin-bottom: .5em
     text-align: center
-    background-color: $grey-medium
+    background-color: $grey-lighter
     &:hover
       background-color: darken($grey-medium, 10)
   .icon

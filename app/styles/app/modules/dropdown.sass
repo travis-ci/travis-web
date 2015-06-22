@@ -100,7 +100,7 @@ $dropdown-border: #C3D9DB
   font-size: $font-size-normal
   &:hover,
   &:focus
-    background-color: lighten($grey, 10)
+    background-color: lighten($grey-medium, 10)
   .icon-cog-light
     position: relative
     top: 0.15em
@@ -119,7 +119,7 @@ $dropdown-border: #C3D9DB
   width: 100%
   z-index: 70
   overflow: hidden
-  background-color: $grey
+  background-color: $grey-lighter
   display: none
   a
     @extend %inline-block
@@ -127,6 +127,6 @@ $dropdown-border: #C3D9DB
     padding: .4em 2em
     color: $white
     &:hover
-      background-color: darken($grey, 10)
+      background-color: darken($grey-lighter, 10)
   &.display
     display: block
