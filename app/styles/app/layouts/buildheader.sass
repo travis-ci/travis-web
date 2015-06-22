@@ -1,7 +1,11 @@
 
 .repo
   font-size: $font-size-m
-  color: $grey
+  color: $grey-medium
+  a
+    color: $grey-medium
+    &:hover
+      color: $grey-medium
 
 .repo-header
   header
@@ -15,7 +19,7 @@
   font-weight: 400
   font-size: 35px
   a
-    color: $grey3
+    color: $grey-medium
     &:hover
       text-decoration: underline
 
@@ -56,7 +60,7 @@
     margin-top: 2em
   .build-title
     margin-top: 2.5rem
-    color: $grey1
+    color: $grey-medium
     font-size: $font-size-sm
     font-weight: 400
     & span:hover + .tooltip
@@ -65,15 +69,13 @@
 .repo-main-commit
   position: relative
   padding-bottom: 0.5em
+  font-weight: 400
   &,
   small
     margin: 0
-    font-weight: 400
     font-size: $font-size-m
-    color: $grey3
+    color: $grey-medium
     line-height: 1
-    a
-      color: $grey3
   small
     margin-right: .3em
     font-weight: 600
@@ -84,10 +86,6 @@
       @include fadeOut(right, -90deg, $cream-light)
 
 .repo-main-description
-  p:not(.body)
-    color: $grey3
-    a
-      color: $grey3
   p
     margin: 0
   @media #{$medium-up}
@@ -105,7 +103,7 @@
     overflow: hidden
     word-break: break-word
     white-space: pre-wrap
-    color: $grey2
+    color: $grey-medium
 
 .repo-main-info
   @include resetul
@@ -117,8 +115,6 @@
   overflow: hidden
   &:after
     @include fadeOut(right, -90deg, $cream-light)
-  a
-    color: $grey
     white-space: nowrap
     &:hover
       text-decoration: underline
@@ -134,9 +130,9 @@
     display: block
     margin-bottom: .5em
     text-align: center
-    background-color: $grey1
+    background-color: $grey-medium
     &:hover
-      background-color: darken($grey, 10)
+      background-color: darken($grey-medium, 10)
   .icon
     width: .9em
     height: 1.1em

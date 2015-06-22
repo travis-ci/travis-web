@@ -93,7 +93,7 @@ $dropdown-border: #C3D9DB
 
 .dropdown-button
   height: 28px
-  background-color: $grey
+  background-color: $grey-lighter
   border: none
   color: $white
   line-height: 1
@@ -113,7 +113,7 @@ $dropdown-border: #C3D9DB
 
 .dropdown-menu
   @include resetul
-  @include border-bottom-radius(4px)
+  @extend %border-bottom-4px
   position: absolute
   top: 29px // height of the button +1
   width: 100%
