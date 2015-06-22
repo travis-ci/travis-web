@@ -31,8 +31,8 @@
         {{/link-to}}
       {{/if}}
     </p>
-    <p class="">
-      <a {{bind-attr href="build.urlGithubCommit"}}>
+    <p>
+      <a href="{{urlGithubCommit}}">
         <span class="icon icon-github"></span>
         {{format-sha build.commit.sha}}
       </a>
