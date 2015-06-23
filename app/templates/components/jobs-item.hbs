@@ -37,7 +37,7 @@
       </p>
     {{/if}}
 
-    <p class="job-duration jobs-item" {{bind-attr title="job.startedAt"}}>
+    <p class="job-duration jobs-item" title="Started {{pretty-date job.startedAt}}">
       <span class="icon icon--clock-dark"></span>
       {{format-duration job.duration}}
     </p>

@@ -40,11 +40,11 @@
   </div>
 
   <div class="column small-6">
-    <p class="" {{bind-attr title="build.duration"}}>
+    <p title="{{format-duration build.duration}}">
       <span class="icon icon-clock"></span>
       {{format-duration build.duration}}
     </p>
-    <p class="" {{bind-attr title="build.formattedFinishedAt"}}>
+    <p title="{{pretty-date build.formattedFinishedAt}}">
       <span class="icon icon-cal"></span>
       {{format-time build.finishedAt}}
     </p>
