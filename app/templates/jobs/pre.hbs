@@ -4,6 +4,9 @@
   {{#if view.job.notStarted}}
     <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
   {{/if}}
+  {{#if view.job.isLegacyInfrastructure}}
+    <p class="">This job runs on our legacy infrastructure. Read more about upgrading  <a href="#" title="">in our docs</a></p>
+  {{/if}}
   <div {{bind-attr class="view.job.notStarted:hidden"}}>
     <menu class="log-header">
       {{#if view.canRemoveLog}}
