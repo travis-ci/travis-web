@@ -12,10 +12,10 @@
       line-height: 1.45
     p:not(.sync-last)
       font-size: $font-size-sm
-      color: #adaaab
+      color: $grey-light
       margin: 2rem 0 1rem 0
       a
-        color: #adaaab
+        color: $grey-light
         text-decoration: underline
     @media #{$medium-up}
       .profile-header, .sync-button, .ember-view
@@ -37,7 +37,7 @@
     margin-right: .5em
   p
     font-size: $font-size-m
-    color: #7a7a7a
+    color: $grey-medium
 
   .cta-btn
     text-align: right
@@ -107,7 +107,7 @@
   h1
     color: #898b8c
     font-size: $font-size-sm
-    border-bottom: solid 2px #f3f2f2
+    border-bottom: solid 2px $cream-dark
 
 .profile-user
   margin: 1rem 0 2rem
@@ -165,9 +165,10 @@ p.profile-user-last
   vertical-align: middle
   span:not(.loading-indicator)
     display: none
-    margin-left: 2rem
+    margin-left: 1rem
     font-size: $font-size-sm
-    color: #484849
+    color: darken($grey-dark, 10)
+    line-height: 1
   .sync-spinner
     vertical-align: top
   &:hover
