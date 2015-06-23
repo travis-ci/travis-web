@@ -2,7 +2,7 @@
 
 moduleForComponent 'builds-item', {
   needs: ['helper:format-sha', 'helper:format-duration', 'helper:format-time',
-          'helper:format-message']
+          'helper:format-message', 'helper:pretty-date']
 }
 
 test 'it renders', (assert) ->

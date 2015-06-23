@@ -2,7 +2,7 @@
 
 moduleForComponent 'jobs-item', 'JobsItemComponent', {
   # specify the other units that are required for this test
-  needs: ['helper:format-duration']
+  needs: ['helper:format-duration', 'helper:pretty-date']
 }
 
 test 'it renders', ->
