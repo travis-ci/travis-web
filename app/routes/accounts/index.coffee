@@ -7,6 +7,6 @@ Route = TravisRoute.extend
     accounts = @modelFor('accounts')
     login    = @controllerFor('currentUser').get('model.login')
     account  = accounts.find (account) -> account.get('login') == login
-    @replaceWith 'account', account
+    @transitionTo 'account', account
 
 `export default Route`
