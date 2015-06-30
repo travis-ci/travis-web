@@ -1,4 +1,4 @@
-<div class="profile-hooks profile-switch columns">
+<div class="profile-hooks profile-switch">
   {{hook-switch hook=hook onToggleError="handleToggleError" onToggle="resetErrors"}}
   {{#if hook.isSaving}}
     {{loading-indicator}}
@@ -6,7 +6,7 @@
     {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
   {{/if}}
 </div>
-<a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo columns">
+<a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo">
   {{hook.slug}}
   <span>{{hook.description}}</span></a>
 
