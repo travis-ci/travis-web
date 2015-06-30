@@ -3,8 +3,7 @@
 
 View = Ember.View.extend
   templateName: 'status_images'
-  elementId: 'status-images'
-  classNames: ['popup']
+  classNames: ['popup', 'status-images']
   classNameBindings: ['display']
 
   repoBinding:  'toolsView.repo'
