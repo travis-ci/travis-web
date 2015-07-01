@@ -1,24 +1,42 @@
 <div class="settings">
   
   <section class="settings-section">
-    <h2>General Settings</h2>
+    <h2 class="small-title">General Settings</h2>
+
+    <ul class="settings-list">
+      <li>{{settings-switch}}</li>
+      <li>
+        <div class="settings-input"><input type="text" pattern="/^[0-9]+$/" value="4"></div><span class="label">Concurrent jobs</span>
+      </li>
+      <li>{{settings-switch}}</li>
+      <li>{{settings-switch}}</li>
+    </ul>
+
   </section>
 
   <section class="settings-section">
-    <h2>Environment Variables</h2>
+    <h2 class="small-title">Environment Variables</h2>
+
+    {{env-var}}
+
+
   </section>
 {{#if config.endpoints.sshKey}}
   <section class="settings-section">
-    <h2>SSH Key</h2>
+    <h2 class="small-title">SSH Key</h2>
+
+    {{ssh-key}}
   </section>
 {{/if}}
   <section class="settings-section">
-    <h2>Deactivate Repository</h2>
+    <h2 class="small-title">Deactivate Repository</h2>
+    <p>If you'd no longer like to run this project on Travis CI you can deactivate it now.<br>You will be able to reactivate it in the future if you'd like to.</p>
+    <a href="#" class="button--delete">Deactivate Repository</a>
   </section>
 
 </div>
 
 
-<div id="settings">
+{{!-- <div id="settings">
   {{outlet}}
-</div>
+</div> --}}

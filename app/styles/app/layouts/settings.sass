@@ -1,4 +1,3 @@
-// If you'd no longer like to run this project on Travis CI you can deactivate it now.<br>You will be able to reactivate it in the future if you'd like to.
 
 $add-green: #3AA95E
 $add-green-hover: #3BA85D
@@ -15,16 +14,6 @@ $deactivate-bg: #e93d3c
 $heading-color: #63a4a3
 $heading-size: 18px
 
-$switch-height: 32px
-$switch-size: 11px
-$switch-color: $white
-
-$switch-descr-size: 16px
-$switch-descr-color: #8e8f8e
-
-$switch-descr-inline-size: 12px
-$switch-descr-inline-color: #8e8f8e
-
 $input-border: 1px solid #eeedec
 $input-radius: 4px
 $input-color: #8e8f8e
@@ -40,3 +29,50 @@ $env-vars-radius: 4px
 $env-vars-pw-bg: #eeedec
 
 $input-main-height: 30px
+
+
+.small-title
+  font-size: 18px
+  color: $heading-color
+  font-weight: 400
+
+
+.settings
+  padding-top: .8em
+
+.settings-section
+  padding: 0 0 1em
+  margin-bottom: 1.5em
+  border-bottom: $setting-section-border
+  &:last-of-type
+    border-bottom: none
+  .small-title
+    margin-top: 0
+
+
+.settings-list
+  padding: 0
+  margin: 0
+  list-style: none
+
+  li
+    margin-bottom: 1rem
+    @media #{$medium-up}
+      display: inline-block
+      width: grid-calc(11, 24)
+
+.settings-input
+  display: inline-block;
+  margin-right: 1rem;
+  vertical-align: middle
+  & + .label
+    vertical-align: middle
+  input
+    border: 1px solid #eeedec
+    border-radius: 4px
+    color: #8e8f8e
+    text-align: center
+    height: 32px;
+    display: inline-block;
+    width: 80px;
+    
