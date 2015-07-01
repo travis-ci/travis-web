@@ -22,6 +22,7 @@ addons:
 sudo: false
 
 cache:
+  branch: md5deep
   directories:
     - node_modules
 
