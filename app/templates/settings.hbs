@@ -3,7 +3,7 @@
   <section class="settings-section">
     <h2 class="small-title">General Settings</h2>
 
-    <ul class="settings-list">
+    <ul class="settings-list--columns">
       <li>{{settings-switch}}</li>
       <li>
         <div class="settings-input"><input type="text" pattern="/^[0-9]+$/" value="4"></div><span class="label">Concurrent jobs</span>
@@ -17,8 +17,12 @@
   <section class="settings-section">
     <h2 class="small-title">Environment Variables</h2>
 
-    {{env-var}}
-
+    <ul class="settings-list--envvars">
+      <li>{{env-var}}</li>
+      <li>{{env-var}}</li>
+      <li>{{env-var}}</li>
+      <li>{{env-var}}</li>
+    </ul>
 
   </section>
 {{#if config.endpoints.sshKey}}

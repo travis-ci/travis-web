@@ -2,6 +2,7 @@
 
 EnvVarComponent = Ember.Component.extend
 
+  classNames: ['settings-envvar']
 
   name:   DS.attr()
   value:  DS.attr()

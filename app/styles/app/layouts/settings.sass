@@ -49,30 +49,78 @@ $input-main-height: 30px
   .small-title
     margin-top: 0
 
-
-.settings-list
+%settings-list
   padding: 0
   margin: 0
   list-style: none
-
   li
     margin-bottom: 1rem
+
+.settings-list--columns
+  @extend %settings-list
+  li
     @media #{$medium-up}
       display: inline-block
       width: grid-calc(11, 24)
 
+.settings-list--envvars
+  @extend %settings-list
+
 .settings-input
-  display: inline-block;
-  margin-right: 1rem;
+  display: inline-block
+  margin-right: 1rem
   vertical-align: middle
   & + .label
     vertical-align: middle
   input
+    display: inline-block
+    height: 32px
+    width: 80px
     border: 1px solid #eeedec
     border-radius: 4px
+    font-size: $font-size-s
     color: #8e8f8e
     text-align: center
-    height: 32px;
-    display: inline-block;
-    width: 80px;
-    
+
+.settings-envvar
+  padding: .6em .5em
+  border-radius: 4px
+  background-color: #F6F5F5
+
+.env-var-name
+  display: inline-block
+  vertical-align: middle
+  @media #{$medium-up}
+    width: grid-calc(6, 12)
+
+.env-var-value
+  display: inline-block
+  input
+    display: inline-block
+    width: 100%
+    padding: 0.7em 0.5em 0.7em 2.2em
+    border-radius: 4px
+    border: none
+    background-color: #eeedec
+    color: #8e8f8e
+    @extend .icon-lock
+    background:
+      size: 14px
+      repeat: no-repeat
+      position: 0.4em 0.7em
+  @media #{$medium-up}
+    width: grid-calc(3, 12)
+
+.env-var-action
+  display: inline-block
+  text-align: right
+  line-height: 2
+
+  .icon-delete
+    @extend %icon
+    @extend .icon-delete
+    width: 1.1em
+    height: 1.3em
+  @media #{$medium-up}
+    width: grid-calc(1, 24)
+    float: right
