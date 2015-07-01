@@ -1,11 +1,23 @@
-<ul class="navigation tabnav-sub">
-  <li>{{#link-to "settings.index"}}General Settings{{/link-to}}</li>
-  <li>{{#link-to "env_vars"}}Environment Variables{{/link-to}}</li>
+<div class="settings">
+  
+  <section class="settings-section">
+    <h2>General Settings</h2>
+  </section>
 
-  {{#if config.endpoints.sshKey}}
-    <li>{{#link-to "ssh_key"}}SSH Key{{/link-to}}</li>
-  {{/if}}
-</ul>
+  <section class="settings-section">
+    <h2>Environment Variables</h2>
+  </section>
+{{#if config.endpoints.sshKey}}
+  <section class="settings-section">
+    <h2>SSH Key</h2>
+  </section>
+{{/if}}
+  <section class="settings-section">
+    <h2>Deactivate Repository</h2>
+  </section>
+
+</div>
+
 
 <div id="settings">
   {{outlet}}
