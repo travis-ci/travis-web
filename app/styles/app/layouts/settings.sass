@@ -89,12 +89,15 @@ $input-main-height: 30px
 
 .env-var-name
   display: inline-block
+  width: grid-calc(6, 12)
   vertical-align: middle
-  @media #{$medium-up}
-    width: grid-calc(6, 12)
 
 .env-var-value
   display: inline-block
+  width: grid-calc(4, 12)
+  @media #{$medium-up}
+    width: grid-calc(3, 12)
+
   input
     display: inline-block
     width: 100%
@@ -108,19 +111,52 @@ $input-main-height: 30px
       size: 14px
       repeat: no-repeat
       position: 0.4em 0.7em
-  @media #{$medium-up}
-    width: grid-calc(3, 12)
 
 .env-var-action
+  position: relative
   display: inline-block
-  text-align: right
   line-height: 2
+  width: grid-calc(2, 24)
+  float: right
 
   .icon-delete
     @extend %icon
     @extend .icon-delete
+    display: block
     width: 1.1em
     height: 1.3em
-  @media #{$medium-up}
-    width: grid-calc(1, 24)
-    float: right
+    margin: .2em auto 0
+  
+
+  .tooltip
+    display: none
+    position: absolute
+    right: 0
+    left: 0
+    top: -2.7em
+    width: 4.2em
+    margin: auto
+    padding: 0 .8em
+    z-index: 5
+    background-color: #818383
+    border-radius: 4px
+    color: $white
+    &:before
+      content: ""
+      position: absolute
+      bottom: -0.3em
+      left: 39%
+      width: 1em
+      height: 1em
+      transform: rotate(45deg)
+      z-index: -1
+      background-color: #818383
+
+  &:hover
+    .icon-delete
+      @extend .icon-delete-hover
+    .tooltip
+      display: block
+
+
+
