@@ -120,7 +120,6 @@ $input-main-height: 30px
 .env-var-action
   position: relative
   display: inline-block
-  line-height: 2
   width: grid-calc(2, 24)
   float: right
 
@@ -132,30 +131,96 @@ $input-main-height: 30px
     height: 1.3em
     margin: .2em auto 0
 
-  .tooltip
-    display: none
-    position: absolute
-    right: 0
-    left: 0
-    top: -2.7em
-    width: 4.2em
-    margin: auto
-    padding: 0 .8em
-    z-index: 5
-    background-color: #818383
-    border-radius: 4px
-    color: $white
-    &:before
-      content: ""
-      position: absolute
-      bottom: -0.3em
-      left: 39%
-      width: 1em
-      height: 1em
-      transform: rotate(45deg)
-      z-index: -1
-      background-color: #818383
+  &:hover
+    .icon-delete
+      @extend .icon-delete-hover
+    .tooltip
+      display: block
 
+.tooltip
+  display: none
+  position: absolute
+  right: 0
+  left: 0
+  top: -2.7em
+  width: auto
+  margin: auto
+  padding: .2em .8em .3em
+  z-index: 5
+  background-color: #818383
+  border-radius: 4px
+  color: $white
+  white-space: nowrap
+  &:before
+    content: ""
+    position: absolute
+    bottom: -0.3em
+    left: 39%
+    width: 1em
+    height: 1em
+    transform: rotate(45deg)
+    z-index: -1
+    background-color: #818383
+
+.settings-sshkey
+  display: block
+  margin-bottom: 1rem
+  padding: .6em .5em
+  border-radius: 4px
+  background-color: #F6F5F5
+
+  span
+    vertical-align: middle
+
+.ssh-key-name
+  display: inline-block
+  position: relative
+  vertical-align: middle
+  width: 40%
+  white-space: nowrap
+  overflow: hidden
+  .icon-key
+    @extend %icon
+    @extend .icon-key
+    width: 1.2em
+    height: 1.3em
+  &:after
+    content: ""
+    @include fadeOut(right, -90deg, #F6F5F5)
+
+.ssh-key-value
+  display: inline-block
+  vertical-align: middle
+  width: grid-calc(3, 12)
+  text-align: right
+  white-space: nowrap
+  .icon-fingerprint
+    @extend %icon
+    @extend .icon-fingerprint
+    width: 1.3em
+    height: 1.3em
+    margin-right: .5em
+
+.ssh-key-action
+  display: inline-block
+  position: relative
+  vertical-align: middle
+  width: grid-calc(2, 24)
+  float: right
+  .icon-delete
+    @extend %icon
+    @extend .icon-delete
+    display: block
+    width: 1.1em
+    height: 1.3em
+    margin: .2em auto 0
+  .icon-delete-disabled
+    @extend %icon
+    @extend .icon-delete-disabled
+    display: block
+    width: 1.1em
+    height: 1.3em
+    margin: .2em auto 0
   &:hover
     .icon-delete
       @extend .icon-delete-hover
@@ -181,7 +246,7 @@ $input-main-height: 30px
   @media #{$medium-up}
     .form-elem:first-of-type,
     .form-elem:nth-of-type(2)
-      width: 32%
+      width: 31.5%
       margin-right: 1em
     .form-elem:nth-of-type(3)
       width: 24%

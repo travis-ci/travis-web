@@ -1,1 +1,35 @@
-<p>This is an ssh key</p>
+{{#if custom}}
+  <div class="ssh-key-name">
+    <span class="icon-key"></span>
+    <span>TRAVIS_PRIVATE_KEY</span>
+  </div>
+  <div class="ssh-key-value">
+    <span class="icon-fingerprint"></span>
+    <span>e1:b1:83:06:7e:51:6d:5e:e0:e0:60:96:ca:ac:3d:8a</span>
+  </div>
+  <div class="ssh-key-action">
+    <a href="#" title="">
+      <span class="icon-delete"></span>
+      <p class="tooltip">
+        <span>Delete</span>
+      </p>
+    </a>
+  </div>
+{{else}}
+  <div class="ssh-key-name">
+    <span class="icon-key"></span>
+    <span>no custom key set</span>
+  </div>
+  <div class="ssh-key-value">
+    <span class="icon-fingerprint"></span>
+    <span>e1:b1:83:06:7e:51:6d:5e:e0:e0:60:96:ca:ac:3d:8a</span>
+  </div>
+  <div class="ssh-key-action">
+    <a href="#" title="">
+      <span class="icon-delete-disabled"></span>
+      <p class="tooltip">
+        <span>Default keys cannot be deleted</span>
+      </p>
+    </a>
+  </div>
+{{/if}}
