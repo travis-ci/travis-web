@@ -1,6 +1,8 @@
 `import Ember from 'ember'`
 `import startApp from '../helpers/start-app'`
 `import Pretender from 'pretender'`
+`import FactoryGuy, { build } from 'ember-data-factory-guy'`
+
 
 application = null
 server = null

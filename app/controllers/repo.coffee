@@ -74,6 +74,10 @@ Controller = Ember.Controller.extend
 
   _lastBuildDidChange: ->
     build = @get('repo.lastBuild')
+    # refresh build in case it's only partially loaded,
+    # I don't want to implement partial records for now
+    if build && !build.get('commit.id')
+      build.reload()
     @set('build', build)
 
   stopObservingLastBuild: ->

@@ -1,0 +1,7 @@
+{{#if sortedRepos.length}}
+  {{#each repo in sortedRepos}}
+    {{repos-list-item repo=repo selectedRepo=selectedRepo}}
+  {{/each}}
+{{else}}
+  <p class="empty">{{noReposMessage}}</p>
+{{/if}}

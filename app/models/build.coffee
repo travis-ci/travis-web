@@ -19,7 +19,7 @@ Build = Model.extend DurationCalculations,
   pullRequestNumber: DS.attr('number')
   eventType:         DS.attr('string')
 
-  repo:   DS.belongsTo('repo', async: true)
+  repo:   DS.belongsTo('repo', async: true, inverse: '_builds')
   commit: DS.belongsTo('commit', async: true)
   jobs:   DS.hasMany('job', async: true)
 

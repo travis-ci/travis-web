@@ -16,8 +16,9 @@ Route = TravisRoute.extend
 
   serialize: (repo) ->
     slug = if repo.get then repo.get('slug') else repo.slug
-    [owner, name] = slug.split('/')
-    { owner: owner, name: name }
+    if slug
+      [owner, name] = slug.split('/')
+      { owner: owner, name: name }
 
   model: (params) ->
     slug = "#{params.owner}/#{params.name}"
