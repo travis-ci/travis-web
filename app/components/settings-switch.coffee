@@ -3,7 +3,7 @@
 SettingsSwitchComponent = Ember.Component.extend
 
   tagName: 'a'
-  classNames: ['settings-switch']
+  classNames: ['switch']
   classNameBindings: ['_active:active']
 
   # TODO: how to handle overriding properties to
