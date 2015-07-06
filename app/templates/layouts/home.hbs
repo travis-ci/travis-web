@@ -1,4 +1,4 @@
-<div {{bind-attr class=":wrapper auth.signedIn:non-centered:centered"}}>
+<div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
 
   <header id="top" class="top">
     {{render "top"}}
@@ -12,11 +12,11 @@
     </div>
   </div>
 
-  <aside id="left" {{bind-attr class="auth.signedIn::hidden"}}>
+  <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
     {{outlet "left"}}
   </aside>
 </div>
 
-<footer {{bind-attr class="auth.signedIn:hidden"}}>
+<footer class="{{if auth.signedIn 'hidden'}}">
   {{render "footer"}}
 </footer>

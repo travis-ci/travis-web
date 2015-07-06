@@ -1,9 +1,9 @@
 {{#if isLoaded}}
   {{#if controller.length}}
     {{#each job in controller}}
-      <div {{bind-attr class=":tile :tile--sidebar job.state"}}>
+      <div class="tile tile--sidebar {{job.state}}">
         {{#if job.repo.slug}}
-          <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+          <span class="icon icon--job {{job.state}}"></span>
           {{#link-to "job" job.repo job}}{{job.repo.slug}}{{/link-to}}
         {{/if}}
 
@@ -17,7 +17,7 @@
         <p>
           <span class="icon icon--clock"></span>
           Duration:
-          <abbr class="duration" {{bind-attr title="job.startedAt"}}>
+          <abbr class="duration" title={{job.startedAt}}>
             {{format-duration job.duration}}
           </abbr>
         </p>

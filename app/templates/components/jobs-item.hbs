@@ -1,6 +1,6 @@
 {{#link-to "job" repo job}}
   <div class="tile-status tile-status--job">
-    <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+    <span class="icon icon--job {{job.state}}"></span>
   </div>
 
   <p class="job-id jobs-item build-status">
@@ -8,8 +8,8 @@
     {{job.number}}
   </p>
 
-  <p {{bind-attr class=":job-os :jobs-item :build-os job.config.os"}}>
-    <span {{bind-attr class=":icon job.config.os"}}></span>
+  <p class="job-os jobs-item build-os {{job.config.os}}">
+    <span class="icon {{job.config.os}}"></span>
   </p>
 
   {{#if languages}}
