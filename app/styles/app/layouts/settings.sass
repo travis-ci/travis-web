@@ -1,11 +1,8 @@
 
 
-$heading-color: #63a4a3
-$setting-section-border: 2px solid #f2f3ef
-
 .small-title
   font-size: 18px
-  color: $heading-color
+  color: $teal-light
   font-weight: 400
 
 .settings
@@ -14,11 +11,13 @@ $setting-section-border: 2px solid #f2f3ef
 .settings-section
   padding: 0 0 1em
   margin-bottom: 1.5em
-  border-bottom: $setting-section-border
+  border-bottom: 2px solid #f2f3ef
   &:last-of-type
     border-bottom: none
   .small-title
     margin-top: 0
+
+
 
 %settings-list
   padding: 0
@@ -44,36 +43,78 @@ $setting-section-border: 2px solid #f2f3ef
   & + .label
     vertical-align: middle
   input
-    display: inline-block
-    height: 32px
     width: 80px
-    border: 1px solid #eeedec
-    border-radius: 4px
     font-size: $font-size-s
-    color: #8e8f8e
     text-align: center
 
-.settings-envvar
+
+
+%settings-row
   padding: .6em .5em
   border-radius: 4px
   background-color: #F6F5F5
 
-.env-var-name
+.settings-envvar
+  @extend %settings-row
+
+.settings-sshkey
+  @extend %settings-row
+  display: block
+  margin-bottom: 1rem
+  span
+    vertical-align: middle
+
+
+
+%settings-name-section
   display: inline-block
   position: relative
-  width: grid-calc(6, 12)
   vertical-align: middle
   overflow: hidden
+  white-space: nowrap
   &:after
     content: ""
     @include fadeOut(right, -90deg, #F6F5F5)
+
+.ssh-key-name
+  @extend %settings-name-section
+  width: 40%
+  .icon-key
+    @extend %icon
+    @extend .icon-key
+    width: 1.2em
+    height: 1.3em
+
+.env-var-name
+  @extend %settings-name-section
+  width: grid-calc(6, 12)
+
+
+
+%settings-value-section
+  display: inline-block
+  vertical-align: middle
+  white-space: nowrap
+  overflow: hidden
+
+.ssh-key-value
+  @extend %settings-value-section
+  width: 48%
+  text-align: right
+  @media #{$medium-up}
+    width: grid-calc(3, 12)
+  .icon-fingerprint
+    @extend %icon
+    @extend .icon-fingerprint
+    width: 1.3em
+    height: 1.3em
+    margin-right: .5em
 
 .env-var-value
   display: inline-block
   width: grid-calc(4, 12)
   @media #{$medium-up}
     width: grid-calc(3, 12)
-
   input
     display: inline-block
     width: 100%
@@ -88,81 +129,32 @@ $setting-section-border: 2px solid #f2f3ef
       repeat: no-repeat
       position: 0.4em 0.7em
 
-.env-var-action
-  position: relative
+
+
+%settings-action-section
   display: inline-block
+  position: relative
   width: grid-calc(2, 24)
   float: right
+  vertical-align: middle
   text-align: center
-
-  a
-    padding: 1em
-
   .icon-delete
     @extend %icon
     @extend .icon-delete
     width: 1.1em
     height: 1.3em
-
   &:hover
     .icon-delete
       @extend .icon-delete-hover
 
-
-.settings-sshkey
-  display: block
-  margin-bottom: 1rem
-  padding: .6em .5em
-  border-radius: 4px
-  background-color: #F6F5F5
-
-  span
-    vertical-align: middle
-
-.ssh-key-name
-  display: inline-block
-  position: relative
-  vertical-align: middle
-  width: 40%
-  white-space: nowrap
-  overflow: hidden
-  .icon-key
-    @extend %icon
-    @extend .icon-key
-    width: 1.2em
-    height: 1.3em
-  &:after
-    content: ""
-    @include fadeOut(right, -90deg, #F6F5F5)
-
-.ssh-key-value
-  display: inline-block
-  vertical-align: middle
-  width: 48%
-  text-align: right
-  white-space: nowrap
-  overflow: hidden
-  @media #{$medium-up}
-    width: grid-calc(3, 12)
-  .icon-fingerprint
-    @extend %icon
-    @extend .icon-fingerprint
-    width: 1.3em
-    height: 1.3em
-    margin-right: .5em
+.env-var-action
+  @extend %settings-action-section
+  a
+    padding: 1em
 
 .ssh-key-action
-  display: inline-block
-  position: relative
-  vertical-align: middle
-  width: grid-calc(2, 24)
-  float: right
+  @extend %settings-action-section
   .icon-delete
-    @extend %icon
-    @extend .icon-delete
-    display: block
-    width: 1.1em
-    height: 1.3em
     margin: .2em auto 0
   .icon-delete-disabled
     @extend %icon
@@ -171,8 +163,5 @@ $setting-section-border: 2px solid #f2f3ef
     width: 1.1em
     height: 1.3em
     margin: .2em auto 0
-  &:hover
-    .icon-delete
-      @extend .icon-delete-hover
 
 
