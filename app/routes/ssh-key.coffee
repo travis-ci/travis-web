@@ -17,7 +17,7 @@ Route = TravisRoute.extend
 
   afterModel: (model, transition) ->
     repo = @modelFor('repo')
-    Ajax.get "/repositories/#{repo.get('id')}/key", (data) =>
+    Ajax.get "/repos/#{repo.get('id')}/key", (data) =>
       @defaultKey = Ember.Object.create(fingerprint: data.fingerprint)
 
   setupController: (controller, model) ->
