@@ -8,12 +8,12 @@
     <span>e1:b1:83:06:7e:51:6d:5e:e0:e0:60:96:ca:ac:3d:8a</span>
   </div>
   <div class="ssh-key-action">
-    <a href="#" title="">
-      <span class="icon-delete"></span>
-      <p class="tooltip">
-        <span>Delete</span>
-      </p>
-    </a>
+    <div class="tooltip">
+      <a href="#" title="">
+        <span class="icon-delete"></span>
+      </a>
+      <div class="tooltip-bubble">Delete</div>
+    </div>
   </div>
 {{else}}
   <div class="ssh-key-name">
@@ -25,11 +25,11 @@
     <span>e1:b1:83:06:7e:51:6d:5e:e0:e0:60:96:ca:ac:3d:8a</span>
   </div>
   <div class="ssh-key-action">
-    <a href="#" title="">
-      <span class="icon-delete-disabled"></span>
-      <p class="tooltip">
-        <span>Default keys cannot be deleted</span>
-      </p>
-    </a>
+    <div class="tooltip--right">
+      <a href="#" title="">
+        <span class="icon-delete-disabled"></span>
+      </a>
+      <div class="tooltip-bubble">Default keys cannot be deleted</div>
+    </div>
   </div>
 {{/if}}

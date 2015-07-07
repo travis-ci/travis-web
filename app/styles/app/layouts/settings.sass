@@ -122,45 +122,21 @@ $input-main-height: 30px
   display: inline-block
   width: grid-calc(2, 24)
   float: right
+  text-align: center
+
+  a
+    padding: 1em
 
   .icon-delete
     @extend %icon
     @extend .icon-delete
-    display: block
     width: 1.1em
     height: 1.3em
-    margin: .2em auto 0
 
   &:hover
     .icon-delete
       @extend .icon-delete-hover
-    .tooltip
-      display: block
 
-.tooltip
-  display: none
-  position: absolute
-  right: 0
-  left: 0
-  top: -2.7em
-  width: auto
-  margin: auto
-  padding: .2em .8em .3em
-  z-index: 5
-  background-color: #818383
-  border-radius: 4px
-  color: $white
-  white-space: nowrap
-  &:before
-    content: ""
-    position: absolute
-    bottom: -0.3em
-    left: 39%
-    width: 1em
-    height: 1em
-    transform: rotate(45deg)
-    z-index: -1
-    background-color: #818383
 
 .settings-sshkey
   display: block
@@ -227,8 +203,6 @@ $input-main-height: 30px
   &:hover
     .icon-delete
       @extend .icon-delete-hover
-    .tooltip
-      display: block
 
 
 .form--envvar

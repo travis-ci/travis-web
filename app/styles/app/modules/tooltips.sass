@@ -1,42 +1,59 @@
+%tooltip
+  &:hover
+    .tooltip-bubble
+      transform: translateY(0)
+      opacity: 1
 
-$tooltip-grey: #6A6C6D
+  .tooltip-bubble
+    position: absolute
+    top: -3.2em
+    width: auto
+    height: 1.9em
+    margin: auto
+    padding: .2em .8em .3em
+    z-index: 5
+    background-color: #818383
+    border-radius: 4px
+    color: $white
+    text-align: center
+    white-space: nowrap
+
+    transition: all 100ms ease
+    transform: translateY(20%)
+    opacity: 0
+
+    &:before
+      content: ""
+      position: absolute
+      bottom: -0.3em
+      width: 1em
+      height: 1em
+      transform: rotate(45deg)
+      z-index: -1
+      background-color: #818383
 
 .tooltip
+  @extend %tooltip
+  .tooltip-bubble
+    right: 0
+    left: 0
+    &:before
+      left: 42%
+
+.tooltip--right
+  @extend %tooltip
+  .tooltip-bubble
+    right: -0.5em
+    &:before
+      left: 72%
+
+.tooltip--jobs
+  @extend %tooltip
+  display: inline-block
   position: relative
-  display: none
-
-.tooltip-inner
-  position: absolute
-  bottom: 0
-  right: 0
-  background: $tooltip-grey
-  color: $white
-  font-size: $font-size-small
-  line-height: 18px
-  text-align: center
-  padding: 8px 5px
-  @extend %border-radius-4px
-  
-  &:after
-    content: ''
-    position: absolute
-    top: 98%
-    right: 3em
-    width: 0
-    height: 0
-    border-top: 13px solid $tooltip-grey
-    border-right: 13px solid transparent
-    border-left: 13px solid transparent
-
-  @media #{$small-only}
-    bottom: -2.5em  
-
-  @media #{$medium-up}
-    width: 18rem
-
-.tooltip-inner
-  height: 4.1em
-  top: -8em
-  left: 4em
-  &:after
-    left: 3.7em
+  .tooltip-bubble
+    top: -4.5em
+    left: -2em
+    height: 3.7em
+    &:before
+      left: 15%
