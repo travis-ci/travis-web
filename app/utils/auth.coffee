@@ -99,7 +99,7 @@ Auth = Ember.Object.extend
         else
           @signOut()
       , (status, xhr) =>
-        @signOut() if status == 403
+        @signOut() if status == 403 || status == 404
 
   signedIn: (->
     @get('state') == 'signed-in'
