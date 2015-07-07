@@ -1,41 +1,12 @@
 
-$add-green: #3AA95E
-$add-green-hover: #3BA85D
-
-$add-var-bg: #c2c3c5
-$add-var-color: $white
-$add-var-radius: 4px
-
-$deactivate-red: #EB3A3D
-$deactivate-red-hover: #D12F2F
-
-$deactivate-bg: #e93d3c
 
 $heading-color: #63a4a3
-$heading-size: 18px
-
-$input-border: 1px solid #eeedec
-$input-radius: 4px
-$input-color: #8e8f8e
-$input-width: 78px
-$input-height: 32px
-
 $setting-section-border: 2px solid #f2f3ef
-
-$env-vars-bg: #f2f3ef
-$env-vars-color: #8e8f8e
-$env-vars-size: 16px
-$env-vars-radius: 4px
-$env-vars-pw-bg: #eeedec
-
-$input-main-height: 30px
-
 
 .small-title
   font-size: 18px
   color: $heading-color
   font-weight: 400
-
 
 .settings
   padding-top: .8em
@@ -204,83 +175,4 @@ $input-main-height: 30px
     .icon-delete
       @extend .icon-delete-hover
 
-
-.form--envvar
-  .form-elem
-    display: inline-block
-    vertical-align: middle
-
-  .form-elem:first-of-type,
-  .form-elem:nth-of-type(2)
-    width: 49.6%
-  .form-elem:nth-of-type(3)
-    width: 50%
-  .form-elem:last-of-type
-    width: 50%
-    float: right
-    text-align: right
-
-  @media #{$medium-up}
-    .form-elem:first-of-type,
-    .form-elem:nth-of-type(2)
-      width: 31.5%
-      margin-right: 1em
-    .form-elem:nth-of-type(3)
-      width: 24%
-    .form-elem:last-of-type
-      width: 6%
-      float: right
-      text-align: right
-  input
-    display: inline-block
-    height: 32px
-    width: 100%
-    padding: .4em .4em
-    border: 1px solid #eeedec
-    border-radius: 4px
-    color: #8e8f8e
-    font-size: $font-size-sm
-
-  .form-submit
-    padding: .5em .8em
-    color: $white
-    font-size: $font-size-sm
-    font-weight: 300
-    &:hover
-      background-color: #3BA85D
-      cursor: pointer
-
-.form--sshkey
-
-  .form-elem
-    margin-bottom: .5rem
-  @media #{$medium-up}
-    .form-elem
-      max-width: 460px
-
-  input
-    display: inline-block
-    height: 32px
-    width: 100%
-    padding: .4em .4em
-    border: 1px solid #eeedec
-    border-radius: 4px
-    color: #8e8f8e
-    font-size: $font-size-sm
-  textarea
-    display: inline-block
-    width: 100%
-    padding: .2em .4em
-    border: 1px solid #eeedec
-    border-radius: 4px
-    color: #8e8f8e
-    font-size: $font-size-sm
-  .form-submit
-    padding: .5em .8em
-    color: $white
-    font-size: $font-size-sm
-    font-weight: 300
-    width: auto
-    &:hover
-      background-color: #3BA85D
 
