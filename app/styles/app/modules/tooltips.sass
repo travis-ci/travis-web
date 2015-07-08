@@ -8,9 +8,10 @@
     position: absolute
     top: -3.2em
     width: auto
+    max-width: 8.6em
     height: 1.9em
     margin: auto
-    padding: .2em .8em .3em
+    padding: .2em .4em .3em
     z-index: 5
     background-color: #818383
     border-radius: 4px
@@ -38,14 +39,21 @@
     right: 0
     left: 0
     &:before
-      left: 42%
+      left: 46%
+      @media #{$medium-up}
+        left: 42%
 
-.tooltip--right
+.tooltip--height
   @extend %tooltip
   .tooltip-bubble
-    right: -0.5em
+    right: 0
+    left: 0
+    top: -4em
+    height: 3.2em
     &:before
-      left: 72%
+      left: 46%
+      @media #{$medium-up}
+        left: 42%
 
 .tooltip--jobs
   @extend %tooltip

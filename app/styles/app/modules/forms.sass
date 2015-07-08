@@ -45,18 +45,12 @@ textarea
   .form-elem
     display: inline-block
     vertical-align: middle
-
-  .form-elem:first-of-type,
-  .form-elem:nth-of-type(2)
-    width: 49.6%
-  .form-elem:nth-of-type(3)
-    width: 50%
-  .form-elem:last-of-type
-    width: 50%
-    float: right
-    text-align: right
+    width: 100%
+    margin-bottom: 1em
 
   @media #{$medium-up}
+    .form-elem
+      margin-bottom: 0
     .form-elem:first-of-type,
     .form-elem:nth-of-type(2)
       width: 31.5%

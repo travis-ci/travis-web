@@ -1,5 +1,4 @@
 
-
 .small-title
   font-size: 18px
   color: $teal-light
@@ -16,8 +15,6 @@
     border-bottom: none
   .small-title
     margin-top: 0
-
-
 
 %settings-list
   padding: 0
@@ -38,7 +35,7 @@
 
 .settings-input
   display: inline-block
-  margin-right: 1rem
+  margin-right: 1.4rem
   vertical-align: middle
   & + .label
     vertical-align: middle
@@ -46,8 +43,6 @@
     width: 80px
     font-size: $font-size-s
     text-align: center
-
-
 
 %settings-row
   padding: .6em .5em
@@ -64,8 +59,6 @@
   span
     vertical-align: middle
 
-
-
 %settings-name-section
   display: inline-block
   position: relative
@@ -78,17 +71,25 @@
 
 .ssh-key-name
   @extend %settings-name-section
-  width: 40%
+  width: 100%
+  margin-bottom: 1em
   .icon-key
     @extend %icon
     @extend .icon-key
     width: 1.2em
     height: 1.3em
 
+  @media #{$medium-up}
+    width: 40%
+    margin-bottom: 0
+
 .env-var-name
   @extend %settings-name-section
-  width: grid-calc(6, 12)
-
+  width: 100%
+  margin-bottom: 1em
+  @media #{$medium-up}
+    width: grid-calc(6, 12)
+    margin-bottom: 0
 
 
 %settings-value-section
@@ -96,25 +97,23 @@
   vertical-align: middle
   white-space: nowrap
   overflow: hidden
+  width: 76%
+  @media #{$medium-up}
+    width: grid-calc(3, 12)
 
 .ssh-key-value
   @extend %settings-value-section
-  width: 48%
-  text-align: right
-  @media #{$medium-up}
-    width: grid-calc(3, 12)
   .icon-fingerprint
     @extend %icon
     @extend .icon-fingerprint
     width: 1.3em
     height: 1.3em
     margin-right: .5em
+  @media #{$medium-up}
+    text-align: right
 
 .env-var-value
-  display: inline-block
-  width: grid-calc(4, 12)
-  @media #{$medium-up}
-    width: grid-calc(3, 12)
+  @extend %settings-value-section
   input
     display: inline-block
     width: 100%
@@ -130,11 +129,10 @@
       position: 0.4em 0.7em
 
 
-
 %settings-action-section
   display: inline-block
   position: relative
-  width: grid-calc(2, 24)
+  width: 24%
   float: right
   vertical-align: middle
   text-align: center
@@ -146,6 +144,10 @@
   &:hover
     .icon-delete
       @extend .icon-delete-hover
+  @media #{$medium-up}
+    width: grid-calc(4, 24)
+  @media #{$xlarge-up}
+    width: grid-calc(4, 36)
 
 .env-var-action
   @extend %settings-action-section
@@ -163,5 +165,4 @@
     width: 1.1em
     height: 1.3em
     margin: .2em auto 0
-
 
