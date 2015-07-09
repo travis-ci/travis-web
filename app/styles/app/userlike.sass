@@ -1,0 +1,28 @@
+.feedback-button
+  display: none
+
+.pro
+  .feedback-button
+    display: inline-block
+
+.feedback-button
+  display: inline-block
+  position: fixed
+  right: 1%
+  left: auto
+  bottom: 0
+  margin: 0
+  padding: .5em 1em .5em
+  border-radius: 4px
+  transform: translateY(20%)
+  will-change: transform
+  transition: transform ease 200ms
+  background: $white
+  font-size: 13px
+  color: #a2afb3
+  text-transform: uppercase
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.15)
+  z-index: 89
+
+.feedback-button:hover
+  transform: translateY(5%)
