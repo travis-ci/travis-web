@@ -4,6 +4,19 @@
   {{#if view.job.notStarted}}
     <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
   {{/if}}
+  
+
+  {{#if view.job.isLegacyInfrastructure}}
+    {{#if view.job.isFinished}}
+      <p class="notice"><span class="icon-flag"></span>
+      This job ran on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/" title="Migrating from legacy">our docs on how to upgrade</a></p>
+    {{else}}
+      <p class="notice"><span class="icon-flag"></span>
+      This job is running on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/" title="Migrating from legacy">our docs on how to upgrade</a></p>
+    {{/if}}
+  {{/if}}
+
+
   <div {{bind-attr class="view.job.notStarted:hidden"}}>
     <menu class="log-header">
       {{#if view.canRemoveLog}}
