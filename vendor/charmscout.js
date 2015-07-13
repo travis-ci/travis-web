@@ -52,6 +52,7 @@ window.bootstrapCharm = function(){
     tab.href = "https://secure.charmhq.com/feedback/" + __CHARM.key;
     tab.onclick = function(){ show(); return false };
     document.body.appendChild(tab);
+    message('feedback_sending', false);
   }
 
   function template(string){
