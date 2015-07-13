@@ -3,6 +3,7 @@ languageConfigKeys = {
   php:         'PHP'
   node_js:     'Node.js'
   perl:        'Perl'
+  perl6:       'Perl6'
   python:      'Python'
   scala:       'Scala'
   ruby:        'Ruby'
