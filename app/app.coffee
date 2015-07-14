@@ -81,6 +81,10 @@ App = Ember.Application.extend(Ember.Evented,
     Travis.pusher.subscribeAll(channels)
 
   setupUserlike: (user) ->
+
+    btn = document.getElementById('userlikeCustomTab')
+    btn.className = btn.className + " logged-in"
+
     userlikeData = window.userlikeData = {}
     userlikeData.user = {}
 
