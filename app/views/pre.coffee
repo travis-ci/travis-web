@@ -23,6 +23,24 @@ Log.Scroll.prototype = $.extend new Log.Listener,
       $('#main').scrollTop(0)
       $('html, body').scrollTop(element.offset()?.top - (window.innerHeight / 3)) # weird, html works in chrome, body in firefox
 
+Log.Limit = (max_lines, limitedLogCallback) ->
+  @max_lines = max_lines || 1000
+  @limitedLogCallback = limitedLogCallback || (->)
+  this
+
+Log.Limit.prototype = Log.extend new Log.Listener,
+  count: 0,
+  insert: (log, node, pos) ->
+    if node.type == 'paragraph' && !node.hidden
+      @count += 1
+      if @limited
+        @limitedLogCallback()
+      return @count
+
+Object.defineProperty Log.Limit.prototype, 'limited',
+  get: ->
+    @count >= @max_lines
+
 View = BasicView.extend
   templateName: 'jobs/pre'
   currentUserBinding: 'controller.auth.currentUser'
@@ -66,7 +84,10 @@ View = BasicView.extend
       console.log 'log view: create engine' if Log.DEBUG
       @scroll = new Log.Scroll beforeScroll: =>
         @unfoldHighlight()
-      @engine = Log.create(limit: Log.LIMIT, listeners: [@scroll])
+      @limit = new Log.Limit Log.LIMIT, =>
+        @set('limited', true)
+      @engine = Log.create(listeners: [@scroll, @limit])
+      @engine.limit = @limit
       @logFolder = new LogFolder(@$().find('#log'))
       @lineSelector = new LinesSelector(@$().find('#log'), @scroll, @logFolder)
       @observeParts()
@@ -85,13 +106,8 @@ View = BasicView.extend
     console.log 'log view: parts did change' if Log.DEBUG
     for part, i in parts.slice(start, start + added)
       # console.log "limit in log view: #{@get('limited')}"
-      break if @get('limited')
+      break if @engine?.limit?.limited
       @engine.set(part.number, part.content)
-      @propertyDidChange('limited')
-
-  limited: (->
-    @engine?.limit?.limited
-  ).property()
 
   plainTextLogUrl: (->
     if id = @get('log.job.id')
