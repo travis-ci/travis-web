@@ -87,8 +87,6 @@ App = Ember.Application.extend(Ember.Evented,
     userlikeData.user.name= user.login;
     userlikeData.user.email = user.email;
 
-    console.log(user)
-
     s = document.createElement('script')
     s.src = '//userlike-cdn-widgets.s3-eu-west-1.amazonaws.com/0327dbb23382ccbbb91b445b76e8a91d4b37d90ef9f2faf84e11177847ff7bb9.js'
     document.body.appendChild(s)
