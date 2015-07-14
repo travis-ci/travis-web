@@ -64,7 +64,7 @@ App = Ember.Application.extend(Ember.Evented,
   onUserUpdate: (user) ->
     if config.pro
       @identifyCustomer(user)
-      @setupCharm(user)
+      @setupUserlike(user)
 
     @subscribePusher(user)
 
@@ -80,14 +80,21 @@ App = Ember.Application.extend(Ember.Evented,
 
     Travis.pusher.subscribeAll(channels)
 
-  setupCharm: (user) ->
-    $.extend window.__CHARM,
-      customer: user.login,
-      customer_id: user.id,
-      email: user.email
+  setupUserlike: (user) ->
+    userlikeData = window.userlikeData = {}
+    userlikeData.user = {}
 
-  displayCharm: ->
-    __CHARM.show()
+    userlikeData.user.name= user.login;
+    userlikeData.user.email = user.email;
+
+    console.log(user)
+
+    s = document.createElement('script')
+    s.src = '//userlike-cdn-widgets.s3-eu-west-1.amazonaws.com/0327dbb23382ccbbb91b445b76e8a91d4b37d90ef9f2faf84e11177847ff7bb9.js'
+    document.body.appendChild(s)
+
+  # displayCharm: ->
+  #   __CHARM.show()
 
   identifyCustomer: (user) ->
     if _cio && _cio.identify
