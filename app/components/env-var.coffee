@@ -4,12 +4,6 @@ EnvVarComponent = Ember.Component.extend
 
   classNames: ['settings-envvar']
 
-  name:   DS.attr()
-  value:  DS.attr()
-  public: DS.attr('boolean')
-
-  repo: DS.belongsTo('repo', async: true)
-
   isEditing: false
   isDeleting: false
 
@@ -20,14 +14,11 @@ EnvVarComponent = Ember.Component.extend
   showValueField: Ember.computed.alias('public')
 
   value: ( (key, value) ->
-    if arguments.length == 2
-      @get('model').set('value', value)
-      value
-    else if @get('public')
-      @get('model.value')
+    if @get('envVar.public')
+      @get('envVar.value')
     else
       '••••••••••••••••'
-  ).property('model.value', 'public')
+  ).property('envVar.value', 'envVar.public')
 
   actions:
     delete: ->

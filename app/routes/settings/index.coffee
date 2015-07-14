@@ -6,7 +6,6 @@ Route = TravisRoute.extend
 
   model: ->
     repo = @modelFor('repo')
-    console.log('######### YEHA ###############')
 
     repo.fetchSettings().then (settings) ->
 

@@ -18,29 +18,13 @@
     <h2 class="small-title">Environment Variables</h2>
 
     <ul class="settings-list--envvars">
-      <li>{{env-var}}</li>
-      <li>{{env-var}}</li>
-      <li>{{env-var}}</li>
-      <li>{{env-var}}</li>
+      {{#each envVars as |envVar|}}
+        <li>{{env-var envVar=envVar}}</li>
+      {{/each}}
     </ul>
 
+    {{add-env-var repo=repo}}
 
-     <div class="form--envvar">
-       <form action="">
-         <div class="form-elem">
-           <input type="text" placeholder="Name">
-         </div>
-         <div class="form-elem">
-           <input type="text" placeholder="Value">
-         </div>
-         <div class="form-elem">
-           {{settings-switch inline="true"}}
-         </div>
-         <div class="form-elem">
-           <input type="submit" class="form-submit" value="Add">
-         </div>
-       </form>
-     </div>
 
   </section>
 {{#if config.endpoints.sshKey}}
