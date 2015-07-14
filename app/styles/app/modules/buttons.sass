@@ -17,9 +17,8 @@ $button-border-color: #d4d4d4
   text-align: center
   color: $white
   white-space: nowrap
-  background-color: #C2C3C5
-  border-radius: 4px
-  font-weight: 300
+  border-radius: 2px
+
 
 .button:hover,
 .button:focus,
@@ -82,6 +81,12 @@ $button-border-color: #d4d4d4
     position: relative
     top: -0.15em
 
+<<<<<<< HEAD
+=======
+.btn
+  @extend .button
+  border-radius: 2px
+>>>>>>> master
 .button--green
   border: none
   font-size: $font-size-small
@@ -116,7 +121,7 @@ $button-border-color: #d4d4d4
   color: #f2f2f2
   font-size: $font-size-small
   border: none
-  @extend %border-radius-4px
+  border-radius: 2px
   &:hover,
   &:active
     border: none
@@ -140,7 +145,7 @@ $button-border-color: #d4d4d4
 
 .button--delete
   @extend .button
-  @extend %border-radius-4px
+  border-radius: 2px
   border: none
   font-size: $font-size-small
   color: $white

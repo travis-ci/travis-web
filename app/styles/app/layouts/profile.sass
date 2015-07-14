@@ -3,6 +3,13 @@
   font-weight: 400
 
 .profile-main
+  padding: 0 $column-gutter/2
+
+  @media #{$medium-up}
+    width: grid-calc(8, 12)
+    float: right
+    padding: 0 0 0 $column-gutter/2
+
   header
     h1
       margin: 0 1.7rem 0 0
@@ -55,7 +62,10 @@
   figcaption
     width: 90%
     margin: auto
-    padding: 0 0 0 2.8em
+    padding: 0 1em 0 2.8em
+    text-align: center
+    @media #{$medium-up}
+      text-align: left
   img
     display: block
     margin: 0 auto 1em
@@ -125,17 +135,21 @@ p.profile-user-last
 .profile-hooklist
   @include resetul
   font-size: $font-size-m
-  color: #7a7a7a
   li
     clear: both
     margin-bottom: .8em
-    overflow: auto
+    // overflow: auto
   .profile-hooks
     width: grid-calc(10, 24)
+    display: inline-block
+    vertical-align: middle
     @media #{$medium-up}
-      width: grid-calc(7, 24)
+      width: grid-calc(5, 24) - 1%
     @media #{$large-up}
-      width: grid-calc(6, 24)
+      width: grid-calc(5, 24) - 1%
+  .switch
+    display: inline-block
+    vertical-align: middle
   .profile-settings
     display: inline-block
     padding: .2em .2em .2em .5em;
@@ -154,7 +168,8 @@ p.profile-user-last
 .profile-repo
   @extend %border-radius-4px
   position: relative
-  width: grid-calc(14, 24)
+  display: inline-block
+  width: grid-calc(13, 24)
   padding: .25em .5em .3em
   white-space: nowrap
   overflow: hidden
@@ -178,7 +193,7 @@ p.profile-user-last
       content: ""
       @include fadeOut(right, -90deg, #e2eee2)
   @media #{$medium-up}
-    width: grid-calc(17, 24)
+    width: grid-calc(18, 24)
     height: 30px
     &:hover
       span
