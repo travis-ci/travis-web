@@ -7,13 +7,18 @@ AddEnvVarComponent = Ember.Component.extend
   store: Ember.inject.service()
 
   isValid: () ->
-    true
+    if Ember.isBlank(@get('name'))
+      this.set('nameIsBlank', true)
+      false
+    else
+      true
 
   reset: ->
     @setProperties(name: null, value: null, public: null)
 
   actions:
     save: ->
+      console.log('SUBMITTED')
       return if @get('isSaving')
       @set('isSaving', true)
 
@@ -33,6 +38,9 @@ AddEnvVarComponent = Ember.Component.extend
           @set('isSaving', false)
       else
         @set('isSaving', false)
+
+    nameChanged: ->
+      this.set('nameIsBlank', false)
 
 
 `export default AddEnvVarComponent`

@@ -37,7 +37,6 @@ module.exports = function(defaults) {
   app.import('vendor/ansiparse.js');
   app.import('vendor/log.js');
   app.import('vendor/customerio.js');
-  app.import('vendor/charmscout.js');
   app.import('bower_components/moment/moment.js');
 
   return app.toTree();
