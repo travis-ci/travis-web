@@ -3,6 +3,7 @@
 AddEnvVarComponent = Ember.Component.extend
 
   classNames: ['form--envvar']
+  classNameBindings: ['nameIsBlank:form-error']
 
   store: Ember.inject.service()
 
