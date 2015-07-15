@@ -2,7 +2,7 @@
   <section class="profile-user">
     <div class="media">
       <div class="media-elem">
-        <img {{bind-attr src="auth.gravatarUrl"}} alt="">
+        <img src={{auth.gravatarUrl}} alt="">
       </div>
       <div class="media-body">
         {{#link-to 'profile'}}
@@ -19,7 +19,7 @@
       {{#link-to "account" view.account class="name"}}
         <div class="media">
           <div class="media-elem">
-            <img {{bind-attr src="view.avatarUrl"}} alt="">
+            <img src={{view.avatarUrl}} alt="">
           </div>
           <div class="media-body">
             <h2>{{view.name}}</h2>
@@ -34,7 +34,7 @@
 {{#if config.githubOrgsOauthAccessSettingsUrl}}
   <section class="profile-additional">
     <p>Is an organization missing?<br>
-      <a {{bind-attr href="config.githubOrgsOauthAccessSettingsUrl"}} title="Orgs Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.</p>
+      <a href={{config.githubOrgsOauthAccessSettingsUrl}} title="Orgs Oauth Access Settings on GitHub">Review and add</a> your authorized organizations.</p>
   </section>
 {{/if}}
 </aside>

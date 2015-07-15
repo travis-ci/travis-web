@@ -1,5 +1,5 @@
 {{#if view.jobs.length}}
-  <section {{bind-attr id=view.jobTableId}}>
+  <section id={{view.jobTableId}}>
 
   {{#if view.required}}
     <h2 class="build-title">Build Jobs</h2>
@@ -14,12 +14,12 @@
 
     {{#each job in view.jobs}}
       {{#view 'jobs-item' context=job}}
-        <div {{bind-attr class=":tile :tile--jobs :row job.state" }}>
+        <div class="tile tile--jobs row {{job.state}}">
           {{#if job.config}}
             {{#link-to "job" job.repo job}}
 
               <div class="tile-status tile-status--job">
-                <span {{bind-attr class=":icon :icon--job job.state"}}></span>
+                <span class="icon icon--job {{job.state}}"></span>
               </div>
 
               <p class="job-id jobs-item build-status">
@@ -31,8 +31,8 @@
                 {{/if}}
               </p>
 
-            <p {{bind-attr class=":job-os :jobs-item :build-os config.os"}}>
-              <span {{bind-attr class=":icon config.os"}}></span>
+            <p class="job-os jobs-item build-os {{config.os}}">
+              <span class="icon {{config.os}}"></span>
               {{!-- {{config.os}} --}}
             </p>
 
@@ -47,7 +47,7 @@
                 no language set
               </p>
             {{/if}}
-            
+
             <div class="job-anchor jobs-item">
               {{#if config.env}}
                 <p class="job-env jobs-item build-env">
@@ -61,14 +61,14 @@
                 </p>
               {{/if}}
 
-              <p class="job-duration jobs-item" {{bind-attr title="startedAt"}}>
+              <p class="job-duration jobs-item" title={{startedAt}}>
                 <span class="icon icon--clock-dark"></span>
                 {{format-duration duration}}
               </p>
 
             </div>
 
-              {{!-- <p class="" {{bind-attr title="formattedFinishedAt"}}>
+              {{!-- <p class="" title={{formattedFinishedAt}}>
                 <span class="icon icon--cal"></span>
                 {{format-time finishedAt}}
               </p> --}}

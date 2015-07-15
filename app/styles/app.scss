@@ -8,10 +8,11 @@
 
 @import "app/ansi";
 @import "app/auth";
-@import "app/charm";
-// @import "app/forms";
-// @import "app/github";
+@import "app/forms";
+@import "app/github";
+
 @import "app/main/annotations";
+@import "app/userlike";
 
 @import "app/main/list";
 @import "app/main/log";

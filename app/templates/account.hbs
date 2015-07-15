@@ -4,16 +4,16 @@
   {{#if config.billingEndpoint}}
     <div class="cta-btn">
     {{#if view.subscribed}}
-      <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
+      <a class="btn btn-activated" href={{billingUrl}}>
         Subscription active!
       </a>
     {{else}}
       {{#if view.education}}
-        <a class="btn btn-activated" {{bind-attr href="billingUrl"}}>
+        <a class="btn btn-activated" href={{billingUrl}}>
           Educational account!
         </a>
       {{else}}
-        <a class="btn btn-activate" {{bind-attr href="billingUrl"}}>
+        <a class="btn btn-activate" href={{billingUrl}}>
           Sign up this account!
         </a>
       {{/if}}
@@ -93,9 +93,9 @@
 
       <ul class="profile-hooklist">
         {{#each hook in hooksWithoutAdmin}}
-          <li {{bind-attr class="hook.active:active :row"}}>
+          <li class="{{if hook.active 'active'}} row">
             <button class="profile-switch disabled"></button>
-            <a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo">
+            <a href={{hook.urlGithub}} rel="nofollow" class="profile-repo">
               {{hook.slug}}
               <span>{{hook.description}}</span>
             </a>

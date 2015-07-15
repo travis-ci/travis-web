@@ -1,7 +1,7 @@
 {{#if cachesExist}}
   <div class="caches-header">
     <h1 class="caches-title">All caches <small>(<a href="http://docs.travis-ci.com/user/caching/" title="">documentation</a>)</small></h1>
-    <a href="#" {{action "deleteRepoCache"}} {{bind-attr class="isDeleting:deleting :delete-repo-caches :button--delete"}}>
+    <a href="#" {{action "deleteRepoCache"}} class="{{if isDeleting 'deleting'}} delete-repo-caches button--delete">
       Delete all repository caches
     </a>
   </div>

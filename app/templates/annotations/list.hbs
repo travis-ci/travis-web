@@ -2,7 +2,7 @@
 <div id="annotations">
   {{#each annotation in view.annotations}}
     <div class="annotation">
-      <a {{bind-attr href="annotation.url"}}>
+      <a href={{annotation.url}}>
           {{annotation.status}} {{annotation.providerName}}
       </a>:
       {{annotation.description}}

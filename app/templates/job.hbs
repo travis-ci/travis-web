@@ -1,14 +1,14 @@
 {{#if job.isLoaded}}
 
-<section {{bind-attr class=":tile :tile--pass :row job.state"}} {{!-- id="new-summary" --}}>
+<section class="tile tile--pass row {{job.state}}" {{!-- id="new-summary" --}}>
   <div class="tile-status">
-    <span {{bind-attr class=":icon :icon-status job.state"}} {{bind-attr title="job.state"}}></span>
-    <span {{bind-attr class=":request-kind job.build.eventType :icon"}} {{bind-attr title="job.build.eventType"}}></span>
+    <span class="icon icon-status {{job.state}}" title={{job.state}}></span>
+    <span class="request-kind {{job.build.eventType}} icon" title={{job.build.eventType}}></span>
   </div>
 
   <div class="tile-main medium-8 columns">
     <h2 class="repo-main-commit">
-      <small class="repo-main-branch" {{bind-attr title="job.commit.branch"}}>{{job.commit.branch}}</small>
+      <small class="repo-main-branch" title={{job.commit.branch}}>{{job.commit.branch}}</small>
       {{format-message job.commit.subject repoBinding=job.repo}}
     </h2>
     <div class="repo-main-description">
@@ -16,11 +16,11 @@
     </div>
     <div class="tile-author">
      {{#if job.commit.authorName}}
-       <img {{bind-attr src="view.urlAuthorGravatarImage"}}/>{{job.commit.authorName}} authored{{#if job.commit.authorIsCommitter}} and committed{{/if}}
+       <img src={{view.urlAuthorGravatarImage}} />{{job.commit.authorName}} authored{{#if job.commit.authorIsCommitter}} and committed{{/if}}
      {{/if}}
      {{#unless job.commit.authorIsCommitter}}
        {{#if job.commit.committerName}}
-         <img {{bind-attr src="view.urlCommitterGravatarImage"}}/>{{job.commit.committerName}} committed
+         <img src={{view.urlCommitterGravatarImage}} />{{job.commit.committerName}} committed
        {{/if}}
      {{/unless}}
     </div>
@@ -35,14 +35,14 @@
         {{/link-to}}
       </li>
       <li>
-        <a class="commit" {{bind-attr href="controller.urlGithubCommit"}}><span class="icon icon--github"></span> Commit {{format-sha job.commit.sha}}</a>
+        <a class="commit" href={{controller.urlGithubCommit}}><span class="icon icon--github"></span> Commit {{format-sha job.commit.sha}}</a>
       </li>
       <li>
         {{#if job.build.pullRequest}}
-          <div class="compare"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}><span class="icon icon--github"></span> #{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
+          <div class="compare"><a class="compare" href={{job.commit.compareUrl}}><span class="icon icon--github"></span> #{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
         {{else}}
           {{#if job.build.commit.compareUrl}}
-            <div class="compare"><a class="compare" {{bind-attr href="job.commit.compareUrl"}}><span class="icon icon--github"></span> Compare {{short-compare-shas job.build.commit.compareUrl}}</a></div>
+            <div class="compare"><a class="compare" href={{job.commit.compareUrl}}><span class="icon icon--github"></span> Compare {{short-compare-shas job.build.commit.compareUrl}}</a></div>
           {{/if}}
         {{/if}}
       </li>
