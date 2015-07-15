@@ -54,6 +54,7 @@ App = Ember.Application.extend(Ember.Evented,
 
     @on 'user:refreshed', (user) ->
       Travis.onUserUpdate(user)
+      Travis.setupUserlike(user)
 
     @on 'user:synced', (user) ->
       Travis.onUserUpdate(user)
@@ -64,7 +65,6 @@ App = Ember.Application.extend(Ember.Evented,
   onUserUpdate: (user) ->
     if config.pro
       @identifyCustomer(user)
-      @setupUserlike(user)
 
     @subscribePusher(user)
 
