@@ -52,7 +52,7 @@ module.exports = function(environment) {
         sshKey: true,
         caches: true
       };
-      ENV.charmKey = 'gy5gx7dy6dh86hxzkz1wmtvupwvievu';
+      ENV.userlike = true;
       ENV.urls = {
         legal: ENV.billingEndpoint + "/pages/legal",
         imprint: ENV.billingEndpoint + "/pages/imprint",

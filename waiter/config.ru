@@ -50,6 +50,7 @@ if ENV['TRAVIS_ENTERPRISE']
 end
 
 run Travis::Web::App.build(
+  userlike:        ENV['USERLIKE'],
   environment:     ENV['RACK_ENV'] || 'development',
   api_endpoint:    ENV['API_ENDPOINT'],
   pages_endpoint:   ENV['PAGES_ENDPOINT'],

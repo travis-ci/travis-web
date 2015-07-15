@@ -58,13 +58,18 @@ App = Ember.Application.extend(Ember.Evented,
     @on 'user:synced', (user) ->
       Travis.onUserUpdate(user)
 
+    @on 'user:signed_out', () ->
+      if config.userlike
+        Travis.removeUserlike()
+
   currentDate: ->
     new Date()
 
   onUserUpdate: (user) ->
     if config.pro
       @identifyCustomer(user)
-      @setupCharm(user)
+    if config.userlike
+      @setupUserlike(user)
 
     @subscribePusher(user)
 
@@ -80,14 +85,26 @@ App = Ember.Application.extend(Ember.Evented,
 
     Travis.pusher.subscribeAll(channels)
 
-  setupCharm: (user) ->
-    $.extend window.__CHARM,
-      customer: user.login,
-      customer_id: user.id,
-      email: user.email
+  setupUserlike: (user) ->
 
-  displayCharm: ->
-    __CHARM.show()
+    btn = document.getElementById('userlikeCustomTab')
+    btn.classList.add("logged-in")
+
+    userlikeData = window.userlikeData = {}
+    userlikeData.user = {}
+
+    userlikeData.user.name= user.login;
+    userlikeData.user.email = user.email;
+
+    unless document.getElementById('userlike-script')
+      s = document.createElement('script')
+      s.id = 'userlike-script'
+      s.src = '//userlike-cdn-widgets.s3-eu-west-1.amazonaws.com/0327dbb23382ccbbb91b445b76e8a91d4b37d90ef9f2faf84e11177847ff7bb9.js'
+      document.body.appendChild(s)
+
+  removeUserlike: () ->
+    btn = document.getElementById('userlikeCustomTab')
+    btn.classList.remove("logged-in")
 
   identifyCustomer: (user) ->
     if _cio && _cio.identify
