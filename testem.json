@@ -3,9 +3,11 @@
   "test_page": "tests/index.html?hidepassed",
   "launch_in_ci": [
     "SL_chrome",
-    "SL_firefox"
+    "SL_firefox",
+    "PhantomJS"
   ],
   "launch_in_dev": [
+    "PhantomJS"
   ],
   "launchers": {
     "SL_chrome": {

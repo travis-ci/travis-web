@@ -19,12 +19,12 @@
   <section class="dashboard-active">
 
     {{#each repo in filteredRepositories}}
-      <div {{bind-attr class=":db :row repo.last_build.state"}}>
+      <div class="db row {{repo.last_build.state}}">
         {{#if repo.private }}
           <div class="db-lock"><span class="icon icon-lock"></span></div>
         {{/if}}
         <div class="db-status">
-          <span {{bind-attr class=":icon :icon-status repo.last_build.state"}}></span>
+          <span class="icon icon-status {{repo.last_build.state}}"></span>
           <span class="icon icon-star"></span>
         </div>
         <div class="db-repo column medium-3 small-12">

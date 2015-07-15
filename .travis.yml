@@ -29,11 +29,18 @@ cache:
 before_install:
   - "npm config set spin false"
   - "npm install -g npm@^2"
+  - mkdir travis-phantomjs
+  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
+  - export PATH=$PWD/travis-phantomjs:$PATH
 
 install:
   - npm install -g bower
   - npm install
   - bower install
+
+before_script:
+  - ruby ci/prepare_testem.rb
 
 script:
   - ember try $EMBER_VERSION

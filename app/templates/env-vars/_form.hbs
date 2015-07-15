@@ -20,7 +20,7 @@
   </div>
 
   <div class="actions">
-    <input type="submit" {{bind-attr value=actionType class=":submit-env-var isSaving:saving" disabled=isSaving}} />
+    <input type="submit" value={{actionType}} class="submit-env-var {{if isSaving 'saving'}}" disabled={{isSaving}} />
     <span class="or">or</span>
     <a href="#" class="cancel-env-var" {{action "cancel"}}>Cancel</a>
   </div>

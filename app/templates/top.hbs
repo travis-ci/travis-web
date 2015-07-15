@@ -4,7 +4,7 @@
     <button type="button" id="burger" class="burger-btn" {{action 'toggleBurgerMenu'}}>&equiv;</button>
   </div>
 
-  <ul id="navigation" {{bind-attr class=":navigation is-open"}}>
+  <ul id="navigation" class="navigation {{is-open}}">
     <li><a href="http://blog.travis-ci.com">Blog</a></li>
     <li><a href="http://www.traviscistatus.com/">Status</a></li>
 
@@ -29,25 +29,27 @@
         </p>
         <ul class="navigation-nested">
           <li>
-            <a {{bind-attr href="config.urls.imprint"}}>Imprint</a>
+            <a href={{config.urls.imprint}}>Imprint</a>
           </li>
           <li>
-            <a {{bind-attr href="config.urls.security"}}>Security</a>
+            <a href={{config.urls.security}}>Security</a>
           </li>
           <li>
-            <a {{bind-attr href="config.urls.terms"}}>Terms</a>
+            <a href={{config.urls.terms}}>Terms</a>
           </li>
         </ul>
       </li>
     {{/if}}
 
-    <li {{bind-attr class="view.classProfile :navigation-sub"}}>
+    <li class="{{view.classProfile}} navigation-sub">
       <p class="handle navigation-handle">
         {{#if auth.signedOut}}
           <button class="signed-out button--signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
-          {{#link-to "profile" class="signed-in"}}{{userName}}<img {{bind-attr src="gravatarUrl"}}/>{{/link-to}}
+          {{#link-to "profile" class="signed-in"}}{{userName}}
+            <img src={{gravatarUrl}} />
+          {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
           <button class="signing-in button--signingin">Signing In <span class="loading-indicator--white"><i></i><i></i><i></i></span></button>
@@ -60,7 +62,7 @@
           </li>
           {{#if config.billingEndpoint}}
             <li>
-              <a {{bind-attr href="config.billingEndpoint"}}>Billing</a>
+              <a href={{config.billingEndpoint}}>Billing</a>
             </li>
           {{/if}}
           <li>

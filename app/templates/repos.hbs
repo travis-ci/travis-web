@@ -22,10 +22,10 @@
       {{#collection 'repos-list' content=this}}
 
         {{#with view.repo as repo}}
-          <div {{bind-attr class=":tile :tile--sidebar repo.lastBuildState"}}>
+          <div class="tile tile--sidebar {{repo.lastBuildState}}">
             <h2 class="tile-title">
               {{#if repo.slug}}
-                <span {{bind-attr class=":icon :icon--job repo.lastBuildState"}}></span>
+                <span class="icon icon--job {{repo.lastBuildState}}"></span>
                 {{#link-to "repo" repo class="slug"}}{{repo.slug}}{{/link-to}}
               {{/if}}
             </h2>
@@ -44,7 +44,7 @@
             <p>
               <span class="icon icon--clock"></span>
               Duration: 
-              <abbr class="duration" {{bind-attr title="lastBuildStartedAt"}}>
+              <abbr class="duration" title={{lastBuildStartedAt}}>
                 {{format-duration repo.lastBuildDuration}}
               </abbr>
             </p>
@@ -52,7 +52,7 @@
             <p>
               <span class="icon icon--cal"></span>
               Finished: 
-              <abbr class="finished_at timeago" {{bind-attr title="lastBuildFinishedAt"}}>
+              <abbr class="finished_at timeago" title={{lastBuildFinishedAt}}>
                 {{format-time repo.lastBuildFinishedAt}}
               </abbr>
             </p>

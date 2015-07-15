@@ -4,12 +4,26 @@
   {{#if view.job.notStarted}}
     <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
   {{/if}}
-  <div {{bind-attr class="view.job.notStarted:hidden"}}>
+  
+{{#if auth.signedIn}}
+  {{#if view.job.isLegacyInfrastructure}}
+    {{#if view.job.isFinished}}
+      <p class="notice"><span class="icon-flag"></span>
+      This job ran on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a></p>
+    {{else}}
+      <p class="notice"><span class="icon-flag"></span>
+      This job is running on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a></p>
+    {{/if}}
+  {{/if}}
+{{/if}}
+
+
+  <div class="{{if view.job.notStarted 'hidden'}}">
     <menu class="log-header">
       {{#if view.canRemoveLog}}
         <a href="#" class="button button--grey open-popup" {{action "removeLogPopup" target=view}}><span class="icon icon--removeLog"></span> Remove Log</a>
       {{/if}}
-      <a class="button button--grey" {{bind-attr href="view.plainTextLogUrl"}}><span class="icon icon--downloadLog"></span> Download Log</a>
+      <a class="button button--grey" href={{view.plainTextLogUrl}}><span class="icon icon--downloadLog"></span> Download Log</a>
     </menu>
     <div class="log-body">
       {{#if view.showTailing}}
@@ -30,13 +44,12 @@
       {{#if view.showToTop}}
         <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
       {{/if}}
-
-      {{#if view.limited}}
-        <p class="warning">
-          This log is too long to be displayed. Please reduce the verbosity of your
-          build or download the <a {{bind-attr href="view.plainTextLogUrl"}}>raw log</a>.
-        </p>
-      {{/if}}
     </div>
   </div>
+  {{#if view.limited}}
+    <p class="warning">
+      This log is too long to be displayed. Please reduce the verbosity of your
+      build or download the <a href={{view.plainTextLogUrl}}>raw log</a>.
+    </p>
+  {{/if}}
 </section>

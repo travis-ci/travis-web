@@ -53,9 +53,9 @@
 			<div class="medium-6 columns">
 				<ul class="tiles-landing">
 				{{#each repo in repos}}
-					<li {{bind-attr class=":db :column repo.lastBuild.state"}}>
+					<li class="db column {{repo.lastBuild.state}}">
 						<div class="db-status">
-							<span {{bind-attr class=":icon :icon-status repo.lastBuild.state"}}></span>
+							<span class="icon icon-status {{repo.lastBuild.state}}"></span>
 						</div>
 						<div class="db-repo column">
 							<h3>{{repo.owner}}</h3>

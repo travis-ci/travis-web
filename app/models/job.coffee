@@ -143,4 +143,9 @@ Job = Model.extend DurationCalculations,
     "#{@get('repo.slug')} ##{@get('number')}"
   ).property()
 
+  isLegacyInfrastructure: (->
+    if @get('queue') == 'builds.linux'
+      true
+  ).property('queue')
+
 `export default Job`

@@ -1,34 +1,34 @@
 <div class="tabnav" role="tablist">
   <ul class="tab tabs--main">
-    <li id="tab_current" {{bind-attr class="view.classCurrent"}}>
+    <li id="tab_current" class={{view.classCurrent}}>
       {{#if repo.slug}}
         {{#link-to "repo" repo current-when="repo.index"}}
           Current
         {{/link-to}}
       {{/if}}
     </li>
-    <li id="tab_branches" {{bind-attr class="view.classBranches"}}>
+    <li id="tab_branches" class={{view.classBranches}}>
       {{#if repo.slug}}
         {{#link-to "branches" repo}}
           Branches
         {{/link-to}}
       {{/if}}
     </li>
-    <li id="tab_builds" {{bind-attr class="view.classBuilds"}}>
+    <li id="tab_builds" class={{view.classBuilds}}>
       {{#if repo.slug}}
         {{#link-to "builds" repo}}
           Build History
         {{/link-to}}
       {{/if}}
     </li>
-    <li id="tab_pull_requests" {{bind-attr class="view.classPullRequests"}}>
+    <li id="tab_pull_requests" class={{view.classPullRequests}}>
       {{#if repo.slug}}
         {{#link-to "pullRequests" repo}}
           Pull Requests
         {{/link-to}}
       {{/if}}
     </li>
-    <li id="tab_build" {{bind-attr class="view.classBuild"}}>
+    <li id="tab_build" class={{view.classBuild}}>
       {{#if build.id}}
         {{#if repo.slug}}
           {{#link-to "build" repo build}}
@@ -37,7 +37,7 @@
         {{/if}}
       {{/if}}
     </li>
-    <li id="tab_job" {{bind-attr class="view.classJob"}}>
+    <li id="tab_job" class={{view.classJob}}>
       {{#if job.id}}
         {{#if repo.slug}}
           {{#link-to "job" repo job}}
@@ -46,14 +46,14 @@
         {{/if}}
       {{/if}}
     </li>
-    <li id="tab_settings" {{bind-attr class="view.classSettings"}}>
+    <li id="tab_settings" class={{view.classSettings}}>
       {{#if repo.slug}}
         {{#link-to "settings" repo}}
           Settings
         {{/link-to}}
       {{/if}}
     </li>
-    <li id="tab_requests" {{bind-attr class="view.classRequests"}}>
+    <li id="tab_requests" class="{{view.classRequests}}">
       {{#if repo.slug}}
         {{#link-to "requests" repo}}
           Requests
@@ -61,7 +61,7 @@
       {{/if}}
     </li>
     {{#if config.caches_enabled}}
-      <li id="tab_caches" {{bind-attr class="view.classCaches"}}>
+      <li id="tab_caches" class={{view.classCaches}}>
         {{#if repo.slug}}
           {{#link-to "caches" repo}}
             Caches
@@ -70,7 +70,7 @@
       </li>
     {{/if}}
 
-    <li id="tab_request" {{bind-attr class="view.classRequest"}}>
+    <li id="tab_request" class={{view.classRequest}}>
       {{#if request.id}}
         {{#if repo.slug}}
           {{#link-to "request" repo request}}

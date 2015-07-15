@@ -1,10 +1,10 @@
 <header class="owner-header row">
   <div class="owner-avatar">
-    <img {{bind-attr src="avatarURL"}} alt="" width="125" height="125">
+    <img src={{avatarURL}} alt="" width="125" height="125">
   </div>
   <div class="owner-info">
     <h1 class="owner-title">{{owner.name}}</h1>
-    <p class="owner-handle"><a {{bind-attr href="githubProfile"}} title=""><span class="icon icon--github-circle"></span> {{owner.login}}</a></p>
+    <p class="owner-handle"><a href={{githubProfile}} title=""><span class="icon icon--github-circle"></span> {{owner.login}}</a></p>
     {{!-- {{owner-sync-button owner=owner}} --}}
   </div>
 </header>
