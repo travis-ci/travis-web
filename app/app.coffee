@@ -59,7 +59,8 @@ App = Ember.Application.extend(Ember.Evented,
       Travis.onUserUpdate(user)
 
     @on 'user:signed_out', () ->
-      Travis.removeUserlike()
+      if config.userlike
+        Travis.removeUserlike()
 
   currentDate: ->
     new Date()
@@ -67,6 +68,7 @@ App = Ember.Application.extend(Ember.Evented,
   onUserUpdate: (user) ->
     if config.pro
       @identifyCustomer(user)
+    if config.userlike
       @setupUserlike(user)
 
     @subscribePusher(user)
