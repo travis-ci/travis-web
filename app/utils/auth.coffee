@@ -25,6 +25,7 @@ Auth = Ember.Object.extend
       @store.unloadAll('user')
     @set('currentUser', null)
     @sendToApp('afterSignOut')
+    Travis.trigger('user:signed_out')
 
   signIn: (data) ->
     if data
