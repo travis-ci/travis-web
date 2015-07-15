@@ -6,7 +6,7 @@
     {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
   {{/if}}
 </div>
-<a {{bind-attr href="hook.urlGithub"}} rel="nofollow" class="profile-repo">
+<a href={{hook.urlGithub}} rel="nofollow" class="profile-repo">
   {{hook.slug}}
   <span>{{hook.description}}</span></a>
 
@@ -16,7 +16,7 @@
       An error happened when we tried to alter settings on GitHub.
       {{#if githubOrgsOauthAccessSettingsUrl}}
         It may be caused by API restrictions, please
-        <a {{bind-attr href="githubOrgsOauthAccessSettingsUrl"}}
+        <a href={{githubOrgsOauthAccessSettingsUrl}}
           title="Orgs Oauth Access Settings on GitHub">
           review and add
         </a> your authorized Orgs.

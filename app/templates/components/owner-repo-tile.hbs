@@ -2,7 +2,7 @@
   <div class="tile-lock"><span class="icon icon-lock"></span></div>
 {{/if}}
 <div class="tile-status">
-  <span {{bind-attr class=":icon :icon-status repo.default_branch.last_build.state"}}></span>
+  <span class="icon icon-status {{repo.default_branch.last_build.state}}"></span>
 </div>
 <div class="tile-main tile-header column medium-3">
   <h2>{{#link-to "repo" ownerName repoName }}{{repoName}}{{/link-to}}</h2>
@@ -18,10 +18,10 @@
     <div class="column medium-8 tile-double">
       <div class="column medium-6">
         <p class="tile-branch">
-          <span {{bind-attr class=":icon :icon--grey :request-kind repo.default_branch.last_build.event_type"}}></span>
+          <span class="icon icon--grey request-kind {{repo.default_branch.last_build.event_type}}"></span>
           {{repo.default_branch.name}}</p>
         <p class="tile-commit">
-          <span class="icon icon-github"></span><a {{bind-attr href="repo.default_branch.last_build.commit.compare_url"}}>{{format-sha repo.default_branch.last_build.commit.sha}}</a></p>
+          <span class="icon icon-github"></span><a href={{repo.default_branch.last_build.commit.compare_url}}>{{format-sha repo.default_branch.last_build.commit.sha}}</a></p>
       </div>
       <div class="column medium-6">
         <p class="tile-duration">
