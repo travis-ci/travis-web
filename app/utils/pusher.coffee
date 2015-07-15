@@ -12,13 +12,6 @@ TravisPusher.prototype.init = (config) ->
   Pusher.host = config.host if config.host
   @pusher = new Pusher(config.key, encrypted: config.encrypted, disableStats: true)
 
-  @callbacksToProcess = []
-
-  Visibility.change (e, state) =>
-    @processSavedCallbacks() if state == 'visible'
-
-  setInterval @processSavedCallbacks.bind(this), @processingIntervalWhenHidden
-
 TravisPusher.prototype.subscribeAll = (channels) ->
   @subscribe(channel) for channel in channels
 
@@ -45,35 +38,18 @@ TravisPusher.prototype.prefix = (channel) ->
   else
     channel
 
-# process pusher messages in batches every 5 minutes when the page is hidden
-TravisPusher.prototype.processingIntervalWhenHidden = 1000 * 60 * 5
-
 TravisPusher.prototype.receive = (event, data) ->
   return if event.substr(0, 6) == 'pusher'
   data = @normalize(event, data) if data.id
 
-  @processWhenVisible =>
-    # TODO remove job:requeued, once sf-restart-event has been merged
-    # TODO this also needs to clear logs on build:created if matrix jobs are already loaded
-    if event == 'job:created' || event == 'job:requeued'
-      if job = @store.getById('job', data.job.id)
-        job.clearLog()
+  # TODO remove job:requeued, once sf-restart-event has been merged
+  # TODO this also needs to clear logs on build:created if matrix jobs are already loaded
+  if event == 'job:created' || event == 'job:requeued'
+    if job = @store.getById('job', data.job.id)
+      job.clearLog()
 
-    Ember.run.next =>
-      @store.receivePusherEvent(event, data)
-
-TravisPusher.prototype.processSavedCallbacks = ->
-  while callback = @callbacksToProcess.shiftObject()
-    callback.call(this)
-
-TravisPusher.prototype.processLater = (callback) ->
-  @callbacksToProcess.pushObject(callback)
-
-TravisPusher.prototype.processWhenVisible = (callback) ->
-  if Visibility.hidden() && Visibility.isSupported()
-    @processLater(callback)
-  else
-    callback.call(this)
+  Ember.run.next =>
+    @store.receivePusherEvent(event, data)
 
 TravisPusher.prototype.normalize = (event, data) ->
   switch event
