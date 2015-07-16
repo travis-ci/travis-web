@@ -3,6 +3,7 @@
 EnvVarComponent = Ember.Component.extend
 
   classNames: ['settings-envvar']
+  classNameBindings: ['envVar.public:is-public']
 
   isEditing: false
   isDeleting: false

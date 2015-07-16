@@ -52,11 +52,11 @@ test('it shows an error if no name is present', function(assert) {
 
   this.$('.form-submit').click();
 
-  assert.ok(this.$('.form-error').length, 'the error message should be displayed');
+  assert.ok(this.$('.form-error-message').length, 'the error message should be displayed');
 
   var e = jQuery.Event("keypress");
   e.which = 50;
   this.$('.env-name').trigger(e);
 
-  assert.ok(!this.$('.form-error').length, 'the error message should be removed after value is changed');
+  assert.ok(!this.$('.form-error-message').length, 'the error message should be removed after value is changed');
 });

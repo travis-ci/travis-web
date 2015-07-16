@@ -115,15 +115,10 @@
 .env-var-value
   @extend %settings-value-section
 
-  // public value
-  // background-image: none;
-  // font-size: 16px;
-  // padding: 0.4rem 0 0.4rem 0.7rem;
-
   input
     display: inline-block
     width: 100%
-    padding: 0.7em 0.5em 0.7em 2.2em
+    padding: 0.7em 0.5em 0.7em 2.6em
     border-radius: 4px
     border: none
     background-color: #eeedec
@@ -132,8 +127,12 @@
     background:
       size: 14px
       repeat: no-repeat
-      position: 0.4em 0.7em
-
+      position: 0.8em 0.7em
+  .is-public &
+    input
+      background-image: none;
+      padding: 0.4em 0 0.5em 0.9em;
+      font-size: 14px;
 
 %settings-action-section
   display: inline-block
@@ -146,7 +145,8 @@
     @extend %icon
     @extend .icon-delete
     width: 1.1em
-    height: 1.3em
+    height: 1.6em
+    background-position: 0 4px
   &:hover
     .icon-delete
       @extend .icon-delete-hover
@@ -171,15 +171,5 @@
     width: 1.1em
     height: 1.3em
     margin: .2em auto 0
-
-.form-error
-  .env-name
-    border: $fail-color 2px solid
-  .form-error
-    color: $fail-color
-    font-size: 14px
-    margin: 0
-
-
 
 
