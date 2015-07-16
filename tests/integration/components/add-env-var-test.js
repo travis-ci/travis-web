@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -22,12 +23,12 @@ test('it adds an env var on submit', function(assert) {
   this.render(hbs`{{add-env-var repo=repo}}`);
 
   this.$('.env-name').val('FOO');
-  var e = jQuery.Event("keyup");
+  var e = $.Event("keyup");
   e.which = 50;
   this.$('.env-name').trigger(e);
 
   this.$('.env-value').val('bar');
-  var e = jQuery.Event("keyup");
+  e = $.Event("keyup");
   e.which = 50;
   this.$('.env-value').trigger(e);
 
@@ -54,7 +55,7 @@ test('it shows an error if no name is present', function(assert) {
 
   assert.ok(this.$('.form-error-message').length, 'the error message should be displayed');
 
-  var e = jQuery.Event("keypress");
+  var e = $.Event("keypress");
   e.which = 50;
   this.$('.env-name').trigger(e);
 

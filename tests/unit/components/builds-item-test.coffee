@@ -25,7 +25,9 @@ test 'it renders', (assert) ->
       slug: 'foo/bar'
     }
   }
-  component = @subject(build: attributes)
+
+  component = @subject()
+  component.set('build', attributes)
   @append()
 
   ok component.$().hasClass('passed'), 'component has right status class'

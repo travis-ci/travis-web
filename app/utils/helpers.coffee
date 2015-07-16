@@ -2,6 +2,7 @@
 `import { githubCommit as githubCommitUrl } from 'travis/utils/urls'`
 `import configKeysMap from 'travis/utils/keys-map'`
 `import config from 'travis/config/environment'`
+`import Ember from 'ember'`
 
 timeago = $.timeago
 mapObject = $.map
@@ -66,9 +67,9 @@ formatMessage = (message, options) ->
   message = message || ''
   message = message.split(/\n/)[0]  if options.short
   message = _emojize(_escape(message))
-  if !!options.repo
-    message = githubify(message, options.repo.get('owner'), options.repo.get('name'))
-  if !!options.pre
+  if options.repo
+    message = githubify(message, Ember.get(options.repo, 'owner'), Ember.get(options.repo, 'name'))
+  if options.pre
     message = message.replace /\n/g, '<br/>'
   message
 
