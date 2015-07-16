@@ -12,39 +12,10 @@
     {{travis-switch active=public}}
   </div>
   <div class="form-elem">
-    <input type="submit" value="Add" class="form-submit {{if isSaving "saving"}}" disabled={{isSaving}} />
+    {{#if isSaving}}
+      {{loading-indicator}}
+    {{else}}
+      <input type="submit" value="Add" class="form-submit" />
+    {{/if}}
   </div>
 </form>
-
-{{!-- 
-
-
-<form class="env-var" {{action "save" on="submit"}}>
-  {{#travis-field "name"}}
-    
-    {{input value=name class="env-name" placeholder="Name"}} {{travis-errors "name"}}
-  {{/travis-field}}
-  <span class="equals">=</span>
-  {{#if showValueField}}
-    <div class="field value value--extra">
-      {{#label for="value" class="value"}}Value:{{/label}}
-      {{input value=value class="env-value" placeholder="Value"}}
-    </div>
-  {{else}}
-    <div class="field name">
-      <span class="value value-display secure">{{value}}</span>
-    </div>
-  {{/if}}
-  <div class="field field--switch">
-    {{travis-switch active=public}}
-    {{#label for="secure" class="public"}}Display value in build logs{{/label}}
-  </div>
-
-  <div class="actions">
-    <input type="submit" {{bind-attr value=actionType class=":submit-env-var isSaving:saving" disabled=isSaving}} />
-    <span class="or">or</span>
-    <a href="#" class="cancel-env-var" {{action "cancel"}}>Cancel</a>
-  </div>
-</form>
-
- --}}

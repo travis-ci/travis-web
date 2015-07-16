@@ -5,9 +5,13 @@
 </div>
 <div class="env-var-action">
   <div class="tooltip">
-    <a href="#" title="">
-      <span class="icon-delete"></span>
-    </a>
-    <div class="tooltip-bubble">Delete</div>
+    {{#if isDeleting}}
+      {{loading-indicator}}
+    {{else}}
+      <a href="#" title="" {{action "delete" on="click"}}>
+        <span class="icon-delete"></span>
+      </a>
+      <div class="tooltip-bubble">Delete</div>
+    {{/if}}
   </div>
 </div>

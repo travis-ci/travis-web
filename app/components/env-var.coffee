@@ -5,7 +5,6 @@ EnvVarComponent = Ember.Component.extend
   classNames: ['settings-envvar']
   classNameBindings: ['envVar.public:is-public']
 
-  isEditing: false
   isDeleting: false
 
   validates:
@@ -25,24 +24,6 @@ EnvVarComponent = Ember.Component.extend
     delete: ->
       return if @get('isDeleting')
       @set('isDeleting', true)
-
-      @get('model').destroyRecord()
-
-    edit: ->
-      @set('isEditing', true)
-
-    cancel: ->
-      @set('isEditing', false)
-      @get('model').revert()
-
-    save: ->
-      return if @get('isSaving')
-
-      if @isValid()
-        env_var = @get('model')
-
-        # TODO: handle errors
-        env_var.save().then =>
-          @set('isEditing', false)
+      @get('envVar').destroyRecord()
 
 `export default EnvVarComponent`
