@@ -8,7 +8,8 @@ Route = TravisRoute.extend BuildFaviconMixin,
   beforeModel: ->
     @_super.apply(this, arguments)
 
-    @get('auth').refreshUserData()
+    @get('auth').refreshUserData().then (->), =>
+      @get('auth').signOut()
 
   renderTemplate: ->
     if @get('config').pro

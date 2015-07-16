@@ -87,8 +87,8 @@ Auth = Ember.Object.extend
         user = data.user
 
     if user
-      Ajax.get "/users/#{user.id}", (data) =>
-        if data.user.correct_scopes
+      Ajax.get("/users/#{user.id}").then (data) =>
+        if data.user.correct_scopes && false
           userRecord = @loadUser(data.user)
           userRecord.get('permissions')
           # if user is still signed in, update saved data
@@ -98,9 +98,9 @@ Auth = Ember.Object.extend
             @storeData(data, @storage)
             Travis.trigger('user:refreshed', data.user)
         else
-          @signOut()
-      , (status, xhr) =>
-        @signOut() if status == 403 || status == 404
+          return Ember.RSVP.Promise.reject()
+    else
+      return Ember.RSVP.Promise.resolve()
 
   signedIn: (->
     @get('state') == 'signed-in'
