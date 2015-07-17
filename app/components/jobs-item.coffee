@@ -7,6 +7,11 @@ JobsItemComponent = Ember.Component.extend
   classNameBindings: ['job.state']
   classNames: ['tile', 'tile--jobs', 'row']
 
+  isBooting: (->
+    if @get('job.state') == 'received'
+      return true
+  ).property('job.state')
+
   languages: (->
     output = []
 
