@@ -82,13 +82,14 @@ Auth = Ember.Object.extend
     @sendToApp('afterSignIn')
 
   refreshUserData: (user) ->
+    debugger
     unless user
       if data = @userDataFrom(@sessionStorage) || @userDataFrom(@storage)
         user = data.user
 
     if user
       Ajax.get("/users/#{user.id}").then (data) =>
-        if data.user.correct_scopes && false
+        if data.user.correct_scopes
           userRecord = @loadUser(data.user)
           userRecord.get('permissions')
           # if user is still signed in, update saved data
