@@ -7,9 +7,13 @@ JobsItemComponent = Ember.Component.extend
   classNameBindings: ['job.state']
   classNames: ['tile', 'tile--jobs', 'row']
 
-  isBooting: (->
-    if @get('job.state') == 'received'
-      return true
+  isAnimating: (->
+    state = @get('job.state')
+    animationStates = ['received', 'queued', 'started', 'booting']
+
+    unless animationStates.indexOf(state) == -1
+      true
+
   ).property('job.state')
 
   languages: (->
