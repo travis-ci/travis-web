@@ -31,23 +31,28 @@
   <section class="settings-section">
     <h2 class="small-title">SSH Key</h2>
 
-    {{ssh-key}}
-    {{ssh-key custom=true}}
+    {{#if sshKey}}
+      {{ssh-key key=sshKey}}
 
-    <div class="form--sshkey">
-      <a href="" class="button">Add custom SSH Key</a>
-      <form action="">
-        <div class="form-elem">
-          <input type="text" placeholder="Description">
-        </div>
-        <div class="form-elem">
-          <textarea name="" id="" cols="30" rows="10" placeholder="SSH key"></textarea>
-        </div>
-        <div class="form-elem">
-          <input type="submit" class="form-submit" value="Add">
-        </div>
-      </form>
-    </div>
+      <div class="form--sshkey">
+        <a href="" class="button">Add custom SSH Key</a>
+        <form action="">
+          <div class="form-elem">
+            <input type="text" placeholder="Description">
+          </div>
+          <div class="form-elem">
+            <textarea name="" id="" cols="30" rows="10" placeholder="SSH key"></textarea>
+          </div>
+          <div class="form-elem">
+            <input type="submit" class="form-submit" value="Add">
+          </div>
+        </form>
+      </div>
+    {{else}}
+      {{ssh-key key=customSshKey}}
+    {{/if}}
+
+    
   </section>
 {{/if}}
   <section class="settings-section">
