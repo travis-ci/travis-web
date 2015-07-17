@@ -82,7 +82,6 @@ Auth = Ember.Object.extend
     @sendToApp('afterSignIn')
 
   refreshUserData: (user) ->
-    debugger
     unless user
       if data = @userDataFrom(@sessionStorage) || @userDataFrom(@storage)
         user = data.user
