@@ -35,19 +35,7 @@
       {{ssh-key key=model.customSshKey}}
     {{else}}
       {{ssh-key key=model.sshKey}}
-      <div class="form--sshkey">
-        <form action="">
-          <div class="form-elem">
-            <input type="text" placeholder="Description">
-          </div>
-          <div class="form-elem">
-            <textarea name="" id="" cols="30" rows="10" placeholder="SSH key"></textarea>
-          </div>
-          <div class="form-elem">
-            <input type="submit" class="form-submit" value="Add">
-          </div>
-        </form>
-      </div>
+      {{add-ssh-key }}
     {{/if}}
 
     
@@ -60,8 +48,3 @@
   </section>
 
 </div>
-
-
-{{!-- <div id="settings">
-  {{outlet}}
-</div> --}}
