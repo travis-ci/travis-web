@@ -1,11 +1,15 @@
-<form action="">
+<form {{action "save" on="submit"}}>
   <div class="form-elem">
-    <input type="text" placeholder="Description">
+    {{input value=description class="ssh-description" placeholder="Description"}}
   </div>
   <div class="form-elem">
-    <textarea name="" id="" cols="30" rows="10" placeholder="SSH key"></textarea>
+    {{textarea value=value class="ssh-value" rows="10" placeholder="SSH Key"}}
   </div>
   <div class="form-elem">
-    <input type="submit" class="form-submit" value="Add">
+    {{#if isSaving}}
+      {{loading-indicator}}
+    {{else}}
+      <input type="submit" value="Add" class="form-submit" />
+    {{/if}}
   </div>
 </form>

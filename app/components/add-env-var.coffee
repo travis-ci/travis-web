@@ -19,7 +19,6 @@ AddEnvVarComponent = Ember.Component.extend
 
   actions:
     save: ->
-      console.log('SUBMITTED')
       return if @get('isSaving')
       @set('isSaving', true)
 
