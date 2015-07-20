@@ -31,11 +31,11 @@
   <section class="settings-section">
     <h2 class="small-title">SSH Key</h2>
 
-    {{#if sshKey}}
-      {{ssh-key key=sshKey}}
-
+    {{#if model.customSshKey}}
+      {{ssh-key key=model.customSshKey}}
+    {{else}}
+      {{ssh-key key=model.sshKey}}
       <div class="form--sshkey">
-        <a href="" class="button">Add custom SSH Key</a>
         <form action="">
           <div class="form-elem">
             <input type="text" placeholder="Description">
@@ -48,8 +48,6 @@
           </div>
         </form>
       </div>
-    {{else}}
-      {{ssh-key key=customSshKey}}
     {{/if}}
 
     

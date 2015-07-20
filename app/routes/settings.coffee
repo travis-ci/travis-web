@@ -12,7 +12,7 @@ Route = TravisRoute.extend
     repo = @modelFor('repo')
     repo.get('envVars.promise')
 
-  fetchSshKey: () ->
+  fetchCustomSshKey: () ->
     repo = @modelFor('repo')
     self = this
     @store.find('sshKey', repo.get('id')).then ( (result) -> result unless result.get('isNew') ), (xhr) ->
@@ -22,7 +22,7 @@ Route = TravisRoute.extend
         # ssh_key.new or ssh_key.no_key
         return false
 
-  fetchCustomSshKey: () ->
+  fetchSshKey: () ->
     repo = @modelFor('repo')
     Ajax.get "/repos/#{repo.get('id')}/key", (data) =>
       Ember.Object.create(fingerprint: data.fingerprint)

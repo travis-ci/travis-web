@@ -1,4 +1,4 @@
-{{#if isCustom}}
+{{#if key.isCustom}}
   <div class="ssh-key-name">
     <span class="icon-key"></span>
     <span>{{key.description}}</span>
@@ -6,11 +6,10 @@
   <div class="ssh-key-value">
     <span class="icon-fingerprint"></span>
     <span>{{key.fingerprint}}</span>
-    <span>{{fingerprint}}</span>
   </div>
   <div class="ssh-key-action">
     <div class="tooltip">
-      <a href="#" title="">
+      <a href="#" title="" {{action "delete"}}>
         <span class="icon-delete"></span>
       </a>
       <div class="tooltip-bubble">Delete</div>
@@ -24,13 +23,10 @@
   <div class="ssh-key-value">
     <span class="icon-fingerprint"></span>
     <span>{{key.fingerprint}}</span>
-    <span>{{fingerprint}}</span>
   </div>
   <div class="ssh-key-action">
     <div class="tooltip--height">
-      <a href="#" title="">
-        <span class="icon-delete-disabled"></span>
-      </a>
+      <span class="icon-delete-disabled"></span>
       <div class="tooltip-bubble">Default keys <br>cannot be deleted</div>
     </div>
   </div>
