@@ -53,10 +53,10 @@ test('it deletes a custom key', function(assert) {
 
   this.set('key', key);
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
-  this.on('sshKeyDeleted', function() {})
+  this.on('sshKeyDeleted', function() {});
 
   this.$('.ssh-key-action a').click();
 
-  assert.ok(key.get('isDeleted'), 'key should be deleted')
+  assert.ok(key.get('isDeleted'), 'key should be deleted');
 
 });

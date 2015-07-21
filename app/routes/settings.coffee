@@ -29,6 +29,7 @@ Route = TravisRoute.extend
 
   model: () ->
     return Ember.RSVP.hash({
+      settings: @modelFor('repo').fetchSettings(),
       envVars: this.fetchEnvVars(),
       sshKey: this.fetchSshKey(),
       customSshKey: this.fetchCustomSshKey()

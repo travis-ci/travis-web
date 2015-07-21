@@ -6,4 +6,7 @@
     OFF
   </span>
 </div>
-<span class="label">Some label text</span>
+<span class="label">{{description}}</span>
+{{#if isSaving}}
+  {{loading-indicator}}
+{{/if}}

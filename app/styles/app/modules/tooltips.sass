@@ -1,8 +1,8 @@
 %tooltip
-  &:hover
-    .tooltip-bubble
-      transform: translateY(0)
-      opacity: 1
+  &:hover .tooltip-bubble, 
+  &:hover + .tooltip-bubble
+    transform: translateY(0)
+    opacity: 1
 
   .tooltip-bubble
     position: absolute

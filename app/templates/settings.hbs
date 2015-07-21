@@ -4,12 +4,12 @@
     <h2 class="small-title">General Settings</h2>
 
     <ul class="settings-list--columns">
-      <li>{{settings-switch}}</li>
+      <li>{{settings-switch active=model.settings.builds_only_with_travis_yml repo=repo description="Build only if .travis.yml is present" key="builds_only_with_travis_yml"}}</li>
       <li>
         <div class="settings-input"><input type="text" pattern="/^[0-9]+$/" value="4"></div><span class="label">Concurrent jobs</span>
       </li>
-      <li>{{settings-switch}}</li>
-      <li>{{settings-switch}}</li>
+      <li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushes" key="build_pushes"}}</li>
+      <li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pull requests" key="build_pull_requests"}}</li>
     </ul>
 
   </section>
