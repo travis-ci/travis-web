@@ -8,6 +8,8 @@ Route = TravisRoute.extend
     controller.set('repo', @modelFor('repo'))
     @controllerFor('repo').activate('settings')
 
+    controller.set('concurrentBuildsLimit', !!model.settings.maximum_number_of_builds)
+
   fetchEnvVars: () ->
     repo = @modelFor('repo')
     repo.get('envVars.promise')
