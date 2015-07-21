@@ -8,16 +8,14 @@ SshKeyComponent = Ember.Component.extend
 
   actions:
     delete: ->
-      console.log('isDeleting')
+      return if @get('isDeleting')
+      @set('isDeleting', true)
 
-      # return if @get('isDeleting')
-      # @set('isDeleting', true)
+      deletingDone = => @set('isDeleting', false)
 
-      # deletingDone = => @set('isDeleting', false)
-
-      # @get('model').deleteRecord()
-      # @get('model').save().then(deletingDone, deletingDone).then =>
-      #   @set('model', null)
+      @get('key').deleteRecord()
+      @get('key').save().then(deletingDone, deletingDone).then =>
+        @sendAction('sshKeyDeleted')
 
 
 `export default SshKeyComponent`

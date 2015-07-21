@@ -8,12 +8,16 @@
     <span>{{key.fingerprint}}</span>
   </div>
   <div class="ssh-key-action">
-    <div class="tooltip">
-      <a href="#" title="" {{action "delete"}}>
-        <span class="icon-delete"></span>
-      </a>
-      <div class="tooltip-bubble">Delete</div>
-    </div>
+    {{#if isDeleting}}
+      {{loading-indicator}}
+    {{else}}
+      <div class="tooltip">
+        <a href="#" title="" {{action "delete"}}>
+          <span class="icon-delete"></span>
+        </a>
+        <div class="tooltip-bubble">Delete</div>
+      </div>
+    {{/if}}
   </div>
 {{else}}
   <div class="ssh-key-name">
