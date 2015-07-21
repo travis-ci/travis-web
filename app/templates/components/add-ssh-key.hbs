@@ -4,6 +4,9 @@
   </div>
   <div class="form-elem">
     {{textarea value=value class="ssh-value" rows="10" placeholder="SSH Key"}}
+    {{#if valueError}}
+      <p>{{valueError}}</p>
+    {{/if}}
   </div>
   <div class="form-elem">
     {{#if isSaving}}
