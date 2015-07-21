@@ -3,6 +3,7 @@
 AddSshKeyComponent = Ember.Component.extend
 
   classNames: ['form--sshkey']
+  classNameBindings: ['valueError:form-error']
 
   store: Ember.inject.service()
   isSaving: false
