@@ -4,7 +4,7 @@ SettingsController = Ember.Controller.extend
   concurrentBuildsLimitDescription: (->
     description = "Limit concurrent jobs"
     if @get('concurrentBuildsLimit')
-      description += ": "
+      description += "  "
     description
   ).property('concurrentBuildsLimit')
 
