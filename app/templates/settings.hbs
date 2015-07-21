@@ -35,7 +35,7 @@
       {{ssh-key key=model.customSshKey}}
     {{else}}
       {{ssh-key key=model.sshKey}}
-      {{add-ssh-key repo=repo}}
+      {{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}
     {{/if}}
 
   </section>
