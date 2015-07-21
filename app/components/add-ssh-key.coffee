@@ -42,7 +42,7 @@ AddSshKeyComponent = Ember.Component.extend
     if error.code == 'not_a_private_key'
       this.set('valueError', 'This key is not a private key.')
     else if error.code == 'key_with_a_passphrase'
-      this.set('valueError', 'We can\'t use key with a passphrase.')
+      this.set('valueError', 'The key can\'t have a passphrase.')
 
   actions:
 
