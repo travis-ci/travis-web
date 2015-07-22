@@ -1,0 +1,7 @@
+{{travis-switch active=enabled description=description action="toggle"}}
+{{#if enabled}}
+  {{input pattern="/^[0-9]+$/" value=value on="key-up" action="limitChanged"}}
+{{/if}}
+{{#if isSaving}}
+  {{loading-indicator}}
+{{/if}}

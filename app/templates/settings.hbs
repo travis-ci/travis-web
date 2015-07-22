@@ -5,15 +5,7 @@
 
     <ul class="settings-list--columns">
       <li>{{settings-switch active=model.settings.builds_only_with_travis_yml repo=repo description="Build only if .travis.yml is present" key="builds_only_with_travis_yml"}}</li>
-      <li>{{travis-switch active=concurrentBuildsLimit description=concurrentBuildsLimitDescription action="concurrentBuildsLimitChanged"}}
-
-        {{#if concurrentBuildsLimit}}
-          {{input pattern="/^[0-9]+$/" value=model.settings.maximum_number_of_builds on="key-up" action="concurrentBuildsLimitValueChanged" class="settings-concurrent"}}
-        {{/if}}
-        {{#if isSaving}}
-          {{loading-indicator inline=true}}
-        {{/if}}
-      </li>
+      <li>{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}</li>
       <li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushes" key="build_pushes"}}</li>
       <li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pull requests" key="build_pull_requests"}}</li>
     </ul>
