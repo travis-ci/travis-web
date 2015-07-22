@@ -48,16 +48,20 @@
     font-size: $font-size-s
     text-align: center
 
-input.settings-concurrent
-  display: inline-block
-  width: 3em
-  margin: 0 .5em
-  text-align: center
+.limit-concurrent-builds
+  input
+    display: inline-block
+    width: 3em
+    height: 30px
+    margin: 0 .5em
+    text-align: center
 
 %settings-row
   padding: .6em .5em
   border-radius: 4px
   background-color: #F6F5F5
+  @media #{$medium-up}
+    height: 47px
 
 .settings-envvar
   @extend %settings-row

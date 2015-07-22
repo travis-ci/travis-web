@@ -1,6 +1,9 @@
 `import Ember from 'ember'`
 
 LimitConcurrentBuildsComponent = Ember.Component.extend
+  
+  classNames: ['limit-concurrent-builds']
+
   description: (->
     description = "Limit concurrent jobs"
     if @get('enabled')

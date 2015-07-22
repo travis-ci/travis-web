@@ -2,7 +2,7 @@
 
 LoadingIndicatorComponent = Ember.Component.extend
   tagName: 'div'
-  classNameBindings: ['center:loading-container', 'inline:inline']
+  classNameBindings: ['center:loading-container', 'inline:inline-block']
   center: false
 
 `export default LoadingIndicatorComponent`
