@@ -5,15 +5,17 @@
 
   .tooltip-bubble
     position: absolute
-    top: -3.2em
+    top: -2.8em
     width: auto
     height: 1.9em
     margin: auto
-    padding: .2em .4em .3em
+    padding: .3em .4em .3em
     z-index: 5
     background-color: #818383
     border-radius: 4px
     color: $white
+    font-size: $font-size-sm
+    line-height: 1.5
     text-align: center
     white-space: nowrap
 
@@ -41,11 +43,9 @@
   .tooltip-bubble
     right: 0
     left: 0
-    max-width: 8.6em
+    max-width: 5em
     &:before
-      left: 46%
-      @media #{$medium-up}
-        left: 45%
+      left: 40%
 
 .tooltip--height
   @extend %tooltip
