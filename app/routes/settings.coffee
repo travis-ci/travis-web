@@ -1,5 +1,6 @@
 `import TravisRoute from 'travis/routes/basic'`
 `import Ajax from 'travis/utils/ajax'`
+`import config from 'travis/config/environment'`
 
 Route = TravisRoute.extend
   needsAuth: true
@@ -29,12 +30,25 @@ Route = TravisRoute.extend
     Ajax.get "/repos/#{repo.get('id')}/key", (data) =>
       Ember.Object.create(fingerprint: data.fingerprint)
 
+  fetchRepositoryActiveFlag: ->
+    repoId = @modelFor('repo').get('id')
+    apiEndpoint = config.apiEndpoint
+
+    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}", {
+      headers: {
+        Authorization: 'token ' + @auth.token()
+      }
+    }).then( (response) ->
+      response.active
+    );
+
   model: () ->
     return Ember.RSVP.hash({
       settings: @modelFor('repo').fetchSettings(),
       envVars: this.fetchEnvVars(),
       sshKey: this.fetchSshKey(),
-      customSshKey: this.fetchCustomSshKey()
+      customSshKey: this.fetchCustomSshKey(),
+      repositoryActive: this.fetchRepositoryActiveFlag()
     });
 
 `export default Route`
