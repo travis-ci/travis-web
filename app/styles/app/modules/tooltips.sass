@@ -1,6 +1,5 @@
 %tooltip
-  &:hover .tooltip-bubble, 
-  &:hover + .tooltip-bubble
+  &:hover .tooltip-bubble
     transform: translateY(0)
     opacity: 1
 
@@ -8,7 +7,6 @@
     position: absolute
     top: -3.2em
     width: auto
-    max-width: 8.6em
     height: 1.9em
     margin: auto
     padding: .2em .4em .3em
@@ -22,6 +20,11 @@
     transition: all 100ms ease
     transform: translateY(20%)
     opacity: 0
+
+    a
+      color: $white
+      &:hover
+        text-decoration: underline
 
     &:before
       content: ""
@@ -38,6 +41,7 @@
   .tooltip-bubble
     right: 0
     left: 0
+    max-width: 8.6em
     &:before
       left: 46%
       @media #{$medium-up}
@@ -50,6 +54,7 @@
     left: 0
     top: -4em
     height: 3.2em
+    max-width: 8.6em
     &:before
       left: 46%
       @media #{$medium-up}
@@ -61,7 +66,21 @@
   position: relative
   .tooltip-bubble
     top: -4.5em
-    left: -2em
+    left: -1.9em
     height: 3.7em
     &:before
       left: 15%
+
+.tooltip--settings
+  @extend %tooltip
+  display: inline-block
+  position: relative
+  .icon
+    width: 1.2em
+    height: 1.2em
+    vertical-align: middle
+  .tooltip-bubble
+    top: -2.6em
+    left: -1.9em
+    &:before
+      left: 2em

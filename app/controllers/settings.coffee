@@ -10,4 +10,9 @@ SettingsController = Ember.Controller.extend
     sshKeyDeleted: ->
       @set('model.customSshKey', null)
 
+    deactivate: ->
+      console.log('deactivate')
+      debugger
+    
+
 `export default SettingsController`
