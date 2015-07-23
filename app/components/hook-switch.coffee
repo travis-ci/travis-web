@@ -2,7 +2,7 @@
 
 HookSwitchComponent = Ember.Component.extend
   tagName: 'a'
-  classNames: ['travis-switch', 'switch']
+  classNames: ['switch--icon']
   classNameBindings: ['active']
   activeBinding: "hook.active"
 

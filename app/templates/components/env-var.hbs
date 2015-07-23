@@ -1,0 +1,17 @@
+
+<div class="env-var-name">{{envVar.name}}</div>
+<div class="env-var-value">
+  <input type="pw" value="{{value}}" readonly="readonly">
+</div>
+<div class="env-var-action">
+  <div class="tooltip">
+    {{#if isDeleting}}
+      {{loading-indicator}}
+    {{else}}
+      <a href="#" title="" {{action "delete" on="click"}}>
+        <span class="icon-delete"></span>
+      </a>
+      <div class="tooltip-bubble">Delete</div>
+    {{/if}}
+  </div>
+</div>

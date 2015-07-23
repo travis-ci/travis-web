@@ -1,0 +1,37 @@
+{{#if key.isCustom}}
+  <div class="ssh-key-name">
+    <span class="icon-key"></span>
+    <span>{{key.description}}</span>
+  </div>
+  <div class="ssh-key-value">
+    <span class="icon-fingerprint"></span>
+    <span>{{key.fingerprint}}</span>
+  </div>
+  <div class="ssh-key-action">
+    {{#if isDeleting}}
+      {{loading-indicator}}
+    {{else}}
+      <div class="tooltip">
+        <a href="#" title="" {{action "delete"}}>
+          <span class="icon-delete"></span>
+        </a>
+        <div class="tooltip-bubble">Delete</div>
+      </div>
+    {{/if}}
+  </div>
+{{else}}
+  <div class="ssh-key-name">
+    <span class="icon-key"></span>
+    <span>no custom key set</span>
+  </div>
+  <div class="ssh-key-value">
+    <span class="icon-fingerprint"></span>
+    <span>{{key.fingerprint}}</span>
+  </div>
+  <div class="ssh-key-action">
+    <div class="tooltip--height">
+      <span class="icon-delete-disabled"></span>
+      <div class="tooltip-bubble">Default keys <br>cannot be deleted</div>
+    </div>
+  </div>
+{{/if}}

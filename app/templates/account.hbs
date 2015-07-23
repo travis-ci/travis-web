@@ -22,7 +22,7 @@
   {{/if}}
 
     <div class="profile-header">
-      <h1>{{view.name}}</h1>
+      <h1>{{user.name}}</h1>
     </div>
 
     {{#if user.isSyncing}}
@@ -94,7 +94,16 @@
       <ul class="profile-hooklist">
         {{#each hook in hooksWithoutAdmin}}
           <li class="{{if hook.active 'active'}} row">
-            <button class="profile-switch disabled"></button>
+            <div class="switch--icon inline-block disabled {{if hook.active 'active'}}">
+              <div class="switch-inner">
+                <span class="on">
+                  ON
+                </span>
+                <span class="off">
+                  OFF
+                </span>
+              </div>
+            </div>
             <a href={{hook.urlGithub}} rel="nofollow" class="profile-repo">
               {{hook.slug}}
               <span>{{hook.description}}</span>

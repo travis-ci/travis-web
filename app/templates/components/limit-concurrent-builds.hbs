@@ -1,0 +1,13 @@
+{{travis-switch active=enabled description=description action="toggle"}}
+<div class="tooltip--settings">
+  <a href="http://blog.travis-ci.com/2014-07-18-per-repository-concurrency-setting/" title="about the concurrency setting">
+    <p class="tooltip-bubble">Read more about<br>concurrent builds</p>
+    <span class="icon icon--question"></span>
+  </a>
+</div>
+{{#if enabled}}
+  {{input pattern="/^[0-9]+$/" value=value on="key-up" action="limitChanged"}}
+{{/if}}
+{{#if isSaving}}
+{{loading-indicator inline=true}}
+{{/if}}
