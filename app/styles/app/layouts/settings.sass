@@ -71,8 +71,11 @@
   @extend %settings-row
   display: block
   margin-bottom: 1rem
+  overflow: hidden
   span
     vertical-align: middle
+  @media #{$medium-up}
+    overflow: visible
 
 %settings-name-section
   display: inline-block
@@ -95,7 +98,7 @@
     height: 1.3em
 
   @media #{$medium-up}
-    width: 40%
+    width: 32%
     margin-bottom: 0
 
 .env-var-name
@@ -110,14 +113,11 @@
 %settings-value-section
   display: inline-block
   vertical-align: middle
-  white-space: nowrap
   overflow: hidden
-  width: 76%
-  @media #{$medium-up}
-    width: grid-calc(3, 12)
 
 .ssh-key-value
   @extend %settings-value-section
+  word-break: break-all
   .icon-fingerprint
     @extend %icon
     @extend .icon-fingerprint
@@ -125,11 +125,16 @@
     height: 1.3em
     margin-right: .5em
   @media #{$medium-up}
-    text-align: right
+    width: grid-calc(6, 12)
+    word-break: normal
+    white-space: nowrap
 
 .env-var-value
   @extend %settings-value-section
-
+  white-space: nowrap
+  width: 76%
+  @media #{$medium-up}
+    width: grid-calc(3, 12)
   input
     display: inline-block
     width: 100%
@@ -152,8 +157,8 @@
 %settings-action-section
   display: inline-block
   position: relative
-  width: 24%
   float: right
+  width: 24%
   vertical-align: middle
   text-align: center
   .icon-delete
@@ -177,6 +182,9 @@
 
 .ssh-key-action
   @extend %settings-action-section
+  margin-top: 1em
+  @media #{$medium-up}
+    margin-top: 0
   .icon-delete
     margin: .2em auto 0
   .icon-delete-disabled
