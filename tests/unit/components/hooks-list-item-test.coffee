@@ -20,5 +20,5 @@ test 'it renders', ->
   @append()
 
   ok component.$().hasClass('active'), 'component should have active class'
-  ok component.$('.travis-switch').hasClass('active'), 'switch should have active class'
+  ok component.$('.switch--icon').hasClass('active'), 'switch should have active class'
   equal component.$('.profile-repo span').text().trim(), 'A foo repo', 'repo description should be displayed'

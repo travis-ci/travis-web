@@ -1,0 +1,79 @@
+
+%input-base
+  display: inline-block
+  width: 100%
+  padding: .4em .4em
+  border: 1px solid #eeedec
+  border-radius: 4px
+  color: #8e8f8e
+  font-size: $font-size-sm
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"]
+  @extend %input-base
+  height: 32px
+
+textarea
+  @extend %input-base
+
+
+.form-submit
+  display: inline-block
+  border: none
+  border-radius: 4px
+  padding: .5em .8em
+  color: $white
+  font-size: $font-size-sm
+  font-weight: 300
+  background-color: $grey-lighter
+  &:hover
+    background-color: #3BA85D
+    cursor: pointer
+
+
+.form--sshkey
+  .form-elem
+    margin-bottom: .5rem
+  @media #{$medium-up}
+    .form-elem
+      max-width: 460px
+
+
+.form--envvar
+  .form-elem
+    display: inline-block
+    vertical-align: top
+    width: 100%
+    margin-bottom: 1em
+  .switch
+    .label
+      font-size: $font-size-s
+      width: 7rem;
+      line-height: 1.2;
+
+  @media #{$medium-up}
+    .form-elem
+      margin-bottom: 0
+    .form-elem:first-of-type,
+    .form-elem:nth-of-type(2)
+      width: 31.5%
+      margin-right: 1em
+    .form-elem:nth-of-type(3)
+      width: 24%
+    .form-elem:last-of-type
+      width: 6%
+      float: right
+      text-align: right
+
+
+.form-error
+  .env-name,
+  .ssh-value
+    border: $fail-color 2px solid
+  .form-error-message
+    color: $fail-color
+    font-size: 14px
+    padding: .2em 0
+    margin: 0

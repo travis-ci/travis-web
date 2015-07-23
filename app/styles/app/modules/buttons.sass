@@ -4,33 +4,28 @@
 
 $button-border-color: #d4d4d4
 
-.button
+.button,
+.btn
   font-family: $font-family-sans-serif
-  font-size: $font-size-tiny
-  font-weight: normal
   position: relative
   overflow: visible
   display: inline-block
   padding: 5px 10px
-  border: 1px solid $button-border-color
-  margin: 0
-  background-color: #E9E9E7
-  background-clip: padding-box
   cursor: pointer
   outline: none
   text-decoration: none
   text-align: center
-  color: $gray-dark-3
+  color: $white
   white-space: nowrap
   border-radius: 2px
+  background-color: $grey-lighter
 
 .button:hover,
 .button:focus,
 .button:active,
 .button.active
   border-color: $button-border-color
-  border-bottom-color: #2a65a0
-  background-color: #40454f
+  background-color: $grey-medium
   text-decoration: none
   color: #fff
 
@@ -85,9 +80,6 @@ $button-border-color: #d4d4d4
     position: relative
     top: -0.15em
 
-.btn
-  @extend .button
-  border-radius: 2px
 .button--green
   border: none
   font-size: $font-size-small

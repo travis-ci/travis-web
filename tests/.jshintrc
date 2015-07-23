@@ -44,7 +44,8 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "jQuery"
   ],
   "node": false,
   "browser": false,

@@ -10,18 +10,19 @@
 @import "app/auth";
 @import "app/forms";
 @import "app/github";
+
 @import "app/main/annotations";
 @import "app/userlike";
 
 @import "app/main/list";
 @import "app/main/log";
-@import "app/main/sponsors";
+// @import "app/main/sponsors";
 @import "app/misc";
 @import "app/popup";
 // @import "app/pro";
-@import "app/settings";
+// @import "app/settings";
 
-@import "app/components/travis-switch";
+// @import "app/components/travis-switch";
 @import "app/components/sync-button";
 @import "app/components/loading-indicator";
 
@@ -38,7 +39,9 @@
 @import "app/modules/media";
 @import "app/modules/switch";
 @import "app/modules/memberlist";
+@import "app/modules/forms";
 @import "app/modules/notice";
+
 
 @import "app/layout";
 @import "app/layouts/dashboard";
@@ -59,3 +62,5 @@
 @import "app/layouts/getting-started";
 @import "app/layouts/first-sync";
 @import "app/layouts/missing-notice";
+@import "app/layouts/settings";
+

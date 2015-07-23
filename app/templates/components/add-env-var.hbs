@@ -1,0 +1,21 @@
+<form {{action "save" on="submit"}}>
+  <div class="form-elem">
+    {{input value=name class="env-name" on="key-up" action="nameChanged" placeholder="Name"}}
+    {{#if nameIsBlank }}
+      <p class="form-error-message">Name cannot be blank</p>
+    {{/if}}
+  </div>
+  <div class="form-elem">
+    {{input value=value class="env-value" placeholder="Value"}}
+  </div>
+  <div class="form-elem">
+    {{travis-switch active=public description="Display value in build log"}}
+  </div>
+  <div class="form-elem">
+    {{#if isSaving}}
+      {{loading-indicator}}
+    {{else}}
+      <input type="submit" value="Add" class="form-submit" />
+    {{/if}}
+  </div>
+</form>
