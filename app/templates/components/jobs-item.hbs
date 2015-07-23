@@ -1,13 +1,7 @@
 {{#link-to "job" repo job}}
   <div class="tile-status tile-status--job">
     {{#if isAnimating}}
-      <svg class="svg-booting" version="1.1" width="30" height="12" viewBox="0 0 10 10" preserveAspectRatio="xMinYMid meet">
-        <g>
-          <circle class="bubble" fill="#CDBC2C" cx="7.686" cy="7.369" r="2"/>
-          <circle class="bubble" fill="#D6C826" cx="13.143" cy="7.369" r="2"/>
-          <circle class="bubble" fill="#D6C826" cx="2.232" cy="7.369" r="2"/>
-        </g>
-      </svg>
+      <span class="icon-receiving"><i></i><i></i><i></i></span>
     {{else}}
       <span class="icon icon--job {{job.state}}"></span>
     {{/if}}
