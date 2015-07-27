@@ -21,6 +21,14 @@ Controller = Ember.ArrayController.extend
     @get('tab') != 'branches' and parseInt(@get('lastObject.number')) > 1
   ).property('tab', 'lastObject.number')
 
+  displayPullRequests: (->
+    if @get('tab') == 'pull_requests'
+      return true
+    else
+      return false
+
+  ).property('tab', 'lastObject.number')
+
   olderThanNumber: (id, number, type) ->
     options = { repository_id: id, after_number: number }
     if type?
