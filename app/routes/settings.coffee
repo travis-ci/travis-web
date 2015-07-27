@@ -42,12 +42,31 @@ Route = TravisRoute.extend
       response.active
     );
 
+  hasPushAccess: ->
+    repoId = parseInt @modelFor('repo').get('id')
+    pushAccess = true
+
+    Ajax.get '/users/permissions', (data) =>
+
+      admin = data.admin.filter (item) ->
+        return item == repoId
+      push = data.push.filter (item) ->
+        return item == repoId
+      pull = data.pull.filter (item) ->
+        return item == repoId
+
+      if Ember.isEmpty admin && Ember.isEmpty push && !Ember.isEmpty pull
+        pushAccess = false
+
+    pushAccess
+
   model: () ->
     return Ember.RSVP.hash({
       settings: @modelFor('repo').fetchSettings(),
       envVars: this.fetchEnvVars(),
       sshKey: this.fetchSshKey(),
       customSshKey: this.fetchCustomSshKey(),
+      hasPushAccess: this.hasPushAccess(),
       repositoryActive: this.fetchRepositoryActiveFlag()
     });
 
