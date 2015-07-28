@@ -1,6 +1,10 @@
 {{#link-to "job" repo job}}
   <div class="tile-status tile-status--job">
-    <span class="icon icon--job {{job.state}}"></span>
+    {{#if isAnimating}}
+      <span class="icon-receiving"><i></i><i></i><i></i></span>
+    {{else}}
+      <span class="icon icon--job {{job.state}}"></span>
+    {{/if}}
   </div>
 
   <p class="job-id jobs-item build-status">

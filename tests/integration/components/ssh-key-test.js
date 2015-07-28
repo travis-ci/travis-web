@@ -41,7 +41,7 @@ test('it renders the custom ssh key if custom key is set', function(assert) {
 });
 
 
-test('it deletes a custom key', function(assert) {
+test('it deletes a custom key if permissions are right', function(assert) {
   assert.expect(1);
 
   var store = this.container.lookup('store:main');
@@ -52,11 +52,28 @@ test('it deletes a custom key', function(assert) {
   });
 
   this.set('key', key);
-  this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
+  this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=true}}`);
   this.on('sshKeyDeleted', function() {});
 
   this.$('.ssh-key-action a').click();
 
   assert.ok(key.get('isDeleted'), 'key should be deleted');
+
+});
+
+test('it does not delete the custom key if permissions are insufficient', function(assert) {
+  assert.expect(1);
+
+  var store = this.container.lookup('store:main');
+
+  var key;
+  Ember.run(function() {
+    key = store.push('sshKey', {description: 'fookey', fingerprint: 'somethingthing', id: 1});
+  });
+
+  this.set('key', key);
+  this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=false}}`);
+
+  assert.ok(Ember.isEmpty(this.$('.ssh-key-action').find('a')), 'delete link should not be displayed');
 
 });
