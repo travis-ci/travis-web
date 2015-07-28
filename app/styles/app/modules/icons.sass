@@ -121,22 +121,19 @@
 
 .icon--env
   background-image: inline-image('svg/icon-environment-dark2.svg')
-.icon--cross-red,
 .icon--job.failed,
 .icon--job.rejected
   background-image: inline-image('svg/icon-job-failed.svg')
-.icon--check-green,
 .icon--job.passed,
 .icon--job.accepted
   background-image: inline-image('svg/icon-job-passed.svg')
-.icon--error-grey,
 .icon--job.errored
   background-image: inline-image('svg/icon-job-errored.svg')
 .icon--job.started,
-.icon--job.created,
-.icon--job.received,
 .icon--job.queued,
-.icon--started-yellow
+.icon--job.booting,
+.icon--job.received,
+.icon--job.created,
   background-image: inline-image('svg/icon-job-started.svg')
 .icon--job.canceled
   background-image: inline-image('svg/icon-job-canceled.svg')
@@ -210,3 +207,29 @@
 
 .icon-flag
   background-image: inline-image('svg/notice-flag.svg')
+
+
+.icon-receiving
+  margin: 0.3rem 0.5rem;
+  display: inline-block;
+  i
+    width: 4px
+    height: 4px
+    border-radius: 50%
+    display: inline-block
+    background-color: $start-bg-color
+    transform-origin: center center
+    animation: bubbleScale 1.2s infinite linear
+  i:nth-of-type(2)
+    animation-delay: 0.35s
+  i:nth-of-type(3)
+    animation-delay: 0.7s
+
+
+@keyframes bubbleScale
+  0%, 80%, 100%
+    transform: scale(0)
+
+  40%
+    transform: scale(1.0)
+
