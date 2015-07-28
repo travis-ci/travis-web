@@ -23,7 +23,11 @@
             {{view 'repo-show-tabs'}}
           </div>
           <div class="tabbody repo-main">
-            {{outlet}}
+            {{#if repo.active}}
+              {{outlet}}
+            {{else}}
+              {{not-active}}
+            {{/if}}
           </div>
         </div>
       </article>
