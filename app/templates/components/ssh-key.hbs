@@ -11,12 +11,19 @@
     {{#if isDeleting}}
       {{loading-indicator}}
     {{else}}
-      <div class="tooltip">
-        <a href="#" title="" {{action "delete"}}>
-          <span class="icon-delete"></span>
-        </a>
-        <div class="tooltip-bubble">Delete</div>
-      </div>
+      {{#if pushAccess}}
+        <div class="tooltip">
+          <a href="#" title="" {{action "delete"}}>
+            <span class="icon-delete"></span>
+          </a>
+          <div class="tooltip-bubble">Delete</div>
+        </div>
+      {{else}}
+        <div class="tooltip--height">
+          <span class="icon-delete-disabled"></span>
+          <div class="tooltip-bubble">You can't<br>delete keys</div>
+        </div>
+      {{/if}}
     {{/if}}
   </div>
 {{else}}
