@@ -22,7 +22,9 @@ Controller = Ember.ArrayController.extend
   ).property('tab', 'lastObject.number')
 
   displayPullRequests: (->
-    if @get('tab') == 'pull_requests'
+    if Ember.isEmpty(@get('repo.builds.content'))
+      return false # if there is no build there is no PR
+    else if Ember.isEmpty(@get('repo.pullRequests.content'))
       return true
     else
       return false
