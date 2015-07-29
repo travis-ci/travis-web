@@ -22,14 +22,21 @@ Controller = Ember.ArrayController.extend
   ).property('tab', 'lastObject.number')
 
   displayPullRequests: (->
-    if Ember.isEmpty(@get('repo.builds.content'))
-      return false # if there is no build there is no PR
-    else if Ember.isEmpty(@get('repo.pullRequests.content'))
-      return true
+    if @get('tab') == 'pull_requests'
+      if Ember.isEmpty(@get('repo.pullRequests.content'))
+        true
+      else
+        false
     else
-      return false
+      false
+  ).property('tab', 'repo.builds', 'repo.pullRequests')
 
-  ).property('tab', 'lastObject.number')
+  things: (->
+    return {
+      repo: @get('repo'),
+      auth: @auth.token()
+    }
+  ).property('repo')
 
   olderThanNumber: (id, number, type) ->
     options = { repository_id: id, after_number: number }
@@ -37,5 +44,6 @@ Controller = Ember.ArrayController.extend
       options.event_type = type.replace(/s$/, '') # poor man's singularize
 
     @store.find('build', options)
+
 
 `export default Controller`
