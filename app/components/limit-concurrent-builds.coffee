@@ -11,7 +11,16 @@ LimitConcurrentBuildsComponent = Ember.Component.extend
     description
   ).property('enabled')
 
+  limitChanged: ->
+    repo = @get('repo')
+    limit = parseInt(@get('value'))
+    if limit
+      @set('isSaving', true)
+      savingFinished = =>
+        @set('isSaving', false)
 
+      repo.saveSettings(maximum_number_of_builds: limit).
+        then(savingFinished, savingFinished)
   actions:
     toggle: ->
       unless @get('enabled')
@@ -26,15 +35,6 @@ LimitConcurrentBuildsComponent = Ember.Component.extend
         @set('value', 0)
 
     limitChanged: ->
-      repo = @get('repo')
-      limit = parseInt(@get('value'))
-      if limit
-        @set('isSaving', true)
-        savingFinished = =>
-          @set('isSaving', false)
-
-        repo.saveSettings(maximum_number_of_builds: limit).
-          then(savingFinished, savingFinished)
-
+      Ember.run.debounce(this, 'limitChanged', 1000)
 
 `export default LimitConcurrentBuildsComponent`
