@@ -2,7 +2,8 @@
 `import limit from 'travis/utils/computed-limit'`
 `import Repo from 'travis/models/repo'`
 
-Controller = Ember.ArrayController.extend
+Controller = Ember.Controller.extend
+  contentBinding: 'repos'
   actions:
     activate: (name) ->
       @activate(name)
@@ -29,7 +30,7 @@ Controller = Ember.ArrayController.extend
       if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0
         @container.lookup('router:main').send('redirectToGettingStarted')
 
-  isLoadedBinding: 'content.isLoaded'
+  isLoadedBinding: 'repos.isLoaded'
   needs: ['currentUser', 'repo', 'runningJobs', 'queue']
   currentUserBinding: 'controllers.currentUser.model'
   selectedRepo: (->
@@ -57,8 +58,8 @@ Controller = Ember.ArrayController.extend
   ).property()
 
   updateTimes: ->
-    if content = @get('content')
-      content.forEach (r) -> r.updateTimes()
+    if repos = @get('repos')
+      repos.forEach (r) -> r.updateTimes()
 
   activate: (tab, params) ->
     @set('sortProperties', ['sortOrder'])
@@ -66,7 +67,7 @@ Controller = Ember.ArrayController.extend
     this["view_#{tab}".camelize()](params)
 
   viewOwned: ->
-    @set('content', @get('userRepos'))
+    @set('repos', @get('userRepos'))
 
   viewRunning: ->
 
@@ -79,7 +80,7 @@ Controller = Ember.ArrayController.extend
 
   viewSearch: (phrase) ->
     @set('search', phrase)
-    @set('content', Repo.search(@store, phrase))
+    @set('repos', Repo.search(@store, phrase))
 
   searchObserver: (->
     search = @get('search')
