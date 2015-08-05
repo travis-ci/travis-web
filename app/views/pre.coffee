@@ -42,6 +42,8 @@ Object.defineProperty Log.Limit.prototype, 'limited',
     @count >= @max_lines
 
 View = BasicView.extend
+  popup: Ember.inject.service()
+
   templateName: 'jobs/pre'
   currentUserBinding: 'controller.auth.currentUser'
 
@@ -144,7 +146,7 @@ View = BasicView.extend
 
     removeLogPopup: ->
       if @get('canRemoveLog')
-        @popup('remove-log-popup')
+        @get('popup').open('remove-log-popup')
         return false
 
   noop: -> # TODO required?

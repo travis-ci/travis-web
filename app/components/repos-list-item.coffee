@@ -3,6 +3,8 @@
 `import { colorForState } from 'travis/utils/helpers'`
 
 ReposListItemComponent = Ember.Component.extend Polling,
+  routing: Ember.inject.service('-routing')
+
   tagName: 'li'
 
   pollModels: 'repo'
@@ -24,6 +26,6 @@ ReposListItemComponent = Ember.Component.extend Polling,
 
   click: ->
     @scrollTop()
-    @get('controller').transitionToRoute('/' + @get('repo.slug'))
+    @get('routing').transitionTo('repo', @get('repo.slug').split('/'))
 
 `export default ReposListItemComponent`

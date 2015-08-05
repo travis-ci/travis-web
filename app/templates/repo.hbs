@@ -18,7 +18,7 @@
         </header>
         <div class="repo-menus">
           <div class="repo-menu-header">
-            {{view 'repo-show-tools'}}
+            {{repo-show-tools repo=repo build=build job=job tab=tab currentUser=auth.currentUser}}
 
             {{repo-show-tabs repo=repo tab=tab}}
           </div>

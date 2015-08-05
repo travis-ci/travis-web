@@ -1,6 +1,8 @@
 `import BasicView from 'travis/views/basic'`
 
 View = BasicView.extend
+  popup: Ember.inject.service()
+
   classNames: ['application']
   click: (event) ->
     # TODO: this solves the case of closing menus and popups,
@@ -8,7 +10,7 @@ View = BasicView.extend
     #       yet, but this does not seem optimal
     targetAndParents = $(event.target).parents().andSelf()
     if ! ( targetAndParents.hasClass('open-popup') || targetAndParents.hasClass('popup') )
-      @popupCloseAll()
+      @get('popup').close()
 
     # TODO: I needed to add second check to this conditional, because for some reason
     #       event.stopPropagation() in menu() function in RepoShowToolsView does
