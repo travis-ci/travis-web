@@ -62,15 +62,18 @@ View = BasicView.extend
     @teardownLog()
 
   versionDidChange: (->
-    @rerender() if @get('_state') == 'inDOM'
+    this.$('#log').empty()
+    @teardownLog()
+    @createEngine()
   ).observes('log.version')
 
   logDidChange: (->
     console.log 'log view: log did change: rerender' if Log.DEBUG
 
+    this.$('#log').empty()
+    @teardownLog()
     if @get('log')
       @createEngine()
-      @rerender() if @get('_state') == 'inDOM'
   ).observes('log')
 
   teardownLog: ->
