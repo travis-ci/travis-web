@@ -31,7 +31,7 @@ Controller = Ember.Controller.extend
         @container.lookup('router:main').send('redirectToGettingStarted')
 
   isLoadedBinding: 'repos.isLoaded'
-  needs: ['currentUser', 'repo', 'runningJobs', 'queue']
+  needs: ['currentUser', 'repo']
   currentUserBinding: 'controllers.currentUser.model'
   selectedRepo: (->
     # we need to observe also repo.content here, because we use
@@ -40,15 +40,36 @@ Controller = Ember.Controller.extend
     @get('controllers.repo.repo.content') || @get('controllers.repo.repo')
   ).property('controllers.repo.repo', 'controllers.repo.repo.content')
 
-  startedJobsCount: Ember.computed.alias('controllers.runningJobs.length')
+  startedJobsCount: Ember.computed.alias('runningJobs.length')
   allJobsCount: (->
-    @get('startedJobsCount') + @get('controllers.queue.length')
-  ).property('startedJobsCount', 'controllers.queue.length')
+    @get('startedJobsCount') + @get('queuedJobs.length')
+  ).property('startedJobsCount', 'queuedJobs.length')
 
   init: ->
     @_super.apply this, arguments
     if !Ember.testing
       Visibility.every @config.intervals.updateTimes, @updateTimes.bind(this)
+
+  runningJobs: (->
+    # TODO: this should also query for received jobs
+    result = @store.filter('job', {}, (job) ->
+      ['started', 'received'].indexOf(job.get('state')) != -1
+    )
+    result.set('isLoaded', false)
+    result.then =>
+      result.set('isLoaded', true)
+    result
+  ).property()
+
+  queuedJobs: (->
+    result = @get('store').filter('job', {}, (job) ->
+      ['created', 'queued'].indexOf(job.get('state')) != -1
+    )
+    result.set('isLoaded', false)
+    result.then =>
+      result.set('isLoaded', true)
+    result
+  ).property()
 
   recentRepos: (->
     # I return an empty array here, because we're removing left sidebar, but
