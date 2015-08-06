@@ -1,6 +1,6 @@
-{{#if isLoaded}}
-  {{#if length}}
-    {{#each job in controller}}
+{{#if jobs.isLoaded}}
+  {{#if jobs.length}}
+    {{#each jobs as |job| }}
       <div class="tile tile--sidebar {{job.state}}">
         {{#if job.repo.slug}}
           <span class="icon icon--job {{job.state}}"></span>
@@ -15,15 +15,18 @@
         </p>
 
         <p>
-          <span class="icon icon--clock"></span> Queued
+          <span class="icon icon--clock"></span>
+          Duration:
+          <abbr class="duration" title={{job.startedAt}}>
+            {{format-duration job.duration}}
+          </abbr>
         </p>
 
       </div>
-
     {{/each}}
   {{else}}
-    <div class="loading-container">There are no jobs queued</div>
+    <div class="loading-container">There are no jobs running</div>
   {{/if}}
 {{else}}
-  {{loading-indicator center=true}}
+  {{loading-indicator center="true"}}
 {{/if}}

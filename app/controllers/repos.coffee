@@ -2,7 +2,8 @@
 `import limit from 'travis/utils/computed-limit'`
 `import Repo from 'travis/models/repo'`
 
-Controller = Ember.ArrayController.extend
+Controller = Ember.Controller.extend
+  contentBinding: 'repos'
   actions:
     activate: (name) ->
       @activate(name)
@@ -29,8 +30,8 @@ Controller = Ember.ArrayController.extend
       if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0
         @container.lookup('router:main').send('redirectToGettingStarted')
 
-  isLoadedBinding: 'content.isLoaded'
-  needs: ['currentUser', 'repo', 'runningJobs', 'queue']
+  isLoadedBinding: 'repos.isLoaded'
+  needs: ['currentUser', 'repo']
   currentUserBinding: 'controllers.currentUser.model'
   selectedRepo: (->
     # we need to observe also repo.content here, because we use
@@ -39,15 +40,36 @@ Controller = Ember.ArrayController.extend
     @get('controllers.repo.repo.content') || @get('controllers.repo.repo')
   ).property('controllers.repo.repo', 'controllers.repo.repo.content')
 
-  startedJobsCount: Ember.computed.alias('controllers.runningJobs.length')
+  startedJobsCount: Ember.computed.alias('runningJobs.length')
   allJobsCount: (->
-    @get('startedJobsCount') + @get('controllers.queue.length')
-  ).property('startedJobsCount', 'controllers.queue.length')
+    @get('startedJobsCount') + @get('queuedJobs.length')
+  ).property('startedJobsCount', 'queuedJobs.length')
 
   init: ->
     @_super.apply this, arguments
     if !Ember.testing
       Visibility.every @config.intervals.updateTimes, @updateTimes.bind(this)
+
+  runningJobs: (->
+    # TODO: this should also query for received jobs
+    result = @store.filter('job', {}, (job) ->
+      ['started', 'received'].indexOf(job.get('state')) != -1
+    )
+    result.set('isLoaded', false)
+    result.then =>
+      result.set('isLoaded', true)
+    result
+  ).property()
+
+  queuedJobs: (->
+    result = @get('store').filter('job', {}, (job) ->
+      ['created', 'queued'].indexOf(job.get('state')) != -1
+    )
+    result.set('isLoaded', false)
+    result.then =>
+      result.set('isLoaded', true)
+    result
+  ).property()
 
   recentRepos: (->
     # I return an empty array here, because we're removing left sidebar, but
@@ -57,8 +79,8 @@ Controller = Ember.ArrayController.extend
   ).property()
 
   updateTimes: ->
-    if content = @get('content')
-      content.forEach (r) -> r.updateTimes()
+    if repos = @get('repos')
+      repos.forEach (r) -> r.updateTimes()
 
   activate: (tab, params) ->
     @set('sortProperties', ['sortOrder'])
@@ -66,7 +88,7 @@ Controller = Ember.ArrayController.extend
     this["view_#{tab}".camelize()](params)
 
   viewOwned: ->
-    @set('content', @get('userRepos'))
+    @set('repos', @get('userRepos'))
 
   viewRunning: ->
 
@@ -79,7 +101,7 @@ Controller = Ember.ArrayController.extend
 
   viewSearch: (phrase) ->
     @set('search', phrase)
-    @set('content', Repo.search(@store, phrase))
+    @set('repos', Repo.search(@store, phrase))
 
   searchObserver: (->
     search = @get('search')

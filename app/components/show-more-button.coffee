@@ -1,21 +1,19 @@
 `import Ember from 'ember'`
 
-View = Ember.View.extend
+ShowMoreButtonComponent = Ember.Component.extend
   tagName: 'button'
   classNames: ['button button--grey button--showmore']
   classNameBindings: ['isLoading', 'showMore']
   showMore: true
   attributeBindings: ['disabled']
-  isLoadingBinding: 'controller.isLoading'
-  templateName: 'show-more-button'
 
   disabledBinding: 'isLoading'
 
-  label: (->
+  buttonLabel: (->
     if @get('isLoading') then 'Loading' else 'Show more'
   ).property('isLoading')
 
   click: ->
-    @get('controller').showMore()
+    this.attrs.showMore()
 
-`export default View`
+`export default ShowMoreButtonComponent`

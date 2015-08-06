@@ -42,6 +42,8 @@ Object.defineProperty Log.Limit.prototype, 'limited',
     @count >= @max_lines
 
 View = BasicView.extend
+  popup: Ember.inject.service()
+
   templateName: 'jobs/pre'
   currentUserBinding: 'controller.auth.currentUser'
 
@@ -60,15 +62,18 @@ View = BasicView.extend
     @teardownLog()
 
   versionDidChange: (->
-    @rerender() if @get('_state') == 'inDOM'
+    this.$('#log').empty()
+    @teardownLog()
+    @createEngine()
   ).observes('log.version')
 
   logDidChange: (->
     console.log 'log view: log did change: rerender' if Log.DEBUG
 
+    this.$('#log').empty()
+    @teardownLog()
     if @get('log')
       @createEngine()
-      @rerender() if @get('_state') == 'inDOM'
   ).observes('log')
 
   teardownLog: ->
@@ -144,7 +149,7 @@ View = BasicView.extend
 
     removeLogPopup: ->
       if @get('canRemoveLog')
-        @popup('remove-log-popup')
+        @get('popup').open('remove-log-popup')
         return false
 
   noop: -> # TODO required?

@@ -5,6 +5,7 @@
 `import Polling from 'travis/mixins/polling'`
 
 View = BasicView.extend Polling,
+  popup: Ember.inject.service()
   reposBinding: 'controllers.repos'
   repoBinding: 'controller.repo'
   buildBinding: 'controller.build'
@@ -25,7 +26,7 @@ View = BasicView.extend Polling,
 
   actions:
     statusImages: () ->
-      @popupCloseAll()
+      @get('popup').close()
       view = StatusImagesView.create(toolsView: this, container: @container)
       BasicView.currentPopupView = view
       view.appendTo($('body'))
