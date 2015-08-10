@@ -44,21 +44,9 @@ Route = TravisRoute.extend
 
   hasPushAccess: ->
     repoId = parseInt @modelFor('repo').get('id')
-    pushAccess = true
 
-    Ajax.get '/users/permissions', (data) =>
-
-      admin = data.admin.filter (item) ->
-        return item == repoId
-      push = data.push.filter (item) ->
-        return item == repoId
-      pull = data.pull.filter (item) ->
-        return item == repoId
-
-      if Ember.isEmpty admin && Ember.isEmpty push && !Ember.isEmpty pull
-        pushAccess = false
-
-    pushAccess
+    @auth.get('currentUser').get('pushPermissions').filter (item) ->
+      item == repoId
 
   model: () ->
     return Ember.RSVP.hash({

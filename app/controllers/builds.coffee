@@ -45,5 +45,9 @@ Controller = Ember.ArrayController.extend
 
     @store.find('build', options)
 
+  actions:
+    showMoreBuilds: ->
+      @showMore()
+
 
 `export default Controller`

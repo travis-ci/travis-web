@@ -7,7 +7,7 @@
   {{/each}}
   {{#if displayShowMoreButton}}
     <p>
-      {{view 'show-more-button'}}
+      {{show-more-button isLoading=isLoading showMore=(action 'showMoreBuilds')}}
       {{#if isLoading}}
         {{loading-indicator}}
       {{/if}}

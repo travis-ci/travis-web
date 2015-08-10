@@ -1,0 +1,83 @@
+<div class="tabnav" role="tablist">
+  <ul class="tab tabs--main">
+    <li id="tab_current" class={{classCurrent}}>
+      {{#if repo.slug}}
+        {{#link-to "repo" repo current-when="repo.index"}}
+          Current
+        {{/link-to}}
+      {{/if}}
+    </li>
+    <li id="tab_branches" class={{classBranches}}>
+      {{#if repo.slug}}
+        {{#link-to "branches" repo}}
+          Branches
+        {{/link-to}}
+      {{/if}}
+    </li>
+    <li id="tab_builds" class={{classBuilds}}>
+      {{#if repo.slug}}
+        {{#link-to "builds" repo}}
+          Build History
+        {{/link-to}}
+      {{/if}}
+    </li>
+    <li id="tab_pull_requests" class={{classPullRequests}}>
+      {{#if repo.slug}}
+        {{#link-to "pullRequests" repo}}
+          Pull Requests
+        {{/link-to}}
+      {{/if}}
+    </li>
+    <li id="tab_build" class={{classBuild}}>
+      {{#if build.id}}
+        {{#if repo.slug}}
+          {{#link-to "build" repo build}}
+            Build #{{build.number}}
+          {{/link-to}}
+        {{/if}}
+      {{/if}}
+    </li>
+    <li id="tab_job" class={{classJob}}>
+      {{#if job.id}}
+        {{#if repo.slug}}
+          {{#link-to "job" repo job}}
+            Job #{{job.number}}
+          {{/link-to}}
+        {{/if}}
+      {{/if}}
+    </li>
+    <li id="tab_settings" class={{classSettings}}>
+      {{#if repo.slug}}
+        {{#link-to "settings" repo}}
+          Settings
+        {{/link-to}}
+      {{/if}}
+    </li>
+    <li id="tab_requests" class="{{classRequests}}">
+      {{#if repo.slug}}
+        {{#link-to "requests" repo}}
+          Requests
+        {{/link-to}}
+      {{/if}}
+    </li>
+    {{#if config.caches_enabled}}
+      <li id="tab_caches" class={{classCaches}}>
+        {{#if repo.slug}}
+          {{#link-to "caches" repo}}
+            Caches
+          {{/link-to}}
+        {{/if}}
+      </li>
+    {{/if}}
+
+    <li id="tab_request" class={{classRequest}}>
+      {{#if request.id}}
+        {{#if repo.slug}}
+          {{#link-to "request" repo request}}
+            Request #{{request.id}}
+          {{/link-to}}
+        {{/if}}
+      {{/if}}
+    </li>
+  </ul>
+</div>
