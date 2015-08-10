@@ -65,11 +65,12 @@
   {{#unless isPR}}
     <h2 class="page-title">No builds for this repository</h2>
     <p class="page-notice">Want to start testing this project on Travis CI?</p>
-    {{#if isLoading}}
+    <a href="http://docs.travis-ci.com/user/getting-started/" class="button button--green">Read the Docs on Getting Started</a>
+    {{!-- {{#if isLoading}}
       {{loading-indicator}}
     {{else}}
       <a href="#" class="button button--green" {{action "triggerBuild"}}>Trigger the first build</a>
-    {{/if}}
+    {{/if}} --}}
   {{else}}
     <h2 class="page-title">No Pull Request builds for this Repositiory</h2>
   {{/unless}}
