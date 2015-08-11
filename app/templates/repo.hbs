@@ -20,7 +20,7 @@
           <div class="repo-menu-header">
             {{repo-show-tools repo=repo build=build job=job tab=tab currentUser=auth.currentUser}}
 
-            {{repo-show-tabs repo=repo tab=tab}}
+            {{repo-show-tabs repo=repo tab=tab build=build job=job}}
           </div>
           <div class="tabbody repo-main">
             {{outlet}}

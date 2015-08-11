@@ -4,7 +4,7 @@
     <button type="button" id="burger" class="burger-btn" {{action 'toggleBurgerMenu'}}>&equiv;</button>
   </div>
 
-  <ul id="navigation" class="navigation {{is-open}}">
+  <ul id="navigation" class="navigation {{if is-open 'is-open'}}">
     <li><a href="http://blog.travis-ci.com">Blog</a></li>
     <li><a href="http://www.traviscistatus.com/">Status</a></li>
 
