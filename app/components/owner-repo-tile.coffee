@@ -3,7 +3,7 @@
 OwnerRepoTileComponent = Ember.Component.extend
 
   tagName: 'li'
-  classNames: ['tile', 'tile--small', 'row']
+  classNames: ['owner-tile']
   classNameBindings: ['repo.default_branch.last_build.state']
 
   ownerName: (->
