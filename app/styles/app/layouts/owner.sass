@@ -79,12 +79,14 @@
 
 .owner-tiles
   padding: 0
+  list-style-type: none
 
 %one-line
   font-size: 16px
   font-weight: 400
   vertical-align: middle
   margin: 0
+  display: inline-block
   *
     display: inline-block
     font-size: inherit
@@ -107,12 +109,7 @@
 
 
 .owner-tile
-  display: flex
-  flex-direction: row
-  flex-flow: space-between
-  align-items: baseline
-  height: 3.8em
-  padding: .8em 0
+  padding: .8em 0 .8em 2em
   margin-bottom: .5em
   border: #F2F0F0 solid 1px
 
@@ -123,11 +120,6 @@
         text-decoration: underline
   .repo-title a:hover
     text-decoration: underline
-
-  .repo
-    @extend %one-line
-    width: grid-calc(4, 12)
-    margin-left: 2em
 
   .icon--job,
   .icon-push,
@@ -149,21 +141,43 @@
   .build-status
     text-transform: capitalize
 
+  .repo
+    @extend %one-line
+    white-space: nowrap
+    width: grid-calc(9, 12)
   .build
     @extend %one-line
-    width: grid-calc(2, 12)
-
+    width: grid-calc(5, 12)
   .branch
     @extend %one-line
-    width: grid-calc(2, 12)
-
+    width: grid-calc(6, 12)
   .commit
     @extend %one-line
-    width: grid-calc(2, 12)
-
+    width: grid-calc(6, 12)
   .duration
     @extend %one-line
-    width: grid-calc(4, 12)
+    width: grid-calc(12, 12)
+
+  @media #{$medium-up}
+    display: flex
+    flex-direction: row
+    flex-flow: space-between
+    align-items: baseline
+    height: 3.8em
+    padding: .8em 0
+
+    .build
+      width: grid-calc(2, 12)
+    .branch
+      width: grid-calc(2, 12)
+    .commit
+      width: grid-calc(2, 12)
+    .duration
+      width: grid-calc(4, 12)
+    .repo
+      width: grid-calc(4, 12)
+      margin-left: 2em
+
 
   @include statusColors($green-dark, 'passed')
   @include statusColors($red-dark, 'failed')
