@@ -17,6 +17,18 @@
     {{content-for 'head-footer'}}
   </head>
   <body>
+    <noscript>
+      <div style="width: 60%; margin: auto;">
+        <img src="/images/travis-mascot-150.png" alt="Travis CI mascot" style="float: left; margin: 1em 3em;">
+        <div>
+          <h1>Hey there!</h1>
+          <p>Looks like you have JavaScript disabled.</p>
+          <p>The Travis CI webclient needs JavaScript to work properly.</p>
+          <h2>Please enable JavaScript to get the best Travis CI experience.</h2>
+          <h3>Thank you!</h3>
+        </div>
+      </div>
+    </noscript>
     {{content-for 'body'}}
 
     <script src="assets/vendor.js"></script>
