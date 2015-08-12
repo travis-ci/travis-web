@@ -7,7 +7,7 @@
     {{#if repo.isLoaded}}
       <article id="repo-header" class="repo-header passed">
         <header>
-          <h1 class="repo-header-title">{{#link-to "repo" repo}}{{repo.slug}}{{/link-to}}</h1>
+          <h1 class="repo-header-title">{{#link-to "owner" repo.owner}}{{repo.owner}}{{/link-to}}/{{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
           <div class="repo-header-icons">
             <a href={{controller.urlGithub}}><span class="icon icon--github-circle"></span></a>
             <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target=view}}>
