@@ -23,7 +23,11 @@
             {{repo-show-tabs repo=repo tab=tab build=build job=job}}
           </div>
           <div class="tabbody repo-main">
-            {{outlet}}
+            {{#if repo.active}}
+              {{outlet}}
+            {{else}}
+              {{not-active}}
+            {{/if}}
           </div>
         </div>
       </article>
