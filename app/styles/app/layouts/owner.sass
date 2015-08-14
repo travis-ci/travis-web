@@ -99,7 +99,7 @@
 
 @mixin statusColors($color, $status)
   &.#{$status}
-    background: linear-gradient(to right, $color 0%, $color 9px, transparent 10px, transparent 100%);
+    background: linear-gradient(to right, $color 0%, $color 9px, transparent 10px, transparent 100%) no-repeat;
     .build a,
     .repo-title a
       color: $color
@@ -135,10 +135,10 @@
     background-size: 100%
 
   .icon--job
-    height: 1.2em
-    background-position-y: 0.2em
+    height: 1em
+    margin-top: .1em
   .icon-push
-    background-position-y: 0.4em
+    margin-top: .6em
   .build-status
     text-transform: capitalize
 
