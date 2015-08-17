@@ -10,7 +10,8 @@
   @extend %icon
 
 .icon-cal,
-.icon--cal
+.icon--cal,
+.icon-calendar
   background-image: inline-image('svg/finished-icon.svg')
 
 .icon-clock,
@@ -83,9 +84,11 @@
 .icon.pull_request
   background-image: inline-image('svg/pull-request-icon.svg')
 
-.icon--grey.push
+.icon--grey.push,
+.icon-push
   background-image: inline-image('svg/icon-request-push.svg')
-.icon--grey.pull_request
+.icon--grey.pull_request,
+.icon-pull_request
   background-image: inline-image('svg/icon-request-pull.svg')
 
 .icon-api,
@@ -225,6 +228,13 @@
   i:nth-of-type(3)
     animation-delay: 0.7s
 
+.icon-owner-receiving
+  @extend .icon-receiving
+  margin-right: 0.5em !important
+  i
+    width: 5px
+    height: 5px
+    background-color: #ECCE4B
 
 @keyframes bubbleScale
   0%, 80%, 100%

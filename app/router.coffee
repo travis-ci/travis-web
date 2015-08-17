@@ -73,7 +73,7 @@ Router.map ->
 
   @resource 'owner', path: '/:owner', ->
     @route 'repositories', path: '/'
-    @route 'running', path: '/running'
+    # @route 'running', path: '/running'
 
   @route 'error404', path: '/*path'
 

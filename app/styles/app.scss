@@ -14,13 +14,14 @@
 @import "app/main/annotations";
 @import "app/userlike";
 
-@import "app/main/list";
 @import "app/main/log";
 @import "app/misc";
 @import "app/popup";
 
 @import "app/components/sync-button";
 @import "app/components/loading-indicator";
+
+@import "app/animation/tractor";
 
 @import "app/modules/section";
 @import "app/modules/loader";

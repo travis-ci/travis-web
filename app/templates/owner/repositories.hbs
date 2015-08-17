@@ -2,6 +2,6 @@
   {{#each repo in repos}}
     {{owner-repo-tile repo=repo}}
   {{else}}
-    <li>No active repos</li>
+    {{no-repos}}
   {{/each}}
 </ul>

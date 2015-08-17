@@ -3,7 +3,7 @@
 OwnerRepoTileComponent = Ember.Component.extend
 
   tagName: 'li'
-  classNames: ['tile', 'tile--small', 'row']
+  classNames: ['owner-tile']
   classNameBindings: ['repo.default_branch.last_build.state']
 
   ownerName: (->
@@ -13,6 +13,15 @@ OwnerRepoTileComponent = Ember.Component.extend
   repoName: (->
     @get('repo.slug').split(/\//)[1]
   ).property('repo.slug')
+
+  isAnimating: (->
+    state = @get('repo.default_branch.last_build.state')
+    animationStates = ['received', 'queued', 'started', 'booting']
+
+    unless animationStates.indexOf(state) == -1
+      true
+
+  ).property('repo.default_branch.last_build.state')
 
 
 

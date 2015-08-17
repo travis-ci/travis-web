@@ -1,38 +1,38 @@
 {{#if repo.private }}
   <div class="tile-lock"><span class="icon icon-lock"></span></div>
 {{/if}}
-<div class="tile-status">
-  <span class="icon icon-status {{repo.default_branch.last_build.state}}"></span>
-</div>
-<div class="tile-main tile-header column medium-3">
-  <h2>{{#link-to "repo" ownerName repoName }}{{repoName}}{{/link-to}}</h2>
-</div>
-<div class="column medium-9 end">
-  {{#if repo.default_branch.last_build}}
-    <p class="tile-single tile-job build-status column medium-4 small-6"><span class="icon icon-hash"></span>
-      {{#link-to "build" ownerName repoName repo.default_branch.last_build.id}}
-        {{!-- {{repo.last_build.number}} {{repo.last_build.state}} --}}
-        {{repo.default_branch.last_build.number}} {{repo.default_branch.last_build.state}}
-      {{/link-to}}</p>
-
-    <div class="column medium-8 tile-double">
-      <div class="column medium-6">
-        <p class="tile-branch">
-          <span class="icon icon--grey request-kind {{repo.default_branch.last_build.event_type}}"></span>
-          {{repo.default_branch.name}}</p>
-        <p class="tile-commit">
-          <span class="icon icon-github"></span><a href={{repo.default_branch.last_build.commit.compare_url}}>{{format-sha repo.default_branch.last_build.commit.sha}}</a></p>
-      </div>
-      <div class="column medium-6">
-        <p class="tile-duration">
-          <span class="icon icon-clock"></span>
-          {{format-duration repo.default_branch.last_build.duration}}</p>
-        <p class="tile-timeago">
-          <span class="icon icon-cal"></span>
-          {{format-time repo.default_branch.last_build.finished_at}}</p>
-      </div>
-    </div>
+<div class="repo">
+  {{#if isAnimating}}
+    <span class="icon-owner-receiving"><i></i><i></i><i></i></span>
   {{else}}
-    <p>there is no build</p>
+    <span class="icon--job {{repo.default_branch.last_build.state}}"></span>
   {{/if}}
+  <h2 class="repo-title">{{#link-to "repo" ownerName repoName }}{{repoName}}{{/link-to}}</h2>
 </div>
+{{#if repo.default_branch.last_build}}
+  <div class="build">
+    {{#link-to "build" ownerName repoName repo.default_branch.last_build.id}}
+      <span class="icon-hash"></span>
+      <span>{{repo.default_branch.last_build.number}}</span>
+    {{/link-to}}
+  </div>
+  <div class="branch">
+    <span class="icon-{{repo.default_branch.last_build.event_type}}"></span>
+    <p>
+      {{repo.default_branch.name}}
+    </p>
+  </div>
+  <div class="commit">
+    <a href="{{repo.default_branch.last_build.commit.compare_url}}">
+      <span class="icon-github"></span>
+      <span>{{format-sha repo.default_branch.last_build.commit.sha}}</span>
+    </a>
+  </div>
+  <div class="duration">
+    <span class="icon-calendar"></span>
+    <span class="build-status">{{repo.default_branch.last_build.state}}</span>
+    <span>{{format-time repo.default_branch.last_build.finished_at}}</span>
+  </div>
+{{else}}
+  <p>there is no build</p>
+{{/if}}

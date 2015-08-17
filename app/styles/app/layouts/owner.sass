@@ -23,6 +23,7 @@
       text-decoration: underline
   img
     border-radius: 50%
+    background-color: #F4F3ED
 
   .sync-button
     margin-top: .8rem
@@ -52,60 +53,6 @@
       content: ""
       @include fadeOut(right, -90deg, $white)
 
-
-.owner-tiles
-  @extend .repo-main
-  @include resetul
-
-  h2
-    font-size: 20px
-    white-space: nowrap
-    line-height: 2.5
-
-  .tile-status .icon-status
-    margin-top: 2.1em
-    width: 1.2em
-    height: 1.3em
-
-  .tile-single,
-  .tile-double
-    color: $grey-medium
-    padding: .1em 0
-    font-size: $font-size-m
-    .icon
-      margin-right: .3em
-      width: 1em
-      height: 1.1em
-      vertical-align: middle
-      &.icon-github
-        width: .9em
-        height: 1.2em
-      &.push
-        width: 1.1em
-        height: .6em
-        margin: 0
-    a
-      color: $grey-medium
-      &:hover
-        color: $grey-medium
-        text-decoration: underline
-
-  .tile-single
-    line-height: 3em
-  .tile-double
-    line-height: 1.5em
-
-  .tile-main
-    position: relative
-    overflow: hidden
-    &:after
-      content: ""
-      @include fadeOut(right, -90deg, $cream-light, 20%)
-    & ~ div
-      @media #{$medium-up}
-        padding-left: 2em
-        border-left: 1px solid $cream-dark
-
 .tabs--owner
   padding : 0 $column-gutter/2
 
@@ -129,3 +76,118 @@
   @media #{$medium-up}
     height: 2.2em
     border-bottom: solid 2px $cream-dark
+
+
+.owner-tiles
+  padding: 0
+  list-style-type: none
+
+%one-line
+  font-size: 16px
+  font-weight: 400
+  vertical-align: middle
+  margin: 0
+  display: inline-block
+  *
+    display: inline-block
+    font-size: inherit
+    font-weight: 400
+    vertical-align: middle
+    margin: 0
+    padding: 0
+    line-height: 1
+
+@mixin statusColors($color, $status)
+  &.#{$status}
+    background: linear-gradient(to right, $color 0%, $color 9px, transparent 10px, transparent 100%) no-repeat;
+    .build a,
+    .repo-title a
+      color: $color
+      &:hover
+        border-color: $color
+    .build-status
+      color: $color
+
+
+.owner-tile
+  padding: .8em 0 .8em 2em
+  margin-bottom: .5em
+  border: #F2F0F0 solid 1px
+
+  a
+    text-decoration: none
+    &:hover
+      span
+        text-decoration: underline
+  .repo-title a:hover
+    text-decoration: underline
+
+  .icon--job,
+  .icon-push,
+  .icon-pull_request,
+  .icon-calendar,
+  .icon-hash,
+  .icon-github
+    width: 1em
+    height: 1.1em
+    margin-right: .5em
+    background-repeat: no-repeat
+    background-size: 100%
+
+  .icon--job
+    height: 1em
+    margin-top: .1em
+  .icon-push
+    margin-top: .6em
+  .build-status
+    text-transform: capitalize
+
+  .repo
+    @extend %one-line
+    white-space: nowrap
+    width: grid-calc(9, 12)
+  .build
+    @extend %one-line
+    width: grid-calc(5, 12)
+  .branch
+    @extend %one-line
+    width: grid-calc(6, 12)
+  .commit
+    @extend %one-line
+    width: grid-calc(6, 12)
+  .duration
+    @extend %one-line
+    width: grid-calc(12, 12)
+
+  @media #{$medium-up}
+    display: flex
+    flex-direction: row
+    flex-flow: space-between
+    align-items: baseline
+    height: 3.8em
+    padding: .8em 0
+
+    .build
+      width: grid-calc(2, 12)
+    .branch
+      width: grid-calc(2, 12)
+    .commit
+      width: grid-calc(2, 12)
+    .duration
+      width: grid-calc(4, 12)
+    .repo
+      width: grid-calc(4, 12)
+      margin-left: 2em
+
+
+  @include statusColors($green-dark, 'passed')
+  @include statusColors($red-dark, 'failed')
+  @include statusColors($red-dark, 'errored')
+  @include statusColors($grey-medium, 'canceled')
+  @include statusColors(#ECCE4B, 'started')
+  @include statusColors(#ECCE4B, 'queued')
+  @include statusColors(#ECCE4B, 'booting')
+  @include statusColors(#ECCE4B, 'received')
+  @include statusColors(#ECCE4B, 'created')
+
+

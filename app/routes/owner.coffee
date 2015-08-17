@@ -9,9 +9,6 @@ Route = TravisRoute.extend
   deactivate: ->
     @controllerFor('loading').set('layoutName', null)
 
-  titleToken: (model) ->
-    "#{model.name}"
-
   model: (params) ->
     $.get(config.apiEndpoint + "/v3/owner/#{params.owner}")
 
