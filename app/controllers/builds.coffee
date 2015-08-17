@@ -31,7 +31,17 @@ Controller = Ember.ArrayController.extend
       false
   ).property('tab', 'repo.builds', 'repo.pullRequests')
 
-  things: (->
+  displayBranches: (->
+    if @get('tab') == 'branches'
+      if Ember.isEmpty(@get('repo.branches.content.content'))
+        true
+      else
+        false
+    else
+      false
+  ).property('tab', 'repo.builds', 'repo.branches')
+
+  noticeData: (->
     return {
       repo: @get('repo'),
       auth: @auth.token()
