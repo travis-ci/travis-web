@@ -6,14 +6,14 @@ Controller = Ember.Controller.extend
 
   githubProfile: (->
     "https://github.com/#{@get('model.login')}"
-  ).property()
+  ).property('model')
 
   avatarURL: (->
     if @get('model.avatar_url')
       "#{@get('model.avatar_url')}?s=125"
     else
       'https://secure.gravatar.com/avatar/?d=mm&s=125'
-  ).property()
+  ).property('model')
 
   owner: (->
     data = @get('model')
