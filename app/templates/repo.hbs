@@ -29,7 +29,7 @@
               {{#if repo.lastBuildId}}
                 {{outlet}}
               {{else}}
-                {{not-active}}
+                {{not-active user=currentUser repo=repo}}
               {{/if}}
             {{/if}}
           </div>

@@ -41,7 +41,7 @@ Controller = Ember.ArrayController.extend
       false
   ).property('tab', 'repo.builds', 'repo.branches')
 
-  things: (->
+  noticeData: (->
     return {
       repo: @get('repo'),
       auth: @auth.token()

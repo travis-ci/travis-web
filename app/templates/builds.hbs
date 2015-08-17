@@ -1,9 +1,8 @@
 {{#if content.isLoaded}}
-{{!-- <table id="builds" class="list"> --}}
   {{#each controller as |build|}}
     {{builds-item build=build}}
   {{else}}
-    {{no-builds repo=things isPR=displayPullRequests isBranch=displayBranches}}
+    {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
   {{/each}}
   {{#if displayShowMoreButton}}
     <p>
