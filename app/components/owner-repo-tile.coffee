@@ -14,6 +14,15 @@ OwnerRepoTileComponent = Ember.Component.extend
     @get('repo.slug').split(/\//)[1]
   ).property('repo.slug')
 
+  isAnimating: (->
+    state = @get('repo.default_branch.last_build.state')
+    animationStates = ['received', 'queued', 'started', 'booting']
+
+    unless animationStates.indexOf(state) == -1
+      true
+
+  ).property('repo.default_branch.last_build.state')
+
 
 
 
