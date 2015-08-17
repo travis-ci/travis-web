@@ -1,0 +1,19 @@
+.tractor
+  @media #{$medium-up}
+    width: 258px
+    height: 188px
+.tractor-arm
+  @media #{$medium-up}
+    width: 90px
+    height: 71px
+    transform-origin: 89px 70px
+    animation: armMovement 1.5s 1 ease
+
+@keyframes armMovement
+  0%,
+  100%
+    transform: rotateZ(0)
+  40%
+    transform: rotateZ(-20deg)
+  70%
+    transform: rotateZ(10deg)
