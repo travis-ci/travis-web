@@ -108,6 +108,8 @@ LogContentComponent = Ember.Component.extend
 
   partsDidChange: (parts, start, _, added) ->
     console.log 'log view: parts did change' if Log.DEBUG
+    return unless @get('state') == 'inDOM'
+
     for part, i in parts.slice(start, start + added)
       # console.log "limit in log view: #{@get('limited')}"
       break if @engine?.limit?.limited
