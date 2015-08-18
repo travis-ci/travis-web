@@ -56,19 +56,21 @@ LogContentComponent = Ember.Component.extend
     console.log 'log view: will destroy' if Log.DEBUG
     @teardownLog()
 
-  teardownLog: ->
-    if log = @get('log')
+  teardownLog: (log) ->
+    if log || log = @get('log')
       parts = log.get('parts')
       parts.removeArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
       parts.destroy()
       log.notifyPropertyChange('parts')
       @lineSelector?.willDestroy()
-      # log should do it on destroy
-      this.$('#log').empty()
+      if logElement = this.$('#log')
+        logElement.empty()
 
-  createEngine: ->
-    if log = @get('log')
-      console.log 'log view: create engine' if Log.DEBUG
+  createEngine: (log) ->
+    if log || log = @get('log')
+      if logElement = this.$('#log')
+        logElement.empty()
+
       log.onClear =>
         @teardownLog()
         @createEngine()
@@ -81,17 +83,24 @@ LogContentComponent = Ember.Component.extend
       @engine.limit = @limit
       @logFolder = new LogFolder(@$('#log'))
       @lineSelector = new LinesSelector(@$('#log'), @scroll, @logFolder)
-      @observeParts()
+      @observeParts(log)
 
-  didUpdateAttrs: ->
-    @teardownLog()
-    @createEngine()
+  didUpdateAttrs: (changes) ->
+    @_super.apply(this, arguments)
+
+    return unless changes.oldAttrs
+
+    if changes.newAttrs.job.value && changes.oldAttrs.job.value &&
+       changes.newAttrs.job.value != changes.oldAttrs.job.value
+
+      @teardownLog(changes.oldAttrs.job.value.get('log'))
+      @createEngine(changes.newAttrs.job.value.get('log'))
 
   unfoldHighlight: ->
     @lineSelector.unfoldLines()
 
-  observeParts: ->
-    if log = @get('log')
+  observeParts: (log) ->
+    if log || log = @get('log')
       parts = log.get('parts')
       parts.addArrayObserver(@, didChange: 'partsDidChange', willChange: 'noop')
       parts = parts.slice(0)
