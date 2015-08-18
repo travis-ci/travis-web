@@ -1,8 +1,8 @@
+`import Ember from 'ember'`
 `import LinesSelector from 'travis/utils/lines-selector'`
 `import LogFolder from 'travis/utils/log-folder'`
 `import config from 'travis/config/environment'`
 `import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls'`
-`import BasicView from 'travis/views/basic'`
 
 Log.DEBUG = false
 Log.LIMIT = 10000
@@ -41,16 +41,11 @@ Object.defineProperty Log.Limit.prototype, 'limited',
   get: ->
     @count >= @max_lines
 
-View = BasicView.extend
+LogContentComponent = Ember.Component.extend
   popup: Ember.inject.service()
+  auth: Ember.inject.service()
 
-  templateName: 'jobs/pre'
-  currentUserBinding: 'controller.auth.currentUser'
-
-  logWillChange: (->
-    console.log 'log view: log will change' if Log.DEBUG
-    @teardownLog()
-  ).observesBefore('log')
+  currentUserBinding: 'auth.currentUser'
 
   didInsertElement: ->
     console.log 'log view: did insert' if Log.DEBUG
@@ -61,21 +56,6 @@ View = BasicView.extend
     console.log 'log view: will destroy' if Log.DEBUG
     @teardownLog()
 
-  versionDidChange: (->
-    this.$('#log').empty()
-    @teardownLog()
-    @createEngine()
-  ).observes('log.version')
-
-  logDidChange: (->
-    console.log 'log view: log did change: rerender' if Log.DEBUG
-
-    this.$('#log').empty()
-    @teardownLog()
-    if @get('log')
-      @createEngine()
-  ).observes('log')
-
   teardownLog: ->
     if log = @get('log')
       parts = log.get('parts')
@@ -83,19 +63,29 @@ View = BasicView.extend
       parts.destroy()
       log.notifyPropertyChange('parts')
       @lineSelector?.willDestroy()
+      # log should do it on destroy
+      this.$('#log').empty()
 
   createEngine: ->
-    if @get('log')
+    if log = @get('log')
       console.log 'log view: create engine' if Log.DEBUG
+      log.onClear =>
+        @teardownLog()
+        @createEngine()
+
       @scroll = new Log.Scroll beforeScroll: =>
         @unfoldHighlight()
       @limit = new Log.Limit Log.LIMIT, =>
         @set('limited', true)
       @engine = Log.create(listeners: [@scroll, @limit])
       @engine.limit = @limit
-      @logFolder = new LogFolder(@$().find('#log'))
-      @lineSelector = new LinesSelector(@$().find('#log'), @scroll, @logFolder)
+      @logFolder = new LogFolder(@$('#log'))
+      @lineSelector = new LinesSelector(@$('#log'), @scroll, @logFolder)
       @observeParts()
+
+  didUpdateAttrs: ->
+    @teardownLog()
+    @createEngine()
 
   unfoldHighlight: ->
     @lineSelector.unfoldLines()
@@ -154,5 +144,4 @@ View = BasicView.extend
 
   noop: -> # TODO required?
 
-`export default View`
-Travis.PreView = View
+`export default LogContentComponent`

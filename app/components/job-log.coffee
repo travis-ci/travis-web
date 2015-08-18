@@ -1,8 +1,6 @@
-`import BasicView from 'travis/views/basic'`
-`import config from 'travis/config/environment'`
+`import Ember from 'ember'`
 
-View = BasicView.extend
-  templateName: 'jobs/log'
+JobLogComponent = Ember.Component.extend
   logBinding: 'job.log'
 
   didInsertElement: ->
@@ -29,4 +27,4 @@ View = BasicView.extend
       job.get('log').fetch()
       job.subscribe()
 
-`export default View`
+`export default JobLogComponent`

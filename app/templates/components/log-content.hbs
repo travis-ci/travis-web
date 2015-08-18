@@ -1,10 +1,10 @@
-{{remove-log-popup job=view.job}}
+{{remove-log-popup job=job}}
 
 <section id="log-container" class="log">
 
   {{#if auth.signedIn}}
-    {{#if view.job.isLegacyInfrastructure}}
-      {{#if view.job.isFinished}}
+    {{#if job.isLegacyInfrastructure}}
+      {{#if job.isFinished}}
         <p class="notice"><span class="icon-flag"></span>
         This job ran on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a></p>
       {{else}}
@@ -14,23 +14,23 @@
     {{/if}}
   {{/if}}
 
-  {{#if view.job.notStarted}}
+  {{#if job.notStarted}}
     <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
   {{/if}}
 
-  <div class="{{if view.job.notStarted 'hidden'}}">
+  <div class="{{if job.notStarted 'hidden'}}">
     <menu class="log-header">
-      {{#if view.canRemoveLog}}
-        <a href="#" class="button button--grey open-popup" {{action "removeLogPopup" target=view}}><span class="icon icon--removeLog"></span> Remove Log</a>
+      {{#if canRemoveLog}}
+        <a href="#" class="button button--grey open-popup" {{action "removeLogPopup"}}><span class="icon icon--removeLog"></span> Remove Log</a>
       {{/if}}
-      <a class="button button--grey" href={{view.plainTextLogUrl}}><span class="icon icon--downloadLog"></span> Download Log</a>
+      <a class="button button--grey" href={{plainTextLogUrl}}><span class="icon icon--downloadLog"></span> Download Log</a>
     </menu>
     <div class="log-body">
-      {{#if view.showTailing}}
-        <a href="#" id="tail" class="log-tail" {{action "toggleTailing" target=view}}>
+      {{#if showTailing}}
+        <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
           <span class="tail-status"></span>
           <span class="tail-label button button--grey"><span class="icon icon--down"></span>
-            {{#if view.job.isFinished}}
+            {{#if job.isFinished}}
               Scroll to End of Log
             {{else}}
               Follow Log
@@ -41,15 +41,15 @@
 
       <pre id="log" class="ansi"></pre>
 
-      {{#if view.showToTop}}
-        <a href='#' class="to-top" {{action "toTop" target=view}}>Top</a>
+      {{#if showToTop}}
+        <a href='#' class="to-top" {{action "toTop"}}>Top</a>
       {{/if}}
     </div>
   </div>
-  {{#if view.limited}}
+  {{#if limited}}
     <p class="warning">
       This log is too long to be displayed. Please reduce the verbosity of your
-      build or download the <a href={{view.plainTextLogUrl}}>raw log</a>.
+      build or download the <a href={{plainTextLogUrl}}>raw log</a>.
     </p>
   {{/if}}
 </section>

@@ -85,19 +85,26 @@ Log = Ember.Object.extend
 
   clear: ->
     @clearParts()
-    @incrementProperty('version')
+    @runOnClear()
+
+  runOnClear: ->
+    if callback = @get('onClearCallback')
+      callback()
+
+  onClear: (callback) ->
+    @set('onClearCallback', callback)
 
   append: (part) ->
     return if @get('parts').isDestroying || @get('parts').isDestroyed
     @get('parts').pushObject(part)
 
   loadParts: (parts) ->
-    console.log 'log model: load parts' if Log.DEBUG
+    console.log 'log model: load parts'
     @append(part) for part in parts
     @set('isLoaded', true)
 
   loadText: (text) ->
-    console.log 'log model: load text' if Log.DEBUG
+    console.log 'log model: load text'
     @append(number: 1, content: text, final: true)
     @set('isLoaded', true)
 
