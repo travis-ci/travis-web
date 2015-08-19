@@ -32,12 +32,4 @@ View = BasicView.extend Polling,
       view.appendTo($('body'))
       return false
 
-  ReposEmptyView: BasicView.extend
-    template: (->
-      if config.pro
-        'pro/repos/show/empty'
-      else
-        ''
-    ).property()
-
 `export default View`
