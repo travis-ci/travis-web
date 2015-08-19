@@ -7,6 +7,7 @@ initialize = (container, app) ->
   app.inject('route', 'auth', 'auth:main')
   app.inject('controller', 'auth', 'auth:main')
   app.inject('application', 'auth', 'auth:main')
+  app.inject('component', 'auth', 'auth:main')
 
   app.inject('auth', 'store', 'store:main')
 

@@ -43,7 +43,6 @@ Object.defineProperty Log.Limit.prototype, 'limited',
 
 LogContentComponent = Ember.Component.extend
   popup: Ember.inject.service()
-  auth: Ember.inject.service()
 
   currentUserBinding: 'auth.currentUser'
 
