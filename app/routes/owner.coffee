@@ -4,8 +4,6 @@
 `import config from 'travis/config/environment'`
 
 Route = TravisRoute.extend
-  needsAuth: false
-
   deactivate: ->
     @controllerFor('loading').set('layoutName', null)
 
