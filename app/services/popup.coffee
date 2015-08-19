@@ -2,7 +2,7 @@
 
 PopupService = Ember.Service.extend
   open: (name) ->
-    @closeAll()
+    @close()
     name = event?.target?.name || name
     $("##{name}").toggleClass('display')
   close: ->
