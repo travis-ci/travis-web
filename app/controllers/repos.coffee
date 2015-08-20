@@ -31,14 +31,14 @@ Controller = Ember.Controller.extend
         @container.lookup('router:main').send('redirectToGettingStarted')
 
   isLoadedBinding: 'repos.isLoaded'
-  needs: ['currentUser', 'repo']
-  currentUserBinding: 'controllers.currentUser.model'
+  repoController: Ember.inject.controller('repo')
+  currentUserBinding: 'auth.currentUser'
   selectedRepo: (->
     # we need to observe also repo.content here, because we use
     # ObjectProxy in repo controller
     # TODO: get rid of ObjectProxy there
-    @get('controllers.repo.repo.content') || @get('controllers.repo.repo')
-  ).property('controllers.repo.repo', 'controllers.repo.repo.content')
+    @get('repoController.repo.content') || @get('repoController.repo')
+  ).property('repoController.repo', 'repoController.repo.content')
 
   startedJobsCount: Ember.computed.alias('runningJobs.length')
   allJobsCount: (->

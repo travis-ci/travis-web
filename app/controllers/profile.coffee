@@ -3,16 +3,17 @@
 Controller = Ember.Controller.extend
   name: 'profile'
 
-  needs: ['currentUser', 'accounts', 'account']
-  userBinding: 'controllers.currentUser.model'
-  accountBinding: 'controllers.account.model'
+  accountController: Ember.inject.controller('account')
+  accountsController: Ember.inject.controller('accounts')
+  userBinding: 'auth.currentUser'
+  accountBinding: 'accountController.model'
 
   activate: (action, params) ->
     this["view_#{action}".camelize()]()
 
   viewHooks: ->
     @connectTab('hooks')
-    @get('controllers.account').reloadHooks()
+    @get('accountController').reloadHooks()
 
   viewUser: ->
     @connectTab('user')

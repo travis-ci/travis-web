@@ -6,7 +6,7 @@
 
 View = BasicView.extend Polling,
   popup: Ember.inject.service()
-  reposBinding: 'controllers.repos'
+  reposBinding: 'reposController'
   repoBinding: 'controller.repo'
   buildBinding: 'controller.build'
   jobBinding: 'controller.job'

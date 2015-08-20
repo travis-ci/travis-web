@@ -21,10 +21,10 @@ Route = BasicRoute.extend
     @_super.apply this, arguments
 
   loadMoreRepos: ->
-    @store.find('build').then (builds) =>
+    @store.findAll('build').then (builds) =>
       repoIds = builds.mapBy('data.repo').uniq()
       repos = @get('repos.repos')
-      @store.find('repo', ids: repoIds).then (reposFromRequest) =>
+      @store.query('repo', ids: repoIds).then (reposFromRequest) =>
         reposFromRequest.toArray().forEach (repo) ->
           repos.pushObject(repo) unless repos.contains(repo)
 
