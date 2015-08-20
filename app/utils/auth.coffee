@@ -119,7 +119,12 @@ Auth = Ember.Object.extend
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
-    @store.pushPayload(users: [user])
+    @store.push(
+      data:
+        type: 'user',
+        id: user.id
+        attributes: user
+    )
     @store.recordForId('user', user.id)
 
   receiveMessage: (event) ->

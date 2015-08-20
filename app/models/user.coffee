@@ -88,7 +88,7 @@ User = Model.extend
         @setWithSession('syncedAt', data.user.synced_at)
         Travis.trigger('user:synced', data.user)
 
-        @store.findQuery('account', {})
+        @store.query('account', {})
 
   setWithSession: (name, value) ->
     @set(name, value)

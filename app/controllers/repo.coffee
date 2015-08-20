@@ -2,11 +2,13 @@
 `import { githubRepo } from 'travis/utils/urls'`
 
 Controller = Ember.Controller.extend
-  needs: ['repos', 'currentUser', 'build', 'job']
-  currentUserBinding: 'controllers.currentUser.model'
+  jobController: Ember.inject.controller('job')
+  buildController: Ember.inject.controller('build')
+  reposController: Ember.inject.controller('repos')
+  currentUserBinding: 'auth.currentUser'
 
-  build: Ember.computed.alias('controllers.build.build')
-  job: Ember.computed.alias('controllers.job.job')
+  build: Ember.computed.alias('buildController.build')
+  job: Ember.computed.alias('jobController.job')
 
   slug: (-> @get('repo.slug') ).property('repo.slug')
   isLoading: (-> @get('repo.isLoading') ).property('repo.isLoading')

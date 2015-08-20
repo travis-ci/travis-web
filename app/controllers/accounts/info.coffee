@@ -1,7 +1,7 @@
 `import Ember from 'ember'`
 
 Controller = Ember.Controller.extend
-  needs: ['currentUser', 'repos']
-  userBinding: 'controllers.currentUser'
+  repos: Ember.inject.controller()
+  userBinding: 'auth.currentUser'
 
 `export default Controller`

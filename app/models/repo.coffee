@@ -85,7 +85,7 @@ Repo = Model.extend
   ).property()
 
   branches: (->
-    builds = @store.find 'build', repository_id: @get('id'), branches: true
+    builds = @store.query 'build', repository_id: @get('id'), branches: true
 
     builds.then ->
       builds.set 'isLoaded', true
@@ -149,7 +149,7 @@ Repo.reopenClass
     @find()
 
   accessibleBy: (store, login) ->
-    repos = store.find('repo', { member: login, orderBy: 'name' })
+    repos = store.query('repo', { member: login, orderBy: 'name' })
 
     repos.then () ->
       repos.set('isLoaded', true)
@@ -157,7 +157,7 @@ Repo.reopenClass
     repos
 
   search: (store, query) ->
-    promise = store.find('repo', search: query, orderBy: 'name')
+    promise = store.query('repo', search: query, orderBy: 'name')
     result = Ember.ArrayProxy.create(content: [])
 
     promise.then ->
@@ -178,11 +178,11 @@ Repo.reopenClass
 
   bySlug: (store, slug) ->
     # first check if there is a repo with a given slug already ordered
-    repos = store.all('repo').filterBy('slug', slug)
+    repos = store.peekAll('repo').filterBy('slug', slug)
     if repos.get('length') > 0
       repos
     else
-      store.find('repo', { slug: slug })
+      store.query('repo', { slug: slug })
 
   fetchBySlug: (store, slug) ->
     repos = @bySlug(store, slug)

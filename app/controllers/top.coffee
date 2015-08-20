@@ -3,8 +3,7 @@
 `import config from 'travis/config/environment'`
 
 Controller = Ember.Controller.extend
-  needs: ['currentUser']
-  userBinding: 'controllers.currentUser.model'
+  userBinding: 'auth.currentUser'
 
   store: Ember.inject.service()
   currentUserBinding: 'auth.currentUser'

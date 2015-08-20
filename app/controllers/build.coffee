@@ -3,11 +3,11 @@
 `import GithubUrlPropertievs from 'travis/mixins/github-url-properties'`
 
 Controller = Ember.Controller.extend GithubUrlPropertievs,
-  needs: ['repo', 'currentUser']
-  repoBinding: 'controllers.repo.repo'
+  repoController: Ember.inject.controller('repo')
+  repoBinding: 'repoController.repo'
   commitBinding: 'build.commit'
-  currentUserBinding: 'controllers.currentUser.model'
-  tabBinding: 'controllers.repo.tab'
+  currentUserBinding: 'auth.currentUser'
+  tabBinding: 'repoController.tab'
   sendFaviconStateChanges: true
 
   currentItemBinding: 'build'

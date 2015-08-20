@@ -4,10 +4,10 @@ Controller = Ember.ArrayController.extend
   sortAscending: false
   sortProperties: ['number']
 
-  needs: ['repo']
+  repoController: Ember.inject.controller('repo')
 
-  repoBinding: 'controllers.repo.repo'
-  tabBinding: 'controllers.repo.tab'
+  repoBinding: 'repoController.repo'
+  tabBinding: 'repoController.tab'
   isLoadedBinding: 'content.isLoaded'
   isLoadingBinding: 'content.isLoading'
 
@@ -53,7 +53,7 @@ Controller = Ember.ArrayController.extend
     if type?
       options.event_type = type.replace(/s$/, '') # poor man's singularize
 
-    @store.find('build', options)
+    @store.query('build', options)
 
   actions:
     showMoreBuilds: ->

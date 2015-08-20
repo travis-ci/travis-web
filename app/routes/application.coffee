@@ -21,7 +21,7 @@ Route = TravisRoute.extend BuildFaviconMixin,
     @get('stylesheetsManager').disable('dashboard')
 
     if !config.pro
-      repos = @get('store').all('repo')
+      repos = @get('store').peekAll('repo')
       repos.forEach (repo) =>
         @subscribeToRepo(repo)
 
