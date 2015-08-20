@@ -87,6 +87,4 @@ Store = DS.Store.extend
       data = json.repository || json.repo
       @pushPayload(repos: [data])
 
-
-
 `export default Store`
