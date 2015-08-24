@@ -1,12 +1,13 @@
 `import ExpandableRecordArray from 'travis/utils/expandable-record-array'`
 `import Model from 'travis/models/model'`
-`import Ajax from 'travis/utils/ajax'`
 # TODO: Investigate for some weird reason if I use durationFrom here not durationFromHelper,
 #       the function stops being visible inside computed properties.
 `import { durationFrom as durationFromHelper } from 'travis/utils/helpers'`
 `import Build from 'travis/models/build'`
 
 Repo = Model.extend
+  ajax: Ember.inject.service()
+
   slug:                DS.attr()
   description:         DS.attr()
   private:             DS.attr('boolean')
@@ -135,14 +136,14 @@ Repo = Model.extend
     @notifyPropertyChange 'lastBuildDuration'
 
   regenerateKey: (options) ->
-    Ajax.ajax '/repos/' + @get('id') + '/key', 'post', options
+    @get('ajax').ajax '/repos/' + @get('id') + '/key', 'post', options
 
   fetchSettings: ->
-    Ajax.ajax('/repos/' + @get('id') + '/settings', 'get', forceAuth: true).then (data) ->
+    @get('ajax').ajax('/repos/' + @get('id') + '/settings', 'get', forceAuth: true).then (data) ->
       data['settings']
 
   saveSettings: (settings) ->
-    Ajax.ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
+    @get('ajax').ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
 
 Repo.reopenClass
   recent: ->

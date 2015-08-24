@@ -2,6 +2,8 @@
 `import config from 'travis/config/environment'`
 
 Store = DS.Store.extend
+  auth: Ember.inject.service()
+
   defaultAdapter: 'application'
   adapter: 'application'
 
@@ -17,7 +19,7 @@ Store = DS.Store.extend
 
   canHandleEvent: (event, data) ->
     [name, type] = event.split(':')
-    auth = @container.lookup('auth:main')
+    auth = @get('auth')
     if event != 'job:log' && auth.get('signedIn') &&
         !config.pro && !config.enterprise
       # if recent repos hasn't been opened yet, we can safely

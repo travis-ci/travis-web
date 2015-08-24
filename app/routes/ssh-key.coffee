@@ -1,8 +1,9 @@
 `import Ember from 'ember'`
-`import Ajax from 'travis/utils/ajax'`
 `import TravisRoute from 'travis/routes/basic'`
 
 Route = TravisRoute.extend
+  ajax: Ember.inject.service()
+
   titleToken: 'Ssh Keys'
 
   model: (params) ->
@@ -17,7 +18,7 @@ Route = TravisRoute.extend
 
   afterModel: (model, transition) ->
     repo = @modelFor('repo')
-    Ajax.get "/repos/#{repo.get('id')}/key", (data) =>
+    @get('ajax').get "/repos/#{repo.get('id')}/key", (data) =>
       @defaultKey = Ember.Object.create(fingerprint: data.fingerprint)
 
   setupController: (controller, model) ->

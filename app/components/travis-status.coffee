@@ -1,5 +1,4 @@
 `import Ember from 'ember'`
-`import Ajax from 'travis/utils/ajax'`
 `import config from 'travis/config/environment'`
 
 TravisStatusComponent = Ember.Component.extend

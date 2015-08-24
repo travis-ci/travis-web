@@ -1,7 +1,8 @@
 `import Ember from 'ember'`
-`import Ajax from 'travis/utils/ajax'`
 
 Controller = Ember.Controller.extend
+  ajax: Ember.inject.service()
+
   repoController: Ember.inject.controller('repo')
   repo: Ember.computed.alias('repoController.repo')
 
@@ -21,7 +22,7 @@ Controller = Ember.Controller.extend
         deletingDone = => @set('isDeleting', false)
 
         repo = @get('repo')
-        Ajax.ajax("/repos/#{@get('repo.id')}/caches", "DELETE").then(deletingDone, deletingDone).then =>
+        @get('ajax').ajax("/repos/#{@get('repo.id')}/caches", "DELETE").then(deletingDone, deletingDone).then =>
           @set('model', {})
 
 `export default Controller`

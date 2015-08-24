@@ -1,7 +1,7 @@
 `import Ember from 'ember'`
-`import Ajax from 'travis/utils/ajax'`
 
 CachesItemComponent = Ember.Component.extend
+  ajax: Ember.inject.service()
 
   tagName: 'li'
   classNames: ['tile', 'tile--xs', 'row']
@@ -20,7 +20,7 @@ CachesItemComponent = Ember.Component.extend
         deletingDone = => @set('isDeleting', false)
 
         repo = @get('repo')
-        Ajax.ajax("/repos/#{repo.get('id')}/caches", "DELETE", data: data).then(deletingDone, deletingDone).then =>
+        @get('ajax').ajax("/repos/#{repo.get('id')}/caches", "DELETE", data: data).then(deletingDone, deletingDone).then =>
           @get('caches').removeObject(@get('cache'))
 
 

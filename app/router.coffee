@@ -13,7 +13,7 @@ Router = Ember.Router.extend
       #
       # we should probably think about a more general way to
       # do this, location should not know about auth status
-      Location.create(auth: @container.lookup('auth:main'))
+      Location.create(auth: @container.lookup('service:auth'))
   ).property()
 
   # TODO: this is needed, because in the original version

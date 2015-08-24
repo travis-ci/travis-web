@@ -1,11 +1,12 @@
 `import { durationFrom, configKeys, compact } from 'travis/utils/helpers'`
-`import Ajax from 'travis/utils/ajax'`
 `import configKeysMap from 'travis/utils/keys-map'`
 `import Ember from 'ember'`
 `import Model from 'travis/models/model'`
 `import DurationCalculations from 'travis/utils/duration-calculations'`
 
 Build = Model.extend DurationCalculations,
+  ajax: Ember.inject.service()
+
   state:             DS.attr()
   number:            DS.attr('number')
   branch:            DS.attr('string')
@@ -91,11 +92,11 @@ Build = Model.extend DurationCalculations,
   canRestart: Ember.computed.alias('isFinished')
 
   cancel: (->
-    Ajax.post "/builds/#{@get('id')}/cancel"
+    @get('ajax').post "/builds/#{@get('id')}/cancel"
   )
 
   restart: ->
-    Ajax.post "/builds/#{@get('id')}/restart"
+    @get('ajax').post "/builds/#{@get('id')}/restart"
 
   formattedFinishedAt: (->
     if finishedAt = @get('finishedAt')
