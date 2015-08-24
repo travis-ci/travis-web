@@ -1,9 +1,13 @@
 `import Ember from 'ember'`
 `import Model from 'travis/models/model'`
-`import Ajax from 'travis/utils/ajax'`
 `import config from 'travis/config/environment'`
 
 User = Model.extend
+  ajax: Ember.inject.service()
+
+  # TODO: this totally not should be needed here
+  sessionStorage: Ember.inject.service()
+
   name:        DS.attr()
   email:       DS.attr()
   login:       DS.attr()
@@ -27,7 +31,7 @@ User = Model.extend
   ).property()
 
   _rawPermissions: (->
-    Ajax.get('/users/permissions')
+    @get('ajax').get('/users/permissions')
   ).property()
 
   permissions: (->
@@ -72,12 +76,12 @@ User = Model.extend
 
   sync: ->
     self = this
-    Ajax.post('/users/sync', {}, ->
+    @get('ajax').post('/users/sync', {}, ->
       self.setWithSession('isSyncing', true)
     )
 
   poll: ->
-    Ajax.get '/users', (data) =>
+    @get('ajax').get '/users', (data) =>
       if data.user.is_syncing
         self = this
         setTimeout ->
@@ -92,8 +96,8 @@ User = Model.extend
 
   setWithSession: (name, value) ->
     @set(name, value)
-    user = JSON.parse(Travis.sessionStorage.getItem('travis.user'))
+    user = JSON.parse(@get('sessionStorage').getItem('travis.user'))
     user[name.underscore()] = @get(name)
-    Travis.sessionStorage.setItem('travis.user', JSON.stringify(user))
+    @get('sessionStorage').setItem('travis.user', JSON.stringify(user))
 
 `export default User`

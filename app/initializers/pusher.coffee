@@ -2,12 +2,7 @@
 `import TravisPusher from 'travis/utils/pusher'`
 
 initialize = (registry, application) ->
-  if config.pusher.key
-    application.pusher = new TravisPusher(config.pusher)
-
-    application.register 'pusher:main', application.pusher, { instantiate: false }
-
-    application.inject('route', 'pusher', 'pusher:main')
+  null
 
 PusherInitializer =
   name: 'pusher'

@@ -7,7 +7,9 @@ default_options =
   accepts:
     json: 'application/json; version=2'
 
-ajax = Em.Object.create
+Ajax = Ember.Service.extend
+  auth: Ember.inject.service()
+
   publicEndpoints: [/\/repos\/?.*/, /\/builds\/?.*/, /\/jobs\/?.*/]
   privateEndpoints: [/\/repos\/\d+\/caches/]
 
@@ -42,8 +44,8 @@ ajax = Em.Object.create
     endpoint = config.apiEndpoint || ''
     options = options || {}
 
-    token = Travis.sessionStorage.getItem('travis.token')
-    if token && (ajax.needsAuth(method, url) || options.forceAuth)
+    token = Ember.get(this, 'auth').token()
+    if token && (@needsAuth(method, url) || options.forceAuth)
       options.headers ||= {}
       options.headers['Authorization'] ||= "token #{token}"
 
@@ -66,9 +68,9 @@ ajax = Em.Object.create
 
     error = options.error || (->)
     options.error = (data, status, xhr) =>
+      console.log "[ERROR] API responded with an error (#{status}): #{JSON.stringify(data)}"
       Travis.lookup('controller:flash').pushObject(data.flash) if data?.flash
       delete data.flash if data?
-      console.log "[ERROR] API responded with an error (#{status}): #{JSON.stringify(data)}"
       error.apply(this, arguments)
 
     options = $.extend(options, default_options)
@@ -153,4 +155,4 @@ ajax = Em.Object.create
 
     return promise
 
-`export default ajax`
+`export default Ajax`

@@ -2,6 +2,8 @@
 `import config from 'travis/config/environment'`
 
 Adapter = DS.ActiveModelAdapter.extend
+  auth: Ember.inject.service()
+
   host: config.apiEndpoint
   coalesceFindRequests: true
 
@@ -12,7 +14,7 @@ Adapter = DS.ActiveModelAdapter.extend
 
     hash.headers['accept'] = 'application/json; version=2'
 
-    if token = Travis.sessionStorage.getItem('travis.token')
+    if token = @get('auth').token()
       hash.headers['Authorization'] ||= "token #{token}"
 
     hash

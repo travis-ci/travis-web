@@ -1,5 +1,4 @@
 `import { durationFrom, configKeys, compact } from 'travis/utils/helpers'`
-`import Ajax from 'travis/utils/ajax'`
 `import configKeysMap from 'travis/utils/keys-map'`
 `import Ember from 'ember'`
 `import Model from 'travis/models/model'`
@@ -7,6 +6,7 @@
 `import DurationCalculations from 'travis/utils/duration-calculations'`
 
 Job = Model.extend DurationCalculations,
+  ajax: Ember.inject.service()
   logId:          DS.attr()
 
   queue:          DS.attr()
@@ -30,7 +30,7 @@ Job = Model.extend DurationCalculations,
 
   log: ( ->
     @set('isLogAccessed', true)
-    Log.create(job: this)
+    Log.create(job: this, ajax: @get('ajax'))
   ).property()
 
   startedAt: (->
@@ -94,11 +94,11 @@ Job = Model.extend DurationCalculations,
   canRestart: Ember.computed.alias('isFinished')
 
   cancel: (->
-    Ajax.post "/jobs/#{@get('id')}/cancel"
+    @get('ajax').post "/jobs/#{@get('id')}/cancel"
   )
 
   removeLog: ->
-    Ajax.patch("/jobs/#{@get('id')}/log").then =>
+    @get('ajax').patch("/jobs/#{@get('id')}/log").then =>
       @reloadLog()
 
   reloadLog: ->
@@ -106,7 +106,7 @@ Job = Model.extend DurationCalculations,
     @get('log').fetch()
 
   restart: ->
-    Ajax.post "/jobs/#{@get('id')}/restart"
+    @get('ajax').post "/jobs/#{@get('id')}/restart"
 
   appendLog: (part) ->
     @get('log').append part

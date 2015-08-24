@@ -1,5 +1,4 @@
 `import Ember from 'ember'`
-`import Ajax from 'travis/utils/ajax'`
 
 Controller = Ember.Controller.extend
   isLoading: false

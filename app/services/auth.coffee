@@ -1,7 +1,11 @@
 `import config from 'travis/config/environment'`
-`import Ajax from 'travis/utils/ajax'`
 
-Auth = Ember.Object.extend
+Auth = Ember.Service.extend
+  store: Ember.inject.service(),
+  storage: Ember.inject.service(),
+  sessionStorage: Ember.inject.service(),
+  ajax: Ember.inject.service()
+
   state:        "signed-out"
   receivingEnd: "#{location.protocol}//#{location.host}"
 
@@ -9,20 +13,20 @@ Auth = Ember.Object.extend
     window.addEventListener('message', (e) => @receiveMessage(e))
 
   token: ->
-    Travis.sessionStorage.getItem('travis.token')
+    @get('sessionStorage').getItem('travis.token')
 
   endpoint: (->
     config.apiEndpoint
   ).property(),
 
   signOut: ->
-    @storage.removeItem('travis.user')
-    @storage.removeItem('travis.token')
-    @sessionStorage.clear()
+    @get('storage').removeItem('travis.user')
+    @get('storage').removeItem('travis.token')
+    @get('sessionStorage').clear()
     @set('state', 'signed-out')
     @set('user', undefined)
     if user = @get('currentUser')
-      @store.unloadAll('user')
+      @get('store').unloadAll('user')
     @set('currentUser', null)
     @sendToApp('afterSignOut')
     Travis.trigger('user:signed_out')
@@ -36,7 +40,7 @@ Auth = Ember.Object.extend
       $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url)
 
   autoSignIn: (data) ->
-    data ||= @userDataFrom(@sessionStorage) || @userDataFrom(@storage)
+    data ||= @userDataFrom(@get('sessionStorage')) || @userDataFrom(@get('storage'))
     @setData(data) if data
 
   userDataFrom: (storage) ->
@@ -54,7 +58,7 @@ Auth = Ember.Object.extend
 
   validateUser: (user) ->
     fieldsToValidate = ['id', 'login', 'token']
-    isTravisBecome = sessionStorage.getItem('travis.become')
+    isTravisBecome = @get('sessionStorage').getItem('travis.become')
 
     unless isTravisBecome
       fieldsToValidate.push 'correct_scopes'
@@ -72,8 +76,8 @@ Auth = Ember.Object.extend
       false
 
   setData: (data) ->
-    @storeData(data, @sessionStorage)
-    @storeData(data, @storage) unless @userDataFrom(@storage)
+    @storeData(data, @get('sessionStorage'))
+    @storeData(data, @get('storage')) unless @userDataFrom(@get('storage'))
     user = @loadUser(data.user)
     @set('currentUser', user)
 
@@ -83,19 +87,19 @@ Auth = Ember.Object.extend
 
   refreshUserData: (user) ->
     unless user
-      if data = @userDataFrom(@sessionStorage) || @userDataFrom(@storage)
+      if data = @userDataFrom(@get('sessionStorage')) || @userDataFrom(@get('storage'))
         user = data.user
 
     if user
-      Ajax.get("/users/#{user.id}").then (data) =>
+      @get('ajax').get("/users/#{user.id}").then (data) =>
         if data.user.correct_scopes
           userRecord = @loadUser(data.user)
           userRecord.get('permissions')
           # if user is still signed in, update saved data
           if @get('signedIn')
             data.user.token = user.token
-            @storeData(data, @sessionStorage)
-            @storeData(data, @storage)
+            @storeData(data, @get('sessionStorage'))
+            @storeData(data, @get('storage'))
             Travis.trigger('user:refreshed', data.user)
         else
           return Ember.RSVP.Promise.reject()
@@ -119,13 +123,13 @@ Auth = Ember.Object.extend
     storage.setItem('travis.user', JSON.stringify(data.user))
 
   loadUser: (user) ->
-    @store.push(
+    @get('store').push(
       data:
         type: 'user',
         id: user.id
         attributes: user
     )
-    @store.recordForId('user', user.id)
+    @get('store').recordForId('user', user.id)
 
   receiveMessage: (event) ->
     if event.origin == @expectedOrigin()
