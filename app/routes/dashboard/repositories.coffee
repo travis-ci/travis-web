@@ -7,7 +7,6 @@ Route = TravisRoute.extend
     filter: { replace: true }
   model: ->
     apiEndpoint = config.apiEndpoint
-    console.log(@auth)
     $.ajax(apiEndpoint + '/v3/repos?repository.active=true', {
     # $.ajax(apiEndpoint + '/v3/#{params.owner}?include=user.repositories,organization.repositories,build.commit', {
       headers: {
