@@ -30,8 +30,8 @@ Controller = Ember.Controller.extend
       @set('allHooks', hooks)
 
   accountName: (->
-    @get('allHooks').get('firstObject.ownerName')
-  ).property('allHooks')
+    @get('model.name') || @get('model.login')
+  ).property('model.name', 'model.login')
 
   hooks: (->
     @reloadHooks() unless hooks = @get('allHooks')
