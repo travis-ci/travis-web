@@ -10,6 +10,9 @@ Route = TravisRoute.extend
     "#{model.name}"
 
   model: (params, transition) ->
-    $.get(config.apiEndpoint + "/v3/owner/#{transition.params.owner.owner}?include=user.repositories,organization.repositories,build.commit,repository.active")
+    options = {}
+    if @get('auth.signedIn')
+      options.headers = { Authorization: "token #{@auth.token()}" }
+    $.ajax(config.apiEndpoint + "/v3/owner/#{transition.params.owner.owner}?include=user.repositories,organization.repositories,build.commit,repository.active", options)
 
 `export default Route`

@@ -4,11 +4,15 @@
 `import config from 'travis/config/environment'`
 
 Route = TravisRoute.extend
+
   deactivate: ->
     @controllerFor('loading').set('layoutName', null)
 
   model: (params) ->
-    $.get(config.apiEndpoint + "/v3/owner/#{params.owner}")
+    options = {}
+    if @get('auth.signedIn')
+      options.headers = { Authorization: "token #{@auth.token()}" }
+    $.ajax(config.apiEndpoint + "/v3/owner/#{params.owner}", options)
 
   beforeModel: ->
     @controllerFor('loading').set('layoutName', 'simple')
