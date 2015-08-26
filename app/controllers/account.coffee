@@ -29,6 +29,10 @@ Controller = Ember.Controller.extend
 
       @set('allHooks', hooks)
 
+  accountName: (->
+    @get('model.name') || @get('model.login')
+  ).property('model.name', 'model.login')
+
   hooks: (->
     @reloadHooks() unless hooks = @get('allHooks')
     @get('allHooks').filter (hook) -> hook.get('admin')
@@ -41,11 +45,11 @@ Controller = Ember.Controller.extend
 
   showPrivateReposHint: (->
     @config.show_repos_hint == 'private'
-  ) .property()
+  ).property()
 
   showPublicReposHint: (->
     @config.show_repos_hint == 'public'
-  ) .property()
+  ).property()
 
   billingUrl: (->
     id = if @get('model.type') == 'user' then 'user' else @get('model.login')
