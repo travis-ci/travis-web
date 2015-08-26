@@ -9,14 +9,11 @@ Route = TravisRoute.extend
     @controllerFor('loading').set('layoutName', null)
 
   model: (params) ->
-    if @get('auth.signedIn')
-      $.get(config.apiEndpoint + "/v3/owner/#{params.owner}", {
-        headers: {
-          Authorization: "token #{@auth.token()}"
-        }
-      })
-    else
-      $.get(config.apiEndpoint + "/v3/owner/#{params.owner}")
+    $.ajax(config.apiEndpoint + "/v3/owner/#{params.owner}", {
+      headers: {
+        Authorization: "token #{@auth.token()}"
+      }
+    })
 
   beforeModel: ->
     @controllerFor('loading').set('layoutName', 'simple')
