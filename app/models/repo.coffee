@@ -11,31 +11,12 @@ Repo = Model.extend
   slug:                DS.attr()
   description:         DS.attr()
   private:             DS.attr('boolean')
-  lastBuildNumber:     DS.attr('number')
-  lastBuildState:      DS.attr()
-  lastBuildStartedAt:  DS.attr()
-  lastBuildFinishedAt: DS.attr()
   githubLanguage:      DS.attr()
-  _lastBuildDuration:  DS.attr('number')
-  lastBuildLanguage:   DS.attr()
   active:              DS.attr()
-  lastBuildId:         DS.attr('number')
-  lastBuildHash: (->
-    {
-      id: @get('lastBuildId')
-      number: @get('lastBuildNumber')
-      repo: this
-    }
-  ).property('lastBuildId', 'lastBuildNumber')
-
-  lastBuild: (->
-    if id = @get('lastBuildId')
-      @store.find('build', id)
-      @store.recordForId('build', id)
-  ).property('lastBuildId')
+  lastBuild: DS.belongsTo('build')
 
   withLastBuild: ->
-    @filter( (repo) -> repo.get('lastBuildId') )
+    @filter( (repo) -> repo.get('lastBuild') )
 
   sshKey: (->
     @store.find('ssh_key', @get('id'))
@@ -150,7 +131,10 @@ Repo.reopenClass
     @find()
 
   accessibleBy: (store, login) ->
-    repos = store.query('repo', { member: login, orderBy: 'name' })
+    # this fires only for authenticated users and with API v3 that means getting
+    # only repos of currently logged in owner, but in the future it would be
+    # nice to not use that as it may change in the future
+    repos = store.query('repo', { 'repository.active': 'true' })
 
     repos.then () ->
       repos.set('isLoaded', true)
@@ -169,7 +153,7 @@ Repo.reopenClass
 
   withLastBuild: (store) ->
     repos = store.filter('repo', {}, (build) ->
-      build.get('lastBuildId')
+      build.get('lastBuild')
     )
 
     repos.then () ->
@@ -177,20 +161,16 @@ Repo.reopenClass
 
     repos
 
-  bySlug: (store, slug) ->
-    # first check if there is a repo with a given slug already ordered
-    repos = store.peekAll('repo').filterBy('slug', slug)
-    if repos.get('length') > 0
-      repos
-    else
-      store.query('repo', { slug: slug })
-
   fetchBySlug: (store, slug) ->
-    repos = @bySlug(store, slug)
+    repos = store.peekAll('repo').filterBy('slug', slug)
     if repos.get('length') > 0
       repos.get('firstObject')
     else
-      repos.then (repos) ->
+      adapter = store.adapterFor('repo')
+      modelClass = store.modelFor('repo')
+      adapter.findRecord(store, modelClass, slug).then (resourceHash) ->
+        store.push(store.normalize('repo', resourceHash));
+      , ->
         error = new Error('repo not found')
         error.slug = slug
         Ember.get(repos, 'firstObject') || throw(error)

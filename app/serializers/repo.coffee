@@ -1,7 +1,8 @@
 `import Ember from 'ember'`
-`import ApplicationSerializer from 'travis/serializers/application'`
+`import V2FallbackSerializer from 'travis/serializers/v2_fallback'`
 
-Serializer = ApplicationSerializer.extend
+Serializer = V2FallbackSerializer.extend
+  isNewSerializerAPI: true
   attrs: {
     _lastBuildDuration: { key: 'last_build_duration' }
   }
