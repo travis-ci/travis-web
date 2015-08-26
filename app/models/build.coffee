@@ -21,7 +21,7 @@ Build = Model.extend DurationCalculations,
   eventType:         DS.attr('string')
 
   repo:   DS.belongsTo('repo', async: true)
-  commit: DS.belongsTo('commit', async: true)
+  commit: DS.belongsTo('commit')
   jobs:   DS.hasMany('job', async: true)
 
   config: (->
