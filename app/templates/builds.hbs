@@ -1,6 +1,12 @@
 {{#if content.isLoaded}}
   {{#each controller as |build|}}
-    {{builds-item build=build}}
+
+    {{#if displayNewBranchRows}}
+      {{branch-row build=build}}
+    {{else}}
+      {{builds-item build=build}}
+    {{/if}}
+
   {{else}}
     {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
   {{/each}}

@@ -1,0 +1,171 @@
+
+.branch-row
+  border: 1px solid $cream-dark
+  font-size: 16px
+  text-align: right
+
+  span
+    width: 1em
+    height: 1em
+    margin-right: .5em
+    background-color: #666
+    display: inline-block
+    vertical-align: middle
+
+  .avatar
+    border-radius: 50%
+    margin-right: .5em
+    vertical-align: middle
+
+  .row-item
+    margin: .2em
+    font-size: 16px
+    font-weight: 400
+    a
+      color: $grey-dark
+      text-decoration: none
+      &:hover
+        text-decoration: underline
+
+  @media #{$medium-up}
+    & > div:first-of-type
+      width: 25%
+    & > div:nth-of-type(2)
+      width: 20%
+    & > div:nth-of-type(3)
+      width: 20%
+    & > div:nth-of-type(4)
+      width: 5%
+    & > div:nth-of-type(5)
+      width: 26%
+
+
+%row-element
+  vertical-align: middle
+  @media #{$medium-up}
+    display: inline-block
+  .row-item
+    vertical-align: middle
+
+.two-line
+  @extend %row-element
+  padding: .6em 0
+  text-align: left  
+
+.one-line
+  @extend %row-element
+  .row-item
+    display: inline-block
+  .branch-nav
+    display: none
+    @media #{$medium-up}
+      display: block
+
+// @todo refactor into dropup
+%dropup
+  @media #{$medium-up}
+    position: absolute
+    display: none
+    z-index: 5
+    background-color: $white
+    border-radius: 2px
+    
+    &:after,
+    &:before
+      content: ""
+      position: absolute
+      display: block
+      width: .6em
+      height: .6em
+      left: 46%
+      transform: rotate(45deg)
+    &:before
+      bottom: -0.4em
+    &:after
+      bottom: -0.3em;
+      background-color: $white
+    .dropup-trigger:hover ~ &,
+    .dropup-trigger:hover &,
+    &:hover
+      display: block
+
+.dropup--blue
+  @extend %dropup
+  ul
+    margin: 0
+    padding: 0
+    list-style-type: none
+    text-align: center
+  li
+    display: inline-block
+    margin: 2em 0
+    background: $teal-dark
+    border-radius: 2px
+  a
+    display: inline-block
+    padding: 0.3em 0.5em
+    color: $white
+    text-decoration: none
+    
+  @media #{$medium-up}
+    padding: .4em
+    transform: translate(-2.7em, -8.2em)
+    border: 1px solid $teal-dark
+    li
+      display: block
+      margin: 0
+      background-color: $white
+    a
+      display: block
+      padding: 0.2em 0.5em
+      text-decoration: none
+      color: $grey-dark
+      &:hover
+        background-color: $teal-dark
+        color: $white
+
+    &:before
+      background-color: $teal-dark
+
+.dropup--status
+  @extend %dropup
+  display: none
+  @media #{$medium-up}
+    top: -3em
+    padding: .2em .3em
+    transform: translate(-1em, 0em);
+    white-space: nowrap
+    font-size: 14px;
+    border: 1px solid $red-dark
+    &:before
+      background-color: $red-dark
+
+.dropup-trigger
+  padding: 1em 0
+
+.build-tiles
+  height: 4.8rem
+  margin: 0
+  padding: 0
+  list-style: none
+  li
+    position: relative
+    display: inline-block
+    height: 100%
+    width: 18.8%
+    background-color: #999
+    .icon-status
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      width: 1.3rem
+      height: 1.3rem
+      margin: auto
+  a
+    display: block
+    height: 100%
+    text-align: center
+
+
