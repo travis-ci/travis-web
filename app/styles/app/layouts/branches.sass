@@ -1,6 +1,6 @@
 @mixin statusColors($color, $status)
   &.#{$status}
-    background: linear-gradient(to right, $color 0%, $color 9px, transparent 10px, transparent 100%) no-repeat
+    background: linear-gradient(to right, $color 0%, $color 9px, white 10px, white 100%) no-repeat
     .branch-name,
     .branch-request a
       color: $color
@@ -58,6 +58,7 @@
     font-size: 16px
     font-weight: 400
     white-space: nowrap
+    overflow: hidden
     a
       color: $grey-dark
       text-decoration: none
@@ -67,6 +68,10 @@
   @media #{$medium-up}
     & > div:first-of-type
       width: 25%
+      position: relative
+      &:after
+        content: ""
+        @include fadeOut(right, -90deg, $white)
     & > div:nth-of-type(2)
       width: 20%
     & > div:nth-of-type(3)
@@ -131,9 +136,9 @@
       left: 46%
       transform: rotate(45deg)
     &:before
-      bottom: -0.4em
+      bottom: -0.3em
     &:after
-      bottom: -0.3em;
+      bottom: -0.2em;
       background-color: $white
     .dropup-trigger:hover ~ &,
     .dropup-trigger:hover &,
@@ -171,7 +176,7 @@
       background-color: $white
     .icon-trigger path,
     .icon-eye path
-      fill: $grey-medium
+      fill: #A7AEAE
     a
       display: block
       padding: 0.2em 0.5em
@@ -236,10 +241,10 @@
   @include buildTileColors(#D94341, #FFF7F5, 'failed')
   @include buildTileColors(#D94341, #FFF7F5, 'errored')
   @include buildTileColors(#A1A0A0, #F5F5F5, 'canceled')
-  @include buildTileColors(#ECCE4B, #eeeeee, 'started')
-  @include buildTileColors(#ECCE4B, #eeeeee, 'queued')
-  @include buildTileColors(#ECCE4B, #eeeeee, 'booting')
-  @include buildTileColors(#ECCE4B, #eeeeee, 'received')
-  @include buildTileColors(#ECCE4B, #eeeeee, 'created')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'started')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'queued')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'booting')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'received')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'created')
 
 
