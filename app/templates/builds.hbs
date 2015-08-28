@@ -1,15 +1,17 @@
 {{#if content.isLoaded}}
-  {{#each controller as |build|}}
+  <ul>
+    {{#each controller as |build|}}
 
-    {{#if displayNewBranchRows}}
-      {{branch-row build=build}}
+      {{#if displayNewBranchRows}}
+        {{branch-row build=build}}
+      {{else}}
+        {{builds-item build=build}}
+      {{/if}}
+
     {{else}}
-      {{builds-item build=build}}
-    {{/if}}
-
-  {{else}}
-    {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
-  {{/each}}
+      {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
+    {{/each}}
+  </ul>
   {{#if displayShowMoreButton}}
     <p>
       {{show-more-button isLoading=isLoading showMore=(action 'showMoreBuilds')}}

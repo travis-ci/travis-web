@@ -1,68 +1,75 @@
-<li class="branch-row failed">
-  <div class="two-line">
-    <div class="branch-name"> 
-      <h2 class="row-item"><span class="icon-status failed"></span>master</h2>
-    </div>
-    <div class="branch-builds">
-      <div class="row-item"><a href="#"><span class="icon-crane"></span>6 builds</a></div>
-    </div>
+<div class="two-line">
+  <div class="branch-name"> 
+    <h2 class="row-item"><span class="icon-status {{build.state}}" title="{{build.state}}"></span>{{build.commit.branch}}</h2>
   </div>
-  <div class="two-line">
-    <div class="branch-request">
-      <div class="row-item"><a href="#"><span class="icon-request push"></span>#2937 failed</a></div>
-    </div>
-    <div class="branch-calendar">
-      <div class="row-item"><a href="#"><span class="icon-calendar"></span>2 days ago</a></div>
-    </div>
+  <div class="branch-builds">
+    <div class="row-item"><a href="#"><span class="icon-crane"></span>~buildcount~ builds</a></div>
   </div>
-  <div class="two-line">
-    <div class="branch-commit">
-      <div class="row-item"><a href="#"><span class="icon-request push"></span>1cbc26</a></div>
-    </div>
-    <div class="branch-commiter">
-      <div class="row-item"><img src="//placehold.it/15x15" alt="" class="avatar">Mr. T</div>
-    </div>
+</div>
+<div class="two-line">
+  <div class="branch-request">
+    <div class="row-item">
+      {{#link-to "build" build.repo build}}
+        <span class="icon-request {{build.eventType}}" title="{{build.eventType}}"></span>{{build.number}} {{build.state}}
+      {{/link-to}}
+      </div>
   </div>
-  <div class="one-line">
-    <div class="branch-nav dropup-trigger">
-      <div class="row-item"><a href="#"><span class="icon-tofu"></span></a></div>
-    </div>
-    <div class="dropup--blue">
-      <ul>
-        <li><a href="#"><span class="icon-trigger"></span>Trigger a build</a></li>
-        <li><a href="#"><span class="icon-eye"></span>View all builds</a></li>
-      </ul>
-    </div>
+  <div class="branch-calendar">
+    <div class="row-item" title="{{pretty-date build.formattedFinishedAt}}"><span class="icon-calendar"></span>{{format-time build.finishedAt}}</div>
   </div>
-  <div class="one-line">
-    <ul class="build-tiles">
-      <li class="passed">
-        <a href="#" class="dropup-trigger">
-          <span class="icon-status failed"></span>
-          <div class="dropup--status">
-            <span class="icon-request push"></span> #23872
-          </div>
-        </a>
-      </li>
-      <li class="passed">
-        <a href="#" class="dropup-trigger"><span class="icon-status passed"></span></a>
-        <div class="dropup--status">
-          <span class="icon-request push"></span> #23872
-        </div>
-      </li>
-      <li class="passed">
-        <a href="#" class="dropup-trigger"><span class="icon-status canceled"></span></a>
-        <div class="dropup dropup--status">
-          <span class="icon-request push"></span> #23872
-        </div>
-      </li>
-      <li class="passed">
-        <a href="#" class="dropup-trigger"><span class="icon-status errored"></span></a>
-        <div class="dropup--status">
-          <span class="icon-request push"></span> #23872
-        </div>
-      </li>
-      <li class=""></li>
+</div>
+<div class="two-line">
+  <div class="branch-commit">
+    <div class="row-item"><a href="{{urlGithubCommit}}" title="commit on GitHub"><span class="icon-github"></span>{{format-sha build.commit.sha}}</a></div>
+  </div>
+  <div class="branch-commiter">
+    <div class="row-item"><img src="{{urlAuthorGravatarImage}}" alt="avatar" class="avatar">{{build.commit.committerName}}</div>
+  </div>
+</div>
+<div class="one-line">
+  <div class="branch-nav dropup-trigger">
+    <div class="row-item"><a href="#"><span class="icon-tofu"></span></a></div>
+  </div>
+  <div class="dropup--blue">
+    <ul>
+      <li><a href="#"><span class="icon-trigger"></span>Trigger a build</a></li>
+      <li><a href="#"><span class="icon-eye"></span>View all builds</a></li>
     </ul>
   </div>
-</li>
+</div>
+<div class="one-line">
+  <ul class="build-tiles">
+    <li class="failed">
+      <a href="#" class="dropup-trigger">
+        <span class="icon-status failed"></span>
+        <div class="dropup--status">
+          <span class="icon-request push"></span> #23872
+        </div>
+      </a>
+    </li>
+    <li class="passed">
+      <a href="#" class="dropup-trigger"><span class="icon-status passed"></span></a>
+      <div class="dropup--status">
+        <span class="icon-request push"></span> #23872
+      </div>
+    </li>
+    <li class="errored">
+      <a href="#" class="dropup-trigger"><span class="icon-status errored"></span></a>
+      <div class="dropup dropup--status">
+        <span class="icon-request push"></span> #23872
+      </div>
+    </li>
+    <li class="canceled">
+      <a href="#" class="dropup-trigger"><span class="icon-status canceled"></span></a>
+      <div class="dropup--status">
+        <span class="icon-request push"></span> #23872
+      </div>
+    </li>
+    <li class="received">
+      <a href="#" class="dropup-trigger"><span class="icon-status received"></span></a>
+      <div class="dropup--status">
+        <span class="icon-request push"></span> #23872
+      </div>
+    </li>
+  </ul>
+</div>

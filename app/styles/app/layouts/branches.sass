@@ -1,8 +1,35 @@
+@mixin statusColors($color, $status)
+  &.#{$status}
+    background: linear-gradient(to right, $color 0%, $color 9px, transparent 10px, transparent 100%) no-repeat
+    .branch-name,
+    .branch-request a
+      color: $color
+      &:hover
+        border-color: $color
+
+@mixin buildTileColors($color, $bg, $status)
+  .#{$status}
+    background-color: $bg
+    a
+      color: $color
+    @media #{$medium-up}
+      .dropup--status
+        border-color: $color
+        &:before
+          background-color: $bg
+
+.tabbody
+  ul
+    padding: 0
+    margin: 0
+    list-style: none
 
 .branch-row
   border: 1px solid $cream-dark
   font-size: 16px
   text-align: right
+  margin-bottom: .3rem
+  color: $grey-dark
 
   span
     width: 1em
@@ -13,14 +40,16 @@
     vertical-align: middle
 
   .avatar
-    border-radius: 50%
+    width: 15px
     margin-right: .5em
+    border-radius: 50%
     vertical-align: middle
 
   .row-item
     margin: .2em
     font-size: 16px
     font-weight: 400
+    white-space: nowrap
     a
       color: $grey-dark
       text-decoration: none
@@ -38,6 +67,16 @@
       width: 5%
     & > div:nth-of-type(5)
       width: 26%
+
+  @include statusColors($green-dark, 'passed')
+  @include statusColors($red-dark, 'failed')
+  @include statusColors($red-dark, 'errored')
+  @include statusColors($grey-medium, 'canceled')
+  @include statusColors(#ECCE4B, 'started')
+  @include statusColors(#ECCE4B, 'queued')
+  @include statusColors(#ECCE4B, 'booting')
+  @include statusColors(#ECCE4B, 'received')
+  @include statusColors(#ECCE4B, 'created')
 
 
 %row-element
@@ -144,7 +183,7 @@
   padding: 1em 0
 
 .build-tiles
-  height: 4.8rem
+  height: 5.6rem
   margin: 0
   padding: 0
   list-style: none
@@ -153,7 +192,6 @@
     display: inline-block
     height: 100%
     width: 18.8%
-    background-color: #999
     .icon-status
       position: absolute
       top: 0
@@ -167,5 +205,15 @@
     display: block
     height: 100%
     text-align: center
+
+  @include buildTileColors(#44A662, #F5FBF6, 'passed')
+  @include buildTileColors(#D94341, #FFF7F5, 'failed')
+  @include buildTileColors(#D94341, #FFF7F5, 'errored')
+  @include buildTileColors(#A1A0A0, #F5F5F5, 'canceled')
+  @include buildTileColors(#ECCE4B, #eeeeee, 'started')
+  @include buildTileColors(#ECCE4B, #eeeeee, 'queued')
+  @include buildTileColors(#ECCE4B, #eeeeee, 'booting')
+  @include buildTileColors(#ECCE4B, #eeeeee, 'received')
+  @include buildTileColors(#ECCE4B, #eeeeee, 'created')
 
 
