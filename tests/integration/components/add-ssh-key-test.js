@@ -37,6 +37,8 @@ test('it adds an ssh key on submit', function(assert) {
   assert.equal(sshKey.get('value'), 'bar', 'value should be set');
   assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
 
+  var done = assert.async();
+  setTimeout(function() { done(); }, 500);
 });
 
 

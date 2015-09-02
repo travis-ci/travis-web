@@ -60,8 +60,8 @@ test('it deletes a custom key if permissions are right', function(assert) {
   assert.ok(key.get('isDeleted'), 'key should be deleted');
 
   // we don't deal with saving records for now, so at least wait till it's done
-  stop();
-  setTimeout(function() { start(); }, 50);
+  var done = assert.async();
+  setTimeout(function() { done(); }, 500);
 });
 
 test('it does not delete the custom key if permissions are insufficient', function(assert) {
