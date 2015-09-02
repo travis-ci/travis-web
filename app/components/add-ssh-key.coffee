@@ -15,8 +15,8 @@ AddSshKeyComponent = Ember.Component.extend
     # once https://github.com/emberjs/data/pull/2867
     # and https://github.com/emberjs/data/pull/2870 are merged
     if model
-      @get('store').dematerializeRecord(model)
-      typeMap = @get('store').typeMapFor('sshKey')
+      @get('store').dematerializeRecord(model._internalModel)
+      typeMap = @get('store').typeMapFor(model.constructor)
       idToRecord = typeMap.idToRecord
       delete idToRecord[id]
 
