@@ -48,6 +48,7 @@ Auth = Ember.Object.extend
     if @get('state') == 'signed-in'
       'a-token'
 
-  refreshUserData: (->)
+  refreshUserData: ->
+    return Ember.RSVP.Promise.resolve()
 
 `export default Auth`
