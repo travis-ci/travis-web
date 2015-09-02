@@ -35,10 +35,8 @@ test 'it renders', ->
   @append()
 
   ok component.$().hasClass('passed'), 'component should have state class (passed)'
-  ok component.$('.icon-status').hasClass('passed'), 'status icon should have state class (passed)'
-  ok component.$('.request-kind').hasClass('push'), 'reuqest icon should have event type class (push)'
-  equal component.$('.tile-main h2 a').text().trim(), 'travis-chat', 'should display correct repo name'
-  equal component.$('.build-status a').text().trim(), '25 passed', 'should display correct build number and state'
-  equal component.$('.tile-commit a').text().trim(), '16fff34', 'should display correct commit sha'
-  equal component.$('.tile-timeago').text().trim(), '2 years ago', 'should display correct build duration'
-  equal component.$('.tile-duration').text().trim(), '4 min 12 sec', 'should display correct build finished at time'
+  equal component.$('.repo-title a').text().trim(), 'travis-chat', 'should display correct repo name'
+  equal component.$('.build a').text().trim(), '25', 'should display correct build numbee'
+  equal component.$('.build-status').text().trim(), 'passed', 'should display a last build state'
+  equal component.$('.commit a').text().trim(), '16fff34', 'should display correct commit sha'
+  equal component.$('.finished-at').text().trim(), '2 years ago', 'should display correct build duration'
