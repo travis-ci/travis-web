@@ -23,11 +23,11 @@ Controller = Ember.Controller.extend
 
   tabOrIsLoadedDidChange: (->
     @possiblyRedirectToGettingStartedPage()
-  ).observes('isLoaded', 'tab', 'length')
+  ).observes('isLoaded', 'tab', 'repos.length')
 
   possiblyRedirectToGettingStartedPage: ->
     Ember.run.scheduleOnce 'routerTransitions', this, ->
-      if @get('tab') == 'owned' && @get('isLoaded') && @get('length') == 0
+      if @get('tab') == 'owned' && @get('isLoaded') && @get('repos.length') == 0
         @container.lookup('router:main').send('redirectToGettingStarted')
 
   isLoadedBinding: 'repos.isLoaded'
