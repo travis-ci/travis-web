@@ -2,7 +2,7 @@
 `import LimitedArray from 'travis/utils/limited-array'`
 `import Broadcast from 'travis/models/broadcast'`
 
-Controller = Ember.ArrayController.extend
+Controller = Ember.Controller.extend
   needs: ['currentUser']
   currentUserBinding: 'controllers.currentUser.model'
 
@@ -10,19 +10,19 @@ Controller = Ember.ArrayController.extend
     @_super.apply this, arguments
     @set('flashes', LimitedArray.create(limit: 1, content: []))
 
-  model: (->
+  messages: (->
     broadcasts = @get('unseenBroadcasts')
     flashes = @get('flashes')
     model = []
     model.pushObjects(broadcasts) if broadcasts
     model.pushObjects(flashes.toArray().reverse())    if flashes
     model.uniq()
-  ).property('unseenBroadcasts.[]', 'flashes.[]')
+  ).property('unseenBroadcasts.[]', 'flashes.[]', 'unseenBroadcasts.length', 'flashes.length')
 
   unseenBroadcasts: (->
     @get('broadcasts').filter (broadcast) ->
       !broadcast.get('isSeen')
-  ).property('broadcasts.[]')
+  ).property('broadcasts.[]', 'broadcasts.length')
 
   broadcasts: (->
     broadcasts = Ember.ArrayProxy.create(content: [])

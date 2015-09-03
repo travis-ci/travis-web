@@ -1,4 +1,4 @@
-{{#each flash in controller}}
+{{#each flash in messages}}
   {{#view "flash-item" flashBinding="flash"}}
     <p>{{{flash.message}}}</p>
     <a class="close" {{action "close" target=view}}></a>
