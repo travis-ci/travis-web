@@ -1,10 +1,13 @@
 `import Ember from 'ember'`
 `import LimitedArray from 'travis/utils/limited-array'`
-`import Broadcast from 'travis/models/broadcast'`
 
-Controller = Ember.Controller.extend
-  needs: ['currentUser']
-  currentUserBinding: 'controllers.currentUser.model'
+FlashDisplayComponent = Ember.Component.extend
+  auth: Ember.inject.service()
+  store: Ember.inject.service()
+  currentUserBinding: 'auth.currentUser'
+
+  classNames: ['flash']
+  tagName: 'ul'
 
   init: ->
     @_super.apply this, arguments
@@ -28,7 +31,7 @@ Controller = Ember.Controller.extend
     broadcasts = Ember.ArrayProxy.create(content: [])
 
     if @get('currentUser.id')
-      @store.find('broadcast').then (result) ->
+      @get('store').find('broadcast').then (result) ->
         broadcasts.pushObjects(result.toArray())
 
     broadcasts
@@ -42,14 +45,14 @@ Controller = Ember.Controller.extend
       Ember.run.later(this, (-> @get('flashes.content').removeObject(msg)), 15000)
 
   close: (msg) ->
-    if msg instanceof Broadcast
+    if msg.constructor.modelName == "broadcast"
       msg.setSeen()
       @notifyPropertyChange('unseenBroadcasts')
     else
       @get('flashes').removeObject(msg)
 
   actions:
-    close: (msg) ->
+    closeMessage: (msg) ->
       @close(msg)
 
-`export default Controller`
+`export default FlashDisplayComponent`
