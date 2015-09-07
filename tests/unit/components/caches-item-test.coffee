@@ -1,7 +1,7 @@
 `import { test, moduleForComponent } from 'ember-qunit'`
 
 moduleForComponent 'caches-item', 'CachesItemComponent', {
-  needs: ['helper:format-time', 'helper:mb']
+  needs: ['helper:format-time', 'helper:travis-mb']
 }
 
 test 'it renders', ->

@@ -10,17 +10,17 @@ AddSshKeyComponent = Ember.Component.extend
 
   didInsertElement: () ->
     id = @get('repo.id')
-    model = @get('store').recordForId('sshKey', id)
+    model = @get('store').recordForId('ssh_key', id)
     # TODO: this can be removed in favor of simply unloading record
     # once https://github.com/emberjs/data/pull/2867
     # and https://github.com/emberjs/data/pull/2870 are merged
     if model
-      @get('store').dematerializeRecord(model)
-      typeMap = @get('store').typeMapFor('sshKey')
+      @get('store').dematerializeRecord(model._internalModel)
+      typeMap = @get('store').typeMapFor(model.constructor)
       idToRecord = typeMap.idToRecord
       delete idToRecord[id]
 
-    model = @get('store').createRecord('sshKey', id: id)
+    model = @get('store').createRecord('ssh_key', id: id)
     @set('model', model)
 
   isValid: () ->

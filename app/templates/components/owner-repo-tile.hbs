@@ -31,7 +31,7 @@
   <div class="duration">
     <span class="icon-calendar"></span>
     <span class="build-status">{{repo.default_branch.last_build.state}}</span>
-    <span>{{format-time repo.default_branch.last_build.finished_at}}</span>
+    <span class="finished-at">{{format-time repo.default_branch.last_build.finished_at}}</span>
   </div>
 {{else}}
   <p>there is no build</p>

@@ -1,7 +1,8 @@
 `import { safe } from 'travis/utils/helpers'`
 `import Ember from "ember"`
 
-helper = Ember.Handlebars.makeBoundHelper (state) ->
+helper = Ember.HTMLBars.makeBoundHelper (params) ->
+  state = params[0]
   if state == 'received'
     'booting'
   else

@@ -17,5 +17,4 @@ SshKeyComponent = Ember.Component.extend
       @get('key').save().then(deletingDone, deletingDone).then =>
         @sendAction('sshKeyDeleted')
 
-
 `export default SshKeyComponent`

@@ -22,7 +22,7 @@ test('it adds an ssh key on submit', function(assert) {
 
   this.render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
 
-  var sshKey = store.all('sshKey').objectAt(0);
+  var sshKey = store.all('ssh_key').objectAt(0);
 
   assert.ok(! sshKey.get('description'), 'description should be blank');
   assert.ok(! sshKey.get('value'), 'value should be blank');
@@ -37,6 +37,8 @@ test('it adds an ssh key on submit', function(assert) {
   assert.equal(sshKey.get('value'), 'bar', 'value should be set');
   assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
 
+  var done = assert.async();
+  setTimeout(function() { done(); }, 500);
 });
 
 
@@ -54,7 +56,7 @@ test('it throws an error if value for ssh key is blank', function(assert) {
 
   this.render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
 
-  var sshKey = store.all('sshKey').objectAt(0);
+  var sshKey = store.all('ssh_key').objectAt(0);
 
   assert.ok(! sshKey.get('description'), 'description should be blank');
   assert.ok(! sshKey.get('value'), 'value should be blank');

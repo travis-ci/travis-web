@@ -1,6 +1,6 @@
-`import BasicView from 'travis/views/basic'`
+`import Ember from 'ember'`
 
-View = BasicView.extend
+FlashItemComponent = Ember.Component.extend
   tagName: 'li'
   classNameBindings: ['type']
 
@@ -10,6 +10,6 @@ View = BasicView.extend
 
   actions:
     close: ->
-      @get('controller').close(@get('flash'))
+      this.attrs.close(@get('flash'))
 
-`export default View`
+`export default FlashItemComponent`

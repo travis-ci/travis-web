@@ -1,7 +1,8 @@
 `import { pathFrom } from 'travis/utils/helpers'`
 `import Ember from "ember"`
 
-helper = Ember.Handlebars.makeBoundHelper (url, options) ->
+helper = Ember.HTMLBars.makeBoundHelper (params) ->
+  url = params[0]
   path = pathFrom(url)
   if path.indexOf('...') >= 0
     shas = path.split('...')

@@ -9,7 +9,7 @@ initialize = (container, app) ->
   app.inject('application', 'auth', 'auth:main')
   app.inject('component', 'auth', 'auth:main')
 
-  app.inject('auth', 'store', 'store:main')
+  app.inject('auth', 'store', 'service:store')
 
 AuthInitializer =
   name: 'auth'
