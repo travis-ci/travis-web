@@ -46,11 +46,11 @@ Router.map ->
     @route 'search', path: '/search/:phrase'
     @resource 'repo', path: '/:owner/:name', ->
       @route 'index', path: '/'
+      @resource 'branches', path: '/branches'
       @resource 'build', path: '/builds/:build_id'
       @resource 'job',   path: '/jobs/:job_id'
       @resource 'builds', path: '/builds'
       @resource 'pullRequests', path: '/pull_requests'
-      @resource 'branches', path: '/branches'
       @resource 'requests', path: '/requests'
       @resource 'caches', path: '/caches' if config.endpoints.caches
       @resource 'request', path: '/requests/:request_id'

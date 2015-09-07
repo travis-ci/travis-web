@@ -1,13 +1,7 @@
 {{#if content.isLoaded}}
   <ul>
     {{#each controller as |build|}}
-
-      {{#if displayNewBranchRows}}
-        {{branch-row build=build}}
-      {{else}}
-        {{builds-item build=build}}
-      {{/if}}
-
+      {{builds-item build=build}}
     {{else}}
       {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
     {{/each}}

@@ -41,10 +41,6 @@ Controller = Ember.ArrayController.extend
       false
   ).property('tab', 'repo.builds', 'repo.branches')
 
-  displayNewBranchRows: (->
-    true if @get('tab') == 'branches'
-  ).property('tab', 'repo.builds', 'repo.branches')
-
   noticeData: (->
     return {
       repo: @get('repo'),
