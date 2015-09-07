@@ -54,6 +54,12 @@ User = Model.extend
     permissions
   ).property()
 
+  # TODO: permissions are loading asynchronously at the moment, so this should
+  # be the way to return them for all types:
+  pushPermissionsPromise: (->
+    @get('_rawPermissions').then (data) => data.pull
+  ).property()
+
   hasAccessToRepo: (repo) ->
     id = if repo.get then repo.get('id') else repo
 

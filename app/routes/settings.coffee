@@ -43,10 +43,11 @@ Route = TravisRoute.extend
     );
 
   hasPushAccess: ->
-    repoId = parseInt @modelFor('repo').get('id')
+    repoId = parseInt(@modelFor('repo').get('id'))
 
-    @auth.get('currentUser').get('pushPermissions').filter (item) ->
-      item == repoId
+    @auth.get('currentUser').get('pushPermissionsPromise').then (permissions) ->
+      permissions.filter (item) ->
+        item == repoId
 
   model: () ->
     return Ember.RSVP.hash({
