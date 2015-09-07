@@ -4,6 +4,23 @@
 
 BranchesController = Ember.Controller.extend
 
+  defaultBranch: (->
+    
+    repos = @get('model')
+
+    # repos = repos.filter (item, index) ->
+    #   item.get('owner.login') == org
+
+  ).property('model')
+
+  activeBranches: (->
+    repos = @get('model')
+  ).property('model')
+
+  inactiveBranches: (->
+    repos = @get('model')
+  ).property('model')
+
   actions:
     tiggerBuild: (branch) ->
       console.log('trigger build')

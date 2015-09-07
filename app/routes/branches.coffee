@@ -12,7 +12,8 @@ Route = TravisRoute.extend
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
 
-    $.ajax("#{apiEndpoint}/repos/#{repoId}/branch/master", options).then (response) ->
+    # $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branch/master", options).then (response) ->
+    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/builds?branch.name=master&limit=5", options).then (response) ->
       
       console.log(response)
       # response.repositories.sortBy('last_build.finished_at').filter( (repo) ->

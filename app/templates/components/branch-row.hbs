@@ -137,11 +137,13 @@
   </div>
 </div>
 <div class="one-line">
-  <ul class="build-tiles">
-    {{build-tile build=build}}
-    {{build-tile build=build}}
-    {{build-tile build=build}}
-    {{build-tile build=build}}
-    {{build-tile build=build}}
-  </ul>
+  {{#unless isLoading }}
+    <ul class="build-tiles">
+      {{#each buildTile in getLast5Builds}}
+        {{build-tile build=buildTile}}
+      {{/each}}
+    </ul>
+  {{else}}
+    {{loading-indicator}}
+  {{/unless}}
 </div>
