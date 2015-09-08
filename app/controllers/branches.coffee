@@ -6,18 +6,20 @@ BranchesController = Ember.Controller.extend
 
   defaultBranch: (->
     repos = @get('model')
-
-    # repos = repos.filter (item, index) ->
-    #   item.get('owner.login') == org
-
+    console.log(repos[0])
+    repos[0]
   ).property('model')
 
   activeBranches: (->
     repos = @get('model')
+    repos = repos.filter (item, index) ->
+      item if item.exists_on_github == true
   ).property('model')
 
   inactiveBranches: (->
     repos = @get('model')
+    repos = repos.filter (item, index) ->
+      item if item.exists_on_github == false
   ).property('model')
 
   actions:

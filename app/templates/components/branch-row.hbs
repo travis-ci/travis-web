@@ -1,6 +1,6 @@
 <div class="two-line">
   <div class="branch-name"> 
-    <h2 class="row-item">{{status-icon build=build}}{{build.commit.branch}}</h2>
+    <h2 class="row-item">{{status-icon build=build}}{{build.name}}</h2>
   </div>
   <div class="branch-builds">
     <div class="row-item"><a href="#">
@@ -18,21 +18,30 @@
           V6.7L9.6,5.9V7.9z M6.4,7.9h2.2V5.7L8.1,5.7l-1.7,0V7.9z M3.6,7.9h1.8v-2l-2,0.7l0,0.4C3.5,7.2,3.5,7.6,3.6,7.9z M6.4,4.7h1.7
           l0.5,0.1V4c-0.1,0-0.4-0.1-0.9-0.2c0,0-0.1,0-0.1,0L6.4,3.5V4.7z"/>
       </g>
-    </svg>
-    </span>~ builds</a></div>
+    </svg></span>
+    {{#if build.last_build}}
+      ~ builds
+    {{else}}
+      0 builds
+    {{/if}}
+    </a></div>
   </div>
 </div>
 <div class="two-line">
   <div class="branch-request">
     <div class="row-item">
-      {{#link-to "build" build.repo build}}
-        {{request-icon build=build}}
-        #{{build.number}} {{build.state}}
-      {{/link-to}}
-      </div>
+      {{#if build.last_build}}
+        {{#link-to "build" build.repository.slug build.last_build.id}}
+          {{request-icon build=build}}
+          #{{build.last_build.number}} {{build.last_build.state}}
+        {{/link-to}}
+      {{else}}
+        {{request-icon build=build}} -
+      {{/if}}
+    </div>
   </div>
   <div class="branch-calendar">
-    <div class="row-item" title="{{pretty-date build.formattedFinishedAt}}">
+    <div class="row-item" title="{{pretty-date build.last_build.finished_at}}">
       <span class="">
         <svg viewBox="0 0 20 20">
           <g id="Cal">
@@ -49,7 +58,12 @@
           </g>
         </svg>
       </span>
-      {{format-time build.finishedAt}}</div>
+      {{#if build.last_build}}
+        {{format-time build.last_build.finished_at}}
+      {{else}}
+        -
+      {{/if}}
+      </div>
   </div>
 </div>
 <div class="two-line">
@@ -57,7 +71,7 @@
     <div class="row-item">
       <a href="{{urlGithubCommit}}" title="commit on GitHub">
       <span class="">
-        <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
+        <svg x="0px" y="0px" viewBox="2 0 20 20" xml:space="preserve">
           <g id="Commit">
             <path fill="#A7AEAE" d="M7.8,17.5c-0.3,0-0.5-0.2-0.5-0.5l0-1c-0.4,0-1,0.1-1.4-0.1c-0.4-0.1-1.3-0.5-1.8-1.7
               c-0.1-0.2-0.3-0.4-0.4-0.6c-0.1-0.1-0.2-0.3-0.3-0.4C3,12.8,3,12,3.3,11.5c0.3-0.4,0.7-0.5,1.2-0.3c0.7,0.2,1.1,0.9,1.4,1.3
@@ -82,10 +96,21 @@
           </g>
         </svg>
       </span>
-      {{format-sha build.commit.sha}}</a></div>
+      {{#if build.last_build}}
+        {{format-sha build.last_build.commit.sha}}
+      {{else}}
+        -
+      {{/if}}
+      </a></div>
   </div>
   <div class="branch-commiter">
-    <div class="row-item"><img src="{{urlAuthorGravatarImage}}" alt="avatar" class="avatar">{{build.commit.committerName}}</div>
+    <div class="row-item">
+      {{#if build.last_build}}
+        <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar">{{build.last_build.commit.committer.name}}
+      {{else}}
+        <div class="avatar"></div> no commits yet
+      {{/if}}
+    </div>
   </div>
 </div>
 <div class="one-line">

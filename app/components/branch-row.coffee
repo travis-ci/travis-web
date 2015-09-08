@@ -7,17 +7,13 @@
 BranchRowComponent = Ember.Component.extend
 
   tagName: 'li'
-  classNameBindings: ['build.state']
+  classNameBindings: ['build.last_build.state']
   classNames: ['branch-row']
   isLoading: true
 
-  urlAuthorGravatarImage: (->
-    gravatarImage(@get('build.commit.authorEmail'), 15)
-  ).property('build.commit.authorEmail')
-
   urlGithubCommit: (->
-    githubCommitUrl(@get('build.repo.slug'), @get('build.commit.sha'))
-  ).property('build.commit.sha')
+    githubCommitUrl(@get('build.repository.slug'), @get('build.last_build.commit.sha'))
+  ).property('build.last_build')
 
   getLast5Builds: (->
 

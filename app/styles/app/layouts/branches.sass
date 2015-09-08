@@ -1,6 +1,6 @@
-@mixin statusColors($color, $status)
+@mixin statusColors($color, $status, $color2: $color)
   &.#{$status}
-    background: linear-gradient(to right, $color 0%, $color 9px, white 10px, white 100%) no-repeat
+    background: linear-gradient(to right, $color2 0%, $color2 9px, white 10px, white 100%) no-repeat
     .branch-name,
     .branch-request a
       color: $color
@@ -10,12 +10,9 @@
     .icon-request g > *
       fill: $color
 
-
-// .tabbody
-//   ul
-//     padding: 0
-//     margin: 0
-//     list-style: none
+.branches
+  .small-title
+    margin: 1.5em 0 0.7em
 
 .branch-row
   border: 1px solid $cream-dark
@@ -23,6 +20,7 @@
   text-align: right
   margin-bottom: .3rem
   color: $grey-dark
+  background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
 
   span
     width: 1.3em
@@ -32,10 +30,13 @@
     vertical-align: middle
 
   .avatar
+    display: inline-block
     width: 16px
+    height: 16px
     margin-right: .7em
     border-radius: 50%
     vertical-align: middle
+    background-color: #E9EBEB
 
   .row-item
     margin: .2em
@@ -69,11 +70,11 @@
   @include statusColors($red-dark, 'failed')
   @include statusColors($red-dark, 'errored')
   @include statusColors($grey-medium, 'canceled')
-  @include statusColors(#ECCE4B, 'started')
-  @include statusColors(#ECCE4B, 'queued')
-  @include statusColors(#ECCE4B, 'booting')
-  @include statusColors(#ECCE4B, 'received')
-  @include statusColors(#ECCE4B, 'created')
+  @include statusColors(#bfb502, 'started', #e5db29)
+  @include statusColors(#bfb502, 'queued', #e5db29)
+  @include statusColors(#bfb502, 'booting', #e5db29)
+  @include statusColors(#bfb502, 'received', #e5db29)
+  @include statusColors(#bfb502, 'created', #e5db29)
 
 
 %row-element
@@ -207,7 +208,7 @@
       vertical-align: middle
       width: 5px
       height: 5px
-      border: solid 2px #ECCE4B
+      border: solid 2px #e5db29
       border-radius: 50%
       transform-origin: center center
 

@@ -1,36 +1,37 @@
+<div class="branches">
+  <section>
+    <h2 class="small-title">Default Branch</h2>
+    <ul class="blank-list">
+      {{branch-row build=defaultBranch}}
+    </ul>
+  </section>
 
-<section>
-  <h2 class="small-title">Default Branch</h2>
-  <ul class="blank-list">
-    {{branch-row build=defaultBranch}}
-  </ul>
-</section>
+  <section>
+    <h2 class="small-title">Active Branches</h2>
+    <ul class="blank-list">
+      {{#each branch in activeBranches}}
+        {{branch-row build=branch}}
+      {{else}}
+        <li>There are no active branches</li>
+      {{/each}}
+    </ul>
+  </section>
 
-<section>
-  <h2 class="small-title">Active Branches</h2>
-  <ul class="blank-list">
-    {{#each branch in activeBranches}}
-      {{branch-row build=branch}}
-    {{else}}
-      <li>There are no active branches</li>
-    {{/each}}
-  </ul>
-</section>
-
-<section>
-  <h2 class="small-title">Inactive Branches</h2>
-  <ul class="blank-list">
-    {{#each branch in inactiveBranches}}
-      {{branch-row build=branch}}
-    {{else}}
-      <li>There are no inactive branches</li>
-    {{/each}}
-  </ul>
-</section>
+  <section>
+    <h2 class="small-title">Inactive Branches</h2>
+    <ul class="blank-list">
+      {{#each branch in inactiveBranches}}
+        {{branch-row build=branch}}
+      {{else}}
+        <li>There are no inactive branches</li>
+      {{/each}}
+    </ul>
+  </section>
 
 
-{{!-- {{#if content.isLoaded}} --}}
+  {{!-- {{#if content.isLoaded}} --}}
 
-{{!-- {{else}}
-  {{loading-indicator}}
-{{/if}} --}}
+  {{!-- {{else}}
+    {{loading-indicator}}
+  {{/if}} --}}
+</div>
