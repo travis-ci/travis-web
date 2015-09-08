@@ -2,8 +2,6 @@
   "framework": "qunit",
   "test_page": "tests/index.html?hidepassed",
   "launch_in_ci": [
-    // "SL_chrome",
-    // "SL_firefox",
     "PhantomJS"
   ],
   "launch_in_dev": [
