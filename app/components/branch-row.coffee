@@ -17,6 +17,14 @@ BranchRowComponent = Ember.Component.extend
 
   getLast5Builds: (->
 
+    array = [{}, {}, {}, {}, {}]
+
+    if @get('build.last_build') == null
+      @set('isLoading', false)
+      array
+    else
+      array
+
     # apiEndpoint = config.apiEndpoint
     # repoId = @get('build.repository.id')
 
@@ -28,5 +36,15 @@ BranchRowComponent = Ember.Component.extend
     #   console.log(response)
     #   @set('isLoading', false)
   ).property('build')
+
+  actions:
+    tiggerBuild: (branch) ->
+      console.log('trigger build')
+
+    viewAllBuilds: (branch) ->
+      console.log('view all builds')
+    # updateFilter: (value) ->
+    #   @set('_lastFilterValue', value)
+    #   Ember.run.throttle this, @updateFilter, [], 200, false
 
 `export default BranchRowComponent`

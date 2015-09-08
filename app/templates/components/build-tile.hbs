@@ -1,6 +1,8 @@
-<a href="#" class="dropup-trigger">
-  {{status-icon build=build}}
-  <div class="dropup--status">
-    {{request-icon build=build}} #{{build.number}}
-  </div>
-</a>
+{{#unless build}}
+  <a href="#" class="dropup-trigger">
+    {{status-icon build=build}}
+    <div class="dropup--status">
+      {{request-icon build=build}} #{{build.number}}
+    </div>
+  </a>
+{{/unless}}

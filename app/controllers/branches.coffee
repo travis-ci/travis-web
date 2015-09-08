@@ -22,14 +22,4 @@ BranchesController = Ember.Controller.extend
       item if item.exists_on_github == false
   ).property('model')
 
-  actions:
-    tiggerBuild: (branch) ->
-      console.log('trigger build')
-
-    viewAllBuilds: (branch) ->
-      console.log('view all builds')
-    # updateFilter: (value) ->
-    #   @set('_lastFilterValue', value)
-    #   Ember.run.throttle this, @updateFilter, [], 200, false
-
 `export default BranchesController`
