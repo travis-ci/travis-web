@@ -5,7 +5,6 @@
 BranchesController = Ember.Controller.extend
 
   defaultBranch: (->
-    
     repos = @get('model')
 
     # repos = repos.filter (item, index) ->

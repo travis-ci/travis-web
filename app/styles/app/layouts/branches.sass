@@ -10,28 +10,12 @@
     .icon-request g > *
       fill: $color
 
-@mixin buildTileColors($color, $bg, $status)
-  > .#{$status}
-    background-color: $bg
-    .icon-request g > *
-      fill: $color
-    &:hover
-      background-color: $color
-      .status-icon g > *
-        fill: $white
 
-    @media #{$medium-up}
-      .dropup--status
-        border-color: $color
-        color: $color
-        &:before
-          background-color: $color
-
-.tabbody
-  ul
-    padding: 0
-    margin: 0
-    list-style: none
+// .tabbody
+//   ul
+//     padding: 0
+//     margin: 0
+//     list-style: none
 
 .branch-row
   border: 1px solid $cream-dark
@@ -198,7 +182,6 @@
   @media #{$medium-up}
     top: -3em
     padding: .2em .3em
-    transform: translate(-1em, 0em);
     white-space: nowrap
     font-size: 14px;
     border: 1px solid $red-dark
@@ -210,41 +193,29 @@
   path
     fill: $teal-dark
 
+// @todo refactor to status-icon module
+.status-icon
+  .is-rotating
+    width: 17px
+    height: 19px
+    line-height: 1
+    transform-origin: center center
+    will-change: transform
+    animation: rotation 3s infinite ease
+    .circle
+      display: inline-block
+      vertical-align: middle
+      width: 5px
+      height: 5px
+      border: solid 2px #ECCE4B
+      border-radius: 50%
+      transform-origin: center center
 
-// @todo refactor to build-tiles module
-.build-tiles
-  height: 5.6rem
-  margin: 0
-  padding: 0
-  list-style: none
-  li
-    position: relative
-    display: inline-block
-    height: 100%
-    width: 18.8%
-    .status-icon
-      position: absolute
-      top: 0
-      right: 0
-      bottom: 0
-      left: 0
-      width: 2rem
-      height: 2rem
-      margin: auto
-      background-color: transparent
-  a
-    display: block
-    height: 100%
-    text-align: center
-
-  @include buildTileColors(#44A662, #F5FBF6, 'passed')
-  @include buildTileColors(#D94341, #FFF7F5, 'failed')
-  @include buildTileColors(#D94341, #FFF7F5, 'errored')
-  @include buildTileColors(#A1A0A0, #F5F5F5, 'canceled')
-  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'started')
-  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'queued')
-  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'booting')
-  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'received')
-  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.5), 'created')
-
+@keyframes rotation
+  0%
+    transform: rotateZ(0deg)
+  45%, 55%
+    transform: rotateZ(180deg)
+  100%
+    transform: rotateZ(360deg)
 

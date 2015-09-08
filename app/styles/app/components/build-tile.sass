@@ -1,0 +1,61 @@
+@mixin buildTileColors($color, $bg, $status)
+  > .#{$status}
+    background-color: $bg
+    .icon-request g > *
+      fill: $color
+    &:hover
+      background-color: $color
+      .status-icon g > *
+        fill: $white
+      .status-icon .circle
+        border-color: $white
+
+    @media #{$medium-up}
+      .dropup--status
+        border-color: $color
+        color: $color
+        &:before
+          background-color: $color
+
+
+.build-tiles
+  height: 5.6rem
+  margin: 0
+  padding: 0
+  list-style: none
+  li
+    position: relative
+    display: inline-block
+    height: 100%
+    width: 18.8%
+    .status-icon
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      width: 2rem
+      height: 2rem
+      margin: auto
+      background-color: transparent
+      .is-rotating
+        width: 100%
+        height: 100%
+        line-height: 1.5
+      .circle
+        width: 8px
+        height: 8px
+  a
+    display: block
+    height: 100%
+    text-align: center
+
+  @include buildTileColors(#44A662, #F5FBF6, 'passed')
+  @include buildTileColors(#D94341, #FFF7F5, 'failed')
+  @include buildTileColors(#D94341, #FFF7F5, 'errored')
+  @include buildTileColors(#A1A0A0, #F5F5F5, 'canceled')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.4), 'started')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.4), 'queued')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.4), 'booting')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.4), 'received')
+  @include buildTileColors(#ECCE4B, rgba(#ECCE4B, 0.4), 'created')

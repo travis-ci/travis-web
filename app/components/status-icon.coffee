@@ -22,4 +22,12 @@ StatusIconComponent = Ember.Component.extend
     @get('build.state') == 'canceled'
   ).property('build.state')
 
+  isRunning: (->
+    @get('build.state') == 'started' || 
+    @get('build.state') == 'queued' ||
+    @get('build.state') == 'booting' ||
+    @get('build.state') == 'received' ||
+    @get('build.state') == 'created'
+  ).property('build.state')
+
 `export default StatusIconComponent`

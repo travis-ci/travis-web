@@ -1,16 +1,14 @@
 
 <section>
-  <h2>Default Branch</h2>
-
-  <ul>
+  <h2 class="small-title">Default Branch</h2>
+  <ul class="blank-list">
     {{branch-row build=defaultBranch}}
   </ul>
 </section>
 
 <section>
-  <h2>Active Branches</h2>
-
-  <ul>
+  <h2 class="small-title">Active Branches</h2>
+  <ul class="blank-list">
     {{#each branch in activeBranches}}
       {{branch-row build=branch}}
     {{else}}
@@ -20,9 +18,8 @@
 </section>
 
 <section>
-  <h2>Inactive Branches</h2>
-
-  <ul>
+  <h2 class="small-title">Inactive Branches</h2>
+  <ul class="blank-list">
     {{#each branch in inactiveBranches}}
       {{branch-row build=branch}}
     {{else}}
