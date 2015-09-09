@@ -2,6 +2,11 @@
 `import Ember from 'ember'`
 
 Route = Ember.Route.extend
+  activate: ->
+    if @routeName != 'error'
+      @controllerFor('error').set('layoutName', null)
+    return @_super.apply(this, arguments)
+
   beforeModel: (transition) ->
     @auth.autoSignIn() unless @signedIn()
 
