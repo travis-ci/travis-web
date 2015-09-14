@@ -8,6 +8,7 @@ initialize = (container, app) ->
   app.inject('controller', 'auth', 'auth:main')
   app.inject('application', 'auth', 'auth:main')
   app.inject('component', 'auth', 'auth:main')
+  app.inject('service:flashes', 'auth', 'auth:main')
 
   app.inject('auth', 'store', 'service:store')
 

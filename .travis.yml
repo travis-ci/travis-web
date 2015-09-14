@@ -16,8 +16,8 @@ matrix:
 
   fast_finish: true
 
-addons:
-  sauce_connect: true
+#addons:
+#  sauce_connect: true
 
 sudo: false
 
