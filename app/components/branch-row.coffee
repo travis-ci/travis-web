@@ -49,15 +49,27 @@ BranchRowComponent = Ember.Component.extend
     lastBuilds
   ).property()
 
+  triggerBuild: (->
+    apiEndpoint = config.apiEndpoint
+    repoId = @get('build.repository.id')
+
+    options = {
+      type: 'POST'
+    }
+    if @get('auth.signedIn')
+      options.headers = { Authorization: "token #{@auth.token()}" }
+
+    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/requests", options).then (response) ->
+      console.log(response);
+
+  )
+
   actions:
     tiggerBuild: (branch) ->
       console.log('trigger build')
+      @triggerBuild()
 
     viewAllBuilds: (branch) ->
       console.log('view all builds')
-      @transitionToRoute('builds')
-    # updateFilter: (value) ->
-    #   @set('_lastFilterValue', value)
-    #   Ember.run.throttle this, @updateFilter, [], 200, false
 
 `export default BranchRowComponent`
