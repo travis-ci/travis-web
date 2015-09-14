@@ -6,27 +6,27 @@
     </ul>
   </section>
 
-  <section>
-    <h2 class="small-title">Active Branches</h2>
-    <ul class="blank-list">
-      {{#each branch in activeBranches}}
-        {{branch-row build=branch}}
-      {{else}}
-        <li>There are no active branches</li>
-      {{/each}}
-    </ul>
-  </section>
+  {{#if activeBranches}}
+    <section>
+      <h2 class="small-title">Active Branches</h2>
+      <ul class="blank-list">
+        {{#each branch in activeBranches}}
+          {{branch-row build=branch}}
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
 
-  <section>
-    <h2 class="small-title">Inactive Branches</h2>
-    <ul class="blank-list">
-      {{#each branch in inactiveBranches}}
-        {{branch-row build=branch}}
-      {{else}}
-        <li>There are no inactive branches</li>
-      {{/each}}
-    </ul>
-  </section>
+  {{#if inactiveBranches}}
+    <section>
+      <h2 class="small-title">Inactive Branches</h2>
+      <ul class="blank-list">
+        {{#each branch in inactiveBranches}}
+          {{branch-row build=branch}}
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
 
 
   {{!-- {{#if content.isLoaded}} --}}

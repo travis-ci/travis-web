@@ -14,6 +14,9 @@ BranchesController = Ember.Controller.extend
     repos = @get('model')
     repos = repos.filter (item, index) ->
       item if item.exists_on_github == true
+    .sort (a, b) ->
+      return 0
+
   ).property('model')
 
   inactiveBranches: (->
