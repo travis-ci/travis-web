@@ -55,6 +55,7 @@ BranchRowComponent = Ember.Component.extend
 
     viewAllBuilds: (branch) ->
       console.log('view all builds')
+      @transitionToRoute('builds')
     # updateFilter: (value) ->
     #   @set('_lastFilterValue', value)
     #   Ember.run.throttle this, @updateFilter, [], 200, false

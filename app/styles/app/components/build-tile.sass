@@ -1,7 +1,8 @@
 @mixin buildTileColors($color, $bg, $status)
   > .#{$status}
     background-color: $bg
-    .icon-request g > *
+    .icon-request g > *,
+    .status-icon g > *
       fill: $color
     &:hover
       background-color: $color
