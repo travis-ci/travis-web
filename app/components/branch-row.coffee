@@ -10,6 +10,8 @@ BranchRowComponent = Ember.Component.extend
   classNameBindings: ['build.last_build.state']
   classNames: ['branch-row']
   isLoading: false
+  isTriggering: false
+  hasTriggered: false
 
   urlGithubCommit: (->
     githubCommitUrl(@get('build.repository.slug'), @get('build.last_build.commit.sha'))
@@ -49,32 +51,28 @@ BranchRowComponent = Ember.Component.extend
     lastBuilds
   ).property()
 
-  triggeredBuild: (->
-    triggeredBuild = Ember.ArrayProxy.create(
-      isTriggered: false,
-      status: null
-    )
-  ).property("triggeredBuild.status['@type']")
-
   triggerBuild: (->
     apiEndpoint = config.apiEndpoint
     repoId = @get('build.repository.id')
-    branchName = @get('build.name')
     options = {
-      type: 'POST'
+      type: 'POST',
+      body: {
+        request: {
+          branch: @get('build.name')
+        }
+      }
     }
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
-    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/requests", options).then (response) ->
-      @triggerBuild.set('isTriggered', true)
-      @triggerBuild.set('status', response)
-      console.log(response)
-      console.log('Build triggered')
+    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/requests", options).then (response) =>
+      @.set('isTriggering', false)
+      @.set('hasTriggered', true)
   )
 
   actions:
     tiggerBuild: (branch) ->
       console.log('trigger build')
+      @.set('isTriggering', true)
       @triggerBuild()
 
     viewAllBuilds: (branch) ->
