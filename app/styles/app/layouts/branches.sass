@@ -180,6 +180,8 @@
 .dropup--status
   @extend %dropup
   display: none
+  &:after
+    bottom: -5px
   @media #{$medium-up}
     top: -3em
     padding: .2em .3em
@@ -208,7 +210,7 @@
       vertical-align: middle
       width: 5px
       height: 5px
-      border: solid 2px #e5db29
+      border: solid 1px #e5db29
       border-radius: 50%
       transform-origin: center center
 

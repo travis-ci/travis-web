@@ -6,14 +6,15 @@ BranchesController = Ember.Controller.extend
 
   defaultBranch: (->
     repos = @get('model')
-    console.log(repos[0])
-    repos[0]
+    output = repos.filter (item, index) ->
+      item if item.repository.default_branch.name == undefined
+    output[0]
   ).property('model')
 
   activeBranches: (->
     repos = @get('model')
     repos = repos.filter (item, index) ->
-      item if item.exists_on_github == true
+      item if item.exists_on_github == true && item.repository.default_branch.name != undefined
     .sort (a, b) ->
       # if a.last_build && b.last_build
 
