@@ -34,7 +34,7 @@ BranchRowComponent = Ember.Component.extend
       if @get('auth.signedIn')
         options.headers = { Authorization: "token #{@auth.token()}" }
 
-      $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/builds?branch.name=#{branchName}&limit=5&offset=1", options).then (response) ->
+      $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/builds?branch.name=#{branchName}&limit=5", options).then (response) ->
         array = response.builds.map( (build) ->
           Ember.Object.create(build)
         )
@@ -49,17 +49,27 @@ BranchRowComponent = Ember.Component.extend
     lastBuilds
   ).property()
 
+  triggeredBuild: (->
+    triggeredBuild = Ember.ArrayProxy.create(
+      isTriggered: false,
+      status: null
+    )
+  ).property("triggeredBuild.status['@type']")
+
   triggerBuild: (->
     apiEndpoint = config.apiEndpoint
     repoId = @get('build.repository.id')
+    branchName = @get('build.name')
     options = {
       type: 'POST'
     }
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
     $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/requests", options).then (response) ->
-      console.log(response);
-      console.log('Build triggered');
+      @triggerBuild.set('isTriggered', true)
+      @triggerBuild.set('status', response)
+      console.log(response)
+      console.log('Build triggered')
   )
 
   actions:

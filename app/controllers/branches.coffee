@@ -14,7 +14,6 @@ BranchesController = Ember.Controller.extend
   activeBranches: (->
     repos = @get('model')
     repos = repos.filter (item, index) ->
-      console.log(item)
       item if item.exists_on_github == true && item.repository.default_branch.name != undefined
     .sortBy('last_build.finished_at')
     .reverse()

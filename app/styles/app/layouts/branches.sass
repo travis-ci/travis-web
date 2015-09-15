@@ -64,7 +64,7 @@
     & > div:nth-of-type(4)
       width: 5%
     & > div:nth-of-type(5)
-      width: 26%
+      width: 27%
 
   @include statusColors($green-dark, 'passed')
   @include statusColors($red-dark, 'failed')
@@ -75,7 +75,6 @@
   @include statusColors(#bfb502, 'booting', #e5db29)
   @include statusColors(#bfb502, 'received', #e5db29)
   @include statusColors(#bfb502, 'created', #e5db29)
-
 
 %row-element
   vertical-align: middle
@@ -99,8 +98,21 @@
     display: inline-block
   .branch-nav
     display: none
+    text-align: center
     @media #{$medium-up}
       display: block
+
+.branch-last-build
+  @media #{$medium-up}
+    padding-left: 1em
+    &:before
+      content: "";
+      display: block;
+      width: 1px;
+      background-color: #EFF0EC;
+      position: absolute;
+      height: 3.7em;
+      margin-left: -1em;
 
 // @todo refactor into dropup module
 %dropup
@@ -120,10 +132,7 @@
       height: 10px
       left: 46%
       transform: rotate(45deg)
-    &:before
-      bottom: -6px
     &:after
-      bottom: -4px
       background-color: $white
     .dropup-trigger:hover ~ &,
     .dropup-trigger:hover &,
@@ -132,6 +141,10 @@
 
 .dropup--blue
   @extend %dropup
+  &:before
+    bottom: -5px
+  &:after
+    bottom: -4px
   ul
     margin: 0
     padding: 0
@@ -152,13 +165,15 @@
     fill: $white
     
   @media #{$medium-up}
-    padding: .4em
-    transform: translate(-2.7em, -8.2em)
+    padding: .5em
+    transform: translate(-37%, -180%)
     border: 1px solid $teal-dark
     li
       display: block
       margin: 0
       background-color: $white
+      &:first-of-type
+        border-bottom: 1px solid #E4E6E6
     .icon-trigger path,
     .icon-eye path
       fill: #A7AEAE
@@ -174,6 +189,10 @@
         .icon-eye path
           fill: $white
 
+  @media #{$large-up}
+    padding: .5em
+    transform: translate(-30%, -180%)
+
     &:before
       background-color: $teal-dark
 
@@ -182,6 +201,8 @@
   display: none
   &:after
     bottom: -5px
+  &:before
+    bottom: -6px
   @media #{$medium-up}
     top: -3em
     padding: .2em .3em
@@ -210,7 +231,7 @@
       vertical-align: middle
       width: 5px
       height: 5px
-      border: solid 1px #e5db29
+      border: solid 1px #bfb502
       border-radius: 50%
       transform-origin: center center
 
