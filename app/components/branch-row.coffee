@@ -52,16 +52,14 @@ BranchRowComponent = Ember.Component.extend
   triggerBuild: (->
     apiEndpoint = config.apiEndpoint
     repoId = @get('build.repository.id')
-
     options = {
       type: 'POST'
     }
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
-
     $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/requests", options).then (response) ->
       console.log(response);
-
+      console.log('Build triggered');
   )
 
   actions:
