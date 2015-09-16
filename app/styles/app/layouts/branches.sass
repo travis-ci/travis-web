@@ -128,9 +128,11 @@
       content: ""
       position: absolute
       display: block
-      width: 10px
-      height: 10px
-      left: 46%
+      width: 7px
+      height: 7px
+      left: 0
+      right: 0
+      margin: 0 auto
       transform: rotate(45deg)
     &:after
       background-color: $white
@@ -142,6 +144,7 @@
 .dropup--blue
   @extend %dropup
   &:before
+    background-color: $teal-dark
     bottom: -5px
   &:after
     bottom: -4px
@@ -165,46 +168,48 @@
     fill: $white
     
   @media #{$medium-up}
-    padding: .5em
-    transform: translate(-37%, -180%)
+    padding: .3em
+    transform: translateY(-160%)
+    right: 24.5%
     border: 1px solid $teal-dark
     li
       display: block
       margin: 0
       background-color: $white
-      &:first-of-type
-        border-bottom: 1px solid #E4E6E6
+      border-radius: 0
+      cursor: pointer
     .icon-trigger path,
     .icon-eye path
       fill: #A7AEAE
     a
       display: block
-      padding: 0.2em 0.5em
+      padding: 0.3em .5em 0.4em
       text-decoration: none
       color: $grey-dark
       &:hover
-        background-color: $teal-dark
         color: $white
+        background-color: $teal-dark
         .icon-trigger path,
         .icon-eye path
           fill: $white
 
-  @media #{$large-up}
-    padding: .5em
-    transform: translate(-30%, -180%)
+  .dropup-item
+    display: inline-block
+    vertical-align: middle
 
-    &:before
-      background-color: $teal-dark
+  @media #{$large-up}
+    right: 24.5%
 
 .dropup--status
   @extend %dropup
   display: none
   &:after
-    bottom: -5px
+    bottom: -3px
   &:before
-    bottom: -6px
+    bottom: -4px
   @media #{$medium-up}
     top: -3em
+    width: 100%
     padding: .2em .3em
     white-space: nowrap
     font-size: 14px;

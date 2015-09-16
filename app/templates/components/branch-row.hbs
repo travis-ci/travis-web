@@ -138,7 +138,7 @@
       <ul>
         <li>
           {{#if hasTriggered}}
-            <span>build was triggered</span>
+            <span class="dropup-item">build was triggered</span>
           {{else}}
             {{#if isTriggering}}
               {{loading-indicator}}
@@ -154,7 +154,7 @@
                     </g>
                   </svg>
                 </span>
-                Trigger a build
+                <span class="dropup-item">Trigger a build</span>
               </a>
             {{/if}}
           {{/if}}
@@ -171,7 +171,7 @@
               </g>
             </svg>
           </span>
-          View all builds</a>
+          <span class="dropup-item">View all builds</span></a>
         </li>
       </ul>
     </div>
