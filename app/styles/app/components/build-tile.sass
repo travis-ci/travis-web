@@ -23,13 +23,17 @@
   height: 5.6rem
   margin: 0
   padding: 0
+  clear: both
   list-style: none
   li
     position: relative
-    display: inline-block
     height: 100%
-    width: 18.7%
+    width: 20%
+    float: left
     background-color: #F7F7F7
+    border-right: 1px solid $white
+    &:last-of-type
+      border-right: none
     .status-icon
       position: absolute
       top: 0
@@ -41,13 +45,17 @@
       margin: auto !important
       background-color: transparent
       .is-rotating
-        width: 100%
-        height: 100%
-        line-height: 1.5
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        margin: auto
+        width: 1.3em
+        height: 1.1em
       .circle
         width: 8px
         height: 8px
-        border-width: 2px
   a
     display: block
     height: 100%
