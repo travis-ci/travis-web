@@ -31,10 +31,13 @@ StatusIconComponent = Ember.Component.extend
   ).property('status')
 
   isEmpty: (->
-    if @get('status') == null || @get('status') == ''
+    unless @get('status')
       true
     else
-      false
+      if @get('status') == ''
+        true
+      else
+        false
 
   ).property('status')
 

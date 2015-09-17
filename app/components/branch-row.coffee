@@ -5,7 +5,7 @@
 `import config from 'travis/config/environment'`
 
 BranchRowComponent = Ember.Component.extend
-
+  routing: Ember.inject.service('-routing')
   tagName: 'li'
   classNameBindings: ['build.last_build.state']
   classNames: ['branch-row']
@@ -86,6 +86,6 @@ BranchRowComponent = Ember.Component.extend
       @triggerBuild()
 
     viewAllBuilds: (branch) ->
-      console.log('view all builds')
+      @get('routing').transitionTo('builds')
 
 `export default BranchRowComponent`
