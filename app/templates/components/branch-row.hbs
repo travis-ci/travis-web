@@ -4,7 +4,7 @@
   </div>
   <div class="branch-builds">
     <div class="row-item">
-    <span class="icon-line-build">
+    <span class="icon icon-line-build">
       <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve" enable-background="new 0 0 20 20">
       <g id="Build">
         <path fill="#A7AEAE" d="M15.2,15.3c-0.4,0-0.7-0.1-1-0.4c-0.4-0.3-0.6-0.8-0.6-1.2c0-0.3,0.2-0.5,0.5-0.5c0.3,0,0.5,0.2,0.5,0.5
@@ -117,11 +117,11 @@
     </div>
   </div>
 </div>
-<div class="one-line">
+<div class="one-line is-relative">
   {{#if build.last_build}}
     <div class="branch-nav dropup-trigger">
       <div class="row-item">
-        <a href="#"><span class="icon-tofu">
+        <a href="#"><span class="icon icon-tofu">
           <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
             <g id="Tofuburger">
               <path fill="#A7AEAE" d="M17.9,6.2H2.1C1.8,6.2,1.5,6,1.5,5.6C1.5,5.3,1.8,5,2.1,5h15.7c0.4,0,0.6,0.3,0.6,0.6
@@ -144,7 +144,7 @@
               {{loading-indicator}}
             {{else}}
               <a {{action 'tiggerBuild'}}>
-                <span class="icon-trigger">
+                <span class="icon icon-trigger">
                   <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
                     <g id="Trigger">
                       <path fill="#A7AEAE" d="M17.2,7.9C17,7.6,16.6,7.7,16.3,8l-1,1.2C14.9,6,12.2,3.6,9,3.6c-3.6,0-6.4,2.9-6.4,6.4s2.9,6.4,6.4,6.4
@@ -160,7 +160,7 @@
           {{/if}}
         </li>
         <li><a {{action 'viewAllBuilds'}}>
-          <span class="icon-eye">
+          <span class="icon icon-eye">
             <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
               <g id="View">
                 <path fill="#A7AEAE" d="M17.4,9.6c-0.1-0.2-3.3-4.1-7.4-4.1s-7.3,4-7.4,4.1c-0.2,0.2-0.2,0.6,0,0.8c0.1,0.2,3.3,4.1,7.4,4.1
@@ -189,7 +189,7 @@
   </ul>
   {{#unless build.last_build}}
     <a {{action 'tiggerBuild'}} class="nobuilds-tigger">
-      <span class="icon-trigger">
+      <span class="icon icon-trigger">
         <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
           <g id="Trigger">
             <path fill="#A7AEAE" d="M17.2,7.9C17,7.6,16.6,7.7,16.3,8l-1,1.2C14.9,6,12.2,3.6,9,3.6c-3.6,0-6.4,2.9-6.4,6.4s2.9,6.4,6.4,6.4

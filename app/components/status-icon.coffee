@@ -3,7 +3,7 @@
 StatusIconComponent = Ember.Component.extend
 
   tagName: 'span'
-  classNames: ['status-icon']
+  classNames: ['status-icon', 'icon']
   classNameBindings: ['build.last_build.state', 'build.state']
 
   hasPassed: (->

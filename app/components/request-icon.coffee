@@ -3,7 +3,7 @@
 RequestIconComponent = Ember.Component.extend
 
   tagName: 'span'
-  classNames: ['icon-request']
+  classNames: ['icon-request', 'icon']
   classNameBindings: ['build.last_build.state', 'build.state']
 
   isPush: (->

@@ -22,7 +22,7 @@
   color: $grey-dark
   background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
 
-  span[class*="icon"]
+  .icon
     width: 1.3em
     height: 1.3em
     margin-right: .2em
@@ -65,6 +65,15 @@
       width: 5%
     & > div:nth-of-type(5)
       width: 27%
+  @media #{$large-up}
+    & > div:nth-of-type(2)
+      width: 21%
+    & > div:nth-of-type(3)
+      width: 21%
+    & > div:nth-of-type(4)
+      width: 2em
+    & > div:nth-of-type(5)
+      width: 25%
 
   @include statusColors($green-dark, 'passed')
   @include statusColors($red-dark, 'failed')
@@ -168,9 +177,10 @@
     fill: $white
     
   @media #{$medium-up}
+    width: 10em
+    left: 0
     padding: .3em
-    transform: translateY(-160%)
-    right: 24.5%
+    transform: translate(-42%, -170%)
     border: 1px solid $teal-dark
     li
       display: block
@@ -197,20 +207,20 @@
     display: inline-block
     vertical-align: middle
 
-  @media #{$large-up}
-    right: 24.5%
-
 .dropup--status
   @extend %dropup
+  left: 0
+  right: 0
+  margin: auto
   display: none
   &:after
     bottom: -3px
   &:before
     bottom: -4px
   @media #{$medium-up}
-    top: -3em
-    width: 100%
-    padding: .2em .3em
+    top: -2.3em
+    width: 4em
+    padding: .1em .1em
     white-space: nowrap
     font-size: 14px;
     border: 1px solid $red-dark
