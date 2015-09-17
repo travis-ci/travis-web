@@ -53,9 +53,13 @@ BranchRowComponent = Ember.Component.extend
 
   canTrigger: (->
     if !@get('auth.signedIn')
-      return false
+      false
     else
-      true
+      permissions = @get('auth.currentUser.permissions')
+      if permissions.contains parseInt(@get('build.repository.id'))
+        true
+      else
+        false
   ).property()
 
   triggerBuild: (->
