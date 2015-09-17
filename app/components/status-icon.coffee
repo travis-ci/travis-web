@@ -4,47 +4,38 @@ StatusIconComponent = Ember.Component.extend
 
   tagName: 'span'
   classNames: ['status-icon', 'icon']
-  classNameBindings: ['build.last_build.state', 'build.state']
+  classNameBindings: ['status']
 
   hasPassed: (->
-    @get('build.last_build.state') == 'passed' ||
-    @get('build.state') == 'passed'
-  ).property('build')
+    @get('status') == 'passed'
+  ).property('status')
 
   hasFailed: (->
-    @get('build.last_build.state') == 'failed' ||
-    @get('build.state') == 'failed'
-  ).property('build')
+    @get('status') == 'failed'
+  ).property('status')
 
   hasErrored: (->
-    @get('build.last_build.state') == 'errored' ||
-    @get('build.state') == 'errored'
-  ).property('build')
+    @get('status') == 'errored'
+  ).property('status')
 
   wasCanceled: (->
-    @get('build.last_build.state') == 'canceled' ||
-    @get('build.state') == 'canceled'
-  ).property('build')
+    @get('status') == 'canceled'
+  ).property('status')
 
   isRunning: (->
-    @get('build.last_build.state') == 'started' || 
-    @get('build.last_build.state') == 'queued' ||
-    @get('build.last_build.state') == 'booting' ||
-    @get('build.last_build.state') == 'received' ||
-    @get('build.last_build.state') == 'created' ||
-    @get('build.state') == 'started' || 
-    @get('build.state') == 'queued' ||
-    @get('build.state') == 'booting' ||
-    @get('build.state') == 'received' ||
-    @get('build.state') == 'created'
-  ).property('build')
+    @get('status') == 'started' || 
+    @get('status') == 'queued' ||
+    @get('status') == 'booting' ||
+    @get('status') == 'received' ||
+    @get('status') == 'created'
+  ).property('status')
 
   isEmpty: (->
-    if @get('build.@type') == 'branch'
-      true if @get('build.last_build.state') == null
-    else if @get('build.@type') == 'build'
-      false if @get('build.state') != ''
+    if @get('status') == null || @get('status') == ''
+      true
+    else
+      false
 
-  ).property('build')
+  ).property('status')
 
 `export default StatusIconComponent`

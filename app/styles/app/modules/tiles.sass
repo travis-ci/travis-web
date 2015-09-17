@@ -1,12 +1,19 @@
-@mixin colorTiles($color)
-  .tile-status
-    background-color: $color
-  .repo-header-title a,
-  .repo-build-status a,
-  .build-status a,
-  .tile-header,
-  .tile-header a
-    color: $color
+@mixin colorStatusIcons($color, $status)
+  .status-icon.#{$status}
+    svg g > *
+      fill: $color
+
+@mixin colorTiles($color, $status)
+  &.#{$status}
+    .tile-status
+      background-color: $color
+    .repo-header-title a,
+    .repo-build-status a,
+    .build-status a,
+    .tile-header,
+    .tile-header a
+      color: $color
+    @include colorStatusIcons($color, $status)
 
 .tile
   @extend %border-radius-4px
@@ -23,21 +30,20 @@
     height: 0.9em
 
   &:not(.tile--jobs)
-    &.started,
-    &.created,
-    &.received,
-    &.queued
-      @include colorTiles($start-color)
-    &.failed
-      @include colorTiles($fail-color)
-    &.errored
-      @include colorTiles($error-color)
-    &.canceled
-      @include colorTiles($cancel-color)
-    &.passed
-      @include colorTiles($pass-color)
-    &.inactive
-      @include colorTiles($cancel-color)
+    @include colorTiles($green-dark, 'passed')
+    @include colorTiles($red-dark, 'failed')
+    @include colorTiles($red-dark, 'errored')
+    @include colorTiles($grey-medium, 'canceled')
+    @include colorTiles(#bfb502, 'started')
+    @include colorTiles(#bfb502, 'queued')
+    @include colorTiles(#bfb502, 'booting')
+    @include colorTiles(#bfb502, 'received')
+    @include colorTiles(#bfb502, 'created')
+
+    .status-icon .is-rotating
+      width: 17px;
+      height: 17px;
+      line-height: 1;
 
   @media #{$medium-up}
     height: 145px
