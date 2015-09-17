@@ -5,14 +5,17 @@
 
 @mixin colorTiles($color, $status, $extra-bg: $color)
   &.#{$status}
+    border-color: $extra-bg
     .tile-status
       background-color: $color
     .repo-header-title a,
     .repo-build-status a,
     .build-status a,
     .tile-header,
-    .tile-header a
+    .tile-header a,
+    a
       color: $color
+
     @include colorStatusIcons($color, $status)
 
 .tile

@@ -94,7 +94,7 @@
 
 .two-line
   @extend %row-element
-  padding: .6em 0
+  padding: .4em 0
   margin-left: 2em
   text-align: left
 
@@ -269,7 +269,8 @@
 .is-relative
   position: relative
 
-.nobuilds-tigger
+span.nobuilds-tigger,
+a.nobuilds-tigger
   position: absolute
   top: 0
   left: 0
@@ -284,11 +285,14 @@
   border: 1px solid #E4E6E6
   border-radius: 2px
   background-color: #fff
+  .icon-trigger
+    height: 1.4em !important
+
+a.nobuilds-tigger
   &:hover
     background: #A6ADAD
     color: white
     .icon-trigger svg path
       fill: #fff
-  .icon-trigger
-    height: 1.4em !important
+
 

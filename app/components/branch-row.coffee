@@ -51,6 +51,10 @@ BranchRowComponent = Ember.Component.extend
     lastBuilds
   ).property()
 
+  canTrigger: (->
+    @get('auth.signedIn')
+  ).property()
+
   triggerBuild: (->
     apiEndpoint = config.apiEndpoint
     repoId = @get('build.repository.id')
@@ -71,7 +75,6 @@ BranchRowComponent = Ember.Component.extend
 
   actions:
     tiggerBuild: (branch) ->
-      console.log('trigger build')
       @.set('isTriggering', true)
       @triggerBuild()
 

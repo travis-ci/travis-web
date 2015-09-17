@@ -1,11 +1,6 @@
 $sb-grey: #f2f2f2
 $sb-font-size: 14px
 
-@mixin colorSidebarTiles($color)
-  border-color: $color
-  a
-    color: $color
-
 .tile--sidebar
   height: auto
   padding: 0.6em 0.5em
@@ -15,17 +10,6 @@ $sb-font-size: 14px
   border-left: 8px solid
   li:last-child &
     margin-bottom: 0
-
-  &.failed,
-  &.errored
-    @include colorSidebarTiles($fail-color)
-  &.passed
-    @include colorSidebarTiles($pass-color)
-  &.started,
-  &.created,
-  &.received,
-  &.queued
-    @include colorSidebarTiles($created-color)
 
   h2, p
     margin: 0
@@ -55,10 +39,6 @@ $sb-font-size: 14px
     width: 1.3em
     height: 1.4em
     margin-right: .1em
-  // .icon--hash
-  //   width: 1.1em
-  //   height: 1.3em
-
 
 .tabnav--sidebar
   font-size: $sb-font-size
