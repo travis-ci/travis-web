@@ -52,7 +52,10 @@ BranchRowComponent = Ember.Component.extend
   ).property()
 
   canTrigger: (->
-    @get('auth.signedIn')
+    if !@get('auth.signedIn')
+      return false
+    else
+      true
   ).property()
 
   triggerBuild: (->
