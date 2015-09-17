@@ -19,6 +19,7 @@
           l0.5,0.1V4c-0.1,0-0.4-0.1-0.9-0.2c0,0-0.1,0-0.1,0L6.4,3.5V4.7z"/>
       </g>
     </svg></span>
+    <span class="label-align">
     {{#if build.last_build}}
       {{#if getLast5Builds.isLoading}}
         {{loading-indicator inline=true}}
@@ -27,7 +28,7 @@
       {{/if}}
     {{else}}
       0 builds
-    {{/if}}
+    {{/if}}</span>
     </div>
   </div>
 </div>
@@ -37,7 +38,7 @@
       {{#if build.last_build}}
         {{#link-to "build" build.repository.slug build.last_build.id}}
           {{request-icon build=build}}
-          #{{build.last_build.number}} {{build.last_build.state}}
+          <span class="label-align">#{{build.last_build.number}} {{build.last_build.state}}</span>
         {{/link-to}}
       {{else}}
         {{request-icon build=build}} -
@@ -62,11 +63,12 @@
           </g>
         </svg>
       </span>
+      <span class="label-align">
       {{#if build.last_build}}
         {{format-time build.last_build.finished_at}}
       {{else}}
         -
-      {{/if}}
+      {{/if}}</span>
       </div>
   </div>
 </div>
@@ -100,24 +102,27 @@
           </g>
         </svg>
       </span>
+      <span class="label-align">
       {{#if build.last_build}}
         {{format-sha build.last_build.commit.sha}}
       {{else}}
         -
-      {{/if}}
+      {{/if}}</span>
       </a></div>
   </div>
   <div class="branch-commiter">
     <div class="row-item">
       {{#if build.last_build}}
-        <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar">{{build.last_build.commit.committer.name}}
+        <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar">
+        <span class="label-align">{{build.last_build.commit.committer.name}}</span>
       {{else}}
-        <div class="avatar"></div> no commits yet
+        <div class="avatar"></div><span class="label-align">no commits yet</span>
       {{/if}}
     </div>
   </div>
 </div>
 <div class="one-line is-relative">
+{{#unless inactive}}
   {{#if build.last_build}}
     <div class="branch-nav dropup-trigger">
       <div class="row-item">
@@ -185,6 +190,7 @@
       </ul>
     </div>
   {{/if}}
+{{/unless}}
 </div>
 <div class="one-line is-relative">
   <ul class="build-tiles">

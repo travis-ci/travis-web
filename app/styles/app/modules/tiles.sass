@@ -3,7 +3,7 @@
     svg g > *
       fill: $color
 
-@mixin colorTiles($color, $status)
+@mixin colorTiles($color, $status, $extra-bg: $color)
   &.#{$status}
     .tile-status
       background-color: $color
@@ -34,11 +34,11 @@
     @include colorTiles($red-dark, 'failed')
     @include colorTiles($red-dark, 'errored')
     @include colorTiles($grey-medium, 'canceled')
-    @include colorTiles(#bfb502, 'started')
-    @include colorTiles(#bfb502, 'queued')
-    @include colorTiles(#bfb502, 'booting')
-    @include colorTiles(#bfb502, 'received')
-    @include colorTiles(#bfb502, 'created')
+    @include colorTiles(#bfb502, 'started', #e5da3f)
+    @include colorTiles(#bfb502, 'queued', #e5da3f)
+    @include colorTiles(#bfb502, 'booting', #e5da3f)
+    @include colorTiles(#bfb502, 'received', #e5da3f)
+    @include colorTiles(#bfb502, 'created', #e5da3f)
 
     .status-icon .is-rotating
       width: 17px;

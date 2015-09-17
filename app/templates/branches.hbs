@@ -22,7 +22,7 @@
       <h2 class="small-title">Inactive Branches</h2>
       <ul class="blank-list">
         {{#each branch in inactiveBranches}}
-          {{branch-row build=branch}}
+          {{branch-row build=branch inactive=true}}
         {{/each}}
       </ul>
     </section>
