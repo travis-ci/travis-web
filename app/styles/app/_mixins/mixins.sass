@@ -64,3 +64,47 @@
   font-size: $font-size-sm
   color: $grey-medium
   font-weight: 400
+
+
+
+// @todo simplyfiy coloring mixins
+
+@mixin colorStatusIcons($color, $status)
+  .status-icon.#{$status}
+    svg g > *
+      fill: $color
+
+@mixin colorTiles($color, $status, $extra-bg: $color)
+  &.#{$status}
+    border-color: $extra-bg
+    .tile-status
+      background-color: $color
+    .repo-header-title a,
+    .repo-build-status a,
+    .build-status a,
+    .tile-header,
+    .tile-header a,
+    .tile-title a
+      color: $color
+    @include colorStatusIcons($color, $status)
+
+@mixin statusColors($color, $status, $color2: $color)
+  &.#{$status}
+    background: linear-gradient(to right, $color2 0%, $color2 9px, white 10px, white 100%) no-repeat
+    .branch-name,
+    .branch-request a
+      color: $color
+      &:hover
+        border-color: $color
+    .branch-name .status-icon g > *,
+    .branch-request .icon-request g > *
+      fill: $color
+      
+    .build a,
+    .repo-title a
+      color: $color
+      &:hover
+        border-color: $color
+    .build-status
+      color: $color
+    @include colorStatusIcons($color, $status)

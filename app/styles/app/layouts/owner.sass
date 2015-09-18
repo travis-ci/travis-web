@@ -97,18 +97,6 @@
     padding: 0
     line-height: 1
 
-@mixin statusColors($color, $status)
-  &.#{$status}
-    background: linear-gradient(to right, $color 0%, $color 9px, transparent 10px, transparent 100%) no-repeat;
-    .build a,
-    .repo-title a
-      color: $color
-      &:hover
-        border-color: $color
-    .build-status
-      color: $color
-
-
 .owner-tile
   padding: .8em 0 .8em 2em
   margin-bottom: .5em
@@ -121,6 +109,10 @@
         text-decoration: underline
   .repo-title a:hover
     text-decoration: underline
+
+  .status-icon
+    width: 1.3em
+    height: 1.1em
 
   .icon--job,
   .icon-push,

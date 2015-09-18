@@ -2,11 +2,7 @@
   <div class="tile-lock"><span class="icon icon-lock"></span></div>
 {{/if}} --}}
 <div class="repo">
-  {{#if isAnimating}}
-    <span class="icon-owner-receiving"><i></i><i></i><i></i></span>
-  {{else}}
-    <span class="icon--job {{repo.default_branch.last_build.state}}"></span>
-  {{/if}}
+  {{status-icon status=repo.default_branch.last_build.state}}
   <h2 class="repo-title">{{#link-to "repo" ownerName repoName }}{{repoName}}{{/link-to}}</h2>
 </div>
 {{#if repo.default_branch.last_build}}
