@@ -15,4 +15,12 @@ Route = TravisRoute.extend
     $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit", options).then (response) ->
       response.branches
 
+  activate: () ->
+    $('.tab.tabs--main li').removeClass('active')
+    $('#tab_branches').addClass('active')
+
+  deactivate: () ->
+    $('#tab_branches').removeClass('active')
+
+
 `export default Route`

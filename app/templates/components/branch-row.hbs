@@ -114,8 +114,7 @@
   <div class="branch-commiter">
     <div class="row-item">
       {{#if build.last_build}}
-        <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar">
-        <span class="label-align">{{build.last_build.commit.committer.name}}</span>
+        <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar"><span class="label-align">{{build.last_build.commit.committer.name}}</span>
       {{else}}
         <div class="avatar"></div><span class="label-align">no commits yet</span>
       {{/if}}
