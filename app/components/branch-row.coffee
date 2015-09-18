@@ -76,13 +76,13 @@ BranchRowComponent = Ember.Component.extend
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
     $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/requests", options).then (response) =>
-      @.set('isTriggering', false)
-      @.set('hasTriggered', true)
+      @set('isTriggering', false)
+      @set('hasTriggered', true)
   )
 
   actions:
     tiggerBuild: (branch) ->
-      @.set('isTriggering', true)
+      @set('isTriggering', true)
       @triggerBuild()
 
     viewAllBuilds: (branch) ->

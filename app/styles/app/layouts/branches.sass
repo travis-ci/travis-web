@@ -75,6 +75,13 @@
     & > div:nth-of-type(5)
       width: 25%
 
+  @media #{$xlarge-up}
+    & > div:first-of-type
+      width: 28%
+  @media (min-width: 2000px)
+    & > div:first-of-type
+      width: 30%
+
   @include statusColors($green-dark, 'passed')
   @include statusColors($red-dark, 'failed')
   @include statusColors($red-dark, 'errored')
