@@ -1,9 +1,9 @@
 <div class="two-line">
-  <div class="branch-name"> 
+  <div class="row-name"> 
     <h2 class="row-item">{{status-icon status=build.last_build.state}}
     <span class="label-align">{{build.name}}</span></h2>
   </div>
-  <div class="branch-builds">
+  <div class="row-builds">
     <div class="row-item">
     <span class="icon icon-line-build">
       <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve" enable-background="new 0 0 20 20">
@@ -33,8 +33,8 @@
     </div>
   </div>
 </div>
-<div class="two-line branch-last-build">
-  <div class="branch-request">
+<div class="two-line row-last-build">
+  <div class="row-request">
     <div class="row-item">
       {{#if build.last_build}}
         {{#link-to "build" build.repository.slug build.last_build.id}}
@@ -46,7 +46,7 @@
       {{/if}}
     </div>
   </div>
-  <div class="branch-calendar">
+  <div class="row-calendar">
     <div class="row-item" title="{{pretty-date build.last_build.finished_at}}">
       <span class="icon">
         <svg viewBox="0 0 20 20">
@@ -74,7 +74,7 @@
   </div>
 </div>
 <div class="two-line">
-  <div class="branch-commit">
+  <div class="row-commit">
     <div class="row-item">
       <a href="{{urlGithubCommit}}" title="commit on GitHub">
       <span class="icon">
@@ -111,7 +111,7 @@
       {{/if}}</span>
       </a></div>
   </div>
-  <div class="branch-commiter">
+  <div class="row-commiter">
     <div class="row-item">
       {{#if build.last_build}}
         <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar"><span class="label-align">{{build.last_build.commit.committer.name}}</span>
@@ -126,7 +126,7 @@
   {{#if canTrigger}}
 
     {{#if build.last_build}}
-      <div class="branch-nav dropup-trigger">
+      <div class="row-nav dropup-trigger">
         <div class="row-item">
           <a href="#"><span class="icon icon-tofu">
             <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">

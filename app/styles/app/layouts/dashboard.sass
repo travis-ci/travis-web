@@ -1,224 +1,95 @@
-/*
- * Dashboard List 
- */
 
-@mixin colorDbelements($color, $icon)
-  .db-status
-    background-color: $color
-  .icon-star
-    @extend %icon-star-#{$icon}
-  .db-repo
-    h2, h3, a
-      color: $color
-  .db-job
-    color: $color
-    a
+
+@mixin colorDashboardTiles($color, $status, $color2: $color)
+  &.#{$status}
+    .row-request
       color: $color
 
-$db-gray: #C9C9C9
-$db-text-color: #ACAAAA
 
 .dashboard
-  color: $grey-medium
-  hr
+  .centered
+    margin: auto
     max-width: 1024px
-    margin: auto
-    border-top: none
-    border-bottom: $db-gray dashed 1px
 
-.dashboard--empty
-  padding: 2em 5em
-  background: $cream-light
-  color: #979597
-  font-size: 20px
-  font-weight: 400
-  text-align: center
-  @extend border-radius-4px
-  p .icon
-    width: 1.5em
-    height: 1.5em
-    transform: translate(-20%, 18%)
-  .icon-star
-    @extend %icon-star-grey
+.dashboard-active li
 
-.db
-  @include resetul
-  margin: auto
-  position: relative
-  margin-bottom: 1em
-  background: $cream-light
-  @extend border-radius-4px
+  padding: 0
+  margin: 0
+  list-style-type: none
 
-  h2, h3, p
-    margin: 0
-    font-weight: 400
-    white-space: nowrap
-
-  p
-    font-size: $font-size-m
+  border: 1px solid $cream-dark
+  font-size: 16px
+  text-align: left
+  margin-bottom: .3rem
+  color: $grey-dark
+  background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
 
   .icon
-    position: absolute
-    left: 0
-    top: 0
-    bottom: 0
-    margin: auto
-
-  &.started,
-  &.created
-    @include colorDbelements($start-color, yellow)
-  &.failed
-    @include colorDbelements($fail-color, red)
-  &.errored
-    @include colorDbelements($error-color, red)
-  &.canceled
-    @include colorDbelements($cancel-color, grey)
-  &.passed
-    @include colorDbelements($pass-color, green)
-  &.inactive
-    @include colorDbelements($cancel-color, grey)
-
-.db-repo
-  padding-left: 3em
-  transform: translateY(0.4em)
-  overflow: hidden
-  margin-bottom: 1em
-  &:after
-    content: ""
-    @include fadeOut(right, -90deg, $cream-light)
-  @media #{$medium-up}
-    margin-bottom: 0
-
-.db-status
-  position: absolute;
-  top: 0
-  left: 0
-  height: 100%
-  width: 2.5em
-  border-top-left-radius: 4px
-  border-bottom-left-radius: 4px
-
-  .icon
-    width: 1.1em
-    height: 1.1em
-    right: 0
-  .icon-status
-    top: -6em
-  .icon-star
-    top: 1.7em
-    opacity: .9
-
-.db-controls
-  line-height: 2.2
-  p,
-  button
-    display: inline-block
-  button
-    margin-left: 1em
-  a:hover
-    text-decoration: underline
-
-  .icon
-    width: 1em
-    height: 1.1em
-  .icon-branch
     width: 1.3em
-    height: .8em
+    height: 1.3em
+    margin-right: .2em
+    display: inline-block
+    vertical-align: middle
 
-.db-job,
-.db-branch,
-.db-commit,
-.db-timeago
-  position: relative
-  padding-left: 1.5em
-  z-index: 30
-  overflow: hidden
-
-.db-branch
-  position: relative
-  &:after
-    content: ""
-    @include fadeOut(right, -90deg, $cream-light)
-
-.db-lock
-  position: absolute
-  left: -2.1em;
-  top: 1.2em;
-  .icon
-    width: 1em
-    height: 1em
-
-.db-activation
-  margin: 1em 0 .5em
-  text-align: right
-  padding-right: 0
-  @media #{$medium-up}
+  h2, h3
     margin: 0
+    font-weight: 300
 
-.db-burger
-  position: absolute;
-  top: 0
-  right: 0
-  height: 4em
-  width: 4em
-  cursor: pointer
-  z-index: 30
-  .icon
-    width: 2em
-    height: 2em
-    right: 0
+  h3
+    font-size: 16px
 
-.dropdown--db
-  display: none
+  h2
+    padding-left: 1.5em
+    font-size: 18px
 
-.db-burger:hover ~ .dropdown--db,
-.dropdown--db:hover
-  display: block
+  .row-item
+    margin: .2em
+    font-size: 16px
+    font-weight: 300
+    white-space: nowrap
+    overflow: hidden
+    a
+      color: $grey-dark
+      text-decoration: none
+      &:hover
+        text-decoration: underline
 
-.dashboard-starred,
-.dashboard-active,
-.dashboard-inactive
-  padding: 0 3em
-  margin: 3em 0 3em
-
-.dashboard-starred
-  .db
-    padding-bottom: .2em
-    @media #{$medium-up}
-      width: grid-calc(17, 36)
-      &:nth-child(2n)
-        float: right
-      &:nth-child(2n + 1)
-        float: left
-  .db-controls
-    padding-left: 3em
-
-.dashboard-active,
-.dashboard-inactive
-  .db-repo,
-  .db-controls
-    padding-left: 4em
   @media #{$medium-up}
-    .db
-      height: 57px
-    .db-repo
-      padding-left: 4em
-    .db-controls
-      padding: 0 4em 0 2em
-      line-height: 3em
-      transform: translateY(26%)
-      border-left: 1px solid $cream-dark
-    .db-burger
-      height: 100%
-    .db-status
-      .icon-status
-        top: -2em
+    & > div:first-of-type
+      width: 27%
+      position: relative
+      padding-left: 1em
+      &:after
+        content: ""
+        @include fadeOut(right, -90deg, $white)
+    & > div:nth-of-type(2)
+      width: 25%
+    & > div:nth-of-type(3)
+      width: 18%
+    & > div:nth-of-type(4)
+      width: 18%
+    & > div:nth-of-type(5)
+      width: 10%
 
-.dashboard-inactive
-  margin-bottom: 5e3
-  .db
-    h2, h3, p, button, .db-status
-      opacity: .7
 
-.dashboard .topbar
-  background-color: transparent !important
+  @include statusColors($green-dark, 'passed')
+  @include statusColors($red-dark, 'failed')
+  @include statusColors($red-dark, 'errored')
+  @include statusColors($grey-medium, 'canceled')
+  @include statusColors(#bfb502, 'started', #e5da3f)
+  @include statusColors(#bfb502, 'queued', #e5da3f)
+  @include statusColors(#bfb502, 'booting', #e5da3f)
+  @include statusColors(#bfb502, 'received', #e5da3f)
+  @include statusColors(#bfb502, 'created', #e5da3f)
+
+  @include colorDashboardTiles($green-dark, 'passed')
+  @include colorDashboardTiles($red-dark, 'failed')
+  @include colorDashboardTiles($red-dark, 'errored')
+  @include colorDashboardTiles($grey-medium, 'canceled')
+  @include colorDashboardTiles(#bfb502, 'started', #e5da3f)
+  @include colorDashboardTiles(#bfb502, 'queued', #e5da3f)
+  @include colorDashboardTiles(#bfb502, 'booting', #e5da3f)
+  @include colorDashboardTiles(#bfb502, 'received', #e5da3f)
+  @include colorDashboardTiles(#bfb502, 'created', #e5da3f)
+
+
