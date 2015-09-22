@@ -55,6 +55,8 @@ $dropdown-border: #C3D9DB
 .filter-current
   padding: .9em 0
   cursor: pointer
+  a
+    color: $teal-dark
 
 .filter-dropdown
   @include resetul
@@ -62,9 +64,10 @@ $dropdown-border: #C3D9DB
   top: 3em
   min-width: 14em
   background-color: $white
-  border-radius: 4px
+  border-radius: 2px
   overflow: hidden
-  box-shadow: 2px 1px 4px 0px rgba(148,145,138,0.4)
+  border: 1px solid $cream-dark
+  border-top: none
   z-index: 40
   display: none
   li
@@ -75,7 +78,7 @@ $dropdown-border: #C3D9DB
     padding: 10px 10px 10px 20px
     &:hover
       color: $white
-      background : #5e869a
+      background : $teal-dark
   .is-selected
     a
       font-weight: 600

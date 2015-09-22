@@ -11,11 +11,12 @@
     margin: auto
     max-width: 1024px
 
-.dashboard-active li
-
+.dashboard-active
   padding: 0
-  margin: 0
+  margin: 3rem 0 5rem
   list-style-type: none
+
+.dashboard-active li
 
   border: 1px solid $cream-dark
   font-size: 16px
@@ -39,8 +40,11 @@
     font-size: 16px
 
   h2
-    padding-left: 1.5em
     font-size: 18px
+  .one-line
+    margin-left: 2em
+  .two-line
+    padding: .1em 0
 
   .row-item
     margin: .2em
@@ -70,6 +74,16 @@
       width: 18%
     & > div:nth-of-type(5)
       width: 10%
+
+    h2
+      padding-left: 1.5em
+    .one-line
+      margin-left: 0
+
+    .dropup--blue
+      li
+        border: none
+      transform:  translate(-19%, -170%)
 
 
   @include statusColors($green-dark, 'passed')
