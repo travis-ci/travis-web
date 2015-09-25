@@ -17,7 +17,7 @@ View = Ember.View.extend
     'Textile',
     'Rdoc',
     'AsciiDoc',
-    'Rst',
+    'RST',
     'Pod',
     'CCTray'
   ]

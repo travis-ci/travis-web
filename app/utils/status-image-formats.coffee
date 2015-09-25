@@ -41,7 +41,7 @@ format = (version, slug, branch) ->
     when 'Textile' then textileStatusImage(url, slug, branch)
     when 'Rdoc' then rdocStatusImage(url, slug, branch)
     when 'AsciiDoc' then asciidocStatusImage(url, slug, branch)
-    when 'Rst' then rstStatusImage(url, slug, branch)
+    when 'RST' then rstStatusImage(url, slug, branch)
     when 'Pod' then podStatusImage(url, slug, branch)
     when 'CCTray' then ccxmlStatusUrl(slug, branch)
 
