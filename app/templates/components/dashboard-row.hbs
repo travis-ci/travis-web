@@ -1,16 +1,18 @@
 
 <div class="two-line">
   <div class="row-name row-item"> 
-    <h3>{{status-icon status=repo.last_build.state}} {{repo.owner.login}}</h3>
-    <h2><span class="label-align">{{repo.name}}</span></h2>
+    <h3>{{#link-to "owner" repo.owner.login}}{{status-icon status=repo.last_build.state}} {{repo.owner.login}}{{/link-to}}</h3>
+    <h2>{{#link-to "repo" repo.owner.login repo.name}}<span class="label-align">{{repo.name}}</span>{{/link-to}}</h2>
   </div>
 </div>
 
 <div class="one-line">
   <div class="row-request">
     <div class="row-item">
+    {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
       {{request-icon build=repo.last_build}}
       <span class="label-align">#{{repo.last_build.number}} {{repo.last_build.state}} on {{repo.name}}</span>
+    {{/link-to}}
     </div>
   </div>
 </div>
