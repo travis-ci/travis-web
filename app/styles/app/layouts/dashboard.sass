@@ -1,12 +1,11 @@
-// .two-line,
-// .one-line
-//   @media #{$medium-up}
-//     white-space: nowrap
-//     position:relative
-//     overflow: hidden
-//     &:after
-//       content: ""
-//       @include fadeOut(right, -90deg, $white)
+.fade-out
+  @media #{$medium-up}
+    white-space: nowrap
+    position:relative
+    overflow: hidden
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, $white)
 
 @mixin colorDashboardTiles($color, $status, $color2: $color)
   &.#{$status}

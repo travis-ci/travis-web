@@ -1,7 +1,7 @@
 {{!-- {{#if repo.private }}
   <div class="tile-lock"><span class="icon icon-lock"></span></div>
 {{/if}} --}}
-<div class="repo">
+<div class="repo fade-out">
   <h2 class="repo-title">
   {{status-icon status=repo.default_branch.last_build.state}}
   {{#link-to "repo" ownerName repoName }}
@@ -27,7 +27,7 @@
       <span>{{repo.default_branch.last_build.number}}</span>
     {{/link-to}}
   </div>
-  <div class="branch">
+  <div class="branch fade-out">
     {{request-icon build=repo.default_branch.last_build}}
     <span class="label-align">{{repo.default_branch.name}}</span>
     
