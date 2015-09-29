@@ -5,7 +5,7 @@
     overflow: hidden
     &:after
       content: ""
-      @include fadeOut(right, -90deg, $white, 20%)
+      @include fadeOut(right, -90deg, $white, 30%)
 
 @mixin colorDashboardTiles($color, $status, $color2: $color)
   &.#{$status}
@@ -77,20 +77,19 @@
 
   @media #{$medium-up}
     & > div:first-of-type
-      width: 27%
+      width: 28%
       position: relative
       padding-left: 1em
       &:after
         content: ""
         @include fadeOut(right, -90deg, $white)
+
     & > div:nth-of-type(2)
-      width: 25%
+      width: 27%
     & > div:nth-of-type(3)
-      width: 18%
+      width: 20%
     & > div:nth-of-type(4)
-      width: 18%
-    & > div:nth-of-type(5)
-      width: 10%
+      width: 20%
 
     h2
       padding-left: 1.5em

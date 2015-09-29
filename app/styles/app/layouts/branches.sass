@@ -41,31 +41,24 @@
 
   @media #{$medium-up}
     & > div:first-of-type
-      width: 26%
+      width: 30%
     & > div:nth-of-type(2)
       width: 20%
     & > div:nth-of-type(3)
       width: 20%
+    // & > div:nth-of-type(4)
+    //   width: 5%
     & > div:nth-of-type(4)
-      width: 5%
-    & > div:nth-of-type(5)
-      width: 27%
+      width: 28%
   @media #{$large-up}
     & > div:nth-of-type(2)
       width: 21%
     & > div:nth-of-type(3)
       width: 21%
+    // & > div:nth-of-type(4)
+    //   width: 2em
     & > div:nth-of-type(4)
-      width: 2em
-    & > div:nth-of-type(5)
       width: 25%
-
-  @media #{$xlarge-up}
-    & > div:first-of-type
-      width: 27%
-  @media (min-width: 2000px)
-    & > div:first-of-type
-      width: 30%
 
   @include statusColors($green-dark, 'passed')
   @include statusColors($red-dark, 'failed')
