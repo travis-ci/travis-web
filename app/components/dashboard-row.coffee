@@ -6,7 +6,7 @@ DashboardRowComponent = Ember.Component.extend
 
   tagName: 'li'
   classNameBindings: ['repo.default_branch.last_build.state']
-  classNames: ['dashboard-row']
+  classNames: ['dashboard-row', 'row-li']
   isLoading: false
   isTriggering: false
   hasTriggered: false

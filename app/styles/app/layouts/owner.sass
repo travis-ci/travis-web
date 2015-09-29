@@ -82,87 +82,21 @@
   padding: 0
   list-style-type: none
 
-%one-line
-  font-size: 16px
-  font-weight: 400
-  vertical-align: middle
-  margin: 0
-  display: inline-block
-  *
-    display: inline-block
-    font-size: inherit
-    font-weight: 400
-    vertical-align: middle
-    margin: 0
-    padding: 0
-    line-height: 1
-
-.owner-tile
-  padding: .8em 0 .8em 2em
-  margin-bottom: .5em
-  border: #F2F0F0 solid 1px
-
-  a
-    text-decoration: none
-    &:hover
-      span
-        text-decoration: underline
-  .repo-title a:hover
-    text-decoration: underline
-
-  .icon
-    width: 1.3em
-    height: 1.1em
-
   .build-status
     text-transform: capitalize
 
-  .repo
-    @extend %one-line
-    white-space: nowrap
-    width: grid-calc(9, 12)
-  .build
-    @extend %one-line
-    width: grid-calc(5, 12)
-  .branch
-    @extend %one-line
-    width: grid-calc(6, 12)
-  .commit
-    @extend %one-line
-    width: grid-calc(6, 12)
-  .duration
-    @extend %one-line
-    width: grid-calc(12, 12)
+.owner-tile
+  padding: .4em 0 .3em
 
   @media #{$medium-up}
-    display: flex
-    flex-direction: row
-    flex-flow: space-between
-    align-items: baseline
-    height: 3.8em
-    padding: .8em 0
-
-    .build
-      width: grid-calc(2, 12)
-    .branch
-      width: grid-calc(2, 12)
-    .commit
-      width: grid-calc(2, 12)
-    .duration
-      width: grid-calc(4, 12)
-    .repo
-      width: grid-calc(4, 12)
-      margin-left: 2em
-
-
-  @include statusColors($green-dark, 'passed')
-  @include statusColors($red-dark, 'failed')
-  @include statusColors($red-dark, 'errored')
-  @include statusColors($grey-medium, 'canceled')
-  @include statusColors(#ECCE4B, 'started')
-  @include statusColors(#ECCE4B, 'queued')
-  @include statusColors(#ECCE4B, 'booting')
-  @include statusColors(#ECCE4B, 'received')
-  @include statusColors(#ECCE4B, 'created')
-
-
+    & > div:first-of-type
+      width: 30%
+      padding-left: 1em
+    & > div:nth-of-type(2)
+      width: 10%
+    & > div:nth-of-type(3)
+      width: 15%
+    & > div:nth-of-type(4)
+      width: 15%
+    & > div:nth-of-type(5)
+      width: 25%

@@ -4,19 +4,6 @@
     margin: 1.5em 0 0.7em
 
 .branch-row
-  border: 1px solid $cream-dark
-  font-size: 16px
-  text-align: right
-  margin-bottom: .3rem
-  color: $grey-dark
-  background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
-
-  .icon
-    width: 1.3em
-    height: 1.3em
-    margin-right: .2em
-    display: inline-block
-    vertical-align: middle
 
   .avatar
     display: inline-block
@@ -27,21 +14,10 @@
     vertical-align: middle
     background-color: #E9EBEB
 
-  .row-item
-    margin: .2em
-    font-size: 16px
-    font-weight: $font-weight-normal
-    white-space: nowrap
-    overflow: hidden
-    a
-      color: $grey-dark
-      text-decoration: none
-      &:hover
-        text-decoration: underline
-
   @media #{$medium-up}
     & > div:first-of-type
       width: 30%
+      padding-left: 1em
     & > div:nth-of-type(2)
       width: 20%
     & > div:nth-of-type(3)
@@ -50,6 +26,7 @@
     //   width: 5%
     & > div:nth-of-type(4)
       width: 28%
+      float: right
   @media #{$large-up}
     & > div:nth-of-type(2)
       width: 21%
@@ -60,53 +37,17 @@
     & > div:nth-of-type(4)
       width: 25%
 
-  @include statusColors($green-dark, 'passed')
-  @include statusColors($red-dark, 'failed')
-  @include statusColors($red-dark, 'errored')
-  @include statusColors($grey-medium, 'canceled')
-  @include statusColors(#bfb502, 'started', #e5da3f)
-  @include statusColors(#bfb502, 'queued', #e5da3f)
-  @include statusColors(#bfb502, 'booting', #e5da3f)
-  @include statusColors(#bfb502, 'received', #e5da3f)
-  @include statusColors(#bfb502, 'created', #e5da3f)
-
-%row-element
-  vertical-align: middle
-  @media #{$medium-up}
-    display: inline-block
-  .row-item
-    vertical-align: middle
-
-.two-line
-  @extend %row-element
-  padding: .4em 0
-  margin-left: 2em
-  text-align: left
-
-  @media #{$medium-up}
-    margin-left: 0
-
-.one-line
-  @extend %row-element
-  .row-item
-    display: inline-block
-  .row-nav
-    display: none
-    text-align: center
+  .row-last-build
     @media #{$medium-up}
-      display: block
-
-.row-last-build
-  @media #{$medium-up}
-    padding-left: 1em
-    &:before
-      content: "";
-      display: block;
-      width: 1px;
-      background-color: #EFF0EC;
-      position: absolute;
-      height: 3.7em;
-      margin-left: -1em;
+      padding-left: 1em
+      &:before
+        content: "";
+        display: block;
+        width: 1px;
+        background-color: #EFF0EC;
+        position: absolute;
+        height: 3.7em;
+        margin-left: -1em;
 
 // @todo refactor into dropup module
 %dropup
@@ -221,10 +162,6 @@
   padding: 1em 0
   path
     fill: $teal-dark
-
-.label-align
-  vertical-align: middle
-  line-height: 1.5
 
 // @todo refactor to status-icon module
 .status-icon

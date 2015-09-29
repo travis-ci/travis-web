@@ -8,7 +8,7 @@ BranchRowComponent = Ember.Component.extend
   routing: Ember.inject.service('-routing')
   tagName: 'li'
   classNameBindings: ['build.last_build.state']
-  classNames: ['branch-row']
+  classNames: ['branch-row', 'row-li']
   isLoading: false
   isTriggering: false
   hasTriggered: false
