@@ -5,7 +5,7 @@
 DashboardRowComponent = Ember.Component.extend
 
   tagName: 'li'
-  classNameBindings: ['repo.last_build.state']
+  classNameBindings: ['repo.default_branch.last_build.state']
   classNames: ['dashboard-row']
   isLoading: false
   isTriggering: false
@@ -13,7 +13,7 @@ DashboardRowComponent = Ember.Component.extend
 
   urlGithubCommit: (->
     githubCommitUrl(@get('repo.slug'), @get('repo.default_branch.last_build.commit.sha'))
-  ).property('repo.last_build')
+  ).property('repo')
 
   # canTrigger: (->
   #   if !@get('auth.signedIn')

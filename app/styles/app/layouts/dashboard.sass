@@ -5,7 +5,7 @@
     overflow: hidden
     &:after
       content: ""
-      @include fadeOut(right, -90deg, $white)
+      @include fadeOut(right, -90deg, $white, 20%)
 
 @mixin colorDashboardTiles($color, $status, $color2: $color)
   &.#{$status}

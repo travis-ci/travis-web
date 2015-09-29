@@ -1,7 +1,7 @@
 
 <div class="two-line fade-out">
   <div class="row-name row-item"> 
-    <h3>{{#link-to "owner" repo.owner.login}}{{status-icon status=repo.last_build.state}} {{repo.owner.login}}{{/link-to}}</h3>
+    <h3>{{#link-to "owner" repo.owner.login}}{{status-icon status=repo.default_branch.last_build.state}} {{repo.owner.login}}{{/link-to}}</h3>
     <h2>{{#link-to "repo" repo.owner.login repo.name}}<span class="label-align">{{repo.name}}</span>{{/link-to}}</h2>
   </div>
 </div>
@@ -10,8 +10,8 @@
   <div class="row-request">
     <div class="row-item">
     {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
-      {{request-icon build=repo.last_build}}
-      <span class="label-align">#{{repo.last_build.number}} {{repo.last_build.state}} on {{repo.name}}</span>
+      {{request-icon build=repo.default_branch.last_build}}
+      <span class="label-align">#{{repo.default_branch.last_build.number}} {{repo.default_branch.last_build.state}} on {{repo.default_branch.name}}</span>
     {{/link-to}}
     </div>
   </div>
@@ -48,7 +48,7 @@
         </svg>
         </span>
         <span class="label-align">
-          {{format-sha repo.last_build.commit.sha}}
+          {{format-sha repo.default_branch.last_build.commit.sha}}
         </span>
       </a>
     </div>
@@ -57,7 +57,7 @@
 
 <div class="one-line">
   <div class="row-calendar">
-    <div class="row-item" title="{{repo.last_build.finished_at}}">
+    <div class="row-item" title="{{repo.default_branch.last_build.finished_at}}">
       <span class="icon">
         <svg viewBox="0 0 20 20">
           <g id="Cal">
@@ -75,8 +75,8 @@
         </svg>
       </span>
       <span class="label-align">
-      {{#if repo.last_build}}
-        {{format-time repo.last_build.finished_at}}
+      {{#if repo.default_branch.last_build}}
+        {{format-time repo.default_branch.last_build.finished_at}}
       {{else}}
         -
       {{/if}}</span>
