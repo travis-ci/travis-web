@@ -2,7 +2,7 @@
 
 moduleForComponent 'owner-repo-tile', 'OwnerRepoTileComponent', {
   # specify the other units that are required for this test
-  needs: ['helper:format-time', 'helper:format-duration', 'helper:format-sha']
+  needs: ['helper:format-time', 'helper:format-duration', 'helper:format-sha', 'component:status-icon', 'component:request-icon']
 }
 
 test 'it renders', ->
@@ -35,8 +35,6 @@ test 'it renders', ->
   @append()
 
   ok component.$().hasClass('passed'), 'component should have state class (passed)'
-  equal component.$('.repo-title a').text().trim(), 'travis-chat', 'should display correct repo name'
-  equal component.$('.build a').text().trim(), '25', 'should display correct build numbee'
-  equal component.$('.build-status').text().trim(), 'passed', 'should display a last build state'
-  equal component.$('.commit a').text().trim(), '16fff34', 'should display correct commit sha'
-  equal component.$('.finished-at').text().trim(), '2 years ago', 'should display correct build duration'
+  equal component.$('.row-item:nth-of-type(1)').text().trim(), 'travis-chat', 'should display correct repo name'
+  equal component.$('.row-item:nth-of-type(3)').text().trim(), 'master', 'should display branch name'
+  equal component.$('.row-item:nth-of-type(4)').text().trim(), '16fff34', 'should display correct commit sha'
