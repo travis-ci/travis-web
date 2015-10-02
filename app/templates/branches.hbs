@@ -10,7 +10,7 @@
     <section>
       <h2 class="small-title">Active Branches</h2>
       <ul class="blank-list">
-        {{#each branch in activeBranches}}
+        {{#each activeBranches as |branch|}}
           {{branch-row build=branch}}
         {{/each}}
       </ul>
@@ -21,7 +21,7 @@
     <section>
       <h2 class="small-title">Inactive Branches</h2>
       <ul class="blank-list">
-        {{#each branch in inactiveBranches}}
+        {{#each inactiveBranches as |branch|}}
           {{branch-row build=branch inactive=true}}
         {{/each}}
       </ul>

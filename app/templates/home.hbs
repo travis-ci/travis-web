@@ -52,7 +52,7 @@
 			</div>
 			<div class="medium-6 columns">
 				<ul class="tiles-landing">
-				{{#each repo in repos}}
+				{{#each repos as |repo|}}
 					<li class="db column {{repo.lastBuild.state}}">
 						<div class="db-status">
 							<span class="icon icon-status {{repo.lastBuild.state}}"></span>

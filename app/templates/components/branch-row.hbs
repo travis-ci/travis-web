@@ -202,7 +202,7 @@
   {{#if getLast5Builds.isLoading}}
     {{loading-indicator center=true}}
   {{else}}
-    {{#each buildTile in getLast5Builds.content}}
+    {{#each  getLast5Builds.content as |buildTile|}}
       {{build-tile build=buildTile}}
     {{/each}}
   {{/if}}

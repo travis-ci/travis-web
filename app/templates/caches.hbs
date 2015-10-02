@@ -8,7 +8,7 @@
   {{#if model.pushes.length}}
     <h2 class="caches-title">Pushes</h2>
     <ul id="caches" class="caches">
-      {{#each cache in model.pushes }}
+      {{#each  model.pushes as |cache|}}
         {{caches-item cache=cache repo=repo caches=model.pushes}}
       {{/each}}
     </ul>
@@ -17,7 +17,7 @@
   {{#if model.pullRequests.length}}
     <h2 class="caches-title">Pull Requests</h2>
     <ul class="caches">
-      {{#each cache in model.pullRequests }}
+      {{#each model.pullRequests as |cache|}}
         {{caches-item cache=cache repo=repo caches=model.pullRequests}}
       {{/each}}
     </ul>

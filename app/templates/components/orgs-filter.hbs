@@ -21,7 +21,7 @@
     {{#if selected }}
       <li><a title="" {{action 'select'}}>All organizations</a></li>
     {{/if}}
-    {{#each org in orgs}}
+    {{#each orgs as |org|}}
       <li>
         <a title="" {{action 'select' org}}><img src="{{org.avatar_url}}" alt="">
           {{#if org.name }}
