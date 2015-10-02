@@ -15,6 +15,8 @@
     background-color: #E9EBEB
 
   @media #{$medium-up}
+    display: flex
+    justify-content: space-between
     & > div:first-of-type
       width: 30%
       padding-left: 1em
@@ -26,7 +28,6 @@
     //   width: 5%
     & > div:nth-of-type(4)
       width: 28%
-      float: right
   @media #{$large-up}
     & > div:nth-of-type(2)
       width: 21%
