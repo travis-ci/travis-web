@@ -1,5 +1,5 @@
 {{#if build.number}}
-  {{#link-to "build" build.repository.slug build.id class="dropup-trigger"}}
+  {{#link-to "build" build.repository build.id class="dropup-trigger"}}
     {{status-icon status=build.state}}
 
     {{build.last_build.state}}
