@@ -51,35 +51,9 @@
 				</div>
 			</div>
 			<div class="medium-6 columns">
-				<ul class="tiles-landing">
+				<ul class="landing-rows">
 				{{#each repos as |repo|}}
-					<li class="db column {{repo.lastBuild.state}}">
-						<div class="db-status">
-							<span class="icon icon-status {{repo.lastBuild.state}}"></span>
-						</div>
-						<div class="db-repo column">
-							<h3>{{repo.owner}}</h3>
-              <h2>{{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h2>
-						</div>
-						<div class="db-controls column end">
-							<p class="db-job column medium-6">
-								{{#link-to "build" repo repo.lastBuild.id}}
-									<span class="icon icon-hash"></span>
-									{{repo.lastBuild.number}}
-									{{repo.lastBuild.state}}
-								{{/link-to}}
-							</p>
-							<p class="db-commit column medium-6">
-								<span class="icon icon-github"></span>
-								{{format-sha repo.lastBuild.commit.sha}}</p>
-							<p class="db-timeago column medium-6">
-								<span class="icon icon-cal"></span>
-								{{landing-page-last-build-time repo.lastBuild.finishedAt}}</p>
-							<p class="db-branch column medium-6">
-								<span class="icon icon-branch"></span>
-								{{repo.lastBuild.branch}}</p>
-						</div>
-					</li>
+					{{landing-row repo=repo}}
 				{{else}}
 					{{loading-indicator}}
 				{{/each}}
