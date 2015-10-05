@@ -141,7 +141,6 @@
 
 .dropup--status
   @extend %dropup
-  left: 0
   right: 0
   margin: auto
   display: none
@@ -149,9 +148,11 @@
     bottom: -3px
   &:before
     bottom: -4px
+  .icon
+    margin-right: 0
   @media #{$medium-up}
     top: -2.3em
-    width: 4.8em
+    width: 5em
     padding: .1em .1em
     white-space: nowrap
     font-size: 14px;
