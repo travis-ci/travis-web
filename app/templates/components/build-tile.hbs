@@ -1,10 +1,10 @@
 {{#if build.number}}
-  {{#link-to "build" build.repository build.id class="dropup-trigger"}}
+  {{#link-to "build" build.repository.slug build.id}}
     {{status-icon status=build.state}}
 
     {{build.last_build.state}}
-    <div class="dropup--status">
+    {{!-- <div class="dropup--status">
       {{request-icon build=build}} <span class="label-align">#{{build.number}}</span>
-    </div>
+    </div> --}}
   {{/link-to}}
 {{/if}}
