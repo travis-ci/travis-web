@@ -5,7 +5,7 @@
     {{else}}
       <a href="" title="">
         {{#if selected }}
-          <img src="https://placehold.it/30x30" alt="">
+          <img src="{{selected.avatar_url}}" alt="{{org.login}}">
           {{#if selected.name}}
             {{selected.name}}
           {{else}}
@@ -19,11 +19,11 @@
   </div>
   <ul class="filter-dropdown">
     {{#if selected }}
-      <li><a href="#" title="" {{action 'select'}}>All organizations</a></li>
+      <li><a title="" {{action 'select'}}>All organizations</a></li>
     {{/if}}
-    {{#each org in orgs}}
+    {{#each orgs as |org|}}
       <li>
-        <a href="#" title="" {{action 'select' org}}><img src="https://placehold.it/30x30" alt="">
+        <a title="" {{action 'select' org}}><img src="{{org.avatar_url}}" alt="">
           {{#if org.name }}
             {{org.name}}
           {{else}}

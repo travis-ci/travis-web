@@ -1,0 +1,30 @@
+<div class="branches">
+  <section>
+    <h2 class="small-title">Default Branch</h2>
+    <ul class="blank-list">
+      {{branch-row build=defaultBranch}}
+    </ul>
+  </section>
+
+  {{#if activeBranches}}
+    <section>
+      <h2 class="small-title">Active Branches</h2>
+      <ul class="blank-list">
+        {{#each activeBranches as |branch|}}
+          {{branch-row build=branch}}
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
+
+  {{#if inactiveBranches}}
+    <section>
+      <h2 class="small-title">Inactive Branches</h2>
+      <ul class="blank-list">
+        {{#each inactiveBranches as |branch|}}
+          {{branch-row build=branch inactive=true}}
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
+</div>

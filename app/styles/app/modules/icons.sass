@@ -192,6 +192,17 @@
 .icon-fingerprint
   background-image: inline-image('svg/fingerprint.svg')
 
+
+.icon-line-cal
+  @extend %icon
+  background-image: inline-image('line-icons/icon-cal.svg')
+.icon-line-build
+  @extend %icon
+  background-image: inline-image('line-icons/icon-build.svg')
+.icon-line-commit
+  @extend %icon
+  background-image: inline-image('line-icons/icon-commit.svg')
+
 .icon--plus
   &:after
     content: "+"
@@ -206,11 +217,10 @@
   margin-left  : 5px
   border-left  : 5px solid transparent
   border-right : 5px solid transparent
-  border-top   : 5px solid $dashboard-text-color
+  border-top   : 5px solid $teal-dark
 
 .icon-flag
   background-image: inline-image('svg/notice-flag.svg')
-
 
 .icon-receiving
   margin: 0.3rem 0.5rem;

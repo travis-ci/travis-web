@@ -1,0 +1,72 @@
+@mixin buildTileColors($color, $bg, $status, $extra-hover: $color)
+  > .#{$status}
+    background-color: $bg
+    .icon-request g > *,
+    .status-icon g > *
+      fill: $color
+    &:hover
+      background-color: $extra-hover
+      .status-icon.#{$status} g > *
+        fill: $white
+      .status-icon .circle
+        border-color: $white
+
+    @media #{$medium-up}
+      .dropup--status
+        border-color: $extra-hover
+        color: $color
+        &:before
+          background-color: $color
+
+
+.build-tiles
+  height: 4.7em
+  margin: 0
+  padding: 0
+  clear: both
+  list-style: none
+  li
+    position: relative
+    height: 100%
+    float: left
+    width: 20%
+    background-color: #F7F7F7
+    border-right: 1px solid $white
+    &:last-of-type
+      border-right: none
+    .status-icon
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      width: 2.5rem !important
+      height: 2.5rem !important
+      margin: auto !important
+      background-color: transparent
+      .is-rotating
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        margin: auto
+        width: 1.3em
+        height: 1.1em
+      .circle
+        width: 8px
+        height: 8px
+  a
+    display: block
+    height: 100%
+    text-align: center
+
+  @include buildTileColors(#44A662, #F5FBF6, 'passed')
+  @include buildTileColors(#D94341, #FFF7F5, 'failed')
+  @include buildTileColors(#D94341, #FFF7F5, 'errored')
+  @include buildTileColors(#A1A0A0, #F5F5F5, 'canceled')
+  @include buildTileColors(#bfb502, #fdfcee, 'started', #e2c913)
+  @include buildTileColors(#bfb502, #fdfcee, 'queued', #e2c913)
+  @include buildTileColors(#bfb502, #fdfcee, 'booting', #e2c913)
+  @include buildTileColors(#bfb502, #fdfcee, 'received', #e2c913)
+  @include buildTileColors(#bfb502, #fdfcee, 'created', #e2c913)

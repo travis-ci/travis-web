@@ -10,6 +10,11 @@ Controller = Ember.Controller.extend
     filter = @get('filter')
     repos = @get('model')
     org = @get('org')
+ 
+    repos = repos.filter (item, index) ->
+      item.get('default_branch.last_build') != null
+    .sortBy('default_branch.last_build.finished_at')
+    .reverse()
 
     if org
       repos = repos.filter (item, index) ->

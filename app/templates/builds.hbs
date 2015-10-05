@@ -1,9 +1,11 @@
 {{#if content.isLoaded}}
-  {{#each controller as |build|}}
-    {{builds-item build=build}}
-  {{else}}
-    {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
-  {{/each}}
+  <ul>
+    {{#each controller as |build|}}
+      {{builds-item build=build}}
+    {{else}}
+      {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
+    {{/each}}
+  </ul>
   {{#if displayShowMoreButton}}
     <p>
       {{show-more-button isLoading=isLoading showMore=(action 'showMoreBuilds')}}

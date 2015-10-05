@@ -29,17 +29,6 @@
   padding: 0
   list-style: none
 
-%border-radius-4px
-  border-radius: 4px
-
-%border-top-4px
-  border-top-left-radius: 4px
-  border-top-right-radius: 4px
-
-%border-bottom-4px
-  border-bottom-left-radius: 4px
-  border-bottom-right-radius: 4px
-
 %absolute-center
   position: absolute
   top: 0
@@ -64,3 +53,47 @@
   font-size: $font-size-sm
   color: $grey-medium
   font-weight: 400
+
+
+// @todo simplyfiy coloring mixins
+
+@mixin colorStatusIcons($color, $status)
+  .status-icon.#{$status}
+    svg g > *
+      fill: $color
+
+@mixin colorTiles($color, $status, $extra-bg: $color)
+  &.#{$status}
+    border-color: $extra-bg
+    .tile-status
+      background-color: $color
+    .repo-header-title a,
+    .repo-build-status a,
+    .build-status a,
+    .tile-header,
+    .tile-header a,
+    .tile-title a
+      color: $color
+    @include colorStatusIcons($color, $status)
+
+@mixin statusColors($color, $status, $color2: $color)
+  &.#{$status}
+    background: linear-gradient(to right, $color2 0%, $color2 9px, white 9px, white 100%) no-repeat
+    .row-name,
+    .row-request a,
+    .row-color a
+      color: $color
+      &:hover
+        border-color: $color
+    .row-name .status-icon g > *,
+    .row-request .icon-request g > *
+      fill: $color
+      
+    .build a,
+    .repo-title a
+      color: $color
+      &:hover
+        border-color: $color
+    .build-status
+      color: $color
+    @include colorStatusIcons($color, $status)

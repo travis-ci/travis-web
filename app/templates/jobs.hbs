@@ -12,7 +12,7 @@
     </h2>
   {{/if}}
 
-    {{#each job in view.jobs}}
+    {{#each view.jobs as |job|}}
       {{#view 'jobs-item' context=job}}
         <div class="tile tile--jobs row {{job.state}}">
           {{#if job.config}}

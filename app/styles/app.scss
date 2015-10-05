@@ -20,10 +20,11 @@
 
 @import "app/components/sync-button";
 @import "app/components/loading-indicator";
+@import "app/components/build-tile";
 
 @import "app/animation/tractor";
 
-@import "app/modules/section";
+@import "app/modules/row";
 @import "app/modules/loader";
 @import "app/modules/tiles";
 @import "app/modules/buttons";
@@ -51,6 +52,7 @@
 @import "app/layouts/profile";
 @import "app/layouts/top";
 @import "app/layouts/owner";
+@import "app/layouts/branches";
 
 @import "app/landing";
 @import "app/layouts/requests";

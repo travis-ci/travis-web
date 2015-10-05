@@ -1,0 +1,87 @@
+.fade-out
+  @media #{$medium-up}
+    white-space: nowrap
+    position:relative
+    overflow: hidden
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, $white, 30%)
+
+.label-align
+  vertical-align: middle
+  line-height: 1.5
+
+.row-li
+  border: 1px solid $cream-dark
+  font-size: 16px
+  margin-bottom: .3rem
+  color: $grey-dark
+  background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
+
+  h2, h3
+    margin: 0
+    font-weight: $font-weight-normal
+    font-size: 16px
+
+  .row-header
+    width: 100%
+
+  .row-item
+    margin: .2em
+    font-size: 16px
+    font-weight: $font-weight-normal
+    white-space: nowrap
+    overflow: hidden
+    padding-left: 1em
+    a
+      color: $grey-dark
+      text-decoration: none
+      &:hover
+        text-decoration: underline
+
+    @media #{$medium-up}
+      display: inline-block
+      padding-left: 0
+
+  %row-element
+    vertical-align: middle
+    @media #{$medium-up}
+      display: inline-block
+    .row-item
+      vertical-align: middle
+
+  .two-line
+    @extend %row-element
+    padding: .4em 0
+    margin-left: 2em
+    text-align: left
+
+    @media #{$medium-up}
+      margin-left: 0
+
+  .one-line
+    @extend %row-element
+    .row-item
+      display: inline-block
+    .row-nav
+      display: none
+      text-align: center
+      @media #{$medium-up}
+        display: block
+
+  .icon
+    width: 1.3em
+    height: 1.3em
+    margin-right: .2em
+    display: inline-block
+    vertical-align: middle
+
+  @include statusColors($green-dark, 'passed')
+  @include statusColors($red-dark, 'failed')
+  @include statusColors($red-dark, 'errored')
+  @include statusColors($grey-medium, 'canceled')
+  @include statusColors(#bfb502, 'started', #e5da3f)
+  @include statusColors(#bfb502, 'queued', #e5da3f)
+  @include statusColors(#bfb502, 'booting', #e5da3f)
+  @include statusColors(#bfb502, 'received', #e5da3f)
+  @include statusColors(#bfb502, 'created', #e5da3f)

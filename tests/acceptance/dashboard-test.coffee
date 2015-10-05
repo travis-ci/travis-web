@@ -63,5 +63,5 @@ test 'visiting /dashboard', ->
   visit '/dashboard'
 
   andThen ->
-    equal find('.dashboard-active .row').length, 1, 'there should be one repo displayed on dashboard'
-    equal find('.dashboard-active .row h2').text(), 'travis-web', 'travis-web repository should be displayed'
+    equal find('.dashboard-active .dashboard-row').length, 1, 'there should be one repo displayed on dashboard'
+    equal find('.dashboard-active .dashboard-row h2').text(), 'travis-web', 'travis-web repository should be displayed'

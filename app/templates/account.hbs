@@ -73,7 +73,7 @@
 
   <div>
     <ul class="profile-hooklist">
-      {{#each hook in hooks}}
+      {{#each hooks as |hook|}}
         {{hooks-list-item hook=hook}}
       {{else}}
         <li>
@@ -92,7 +92,7 @@
       <p>You require admin rights to enable these repositories</p>
 
       <ul class="profile-hooklist">
-        {{#each hook in hooksWithoutAdmin}}
+        {{#each hooksWithoutAdmin as |hook| }}
           <li class="{{if hook.active 'active'}} row">
             <div class="switch--icon inline-block disabled {{if hook.active 'active'}}">
               <div class="switch-inner">

@@ -1,14 +1,20 @@
 .sync-button
   padding: 0.8em 0
-  button
-    @extend %border-radius-4px
-    padding: 0 10px
-    max-width: 98px
-    min-height: 25px
+  display: flex
+  flex-direction: row-reverse
+  .button
+    padding: 5px 10px
     margin-left: .5em
+    height: 25px
+    position: relative
+    z-index: 1
     background: #a6adad
     color: #ffffff
+    font-size: 14px
+    font-weight: $font-weight-normal
     border: none
+    border-radius: 2px
+    line-height: 1
     &:hover
       background: #8d9b9a
       cursor: pointer
@@ -16,17 +22,17 @@
     &.is-syncing
       background: #c6b93d
       color: $white
-      padding: 0 10px
-      max-width: 160px
   .icon
-    position: relative
-    top: -0.1em
-    width: 1em
+    width: 1.1em
     height: 1.2em
     vertical-align: middle
-  .icon,
-  .sync-spinner
+    svg path
+      fill: $white
+  .icon
     margin-right: .5em
+  .loading-indicator--white
+    margin-right: .5em
+    vertical-align: top
 
 .profile-main
   .sync-button
@@ -41,6 +47,15 @@
 .sync-last
   display: inline-block
   margin: 0
-  font-size: 12px
+  font-size: 14px
   color: #848384
   text-align: right
+  
+  pointer-events: none
+  transform: translateX(50%)
+  opacity: 0
+  transition: transform 200ms ease, opacity 100ms ease
+
+  .button:hover ~ &
+    transform: translateX(0)
+    opacity: 1
