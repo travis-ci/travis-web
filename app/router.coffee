@@ -76,6 +76,6 @@ Router.map ->
     # @route 'running', path: '/running'
 
   @route 'error404', path: '/*path'
-  # @route 'error404', path: '/404'
+  
 
 `export default Router`
