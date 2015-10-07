@@ -1,5 +1,5 @@
 {{#if build.number}}
-  {{#link-to "build" build.repository.slug build.id}}
+  {{#link-to "build" build.id}}
     {{status-icon status=build.state}}
 
     {{build.last_build.state}}
