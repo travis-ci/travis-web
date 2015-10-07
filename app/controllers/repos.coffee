@@ -53,7 +53,7 @@ Controller = Ember.Controller.extend
   runningJobs: (->
     # TODO: this should also query for received jobs
     result = @store.filter('job', {}, (job) ->
-      ['started', 'received'].indexOf(job.get('state')) != -1
+      ['queued', 'started', 'received'].indexOf(job.get('state')) != -1
     )
     result.set('isLoaded', false)
     result.then =>
@@ -63,7 +63,7 @@ Controller = Ember.Controller.extend
 
   queuedJobs: (->
     result = @get('store').filter('job', {}, (job) ->
-      ['created', 'queued'].indexOf(job.get('state')) != -1
+      ['created'].indexOf(job.get('state')) != -1
     )
     result.set('isLoaded', false)
     result.then =>
