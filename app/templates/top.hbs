@@ -7,8 +7,8 @@
   <ul id="navigation" class="navigation {{if is-open 'is-open'}}">
 
     <li class="">
-      <span class="navigation-anchor" {{action 'toggleBroadcasts'}}><span class="icon-broadcast {{broadcasts.lastBroadcastStatus}}" title="broadcasts"></span></span>
       {{#if auth.signedIn}}
+        <span class="navigation-anchor" {{action 'toggleBroadcasts'}}><span class="icon-broadcast {{broadcasts.lastBroadcastStatus}}" title="broadcasts"></span></span>
         <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
         {{#each broadcasts.content as |broadcast|}}
           <li><p><span class="broadcast-status {{broadcast.category}}" title="{{broadcast.updated_at}}"></span> {{{broadcast.message}}}</p></li>
