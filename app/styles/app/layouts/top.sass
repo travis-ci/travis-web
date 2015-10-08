@@ -89,18 +89,16 @@ $top-height: 55px
     &.is-open
       height: auto
 
-  .navigation-handle
-    position: relative
-    margin: 0
-
-  .navigation-sub
-    position: relative
+    > li
+      position: relative
 
   .navigation-nested
-    @include resetul
+    margin: 0
+    padding: 0
+    list-style: none
 
   a,
-  .navigation-handle
+  .navigation-anchor
     display: block
     color: #898989
     font-size: $font-size-m
@@ -137,7 +135,7 @@ $top-height: 55px
         margin-right: 0
 
       a,
-      .navigation-handle span:not(.sync-spinner)
+      .navigation-anchor
         padding: 0 .2em
 
     .centered & .navigation li:last-child
@@ -159,6 +157,6 @@ $top-height: 55px
           text-decoration: none
           background-color: $cream-light
 
-    .navigation-handle:hover + .navigation-nested,
+    .navigation-anchor:hover + .navigation-nested,
     .navigation-nested:hover
       display: block
