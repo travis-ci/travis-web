@@ -36,7 +36,7 @@ BranchRowComponent = Ember.Component.extend
       if @get('auth.signedIn')
         options.headers = { Authorization: "token #{@auth.token()}" }
 
-      $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/builds?branch.name=#{branchName}&limit=5", options).then (response) ->
+      $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/builds?branch.name=#{branchName}&limit=5&build.event_type=push,api", options).then (response) ->
         array = response.builds.map( (build) ->
           Ember.Object.create(build)
         )
