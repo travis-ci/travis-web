@@ -37,11 +37,15 @@ Controller = Ember.Controller.extend
         broadcasts.set('isLoading', false)
 
       broadcasts
-  ).property()
+  ).property('broadcasts')
 
   actions: {
     toggleBurgerMenu: ->
       @toggleProperty('is-open')
+      return false
+
+    toggleBroadcasts: ->
+      @toggleProperty('showBroadcasts')
       return false
   }
 
