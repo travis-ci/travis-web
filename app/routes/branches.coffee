@@ -12,7 +12,7 @@ Route = TravisRoute.extend
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
 
-    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit", options).then (response) ->
+    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100", options).then (response) ->
       response.branches
 
   activate: () ->
