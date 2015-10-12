@@ -8,12 +8,21 @@ Route = TravisRoute.extend
     apiEndpoint = config.apiEndpoint
     repoId = @modelFor('repo').get('id')
 
+    allTheBranches = Ember.ArrayProxy.create()
+
     options = {}
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
 
     $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100", options).then (response) ->
-      response.branches
+      allTheBranches = response.branches
+      unless response['@pagination'].is_last
+        $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100&offset=1", options).then (response) ->
+          allTheBranches = allTheBranches.concat(response.branches)
+          allTheBranches
+      else
+        allTheBranches
+
 
   activate: () ->
     $('.tab.tabs--main li').removeClass('active')
