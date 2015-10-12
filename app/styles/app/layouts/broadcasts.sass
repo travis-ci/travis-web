@@ -1,20 +1,26 @@
+.broadcast
+  display: inline-block
+  height: $top-height
+  width: 40px
+  line-height: $top-height
+  cursor: pointer
+  vertical-align: middle
+  float: left
+
 .broadcasts
-  position: absolute
-  top: 3.2em
-  width: 27em
-  z-index: 70
+  position: relative
   background-color: $white
   list-style: none
   padding: 0 1em
-  margin: 0
-  border: solid 2px $cream-dark
+  margin: 0 auto .7em
   border-radius: 2px
-  margin-left: -0.7em
-
-  transform-origin: top left
-  transform: translateY(-100%) scale(.9)
+  height: 0
+  transform-origin: top center
+  transform: translateY(50%) scale(.9)
   opacity: 0
-  transition: transform 300ms ease, opacity 150ms ease
+  z-index: -1
+  will-change: transform, opacity
+  transition: opacity 150ms ease, transform 50ms linear
 
   &:after
     content: ""
@@ -24,29 +30,42 @@
     height: 14px
     background: $white
     top: -0.5em
+    left: 123px
     transform: rotate(45deg)
-    left: 1rem
     border-top: solid 2px $cream-dark
     border-left: solid 2px $cream-dark
-
   li
     border-bottom: solid 2px $cream-dark
     &:last-of-type
       border-bottom: none
-
   p
     margin: .5em 0
     padding-left: 1.5rem
     word-wrap: break-word
-
   a
     display: inline
     line-height: 1.45
+    text-decoration: underline
 
   &.is-open
+    z-index: 80
+    border: solid 2px $cream-dark
     opacity: 1
+    height: auto
     transform: translateY(0) scale(1)
 
+  @media #{$medium-up}
+    position: absolute
+    top: 3.3em
+    left: 130px
+    width: 27em
+    height: auto
+    z-index: 70
+    margin-left: -0.7em
+    .centered &
+      left: 118px
+    &:after
+      left: 1rem
 
 .broadcast-status
   display: inline-block

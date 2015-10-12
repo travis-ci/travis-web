@@ -1,4 +1,3 @@
-$top-height: 55px
 
 #auth #top .cta
   display: none
@@ -32,132 +31,25 @@ $top-height: 55px
   @media #{$medium-up}
     display: block
 
-.centered .cta
-  padding-right: 0
-
-.logo
-  position: relative
-  margin: 0 1.5rem 0 1.3rem
-  float: left
-  a
-    display: block
-    width: 100px
-    height: $top-height
-    z-index: 999
-    outline: none
-    text-indent: -9999px
-    transition: background-color 200ms ease
-    background: inline-image('svg/travis-ci-logo.svg') no-repeat 0 50%
-
-    &:hover
-      background: $cream-light inline-image('svg/travis-ci-logo-hover.svg') no-repeat 50%
-  .centered &
-    margin-left: 0
-
-.burger
-  overflow: auto
-  height: $top-height
-  @media #{$medium-up}
-    display: none
-
-  .burger-btn
-    float: right
-    font-size: 50px
-    background: none
-    border: none
-    line-height: 1
-    color: $grey-medium
-    outline: none !important
-    @include clearfix
-    &:hover
-      cursor: pointer
-
 .top
   background-color: #eff0ec
-  position: relative
-  z-index: 90
 
 .topbar
+  height: $top-height
+  padding: 0 $column-gutter/2
+  clear: both
+  overflow: hidden
   font-size: $font-size-m
-  background-color: #eff0ec
   color: $grey-medium
-
-  .navigation
-    padding: 0 $column-gutter/2
-    margin: 0
-    height: 0
-    list-style: none
-    overflow: hidden
-    &.is-open
-      height: auto
-
-    > li
-      position: relative
-
-  .navigation-nested
-    margin: 0
-    padding: 0
-    list-style: none
-
-  a,
-  .navigation-anchor
-    color: #898989
-    font-size: $font-size-m
-    cursor: pointer
-    height: $top-height
-    line-height: $top-height + 2px
-    border: none
+  a
+    color: $grey-medium
     &:hover
       text-decoration: underline
-
-  .profile
-    float: right
-    img
-      border-radius: 50%;
-      width: 2.7rem;
-      height: 2.7rem;
-      margin-left: 1rem;
-      transform: translateY(-0.1rem);
-
+  &.has-autoheight
+    height: auto
   @media #{$medium-up}
-    &.row
-      height: $top-height
-
-    .navigation
-      padding: 0
+    &,
+    &.has-autoheight
+      position: relative
       height: $top-height
       overflow: visible
-      > li
-        display: inline-block
-        margin-right: 1rem
-      .centered & li.signed-out
-      .centered & li.signed-in
-      .centered & li.signing-in
-        margin-right: 0
-
-      a,
-      .navigation-anchor
-        padding: 0 .2em
-
-    .centered & .navigation li:last-child
-      margin-right: 0
-
-    .navigation-nested
-      display: none
-      position: absolute
-      top: $top-height
-      left: -1em
-      z-index: 90
-      background-color: #eff0ec
-      a
-        height: 35px
-        line-height: 35px
-        padding: 0 2em
-        white-space: nowrap
-        &:hover
-          text-decoration: none
-          background-color: $cream-light
-
-    .navigation-anchor:hover + .navigation-nested,
-    .navigation-nested:hover
-      display: block

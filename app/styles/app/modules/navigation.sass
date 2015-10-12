@@ -1,0 +1,77 @@
+$nav-line-height: 35px
+
+.navigation-toggle
+  float: right
+  @media #{$medium-up}
+    display: none
+
+.navigation
+  height: 0
+  will-change: height
+  transition: height 200ms ease
+  > ul
+    padding: 0
+    margin: 0
+    list-style: none
+  li
+    display: block
+  &.is-open
+    height: 100%
+
+  @media #{$medium-up}
+    > ul > li
+      display: inline-block
+      vertical-align: middle
+      margin-right: 1.5em
+
+  .profile
+    font-size: $font-size-m
+    color: $grey-medium
+    text-align: right
+    line-height: $top-height
+    img
+      border-radius: 50%
+      width: 2.7rem
+      height: 2.7rem
+      margin-left: 1rem
+    @media #{$medium-up}
+      margin-right: 0
+      float: right
+
+.navigation-anchor
+  display: block
+  width: 100%
+  line-height: $nav-line-height
+  &:hover
+    text-decoration: underline
+    cursor: pointer
+  @media #{$medium-up}
+    line-height: $top-height + 1px // such magic wow
+
+.navigation-nested
+  margin: 0
+  padding: 0 0 0 1em
+  list-style: none
+  line-height: $nav-line-height
+
+  @media #{$medium-up}
+    display: none
+    position: absolute
+    padding: 0 0 0 0
+    margin: -1px 0 0 -1em
+    z-index: 88
+    background-color: #eff0ec
+
+    li
+      display: block
+      text-align: left
+    a
+      display: block
+      padding: 0 2em
+      &:hover
+        text-decoration: none
+        background-color: $cream-light
+
+.navigation-anchor:hover ~ .navigation-nested,
+.navigation-nested:hover
+  display: block

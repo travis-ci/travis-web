@@ -8,14 +8,12 @@
   background-color: #fff
 
   .button--signin
-    margin-top: -4px
     background-color: #ffffff
     background-image: inline-image('landing-page/signingithub.svg')
     background-size: 16px 16px
     border: 2px solid #e4e7e7
     color: #a0a8a8
   .button--signingin
-    margin-top: -4px
     border: 2px solid #3FA75F
   .button--signin:hover
     background-color: #73c78d
@@ -38,7 +36,7 @@
 .landing
   margin: 0 auto 170px auto
   font-weight: 300
-  overflow: hidden
+  overflow-x: hidden
 
   h1
     font-size: 5em
@@ -469,6 +467,8 @@
 .landing-rows
   list-style: none
   margin: 0
+  @media #{$small-only}
+    padding: 0
 
 .landing-row
   .two-line
