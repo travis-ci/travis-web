@@ -14,7 +14,7 @@ Route = TravisRoute.extend
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
 
-    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100&sort_by=exists_on_github", options).then (response) ->
+    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100", options).then (response) ->
       allTheBranches = response.branches
 
       defaultBranch = allTheBranches.filter (item, index) ->
@@ -22,7 +22,7 @@ Route = TravisRoute.extend
       
       allTheBranches
       unless defaultBranch.length == 1
-        $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100&offset=1&sort_by=exists_on_github", options).then (response) ->
+        $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100&offset=1", options).then (response) ->
           allTheBranches = allTheBranches.concat(response.branches)
 
           allTheBranches
