@@ -12,7 +12,8 @@ Controller = Ember.Controller.extend
     org = @get('org')
  
     repos = repos.filter (item, index) ->
-      item.get('default_branch.last_build') != null
+      if item.get('default_branch')
+        item.get('default_branch.last_build') != null
     .sortBy('default_branch.last_build.finished_at')
     .reverse()
 

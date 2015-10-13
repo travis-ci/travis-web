@@ -9,7 +9,7 @@
 <div class="one-line fade-out">
   <div class="row-request">
     <div class="row-item">
-    {{#link-to "build" repo.owner.login repo.name repo.last_build.id}}
+    {{#link-to "build" repo.owner.login repo.name repo.default_branch.last_build.id}}
       {{request-icon build=repo.default_branch.last_build}}
       <span class="label-align">#{{repo.default_branch.last_build.number}} {{repo.default_branch.last_build.state}} on {{repo.default_branch.name}}</span>
     {{/link-to}}

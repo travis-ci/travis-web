@@ -3,7 +3,7 @@
     {{#if orgs.isLoading}}
       {{loading-indicator}}
     {{else}}
-      <a href="" title="">
+      <a {{action 'toggleOrgFilter'}} title="">
         {{#if selected }}
           <img src="{{selected.avatar_url}}" alt="{{org.login}}">
           {{#if selected.name}}
@@ -17,7 +17,7 @@
       </a><span class="icon-arrow-down"></span>
     {{/if}}
   </div>
-  <ul class="filter-dropdown">
+  <ul class="filter-dropdown {{if showFilter 'is-open'}}">
     {{#if selected }}
       <li><a title="" {{action 'select'}}>All organizations</a></li>
     {{/if}}
