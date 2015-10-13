@@ -11,7 +11,7 @@ Route = TravisRoute.extend
     options = {}
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
-    $.ajax(config.apiEndpoint + "/v3/owner/#{params.owner}", options)
+    $.ajax(config.apiEndpoint + "/v3/owner/#{params.owner}?include=organization.repositories,repository.default_branch,build.commit", options)
 
   beforeModel: ->
     @controllerFor('loading').set('layoutName', 'simple')

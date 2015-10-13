@@ -8,7 +8,8 @@ Controller = Ember.Controller.extend
     data = @get('model')
 
     repos = data.repositories.filter (item, index) -> 
-      if item.default_branch.last_build
+      if item.active
+        console.log(item)
         item
     repos.sortBy('default_branch.last_build.finished_at').reverse()
 
