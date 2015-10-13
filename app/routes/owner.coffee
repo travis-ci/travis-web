@@ -23,8 +23,7 @@ Route = TravisRoute.extend
       login = transition.params.owner.owner
 
       message = if error.status == 404
-        # @transitionTo('/404')
-        "Couldn't find an owner with login \"#{login}\""
+        @transitionTo('error404')
       else
         "There was an error while loading data, please try again."
 
