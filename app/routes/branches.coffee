@@ -16,16 +16,7 @@ Route = TravisRoute.extend
 
     $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100", options).then (response) ->
       allTheBranches = response.branches
-
-      defaultBranch = allTheBranches.filter (item, index) ->
-        item if item.repository.default_branch['@href'] == item['@href']
-      
       allTheBranches
-      unless defaultBranch.length == 1
-        $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100&offset=1", options).then (response) ->
-          allTheBranches = allTheBranches.concat(response.branches)
-
-          allTheBranches
 
   activate: () ->
     $('.tab.tabs--main li').removeClass('active')
