@@ -14,15 +14,18 @@ Route = TravisRoute.extend
     if @get('auth.signedIn')
       options.headers = { Authorization: "token #{@auth.token()}" }
 
-    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100", options).then (response) ->
+    $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100&sort_by=exists_on_github", options).then (response) ->
       allTheBranches = response.branches
-      unless response['@pagination'].is_last
-        $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100&offset=1", options).then (response) ->
-          allTheBranches = allTheBranches.concat(response.branches)
-          allTheBranches
-      else
-        allTheBranches
 
+      defaultBranch = allTheBranches.filter (item, index) ->
+        item if item.repository.default_branch['@href'] == item['@href']
+      
+      allTheBranches
+      unless defaultBranch.length == 1
+        $.ajax("#{apiEndpoint}/v3/repo/#{repoId}/branches?include=build.commit&limit=100&offset=1&sort_by=exists_on_github", options).then (response) ->
+          allTheBranches = allTheBranches.concat(response.branches)
+
+          allTheBranches
 
   activate: () ->
     $('.tab.tabs--main li').removeClass('active')
