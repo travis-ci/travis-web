@@ -28,9 +28,11 @@ Controller = Ember.Controller.extend
       options.headers = { Authorization: "token #{@auth.token()}" }
 
       $.ajax("#{apiEndpoint}/v3/broadcasts", options).then (response) ->
-        array = response.broadcasts.map( (broadcast) ->
-          Ember.Object.create(broadcast)
-        ).reverse()
+        array = response.broadcasts.filter((broadcast) ->
+            broadcast unless broadcast.expired
+          ).map( (broadcast) ->
+            Ember.Object.create(broadcast)
+          ).reverse()
         
         broadcasts.set('lastBroadcastStatus', array[0].category)
         broadcasts.set('content', array)
