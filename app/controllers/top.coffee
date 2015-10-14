@@ -29,6 +29,8 @@ Controller = Ember.Controller.extend
       @get('store').find('broadcast').then (result) ->
         broadcasts.pushObjects(result.toArray())
 
+      console.log(broadcasts)
+
     broadcasts
   ).property('currentUser.id')
 
