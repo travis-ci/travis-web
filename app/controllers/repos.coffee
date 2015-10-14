@@ -51,7 +51,6 @@ Controller = Ember.Controller.extend
       Visibility.every @config.intervals.updateTimes, @updateTimes.bind(this)
 
   runningJobs: (->
-    # TODO: this should also query for received jobs
     result = @store.filter('job', {}, (job) ->
       ['queued', 'started', 'received'].indexOf(job.get('state')) != -1
     )

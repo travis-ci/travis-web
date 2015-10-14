@@ -6,6 +6,9 @@ Controller = Ember.Controller.extend
   needs: ['currentUser']
   userBinding: 'controllers.currentUser.model'
 
+  store: Ember.inject.service()
+  currentUserBinding: 'auth.currentUser'
+
   userName: (->
     @get('user.name') || @get('user.login')
   ).property('user.login', 'user.name')
@@ -13,6 +16,21 @@ Controller = Ember.Controller.extend
   gravatarUrl: (->
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
   ).property('user.gravatarId')
+
+  unseenBroadcasts: (->
+    @get('broadcasts').filter (broadcast) ->
+      !broadcast.get('isSeen')
+  ).property('broadcasts.[]', 'broadcasts.length')
+
+  v2broadcasts: (->
+    broadcasts = Ember.ArrayProxy.create(content: [])
+
+    if @get('currentUser.id')
+      @get('store').find('broadcast').then (result) ->
+        broadcasts.pushObjects(result.toArray())
+
+    broadcasts
+  ).property('currentUser.id')
 
   broadcasts: (->
 
