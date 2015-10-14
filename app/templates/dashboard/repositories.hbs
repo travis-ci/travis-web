@@ -19,6 +19,8 @@
   <ul class="dashboard-active">
     {{#each repo in filteredRepositories}}
       {{dashboard-row repo=repo}}
+    {{else}}
+      {{no-repos}}
     {{/each}}
   </ul>
   {{!-- <hr> --}}
