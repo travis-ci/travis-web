@@ -17,23 +17,6 @@ Controller = Ember.Controller.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
   ).property('user.gravatarId')
 
-  unseenBroadcasts: (->
-    @get('broadcasts').filter (broadcast) ->
-      !broadcast.get('isSeen')
-  ).property('broadcasts.[]', 'broadcasts.length')
-
-  v2broadcasts: (->
-    broadcasts = Ember.ArrayProxy.create(content: [])
-
-    if @get('currentUser.id')
-      @get('store').find('broadcast').then (result) ->
-        broadcasts.pushObjects(result.toArray())
-
-      console.log(broadcasts)
-
-    broadcasts
-  ).property('currentUser.id')
-
   broadcasts: (->
 
     if @get('auth.signedIn')
@@ -47,14 +30,21 @@ Controller = Ember.Controller.extend
       options.type = 'GET'
       options.headers = { Authorization: "token #{@auth.token()}" }
 
+      seenBroadcasts = Travis.storage.getItem('travis.seen_broadcasts')
+      seenBroadcasts = JSON.parse(seenBroadcasts) if seenBroadcasts
+
       $.ajax("#{apiEndpoint}/v3/broadcasts", options).then (response) ->
-        array = response.broadcasts.filter((broadcast) ->
-            broadcast unless broadcast.expired
-          ).map( (broadcast) ->
-            Ember.Object.create(broadcast)
-          ).reverse()
-        
-        broadcasts.set('lastBroadcastStatus', array[0].category)
+        if response.broadcasts.length
+          array = response.broadcasts.filter((broadcast) ->
+              unless broadcast.expired
+                if seenBroadcasts.indexOf(broadcast.id.toString()) == -1
+                  broadcast
+            ).map( (broadcast) ->
+              Ember.Object.create(broadcast)
+            ).reverse()
+          
+          if array.length
+            broadcasts.set('lastBroadcastStatus', array[0].category)
         broadcasts.set('content', array)
         broadcasts.set('isLoading', false)
 
@@ -68,6 +58,17 @@ Controller = Ember.Controller.extend
 
     toggleBroadcasts: ->
       @toggleProperty('showBroadcasts')
+      return false
+
+    markBroadcastAsSeen: (broadcast) ->
+      id = broadcast.get('id').toString()
+      seenBroadcasts = Travis.storage.getItem('travis.seen_broadcasts')
+      if seenBroadcasts
+        seenBroadcasts = JSON.parse(seenBroadcasts) 
+      else
+        seenBroadcasts = []
+      seenBroadcasts.push(id)
+      Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts))
       return false
   }
 

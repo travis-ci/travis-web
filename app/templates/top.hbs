@@ -11,12 +11,12 @@
   </div>
   <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
   {{#each broadcasts.content as |broadcast|}}
-    <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}}</p></li>
+    <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}} <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a></p></li>
+  {{else}}
+    <li><p>There are no broadcasts transmitted</p></li>
   {{/each}}
   </ul>
 {{/if}}
-
-  {{v2broadcasts}}
 
   <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
