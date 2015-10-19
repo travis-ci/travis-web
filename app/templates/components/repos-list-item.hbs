@@ -1,12 +1,12 @@
-<div class="tile tile--sidebar {{repo.lastBuild.state}}">
+<div class="tile tile--sidebar {{repo.defaultBranch.lastBuild.state}}">
   <h2 class="tile-title">
     {{#if repo.slug}}
-      {{status-icon status=repo.lastBuildState}}
+      {{status-icon status=repo.defaultBranch.lastBuild.state}}
       {{#link-to "repo" repo class="slug"}}{{repo.slug}}{{/link-to}}
     {{/if}}
   </h2>
   {{#if repo.slug}}
-    {{#if repo.lastBuild.id}}
+    {{#if repo.defaultBranch.lastBuild.id}}
       <p class="tile-title float-right">
         <span class="icon">
           <svg version="1.1" id="Layer_1" x="0px" y="0px"
@@ -20,8 +20,8 @@
             L-277.2,202.4z"/>
           </svg>
         </span>
-        {{#link-to "build" repo repo.lastBuild.id
-           class="last_build"}}{{repo.lastBuild.number}}{{/link-to}}
+        {{#link-to "build" repo repo.defaultBranch.lastBuild.id
+           class="last_build"}}{{repo.defaultBranch.lastBuild.number}}{{/link-to}}
       </p>
     {{/if}}
   {{/if}}
@@ -39,8 +39,8 @@
       </svg>
     </span>
     Duration: 
-    <abbr class="duration" title={{repo.lastBuild.startedAt}}>
-      {{format-duration repo.lastBuild.duration}}
+    <abbr class="duration" title={{repo.defaultBranch.lastBuild.startedAt}}>
+      {{format-duration repo.defaultBranch.lastBuild.duration}}
     </abbr>
   </p>
 
@@ -62,8 +62,8 @@
       </svg>
     </span>
     Finished: 
-    <abbr class="finished_at timeago" title={{repo.lastBuild.finishedAt}}>
-      {{format-time repo.lastBuild.finishedAt}}
+    <abbr class="finished_at timeago" title={{repo.defaultBranch.lastBuild.finishedAt}}>
+      {{format-time repo.defaultBranch.lastBuild.finishedAt}}
     </abbr>
   </p>
 </div>

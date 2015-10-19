@@ -3,8 +3,5 @@
 
 Serializer = V2FallbackSerializer.extend
   isNewSerializerAPI: true
-  attrs: {
-    _lastBuildDuration: { key: 'last_build_duration' }
-  }
 
 `export default Serializer`

@@ -16,8 +16,8 @@ ReposListItemComponent = Ember.Component.extend Polling,
   ).property('selectedRepo')
 
   color: (->
-    colorForState(@get('repo.lastBuildState'))
-  ).property('repo.lastBuildState')
+    colorForState(@get('repo.defaultBranch.lastBuild.state'))
+  ).property('repo.defaultBranch.lastBuild.state')
 
   scrollTop: (->
     if (window.scrollY > 0)

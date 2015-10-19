@@ -75,15 +75,15 @@ Controller = Ember.Controller.extend
     Ember.run.scheduleOnce('actions', this, @_lastBuildDidChange);
 
   _lastBuildDidChange: ->
-    build = @get('repo.lastBuild')
+    build = @get('repo.defaultBranch.lastBuild')
     @set('build', build)
 
   stopObservingLastBuild: ->
-    @removeObserver('repo.lastBuild', this, 'lastBuildDidChange')
+    @removeObserver('repo.defaultBranch.lastBuild', this, 'lastBuildDidChange')
 
   observeLastBuild: ->
     @lastBuildDidChange()
-    @addObserver('repo.lastBuild', this, 'lastBuildDidChange')
+    @addObserver('repo.defaultBranch.lastBuild', this, 'lastBuildDidChange')
 
   connectTab: (tab) ->
     # TODO: such implementation seems weird now, because we render

@@ -20,6 +20,7 @@ Store = DS.Store.extend
   canHandleEvent: (event, data) ->
     [name, type] = event.split(':')
     auth = @get('auth')
+
     if event != 'job:log' && auth.get('signedIn') &&
         !config.pro && !config.enterprise
       # if recent repos hasn't been opened yet, we can safely

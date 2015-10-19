@@ -6,7 +6,7 @@ Route = TravisRoute.extend
     @controllerFor('repo').activate('current')
 
   renderTemplate: ->
-    if @modelFor('repo').get('lastBuild')
+    if @modelFor('repo').get('defaultBranch.lastBuild')
       @render 'build'
     else
       @render 'builds/not_found'

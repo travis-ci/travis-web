@@ -13,10 +13,12 @@ Repo = Model.extend
   private:             DS.attr('boolean')
   githubLanguage:      DS.attr()
   active:              DS.attr()
-  lastBuild: DS.belongsTo('build')
+
+  #lastBuild:     DS.belongsTo('build')
+  defaultBranch: DS.belongsTo('branch')
 
   withLastBuild: ->
-    @filter( (repo) -> repo.get('lastBuild') )
+    @filter( (repo) -> repo.get('defaultBranch.lastBuild') )
 
   sshKey: (->
     @store.find('ssh_key', @get('id'))
@@ -83,27 +85,21 @@ Repo = Model.extend
     (@get('slug') || '').split('/')[1]
   ).property('slug')
 
-  lastBuildDuration: (->
-    duration = @get('_lastBuildDuration')
-    duration = durationFromHelper(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
-    duration
-  ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
-
   sortOrderForLandingPage: (->
-    state = @get('lastBuildState')
+    state = @get('defaultBranch.lastBuild.state')
     if state != 'passed' && state != 'failed'
       0
     else
-      parseInt(@get('lastBuildId'))
-  ).property('lastBuildId', 'lastBuildState')
+      parseInt(@get('defaultBranch.lastBuild.id'))
+  ).property('defaultBranch.lastBuild.id', 'defaultBranch.lastBuild.state')
 
   sortOrder: (->
     # cuz sortAscending seems buggy when set to false
-    if lastBuildFinishedAt = @get('lastBuildFinishedAt')
+    if lastBuildFinishedAt = @get('defaultBranch.lastBuild.finishedAt')
       - new Date(lastBuildFinishedAt).getTime()
     else
-      - new Date('9999').getTime() - parseInt(@get('lastBuildId'))
-  ).property('lastBuildFinishedAt', 'lastBuildId')
+      - new Date('9999').getTime() - parseInt(@get('defaultBranch.lastBuild.id'))
+  ).property('defaultBranch.lastBuild.state', 'defaultBranch.lastBuild.finishedAt')
 
   stats: (->
     if @get('slug')
@@ -114,7 +110,7 @@ Repo = Model.extend
   ).property('slug')
 
   updateTimes: ->
-    @notifyPropertyChange 'lastBuildDuration'
+    @notifyPropertyChange 'defaultBranch.lastBuild.duration'
 
   regenerateKey: (options) ->
     @get('ajax').ajax '/repos/' + @get('id') + '/key', 'post', options
@@ -153,7 +149,7 @@ Repo.reopenClass
 
   withLastBuild: (store) ->
     repos = store.filter('repo', {}, (build) ->
-      build.get('lastBuild')
+      build.get('defaultBranch.lastBuild')
     )
 
     repos.then () ->
