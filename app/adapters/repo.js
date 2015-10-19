@@ -14,9 +14,9 @@ export default V3Adapter.extend({
     }
 
     if(hash.data.include) {
-      hash.data.include += ',repository.last_build,build.commit';
+      hash.data.include += ',repository.default_branch,branch.last_build,build.commit';
     } else {
-      hash.data.include = 'repository.last_build,build.commit';
+      hash.data.include = 'repository.default_branch,branch.last_build,build.commit';
     }
 
     return this._super(url, type, hash);

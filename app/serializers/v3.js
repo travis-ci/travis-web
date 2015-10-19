@@ -52,7 +52,7 @@ export default DS.JSONSerializer.extend({
     if(type = payload['@type']) {
       items = payload[type];
     } else {
-      items = payload[primaryModelClass.modelName + 's'];
+      items = payload[primaryModelClass.modelName.underscore() + 's'];
     }
 
     documentHash.data = items.map((item) => {

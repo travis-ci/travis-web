@@ -1,19 +1,19 @@
-<div class="tile {{repo.lastBuild.state}}">
-  <h2 class="tile-title {{repo.lastBuild.state}}">
+<div class="tile {{repo.defaultBranch.lastBuild.state}}">
+  <h2 class="tile-title {{repo.defaultBranch.lastBuild.state}}">
     {{#if repo.slug}}
       {{#link-to "repo" repo}}
-      {{status-icon status=repo.lastBuildState}}
+      {{status-icon status=repo.defaultBranch.lastBuild.state}}
       <span class="label-align">{{repo.slug}}</span>
       {{/link-to}}
     {{/if}}
   </h2>
 
   {{#if repo.slug}}
-    {{#if repo.lastBuild.id}}
-      <p class="tile-title float-right {{repo.lastBuild.state}}">
-        {{#link-to "build" repo repo.lastBuild.id}}
+    {{#if repo.defaultBranch.lastBuild.id}}
+      <p class="tile-title float-right {{repo.defaultBranch.lastBuild.state}}">
+        {{#link-to "build" repo repo.defaultBranch.lastBuild.id}}
           <span class="icon-hash"></span>
-          <span class="label-align">{{lastBuild.number}}</span>
+          <span class="label-align">{{repo.defaultBranch.lastBuild.number}}</span>
         {{/link-to}}
       </p>
     {{/if}}
@@ -22,16 +22,16 @@
   <p>
     <span class="icon-clock"></span>
     <span class="label-align">Duration: 
-    <abbr class="duration" title={{lastBuild.startedAt}}>
-      {{format-duration repo.lastBuild.duration}}
+    <abbr class="duration" title={{repo.defaultBranch.lastBuild.startedAt}}>
+      {{format-duration repo.defaultBranch.lastBuild.duration}}
     </abbr></span>
   </p>
 
   <p>
     <span class="icon-calendar"></span>
     <span class="label-align">Finished: 
-    <abbr class="finished_at timeago" title={{lastBuild.finishedAt}}>
-      {{format-time repo.lastBuild.finishedAt}}
+    <abbr class="finished_at timeago" title={{repo.defaultBranch.lastBuild.finishedAt}}>
+      {{format-time repo.defaultBranch.lastBuild.finishedAt}}
     </abbr></span>
   </p>
 </div>
