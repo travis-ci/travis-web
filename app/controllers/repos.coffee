@@ -30,7 +30,7 @@ Controller = Ember.Controller.extend
       if @get('tab') == 'owned' && @get('isLoaded') && @get('repos.length') == 0
         @container.lookup('router:main').send('redirectToGettingStarted')
 
-  isLoadedBinding: 'repos.isLoaded'
+  isLoaded: false
   repoController: Ember.inject.controller('repo')
   currentUserBinding: 'auth.currentUser'
   selectedRepo: (->
@@ -87,20 +87,25 @@ Controller = Ember.Controller.extend
     this["view_#{tab}".camelize()](params)
 
   viewOwned: ->
-    @set('repos', @get('userRepos'))
+    @set('isLoaded', false);
+    if login = @get('currentUser.login')
+      repos = Repo.accessibleBy(@store, login).then( (reposRecordArray) =>
+        @set('isLoaded', true)
+        @set('repos', reposRecordArray)
+      )
+      # TODO: handle error
+    else
+      @set('repos', [])
 
   viewRunning: ->
 
-  userRepos: (->
-    if login = @get('currentUser.login')
-      Repo.accessibleBy(@store, login)
-    else
-      []
-  ).property('currentUser.login')
-
   viewSearch: (phrase) ->
     @set('search', phrase)
-    @set('repos', Repo.search(@store, phrase))
+    @set('isLoaded', false)
+    Repo.search(@store, phrase).then( (reposRecordArray) =>
+      @set('isLoaded', true)
+      @set('repos', reposRecordArray)
+    )
 
   searchObserver: (->
     search = @get('search')
