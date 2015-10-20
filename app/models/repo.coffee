@@ -93,14 +93,6 @@ Repo = Model.extend
       parseInt(@get('defaultBranch.lastBuild.id'))
   ).property('defaultBranch.lastBuild.id', 'defaultBranch.lastBuild.state')
 
-  sortOrder: (->
-    # cuz sortAscending seems buggy when set to false
-    if lastBuildFinishedAt = @get('defaultBranch.lastBuild.finishedAt')
-      - new Date(lastBuildFinishedAt).getTime()
-    else
-      - new Date('9999').getTime() - parseInt(@get('defaultBranch.lastBuild.id'))
-  ).property('defaultBranch.lastBuild.state', 'defaultBranch.lastBuild.finishedAt')
-
   stats: (->
     if @get('slug')
       @get('_stats') || $.get("https://api.github.com/repos/#{@get('slug')}", (data) =>

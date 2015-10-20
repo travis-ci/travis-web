@@ -1,7 +1,5 @@
-{{#each repos as |repo|}}
+{{#each sortedRepos as |repo|}}
   {{repos-list-item repo=repo selectedRepo=selectedRepo}}
 {{else}}
   <p class="empty">{{noReposMessage}}</p>
 {{/each}}
-
-
