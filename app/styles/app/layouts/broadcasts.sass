@@ -2,10 +2,12 @@
   display: inline-block
   height: $top-height
   width: 40px
+  margin-left: 1em
   line-height: $top-height
   cursor: pointer
   vertical-align: middle
-  float: left
+  @media #{$medium-up}
+    float: left
 
 .broadcasts
   position: relative
@@ -30,7 +32,7 @@
     height: 14px
     background: $white
     top: -0.5em
-    left: 123px
+    left: 136px
     transform: rotate(45deg)
     border-top: solid 2px $cream-dark
     border-left: solid 2px $cream-dark
@@ -41,6 +43,7 @@
   p
     margin: .5em 0
     padding-left: 1.5rem
+    font-size: .9em
     word-wrap: break-word
   a
     display: inline
@@ -66,13 +69,13 @@
   @media #{$medium-up}
     position: absolute
     top: 3.3em
-    left: 130px
+    left: 145px
     width: 27em
     height: auto
     z-index: 70
     margin-left: -0.7em
     .centered &
-      left: 118px
+      left: 133px
     &:after
       left: 1rem
 

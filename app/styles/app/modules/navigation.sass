@@ -9,6 +9,7 @@ $nav-line-height: 35px
   height: 0
   will-change: height
   transition: height 200ms ease
+  overflow: hidden
   > ul
     padding: 0
     margin: 0
@@ -19,6 +20,7 @@ $nav-line-height: 35px
     height: 100%
 
   @media #{$medium-up}
+    overflow: visible
     > ul > li
       display: inline-block
       vertical-align: middle
@@ -29,6 +31,7 @@ $nav-line-height: 35px
     color: $grey-medium
     text-align: right
     line-height: $top-height
+    float: right
     img
       border-radius: 50%
       width: 2.7rem
@@ -36,7 +39,7 @@ $nav-line-height: 35px
       margin-left: 1rem
     @media #{$medium-up}
       margin-right: 0
-      float: right
+      
 
 .navigation-anchor
   display: block
