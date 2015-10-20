@@ -24,6 +24,7 @@ languageConfigKeys = {
   clojure:     'Clojure'
   lein:        'Lein'
   compiler:    'Compiler'
+  crystal:     'Crystal'
 }
 
 configKeys = {
