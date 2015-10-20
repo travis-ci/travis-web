@@ -35,17 +35,17 @@ Controller = Ember.Controller.extend
 
       $.ajax("#{apiEndpoint}/v3/broadcasts", options).then (response) ->
         if response.broadcasts.length
-          array = response.broadcasts.filter((broadcast) ->
+          receivedBroadcasts = response.broadcasts.filter((broadcast) ->
               unless broadcast.expired
                 if seenBroadcasts.indexOf(broadcast.id.toString()) == -1
                   broadcast
             ).map( (broadcast) ->
               Ember.Object.create(broadcast)
             ).reverse()
-          
-          if array.length
-            broadcasts.set('lastBroadcastStatus', array[0].category)
-        broadcasts.set('content', array)
+
+          if receivedBroadcasts.length
+            broadcasts.set('lastBroadcastStatus', receivedBroadcasts[0].category)
+        broadcasts.set('content', receivedBroadcasts)
         broadcasts.set('isLoading', false)
 
       broadcasts
@@ -69,6 +69,7 @@ Controller = Ember.Controller.extend
         seenBroadcasts = []
       seenBroadcasts.push(id)
       Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts))
+      @get('broadcasts.content').removeObject(broadcast)
       return false
   }
 
