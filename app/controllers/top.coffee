@@ -70,6 +70,10 @@ Controller = Ember.Controller.extend
       seenBroadcasts.push(id)
       Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts))
       @get('broadcasts.content').removeObject(broadcast)
+      unless @get('broadcasts.content').length
+        @set('broadcasts.lastBroadcastStatus', '')
+      else
+        @set('broadcasts.lastBroadcastStatus', @get('broadcasts.content')[0].category)
       return false
   }
 
