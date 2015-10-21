@@ -18,7 +18,6 @@
   border-radius: 2px
   height: 0
   transform-origin: center center
-  // transform: translateY(50%)
   opacity: 0
   z-index: -1
   will-change: opacity
@@ -55,7 +54,6 @@
     border: solid 2px $cream-dark
     opacity: 1
     height: auto
-    // transform: translateY(0)
 
   .icon-close
     display: inline-block
@@ -122,3 +120,22 @@
     &.is-open
       .tower-path
         fill: #238C3E
+
+  .radio-wave--right
+    .tower-path
+      transform-origin: left center
+      animation: pulsating-right 1s linear infinite
+
+  .radio-wave--left
+    .tower-path
+      transform-origin: right center
+      animation: pulsating-left 1s linear infinite
+
+
+@keyframes pulsating-right
+  40%
+    transform: translateX(20%) scale(1.1)
+
+@keyframes pulsating-left
+  40%
+    transform: translateX(-20%) scale(1.1)
