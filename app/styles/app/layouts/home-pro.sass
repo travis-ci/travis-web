@@ -1,0 +1,66 @@
+.inner
+  margin: auto
+  max-width: 1024px
+  padding: 0 $column-gutter/2
+
+
+.h1
+  font-size: 50px
+  color: #408692 !important
+  font-weight: 300
+  margin: 0
+
+%h2
+  font-size: 40px
+  font-weight: 300
+  line-height: 1.2
+
+.h2--green
+  @extend %h2
+  color: #39A85B
+
+.h2--teal
+  @extend %h2
+  color: #408692
+
+.h3
+  font-size: 22px
+  font-weight: 300
+
+.text-big
+  font-size: 26px
+  font-weight: 300
+  line-height: 1.45
+
+.text-small
+  font-size: 18px
+
+.hero-button
+  display: inline-block
+  background:
+    color: #39A85B
+    image: inline-image('landing-page/sign-in-mascot.svg')
+    size: 1.7em
+    position: 0.8em center
+    repeat: no-repeat
+  padding: 0.9em 1em 0.9em 3em
+  margin: 0 auto
+  color: white
+  border-radius: 4px
+  font-size: 27px
+  text-decoration: none
+  &:hover
+    color: white
+    background-color: darken(#39A85B, 10)
+
+
+.section--grey
+  background-color: #F6F6F6
+
+.section--white
+  background-color: white
+
+
+.list--check
+  li
+    @extend .text-big
