@@ -17,12 +17,12 @@
   margin: 0 auto .7em
   border-radius: 2px
   height: 0
-  transform-origin: top center
-  transform: translateY(50%) scale(.9)
+  transform-origin: center center
+  // transform: translateY(50%)
   opacity: 0
   z-index: -1
-  will-change: transform, opacity
-  transition: opacity 150ms ease, transform 50ms linear
+  will-change: opacity
+  transition: opacity 150ms ease
 
   &:after
     content: ""
@@ -55,7 +55,7 @@
     border: solid 2px $cream-dark
     opacity: 1
     height: auto
-    transform: translateY(0) scale(1)
+    // transform: translateY(0)
 
   .icon-close
     display: inline-block

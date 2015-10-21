@@ -5,6 +5,7 @@ BroadcastTowerComponent = Ember.Component.extend
   classNames: ['broadcast']
 
   isOpen: false
+  timeoutId: ''
 
   isEmpty: (->
     @get('status') == ''
@@ -16,9 +17,12 @@ BroadcastTowerComponent = Ember.Component.extend
       @sendAction('toggleBroadcasts')
 
       if @get('isOpen') == true
-        setTimeout => 
-          @toggleProperty('isOpen')
-          @sendAction('toggleBroadcasts')
-        , 10000
+        @set('timeoutId', setTimeout => 
+            @toggleProperty('isOpen')
+            @sendAction('toggleBroadcasts')
+          , 10000
+        )
+      else
+        clearTimeout(@get('timeoutId'))
 
 `export default BroadcastTowerComponent`
