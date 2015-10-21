@@ -66,6 +66,8 @@ Router.map ->
   @route 'auth'
   @route 'home'
 
+  @route 'home-pro', path: '/home-pro'
+
   @resource 'profile', path: '/profile', ->
     @resource 'accounts', path: '/', ->
       @resource 'account', path: '/:login'
