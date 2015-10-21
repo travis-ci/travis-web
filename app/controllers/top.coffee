@@ -48,6 +48,8 @@ Controller = Ember.Controller.extend
         broadcasts.set('content', receivedBroadcasts)
         broadcasts.set('isLoading', false)
 
+        console.log broadcasts
+
       broadcasts
   ).property('broadcasts')
 

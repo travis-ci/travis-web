@@ -6,9 +6,9 @@
   </div>
 
 {{#if auth.signedIn}}
-  <div class="broadcast">
-    <span class="icon-broadcast {{broadcasts.lastBroadcastStatus}}" title="broadcasts" {{action 'toggleBroadcasts'}}></span>
-  </div>
+
+  {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus}}
+
   <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
   {{#each broadcasts.content as |broadcast|}}
     <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}} <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a></p></li>
