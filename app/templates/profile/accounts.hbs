@@ -9,7 +9,14 @@
           <h1>{{userName}}</h1>
           <p>Repositories <strong>{{user.reposCount}}</strong></p>
         {{/link-to}}
-        <p class="profile-user-last">Token: <strong>{{auth.currentUser.token}}</strong></p>
+        <p class="profile-user-last">Token: 
+
+        {{#if isVisible}}
+          <strong>{{auth.currentUser.token}}</strong><a {{action 'tokenVisibility'}} class="profile-token-toggle">&lharu;</a>
+        {{else}}
+          <a {{action 'tokenVisibility'}} class="profile-token-toggle">&rharu;</a>
+        {{/if}}
+        </p>
       </div>
     </div>
   </section>
