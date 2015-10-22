@@ -1,0 +1,17 @@
+.burger
+  overflow: auto
+  height: $top-height
+  @media #{$medium-up}
+    display: none
+
+  .burger-btn
+    float: right
+    font-size: 50px
+    background: none
+    border: none
+    line-height: 1
+    color: $grey-medium
+    outline: none !important
+    @include clearfix
+    &:hover
+      cursor: pointer

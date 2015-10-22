@@ -8,7 +8,12 @@
     padding-left: 0 !important
     padding-right: 0 !important
     padding-top: 30px !important
-    overflow-y: auto
+    // overflow-y: auto
+  @media #{$medium-up}
+    .topbar
+      max-width: 1024px
+      margin: auto
+      padding: 0
 
 .main,
 .profile-view
@@ -30,16 +35,6 @@
   padding: 0 0 110px 0
   background-color: $white
   border-right: 2px solid #f2f2f2
-
-.duration_label
-  display: inline-block
-  height: 11px
-  line-height: 13px
-  text-indent: 14px
-  margin-right: 1px
-  overflow: hidden
-  background: inline-image('ui/clock.svg') no-repeat 0px 0px
-  background-size: contain
 
 #main
   position: relative

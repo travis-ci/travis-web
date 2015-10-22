@@ -1,18 +1,30 @@
-<div class="row topbar">
+<div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
   <h1 id="logo" class="logo">{{#link-to "main"}}Travis{{/link-to}}</h1>
-  <div class="burger">
-    <button type="button" id="burger" class="burger-btn" {{action 'toggleBurgerMenu'}}>&equiv;</button>
+
+  <div class="navigation-toggle">
+    <button type="button" id="tofuburger" class="tofuburger" {{action 'toggleBurgerMenu'}}>Toggle Menu</button>
   </div>
 
-  <ul id="navigation" class="navigation {{if is-open 'is-open'}}">
-    <li><a href="http://blog.travis-ci.com">Blog</a></li>
-    <li><a href="http://www.traviscistatus.com/">Status</a></li>
+{{#if auth.signedIn}}
 
+  {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus}}
+
+  <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
+  {{#each broadcasts.content as |broadcast|}}
+    <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}} <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a></p></li>
+  {{else}}
+    <li><p>There are no broadcasts transmitted</p></li>
+  {{/each}}
+  </ul>
+{{/if}}
+
+  <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
+    <ul>
+      <li><a href="http://blog.travis-ci.com" class="navigation-anchor">Blog</a></li>
+      <li><a href="http://www.traviscistatus.com/" class="navigation-anchor">Status</a></li>
     {{#unless config.pro}}
-      <li class="navigation-sub navigation--community">
-        <p class="handle navigation-handle">
-          <span>Help</span>
-        </p>
+      <li>
+        <span class="navigation-anchor">Help</span>
         <ul class="navigation-nested">
           <li><a href="http://docs.travis-ci.com">Docs</a></li>
           <li><a href="http://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
@@ -20,57 +32,47 @@
       </li>
     {{/unless}}
 
-    {{#if config.pro}}
-      <li><a href="http://docs.travis-ci.com">Docs</a></li>
-      <li class="navigation-sub navigation--legal">
-        <p class="handle navigation-handle">
-          <span>Legal</span>
-        </p>
-        <ul class="navigation-nested">
-          <li>
-            <a href={{config.urls.imprint}}>Imprint</a>
-          </li>
-          <li>
-            <a href={{config.urls.security}}>Security</a>
-          </li>
-          <li>
-            <a href={{config.urls.terms}}>Terms</a>
-          </li>
-        </ul>
-      </li>
-    {{/if}}
+      {{#if config.pro}}
+        <li><a href="http://docs.travis-ci.com">Docs</a></li>
+        <li>
+          <span class="navigation-anchor">Legal</span>
+          <ul class="navigation-nested">
+            <li><a href={{config.urls.imprint}}>Imprint</a></li>
+            <li><a href={{config.urls.security}}>Security</a></li>
+            <li><a href={{config.urls.terms}}>Terms</a></li>
+          </ul>
+        </li>
+      {{/if}}
 
-    <li class="{{view.classProfile}} navigation-sub">
-      <p class="handle navigation-handle">
+      <li class="{{view.classProfile}}">
         {{#if auth.signedOut}}
           <button class="signed-out button--signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
-          {{#link-to "profile" class="signed-in"}}{{userName}}
-            <img src={{gravatarUrl}} />
+          {{#link-to "profile" class="navigation-anchor signed-in"}}{{userName}}<img src={{gravatarUrl}} />
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
           <button class="signing-in button--signingin">Signing In <span class="loading-indicator--white"><i></i><i></i><i></i></span></button>
         {{/if}}
-      </p>
-      {{#if auth.signedIn}}
-        <ul class="navigation-nested">
-          <li>
-            {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
-          </li>
-          {{#if config.billingEndpoint}}
+        {{#if auth.signedIn}}
+          <ul class="navigation-nested">
             <li>
-              <a href={{config.billingEndpoint}}>Billing</a>
+              {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
             </li>
-          {{/if}}
-          <li>
-            <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
-          </li>
-        </ul>
-      {{/if}}
-    </li>
-  </ul>
+            {{#if config.billingEndpoint}}
+              <li>
+                <a href={{config.billingEndpoint}}>Billing</a>
+              </li>
+            {{/if}}
+            <li>
+              <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
+            </li>
+          </ul>
+        {{/if}}
+      </li>
+    </ul>
+  </nav>
 </div>
 
 {{#if showCta}}

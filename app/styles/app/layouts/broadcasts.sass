@@ -1,0 +1,143 @@
+.broadcast
+  display: inline-block
+  height: $top-height
+  width: 40px
+  margin-left: 1em
+  line-height: $top-height
+  cursor: pointer
+  vertical-align: middle
+  @media #{$medium-up}
+    float: left
+
+.broadcasts
+  position: relative
+  background-color: $white
+  list-style: none
+  padding: 0 1em
+  margin: 0 auto .7em
+  border-radius: 2px
+  height: 0
+  transform-origin: center center
+  opacity: 0
+  z-index: -1
+  will-change: opacity
+  transition: opacity 150ms ease
+
+  &:after
+    content: ""
+    position: absolute
+    display: block
+    width: 14px
+    height: 14px
+    background: $white
+    top: -0.5em
+    left: 136px
+    transform: rotate(45deg)
+    border-top: solid 2px $cream-dark
+    border-left: solid 2px $cream-dark
+  li
+    border-bottom: solid 2px $cream-dark
+    &:last-of-type
+      border-bottom: none
+  p
+    margin: .5em 0
+    padding-left: 1.5rem
+    font-size: .9em
+    word-wrap: break-word
+  a
+    display: inline
+    line-height: 1.45
+    text-decoration: underline
+
+  &.is-open
+    z-index: 80
+    border: solid 2px $cream-dark
+    opacity: 1
+    height: auto
+
+  .icon-close
+    display: inline-block
+    width: 1.2em
+    height: 1.2em
+    float: right
+    background:
+      image: inline-image('line-icons/icon-failed.svg')
+      repeat: no-repeat
+
+  @media #{$medium-up}
+    position: absolute
+    top: 3.3em
+    left: 145px
+    width: 27em
+    height: auto
+    z-index: 70
+    margin-left: -0.7em
+    .centered &
+      left: 133px
+    &:after
+      left: 1rem
+
+.broadcast-status
+  display: inline-block
+  width: 10px
+  height: 10px
+  margin-right: .5rem
+  margin-left: -1.5rem
+  border-radius: 50%
+  background-color: $grey-medium
+
+  &.warning
+    background-color: $red-dark
+
+  &.announcement
+    background-color: $green-dark
+
+
+.icon-broadcast
+  display: inline-block
+  width: 1.3em
+  height: 2em
+  vertical-align: middle
+  svg
+    overflow: visible
+  .tower-path
+    fill: #AEAEAE
+  &:hover,
+  &.is-open
+    .tower-path
+      fill: #818181
+
+  &.warning
+    .tower-path
+      fill: #DB4141
+    &:hover,
+    &.is-open
+      .tower-path
+        fill: #BA1717
+
+  &.announcement
+    .tower-path
+      fill: #3CA85B
+    &:hover,
+    &.is-open
+      .tower-path
+        fill: #238C3E
+
+  .radio-wave--right
+    .tower-path
+      transform-origin: left center
+      animation: pulsating-right 1.5s linear infinite
+
+  .radio-wave--left
+    .tower-path
+      transform-origin: right center
+      animation: pulsating-left 1.5s linear infinite
+
+
+@keyframes pulsating-right
+  40%
+    transform: translateX(1px) scale(1.1)
+
+@keyframes pulsating-left
+  40%
+    transform: translateX(-1px) scale(1.1)
