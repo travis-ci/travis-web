@@ -6,6 +6,7 @@ languageConfigKeys = {
   perl6:       'Perl6'
   python:      'Python'
   scala:       'Scala'
+  smalltalk:   'Smalltalk'
   ruby:        'Ruby'
   d:           'D'
   julia:       'Julia'
