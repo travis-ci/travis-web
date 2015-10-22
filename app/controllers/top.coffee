@@ -31,7 +31,10 @@ Controller = Ember.Controller.extend
       options.headers = { Authorization: "token #{@auth.token()}" }
 
       seenBroadcasts = Travis.storage.getItem('travis.seen_broadcasts')
-      seenBroadcasts = JSON.parse(seenBroadcasts) if seenBroadcasts
+      if seenBroadcasts
+        seenBroadcasts = JSON.parse(seenBroadcasts)
+      else
+        seenBroadcasts = []
 
       $.ajax("#{apiEndpoint}/v3/broadcasts", options).then (response) ->
         if response.broadcasts.length
@@ -44,7 +47,13 @@ Controller = Ember.Controller.extend
             ).reverse()
 
           if receivedBroadcasts.length
-            broadcasts.set('lastBroadcastStatus', receivedBroadcasts[0].category)
+            if receivedBroadcasts.findBy('category', 'warning')
+              broadcasts.set('lastBroadcastStatus', 'warning')
+            else if receivedBroadcasts.findBy('category', 'announcement')
+              broadcasts.set('lastBroadcastStatus', 'announcement')
+            else
+              broadcasts.set('lastBroadcastStatus', '')
+
         broadcasts.set('content', receivedBroadcasts)
         broadcasts.set('isLoading', false)
 
