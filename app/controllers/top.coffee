@@ -82,7 +82,10 @@ Controller = Ember.Controller.extend
       unless @get('broadcasts.content').length
         @set('broadcasts.lastBroadcastStatus', '')
       else
-        @set('broadcasts.lastBroadcastStatus', @get('broadcasts.content')[0].category)
+        if @get('broadcasts.content').findBy('category', 'warning')
+          @set('broadcasts.lastBroadcastStatus', 'warning')
+        else if @get('broadcasts.content').findBy('category', 'announcement')
+          @set('broadcasts.lastBroadcastStatus', 'announcement')
       return false
   }
 
