@@ -6,12 +6,13 @@ Controller = Ember.Controller.extend
 
   repos: (->
     data = @get('model')
-
-    repos = data.repositories.filter (item, index) -> 
-      if item.active
-        console.log(item)
-        item
-    repos.sortBy('default_branch.last_build.finished_at').reverse()
+    repos = []
+    if data.repositories
+      repos = data.repositories.filter((item, index) ->
+        if item.active
+          item
+      ).sortBy('default_branch.last_build.finished_at').reverse()
+    repos
 
   ).property('model')
 
