@@ -17,6 +17,15 @@ Controller = Ember.Controller.extend
     "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
   ).property('user.gravatarId')
 
+  defineTowerColor: (broadcastArray) ->
+    if broadcastArray.length
+      if broadcastArray.findBy('category', 'warning')
+        return 'warning'
+      else if broadcastArray.findBy('category', 'announcement')
+        return 'announcement'
+      else
+        return ''
+
   broadcasts: (->
 
     if @get('auth.signedIn')
@@ -36,9 +45,9 @@ Controller = Ember.Controller.extend
       else
         seenBroadcasts = []
 
-      $.ajax("#{apiEndpoint}/v3/broadcasts", options).then (response) ->
+      $.ajax("#{apiEndpoint}/v3/broadcasts", options).then (response) =>
         if response.broadcasts.length
-          receivedBroadcasts = response.broadcasts.filter((broadcast) ->
+          receivedBroadcasts = response.broadcasts.filter((broadcast) =>
               unless broadcast.expired
                 if seenBroadcasts.indexOf(broadcast.id.toString()) == -1
                   broadcast
@@ -46,14 +55,7 @@ Controller = Ember.Controller.extend
               Ember.Object.create(broadcast)
             ).reverse()
 
-          if receivedBroadcasts.length
-            if receivedBroadcasts.findBy('category', 'warning')
-              broadcasts.set('lastBroadcastStatus', 'warning')
-            else if receivedBroadcasts.findBy('category', 'announcement')
-              broadcasts.set('lastBroadcastStatus', 'announcement')
-            else
-              broadcasts.set('lastBroadcastStatus', '')
-
+        broadcasts.set('lastBroadcastStatus', @defineTowerColor(receivedBroadcasts))
         broadcasts.set('content', receivedBroadcasts)
         broadcasts.set('isLoading', false)
 
@@ -79,13 +81,7 @@ Controller = Ember.Controller.extend
       seenBroadcasts.push(id)
       Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts))
       @get('broadcasts.content').removeObject(broadcast)
-      unless @get('broadcasts.content').length
-        @set('broadcasts.lastBroadcastStatus', '')
-      else
-        if @get('broadcasts.content').findBy('category', 'warning')
-          @set('broadcasts.lastBroadcastStatus', 'warning')
-        else if @get('broadcasts.content').findBy('category', 'announcement')
-          @set('broadcasts.lastBroadcastStatus', 'announcement')
+      @set('broadcasts.lastBroadcastStatus', @defineTowerColor(@get('broadcasts.content')))
       return false
   }
 
