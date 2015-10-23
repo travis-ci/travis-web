@@ -102,6 +102,9 @@
     overflow: visible
   .tower-path
     fill: #AEAEAE
+  .radio-wave--right,
+  .radio-wave--left
+    display: none
   &:hover,
   &.is-open
     .tower-path
@@ -122,6 +125,12 @@
     &.is-open
       .tower-path
         fill: #238C3E
+
+  &.announcement,
+  &.warning
+    .radio-wave--right,
+    .radio-wave--left
+      display: block
 
   .radio-wave--right
     .tower-path
