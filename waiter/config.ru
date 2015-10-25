@@ -42,6 +42,9 @@ if ENV['TRAVIS_PRO']
 
   ENV['CODE_CLIMATE_URL'] ||= "https://codeclimate.com/partners/travisci"
   ENV['CODE_CLIMATE'] = 'true' unless ENV.has_key?('CODE_CLIMATE')
+
+  ENV['CODECOV_URL'] ||= "https://codecov.io/integrations/travis-ci"
+  ENV['CODECOV'] = 'true' unless ENV.has_key?('CODECOV')
 end
 
 if ENV['TRAVIS_ENTERPRISE']
@@ -71,6 +74,8 @@ run Travis::Web::App.build(
   enterprise: ENV['TRAVIS_ENTERPRISE'],
   code_climate: ENV['CODE_CLIMATE'],
   code_climate_url: ENV['CODE_CLIMATE_URL'],
+  codecov: ENV['CODECOV'],
+  codecov_url: ENV['CODECOV_URL'],
   assets_host: ENV['ASSETS_HOST'],
   ajax_polling: ENV['AJAX_POLLING'],
   github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']

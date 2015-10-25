@@ -83,6 +83,19 @@
   margin-right: 10px;
 }
 
+/* line 51, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
+#codecov a {
+  text-decoration: underline;
+  font-weight: bold;
+}
+/* line 56, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
+#codecov img#codecov-logo {
+  float: right;
+  width: 150px;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
 /* line 62, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
 #actions {
   float: right;

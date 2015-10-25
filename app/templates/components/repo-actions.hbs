@@ -8,6 +8,14 @@
     {{build-repo-actions build=build user=user repo=repo}}
   {{/if}}
 
+  {{#if displayCodecov}}
+    <a href="#" name="codecov"
+      {{action "codecovPopup"}} class="button-circle open-popup"
+      title="Test Coverage with Codecov">
+      <span class="icon icon--codecov"></span>
+    </a>
+  {{/if}}
+
   {{#if displayCodeClimate}}
     <a href="#" name="code-climate"
       {{action "codeClimatePopup"}} class="button-circle open-popup"
@@ -19,3 +27,4 @@
 </div>
 
 {{code-climate-popup}}
+{{codecov-popup language=repo.githubLanguage}}
