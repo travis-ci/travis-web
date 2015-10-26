@@ -1,3 +1,7 @@
+.landing
+  width: 100%
+
+
 .inner
   margin: auto
   max-width: 1024px
@@ -30,7 +34,7 @@
 .text-big
   font-size: 26px
   font-weight: 300
-  line-height: 1.45
+  line-height: 1.55
 
 .text-small
   font-size: 18px
@@ -46,12 +50,12 @@
   padding: 0.9em 1em 0.9em 3em
   margin: 0 auto
   color: white
-  border-radius: 4px
+  border-radius: 2px
   font-size: 27px
   text-decoration: none
   &:hover
     color: white
-    background-color: darken(#39A85B, 10)
+    background-color: #73c78d
 
 
 .section--grey
@@ -60,7 +64,105 @@
 .section--white
   background-color: white
 
+.section--center
+  text-align: center
+
+
+
+%list
+  list-style: none
+  padding: 0
+  margin: 0
+
+
+.list--customers
+  @extend %list
+  display: flex
+  justify-content: space-around
+  flex-wrap: wrap
+  li
+    flex: 1 0 20%
+
+.list--languages
+  @extend %list
+  display: flex
+  justify-content: space-around
+  flex-wrap: wrap
+  li
+    flex: 0 0 9%
 
 .list--check
+  @extend %list
   li
     @extend .text-big
+    &:before
+      content: ""
+      display: inline-block
+      height: 1.2em
+      width: 1.2em
+      margin-right: .3em
+      vertical-align: middle
+      background:
+        image: url(../images/line-icons/icon-passed.svg)
+
+
+
+.landing-pro
+
+  [class^="customer-"]
+    display: block
+    height: 5em
+    text-indent: -999%
+    overflow: hidden
+    background:
+      repeat: no-repeat
+      size: 12em 2em
+      position: center center
+
+  .customer-zendesk
+    background-image: url(../images/pro-landing/customer-logos-zendesk.svg)
+  .customer-heroku
+    background-image: url(../images/pro-landing/customer-logos-heroku.svg)
+  .customer-engineyard
+    background-image: url(../images/pro-landing/customer-logos-engineyard.svg)
+  .customer-bittorrent
+    background-image: url(../images/pro-landing/customer-logos-bittorrent.svg)
+  .customer-moz
+    background-image: url(../images/pro-landing/customer-logos-moz.svg)
+
+
+  [class^="language-"]
+    display: block
+    height: 3.5em
+    width: 3.5em
+    margin: 0 auto .5em
+    background:
+      repeat: no-repeat
+      size: 100%
+      position: center center
+
+  .language-clojure
+    background-image: url(../images/pro-landing/lang-clojure.svg)
+  .language-node
+    background-image: url(../images/pro-landing/lang-nodejs.svg)
+  .language-php
+    background-image: url(../images/pro-landing/lang-php.svg)
+  .language-xcode
+    background-image: url(../images/pro-landing/lang-xcode.svg)
+  .language-ruby
+    background-image: url(../images/pro-landing/lang-ruby.svg)
+  .language-python
+    background-image: url(../images/pro-landing/lang-python.svg)
+  .language-java
+    background-image: url(../images/pro-landing/lang-java.svg)
+  .language-erlang
+    background-image: url(../images/pro-landing/lang-erlang.svg)
+  .language-go
+    background-image: url(../images/pro-landing/lang-go.svg)
+  .language-scala
+    background-image: url(../images/pro-landing/lang-scala.svg)
+  .language-perl
+    background-image: url(../images/pro-landing/lang-perl.svg)
+
+
+
