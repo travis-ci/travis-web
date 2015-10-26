@@ -68,6 +68,22 @@
   text-align: center
 
 
+.section--feature
+  .inner
+    display: flex
+  
+  .section-list,
+  .section-text
+    flex: 1 0 50%
+
+
+.section--hero
+  .inner
+    display: flex
+  
+  .section-image,
+  .section-text
+    flex: 1 0 50%
 
 %list
   list-style: none
@@ -105,6 +121,15 @@
       background:
         image: url(../images/line-icons/icon-passed.svg)
 
+
+.list--features
+  @extend %list
+  display: flex
+  justify-content: space-around
+  flex-wrap: wrap
+
+  li
+    flex: 0 0 50%
 
 
 .landing-pro
