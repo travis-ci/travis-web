@@ -12,10 +12,22 @@
         <p class="profile-user-last">Token: 
 
         {{#if isVisible}}
-          <strong>{{auth.currentUser.token}}</strong><a {{action 'tokenVisibility'}} class="profile-token-toggle">&lharu;</a>
-        {{else}}
-          <a {{action 'tokenVisibility'}} class="profile-token-toggle">&rharu;</a>
+          <strong>{{auth.currentUser.token}}</strong>
         {{/if}}
+        <a {{action 'tokenVisibility'}} class="profile-token-toggle tooltip--profile {{if isVisible 'is-visible'}} dropdown">
+          <span class="tooltip-bubble">
+            {{#if isVisible}}hide token{{else}}show token{{/if}}
+          </span>
+          <span class="icon-eye">
+            <svg x="0px" y="0px" viewBox="2 -1 17 17" width="20" height="18" xml:space="preserve">
+              <g>
+                <path  d="M17.4,9.6c-0.1-0.2-3.3-4.1-7.4-4.1s-7.3,4-7.4,4.1c-0.2,0.2-0.2,0.6,0,0.8c0.1,0.2,3.3,4.1,7.4,4.1
+                  s7.3-4,7.4-4.1C17.6,10.2,17.6,9.8,17.4,9.6z M10,13.2c-2.8,0-5.2-2.3-6.1-3.2C4.8,9.1,7.2,6.8,10,6.8c2.8,0,5.2,2.3,6.1,3.2
+                  C15.2,10.9,12.8,13.2,10,13.2z"/>
+                <polygon points="10 7, 7.4000000954 10, 10 13, 12.5999999046 10, 10 7"/>
+              </g>
+            </svg>
+          </span></a>
         </p>
       </div>
     </div>
