@@ -1,6 +1,11 @@
-.landing
-  width: 100%
+.landing-pro
+  .wrapper
+    width: 100%
+    padding-bottom: 0
+    margin-bottom: 0
 
+  .landing-footer
+    margin-top: 0
 
 .inner
   margin: auto
@@ -28,6 +33,7 @@
   color: #408692
 
 .h3
+  margin: .5em 0
   font-size: 22px
   font-weight: 300
 
@@ -37,26 +43,35 @@
   line-height: 1.55
 
 .text-small
+  margin: 0
   font-size: 18px
 
-.hero-button
+
+.landing-button
   display: inline-block
-  background:
-    color: #39A85B
-    image: inline-image('landing-page/sign-in-mascot.svg')
-    size: 1.7em
-    position: 0.8em center
-    repeat: no-repeat
-  padding: 0.9em 1em 0.9em 3em
+  padding: 0.9em 1em
   margin: 0 auto
   color: white
   border-radius: 2px
   font-size: 27px
   text-decoration: none
+  background-color: #39A85B
   &:hover
     color: white
     background-color: #73c78d
 
+.hero-button
+  @extend .landing-button
+  padding: 0.9em 1em 0.9em 3em
+  background:
+    image: inline-image('landing-page/sign-in-mascot.svg')
+    size: 1.7em
+    position: 0.8em center
+    repeat: no-repeat
+
+.hero-computer
+  width: 100%
+  height: 100%
 
 .section--grey
   background-color: #F6F6F6
@@ -119,7 +134,7 @@
       margin-right: .3em
       vertical-align: middle
       background:
-        image: url(../images/line-icons/icon-passed.svg)
+        image: inline-image('line-icons/icon-passed.svg')
 
 
 .list--features
@@ -145,15 +160,36 @@
       position: center center
 
   .customer-zendesk
-    background-image: url(../images/pro-landing/customer-logos-zendesk.svg)
+    background-image: inline-image('pro-landing/customer-logos-zendesk.svg')
   .customer-heroku
-    background-image: url(../images/pro-landing/customer-logos-heroku.svg)
+    background-image: inline-image('pro-landing/customer-logos-heroku.svg')
   .customer-engineyard
-    background-image: url(../images/pro-landing/customer-logos-engineyard.svg)
+    background-image: inline-image('pro-landing/customer-logos-engineyard.svg')
   .customer-bittorrent
-    background-image: url(../images/pro-landing/customer-logos-bittorrent.svg)
+    background-image: inline-image('pro-landing/customer-logos-bittorrent.svg')
   .customer-moz
-    background-image: url(../images/pro-landing/customer-logos-moz.svg)
+    background-image: inline-image('pro-landing/customer-logos-moz.svg')
+
+
+  [class^="feature-"]
+    display: block
+    height: 2.5em
+    width: 2.5em
+    overflow: hidden
+    margin: auto
+    background:
+      repeat: no-repeat
+      size: 100%
+      position: center center
+
+  .feature-github
+    background-image: inline-image('pro-landing/feature-icon-github.svg')
+  .feature-db
+    background-image: inline-image('pro-landing/feature-icon-platform.svg')
+  .feature-pr
+    background-image: inline-image('pro-landing/feature-icon-pullrequests.svg')
+  .feature-heroku
+    background-image: inline-image('pro-landing/feature-icon-heroku.svg')
 
 
   [class^="language-"]
@@ -167,27 +203,27 @@
       position: center center
 
   .language-clojure
-    background-image: url(../images/pro-landing/lang-clojure.svg)
+    background-image: inline-image('pro-landing/lang-clojure.svg')
   .language-node
-    background-image: url(../images/pro-landing/lang-nodejs.svg)
+    background-image: inline-image('pro-landing/lang-nodejs.svg')
   .language-php
-    background-image: url(../images/pro-landing/lang-php.svg)
+    background-image: inline-image('pro-landing/lang-php.svg')
   .language-xcode
-    background-image: url(../images/pro-landing/lang-xcode.svg)
+    background-image: inline-image('pro-landing/lang-xcode.svg')
   .language-ruby
-    background-image: url(../images/pro-landing/lang-ruby.svg)
+    background-image: inline-image('pro-landing/lang-ruby.svg')
   .language-python
-    background-image: url(../images/pro-landing/lang-python.svg)
+    background-image: inline-image('pro-landing/lang-python.svg')
   .language-java
-    background-image: url(../images/pro-landing/lang-java.svg)
+    background-image: inline-image('pro-landing/lang-java.svg')
   .language-erlang
-    background-image: url(../images/pro-landing/lang-erlang.svg)
+    background-image: inline-image('pro-landing/lang-erlang.svg')
   .language-go
-    background-image: url(../images/pro-landing/lang-go.svg)
+    background-image: inline-image('pro-landing/lang-go.svg')
   .language-scala
-    background-image: url(../images/pro-landing/lang-scala.svg)
+    background-image: inline-image('pro-landing/lang-scala.svg')
   .language-perl
-    background-image: url(../images/pro-landing/lang-perl.svg)
+    background-image: inline-image('pro-landing/lang-perl.svg')
 
 
 
