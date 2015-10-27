@@ -1,4 +1,14 @@
 .landing-pro
+
+  p a
+    text-decoration: none
+    border-bottom: 1px solid #bfc0c1
+    padding-bottom: 0.1em
+    &:hover,
+    &:active
+      color: #303030
+      border-color: transparent
+
   .wrapper
     width: 100%
     padding-bottom: 0
@@ -7,147 +17,167 @@
   .landing-footer
     margin-top: 0
 
-.inner
-  margin: auto
-  max-width: 1024px
-  padding: 0 $column-gutter/2
+  .inner
+    margin: auto
+    max-width: 1024px
+    padding: 0 $column-gutter/2
 
 
-.h1
-  font-size: 50px
-  color: #408692 !important
-  font-weight: 300
-  margin: 0
+  .h1
+    font-size: 64px
+    color: #408692 !important
+    font-weight: 300
+    margin: 0
+    line-height: 1.3
 
-%h2
-  font-size: 40px
-  font-weight: 300
-  line-height: 1.2
+  %h2
+    margin: 0 0 .5em
+    font-size: 32px
+    font-weight: 300
+    line-height: 1.3
 
-.h2--green
-  @extend %h2
-  color: #39A85B
+  .h2--green
+    @extend %h2
+    color: #39A85B
 
-.h2--teal
-  @extend %h2
-  color: #408692
+  .h2--teal
+    @extend %h2
+    margin-bottom: 1em
+    color: #408692
 
-.h3
-  margin: .5em 0
-  font-size: 22px
-  font-weight: 300
+  .h3
+    margin: .5em 0
+    font-size: 20px
+    font-weight: 300
 
-.text-big
-  font-size: 26px
-  font-weight: 300
-  line-height: 1.55
+  .text-big
+    font-size: 20px
+    font-weight: 300
+    line-height: 1.55
 
-.text-small
-  margin: 0
-  font-size: 18px
+  .text-small
+    margin: 0 0 2.5em
 
-
-.landing-button
-  display: inline-block
-  padding: 0.9em 1em
-  margin: 0 auto
-  color: white
-  border-radius: 2px
-  font-size: 27px
-  text-decoration: none
-  background-color: #39A85B
-  &:hover
+  .landing-button
+    display: inline-block
+    padding: 0.9em 1em
+    margin: 0 auto
     color: white
-    background-color: #73c78d
+    border-radius: 2px
+    font-size: 27px
+    text-decoration: none
+    background-color: #39A85B
+    &:hover
+      color: white
+      background-color: #73c78d
 
-.hero-button
-  @extend .landing-button
-  padding: 0.9em 1em 0.9em 3em
-  background:
-    image: inline-image('landing-page/sign-in-mascot.svg')
-    size: 1.7em
-    position: 0.8em center
-    repeat: no-repeat
+  .hero-button
+    @extend .landing-button
+    padding: 0.9em 1em 0.9em 3em
+    background:
+      image: inline-image('landing-page/sign-in-mascot.svg')
+      size: 1.7em
+      position: 0.8em center
+      repeat: no-repeat
 
-.hero-computer
-  width: 100%
-  height: 100%
+  .hero-computer
+    width: 100%
+    height: 35em
+    position: absolute
+    transform: translateY(-.1rem)
 
-.section--grey
-  background-color: #F6F6F6
+  .section--grey
+    padding: 4rem 0 5rem
+    background-color: #F6F6F6
 
-.section--white
-  background-color: white
+  .section--white
+    padding: 6rem 0
+    background-color: white
 
-.section--center
-  text-align: center
+  .section--center
+    text-align: center
 
 
-.section--feature
-  .inner
+  .section--feature
+    .inner
+      display: flex
+      justify-content: space-between
+      flex-direction: column
+      @media #{$medium-up}
+        flex-direction: row
+    
+    .section-list,
+    .section-text
+      flex: 0 0 47%
+
+
+  .section--hero
+    .inner
+      display: flex
+      justify-content: space-between
+      flex-direction: column
+      @media #{$medium-up}
+        flex-direction: row
+    
+    .section-text
+      flex: 0 0 47%
+    .section-image
+      flex: 0 0 50%
+
+    .section-image
+      position: relative
+
+    .text-big
+      margin: 0.8em 0 1.7em
+
+  %list
+    list-style: none
+    padding: 0
+    margin: 0
+
+
+  .list--customers
+    @extend %list
     display: flex
-  
-  .section-list,
-  .section-text
-    flex: 1 0 50%
+    justify-content: space-around
+    flex-wrap: wrap
+    width: 88%
+    margin: auto
+    li
+      flex: 0 0 12em
 
-
-.section--hero
-  .inner
+  .list--languages
+    @extend %list
     display: flex
-  
-  .section-image,
-  .section-text
-    flex: 1 0 50%
+    justify-content: space-around
+    flex-wrap: wrap
+    li
+      flex: 0 0 9%
 
-%list
-  list-style: none
-  padding: 0
-  margin: 0
-
-
-.list--customers
-  @extend %list
-  display: flex
-  justify-content: space-around
-  flex-wrap: wrap
-  li
-    flex: 1 0 20%
-
-.list--languages
-  @extend %list
-  display: flex
-  justify-content: space-around
-  flex-wrap: wrap
-  li
-    flex: 0 0 9%
-
-.list--check
-  @extend %list
-  li
-    @extend .text-big
-    &:before
-      content: ""
-      display: inline-block
-      height: 1.2em
-      width: 1.2em
-      margin-right: .3em
-      vertical-align: middle
-      background:
-        image: inline-image('line-icons/icon-passed.svg')
+  .list--check
+    @extend %list
+    li
+      @extend .text-big
+      line-height: 1.65
+      &:before
+        content: ""
+        display: inline-block
+        height: 1.2em
+        width: 1.2em
+        margin-right: .3em
+        vertical-align: middle
+        background:
+          image: inline-image('line-icons/icon-passed.svg')
 
 
-.list--features
-  @extend %list
-  display: flex
-  justify-content: space-around
-  flex-wrap: wrap
+  .list--features
+    @extend %list
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
 
-  li
-    flex: 0 0 50%
-
-
-.landing-pro
+    li
+      flex: 0 0 43%
 
   [class^="customer-"]
     display: block
@@ -173,8 +203,8 @@
 
   [class^="feature-"]
     display: block
-    height: 2.5em
-    width: 2.5em
+    height: 2em
+    width: 2em
     overflow: hidden
     margin: auto
     background:
