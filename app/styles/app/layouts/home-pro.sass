@@ -83,8 +83,11 @@
   .hero-computer
     width: 100%
     height: 35em
-    position: absolute
-    transform: translateY(-.1rem)
+    margin-top: 3em
+    @media #{$medium-up}
+      position: absolute
+      margin-top: 0
+      transform: translateY(-.1rem)
 
   .section--grey
     padding: 4rem 0 5rem
@@ -102,13 +105,15 @@
     .inner
       display: flex
       justify-content: space-between
-      flex-direction: column
+      flex-direction: column-reverse
       @media #{$medium-up}
         flex-direction: row
     
     .section-list,
     .section-text
-      flex: 0 0 47%
+      flex: 0 0 50%
+      @media (min-width: 54em)
+        flex: 0 0 47%
 
 
   .section--hero
@@ -121,6 +126,9 @@
     
     .section-text
       flex: 0 0 47%
+      text-align: center
+      @media #{$medium-up}
+        text-align: left
     .section-image
       flex: 0 0 50%
 
@@ -174,10 +182,13 @@
     @extend %list
     display: flex
     justify-content: space-between
-    flex-wrap: wrap
-
+    flex-flow: column wrap
+    margin-top: 5em
+    @media #{$medium-up}
+      flex-flow: row wrap
+      margin-top: 0
     li
-      flex: 0 0 43%
+      flex: 0 0 15em
 
   [class^="customer-"]
     display: block
