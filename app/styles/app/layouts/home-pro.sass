@@ -5,6 +5,7 @@
       text-decoration: none
       border-bottom: 1px solid #bfc0c1
       padding-bottom: 0.1em
+      transition: color 200ms ease, border 200ms ease
       &:hover,
       &:active
         color: #303030
@@ -24,12 +25,23 @@
     max-width: 1024px
     padding: 0 $column-gutter/2
 
-  .h1
+  %h1
     font-size: 64px
-    color: #408692 !important
     font-weight: 300
     margin: 0
     line-height: 1.3
+
+  .h1--grey
+    @extend %h1
+    @include linkStyle
+    font-size: 54px
+    color: #858585 !important
+    a
+      color: #858585
+
+  .h1--teal
+    @extend %h1
+    color: #408692 !important
 
   %h2
     margin: 0 0 .5em
@@ -46,12 +58,21 @@
     margin-bottom: 1em
     color: #408692
 
-  .h3
+  %h3
     margin: .5em 0
     font-size: 20px
     font-weight: 300
 
+  .h3
+    @extend %h3
+
+  .h3--plans
+    @extend %h3
+    font-size: 26px
+    text-align: center
+
   .text-big
+    @include linkStyle
     font-size: 20px
     font-weight: 300
     line-height: 1.55
@@ -116,6 +137,11 @@
       @media (min-width: 54em)
         flex: 0 0 47%
 
+    .list--check
+      li
+        @extend .text-big
+        line-height: 1.65
+
 
   .section--hero
     .inner
@@ -169,8 +195,6 @@
   .list--check
     @extend %list
     li
-      @extend .text-big
-      line-height: 1.65
       &:before
         content: ""
         display: inline-block
@@ -205,5 +229,72 @@
     width: 3.5em
     margin: 0 auto .5em
 
+
+  .list--plans
+    @extend %list
+    display: flex
+    justify-content: space-between
+    margin: 5em 0
+    > li
+      flex: 0 0 230px
+      padding: 1em 2em 3em
+      border: 1px solid
+
+    .list--check
+      margin: 3em 0
+      li
+        line-height: 1.45
+
+
+  .plan-title
+    font-size: 1.9em
+    font-weight: 300
+    text-align: center
+
+  .plan-pricing
+    text-align: center
+    .price
+      font-size: 20px
+    .timeframe
+      font-size: 16px
+
+  .plan-cta
+    text-align: center
+
+  .plan-cta-btn
+    display: inline-block
+    padding: 0.7em
+    border-radius: 2px
+    font-size: 22px
+    text-decoration: none
+    border: solid 1px black
+
+
+  .section--enterprise
+    .inner
+      display: flex
+      justify-content: space-between
+
+    .section-text
+      text-align: right
+
+    .section-text,
+    .section-image
+      flex: 0 0 47%
+
+
+  .list--faq
+    display: flex
+    flex-flow: row wrap
+    justify-content: space-between
+
+    padding: 0
+    margin: 3em 0 0
+    list-style: none
+    li
+      flex: 0 0 48%
+      padding: 1em 1.5em 0
+      margin-bottom: 2em
+      border: solid 1px lightgrey
 
 

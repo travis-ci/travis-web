@@ -1,18 +1,20 @@
 <div id="landing" class="landing wrapper">
   <section class="section--white">
     <div class="inner">
-      <h1>Always free for <a href="#">open source projects</a>!</h1>
-      <p>Set up your first project in <em>just one minute</em>.<br>
-        <em>Your first 100 builds are free!</em> No credit card required.
-      </p>
+      <header class="section--center">
+        <h1 class="h1--grey">Always free for <a href="#">open source projects</a>!</h1>
+        <p class="text-big">Set up your first project in <strong>just one minute</strong>.<br>
+          <strong>Your first 100 builds are free!</strong> No credit card required.
+        </p>
+      </header>
       <ul class="list--plans">
         <li>
-          <h2>Open Source</h2>
+          <h2 class="plan-title">Open Source</h2>
           <div class="plan-pricing">
             <div class="price">Free</div>
             <div class="timefrane">always</div>
           </div>
-          <ul>
+          <ul class="list--check">
             <li>Fair use</li>
             <li>Ulimited build minutes</li>
             <li>Unlimited repositories</li>
@@ -23,62 +25,64 @@
           </div>
         </li>
         <li>
-          <h2>Startup</h2>
+          <h2 class="plan-title">Startup</h2>
           <div class="plan-pricing">
             <div class="price">$129</div>
             <div class="timefrane">per month</div>
           </div>
-          <ul>
+          <ul class="list--check">
             <li data-jobs="2"><span aria-hidden="false" class="is-hidden">2</span>Concurrent jobs</li>
             <li>Ulimited build minutes</li>
             <li>Unlimited repositories</li>
             <li>Unlimited collaborators</li>
           </ul>
           <div class="plan-cta">
-            <a href="https://travis-ci.com/signin" class="plan-cta-btn">Get Started</a>
+            <a href="https://travis-ci.com/signin" class="plan-cta-btn">Start Trial</a>
           </div>
         </li>
         <li>
-          <h2>Small Business</h2>
+          <h2 class="plan-title">Small Business</h2>
           <div class="plan-pricing">
             <div class="price">$249</div>
             <div class="timefrane">per month</div>
           </div>
-          <ul>
+          <ul class="list--check">
             <li data-jobs="5"><span aria-hidden="false" class="is-hidden">5</span>Concurrent jobs</li>
             <li>Ulimited build minutes</li>
             <li>Unlimited repositories</li>
             <li>Unlimited collaborators</li>
           </ul>
           <div class="plan-cta">
-            <a href="https://travis-ci.com/signin" class="plan-cta-btn">Get Started</a>
+            <a href="https://travis-ci.com/signin" class="plan-cta-btn">Start Trial</a>
           </div>
         </li>
         <li>
-          <h2>Premium</h2>
+          <h2 class="plan-title">Premium</h2>
           <div class="plan-pricing">
             <div class="price">$489</div>
             <div class="timefrane">per month</div>
           </div>
-          <ul>
+          <ul class="list--check">
             <li data-jobs="10"><span aria-hidden="false" class="is-hidden">10</span>Concurrent jobs</li>
             <li>Ulimited build minutes</li>
             <li>Unlimited repositories</li>
             <li>Unlimited collaborators</li>
           </ul>
           <div class="plan-cta">
-            <a href="https://travis-ci.com/signin" class="plan-cta-btn">Get Started</a>
+            <a href="https://travis-ci.com/signin" class="plan-cta-btn">Start Trial</a>
           </div>
         </li>
       </ul>
-      <p>In need of a bigger plan? <a href="mailto:contact@travis-ci.com">Get in touch</a><br> and we'll help get that started!</p>
+      <div class="section--center">
+       <p class="text-big">In need of a bigger plan? <a href="mailto:contact@travis-ci.com">Get in touch</a><br> and we'll help get that started!</p> 
+      </div>
     </div>
   </section>
-  <section class="section--grey">
+  <section class="section--grey section--enterprise">
     <div class="inner">
       <div class="section-text">
-        <h2>Interested in using Travis CI on-site?</h2>
-        <p>We offer an <em>Enterprise plan</em> for companies who want to keep using the same features of Travis CI with additional on-site security needs. <a href="#">Learn more</a> about Travis CI Enterprise.</p>
+        <h2 class="h2--teal">Interested in using <br>Travis CI on-site?</h2>
+        <p class="text-big">We offer an <strong>Enterprise plan</strong> for companies who<br> want to keep using the same features of<br> Travis CI with additional on-site security needs.<br><a href="#">Learn more</a> about Travis CI Enterprise.</p>
       </div>
       <div class="section-image">
         <img src="../images/pro-landing/enterprise-servers.svg" alt="Travis CI Enterprise" aria-hidden="true">
@@ -87,43 +91,43 @@
   </section>
   <section class="section--white">
     <div class="inner">
-      <h3>Frequently asked questions about Travis CI plans</h3>
+      <h3 class="h3--plans">Frequently asked questions about Travis CI plans</h3>
       <ul class="list--faq">
         <li>
-          <h4>What is a concurrent job?</h4>
-          <p>Every commit triggers a single job by default. If two commits have been pushed on the Startup plan, they'll be run right away. Subsequent commits have to wait until the builds finished.</p>
+          <h4 class="h3">What is a concurrent job?</h4>
+          <p class="text-small">Every commit triggers a single job by default. If two commits have been pushed on the Startup plan, they'll be run right away. Subsequent commits have to wait until the builds finished.</p>
         </li>
         <li>
-          <h4>Are there any restrictions on build time?</h4>
-          <p>A build has 120 minutes to run. Should your build take longer, you can split it up using a build matrix.</p>
+          <h4 class="h3">Are there any restrictions on build time?</h4>
+          <p class="text-small">A build has 120 minutes to run. Should your build take longer, you can split it up using a build matrix.</p>
         </li>
         <li>
-          <h4>Can I cancel anytime?</h4>
-          <p>Absolutely! Contact us and we'll make sure your subscription gets cancelled as you want.</p>
+          <h4 class="h3">Can I cancel anytime?</h4>
+          <p class="text-small">Absolutely! Contact us and we'll make sure your subscription gets cancelled as you want.</p>
         </li>
         <li>
-          <h4>Do the listed prices include VAT?</h4>
-          <p>Prices listed are excluding VAT, which will be added depending on origin (Germany and Europe). Make sure to have your company's VAT ID ready when entering billing details to remove VAT!</p>
+          <h4 class="h3">Do the listed prices include VAT?</h4>
+          <p class="text-small">Prices listed are excluding VAT, which will be added depending on origin (Germany and Europe). Make sure to have your company's VAT ID ready when entering billing details to remove VAT!</p>
         </li>
         <li>
-          <h4>What hardware are my tests running on?</h4>
-          <p>We use dedicated hardware to ensure full speed for your tests. You have 3GB of memory and up to 2 cores available. Your tests are running directly off SSDs with the most common databases optimized to run off RAM disks.</p>
+          <h4 class="h3">What hardware are my tests running on?</h4>
+          <p class="text-small">We use dedicated hardware to ensure full speed for your tests. You have 3GB of memory and up to 2 cores available. Your tests are running directly off SSDs with the most common databases optimized to run off RAM disks.</p>
         </li>
         <li>
-          <h4>Can I pay anually?</h4>
-          <p>You most certainly can! When signing up for a subscription, simply select the annual option. You get 1 month for free &mdash; 12 months for the price of 11!</p>
+          <h4 class="h3">Can I pay anually?</h4>
+          <p class="text-small">You most certainly can! When signing up for a subscription, simply select the annual option. You get 1 month for free &mdash; 12 months for the price of 11!</p>
         </li>
         <li>
-          <h4>Am I able to upgrade my plan?</h4>
-          <p>Yes, you can change your plan subscription at any time.</p>
+          <h4 class="h3">Am I able to upgrade my plan?</h4>
+          <p class="text-small">Yes, you can change your plan subscription at any time.</p>
         </li>
         <li>
-          <h4>How does the trial work?</h4>
-          <p>Your free trial includes 100 builds and starts as soon as you set up your first project and push a commit. The trial is limitedj to one concurrent build.</p>
+          <h4 class="h3">How does the trial work?</h4>
+          <p class="text-small">Your free trial includes 100 builds and starts as soon as you set up your first project and push a commit. The trial is limitedj to one concurrent build.</p>
         </li>
         <li>
-          <h4>Do you have plans for student?</h4>
-          <p>We most certainly do! You can find all details on <a href="https://education.travis-ci.com">education.travis-ci.com</a></p>
+          <h4 class="h3">Do you have plans for student?</h4>
+          <p class="text-small">We most certainly do! You can find all details on <a href="https://education.travis-ci.com">education.travis-ci.com</a></p>
         </li>
       </ul>
     </div>
