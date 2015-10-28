@@ -1,13 +1,15 @@
 .landing-pro
 
-  p a
-    text-decoration: none
-    border-bottom: 1px solid #bfc0c1
-    padding-bottom: 0.1em
-    &:hover,
-    &:active
-      color: #303030
-      border-color: transparent
+  @mixin linkStyle
+    a
+      text-decoration: none
+      border-bottom: 1px solid #bfc0c1
+      padding-bottom: 0.1em
+      &:hover,
+      &:active
+        color: #303030
+        text-decoration: none
+        border-color: transparent
 
   .wrapper
     width: 100%
@@ -55,6 +57,7 @@
     line-height: 1.55
 
   .text-small
+    @include linkStyle
     margin: 0 0 2.5em
 
   .landing-button
@@ -186,7 +189,7 @@
     margin-top: 5em
     @media #{$medium-up}
       flex-flow: row wrap
-      margin-top: 0
+      margin-top: 1em
     li
       flex: 0 0 15em
 
