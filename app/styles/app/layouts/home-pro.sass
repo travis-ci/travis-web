@@ -22,7 +22,6 @@
     max-width: 1024px
     padding: 0 $column-gutter/2
 
-
   .h1
     font-size: 64px
     color: #408692 !important
@@ -100,7 +99,6 @@
   .section--center
     text-align: center
 
-
   .section--feature
     .inner
       display: flex
@@ -143,16 +141,19 @@
     padding: 0
     margin: 0
 
-
   .list--customers
     @extend %list
     display: flex
     justify-content: space-around
     flex-wrap: wrap
-    width: 88%
-    margin: auto
+    align-items: center
+    width: 80%
+    margin: 2em auto 0
     li
-      flex: 0 0 12em
+      flex: 0 0 9em
+      margin-bottom: 3em
+      @media #{$medium-up}
+        margin-bottom: 0
 
   .list--languages
     @extend %list
@@ -160,7 +161,7 @@
     justify-content: space-around
     flex-wrap: wrap
     li
-      flex: 0 0 9%
+      flex: 0 0 5em
 
   .list--check
     @extend %list
@@ -177,7 +178,6 @@
         background:
           image: inline-image('line-icons/icon-passed.svg')
 
-
   .list--features
     @extend %list
     display: flex
@@ -190,81 +190,17 @@
     li
       flex: 0 0 15em
 
-  [class^="customer-"]
-    display: block
-    height: 5em
-    text-indent: -999%
-    overflow: hidden
-    background:
-      repeat: no-repeat
-      size: 12em 2em
-      position: center center
-
-  .customer-zendesk
-    background-image: inline-image('pro-landing/customer-logos-zendesk.svg')
-  .customer-heroku
-    background-image: inline-image('pro-landing/customer-logos-heroku.svg')
-  .customer-engineyard
-    background-image: inline-image('pro-landing/customer-logos-engineyard.svg')
-  .customer-bittorrent
-    background-image: inline-image('pro-landing/customer-logos-bittorrent.svg')
-  .customer-moz
-    background-image: inline-image('pro-landing/customer-logos-moz.svg')
-
-
   [class^="feature-"]
     display: block
     height: 2em
     width: 2em
-    overflow: hidden
     margin: auto
-    background:
-      repeat: no-repeat
-      size: 100%
-      position: center center
-
-  .feature-github
-    background-image: inline-image('pro-landing/feature-icon-github.svg')
-  .feature-db
-    background-image: inline-image('pro-landing/feature-icon-platform.svg')
-  .feature-pr
-    background-image: inline-image('pro-landing/feature-icon-pullrequests.svg')
-  .feature-heroku
-    background-image: inline-image('pro-landing/feature-icon-heroku.svg')
-
 
   [class^="language-"]
     display: block
     height: 3.5em
     width: 3.5em
     margin: 0 auto .5em
-    background:
-      repeat: no-repeat
-      size: 100%
-      position: center center
-
-  .language-clojure
-    background-image: inline-image('pro-landing/lang-clojure.svg')
-  .language-node
-    background-image: inline-image('pro-landing/lang-nodejs.svg')
-  .language-php
-    background-image: inline-image('pro-landing/lang-php.svg')
-  .language-xcode
-    background-image: inline-image('pro-landing/lang-xcode.svg')
-  .language-ruby
-    background-image: inline-image('pro-landing/lang-ruby.svg')
-  .language-python
-    background-image: inline-image('pro-landing/lang-python.svg')
-  .language-java
-    background-image: inline-image('pro-landing/lang-java.svg')
-  .language-erlang
-    background-image: inline-image('pro-landing/lang-erlang.svg')
-  .language-go
-    background-image: inline-image('pro-landing/lang-go.svg')
-  .language-scala
-    background-image: inline-image('pro-landing/lang-scala.svg')
-  .language-perl
-    background-image: inline-image('pro-landing/lang-perl.svg')
 
 
 
