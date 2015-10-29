@@ -37,7 +37,7 @@
   <div class="row-request">
     <div class="row-item">
       {{#if build.last_build}}
-        {{#link-to "build" build.repository.slug build.last_build.id}}
+        {{#link-to "build" build.last_build.id}}
           {{request-icon build=build}}
           <span class="label-align">#{{build.last_build.number}} {{build.last_build.state}}</span>
         {{/link-to}}
