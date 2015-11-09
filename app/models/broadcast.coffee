@@ -18,7 +18,7 @@ Broadcast = Model.extend
 
 Broadcast.reopenClass
   seen: (->
-    seenBroadcasts = Travis.storage.getItem('travis.seen_broadcasts')
+    seenBroadcasts = Travis.lookup('service:storage').getItem('travis.seen_broadcasts')
     seenBroadcasts = JSON.parse(seenBroadcasts) if seenBroadcasts?
     Ember.A(seenBroadcasts || [])
   ).property()
