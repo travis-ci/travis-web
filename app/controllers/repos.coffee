@@ -3,7 +3,6 @@
 `import Repo from 'travis/models/repo'`
 
 Controller = Ember.Controller.extend
-  contentBinding: 'repos'
   actions:
     activate: (name) ->
       @activate(name)
