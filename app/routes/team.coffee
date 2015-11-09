@@ -13,6 +13,7 @@ Route = TravisRoute.extend
         nationality: 'germany'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Josh Kalderimis'
@@ -21,6 +22,7 @@ Route = TravisRoute.extend
         nationality: 'newzealand'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Fritz Thielemann'
@@ -29,6 +31,7 @@ Route = TravisRoute.extend
         nationality: 'germany'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Konstantin Haase'
@@ -37,6 +40,7 @@ Route = TravisRoute.extend
         nationality: 'germany'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Mathias Meyer'
@@ -45,6 +49,7 @@ Route = TravisRoute.extend
         nationality: 'germany'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Piotr Sarnacki'
@@ -53,6 +58,7 @@ Route = TravisRoute.extend
         nationality: 'poland'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Anika Lindtner'
@@ -61,6 +67,7 @@ Route = TravisRoute.extend
         nationality: 'germany'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Henrik Hodne'
@@ -69,6 +76,7 @@ Route = TravisRoute.extend
         nationality: 'norway'
         country: 'norway'
         image: ''
+        gif: ''
       },
       {
         name: 'Justine Arreche'
@@ -77,6 +85,7 @@ Route = TravisRoute.extend
         nationality: 'usa'
         country: 'usa'
         image: ''
+        gif: ''
       },
       {
         name: 'Hiro Asari'
@@ -85,6 +94,7 @@ Route = TravisRoute.extend
         nationality: 'japan'
         country: 'usa'
         image: ''
+        gif: ''
       },
       {
         name: 'Dan Buch'
@@ -93,6 +103,7 @@ Route = TravisRoute.extend
         nationality: 'usa'
         country: 'usa'
         image: ''
+        gif: ''
       },
       {
         name: 'Lisa Passing'
@@ -100,6 +111,7 @@ Route = TravisRoute.extend
         nationality: 'germany'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Carla Drago'
@@ -108,6 +120,7 @@ Route = TravisRoute.extend
         nationality: 'italy'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Anja Reichmann'
@@ -116,6 +129,7 @@ Route = TravisRoute.extend
         nationality: 'germany'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Aly Fulton'
@@ -124,6 +138,7 @@ Route = TravisRoute.extend
         nationality: 'usa'
         country: 'usa'
         image: ''
+        gif: ''
       },
       {
         name: 'Amanda Quaranto'
@@ -132,6 +147,7 @@ Route = TravisRoute.extend
         nationality: 'usa'
         country: 'usa'
         image: ''
+        gif: ''
       },
       {
         name: 'Jen Duke'
@@ -140,6 +156,7 @@ Route = TravisRoute.extend
         nationality: 'usa'
         country: 'germany'
         image: ''
+        gif: ''
       },
       {
         name: 'Brandon Burton'
@@ -148,6 +165,7 @@ Route = TravisRoute.extend
         nationality: 'usa'
         country: 'usa'
         image: ''
+        gif: ''
       },
       {
         name: 'Emma Trimble'
@@ -156,6 +174,7 @@ Route = TravisRoute.extend
         nationality: 'usa'
         country: 'usa'
         image: ''
+        gif: ''
       },
       {
         name: 'María de Antón'
@@ -164,6 +183,7 @@ Route = TravisRoute.extend
         nationality: 'spain'
         country: 'spain'
         image: ''
+        gif: ''
       },
       {
         name: 'Danish Khan'
@@ -172,6 +192,7 @@ Route = TravisRoute.extend
         nationality: 'usa'
         country: 'usa'
         image: ''
+        gif: ''
       },
       {
         name: 'Dominic Jodoin'
@@ -180,6 +201,7 @@ Route = TravisRoute.extend
         nationality: 'canada'
         country: 'canada'
         image: ''
+        gif: ''
       },
       {
         name: 'Liza Brisker'
@@ -187,6 +209,7 @@ Route = TravisRoute.extend
         nationality: 'russia'
         country: 'germany'
         image: ''
+        gif: ''
       }
     ]
 
