@@ -1,7 +1,16 @@
 <div id="landing" class="landing wrapper">
   <section class="section--white">
     <div class="inner">
-      <h1>HEllo team</h1>
+      <header class="section--center">
+        <h1 class="h1--green">Teamwork makes Travis CI possible</h1>
+        <p class="text-big">We've got Builders in areas across Europe and North America working together to make the tool you love to use.
+        </p>
+      </header>
+      <ul class="list--team">
+        {{#each model as |member|}}
+          {{team-member member=member}}
+        {{/each}}
+      </ul>
     </div>
   </section>
 </div>

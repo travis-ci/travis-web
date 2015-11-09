@@ -1,0 +1,13 @@
+<figure class="team-image">
+  <img src="{{member.image}}" alt="">
+</figure>
+<h3 class="team-name">{{member.name}}</h3>
+<p class="team-title">{{member.title}}</p>
+{{#if member.handle}}
+  <p class="team-handle"><a href="https://twitter.com/{{member.handle}}" title="{{member.name}} on Twitter">@{{member.handle}}</a></p>
+{{/if}}
+<div class="team-flags">
+  <img src="../images/pro-landing/flag-{{member.nationality}}.svg" alt="flag {{member.nationality}}">
+  <span class="flag-divider">/</span>
+  <img src="../images/pro-landing/flag-{{member.country}}.svg" alt="flag {{member.country}}">
+</div>
