@@ -10,16 +10,16 @@ Serializer = V2FallbackSerializer.extend
     _startedAt:  { key: 'started_at' }
   }
 
-  extractSingle: (store, primaryType, rawPayload, recordId) ->
-    if commit = rawPayload.commit
-      rawPayload.commits = [commit]
-
-    @_super(store, primaryType, rawPayload, recordId)
-
   keyForV2Relationship: (key, typeClass, method) ->
     if key == 'repo'
       'repository_id'
     else
       @_super.apply(this, arguments)
+
+  normalize: (modelClass, resourceHash) ->
+    if resourceHash.commit
+      resourceHash.commit['type'] = 'commit'
+
+    @_super(modelClass, resourceHash)
 
 `export default Serializer`

@@ -35,6 +35,26 @@ export default V3Serializer.extend({
     }
   },
 
+  normalize(modelClass, resourceHash) {
+    if(resourceHash['@type']) {
+      return this._super(...arguments);
+    } else {
+      var modelKey = modelClass.modelName;
+      var attributes = resourceHash[modelKey];
+      if(attributes) {
+        for(var key in attributes) {
+          resourceHash[key] = attributes[key];
+        };
+
+        resourceHash['@type'] = modelKey;
+        resourceHash['type'] = modelKey;
+        delete resourceHash[modelKey];
+      }
+
+      return this._super(modelClass, resourceHash);
+    }
+  },
+
   keyForV2Relationship(key, typeClass, method) {
     return key.underscore() + '_id';
   }

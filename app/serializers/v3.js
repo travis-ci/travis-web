@@ -4,10 +4,12 @@ import DS from 'ember-data';
 export default DS.JSONSerializer.extend({
   isNewSerializerAPI: true,
 
-  extractRelationship() {
+  extractRelationship(type, hash) {
     let relationshipHash = this._super(...arguments);
     if(relationshipHash && relationshipHash['@type']) {
       relationshipHash.type = relationshipHash['@type'];
+    } else if(relationshipHash && !relationshipHash.type) {
+      relationshipHash.type = type;
     }
     return relationshipHash;
   },
@@ -101,5 +103,13 @@ export default DS.JSONSerializer.extend({
     }
 
     return { data, included };
+  },
+
+  keyForAttribute(key, method) {
+    if(method === 'deserialize') {
+      return Ember.String.underscore(key);
+    } else {
+      return Ember.String.camelize(key);
+    }
   }
 });
