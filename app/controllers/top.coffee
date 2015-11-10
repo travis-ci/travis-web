@@ -18,6 +18,8 @@ Controller = Ember.Controller.extend
   ).property('user.gravatarId')
 
   defineTowerColor: (broadcastArray) ->
+    return '' unless broadcastArray
+
     if broadcastArray.length
       if broadcastArray.findBy('category', 'warning')
         return 'warning'
@@ -75,7 +77,7 @@ Controller = Ember.Controller.extend
       id = broadcast.get('id').toString()
       seenBroadcasts = @get('storage').getItem('travis.seen_broadcasts')
       if seenBroadcasts
-        seenBroadcasts = JSON.parse(seenBroadcasts) 
+        seenBroadcasts = JSON.parse(seenBroadcasts)
       else
         seenBroadcasts = []
       seenBroadcasts.push(id)

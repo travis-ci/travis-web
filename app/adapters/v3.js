@@ -33,7 +33,7 @@ export default DS.RESTAdapter.extend({
   // be to create my own URL generator
   _buildURL: function(modelName, id) {
     var url = [];
-    var host = get(this, 'host');
+    var host = Ember.get(this, 'host');
     var prefix = this.urlPrefix();
     var path;
 
