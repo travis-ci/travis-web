@@ -10,9 +10,36 @@ Serializer = V2FallbackSerializer.extend
     _duration:   { key: 'duration' }
   }
 
+  extractRelationships: (modelClass, resourceHash) ->
+    result = @_super(modelClass, resourceHash)
+    result
+
+  normalizeArrayResponse: (store, primaryModelClass, payload, id, requestType) ->
+    if payload.commits
+      payload.builds.forEach (build) ->
+        commit_id = build.commit_id
+        if commit = payload.commits.findBy('id', commit_id)
+          build.commit = commit
+          delete build.commit_id
+
+    result = @_super.apply(this, arguments)
+    store = this.store
+    # TODO: probably it should be done for all of the relationships, not
+    # only commit
+    result.data.forEach (item) ->
+      if item.relationships && item.relationships.commit
+        serializer = store.serializerFor 'commit'
+        modelClass = store.modelFor 'commit'
+        normalized = serializer.normalize(modelClass, item.relationships.commit.data)
+        result.included.push normalized.data
+
+    result
+
   keyForV2Relationship: (key, typeClass, method) ->
     if key == 'repo'
       'repository_id'
+    else if key == 'commit'
+      key
     else
       @_super.apply(this, arguments)
 
