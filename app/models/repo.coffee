@@ -35,7 +35,7 @@ Repo = Model.extend
   builds: (->
     id = @get('id')
     builds = @store.filter('build', event_type: ['push', 'api'], repository_id: id, (b) ->
-      b.get('repo.id') == id && (b.get('eventType') == 'push' || b.get('eventType') == 'api')
+      b.get('repositoryId')+'' == id+'' && (b.get('eventType') == 'push' || b.get('eventType') == 'api')
     )
 
     # TODO: move to controller
@@ -52,7 +52,7 @@ Repo = Model.extend
   pullRequests: (->
     id = @get('id')
     builds = @store.filter('build', event_type: 'pull_request', repository_id: id, (b) ->
-      b.get('repo.id') == id && b.get('eventType') == 'pull_request'
+      b.get('repositoryId')+'' == id+'' && b.get('eventType') == 'pull_request'
     )
 
     # TODO: move to controller
