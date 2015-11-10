@@ -1,7 +1,8 @@
 `import Ember from 'ember'`
-`import ApplicationSerializer from 'travis/serializers/application'`
+`import V2FallbackSerializer from 'travis/serializers/v2_fallback'`
 
-Serializer = ApplicationSerializer.extend
+Serializer = V2FallbackSerializer.extend
+  isNewSerializerAPI: true
   attrs: {
     repo:   { key: 'repository_id' }
     _config: { key: 'config' }
@@ -14,5 +15,11 @@ Serializer = ApplicationSerializer.extend
       rawPayload.commits = [commit]
 
     @_super(store, primaryType, rawPayload, recordId)
+
+  keyForV2Relationship: (key, typeClass, method) ->
+    if key == 'repo'
+      'repository_id'
+    else
+      @_super.apply(this, arguments)
 
 `export default Serializer`
