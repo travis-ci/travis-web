@@ -51,7 +51,37 @@ export default V3Serializer.extend({
         delete resourceHash[modelKey];
       }
 
-      return this._super(modelClass, resourceHash);
+      let { data, included } = this._super(...arguments);
+      if(!included) {
+        included = [];
+      }
+      let store = this.store;
+
+      if(data.relationships) {
+        Object.keys(data.relationships).forEach(function (key) {
+          let relationship = data.relationships[key];
+          let process = function(data) {
+            let type = key.singularize();
+            let serializer = store.serializerFor(type);
+            let modelClass = store.modelFor(type);
+            let normalized = serializer.normalize(modelClass, data);
+            included.push(normalized.data);
+            if(normalized.included) {
+              normalized.included.forEach(function(item) {
+                included.push(item);
+              });
+            }
+          };
+
+          if(Array.isArray(relationship.data)) {
+            relationship.data.forEach(process);
+          } else if(relationship && relationship.data) {
+            process(relationship.data);
+          }
+        });
+      }
+
+      return { data, included };
     }
   },
 
