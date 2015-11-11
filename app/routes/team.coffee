@@ -12,8 +12,7 @@ Route = TravisRoute.extend
         handle: 'svenfuchs'
         nationality: 'germany'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'sven'
       },
       {
         name: 'Josh Kalderimis'
@@ -21,8 +20,7 @@ Route = TravisRoute.extend
         handle: 'j2h'
         nationality: 'newzealand'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'josh'
       },
       {
         name: 'Fritz Thielemann'
@@ -30,8 +28,7 @@ Route = TravisRoute.extend
         handle: 'fritzek'
         nationality: 'germany'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'fritz'
       },
       {
         name: 'Konstantin Haase'
@@ -39,8 +36,7 @@ Route = TravisRoute.extend
         handle: 'konstantinhaase'
         nationality: 'germany'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'konstantin'
       },
       {
         name: 'Mathias Meyer'
@@ -48,8 +44,7 @@ Route = TravisRoute.extend
         handle: 'roidrage'
         nationality: 'germany'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'mathias'
       },
       {
         name: 'Piotr Sarnacki'
@@ -57,8 +52,7 @@ Route = TravisRoute.extend
         handle: 'drogus'
         nationality: 'poland'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'piotr'
       },
       {
         name: 'Anika Lindtner'
@@ -66,8 +60,7 @@ Route = TravisRoute.extend
         handle: 'langziehohr'
         nationality: 'germany'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'anika'
       },
       {
         name: 'Henrik Hodne'
@@ -75,8 +68,7 @@ Route = TravisRoute.extend
         handle: 'henrikhodne'
         nationality: 'norway'
         country: 'norway'
-        image: ''
-        gif: ''
+        image: 'henrik'
       },
       {
         name: 'Justine Arreche'
@@ -84,8 +76,7 @@ Route = TravisRoute.extend
         handle: 'saltinejustine'
         nationality: 'usa'
         country: 'usa'
-        image: ''
-        gif: ''
+        image: 'justine'
       },
       {
         name: 'Hiro Asari'
@@ -93,8 +84,7 @@ Route = TravisRoute.extend
         handle: 'hiro_asari'
         nationality: 'japan'
         country: 'usa'
-        image: ''
-        gif: ''
+        image: 'hiro'
       },
       {
         name: 'Dan Buch'
@@ -102,16 +92,14 @@ Route = TravisRoute.extend
         handle: 'meatballhat'
         nationality: 'usa'
         country: 'usa'
-        image: ''
-        gif: ''
+        image: 'dan'
       },
       {
         name: 'Lisa Passing'
         title: 'Queen of !important'
         nationality: 'germany'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'lisa'
       },
       {
         name: 'Carla Drago'
@@ -119,8 +107,7 @@ Route = TravisRoute.extend
         handle: 'carlad'
         nationality: 'italy'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'carla'
       },
       {
         name: 'Anja Reichmann'
@@ -128,8 +115,7 @@ Route = TravisRoute.extend
         handle: '_tyranja_'
         nationality: 'germany'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'anja'
       },
       {
         name: 'Aly Fulton'
@@ -137,8 +123,7 @@ Route = TravisRoute.extend
         handle: 'sinthetix'
         nationality: 'usa'
         country: 'usa'
-        image: ''
-        gif: ''
+        image: 'aly'
       },
       {
         name: 'Amanda Quaranto'
@@ -146,8 +131,7 @@ Route = TravisRoute.extend
         handle: 'aquaranto'
         nationality: 'usa'
         country: 'usa'
-        image: ''
-        gif: ''
+        image: 'amanda'
       },
       {
         name: 'Jen Duke'
@@ -155,8 +139,7 @@ Route = TravisRoute.extend
         handle: 'dukeofberlin'
         nationality: 'usa'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'jen'
       },
       {
         name: 'Brandon Burton'
@@ -164,8 +147,7 @@ Route = TravisRoute.extend
         handle: 'solarce'
         nationality: 'usa'
         country: 'usa'
-        image: ''
-        gif: ''
+        image: 'brandon'
       },
       {
         name: 'Emma Trimble'
@@ -173,8 +155,7 @@ Route = TravisRoute.extend
         handle: 'emdantrim'
         nationality: 'usa'
         country: 'usa'
-        image: ''
-        gif: ''
+        image: 'emma'
       },
       {
         name: 'María de Antón'
@@ -182,8 +163,7 @@ Route = TravisRoute.extend
         handle: 'amalulla'
         nationality: 'spain'
         country: 'spain'
-        image: ''
-        gif: ''
+        image: 'maria'
       },
       {
         name: 'Danish Khan'
@@ -191,8 +171,7 @@ Route = TravisRoute.extend
         handle: 'danishkhan'
         nationality: 'usa'
         country: 'usa'
-        image: ''
-        gif: ''
+        image: 'danish'
       },
       {
         name: 'Dominic Jodoin'
@@ -200,16 +179,14 @@ Route = TravisRoute.extend
         handle: 'cotsog'
         nationality: 'canada'
         country: 'canada'
-        image: ''
-        gif: ''
+        image: 'dominic'
       },
       {
         name: 'Liza Brisker'
         title: 'Brainy Trainee'
         nationality: 'russia'
         country: 'germany'
-        image: ''
-        gif: ''
+        image: 'liz'
       }
     ]
 
