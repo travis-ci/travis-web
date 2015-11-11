@@ -129,6 +129,7 @@
     @extend .text-small
     line-height: 1.8
     margin-bottom: 2em
+    text-align: left
     @media #{$medium-up}
       width: 80%
       margin-right: auto
@@ -247,8 +248,10 @@
     li
       flex: 0 0 5em
 
-  .list--check
+  .list--check,
+  .list--cross
     @extend %list
+    padding: 0 0 0 1.4em
     li
       &:before
         content: ""
@@ -256,9 +259,17 @@
         height: 1.2em
         width: 1.2em
         margin-right: .3em
+        margin-left: -1.5em
         vertical-align: middle
-        background:
-          image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjMzlBODVCIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
+
+  .list--check
+    li:before
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjMzlBODVCIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
+
+  .list--cross
+    li:before
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KICA8ZyBpZD0iRmFpbGVkIj4KICAJPHBhdGggZmlsbD0iI0RCNDI0MiIgZD0iTTEwLjksMTBsMy45LTMuOWMwLjItMC4yLDAuMi0wLjYsMC0wLjljLTAuMi0wLjItMC42LTAuMi0wLjksMEwxMCw5LjFMNi4xLDUuMmMtMC4yLTAuMi0wLjYtMC4yLTAuOSwwCiAgCQljLTAuMiwwLjItMC4yLDAuNiwwLDAuOUw5LjEsMTBsLTMuOSwzLjljLTAuMiwwLjItMC4yLDAuNiwwLDAuOUM1LjMsMTQuOSw1LjUsMTUsNS42LDE1czAuMy0wLjEsMC40LTAuMmwzLjktMy45bDMuOSwzLjkKICAJCWMwLjEsMC4xLDAuMywwLjIsMC40LDAuMmMwLjIsMCwwLjMtMC4xLDAuNC0wLjJjMC4yLTAuMiwwLjItMC42LDAtMC45TDEwLjksMTB6Ii8+CiAgPC9nPgo8L3N2Zz4=")
+
 
   .list--features
     @extend %list
@@ -413,7 +424,6 @@
     display: flex
     flex-flow: row wrap
     justify-content: space-between
-
     padding: 0
     margin: 3em 0 0
     list-style: none
@@ -430,6 +440,72 @@
     margin: 0
     font-size: 16px
 
+  .list--fonts
+    @extend %list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    margin: 3em 0 7em
+    flex-direction: column
+    @media #{$medium-up}
+      flex-direction: row
+    li
+      flex: 1 0 33%
+      margin-bottom: 2em
+      @media #{$medium-up}
+        flex: 0 0 33%
+        margin-bottom: 0
+    [class^="font-"]
+      font-size: 36px
+      margin: 0
+    .text-big
+      margin: .5em 0 0
+    .font-light
+      font-weight: 300
+      color: $teal
+    .font-regular
+      font-weight: 400
+      color: #D3B01E
+    .font-semibold
+      font-weight: 600
+      color: $grey
+
+  .list--colors
+    @extend %list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    flex-direction: column
+    @media #{$medium-up}
+      flex-direction: row
+
+    li
+      flex: 0 0 19%
+    [class^="colors-sample"]
+      height: 3em
+      margin-bottom: .5em
+    .colors-sample--teal
+      background-color: $teal
+    .colors-sample--green
+      background-color: $green
+    .colors-sample--yellow
+      background-color: $yellow
+    .colors-sample--red
+      background-color: $red
+    .colors-sample--grey
+      background-color: #666
+
+  .list--mascot
+    @extend %list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    justify-content: center
+    @media #{$medium-up}
+      width: 80%
+      margin: auto
+    li
+      flex: 0 0 15em
 
 .team-header
   margin-bottom: 7em
@@ -472,7 +548,7 @@
   display: flex
   flex-wrap: wrap
   list-style: none
-  align-content: space-between
+  justify-content: space-between
   margin: 0
   padding: 0
 
@@ -491,3 +567,33 @@
   font-size: 16px
   margin: 0
 
+.logo-logos
+  margin-top: 6em
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  figure
+    margin: 0
+    flex: 1 0 48%
+  [class^="logos--"]
+    padding: 2em
+    margin-bottom: 1em
+.logos--light
+  background-color: #EDF3F3
+.logos--dark
+  background-color: #40A3AD
+
+
+.does-donts
+  @media #{$medium-up}
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+  .does,
+  .donts
+    flex: 0 0 46%
+
+  .does
+    margin-bottom: 3em
+    @media #{$medium-up}
+      margin-bottom: 0
