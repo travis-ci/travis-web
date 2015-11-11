@@ -36,18 +36,7 @@ var Serializer = V2FallbackSerializer.extend({
         }
       });
     }
-    result = this._super.apply(this, arguments);
-    store = this.store;
-    result.data.forEach(function(item) {
-      var modelClass, normalized, serializer;
-      if (item.relationships && item.relationships.commit) {
-        serializer = store.serializerFor('commit');
-        modelClass = store.modelFor('commit');
-        normalized = serializer.normalize(modelClass, item.relationships.commit.data);
-        return result.included.push(normalized.data);
-      }
-    });
-    return result;
+    return this._super.apply(this, arguments);
   },
 
   keyForV2Relationship: function(key, typeClass, method) {
