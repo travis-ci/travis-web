@@ -20,9 +20,9 @@
 
   <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
-      <li><a href="http://blog.travis-ci.com" class="navigation-anchor">Blog</a></li>
-      <li><a href="http://www.traviscistatus.com/" class="navigation-anchor">Status</a></li>
     {{#unless config.pro}}
+      <li><a href="http://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
+      <li><a href="http://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
       <li>
         <span class="navigation-anchor">Help</span>
         <ul class="navigation-nested">
@@ -33,15 +33,9 @@
     {{/unless}}
 
       {{#if config.pro}}
-        <li><a href="http://docs.travis-ci.com">Docs</a></li>
-        <li>
-          <span class="navigation-anchor">Legal</span>
-          <ul class="navigation-nested">
-            <li><a href={{config.urls.imprint}}>Imprint</a></li>
-            <li><a href={{config.urls.security}}>Security</a></li>
-            <li><a href={{config.urls.terms}}>Terms</a></li>
-          </ul>
-        </li>
+        <li><a href="/team" title="Travis CI team" class="navigation-anchor">About Us</a></li>
+        <li><a href="/plans" title="" class="navigation-anchor">Plans & Pricing</a></li>
+        <li><a href="https://enterprise.travis-ci.com" title="">Enterprise</a></li>
       {{/if}}
 
       <li class="{{view.classProfile}}">

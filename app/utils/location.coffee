@@ -13,17 +13,19 @@ Location = Ember.HistoryLocation.extend
 
   getURL: ->
     url = this._super.apply(this, arguments)
-    unless config.pro
-      if location.pathname == '/'
-        if @get('auth.signedIn')
-          return '/repositories'
+    if location.pathname == '/'
+      if @get('auth.signedIn')
+        return '/repositories'
+      else
+        if config.pro
+          return '/home-pro'
         else
           return '/home'
 
     url
 
   formatURL: (logicalPath) ->
-    if logicalPath == '/repositories' || logicalPath == '/home'
+    if logicalPath == '/repositories' || logicalPath == '/home' || logicalPath == '/home-pro'
       '/'
     else
       @_super.apply this, arguments
