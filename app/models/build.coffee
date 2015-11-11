@@ -14,7 +14,7 @@ Build = Model.extend DurationCalculations,
   _duration:         DS.attr('number')
   _config:           DS.attr('object')
   _startedAt:        DS.attr()
-  _finishedAt:       DS.attr()
+  _finishedAt:       DS.attr('string')
   pullRequest:       DS.attr('boolean')
   pullRequestTitle:  DS.attr()
   pullRequestNumber: DS.attr('number')

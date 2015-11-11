@@ -27,7 +27,7 @@ export default DS.JSONSerializer.extend({
     }
   },
 
-  extractAttributes() {
+  extractAttributes(modelClass, resourceHash) {
     let attributes = this._super(...arguments);
     for(let key in attributes) {
       if(key.startsWith('@')) {
