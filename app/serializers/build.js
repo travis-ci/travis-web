@@ -40,7 +40,9 @@ var Serializer = V2FallbackSerializer.extend({
   },
 
   keyForV2Relationship: function(key, typeClass, method) {
-    if (key === 'repo') {
+    if(key === 'jobs') {
+      return 'job_ids';
+    } else if (key === 'repo') {
       return 'repository_id';
     } else if (key === 'commit') {
       return key;
