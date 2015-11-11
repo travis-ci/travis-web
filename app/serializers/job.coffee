@@ -4,7 +4,6 @@
 Serializer = V2FallbackSerializer.extend
   isNewSerializerAPI: true
   attrs: {
-    repo:   { key: 'repository_id' }
     _config: { key: 'config' }
     _finishedAt: { key: 'finished_at' }
     _startedAt:  { key: 'started_at' }
