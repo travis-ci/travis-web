@@ -15,9 +15,9 @@ export default V3Serializer.extend({
         let relationship = null;
         let relationshipKey = this.keyForV2Relationship(key, relationshipMeta.kind, 'deserialize');
 
-        if (resourceHash.hasOwnProperty(relationshipKey)) {
+        if (resourceHash.hasOwnProperty(key) || resourceHash.hasOwnProperty(relationshipKey)) {
           let data = null;
-          let relationshipHash = resourceHash[relationshipKey];
+          let relationshipHash = resourceHash[key] || resourceHash[relationshipKey];
           if (relationshipMeta.kind === 'belongsTo') {
             data = this.extractRelationship(relationshipMeta.type, relationshipHash);
           } else if (relationshipMeta.kind === 'hasMany') {
@@ -46,7 +46,6 @@ export default V3Serializer.extend({
           resourceHash[key] = attributes[key];
         };
 
-        resourceHash['@type'] = modelKey;
         resourceHash['type'] = modelKey;
         delete resourceHash[modelKey];
       }
@@ -61,15 +60,18 @@ export default V3Serializer.extend({
         Object.keys(data.relationships).forEach(function (key) {
           let relationship = data.relationships[key];
           let process = function(data) {
-            let type = key.singularize();
-            let serializer = store.serializerFor(type);
-            let modelClass = store.modelFor(type);
-            let normalized = serializer.normalize(modelClass, data);
-            included.push(normalized.data);
-            if(normalized.included) {
-              normalized.included.forEach(function(item) {
-                included.push(item);
-              });
+            if(Object.keys(data).sort()+'' !== 'id,type') {
+              // no need to add records if they have only id and type
+              let type = key.singularize();
+              let serializer = store.serializerFor(type);
+              let modelClass = store.modelFor(type);
+              let normalized = serializer.normalize(modelClass, data);
+              included.push(normalized.data);
+              if(normalized.included) {
+                normalized.included.forEach(function(item) {
+                  included.push(item);
+                });
+              }
             }
           };
 
