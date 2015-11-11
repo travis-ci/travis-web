@@ -87,14 +87,12 @@ Controller = Ember.Controller.extend
 
   viewOwned: ->
     @set('isLoaded', false);
-    if login = @get('currentUser.login')
-      repos = Repo.accessibleBy(@store, login).then( (reposRecordArray) =>
+    @get('currentUser._rawPermissions').then (data) =>
+      repos = Repo.accessibleBy(@store, data.pull).then( (reposRecordArray) =>
         @set('isLoaded', true)
         @set('repos', reposRecordArray)
       )
       # TODO: handle error
-    else
-      @set('repos', [])
 
   viewRunning: ->
 

@@ -118,16 +118,22 @@ Repo.reopenClass
   recent: ->
     @find()
 
-  accessibleBy: (store, login) ->
+  accessibleBy: (store, reposIds) ->
     # this fires only for authenticated users and with API v3 that means getting
     # only repos of currently logged in owner, but in the future it would be
     # nice to not use that as it may change in the future
-    repos = store.query('repo', { 'repository.active': 'true' })
+    repos = store.filter('repo', (repo) ->
+      reposIds.indexOf(parseInt(repo.get('id'))) != -1
+    )
 
-    repos.then () ->
-      repos.set('isLoaded', true)
+    promise = new Ember.RSVP.Promise (resolve, reject) ->
+      store.query('repo', { 'repository.active': 'true' }).then( ->
+        resolve(repos)
+      , ->
+        reject()
+      )
 
-    repos
+    promise
 
   search: (store, query) ->
     promise = store.query('repo', search: query, orderBy: 'name')
