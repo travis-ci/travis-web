@@ -58,12 +58,16 @@
 @import "app/layouts/branches";
 @import "app/layouts/broadcasts";
 
-@import "app/landing";
 @import "app/layouts/requests";
 @import "app/layouts/caches";
-@import "app/layouts/getting-started";
 @import "app/layouts/first-sync";
 @import "app/layouts/missing-notice";
 @import "app/layouts/settings";
-@import "app/layouts/home-pro";
+
+@import "app/pages/landing";
+@import "app/pages/home-pro";
+@import "app/pages/getting-started";
+@import "app/pages/team";
+@import "app/pages/plans";
+@import "app/pages/logo";
 

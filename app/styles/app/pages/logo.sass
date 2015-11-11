@@ -1,0 +1,98 @@
+.landing-pro
+  .list--fonts
+    @extend %list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    margin: 3em 0 7em
+    flex-direction: column
+    @media #{$medium-up}
+      flex-direction: row
+    li
+      flex: 1 0 33%
+      margin-bottom: 2em
+      @media #{$medium-up}
+        flex: 0 0 33%
+        margin-bottom: 0
+    [class^="font-"]
+      font-size: 36px
+      margin: 0
+    .text-big
+      margin: .5em 0 0
+    .font-light
+      font-weight: 300
+      color: $teal
+    .font-regular
+      font-weight: 400
+      color: #D3B01E
+    .font-semibold
+      font-weight: 600
+      color: $grey
+
+  .list--colors
+    @extend %list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    flex-direction: column
+    @media #{$medium-up}
+      flex-direction: row
+
+    li
+      flex: 0 0 19%
+    [class^="colors-sample"]
+      height: 3em
+      margin-bottom: .5em
+    .colors-sample--teal
+      background-color: $teal
+    .colors-sample--green
+      background-color: $green
+    .colors-sample--yellow
+      background-color: $yellow
+    .colors-sample--red
+      background-color: $red
+    .colors-sample--grey
+      background-color: #666
+
+  .list--mascot
+    @extend %list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    justify-content: center
+    @media #{$medium-up}
+      width: 80%
+      margin: auto
+    li
+      flex: 0 0 15em
+
+  .logo-logos
+    margin-top: 6em
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    figure
+      margin: 0
+      flex: 1 0 48%
+    [class^="logos--"]
+      padding: 2em
+      margin-bottom: 1em
+  .logos--light
+    background-color: #EDF3F3
+  .logos--dark
+    background-color: #40A3AD
+
+
+  .does-donts
+    @media #{$medium-up}
+      display: flex
+      flex-wrap: wrap
+      justify-content: space-between
+    .does,
+    .donts
+      flex: 0 0 46%
+
+    .does
+      margin-bottom: 3em
+      @media #{$medium-up}
+        margin-bottom: 0
