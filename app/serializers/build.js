@@ -7,10 +7,10 @@ var Serializer = V2FallbackSerializer.extend({
     _config: {
       key: 'config'
     },
-    _finishedAt: {
+    _finished_at: {
       key: 'finished_at'
     },
-    _startedAt: {
+    _started_at: {
       key: 'started_at'
     },
     _duration: {

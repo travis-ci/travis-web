@@ -3,8 +3,8 @@
 
 Serializer = ApplicationSerializer.extend
   attrs: {
-    branchName: { key: 'branch' }
-    tagName:    { key: 'tag' }
+    branch_name: { key: 'branch' }
+    tag_name:    { key: 'tag' }
     repo:       { key: 'repository_id' }
   }
 
