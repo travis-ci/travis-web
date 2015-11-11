@@ -94,8 +94,8 @@ export default DS.JSONSerializer.extend({
           }
         };
 
-        if(Array.isArray(relationship)) {
-          relationship.forEach(process);
+        if(Array.isArray(relationship.data)) {
+          relationship.data.forEach(process);
         } else if(relationship && relationship.data) {
           process(relationship.data);
         }
