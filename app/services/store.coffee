@@ -47,8 +47,10 @@ Store = DS.Store.extend
 
     return unless @canHandleEvent(event, data)
 
+    console.log(event, data)
+
     if name == 'job' && data.job?.commit
-      @pushPayload(commits: [data.job.commit])
+      @push(this.normalize('commit', data.job.commit))
 
     if name == 'build' && data.build?.commit
       # TODO: commit should be a sideload record on build, not mixed with it
@@ -67,7 +69,7 @@ Store = DS.Store.extend
       }
       delete(data.build.commit)
 
-      @pushPayload(commits: [commit])
+      @push(this.normalize('commit', commit))
 
     if event == 'job:log'
       data = data.job
@@ -81,13 +83,13 @@ Store = DS.Store.extend
   _loadOne: (type, json) ->
     payload = {}
     payload[type.pluralize()] = [json[type]]
-    @pushPayload(payload)
+    @push(this.normalize(type, json))
 
     # we get other types of records only in a few situations and
     # it's not always needed to update data, so I'm specyfing which
     # things I want to update here:
     if type == 'build' && (json.repository || json.repo)
       data = json.repository || json.repo
-      @pushPayload(repos: [data])
+      @push(this.normalize('repo', data))
 
 `export default Store`
