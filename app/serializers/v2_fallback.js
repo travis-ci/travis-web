@@ -44,7 +44,7 @@ export default V3Serializer.extend({
       if(attributes) {
         for(var key in attributes) {
           resourceHash[key] = attributes[key];
-        };
+        }
 
         resourceHash['type'] = modelKey;
         delete resourceHash[modelKey];
