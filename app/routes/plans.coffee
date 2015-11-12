@@ -5,6 +5,6 @@ Route = BasicRoute.extend
   needsAuth: false
   redirect: ->
     unless config.pro
-      @transitionTo('home-pro')
+      @transitionTo('/')
 
 `export default Route`
