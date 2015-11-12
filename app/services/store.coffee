@@ -47,8 +47,6 @@ Store = DS.Store.extend
 
     return unless @canHandleEvent(event, data)
 
-    console.log(event, data)
-
     if name == 'job' && data.job?.commit
       @push(this.normalize('commit', data.job.commit))
 
