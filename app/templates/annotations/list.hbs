@@ -1,6 +1,6 @@
 {{#if view.annotations}}
 <div id="annotations">
-  {{#each annotation in view.annotations}}
+  {{#each view.annotations as |annotation|}}
     <div class="annotation">
       <a href={{annotation.url}}>
           {{annotation.status}} {{annotation.providerName}}

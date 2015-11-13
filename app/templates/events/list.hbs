@@ -10,8 +10,8 @@
     </thead>
 
     <tbody>
-      {{#each event in view.events}}
-        {{#view "events-item" contextBinding="event"}}
+      {{#each view.events as |event|}}
+        {{#view "events-item" context="event"}}
           <td class="created_at">
             {{format-time createdAt}}
           </td>

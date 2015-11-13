@@ -1,1 +1,1 @@
-{{#each error in view.errors}}{{error.message}}{{/each}}
+{{#each view.errors as |error|}}{{error.message}}{{/each}}
