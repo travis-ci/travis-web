@@ -73,7 +73,7 @@ Route = TravisRoute.extend BuildFaviconMixin,
 
     afterSignOut: ->
       if @get('config').pro
-        @transitionTo('auth')
+        @transitionTo('home-pro')
       else
         @transitionTo('home')
 
