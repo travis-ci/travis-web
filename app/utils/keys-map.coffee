@@ -26,6 +26,7 @@ languageConfigKeys = {
   lein:        'Lein'
   compiler:    'Compiler'
   crystal:     'Crystal'
+  osx_image:   'Xcode'
 }
 
 configKeys = {
