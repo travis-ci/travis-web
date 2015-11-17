@@ -1,46 +1,17 @@
-<aside class="columns medium-4">
-  <section class="profile-user">
-    <div class="media">
-      <div class="media-elem">
-        <img src={{auth.gravatarUrl}} alt="">
-      </div>
-      <div class="media-body">
-        {{#link-to 'profile'}}
-          <h1>{{userName}}</h1>
-          <p>Repositories <strong>{{user.reposCount}}</strong></p>
-        {{/link-to}}
-        <p class="profile-user-last">Token: 
 
-        {{#if isVisible}}
-          <strong>{{auth.currentUser.token}}</strong>
-        {{/if}}
-        <a {{action 'tokenVisibility'}} class="profile-token-toggle tooltip--profile {{if isVisible 'is-visible'}} dropdown">
-          <span class="tooltip-bubble">
-            {{#if isVisible}}hide token{{else}}show token{{/if}}
-          </span>
-          {{eye-icon}}
-          </a>
-        </p>
-      </div>
-    </div>
-  </section>
+<aside class="columns medium-4">
   <section class="profile-orgs">
+    <ul>
+      {{org-item account=user}}
+    </ul>
     <h1>Organizations</h1>
-    {{#collection "accounts-list" content="organizations"}}
-      {{#link-to "account" view.account class="name"}}
-        <div class="media">
-          <div class="media-elem">
-            <img src={{view.avatarUrl}} alt="">
-          </div>
-          <div class="media-body">
-            <h2>{{view.name}}</h2>
-            <p>Repositories <strong>{{view.account.reposCount}}</strong></p>
-          </div>
-        </div>
-      {{/link-to}}
+    <ul>
+    {{#each organizations as |org|}}
+      {{org-item account=org}}
     {{else}}
-      <p class="profile-text">You are not currently a member of <br> any organization.</p>
-    {{/collection}}
+      <li class="profile-text">You are not currently a member of <br> any organization.</li>
+    {{/each}}
+    </ul>
   </section>
 {{#if config.githubOrgsOauthAccessSettingsUrl}}
   <section class="profile-additional">

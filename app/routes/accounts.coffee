@@ -18,4 +18,11 @@ Route = TravisRoute.extend
     @render 'profile_accounts', outlet: 'left', into: 'profile'
 
 
+  organizations: ->
+    model.filterBy('type', 'organization')
+
+  user: ->
+    model.filterBy('type', 'user')[0]
+
+
 `export default Route`

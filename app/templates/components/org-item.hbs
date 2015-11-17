@@ -1,0 +1,27 @@
+<div class="media-elem">
+  {{#if avatarUrl}}
+    <img src={{avatarUrl}} alt="avatar">
+  {{else}}
+    <div class="default-avatar--profile"></div>
+  {{/if}}
+</div>
+<div class="media-body">
+  {{#link-to "account" account.login}}
+    <h2>{{account.login}}</h2>
+    <p>Repositories <strong>{{reposCount}}</strong></p>
+  {{/link-to}}
+
+  {{#if isUser}}
+    <p class="profile-user-last">Token: 
+    {{#if tokenIsVisible}}
+      <strong>{{auth.currentUser.token}}</strong>
+    {{/if}}
+    <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle tooltip--profile {{if tokenIsVisible 'is-visible'}} dropdown">
+      <span class="tooltip-bubble">
+        {{#if tokenIsVisible}}hide token{{else}}show token{{/if}}
+      </span>
+      {{eye-icon}}
+      </a>
+    </p>
+  {{/if}}
+</div>

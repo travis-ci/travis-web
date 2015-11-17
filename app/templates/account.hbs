@@ -1,10 +1,25 @@
 {{#if allHooks.isLoaded}}
 
   <header>
-
-    {{#if config.billingEndpoint}}
-      {{subscribe-button account=subscribeButtonInfo}}
+  {{#if config.billingEndpoint}}
+    <div class="cta-btn">
+    {{#if view.subscribed}}
+      <a class="btn btn-activated" href={{billingUrl}}>
+        Subscription active!
+      </a>
+    {{else}}
+      {{#if view.education}}
+        <a class="btn btn-activated" href={{billingUrl}}>
+          Educational account!
+        </a>
+      {{else}}
+        <a class="btn btn-activate" href={{billingUrl}}>
+          Sign up this account!
+        </a>
+      {{/if}}
     {{/if}}
+    </div>
+  {{/if}}
 
     <div class="profile-header">
       <h1>{{accountName}}</h1>
@@ -111,5 +126,3 @@
 {{else}}
   {{loading-indicator}}
 {{/if}}
-
-
