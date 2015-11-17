@@ -50,9 +50,17 @@ Controller = Ember.Controller.extend
     @config.show_repos_hint == 'public'
   ).property()
 
-  billingUrl: (->
+  billingUrl: ( ->
     id = if @get('model.type') == 'user' then 'user' else @get('model.login')
     "#{@config.billingEndpoint}/subscriptions/#{id}"
+  ).property('model.name', 'model.login')
+
+  subscribeButtonInfo: (->
+    {
+      billingUrl: @get('billingUrl')
+      subscribed: @get('model.subscribed')
+      education: @get('model.education')
+    }
   ).property('model.login', 'model.type')
 
 `export default Controller`
