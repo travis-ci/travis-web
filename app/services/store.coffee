@@ -74,14 +74,12 @@ Store = DS.Store.extend
       job = @recordForId('job', data.id)
       job.appendLog(number: parseInt(data.number), content: data._log, final: data.final)
     else if data[name]
-      @_loadOne(name, data)
+      @loadOne(name, data)
     else
       throw "can't load data for #{name}" unless type
 
-  _loadOne: (type, json) ->
-    payload = {}
-    payload[type.pluralize()] = [json[type]]
-    @push(this.normalize(type, json))
+  loadOne: (type, json) ->
+    record = @push(this.normalize(type, json))
 
     # we get other types of records only in a few situations and
     # it's not always needed to update data, so I'm specyfing which
