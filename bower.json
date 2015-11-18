@@ -1,23 +1,22 @@
 {
   "name": "travis",
   "dependencies": {
-    "handlebars": "2.0.0",
+    "ember": "1.13.10",
+    "ember-cli-shims": "0.0.6",
+    "ember-cli-test-loader": "0.2.1",
+    "ember-data": "1.13.15",
+    "ember-load-initializers": "0.1.7",
+    "ember-qunit": "0.4.16",
+    "ember-qunit-notifications": "0.1.0",
     "jquery": "^1.11.3",
-    "ember": "1.13.8",
-    "ember-data": "1.13.9",
-    "ember-resolver": "~0.1.15",
     "loader.js": "ember-cli/loader.js#3.2.1",
-    "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",
-    "ember-cli-test-loader": "ember-cli/ember-cli-test-loader#0.1.0",
-    "ember-load-initializers": "ember-cli/ember-load-initializers#0.1.4",
-    "ember-qunit": "0.4.9",
-    "ember-qunit-notifications": "0.0.5",
-    "qunit": "~1.18.0",
+    "qunit": "~1.20.0",
     "visibilityjs": "~1.2.1",
     "JavaScript-MD5": "~1.1.0",
     "moment": "~2.9.0",
     "jquery-timeago": "~1.4.1",
     "pusher": "~2.2.3",
-    "pretender": "0.1.0"
+    "pretender": "0.1.0",
+    "ember-resolver": "~0.1.20"
   }
 }
