@@ -21,9 +21,4 @@ Controller = Ember.Controller.extend
   connectTab: (tab) ->
     @set('tab', tab)
 
-  billingUrl: (->
-    id = if @get('account.type') == 'user' then 'user' else @get('account.login')
-    "#{@get('config').billingEndpoint}/subscriptions/#{id}"
-  ).property('account.login', 'account.type')
-
 `export default Controller`

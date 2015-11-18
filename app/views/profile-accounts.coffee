@@ -5,9 +5,5 @@ View = BasicView.extend
   classNames: ['profile-orglist', 'columns', 'medium-4']
   tagName: 'aside'
   templateName: 'profile/accounts'
-  classAccounts: (->
-    'active' if @get('tab') == 'accounts'
-  ).property('tab')
-
 
 `export default View`
