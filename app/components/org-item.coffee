@@ -14,7 +14,6 @@ OrgItemComponent = Ember.Component.extend
   ).property('account')
 
   avatarUrl: (->
-    console.log(@get('account'))
     @get('account.avatarUrl') || false
   ).property('account')
 

@@ -2,7 +2,8 @@
 
 View = BasicView.extend
   tabBinding: 'controller.tab'
-  classNames: ['profile-orglist']
+  classNames: ['profile-orglist', 'columns', 'medium-4']
+  tagName: 'aside'
   templateName: 'profile/accounts'
   classAccounts: (->
     'active' if @get('tab') == 'accounts'

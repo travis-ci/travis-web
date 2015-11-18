@@ -13,7 +13,8 @@ Controller = Ember.Controller.extend
   ).property('user.login', 'user.name')
 
   gravatarUrl: (->
-    "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=48&d=mm"
+    if @get('user.gravatarId')
+      "#{location.protocol}//www.gravatar.com/avatar/#{@get('user.gravatarId')}?s=36&d=mm"
   ).property('user.gravatarId')
 
   defineTowerColor: (broadcastArray) ->
