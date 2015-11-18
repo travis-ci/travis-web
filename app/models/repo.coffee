@@ -162,8 +162,16 @@ Repo.reopenClass
     else
       adapter = store.adapterFor('repo')
       modelClass = store.modelFor('repo')
-      adapter.findRecord(store, modelClass, slug).then (resourceHash) ->
-        store.push(store.normalize('repo', resourceHash));
+      adapter.findRecord(store, modelClass, slug).then (payload) ->
+        serializer = store.serializerFor('repo')
+        modelClass = store.modelFor('repo')
+        result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord')
+
+        repo = store.push(data: result.data)
+        for record in result.included
+          r = store.push(data: record)
+
+        repo
       , ->
         error = new Error('repo not found')
         error.slug = slug
