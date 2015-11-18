@@ -1,6 +1,29 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
+var traverse = function(object, callback) {
+  if(!object) {
+    return;
+  }
+
+  if(typeof(object) === 'object' && !Ember.isArray(object)) {
+    callback(object);
+  }
+
+  if(Ember.isArray(object)) {
+    for(let item of object) {
+      traverse(item, callback);
+    }
+  } else if(typeof object === 'object') {
+    for(let key in object) {
+      if(object.hasOwnProperty(key)) {
+        let item = object[key];
+        traverse(item, callback);
+      }
+    }
+  }
+};
+
 export default DS.JSONSerializer.extend({
   isNewSerializerAPI: true,
 
@@ -36,6 +59,11 @@ export default DS.JSONSerializer.extend({
     }
 
     return attributes;
+  },
+
+  normalizeResponse(store, primaryModelClass, payload, id, requestType) {
+    this._fixReferences(payload);
+    return this._super(...arguments);
   },
 
   normalizeArrayResponse(store, primaryModelClass, payload, id, requestType) {
@@ -111,5 +139,44 @@ export default DS.JSONSerializer.extend({
     } else {
       return Ember.String.camelize(key);
     }
+  },
+
+  _fixReferences(payload) {
+    let byHref = {}, href, records;
+    if(payload['@type']) {
+      // API V3 doesn't return all of the objects in a full representation
+      // If an object is present in one place in the response, all of the
+      // other occurences will be just references of a kind - they will just
+      // include @href property.
+      //
+      // I don't want to identify records by href in ember-data, so here I'll
+      // set an id and a @type field on all of the references.
+      //
+      // First we need to group all of the items in the response by href:
+      traverse(payload, (item) => {
+        if(href = item['@href']) {
+          if(records = byHref[href]) {
+            records.push(item);
+          } else {
+            byHref[href] = [item];
+          }
+        }
+      });
+
+      // Then we can choose a record with an id for each href and put the id
+      // in all of the other occurences.
+      for(let href in byHref) {
+        records = byHref[href];
+        let recordWithAnId = records.find( (record) => record.id );
+        if(recordWithAnId) {
+          for(let record of records) {
+            record.id = recordWithAnId.id;
+            //record['@type'] = recordWithAnId['@type'];
+          }
+        }
+      }
+    }
+
+    return payload;
   }
 });
