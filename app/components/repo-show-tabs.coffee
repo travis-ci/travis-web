@@ -23,10 +23,6 @@ RepoShowTabsComponent = Ember.Component.extend
     'active' if @get('tab') == 'branches'
   ).property('tab')
 
-  classEvents: (->
-    'active' if @get('tab') == 'events'
-  ).property('tab')
-
   classBuild: (->
     tab = @get('tab')
     classes = []
