@@ -13,7 +13,7 @@
         <small class="repo-main-branch" title={{build.pullRequestTitle}}>Pull Request #{{build.pullRequestNumber}}</small>
         {{build.pullRequestTitle}}
       {{else}}
-        <small class="repo-main-branch" title={{build.commit.branch}}>{{build.commit.branch}}</small>
+        <small class="repo-main-branch" title={{build.branch.name}}>{{build.branch.name}}</small>
         {{format-message build.commit.subject repo=build.repo}}
       {{/if}}
       </h2>

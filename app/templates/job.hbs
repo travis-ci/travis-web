@@ -8,7 +8,7 @@
 
   <div class="tile-main medium-8 columns">
     <h2 class="repo-main-commit">
-      <small class="repo-main-branch" title={{job.commit.branch}}>{{job.commit.branch}}</small>
+      <small class="repo-main-branch" title={{job.build.branch.name}}>{{job.build.branch.name}}</small>
       {{format-message job.commit.subject repoBinding=job.repo}}
     </h2>
     <div class="repo-main-description">

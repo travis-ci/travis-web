@@ -15,7 +15,7 @@ Repo = Model.extend
   active:              DS.attr()
 
   #lastBuild:     DS.belongsTo('build')
-  defaultBranch: DS.belongsTo('branch')
+  defaultBranch: DS.belongsTo('branch', async: false)
 
   withLastBuild: ->
     @filter( (repo) -> repo.get('defaultBranch.lastBuild') )
