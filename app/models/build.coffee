@@ -9,7 +9,6 @@ Build = Model.extend DurationCalculations,
 
   state:             DS.attr()
   number:            DS.attr('number')
-  branch:            DS.attr('string')
   message:           DS.attr('string')
   _duration:         DS.attr('number')
   _config:           DS.attr('object')
@@ -21,8 +20,9 @@ Build = Model.extend DurationCalculations,
   eventType:         DS.attr('string')
   repositoryId:      DS.attr('number')
 
+  branch: DS.belongsTo('branch', async: false, inverse: 'builds')
   repo:   DS.belongsTo('repo', async: true)
-  commit: DS.belongsTo('commit')
+  commit: DS.belongsTo('commit', async: false)
   jobs:   DS.hasMany('job', async: true)
 
   config: (->

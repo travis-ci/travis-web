@@ -54,6 +54,18 @@ var Serializer = V2FallbackSerializer.extend({
   normalize: function(modelClass, resourceHash) {
     var data, href, id, repoId, result;
 
+    // TODO: remove this after switching to V3 entirely
+    if(!resourceHash['@type']) {
+      let build = resourceHash.build,
+          commit = resourceHash.commit;
+      let branch = {
+        name: commit.branch,
+        default_branch: build.is_on_default_branch,
+        "@href": `/repo/${build.repository_id}/branch/${commit.branch}`
+      };
+      resourceHash.build.branch = branch;
+    }
+
     result = this._super(modelClass, resourceHash);
 
     data = result.data;

@@ -28,6 +28,10 @@ export default DS.JSONSerializer.extend({
   isNewSerializerAPI: true,
 
   extractRelationship(type, hash) {
+    if(!hash.id && hash['@href']) {
+      hash.id = hash['@href'];
+    }
+
     let relationshipHash = this._super(...arguments);
     if(relationshipHash && relationshipHash['@type']) {
       relationshipHash.type = relationshipHash['@type'];
