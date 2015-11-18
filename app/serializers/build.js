@@ -51,6 +51,14 @@ var Serializer = V2FallbackSerializer.extend({
     }
   },
 
+  keyForRelationship(key, typeClass, method) {
+    if (key === 'repo') {
+      return 'repository';
+    } else {
+      return this._super.apply(this, arguments);
+    }
+  },
+
   normalize: function(modelClass, resourceHash) {
     var data, href, id, repoId, result;
 
