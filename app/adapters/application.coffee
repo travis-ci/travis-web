@@ -20,6 +20,6 @@ Adapter = DS.ActiveModelAdapter.extend
     hash
 
   findMany: (store, type, ids) ->
-    @ajax(@buildURL(type.typeKey), 'GET', data: { ids: ids })
+    @ajax(@buildURL(type.modelName), 'GET', data: { ids: ids })
 
 `export default Adapter`
