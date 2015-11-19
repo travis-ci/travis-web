@@ -68,7 +68,7 @@ Router.map ->
 
   @route 'home-pro', path: '/home-pro'
   @route 'plans', path: '/plans'
-  @route 'team', path: '/team'
+  @route 'team', path: '/about'
   @route 'logo', path: '/logo'
 
   @resource 'profile', path: '/profile', ->
