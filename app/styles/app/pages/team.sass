@@ -40,9 +40,12 @@
   .list--team
     display: flex
     flex-wrap: wrap
+    justify-content: space-around
     list-style: none
     margin: 0
     padding: 0
+    @media (min-width: 1000px)
+      justify-content: flex-start
 
   .team-name
     font-weight: 300
