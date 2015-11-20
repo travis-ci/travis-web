@@ -20,10 +20,10 @@ module.exports = function(environment) {
     },
 
     // defaults for running travis-web
-    apiEndpoint: 'https://api.travis-ci.org',
+    apiEndpoint: 'https://api-staging.travis-ci.org',
     sourceEndpoint: 'https://github.com',
     pusher: {
-      key: '5df8ac576dcccf4fd076',
+      key: 'dd3f11c013317df48b50',
       host: 'ws.pusherapp.com'
     },
     pro: false,

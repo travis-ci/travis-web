@@ -1,0 +1,15 @@
+<div class="content">
+  {{#if loading}}
+    {{loading-indicator}}
+  {{else}}
+
+    <input type="text" class="input" value={{filterString}}
+           oninput={{action "filterChanged" value="target.value"}}
+           onkeydown={{action "keypress"}}>
+
+    <div class="matches">
+      {{{matches}}}
+    </div>
+
+  {{/if}}
+</div>
