@@ -40,7 +40,7 @@ $grey: #858585
     margin: 0
     font-size: 54px
     font-weight: 300
-    line-height: 1.3
+    line-height: 1.2
 
   .h1--grey
     @extend %h1
@@ -184,14 +184,16 @@ $grey: #858585
       display: flex
       justify-content: space-between
       flex-direction: column-reverse
+      align-items: center
       @media #{$medium-up}
         flex-direction: row
     
     .section-list,
     .section-text
       flex: 0 0 50%
-      @media (min-width: 54em)
-        flex: 0 0 47%
+      padding: 0 1em
+      // @media (min-width: 54em)
+      //   flex: 0 0 47%
 
     .list--check
       li
@@ -281,7 +283,7 @@ $grey: #858585
       flex-flow: row wrap
       margin-top: 1em
     li
-      flex: 0 0 15em
+      flex: 0 0 16em
 
   [class^="feature-"]
     display: block
