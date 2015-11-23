@@ -1,7 +1,33 @@
 %avatar
-  background-color: hotpink
+  position: relative
+  background-color: #a0a0a0
   border-radius: 50%
-  background-image: linear-gradient(top left, $grey-dark 30%, $grey-medium 40%, $grey-medium 60%, $grey-dark 70%)
+  overflow: hidden
+  &:before
+    content: ""
+    display: block
+    width: 40%
+    height: 40%
+    border-radius: 50%
+    background: $cream-light
+    position: absolute
+    top: 20%
+    margin: auto
+    left: 0
+    right: 0
+
+  &:after
+    content: ""
+    display: block
+    width: 66%
+    height: 70%
+    border-radius: 50%
+    background: $cream-light
+    position: absolute
+    top: 55%
+    margin: auto
+    left: 0
+    right: 0
 
 .default-avatar--profile
   @extend %avatar
