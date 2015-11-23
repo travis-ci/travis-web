@@ -1,9 +1,8 @@
 {{#if canCancel}}
   {{#if cancelling}}
-    {{loading-indicator}}
+    {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action "cancel"}} class="button-circle"
-       title="Cancel Build">
+    <a href="#" {{action "cancel"}} class="button-circle" title="Cancel Build">
       <span class="icon icon--cancel"></span>
     </a>
   {{/if}}
@@ -11,7 +10,7 @@
 
 {{#if canRestart}}
   {{#if restarting}}
-    {{loading-indicator}}
+    {{loading-indicator height=true}}
   {{else}}
     <a href="#" {{action "restart"}} class="button-circle" title="Restart Build">
       <span class="icon icon--trigger"></span>
