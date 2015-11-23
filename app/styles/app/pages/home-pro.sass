@@ -181,13 +181,11 @@ $grey: #858585
 
   .section--feature
     .inner
-      display: flex
-      justify-content: space-between
-      flex-direction: column-reverse
-      align-items: center
       @media #{$medium-up}
-        flex-direction: row
-    
+        flex-direction: row-reverse
+        display: flex
+        justify-content: space-between
+        align-items: center
     .section-list,
     .section-text
       flex: 0 0 48%
@@ -198,15 +196,12 @@ $grey: #858585
         @extend .text-big
         line-height: 1.65
 
-
   .section--hero
     .inner
-      display: flex
-      justify-content: space-between
-      flex-direction: column
       @media #{$medium-up}
+        display: flex
+        justify-content: space-between
         flex-direction: row
-    
     .section-text
       flex: 0 0 47%
       text-align: center
@@ -228,12 +223,13 @@ $grey: #858585
 
   .list--customers
     @extend %list
-    display: flex
-    justify-content: space-around
-    flex-wrap: wrap
-    align-items: center
     width: 80%
     margin: 2em auto 0
+    @media #{$medium-up}
+      display: flex
+      justify-content: space-around
+      flex-wrap: wrap
+      align-items: center
     li
       flex: 0 0 9em
       margin-bottom: 3em
@@ -242,9 +238,10 @@ $grey: #858585
 
   .list--languages
     @extend %list
-    display: flex
-    justify-content: space-around
-    flex-wrap: wrap
+    @media #{$medium-up}
+      display: flex
+      justify-content: space-around
+      flex-wrap: wrap
     li
       flex: 0 0 5em
 
@@ -272,11 +269,10 @@ $grey: #858585
 
   .list--features
     @extend %list
-    display: flex
-    justify-content: space-between
-    flex-flow: column wrap
     margin-top: 5em
     @media #{$medium-up}
+      display: flex
+      justify-content: space-between
       flex-flow: row wrap
       margin-top: 1em
     li
