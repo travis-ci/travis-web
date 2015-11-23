@@ -28,7 +28,7 @@ export default DS.JSONSerializer.extend({
   isNewSerializerAPI: true,
 
   extractRelationship(type, hash) {
-    if(!hash.id && hash['@href']) {
+    if(hash && !hash.id && hash['@href']) {
       hash.id = hash['@href'];
     }
 
