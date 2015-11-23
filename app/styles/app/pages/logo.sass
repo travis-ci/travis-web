@@ -1,13 +1,11 @@
 .landing-pro
   .list--fonts
     @extend %list
-    display: flex
-    flex-wrap: wrap
-    justify-content: space-between
     margin: 3em 0 7em
-    flex-direction: column
     @media #{$medium-up}
-      flex-direction: row
+      display: flex
+      flex-flow: row wrap
+      justify-content: space-between
     li
       flex: 1 0 33%
       margin-bottom: 2em
@@ -31,13 +29,10 @@
 
   .list--colors
     @extend %list
-    display: flex
-    flex-wrap: wrap
-    justify-content: space-around
-    flex-direction: column
     @media #{$medium-up}
-      flex-direction: row
-
+      display: flex
+      flex-flow: row wrap
+      justify-content: space-around
     li
       flex: 0 0 19%
     [class^="colors-sample"]
