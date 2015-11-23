@@ -1,0 +1,142 @@
+.landing-pro
+  .list--plans
+    @extend %list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    margin: 5em 0
+
+  [class^="plan--"]
+    flex: 1 0 230px
+    padding: .5em 1.5em 3em
+    margin-bottom: 2em
+    border:
+      width: 2px
+      color: #E8E8E8
+      style: solid
+
+    @media #{$medium-up}
+      flex: 0 0 230px
+      margin-bottom: 0
+
+    .list--check
+      margin: 3em 0
+      font-size: 16px
+      li
+        line-height: 2
+        &[data-jobs]:before
+          content: attr(data-jobs)
+          width: 1.2em
+          background-image: none
+          line-height: 1
+          font-weight: 600
+          text-align: center
+          font-size: 18px
+
+  =colorPlans($color, $hover-color, $bg: true)
+    border-top-color: $color
+    .plan-title
+      color: $color
+    .plan-cta-btn
+      border: $color solid 1px
+      @if $bg
+        background-color: $color
+        color: white
+      @else
+        color: $color
+        background-color: white
+      &:hover
+        border-color: $hover-color
+        background-color: $hover-color
+    .list--check li:before
+      color: $color
+
+  .plan--red
+    +colorPlans($red, #FCF0F0, false)
+    .list--check li:before
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjREI0MjQyIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
+  .plan--green
+    +colorPlans($green, #73c78d)
+    .list--check li:before
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjMzlBODVCIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
+  .plan--teal
+    +colorPlans($teal, #8CC8CE)
+    .list--check li:before
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNDBBM0FEIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
+  .plan--yellow
+    +colorPlans($yellow, #EFD97C)
+    .list--check li:before
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjRTVDMDI1IiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
+
+
+  .plan-title,
+  .plan-pricing,
+  .plan-cta
+    text-align: center
+
+  .plan-title
+    font-size: 1.9em
+    font-weight: 300
+
+  .plan-pricing
+    .price
+      font-size: 20px
+    .timeframe
+      font-size: 16px
+
+  .plan-cta-btn
+    display: inline-block
+    padding: 0.4em 0.9em
+    border-radius: 2px
+    font-size: 22px
+    text-decoration: none
+    transition: background-color 200ms ease, border-color 200ms ease
+
+  .section--enterprise
+    .inner
+      display: flex
+      flex-flow: column wrap
+      justify-content: space-between
+      @media #{$medium-up}
+        flex-flow: row wrap
+
+    .section-text
+      text-align: center
+      @media #{$medium-up}
+        text-align: right
+
+    .section-image
+      img
+        display: block
+        width: 320px
+        height: auto
+        margin: auto
+      @media #{$medium-up}
+        img
+          width: 100%
+
+    .section-text,
+    .section-image
+      flex: 0 0 47%
+
+  .list--faq
+    display: flex
+    flex-flow: row wrap
+    justify-content: space-between
+    padding: 0
+    margin: 3em 0 0
+    list-style: none
+    li
+      flex: 0 0 100%
+      padding: 1em 1.5em 1.7em
+      margin-bottom: 2em
+      border: solid 1px #E8E8E8
+      @media #{$medium-up}
+        flex: 0 0 48%
+
+  .faq-text
+    @include linkStyle
+    margin: 0
+    font-size: 16px
+    a
+      display: inline-block

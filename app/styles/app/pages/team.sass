@@ -1,0 +1,64 @@
+.landing-pro
+  .team-header
+    margin-bottom: 7em
+
+  .team-flags
+    margin-top: 10px
+    img
+      width: 30px
+      height: 20px
+    .flag-divider
+      color: #d9d9d9
+      padding: 0 5px
+
+  .team-image
+    width: 113px
+    height: 113px
+    border-radius: 50%
+    margin: auto
+    overflow: hidden
+    img
+      display: block
+      width: 100%
+      height: 100%
+    .back
+      display: none
+    &:hover
+      .back
+        display: block
+      .front
+        display: none
+
+  .team-member
+    flex: 0 0 195px
+    padding: 0
+    margin-bottom: 4em
+    text-align: center
+    display: flex
+    flex-flow: column wrap
+
+  .list--team
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    list-style: none
+    margin: 0
+    padding: 0
+    @media (min-width: 1000px)
+      justify-content: flex-start
+
+  .team-name
+    font-weight: 300
+    font-size: 20px
+    margin: 10px 0 0 0
+    line-height: 1.5
+  .team-title
+    font-style: italic
+    line-height: 1.5
+    margin: 0
+    font-size: 16px
+    flex-grow: 1
+
+  .team-handle
+    font-size: 16px
+    margin: 0
