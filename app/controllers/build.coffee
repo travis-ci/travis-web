@@ -21,14 +21,6 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
     @get('build.isLoading')
   ).property('build.isLoading')
 
-  urlCommitterGravatarImage: (->
-    gravatarImage(@get('commit.committerEmail'), 40)
-  ).property('commit.committerEmail')
-
-  urlAuthorGravatarImage: (->
-    gravatarImage(@get('commit.authorEmail'), 40)
-  ).property('commit.authorEmail')
-
   buildStateDidChange: (->
     if @get('sendFaviconStateChanges')
       @send('faviconStateDidChange', @get('build.state'))

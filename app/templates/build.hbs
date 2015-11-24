@@ -2,70 +2,7 @@
   {{loading-indicator}}
 {{else}}
 
-  <section class="build-header {{build.state}}">
-    <div class="build-commit">
-      <h2 class="build-title {{build.state}}">
-        {{status-icon status=build.state}}
-        {{#if build.pullRequest}}
-          <small class="commit-branch" title={{build.pullRequestTitle}}>Pull Request #{{build.pullRequestNumber}}</small>
-          {{build.pullRequestTitle}}
-        {{else}}
-          <small class="commit-branch" title={{build.commit.branch}}>{{build.commit.branch}}</small>
-          {{format-message build.commit.subject repo=build.repo}}
-        {{/if}}
-      </h2>
-      <div class="commit-info">
-        <p class="commit-description">
-          {{#if build.pullRequest}}
-            {{format-message build.commit.subject repo=build.repo}}<br>
-          {{/if}}
-          <span class="monospace">{{format-message build.commit.body repo=build.repo pre=true}}</span>
-        </p>
-        <ul class="list-icon">
-          <li>
-            <a class="commit-commit" href={{urlGithubCommit}}>
-              Commit {{format-sha commit.sha}}</a>
-          </li>
-          <li>
-            {{#if build.pullRequest}}
-              <a class="commit-compare" title="See the commit on GitHub" href={{build.commit.compareUrl}}>#{{build.pullRequestNumber}}: {{build.pullRequestTitle}}</a>
-            {{else}}
-              {{#if build.commit.compareUrl}}
-                <a class="commit-compare" title="See the diff on GitHub" href={{build.commit.compareUrl}}>
-                Compare {{short-compare-shas build.commit.compareUrl}}</a>
-              {{/if}}
-            {{/if}}
-          </li>
-        </ul>
-        <p class="commit-author">
-          {{#if commit.authorName}}
-            <img src={{urlAuthorGravatarImage}}>{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}
-          {{/if}}
-          {{#unless commit.authorIsCommitter}}
-            {{#if commit.committerName}}
-              <img src={{urlCommitterGravatarImage}}>{{commit.committerName}} committed
-            {{/if}}
-          {{/unless}}
-        </p>
-      </div>
-    </div>
-
-    <div class="build-info">
-      <h3 class="build-status {{build.state}}">
-        {{#link-to "build" repo build}}
-          {{status-icon status=build.state}} #{{build.number}} {{humanize-state build.state}}{{/link-to}}
-      </h3>
-      <ul class="list-icon">
-        <li><span title="{{format-duration build.duration}}" class="commit-clock">{{#if build.isFinished}}ran{{else}}running{{/if}} for {{format-duration build.duration}}</span></li>
-        {{!-- <li><span>Elapsed time</span></li> --}}
-        <li><span title="{{pretty-date build.finishedAt}}" class="commit-calendar">{{format-time build.finishedAt}}</span></li>
-      </ul>
-    </div>
-
-    <div class="build-tools">
-      {{repo-actions build=build repo=build.repo user=auth.currentUser}}
-    </div>
-  </section>
+  {{build-header item=build user=auth.currentUser commit=commit}}
 
   {{#unless build.isMatrix}}
     {{view 'annotations' annotations=build.jobs.firstObject.annotations}}
