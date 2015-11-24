@@ -122,11 +122,6 @@ $button-border-color: #d4d4d4
   &:focus
     background-color: #696867
 
-.button-circle
-  width: 28px
-  height: 28px
-  border-radius: 50%
-
 .button--showmore
   height: auto
   padding: 0.3em 0.7em
@@ -148,3 +143,48 @@ $button-border-color: #d4d4d4
   &:focus,
   &:hover
     background-color: lighten(#CD3A36, 10)
+
+
+
+// new stuff
+
+
+%circle-button
+  display: block
+  text-indent: 999%
+  overflow: hidden
+  width: 28px
+  height: 28px
+  border: solid 1px #E4E6E6
+  border-radius: 50%
+  &:hover
+    background-color: $teal
+
+  float: left
+  margin-right: 1rem
+  @media #{$medium-up}
+    float: none
+    margin-right: 0
+    margin-bottom: .5em
+
+.button-circle-codeclimate
+  @extend %circle-button
+  background:
+    image: inline-image('icons/code-climate-icon.svg')
+    repeat: no-repeat
+    size: auto 100%
+
+.button-circle-cancel
+  @extend %circle-button
+  @extend %icon-line-cross
+  background:
+    repeat: no-repeat
+    size: auto 100%
+
+.button-circle-trigger
+  @extend %circle-button
+  @extend %icon-line-trigger
+  background:
+    position: 2px 1px
+    repeat: no-repeat
+    size: 24px 24px

@@ -1,0 +1,41 @@
+.repo-title
+  margin: 0
+  font-size: 36px
+  font-weight: $font-weight-normal
+  a
+    color: #808080
+    &:hover,
+    &:active
+      text-decoration: underline
+
+.repo-header
+  header
+    @media #{$medium-up}
+      display: flex
+      flex-flow: row wrap
+      justify-content: flex-start
+      align-items: center
+
+.repo-gh
+  width: 28px
+  height: 28px
+  flex: 0 0 28px
+  margin: 0 1.2em
+  overflow: hidden
+  text-indent: 999%
+  white-space: nowrap
+  a
+    @extend %icon-github-circle
+    display: block
+    height: 100%
+    background:
+      size: 100%
+      repeat: no-repeat
+
+.repo-navigation
+  margin: 1.9em 0 1.2em
+  @media #{$medium-up}
+    display: flex
+    flex-flow: row-reverse wrap
+    justify-content: space-between
+    border-bottom: 2px $cream-dark 

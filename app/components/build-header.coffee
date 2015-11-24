@@ -16,4 +16,8 @@ BuildHeaderComponent = Ember.Component.extend
     gravatarImage(@get('commit.authorEmail'), 40)
   ).property('commit.authorEmail')
 
+  isJob: (->
+    if @get('item.build') then true else false
+  ).property('item')
+
 `export default BuildHeaderComponent`

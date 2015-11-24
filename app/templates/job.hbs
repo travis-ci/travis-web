@@ -1,65 +1,6 @@
 {{#if job.isLoaded}}
 
-<section class="tile tile--pass row {{job.state}}" {{!-- id="new-summary" --}}>
-  <div class="tile-status">
-    <span class="icon icon-status {{job.state}}" title={{job.state}}></span>
-    <span class="request-kind {{job.build.eventType}} icon" title={{job.build.eventType}}></span>
-  </div>
-
-  <div class="tile-main medium-8 columns">
-    <h2 class="repo-main-commit">
-      <small class="repo-main-branch" title={{job.commit.branch}}>{{job.commit.branch}}</small>
-      {{format-message job.commit.subject repoBinding=job.repo}}
-    </h2>
-    <div class="repo-main-description">
-      <pre class="body">{{format-message job.commit.body repoBinding=job.repo pre=true}}</pre>
-    </div>
-    <div class="tile-author">
-     {{#if job.commit.authorName}}
-       <img src={{view.urlAuthorGravatarImage}} />{{job.commit.authorName}} authored{{#if job.commit.authorIsCommitter}} and committed{{/if}}
-     {{/if}}
-     {{#unless job.commit.authorIsCommitter}}
-       {{#if job.commit.committerName}}
-         <img src={{view.urlCommitterGravatarImage}} />{{job.commit.committerName}} committed
-       {{/if}}
-     {{/unless}}
-    </div>
-  </div>
-
-  <div class="tile-additional medium-4 columns end">
-    <ul class="repo-main-info">
-      <li class="repo-build-status">
-        {{#link-to "job" repo job}}
-          <span class="icon icon--hash"></span>
-          {{job.number}} {{humanize-state job.state}}
-        {{/link-to}}
-      </li>
-      <li>
-        <a class="commit" href={{controller.urlGithubCommit}}><span class="icon icon--github"></span> Commit {{format-sha job.commit.sha}}</a>
-      </li>
-      <li>
-        {{#if job.build.pullRequest}}
-          <div class="compare"><a class="compare" href={{job.commit.compareUrl}}><span class="icon icon--github"></span> #{{job.build.pullRequestNumber}}: {{job.build.pullRequestTitle}}</a></div>
-        {{else}}
-          {{#if job.build.commit.compareUrl}}
-            <div class="compare"><a class="compare" href={{job.commit.compareUrl}}><span class="icon icon--github"></span> Compare {{short-compare-shas job.build.commit.compareUrl}}</a></div>
-          {{/if}}
-        {{/if}}
-      </li>
-      <li>
-        <span class="icon icon--clock"></span>
-        {{#if job.isFinished}}ran{{else}}running{{/if}} for {{format-duration job.duration}}
-      </li>
-      <li>
-        <span class="icon icon--cal"></span>
-        {{format-time job.finishedAt}}
-      </li>
-    </ul>
-
-    {{repo-actions job=job repo=job.repo user=auth.currentUser}}
-
-  </div>
-</section>
+  {{build-header item=job user=auth.currentUser commit=job.commit}}
 
   {{view 'annotations' annotations=view.annotations}}
 

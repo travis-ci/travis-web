@@ -57,9 +57,6 @@
 
 // @todo simplyfiy coloring mixins
 
-@mixin colorRows($color, $status)
-  
-
 @mixin colorStatusIcons($color, $status)
   .status-icon.#{$status}
     svg g > *
@@ -79,9 +76,9 @@
       color: $color
     @include colorStatusIcons($color, $status)
 
-@mixin statusColors($color, $status, $color2: $color)
+@mixin statusColors($color, $status, $width, $color2: $color)
   &.#{$status}
-    background: linear-gradient(to right, $color2 0%, $color2 9px, white 9px, white 100%) no-repeat
+    background: linear-gradient(to right, $color2 0%, $color2 $width, white $width, white 100%) no-repeat
     .row-name,
     .row-request a,
     .row-color a
@@ -100,3 +97,11 @@
     .build-status
       color: $color
     @include colorStatusIcons($color, $status)
+
+@mixin colorRows($color, $status, $width, $color2: $color)
+  &.#{$status}
+    background: linear-gradient(to right, $color2 0%, $color2 $width, white $width, white 100%) no-repeat
+  .#{$status},
+  .#{$status} a,
+    color: $color
+  @include colorStatusIcons($color, $status)

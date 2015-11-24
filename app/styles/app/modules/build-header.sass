@@ -1,3 +1,107 @@
-
 .build-header
+  font-size: 16px
+  border: 1px solid $cream-dark
   clear: both
+
+  @include colorRows($green, 'passed', 12px)
+  @include colorRows($red, 'failed', 12px)
+  @include colorRows($red, 'errored', 12px)
+  @include colorRows($grey, 'canceled', 12px)
+  @include colorRows($yellow, 'started', 12px, #e5da3f)
+  @include colorRows($yellow, 'queued', 12px, #e5da3f)
+  @include colorRows($yellow, 'booting', 12px, #e5da3f)
+  @include colorRows($yellow, 'received', 12px, #e5da3f)
+  @include colorRows($yellow, 'created', 12px, #e5da3f)
+
+  @media #{$medium-up}
+    display: flex
+    flex-flow: row no-wrap
+    justify-content: space-between
+
+.build-commit,
+.build-tools
+  padding-left: 2rem
+
+.build-commit
+  @media #{$medium-up}
+    flex: 1 1 65%
+    padding-left: 2.5rem
+
+.build-tools
+  padding: 1rem 0 1rem 3rem
+  overflow: auto
+  @media #{$medium-up}
+    flex: 0 0 40px
+    padding: 1rem 0 0
+
+.build-info
+  padding-left: 3rem
+  @media #{$medium-up}
+    flex: 1 1 35%
+
+.build-title,
+.build-status
+  margin: 1rem 0
+  padding-left: 1rem
+  font-weight: $font-weight-normal
+  font-size: 16px
+
+  .status-icon
+    width: 1.7rem
+    height: 1.8rem
+    vertical-align: middle
+
+.build-title
+  .status-icon
+    margin-left: -2rem
+
+.commit-info
+  padding-left: 1rem
+
+.commit-branch
+  margin-right: .5em
+  font-weight: $font-weight-bold
+  font-size: 16px
+
+.build-status
+  padding-left: 0
+
+.commit-author
+  margin: 1rem 0 .7rem
+  img
+    width: 20px
+    height: 20px
+    margin-right: .3em
+    border-radius: 50%
+
+.commit-description
+  margin: 1rem 0
+
+.list-icon
+  padding: 0
+  margin: 1rem 0
+  list-style: none
+
+  .commit-commit,
+  .commit-compare
+    @extend %icon-line-commit
+    padding-left: 1.5em
+    background:
+      size: auto 23px
+      repeat: no-repeat
+      position: -11px -1px
+  .commit-clock
+    @extend %icon-line-clock
+    padding-left: 1.5em
+    background:
+      size: auto 22px
+      repeat: no-repeat
+      position: 0 0
+  .commit-calendar
+    @extend %icon-line-calendar
+    padding-left: 1.5em
+    background:
+      size: auto 20px
+      repeat: no-repeat
+      position: 1px 1px
+

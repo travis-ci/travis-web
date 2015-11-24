@@ -34,11 +34,11 @@
     </ul>
     <p class="commit-author">
       {{#if commit.authorName}}
-        <img src={{urlAuthorGravatarImage}}>{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}
+        <img src={{urlAuthorGravatarImage}} alt="comitter avatar" aria-hidden="true"><span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
       {{/if}}
       {{#unless commit.authorIsCommitter}}
         {{#if commit.committerName}}
-          <img src={{urlCommitterGravatarImage}}>{{commit.committerName}} committed
+          <img src={{urlCommitterGravatarImage}} alt="comitter avatar" aria-hidden="true"><span class="label-align">{{commit.committerName}} committed</span>
         {{/if}}
       {{/unless}}
     </p>
@@ -47,8 +47,13 @@
 
 <div class="build-info">
   <h3 class="build-status {{item.state}}">
-    {{#link-to "build" repo item}}
-      {{status-icon status=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
+    {{#if isJob}}
+      {{#link-to "job" repo item}}
+        {{status-icon status=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
+    {{else}}
+      {{#link-to "build" repo item}}
+        {{status-icon status=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
+    {{/if}}
   </h3>
   <ul class="list-icon">
     <li><span title="{{format-duration item.duration}}" class="commit-clock">{{#if item.isFinished}}ran{{else}}running{{/if}} for {{format-duration item.duration}}</span></li>
@@ -56,7 +61,10 @@
     <li><span title="{{pretty-date item.finishedAt}}" class="commit-calendar">{{format-time item.finishedAt}}</span></li>
   </ul>
 </div>
-
 <div class="build-tools">
-  {{repo-actions build=item repo=item.repo user=user}}
+  {{#if isJob}}
+    {{repo-actions job=item repo=item.repo user=auth.currentUser}}
+  {{else}}
+    {{repo-actions build=item repo=item.repo user=user}}
+  {{/if}}
 </div>
