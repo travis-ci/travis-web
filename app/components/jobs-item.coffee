@@ -5,7 +5,7 @@
 JobsItemComponent = Ember.Component.extend
   tagName: 'li'
   classNameBindings: ['job.state']
-  classNames: ['tile', 'tile--jobs', 'row']
+  classNames: ['jobs-item']
 
   isAnimating: (->
     state = @get('job.state')
