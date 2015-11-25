@@ -83,6 +83,12 @@
 
 .log-body
   position: relative
+  max-height: 20vh
+  overflow: scroll
+  @media #{$medium-up}
+    max-height: none
+    overflow: auto
+
   pre
     clear: left
     min-height: 42px
@@ -96,7 +102,6 @@
     background-color: #2a2a2a
     counter-reset: line-numbering
     margin-top: 0
-    @extend %border-bottom-4px
 
   .cut
     padding: 20px 15px 0 55px
