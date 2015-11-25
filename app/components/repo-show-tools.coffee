@@ -4,20 +4,20 @@
 RepoShowToolsComponent = Ember.Component.extend
   popup: Ember.inject.service()
 
-  classNames: ['dropdown', 'dropdown--classic']
+  classNames: ['settings-menu']
+  classNameBindings: ['isOpen:display']
+  isOpen: false
 
   click: (event) ->
-    if $(event.target).is('a') && $(event.target).parents('.dropdown-menu').length
+    if $(event.target).is('a') && $(event.target).parents('.settings-dropdown').length
       @closeMenu()
 
   closeMenu: ->
-    $('.menu').removeClass('display')
+    @toggleProperty('isOpen')
 
   actions:
     menu: ->
-      @get('popup').close()
-      $('.menu.display').toggleClass('display')
-      return false
+      @toggleProperty('isOpen')
 
   hasPermission: (->
     if permissions = @get('currentUser.permissions')

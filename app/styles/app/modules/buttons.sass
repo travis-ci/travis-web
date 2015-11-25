@@ -148,7 +148,6 @@ $button-border-color: #d4d4d4
 
 // new stuff
 
-
 %circle-button
   display: block
   text-indent: 999%
@@ -180,6 +179,8 @@ $button-border-color: #d4d4d4
   background:
     repeat: no-repeat
     size: auto 100%
+  &:hover
+    @extend %icon-line-cross-white
 
 .button-circle-trigger
   @extend %circle-button
@@ -188,3 +189,35 @@ $button-border-color: #d4d4d4
     position: 2px 1px
     repeat: no-repeat
     size: 24px 24px
+  &:hover
+    @extend %icon-line-trigger-white
+
+
+%log-button
+  display: inline-block
+  height: 28px
+  padding: 0 1.1em 0 2.3em
+  border: 1px solid #f1f1f1
+  color: #f1f1f1
+  border-radius: 2px
+  text-align: center
+  line-height: 1.9
+  font-size: 14px
+  font-weight: 300
+  background:
+    repeat: no-repeat
+    size: auto 14px
+    position: 7px 6px
+  &:hover,
+  &:active
+    background-color: hotpink
+
+// log buttons
+.remove-log-button
+  @extend %log-button
+  @extend %icon-remove-log
+
+.download-log-button
+  @extend %log-button
+  @extend %icon-download-log
+

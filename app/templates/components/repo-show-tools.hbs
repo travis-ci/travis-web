@@ -1,6 +1,5 @@
-<a href="#" {{action "menu"}} class="menu-popup-button dropdown-button btn" type="" title="open settings menu">
-  <span class="icon icon-cog-light"></span> Settings <span class="icon icon-arrow-down"></span></a>
-<ul class="dropdown-menu menu">
+<a href="#" {{action "menu"}} class="settings-button" type="" title="open settings menu">Settings</a>
+<ul class="settings-dropdown">
   {{#if displaySettingsLink}}
     <li>
       {{#link-to "settings" repo}}Settings{{/link-to}}

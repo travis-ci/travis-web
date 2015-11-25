@@ -38,4 +38,53 @@
     display: flex
     flex-flow: row-reverse wrap
     justify-content: space-between
-    border-bottom: 2px $cream-dark 
+    border-bottom: 2px #f1f1f1 solid
+
+
+$dropdown-button-height: 30px
+$dropdown-button-margin: -9px
+
+.settings-button
+  display: block
+  height: $dropdown-button-height
+  padding: 0 2.5em
+  margin-top: $dropdown-button-margin
+  background:
+    color: white
+  border: 1px solid #f1f1f1
+  color: $grey-light
+  border-radius: 2px
+  text-align: center
+  line-height: 2
+  font-size: 14px
+  &:hover,
+  &:active
+    background-color: #f1f1f1
+
+.settings-dropdown
+  display: none
+  position: absolute
+  top: $dropdown-button-height + ($dropdown-button-margin * .8)
+  width: 100%
+  padding: 0
+  margin: 1px 0 0
+  list-style: none
+  z-index: 60
+  background-color: #f1f1f1
+  a
+    display: block
+    padding: 0.5em 1em
+    font-size: 14px
+    color: $grey-light
+    &:hover
+      background-color: $grey
+      color: white
+
+.settings-menu
+  position: relative
+  &.display
+    .settings-button
+      background-color: #f1f1f1
+    .settings-dropdown
+      display: block
+
