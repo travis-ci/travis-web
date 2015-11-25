@@ -197,6 +197,8 @@ class Travis::Web::App
 
       config['codeClimate'] = options[:code_climate] if options[:code_climate]
       config['codeClimateUrl'] = options[:code_climate_url] if options[:code_climate_url]
+      config['codecov'] = options[:codecov] if options[:codecov]
+      config['codecovUrl'] = options[:codecov_url] if options[:codecov_url]
       config['charmKey'] = options[:charm_key] if options[:charm_key]
       config['githubOrgsOauthAccessSettingsUrl'] = options[:github_orgs_oauth_access_settings_url]
       config['ajaxPolling'] = true if options[:ajax_polling]

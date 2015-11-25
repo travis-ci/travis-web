@@ -1,0 +1,56 @@
+<div id="codecov" class="popup">
+  <img src="/images/icons/codecov-logo.svg" id="codecov-logo"/>
+  <a href="#" class="close" {{action "close"}}></a>
+  <p>
+    <b>Want test coverage for your tests?</b>
+  </p>
+  <p>
+    Integrating <a href="https://codecov.io">Codecov's test coverage</a> reporting with your test
+    suite on Travis CI allows you to track changes in coverage over time. If you haven't tried it out already, <a
+    href={{config.codecovUrl}} target="_blank">sign
+    up today</a> to improve your code's quality. Forever free for Open Source project. Private starting at $3/month.
+  </p>
+
+  <p>
+    Quickly upload report to Codecov:
+  </p>
+
+  <div>
+    <ol>
+
+      {{#if bashSupportedLanguage}}
+
+        <li>
+          <p>Add Codecov to your .travis.yml:</p>
+    <pre>after_success:
+    bash &lt;(curl -s https://codecov.io/bash)
+    </pre>
+          <p>
+            Learn more at <a href="{{url}}">{{url}}</a>
+          </p>
+        </li>
+
+      {{else if (eq language "Ruby")}}
+
+        <li>
+          <p>Add the `codecov` gem to your Gemfile:</p>
+  <pre>gem "codecov", group: :test, require: nil
+  </pre>
+        </li>
+        <li>
+          <p>Load the reporter in your `test_helper` or `spec_helper`, putting it at the very top:</p>
+  <pre>require "codecov"
+  require "simplecov"
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  </pre>
+          <p>
+            Learn more at <a href="{{url}}">{{url}}</a>
+          </p>
+        </li>
+
+      {{/if}}
+
+    </ol>
+  </div>
+
+</div>

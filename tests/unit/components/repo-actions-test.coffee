@@ -23,3 +23,14 @@ test 'it doesn\'t display code climate for other languages', ->
 
   ok !component.get('displayCodeClimate'), 'component should not try to display code climate'
   ok !component.$('a[name=code-climate]').length, 'component should not render a code climate button'
+
+for language in ['Ruby', 'Python', 'Go', 'Java', 'PHP', 'Node.js', 'Scala', 'D', 'C']
+  test "it displays codecov if the language is #{language}", ->
+    # creates the component instance
+    repo = Ember.Object.create(githubLanguage: language)
+
+    component = @subject(repo: repo)
+    @append()
+
+    ok component.get('displayCodecov'), 'component should try to display codecov'
+    ok component.$('a[name=codecov]').length, 'component should render a codecov button'
