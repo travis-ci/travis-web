@@ -38,11 +38,11 @@
     <div class="row-item">
       {{#if build.last_build}}
         {{#link-to "build" build.last_build.id}}
-          {{request-icon build=build}}
+          {{request-icon event=build.last_build.event_type state=build.last_build.state}}
           <span class="label-align">#{{build.last_build.number}} {{build.last_build.state}}</span>
         {{/link-to}}
       {{else}}
-        {{request-icon build=build}} -
+        {{request-icon event=build.last_build.eventType state=build.last_build.state}} -
       {{/if}}
     </div>
   </div>

@@ -3,28 +3,23 @@
 RequestIconComponent = Ember.Component.extend
 
   tagName: 'span'
-  classNames: ['icon-request', 'icon']
-  classNameBindings: ['build.last_build.state', 'build.state']
+  classNames: ['status-icon', 'icon']
+  classNameBindings: ['event', 'state']
 
   isPush: (->
-    @get('build.last_build.event_type') == 'push' ||
-    @get('build.event_type') == 'push'
-  ).property('build.last_build')
+    @get('event') == 'push'
+  ).property('event')
 
   isPR: (->
-    @get('build.last_build.event_type') == 'pull_request' ||
-    @get('build.event_type') == 'pull_request'
-  ).property('build.last_build')
+    @get('event') == 'pull_request'
+  ).property('event')
 
   isAPI: (->
-    @get('build.last_build.event_type') == 'api' ||
-    @get('build.event_type') == 'api'
-  ).property('build.last_build')
+    @get('event') == 'api'
+  ).property('event')
 
   isEmpty: (->
-    true if @get('build.last_build') == null || @get('build') == null
-  ).property('build.last_build')
-
-
+    true if @get('event') == null || @get('event') == null
+  ).property('event')
 
 `export default RequestIconComponent`

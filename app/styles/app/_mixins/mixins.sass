@@ -56,27 +56,12 @@
 
 
 // @todo simplyfiy coloring mixins
-
-@mixin colorStatusIcons($color, $status)
+=colorStatusIcons($color, $status)
   .status-icon.#{$status}
     svg g > *
       fill: $color
 
-// @mixin colorTiles($color, $status, $extra-bg: $color)
-//   &.#{$status}
-//     border-color: $extra-bg
-//     .tile-status
-//       background-color: $color
-//     .repo-header-title a,
-//     .repo-build-status a,
-//     .build-status a,
-//     .tile-header,
-//     .tile-header a,
-//     .tile-title a
-//       color: $color
-//     @include colorStatusIcons($color, $status)
-
-@mixin statusColors($color, $status, $width, $color2: $color)
+=statusColors($color, $status, $width, $color2: $color)
   &.#{$status}
     background: linear-gradient(to right, $color2 0%, $color2 $width, white $width, white 100%) no-repeat
     .row-name,
@@ -98,10 +83,29 @@
       color: $color
     @include colorStatusIcons($color, $status)
 
-@mixin colorRows($color, $status, $width, $color2: $color)
+=colorBg($color, $status, $width, $color2: white)
   &.#{$status}
-    background: linear-gradient(to right, $color2 0%, $color2 $width, white $width, white 100%) no-repeat
-  .#{$status},
-  .#{$status} a,
-    color: $color
+    background: linear-gradient(to right, $color 0%, $color $width, $color2 $width, $color2 100%) no-repeat
+
+=colorLinks($color, $status, $building: false)
+  @if $building
+    .#{$status},
+    .#{$status} a,
+      color: #beab04
+  @else
+    .#{$status},
+    .#{$status} a,
+      color: $color
+
+=colorRows($color, $status, $width, $is-building: false)
+  @include colorBg($color, $status, $width)
+  @include colorLinks($color, $status, $is-building)
   @include colorStatusIcons($color, $status)
+
+=colorJobs($color, $status, $width, $hover, $is-building: false)
+  &.#{$status}
+    @include colorLinks($color, $status, $is-building)
+    @include colorStatusIcons($color, $status)
+    &:hover,
+    &:active,
+      @include colorBg($color, $status, $width, $hover)

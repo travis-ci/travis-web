@@ -7,22 +7,27 @@
   @include colorRows($red, 'failed', 12px)
   @include colorRows($red, 'errored', 12px)
   @include colorRows($grey, 'canceled', 12px)
-  @include colorRows($yellow, 'started', 12px, #e5da3f)
-  @include colorRows($yellow, 'queued', 12px, #e5da3f)
-  @include colorRows($yellow, 'booting', 12px, #e5da3f)
-  @include colorRows($yellow, 'received', 12px, #e5da3f)
-  @include colorRows($yellow, 'created', 12px, #e5da3f)
+  @include colorRows($yellow, 'started', 12px, true)
+  @include colorRows($yellow, 'queued', 12px, true)
+  @include colorRows($yellow, 'booting', 12px, true)
+  @include colorRows($yellow, 'received', 12px, true)
+  @include colorRows($yellow, 'created', 12px, true)
 
   @media #{$medium-up}
     display: flex
     flex-flow: row no-wrap
     justify-content: space-between
 
+  a:hover,
+  a:active
+    text-decoration: underline
+
 .build-commit,
 .build-tools
   padding-left: 2rem
 
 .build-commit
+  font-size: 16px
   @media #{$medium-up}
     flex: 1 1 65%
     padding-left: 2.5rem
@@ -35,6 +40,7 @@
     padding: 1rem 0 0
 
 .build-info
+  font-size: 15px
   padding-left: 3rem
   @media #{$medium-up}
     flex: 1 1 35%
@@ -56,6 +62,7 @@
     margin-left: -2rem
 
 .commit-info
+  font-size: 15px
   padding-left: 1rem
 
 .commit-branch
@@ -71,7 +78,7 @@
   img
     width: 20px
     height: 20px
-    margin-right: .3em
+    margin-right: .5em
     border-radius: 50%
 
 .commit-description
@@ -81,25 +88,26 @@
   padding: 0
   margin: 1rem 0
   list-style: none
+  line-height: 1.7
 
   .commit-commit,
   .commit-compare
     @extend %icon-line-commit
-    padding-left: 1.5em
+    padding-left: 1.7em
     background:
       size: auto 23px
       repeat: no-repeat
       position: -11px -1px
   .commit-clock
     @extend %icon-line-clock
-    padding-left: 1.5em
+    padding-left: 1.7em
     background:
       size: auto 22px
       repeat: no-repeat
       position: 0 0
   .commit-calendar
     @extend %icon-line-calendar
-    padding-left: 1.5em
+    padding-left: 1.7em
     background:
       size: auto 20px
       repeat: no-repeat

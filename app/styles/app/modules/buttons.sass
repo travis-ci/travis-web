@@ -157,7 +157,7 @@ $button-border-color: #d4d4d4
   border: solid 1px #E4E6E6
   border-radius: 50%
   &:hover
-    background-color: $teal
+    border-color: $teal
 
   float: left
   margin-right: 1rem
@@ -168,10 +168,13 @@ $button-border-color: #d4d4d4
 
 .button-circle-codeclimate
   @extend %circle-button
+  @extend %icon-line-codeclimate
   background:
-    image: inline-image('icons/code-climate-icon.svg')
     repeat: no-repeat
-    size: auto 100%
+    size: auto 10px
+    position: 4px 8px
+  &:hover
+    @extend %icon-line-codeclimate-teal
 
 .button-circle-cancel
   @extend %circle-button
@@ -180,7 +183,7 @@ $button-border-color: #d4d4d4
     repeat: no-repeat
     size: auto 100%
   &:hover
-    @extend %icon-line-cross-white
+    @extend %icon-line-cross-teal
 
 .button-circle-trigger
   @extend %circle-button
@@ -190,7 +193,7 @@ $button-border-color: #d4d4d4
     repeat: no-repeat
     size: 24px 24px
   &:hover
-    @extend %icon-line-trigger-white
+    @extend %icon-line-trigger-teal
 
 
 %log-button
@@ -208,16 +211,38 @@ $button-border-color: #d4d4d4
     repeat: no-repeat
     size: auto 14px
     position: 7px 6px
-  &:hover,
-  &:active
-    background-color: hotpink
 
 // log buttons
 .remove-log-button
   @extend %log-button
   @extend %icon-remove-log
+  &:hover,
+  &:active
+    background-color: #d94341
 
 .download-log-button
   @extend %log-button
   @extend %icon-download-log
+  &:hover,
+  &:active
+    background-color: #999a98
+
+// popup buttons
+@mixin buttons($bg-color)
+  display: inline-block
+  padding: .3em 1em
+  font-size: 20px
+  color: white
+  font-weight: $font-weight-light
+  border-radius: 2px
+  background-color: $bg-color
+  &:hover,
+  &:active
+    background-color: lighten($bg-color, 10)
+
+.button-delete
+  @include buttons($red)
+
+.button-cancel
+  @include buttons(#A0A8A8)
 

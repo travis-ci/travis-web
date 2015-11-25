@@ -34,7 +34,7 @@
   
   <div class="row-item fade-out">
     <div class="one-line">
-      {{request-icon build=repo.default_branch.last_build}}
+      {{request-icon event=repo.default_branch.last_build.event_type state=repo.default_branch.last_build.state}}
       <span class="label-align">{{repo.default_branch.name}}</span>
     </div>
   </div>

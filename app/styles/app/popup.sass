@@ -1,15 +1,14 @@
 %popup
-  width: 29em
   height: auto
   position: fixed
   top: 50%
   left: 50%
   transform: translate(-50%, -50%)
-  padding: 2.5em 2em
+  padding: 2.9em 2em
   color: #565656
   z-index: 99
   background-color: $white
-  border-radius: 4px
+  border-radius: 2px
 
 .help
   display: inline-block
@@ -28,9 +27,8 @@
 .popup
   @extend %popup
   display: none
-  width: 400px
   background-color: #fff
-  border: solid 10px $cream-dark
+  border: solid 10px #f1f1f1
 
   &:before
     content: ""
@@ -38,21 +36,19 @@
   .close
     position: absolute
     display: block
-    right: 10px
-    top: 10px
-    width: 16px
-    height: 16px
-    @extend .icon
-    @extend .icon--dismiss-grey
+    right: 5px
+    top: 8px
+    width: 30px
+    height: 30px
+    text-indent: 999%
+    overflow: hidden
+    white-space: nowrap
+    @extend %icon-line-cross
   h4
     margin-top: 0
     font-size: 18px
     font-weight: bold
     color: $color-text
-
-  p
-    font-size: $font-size-sm
-    word-wrap: normal
 
   pre
     background-color: $color-bg-pre
@@ -60,6 +56,15 @@
     padding: 5px 10px
     border-radius: 4px
     overflow-x: scroll
+
+  .popup-title
+    margin-bottom: 0
+  .popup-text
+    margin-top: 0
+    text-align: center
+  .buttons
+    margin-top: 3rem
+    text-align: center
 
 .status-images
   width: 100%
@@ -83,31 +88,12 @@
   p:last-child
     margin-top: 10px
 
-#regenerate-key,
-#remove-log-popup
-  .cancel
-    text-decoration: underline
-  p
-    text-align: center
-  .or
-    display: inline-block
-    margin: 20px 10px 0 10px
-  p:last-of-type
-    margin-bottom: 5px
-  a.button
-    font-size: 13px
-  strong
-    color: $red
-
-.status-images, #regenerate-key
+.status-images
   input
     border: 1px solid $color-border-light
     width: 505px
     padding: 4px
     border-radius: 3px
-
-#regenerate-key, #regeneration-success
-  width: 400px
 
 #code-climate
   width: 100%

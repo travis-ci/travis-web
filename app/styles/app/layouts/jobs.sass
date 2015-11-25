@@ -2,7 +2,33 @@
 
 
 .jobs-list
+  margin: 0
+  padding: 0
+  list-style: none
+  font-size: 16px
 
+.jobs-item
+  border: 1px solid $cream-dark
+  margin-bottom: 5px
+  @include colorJobs($green, 'passed', 6px, rgba($green, .1))
+  @include colorJobs($red, 'failed', 6px, rgba($red, .1))
+  @include colorJobs($red, 'errored', 6px, rgba($red, .1))
+  @include colorJobs($grey, 'canceled', 6px, rgba($grey, .1))
+  @include colorJobs($yellow, 'started', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow, 'queued', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow, 'booting', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow, 'received', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow, 'created', 6px, rgba($yellow, .1), true)
+
+  a
+    display: block
+    padding-left: 1em
+    @media #{$medium-up}
+      display: flex
+      flex-flow: row nowrap
+      justify-content: space-between
+      align-items: center
+      height: 34px
 
 .section-title
   font-size: 16px
