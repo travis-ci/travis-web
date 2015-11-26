@@ -1,71 +1,38 @@
-<div class="tile tile--sidebar {{repo.lastBuildState}}">
-  <h2 class="tile-title">
+<div class="tile {{repo.lastBuildState}}">
+  <h2 class="tile-title {{repo.lastBuildState}}">
     {{#if repo.slug}}
+      {{#link-to "repo" repo}}
       {{status-icon status=repo.lastBuildState}}
-      {{#link-to "repo" repo class="slug"}}{{repo.slug}}{{/link-to}}
+      <span class="label-align">{{repo.slug}}</span>
+      {{/link-to}}
     {{/if}}
   </h2>
   {{#with repo.lastBuildHash as lastBuild}}
     {{#if repo.slug}}
       {{#if lastBuild.id}}
-      <p class="tile-title float-right">
-        <span class="icon">
-          <svg version="1.1" id="Layer_1" x="0px" y="0px"
-             viewBox="-289 193 18 18" {{!-- style="enable-background:new -289 191 20 20;" --}} xml:space="preserve">
-          <path fill="#A5ACAD" class="st0" d="M-272.4,198.4C-272.4,198.4-272.4,198.4-272.4,198.4l-3.4,0l0.3-3.3c0-0.3-0.2-0.6-0.5-0.6
-            c-0.3,0-0.6,0.2-0.6,0.5l-0.3,3.4l-3.2,0l0.3-3.6c0-0.3-0.2-0.6-0.5-0.6c-0.3,0-0.6,0.2-0.6,0.5l-0.3,3.7l-3.2,0
-            c-0.3,0-0.5,0.2-0.5,0.6c0,0.3,0.2,0.5,0.5,0.5c0,0,0,0,0,0l3.1,0l-0.2,2.9l-3.5,0c-0.3,0-0.5,0.2-0.5,0.6c0,0.3,0.2,0.5,0.5,0.5
-            c0,0,0,0,0,0l3.4,0l-0.3,3.3c0,0.3,0.2,0.6,0.5,0.6c0,0,0,0,0,0c0.3,0,0.5-0.2,0.5-0.5l0.3-3.4l3.2,0l-0.3,3.6
-            c0,0.3,0.2,0.6,0.5,0.6c0,0,0,0,0,0c0.3,0,0.5-0.2,0.5-0.5l0.3-3.7l3.2,0c0.3,0,0.5-0.2,0.5-0.6c0-0.3-0.2-0.5-0.5-0.5c0,0,0,0,0,0
-            l-3.1,0l0.2-2.9l3.5,0c0.3,0,0.5-0.2,0.5-0.6C-271.8,198.7-272.1,198.4-272.4,198.4z M-277.2,202.4l-3.2,0l0.2-2.9l3.2,0
-            L-277.2,202.4z"/>
-          </svg>
-        </span>
-        {{#link-to "build" repo lastBuild.id
-           class="last_build"}}{{lastBuild.number}}{{/link-to}}
+      <p class="tile-title float-right {{repo.lastBuild.state}}">
+        {{#link-to "build" repo lastBuild.id}}
+          <span class="icon-hash"></span>
+          <span class="label-align">{{lastBuild.number}}</span>
+        {{/link-to}}
       </p>
       {{/if}}
     {{/if}}
   {{/with}}
 
   <p>
-    <span class="icon">
-      <svg version="1.1" id="Layer_1" x="0px" y="0px"
-         viewBox="-288 192 20 20" {{!-- style="enable-background:new -289 191 20 20;" --}} xml:space="preserve">
-        <g>
-          <path fill="#A5ACAD" class="st0" d="M-278.9,207.7c-3.7,0-6.7-3-6.7-6.7s3-6.7,6.7-6.7s6.7,3,6.7,6.7S-275.2,207.7-278.9,207.7z M-278.9,195.4
-            c-3.1,0-5.6,2.5-5.6,5.6s2.5,5.6,5.6,5.6c3.1,0,5.6-2.5,5.6-5.6S-275.8,195.4-278.9,195.4z"/>
-          <path fill="#A5ACAD" class="st0" d="M-276.7,203.1c-0.1,0-0.2,0-0.3-0.1l-2.4-1.5c-0.2-0.1-0.2-0.3-0.2-0.4v-3.8c0-0.3,0.2-0.5,0.5-0.5
-            s0.5,0.2,0.5,0.5v3.5l2.1,1.4c0.2,0.2,0.3,0.5,0.2,0.7C-276.4,203-276.5,203.1-276.7,203.1z"/>
-        </g>
-      </svg>
-    </span>
-    Duration: 
+    <span class="icon-clock"></span>
+    <span class="label-align">Duration: 
     <abbr class="duration" title={{lastBuildStartedAt}}>
       {{format-duration repo.lastBuildDuration}}
-    </abbr>
+    </abbr></span>
   </p>
 
   <p>
-    <span class="icon">
-      <svg viewBox="0 2 20 20">
-        <g id="Cal">
-          <path fill="#A7AEAE" d="M16.7,2.5H3.3C3,2.5,2.8,2.7,2.8,3V17c0,0.3,0.2,0.5,0.5,0.5h13.4c0.3,0,0.5-0.2,0.5-0.5V3
-            C17.2,2.7,17,2.5,16.7,2.5z M16.2,3.4v3.1H3.8V3.4H16.2z M3.8,16.6v-9h12.5v9H3.8z"/>
-          <path fill="#A7AEAE" d="M8.7,13.4c-0.1,0-0.3,0-0.4,0c0.2-0.2,0.4-0.4,0.5-0.6c0.2-0.2,0.3-0.4,0.5-0.6c0.1-0.2,0.2-0.4,0.3-0.6
-            c0.1-0.2,0.1-0.4,0.1-0.6c0-0.2,0-0.4-0.1-0.6c-0.1-0.2-0.2-0.3-0.3-0.4C9.2,10,9.1,9.9,8.9,9.8C8.7,9.7,8.5,9.7,8.3,9.7
-            C8,9.7,7.7,9.8,7.5,9.9C7.2,10,7,10.2,6.8,10.4L7.3,11c0.1-0.1,0.2-0.2,0.4-0.3c0.1-0.1,0.3-0.1,0.4-0.1c0.2,0,0.4,0.1,0.5,0.2
-            c0.1,0.1,0.2,0.3,0.2,0.5c0,0.2,0,0.3-0.1,0.5c-0.1,0.2-0.2,0.4-0.4,0.6c-0.2,0.2-0.4,0.4-0.6,0.7c-0.2,0.2-0.5,0.5-0.8,0.8v0.6
-            H10v-0.9H9.1C9,13.4,8.8,13.4,8.7,13.4z"/>
-          <path fill="#A7AEAE" d="M10.6,10.7h2c-0.2,0.3-0.4,0.6-0.5,0.8c-0.1,0.3-0.3,0.6-0.4,0.8c-0.1,0.3-0.2,0.6-0.2,0.9
-            c0,0.3-0.1,0.7-0.1,1h1c0-0.4,0-0.8,0.1-1.2c0-0.3,0.1-0.7,0.2-0.9c0.1-0.3,0.2-0.6,0.4-0.9c0.2-0.3,0.4-0.6,0.6-0.9V9.8h-3.1
-            V10.7z"/>
-        </g>
-      </svg>
-    </span>
-    Finished: 
+    <span class="icon-calendar"></span>
+    <span class="label-align">Finished: 
     <abbr class="finished_at timeago" title={{lastBuildFinishedAt}}>
       {{format-time repo.lastBuildFinishedAt}}
-    </abbr>
+    </abbr></span>
   </p>
 </div>

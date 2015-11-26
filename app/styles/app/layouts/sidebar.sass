@@ -1,15 +1,29 @@
 $sb-grey: #f2f2f2
 $sb-font-size: 14px
 
-.tile--sidebar
+.tile
   height: auto
-  padding: 0.6em 0.5em
+  padding: 0.8em 0.5em 0.8em 1.5em
   margin-bottom: .46rem
   background-color: $white
   border-radius: 0
-  border-left: 8px solid
   li:last-child &
     margin-bottom: 0
+
+  @include colorRows($green, 'passed', 8px)
+  @include colorRows($red, 'failed', 8px)
+  @include colorRows($red, 'errored', 8px)
+  @include colorRows($grey, 'canceled', 8px)
+  @include colorRows($yellow, 'started', 8px, true)
+  @include colorRows($yellow, 'queued', 8px, true)
+  @include colorRows($yellow, 'booting', 8px, true)
+  @include colorRows($yellow, 'received', 8px, true)
+  @include colorRows($yellow, 'created', 8px, true)
+
+  .status-icon .is-rotating
+    width: 17px;
+    height: 17px;
+    line-height: 1;
 
   h2, p
     margin: 0
@@ -38,6 +52,7 @@ $sb-font-size: 14px
   .icon
     width: 1.3em
     height: 1.4em
+    vertical-align: middle
 
 .tabnav--sidebar
   font-size: $sb-font-size
@@ -59,15 +74,12 @@ $sb-font-size: 14px
         color: $teal-light
       &:after
         bottom: -1px
-
   @media (min-width: #{lower-bound($large-range)})
     ul
         height: 2em
-
   @media #{$xxlarge-up}
     li
       padding-right: 2em
-
   @media (max-width: #{lower-bound($large-range)})
     li
       display: block !important

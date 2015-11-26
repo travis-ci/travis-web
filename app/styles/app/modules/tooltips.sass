@@ -59,18 +59,7 @@
     &:before
       left: 45%
 
-.tooltip--jobs
-  @extend %tooltip
-  display: inline-block
-  position: relative
-  .tooltip-bubble
-    top: -4.5em
-    left: -1.9em
-    height: 3.7em
-    &:before
-      left: 15%
-
-.tooltip--settings
+.tooltip-settings
   @extend %tooltip
   display: inline-block
   position: relative
@@ -82,6 +71,7 @@
     top: -4em
     left: -1.9em
     height: 3.2em
+    font-size: 12px
     &:before
       left: 2em
 
@@ -92,4 +82,31 @@
     width: 6em
     &:before
       left: 2.5em
+
+.tooltip-jobs
+  display: inline-block
+  position: relative
+  vertical-align: middle
+  @extend %tooltip
+  .tooltip-bubble
+    top: -3.8em
+    left: -.5em
+    height: 3.2em
+    padding: .3em .4em
+    font-size: 12px
+    &:before
+      left: 0.6em
+  .tooltip-trigger
+    vertical-align: baseline
+
+.tooltip.job-os
+  .tooltip-bubble
+    top: -2.2em
+    height: 1.6em
+    padding: 0.1em .4em
+    font-size: 12px
+    &:before
+      left: 0
+      right: 0
+      margin: auto
 

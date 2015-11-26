@@ -49,10 +49,10 @@
   <h3 class="build-status {{item.state}}">
     {{#if isJob}}
       {{#link-to "job" repo item}}
-        {{request-icon event=item.build.event_type state=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
+        {{request-icon event=item.build.eventType state=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
-        {{request-icon event=item.event_type state=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
+        {{request-icon event=item.eventType state=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
     {{/if}}
   </h3>
   <ul class="list-icon">

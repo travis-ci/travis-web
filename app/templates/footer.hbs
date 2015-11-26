@@ -1,39 +1,34 @@
-<div class="row">
-
-  {{#if config.pro}}
-    <div class="small-6 medium-4 large-4 columns">
-      <img src="/images/dashboard/footer-logo.svg">
+<footer class="footer">
+  <div class="inner">
+    <div class="footer-elem">
+      <img src="/images/ui/footer-logo.svg">
     </div>
-  {{else}}
-    <div class="small-6 medium-6 large-6 columns">
-      <img src="/images/dashboard/footer-logo.svg">
+    <div class="footer-elem">
+      <h3>&copy;Travis CI, GmbH</h3>
+      <p>Rigaer Straße 8<br>10247 Berlin, Germany <br>
+      <a href="http://docs.travis-ci.com/imprint.html">Imprint</a></p>
     </div>
-  {{/if}}
-  <div class="small-6 medium-2 large-2 columns">
-    <h3>&copy;Travis CI, GmbH</h3>
-    <p>Rigaer Straße 8<br>10247 Berlin, Germany</p>
+    <div class="footer-elem">
+      <h3>Help</h3>
+      <ul>
+        <li><a href="/docs">Documentation</a></li>
+        <li><a href="http://blog.travis-ci.com/">Blog</a></li>
+        <li><a href="mailto:enterprise@travis-ci.com">Email</a></li>
+        <li><a href="https://twitter.com/travisci">Twitter</a></li>
+      </ul>
+    </div>
+    {{#if config.pro}}
+      <div class="footer-elem">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="http://docs.travis-ci.com/imprint.html">Imprint</a></li>
+          <li><a href="https://billing.travis-ci.com/pages/terms">Terms of Service</a></li>
+          <li><a href="https://billing.travis-ci.com/pages/security">Security Statement</a></li>
+        </ul>
+      </div>
+    {{/if}}
+    <div class="footer-elem">
+      {{travis-status}}
+    </div>
   </div>
-
-  <div class="small-6 medium-2 large-2 columns">
-    <h3>Help</h3>
-    <ul>
-      <li><a href="http://docs.travis-ci.com/">Documentation</a></li>
-      <li><a href="http://blog.travis-ci.com/">Blog</a></li>
-      <li><a href="mailto:support@travis-ci.com">Email</a></li>
-      <li><a href="https://twitter.com/travisci">Twitter</a></li>
-    </ul>
-  </div>
-{{#if config.pro}}
-  <div class="small-6 medium-2 large-2 columns">
-    <h3>Legal</h3>
-    <ul>
-      <li><a href="http://docs.travis-ci.com/imprint.html">Imprint</a></li>
-      <li><a href="https://billing.travis-ci.com/pages/terms">Terms of Service</a></li>
-      <li><a href="https://billing.travis-ci.com/pages/security">Security Statement</a></li>
-    </ul>
-  </div>
-{{/if}}
-  <div class="small-6 medium-2 large-2 columns">
-    {{travis-status}}
-  </div>
-</div>
+</footer>

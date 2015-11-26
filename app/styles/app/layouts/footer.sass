@@ -2,72 +2,56 @@
  * Footer on the dashboard
  */
 
-$footer-height: 210px
+$footer-bg: #e0e0e0
+$blue-grey: #8f9ba2
 
-a
-  color           : $color-link
-  text-decoration : none
-
-footer
+.footer
   position: relative
   padding          : 20px 0
-  background-color : $footer-bg-color
-  min-height       : 334px
+  background-color : $footer-bg
   font-size        : 12px
   line-height      : 22px
-  margin-top      : -334px /* sticky footer */
+  color: #404650
 
   a
-    display         : block
-    color           : $footer-color
+    display: inline-block
     vertical-align: middle
+    color: #404650
+    text-decoration: none
+    &:hover,
+    &:active
+      text-decoration : underline
 
-.wrapper
-  padding-bottom: 334px
-  min-height: 100vh
-  height: auto
-@media (min-width: 640px)
-  .wrapper
-    padding-bottom: $footer-height
+  h3
+    font-size   : 15px
+    margin  : 0 0 10px 0
+    padding-top : 6px
+    font-weight : 400
+    color       : $blue-grey
+    border-top  : solid 4px #ccd0d5
 
-  footer
-    margin-top: - $footer-height
-    min-height: $footer-height
+  ul
+    padding: 0
+    margin: 0
+    list-style: none
 
-footer h3
-  font-size   : 15px
-  margin  : 0 0 10px 0
-  padding-top : 6px
-  font-weight : 400
-  color       : $footer-h3-color
-  border-top  : solid 4px $footer-h3-corder-color
 
-footer .row p
-  display : inline-block
-  margin  : 0
-  color: $footer-color
-  line-height: 23px
+  .inner
+    display: flex
+    flex-flow: row wrap
+    justify-content: space-between
+    align-items: flex-start
 
-footer .row
-  max-width: 1024px
-
-footer .row ul,
-footer .row li
-  display         : block
-  color           : $footer-color
-  line-height     : 22px
-  padding         : 0
-  margin-top      : 0
-  list-style-type : none
-
-footer a
-  text-decoration : none
-  display         : inline-block
-  color           : $footer-color
-
-footer a:hover,
-footer a:active
-  text-decoration : underline
+  .footer-elem
+    flex: 1 0 70%
+    margin-left: 1em
+  @media #{$medium-up}
+    .footer-elem
+      flex: 0 1 16%
+      margin-left: 1em
+      &:first-of-type
+        flex: 1 1 45%
+        margin-left: 0
 
 .status-circle
   display      : inline-block
@@ -75,20 +59,14 @@ footer a:active
   width        : 11px
   text-indent  : -9999px
   margin-right : 5px
-  border-radius         : 100px
-  -webkit-border-radius : 100px
-  -moz-border-radius    : 100px
+  border-radius: 100px
   vertical-align: middle
-
-.status-circle.none
-  background: #2fcc66
-
-.status-circle.degraded
-  background: #f1c40f
-
-.status-circle.minor
-  background: #e67e22
-
-.status-circle.major
-  background: #e74c3c
+  &.none
+    background: #2fcc66
+  &.degraded
+    background: #f1c40f
+  &.minor
+    background: #e67e22
+  &.major
+    background: #e74c3c
 

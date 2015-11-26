@@ -74,11 +74,11 @@ $dropdown-button-margin: -9px
   &:hover,
   &:active,
   .display &
-    background-color: $teal
-    color: white
-    @extend %icon-line-cog-white
+    color: $teal
+    border-color: $teal
+    @extend %icon-line-cog-teal
     &:after
-      @extend %icon-line-dropdown-white
+      @extend %icon-line-dropdown-teal
 
 .settings-dropdown
   display: none
@@ -89,15 +89,16 @@ $dropdown-button-margin: -9px
   margin: -1px 0 0
   list-style: none
   z-index: 60
-  background-color: #f1f1f1
+  background-color: white
+  border: 1px solid $teal
   a
     display: block
     padding: .4em 1em .5em 2.4em
     font-size: 14px
-    color: $grey-light
+    color: $teal
     &:hover
-      background-color: $teal
       color: white
+      background-color: $teal
 
 .settings-menu
   position: relative

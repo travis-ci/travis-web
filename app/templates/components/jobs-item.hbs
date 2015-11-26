@@ -1,5 +1,5 @@
 {{#link-to "job" repo job}}
-  <div class="job-state">
+  <div class="job-state {{job.state}}">
     {{status-icon status=job.state}}
   </div>
 
@@ -9,8 +9,10 @@
   </div>
 
   <div class="job-os {{job.config.os}} tooltip">
-    <span class="icon tooltip-trigger">{{job.config.os}}</span>
-    <div class="tooltip-bubble" aria-hidden="true">{{job.config.os}}</div>
+    {{#if job.config.os}}
+      <span class="icon tooltip-trigger">{{job.config.os}}</span>
+      <div class="tooltip-bubble" aria-hidden="true">{{job.config.os}}</div>
+    {{/if}}
   </div>
 
   <div class="job-lang">
@@ -18,15 +20,17 @@
     <span class="label-align">{{#if languages}}{{languages}}{{else}}no language set{{/if}}</span>
   </div>
 
+{{#if environment}}
   <div class="job-env">
-    {{#if environment}}
-      <span class="icon-env--dark"></span>
-      <span class="label-align">{{environment}}</span>
-    {{else}}
-      <span class="icon-env--light"></span>
-      <span class="label-align">no environment variables set</span>
-    {{/if}}
+    <span class="icon-env"></span>
+    <span class="label-align">{{environment}}</span>
   </div>
+{{else}}
+  <div class="job-env is-empty">
+    <span class="icon-env"></span>
+    <span class="label-align">no environment variables set</span>
+  </div>
+{{/if}}
 
   <div class="job-duration" title="Started {{pretty-date job.startedAt}}">
     <span class="icon-clock"></span>
