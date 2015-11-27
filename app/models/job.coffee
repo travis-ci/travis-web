@@ -148,4 +148,8 @@ Job = Model.extend DurationCalculations,
       true
   ).property('queue')
 
+  isGce: (->
+    if @get('queue') == 'builds.gce' then true else false
+  ).property('queue')
+
 `export default Job`
