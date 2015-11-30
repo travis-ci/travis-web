@@ -35,19 +35,6 @@ $button-border-color: #d4d4d4
   border-bottom-color: #2356c4
   background-color: #40454f
 
-.show-more
-  background-color: #F2F2EB
-  display: inline-block
-  color: #666
-  padding: 6px 15px
-  text-decoration: none
-  border: 1px solid #DDD
-.show-more:hover
-  background-color: #40454F
-  color: $white
-  border: 1px solid #40454F
-  cursor: pointer
-
 .button--signin,
 .button--signingin
   display: inline-block
@@ -121,15 +108,6 @@ $button-border-color: #d4d4d4
     background-color: lighten(#696867, 10)
   &:focus
     background-color: #696867
-
-.button--showmore
-  height: auto
-  padding: 0.3em 0.7em
-  font-size: $font-size-m
-  .icon
-    width: 1.1em
-    height: 0.7em
-    margin-right: .5em
 
 .button--delete
   @extend .button
@@ -244,4 +222,14 @@ $button-border-color: #d4d4d4
 
 .button-cancel
   @include buttons(#A0A8A8)
+
+.showmore-button
+  padding-left: 2em
+  background:
+    repeat: no-repeat
+    size: auto 20px
+    position: 4px 1px
+  cursor: pointer
+  @extend .button--grey
+  @extend %icon-line-eye
 

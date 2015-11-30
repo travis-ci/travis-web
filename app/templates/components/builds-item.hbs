@@ -8,12 +8,16 @@
       {{/link-to}}
     {{else}}
       {{#link-to "build" build.repo build}}
-        <small>{{build.commit.branch}}</small>
-        {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
+        {{build.commit.branch}}
       {{/link-to}}
     {{/if}}
   </h2>
   <div class="row-item row-committer">
+    {{#unless build.isPullRequest}}
+      <div class="row-message">
+        {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
+      </div>
+    {{/unless}}
     <img class="avatar" src={{urlAuthorGravatarImage}} alt="{{build.commit.committerName}} avatar">
     <span class="label-align">{{build.commit.committerName}} committed</span>
   </div>
