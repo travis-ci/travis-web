@@ -19,22 +19,6 @@ Store = DS.Store.extend
 
   canHandleEvent: (event, data) ->
     [name, type] = event.split(':')
-    auth = @get('auth')
-
-    if event != 'job:log' && auth.get('signedIn') &&
-        !config.pro && !config.enterprise
-      # if recent repos hasn't been opened yet, we can safely
-      # drop any events that doesn't belong to repos owned by
-      # the logged in user and that aren't related to any
-      # repositories that are already opened
-
-      permissions = auth.get('permissions')
-      if name == 'job'
-        id = data.job.repository_id
-      else if name == 'build'
-        id = data.repository.id
-
-      return @hasRecordForId('repo', id) || permissions.contains(id)
 
     for name, callback of @get('pusherEventHandlerGuards')
       unless callback(event, data)
