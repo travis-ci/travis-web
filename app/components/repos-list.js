@@ -60,7 +60,8 @@ var ReposListComponent = Ember.Component.extend({
     } else {
       return [];
     }
-  }.property('repos.[]', 'repos')
+  }.property('repos.[]', 'repos.@each.lastBuildFinishedAt',
+             'repos.@each.lastBuildId')
 });
 
 export default ReposListComponent;

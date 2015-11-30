@@ -86,13 +86,14 @@ Controller = Ember.Controller.extend
     this["view_#{tab}".camelize()](params)
 
   viewOwned: ->
-    @set('isLoaded', false);
-    @get('currentUser._rawPermissions').then (data) =>
-      repos = Repo.accessibleBy(@store, data.pull).then( (reposRecordArray) =>
-        @set('isLoaded', true)
-        @set('repos', reposRecordArray)
-      )
-      # TODO: handle error
+    @set('isLoaded', false)
+    if user = @get('currentUser')
+      user.get('_rawPermissions').then (data) =>
+        repos = Repo.accessibleBy(@store, data.pull).then( (reposRecordArray) =>
+          @set('isLoaded', true)
+          @set('repos', reposRecordArray)
+        )
+        # TODO: handle error
 
   viewRunning: ->
 

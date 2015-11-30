@@ -17,6 +17,10 @@ Repo = Model.extend
   #lastBuild:     DS.belongsTo('build')
   defaultBranch: DS.belongsTo('branch', async: false)
 
+  # just for sorting
+  lastBuildFinishedAt: Ember.computed.oneWay('defaultBranch.lastBuild.finishedAt')
+  lastBuildId: Ember.computed.oneWay('defaultBranch.lastBuild.id')
+
   withLastBuild: ->
     @filter( (repo) -> repo.get('defaultBranch.lastBuild') )
 
