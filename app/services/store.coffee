@@ -70,6 +70,10 @@ Store = DS.Store.extend
     # things I want to update here:
     if type == 'build' && (json.repository || json.repo)
       data = json.repository || json.repo
+
+      if data.default_branch
+        data.default_branch.default_branch = true
+
       @push(this.normalize('repo', data))
 
 `export default Store`

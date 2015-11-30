@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import V3Serializer from 'travis/serializers/v3';
+import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
-export default V3Serializer.extend({
+export default V2FallbackSerializer.extend({
   extractAttributes(klass, payload) {
     payload.id = payload['@href'];
     return this._super(...arguments);

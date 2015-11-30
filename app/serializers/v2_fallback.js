@@ -14,10 +14,11 @@ export default V3Serializer.extend({
         // V2 API payload
         let relationship = null;
         let relationshipKey = this.keyForV2Relationship(key, relationshipMeta.kind, 'deserialize');
+        let alternativeRelationshipKey = key.underscore();
 
-        if (resourceHash.hasOwnProperty(key) || resourceHash.hasOwnProperty(relationshipKey)) {
+        if (resourceHash.hasOwnProperty(alternativeRelationshipKey) || resourceHash.hasOwnProperty(relationshipKey)) {
           let data = null;
-          let relationshipHash = resourceHash[key] || resourceHash[relationshipKey];
+          let relationshipHash = resourceHash[alternativeRelationshipKey] || resourceHash[relationshipKey];
           if (relationshipMeta.kind === 'belongsTo') {
             data = this.extractRelationship(relationshipMeta.type, relationshipHash);
           } else if (relationshipMeta.kind === 'hasMany') {
@@ -62,7 +63,7 @@ export default V3Serializer.extend({
           let process = function(data) {
             if(Object.keys(data).sort()+'' !== 'id,type' || (data['@href'] && data.type == 'branch')) {
               // no need to add records if they have only id and type
-              let type = key.singularize();
+              let type = key === 'defaultBranch' ? 'branch' : key.singularize();
               let serializer = store.serializerFor(type);
               let modelClass = store.modelFor(type);
               let normalized = serializer.normalize(modelClass, data);

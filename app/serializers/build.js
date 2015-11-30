@@ -63,15 +63,31 @@ var Serializer = V2FallbackSerializer.extend({
     var data, href, id, repoId, result;
 
     // TODO: remove this after switching to V3 entirely
-    if(!resourceHash['@type']) {
+    if(!resourceHash['@type'] && resourceHash.commit && resourceHash.commit.branch_is_default) {
       let build = resourceHash.build,
           commit = resourceHash.commit;
       let branch = {
         name: commit.branch,
-        default_branch: build.is_on_default_branch,
+        default_branch: commit.branch_is_default,
         "@href": `/repo/${build.repository_id}/branch/${commit.branch}`
       };
       resourceHash.build.branch = branch;
+    }
+
+    // fix pusher payload, it doesn't include a branch record:
+    if(!resourceHash['@type'] && resourceHash.build &&
+       resourceHash.repository && resourceHash.repository.default_branch) {
+      let branchName = resourceHash.build.branch,
+          repository = resourceHash.repository,
+          defaultBranchName = repository.default_branch.name;
+
+      resourceHash.build.branch = {
+        name: branchName,
+        default_branch: branchName === defaultBranchName,
+        '@href': `/repo/${repository.id}/branch/${branchName}`
+      };
+
+      repository.default_branch['@href'] = `/repo/${repository.id}/branch/${defaultBranchName}`;
     }
 
     result = this._super(modelClass, resourceHash);
