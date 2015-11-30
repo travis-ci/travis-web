@@ -3,8 +3,10 @@
 `import { githubCommit as githubCommitUrl } from 'travis/utils/urls'`
 
 BuildsItemComponent = Ember.Component.extend
+  
+  tagName: 'li'
   classNameBindings: ['build.state']
-  classNames: ['tile', 'tile--small', 'tile--build', 'row']
+  classNames: ['row-li', 'pr-row']
 
   urlAuthorGravatarImage: (->
     gravatarImage(@get('build.commit.authorEmail'), 40)

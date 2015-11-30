@@ -61,7 +61,7 @@
     svg g > *
       fill: $color
 
-=statusColors($color, $status, $width, $color2: $color)
+=statusColors($color, $status, $width, $color2: $color, $building:false)
   &.#{$status}
     background: linear-gradient(to right, $color2 0%, $color2 $width, white $width, white 100%) no-repeat
     .row-name,
@@ -82,6 +82,7 @@
     .build-status
       color: $color
     @include colorStatusIcons($color, $status)
+    @include colorLinks($color, $status, $building)
 
 =colorBg($color, $status, $width, $color2: white)
   &.#{$status}

@@ -1,0 +1,28 @@
+.build-list
+  padding:  0
+  margin: 0
+  list-style: none
+
+.pr-row
+  @media #{$medium-up}
+    display: flex
+    justify-content: space-between
+    flex-flow: row wrap
+
+    .two-line
+      padding: 0
+      margin: .4em 0
+      .row-item
+        display: block
+
+    .row-committer
+      padding-left: 1.6em
+
+    .two-line:first-of-type
+      flex: 0 0 55%
+      padding-left: .5em
+      border-right: 1px solid $cream-dark
+    .two-line:nth-of-type(2)
+      flex: 0 0 20%
+    .two-line:last-of-type
+      flex: 0 0 20%

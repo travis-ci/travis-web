@@ -10,12 +10,12 @@
   {{#with repo.lastBuildHash as lastBuild}}
     {{#if repo.slug}}
       {{#if lastBuild.id}}
-      <p class="tile-title float-right {{repo.lastBuild.state}}">
-        {{#link-to "build" repo lastBuild.id}}
-          <span class="icon-hash"></span>
-          <span class="label-align">{{lastBuild.number}}</span>
-        {{/link-to}}
-      </p>
+        <p class="tile-title float-right {{repo.lastBuildState}}">
+          {{#link-to "build" repo lastBuild.id}}
+            <span class="icon-hash"></span>
+            <span class="label-align">{{lastBuild.number}}</span>
+          {{/link-to}}
+        </p>
       {{/if}}
     {{/if}}
   {{/with}}
