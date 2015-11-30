@@ -6,8 +6,6 @@ export default DS.RESTAdapter.extend({
   auth: Ember.inject.service(),
   host: config.apiEndpoint,
 
-  defaultSerializer: '-repo',
-
   sortQueryParams: false,
   coalesceFindRequests: false,
   headers: {
