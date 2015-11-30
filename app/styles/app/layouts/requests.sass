@@ -1,58 +1,62 @@
-@mixin colorRequests($color-bg)
-  &:hover
-    background-color: $color-bg
-    .requests-commit,
-    .requests-branch,
-    .requests-message,
-    .requests-time
-      &:after
-        @include fadeOut(right, -90deg, $color-bg, 30%)
-
+=requestFadeOut($status, $color)
+  @media #{$medium-up}
+    &.#{$status}:hover
+      .fade-out
+        &:after
+          @include fadeOut(right, -90deg, $color)
 
 .requests
-  @include resetul
+  padding: 0
+  margin: 0
+  list-style: none
 
-  .accepted:hover
-    @include colorRequests(#e5efe4)
-  .rejected:hover
-    @include colorRequests(#fbebe6)
+.request-item
+  border: 1px solid $cream-dark
+  margin-bottom: 5px
+  font-size: 15px
+  padding-left: 1em
+  @include colorJobs($green, 'accepted', 6px, rgba($green, .1))
+  @include colorJobs($red, 'rejected', 6px, rgba($red, .1))
 
-  margin-top: 2.5rem
-  color: #969496
-  a:hover
+  @include requestFadeOut('accepted',#ECF6EF)
+  @include requestFadeOut('rejected', #FBECEB)
+
+  strong
+    font-weight: $font-weight-bold
+    margin-right: .5em
+
+  .status-icon
+    width: 1.3em
+    height: 1.3em
+    vertical-align: middle
+
+  a:hover,
+  a:active
     text-decoration: underline
-  
-  .requests-commit,
-  .requests-branch,
-  .requests-message,
-  .requests-time
-    position: relative
-    &:after
-      content: ""
-      @include fadeOut(right, -90deg, $cream-light, 30%)
-
-  .requests-time
-    @media #{$medium-up}
-      padding-left: 2em
-      border-left: 1px solid $cream-dark
-
-  .tile--jobs
-    padding-left: 2.5em
-
-  .icon.push
-    width: 1.2em
-    height: .8em
-  .icon.pull_request
-    height: 1.5em
 
   @media #{$medium-up}
-    .requests-time
-      width: grid-calc(4, 24)
-    .requests-branch
-      width: grid-calc(4, 24)
-    .requests-commit
-      width: grid-calc(9, 24)
-    .requests-build
-      width: grid-calc(2, 24)
-    .requests-message
-      width: grid-calc(5, 24)
+    display: flex
+    justify-content: space-between
+    flex-flow: row wrap
+    align-items: center
+    padding: .3em 0
+    white-space: nowrap
+    .row-item
+      overflow: hidden
+
+    .row-item:first-of-type
+      flex: 0 0 3em
+      padding-left: .7em
+      border-right: 1px solid $cream-dark
+    .row-item:nth-of-type(2)
+      flex: 1 0 15%
+      padding-left: 1em
+    .row-item:nth-of-type(3)
+      flex: 0 0 15%
+    .row-item:nth-of-type(4)
+      flex: 1 0 30%
+    .row-item:nth-of-type(5)
+      flex: 0 0 8%
+    .row-item:last-of-type
+      flex: 0 0 20%
+

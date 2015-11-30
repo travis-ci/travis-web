@@ -1,30 +1,35 @@
-<div class="tile-status tile-status--job">
-  <span class="icon icon--job {{requestClass}}"></span>
+<div class="row-item">
+  {{status-icon status=requestClass}}
 </div>
 
-<p class="jobs-item requests-time column">{{format-time request.created_at}}</p>
-
-<p class="jobs-item requests-branch column">
-  <span class="icon icon--grey {{type}}"></span>
+<div class="row-item fade-out {{requestClass}}">
+  {{request-icon event=request.event_type state=requestClass}}
   {{#if request.isPullRequest}}
-    <strong>#{{request.pullRequestNumber}}</strong>
+    <strong class="label-align">#{{request.pullRequestNumber}}</strong>
   {{else}}
-    <strong>{{request.branchName}}</strong>
+    <strong class="label-align">{{request.branchName}}</strong>
   {{/if}}
-  {{github-commit-link request.repo.slug request.commit.sha}}
-</p>
+  <span class="label-align">{{github-commit-link request.repo.slug request.commit.sha}}</span>
+</div>
 
-<p class="jobs-item requests-commit column">
+<div class="row-item fade-out">
+  <span class="icon-calendar"></span>
+  <span class="label-align">{{format-time request.created_at}}</span></div>
+
+<div class="row-item fade-out">
   {{{format-message request.commit.message short="true" repoBinding=request.build.repo}}}
-  </p>
+</div>
 
-<p class="jobs-item requests-build column">
+<div class="row-item">
   {{#if request.build}}
-    <span class="icon icon-hash"></span>
     {{#link-to "build" request.build}}
-      {{request.build.number}}{{/link-to}}
+      <span class="icon-hash"></span>
+      <span class="label-align">{{request.build.number}}</span>{{/link-to}}
   {{else}}
     -
   {{/if}}
-</p>
-<p class="jobs-item requests-message column">{{message}}</p>
+</div>
+
+<div class="row-item fade-out">
+  <span class="label-align">{{message}}</span>
+</div>

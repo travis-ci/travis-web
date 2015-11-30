@@ -4,9 +4,11 @@
   font-weight: $font-weight-normal
   a
     color: #808080
+    border-bottom: 2px solid transparent
+    transition: border-color 100ms ease
     &:hover,
     &:active
-      text-decoration: underline
+      border-color: #808080
 
 .repo-header
   header
@@ -48,7 +50,6 @@ $dropdown-button-margin: -9px
   display: block
   height: $dropdown-button-height
   padding: 0 0.7em 0 2.3em
-  margin-top: $dropdown-button-margin
   background:
     color: white
     repeat: no-repeat
@@ -79,6 +80,8 @@ $dropdown-button-margin: -9px
     @extend %icon-line-cog-teal
     &:after
       @extend %icon-line-dropdown-teal
+  @media #{$medium-up}
+    margin-top: $dropdown-button-margin
 
 .settings-dropdown
   display: none
@@ -86,7 +89,7 @@ $dropdown-button-margin: -9px
   top: $dropdown-button-height + ($dropdown-button-margin * .8)
   width: 100%
   padding: 0
-  margin: -1px 0 0
+  margin: 6px 0 0
   list-style: none
   z-index: 60
   background-color: white
@@ -99,6 +102,8 @@ $dropdown-button-margin: -9px
     &:hover
       color: white
       background-color: $teal
+  @media #{$medium-up}
+    margin-top: -3px
 
 .settings-menu
   position: relative

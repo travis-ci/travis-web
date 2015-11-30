@@ -2,7 +2,7 @@
 `import config from 'travis/config/environment'`
 
 RequestsItemComponent = Ember.Component.extend
-  classNames: ['tile', 'tile--jobs', 'row']
+  classNames: ['request-item']
   classNameBindings: ['requestClass']
   tagName: 'li'
 
