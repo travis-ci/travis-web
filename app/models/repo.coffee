@@ -106,7 +106,8 @@ Repo = Model.extend
   ).property('slug')
 
   updateTimes: ->
-    @notifyPropertyChange 'defaultBranch.lastBuild.duration'
+    if lastBuild = @get('defaultBranch.lastBuild')
+      lastBuild.updateTimes()
 
   regenerateKey: (options) ->
     @get('ajax').ajax '/repos/' + @get('id') + '/key', 'post', options
