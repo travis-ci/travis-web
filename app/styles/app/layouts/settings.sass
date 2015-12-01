@@ -53,17 +53,18 @@
     box-shadow: none
 
 %settings-row
-  padding: .6em .5em
   border-radius: 4px
   background-color: #F6F5F5
   @media #{$medium-up}
-    height: 47px
+    height: 36px
 
 .settings-envvar
   @extend %settings-row
+  padding: .4em .5em
 
 .settings-sshkey
   @extend %settings-row
+  padding: .6em .5em
   display: block
   margin-bottom: 1rem
   overflow: hidden
@@ -104,7 +105,6 @@
     width: grid-calc(6, 12)
     margin-bottom: 0
 
-
 %settings-value-section
   display: inline-block
   vertical-align: middle
@@ -133,7 +133,7 @@
   input
     display: inline-block
     width: 100%
-    padding: 0.7em 0.5em 0.7em 2.6em
+    padding: 0.6em 0.5em 0.7em 2.6em
     border-radius: 4px
     border: none
     background-color: #eeedec
@@ -161,7 +161,7 @@
     @extend .icon-delete
     width: 1.1em
     height: 1.6em
-    background-position: 0 4px
+    background-position: 0 2px
   &:hover
     .icon-delete
       @extend .icon-delete-hover

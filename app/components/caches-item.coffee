@@ -4,7 +4,7 @@
 CachesItemComponent = Ember.Component.extend
 
   tagName: 'li'
-  classNames: ['tile', 'tile--xs', 'row']
+  classNames: ['cache-item']
   classNameBindings: ['cache.type']
   isDeleting: false
 

@@ -1,67 +1,95 @@
-.caches
-  @include resetul
-  margin-top: 1rem
-  font-size: $font-size-sm
-  color: $grey-medium
-  clear: both
-
-  .tile-xs
-    padding-left: 0
-
-
-  .push
-    .icon--grey
-      @extend .icon--grey.push
-      width: 1.2em;
-      height: 0.8em;
-  .pull_request
-    .icon--grey
-      @extend .icon--grey.pull_request
-      width: 1em;
-      height: 1.5em;
-
-  .icon--grey
-    margin-right: .3em
-
-  .button--delete
-    transform: translateY(-0.2em);
-
-  @media #{$medium-up}
-    .caches-branch
-      position: relative
-      overflow: hidden
-      width: grid-calc(4, 13)
-      &:after
-        content: ""
-        @include fadeOut(right, -90deg, $cream-light)
-    .caches-date
-      width: grid-calc(4, 13)
-    .caches-size
-      width: grid-calc(4, 13)
-    .caches-button
-      text-align: right
-      width: grid-calc(1, 13)
-
-.delete-repo-caches
-  margin-top: 1rem
 
 .caches-header
-  overflow: auto
-  .build-title
-    float: left
-    margin: 1.1em 0 .5em
-    a:hover
-      text-decoration: underline
-  .button--delete
-    float: right
+  .small-title
+    margin-top: .5em
+    small
+      color: $grey
+      font-size: 14px
+    a:hover,
+    a:active
+      border-bottom: 1px solid $grey
 
-.caches-helptext
-  @extend %helptext
+  @media #{$medium-up}
+    display: flex
+    flex-flow: row wrap
+    justify-content: space-between
+    align-items: center
 
-.caches-title
-  @extend %helptext
-  @extend %section-title
-  @include clearfix
-  float: left
-  margin: 1em 0 .5em
+.caches-list
+  padding: 0
+  margin: 0
+  list-style: none
+
+.cache-item
+  border: 1px solid $cream-dark
+  margin-bottom: 5px
+  font-size: 15px
+  padding: 0 1em
+  .status-icon
+    width: 1.5em
+    height: 1.5em
+    vertical-align: middle
+  &:hover,
+  &:active
+    background-color: #F5F5F5
+
+  @media #{$medium-up}
+    display: flex
+    justify-content: space-between
+    flex-flow: row wrap
+    align-items: center
+    padding: .3em 0
+    white-space: nowrap
+    .row-item:first-of-type
+      flex: 1 0 30%
+      padding-left: 1em
+    .row-item:nth-of-type(2)
+      flex: 1 0 30%
+    .row-item:nth-of-type(3)
+      flex: 1 0 30%
+    .row-item:last-of-type
+      flex: 0 0 50px
+      padding-right: 1em
+
+.delete-cache-button
+  padding-right: 3.1em
+  font-size: 15px
+  background:
+    size: auto 17px
+    position: 90% 0
+    repeat: no-repeat
+  @extend %icon-line-trashcan
+  &:hover,
+  &:active
+    color: $red
+    @extend %icon-line-trashcan-red
+
+.delete-cache-icon
+  position: relative
+  display: inline-block
+  .tooltip
+    pointer-events: none
+  .icon-trash
+    display: inline-block
+    height: 17px
+    padding-left: 1.7em
+    background:
+      size: auto 100%
+      repeat: no-repeat
+    @extend %icon-line-trashcan
+  &:hover,
+  &:active
+    color: $red
+    .icon-trash
+      @extend %icon-line-trashcan-red
+  @media #{$medium-up}
+    .tooltip
+      pointer-events: inherit
+    .icon-trash
+      width: 50px
+      padding-left: 0
+      text-indent: 999%
+      white-space: nowrap
+      overflow: hidden
+      background-position: 50% 0
 

@@ -40,20 +40,31 @@
 %inline-block
   display: inline-block
 
-%helptext
-  font-size: $font-size-m
-  color: $grey-medium
-  a
-    color: $grey-dark
-    text-decoration: none
-    &:hover
-      text-decoration: underline
-
 %section-title
   font-size: $font-size-sm
   color: $grey-medium
   font-weight: 400
 
+
+=linkStyle
+  a
+    text-decoration: none
+    border-bottom: 1px solid #bfc0c1
+    padding-bottom: 0.1em
+    transition: color 200ms ease, border 200ms ease
+    &:hover,
+    &:active
+      color: #303030
+      text-decoration: none
+      border-color: transparent
+
+%helptext
+  font-size: $font-size-m
+  color: $grey-medium
+  +linkStyle
+
+.helptext
+  @extend %helptext
 
 // @todo simplyfiy coloring mixins
 =colorStatusIcons($color, $status)

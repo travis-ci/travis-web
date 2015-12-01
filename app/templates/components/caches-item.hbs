@@ -1,14 +1,20 @@
-<p class="tile-item caches-branch column">
-  <span class="icon icon--grey"></span>
-  {{cache.branch}}
-</p>
-
-<p class="tile-item caches-date column">{{format-time cache.last_modified}}</p>
-
-<p class="tile-item caches-size column">{{travis-mb cache.size}}MB</p>
-
-<p class="tile-item caches-button column">
-  <a href="#" {{action "delete"}} class="{{if isDeleting 'deleting'}} delete-by-slug delete button--delete">
-    Delete
+<div class="row-item">
+  {{request-icon event=cache.type}}
+  <span class="label-align">{{cache.branch}}</span>
+</div>
+<div class="row-item">
+  <span class="icon-calendar"></span>
+  <span class="label-align">{{format-time cache.last_modified}}</span>
+</div>
+<div class="row-item">
+  <span class="icon-scale"></span>
+  <span class="label-align">{{travis-mb cache.size}}MB</span>
+</div>
+<div class="row-item">
+  <a {{action "delete"}} class="{{if isDeleting 'deleting'}} delete-cache-icon" title="Delete this cache">
+    <div class="tooltip">
+      <span class="icon-trash">delete cache</span>
+      <span class="tooltip-bubble">Delete</span>
+    </div>
   </a>
-</p>
+</div>
