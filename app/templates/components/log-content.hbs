@@ -13,7 +13,7 @@
       {{/if}}
     {{/if}}
 
-    {{#if job.isGce}}
+    {{#if job.displayGceNotice}}
       {{#if job.isFinished}}
         <p class="notice--blue"><span class="icon-flag"></span>
         <span class="label-align">This job ran on our new platform for Legacy Precise builds. Please read <a href="https://blog.travis-ci.com/2015-11-27-moving-to-a-more-elastic-future" title="Blog post on infrastructure migration">our blog post for more information</a>.</span></p>
