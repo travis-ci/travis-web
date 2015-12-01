@@ -27,6 +27,10 @@ RequestsItemComponent = Ember.Component.extend
       'Rejected'
   ).property('request.isAccepted')
 
+  hasBranchName: (->
+    @get('request.branchName')
+  ).property('request')
+
   message: (->
     message = @get('request.message')
     if config.pro && message == "private repository"

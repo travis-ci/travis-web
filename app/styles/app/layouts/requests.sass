@@ -1,6 +1,9 @@
 =requestFadeOut($status, $color)
   @media #{$medium-up}
     &.#{$status}:hover
+      .status-icon.api
+        svg
+          background-color: $color
       .fade-out
         &:after
           @include fadeOut(right, -90deg, $color)
@@ -29,6 +32,8 @@
     width: 1.3em
     height: 1.3em
     vertical-align: middle
+    &.api
+      width: 1.2em !important
 
   a:hover,
   a:active

@@ -74,7 +74,8 @@ $dropdown-button-margin: -9px
     @extend %icon-line-dropdown
   &:hover,
   &:active,
-  .display &
+  // .display &,
+  .settings-menu:hover &
     color: $teal
     border-color: $teal
     @extend %icon-line-cog-teal
@@ -107,7 +108,12 @@ $dropdown-button-margin: -9px
 
 .settings-menu
   position: relative
-  &.display
-    .settings-dropdown
-      display: block
+  @media #{$small-only}
+    &.display
+      .settings-dropdown
+        display: block
+  @media #{$medium-up}
+    &:hover
+      .settings-dropdown
+        display: block
 

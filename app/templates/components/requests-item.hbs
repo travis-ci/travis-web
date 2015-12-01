@@ -7,7 +7,9 @@
   {{#if request.isPullRequest}}
     <strong class="label-align">#{{request.pullRequestNumber}}</strong>
   {{else}}
-    <strong class="label-align">{{request.branchName}}</strong>
+    {{#if hasBranchName}}
+      <strong class="label-align">{{request.branchName}}</strong>
+    {{/if}}
   {{/if}}
   <span class="label-align">{{github-commit-link request.repo.slug request.commit.sha}}</span>
 </div>
