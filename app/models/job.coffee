@@ -149,10 +149,10 @@ Job = Model.extend DurationCalculations,
   ).property('queue')
 
   displayGceNotice: (->
-    if @get('queue') == 'builds.gce' && @get('_config.dist') == 'precise'
+    if @get('queue') == 'builds.gce' && @get('config.dist') == 'precise'
       true
     else
       false
-  ).property('queue', '_config.dist')
+  ).property('queue', 'config.dist')
 
 `export default Job`
