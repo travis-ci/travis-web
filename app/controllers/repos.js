@@ -2,6 +2,53 @@ import Ember from 'ember';
 import limit from 'travis/utils/computed-limit';
 import Repo from 'travis/models/repo';
 
+var sortCallback = function(repo1, repo2) {
+  // this function could be made simpler, but I think it's clearer this way
+  // what're we really trying to achieve
+
+  var lastBuild1 = repo1.get('defaultBranch.lastBuild');
+  var lastBuild2 = repo2.get('defaultBranch.lastBuild');
+
+  if(!lastBuild1 && !lastBuild2) {
+    // if both repos lack builds, put newer repo first
+    return repo1.get('id') > repo2.get('id') ? -1 : 1;
+  } else if(lastBuild1 && !lastBuild2) {
+    // if only repo1 has a build, it goes first
+    return -1;
+  } else if(lastBuild2 && !lastBuild1) {
+    // if only repo2 has a build, it goes first
+    return 1;
+  }
+
+  var finishedAt1 = lastBuild1.get('finishedAt');
+  var finishedAt2 = lastBuild2.get('finishedAt');
+
+  if(finishedAt1) {
+    finishedAt1 = new Date(finishedAt1);
+  }
+  if(finishedAt2) {
+    finishedAt2 = new Date(finishedAt2);
+  }
+
+  if(finishedAt1 && finishedAt2) {
+    // if both builds finished, put newer first
+    return finishedAt1.getTime() > finishedAt2.getTime() ? -1 : 1;
+  } else if(finishedAt1 && !finishedAt2) {
+    // if repo1 finished, but repo2 didn't, put repo2 first
+    return 1;
+  } else if(finishedAt2 && !finishedAt1) {
+    // if repo2 finisher, but repo1 didn't, put repo1 first
+    return -1;
+  } else {
+    // none of the builds finished, put newer build first
+    return lastBuild1.get('id') > lastBuild2.get('id') ? -1 : 1;
+  }
+
+  throw "should not happen";
+};
+
+
+
 var Controller = Ember.Controller.extend({
   actions: {
     activate: function(name) {
@@ -102,7 +149,7 @@ var Controller = Ember.Controller.extend({
     var repos, user;
 
     if (repos = this.get('ownedRepos')) {
-      return this.set('repos', repos);
+      return this.set('_repos', repos);
     } else if (!this.get('fetchingOwnedRepos')) {
       this.set('fetchingOwnedRepos', true);
       this.set('isLoaded', false);
@@ -112,7 +159,7 @@ var Controller = Ember.Controller.extend({
           repos = Repo.accessibleBy(this.store, data.pull).then(
             (reposRecordArray) => {
               this.set('isLoaded', true);
-              this.set('repos', reposRecordArray);
+              this.set('_repos', reposRecordArray);
               this.set('ownedRepos', reposRecordArray);
               this.set('fetchingOwnedRepos', false);
               return reposRecordArray;
@@ -129,7 +176,7 @@ var Controller = Ember.Controller.extend({
     this.set('isLoaded', false);
     Repo.search(this.store, phrase).then( () => {
       this.set('isLoaded', true);
-      this.set('repos', reposRecordArray);
+      this.set('_repos', reposRecordArray);
     });
   },
 
@@ -164,7 +211,22 @@ var Controller = Ember.Controller.extend({
 
   showRunningJobs: function() {
     return this.get('tab') === 'running';
-  }.property('tab')
+  }.property('tab'),
+
+  repos: function() {
+    var repos = this.get('_repos');
+
+    if(repos && repos.toArray) {
+      repos = repos.toArray();
+    }
+
+    if(repos && repos.sort) {
+      return repos.sort(sortCallback);
+    } else {
+      return [];
+    }
+  }.property('_repos.[]', '_repos.@each.lastBuildFinishedAt',
+             '_repos.@each.lastBuildId')
 });
 
 export default Controller;
