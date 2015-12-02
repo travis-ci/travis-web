@@ -1,7 +1,7 @@
 `import { test, moduleForComponent } from 'ember-qunit'`
 
 moduleForComponent 'caches-item', 'CachesItemComponent', {
-  needs: ['helper:format-time', 'helper:travis-mb']
+  needs: ['helper:format-time', 'helper:travis-mb', 'component:request-icon']
 }
 
 test 'it renders', ->
@@ -18,6 +18,6 @@ test 'it renders', ->
   @append()
 
   ok component.$().hasClass('push'), 'component should have a type class (push)'
-  equal component.$('.caches-branch').text().trim(), 'master', 'branch name should be displayed'
+  equal component.$('.row-item:first-child .label-align').text().trim(), 'master', 'branch name should be displayed'
   # equal component.$('.caches-date').text().trim(), '', ''
-  equal component.$('.caches-size').text().trim(), '1.00MB', 'size should be displayed'
+  equal component.$('.row-item:nth-child(3) .label-align').text().trim(), '1.00MB', 'size should be displayed'

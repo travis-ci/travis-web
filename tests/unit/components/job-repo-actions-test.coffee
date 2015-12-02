@@ -7,13 +7,13 @@ test 'it shows cancel button if canCancel is true', ->
   component = @subject(canCancel: true)
   @append()
 
-  ok component.$('a[title="Cancel Job"]').length, 'cancel link should be visible'
+  ok component.$('a[title="Cancel job"]').length, 'cancel link should be visible'
 
 test 'it shows restart button if canRestart is true', ->
   component = @subject(canRestart: true)
   @append()
 
-  ok component.$('a[title="Restart Job"]').length, 'restart link should be visible'
+  ok component.$('a[title="Restart job"]').length, 'restart link should be visible'
 
 test 'user can cancel if she has permissions to a repo and job is cancelable', ->
   job = Ember.Object.create(canCancel: false, userHasPermissionForRepo: true)

@@ -2,7 +2,7 @@
 
 moduleForComponent 'jobs-item', 'JobsItemComponent', {
   # specify the other units that are required for this test
-  needs: ['helper:format-duration', 'helper:pretty-date']
+  needs: ['helper:format-duration', 'helper:pretty-date', 'component:status-icon']
 }
 
 test 'it renders', ->
@@ -23,7 +23,7 @@ test 'it renders', ->
   @append()
 
   ok component.$().hasClass('passed'), 'component should have a state class (passed)'
-  equal component.$('.job-id').text().trim(), '2', 'job number should be displayed'
+  equal component.$('.job-number').text().trim(), '2', 'job number should be displayed'
   equal component.$('.job-lang').text().trim(), 'JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed'
   equal component.$('.job-env').text().trim(), 'TESTS=unit', 'env should be displayed'
   ok component.$('.job-os').hasClass('linux'), 'OS class should be added for OS icon'
@@ -53,8 +53,8 @@ test 'when env is not set, gemfile is displayed in the env section', ->
   component = @subject(job: job)
   @append()
 
-  equal component.$('.job-lang').text().trim(), 'Ruby: 2.1.2', 'langauges list should be displayed'
-  equal component.$('.job-env').text().trim(), 'Gemfile: foo/Gemfile', 'env should be displayed'
+  equal component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2', 'langauges list should be displayed'
+  equal component.$('.job-env .label-align').text().trim(), 'Gemfile: foo/Gemfile', 'env should be displayed'
 
 test 'when env is set, gemfile is displayed in the language section', ->
   attributes = {
@@ -72,5 +72,5 @@ test 'when env is set, gemfile is displayed in the language section', ->
   component = @subject(job: job)
   @append()
 
-  equal component.$('.job-lang').text().trim(), 'Ruby: 2.1.2 Gemfile: foo/Gemfile', 'Gemfile should be displayed in languages section'
-  equal component.$('.job-env').text().trim(), 'FOO=bar', 'env should be displayed'
+  equal component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2 Gemfile: foo/Gemfile', 'Gemfile should be displayed in languages section'
+  equal component.$('.job-env .label-align').text().trim(), 'FOO=bar', 'env should be displayed'
