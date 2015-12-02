@@ -24,7 +24,6 @@ Build = Model.extend DurationCalculations,
   jobs:   DS.hasMany('job', async: true)
 
   config: (->
-    console.log('config')
     if config = @get('_config')
       compact(config)
     else if @get('currentState.stateName') != 'root.loading'

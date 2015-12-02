@@ -56,9 +56,9 @@
     {{/if}}
   </h3>
   <ul class="list-icon">
-    <li><span title="{{format-duration item.duration}}" class="commit-clock">{{#if item.isFinished}}ran{{else}}running{{/if}} for {{format-duration item.duration}}</span></li>
-    {{!-- <li><span>Elapsed time</span></li> --}}
-    <li><span title="{{pretty-date item.finishedAt}}" class="commit-calendar">{{format-time item.finishedAt}}</span></li>
+    <li title="{{format-duration item.duration}}" class="commit-clock">{{#if item.isFinished}}Total time{{else}}Running{{/if}} for {{format-duration item.duration}}</li>
+    <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">Elapsed time {{format-duration elapsedTime}}</li>
+    <li title="{{pretty-date item.finishedAt}}" class="commit-calendar">{{format-time item.finishedAt}}</li>
   </ul>
 </div>
 <div class="build-tools">

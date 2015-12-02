@@ -1,6 +1,7 @@
 `import Ember from 'ember'`
 `import { gravatarImage } from 'travis/utils/urls'`
 `import GithubUrlPropertievs from 'travis/mixins/github-url-properties'`
+`import { durationFrom, safe } from 'travis/utils/helpers'`
 
 BuildHeaderComponent = Ember.Component.extend
 
@@ -19,5 +20,9 @@ BuildHeaderComponent = Ember.Component.extend
   isJob: (->
     if @get('item.build') then true else false
   ).property('item')
+
+  elapsedTime: (->
+    durationFrom(@get('item.startedAt'), @get('item.finishedAt'))
+  ).property('item.startedAt', 'item.finishedAt', 'item.duration')
 
 `export default BuildHeaderComponent`
