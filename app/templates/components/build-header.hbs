@@ -56,8 +56,12 @@
     {{/if}}
   </h3>
   <ul class="list-icon">
-    <li title="{{format-duration item.duration}}" class="commit-clock">{{#if item.isFinished}}Total time{{else}}Running{{/if}} for {{format-duration item.duration}}</li>
     <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">Elapsed time {{format-duration elapsedTime}}</li>
+    {{#unless isJob}}
+      {{#if item.isMatrix}}
+        <li title="{{format-duration item.duration}}" class="commit-clock">{{#if item.isFinished}}Total time{{else}}Running{{/if}} for {{format-duration item.duration}}</li>
+      {{/if}}
+    {{/unless}}
     <li title="{{pretty-date item.finishedAt}}" class="commit-calendar">{{format-time item.finishedAt}}</li>
   </ul>
 </div>
