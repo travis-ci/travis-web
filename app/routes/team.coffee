@@ -143,7 +143,7 @@ Route = TravisRoute.extend
       },
       {
         name: 'Brandon Burton'
-        title: 'Regional Cloud Manager'
+        title: 'Infrastructure Conductor'
         handle: 'solarce'
         nationality: 'usa'
         country: 'usa'
