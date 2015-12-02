@@ -61,7 +61,7 @@ export default V3Serializer.extend({
         Object.keys(data.relationships).forEach(function (key) {
           let relationship = data.relationships[key];
           let process = function(data) {
-            if(Object.keys(data).sort()+'' !== 'id,type' || (data['@href'] && data.type == 'branch')) {
+            if(Object.keys(data).sort()+'' !== 'id,type' || (data['@href'] && data.type === 'branch')) {
               // no need to add records if they have only id and type
               let type = key === 'defaultBranch' ? 'branch' : key.singularize();
               let serializer = store.serializerFor(type);

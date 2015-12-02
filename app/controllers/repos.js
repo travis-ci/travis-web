@@ -174,7 +174,7 @@ var Controller = Ember.Controller.extend({
   viewSearch(phrase) {
     this.set('search', phrase);
     this.set('isLoaded', false);
-    Repo.search(this.store, phrase).then( () => {
+    Repo.search(this.store, phrase).then( (reposRecordArray) => {
       this.set('isLoaded', true);
       this.set('_repos', reposRecordArray);
     });

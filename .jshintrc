@@ -3,7 +3,8 @@
     "document",
     "window",
     "-Promise",
-    "jQuery"
+    "jQuery",
+    "Visibility"
   ],
   "browser": true,
   "boss": true,
