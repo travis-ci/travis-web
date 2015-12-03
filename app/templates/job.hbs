@@ -1,6 +1,6 @@
 {{#if job.isLoaded}}
 
-  {{build-header item=job user=auth.currentUser commit=job.commit}}
+  {{build-header item=job user=auth.currentUser commit=job.commit repo=repo}}
 
   {{view 'annotations' annotations=view.annotations}}
 

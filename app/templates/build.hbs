@@ -2,7 +2,7 @@
   {{loading-indicator}}
 {{else}}
 
-  {{build-header item=build user=auth.currentUser commit=commit}}
+  {{build-header item=build user=auth.currentUser commit=commit repo=repo}}
 
   {{#unless build.isMatrix}}
     {{view 'annotations' annotations=build.jobs.firstObject.annotations}}

@@ -2,6 +2,7 @@
 `import { gravatarImage } from 'travis/utils/urls'`
 `import GithubUrlPropertievs from 'travis/mixins/github-url-properties'`
 `import { durationFrom, safe } from 'travis/utils/helpers'`
+`import { githubCommit } from 'travis/utils/urls'`
 
 BuildHeaderComponent = Ember.Component.extend
 
@@ -19,6 +20,10 @@ BuildHeaderComponent = Ember.Component.extend
 
   isJob: (->
     if @get('item.build') then true else false
+  ).property('item')
+
+  urlGithubCommit: (->
+    githubCommit(@get('repo.slug'), @get('commit.sha'))
   ).property('item')
 
   elapsedTime: (->
