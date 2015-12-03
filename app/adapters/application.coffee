@@ -20,4 +20,9 @@ Adapter = DS.ActiveModelAdapter.extend
   findMany: (store, type, ids) ->
     @ajax(@buildURL(type.typeKey), 'GET', data: { ids: ids })
 
+  handleResponse: (status, headers, payload) ->
+    if status > 299
+      console.log "[ERROR] API responded with an error (#{status}): #{JSON.stringify(payload)}"
+    return @_super.apply(this, arguments)
+
 `export default Adapter`
