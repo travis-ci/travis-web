@@ -3,7 +3,7 @@
   {{#if hook.isSaving}}
     {{loading-indicator inline=true}}
   {{else}}
-    {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Repository settings"}}<span class="icon icon--cog"></span>{{/link-to}}
+    {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repo settings"}}<span class="icon-settings"></span>{{/link-to}}
   {{/if}}
 </div>
 <a href={{hook.urlGithub}} rel="nofollow" class="profile-repo">
