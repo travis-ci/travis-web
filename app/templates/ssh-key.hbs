@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="actions">
-      <a href="#" {{action "delete"}} class="delete-ssh-key {{if isDeleting 'deleting'}}">
+      <a {{action "delete"}} class="delete-ssh-key {{if isDeleting 'deleting'}}" title="Delete SSH key">
         Delete
       </a>
     </div>
@@ -27,5 +27,5 @@
     The default key's fingerprint is <code>{{defaultKey.fingerprint}}</code>
   </p>
 
-  <a {{action "add"}} href="#" class="add-ssh-key">Add a custom SSH key</a>
+  <a {{action "add"}} class="add-ssh-key" title="Add a custom SSH key">Add a custom SSH key</a>
 {{/if}}

@@ -7,11 +7,11 @@ StatusIconComponent = Ember.Component.extend
   classNameBindings: ['status']
 
   hasPassed: (->
-    @get('status') == 'passed'
+    @get('status') == 'passed' || @get('status') == 'accepted'
   ).property('status')
 
   hasFailed: (->
-    @get('status') == 'failed'
+    @get('status') == 'failed' || @get('status') == 'rejected'
   ).property('status')
 
   hasErrored: (->

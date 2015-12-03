@@ -18,10 +18,13 @@
   color: $grey-dark
   background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
 
-  h2, h3
+  h2, h3, small
     margin: 0
     font-weight: $font-weight-normal
     font-size: 16px
+  small
+    font-weight: $font-weight-bold
+    margin-right: 1em
 
   .row-header
     width: 100%
@@ -53,7 +56,7 @@
   .two-line
     @extend %row-element
     padding: .4em 0
-    margin-left: 2em
+    margin-left: 1em
     text-align: left
 
     @media #{$medium-up}
@@ -76,12 +79,21 @@
     display: inline-block
     vertical-align: middle
 
-  @include statusColors($green-dark, 'passed')
-  @include statusColors($red-dark, 'failed')
-  @include statusColors($red-dark, 'errored')
-  @include statusColors($grey-medium, 'canceled')
-  @include statusColors(#bfb502, 'started', #e5da3f)
-  @include statusColors(#bfb502, 'queued', #e5da3f)
-  @include statusColors(#bfb502, 'booting', #e5da3f)
-  @include statusColors(#bfb502, 'received', #e5da3f)
-  @include statusColors(#bfb502, 'created', #e5da3f)
+  .avatar
+    display: inline-block
+    width: 16px
+    height: 16px
+    margin: 0 .4em 0 .1em
+    border-radius: 50%
+    vertical-align: middle
+    background-color: #E9EBEB
+
+  @include statusColors($green, 'passed', 10px)
+  @include statusColors($red, 'failed', 10px)
+  @include statusColors($red, 'errored', 10px)
+  @include statusColors($grey, 'canceled', 10px)
+  @include statusColors($yellow, 'started', 10px, #e5da3f, true)
+  @include statusColors($yellow, 'queued', 10px, #e5da3f, true)
+  @include statusColors($yellow, 'booting', 10px, #e5da3f, true)
+  @include statusColors($yellow, 'received', 10px, #e5da3f, true)
+  @include statusColors($yellow, 'created', 10px, #e5da3f, true)

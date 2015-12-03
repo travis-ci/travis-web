@@ -2,7 +2,7 @@
 `import config from 'travis/config/environment'`
 
 RequestsItemComponent = Ember.Component.extend
-  classNames: ['tile', 'tile--jobs', 'row']
+  classNames: ['request-item']
   classNameBindings: ['requestClass']
   tagName: 'li'
 
@@ -26,6 +26,10 @@ RequestsItemComponent = Ember.Component.extend
     else
       'Rejected'
   ).property('request.isAccepted')
+
+  hasBranchName: (->
+    @get('request.branchName')
+  ).property('request')
 
   message: (->
     message = @get('request.message')

@@ -7,8 +7,8 @@
         {{#if isEditing}}
           {{partial 'env_vars/form'}}
         {{else}}
-          <a href="#" class="edit-var" {{action "edit"}}>Edit</a>
-          <a href="#" {{action "delete"}} class="delete-var {{if isDeleting 'deleting'}}">
+          <a class="edit-var" {{action "edit"}} title="Edit env var">Edit</a>
+          <a {{action "delete"}} class="delete-var {{if isDeleting 'deleting'}}" title="Delete env var">
             Delete
           </a>
           <span class="name">{{name}}</span>

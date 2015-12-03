@@ -1,52 +1,58 @@
-<div class="tile-status">
-  <span class="icon icon-status {{build.state}}" title="{{build.state}}"></span>
-  <span class="request-kind icon {{build.eventType}}" title="{{build.eventType}}"></span>
-</div>
-
-<div class="column tile-main medium-6">
-  <h2>
-    {{#if build.isPullRequest}}
-      <small>PR #{{build.pullRequestNumber}}</small>
-      {{#link-to "build" build.repo build}}
-        {{{format-message build.pullRequestTitle short="true" repoBinding=build.repo}}}
-      {{/link-to}}
-    {{else}}
-      <small>{{build.commit.branch}}</small>
-      {{#link-to "build" build.repo build}}
-        {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
-      {{/link-to}}
-    {{/if}}
-  </h2>
-  <p class="tile-author"><img src={{urlAuthorGravatarImage}} alt="">
-    {{build.commit.committerName}} committed
-  </p>
-</div>
-<div class="column tile-additional medium-6 end">
-  <div class="column small-6">
-    <p class="build-status">
-      {{#if build.id}}
+<div class="two-line fade-out">
+  <div class="row-item build-info">
+    <h2 class="row-branch {{build.state}}">
+      {{status-icon status=build.state}}
+      {{#if build.isPullRequest}}
         {{#link-to "build" build.repo build}}
-          <span class="icon icon-hash"></span>
-          {{build.number}} {{build.state}}
+          <small>PR #{{build.pullRequestNumber}}</small>
+          {{{format-message build.pullRequestTitle short="true" repoBinding=build.repo}}}
+        {{/link-to}}
+      {{else}}
+        {{#link-to "build" build.repo build}}
+          {{build.commit.branch}}
         {{/link-to}}
       {{/if}}
-    </p>
-    <p>
-      <a href="{{urlGithubCommit}}">
-        <span class="icon icon-github"></span>
-        {{format-sha build.commit.sha}}
-      </a>
-    </p>
+    </h2>
+    {{#unless build.isPullRequest}}
+      <div class="row-message">
+        {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
+      </div>
+    {{/unless}}
   </div>
+  <div class="row-item row-committer">
+    <img class="avatar" src={{urlAuthorGravatarImage}} alt="{{build.commit.committerName}} avatar">
+    <span class="label-align">{{build.commit.committerName}}</span>
+  </div>
+</div>
 
-  <div class="column small-6">
-    <p title="{{format-duration build.duration}}">
-      <span class="icon icon-clock"></span>
-      {{format-duration build.duration}}
-    </p>
-    <p title="{{pretty-date build.formattedFinishedAt}}">
-      <span class="icon icon-cal"></span>
-      {{format-time build.finishedAt}}
-    </p>
+<div class="two-line">
+  <h3 class="row-item {{build.state}}">
+    {{#if build.id}}
+      {{#link-to "build" build.repo build}}
+        {{request-icon event=build.eventType state=build.state}}
+        <span class="label-align">#{{build.number}} {{build.state}}</span>
+      {{/link-to}}
+    {{/if}}
+  </h3>
+  <div class="row-item">
+    <a href="{{urlGithubCommit}}" title="See the commit on GitHub">
+      <span class="icon-github"></span>
+      <span class="label-align">{{format-sha build.commit.sha}}</span>
+    </a>
+  </div>
+</div>
+
+<div class="two-line">
+  <div class="row-item">
+    <div title="{{format-duration build.duration}}">
+      <span class="icon-clock"></span>
+      <span class="label-align">{{format-duration build.duration}}</span>
+    </div>
+  </div>
+  <div class="row-item">
+    <div title="{{pretty-date build.formattedFinishedAt}}">
+      <span class="icon-calendar"></span>
+      <span class="label-align">{{format-time build.finishedAt}}</span>
+    </div>
   </div>
 </div>

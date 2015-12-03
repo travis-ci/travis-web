@@ -30,7 +30,6 @@
 @import "app/modules/navigation";
 @import "app/modules/row";
 @import "app/modules/loader";
-@import "app/modules/tiles";
 @import "app/modules/buttons";
 @import "app/modules/icons";
 @import "app/modules/search";
@@ -43,21 +42,21 @@
 @import "app/modules/memberlist";
 @import "app/modules/forms";
 @import "app/modules/notice";
+@import "app/modules/build-header";
 
 @import "app/layout";
 @import "app/layouts/dashboard";
 @import "app/layouts/error";
 @import "app/layouts/footer";
-@import "app/layouts/buildheader";
-@import "app/layouts/build-job";
-@import "app/layouts/sidebar";
-@import "app/layouts/build-job";
 @import "app/layouts/sidebar";
 @import "app/layouts/profile";
 @import "app/layouts/top";
 @import "app/layouts/owner";
 @import "app/layouts/branches";
 @import "app/layouts/broadcasts";
+@import "app/layouts/repo";
+@import "app/layouts/jobs";
+@import "app/layouts/pull-requests";
 
 @import "app/layouts/requests";
 @import "app/layouts/caches";

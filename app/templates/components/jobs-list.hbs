@@ -1,12 +1,11 @@
 {{#if jobs.length}}
-  <section>
 
   {{#if required}}
-    <h2 class="build-title">Build Jobs</h2>
+    <h2 class="section-title">Build Jobs</h2>
   {{else}}
-    <h2 class="build-title">Allowed Failures
-      <div class="tooltip--jobs">
-        <span class="icon icon--question"></span>
+    <h2 class="section-title">Allowed Failures
+      <div class="tooltip-jobs">
+        <span class="icon-question tooltip-trigger"></span>
         <p class="tooltip-bubble">These are jobs you can allow to fail <br> without failing your entire build</p>
       </div>
     </h2>
@@ -17,5 +16,4 @@
       {{jobs-item job=job repo=repo}}
     {{/each}}
     </ul>
-  </section>
 {{/if}}

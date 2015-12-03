@@ -35,19 +35,6 @@ $button-border-color: #d4d4d4
   border-bottom-color: #2356c4
   background-color: #40454f
 
-.show-more
-  background-color: #F2F2EB
-  display: inline-block
-  color: #666
-  padding: 6px 15px
-  text-decoration: none
-  border: 1px solid #DDD
-.show-more:hover
-  background-color: #40454F
-  color: $white
-  border: 1px solid #40454F
-  cursor: pointer
-
 .button--signin,
 .button--signingin
   display: inline-block
@@ -122,20 +109,6 @@ $button-border-color: #d4d4d4
   &:focus
     background-color: #696867
 
-.button-circle
-  width: 28px
-  height: 28px
-  border-radius: 50%
-
-.button--showmore
-  height: auto
-  padding: 0.3em 0.7em
-  font-size: $font-size-m
-  .icon
-    width: 1.1em
-    height: 0.7em
-    margin-right: .5em
-
 .button--delete
   @extend .button
   border-radius: 2px
@@ -143,8 +116,120 @@ $button-border-color: #d4d4d4
   font-size: $font-size-small
   color: $white
   background-color: #CD3A36
-  font-weight: 300;
+  font-weight: 300
   padding: 4px 10px 2px
   &:focus,
   &:hover
     background-color: lighten(#CD3A36, 10)
+
+
+
+// new stuff
+
+%circle-button
+  display: block
+  text-indent: 999%
+  overflow: hidden
+  width: 28px
+  height: 28px
+  border: solid 1px #E4E6E6
+  border-radius: 50%
+  &:hover
+    border-color: $teal
+
+  float: left
+  margin-right: 1rem
+  @media #{$medium-up}
+    float: none
+    margin-right: 0
+    margin-bottom: .5em
+
+.button-circle-codeclimate
+  @extend %circle-button
+  @extend %icon-line-codeclimate
+  background:
+    repeat: no-repeat
+    size: auto 9px
+    position: 4px 8px
+  &:hover
+    @extend %icon-line-codeclimate-teal
+
+.button-circle-cancel
+  @extend %circle-button
+  @extend %icon-line-cross
+  background:
+    repeat: no-repeat
+    size: auto 100%
+  &:hover
+    @extend %icon-line-cross-teal
+
+.button-circle-trigger
+  @extend %circle-button
+  @extend %icon-line-trigger
+  background:
+    position: 2px 1px
+    repeat: no-repeat
+    size: 24px 24px
+  &:hover
+    @extend %icon-line-trigger-teal
+
+%log-button
+  display: inline-block
+  height: 28px
+  padding: 0 0.8em 0 2.3em
+  border: 1px solid #f1f1f1
+  color: #f1f1f1
+  border-radius: 2px
+  text-align: center
+  line-height: 1.9
+  font-size: 14px
+  font-weight: 300
+  background:
+    repeat: no-repeat
+    size: auto 14px
+    position: 7px 6px
+
+// log buttons
+.remove-log-button
+  @extend %log-button
+  @extend %icon-remove-log
+  &:hover,
+  &:active
+    background-color: #d94341
+
+.download-log-button
+  @extend %log-button
+  @extend %icon-download-log
+  &:hover,
+  &:active
+    background-color: #999a98
+
+// popup buttons
+@mixin buttons($bg-color)
+  display: inline-block
+  padding: .3em 1em
+  font-size: 20px
+  color: white
+  font-weight: $font-weight-light
+  border-radius: 2px
+  background-color: $bg-color
+  &:hover,
+  &:active
+    background-color: lighten($bg-color, 10)
+
+.button-delete
+  @include buttons($red)
+
+.button-cancel
+  @include buttons(#A0A8A8)
+
+.showmore-button
+  padding-left: 2em
+  background:
+    repeat: no-repeat
+    size: auto 20px
+    position: 4px 1px
+  cursor: pointer
+  @extend .button--grey
+  @extend %icon-line-eye
+

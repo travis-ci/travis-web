@@ -1,0 +1,53 @@
+.build-list
+  padding:  0
+  margin: 0
+  list-style: none
+
+.pr-row
+  @media #{$medium-up}
+    display: flex
+    justify-content: space-between
+    flex-flow: row wrap
+    align-items: center
+
+    .two-line
+      padding: 0
+      margin: .4em 0
+      .row-item:not(.build-info)
+        display: block
+
+    .row-committer
+      padding-left: 1.6em
+      margin-bottom: 0
+
+    .build-info
+      display: flex
+      flex-flow: row wrap
+      align-items: baseline
+
+    .row-branch
+      flex: 1 0 18%
+      position: relative
+      overflow: hidden
+      &:after
+        content: ""
+        +fadeOut(right, -90deg, $white)
+      &:hover
+        overflow: visible
+        &:after
+          content: none
+        a
+          background-color: white
+
+    .row-message
+      padding-left: 1.6em
+      flex: 1 1 50%
+
+    .two-line:first-of-type
+      flex: 0 0 55%
+      padding-left: .5em
+      border-right: 1px solid $cream-dark
+    .two-line:nth-of-type(2)
+      flex: 0 0 20%
+    .two-line:last-of-type
+      flex: 0 0 20%

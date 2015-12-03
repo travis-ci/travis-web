@@ -1,0 +1,180 @@
+=colorFadeOut($status, $color)
+  @media #{$medium-up}
+    &.#{$status}:hover
+      .job-lang,
+      .job-env
+        &:after
+          @include fadeOut(right, -90deg, $color)
+      .job-lang:hover,
+      .job-env:hover
+        overflow: visible
+        z-index: 80
+        .label-align
+          background-color: $color
+        &:after
+          content: none !important
+
+.jobs-list
+  margin: 0
+  padding: 0
+  list-style: none
+  font-size: 15px
+
+.jobs-item
+  border: 1px solid $cream-dark
+  margin-bottom: 5px
+  @include colorJobs($green, 'passed', 6px, rgba($green, .1))
+  @include colorJobs($red, 'failed', 6px, rgba($red, .1))
+  @include colorJobs($red, 'errored', 6px, rgba($red, .1))
+  @include colorJobs($grey, 'canceled', 6px, #f1f1f1)
+  @include colorJobs($yellow, 'started', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow, 'queued', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow, 'booting', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow, 'received', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow, 'created', 6px, rgba($yellow, .1), true)
+
+  @include colorFadeOut('passed',#ECF6EF)
+  @include colorFadeOut('failed', #FBECEB)
+  @include colorFadeOut('errored', #FBECEB)
+  @include colorFadeOut('canceled', #f1f1f1)
+  @include colorFadeOut('started', #FCFBEB)
+  @include colorFadeOut('queued', #FCFBEB)
+  @include colorFadeOut('booting', #FCFBEB)
+  @include colorFadeOut('received', #FCFBEB)
+  @include colorFadeOut('created', #FCFBEB)
+
+  a
+    display: block
+    padding-left: 1em
+    @media #{$medium-up}
+      display: flex
+      flex-flow: row nowrap
+      justify-content: space-between
+      align-items: center
+      height: 34px
+      padding-left: 0.5em
+
+.section-title
+  font-size: 16px
+  color: $grey
+  font-weight: 400
+  margin: 3rem 0 1rem
+
+.job-state
+  display: inline-block
+  @media #{$medium-up}
+    flex: 0 0 2em
+
+  &.started,
+  &.booting,
+  &.received,
+  &.created
+    line-height: 3
+  .icon
+    width: 24px
+    height: 24px
+    vertical-align: middle
+
+.job-number
+  display: inline-block
+  @media #{$medium-up}
+    flex: 0 0 7em
+    padding-right: 1em
+    border-right: 1px solid $cream-dark
+.icon-hash
+  width: 20px
+  height: 20px
+  vertical-align: middle
+  @extend %icon
+  @extend %icon-line-hash
+
+.job-os
+  position: relative
+  pointer-events: none
+  .icon
+    width: 16px
+    height: 20px
+    vertical-align: middle
+    padding-left: 1.5em
+    background: 
+      size: auto 18px
+      repeat: no-repeat
+  @media #{$medium-up}
+    flex: 0 0 4em
+    text-align: center
+    pointer-events: initial
+    .icon
+      padding-left: 0
+      text-indent: 999%
+      white-space: nowrap
+      overflow: hidden
+
+  &.linux
+    .icon
+      @extend %icon-line-linux
+  &.osx
+    .icon
+      @extend %icon-line-mac
+
+.job-lang
+  @media #{$medium-up}
+    flex: 1 1 20%
+    position: relative
+    white-space: nowrap
+    overflow:hidden
+    &:after
+      content: ""
+      @include fadeOut(right, -90deg, white)
+
+.icon-lang
+  width: 16px
+  height: 13px
+  margin-right: .3em
+  vertical-align: middle
+  @extend %icon
+  @extend %icon-line-language
+
+.job-env
+  @media #{$medium-up}
+    flex: 1 1 30%
+    position: relative
+    white-space: nowrap
+    overflow: hidden
+    &:after
+      @include fadeOut(right, -90deg, white)
+  &.is-empty
+    opacity: .5
+
+.icon-env
+  width: 14px
+  height: 14px
+  margin-right: .3em
+  vertical-align: middle
+  @extend %icon
+  @extend %icon-line-environment
+
+.job-duration
+  flex: 1 0 14%
+  padding-right: 1em
+.icon-clock
+  display: inline-block
+  width: 16px
+  height: 20px
+  margin-right: .3em
+  vertical-align: middle
+  background:
+    size: auto 20px
+    position: -2px 0
+  @extend %icon-line-clock
+
+.icon-calendar
+  display: inline-block
+  width: 16px
+  height: 18px
+  margin-right: .3em
+  vertical-align: middle
+  background:
+    size: auto 18px
+    position: -1px 0
+  @extend %icon-line-calendar
+

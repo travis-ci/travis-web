@@ -1,0 +1,120 @@
+
+.repo-header
+  header
+    @media #{$medium-up}
+      display: flex
+      flex-flow: row wrap
+      justify-content: flex-start
+      align-items: center
+
+  .repo-title
+    margin: 0
+    font-size: 36px
+    font-weight: $font-weight-normal
+    a
+      color: #808080
+      border-bottom: 2px solid transparent
+      transition: border-color 100ms ease
+      &:hover,
+      &:active
+        border-color: #808080
+
+.repo-gh
+  width: 28px
+  height: 28px
+  flex: 0 0 28px
+  margin: 0 1.2em
+  overflow: hidden
+  text-indent: 999%
+  white-space: nowrap
+  a
+    @extend %icon-github-circle
+    display: block
+    height: 100%
+    background:
+      size: 100%
+      repeat: no-repeat
+
+.repo-navigation
+  margin: 1.9em 0 1.2em
+  @media #{$medium-up}
+    display: flex
+    flex-flow: row-reverse wrap
+    justify-content: space-between
+    border-bottom: 2px #f1f1f1 solid
+
+
+$dropdown-button-height: 30px
+$dropdown-button-margin: -9px
+
+.settings-button
+  display: block
+  height: $dropdown-button-height
+  padding: 0 0.7em 0 2.3em
+  background:
+    color: white
+    repeat: no-repeat
+    size: auto 14px
+    position: 11px 7px
+  border: 1px solid #f1f1f1
+  color: $grey-light
+  border-radius: 2px
+  text-align: center
+  line-height: 2
+  font-size: 14px
+  @extend %icon-line-cog
+  &:after
+    content: ""
+    display: inline-block
+    width: 0.9em
+    height: 0.6em
+    margin-left: 1em
+    background:
+      size: 100%
+      repeat: no-repeat
+    @extend %icon-line-dropdown
+  &:hover,
+  &:active,
+  // .display &,
+  .settings-menu:hover &
+    color: $teal
+    border-color: $teal
+    @extend %icon-line-cog-teal
+    &:after
+      @extend %icon-line-dropdown-teal
+  @media #{$medium-up}
+    margin-top: $dropdown-button-margin
+
+.settings-dropdown
+  display: none
+  position: absolute
+  top: $dropdown-button-height + ($dropdown-button-margin * .8)
+  width: 100%
+  padding: 0
+  margin: 6px 0 0
+  list-style: none
+  z-index: 60
+  background-color: white
+  border: 1px solid $teal
+  a
+    display: block
+    padding: .4em 1em .5em 2.4em
+    font-size: 14px
+    color: $teal
+    &:hover
+      color: white
+      background-color: $teal
+  @media #{$medium-up}
+    margin-top: -3px
+
+.settings-menu
+  position: relative
+  @media #{$small-only}
+    &.display
+      .settings-dropdown
+        display: block
+  @media #{$medium-up}
+    &:hover
+      .settings-dropdown
+        display: block
+

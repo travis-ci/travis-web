@@ -2,7 +2,7 @@
 
 ShowMoreButtonComponent = Ember.Component.extend
   tagName: 'button'
-  classNames: ['button button--grey button--showmore']
+  classNames: ['showmore-button']
   classNameBindings: ['isLoading', 'showMore']
   showMore: true
   attributeBindings: ['disabled']

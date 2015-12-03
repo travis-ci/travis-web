@@ -1,6 +1,3 @@
-/*
- * Dashboard Activation Dropdown
- */
 
 $dropdown-border: #C3D9DB
 
@@ -35,10 +32,6 @@ $dropdown-border: #C3D9DB
     border-left: solid 2px $dropdown-border;
     transform: rotate(45deg);
 
-
-/*
- * Dashboard Organizations Dropdown
- */
 .filter
   position: relative
   img
@@ -84,51 +77,4 @@ $dropdown-border: #C3D9DB
       font-weight: 600
 
   &.is-open
-    display: block
-
-
-
-.dropdown
-  position: relative
-.dropdown--classic
-  width: 10.7rem
-
-.dropdown-button
-  height: 28px
-  background-color: $grey-lighter
-  border: none
-  color: $white
-  line-height: 1
-  font-size: $font-size-normal
-  &:hover,
-  &:focus
-    background-color: #8b9595
-  .icon-cog-light
-    position: relative
-    top: 0.15em
-    left: -0.2em
-  .icon-arrow-down
-    border-top-color: $white
-
-  @media #{$medium-up}
-    float: right
-
-.dropdown-menu
-  @include resetul
-  @extend %border-bottom-4px
-  position: absolute
-  top: 29px // height of the button +1
-  width: 100%
-  z-index: 70
-  overflow: hidden
-  background-color: $grey-lighter
-  display: none
-  a
-    @extend %inline-block
-    width: 100%
-    padding: .4em 2em
-    color: $white
-    &:hover
-      background-color: darken($grey-lighter, 10)
-  &.display
     display: block

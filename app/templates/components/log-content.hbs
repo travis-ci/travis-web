@@ -6,10 +6,10 @@
     {{#if job.isLegacyInfrastructure}}
       {{#if job.isFinished}}
         <p class="notice"><span class="icon-flag"></span>
-        This job ran on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a></p>
+        <span class="label-align">This job ran on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a>.</span></p>
       {{else}}
         <p class="notice"><span class="icon-flag"></span>
-        This job is running on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a></p>
+        <span class="label-align">This job is running on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a>.</span></p>
       {{/if}}
     {{/if}}
 
@@ -31,15 +31,15 @@
   <div class="{{if job.notStarted 'hidden'}}">
     <menu class="log-header">
       {{#if canRemoveLog}}
-        <a href="#" class="button button--grey open-popup" {{action "removeLogPopup"}}><span class="icon icon--removeLog"></span> Remove Log</a>
+        <a class="remove-log-button open-popup" {{action "removeLogPopup"}}>Remove log</a>
       {{/if}}
-      <a class="button button--grey" href={{plainTextLogUrl}}><span class="icon icon--downloadLog"></span> Download Log</a>
+      <a class="download-log-button" href={{plainTextLogUrl}}>Download log</a>
     </menu>
     <div class="log-body">
       {{#if showTailing}}
         <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
           <span class="tail-status"></span>
-          <span class="tail-label button button--grey"><span class="icon icon--down"></span>
+          <span class="tail-label">
             {{#if job.isFinished}}
               Scroll to End of Log
             {{else}}

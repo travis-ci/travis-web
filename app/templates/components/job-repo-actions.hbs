@@ -2,8 +2,8 @@
   {{#if cancelling}}
     {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action "cancel"}} class="button-circle" title="Cancel Job">
-      <span class="icon icon--cancel"></span>
+    <a href="#" {{action "cancel"}} class="button-circle-cancel" title="Cancel job">
+      Cancel Job
     </a>
   {{/if}}
 {{/if}}
@@ -12,8 +12,8 @@
   {{#if restarting}}
     {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action "restart"}} class="button-circle" title="Restart Job">
-      <span class="icon icon--trigger"></span>
+    <a href="#" {{action "restart"}} class="button-circle-trigger" title="Restart job">
+      Restart Job
     </a>
   {{/if}}
 {{/if}}

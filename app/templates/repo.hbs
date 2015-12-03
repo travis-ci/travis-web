@@ -1,44 +1,42 @@
-<div id="repo" class="{{view.className}} repo">
 
-  {{#if view.isEmpty}}
-    {{repos-empty}}
-  {{else}}
+{{#if view.isEmpty}}
+  {{repos-empty}}
+{{else}}
 
-    {{#if repo.isLoaded}}
-      <article id="repo-header" class="repo-header passed">
-        <header>
-          <h1 class="repo-header-title">{{#link-to "owner" repo.owner}}{{repo.owner}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
-          <div class="repo-header-icons">
-            <a href={{controller.urlGithub}}><span class="icon icon--github-circle"></span></a>
-            <a href="#" id="status-image-popup" name="status-images" class="open-popup" {{action "statusImages" target=view}}>
-              <img src={{view.statusImageUrl}} title="Build Status Images"/>
-            </a>
-          </div>
-          <p class="description">{{description}}</p>
-        </header>
-        <div class="repo-menus">
-          <div class="repo-menu-header">
-            {{repo-show-tools repo=repo build=build job=job tab=tab currentUser=auth.currentUser}}
+  {{#if repo.isLoaded}}
+    <article class="repo-header">
+      <header>
+        <h1 class="repo-title">{{#link-to "owner" repo.owner}}{{repo.owner}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
+        <div class="repo-gh">
+          <a href="{{controller.urlGithub}}" title="{{repo.name}} on Github">{{repo.name}} on Github</a>
+        </div>
+        <div class="repo-badge">
+          <a href="#" id="status-image-popup" title="build status image" name="status-images" class="open-popup" {{action "statusImages" target=view}}>
+            <img src={{view.statusImageUrl}} alt="Build Status Images"/>
+          </a>
+        </div>
+      </header>
+      <main class="repo-main">
+        <div class="repo-navigation">
+          {{repo-show-tools repo=repo build=build job=job tab=tab currentUser=auth.currentUser}}
 
-            {{repo-show-tabs repo=repo tab=tab build=build job=job}}
-          </div>
-          <div class="tabbody repo-main">
-            {{#if repo.active}}
+          {{repo-show-tabs repo=repo tab=tab build=build job=job}}
+        </div>
+        <div class="tabbody repo-body">
+          {{#if repo.active}}
+            {{outlet}}
+          {{else}}
+            {{#if repo.lastBuildId}}
               {{outlet}}
             {{else}}
-              {{#if repo.lastBuildId}}
-                {{outlet}}
-              {{else}}
-                {{not-active user=currentUser repo=repo}}
-              {{/if}}
+              {{not-active user=currentUser repo=repo}}
             {{/if}}
-          </div>
+          {{/if}}
         </div>
-      </article>
+      </main>
+    </article>
 
-    {{else}}
-      {{loading-indicator}}
-    {{/if}}
-
+  {{else}}
+    {{loading-indicator}}
   {{/if}}
-</div>
+{{/if}}

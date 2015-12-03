@@ -1,18 +1,16 @@
-<div class="dropdown dropdown--classic" id="tools">
-  <a href="#" {{action "menu"}} class="menu-popup-button dropdown-button btn" type=""><span class="icon icon-cog-light"></span> Settings <span class="icon icon-arrow-down"></span></a>
-  <ul class="dropdown-menu menu">
-    {{#if displaySettingsLink}}
-      <li>
-        {{#link-to "settings" repo}}Settings{{/link-to}}
-      </li>
-    {{/if}}
+<a {{action "menu"}} class="settings-button" type="" title="Open settings menu">Settings</a>
+<ul class="settings-dropdown">
+  {{#if displaySettingsLink}}
     <li>
-      {{#link-to "requests" repo}}Requests{{/link-to}}
+      {{#link-to "settings" repo}}Settings{{/link-to}}
     </li>
-    {{#if displayCachesLink}}
-      <li>
-        {{#link-to "caches" repo}}Caches{{/link-to}}
-      </li>
-    {{/if}}
-  </ul>
-</div>
+  {{/if}}
+  <li>
+    {{#link-to "requests" repo}}Requests{{/link-to}}
+  </li>
+  {{#if displayCachesLink}}
+    <li>
+      {{#link-to "caches" repo}}Caches{{/link-to}}
+    </li>
+  {{/if}}
+</ul>

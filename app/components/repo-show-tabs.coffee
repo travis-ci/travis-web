@@ -1,6 +1,11 @@
 `import Ember from 'ember'`
 
 RepoShowTabsComponent = Ember.Component.extend
+
+  tagName: 'nav'
+  classNames: ['tabnav']
+  ariaRole: 'tablist'
+
   # hrm. how to parametrize bind-attr?
   classCurrent: (->
     'active' if @get('tab') == 'current'

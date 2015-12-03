@@ -1,50 +1,39 @@
 {{#link-to "job" repo job}}
-  <div class="tile-status tile-status--job">
-    {{#if isAnimating}}
-      <span class="icon-receiving"><i></i><i></i><i></i></span>
-    {{else}}
-      <span class="icon icon--job {{job.state}}"></span>
+  <div class="job-state {{job.state}}">
+    {{status-icon status=job.state}}
+  </div>
+
+  <div class="job-number {{job.state}}">
+    <span class="icon-hash" aria-hidden="true"></span>
+    <span class="label-align">{{job.number}}</span>
+  </div>
+
+  <div class="job-os {{job.config.os}} tooltip">
+    {{#if job.config.os}}
+      <span class="icon tooltip-trigger">{{job.config.os}}</span>
+      <div class="tooltip-bubble" aria-hidden="true">{{job.config.os}}</div>
     {{/if}}
   </div>
 
-  <p class="job-id jobs-item build-status">
-    <span class="icon icon--hash-dark"></span>
-    {{job.number}}
-  </p>
+  <div class="job-lang">
+    <span class="icon-lang"></span>
+    <span class="label-align">{{#if languages}}{{languages}}{{else}}no language set{{/if}}</span>
+  </div>
 
-  <p class="job-os jobs-item build-os {{job.config.os}}">
-    <span class="icon {{job.config.os}}"></span>
-  </p>
+{{#if environment}}
+  <div class="job-env">
+    <span class="icon-env"></span>
+    <span class="label-align">{{environment}}</span>
+  </div>
+{{else}}
+  <div class="job-env is-empty">
+    <span class="icon-env"></span>
+    <span class="label-align">no environment variables set</span>
+  </div>
+{{/if}}
 
-  {{#if languages}}
-    <p class="job-lang jobs-item build-lang">
-      <span class="icon icon--lang"></span>
-      {{languages}}
-    </p>
-  {{else}}
-    <p class="job-lang jobs-item build-lang is-empty">
-      <span class="icon icon--lang"></span>
-      no language set
-    </p>
-  {{/if}}
-
-  <div class="job-anchor jobs-item">
-    {{#if environment}}
-      <p class="job-env jobs-item build-env">
-        <span class="icon icon--env"></span>
-        {{environment}}
-      </p>
-    {{else}}
-      <p class="job-env jobs-item build-env is-empty">
-        <span class="icon icon--env"></span>
-        no environment variables set
-      </p>
-    {{/if}}
-
-    <p class="job-duration jobs-item" title="Started {{pretty-date job.startedAt}}">
-      <span class="icon icon--clock-dark"></span>
-      {{format-duration job.duration}}
-    </p>
-
+  <div class="job-duration" title="Started {{pretty-date job.startedAt}}">
+    <span class="icon-clock"></span>
+    <span class="label-align">{{format-duration job.duration}}</span>
   </div>
 {{/link-to}}

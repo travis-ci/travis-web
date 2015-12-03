@@ -40,45 +40,41 @@
 %inline-block
   display: inline-block
 
-%helptext
-  font-size: $font-size-m
-  color: $grey-medium
-  a
-    color: $grey-dark
-    text-decoration: none
-    &:hover
-      text-decoration: underline
-
 %section-title
   font-size: $font-size-sm
   color: $grey-medium
   font-weight: 400
 
 
-// @todo simplyfiy coloring mixins
+=linkStyle
+  a
+    text-decoration: none
+    border-bottom: 1px solid #bfc0c1
+    padding-bottom: 0.1em
+    transition: color 200ms ease, border 200ms ease
+    &:hover,
+    &:active
+      color: #303030
+      text-decoration: none
+      border-color: transparent
 
-@mixin colorStatusIcons($color, $status)
+%helptext
+  font-size: $font-size-m
+  color: $grey-medium
+  +linkStyle
+
+.helptext
+  @extend %helptext
+
+// @todo simplyfiy coloring mixins
+=colorStatusIcons($color, $status)
   .status-icon.#{$status}
-    svg g > *
+    svg *
       fill: $color
 
-@mixin colorTiles($color, $status, $extra-bg: $color)
+=statusColors($color, $status, $width, $color2: $color, $building:false)
   &.#{$status}
-    border-color: $extra-bg
-    .tile-status
-      background-color: $color
-    .repo-header-title a,
-    .repo-build-status a,
-    .build-status a,
-    .tile-header,
-    .tile-header a,
-    .tile-title a
-      color: $color
-    @include colorStatusIcons($color, $status)
-
-@mixin statusColors($color, $status, $color2: $color)
-  &.#{$status}
-    background: linear-gradient(to right, $color2 0%, $color2 9px, white 9px, white 100%) no-repeat
+    background: linear-gradient(to right, $color2 0%, $color2 $width, white $width, white 100%) no-repeat
     .row-name,
     .row-request a,
     .row-color a
@@ -97,3 +93,32 @@
     .build-status
       color: $color
     @include colorStatusIcons($color, $status)
+    @include colorLinks($color, $status, $building)
+
+=colorBg($color, $status, $width, $color2: white)
+  &.#{$status}
+    background: linear-gradient(to right, $color 0%, $color $width, $color2 $width, $color2 100%) no-repeat
+
+=colorLinks($color, $status, $building: false)
+  @if $building
+    .#{$status},
+    .#{$status} a,
+      color: #beab04
+  @else
+    .#{$status},
+    .#{$status} a,
+      color: $color
+
+=colorRows($color, $status, $width, $is-building: false)
+  @include colorBg($color, $status, $width)
+  @include colorLinks($color, $status, $is-building)
+  @include colorStatusIcons($color, $status)
+
+=colorJobs($color, $status, $width, $hover, $is-building: false)
+  &.#{$status}
+    @include colorLinks($color, $status, $is-building)
+    @include colorStatusIcons($color, $status)
+    &:hover,
+    &:active
+      @include colorBg($color, $status, $width, $hover)
+
