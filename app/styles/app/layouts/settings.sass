@@ -88,12 +88,6 @@
   @extend %settings-name-section
   width: 100%
   margin-bottom: 1em
-  .icon-key
-    @extend %icon
-    @extend .icon-key
-    width: 1.2em
-    height: 1.3em
-
   @media #{$medium-up}
     width: 32%
     margin-bottom: 0
@@ -110,16 +104,11 @@
   display: inline-block
   vertical-align: middle
   overflow: hidden
+  color: #8e8f8e
 
 .ssh-key-value
   @extend %settings-value-section
   word-break: break-all
-  .icon-fingerprint
-    @extend %icon
-    @extend .icon-fingerprint
-    width: 1.3em
-    height: 1.3em
-    margin-right: .5em
   @media #{$medium-up}
     width: grid-calc(6, 12)
     word-break: normal
@@ -188,7 +177,7 @@
     @extend .icon-delete-disabled
     display: block
     width: 1.1em
-    height: 1.3em
+    height: 1.4em
     margin: .2em auto 0
 
 
