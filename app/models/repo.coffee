@@ -148,7 +148,9 @@ Repo.reopenClass
       result.pushObjects(promise.get('content').toArray())
       result.set('isLoaded', true)
 
-    result
+      result
+
+    promise
 
   withLastBuild: (store) ->
     repos = store.filter('repo', {}, (build) ->
