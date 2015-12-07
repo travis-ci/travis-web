@@ -143,7 +143,7 @@ ajax = Em.Object.create
           options.success.call(options.context, data, xhr.status, xhr)
         else
           reject(xhr)
-          options.error.call(data, xhr.status, xhr)
+          options.error.call(options.context, data, xhr.status, xhr)
 
     data = options.data
     if typeof(options.data) == "object" && (Ember.isNone(options.contentType) || options.contentType.match /application\/json/)
