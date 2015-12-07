@@ -1,5 +1,4 @@
 `import Model from 'travis/models/model'`
-`import Ajax from 'travis/utils/ajax'`
 `import Job from 'travis/models/job'`
 `import Ember from 'ember'`
 `import config from 'travis/config/environment'`
