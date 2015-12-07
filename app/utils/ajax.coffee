@@ -65,7 +65,7 @@ ajax = Em.Object.create
       success.apply(this, arguments)
 
     error = options.error || (->)
-    options.error = (data, status, xhr) =>
+    options.error = (xhr, status, data) =>
       Travis.lookup('controller:flash').pushObject(data.flash) if data?.flash
       delete data.flash if data?
       console.log "[ERROR] API responded with an error (#{status}): #{JSON.stringify(data)}"
