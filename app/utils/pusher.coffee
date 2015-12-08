@@ -89,12 +89,15 @@ if ENV.pro
     names = Object.keys(channels.channels)
 
     channels.callbacks.push (auths) ->
-      _callback(false, auth: auths[name])
+      auth = auths[name]
+      auth = auth.replace(/^key:/, config.key)
+      _callback(false, auth: auth)
 
     unless channels.fetching
       channels.fetching = true
       Ajax.post Pusher.channel_auth_endpoint, { socket_id: socketId, channels: names }, (data) ->
         channels.fetching = false
+        debugger
         callback(data.channels) for callback in channels.callbacks
 
 
