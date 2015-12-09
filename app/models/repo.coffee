@@ -140,17 +140,20 @@ Repo.reopenClass
 
     promise
 
-  search: (store, query) ->
-    promise = store.query('repo', search: query, orderBy: 'name')
+  search: (store, ajax, query) ->
+    queryString = $.param(search: query, orderBy: 'name', limit: 5)
+    promise = ajax.ajax("/repos?#{queryString}", 'get')
     result = Ember.ArrayProxy.create(content: [])
 
-    promise.then ->
-      result.pushObjects(promise.get('content').toArray())
-      result.set('isLoaded', true)
+    promise.then (data, status, xhr) ->
+      promises = data.repos.map (repoData) ->
+        store.findRecord('repo', repoData.id).then (record) ->
+          result.pushObject(record)
+          result.set('isLoaded', true)
+          record
 
-      result
-
-    promise
+      Ember.RSVP.allSettled(promises).then ->
+        result
 
   withLastBuild: (store) ->
     repos = store.filter('repo', {}, (build) ->

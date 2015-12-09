@@ -14,6 +14,6 @@ Route = TravisRoute.extend
 
   setupController: (controller)->
     # TODO: this is redundant with repositories and recent routes
-    @container.lookup('controller:repos').activate('owned')
+    #@container.lookup('controller:repos').activate('owned')
 
 `export default Route`

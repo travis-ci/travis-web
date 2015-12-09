@@ -11,6 +11,7 @@ Route = TravisRoute.extend
     @render 'repo', into: 'main'
 
   setupController: (controller, model) ->
+    @container.lookup('controller:repos').activate('owned')
     # TODO: if repo is just a data hash with id and slug load it
     #       as incomplete record
     model = @get('store').find('repo', model.id) if model && !model.get

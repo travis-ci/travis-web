@@ -50,6 +50,8 @@ var sortCallback = function(repo1, repo2) {
 
 
 var Controller = Ember.Controller.extend({
+  ajax: Ember.inject.service(),
+
   actions: {
     activate: function(name) {
       return this.activate(name);
@@ -174,7 +176,7 @@ var Controller = Ember.Controller.extend({
   viewSearch(phrase) {
     this.set('search', phrase);
     this.set('isLoaded', false);
-    Repo.search(this.store, phrase).then( (reposRecordArray) => {
+    Repo.search(this.store, this.get('ajax'), phrase).then( (reposRecordArray) => {
       this.set('isLoaded', true);
       this.set('_repos', reposRecordArray);
     });
