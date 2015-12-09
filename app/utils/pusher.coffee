@@ -2,6 +2,7 @@
 
 TravisPusher = (config, ajaxService) ->
   @init(config, ajaxService)
+  TravisPusher.ajaxService = ajaxService
   this
 
 TravisPusher.prototype.active_channels = []
@@ -96,7 +97,6 @@ if ENV.pro
       TravisPusher.ajaxService.post Pusher.channel_auth_endpoint, { socket_id: socketId, channels: names }, (data) ->
         channels.fetching = false
         callback(data.channels) for callback in channels.callbacks
-
 
   Pusher.getDefaultStrategy = (config) ->
     [

@@ -5,7 +5,7 @@ initialize = (data) ->
   application = data.application
 
   if config.pusher.key
-    application.pusher = new TravisPusher(config.pusher)
+    application.pusher = new TravisPusher(config.pusher, data.container.lookup('service:ajax'))
 
     application.register 'pusher:main', application.pusher, { instantiate: false }
 
