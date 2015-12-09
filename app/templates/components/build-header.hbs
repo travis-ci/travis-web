@@ -19,15 +19,19 @@
     <ul class="list-icon">
       <li>
         <a class="commit-commit" title="See the commit on GitHub" href={{urlGithubCommit}}>
-          Commit {{format-sha commit.sha}}</a>
+          <span class="icon-github" aria-hidden="true"></span>
+          <span class="label-align">Commit {{format-sha commit.sha}}</span></a>
       </li>
       <li>
         {{#if item.pullRequest}}
-          <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</a>
+          <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
+            <span class="icon-github" aria-hidden="true"></span>
+            <span class="label-align">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
         {{else}}
           {{#if item.commit.compareUrl}}
             <a class="commit-compare" title="See the diff on GitHub" href={{item.commit.compareUrl}}>
-            Compare {{short-compare-shas item.commit.compareUrl}}</a>
+              <span class="icon-github" aria-hidden="true"></span>
+              <span class="label-align">Compare {{short-compare-shas item.commit.compareUrl}}</span></a>
           {{/if}}
         {{/if}}
       </li>
@@ -56,13 +60,19 @@
     {{/if}}
   </h3>
   <ul class="list-icon">
-    <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">Elapsed time {{format-duration elapsedTime}}</li>
+    <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
+      <span class="icon-stopwatch" aria-hidden="true"></span>
+      <span class="label-align">Elapsed time {{format-duration elapsedTime}}</span></li>
     {{#unless isJob}}
       {{#if item.isMatrix}}
-        <li title="{{format-duration item.duration}}" class="commit-clock">{{#if item.isFinished}}Total time{{else}}Running{{/if}} for {{format-duration item.duration}}</li>
+        <li title="{{format-duration item.duration}}" class="commit-clock">
+          <span class="icon-clock" aria-hidden="true"></span>
+          <span class="label-align">{{#if item.isFinished}}Total time{{else}}Running{{/if}} for {{format-duration item.duration}}</span></li>
       {{/if}}
     {{/unless}}
-    <li title="{{pretty-date item.finishedAt}}" class="commit-calendar">{{format-time item.finishedAt}}</li>
+    <li title="{{pretty-date item.finishedAt}}" class="commit-calendar">
+      <span class="icon-calendar" aria-hidden="true"></span>
+      <span class="label-align">{{format-time item.finishedAt}}</span></li>
   </ul>
 </div>
 <div class="build-tools">
