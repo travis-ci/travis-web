@@ -5,6 +5,10 @@
 
 Ember.MODEL_FACTORY_INJECTIONS = true
 
+Ember.LinkView.reopen(
+  attributeBindings: ['alt']
+);
+
 App = Ember.Application.extend(Ember.Evented,
   LOG_TRANSITIONS: true
   LOG_TRANSITIONS_INTERNAL: true
