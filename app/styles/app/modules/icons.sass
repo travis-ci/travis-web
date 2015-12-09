@@ -1,5 +1,6 @@
 %icon
   display: inline-block
+  vertical-align: middle
   background:
     size: 100%
     repeat: no-repeat
@@ -53,19 +54,19 @@
 .icon-key
   @extend %icon
   @extend %icon-line-key
-  width: 1.2em
-  height: 1.3em
+  width: 20px
+  height: 20px
   background-position: 0 6px
-  margin-right: .3em
+  margin-right: .1em
 
 %icon-line-fingerprint
   background-image: inline-image('line-icons/icon-fingerprint.svg')
 .icon-fingerprint
   @extend %icon
   @extend %icon-line-fingerprint
-  width: 1.3em
-  height: 1.3em
-  margin-right: .3em
+  width: 20px
+  height: 20px
+  margin-right: .1em
 
 %icon-line-calendar
   background-image: inline-image('line-icons/icon-cal.svg')
@@ -73,16 +74,36 @@
 .icon-cal,
 .icon-calendar
   @extend %icon
-  @extend %icon-line-fingre
+  @extend %icon-line-calendar
+  width: 20px
+  height: 18px
+  margin-right: .1em
+  background:
+    size: auto 20px
+    position: -1px 0
 
 %icon-line-clock
   background-image: inline-image('line-icons/icon-clock.svg')
-.icon-line-clock
+.icon-clock
   @extend %icon
   @extend %icon-line-clock
+  width: 20px
+  height: 20px
+  margin-right: .1em
+  background:
+    size: auto 21px
+    position: -2px 0
 
 %icon-line-stopwatch
   background-image: inline-image('line-icons/icon-stopwatch.svg')
+.icon-stopwatch
+  @extend %icon
+  @extend %icon-line-stopwatch
+  width: 20px
+  height: 18px
+  margin-right: .1em
+  background-size: auto 18px
+  background-position: 1px 0
 
 .icon-line-build
   @extend %icon
@@ -93,7 +114,6 @@
 .icon-line-commit
   @extend %icon
   @extend %icon-line-commit
-
 
 %icon-line-eye
   background-image:inline-image('line-icons/icon-view.svg')
