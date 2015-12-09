@@ -11,19 +11,22 @@ Route = TravisRoute.extend
     @controllerFor('repo').activate('index')
     @controllerFor('repos').activate(@get('reposTabName'))
 
-    @currentRepoDidChange()
-    if repos = @controllerFor('repos').get('repos')
-      repos.addObserver('firstObject', this, 'currentRepoDidChange')
+    @setCurrentRepoObservers()
 
   deactivate: ->
-    if repos = @controllerFor('repos').get('repos')
-      repos.removeObserver('firstObject', this, 'currentRepoDidChange')
+    if repos = @controllerFor('repos')
+      repos.removeObserver('repos.firstObject', this, 'currentRepoDidChange')
 
     @_super.apply(this, arguments)
 
   currentRepoDidChange: ->
     if repo = @controllerFor('repos').get('repos.firstObject')
       @controllerFor('repo').set('repo', repo)
+
+  setCurrentRepoObservers: ->
+    @currentRepoDidChange()
+    if repos = @controllerFor('repos')
+      repos.addObserver('repos.firstObject', this, 'currentRepoDidChange')
 
   actions:
     redirectToGettingStarted: ->

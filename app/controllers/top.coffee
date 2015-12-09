@@ -1,12 +1,11 @@
 `import Ember from 'ember'`
-`import Ajax from 'travis/utils/ajax'`
 `import config from 'travis/config/environment'`
 
 Controller = Ember.Controller.extend
-  needs: ['currentUser']
-  userBinding: 'controllers.currentUser.model'
+  userBinding: 'auth.currentUser'
 
   store: Ember.inject.service()
+  storage: Ember.inject.service()
   currentUserBinding: 'auth.currentUser'
 
   userName: (->
@@ -18,6 +17,8 @@ Controller = Ember.Controller.extend
   ).property('user.gravatarId')
 
   defineTowerColor: (broadcastArray) ->
+    return '' unless broadcastArray
+
     if broadcastArray.length
       if broadcastArray.findBy('category', 'warning')
         return 'warning'
@@ -39,7 +40,7 @@ Controller = Ember.Controller.extend
       options.type = 'GET'
       options.headers = { Authorization: "token #{@auth.token()}" }
 
-      seenBroadcasts = Travis.storage.getItem('travis.seen_broadcasts')
+      seenBroadcasts = @get('storage').getItem('travis.seen_broadcasts')
       if seenBroadcasts
         seenBroadcasts = JSON.parse(seenBroadcasts)
       else
@@ -73,13 +74,13 @@ Controller = Ember.Controller.extend
 
     markBroadcastAsSeen: (broadcast) ->
       id = broadcast.get('id').toString()
-      seenBroadcasts = Travis.storage.getItem('travis.seen_broadcasts')
+      seenBroadcasts = @get('storage').getItem('travis.seen_broadcasts')
       if seenBroadcasts
-        seenBroadcasts = JSON.parse(seenBroadcasts) 
+        seenBroadcasts = JSON.parse(seenBroadcasts)
       else
         seenBroadcasts = []
       seenBroadcasts.push(id)
-      Travis.storage.setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts))
+      @get('storage').setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts))
       @get('broadcasts.content').removeObject(broadcast)
       @set('broadcasts.lastBroadcastStatus', @defineTowerColor(@get('broadcasts.content')))
       return false

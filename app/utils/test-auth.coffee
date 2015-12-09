@@ -14,7 +14,12 @@ Auth = Ember.Object.extend
   signInForTests: (user) ->
     @set('state', 'signed-in')
     if user.constructor.typeKey? != 'user'
-      @store.pushPayload(users: [user])
+      @store.push(
+        data:
+          type: 'user',
+          id: user.id
+          attributes: user
+      )
       user = @store.recordForId('user', user.id)
 
     @set('currentUser', user)

@@ -1,13 +1,14 @@
 `import ENV from 'travis/config/environment'`
-`import Ajax from 'travis/utils/ajax'`
 
-TravisPusher = (config) ->
-  @init(config)
+TravisPusher = (config, ajaxService) ->
+  @init(config, ajaxService)
+  TravisPusher.ajaxService = ajaxService
   this
 
 TravisPusher.prototype.active_channels = []
 
-TravisPusher.prototype.init = (config) ->
+TravisPusher.prototype.init = (config, ajaxService) ->
+  this.ajaxService = ajaxService
   Pusher.warn = @warn.bind(this)
   Pusher.host = config.host if config.host
   @pusher = new Pusher(config.key, encrypted: config.encrypted, disableStats: true)
@@ -44,7 +45,7 @@ TravisPusher.prototype.receive = (event, data) ->
   # TODO remove job:requeued, once sf-restart-event has been merged
   # TODO this also needs to clear logs on build:created if matrix jobs are already loaded
   if event == 'job:created' || event == 'job:requeued'
-    if job = @store.getById('job', data.job.id)
+    if job = @store.peekRecord('job', data.job.id)
       job.clearLog()
 
   Ember.run.next =>
@@ -93,10 +94,9 @@ if ENV.pro
 
     unless channels.fetching
       channels.fetching = true
-      Ajax.post Pusher.channel_auth_endpoint, { socket_id: socketId, channels: names }, (data) ->
+      TravisPusher.ajaxService.post Pusher.channel_auth_endpoint, { socket_id: socketId, channels: names }, (data) ->
         channels.fetching = false
         callback(data.channels) for callback in channels.callbacks
-
 
   Pusher.getDefaultStrategy = (config) ->
     [

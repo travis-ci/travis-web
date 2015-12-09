@@ -1,16 +1,11 @@
-`import Auth from 'travis/utils/auth'`
 `import TestAuth from 'travis/utils/test-auth'`
 
 initialize = (container, app) ->
-  app.register 'auth:main', if Ember.testing then TestAuth else Auth
-
-  app.inject('route', 'auth', 'auth:main')
-  app.inject('controller', 'auth', 'auth:main')
-  app.inject('application', 'auth', 'auth:main')
-  app.inject('component', 'auth', 'auth:main')
-  app.inject('service:flashes', 'auth', 'auth:main')
-
-  app.inject('auth', 'store', 'service:store')
+  app.inject('route', 'auth', 'service:auth')
+  app.inject('controller', 'auth', 'service:auth')
+  app.inject('application', 'auth', 'service:auth')
+  app.inject('component', 'auth', 'service:auth')
+  app.inject('service:flashes', 'auth', 'service:auth')
 
 AuthInitializer =
   name: 'auth'

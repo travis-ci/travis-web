@@ -1,10 +1,8 @@
 `import Ember from 'ember'`
-`import Ajax from 'travis/utils/ajax'`
 `import config from 'travis/config/environment'`
 
 NoBuildsComponent = Ember.Component.extend
-
-  actions: 
+  actions:
     triggerBuild: () ->
       @set('isLoading', true)
       apiEndpoint = config.apiEndpoint

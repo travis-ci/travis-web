@@ -2,8 +2,7 @@
 
 Controller = Ember.Controller.extend
   allHooks: []
-  needs: ['currentUser']
-  userBinding: 'controllers.currentUser.model'
+  userBinding: 'auth.currentUser'
 
   init: ->
     @_super.apply this, arguments
@@ -22,7 +21,7 @@ Controller = Ember.Controller.extend
 
   reloadHooks: ->
     if login = @get('model.login')
-      hooks = @store.find('hook', all: true, owner_name: login)
+      hooks = @store.query('hook', all: true, owner_name: login)
 
       hooks.then () ->
         hooks.set('isLoaded', true)

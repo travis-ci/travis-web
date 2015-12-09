@@ -1,8 +1,9 @@
 `import TravisRoute from 'travis/routes/basic'`
-`import Ajax from 'travis/utils/ajax'`
 `import config from 'travis/config/environment'`
 
 Route = TravisRoute.extend
+  ajax: Ember.inject.service()
+
   needsAuth: true
   setupController: (controller, model) ->
     @_super.apply(this, arguments)
@@ -27,7 +28,7 @@ Route = TravisRoute.extend
 
   fetchSshKey: () ->
     repo = @modelFor('repo')
-    Ajax.get "/repos/#{repo.get('id')}/key", (data) =>
+    @get('ajax').get "/repos/#{repo.get('id')}/key", (data) =>
       Ember.Object.create(fingerprint: data.fingerprint)
 
   fetchRepositoryActiveFlag: ->

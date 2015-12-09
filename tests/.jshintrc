@@ -45,7 +45,8 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "jQuery"
+    "jQuery",
+    "Visibility"
   ],
   "node": false,
   "browser": false,

@@ -1,40 +1,28 @@
 `import ExpandableRecordArray from 'travis/utils/expandable-record-array'`
 `import Model from 'travis/models/model'`
-`import Ajax from 'travis/utils/ajax'`
 # TODO: Investigate for some weird reason if I use durationFrom here not durationFromHelper,
 #       the function stops being visible inside computed properties.
 `import { durationFrom as durationFromHelper } from 'travis/utils/helpers'`
 `import Build from 'travis/models/build'`
 
 Repo = Model.extend
+  ajax: Ember.inject.service()
+
   slug:                DS.attr()
   description:         DS.attr()
   private:             DS.attr('boolean')
-  lastBuildNumber:     DS.attr('number')
-  lastBuildState:      DS.attr()
-  lastBuildStartedAt:  DS.attr()
-  lastBuildFinishedAt: DS.attr()
   githubLanguage:      DS.attr()
-  _lastBuildDuration:  DS.attr('number')
-  lastBuildLanguage:   DS.attr()
   active:              DS.attr()
-  lastBuildId:         DS.attr('number')
-  lastBuildHash: (->
-    {
-      id: @get('lastBuildId')
-      number: @get('lastBuildNumber')
-      repo: this
-    }
-  ).property('lastBuildId', 'lastBuildNumber')
 
-  lastBuild: (->
-    if id = @get('lastBuildId')
-      @store.find('build', id)
-      @store.recordForId('build', id)
-  ).property('lastBuildId')
+  #lastBuild:     DS.belongsTo('build')
+  defaultBranch: DS.belongsTo('branch', async: false)
+
+  # just for sorting
+  lastBuildFinishedAt: Ember.computed.oneWay('defaultBranch.lastBuild.finishedAt')
+  lastBuildId: Ember.computed.oneWay('defaultBranch.lastBuild.id')
 
   withLastBuild: ->
-    @filter( (repo) -> repo.get('lastBuildId') )
+    @filter( (repo) -> repo.get('defaultBranch.lastBuild') )
 
   sshKey: (->
     @store.find('ssh_key', @get('id'))
@@ -51,7 +39,7 @@ Repo = Model.extend
   builds: (->
     id = @get('id')
     builds = @store.filter('build', event_type: ['push', 'api'], repository_id: id, (b) ->
-      b.get('repo.id') == id && (b.get('eventType') == 'push' || b.get('eventType') == 'api')
+      b.get('repositoryId')+'' == id+'' && (b.get('eventType') == 'push' || b.get('eventType') == 'api')
     )
 
     # TODO: move to controller
@@ -68,7 +56,7 @@ Repo = Model.extend
   pullRequests: (->
     id = @get('id')
     builds = @store.filter('build', event_type: 'pull_request', repository_id: id, (b) ->
-      b.get('repo.id') == id && b.get('eventType') == 'pull_request'
+      b.get('repositoryId')+'' == id+'' && b.get('eventType') == 'pull_request'
     )
 
     # TODO: move to controller
@@ -85,7 +73,7 @@ Repo = Model.extend
   ).property()
 
   branches: (->
-    builds = @store.find 'build', repository_id: @get('id'), branches: true
+    builds = @store.query 'build', repository_id: @get('id'), branches: true
 
     builds.then ->
       builds.set 'isLoaded', true
@@ -101,27 +89,13 @@ Repo = Model.extend
     (@get('slug') || '').split('/')[1]
   ).property('slug')
 
-  lastBuildDuration: (->
-    duration = @get('_lastBuildDuration')
-    duration = durationFromHelper(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
-    duration
-  ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
-
   sortOrderForLandingPage: (->
-    state = @get('lastBuildState')
+    state = @get('defaultBranch.lastBuild.state')
     if state != 'passed' && state != 'failed'
       0
     else
-      parseInt(@get('lastBuildId'))
-  ).property('lastBuildId', 'lastBuildState')
-
-  sortOrder: (->
-    # cuz sortAscending seems buggy when set to false
-    if lastBuildFinishedAt = @get('lastBuildFinishedAt')
-      - new Date(lastBuildFinishedAt).getTime()
-    else
-      - new Date('9999').getTime() - parseInt(@get('lastBuildId'))
-  ).property('lastBuildFinishedAt', 'lastBuildId')
+      parseInt(@get('defaultBranch.lastBuild.id'))
+  ).property('defaultBranch.lastBuild.id', 'defaultBranch.lastBuild.state')
 
   stats: (->
     if @get('slug')
@@ -132,43 +106,58 @@ Repo = Model.extend
   ).property('slug')
 
   updateTimes: ->
-    @notifyPropertyChange 'lastBuildDuration'
+    if lastBuild = @get('defaultBranch.lastBuild')
+      lastBuild.updateTimes()
 
   regenerateKey: (options) ->
-    Ajax.ajax '/repos/' + @get('id') + '/key', 'post', options
+    @get('ajax').ajax '/repos/' + @get('id') + '/key', 'post', options
 
   fetchSettings: ->
-    Ajax.ajax('/repos/' + @get('id') + '/settings', 'get', forceAuth: true).then (data) ->
+    @get('ajax').ajax('/repos/' + @get('id') + '/settings', 'get', forceAuth: true).then (data) ->
       data['settings']
 
   saveSettings: (settings) ->
-    Ajax.ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
+    @get('ajax').ajax('/repos/' + @get('id') + '/settings', 'patch', data: { settings: settings })
 
 Repo.reopenClass
   recent: ->
     @find()
 
-  accessibleBy: (store, login) ->
-    repos = store.find('repo', { member: login, orderBy: 'name' })
+  accessibleBy: (store, reposIds) ->
+    # this fires only for authenticated users and with API v3 that means getting
+    # only repos of currently logged in owner, but in the future it would be
+    # nice to not use that as it may change in the future
+    repos = store.filter('repo', (repo) ->
+      reposIds.indexOf(parseInt(repo.get('id'))) != -1
+    )
 
-    repos.then () ->
-      repos.set('isLoaded', true)
+    promise = new Ember.RSVP.Promise (resolve, reject) ->
+      store.query('repo', { 'repository.active': 'true' }).then( ->
+        resolve(repos)
+      , ->
+        reject()
+      )
 
-    repos
+    promise
 
-  search: (store, query) ->
-    promise = store.find('repo', search: query, orderBy: 'name')
+  search: (store, ajax, query) ->
+    queryString = $.param(search: query, orderBy: 'name', limit: 5)
+    promise = ajax.ajax("/repos?#{queryString}", 'get')
     result = Ember.ArrayProxy.create(content: [])
 
-    promise.then ->
-      result.pushObjects(promise.get('content').toArray())
-      result.set('isLoaded', true)
+    promise.then (data, status, xhr) ->
+      promises = data.repos.map (repoData) ->
+        store.findRecord('repo', repoData.id).then (record) ->
+          result.pushObject(record)
+          result.set('isLoaded', true)
+          record
 
-    result
+      Ember.RSVP.allSettled(promises).then ->
+        result
 
   withLastBuild: (store) ->
     repos = store.filter('repo', {}, (build) ->
-      build.get('lastBuildId')
+      build.get('defaultBranch.lastBuild')
     )
 
     repos.then () ->
@@ -176,20 +165,24 @@ Repo.reopenClass
 
     repos
 
-  bySlug: (store, slug) ->
-    # first check if there is a repo with a given slug already ordered
-    repos = store.all('repo').filterBy('slug', slug)
-    if repos.get('length') > 0
-      repos
-    else
-      store.find('repo', { slug: slug })
-
   fetchBySlug: (store, slug) ->
-    repos = @bySlug(store, slug)
+    repos = store.peekAll('repo').filterBy('slug', slug)
     if repos.get('length') > 0
       repos.get('firstObject')
     else
-      repos.then (repos) ->
+      adapter = store.adapterFor('repo')
+      modelClass = store.modelFor('repo')
+      adapter.findRecord(store, modelClass, slug).then (payload) ->
+        serializer = store.serializerFor('repo')
+        modelClass = store.modelFor('repo')
+        result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord')
+
+        repo = store.push(data: result.data)
+        for record in result.included
+          r = store.push(data: record)
+
+        repo
+      , ->
         error = new Error('repo not found')
         error.slug = slug
         Ember.get(repos, 'firstObject') || throw(error)

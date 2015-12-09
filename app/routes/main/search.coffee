@@ -10,8 +10,7 @@ Route = MainTabRoute.extend
     @controllerFor('repo').activate('index')
     @controllerFor('repos').activate('search', searchPhrase)
 
-    @currentRepoDidChange()
-    @controllerFor('repos').addObserver('firstObject', this, 'currentRepoDidChange')
+    @setCurrentRepoObservers()
 
   model: (params) ->
     params.phrase.replace(/%2F/g, '/')

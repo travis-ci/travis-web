@@ -1,8 +1,9 @@
 `import Ember from 'ember'`
 `import TravisRoute from 'travis/routes/basic'`
-`import Ajax from 'travis/utils/ajax'`
 
 Route = TravisRoute.extend
+  ajax: Ember.inject.service()
+
   needsAuth: true
   setupController: (controller) ->
     @_super.apply this, arguments
@@ -10,7 +11,7 @@ Route = TravisRoute.extend
 
   model: ->
     repo = @modelFor('repo')
-    Ajax.get("/repos/#{repo.get('id')}/caches").then( (data) ->
+    @get('ajax').get("/repos/#{repo.get('id')}/caches").then( (data) ->
       caches = {}
 
       data["caches"].forEach (cacheData) ->

@@ -6,4 +6,7 @@ Serializer = ApplicationSerializer.extend
     repo: { key: 'repository_id' }
   }
 
+  serialize: (snapshot, options) ->
+    return { env_var: this._super(snapshot, options) }
+
 `export default Serializer`

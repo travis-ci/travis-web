@@ -1,7 +1,9 @@
 `import TravisRoute from 'travis/routes/basic'`
 `import Repo from 'travis/models/repo'`
+`import Ember from 'ember'`
 
 Route = TravisRoute.extend
+  store: Ember.inject.service()
   titleToken: (model) ->
     model.get('slug')
 
@@ -9,9 +11,10 @@ Route = TravisRoute.extend
     @render 'repo', into: 'main'
 
   setupController: (controller, model) ->
+    @container.lookup('controller:repos').activate('owned')
     # TODO: if repo is just a data hash with id and slug load it
     #       as incomplete record
-    model = @store.find('repo', model.id) if model && !model.get
+    model = @get('store').find('repo', model.id) if model && !model.get
     controller.set('repo', model)
 
   serialize: (repo) ->
@@ -21,7 +24,7 @@ Route = TravisRoute.extend
 
   model: (params) ->
     slug = "#{params.owner}/#{params.name}"
-    Repo.fetchBySlug(@store, slug)
+    Repo.fetchBySlug(@get('store'), slug)
 
   resetController: ->
     @controllerFor('repo').deactivate()

@@ -1,5 +1,4 @@
 `import Model from 'travis/models/model'`
-`import Ajax from 'travis/utils/ajax'`
 `import Job from 'travis/models/job'`
 `import Ember from 'ember'`
 `import config from 'travis/config/environment'`
@@ -9,7 +8,7 @@ Request = Ember.Object.extend
     accept: 'application/json; chunked=true; version=2, text/plain; version=2'
 
   run: ->
-    Ajax.ajax "/jobs/#{@id}/log?cors_hax=true", 'GET',
+    @get('ajax').ajax "/jobs/#{@id}/log?cors_hax=true", 'GET',
       dataType: 'text'
       headers: @HEADERS
       success: (body, status, xhr) => Ember.run(this, -> @handle(body, status, xhr))
@@ -50,7 +49,7 @@ Log = Ember.Object.extend
     data['part_numbers'] = partNumbers if partNumbers
     data['after'] = after if after
 
-    Ajax.ajax "/jobs/#{@get('job.id')}/log", 'GET',
+    @get('ajax').ajax "/jobs/#{@get('job.id')}/log", 'GET',
       dataType: 'json'
       headers:
         accept: 'application/json; chunked=true; version=2'
@@ -81,7 +80,8 @@ Log = Ember.Object.extend
           @set('removed', true)
         @loadParts(json['log']['parts'])
       text: (text) => @loadText(text)
-    Request.create(id: id, handlers: handlers, log: this).run() if id = @get('job.id')
+    if id = @get('job.id')
+      Request.create(id: id, handlers: handlers, log: this, ajax: @get('ajax')).run()
 
   clear: ->
     @clearParts()

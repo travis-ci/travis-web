@@ -18,16 +18,18 @@ Route = TravisRoute.extend
     @controllerFor('job').set('job', model)
     repo.activate('job')
 
-    if build = model.get('build')
-      build = @store.recordForId('build', build.get('id'))
-      buildController = @controllerFor('build')
+    buildController = @controllerFor('build')
 
-      # this is a hack to not set favicon changes from build
-      # controller while we're viewing job, this should go away
-      # after refactoring of controllers
-      buildController.set('sendFaviconStateChanges', false)
+    model.get('repo')
+    if buildPromise = model.get('build')
+      buildPromise.then (build) =>
+        build = @store.recordForId('build', build.get('id'))
+        buildController.set('build', build)
 
-      buildController.set('build', build)
+    # this is a hack to not set favicon changes from build
+    # controller while we're viewing job, this should go away
+    # after refactoring of controllers
+    buildController.set('sendFaviconStateChanges', false)
 
   model: (params) ->
     @store.find('job', params.job_id)

@@ -7,6 +7,6 @@ Route = TravisRoute.extend
     @controllerFor('repo').activate('requests')
 
   model: ->
-    @store.find 'request', repository_id: @modelFor('repo').get('id')
+    @store.query 'request', repository_id: @modelFor('repo').get('id')
 
 `export default Route`

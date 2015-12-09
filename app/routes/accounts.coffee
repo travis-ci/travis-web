@@ -2,7 +2,7 @@
 
 Route = TravisRoute.extend
   model: ->
-    @store.find('account', { all: true })
+    @store.query('account', { all: true })
 
   setupController: (controller, model) ->
     user = model.filterBy('type', 'user')[0]

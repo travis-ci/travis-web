@@ -2,13 +2,13 @@
 `import { githubCommit } from 'travis/utils/urls'`
 
 Controller = Ember.Controller.extend
-  needs: ['repo', 'currentUser']
+  repoController: Ember.inject.controller('repo')
 
-  repoBinding: 'controllers.repo.repo'
+  repoBinding: 'repoController.repo'
   commitBinding: 'job.commit'
   annotationsBinding: 'job.annotations'
-  currentUserBinding: 'controllers.currentUser.model'
-  tabBinding: 'controllers.repo.tab'
+  currentUserBinding: 'auth.currentUser'
+  tabBinding: 'repoController.tab'
 
   currentItemBinding: 'job'
 

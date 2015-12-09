@@ -1,26 +1,28 @@
 `import { durationFrom, configKeys, compact } from 'travis/utils/helpers'`
-`import Ajax from 'travis/utils/ajax'`
 `import configKeysMap from 'travis/utils/keys-map'`
 `import Ember from 'ember'`
 `import Model from 'travis/models/model'`
 `import DurationCalculations from 'travis/utils/duration-calculations'`
 
 Build = Model.extend DurationCalculations,
+  ajax: Ember.inject.service()
+
   state:             DS.attr()
   number:            DS.attr('number')
-  branch:            DS.attr('string')
   message:           DS.attr('string')
   _duration:         DS.attr('number')
   _config:           DS.attr('object')
   _startedAt:        DS.attr()
-  _finishedAt:       DS.attr()
+  _finishedAt:       DS.attr('string')
   pullRequest:       DS.attr('boolean')
   pullRequestTitle:  DS.attr()
   pullRequestNumber: DS.attr('number')
   eventType:         DS.attr('string')
+  repositoryId:      DS.attr('number')
 
+  branch: DS.belongsTo('branch', async: false, inverse: 'builds')
   repo:   DS.belongsTo('repo', async: true)
-  commit: DS.belongsTo('commit', async: true)
+  commit: DS.belongsTo('commit', async: false)
   jobs:   DS.hasMany('job', async: true)
 
   config: (->
@@ -90,11 +92,11 @@ Build = Model.extend DurationCalculations,
   canRestart: Ember.computed.alias('isFinished')
 
   cancel: (->
-    Ajax.post "/builds/#{@get('id')}/cancel"
+    @get('ajax').post "/builds/#{@get('id')}/cancel"
   )
 
   restart: ->
-    Ajax.post "/builds/#{@get('id')}/restart"
+    @get('ajax').post "/builds/#{@get('id')}/restart"
 
   formattedFinishedAt: (->
     if finishedAt = @get('finishedAt')
