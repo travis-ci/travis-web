@@ -26,7 +26,6 @@
     "ember-cli-autoprefixer": "^0.3.0",
     "ember-cli-babel": "5.1.5",
     "ember-cli-coffeescript": "1.13.1",
-    "ember-cli-content-security-policy": "0.4.0",
     "ember-cli-dependency-checker": "^1.1.0",
     "ember-cli-document-title": "0.2.0",
     "ember-cli-htmlbars": "1.0.1",
