@@ -60,6 +60,7 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
 
 export default Ember.Component.extend({
   popup: Ember.inject.service(),
+  logIsVisible: false,
   currentUserBinding: 'auth.currentUser',
 
   didInsertElement() {
@@ -220,6 +221,10 @@ export default Ember.Component.extend({
         this.get('popup').open('remove-log-popup');
         return false;
       }
+    },
+
+    toggleLog() {
+      this.toggleProperty('ligIsVisible');
     }
   },
 

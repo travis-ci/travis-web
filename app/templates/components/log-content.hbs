@@ -1,5 +1,7 @@
 {{remove-log-popup job=job}}
 
+
+
 <section id="log-container" class="log">
 
   {{#if auth.signedIn}}
@@ -28,13 +30,16 @@
     <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
   {{/if}}
 
-  <div class="{{if job.notStarted 'hidden'}}">
-    <menu class="log-header">
+  <a class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}><span class="icon-view--white" aria-hidden='true'></span>View log</a>
+
+  <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
+    <div class="log-header">
+      <a class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}><span class="icon-view" aria-hidden='true'></span>Hide log</a>
       {{#if canRemoveLog}}
         <a class="remove-log-button open-popup" {{action "removeLogPopup"}}>Remove log</a>
       {{/if}}
-      <a class="download-log-button" href={{plainTextLogUrl}}>Download log</a>
-    </menu>
+      <a class="download-log-button" href={{plainTextLogUrl}}>Raw log</a>
+    </div>
     <div class="log-body">
       {{#if showTailing}}
         <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>

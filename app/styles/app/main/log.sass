@@ -41,18 +41,18 @@
     .tail-status
       position: relative
       display: inline-block
-      height: 20px;
-      width: 20px;
+      height: 20px
+      width: 20px
       vertical-align: middle
       background-color: $grey-light
-      border-radius: 50%;
+      border-radius: 50%
       &:after
         content: ""
         display: block
-        height: 10px;
-        width: 10px;
-        background: #f1f1f1;
-        border-radius: 50%;
+        height: 10px
+        width: 10px
+        background: #f1f1f1
+        border-radius: 50%
         @extend %absolute-center
 
     &.active .tail-status
@@ -81,13 +81,41 @@
   a
     margin-left: .4em
 
+.log-main
+  display: none
+  &.is-visible
+    display: block
+  @media #{$medium-up}
+    display: block
+
+[class^="toggle-log-button"]
+  @media #{$medium-up}
+    display: none !important
+
+.toggle-log-button
+  border: 1px solid $grey
+  padding: .5em 1em
+  border-radius: 2px
+  display: block
+  text-align: center
+  &.hidden
+    display: none
+  &:hover,
+  &:active
+    background: $grey
+    color: white
+
+.toggle-log-button--dark
+  @extend %log-button
+  @extend %icon-line-eye
+  background-size: auto 21px;
+  background-position: 6px 2px;
+  &:hover,
+  &:active
+    background-color: #999a98
+
 .log-body
   position: relative
-  max-height: 20vh
-  overflow: scroll
-  @media #{$medium-up}
-    max-height: none
-    overflow: auto
 
   pre
     clear: left
