@@ -11,7 +11,7 @@ Serializer = V2FallbackSerializer.extend
 
   keyForV2Relationship: (key, typeClass, method) ->
     if key == 'repo'
-      'repository'
+      'repository_id'
     else
       @_super.apply(this, arguments)
 
