@@ -15,12 +15,6 @@ Serializer = V2FallbackSerializer.extend
     else
       @_super.apply(this, arguments)
 
-  keyForV2Relationship: (key, typeClass, method) ->
-    if key == 'repo'
-      'repository_id'
-    else
-      @_super.apply(this, arguments)
-
   normalize: (modelClass, resourceHash) ->
     if resourceHash.commit
       resourceHash.commit['type'] = 'commit'
