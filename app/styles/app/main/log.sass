@@ -78,8 +78,13 @@
   text-align: right
   background-color: $log-header-bg
   @extend %border-top-4px
+  
+  @media #{$small-only}
+    display: flex
   a
     margin-left: .4em
+    @media #{$small-only}
+      flex-grow: 1
 
 .log-main
   display: none
@@ -89,27 +94,48 @@
     display: block
 
 [class^="toggle-log-button"]
+  .icon-eye
+    vertical-align: middle
+    display: inline-block
   @media #{$medium-up}
     display: none !important
 
 .toggle-log-button
-  border: 1px solid $grey
-  padding: .5em 1em
+  border: 1px solid #f1f1f1
+  padding: .3em 1em
   border-radius: 2px
   display: block
+  color: #8d8d8d
   text-align: center
+  .icon-eye
+    height: 1.8em
+    path
+      fill: #949899
+    circle
+      stroke: #949899
+      fill: #fff
   &.hidden
     display: none
   &:hover,
   &:active
-    background: $grey
-    color: white
+    border-color: $teal
+    color: $teal
+    .icon-eye
+      path
+        fill: $teal
+      circle
+        stroke: $teal
+        fill: transparent
 
 .toggle-log-button--dark
   @extend %log-button
-  @extend %icon-line-eye
-  background-size: auto 21px;
-  background-position: 6px 2px;
+  .icon-eye
+    margin-right: .3em
+    path
+      fill: #f1f1f1
+    circle
+      stroke: #f1f1f1
+      fill: #f1f1f1
   &:hover,
   &:active
     background-color: #999a98

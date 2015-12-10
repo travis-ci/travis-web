@@ -176,23 +176,20 @@ $button-border-color: #d4d4d4
 %log-button
   display: inline-block
   height: 28px
-  padding: 0 0.8em 0 2.3em
+  padding: 0 0.8em
   border: 1px solid #f1f1f1
   color: #f1f1f1
   border-radius: 2px
   text-align: center
-  line-height: 1.9
+  line-height: 1.8
   font-size: 14px
   font-weight: 300
-  background:
-    repeat: no-repeat
-    size: auto 14px
-    position: 7px 6px
+  [class^="icon"]
+    margin-right: .3em
 
 // log buttons
 .remove-log-button
   @extend %log-button
-  @extend %icon-remove-log
   &:hover,
   &:active
     background-color: #d94341
@@ -202,7 +199,6 @@ $button-border-color: #d4d4d4
 
 .download-log-button
   @extend %log-button
-  @extend %icon-download-log
   &:hover,
   &:active
     background-color: #999a98

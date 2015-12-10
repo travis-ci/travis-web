@@ -30,15 +30,19 @@
     <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
   {{/if}}
 
-  <a class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}><span class="icon-view--white" aria-hidden='true'></span>View log</a>
+  <a class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
+    {{eye-icon}}
+    <span class="label-align">View log</span></a>
 
   <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
     <div class="log-header">
-      <a class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}><span class="icon-view" aria-hidden='true'></span>Hide log</a>
+      <a class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>{{eye-icon}}<span class="label-align">Hide log</span></a>
       {{#if canRemoveLog}}
-        <a class="remove-log-button open-popup" {{action "removeLogPopup"}}>Remove log</a>
+        <a class="remove-log-button open-popup" {{action "removeLogPopup"}} title="Remove the log">
+          <span class="icon-remove-log" aria-hidden="true"></span><span class="label-align">Remove log</span></a>
       {{/if}}
-      <a class="download-log-button" href={{plainTextLogUrl}}>Raw log</a>
+      <a class="download-log-button" href={{plainTextLogUrl}} title="Display the log in plaintext">
+        <span class="icon-download-log" aria-hiden="true"></span><span class="label-align">Raw log</span></a>
     </div>
     <div class="log-body">
       {{#if showTailing}}
