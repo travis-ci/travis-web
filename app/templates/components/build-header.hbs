@@ -6,15 +6,15 @@
       {{item.pullRequestTitle}}
     {{else}}
       <small class="commit-branch" title={{item.branch.name}}>{{item.branch.name}}</small>
-      {{format-message item.commit.subject repo=item.repo}}
+      {{format-message commit.subject repo=item.repo}}
     {{/if}}
   </h2>
   <div class="commit-info">
     <p class="commit-description">
       {{#if item.pullRequest}}
-        {{format-message item.commit.subject repo=item.repo}}<br>
+        {{format-message commit.subject repo=item.repo}}<br>
       {{/if}}
-      <span class="monospace">{{format-message item.commit.body repo=item.repo pre=true}}</span>
+      <span class="monospace">{{format-message commit.body repo=item.repo pre=true}}</span>
     </p>
     <ul class="list-icon">
       <li>
@@ -34,11 +34,11 @@
     </ul>
     <p class="commit-author">
       {{#if commit.authorName}}
-        <img src={{urlAuthorGravatarImage}} alt="comitter avatar" aria-hidden="true"><span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
+        <img src={{authorAvatarUrl}} alt="comitter avatar" aria-hidden="true"><span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
       {{/if}}
       {{#unless commit.authorIsCommitter}}
         {{#if commit.committerName}}
-          <img src={{urlCommitterGravatarImage}} alt="comitter avatar" aria-hidden="true"><span class="label-align">{{commit.committerName}} committed</span>
+          <img src={{committerAvatarUrl}} alt="comitter avatar" aria-hidden="true"><span class="label-align">{{commit.committerName}} committed</span>
         {{/if}}
       {{/unless}}
     </p>
