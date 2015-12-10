@@ -132,7 +132,7 @@ Repo.reopenClass
     )
 
     promise = new Ember.RSVP.Promise (resolve, reject) ->
-      store.query('repo', { 'repository.active': 'true' }).then( ->
+      store.query('repo', { 'repository.active': 'true', limit: 20 }).then( ->
         resolve(repos)
       , ->
         reject()
