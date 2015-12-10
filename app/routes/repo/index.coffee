@@ -1,4 +1,5 @@
 `import TravisRoute from 'travis/routes/basic'`
+`import Config from 'travis/config/environment'`
 
 Route = TravisRoute.extend
   setupController: (controller, model) ->
@@ -6,7 +7,7 @@ Route = TravisRoute.extend
     @controllerFor('repo').activate('current')
 
   renderTemplate: ->
-    if @modelFor('repo').get('defaultBranch.lastBuild')
+    if @modelFor('repo').get('lastBuildId')
       @render 'build'
     else
       @render 'builds/not_found'

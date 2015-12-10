@@ -1,13 +1,11 @@
 import V3Adapter from 'travis/adapters/v3';
+import ApplicationAdapter from 'travis/adapters/application';
+import Config from 'travis/config/environment';
 
-export default V3Adapter.extend({
+let Adapter = Config.useV3API ? V3Adapter : ApplicationAdapter;
+
+export default Adapter.extend({
   defaultSerializer: '-repo',
-
-  buildUrl(modelName, id, snapshot, requestType, query) {
-    var url = this._super(...arguments);
-
-    return url;
-  },
 
   ajaxOptions(url, type, options) {
     var hash = options || {};
@@ -15,10 +13,12 @@ export default V3Adapter.extend({
       hash.data = {};
     }
 
-    if(hash.data.include) {
-      hash.data.include += ',repository.default_branch,branch.last_build,build.commit';
-    } else {
-      hash.data.include = 'repository.default_branch,branch.last_build,build.commit';
+    if(Config.useV3API) {
+      if(hash.data.include) {
+        hash.data.include += ',repository.default_branch,branch.last_build,build.commit';
+      } else {
+        hash.data.include = 'repository.default_branch,branch.last_build,build.commit';
+      }
     }
 
     return this._super(url, type, hash);
