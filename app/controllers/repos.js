@@ -117,7 +117,7 @@ var Controller = Ember.Controller.extend({
 
   queuedJobs: function() {
     var result;
-    result = this.get('store').filter('job', {}, function(job) {
+    result = this.get('store').filter('job', function(job) {
       return ['created'].indexOf(job.get('state')) !== -1;
     });
     result.set('isLoaded', false);
