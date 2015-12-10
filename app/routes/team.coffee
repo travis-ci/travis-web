@@ -64,7 +64,7 @@ Route = TravisRoute.extend
       },
       {
         name: 'Henrik Hodne'
-        title: 'Mac Master Man'
+        title: 'Timezone Experimentalist'
         handle: 'henrikhodne'
         nationality: 'norway'
         country: 'norway'
