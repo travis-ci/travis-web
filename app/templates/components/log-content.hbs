@@ -1,7 +1,5 @@
 {{remove-log-popup job=job}}
 
-
-
 <section id="log-container" class="log">
 
   {{#if auth.signedIn}}
@@ -28,47 +26,47 @@
 
   {{#if job.notStarted}}
     <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
-  {{/if}}
+  {{else}}
+    <a class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
+      {{eye-icon}}
+      <span class="label-align">View log</span></a>
 
-  <a class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
-    {{eye-icon}}
-    <span class="label-align">View log</span></a>
+    <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
+      <div class="log-header">
+        <a class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>{{eye-icon}}Hide log</a>
+        {{#if canRemoveLog}}
+          <a class="remove-log-button open-popup" {{action "removeLogPopup"}} title="Remove the log">
+            <span class="icon-remove-log" aria-hidden="true"></span>Remove log</a>
+        {{/if}}
+        <a class="download-log-button" href={{plainTextLogUrl}} title="Display the log in plaintext">
+          <span class="icon-download-log" aria-hiden="true"></span>Raw log</a>
+      </div>
+      <div class="log-body">
+        {{#if showTailing}}
+          <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
+            <span class="tail-status"></span>
+            <span class="tail-label">
+              {{#if job.isFinished}}
+                Scroll to End of Log
+              {{else}}
+                Follow Log
+              {{/if}}
+            </span>
+          </a>
+        {{/if}}
 
-  <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
-    <div class="log-header">
-      <a class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>{{eye-icon}}<span class="label-align">Hide log</span></a>
-      {{#if canRemoveLog}}
-        <a class="remove-log-button open-popup" {{action "removeLogPopup"}} title="Remove the log">
-          <span class="icon-remove-log" aria-hidden="true"></span><span class="label-align">Remove log</span></a>
-      {{/if}}
-      <a class="download-log-button" href={{plainTextLogUrl}} title="Display the log in plaintext">
-        <span class="icon-download-log" aria-hiden="true"></span><span class="label-align">Raw log</span></a>
+        <pre id="log" class="ansi"></pre>
+
+        {{#if showToTop}}
+          <a href='#' class="to-top" {{action "toTop"}}>Top</a>
+        {{/if}}
+      </div>
     </div>
-    <div class="log-body">
-      {{#if showTailing}}
-        <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
-          <span class="tail-status"></span>
-          <span class="tail-label">
-            {{#if job.isFinished}}
-              Scroll to End of Log
-            {{else}}
-              Follow Log
-            {{/if}}
-          </span>
-        </a>
-      {{/if}}
-
-      <pre id="log" class="ansi"></pre>
-
-      {{#if showToTop}}
-        <a href='#' class="to-top" {{action "toTop"}}>Top</a>
-      {{/if}}
-    </div>
-  </div>
-  {{#if limited}}
-    <p class="warning">
-      This log is too long to be displayed. Please reduce the verbosity of your
-      build or download the <a href={{plainTextLogUrl}}>raw log</a>.
-    </p>
+    {{#if limited}}
+      <p class="warning">
+        This log is too long to be displayed. Please reduce the verbosity of your
+        build or download the <a href={{plainTextLogUrl}}>raw log</a>.
+      </p>
+    {{/if}}
   {{/if}}
 </section>
