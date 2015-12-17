@@ -19,7 +19,6 @@ Adapter = ApplicationAdapter.extend
 
     id = Ember.get(record, 'id')
 
-    this.ajax(this.urlPrefix() + '/ssh_key/' + id, "PATCH", { data: data }).then (data) ->
-      data.ssh_key
+    this.ajax(this.urlPrefix() + '/ssh_key/' + id, "PATCH", { data: data })
 
 `export default Adapter`
