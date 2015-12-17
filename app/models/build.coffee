@@ -18,7 +18,6 @@ Build = Model.extend DurationCalculations,
   pullRequestTitle:  DS.attr()
   pullRequestNumber: DS.attr('number')
   eventType:         DS.attr('string')
-  repositoryId:      DS.attr('number')
 
   branch: DS.belongsTo('branch', async: false, inverse: 'builds')
   repo:   DS.belongsTo('repo', async: true)

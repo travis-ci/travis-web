@@ -2,6 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
+    useV3API: false,
     modulePrefix: 'travis',
     environment: environment,
     baseURL: '/',

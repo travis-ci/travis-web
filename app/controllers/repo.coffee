@@ -4,12 +4,14 @@
 Controller = Ember.Controller.extend
   jobController: Ember.inject.controller('job')
   buildController: Ember.inject.controller('build')
+  buildsController: Ember.inject.controller('builds')
   reposController: Ember.inject.controller('repos')
   currentUserBinding: 'auth.currentUser'
 
   classNames: ['repo']
 
   build: Ember.computed.alias('buildController.build')
+  builds: Ember.computed.alias('buildsController.content')
   job: Ember.computed.alias('jobController.job')
 
   slug: (-> @get('repo.slug') ).property('repo.slug')
@@ -77,15 +79,15 @@ Controller = Ember.Controller.extend
     Ember.run.scheduleOnce('actions', this, @_lastBuildDidChange);
 
   _lastBuildDidChange: ->
-    build = @get('repo.defaultBranch.lastBuild')
+    build = @get('repo.lastBuild')
     @set('build', build)
 
   stopObservingLastBuild: ->
-    @removeObserver('repo.defaultBranch.lastBuild', this, 'lastBuildDidChange')
+    @removeObserver('repo.lastBuild', this, 'lastBuildDidChange')
 
   observeLastBuild: ->
     @lastBuildDidChange()
-    @addObserver('repo.defaultBranch.lastBuild', this, 'lastBuildDidChange')
+    @addObserver('repo.lastBuild', this, 'lastBuildDidChange')
 
   connectTab: (tab) ->
     # TODO: such implementation seems weird now, because we render

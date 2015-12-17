@@ -26,7 +26,7 @@
           {{#if repo.active}}
             {{outlet}}
           {{else}}
-            {{#if repo.defaultBranch.lastBuild.id}}
+            {{#if repo.lastBuildId}}
               {{outlet}}
             {{else}}
               {{not-active user=currentUser repo=repo}}
