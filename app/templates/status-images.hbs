@@ -2,13 +2,13 @@
 <p>
   <label>Branch:</label>
   {{#if view.branches.isLoaded}}
-    {{view Ember.Select contentBinding="view.branches" selectionBinding="view.statusImageBranch" optionLabelPath="content.commit.branch" optionValuePath="content.commit.branch"}}
+    {{view Ember.Select content="view.branches" selection="view.statusImageBranch" optionLabelPath="content.commit.branch" optionValuePath="content.commit.branch"}}
   {{else}}
     {{loading-indicator}}
   {{/if}}
 </p>
 
 <p>
-  <label>{{view Ember.Select contentBinding="view.formats" selectionBinding="view.statusImageFormat"}}</label>
-  {{view 'status-image-input' valueBinding="view.statusString" class="url" rows=3}}
+  <label>{{view Ember.Select content="view.formats" selection="view.statusImageFormat"}}</label>
+  {{view 'status-image-input' value="view.statusString" class="url" rows=3}}
 </p>

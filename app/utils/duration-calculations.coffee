@@ -13,7 +13,7 @@ mixin = Ember.Mixin.create
 
   updateTimes: ->
     unless @get('isFinished')
-      @notifyPropertyChange '_duration'
-      @notifyPropertyChange 'finished_at'
+      @notifyPropertyChange 'duration'
+      @notifyPropertyChange 'finishedAt'
 
 `export default mixin`

@@ -14,7 +14,7 @@ Controller = Ember.Controller.extend GithubUrlPropertievs,
 
   jobsLoaded: (->
     if jobs = @get('build.jobs')
-      jobs.everyBy('config')
+      jobs.isEvery('config')
   ).property('build.jobs.@each.config')
 
   loading: (->

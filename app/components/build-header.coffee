@@ -10,13 +10,21 @@ BuildHeaderComponent = Ember.Component.extend
   classNames: ['build-header']
   classNameBindings: ['item.state']
 
-  urlCommitterGravatarImage: (->
-    gravatarImage(@get('commit.committerEmail'), 40)
-  ).property('commit.committerEmail')
+  committerAvatarUrl: (->
+    if url = @get('commit.committerAvatarUrl')
+      url
+    else
+      email = @get('commit.committerEmail')
+      gravatarImage(email, 40)
+  ).property('commit.committerEmail', 'commit.committerAvatarUrl')
 
-  urlAuthorGravatarImage: (->
-    gravatarImage(@get('commit.authorEmail'), 40)
-  ).property('commit.authorEmail')
+  authorAvatarUrl: (->
+    if url = @get('commit.authorAvatarUrl')
+      url
+    else
+      email = @get('commit.authorEmail')
+      gravatarImage(email, 40)
+  ).property('commit.authorEmail', 'commit.authorAvatarUrl')
 
   isJob: (->
     if @get('item.build') then true else false

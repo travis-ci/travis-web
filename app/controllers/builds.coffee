@@ -52,6 +52,8 @@ Controller = Ember.ArrayController.extend
     options = { repository_id: id, after_number: number }
     if type?
       options.event_type = type.replace(/s$/, '') # poor man's singularize
+      if options.event_type == 'push'
+        options.event_type = ['push', 'api']
 
     @store.query('build', options)
 

@@ -94,14 +94,6 @@ var Serializer = V2FallbackSerializer.extend({
 
     data = result.data;
 
-    if (repoId = resourceHash.repository_id) {
-      data.attributes.repositoryId = repoId;
-    } else if (resourceHash.repository) {
-      if (href = resourceHash.repository['@href']) {
-        id = href.match(/\d+/)[0];
-        data.attributes.repositoryId = id;
-      }
-    }
     return result;
   }
 });

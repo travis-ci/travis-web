@@ -1,0 +1,43 @@
+%avatar
+  position: relative
+  background-color: #a0a0a0
+  border-radius: 50%
+  overflow: hidden
+  &:before
+    content: ""
+    display: block
+    width: 40%
+    height: 40%
+    border-radius: 50%
+    background: $cream-light
+    position: absolute
+    top: 20%
+    margin: auto
+    left: 0
+    right: 0
+
+  &:after
+    content: ""
+    display: block
+    width: 66%
+    height: 70%
+    border-radius: 50%
+    background: $cream-light
+    position: absolute
+    top: 55%
+    margin: auto
+    left: 0
+    right: 0
+
+.default-avatar--profile
+  @extend %avatar
+  width: 2.6rem
+  height: 2.6rem
+
+.default-avatar--topbar
+  @extend %avatar
+  width: 2.7rem
+  height: 2.7rem
+  display: inline-block
+  vertical-align: middle
+  margin-left: 0.3em

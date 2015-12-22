@@ -4,8 +4,54 @@
 #       the function stops being visible inside computed properties.
 `import { durationFrom as durationFromHelper } from 'travis/utils/helpers'`
 `import Build from 'travis/models/build'`
+`import Config from 'travis/config/environment'`
 
-Repo = Model.extend
+Repo = null
+
+if Config.useV3API
+  Repo = Model.extend
+    defaultBranch: DS.belongsTo('branch', async: false)
+
+    lastBuild: Ember.computed.oneWay('defaultBranch.lastBuild')
+
+    lastBuildFinishedAt: Ember.computed.oneWay('lastBuild.finishedAt')
+    lastBuildId: Ember.computed.oneWay('lastBuild.id')
+    lastBuildState: Ember.computed.oneWay('lastBuild.state')
+    lastBuildNumber: Ember.computed.oneWay('lastBuild.number')
+    lastBuildStartedAt: Ember.computed.oneWay('lastBuild.startedAt')
+    lastBuildDuration: Ember.computed.oneWay('lastBuild.duration')
+
+
+else
+  Repo = Model.extend
+    lastBuildNumber:     DS.attr('number')
+    lastBuildState:      DS.attr()
+    lastBuildStartedAt:  DS.attr()
+    lastBuildFinishedAt: DS.attr()
+    _lastBuildDuration:  DS.attr('number')
+    lastBuildLanguage:   DS.attr()
+    lastBuildId:         DS.attr('number')
+    lastBuildHash: (->
+      {
+        id: @get('lastBuildId')
+        number: @get('lastBuildNumber')
+        repo: this
+      }
+    ).property('lastBuildId', 'lastBuildNumber')
+
+    lastBuild: (->
+      if id = @get('lastBuildId')
+        @store.findRecord('build', id)
+        @store.recordForId('build', id)
+    ).property('lastBuildId')
+
+    lastBuildDuration: (->
+      duration = @get('_lastBuildDuration')
+      duration = durationFromHelper(@get('lastBuildStartedAt'), @get('lastBuildFinishedAt')) unless duration
+      duration
+    ).property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
+
+Repo.reopen
   ajax: Ember.inject.service()
 
   slug:                DS.attr()
@@ -14,15 +60,8 @@ Repo = Model.extend
   githubLanguage:      DS.attr()
   active:              DS.attr()
 
-  #lastBuild:     DS.belongsTo('build')
-  defaultBranch: DS.belongsTo('branch', async: false)
-
-  # just for sorting
-  lastBuildFinishedAt: Ember.computed.oneWay('defaultBranch.lastBuild.finishedAt')
-  lastBuildId: Ember.computed.oneWay('defaultBranch.lastBuild.id')
-
   withLastBuild: ->
-    @filter( (repo) -> repo.get('defaultBranch.lastBuild') )
+    @filter( (repo) -> repo.get('lastBuildId') )
 
   sshKey: (->
     @store.find('ssh_key', @get('id'))
@@ -39,7 +78,7 @@ Repo = Model.extend
   builds: (->
     id = @get('id')
     builds = @store.filter('build', event_type: ['push', 'api'], repository_id: id, (b) ->
-      b.get('repositoryId')+'' == id+'' && (b.get('eventType') == 'push' || b.get('eventType') == 'api')
+      b.get('repo.id')+'' == id+'' && (b.get('eventType') == 'push' || b.get('eventType') == 'api')
     )
 
     # TODO: move to controller
@@ -56,7 +95,7 @@ Repo = Model.extend
   pullRequests: (->
     id = @get('id')
     builds = @store.filter('build', event_type: 'pull_request', repository_id: id, (b) ->
-      b.get('repositoryId')+'' == id+'' && b.get('eventType') == 'pull_request'
+      b.get('repo.id')+'' == id+'' && b.get('eventType') == 'pull_request'
     )
 
     # TODO: move to controller
@@ -90,12 +129,12 @@ Repo = Model.extend
   ).property('slug')
 
   sortOrderForLandingPage: (->
-    state = @get('defaultBranch.lastBuild.state')
+    state = @get('lastBuildState')
     if state != 'passed' && state != 'failed'
       0
     else
-      parseInt(@get('defaultBranch.lastBuild.id'))
-  ).property('defaultBranch.lastBuild.id', 'defaultBranch.lastBuild.state')
+      parseInt(@get('lastBuildId'))
+  ).property('lastBuildId', 'lastBuildState')
 
   stats: (->
     if @get('slug')
@@ -106,8 +145,11 @@ Repo = Model.extend
   ).property('slug')
 
   updateTimes: ->
-    if lastBuild = @get('defaultBranch.lastBuild')
-      lastBuild.updateTimes()
+    if Config.useV3API
+      if lastBuild = @get('lastBuild')
+        lastBuild.updateTimes()
+    else
+      @notifyPropertyChange 'lastBuildDuration'
 
   regenerateKey: (options) ->
     @get('ajax').ajax '/repos/' + @get('id') + '/key', 'post', options
@@ -123,41 +165,49 @@ Repo.reopenClass
   recent: ->
     @find()
 
-  accessibleBy: (store, reposIds) ->
-    # this fires only for authenticated users and with API v3 that means getting
-    # only repos of currently logged in owner, but in the future it would be
-    # nice to not use that as it may change in the future
-    repos = store.filter('repo', (repo) ->
-      reposIds.indexOf(parseInt(repo.get('id'))) != -1
-    )
-
-    promise = new Ember.RSVP.Promise (resolve, reject) ->
-      store.query('repo', { 'repository.active': 'true' }).then( ->
-        resolve(repos)
-      , ->
-        reject()
+  accessibleBy: (store, reposIdsOrlogin) ->
+    if Config.useV3API
+      reposIds = reposIdsOrlogin
+      # this fires only for authenticated users and with API v3 that means getting
+      # only repos of currently logged in owner, but in the future it would be
+      # nice to not use that as it may change in the future
+      repos = store.filter('repo', (repo) ->
+        reposIds.indexOf(parseInt(repo.get('id'))) != -1
       )
 
-    promise
+      promise = new Ember.RSVP.Promise (resolve, reject) ->
+        store.query('repo', { 'repository.active': 'true', limit: 20 }).then( ->
+          resolve(repos)
+        , ->
+          reject()
+        )
+
+      promise
+    else
+      login = reposIdsOrlogin
+      store.find('repo', { member: login, orderBy: 'name' })
 
   search: (store, ajax, query) ->
-    queryString = $.param(search: query, orderBy: 'name', limit: 5)
-    promise = ajax.ajax("/repos?#{queryString}", 'get')
-    result = Ember.ArrayProxy.create(content: [])
+    if Config.useV3API
+      queryString = $.param(search: query, orderBy: 'name', limit: 5)
+      promise = ajax.ajax("/repos?#{queryString}", 'get')
+      result = Ember.ArrayProxy.create(content: [])
 
-    promise.then (data, status, xhr) ->
-      promises = data.repos.map (repoData) ->
-        store.findRecord('repo', repoData.id).then (record) ->
-          result.pushObject(record)
-          result.set('isLoaded', true)
-          record
+      promise.then (data, status, xhr) ->
+        promises = data.repos.map (repoData) ->
+          store.findRecord('repo', repoData.id).then (record) ->
+            result.pushObject(record)
+            result.set('isLoaded', true)
+            record
 
-      Ember.RSVP.allSettled(promises).then ->
-        result
+        Ember.RSVP.allSettled(promises).then ->
+          result
+    else
+      store.find('repo', search: query, orderBy: 'name')
 
   withLastBuild: (store) ->
     repos = store.filter('repo', {}, (build) ->
-      build.get('defaultBranch.lastBuild')
+      build.get('lastBuildId')
     )
 
     repos.then () ->
@@ -170,22 +220,31 @@ Repo.reopenClass
     if repos.get('length') > 0
       repos.get('firstObject')
     else
-      adapter = store.adapterFor('repo')
-      modelClass = store.modelFor('repo')
-      adapter.findRecord(store, modelClass, slug).then (payload) ->
-        serializer = store.serializerFor('repo')
+      promise = null
+
+      if Config.useV3API
+        adapter = store.adapterFor('repo')
         modelClass = store.modelFor('repo')
-        result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord')
 
-        repo = store.push(data: result.data)
-        for record in result.included
-          r = store.push(data: record)
+        promise = adapter.findRecord(store, modelClass, slug).then (payload) ->
+          serializer = store.serializerFor('repo')
+          modelClass = store.modelFor('repo')
+          result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord')
 
-        repo
-      , ->
+          repo = store.push(data: result.data)
+          for record in result.included
+            r = store.push(data: record)
+
+          repo
+
+      else
+        promise = store.find('repo', { slug: slug }).then (repos) ->
+          repos.get('firstObject') || throw("no repos found")
+
+      promise.catch ->
         error = new Error('repo not found')
         error.slug = slug
-        Ember.get(repos, 'firstObject') || throw(error)
+        throw(error)
 
   # buildURL: (slug) ->
   #   if slug then slug else 'repos'

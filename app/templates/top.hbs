@@ -1,5 +1,5 @@
 <div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
-  <h1 id="logo" class="logo"><a href="/" alt="Travis CI">Travis CI</a></h1>
+  <h1 id="logo" class="logo">{{#link-to "main" alt="Travis CI"}}Travis CI{{/link-to}}</h1>
 
   <div class="navigation-toggle">
     <button type="button" id="tofuburger" class="tofuburger" {{action 'toggleBurgerMenu'}}>Toggle Menu</button>
@@ -56,7 +56,8 @@
           <button class="signed-out button--signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
-          {{#link-to "profile" class="navigation-anchor signed-in"}}{{userName}}<img src={{gravatarUrl}} />
+          {{#link-to "profile" class="navigation-anchor signed-in"}}{{userName}}
+          {{#if gravatarUrl }}<img src={{gravatarUrl}} />{{else}}<div class="default-avatar--topbar"></div>{{/if}}
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}

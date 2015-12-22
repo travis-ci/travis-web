@@ -6,7 +6,7 @@
     </ul>
   </section>
 
-  {{#if activeBranches}}
+  {{#if activeBranches.length}}
     <section>
       <h2 class="small-title">Active Branches</h2>
       <ul class="blank-list">
@@ -17,7 +17,7 @@
     </section>
   {{/if}}
 
-  {{#if inactiveBranches}}
+  {{#if inactiveBranches.length}}
     <section>
       <h2 class="small-title">Inactive Branches</h2>
       <ul class="blank-list">

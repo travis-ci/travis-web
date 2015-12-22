@@ -30,6 +30,7 @@ module.exports = function(defaults) {
     }
   });
 
+  app.import('vendor/babel-polyfill.js', { prepend: true });
   app.import('bower_components/pusher/dist/pusher.js');
   app.import('bower_components/jquery-timeago/jquery.timeago.js');
   app.import('bower_components/visibilityjs/lib/visibility.core.js');

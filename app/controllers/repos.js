@@ -1,27 +1,28 @@
 import Ember from 'ember';
 import limit from 'travis/utils/computed-limit';
 import Repo from 'travis/models/repo';
+import Config from 'travis/config/environment';
 
 var sortCallback = function(repo1, repo2) {
   // this function could be made simpler, but I think it's clearer this way
   // what're we really trying to achieve
 
-  var lastBuild1 = repo1.get('defaultBranch.lastBuild');
-  var lastBuild2 = repo2.get('defaultBranch.lastBuild');
+  var lastBuildId1 = repo1.get('lastBuildId');
+  var lastBuildId2 = repo2.get('lastBuildId');
 
-  if(!lastBuild1 && !lastBuild2) {
+  if(!lastBuildId1 && !lastBuildId2) {
     // if both repos lack builds, put newer repo first
     return repo1.get('id') > repo2.get('id') ? -1 : 1;
-  } else if(lastBuild1 && !lastBuild2) {
+  } else if(lastBuildId1 && !lastBuildId2) {
     // if only repo1 has a build, it goes first
     return -1;
-  } else if(lastBuild2 && !lastBuild1) {
+  } else if(lastBuildId2 && !lastBuildId1) {
     // if only repo2 has a build, it goes first
     return 1;
   }
 
-  var finishedAt1 = lastBuild1.get('finishedAt');
-  var finishedAt2 = lastBuild2.get('finishedAt');
+  var finishedAt1 = repo1.get('lastBuildFinishedAt');
+  var finishedAt2 = repo2.get('lastBuildFinishedAt');
 
   if(finishedAt1) {
     finishedAt1 = new Date(finishedAt1);
@@ -41,7 +42,7 @@ var sortCallback = function(repo1, repo2) {
     return -1;
   } else {
     // none of the builds finished, put newer build first
-    return lastBuild1.get('id') > lastBuild2.get('id') ? -1 : 1;
+    return lastBuildId1 > lastBuildId2 ? -1 : 1;
   }
 
   throw "should not happen";
@@ -117,7 +118,7 @@ var Controller = Ember.Controller.extend({
 
   queuedJobs: function() {
     var result;
-    result = this.get('store').filter('job', {}, function(job) {
+    result = this.get('store').filter('job', function(job) {
       return ['created'].indexOf(job.get('state')) !== -1;
     });
     result.set('isLoaded', false);
@@ -157,16 +158,22 @@ var Controller = Ember.Controller.extend({
       this.set('isLoaded', false);
 
       if (user = this.get('currentUser')) {
-        user.get('_rawPermissions').then( (data) => {
-          repos = Repo.accessibleBy(this.store, data.pull).then(
-            (reposRecordArray) => {
-              this.set('isLoaded', true);
-              this.set('_repos', reposRecordArray);
-              this.set('ownedRepos', reposRecordArray);
-              this.set('fetchingOwnedRepos', false);
-              return reposRecordArray;
-            });
-        });
+        let callback = (reposRecordArray) => {
+          this.set('isLoaded', true);
+          this.set('_repos', reposRecordArray);
+          this.set('ownedRepos', reposRecordArray);
+          this.set('fetchingOwnedRepos', false);
+          return reposRecordArray;
+        };
+
+        if(Config.useV3API) {
+          user.get('_rawPermissions').then( (data) => {
+            Repo.accessibleBy(this.store, data.pull).then(callback);
+          });
+        } else {
+          let login = user.get('login');
+          Repo.accessibleBy(this.store, login).then(callback);
+        }
       }
     }
   },

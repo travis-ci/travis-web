@@ -1,6 +1,6 @@
 <form {{action "save" on="submit"}}>
   <div class="form-elem">
-    {{input value=name class="env-name" on="key-up" action="nameChanged" placeholder="Name"}}
+    {{input value=name class="env-name" key-up="nameChanged" placeholder="Name"}}
     {{#if nameIsBlank }}
       <p class="form-error-message">Name cannot be blank</p>
     {{/if}}

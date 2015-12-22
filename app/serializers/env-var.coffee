@@ -9,4 +9,8 @@ Serializer = ApplicationSerializer.extend
   serialize: (snapshot, options) ->
     return { env_var: this._super(snapshot, options) }
 
+  normalizeSingleResponse: (store, primaryModelClass, payload, id, requestType) ->
+    payload = payload.env_var;
+    return @_super(store, primaryModelClass, payload, id, requestType)
+
 `export default Serializer`
