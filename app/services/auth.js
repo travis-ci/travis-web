@@ -1,0 +1,232 @@
+import config from 'travis/config/environment';
+
+export default Ember.Service.extend({
+  store: Ember.inject.service(),
+  storage: Ember.inject.service(),
+  sessionStorage: Ember.inject.service(),
+  ajax: Ember.inject.service(),
+  state: "signed-out",
+  receivingEnd: location.protocol + "//" + location.host,
+
+  init: function() {
+    return window.addEventListener('message', () => {
+      return this.receiveMessage(e);
+    });
+  },
+
+  token() {
+    return this.get('sessionStorage').getItem('travis.token');
+  },
+
+  endpoint: function() {
+    return config.apiEndpoint;
+  }.property(),
+
+  signOut: function() {
+    var user;
+    this.get('storage').removeItem('travis.user');
+    this.get('storage').removeItem('travis.token');
+    this.get('sessionStorage').clear();
+    this.set('state', 'signed-out');
+    this.set('user', void 0);
+
+    if (user = this.get('currentUser')) {
+      this.get('store').unloadAll('user');
+    }
+
+    this.set('currentUser', null);
+    this.sendToApp('afterSignOut');
+
+    return Travis.trigger('user:signed_out');
+  },
+
+  signIn(data) {
+    var url;
+    if (data) {
+      return this.autoSignIn(data);
+    } else {
+      this.set('state', 'signing-in');
+      url = (this.get('endpoint')) + "/auth/post_message?origin=" + this.receivingEnd;
+      return $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
+    }
+  },
+
+  autoSignIn(data) {
+    data || (data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage')));
+    if (data) {
+      return this.setData(data);
+    }
+  },
+
+  userDataFrom(storage) {
+    var token, user, userJSON;
+    userJSON = storage.getItem('travis.user');
+    if (userJSON != null) {
+      user = JSON.parse(userJSON);
+    }
+    if (user != null ? user.user : void 0) {
+      user = user.user;
+    }
+    token = storage.getItem('travis.token');
+    if (user && token && this.validateUser(user)) {
+      return {
+        user: user,
+        token: token
+      };
+    } else {
+      storage.removeItem('travis.user');
+      storage.removeItem('travis.token');
+      return null;
+    }
+  },
+
+  validateUser(user) {
+    var fieldsToValidate, isTravisBecome;
+    fieldsToValidate = ['id', 'login', 'token'];
+    isTravisBecome = this.get('sessionStorage').getItem('travis.become');
+    if (!isTravisBecome) {
+      fieldsToValidate.push('correct_scopes');
+    }
+    if (config.pro) {
+      fieldsToValidate.push('channels');
+    }
+    return fieldsToValidate.every((function(_this) {
+      return function(field) {
+        return _this.validateHas(field, user);
+      };
+    })(this)) && (isTravisBecome || user.correct_scopes);
+  },
+
+  validateHas(field, user) {
+    if (user[field]) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  setData(data) {
+    var user;
+    this.storeData(data, this.get('sessionStorage'));
+    if (!this.userDataFrom(this.get('storage'))) {
+      this.storeData(data, this.get('storage'));
+    }
+    user = this.loadUser(data.user);
+    this.set('currentUser', user);
+    this.set('state', 'signed-in');
+    Travis.trigger('user:signed_in', data.user);
+    return this.sendToApp('afterSignIn');
+  },
+
+  refreshUserData(user) {
+    var data;
+    if (!user) {
+      if (data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage'))) {
+        user = data.user;
+      }
+    }
+    if (user) {
+      return this.get('ajax').get("/users/" + user.id).then(() => {
+        var userRecord;
+        if (data.user.correct_scopes) {
+          userRecord = this.loadUser(data.user);
+          userRecord.get('permissions');
+          if (this.get('signedIn')) {
+            data.user.token = user.token;
+            this.storeData(data, this.get('sessionStorage'));
+            this.storeData(data, this.get('storage'));
+            return Travis.trigger('user:refreshed', data.user);
+          }
+        } else {
+          return Ember.RSVP.Promise.reject();
+        }
+      });
+    } else {
+      return Ember.RSVP.Promise.resolve();
+    }
+  },
+
+  signedIn: function() {
+    return this.get('state') === 'signed-in';
+  }.property('state'),
+
+  signedOut: function() {
+    return this.get('state') === 'signed-out';
+  }.property('state'),
+
+  signingIn: function() {
+    return this.get('state') === 'signing-in';
+  }.property('state'),
+
+  storeData(data, storage) {
+    if (data.token) {
+      storage.setItem('travis.token', data.token);
+    }
+    return storage.setItem('travis.user', JSON.stringify(data.user));
+  },
+
+  loadUser(user) {
+    this.get('store').push({
+      data: {
+        type: 'user',
+        id: user.id,
+        attributes: user
+      }
+    });
+    return this.get('store').recordForId('user', user.id);
+  },
+
+  receiveMessage(event) {
+    if (event.origin === this.expectedOrigin()) {
+      if (event.data === 'redirect') {
+        return window.location = (this.get('endpoint')) + "/auth/handshake?redirect_uri=" + location;
+      } else if (event.data.user != null) {
+        if (event.data.travis_token) {
+          event.data.user.token = event.data.travis_token;
+        }
+        return this.setData(event.data);
+      }
+    }
+  },
+
+  expectedOrigin() {
+    var endpoint;
+    endpoint = this.get('endpoint');
+    if (endpoint[0] === '/') {
+      return this.receivingEnd;
+    } else {
+      return endpoint.match(/^https?:\/\/[^\/]*/)[0];
+    }
+  },
+
+  sendToApp(name) {
+    var error, error1, router;
+
+    // TODO: this is an ugly solution, we need to do one of 2 things:
+    //       * find a way to check if we can already send an event to remove try/catch
+    //       * remove afterSignIn and afterSignOut events by replacing them in a more
+    //         straightforward code - we can do what's needed on a routes/controller level
+    //         as a direct response to either manual sign in or autoSignIn (right now
+    //         we treat both cases behave the same in terms of sent events which I think
+    //         makes it more complicated than it should be).
+    router = this.container.lookup('router:main');
+    try {
+      return router.send(name);
+    } catch (error1) {
+      error = error1;
+      if (!(error.message = ~/Can't trigger action/)) {
+        throw error;
+      }
+    }
+  },
+
+  userName: function() {
+    return this.get('currentUser.name') || this.get('currentUser.login');
+  }.property('currentUser.login', 'currentUser.name'),
+
+  gravatarUrl: function() {
+    return location.protocol + "//www.gravatar.com/avatar/" + (this.get('currentUser.gravatarId')) + "?s=48&d=mm";
+  }.property('currentUser.gravatarId'),
+
+  permissions: Ember.computed.alias('currentUser.permissions')
+});

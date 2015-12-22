@@ -9,12 +9,12 @@ Log.DEBUG = false;
 Log.LIMIT = 10000;
 
 Log.Scroll = function(options) {
-  options = options || {};
+  options || (options = {});
   this.beforeScroll = options.beforeScroll;
   return this;
 };
 
-Log.Scroll.prototype = $.extend(new Log.Listener(), {
+Log.Scroll.prototype = $.extend(new Log.Listener, {
   insert: function(log, data, pos) {
     if (this.numbers) {
       this.tryScroll();
@@ -39,7 +39,7 @@ Log.Limit = function(max_lines, limitedLogCallback) {
   return this;
 };
 
-Log.Limit.prototype = Log.extend(new Log.Listener(), {
+Log.Limit.prototype = Log.extend(new Log.Listener, {
   count: 0,
   insert: function(log, node, pos) {
     if (node.type === 'paragraph' && !node.hidden) {
@@ -90,8 +90,8 @@ export default Ember.Component.extend({
       if ((ref = this.lineSelector) != null) {
         ref.willDestroy();
       }
-      if (logElement = this.$('#log')[0]) {
-        logElement.innerHTML = '';
+      if (logElement = this.$('#log')) {
+        return logElement.empty();
       }
     }
   },
@@ -99,8 +99,8 @@ export default Ember.Component.extend({
   createEngine(log) {
     var logElement;
     if (log || (log = this.get('log'))) {
-      if (logElement = this.$('#log')[0]) {
-        logElement.innerHTML = '';
+      if (logElement = this.$('#log')) {
+        logElement.empty();
       }
       log.onClear(() => {
         this.teardownLog();
@@ -212,7 +212,7 @@ export default Ember.Component.extend({
     toggleTailing() {
       Travis.tailing.toggle();
       this.engine.autoCloseFold = !Travis.tailing.isActive();
-      return false;
+      return event.preventDefault();
     },
 
     removeLogPopup() {
