@@ -25,7 +25,7 @@
         color: $grey-light
         text-decoration: underline
     @media #{$medium-up}
-      .profile-header, .sync-button, .ember-view
+      .profile-header, .sync-button
         display: inline-block
         vertical-align: middle
       .sync-button
@@ -128,9 +128,7 @@ p.profile-user-last
 
 .profile-orglist
   @media #{$large-up}
-    padding-right: 10em
-    aside
-      padding: 0
+    padding: 0 3em 0 0
 
 .profile-hooklist
   @include resetul
@@ -138,7 +136,6 @@ p.profile-user-last
   li
     clear: both
     margin-bottom: .8em
-    // overflow: auto
   .profile-hooks
     width: grid-calc(10, 24)
     display: inline-block

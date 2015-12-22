@@ -4,10 +4,6 @@
 
   {{build-header item=build user=auth.currentUser commit=commit repo=repo}}
 
-  {{#unless build.isMatrix}}
-    {{view 'annotations' annotations=build.jobs.firstObject.annotations}}
-  {{/unless}}
-
   {{#if build.isMatrix}}
     {{#if jobsLoaded}}
       {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}

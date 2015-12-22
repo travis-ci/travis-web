@@ -9,7 +9,6 @@ View = Ember.View.extend Polling,
   repoBinding: 'controller.repo'
   jobBinding: 'controller.job'
   commitBinding: 'job.commit'
-  annotationsBinding: 'job.annotations'
 
   currentItemBinding: 'job'
 

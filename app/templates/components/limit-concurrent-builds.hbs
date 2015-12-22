@@ -6,7 +6,7 @@
   </a>
 </div>
 {{#if enabled}}
-  {{input pattern="/^[0-9]+$/" value=value on="key-up" action="limitChanged"}}
+  {{input pattern="/^[0-9]+$/" value=value key-up="limitChanged"}}
 {{/if}}
 {{#if isSaving}}
 {{loading-indicator inline=true}}

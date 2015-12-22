@@ -6,7 +6,6 @@ Controller = Ember.Controller.extend
 
   repoBinding: 'repoController.repo'
   commitBinding: 'job.commit'
-  annotationsBinding: 'job.annotations'
   currentUserBinding: 'auth.currentUser'
   tabBinding: 'repoController.tab'
 

@@ -17,7 +17,7 @@
   </section> --}}
 
   <ul class="dashboard-active">
-    {{#each repo in filteredRepositories}}
+    {{#each filteredRepositories as |repo|}}
       {{dashboard-row repo=repo}}
     {{else}}
       {{no-repos}}
