@@ -23,7 +23,24 @@ var Serializer = V2FallbackSerializer.extend({
     }
 
     return this._super(modelClass, resourceHash);
-  }
+  },
+
+  normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
+    var result;
+    if (payload.commits) {
+      payload.jobs.forEach(function(job) {
+        var commit, commit_id;
+        commit_id = job.commit_id;
+        if (commit = payload.commits.findBy('id', commit_id)) {
+          job.commit = commit;
+          return delete job.commit_id;
+        }
+      });
+    }
+    return this._super.apply(this, arguments);
+  },
+
+
 });
 
 export default Serializer;
