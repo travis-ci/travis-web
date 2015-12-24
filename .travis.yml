@@ -24,7 +24,8 @@ addons:
     packages:
     - google-chrome-stable
 
-sudo: false
+sudo: required
+dist: trusty
 
 cache:
   branch: md5deep
