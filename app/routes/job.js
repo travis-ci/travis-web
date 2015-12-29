@@ -25,7 +25,7 @@ export default TravisRoute.extend({
     buildController = this.controllerFor('build');
     model.get('repo');
     if (buildPromise = model.get('build')) {
-      buildPromise.then(() => {
+      buildPromise.then( (build) => {
         build = this.store.recordForId('build', build.get('id'));
         return buildController.set('build', build);
       });

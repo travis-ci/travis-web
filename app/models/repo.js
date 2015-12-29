@@ -3,6 +3,9 @@ import Model from 'travis/models/model';
 import { durationFrom as durationFromHelper } from 'travis/utils/helpers';
 import Build from 'travis/models/build';
 import Config from 'travis/config/environment';
+import DS from 'ember-data';
+import Ember from 'ember';
+
 var Repo;
 
 if (Config.useV3API) {
@@ -153,7 +156,7 @@ Repo.reopen({
 
   stats: function() {
     if (this.get('slug')) {
-      return this.get('_stats') || $.get("https://api.github.com/repos/" + this.get('slug'), () => {
+      return this.get('_stats') || $.get("https://api.github.com/repos/" + this.get('slug'), (data) => {
         this.set('_stats', data);
         return this.notifyPropertyChange('stats');
       }) && {};

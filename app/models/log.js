@@ -12,7 +12,7 @@ var Request = Ember.Object.extend({
     return this.get('ajax').ajax("/jobs/" + this.id + "/log?cors_hax=true", 'GET', {
       dataType: 'text',
       headers: this.HEADERS,
-      success: () => {
+      success: (body, status, xhr) => {
         return Ember.run(this, function() {
           return this.handle(body, status, xhr);
         });
@@ -51,7 +51,7 @@ var Request = Ember.Object.extend({
   }
 });
 
-var Log = Ember.Object.extend({
+var LogModel = Ember.Object.extend({
   version: 0,
   isLoaded: false,
   length: 0,
@@ -180,4 +180,4 @@ var Log = Ember.Object.extend({
   }
 });
 
-export default Log;
+export default LogModel;

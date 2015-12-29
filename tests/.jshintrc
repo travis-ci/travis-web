@@ -46,7 +46,8 @@
     "currentPath",
     "currentRouteName",
     "jQuery",
-    "Visibility"
+    "Visibility",
+    "Travis"
   ],
   "node": false,
   "browser": false,

@@ -1,5 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
+import Ember from 'ember';
 
 export default TravisRoute.extend({
   ajax: Ember.inject.service(),
@@ -36,7 +37,7 @@ export default TravisRoute.extend({
   fetchSshKey() {
     var repo;
     repo = this.modelFor('repo');
-    return this.get('ajax').get("/repos/" + (repo.get('id')) + "/key", () => {
+    return this.get('ajax').get("/repos/" + (repo.get('id')) + "/key", (data) => {
       return Ember.Object.create({
         fingerprint: data.fingerprint
       });

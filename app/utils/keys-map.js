@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 var configKeys, configKeysMap, languageConfigKeys;
 
 languageConfigKeys = {

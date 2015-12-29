@@ -57,7 +57,7 @@ export default (function() {
 
   LinesSelector.prototype.highlightLines = function(tries) {
     var elements, lines;
-    tries || (tries = 0);
+    tries = tries || 0;
     this.removeAllHighlights();
     if (lines = this.getSelectedLines()) {
       elements = this.element.find('p:visible').slice(lines.first - 1, lines.last);

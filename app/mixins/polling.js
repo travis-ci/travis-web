@@ -51,7 +51,7 @@ export default Ember.Mixin.create({
       if (!Ember.isArray(pollModels)) {
         pollModels = [pollModels];
       }
-      pollModels.forEach(() => {
+      pollModels.forEach( (property) => {
         this.pollModel(property);
         this.addObserver(property, this, 'pollModelDidChange');
         return Ember.addBeforeObserver(this, property, this, 'pollModelWillChange');
@@ -68,7 +68,7 @@ export default Ember.Mixin.create({
       if (!Ember.isArray(pollModels)) {
         pollModels = [pollModels];
       }
-      pollModels.forEach(() => {
+      pollModels.forEach( (property) => {
         this.stopPollingModel(property);
         this.removeObserver(property, this, 'pollModelDidChange');
         return Ember.removeBeforeObserver(this, property, this, 'pollModelWillChange');

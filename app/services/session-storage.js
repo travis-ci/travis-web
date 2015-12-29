@@ -4,7 +4,7 @@ import Storage from 'travis/utils/hash-storage';
 
 export default StorageService.extend({
   init: function() {
-    var err, error, storage;
+    var err, storage;
     storage = null;
     try {
       // firefox will not throw error on access for sessionStorage var,

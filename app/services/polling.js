@@ -61,7 +61,7 @@ export default Ember.Service.extend({
       return model.reload();
     });
 
-    return this.get('sources').forEach( () => {
+    return this.get('sources').forEach( (source) => {
      if (Ember.get(source, 'isDestroyed')) {
        return this.get('sources').removeObject(source);
      } else {

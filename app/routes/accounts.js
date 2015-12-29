@@ -22,13 +22,5 @@ export default TravisRoute.extend({
       outlet: 'left',
       into: 'profile'
     });
-  },
-
-  organizations() {
-    return model.filterBy('type', 'organization');
-  },
-
-  user() {
-    return model.filterBy('type', 'user')[0];
   }
 });

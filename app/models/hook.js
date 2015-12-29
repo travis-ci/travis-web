@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Model from 'travis/models/model';
 import config from 'travis/config/environment';
+import DS from 'ember-data';
 
 export default Model.extend({
   name: DS.attr(),

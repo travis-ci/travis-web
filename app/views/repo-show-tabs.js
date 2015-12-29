@@ -18,7 +18,7 @@ export default Ember.View.extend({
   }.property('tab'),
 
   classBranches: function() {
-    this.get('tab') === 'branches' ? 'active' : null;
+    return this.get('tab') === 'branches' ? 'active' : null;
   }.property('tab'),
 
   classBuild: function() {

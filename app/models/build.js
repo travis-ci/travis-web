@@ -3,6 +3,7 @@ import configKeysMap from 'travis/utils/keys-map';
 import Ember from 'ember';
 import Model from 'travis/models/model';
 import DurationCalculations from 'travis/utils/duration-calculations';
+import DS from 'ember-data';
 
 export default Model.extend(DurationCalculations, {
   ajax: Ember.inject.service(),

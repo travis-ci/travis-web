@@ -24,7 +24,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     this.get('stylesheetsManager').disable('dashboard');
     if (!config.pro) {
       repos = this.get('store').peekAll('repo');
-      repos.forEach(() => {
+      repos.forEach((repo) => {
         return this.subscribeToRepo(repo);
       });
       return repos.addArrayObserver(this, {
@@ -39,7 +39,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   reposDidChange(array, start, removedCount, addedCount) {
     var addedRepos;
     addedRepos = array.slice(start, start + addedCount);
-    return addedRepos.forEach(() => {
+    return addedRepos.forEach((repo) => {
       return this.subscribeToRepo(repo);
     });
   },

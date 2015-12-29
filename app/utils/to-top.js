@@ -12,12 +12,10 @@ export default (function() {
     this.element_selector = element_selector;
     this.container_selector = container_selector;
     this.position = this.window.scrollTop();
-    this.window.scroll((function(_this) {
-      return function() {
-        return Ember.run.throttle(_this, _this.onScroll, [], 200, false);
-      };
-    })(this));
-    this;
+    this.window.scroll(() => {
+      return Ember.run.throttle(this, this.onScroll, [], 200, false);
+    });
+    return this;
   }
 
   ToTop.prototype.element = function() {

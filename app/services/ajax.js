@@ -1,4 +1,4 @@
-import Ember from 'ember';;
+import Ember from 'ember';
 import config from 'travis/config/environment';
 var default_options;
 
@@ -61,8 +61,10 @@ export default Ember.Service.extend({
     options = options || {};
     token = Ember.get(this, 'auth').token();
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
-      options.headers || (options.headers = {});
-      (base = options.headers)['Authorization'] || (base['Authorization'] = "token " + token);
+      options.headers = options.headers || {};
+      if(!options.headers['Authorization']) {
+        options.headers['Authorization'] = "token " + token;
+      }
     }
     options.url = url = "" + endpoint + url;
     options.type = method;
@@ -97,30 +99,7 @@ export default Ember.Service.extend({
     };
 
     options = $.extend(options, default_options);
-    if (typeof testMode !== "undefined" && testMode !== null) {
-      console.log('Running ajax with', options.url);
-      return new Ember.RSVP.Promise(function(resolve, reject) {
-        var oldError, oldSuccess;
-        oldSuccess = options.success;
-        options.success = function(json, status, xhr) {
-          Ember.run(this, function() {
-            return oldSuccess.call(this, json, status, xhr);
-          });
-          return Ember.run(null, resolve, json);
-        };
-        oldError = options.error;
-        options.error = function(jqXHR) {
-          if (jqXHR) {
-            jqXHR.then = null;
-          }
-          return Ember.run(this, function() {
-            oldError.call(this, jqXHR);
-            return reject(jqXHR);
-          });
-        };
-        return $.ajax(options);
-      });
-    }
+
     if (options.data && (method === "GET" || method === "HEAD")) {
       params = jQuery.param(options.data);
       delimeter = url.indexOf('?') === -1 ? '?' : '&';
@@ -158,7 +137,6 @@ export default Ember.Service.extend({
       if (xhr.readyState === 4) {
         contentType = xhr.getResponseHeader('Content-Type');
         data = (function() {
-          var error1;
           if (contentType && contentType.match(/application\/json/)) {
             try {
               return jQuery.parseJSON(xhr.responseText);

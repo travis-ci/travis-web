@@ -1,4 +1,4 @@
-var Controller;
+import Ember from 'ember';
 
 export default Ember.Controller.extend({
   sync() {
@@ -8,6 +8,7 @@ export default Ember.Controller.extend({
   model: Ember.computed.alias('auth.currentUser'),
 
   syncingDidChange: function() {
+    var user;
     if ((user = this.get('model')) && user.get('isSyncing') && !user.get('syncedAt')) {
       return Ember.run.scheduleOnce('routerTransitions', this, function() {
         return this.container.lookup('router:main').send('renderFirstSync');

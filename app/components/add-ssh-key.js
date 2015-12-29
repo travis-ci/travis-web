@@ -1,4 +1,4 @@
-var AddSshKeyComponent;
+import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['form--sshkey'],
@@ -7,17 +7,18 @@ export default Ember.Component.extend({
   isSaving: false,
 
   didInsertElement() {
-    id = this.get('repo.id');
-    model = this.get('store').recordForId('ssh_key', id);
+    var id = this.get('repo.id');
+    var model = this.get('store').recordForId('ssh_key', id);
+
     if (model) {
       this.get('store').dematerializeRecord(model._internalModel);
-      typeMap = this.get('store').typeMapFor(model.constructor);
-      idToRecord = typeMap.idToRecord;
+      var typeMap = this.get('store').typeMapFor(model.constructor);
+      var idToRecord = typeMap.idToRecord;
       delete idToRecord[id];
     }
-    model = this.get('store').createRecord('ssh_key', {
-      id: id
-    });
+
+    model = this.get('store').createRecord('ssh_key', { id: id });
+
     return this.set('model', model);
   },
 
@@ -42,8 +43,8 @@ export default Ember.Component.extend({
   }.observes('value'),
 
   addErrorsFromResponse(errArr) {
-    var error;
-    error = errArr[0].detail;
+    var error = errArr[0].detail;
+
     if (error.code === 'not_a_private_key') {
       return this.set('valueError', 'This key is not a private key.');
     } else if (error.code === 'key_with_a_passphrase') {
@@ -54,6 +55,7 @@ export default Ember.Component.extend({
   actions: {
     save() {
       var ssh_key;
+
       this.set('valueError', false);
       if (this.get('isSaving')) {
         return;
@@ -68,7 +70,7 @@ export default Ember.Component.extend({
           this.set('isSaving', false);
           this.reset();
           return this.sendAction('sshKeyAdded', ssh_key);
-        }, () => {
+        }, (error) => {
           this.set('isSaving', false);
           if (error.errors) {
             return this.addErrorsFromResponse(error.errors);

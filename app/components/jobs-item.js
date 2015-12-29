@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { colorForState } from 'travis/utils/helpers';
-import { languageConfigKeys } from 'travis/utils/keys-map';;
+import { languageConfigKeys } from 'travis/utils/keys-map';
 
 export default Ember.Component.extend({
   tagName: 'li',

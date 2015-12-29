@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Model from 'travis/models/model';
 import config from 'travis/config/environment';
+import DS from 'ember-data';
 
 export default Model.extend({
   ajax: Ember.inject.service(),
@@ -42,11 +43,9 @@ export default Model.extend({
     permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((function(_this) {
-      return function(data) {
-        return permissions.set('content', data.permissions);
-      };
-    })(this));
+    this.get('_rawPermissions').then((data) => {
+      return permissions.set('content', data.permissions);
+    });
     return permissions;
   }.property(),
 
@@ -55,7 +54,7 @@ export default Model.extend({
     permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then(() => {
+    this.get('_rawPermissions').then((data) => {
       return permissions.set('content', data.admin);
     });
     return permissions;
@@ -66,7 +65,7 @@ export default Model.extend({
     permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then(() => {
+    this.get('_rawPermissions').then((data) => {
       return permissions.set('content', data.pull);
     });
     return permissions;
@@ -77,14 +76,14 @@ export default Model.extend({
     permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then(() => {
+    this.get('_rawPermissions').then((data) => {
       return permissions.set('content', data.push);
     });
     return permissions;
   }.property(),
 
   pushPermissionsPromise: function() {
-    return this.get('_rawPermissions').then(() => {
+    return this.get('_rawPermissions').then((data) => {
       return data.pull;
     });
   }.property(),
@@ -110,7 +109,7 @@ export default Model.extend({
   },
 
   poll() {
-    return this.get('ajax').get('/users', () => {
+    return this.get('ajax').get('/users', (data) => {
       var self;
       if (data.user.is_syncing) {
         self = this;

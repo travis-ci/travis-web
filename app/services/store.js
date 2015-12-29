@@ -1,5 +1,6 @@
 import DS from 'ember-data';
 import Config from 'travis/config/environment';
+import Ember from 'ember';
 
 export default DS.Store.extend({
   auth: Ember.inject.service(),
@@ -21,7 +22,9 @@ export default DS.Store.extend({
 
   canHandleEvent(event, data) {
     var callback, name, ref, ref1, type;
-    ref = event.split(':'), name = ref[0], type = ref[1];
+    ref = event.split(':');
+    name = ref[0];
+    type = ref[1];
     ref1 = this.get('pusherEventHandlerGuards');
     for (name in ref1) {
       callback = ref1[name];
@@ -34,7 +37,10 @@ export default DS.Store.extend({
 
   receivePusherEvent(event, data) {
     var build, commit, job, name, ref, ref1, ref2, type;
-    ref = event.split(':'), name = ref[0], type = ref[1];
+    ref = event.split(':');
+    name = ref[0];
+    type = ref[1];
+
     if (!this.canHandleEvent(event, data)) {
       return;
     }

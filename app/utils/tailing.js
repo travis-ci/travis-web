@@ -6,12 +6,10 @@ export default (function() {
     this.tail_selector = tail_selector;
     this.log_selector = log_selector;
     this.position = this.window.scrollTop();
-    this.window.scroll((function(_this) {
-      return function() {
-        return Ember.run.throttle(_this, _this.onScroll, [], 200, false);
-      };
-    })(this));
-    this;
+    this.window.scroll(() => {
+      return Ember.run.throttle(this, this.onScroll, [], 200, false);
+    });
+    return this;
   }
 
   Tailing.prototype.options = {

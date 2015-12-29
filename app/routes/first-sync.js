@@ -1,4 +1,5 @@
 import SimpleLayoutRoute from 'travis/routes/simple-layout';
+import Ember from 'ember';
 
 export default SimpleLayoutRoute.extend({
   activate() {

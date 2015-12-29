@@ -1,8 +1,8 @@
 import DS from 'ember-data';
 import config from 'travis/config/environment';
-var Adapter;
+import Ember from 'ember';
 
-Adapter = DS.ActiveModelAdapter.extend({
+export default DS.ActiveModelAdapter.extend({
   auth: Ember.inject.service(),
   host: config.apiEndpoint,
   coalesceFindRequests: true,
@@ -11,11 +11,13 @@ Adapter = DS.ActiveModelAdapter.extend({
     var base, hash, token;
 
     hash = this._super(...arguments);
-    hash.headers || (hash.headers = {});
+    hash.headers = hash.headers || {};
     hash.headers['accept'] = 'application/json; version=2';
 
     if (token = this.get('auth').token()) {
-      (base = hash.headers)['Authorization'] || (base['Authorization'] = "token " + token);
+      if(!hash.headers['Authorization']) {
+        hash.headers['Authorization'] = "token " + token;
+      }
     }
 
     return hash;
@@ -37,5 +39,3 @@ Adapter = DS.ActiveModelAdapter.extend({
     return this._super(...arguments);
   }
 });
-
-export default Adapter;

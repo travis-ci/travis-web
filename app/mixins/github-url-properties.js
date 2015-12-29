@@ -1,4 +1,5 @@
 import { githubCommit, githubPullRequest } from 'travis/utils/urls';
+import Ember from 'ember';
 
 export default Ember.Mixin.create({
   urlGithubCommit: function() {

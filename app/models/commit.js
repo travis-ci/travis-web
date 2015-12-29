@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Model from 'travis/models/model';
 import Build from 'travis/models/build';
 import { gravatarImage } from 'travis/utils/urls';
+import DS from 'ember-data';
 
 export default Model.extend({
   sha: DS.attr(),

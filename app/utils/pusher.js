@@ -1,4 +1,5 @@
 import ENV from 'travis/config/environment';
+import Ember from 'ember';
 
 var TravisPusher = function(config, ajaxService) {
   this.init(config, ajaxService);
@@ -165,7 +166,7 @@ if (ENV.pro) {
   Pusher.authorizers.bulk_ajax = function(socketId, _callback) {
     var channels, name, names;
     channels = Travis.pusher.pusher.channels;
-    channels.callbacks || (channels.callbacks = []);
+    channels.callbacks = channels.callbacks || [];
     name = this.channel.name;
     names = Object.keys(channels.channels);
     channels.callbacks.push(function(auths) {

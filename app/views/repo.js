@@ -3,6 +3,7 @@ import StatusImagesView from 'travis/views/status-images';
 import BasicView from 'travis/views/basic';
 import config from 'travis/config/environment';
 import Polling from 'travis/mixins/polling';
+import Ember from 'ember';
 
 export default BasicView.extend(Polling, {
   popup: Ember.inject.service(),

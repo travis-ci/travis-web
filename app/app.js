@@ -32,12 +32,12 @@ var App = Ember.Application.extend(Ember.Evented, {
     $('body').toggleClass('maximized');
     element = $('<span></span>');
     $('#top .profile').append(element);
-    Em.run.later((function() {
+    Ember.run.later((function() {
       return element.remove();
     }), 10);
     element = $('<span></span>');
     $('#repo').append(element);
-    return Em.run.later((function() {
+    return Ember.run.later((function() {
       return element.remove();
     }), 10);
   },

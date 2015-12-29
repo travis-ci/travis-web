@@ -9,12 +9,12 @@ Log.DEBUG = false;
 Log.LIMIT = 10000;
 
 Log.Scroll = function(options) {
-  options || (options = {});
+  options = options || {};
   this.beforeScroll = options.beforeScroll;
   return this;
 };
 
-Log.Scroll.prototype = $.extend(new Log.Listener, {
+Log.Scroll.prototype = $.extend(new Log.Listener(), {
   insert: function(log, data, pos) {
     if (this.numbers) {
       this.tryScroll();
@@ -39,7 +39,7 @@ Log.Limit = function(max_lines, limitedLogCallback) {
   return this;
 };
 
-Log.Limit.prototype = Log.extend(new Log.Listener, {
+Log.Limit.prototype = Log.extend(new Log.Listener(), {
   count: 0,
   insert: function(log, node, pos) {
     if (node.type === 'paragraph' && !node.hidden) {

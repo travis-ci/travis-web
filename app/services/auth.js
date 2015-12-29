@@ -1,4 +1,5 @@
 import config from 'travis/config/environment';
+import Ember from 'ember';
 
 export default Ember.Service.extend({
   store: Ember.inject.service(),
@@ -9,7 +10,7 @@ export default Ember.Service.extend({
   receivingEnd: location.protocol + "//" + location.host,
 
   init: function() {
-    return window.addEventListener('message', () => {
+    return window.addEventListener('message', (e) => {
       return this.receiveMessage(e);
     });
   },
@@ -52,9 +53,13 @@ export default Ember.Service.extend({
   },
 
   autoSignIn(data) {
-    data || (data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage')));
+    if(!data) {
+      data = this.userDataFrom(this.get('sessionStorage')) ||
+             this.userDataFrom(this.get('storage'));
+    }
+
     if (data) {
-      return this.setData(data);
+      this.setData(data);
     }
   },
 
@@ -200,7 +205,7 @@ export default Ember.Service.extend({
   },
 
   sendToApp(name) {
-    var error, error1, router;
+    var error, router;
 
     // TODO: this is an ugly solution, we need to do one of 2 things:
     //       * find a way to check if we can already send an event to remove try/catch
@@ -214,7 +219,7 @@ export default Ember.Service.extend({
       return router.send(name);
     } catch (error1) {
       error = error1;
-      if (!(error.message = ~/Can't trigger action/)) {
+      if (!(error.message.match(/Can't trigger action/))) {
         throw error;
       }
     }

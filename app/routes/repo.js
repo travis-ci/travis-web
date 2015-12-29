@@ -26,7 +26,10 @@ export default TravisRoute.extend({
   serialize(repo) {
     var name, owner, ref, slug;
     slug = repo.get ? repo.get('slug') : repo.slug;
-    ref = slug.split('/'), owner = ref[0], name = ref[1];
+    ref = slug.split('/');
+    owner = ref[0];
+    name = ref[1];
+
     return {
       owner: owner,
       name: name

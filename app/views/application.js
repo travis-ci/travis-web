@@ -1,4 +1,5 @@
 import BasicView from 'travis/views/basic';
+import Ember from 'ember';
 
 export default BasicView.extend({
   popup: Ember.inject.service(),

@@ -1,9 +1,10 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import Model from 'travis/models/model';
 
-var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+var indexOf = [].indexOf;
 
-export default Model.extend({
+var Broadcast = Model.extend({
   message: DS.attr(),
 
   toObject() {
@@ -36,3 +37,5 @@ Broadcast.reopenClass({
     return Ember.A(seenBroadcasts || []);
   }.property()
 });
+
+export default Broadcast;

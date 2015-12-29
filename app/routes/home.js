@@ -1,6 +1,7 @@
 import BasicRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import limit from 'travis/utils/computed-limit';
+import Ember from 'ember';
 
 export default BasicRoute.extend({
   init: function() {
@@ -23,7 +24,7 @@ export default BasicRoute.extend({
   },
 
   loadMoreRepos() {
-    return this.store.findAll('build').then(() => {
+    return this.store.findAll('build').then( (builds) => {
       var repoIds, repos;
       repoIds = builds.mapBy('data.repo').uniq();
       repos = this.get('repos.repos');

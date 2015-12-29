@@ -5,7 +5,14 @@
     "-Promise",
     "jQuery",
     "Visibility",
-    "$"
+    "$",
+    "Travis",
+    "_cio",
+    "_gaq",
+    "Log",
+    "moment",
+    "Pusher",
+    "md5"
   ],
   "browser": true,
   "boss": true,
