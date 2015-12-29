@@ -212,7 +212,7 @@ export default Ember.Component.extend({
     toggleTailing() {
       Travis.tailing.toggle();
       this.engine.autoCloseFold = !Travis.tailing.isActive();
-      return event.preventDefault();
+      return false;
     },
 
     removeLogPopup() {

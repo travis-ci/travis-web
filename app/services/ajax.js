@@ -77,17 +77,17 @@ export default Ember.Service.extend({
       options.contentType = options.contentType || 'application/json; charset=utf-8';
     }
     success = options.success || (function() {});
-    options.success = () => {
+    options.success = (body, status, xhr) => {
       if (data != null ? data.flash : void 0) {
         Travis.lookup('controller:flash').loadFlashes(data.flash);
       }
       if (data != null) {
         delete data.flash;
       }
-      return success.apply(this, arguments);
+      return success.call(this, body, status, xhr);
     };
     error = options.error || function() {};
-    options.error = () => {
+    options.error = (body, status, xhr) => {
       console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(data)));
       if (data != null ? data.flash : void 0) {
         Travis.lookup('controller:flash').pushObject(data.flash);
@@ -95,7 +95,7 @@ export default Ember.Service.extend({
       if (data != null) {
         delete data.flash;
       }
-      return error.apply(this, arguments);
+      return error.call(this, body, status, xhr);
     };
 
     options = $.extend(options, default_options);
