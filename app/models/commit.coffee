@@ -1,6 +1,7 @@
 `import Ember from 'ember'`
 `import Model from 'travis/models/model'`
 `import Build from 'travis/models/build'`
+`import { gravatarImage } from 'travis/utils/urls'`
 
 Commit = Model.extend
   sha:               DS.attr()
@@ -33,5 +34,21 @@ Commit = Model.extend
     @get('authorName') == @get('committerName') and
       @get('authorEmail') == @get('committerEmail')
   ).property('authorName', 'authorEmail', 'committerName', 'committerEmail')
+
+  authorAvatarUrl: (->
+    if url = @get('authorAvatarUrl')
+      url
+    else
+      email = @get('authorEmail')
+      gravatarImage(email, 40)
+  ).property('authorEmail', 'authorAvatarUrl')
+
+  committerAvatarUrl: (->
+    if url = @get('committerAvatarUrl')
+      url
+    else
+      email = @get('committerEmail')
+      gravatarImage(email, 40)
+  ).property('committerEmail', 'committerAvatarUrl')
 
 `export default Commit`
