@@ -20,8 +20,14 @@
     {{/unless}}
   </div>
   <div class="row-item row-committer">
-    <img class="avatar" src={{authorAvatarUrl}} alt="{{build.commit.committerName}} avatar">
-    <span class="label-align">{{build.commit.committerName}}</span>
+    <img class="avatar" src={{build.commit.authorAvatarUrlOrGravatar}} alt="{{build.commit.authorName}} avatar">
+    <span class="label-align">{{build.commit.authorName}}</span>
+    {{#unless build.commit.authorIsCommitter}}
+      {{#if build.commit.committerName}}
+        <img class="avatar" src={{build.commit.committerAvatarUrlOrGravatar}} alt="{{build.commit.commiterName}}">
+        <span class="label-align">{{build.commit.committerName}}</span>
+      {{/if}}
+    {{/unless}}
   </div>
 </div>
 
