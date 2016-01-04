@@ -1,4 +1,5 @@
 `import Ember from 'ember'`
+`import { gravatarImage } from 'travis/utils/urls'`
 `import GithubUrlPropertievs from 'travis/mixins/github-url-properties'`
 
 BranchesController = Ember.Controller.extend
