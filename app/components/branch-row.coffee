@@ -1,5 +1,4 @@
 `import Ember from 'ember'`
-`import { gravatarImage } from 'travis/utils/urls'`
 `import { githubCommit as githubCommitUrl } from 'travis/utils/urls'`
 `import TravisRoute from 'travis/routes/basic'`
 `import config from 'travis/config/environment'`
