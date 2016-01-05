@@ -131,7 +131,7 @@ export default Ember.Service.extend({
       }
     }
     if (user) {
-      return this.get('ajax').get("/users/" + user.id).then(() => {
+      return this.get('ajax').get("/users/" + user.id).then( (data) => {
         var userRecord;
         if (data.user.correct_scopes) {
           userRecord = this.loadUser(data.user);
@@ -171,14 +171,14 @@ export default Ember.Service.extend({
   },
 
   loadUser(user) {
-    this.get('store').push({
-      data: {
-        type: 'user',
-        id: user.id,
-        attributes: user
-      }
-    });
-    return this.get('store').recordForId('user', user.id);
+    var store = this.get('store'),
+        adapter = store.adapterFor('user'),
+        userClass = store.modelFor('user'),
+        serializer = store.serializerFor('user'),
+        normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
+
+    store.push(normalized);
+    return store.recordForId('user', user.id);
   },
 
   receiveMessage(event) {
