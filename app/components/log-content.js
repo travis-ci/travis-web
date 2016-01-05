@@ -90,8 +90,8 @@ export default Ember.Component.extend({
       if ((ref = this.lineSelector) != null) {
         ref.willDestroy();
       }
-      if (logElement = this.$('#log')[0]) {
-        logElement.innerHTML = '';
+      if (logElement = this.$('#log')) {
+        return logElement.empty();
       }
     }
   },
@@ -99,8 +99,8 @@ export default Ember.Component.extend({
   createEngine(log) {
     var logElement;
     if (log || (log = this.get('log'))) {
-      if (logElement = this.$('#log')[0]) {
-        logElement.innerHTML = '';
+      if (logElement = this.$('#log')) {
+        logElement.empty();
       }
       log.onClear(() => {
         this.teardownLog();
