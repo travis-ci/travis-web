@@ -134,7 +134,7 @@ export default Ember.Service.extend({
       return this.get('ajax').get("/users/" + user.id).then( (data) => {
         var userRecord;
         if (data.user.correct_scopes) {
-          userRecord = this.loadUser(data.user);
+          userRecord = this.loadUser(data.user)
           userRecord.get('permissions');
           if (this.get('signedIn')) {
             data.user.token = user.token;
