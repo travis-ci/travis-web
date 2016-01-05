@@ -50,19 +50,13 @@ $dropdown-button-margin: -9px
 .settings-button
   display: block
   height: $dropdown-button-height
-  padding: 0 0.7em 0 2.3em
-  background:
-    color: white
-    repeat: no-repeat
-    size: auto 14px
-    position: 11px 7px
+  padding: 0 0.7em
   border: 1px solid #f1f1f1
   color: $grey-light
   border-radius: 2px
   text-align: center
   line-height: 2
   font-size: 14px
-  @extend %icon-line-cog
   &:after
     content: ""
     display: inline-block
@@ -73,13 +67,17 @@ $dropdown-button-margin: -9px
       size: 100%
       repeat: no-repeat
     @extend %icon-line-dropdown
+  .icon-settings
+    width: .9em
+    margin-right: .3em
   &:hover,
   &:active,
   // .display &,
   .settings-menu:hover &
     color: $teal
     border-color: $teal
-    @extend %icon-line-cog-teal
+    .icon-settings
+      @extend %icon-line-cog-teal
     &:after
       @extend %icon-line-dropdown-teal
   @media #{$medium-up}
