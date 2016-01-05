@@ -224,7 +224,7 @@ export default Ember.Component.extend({
     },
 
     toggleLog() {
-      this.toggleProperty('ligIsVisible');
+      this.toggleProperty('logIsVisible');
     }
   },
 
