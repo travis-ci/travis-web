@@ -4,10 +4,10 @@ export default Ember.Component.extend({
   tagName: 'span',
   classNames: ['status-icon', 'icon'],
   classNameBindings: ['status'],
-  attributeBindings: ['label:aria-label', 'label:title']
+  attributeBindings: ['label:aria-label', 'label:title'],
 
   label: function() {
-    return 'Job ' + this.get('status')
+    return 'Job ' + this.get('status');
   }.property('status'),
 
   hasPassed: function() {
