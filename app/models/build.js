@@ -4,8 +4,22 @@ import Ember from 'ember';
 import Model from 'travis/models/model';
 import DurationCalculations from 'travis/utils/duration-calculations';
 import DS from 'ember-data';
+import Config from 'travis/config/environment';
 
-export default Model.extend(DurationCalculations, {
+var Build;
+
+if (Config.useV3API) {
+  Build = DS.Model.extend({
+    branch: DS.belongsTo('branch', { async: false, inverse: 'builds' }),
+    branchName: Ember.computed.alias('branch.name')
+  });
+} else {
+  Build = DS.Model.extend({
+      branchName: Ember.computed.alias('commit.branch')
+  });
+}
+
+Build.reopen({
   ajax: Ember.inject.service(),
   state: DS.attr(),
   number: DS.attr('number'),
@@ -18,7 +32,6 @@ export default Model.extend(DurationCalculations, {
   pullRequestTitle: DS.attr(),
   pullRequestNumber: DS.attr('number'),
   eventType: DS.attr('string'),
-  branch: DS.belongsTo('branch', { async: false, inverse: 'builds' }),
   repo: DS.belongsTo('repo', { async: true }),
   commit: DS.belongsTo('commit', { async: false }),
   jobs: DS.hasMany('job', { async: true }),
@@ -124,4 +137,7 @@ export default Model.extend(DurationCalculations, {
       return moment(finishedAt).format('lll');
     }
   }.property('finishedAt')
+
 });
+
+export default Build;

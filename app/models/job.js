@@ -24,6 +24,7 @@ export default Model.extend(DurationCalculations, {
   build: DS.belongsTo('build', { async: true }),
   commit: DS.belongsTo('commit', { async: true }),
   branch: Ember.computed.alias('build.branch'),
+  branchName: Ember.computed.alias('build.branchName'),
 
   log: function() {
     this.set('isLogAccessed', true);
