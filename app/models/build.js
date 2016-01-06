@@ -9,12 +9,12 @@ import Config from 'travis/config/environment';
 var Build;
 
 if (Config.useV3API) {
-  Build = DS.Model.extend({
+  Build = DS.Model.extend(DurationCalculations, {
     branch: DS.belongsTo('branch', { async: false, inverse: 'builds' }),
     branchName: Ember.computed.alias('branch.name')
   });
 } else {
-  Build = DS.Model.extend({
+  Build = DS.Model.extend(DurationCalculations, {
       branchName: Ember.computed.alias('commit.branch')
   });
 }
