@@ -32,7 +32,7 @@ export default TravisRoute.extend({
         title: 'Haase of Pain',
         handle: 'konstantinhaase',
         nationality: 'germany',
-        country: 'germany',
+        country: 'switzerland',
         image: 'konstantin'
       }, {
         name: 'Mathias Meyer',
