@@ -33,5 +33,12 @@
 </div>
 
 <div class="row-item fade-out">
-  <span class="label-align">{{message}}</span>
+  <span class="label-align">{{message}} </span>
 </div>
+
+{{#if isGHPages}}
+  <a class="tooltip--requests" href="https://docs.travis-ci.com/user/customizing-the-build/#Whitelisting-or-blacklisting-branches" title="Branch whitelisting - Travis CI Docs">
+    <span class="icon-question tooltip-trigger" aria-label="Help"></span>
+    <span class="tooltip-bubble">Read about branch whitelisting</span>
+  </a>
+{{/if}}

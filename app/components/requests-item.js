@@ -6,6 +6,15 @@ export default Ember.Component.extend({
   classNameBindings: ['requestClass'],
   tagName: 'li',
 
+  isGHPages: function() {
+    var message = this.get('request.message');
+    if (message === 'github pages branch') {
+      return true;
+    } else {
+      return false;
+    }
+  }.property('request.message'),
+
   requestClass: function() {
     if (this.get('request.isAccepted')) {
       return 'accepted';

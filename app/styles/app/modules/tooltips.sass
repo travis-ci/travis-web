@@ -107,3 +107,19 @@
       right: 0
       margin: auto
 
+
+.tooltip--requests
+  @extend %tooltip
+  position: absolute
+  right: 0
+  bottom: 0
+  .tooltip-trigger
+    margin: .2em .5em
+  .tooltip-bubble
+    top: -3.6em
+    right: 0
+    width: 10em
+    height: 3em
+    white-space: normal
+    &:before
+      right: .8em
