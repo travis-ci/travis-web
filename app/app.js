@@ -5,7 +5,7 @@ import config from './config/environment';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
-Ember.LinkView.reopen({
+Ember.LinkComponent.reopen({
   attributeBindings: ['alt']
 });
 
