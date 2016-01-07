@@ -11,13 +11,6 @@
       .status-icon .circle
         border-color: $white
 
-    @media #{$medium-up}
-      .dropup--status
-        border-color: $extra-hover
-        color: $color
-        &:before
-          background-color: $color
-
 
 .build-tiles
   height: 4.7em
@@ -44,6 +37,7 @@
       height: 2.5rem !important
       margin: auto !important
       background-color: transparent
+      transition: top 200ms ease
       .is-rotating
         position: absolute
         top: 0
@@ -56,6 +50,23 @@
       .circle
         width: 8px
         height: 8px
+    .build-tile-number
+      margin: auto
+      height: 1em
+      width: auto
+      text-align: center
+      position: absolute
+      transform: scale(.7)
+      opacity: 0
+      color: white
+      transition: transform 200ms ease,  opacity 200ms ease
+      top: 0; right: 0; bottom: -1.5em; left: 0
+    &:hover
+      .status-icon
+        top: -1.4em
+      .build-tile-number
+        transform: scale(1)
+        opacity: 1
   a
     display: block
     height: 100%
