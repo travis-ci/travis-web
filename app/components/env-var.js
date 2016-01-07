@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   actionType: 'Save',
   showValueField: Ember.computed.alias('public'),
 
-  value: function(key, value) {
+  value: function(key) {
     if (this.get('envVar.public')) {
       return this.get('envVar.value');
     } else {
