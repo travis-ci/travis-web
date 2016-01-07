@@ -3,11 +3,11 @@ window.deprecationWorkflow.config = {
   workflow: [
     // DONE
     { handler: "log", matchMessage: "Ember.LinkView is deprecated. Please use Ember.LinkComponent." },
+    { handler: "log", matchMessage: "Calling store.find() with a query object is deprecated. Use store.query() instead." },
     { handler: "log", matchMessage: new RegExp("A property of .*? was modified inside the didInsertElement hook. You should never change properties on components, services or models during didInsertElement because it causes significant performance degradation.") },
     { handler: "log", matchMessage: "Ember.arrayComputed is deprecated. Replace it with plain array methods" },
 
     // TODO
-    { handler: "silence", matchMessage: "Calling store.find() with a query object is deprecated. Use store.query() instead." },
     { handler: "silence", matchMessage: "Ember.View is deprecated. Consult the Deprecations Guide for a migration strategy." },
     { handler: "silence", matchMessage: "The filter API will be moved into a plugin soon. To enable store.filter using an environment flag, or to use an alternative, you can visit the ember-data-filter addon page" },
     { handler: "silence", matchMessage: "Usage of `state` is deprecated, use `_state` instead." },
