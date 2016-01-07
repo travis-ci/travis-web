@@ -16,13 +16,13 @@ window.deprecationWorkflow.config = {
     { handler: "log", matchMessage: "Using the same function as getter and setter is deprecated." },
     { handler: "log", matchMessage: "`Ember.ArrayController` is deprecated." },
     { handler: "log", matchMessage: "The default behavior of `shouldBackgroundReloadRecord` will change in Ember Data 2.0 to always return true. If you would like to preserve the current behavior please override `shouldBackgroundReloadRecord` in your adapter:application and return false." },
+    { handler: "log", matchMessage: "Function#observesBefore is deprecated and will be removed in the near future." },
+    { handler: "log", matchMessage: "Ember.addBeforeObserver is deprecated and will be removed in the near future." },
+    { handler: "log", matchMessage: "Ember.removeBeforeObserver is deprecated and will be removed in the near future." },
 
     // TODO
     { handler: "silence", matchMessage: "Ember.View is deprecated. Consult the Deprecations Guide for a migration strategy." },
     { handler: "silence", matchMessage: "The filter API will be moved into a plugin soon. To enable store.filter using an environment flag, or to use an alternative, you can visit the ember-data-filter addon page" },
-    { handler: "silence", matchMessage: "Function#observesBefore is deprecated and will be removed in the near future." },
-    { handler: "silence", matchMessage: "Ember.addBeforeObserver is deprecated and will be removed in the near future." },
-    { handler: "silence", matchMessage: "Ember.removeBeforeObserver is deprecated and will be removed in the near future." },
     { handler: "silence", matchMessage: "Using DS.Snapshot.get() is deprecated. Use .attr(), .belongsTo() or .hasMany() instead." },
   ]
 };
