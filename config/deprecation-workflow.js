@@ -10,6 +10,7 @@ window.deprecationWorkflow.config = {
     // request-icon compoenent, that makes Ember.js think that we're using
     // internal component's state
     { handler: "log", matchMessage: "Usage of `state` is deprecated, use `_state` instead." },
+    { handler: "log", matchMessage: "RestAdapter#find has been deprecated and renamed to `findRecord`." },
 
     // TODO
     { handler: "silence", matchMessage: "Ember.View is deprecated. Consult the Deprecations Guide for a migration strategy." },
@@ -19,7 +20,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchMessage: "`Ember.ArrayController` is deprecated." },
     { handler: "silence", matchMessage: "Ember.removeBeforeObserver is deprecated and will be removed in the near future." },
     { handler: "silence", matchMessage: "The default behavior of `shouldBackgroundReloadRecord` will change in Ember Data 2.0 to always return true. If you would like to preserve the current behavior please override `shouldBackgroundReloadRecord` in your adapter:application and return false." },
-    { handler: "silence", matchMessage: "RestAdapter#find has been deprecated and renamed to `findRecord`." },
     { handler: "silence", matchMessage: "Using the same function as getter and setter is deprecated." },
     { handler: "silence", matchMessage: "Using store.dematerializeRecord() has been deprecated since it was intended for private use only. You should use store.unloadRecord() instead." },
     { handler: "silence", matchMessage: "Using DS.Snapshot.get() is deprecated. Use .attr(), .belongsTo() or .hasMany() instead." },

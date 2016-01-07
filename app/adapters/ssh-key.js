@@ -4,7 +4,7 @@ import ApplicationAdapter from 'travis/adapters/application';
 export default ApplicationAdapter.extend({
   namespace: 'settings',
 
-  find(store, type, id, record) {
+  findRecord(store, type, id, record) {
     return this.ajax(this.urlPrefix() + '/ssh_key/' + id, 'GET');
   },
 
