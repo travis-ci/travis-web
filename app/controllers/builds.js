@@ -1,20 +1,20 @@
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
   sortAscending: false,
   sortProperties: ['number'],
   repoController: Ember.inject.controller('repo'),
   repoBinding: 'repoController.repo',
   tabBinding: 'repoController.tab',
-  isLoadedBinding: 'content.isLoaded',
-  isLoadingBinding: 'content.isLoading',
+  isLoadedBinding: 'model.isLoaded',
+  isLoadingBinding: 'model.isLoading',
 
   showMore() {
     var id, number, type;
     id = this.get('repo.id');
     number = this.get('lastObject.number');
     type = this.get('tab') === "builds" ? 'push' : 'pull_request';
-    return this.get('content').load(this.olderThanNumber(id, number, type));
+    return this.get('model').load(this.olderThanNumber(id, number, type));
   },
 
   displayShowMoreButton: function() {

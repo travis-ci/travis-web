@@ -1,6 +1,6 @@
-{{#if content.isLoaded}}
+{{#if model.isLoaded}}
   <ul class="build-list">
-    {{#each controller as |build|}}
+    {{#each model as |build|}}
       {{builds-item build=build}}
     {{else}}
       {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
