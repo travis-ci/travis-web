@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   logBinding: 'job.log',
 
   didInsertElement() {
-    return this.setupLog();
+    Ember.run.scheduleOnce('afterRender', this, 'setupLog');
   },
 
   logDidChange: function() {
@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   }.observesBefore('log'),
 
   willDestroyElement() {
-    return this.teardownLog();
+    Ember.run.scheduleOnce('afterRender', this, 'teardownLog');
   },
 
   teardownLog() {

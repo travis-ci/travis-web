@@ -68,14 +68,14 @@ export default Ember.Component.extend({
       console.log('log view: did insert');
     }
     this._super.apply(this, arguments);
-    return this.createEngine();
+    Ember.run.scheduleOnce('afterRender', this, 'createEngine');
   },
 
   willDestroyElement() {
     if (Log.DEBUG) {
       console.log('log view: will destroy');
     }
-    return this.teardownLog();
+    Ember.run.scheduleOnce('afterRender', this, 'teardownLog');
   },
 
   teardownLog(log) {
@@ -121,7 +121,7 @@ export default Ember.Component.extend({
       this.engine.limit = this.limit;
       this.logFolder = new LogFolder(this.$('#log'));
       this.lineSelector = new LinesSelector(this.$('#log'), this.scroll, this.logFolder);
-      return this.observeParts(log);
+      this.observeParts(log);
     }
   },
 

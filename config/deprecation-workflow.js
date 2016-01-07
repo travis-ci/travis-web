@@ -3,6 +3,7 @@ window.deprecationWorkflow.config = {
   workflow: [
     // DONE
     { handler: "log", matchMessage: "Ember.LinkView is deprecated. Please use Ember.LinkComponent." },
+    { handler: "log", matchMessage: new RegExp("A property of .*? was modified inside the didInsertElement hook. You should never change properties on components, services or models during didInsertElement because it causes significant performance degradation.") },
 
     // TODO
     { handler: "silence", matchMessage: "Calling store.find() with a query object is deprecated. Use store.query() instead." },
@@ -18,7 +19,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchMessage: "RestAdapter#find has been deprecated and renamed to `findRecord`." },
     { handler: "silence", matchMessage: "Using the same function as getter and setter is deprecated." },
     { handler: "silence", matchMessage: "Using store.dematerializeRecord() has been deprecated since it was intended for private use only. You should use store.unloadRecord() instead." },
-    { handler: "silence", matchMessage: "A property of <travis@view:-outlet::ember607> was modified inside the didInsertElement hook. You should never change properties on components, services or models during didInsertElement because it causes significant performance degradation." },
     { handler: "silence", matchMessage: "Using DS.Snapshot.get() is deprecated. Use .attr(), .belongsTo() or .hasMany() instead." },
     { handler: "silence", matchMessage: "Usage of `typeKey` has been deprecated and will be removed in Ember Data 2.0. It has been replaced by `modelName` on the model class." }
   ]
