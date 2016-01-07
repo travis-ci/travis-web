@@ -13,7 +13,7 @@ export default Ember.Object.extend({
 
   signInForTests(user) {
     this.set('state', 'signed-in');
-    if ((user.constructor.typeKey != null) !== 'user') {
+    if ((user.constructor.modelName != null) !== 'user') {
       this.store.push({
         data: {
           type: 'user',

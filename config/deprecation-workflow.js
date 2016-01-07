@@ -11,6 +11,7 @@ window.deprecationWorkflow.config = {
     // internal component's state
     { handler: "log", matchMessage: "Usage of `state` is deprecated, use `_state` instead." },
     { handler: "log", matchMessage: "RestAdapter#find has been deprecated and renamed to `findRecord`." },
+    { handler: "log", matchMessage: "Usage of `typeKey` has been deprecated and will be removed in Ember Data 2.0. It has been replaced by `modelName` on the model class." },
 
     // TODO
     { handler: "silence", matchMessage: "Ember.View is deprecated. Consult the Deprecations Guide for a migration strategy." },
@@ -23,6 +24,5 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchMessage: "Using the same function as getter and setter is deprecated." },
     { handler: "silence", matchMessage: "Using store.dematerializeRecord() has been deprecated since it was intended for private use only. You should use store.unloadRecord() instead." },
     { handler: "silence", matchMessage: "Using DS.Snapshot.get() is deprecated. Use .attr(), .belongsTo() or .hasMany() instead." },
-    { handler: "silence", matchMessage: "Usage of `typeKey` has been deprecated and will be removed in Ember Data 2.0. It has been replaced by `modelName` on the model class." }
   ]
 };

@@ -17,10 +17,10 @@ export default ApplicationAdapter.extend({
   updateRecord(store, type, record) {
     var data, id, serializer;
     data = {};
-    serializer = store.serializerFor(type.typeKey);
+    serializer = store.serializerFor(type.modelName);
     serializer.serializeIntoHash(data, type, record);
     id = Ember.get(record, 'id');
-    return this.ajax(this.buildURL(type.typeKey, id, record), "PATCH", {
+    return this.ajax(this.buildURL(type.modelName, id, record), "PATCH", {
       data: data
     });
   }
