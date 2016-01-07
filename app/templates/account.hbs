@@ -1,14 +1,15 @@
 {{#if allHooks.isLoaded}}
 
   <header>
+
   {{#if config.billingEndpoint}}
     <div class="cta-btn">
-    {{#if view.subscribed}}
+    {{#if subscribeButtonInfo.subscribed}}
       <a class="btn btn-activated" href={{billingUrl}}>
         Subscription active!
       </a>
     {{else}}
-      {{#if view.education}}
+      {{#if subscribeButtonInfo.education}}
         <a class="btn btn-activated" href={{billingUrl}}>
           Educational account!
         </a>
