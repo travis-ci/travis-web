@@ -158,7 +158,7 @@ export default Ember.Component.extend({
     if (Log.DEBUG) {
       console.log('log view: parts did change');
     }
-    if (this.get('state') !== 'inDOM') {
+    if (this.get('_state') !== 'inDOM') {
       return;
     }
     ref = parts.slice(start, start + added);
