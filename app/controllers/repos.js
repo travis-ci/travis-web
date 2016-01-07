@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import limit from 'travis/utils/computed-limit';
 import Repo from 'travis/models/repo';
 import Config from 'travis/config/environment';
 
