@@ -19,10 +19,10 @@ window.deprecationWorkflow.config = {
     { handler: "log", matchMessage: "Function#observesBefore is deprecated and will be removed in the near future." },
     { handler: "log", matchMessage: "Ember.addBeforeObserver is deprecated and will be removed in the near future." },
     { handler: "log", matchMessage: "Ember.removeBeforeObserver is deprecated and will be removed in the near future." },
+    { handler: "log", matchMessage: "Using DS.Snapshot.get() is deprecated. Use .attr(), .belongsTo() or .hasMany() instead." },
 
     // TODO
     { handler: "silence", matchMessage: "Ember.View is deprecated. Consult the Deprecations Guide for a migration strategy." },
     { handler: "silence", matchMessage: "The filter API will be moved into a plugin soon. To enable store.filter using an environment flag, or to use an alternative, you can visit the ember-data-filter addon page" },
-    { handler: "silence", matchMessage: "Using DS.Snapshot.get() is deprecated. Use .attr(), .belongsTo() or .hasMany() instead." },
   ]
 };
