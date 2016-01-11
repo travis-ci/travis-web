@@ -62,7 +62,7 @@ You can also start an interactive test runner for easier development:
 
 ### Updating the team page
 
-The team information can be found in `app/routes/team.coffee`.
+The team information can be found in `app/routes/team.js`.
 To add another member just add the info in the same style as the previous ones. Like so
 
     {
