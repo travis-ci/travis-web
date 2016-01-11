@@ -20,7 +20,7 @@ export default Ember.Service.extend({
   },
 
   endpoint: function() {
-    return config.apiEndpoint;
+    return config.authEndpoint || config.apiEndpoint;
   }.property(),
 
   signOut: function() {

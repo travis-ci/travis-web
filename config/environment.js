@@ -61,6 +61,14 @@ module.exports = function(environment) {
         terms: ENV.billingEndpoint + "/pages/terms"
       };
     }
+
+    if (process.env.API_ENDPOINT) {
+      ENV.apiEndpoint = process.env.API_ENDPOINT;
+    }
+
+    if (process.env.AUTH_ENDPOINT) {
+      ENV.authEndpoint = process.env.AUTH_ENDPOINT;
+    }
   }
 
   if (environment === 'development') {
