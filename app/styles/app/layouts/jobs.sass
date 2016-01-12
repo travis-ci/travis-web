@@ -27,11 +27,11 @@
   @include colorJobs($red, 'failed', 6px, rgba($red, .1))
   @include colorJobs($red, 'errored', 6px, rgba($red, .1))
   @include colorJobs($grey, 'canceled', 6px, #f1f1f1)
-  @include colorJobs($yellow, 'started', 6px, rgba($yellow, .1), true)
-  @include colorJobs($yellow, 'queued', 6px, rgba($yellow, .1), true)
-  @include colorJobs($yellow, 'booting', 6px, rgba($yellow, .1), true)
-  @include colorJobs($yellow, 'received', 6px, rgba($yellow, .1), true)
-  @include colorJobs($yellow, 'created', 6px, rgba($yellow, .1), true)
+  @include colorJobs($yellow-font, 'started', 6px, rgba($yellow, .1), true, $yellow-bg)
+  @include colorJobs($yellow-font, 'queued', 6px, rgba($yellow, .1), true, $yellow-bg)
+  @include colorJobs($yellow-font, 'booting', 6px, rgba($yellow, .1), true, $yellow-bg)
+  @include colorJobs($yellow-font, 'received', 6px, rgba($yellow, .1), true,  $yellow-bg)
+  @include colorJobs($yellow-font, 'created', 6px, rgba($yellow, .1), true, $yellow-bg)
 
   @include colorFadeOut('passed',#ECF6EF)
   @include colorFadeOut('failed', #FBECEB)
@@ -96,7 +96,7 @@
     height: 20px
     vertical-align: middle
     padding-left: 1.5em
-    background: 
+    background:
       size: auto 18px
       repeat: no-repeat
   @media #{$medium-up}

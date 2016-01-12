@@ -10,7 +10,7 @@
         fill: $white
       .status-icon .circle
         border-color: $white
-
+        border-width: 2px
 
 .build-tiles
   height: 4.7em
@@ -76,8 +76,8 @@
   @include buildTileColors(#D94341, #FFF7F5, 'failed')
   @include buildTileColors(#D94341, #FFF7F5, 'errored')
   @include buildTileColors(#A1A0A0, #F5F5F5, 'canceled')
-  @include buildTileColors(#bfb502, #fdfcee, 'started', #e2c913)
-  @include buildTileColors(#bfb502, #fdfcee, 'queued', #e2c913)
-  @include buildTileColors(#bfb502, #fdfcee, 'booting', #e2c913)
-  @include buildTileColors(#bfb502, #fdfcee, 'received', #e2c913)
-  @include buildTileColors(#bfb502, #fdfcee, 'created', #e2c913)
+  @include buildTileColors($yellow-tile, #fdfcee, 'started')
+  @include buildTileColors($yellow-tile, #fdfcee, 'queued')
+  @include buildTileColors($yellow-tile, #fdfcee, 'booting')
+  @include buildTileColors($yellow-tile, #fdfcee, 'received')
+  @include buildTileColors($yellow-tile, #fdfcee, 'created')
