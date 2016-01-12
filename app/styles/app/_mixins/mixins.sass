@@ -1,4 +1,3 @@
-
 @mixin fadeOut($position, $angle, $color, $width: 0%)
   content: ""
   display: block
@@ -84,7 +83,7 @@
     .row-name .status-icon g > *,
     .row-request .icon-request g > *
       fill: $color
-      
+
     .build a,
     .repo-title a
       color: $color
@@ -103,22 +102,21 @@
   @if $building
     .#{$status},
     .#{$status} a,
-      color: #beab04
+      color: $yellow-font
   @else
     .#{$status},
     .#{$status} a,
       color: $color
 
-=colorRows($color, $status, $width, $is-building: false)
+=colorRows($color, $status, $width, $is-building: false, $color-icon: $color)
   @include colorBg($color, $status, $width)
   @include colorLinks($color, $status, $is-building)
-  @include colorStatusIcons($color, $status)
+  @include colorStatusIcons($color-icon, $status)
 
-=colorJobs($color, $status, $width, $hover, $is-building: false)
+=colorJobs($color, $status, $width, $hover, $is-building: false, $bg-start: $color)
   &.#{$status}
     @include colorLinks($color, $status, $is-building)
     @include colorStatusIcons($color, $status)
     &:hover,
     &:active
-      @include colorBg($color, $status, $width, $hover)
-
+      @include colorBg($bg-start, $status, $width, $hover)

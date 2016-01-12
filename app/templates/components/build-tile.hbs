@@ -1,10 +1,6 @@
 {{#if build.number}}
   {{#link-to "build" build.id}}
     {{status-icon status=build.state}}
-
-    {{build.last_build.state}}
-{{!--     <div class="dropup--status">
-      {{request-icon event=build.eventType state=build.state}} <span class="label-align">#{{build.number}}</span>
-    </div> --}}
+    <span class="build-tile-number">#{{build.number}}</span>
   {{/link-to}}
 {{/if}}

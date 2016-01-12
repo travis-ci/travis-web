@@ -7,11 +7,11 @@
   @include colorRows($red, 'failed', 12px)
   @include colorRows($red, 'errored', 12px)
   @include colorRows($grey, 'canceled', 12px)
-  @include colorRows($yellow, 'started', 12px, true)
-  @include colorRows($yellow, 'queued', 12px, true)
-  @include colorRows($yellow, 'booting', 12px, true)
-  @include colorRows($yellow, 'received', 12px, true)
-  @include colorRows($yellow, 'created', 12px, true)
+  @include colorRows($yellow-bg, 'started', 12px, true, $yellow-font)
+  @include colorRows($yellow-bg, 'queued', 12px, true, $yellow-font)
+  @include colorRows($yellow-bg, 'booting', 12px, true, $yellow-font)
+  @include colorRows($yellow-bg, 'received', 12px, true, $yellow-font)
+  @include colorRows($yellow-bg, 'created', 12px, true, $yellow-font)
 
   @media #{$medium-up}
     display: flex
