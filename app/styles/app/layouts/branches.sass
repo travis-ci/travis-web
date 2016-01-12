@@ -1,4 +1,3 @@
-
 .branches
   .small-title
     margin: 1.5em 0 0.7em
@@ -49,7 +48,7 @@
     z-index: 5
     background-color: $white
     border-radius: 2px
-    
+
     &:after,
     &:before
       content: ""
@@ -94,7 +93,7 @@
   .icon-trigger path,
   .icon-eye path
     fill: $white
-    
+
   @media #{$medium-up}
     width: 10em
     left: 0
@@ -156,33 +155,6 @@
   path
     fill: $teal-dark
 
-// @todo refactor to status-icon module
-.status-icon
-  .is-rotating
-    width: 17px
-    height: 19px
-    line-height: 0.9
-    text-align: center
-    transform-origin: center center
-    will-change: transform
-    animation: rotation 3s infinite ease
-    .circle
-      display: inline-block
-      vertical-align: middle
-      width: 5px
-      height: 5px
-      border: solid 1px #bfb502
-      border-radius: 50%
-      transform-origin: center center
-
-@keyframes rotation
-  0%
-    transform: rotateZ(0deg)
-  45%, 55%
-    transform: rotateZ(180deg)
-  100%
-    transform: rotateZ(360deg)
-
 .is-relative
   position: relative
 
@@ -211,5 +183,3 @@ a.nobuilds-tigger
     color: white
     .icon-trigger svg path
       fill: #fff
-
-
