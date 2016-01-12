@@ -5,7 +5,7 @@ export default TravisRoute.extend({
 
   renderTemplate() {
     $('body').attr('id', 'auth');
-    return this.render('auth.signin');
+    return this.render('signin');
   },
 
   deactivate() {

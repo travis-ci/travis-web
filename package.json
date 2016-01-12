@@ -42,6 +42,7 @@
     "ember-data-filter": "1.13.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
-    "ember-try": "0.0.7"
+    "ember-try": "0.0.7",
+    "emberx-select": "2.0.2"
   }
 }

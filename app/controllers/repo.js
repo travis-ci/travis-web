@@ -1,11 +1,16 @@
 import Ember from 'ember';
-import { githubRepo } from 'travis/utils/urls';
+import { githubRepo, statusImage } from 'travis/utils/urls';
+import config from 'travis/config/environment';
+
 
 export default Ember.Controller.extend({
+  popup: Ember.inject.service(),
+
   jobController: Ember.inject.controller('job'),
   buildController: Ember.inject.controller('build'),
   buildsController: Ember.inject.controller('builds'),
   reposController: Ember.inject.controller('repos'),
+  reposBinding: 'reposController.repos',
   currentUserBinding: 'auth.currentUser',
 
   classNames: ['repo'],
@@ -13,6 +18,21 @@ export default Ember.Controller.extend({
   build: Ember.computed.alias('buildController.build'),
   builds: Ember.computed.alias('buildsController.content'),
   job: Ember.computed.alias('jobController.job'),
+
+  isEmpty: function() {
+    return this.get('repos.isLoaded') && this.get('repos.length') === 0;
+  }.property('repos.isLoaded', 'repos.length'),
+
+  statusImageUrl: function() {
+    return statusImage(this.get('repo.slug'));
+  }.property('repo.slug'),
+
+  actions: {
+    statusImages() {
+      this.get('popup').open('status-images');
+      return false;
+    }
+  },
 
   slug: function() {
     return this.get('repo.slug');

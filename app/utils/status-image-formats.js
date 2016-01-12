@@ -57,4 +57,5 @@ format = function(version, slug, branch) {
   }
 };
 
+export { format };
 export default format;

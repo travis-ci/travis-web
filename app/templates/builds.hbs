@@ -1,3 +1,4 @@
+{{#builds-wrapper contentType=contentType repo=repo}}
 {{#if model.isLoaded}}
   <ul class="build-list">
     {{#each model as |build|}}
@@ -18,3 +19,4 @@
 {{else}}
   {{loading-indicator}}
 {{/if}}
+{{/builds-wrapper}}

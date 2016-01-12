@@ -4,7 +4,7 @@
   </div>
 </div>
 
-{{view 'repos-list-tabs'}}
+{{repos-list-tabs tab=tab showMyRepositories=(action "showMyRepositories") showRunningJobs=(action "showRunningJobs")}}
 
 {{#if showRunningJobs}}
   <div class="tabbody sidebar-list">

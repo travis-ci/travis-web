@@ -3,10 +3,8 @@ import { colorForState } from 'travis/utils/helpers';
 import { githubCommit } from 'travis/utils/urls';
 import Polling from 'travis/mixins/polling';
 
-export default Ember.View.extend(Polling, {
-  pollModels: 'controller.job.build',
-  repoBinding: 'controller.repo',
-  jobBinding: 'controller.job',
+export default Ember.Component.extend({
+  pollModels: 'job.build',
   commitBinding: 'job.commit',
   currentItemBinding: 'job',
 
@@ -16,5 +14,5 @@ export default Ember.View.extend(Polling, {
 
   urlGithubCommit: function() {
     return githubCommit(this.get('repo.slug'), this.get('commit.sha'));
-  }.property('repo.slug', 'commit.sha'),
+  }.property('repo.slug', 'commit.sha')
 });
