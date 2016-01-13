@@ -1,10 +1,13 @@
 import Ember from 'ember';
+import config from 'travis/config/environment';
 
 export default Ember.Controller.extend({
   actions: {
     gaCta(location) {
-      _gaq.push(['_trackPageview', '/virtual/signup?' + location]);
-      return this.auth.signIn();
+      if(config.gaCode) {
+        _gaq.push(['_trackPageview', '/virtual/signup?' + location]);
+      }
+      this.auth.signIn();
     }
   }
 });

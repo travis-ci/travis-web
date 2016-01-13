@@ -3,8 +3,10 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   actions: {
     gaCta(location) {
-      _gaq.push(['_trackPageview', '/virtual/signup?' + location]);
-      return this.auth.signIn();
+      if(config.gaCode) {
+        _gaq.push(['_trackPageview', '/virtual/signup?' + location]);
+      }
+      this.auth.signIn();
     }
   }
 });
