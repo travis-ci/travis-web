@@ -12,38 +12,22 @@ export default Ember.Controller.extend({
   showMore() {
     var id, number, type;
     id = this.get('repo.id');
-    number = this.get('lastObject.number');
-    type = this.get('tab') === "builds" ? 'push' : 'pull_request';
+    number = this.get('model.lastObject.number');
+    type = this.get('tab') === "model" ? 'push' : 'pull_request';
     return this.get('model').load(this.olderThanNumber(id, number, type));
   },
 
   displayShowMoreButton: function() {
-    return this.get('tab') !== 'branches' && parseInt(this.get('lastObject.number')) > 1;
-  }.property('tab', 'lastObject.number'),
+    return this.get('tab') !== 'branches' && parseInt(this.get('model.lastObject.number')) > 1;
+  }.property('tab', 'model.lastObject.number'),
 
   displayPullRequests: function() {
-    if (this.get('tab') === 'pull_requests') {
-      if (Ember.isEmpty(this.get('repo.pullRequests.content'))) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }.property('tab', 'repo.builds', 'repo.pullRequests'),
+    return this.get('tab') === 'pull_requests';
+  }.property('tab'),
 
   displayBranches: function() {
-    if (this.get('tab') === 'branches') {
-      if (Ember.isEmpty(this.get('repo.branches.content.content'))) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }.property('tab', 'repo.builds', 'repo.branches'),
+    return this.get('tab') === 'branches';
+  }.property('tab'),
 
   noticeData: function() {
     return {
