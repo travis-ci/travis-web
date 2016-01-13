@@ -201,7 +201,7 @@ var Controller = Ember.Controller.extend({
       Ember.run.cancel(this.searchLater);
     }
     this.searchLater = Ember.run.later(this, (function() {
-      this.transitionTo('main.search', phrase.replace(/\//g, '%2F'));
+      this.transitionToRoute('main.search', phrase.replace(/\//g, '%2F'));
     }), 500);
   },
 
