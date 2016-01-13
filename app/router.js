@@ -74,6 +74,7 @@ Router.map(function() {
 
   this.route('first_sync');
   this.route('insufficient_oauth_permissions');
+  this.route('signin');
   this.route('auth');
   this.route('home');
   this.route('home-pro', { path: '/home-pro' });
