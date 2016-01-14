@@ -34,6 +34,6 @@
 
   <div class="job-duration" title="Started {{pretty-date job.startedAt}}">
     <span class="icon-clock" aria-hidden="true"></span>
-    <span class="label-align" aria-label="Job duration">{{format-duration job.duration}}</span>
+    <time class="label-align" aria-label="Job duration" datetime="PT{{job.duration}}S">{{format-duration job.duration}}</time>
   </div>
 {{/link-to}}

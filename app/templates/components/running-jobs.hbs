@@ -41,9 +41,9 @@
           </span>
           <span class="label-align">
             Duration:
-            <abbr class="duration" title={{job.startedAt}}>
+            <time class="duration" datetime={{job.startedAt}} title={{job.startedAt}}>
               {{format-duration job.duration}}
-            </abbr>
+            </time>
           </span>
         </p>
 
