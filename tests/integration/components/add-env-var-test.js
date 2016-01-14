@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
+import DS from 'ember-data';
 
 
 moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
@@ -11,12 +12,14 @@ moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
 test('it adds an env var on submit', function(assert) {
   assert.expect(6);
 
-  var store = this.container.lookup('store:main');
-  assert.equal(store.all('envVar').get('length'), 0, 'precond: store should be empty');
+  // this shouldn't be needed, probably some bug in tests setup with new ember-data
+  this.registry.register('transform:boolean', DS.BooleanTransform);
+  var store = this.container.lookup('service:store');
+  assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
   var repo;
   Ember.run(function() {
-    repo  = store.push('repo', {id: 1, slug: 'travis-ci/travis-web'});
+    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web'}}});
   });
 
   this.set('repo', repo);
@@ -28,9 +31,9 @@ test('it adds an env var on submit', function(assert) {
 
   this.$('.form-submit').click();
 
-  assert.equal(store.all('envVar').get('length'), 1, 'env var should be added to store');
+  assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 
-  var envVar = store.all('envVar').objectAt(0);
+  var envVar = store.peekAll('envVar').objectAt(0);
 
   assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
   assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
@@ -62,12 +65,13 @@ test('it shows an error if no name is present', function(assert) {
 test('it adds a public env var on submit', function(assert) {
   assert.expect(6);
 
-  var store = this.container.lookup('store:main');
-  assert.equal(store.all('envVar').get('length'), 0, 'precond: store should be empty');
+  this.registry.register('transform:boolean', DS.BooleanTransform);
+  var store = this.container.lookup('service:store');
+  assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
   var repo;
   Ember.run(function() {
-    repo  = store.push('repo', {id: 1, slug: 'travis-ci/travis-web'});
+    repo  = store.push({data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web'}}});
   });
 
   this.set('repo', repo);
@@ -81,9 +85,9 @@ test('it adds a public env var on submit', function(assert) {
 
   this.$('.form-submit').click();
 
-  assert.equal(store.all('envVar').get('length'), 1, 'env var should be added to store');
+  assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 
-  var envVar = store.all('envVar').objectAt(0);
+  var envVar = store.peekAll('envVar').objectAt(0);
 
   assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
   assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');

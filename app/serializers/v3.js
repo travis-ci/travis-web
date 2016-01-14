@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import JSONSerializer from 'ember-data/serializers/json'
+import JSONSerializer from 'ember-data/serializers/json';
 
 var traverse = function(object, callback) {
   if(!object) {
