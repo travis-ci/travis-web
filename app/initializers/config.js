@@ -7,6 +7,7 @@ initialize = function(container, application) {
     instantiate: false
   });
   application.inject('controller', 'config', 'config:main');
+  application.inject('component', 'config', 'config:main');
   return application.inject('route', 'config', 'config:main');
 };
 
