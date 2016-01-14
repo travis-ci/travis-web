@@ -22,5 +22,12 @@ window.deprecationWorkflow.config = {
     { handler: "log", matchMessage: "Using DS.Snapshot.get() is deprecated. Use .attr(), .belongsTo() or .hasMany() instead." },
     { handler: "log", matchMessage: "The filter API will be moved into a plugin soon. To enable store.filter using an environment flag, or to use an alternative, you can visit the ember-data-filter addon page" },
     { handler: "log", matchMessage: "Ember.View is deprecated. Consult the Deprecations Guide for a migration strategy." },
+
+    // TODO
+    { handler: "silence", matchMessage: new RegExp("The `initialize` method for Application initializer .*? should take only one argument - `App`, an instance of an `Application`.") },
+    { handler: "silence", matchMessage: "Using `ApplicationInstance.container.lookup` is deprecated. Please use `ApplicationInstance.lookup` instead." },
+    { handler: "silence", matchMessage: "this.resource() is deprecated. Use this.route('name', { resetNamespace: true }, function () {}) instead." },
+    { handler: "silence", matchMessage: new RegExp("the component:.*? test module is implicitly running in unit test mode, which will change to integration test mode by default in an upcoming version of ember-test-helpers. Add `unit: true` or a `needs:[]` list to explicitly opt in to unit test mode.") },
+    { handler: "silence", matchMessage: "this.append() is deprecated. Please use this.render() or this.$() instead." }
   ]
 };

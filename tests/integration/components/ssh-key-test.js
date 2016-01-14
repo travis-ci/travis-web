@@ -11,7 +11,7 @@ moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
 test('it renders the default ssh key if no custom key is set', function(assert) {
   assert.expect(2);
 
-  var store = this.container.lookup('store:main');
+  var store = this.container.lookup('service:store');
 
   var key = Ember.Object.create({fingerprint: 'fingerprint'});
   this.set('key', key);
@@ -25,11 +25,11 @@ test('it renders the default ssh key if no custom key is set', function(assert) 
 test('it renders the custom ssh key if custom key is set', function(assert) {
   assert.expect(2);
 
-  var store = this.container.lookup('store:main');
+  var store = this.container.lookup('service:store');
 
   var key;
   Ember.run(function() {
-    key = store.push('sshKey', {description: 'fookey', fingerprint: 'somethingthing', id: 1});
+    key = store.push({data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' }}});
   });
 
   this.set('key', key);
@@ -44,11 +44,11 @@ test('it renders the custom ssh key if custom key is set', function(assert) {
 test('it deletes a custom key if permissions are right', function(assert) {
   assert.expect(1);
 
-  var store = this.container.lookup('store:main');
+  var store = this.container.lookup('service:store');
 
   var key;
   Ember.run(function() {
-    key = store.push('sshKey', {description: 'fookey', fingerprint: 'somethingthing', id: 1});
+    key = store.push({data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' }}});
   });
 
   this.set('key', key);
@@ -67,11 +67,11 @@ test('it deletes a custom key if permissions are right', function(assert) {
 test('it does not delete the custom key if permissions are insufficient', function(assert) {
   assert.expect(1);
 
-  var store = this.container.lookup('store:main');
+  var store = this.container.lookup('service:store');
 
   var key;
   Ember.run(function() {
-    key = store.push('sshKey', {description: 'fookey', fingerprint: 'somethingthing', id: 1});
+    key = store.push({data: { id: 1, type: 'ssh-key', attributes: { description: 'fookey', fingerprint: 'somethingthing' }}});
   });
 
   this.set('key', key);

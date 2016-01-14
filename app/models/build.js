@@ -3,38 +3,39 @@ import configKeysMap from 'travis/utils/keys-map';
 import Ember from 'ember';
 import Model from 'travis/models/model';
 import DurationCalculations from 'travis/utils/duration-calculations';
-import DS from 'ember-data';
 import Config from 'travis/config/environment';
+import attr from 'ember-data/attr';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 
 var Build;
 
 if (Config.useV3API) {
-  Build = DS.Model.extend(DurationCalculations, {
-    branch: DS.belongsTo('branch', { async: false, inverse: 'builds' }),
+  Build = Model.extend(DurationCalculations, {
+    branch: belongsTo('branch', { async: false, inverse: 'builds' }),
     branchName: Ember.computed.alias('branch.name')
   });
 } else {
-  Build = DS.Model.extend(DurationCalculations, {
+  Build = Model.extend(DurationCalculations, {
       branchName: Ember.computed.alias('commit.branch')
   });
 }
 
 Build.reopen({
   ajax: Ember.inject.service(),
-  state: DS.attr(),
-  number: DS.attr('number'),
-  message: DS.attr('string'),
-  _duration: DS.attr('number'),
-  _config: DS.attr('object'),
-  _startedAt: DS.attr(),
-  _finishedAt: DS.attr('string'),
-  pullRequest: DS.attr('boolean'),
-  pullRequestTitle: DS.attr(),
-  pullRequestNumber: DS.attr('number'),
-  eventType: DS.attr('string'),
-  repo: DS.belongsTo('repo', { async: true }),
-  commit: DS.belongsTo('commit', { async: false }),
-  jobs: DS.hasMany('job', { async: true }),
+  state: attr(),
+  number: attr('number'),
+  message: attr('string'),
+  _duration: attr('number'),
+  _config: attr('object'),
+  _startedAt: attr(),
+  _finishedAt: attr('string'),
+  pullRequest: attr('boolean'),
+  pullRequestTitle: attr(),
+  pullRequestNumber: attr('number'),
+  eventType: attr('string'),
+  repo: belongsTo('repo', { async: true }),
+  commit: belongsTo('commit', { async: false }),
+  jobs: hasMany('job', { async: true }),
 
   config: function() {
     var config;

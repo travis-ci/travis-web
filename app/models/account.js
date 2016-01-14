@@ -1,13 +1,13 @@
 import Ember from 'ember';
-import DS from 'ember-data';
+import attr from 'ember-data/attr';
 import Model from 'travis/models/model';
 
 export default Model.extend({
-  name: DS.attr(),
-  type: DS.attr(),
-  avatarUrl: DS.attr(),
-  reposCount: DS.attr('number'),
-  subscribed: DS.attr('boolean'),
-  education: DS.attr('boolean'),
+  name: attr(),
+  type: attr(),
+  avatarUrl: attr(),
+  reposCount: attr('number'),
+  subscribed: attr('boolean'),
+  education: attr('boolean'),
   loginBinding: 'id'
 });

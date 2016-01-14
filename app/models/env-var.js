@@ -1,10 +1,11 @@
 import Ember from 'ember';
 import Model from 'travis/models/model';
-import DS from 'ember-data';
+import attr from 'ember-data/attr';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
-  name: DS.attr(),
-  value: DS.attr(),
-  "public": DS.attr('boolean'),
-  repo: DS.belongsTo('repo', { async: true })
+  name: attr(),
+  value: attr(),
+  "public": attr('boolean'),
+  repo: belongsTo('repo', { async: true })
 });

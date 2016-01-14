@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import Model from 'travis/models/model';
 import config from 'travis/config/environment';
-import DS from 'ember-data';
+import attr from 'ember-data/attr';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   ajax: Ember.inject.service(),
@@ -9,14 +10,14 @@ export default Model.extend({
   // TODO: this totally not should be needed here
   sessionStorage: Ember.inject.service(),
 
-  name: DS.attr(),
-  email: DS.attr(),
-  login: DS.attr(),
-  token: DS.attr(),
-  gravatarId: DS.attr(),
-  isSyncing: DS.attr('boolean'),
-  syncedAt: DS.attr(),
-  repoCount: DS.attr('number'),
+  name: attr(),
+  email: attr(),
+  login: attr(),
+  token: attr(),
+  gravatarId: attr(),
+  isSyncing: attr('boolean'),
+  syncedAt: attr(),
+  repoCount: attr('number'),
 
   fullName: function() {
     return this.get('name') || this.get('login');
