@@ -22,16 +22,16 @@
   <p>
     <span class="icon-clock"></span>
     <span class="label-align">Duration: 
-    <abbr class="duration" title={{repo.lastBuildStartedAt}}>
+    <time class="duration" datetime={{repo.lastBuildStartedAt}} title={{repo.lastBuildStartedAt}}>
       {{format-duration repo.lastBuildDuration}}
-    </abbr></span>
+    </time></span>
   </p>
 
   <p>
     <span class="icon-calendar"></span>
     <span class="label-align">Finished: 
-    <abbr class="finished_at timeago" title={{repo.lastBuildFinishedAt}}>
+    <time class="finished_at timeago" datetime={{repo.lastBuildFinishedAt}} title={{repo.lastBuildFinishedAt}}>
       {{format-time repo.lastBuildFinishedAt}}
-    </abbr></span>
+    </time></span>
   </p>
 </div>
