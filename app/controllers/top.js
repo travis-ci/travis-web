@@ -11,12 +11,6 @@ export default Ember.Controller.extend({
     return this.get('user.name') || this.get('user.login');
   }.property('user.login', 'user.name'),
 
-  gravatarUrl: function() {
-    if (this.get('user.gravatarId')) {
-      return location.protocol + "//www.gravatar.com/avatar/" + (this.get('user.gravatarId')) + "?s=36&d=mm";
-    }
-  }.property('user.gravatarId'),
-
   defineTowerColor(broadcastArray) {
     if (!broadcastArray) {
       return '';

@@ -16,8 +16,8 @@ test('calculation of avatar urls via Gravatar', function() {
       committerAvatarUrl: null
     });
   });
-  equal(model.get('authorAvatarUrlOrGravatar'), 'https://www.gravatar.com/avatar/5c1e6d6e64e12aca17657581a48005d1?s=40&d=https%3A%2F%2Ftravis-ci.org%2Fimages%2Fui%2Fdefault-avatar.png', 'correctly sets gravatar image');
-  return equal(model.get('committerAvatarUrlOrGravatar'), 'https://www.gravatar.com/avatar/5c1e6d6e64e12aca17657581a48005d1?s=40&d=https%3A%2F%2Ftravis-ci.org%2Fimages%2Fui%2Fdefault-avatar.png', 'correctly sets gravatar image');
+  equal(model.get('authorAvatarUrlOrGravatar'), 'https://www.gravatar.com/avatar/5c1e6d6e64e12aca17657581a48005d1?s=40&d=blank', 'correctly sets gravatar image');
+  return equal(model.get('committerAvatarUrlOrGravatar'), 'https://www.gravatar.com/avatar/5c1e6d6e64e12aca17657581a48005d1?s=40&d=blank', 'correctly sets gravatar image');
 });
 
 test('calculation of avatar urls via overriding parameter', function() {

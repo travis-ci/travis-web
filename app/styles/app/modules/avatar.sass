@@ -1,43 +1,58 @@
-%avatar
-  position: relative
-  background-color: #a0a0a0
-  border-radius: 50%
-  overflow: hidden
-  &:before
-    content: ""
-    display: block
-    width: 40%
-    height: 40%
-    border-radius: 50%
-    background: $cream-light
-    position: absolute
-    top: 20%
-    margin: auto
-    left: 0
-    right: 0
+=absoluteCenter
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  margin: auto
 
-  &:after
-    content: ""
-    display: block
-    width: 66%
-    height: 70%
-    border-radius: 50%
-    background: $cream-light
-    position: absolute
-    top: 55%
-    margin: auto
-    left: 0
-    right: 0
-
-.default-avatar--profile
-  @extend %avatar
-  width: 2.6rem
-  height: 2.6rem
-
-.default-avatar--topbar
-  @extend %avatar
-  width: 2.7rem
-  height: 2.7rem
+.avatar
   display: inline-block
+  width: 2.3em
+  height: 2.3em
+  position: relative
   vertical-align: middle
-  margin-left: 0.3em
+  border-radius: 50%
+  background-color: white
+  overflow: hidden
+
+  .pseudo-avatar
+    +absoluteCenter
+    border: 1px solid $grey
+    border-radius: 50%
+    background: white
+    z-index: 1
+    &:after
+      content: attr(data-initials)
+      +absoluteCenter
+      color: $grey
+      font-weight: 600
+      text-align: center
+      font-size: 1.4em
+      line-height: 1.6
+
+  .real-avatar
+    +absoluteCenter
+    z-index: 2
+    border-radius: 50%
+
+.profile
+  .avatar
+    margin-left: 1em
+    top: -3px
+
+.commit-author
+  .avatar
+    width: 20px
+    height: 20px
+  .pseudo-avatar:after
+    font-size: .7em
+    line-height: 1.7
+
+.row-committer
+  .avatar
+    width: 18px
+    height: 18px
+  .pseudo-avatar:after
+    font-size: .7em
+    line-height: 1.6

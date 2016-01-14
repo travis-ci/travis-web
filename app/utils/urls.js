@@ -59,9 +59,7 @@ email = function(email) {
 };
 
 gravatarImage = function(email, size) {
-  var avatarDefaultUrl;
-  avatarDefaultUrl = 'https://travis-ci.org/images/ui/default-avatar.png';
-  return "https://www.gravatar.com/avatar/" + (md5(email)) + "?s=" + size + "&d=" + (encodeURIComponent(avatarDefaultUrl));
+    return "https://www.gravatar.com/avatar/" + (md5(email)) + "?s=" + size + "&d=blank";
 };
 
 export { plainTextLog, githubPullRequest, githubCommit, githubRepo, githubWatchers, githubNetwork, githubAdmin, statusImage, ccXml, email, gravatarImage };

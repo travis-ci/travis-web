@@ -56,8 +56,9 @@
           <button class="signed-out button--signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
-          {{#link-to "profile" class="navigation-anchor signed-in"}}{{userName}}
-          {{#if gravatarUrl }}<img src={{gravatarUrl}} />{{else}}<div class="default-avatar--topbar"></div>{{/if}}
+          {{#link-to "profile" class="navigation-anchor signed-in"}}
+            {{userName}}
+            {{user-avatar user=user}}
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
