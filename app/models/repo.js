@@ -220,7 +220,7 @@ Repo.reopenClass({
       return promise;
     } else {
       login = reposIdsOrlogin;
-      return store.find('repo', {
+      return store.query('repo', {
         member: login,
         orderBy: 'name'
       });
@@ -253,7 +253,7 @@ Repo.reopenClass({
         });
       });
     } else {
-      return store.find('repo', {
+      return store.query('repo', {
         search: query,
         orderBy: 'name'
       });
@@ -299,7 +299,7 @@ Repo.reopenClass({
           return repo;
         });
       } else {
-        promise = store.find('repo', {
+        promise = store.query('repo', {
           slug: slug
         }).then(function(repos) {
           return repos.get('firstObject') || (function() {

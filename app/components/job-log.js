@@ -3,36 +3,24 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   logBinding: 'job.log',
 
-  didInsertElement() {
-    return this.setupLog();
-  },
+  didReceiveAttrs: function(options) {
+    this._super(...arguments);
 
-  logDidChange: function() {
-    return this.setupLog();
-  }.observes('log'),
+    if(options.oldAttrs && options.oldAttrs.job) {
+      this.teardownLog(options.oldAttrs.job.value);
+    }
 
-  logWillChange: function() {
-    return this.teardownLog();
-  }.observesBefore('log'),
-
-  willDestroyElement() {
-    return this.teardownLog();
-  },
-
-  teardownLog() {
-    var job;
-    job = this.get('job');
-    if (job) {
-      return job.unsubscribe();
+    if(options.newAttrs && options.newAttrs.job) {
+      this.setupLog(options.newAttrs.job.value);
     }
   },
 
-  setupLog() {
-    var job;
-    job = this.get('job');
-    if (job) {
-      job.get('log').fetch();
-      return job.subscribe();
-    }
+  teardownLog(job) {
+    job.unsubscribe();
+  },
+
+  setupLog(job) {
+    job.get('log').fetch();
+    job.subscribe();
   }
 });

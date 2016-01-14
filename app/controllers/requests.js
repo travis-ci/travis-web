@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
   repoController: Ember.inject.controller('repo'),
 
   lintUrl: function() {

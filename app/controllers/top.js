@@ -102,5 +102,17 @@ export default Ember.Controller.extend({
   },
   showCta: function() {
     return !this.get('auth.signedIn') && !this.get('config.pro') && !this.get('landingPage');
-  }.property('auth.signedIn', 'landingPage')
+  }.property('auth.signedIn', 'landingPage'),
+
+  classProfile: function() {
+    var classes = ['profile menu'];
+
+    if (this.get('tab') === 'profile') {
+      classes.push('active');
+    }
+
+    classes.push(this.get('controller.auth.state') || 'signed-out');
+
+    return classes.join(' ');
+  }.property('tab', 'auth.state')
 });

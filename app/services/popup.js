@@ -9,11 +9,6 @@ export default Ember.Service.extend({
   },
 
   close() {
-    var view;
-    if (view = Ember.View.currentPopupView) {
-      view.destroy();
-      Ember.View.currentPopupView = null;
-    }
     return $('.popup').removeClass('display');
   }
 });

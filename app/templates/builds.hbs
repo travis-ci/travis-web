@@ -1,6 +1,7 @@
-{{#if content.isLoaded}}
+{{#builds-wrapper contentType=contentType repo=repo}}
+{{#if model.isLoaded}}
   <ul class="build-list">
-    {{#each controller as |build|}}
+    {{#each model as |build|}}
       {{builds-item build=build}}
     {{else}}
       {{no-builds repo=noticeData isPR=displayPullRequests isBranch=displayBranches}}
@@ -18,3 +19,4 @@
 {{else}}
   {{loading-indicator}}
 {{/if}}
+{{/builds-wrapper}}

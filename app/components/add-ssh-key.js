@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     var model = this.get('store').recordForId('ssh_key', id);
 
     if (model) {
-      this.get('store').dematerializeRecord(model._internalModel);
+      this.get('store').unloadRecord(model);
       var typeMap = this.get('store').typeMapFor(model.constructor);
       var idToRecord = typeMap.idToRecord;
       delete idToRecord[id];
@@ -62,7 +62,8 @@ export default Ember.Component.extend({
       }
       this.set('isSaving', true);
       if (this.isValid()) {
-        ssh_key = this.get('model').setProperties({
+        ssh_key = this.get('model');
+        ssh_key.setProperties({
           description: this.get('description'),
           value: this.get('value')
         });

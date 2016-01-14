@@ -1,12 +1,15 @@
-import BasicView from 'travis/views/basic';
+import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 
-export default BasicView.extend(Polling, {
+export default Ember.Component.extend({
+  store: Ember.inject.service('store'),
+
   pollHook: function(store) {
     var contentType, repositoryId;
-    contentType = this.get('controller.contentType');
-    repositoryId = this.get('controller.repo.id');
-    store = this.get('controller.store');
+    contentType = this.get('contentType');
+    repositoryId = this.get('repo.id');
+    store = this.get('store');
+
     if (contentType === 'builds') {
       return store.query('build', {
         event_type: 'push',

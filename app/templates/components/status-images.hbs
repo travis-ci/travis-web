@@ -1,0 +1,25 @@
+<a href="#" class="close" {{action "close"}}></a>
+<p>
+  <label>Branch:</label>
+  {{#if branches.isLoaded}}
+    {{#x-select value=branch}}
+      {{#each branches as |branch|}}
+        {{#x-option value=branch.commit.branch}}{{branch.commit.branch}}{{/x-option}}
+      {{/each}}
+    {{/x-select}}
+  {{else}}
+    {{loading-indicator}}
+  {{/if}}
+</p>
+
+<p>
+  <label>
+  {{#x-select value=format}}
+    {{#each formats as |format|}}
+      {{#x-option value=format}}{{format}}{{/x-option}}
+    {{/each}}
+  {{/x-select}}
+
+  </label>
+  {{status-image-input value=statusString class="url" rows=3}}
+</p>

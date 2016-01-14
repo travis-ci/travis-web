@@ -3,6 +3,12 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
   polling: Ember.inject.service(),
 
+  init() {
+    this.set('currentPollModels', {});
+
+    return this._super(...arguments);
+  },
+
   didInsertElement() {
     this._super.apply(this, arguments);
     return this.startPolling();
@@ -17,16 +23,20 @@ export default Ember.Mixin.create({
     return this.pollModel(key);
   },
 
-  pollModelWillChange(sender, key, value) {
-    return this.stopPollingModel(key);
-  },
-
   pollModel(property) {
-    var addToPolling, model;
-    addToPolling = () => {
+    var model = this.get(property),
+        currentPollModels = this.get('currentPollModels');
+
+    if(currentPollModels[property]) {
+      this.get('polling').stopPolling(currentPollModels[property]);
+    }
+    currentPollModels[property] = model;
+
+    var addToPolling = () => {
       return this.get('polling').startPolling(model);
     };
-    if (model = this.get(property)) {
+
+    if (model) {
       if (model.then) {
         return model.then(function(resolved) {
           return addToPolling(resolved);
@@ -38,8 +48,8 @@ export default Ember.Mixin.create({
   },
 
   stopPollingModel(property) {
-    var model;
-    if (model = this.get(property)) {
+    var model = this.get(property);
+    if (model) {
       return this.get('polling').stopPolling(model);
     }
   },
@@ -54,7 +64,6 @@ export default Ember.Mixin.create({
       pollModels.forEach( (property) => {
         this.pollModel(property);
         this.addObserver(property, this, 'pollModelDidChange');
-        return Ember.addBeforeObserver(this, property, this, 'pollModelWillChange');
       });
     }
     if (this.pollHook) {
@@ -63,15 +72,15 @@ export default Ember.Mixin.create({
   },
 
   stopPolling() {
-    var pollModels;
-    if (pollModels = this.get('pollModels')) {
+    var pollModels = this.get('pollModels');
+
+    if (pollModels) {
       if (!Ember.isArray(pollModels)) {
         pollModels = [pollModels];
       }
       pollModels.forEach( (property) => {
         this.stopPollingModel(property);
         this.removeObserver(property, this, 'pollModelDidChange');
-        return Ember.removeBeforeObserver(this, property, this, 'pollModelWillChange');
       });
     }
     return this.get('polling').stopPollingHook(this);

@@ -4,24 +4,24 @@ import ApplicationAdapter from 'travis/adapters/application';
 export default ApplicationAdapter.extend({
   namespace: 'settings',
 
-  find(store, type, id, record) {
+  findRecord(store, type, id, record) {
     return this.ajax(this.urlPrefix() + '/ssh_key/' + id, 'GET');
   },
 
   deleteRecord(store, type, record) {
-    var id;
-    id = Ember.get(record, 'id');
+    var id = record.id;
     return this.ajax(this.urlPrefix() + '/ssh_key/' + id, "DELETE");
   },
 
   createRecord(store, type, record) {
-    var data, id, serializer;
+    var data, serializer;
     data = {};
-    serializer = store.serializerFor(type.typeKey);
+    serializer = store.serializerFor(type.modelName);
     serializer.serializeIntoHash(data, type, record, {
       includeId: true
     });
-    id = Ember.get(record, 'id');
+
+    var id = record.id;
     return this.ajax(this.urlPrefix() + '/ssh_key/' + id, "PATCH", {
       data: data
     });

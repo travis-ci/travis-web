@@ -1,13 +1,14 @@
 import Ember from 'ember';
 
-export default Ember.View.extend({
-  templateName: 'repos/list/tabs',
-  tabBinding: 'controller.tab',
-  currentUserBinding: 'controller.currentUser.model',
+export default Ember.Component.extend({
+  auth: Ember.inject.service(),
+
+  currentUserBinding: 'auth.currentUser',
+
   classRecent: function() {
     if (this.get('tab') === 'recent') {
       return 'active';
-    } else if (this.get('tab') === 'search' && this.get('controller').auth.get('signedIn')) {
+    } else if (this.get('tab') === 'search' && this.get('auth.signedIn')) {
       return 'hidden';
     }
   }.property('tab'),

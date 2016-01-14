@@ -7,6 +7,16 @@ export default DS.ActiveModelAdapter.extend({
   host: config.apiEndpoint,
   coalesceFindRequests: true,
 
+  // Before Ember Data 2.0 the default behaviour of running `findAll` was to get
+  // new records only when there're no records in the store. This will change
+  // to a different strategy in 2.0: when you run `findAll` it will not get any
+  // new data initially, but it will try loading new data in the background.
+  // 
+  // I'm disabling the new behaviour for now.
+  shouldBackgroundReloadRecord() {
+    return false;
+  },
+
   ajaxOptions(url, type, options) {
     var base, hash, token;
 

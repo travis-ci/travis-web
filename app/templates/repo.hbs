@@ -1,4 +1,5 @@
-{{#if view.isEmpty}}
+{{#repo-wrapper repo=repo isLoading=isLoading}}
+{{#if isEmpty}}
   {{repos-empty}}
 {{else}}
 
@@ -7,11 +8,11 @@
       <header>
         <h1 class="repo-title">{{#link-to "owner" repo.owner}}{{repo.owner}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
         <div class="repo-gh">
-          <a href="{{controller.urlGithub}}" title="{{repo.name}} on Github">{{repo.name}} on Github</a>
+          <a href="{{urlGithub}}" title="{{repo.name}} on Github">{{repo.name}} on Github</a>
         </div>
         <div class="repo-badge">
-          <a href="#" id="status-image-popup" title="build status image" name="status-images" class="open-popup" {{action "statusImages" target=view}}>
-            <img src={{view.statusImageUrl}} alt="Build Status Images"/>
+          <a href="#" id="status-image-popup" title="build status image" name="status-images" class="open-popup" {{action "statusImages"}}>
+            <img src={{statusImageUrl}} alt="Build Status Images"/>
           </a>
         </div>
       </header>
@@ -39,3 +40,6 @@
     {{loading-indicator}}
   {{/if}}
 {{/if}}
+{{/repo-wrapper}}
+
+{{status-images repo=repo branches=repo.branches}}
