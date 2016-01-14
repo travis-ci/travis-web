@@ -62,7 +62,7 @@ export default Ember.Component.extend({
       }
       this.set('isSaving', true);
       if (this.isValid()) {
-        ssh_key = this.get('model')
+        ssh_key = this.get('model');
         ssh_key.setProperties({
           description: this.get('description'),
           value: this.get('value')
