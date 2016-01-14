@@ -4,25 +4,26 @@ import Ember from 'ember';
 import Model from 'travis/models/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/utils/duration-calculations';
-import DS from 'ember-data';
+import attr from 'ember-data/attr';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 
 export default Model.extend(DurationCalculations, {
   ajax: Ember.inject.service(),
-  logId: DS.attr(),
-  queue: DS.attr(),
-  state: DS.attr(),
-  number: DS.attr(),
-  _startedAt: DS.attr(),
-  _finishedAt: DS.attr(),
-  allowFailure: DS.attr('boolean'),
-  tags: DS.attr(),
-  repositoryPrivate: DS.attr(),
-  repositorySlug: DS.attr(),
-  _config: DS.attr('object'),
+  logId: attr(),
+  queue: attr(),
+  state: attr(),
+  number: attr(),
+  _startedAt: attr(),
+  _finishedAt: attr(),
+  allowFailure: attr('boolean'),
+  tags: attr(),
+  repositoryPrivate: attr(),
+  repositorySlug: attr(),
+  _config: attr('object'),
 
-  repo: DS.belongsTo('repo', { async: true }),
-  build: DS.belongsTo('build', { async: true }),
-  commit: DS.belongsTo('commit', { async: true }),
+  repo: belongsTo('repo', { async: true }),
+  build: belongsTo('build', { async: true }),
+  commit: belongsTo('commit', { async: true }),
   branch: Ember.computed.alias('build.branch'),
   branchName: Ember.computed.alias('build.branchName'),
 

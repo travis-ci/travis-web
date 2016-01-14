@@ -1,22 +1,23 @@
 import Ember from 'ember';
 import Model from 'travis/models/model';
-import DS from 'ember-data';
+import attr from 'ember-data/attr';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
-  created_at: DS.attr(),
-  event_type: DS.attr(),
-  result: DS.attr(),
-  message: DS.attr(),
-  headCommit: DS.attr(),
-  baseCommit: DS.attr(),
-  branchName: DS.attr(),
-  tagName: DS.attr(),
-  pullRequest: DS.attr('boolean'),
-  pullRequestTitle: DS.attr(),
-  pullRequestNumber: DS.attr('number'),
-  repo: DS.belongsTo('repo', { async: true }),
-  commit: DS.belongsTo('commit', { async: true }),
-  build: DS.belongsTo('build', { async: true }),
+  created_at: attr(),
+  event_type: attr(),
+  result: attr(),
+  message: attr(),
+  headCommit: attr(),
+  baseCommit: attr(),
+  branchName: attr(),
+  tagName: attr(),
+  pullRequest: attr('boolean'),
+  pullRequestTitle: attr(),
+  pullRequestNumber: attr('number'),
+  repo: belongsTo('repo', { async: true }),
+  commit: belongsTo('commit', { async: true }),
+  build: belongsTo('build', { async: true }),
 
   isAccepted: function() {
     // For some reason some of the requests have a null result beside the fact that

@@ -1,8 +1,8 @@
-import DS from 'ember-data';
 import config from 'travis/config/environment';
 import Ember from 'ember';
+import ActiveModelAdapter from 'active-model-adapter';
 
-export default DS.ActiveModelAdapter.extend({
+export default ActiveModelAdapter.extend({
   auth: Ember.inject.service(),
   host: config.apiEndpoint,
   coalesceFindRequests: true,

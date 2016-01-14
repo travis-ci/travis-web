@@ -3,14 +3,15 @@ import Model from 'travis/models/model';
 import { durationFrom as durationFromHelper } from 'travis/utils/helpers';
 import Build from 'travis/models/build';
 import Config from 'travis/config/environment';
-import DS from 'ember-data';
 import Ember from 'ember';
+import attr from 'ember-data/attr';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 
 var Repo;
 
 if (Config.useV3API) {
   Repo = Model.extend({
-    defaultBranch: DS.belongsTo('branch', {
+    defaultBranch: belongsTo('branch', {
       async: false
     }),
     lastBuild: Ember.computed.oneWay('defaultBranch.lastBuild'),
@@ -23,13 +24,13 @@ if (Config.useV3API) {
   });
 } else {
   Repo = Model.extend({
-    lastBuildNumber: DS.attr('number'),
-    lastBuildState: DS.attr(),
-    lastBuildStartedAt: DS.attr(),
-    lastBuildFinishedAt: DS.attr(),
-    _lastBuildDuration: DS.attr('number'),
-    lastBuildLanguage: DS.attr(),
-    lastBuildId: DS.attr('number'),
+    lastBuildNumber: attr('number'),
+    lastBuildState: attr(),
+    lastBuildStartedAt: attr(),
+    lastBuildFinishedAt: attr(),
+    _lastBuildDuration: attr('number'),
+    lastBuildLanguage: attr(),
+    lastBuildId: attr('number'),
 
     lastBuildHash: function() {
       return {
@@ -60,11 +61,11 @@ if (Config.useV3API) {
 
 Repo.reopen({
   ajax: Ember.inject.service(),
-  slug: DS.attr(),
-  description: DS.attr(),
-  "private": DS.attr('boolean'),
-  githubLanguage: DS.attr(),
-  active: DS.attr(),
+  slug: attr(),
+  description: attr(),
+  "private": attr('boolean'),
+  githubLanguage: attr(),
+  active: attr(),
 
   withLastBuild() {
     return this.filter(function(repo) {

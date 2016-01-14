@@ -4,18 +4,10 @@ import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 var Serializer = V2FallbackSerializer.extend({
   isNewSerializerAPI: true,
   attrs: {
-    _config: {
-      key: 'config'
-    },
-    _finished_at: {
-      key: 'finished_at'
-    },
-    _started_at: {
-      key: 'started_at'
-    },
-    _duration: {
-      key: 'duration'
-    }
+    _config: { key: 'config' },
+    _finishedAt: { key: 'finished_at' },
+    _startedAt: { key: 'started_at' },
+    _duration: { key: 'duration' }
   },
 
   extractRelationships: function(modelClass, resourceHash) {

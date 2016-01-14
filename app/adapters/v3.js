@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import config from 'travis/config/environment';
+import RESTAdapter from 'ember-data/adapters/rest';
 
-export default DS.RESTAdapter.extend({
+export default RESTAdapter.extend({
   auth: Ember.inject.service(),
   host: config.apiEndpoint,
 

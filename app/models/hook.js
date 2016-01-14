@@ -1,15 +1,16 @@
 import Ember from 'ember';
 import Model from 'travis/models/model';
 import config from 'travis/config/environment';
-import DS from 'ember-data';
+import attr from 'ember-data/attr';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
-  name: DS.attr(),
-  ownerName: DS.attr(),
-  description: DS.attr(),
-  active: DS.attr('boolean'),
-  admin: DS.attr('boolean'),
-  "private": DS.attr('boolean'),
+  name: attr(),
+  ownerName: attr(),
+  description: attr(),
+  active: attr('boolean'),
+  admin: attr('boolean'),
+  "private": attr('boolean'),
 
   account: function() {
     return this.get('slug').split('/')[0];

@@ -2,22 +2,23 @@ import Ember from 'ember';
 import Model from 'travis/models/model';
 import Build from 'travis/models/build';
 import { gravatarImage } from 'travis/utils/urls';
-import DS from 'ember-data';
+import attr from 'ember-data/attr';
+import { hasMany, belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
-  sha: DS.attr(),
-  branch: DS.attr(),
-  message: DS.attr(),
-  compareUrl: DS.attr(),
-  authorName: DS.attr(),
-  authorEmail: DS.attr(),
-  committerName: DS.attr(),
-  committerEmail: DS.attr(),
-  committedAt: DS.attr(),
-  committerAvatarUrl: DS.attr(),
-  authorAvatarUrl: DS.attr(),
+  sha: attr(),
+  branch: attr(),
+  message: attr(),
+  compareUrl: attr(),
+  authorName: attr(),
+  authorEmail: attr(),
+  committerName: attr(),
+  committerEmail: attr(),
+  committedAt: attr(),
+  committerAvatarUrl: attr(),
+  authorAvatarUrl: attr(),
 
-  build: DS.belongsTo('build'),
+  build: belongsTo('build'),
 
   subject: function() {
     return this.get('message').split("\n", 1)[0];

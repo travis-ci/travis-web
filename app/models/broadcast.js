@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import DS from 'ember-data';
 import Model from 'travis/models/model';
+import attr from 'ember-data/attr';
 
 var indexOf = [].indexOf;
 
 var Broadcast = Model.extend({
-  message: DS.attr(),
+  message: attr(),
 
   toObject() {
     return {
