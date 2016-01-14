@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  sortAscending: false,
-  sortProperties: ['number'],
+  buildsSorting: ['number:desc'],
+  builds: Ember.computed.sort('model', 'buildsSorting'),
   repoController: Ember.inject.controller('repo'),
   repoBinding: 'repoController.repo',
   tabBinding: 'repoController.tab',
@@ -12,14 +12,14 @@ export default Ember.Controller.extend({
   showMore() {
     var id, number, type;
     id = this.get('repo.id');
-    number = this.get('model.lastObject.number');
+    number = this.get('builds.lastObject.number');
     type = this.get('tab') === "builds" ? 'push' : 'pull_request';
-    return this.get('model').load(this.olderThanNumber(id, number, type));
+    return this.get('builds').load(this.olderThanNumber(id, number, type));
   },
 
   displayShowMoreButton: function() {
-    return this.get('tab') !== 'branches' && parseInt(this.get('model.lastObject.number')) > 1;
-  }.property('tab', 'model.lastObject.number'),
+    return this.get('tab') !== 'branches' && parseInt(this.get('builds.lastObject.number')) > 1;
+  }.property('tab', 'builds.lastObject.number'),
 
   displayPullRequests: function() {
     return this.get('tab') === 'pull_requests';
