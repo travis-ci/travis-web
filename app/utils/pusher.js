@@ -196,8 +196,8 @@ if (ENV.pro) {
     return [
       [
         ":def", "ws_options", {
-          hostUnencrypted: config.wsHost + ":" + config.wsPort + (ENV.pusher.path && ("/" + config.pusher.path) || ''),
-          hostEncrypted: config.wsHost + ":" + config.wssPort + (ENV.pusher.path && ("/" + config.pusher.path) || ''),
+          hostUnencrypted: config.wsHost + ":" + config.wsPort + (ENV.pusher.path && ("/" + ENV.pusher.path) || ''),
+          hostEncrypted: config.wsHost + ":" + config.wssPort + (ENV.pusher.path && ("/" + ENV.pusher.path) || ''),
           path: config.path
         }
       ], [
