@@ -8,11 +8,7 @@ export default TravisRoute.extend({
   },
 
   renderTemplate() {
-    if (this.modelFor('repo').get('lastBuildId')) {
-      return this.render('build');
-    } else {
-      return this.render('builds/not_found');
-    }
+    return this.render('build');
   },
   deactivate() {
     var repo;

@@ -27,6 +27,10 @@ export default Ember.Controller.extend({
     return statusImage(this.get('repo.slug'));
   }.property('repo.slug'),
 
+  showCurrentBuild: function() {
+    return this.get('repo.lastBuildId') && this.get('repo.active');
+  }.property('repo.lastBuildId', 'repo.active'),
+
   actions: {
     statusImages() {
       this.get('popup').open('status-images');
