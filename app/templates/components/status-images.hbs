@@ -4,7 +4,7 @@
   {{#if branches.isLoaded}}
     {{#x-select value=branch}}
       {{#each branches as |branch|}}
-        {{#x-option value=branch.commit.branch}}{{branch.commit.branch}}{{/x-option}}
+        {{#x-option value=branch}}{{branch}}{{/x-option}}
       {{/each}}
     {{/x-select}}
   {{else}}
