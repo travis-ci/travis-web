@@ -67,7 +67,7 @@
       {{#if item.isMatrix}}
         <li title="{{format-duration item.duration}}" class="commit-clock">
           <span class="icon-clock" aria-hidden="true"></span>
-          <span class="label-align">{{#if item.isFinished}}Total time{{else}}Running{{/if}} for {{format-duration item.duration}}</span></li>
+          <span class="label-align">{{#if item.isFinished}}Total time{{else}}Running for{{/if}} {{format-duration item.duration}}</span></li>
       {{/if}}
     {{/unless}}
     <li title="{{pretty-date item.finishedAt}}" class="commit-calendar">
