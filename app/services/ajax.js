@@ -12,8 +12,6 @@ default_options = {
 
 export default Ember.Service.extend({
   auth: Ember.inject.service(),
-  publicEndpoints: [/\/repos\/?.*/, /\/builds\/?.*/, /\/jobs\/?.*/],
-  privateEndpoints: [/\/repos\/\d+\/caches/],
 
   get(url, callback, errorCallback) {
     return this.ajax(url, 'get', {
@@ -37,20 +35,7 @@ export default Ember.Service.extend({
   },
 
   needsAuth(method, url) {
-    var privateEndpoint, publicEndpoint;
-    if (config.pro) {
-      return true;
-    }
-    if (method !== 'GET') {
-      return true;
-    }
-    publicEndpoint = this.publicEndpoints.find(function(pattern) {
-      return url.match(pattern);
-    });
-    privateEndpoint = this.privateEndpoints.find(function(pattern) {
-      return url.match(pattern);
-    });
-    return !publicEndpoint || privateEndpoint;
+    return true;
   },
 
   ajax(url, method, options) {
