@@ -161,7 +161,11 @@ export default Ember.Service.extend({
     if (typeof options.data === "object" && (Ember.isNone(options.contentType) || options.contentType.match(/application\/json/))) {
       data = JSON.stringify(data);
     }
-    xhr.send(data);
+    if (data) {
+      xhr.send(data);
+    } else {
+      xhr.send();
+    }
     return promise;
   }
 });
