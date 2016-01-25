@@ -27,13 +27,13 @@
   {{#if job.notStarted}}
     <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
   {{else}}
-    <a class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
+    <a  href="#" class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
       {{eye-icon}}
       <span class="label-align">View log</span></a>
 
     <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
       <div class="log-header">
-        <a class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>{{eye-icon}}Hide log</a>
+        <a href="#" class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>{{eye-icon}}Hide log</a>
         {{#if canRemoveLog}}
           <a class="remove-log-button open-popup" {{action "removeLogPopup"}} title="Remove the log">
             <span class="icon-remove-log" aria-hidden="true"></span>Remove log</a>

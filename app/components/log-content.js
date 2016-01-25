@@ -60,6 +60,7 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
 
 export default Ember.Component.extend({
   popup: Ember.inject.service(),
+  classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
   currentUserBinding: 'auth.currentUser',
 
@@ -226,7 +227,5 @@ export default Ember.Component.extend({
     toggleLog() {
       this.toggleProperty('logIsVisible');
     }
-  },
-
-  noop() {}
+  }
 });
