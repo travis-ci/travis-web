@@ -55,7 +55,12 @@ if (Config.useV3API) {
         duration = durationFromHelper(this.get('lastBuildStartedAt'), this.get('lastBuildFinishedAt'));
       }
       return duration;
-    }.property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt')
+    }.property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt'),
+
+    isFinished: function() {
+      let state = this.get('lastBuildState');
+      return ['passed', 'failed', 'errored', 'canceled'].contains(state);
+    }.property('lastBuildState')
   });
 }
 

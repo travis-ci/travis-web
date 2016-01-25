@@ -51,6 +51,7 @@ var sortCallback = function(repo1, repo2) {
 
 var Controller = Ember.Controller.extend({
   ajax: Ember.inject.service(),
+  updateTimesService: Ember.inject.service('updateTimes'),
 
   actions: {
     activate: function(name) {
@@ -97,7 +98,7 @@ var Controller = Ember.Controller.extend({
   init() {
     this._super.apply(this, arguments);
     if (!Ember.testing) {
-      return Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
+      Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
 
@@ -133,12 +134,13 @@ var Controller = Ember.Controller.extend({
   }.property(),
 
   updateTimes() {
-    var repos;
-    if (repos = this.get('repos')) {
-      return repos.forEach(function(r) {
-        return r.updateTimes();
-      });
+    let records = this.get('repos');
+
+    if(Config.useV3API) {
+      let callback = (record) => { return record.get('lastBuild'); };
+      records = records.filter(callback).map(callback);
     }
+    this.get('updateTimesService').push(records);
   },
 
   activate(tab, params) {

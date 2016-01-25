@@ -1,0 +1,54 @@
+import Ember from 'ember';
+import Config from 'travis/config/environment';
+
+export default Ember.Service.extend({
+  records: [],
+  allowFinishedBuilds: false,
+
+  init() {
+    Visibility.every(Config.intervals.updateTimes, this.updateTimes.bind(this));
+    setInterval(this.resetAllowFinishedBuilds.bind(this), 60000);
+
+    return this._super(...arguments);
+  },
+
+  resetAllowFinishedBuilds() {
+    this.set('allowFinishedBuilds', true);
+  },
+
+  updateTimes() {
+    let records = this.get('records');
+
+    records.filter((record) => {
+      return this.get('allowFinishedBuilds') || !record.get('isFinished');
+    }).forEach((record) => {
+      record.updateTimes();
+    });
+
+    this.set('records', []);
+
+    if(this.get('allowFinishedBuilds')) {
+      this.set('allowFinishedBuilds', false);
+    }
+  },
+
+  pushObject(record) {
+    let records = this.get('records');
+
+    if(!records.contains(record)) {
+      records.pushObject(record);
+    }
+  },
+
+  push(model) {
+    if(!model) { return; }
+
+    if(model.forEach) {
+      model.forEach( (element) => {
+        this.pushObject(element);
+      });
+    } else {
+      this.pushObject(model);
+    }
+  }
+});

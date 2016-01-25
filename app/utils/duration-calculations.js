@@ -14,9 +14,7 @@ export default Ember.Mixin.create({
   }.property('_duration', 'finishedAt', 'startedAt', 'notStarted', '_finishedAt', '_startedAt'),
 
   updateTimes() {
-    if (!this.get('isFinished')) {
-      this.notifyPropertyChange('duration');
-      return this.notifyPropertyChange('finishedAt');
-    }
+    this.notifyPropertyChange('duration');
+    return this.notifyPropertyChange('finishedAt');
   }
 });

@@ -3,6 +3,8 @@ import config from 'travis/config/environment';
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
+  updateTimesService: Ember.inject.service('updateTimes'),
+
   init() {
     this._super.apply(this, arguments);
     if (!Ember.testing) {
@@ -11,11 +13,6 @@ export default Ember.Component.extend({
   },
 
   updateTimes() {
-    var jobs;
-    if (jobs = this.get('jobs')) {
-      return jobs.forEach(function(job) {
-        return job.updateTimes();
-      });
-    }
+    this.get('updateTimesService').push(this.get('jobs'));
   }
 });
