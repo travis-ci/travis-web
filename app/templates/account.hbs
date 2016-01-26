@@ -2,25 +2,21 @@
 
   <header>
 
-  {{#if config.billingEndpoint}}
-    <div class="cta-btn">
-    {{#if subscribeButtonInfo.subscribed}}
-      <a class="btn btn-activated" href={{billingUrl}}>
-        Subscription active!
-      </a>
-    {{else}}
-      {{#if subscribeButtonInfo.education}}
-        <a class="btn btn-activated" href={{billingUrl}}>
-          Educational account!
-        </a>
+  {{#unless config.enterprise}}
+    {{#if config.billingEndpoint}}
+      <div class="cta-btn">
+      {{#if subscribeButtonInfo.subscribed}}
+        <a class="btn btn-activated" href={{billingUrl}}>Subscription active!</a>
       {{else}}
-        <a class="btn btn-activate" href={{billingUrl}}>
-          Sign up this account!
-        </a>
+        {{#if subscribeButtonInfo.education}}
+          <a class="btn btn-activated" href={{billingUrl}}>Educational account!</a>
+        {{else}}
+          <a class="btn btn-activate" href={{billingUrl}}> Sign up this account!</a>
+        {{/if}}
       {{/if}}
+      </div>
     {{/if}}
-    </div>
-  {{/if}}
+  {{/unless}}
 
     <div class="profile-header">
       <h1>{{accountName}}</h1>
@@ -35,9 +31,9 @@
         <p>We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
       {{/if}}
     {{/if}}
-
   </header>
 
+{{#unless config.enterprise}}
   <section class="profile-getstarted">
     {{!-- <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a> --}}
     <ol class="row">
@@ -61,7 +57,7 @@
       </li>
     </ol>
   </section>
-
+{{/unless}}
   <div>
     <ul class="profile-hooklist">
       {{#each hooks as |hook|}}
