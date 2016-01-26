@@ -38,12 +38,12 @@
     </ul>
     <p class="commit-author">
       {{#if commit.authorName}}
-        {{user-avatar user=commit isAuthor=true}}
+        {{user-avatar url=commit.authorAvatarUrlOrGravatar name=commit.authorName}}
         <span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
       {{/if}}
       {{#unless commit.authorIsCommitter}}
         {{#if commit.committerName}}
-          {{user-avatar user=commit isComitter=true}}
+          {{user-avatar url=commit.committerAvatarUrlOrGravatar name=commit.committerName}}
           <span class="label-align">{{commit.committerName}} committed</span>
         {{/if}}
       {{/unless}}

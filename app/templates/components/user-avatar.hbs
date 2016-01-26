@@ -1,2 +1,4 @@
 <span class="pseudo-avatar" aria-hidden="true" data-initials="{{userInitials}}"></span>
-<img class="real-avatar" src="{{gravatarUrl}}" alt="avatar">
+{{#if url}}
+<img class="real-avatar" src="{{url}}" alt="avatar">
+{{/if}}
