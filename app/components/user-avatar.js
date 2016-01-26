@@ -1,6 +1,4 @@
 import Ember from 'ember';
-import config from 'travis/config/environment';
-import {gravatarImage} from '../utils/urls';
 
 export default Ember.Component.extend({
 
