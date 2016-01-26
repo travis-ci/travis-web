@@ -3,32 +3,40 @@
     <div class="footer-elem">
       <img src="/images/ui/footer-logo.svg">
     </div>
-    <div class="footer-elem">
-      <h3>&copy;Travis CI, GmbH</h3>
-      <p>Rigaer Straße 8<br>10247 Berlin, Germany <br>
-      <a href="https://docs.travis-ci.com/imprint.html">Imprint</a></p>
-    </div>
+
+    {{#unless config.enterprise}}
+      <div class="footer-elem">
+        <h3>&copy;Travis CI, GmbH</h3>
+        <p>Rigaer Straße 8<br>10247 Berlin, Germany <br>
+        <a href="https://docs.travis-ci.com/imprint.html">Imprint</a></p>
+      </div>
+    {{/unless}}
     <div class="footer-elem">
       <h3>Help</h3>
       <ul>
         <li><a href="https://docs.travis-ci.com">Documentation</a></li>
-        <li><a href="https://blog.travis-ci.com/">Blog</a></li>
-        <li><a href="mailto:support@travis-ci.com">Email</a></li>
-        <li><a href="https://twitter.com/travisci">Twitter</a></li>
+        {{#unless config.enterprise}}
+          <li><a href="https://blog.travis-ci.com/">Blog</a></li>
+          <li><a href="mailto:support@travis-ci.com">Email</a></li>
+          <li><a href="https://twitter.com/travisci">Twitter</a></li>
+        {{/unless}}
       </ul>
     </div>
-    {{#if config.pro}}
+    {{#unless config.enterprise}}
+      {{#if config.pro}}
+        <div class="footer-elem">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="https://docs.travis-ci.com/imprint.html">Imprint</a></li>
+            <li><a href="https://billing.travis-ci.com/pages/terms">Terms of Service</a></li>
+            <li><a href="https://billing.travis-ci.com/pages/security">Security Statement</a></li>
+          </ul>
+        </div>
+      {{/if}}
+
       <div class="footer-elem">
-        <h3>Legal</h3>
-        <ul>
-          <li><a href="https://docs.travis-ci.com/imprint.html">Imprint</a></li>
-          <li><a href="https://billing.travis-ci.com/pages/terms">Terms of Service</a></li>
-          <li><a href="https://billing.travis-ci.com/pages/security">Security Statement</a></li>
-        </ul>
+        {{travis-status}}
       </div>
-    {{/if}}
-    <div class="footer-elem">
-      {{travis-status}}
-    </div>
+    {{/unless}}
   </div>
 </footer>

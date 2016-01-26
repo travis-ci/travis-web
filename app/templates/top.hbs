@@ -5,32 +5,36 @@
     <button type="button" id="tofuburger" class="tofuburger" {{action 'toggleBurgerMenu'}}>Toggle Menu</button>
   </div>
 
-{{#if auth.signedIn}}
+{{#unless config.enterprise}}
+  {{#if auth.signedIn}}
 
-  {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus}}
+    {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus}}
 
-  <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
-  {{#each broadcasts.content as |broadcast|}}
-    <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}} <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a></p></li>
-  {{else}}
-    <li><p>There are no broadcasts transmitted</p></li>
-  {{/each}}
-  </ul>
-{{/if}}
+    <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
+    {{#each broadcasts.content as |broadcast|}}
+      <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}} <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a></p></li>
+    {{else}}
+      <li><p>There are no broadcasts transmitted</p></li>
+    {{/each}}
+    </ul>
+  {{/if}}
+{{/unless}}
 
   <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
-    {{#unless config.pro}}
-      <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
-      <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
-      <li>
-        <span class="navigation-anchor">Help</span>
-        <ul class="navigation-nested">
-          <li><a href="https://docs.travis-ci.com">Docs</a></li>
-          <li><a href="https://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
-        </ul>
-      </li>
-    {{/unless}}
+
+    {{#unless config.enterprise}}
+      {{#unless config.pro}}
+        <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
+        <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+        <li>
+          <span class="navigation-anchor">Help</span>
+          <ul class="navigation-nested">
+            <li><a href="https://docs.travis-ci.com">Docs</a></li>
+            <li><a href="https://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
+          </ul>
+        </li>
+      {{/unless}}
 
       {{#if config.pro}}
         {{#unless auth.signedIn}}
@@ -50,6 +54,11 @@
           </li>
         {{/unless}}
       {{/if}}
+    {{else}}
+      {{#if auth.signedIn}}
+        <li><a class="navigation-anchor" title="Documentation" href="https://docs.travis-ci.com">Docs</a></li>
+      {{/if}}
+    {{/unless}}
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
@@ -70,9 +79,11 @@
               {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
             </li>
             {{#if config.billingEndpoint}}
-              <li>
-                <a href={{config.billingEndpoint}}>Billing</a>
-              </li>
+              {{#unless config.enterprise}}
+                <li>
+                  <a href={{config.billingEndpoint}}>Billing</a>
+                </li>
+              {{/unless}}
             {{/if}}
             <li>
               <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
