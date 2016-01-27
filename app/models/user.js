@@ -3,6 +3,7 @@ import Model from 'travis/models/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
+import {gravatarImage} from '../utils/urls';
 
 export default Model.extend({
   ajax: Ember.inject.service(),
@@ -132,5 +133,9 @@ export default Model.extend({
     user = JSON.parse(this.get('sessionStorage').getItem('travis.user'));
     user[name.underscore()] = this.get(name);
     return this.get('sessionStorage').setItem('travis.user', JSON.stringify(user));
-  }
+  },
+
+  avatarUrl: function() {
+    return gravatarImage(this.get('email'), 36);
+  }.property('email')
 });

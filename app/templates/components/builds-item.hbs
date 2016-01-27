@@ -20,7 +20,7 @@
     {{/unless}}
   </div>
   <div class="row-item row-committer">
-    <img class="avatar" src={{build.commit.authorAvatarUrlOrGravatar}} alt="{{build.commit.authorName}} avatar">
+    {{user-avatar url=build.commit.authorAvatarUrlOrGravatar name=build.commit.authorName}}
     <span class="label-align">{{build.commit.authorName}}</span>
   </div>
 </div>

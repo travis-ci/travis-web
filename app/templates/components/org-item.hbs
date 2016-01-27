@@ -1,9 +1,5 @@
 <div class="media-elem">
-  {{#if avatarUrl}}
-    <img src={{avatarUrl}} alt="{{name}} avatar">
-  {{else}}
-    <div class="default-avatar--profile"></div>
-  {{/if}}
+  {{user-avatar url=account.avatarUrl name=name}}
 </div>
 <div class="media-body">
   {{#link-to "account" account.login}}
@@ -12,7 +8,7 @@
   {{/link-to}}
 
   {{#if isUser}}
-    <p class="profile-user-last">Token: 
+    <p class="profile-user-last">Token:
     {{#if tokenIsVisible}}
       <strong>{{auth.currentUser.token}}</strong>
     {{/if}}
