@@ -227,5 +227,8 @@ export default Ember.Component.extend({
     toggleLog() {
       this.toggleProperty('logIsVisible');
     }
-  }
+  },
+
+  // don't remove this, it's needed as an empty willChange callback
+  noop: function() {}
 });
