@@ -1039,8 +1039,9 @@ Log.extend(Log.Renderer.prototype, {
     if (other) {
       return other.parentNode.insertBefore(node, other);
     } else {
-      log = document.getElementById('log');
-      return log.insertBefore(node, log.firstChild);
+      if(log = document.getElementById('log')) {
+        return log.insertBefore(node, log.firstChild);
+      }
     }
   },
   insertAfter: function(node, other) {
