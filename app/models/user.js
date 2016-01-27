@@ -137,5 +137,5 @@ export default Model.extend({
 
   avatarUrl: function() {
     return gravatarImage(this.get('email'), 36);
-  }.property()
+  }.property('email')
 });
