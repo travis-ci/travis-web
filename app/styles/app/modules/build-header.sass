@@ -78,6 +78,13 @@
 
 .commit-description
   margin: 1rem 0
+  @media #{$medium-up}
+    max-height: 4.5em
+    position: relative
+    overflow: hidden
+    &:after
+      conent: ""
+      +fadeOut(bottom, 360deg, white, 5%)
 
 .list-icon
   padding: 0
