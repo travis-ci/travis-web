@@ -80,7 +80,7 @@ export default Ember.Component.extend({
   },
 
   teardownLog(log) {
-    var logElement, parts, ref;
+    var parts, ref;
     if (log || (log = this.get('log'))) {
       parts = log.get('parts');
       parts.removeArrayObserver(this, {
@@ -92,18 +92,20 @@ export default Ember.Component.extend({
       if ((ref = this.lineSelector) != null) {
         ref.willDestroy();
       }
-      if (logElement = this.$('#log')) {
-        return logElement.empty();
-      }
+      this.clearLogElement();
+    }
+  },
+
+  clearLogElement() {
+    var logElement = this.$('#log');
+    if (logElement && logElement[0]) {
+      logElement[0].innerHTML = '';
     }
   },
 
   createEngine(log) {
-    var logElement;
     if (log || (log = this.get('log'))) {
-      if (logElement = this.$('#log')) {
-        logElement.empty();
-      }
+      this.clearLogElement();
       log.onClear(() => {
         this.teardownLog();
         return this.createEngine();
