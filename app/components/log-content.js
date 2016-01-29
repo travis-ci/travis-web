@@ -152,28 +152,30 @@ export default Ember.Component.extend({
         willChange: 'noop'
       });
       parts = parts.slice(0);
-      return this.partsDidChange(parts, 0, null, parts.length);
+      this.partsDidChange(parts, 0, null, parts.length);
     }
   },
 
   partsDidChange(parts, start, _, added) {
-    var i, j, len, part, ref, ref1, ref2, results;
-    if (Log.DEBUG) {
-      console.log('log view: parts did change');
-    }
-    if (this.get('_state') !== 'inDOM') {
-      return;
-    }
-    ref = parts.slice(start, start + added);
-    results = [];
-    for (i = j = 0, len = ref.length; j < len; i = ++j) {
-      part = ref[i];
-      if ((ref1 = this.engine) != null ? (ref2 = ref1.limit) != null ? ref2.limited : void 0 : void 0) {
-        break;
+    Ember.run.schedule('afterRender', this, function() {
+      var i, j, len, part, ref, ref1, ref2, results;
+      if (Log.DEBUG) {
+        console.log('log view: parts did change');
       }
-      results.push(this.engine.set(part.number, part.content));
-    }
-    return results;
+      if (this.get('_state') !== 'inDOM') {
+        return;
+      }
+      ref = parts.slice(start, start + added);
+      results = [];
+      for (i = j = 0, len = ref.length; j < len; i = ++j) {
+        part = ref[i];
+        if ((ref1 = this.engine) != null ? (ref2 = ref1.limit) != null ? ref2.limited : void 0 : void 0) {
+          break;
+        }
+        results.push(this.engine.set(part.number, part.content));
+      }
+      return results;
+    });
   },
 
   plainTextLogUrl: function() {
