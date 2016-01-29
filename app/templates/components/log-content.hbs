@@ -25,8 +25,10 @@
   {{/if}}
 
   {{#if job.notStarted}}
-    <div class="log-notice">Hang tight, the log cannot be shown until the build has started.</div>
-  {{else}}
+    <div class="log-notice {{if logStarted 'hidden'}}">Hang tight, the log cannot be shown until the build has started.</div>
+  {{/if}}
+
+  <div class="log-container {{if job.notStarted 'hidden'}}">
     <a  href="#" class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
       {{eye-icon}}
       <span class="label-align">View log</span></a>
@@ -62,11 +64,12 @@
         {{/if}}
       </div>
     </div>
+
     {{#if limited}}
       <p class="warning">
         This log is too long to be displayed. Please reduce the verbosity of your
         build or download the <a href={{plainTextLogUrl}}>raw log</a>.
       </p>
     {{/if}}
-  {{/if}}
+  </div>
 </section>
