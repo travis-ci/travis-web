@@ -11,7 +11,7 @@ stylesheetsManager = Ember.Object.create({
   }
 });
 
-initialize = function(container, application) {
+initialize = function(application) {
   application.register('stylesheetsManager:main', stylesheetsManager, {
     instantiate: false
   });
