@@ -3,7 +3,7 @@ import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('user-avatar', 'UserAvatarComponent | Unit', {
-
+  unit: true
 });
 
 test('it renders', function() {
@@ -17,5 +17,4 @@ test('it renders', function() {
   ok(component.$().hasClass('avatar'), 'component should have right class');
   equal(component.$('.pseudo-avatar').data('initials'), 'HT', 'initials should be correct');
   equal(component.$('.real-avatar').attr('src'), 'https://someurl.com/someimage.jpg', 'avatar should be right');
-
 });
