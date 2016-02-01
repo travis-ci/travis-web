@@ -8,13 +8,4 @@
     {{build-repo-actions build=build user=user repo=repo}}
   {{/if}}
 
-  {{#if displayCodeClimate}}
-    <a href="#" name="code-climate"
-      {{action "codeClimatePopup"}} class="button-circle-codeclimate open-popup"
-      title="Test Coverage with Code Climate">Code Climate
-    </a>
-  {{/if}}
-
 </div>
-
-{{code-climate-popup}}
