@@ -2,7 +2,7 @@
 import config from 'travis/config/environment';
 var UserlikeInitializer, initialize;
 
-initialize = function(container) {
+initialize = function(application) {
   var userlikeData;
   return userlikeData = {};
 };

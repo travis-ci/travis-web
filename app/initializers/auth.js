@@ -2,7 +2,7 @@
 import TestAuth from 'travis/utils/test-auth';
 var AuthInitializer, initialize;
 
-initialize = function(container, app) {
+initialize = function(app) {
   app.inject('route', 'auth', 'service:auth');
   app.inject('controller', 'auth', 'service:auth');
   app.inject('application', 'auth', 'service:auth');

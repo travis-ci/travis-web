@@ -3,7 +3,7 @@ import config from 'travis/config/environment';
 import TravisPusher from 'travis/utils/pusher';
 var PusherInitializer, initialize;
 
-initialize = function(registry, application) {
+initialize = function(application) {
   return null;
 };
 
