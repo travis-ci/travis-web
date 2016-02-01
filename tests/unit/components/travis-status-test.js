@@ -3,7 +3,9 @@ import Ember from 'ember';
 
 var server = null;
 
-moduleForComponent('travis-status', 'TravisStatusComponent', {});
+moduleForComponent('travis-status', 'TravisStatusComponent', {
+  unit: true
+});
 
 test('adds incident class to .status-circle', function() {
   var component;

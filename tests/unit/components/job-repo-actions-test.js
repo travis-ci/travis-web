@@ -1,7 +1,9 @@
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 
-moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {});
+moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
+  unit: true
+});
 
 test('it shows cancel button if canCancel is true', function() {
   var component;
