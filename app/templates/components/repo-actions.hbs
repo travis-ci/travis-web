@@ -1,11 +1,7 @@
-<div id="actions" class="repo-main-tools">
-
-  {{! TODO: when `component` helper is available we could just use
-            with a component name based on type that is passed here }}
-  {{#if job}}
-    {{job-repo-actions job=job user=user repo=repo}}
-  {{else}}
-    {{build-repo-actions build=build user=user repo=repo}}
-  {{/if}}
-
-</div>
+{{! TODO: when `component` helper is available we could just use
+with a component name based on type that is passed here }}
+{{#if job}}
+  {{job-repo-actions job=job user=user repo=repo}}
+{{else}}
+  {{build-repo-actions build=build user=user repo=repo}}
+{{/if}}
