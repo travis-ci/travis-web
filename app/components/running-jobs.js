@@ -4,6 +4,7 @@ import config from 'travis/config/environment';
 
 export default Ember.Component.extend(Polling, {
   store: Ember.inject.service(),
+  updateTimesService: Ember.inject.service('updateTimes'),
 
   pollHook(store) {
     return this.get('store').find('job', {});
@@ -17,11 +18,6 @@ export default Ember.Component.extend(Polling, {
   },
 
   updateTimes() {
-    var jobs;
-    if (jobs = this.get('jobs')) {
-      return jobs.forEach(function(job) {
-        return job.updateTimes();
-      });
-    }
+    this.get('updateTimesService').push(this.get('jobs'));
   }
 });

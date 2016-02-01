@@ -4,6 +4,7 @@ import config from 'travis/config/environment';
 
 
 export default Ember.Controller.extend({
+  updateTimesService: Ember.inject.service('updateTimes'),
   popup: Ember.inject.service(),
 
   jobController: Ember.inject.controller('job'),
@@ -49,27 +50,16 @@ export default Ember.Controller.extend({
   init() {
     this._super.apply(this, arguments);
     if (!Ember.testing) {
-      return Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
+      Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
 
   updateTimes() {
-    return Ember.run(this, function() {
-      var build, builds, jobs;
-      if (builds = this.get('builds')) {
-        builds.forEach(function(b) {
-          return b.updateTimes();
-        });
-      }
-      if (build = this.get('build')) {
-        build.updateTimes();
-      }
-      if (build && (jobs = build.get('jobs'))) {
-        return jobs.forEach(function(j) {
-          return j.updateTimes();
-        });
-      }
-    });
+    let updateTimesService = this.get('updateTimesService');
+
+    updateTimesService.push(this.get('build'));
+    updateTimesService.push(this.get('builds'));
+    updateTimesService.push(this.get('jobs'));
   },
 
   deactivate() {
