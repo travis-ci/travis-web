@@ -1,11 +1,13 @@
-{{#if defaultBranch}}
+{{#if branchesExist}}
   <div class="branches">
-    <section>
-      <h2 class="small-title">Default Branch</h2>
-      <ul class="blank-list">
-        {{branch-row build=defaultBranch}}
-      </ul>
-    </section>
+    {{#if defaultBranch}}
+      <section>
+        <h2 class="small-title">Default Branch</h2>
+        <ul class="blank-list">
+          {{branch-row build=defaultBranch}}
+        </ul>
+      </section>
+    {{/if}}
 
     {{#if activeBranches.length}}
       <section>

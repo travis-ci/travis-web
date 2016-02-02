@@ -13,6 +13,12 @@ export default Ember.Controller.extend({
     }
   }.property('model'),
 
+  branchesExist: function() {
+    var branches = this.get('model');
+
+    return branches.length;
+  }.property('model'),
+
   activeBranches: function() {
     var repos;
     repos = this.get('model');
