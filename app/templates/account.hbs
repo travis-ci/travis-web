@@ -1,22 +1,19 @@
 {{#if allHooks.isLoaded}}
 
   <header>
-
-  {{#unless config.enterprise}}
     {{#if config.billingEndpoint}}
       <div class="cta-btn">
-      {{#if subscribeButtonInfo.subscribed}}
-        <a class="btn btn-activated" href={{billingUrl}}>Subscription active!</a>
-      {{else}}
-        {{#if subscribeButtonInfo.education}}
-          <a class="btn btn-activated" href={{billingUrl}}>Educational account!</a>
+        {{#if subscribeButtonInfo.subscribed}}
+          <a class="btn btn-activated" href={{billingUrl}}>Subscription active!</a>
         {{else}}
-          <a class="btn btn-activate" href={{billingUrl}}> Sign up this account!</a>
+          {{#if subscribeButtonInfo.education}}
+            <a class="btn btn-activated" href={{billingUrl}}>Educational account!</a>
+          {{else}}
+            <a class="btn btn-activate" href={{billingUrl}}> Sign up this account!</a>
+          {{/if}}
         {{/if}}
-      {{/if}}
       </div>
     {{/if}}
-  {{/unless}}
 
     <div class="profile-header">
       <h1>{{accountName}}</h1>

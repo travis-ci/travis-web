@@ -37,7 +37,7 @@ module.exports = function(environment) {
   };
 
   if (typeof process !== 'undefined') {
-    if (process.env.TRAVIS_PRO) {
+    if (process.env.TRAVIS_PRO && !process.env.TRAVIS_ENTERPRISE) {
       // set defaults for pro if it's used
       // TODO: we have the same defaults also in ruby process,
       //       it would be nice to move it to one place. In theory
