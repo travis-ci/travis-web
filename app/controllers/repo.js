@@ -59,7 +59,7 @@ export default Ember.Controller.extend({
 
     updateTimesService.push(this.get('build'));
     updateTimesService.push(this.get('builds'));
-    updateTimesService.push(this.get('jobs'));
+    updateTimesService.push(this.get('build.jobs'));
   },
 
   deactivate() {
