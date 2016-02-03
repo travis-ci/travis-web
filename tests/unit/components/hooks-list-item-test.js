@@ -18,7 +18,7 @@ test('it renders', function() {
   component = this.subject({
     hook: attributes
   });
-  this.append();
+  this.render();
   ok(component.$().hasClass('active'), 'component should have active class');
   ok(component.$('.switch--icon').hasClass('active'), 'switch should have active class');
   return equal(component.$('.profile-repo span').text().trim(), 'A foo repo', 'repo description should be displayed');

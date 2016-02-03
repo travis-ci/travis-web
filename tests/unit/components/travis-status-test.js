@@ -21,7 +21,7 @@ test('adds incident class to .status-circle', function() {
     });
   };
   ok(!component.get('status'), 'status is initially not set');
-  this.append();
+  this.render();
   equal(component.get('status'), 'major', 'status is updated from the API');
   return ok(component.$('.status-circle').hasClass('major'), 'status class is set on .status-circle');
 });
