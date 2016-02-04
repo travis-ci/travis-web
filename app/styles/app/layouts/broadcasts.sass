@@ -40,12 +40,13 @@
     &:last-of-type
       border-bottom: none
   p
+    position: relative
     margin: .5em 0
     padding-left: 1.5rem
     font-size: .9em
     word-wrap: break-word
-  a
-    display: inline
+  a:not(.icon-close)
+    display: block
     line-height: 1.45
     text-decoration: underline
 
@@ -56,10 +57,12 @@
     height: auto
 
   .icon-close
+    position: absolute
+    bottom: 0
+    right: 0
     display: inline-block
     width: 1.2em
     height: 1.2em
-    float: right
     background:
       image: inline-image('line-icons/icon-failed.svg')
       repeat: no-repeat
