@@ -19,7 +19,7 @@ export default Ember.HistoryLocation.extend({
   getURL: function() {
     var url;
     url = this._super.apply(this, arguments);
-    if (location.pathname === '/') {
+    if (location.pathname === '/' && !config.enterprise) {
       if (this.get('auth.signedIn')) {
         return '/repositories';
       } else {
@@ -34,7 +34,7 @@ export default Ember.HistoryLocation.extend({
   },
 
   formatURL: function(logicalPath) {
-    if (logicalPath === '/repositories' || logicalPath === '/home' || logicalPath === '/home-pro') {
+    if (!config.enterprise && (logicalPath === '/repositories' || logicalPath === '/home' || logicalPath === '/home-pro')) {
       return '/';
     } else {
       return this._super(...arguments);

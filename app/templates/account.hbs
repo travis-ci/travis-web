@@ -1,26 +1,19 @@
 {{#if allHooks.isLoaded}}
 
   <header>
-
-  {{#if config.billingEndpoint}}
-    <div class="cta-btn">
-    {{#if subscribeButtonInfo.subscribed}}
-      <a class="btn btn-activated" href={{billingUrl}}>
-        Subscription active!
-      </a>
-    {{else}}
-      {{#if subscribeButtonInfo.education}}
-        <a class="btn btn-activated" href={{billingUrl}}>
-          Educational account!
-        </a>
-      {{else}}
-        <a class="btn btn-activate" href={{billingUrl}}>
-          Sign up this account!
-        </a>
-      {{/if}}
+    {{#if config.billingEndpoint}}
+      <div class="cta-btn">
+        {{#if subscribeButtonInfo.subscribed}}
+          <a class="btn btn-activated" href={{billingUrl}}>Subscription active!</a>
+        {{else}}
+          {{#if subscribeButtonInfo.education}}
+            <a class="btn btn-activated" href={{billingUrl}}>Educational account!</a>
+          {{else}}
+            <a class="btn btn-activate" href={{billingUrl}}> Sign up this account!</a>
+          {{/if}}
+        {{/if}}
+      </div>
     {{/if}}
-    </div>
-  {{/if}}
 
     <div class="profile-header">
       <h1>{{accountName}}</h1>
@@ -29,14 +22,16 @@
     {{sync-button user=auth.currentUser}}
 
     {{#if user.isSyncing}}
-      {{#if config.pro}}
-        <p>We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+      {{#unless config.enterprise}}
+        {{#if config.pro}}
+          <p>We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
         {{else}}
-        <p>We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
-      {{/if}}
+          <p>We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+        {{/if}}
+      {{/unless}}
     {{/if}}
-
   </header>
+
 
   <section class="profile-getstarted">
     {{!-- <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a> --}}
