@@ -9,6 +9,7 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 
 export default Model.extend(DurationCalculations, {
   ajax: Ember.inject.service(),
+  v3Ajax: Ember.inject.service(),
   logId: attr(),
   queue: attr(),
   state: attr(),
@@ -111,7 +112,7 @@ export default Model.extend(DurationCalculations, {
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post("/jobs/" + (this.get('id')) + "/cancel");
+    return this.get('v3Ajax').post("/job/" + (this.get('id')) + "/cancel");
   },
 
   removeLog() {
@@ -126,7 +127,7 @@ export default Model.extend(DurationCalculations, {
   },
 
   restart() {
-    return this.get('ajax').post("/jobs/" + (this.get('id')) + "/restart");
+    return this.get('v3Ajax').post("/job/" + (this.get('id')) + "/restart");
   },
 
   appendLog(part) {
