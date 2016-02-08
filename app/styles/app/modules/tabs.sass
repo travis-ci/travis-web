@@ -1,6 +1,5 @@
-
 .tabnav
-  color: $grey-light
+  color: $asphalt-grey
   font-size: $font-size-sm
   ul
     @include resetul
@@ -24,13 +23,13 @@
   a
     @extend %inline-block
     width: 100%
-    color: $grey-light
-    padding: 3px 0 4px
+    color: $asphalt-grey
+    padding: 3px 0 5px
 
   .active a,
   a:hover
     position: relative
-    color: $teal
+    color: $oxide-blue
     &:after
       content: ""
       position: absolute
@@ -38,7 +37,7 @@
       bottom: -2px
       width: 100%
       height: 2px
-      background-color: $teal
+      background-color: $oxide-blue
   .active a
     font-weight: $font-weight-bold
 
@@ -49,13 +48,13 @@
     @extend %inline-block
     overflow: visible
     a
-      color: $grey-light
+      color: $asphalt-grey
       padding: .5em 0
     .active
-      color: $teal-dark
+      color: $oxide-blue
 
     @media #{$medium-up}
-      border-bottom: solid $cream-dark 2px
+      border-bottom: solid $cement-grey 2px
       li
         float: left
         margin-right: 1em

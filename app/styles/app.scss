@@ -1,28 +1,11 @@
-@import "app/_mixins/colors";
-@import "app/_mixins/fonts";
-@import "app/_mixins/vars";
-@import "app/foundation/scss/foundation/_settings";
-@import "app/foundation/scss/foundation/components/_grid";
+@import "app/legacy/_functions";
+@import "app/legacy/_global";
+@import "app/legacy/_grid";
 
-@import "app/_mixins/mixins";
-
+@import "app/vars";
+@import "app/mixins";
 @import "app/base";
-@import "app/ansi";
-@import "app/auth";
-@import "app/forms";
-@import "app/github";
-
 @import "app/userlike";
-
-@import "app/misc";
-@import "app/popup";
-
-@import "app/components/sync-button";
-@import "app/components/loading-indicator";
-@import "app/components/build-tile";
-@import "app/components/status-icon";
-
-@import "app/animation/tractor";
 
 @import "app/modules/logo";
 @import "app/modules/tofuburger";
@@ -38,14 +21,22 @@
 @import "app/modules/flash";
 @import "app/modules/media";
 @import "app/modules/switch";
-@import "app/modules/memberlist";
 @import "app/modules/forms";
 @import "app/modules/notice";
 @import "app/modules/build-header";
 @import "app/modules/avatar";
+@import "app/modules/popup";
+
+@import "app/components/sync-button";
+@import "app/components/loading-indicator";
+@import "app/components/build-tile";
+@import "app/components/status-icon";
+
+@import "app/animation/tractor";
 
 @import "app/layout";
-@import "app/layouts/dashboard";
+@import "app/layouts/ansi";
+@import "app/layouts/auth";
 @import "app/layouts/error";
 @import "app/layouts/footer";
 @import "app/layouts/sidebar";
@@ -57,13 +48,13 @@
 @import "app/layouts/repo";
 @import "app/layouts/jobs";
 @import "app/layouts/pull-requests";
-@import "app/main/log";
-
+@import "app/layouts/log";
 @import "app/layouts/requests";
 @import "app/layouts/caches";
 @import "app/layouts/first-sync";
 @import "app/layouts/missing-notice";
 @import "app/layouts/settings";
+@import "app/layouts/dashboard";
 
 @import "app/pages/landing";
 @import "app/pages/home-pro";

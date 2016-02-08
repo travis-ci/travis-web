@@ -1,4 +1,3 @@
-
 .repo-header
   header
     @media #{$medium-up}
@@ -12,12 +11,12 @@
     font-size: 36px
     font-weight: $font-weight-normal
     a
-      color: #808080
+      color: $asphalt-grey
       border-bottom: 2px solid transparent
       transition: border-color 100ms ease
       &:hover,
       &:active
-        border-color: #808080
+        border-color: $asphalt-grey
 
 .repo-gh
   width: 28px
@@ -52,7 +51,7 @@ $dropdown-button-margin: -9px
   height: $dropdown-button-height
   padding: 0 0.7em
   border: 1px solid #f1f1f1
-  color: $grey-light
+  color: $cement-grey
   border-radius: 2px
   text-align: center
   line-height: 2
@@ -74,8 +73,8 @@ $dropdown-button-margin: -9px
   &:active,
   // .display &,
   .settings-menu:hover &
-    color: $teal
-    border-color: $teal
+    color: $oxide-blue
+    border-color: $oxide-blue
     .icon-settings
       @extend %icon-line-cog-teal
     &:after
@@ -93,15 +92,15 @@ $dropdown-button-margin: -9px
   list-style: none
   z-index: 60
   background-color: white
-  border: 1px solid $teal
+  border: 1px solid $oxide-blue
   a
     display: block
     padding: .4em 1em .5em 2.4em
     font-size: 14px
-    color: $teal
+    color: $oxide-blue
     &:hover
       color: white
-      background-color: $teal
+      background-color: $oxide-blue
   @media #{$medium-up}
     margin-top: -3px
 
@@ -115,4 +114,3 @@ $dropdown-button-margin: -9px
     &:hover
       .settings-dropdown
         display: block
-

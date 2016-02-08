@@ -3,7 +3,7 @@
 // Licensed under MIT Open Source
 
 // This is the default html and body font-size for the base rem value.
-$rem-base: 16px !default;
+$rem-base: 14px !default;
 
 // IMPORT ONCE
 // We use this to prevent styles from being loaded multiple times for compenents that rely on other components.
@@ -18,11 +18,6 @@ $modules: () !default;
     @content;
   }
 }
-
-//
-// @functions
-//
-
 
 // RANGES
 // We use these functions to define ranges for various things, like media queries.
@@ -131,16 +126,4 @@ $modules: () !default;
     $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
   }
   @return $remValues;
-}
-
-// OLD EM CALC
-// Deprecated: We'll drop support for this in 5.1.0, use rem-calc()
-@function emCalc($values){
-  @return rem-calc($values);
-}
-
-// OLD EM CALC
-// Deprecated: We'll drop support for this in 5.1.0, use rem-calc()
-@function em-calc($values){
-  @return rem-calc($values);
 }

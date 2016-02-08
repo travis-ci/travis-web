@@ -23,25 +23,25 @@
 .jobs-item
   border: 1px solid $cream-dark
   margin-bottom: 5px
-  @include colorJobs($green, 'passed', 6px, rgba($green, .1))
-  @include colorJobs($red, 'failed', 6px, rgba($red, .1))
-  @include colorJobs($red, 'errored', 6px, rgba($red, .1))
-  @include colorJobs($grey, 'canceled', 6px, #f1f1f1)
-  @include colorJobs($yellow-font, 'started', 6px, rgba($yellow, .1), true, $yellow-bg)
-  @include colorJobs($yellow-font, 'queued', 6px, rgba($yellow, .1), true, $yellow-bg)
-  @include colorJobs($yellow-font, 'booting', 6px, rgba($yellow, .1), true, $yellow-bg)
-  @include colorJobs($yellow-font, 'received', 6px, rgba($yellow, .1), true,  $yellow-bg)
-  @include colorJobs($yellow-font, 'created', 6px, rgba($yellow, .1), true, $yellow-bg)
+  @include colorJobs($turf-green, 'passed', 6px, $seed-green)
+  @include colorJobs($brick-red, 'failed', 6px, $quartz-red)
+  @include colorJobs($brick-red, 'errored', 6px, $quartz-red)
+  @include colorJobs($cement-grey, 'canceled', 6px, $pebble-grey)
+  @include colorJobs($canary-yellow, 'started', 6px, $haze-yellow, true)
+  @include colorJobs($canary-yellow, 'queued', 6px, $haze-yellow, true)
+  @include colorJobs($canary-yellow, 'booting', 6px, $haze-yellow, true)
+  @include colorJobs($canary-yellow, 'received', 6px, $haze-yellow, true)
+  @include colorJobs($canary-yellow, 'created', 6px, $haze-yellow, true)
 
-  @include colorFadeOut('passed',#ECF6EF)
-  @include colorFadeOut('failed', #FBECEB)
-  @include colorFadeOut('errored', #FBECEB)
-  @include colorFadeOut('canceled', #f1f1f1)
-  @include colorFadeOut('started', #FCFBEB)
-  @include colorFadeOut('queued', #FCFBEB)
-  @include colorFadeOut('booting', #FCFBEB)
-  @include colorFadeOut('received', #FCFBEB)
-  @include colorFadeOut('created', #FCFBEB)
+  @include colorFadeOut('passed', $seed-green)
+  @include colorFadeOut('failed', $quartz-red)
+  @include colorFadeOut('errored', $quartz-red)
+  @include colorFadeOut('canceled', $pebble-grey)
+  @include colorFadeOut('started', $haze-yellow)
+  @include colorFadeOut('queued', $haze-yellow)
+  @include colorFadeOut('booting', $haze-yellow)
+  @include colorFadeOut('received', $haze-yellow)
+  @include colorFadeOut('created', $haze-yellow)
 
   a
     display: block
@@ -56,7 +56,7 @@
 
 .section-title
   font-size: 16px
-  color: $grey
+  color: $cement-grey
   font-weight: 400
   margin: 3rem 0 1rem
 

@@ -1,12 +1,14 @@
-
 %input-base
   display: inline-block
   width: 100%
   padding: .4em .4em
   border: 1px solid #eeedec
-  border-radius: 4px
-  color: #8e8f8e
-  font-size: $font-size-sm
+  border-radius: 2px
+  color: $asphalt-grey
+  font-size: 14px
+  font-family: $font-family-sans-serif
+  background: white
+
 
 input[type="text"],
 input[type="email"],
@@ -18,16 +20,20 @@ input[type="password"]
 textarea
   @extend %input-base
 
+.form-label
+  font-size: 10px
+  color: $cement-grey
+  text-transform: uppercase
 
 .form-submit
   display: inline-block
   border: none
   border-radius: 4px
   padding: .5em .8em
-  color: $white
+  color: white
   font-size: $font-size-sm
   font-weight: 300
-  background-color: $grey-lighter
+  background-color: $cement-grey
   &:hover
     background-color: #3BA85D
     cursor: pointer
@@ -39,7 +45,6 @@ textarea
   @media #{$medium-up}
     .form-elem
       max-width: 460px
-
 
 .form--envvar
   .form-elem
@@ -67,13 +72,12 @@ textarea
       float: right
       text-align: right
 
-
 .form-error
   .env-name,
   .ssh-value
-    border: $fail-color 2px solid
+    border: $brick-red 2px solid
   .form-error-message
-    color: $fail-color
+    color: $brick-red
     font-size: 14px
     padding: .2em 0
     margin: 0

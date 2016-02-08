@@ -1,13 +1,12 @@
-
 .caches-header
   .small-title
     margin-top: .5em
     small
-      color: $grey
+      color: $cement-grey
       font-size: 14px
     a:hover,
     a:active
-      border-bottom: 1px solid $grey
+      border-bottom: 1px solid $cement-grey
 
   @media #{$medium-up}
     display: flex
@@ -66,7 +65,7 @@
   @extend %icon-line-trashcan
   &:hover,
   &:active
-    color: $red
+    color: $brick-red
     @extend %icon-line-trashcan-red
 
 .delete-cache-icon
@@ -84,7 +83,7 @@
     @extend %icon-line-trashcan
   &:hover,
   &:active
-    color: $red
+    color: $brick-red
     .icon-trash
       @extend %icon-line-trashcan-red
   @media #{$medium-up}
@@ -97,4 +96,3 @@
       white-space: nowrap
       overflow: hidden
       background-position: 50% 0
-

@@ -1,6 +1,7 @@
 <a href="#" class="close" {{action "close"}}></a>
-<p>
-  <label>Branch:</label>
+<h3 class="small-title">Status Image</h3>
+<div class="form-pair">
+  <label class="form-label">Branch</label>
   {{#if branches.isLoaded}}
     {{#x-select value=branch}}
       {{#each branches as |branch|}}
@@ -10,10 +11,10 @@
   {{else}}
     {{loading-indicator}}
   {{/if}}
-</p>
+</div>
 
-<p>
-  <label>
+<div class="form-pair">
+  <label class="form-label">
   {{#x-select value=format}}
     {{#each formats as |format|}}
       {{#x-option value=format}}{{format}}{{/x-option}}
@@ -22,4 +23,4 @@
 
   </label>
   {{status-image-input value=statusString class="url" rows=3}}
-</p>
+</div>

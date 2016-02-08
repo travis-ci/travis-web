@@ -1,7 +1,9 @@
-
 .centered
   .row
     max-width: 1024px
+
+  max-width: 1024px
+  margin: auto
 
   .main
     margin: auto
@@ -30,15 +32,9 @@
   #top
     top: 0
 
-#not-found #main
-  padding: 100px 50px 0 50px
-
-#left, #right, .wrapper-main
-  position: relative
-
 #left
   padding: 0 0 110px 0
-  background-color: $white
+  background-color: white
   border-right: 2px solid #f2f2f2
 
 #main
@@ -56,7 +52,7 @@
 
 @media #{$large-up}
 
-  #left, #right, .wrapper-main
+  #left, .wrapper-main
     min-height: 100vh
 
   #left
@@ -70,7 +66,7 @@
     float: left
     margin-left: grid-calc(6, 24)
     overflow: visible
-
+ercac
   .centered .wrapper-main
     max-width: 1024px
     margin-left: auto
@@ -96,4 +92,3 @@
   .non-centered .wrapper-main
     width: grid-calc(31, 36)
     margin-left: grid-calc(5, 36)
-

@@ -5,7 +5,7 @@
     overflow: hidden
     &:after
       content: ""
-      @include fadeOut(right, -90deg, $white, 30%)
+      @include fadeOut(right, -90deg, white, 30%)
 
 .label-align
   vertical-align: middle
@@ -16,7 +16,6 @@
   border: 1px solid $cream-dark
   font-size: 16px
   margin-bottom: .3rem
-  color: $grey-dark
   background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
 
   h2, h3, small
@@ -38,7 +37,6 @@
     overflow: hidden
     padding-left: 1em
     a
-      color: $grey-dark
       text-decoration: none
       &:hover
         text-decoration: underline
@@ -89,12 +87,12 @@
     vertical-align: middle
     background-color: #E9EBEB
 
-  @include statusColors($green, 'passed', 10px)
-  @include statusColors($red, 'failed', 10px)
-  @include statusColors($red, 'errored', 10px)
-  @include statusColors($grey, 'canceled', 10px)
-  @include statusColors($yellow-font, 'started', 10px, $yellow-bg, true)
-  @include statusColors($yellow-font, 'queued', 10px, $yellow-bg, true)
-  @include statusColors($yellow-font, 'booting', 10px, $yellow-bg, true)
-  @include statusColors($yellow-font, 'received', 10px, $yellow-bg, true)
-  @include statusColors($yellow-font, 'created', 10px, $yellow-bg, true)
+  @include statusColors($turf-green, 'passed', 10px)
+  @include statusColors($brick-red, 'failed', 10px)
+  @include statusColors($brick-red, 'errored', 10px)
+  @include statusColors($cement-grey, 'canceled', 10px)
+  @include statusColors($dozer-yellow, 'started', 10px, $canary-yellow, true)
+  @include statusColors($dozer-yellow, 'queued', 10px, $canary-yellow, true)
+  @include statusColors($dozer-yellow, 'booting', 10px, $canary-yellow, true)
+  @include statusColors($dozer-yellow, 'received', 10px, $canary-yellow, true)
+  @include statusColors($dozer-yellow, 'created', 10px, $canary-yellow, true)

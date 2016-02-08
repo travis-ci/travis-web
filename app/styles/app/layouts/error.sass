@@ -3,7 +3,7 @@
  */
 
 @mixin error-bg-gradient($color)
-  background: linear-gradient(0deg, $color, $color 38.9%, $error-bg-gradient 39%, $white 60%, $white)
+  background: linear-gradient(0deg, $color, $color 38.9%, $error-bg-gradient 39%, white 60%, white)
 
 @mixin error-position-img($size:inherit, $pos:inherit)
   background:
@@ -26,7 +26,6 @@
     width: 100%
     overflow: hidden
     background-repeat: no-repeat
-
 
 .main--error
   min-height: 100%
@@ -154,4 +153,3 @@
     @include error-position-img(87vw auto, 63% 87%)
     @media #{$medium-up}
       @include error-position-img(auto 44vh, 63% 83%)
-
