@@ -39,30 +39,30 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource('dashboard', function() {
+  this.route('dashboard', { resetNamespace: true }, function() {
     this.route('repositories', { path: '/' });
   });
-  this.resource('main', { path: '/' }, function() {
-    this.resource('getting_started');
+  this.route('main', { path: '/', resetNamespace: true }, function() {
+    this.route('getting_started', { resetNamespace: true });
     this.route('recent');
     this.route('repositories');
     this.route('my_repositories');
     this.route('search', { path: '/search/:phrase' });
-    this.resource('repo', { path: '/:owner/:name' }, function() {
+    this.route('repo', { path: '/:owner/:name', resetNamespace: true }, function() {
       this.route('index', { path: '/' });
-      this.resource('branches', { path: '/branches' });
-      this.resource('build', { path: '/builds/:build_id' });
-      this.resource('job', { path: '/jobs/:job_id' });
-      this.resource('builds', { path: '/builds' });
-      this.resource('pullRequests', { path: '/pull_requests' });
-      this.resource('requests', { path: '/requests' });
+      this.route('branches', { path: '/branches', resetNamespace: true });
+      this.route('build', { path: '/builds/:build_id', resetNamespace: true });
+      this.route('job', { path: '/jobs/:job_id', resetNamespace: true });
+      this.route('builds', { path: '/builds', resetNamespace: true });
+      this.route('pullRequests', { path: '/pull_requests', resetNamespace: true });
+      this.route('requests', { path: '/requests', resetNamespace: true });
       if (config.endpoints.caches) {
         this.resource('caches', { path: '/caches' });
       }
-      this.resource('request', { path: '/requests/:request_id' });
-      this.resource('settings', function() {
+      this.route('request', { path: '/requests/:request_id', resetNamespace: true });
+      this.route('settings', { resetNamespace: true }, function() {
         this.route('index', { path: '/' });
-        this.resource('env_vars', function() {
+        this.route('env_vars', { resetNamespace: true }, function() {
           this.route('new');
         });
         if (config.endpoints.sshKey) {
@@ -81,13 +81,13 @@ Router.map(function() {
   this.route('plans', { path: '/plans' });
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
-  this.resource('profile', { path: '/profile' }, function() {
-    this.resource('accounts', { path: '/' }, function() {
-      this.resource('account', { path: '/:login' });
+  this.route('profile', { path: '/profile', resetNamespace: true }, function() {
+    this.route('accounts', { path: '/', resetNamespace: true }, function() {
+      this.route('account', { path: '/:login', resetNamespace: true });
       this.route('info', { path: '/info' });
     });
   });
-  this.resource('owner', { path: '/:owner' }, function() {
+  this.route('owner', { path: '/:owner', resetNamespace: true }, function() {
     this.route('repositories', { path: '/' });
   });
   this.route('error404', { path: '/404' });
