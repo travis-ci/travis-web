@@ -9,7 +9,7 @@ test('it shows cancel button if canCancel is true', function() {
   component = this.subject({
     canCancel: true
   });
-  this.append();
+  this.render();
   return ok(component.$('a[title="Cancel Build"]').length, 'cancel link should be visible');
 });
 
@@ -18,7 +18,7 @@ test('it shows restart button if canRestart is true', function() {
   component = this.subject({
     canRestart: true
   });
-  this.append();
+  this.render();
   return ok(component.$('a[title="Restart Build"]').length, 'restart link should be visible');
 });
 

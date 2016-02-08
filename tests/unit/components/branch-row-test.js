@@ -45,7 +45,7 @@ test('it renders', function() {
   component = this.subject({
     build: attributes
   });
-  this.append();
+  this.render();
   ok(component.$().hasClass('passed'), 'component should have state class (passed)');
   equal(component.$('.row-name .label-align').text().trim(), 'master', 'should display correct branch name');
   equal(component.$('.row-request .label-align').text().trim(), '#1 passed', 'should display build number and state');

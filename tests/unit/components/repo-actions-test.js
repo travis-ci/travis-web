@@ -9,7 +9,7 @@ test('it renders', function() {
 
   var component;
   component = this.subject({});
-  this.append();
+  this.render();
   return ok(component.$().hasClass('repo-main-tools'), 'component has class');
 
 });

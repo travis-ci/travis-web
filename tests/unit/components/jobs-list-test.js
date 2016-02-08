@@ -20,7 +20,7 @@ test('it renders a list of jobs', function() {
     jobs: jobs,
     required: true
   });
-  this.append();
+  this.render();
   equal(component.$('.section-title').text().trim(), 'Build Jobs');
   equal(component.$('.jobs-item').length, 2, 'there should be 2 job items');
   ok(component.$('.jobs-item:nth(0)').hasClass('passed'), 'passed class should be applied to a job');
@@ -37,6 +37,6 @@ test('it renders "Allowed Failures" version without a `required` property', func
   component = this.subject({
     jobs: jobs
   });
-  this.append();
+  this.render();
   return ok(component.$('.section-title').text().match(/Allowed Failures/));
 });

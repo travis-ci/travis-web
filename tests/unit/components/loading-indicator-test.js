@@ -9,7 +9,7 @@ test('it renders', function(assert) {
   component = this.subject({
     center: true
   });
-  this.append();
+  this.render();
   ok(component.$('span').hasClass('loading-indicator'), 'component has loading indicator class');
   return ok(component.$().hasClass('loading-container'), 'indicator gets parent class if centered flag is given');
 });

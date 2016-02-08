@@ -61,7 +61,7 @@ test('it properly stops polling hook without any models', function() {
   component = this.subject({
     pollModels: null
   });
-  this.append();
+  this.render();
   Ember.run(function() {
     return component.destroy();
   });
@@ -84,7 +84,7 @@ test('it works even if one of the model is null', function() {
       name: 'model1'
     }
   });
-  this.append();
+  this.render();
   Ember.run(function() {
     return component.destroy();
   });
@@ -120,7 +120,7 @@ test('it polls for both models if they are present', function() {
       name: 'model2'
     }
   });
-  this.append();
+  this.render();
   Ember.run(function() {
     return component.destroy();
   });
@@ -163,7 +163,7 @@ test('it detects model changes', function() {
       name: 'foo'
     }
   });
-  this.append();
+  this.render();
   Ember.run(function() {
     return component.set('model1', {
       name: 'bar'

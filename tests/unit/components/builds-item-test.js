@@ -26,7 +26,7 @@ test('it renders', function(assert) {
   };
   component = this.subject();
   component.set('build', attributes);
-  this.append();
+  this.render();
   ok(component.$().hasClass('passed'), 'component has right status class');
   equal(component.$('.row-branch a').text().trim(), 'foobarbranch', 'component renders branch if event is push');
   return equal(component.$('a[title="See the commit on GitHub"]').attr('href'), 'https://github.com/foo/bar/commit/a5e8093098f9c0fb46856b753fb8943c7fbf26f3', 'component generates right commit link');

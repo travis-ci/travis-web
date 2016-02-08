@@ -22,7 +22,7 @@ test('it renders', function() {
   component = this.subject({
     job: job
   });
-  this.append();
+  this.render();
   ok(component.$().hasClass('passed'), 'component should have a state class (passed)');
   equal(component.$('.job-number').text().trim(), '2', 'job number should be displayed');
   equal(component.$('.job-lang').text().trim(), 'JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed');
@@ -37,7 +37,7 @@ test('outputs info on not set properties', function() {
   component = this.subject({
     job: job
   });
-  this.append();
+  this.render();
   ok(component.$('.job-env').text().match(/no environment variables set/), 'a message for no env vars should be displayed');
   return ok(component.$('.job-lang').text().match(/no language set/), 'a message about no language being set should be displayed');
 });
@@ -58,7 +58,7 @@ test('when env is not set, gemfile is displayed in the env section', function() 
   component = this.subject({
     job: job
   });
-  this.append();
+  this.render();
   equal(component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2', 'langauges list should be displayed');
   return equal(component.$('.job-env .label-align').text().trim(), 'Gemfile: foo/Gemfile', 'env should be displayed');
 });
@@ -80,7 +80,7 @@ test('when env is set, gemfile is displayed in the language section', function()
   component = this.subject({
     job: job
   });
-  this.append();
+  this.render();
   equal(component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2 Gemfile: foo/Gemfile', 'Gemfile should be displayed in languages section');
   return equal(component.$('.job-env .label-align').text().trim(), 'FOO=bar', 'env should be displayed');
 });

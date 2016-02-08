@@ -30,7 +30,7 @@ test('it renders', function() {
   component = this.subject({
     repo: attributes
   });
-  this.append();
+  this.render();
   ok(component.$().hasClass('passed'), 'component should have state class (passed)');
   equal(component.$('.row-item:nth-of-type(1)').text().trim(), 'travis-chat', 'should display correct repo name');
   equal(component.$('.row-item:nth-of-type(3)').text().trim(), 'master', 'should display branch name');

@@ -16,7 +16,7 @@ test('it renders', function() {
   component = this.subject({
     cache: attributes
   });
-  this.append();
+  this.render();
   ok(component.$().hasClass('push'), 'component should have a type class (push)');
   equal(component.$('.row-item:first-child .label-align').text().trim(), 'master', 'branch name should be displayed');
   return equal(component.$('.row-item:nth-child(3) .label-align').text().trim(), '1.00MB', 'size should be displayed');
