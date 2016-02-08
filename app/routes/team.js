@@ -165,6 +165,12 @@ export default TravisRoute.extend({
         nationality: 'russia',
         country: 'germany',
         image: 'liz'
+      }, {
+        name: 'Laura Gaetano',
+        title: 'Two Trick Pony',
+        nationality: 'italy',
+        country: 'austria',
+        image: 'laura'
       }
     ];
   }
