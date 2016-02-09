@@ -168,6 +168,7 @@ export default TravisRoute.extend({
       }, {
         name: 'Laura Gaetano',
         title: 'Two Trick Pony',
+        handle: 'alicetragedy',
         nationality: 'italy',
         country: 'austria',
         image: 'laura'
