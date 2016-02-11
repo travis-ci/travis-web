@@ -25,6 +25,21 @@
 
     {{add-env-var repo=repo}}
 
+  </section>
+
+  <section class="settings-section">
+    <h2 class="small-title">Cron Builds</h2>
+
+    <ul class="settings-list--crons">
+      {{#each crons as |cron|}}
+        <li>{{add-cron cron=cron}}</li>
+      {{/each}}
+      <li>{{add-cron2 repo=repo}}</li>
+      <li>{{add-cron repo=repo}}</li>
+    </ul>
+
+
+
 
   </section>
 {{#if config.endpoints.sshKey}}

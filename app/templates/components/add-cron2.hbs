@@ -1,0 +1,34 @@
+
+<form {{action "save" on="submit"}}>
+  <div class="form-elem select">
+    <span class="label">Branch</span>
+    {{#x-select value=branch}}
+      {{#each branches as |branch|}}
+        {{#x-option value=branch}}{{branch}}{{/x-option}}
+      {{/each}}
+    {{/x-select}}
+  </div>
+  <div class="form-elem select">
+    <span class="label">Interval</span>
+    {{#x-select value=interval}}
+      {{#each intervals as |interval|}}
+        {{#x-option value=interval}}{{interval}}{{/x-option}}
+      {{/each}}
+    {{/x-select}}
+  </div>
+  <div class="form-elem">
+    {{travis-switch active=public description="Only if no new commit after last cron build"}}
+  </div>
+  <div class="form-elem cron-action">
+    <div class="tooltip">
+      {{#if isDeleting}}
+        {{loading-indicator}}
+      {{else}}
+        <a href="#" title="" {{action "delete" on="click"}}>
+          <span class="icon-delete"></span>
+        </a>
+        <div class="tooltip-bubble">Delete</div>
+      {{/if}}
+    </div>
+  </div>
+</form>
