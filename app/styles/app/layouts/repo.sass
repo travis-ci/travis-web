@@ -49,36 +49,26 @@ $dropdown-button-margin: -9px
 .settings-button
   display: block
   height: $dropdown-button-height
-  padding: 0 0.7em
-  border: 1px solid #f1f1f1
-  color: $cement-grey
+  padding: 0
+  border: 1px solid $pebble-grey
+  color: $asphalt-grey
   border-radius: 2px
   text-align: center
   line-height: 2
   font-size: 14px
-  &:after
-    content: ""
-    display: inline-block
-    width: 0.9em
-    height: 0.6em
-    margin-left: 1em
-    background:
-      size: 100%
-      repeat: no-repeat
-    @extend %icon-line-dropdown
-  .icon-settings
-    width: .9em
-    margin-right: .3em
+  cursor: pointer
+  .label-align
+    padding: 0 1em
   &:hover,
   &:active,
   // .display &,
   .settings-menu:hover &
     color: $oxide-blue
     border-color: $oxide-blue
-    .icon-settings
-      @extend %icon-line-cog-teal
-    &:after
-      @extend %icon-line-dropdown-teal
+    .settings-tofu
+      border-color: $oxide-blue
+      background-image: inline-image('/line-icons/icon-tofuburger-teal.svg')
+
   @media #{$medium-up}
     margin-top: $dropdown-button-margin
 
@@ -103,6 +93,19 @@ $dropdown-button-margin: -9px
       background-color: $oxide-blue
   @media #{$medium-up}
     margin-top: -3px
+
+.settings-tofu
+  width: 2em
+  height: 2em
+  display: inline-block
+  vertical-align: top
+  background:
+    image: inline-image('/line-icons/icon-tofuburger.svg')
+    repeat: no-repeat
+    size: 20px
+    position: 50%
+  @media #{$medium-up}
+    border-left: 1px solid $pebble-grey
 
 .settings-menu
   position: relative
