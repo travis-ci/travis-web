@@ -120,7 +120,7 @@ Build.reopen({
 
   canCancel: function() {
     return this.get('jobs').filterBy('canCancel').length;
-  }.property('jobs.@each.canCancel'),
+  }.property('jobs.@each.canCancel', 'jobs', 'jobs.[]'),
 
   canRestart: Ember.computed.alias('isFinished'),
 
