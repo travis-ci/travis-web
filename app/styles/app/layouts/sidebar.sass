@@ -1,24 +1,21 @@
-$sb-grey: #f2f2f2
-$sb-font-size: 14px
-
 .tile
   height: auto
   padding: 0.8em 0.5em 0.8em 1.5em
   margin-bottom: .46rem
-  background-color: $white
+  background-color: white
   border-radius: 0
   li:last-child &
     margin-bottom: 0
 
-  @include colorRows($green, 'passed', 8px)
-  @include colorRows($red, 'failed', 8px)
-  @include colorRows($red, 'errored', 8px)
-  @include colorRows($grey, 'canceled', 8px)
-  @include colorRows($yellow, 'started', 8px, true)
-  @include colorRows($yellow, 'queued', 8px, true)
-  @include colorRows($yellow, 'booting', 8px, true)
-  @include colorRows($yellow, 'received', 8px, true)
-  @include colorRows($yellow, 'created', 8px, true)
+  @include colorRows($turf-green, 'passed', 8px)
+  @include colorRows($brick-red, 'failed', 8px)
+  @include colorRows($brick-red, 'errored', 8px)
+  @include colorRows($cement-grey, 'canceled', 8px)
+  @include colorRows($canary-yellow, 'started', 8px, true)
+  @include colorRows($canary-yellow, 'queued', 8px, true)
+  @include colorRows($canary-yellow, 'booting', 8px, true)
+  @include colorRows($canary-yellow, 'received', 8px, true)
+  @include colorRows($canary-yellow, 'created', 8px, true)
 
   .status-icon .is-rotating
     width: 17px;
@@ -27,7 +24,7 @@ $sb-font-size: 14px
 
   h2, p
     margin: 0
-    font-size: $sb-font-size
+    font-size: 14px
     font-weight: 400
   h2
     position: relative
@@ -38,7 +35,7 @@ $sb-font-size: 14px
       white-space: nowrap
       overflow: hidden
       &:after
-        @include fadeOut(right, -90deg, $white)
+        @include fadeOut(right, -90deg, white)
   p.tile-title
     width: 10%
     @media #{$medium-up}
@@ -55,8 +52,8 @@ $sb-font-size: 14px
     vertical-align: middle
 
 .tabnav--sidebar
-  font-size: $sb-font-size
-  border-bottom: solid 2px $sb-grey
+  font-size: 14px
+  border-bottom: solid 2px $pebble-grey
   width: 90%
   margin: auto
 
@@ -71,7 +68,7 @@ $sb-font-size: 14px
   #tab_new
     a:hover
       .icon--plus:after
-        color: $teal-light
+        color: $oxide-blue
       &:after
         bottom: -1px
   li
@@ -89,11 +86,10 @@ $sb-font-size: 14px
 
 .sidebar-list
   margin-top: 1.4rem
-  color: $grey-medium
   ul
     @include resetul
-    border-bottom: .46rem solid #FAF9F7
-    background-color: #FAF9F7
+    border-bottom: .46rem solid $cream-light
+    background-color: $cream-light
 
 .sidebar-seperator
   width: 90%

@@ -1,0 +1,64 @@
+.help
+  display: inline-block
+  height: 19px
+  width: 16px
+  margin: -4px 0 0 3px
+  vertical-align: middle
+  background:
+    image: inline-image('ui/help.svg')
+    repeat: no-repeat
+    position: 0 1px
+    color: transparent
+    size: 100%
+  cursor: pointer
+
+.popup
+  position: fixed
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  height: auto
+  padding: 2em
+  color: #565656
+  z-index: 99
+  background-color: white
+  border-radius: 2px
+
+  display: none
+  background-color: #fff
+  border: solid 10px #f1f1f1
+
+  &:before
+    content: ""
+
+  .close
+    position: absolute
+    display: block
+    right: 5px
+    top: 8px
+    width: 30px
+    height: 30px
+    text-indent: 999%
+    overflow: hidden
+    white-space: nowrap
+    @extend %icon-line-cross
+
+  .popup-title
+    margin-bottom: 0
+  .popup-text
+    margin-top: 0
+    text-align: center
+  .buttons
+    margin-top: 3rem
+    text-align: center
+
+.status-images
+  width: 100%
+  @media #{$medium-up}
+    width: 600px
+
+  select, textarea
+    margin-bottom: 1em
+
+  .small-title
+    margin: .3em 0 .8em

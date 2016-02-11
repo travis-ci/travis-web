@@ -19,10 +19,10 @@
       line-height: 1.45
     p:not(.sync-last)
       font-size: $font-size-sm
-      color: $grey-light
+      color: $cement-grey
       margin: 2rem 0 1rem 0
       a
-        color: $grey-light
+        color: $cement-grey
         text-decoration: underline
     @media #{$medium-up}
       .profile-header, .sync-button
@@ -37,14 +37,14 @@
         max-width: 77%;
         overflow: hidden;
         &:after
-          @include fadeOut(right, -90deg, $white)
+          @include fadeOut(right, -90deg, white)
 
   .loading-indicator--white
     vertical-align: top
     margin-right: .5em
   p
     font-size: $font-size-m
-    color: $grey-medium
+    color: $cement-grey
 
   .cta-btn
     text-align: right
@@ -171,7 +171,7 @@ p.profile-user-last
     display: none
     margin-left: 1rem
     font-size: $font-size-sm
-    color: darken($grey-dark, 10)
+    color: $cement-grey
     line-height: 1
   .sync-spinner
     vertical-align: top

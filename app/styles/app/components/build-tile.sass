@@ -7,9 +7,9 @@
     &:hover
       background-color: $extra-hover
       .status-icon.#{$status} g > *
-        fill: $white
+        fill: white
       .status-icon .circle
-        border-color: $white
+        border-color: white
         border-width: 2px
 
 .build-tiles
@@ -24,7 +24,7 @@
     float: left
     width: 20%
     background-color: #F7F7F7
-    border-right: 1px solid $white
+    border-right: 1px solid white
     &:last-of-type
       border-right: none
     .status-icon
@@ -72,12 +72,12 @@
     height: 100%
     text-align: center
 
-  @include buildTileColors(#44A662, #F5FBF6, 'passed')
-  @include buildTileColors(#D94341, #FFF7F5, 'failed')
-  @include buildTileColors(#D94341, #FFF7F5, 'errored')
-  @include buildTileColors(#A1A0A0, #F5F5F5, 'canceled')
-  @include buildTileColors($yellow-tile, #fdfcee, 'started')
-  @include buildTileColors($yellow-tile, #fdfcee, 'queued')
-  @include buildTileColors($yellow-tile, #fdfcee, 'booting')
-  @include buildTileColors($yellow-tile, #fdfcee, 'received')
-  @include buildTileColors($yellow-tile, #fdfcee, 'created')
+  @include buildTileColors($turf-green, $seed-green, 'passed')
+  @include buildTileColors($brick-red, $quartz-red, 'failed')
+  @include buildTileColors($brick-red, $quartz-red, 'errored')
+  @include buildTileColors($cement-grey, $pebble-grey, 'canceled')
+  @include buildTileColors($dozer-yellow, $haze-yellow, 'started')
+  @include buildTileColors($dozer-yellow, $haze-yellow, 'queued')
+  @include buildTileColors($dozer-yellow, $haze-yellow, 'booting')
+  @include buildTileColors($dozer-yellow, $haze-yellow, 'received')
+  @include buildTileColors($dozer-yellow, $haze-yellow, 'created')

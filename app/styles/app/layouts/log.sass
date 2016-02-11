@@ -20,7 +20,7 @@
         size: auto 12px
         position: 6px 4px
       border-radius: 2px
-      color: #f1f1f1
+      color: $pebble-grey
       @extend %icon-arrow-down
 
     &:hover
@@ -43,7 +43,7 @@
       height: 20px
       width: 20px
       vertical-align: middle
-      background-color: $grey-light
+      background-color: $cement-grey
       border-radius: 50%
       &:after
         content: ""
@@ -117,13 +117,13 @@
     display: none
   &:hover,
   &:active
-    border-color: $teal
-    color: $teal
+    border-color: $oxide-blue
+    color: $oxide-blue
     .icon-eye
       path
-        fill: $teal
+        fill: $oxide-blue
       circle
-        stroke: $teal
+        stroke: $oxide-blue
         fill: transparent
 
 .toggle-log-button--dark
@@ -146,13 +146,13 @@
     clear: left
     min-height: 42px
     padding: 15px 0
-    color: $color-text-log
-    font-family: monospace
+    color: $pebble-grey
+    font-family: $font-family-monospace
     font-size: $font-size-log
     line-height: $line-height-log
     white-space: pre-wrap
     word-wrap: break-word
-    background-color: #2a2a2a
+    background-color: $color-bg-log-fold
     counter-reset: line-numbering
     margin-top: 0
 
@@ -196,7 +196,7 @@
 
     // &.active
     p:first-of-type
-      background: $color-bg-log-fold inline-image('ui/log.fold.open.2.svg') no-repeat 8px 3px
+      background: darken($color-bg-log-hover, 10) inline-image('ui/log.fold.open.2.svg') no-repeat 8px 3px
       &.highlight
         background-color: $color-bg-log-fold-highlight
 
@@ -240,7 +240,7 @@
 
 .log-notice
   background-color: #A6ADAD
-  color: $white
+  color: white
   min-height: 70px
   line-height: 35px
   text-align: center

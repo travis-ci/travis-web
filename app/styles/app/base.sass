@@ -1,14 +1,78 @@
+*,
+*:before,
+*:after
+  box-sizing: border-box
 
 html,
 body
+  height: 100%
   line-height: 1.45 !important
+  font-size: 14px
+  background: white
+  color: $asphalt-grey
+  padding: 0
+  margin: 0
+  font-weight: 400
+  font-style: normal
+  line-height: 1.45
+  font-family: $font-family-sans-serif
+
+img
+  max-width: 100%
+  height: auto
+  -ms-interpolation-mode: bicubic
+  display: inline-block
+  vertical-align: middle
+
+textarea
+  height: auto
+  min-height: 50px
+
+select
+  width: 100%
 
 strong
   font-weight: 400
 
 a
-  color: $grey
+  color: $asphalt-grey
   text-decoration: none
   &:hover,
   &:active
     text-decoration: none
+
+.display
+  display: block !important
+
+.display-inline
+  display: inline-block !important
+
+.hidden
+  display: none
+
+.emoji
+  vertical-align: middle
+  width: 20px
+  height: 20px
+
+.warning
+  color: #c00
+  a
+    color: #c00
+    text-decoration: underline
+
+.small-title
+  font-size: 20px
+  color: $oxide-blue
+  font-weight: 400
+
+.blank-list
+  @include resetul
+
+.monospace
+  font-family: Monaco, monospace
+  font-size: 13px
+  line-height: 1
+
+.float-right
+  float: right

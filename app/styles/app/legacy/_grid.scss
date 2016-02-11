@@ -2,8 +2,6 @@
 // foundation.zurb.com
 // Licensed under MIT Open Source
 
-@import "global";
-
 //
 // @variables
 //
@@ -13,6 +11,8 @@ $include-xl-html-grid-classes: false !default;
 $row-width: 100%;
 $total-columns: 12 !default;
 
+$default-float: left;
+$opposite-direction: right;
 $last-child-float: $opposite-direction !default;
 
 //

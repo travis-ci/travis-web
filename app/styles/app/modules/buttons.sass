@@ -1,7 +1,3 @@
-/*
- * Buttons
- */
-
 $button-border-color: #d4d4d4
 
 .button,
@@ -15,17 +11,17 @@ $button-border-color: #d4d4d4
   outline: none
   text-decoration: none
   text-align: center
-  color: $white
+  color: white
   white-space: nowrap
   border-radius: 2px
-  background-color: $grey-lighter
+  background-color: $pebble-grey
 
 .button:hover,
 .button:focus,
 .button:active,
 .button.active
   border-color: $button-border-color
-  background-color: $grey-medium
+  background-color: $cement-grey
   text-decoration: none
   color: #fff
 
@@ -38,15 +34,15 @@ $button-border-color: #d4d4d4
 .button--signin,
 .button--signingin
   display: inline-block
-  color: $white
-  font-size: $font-size-small
+  color: #fff
+  font-size: $font-size-s
   line-height: 1
   text-decoration: none
   border-radius: 4px
   border: none
   vertical-align: middle
   background:
-    color: $pass-color
+    color: $turf-green
 
 .button--signin
   padding: 0.6em 2em 0.55em 0.6em
@@ -69,9 +65,9 @@ $button-border-color: #d4d4d4
 
 .button--green
   border: none
-  font-size: $font-size-small
-  color: $white
-  background-color: $pass-color
+  font-size: $font-size-s
+  color: white
+  background-color: $turf-green
   &:hover
     background-color: #73c78d
 .button--fixedwidth
@@ -82,11 +78,11 @@ $button-border-color: #d4d4d4
   font-size: $font-size-sm
   border: none
   &:hover
-    background-color: $grey-medium
+    background-color: $cement-grey
 
 .btn-activated
   background-color: #39a85b
-  color: $white
+  color: white
   &:hover
     background-color: darken(#39a85b, 10)
 
@@ -97,9 +93,9 @@ $button-border-color: #d4d4d4
 .button--grey
   height: 22px
   padding: 0 10px 0 10px
-  background-color: #696867
-  color: #f2f2f2
-  font-size: $font-size-small
+  background-color: $asphalt-grey
+  color: $pebble-grey
+  font-size: $font-size-s
   border: none
   border-radius: 2px
   &:hover,
@@ -113,18 +109,14 @@ $button-border-color: #d4d4d4
   @extend .button
   border-radius: 2px
   border: none
-  font-size: $font-size-small
-  color: $white
-  background-color: #CD3A36
+  font-size: $font-size-s
+  color: white
+  background-color: $brick-red
   font-weight: 300
   padding: 4px 10px 2px
   &:focus,
   &:hover
-    background-color: lighten(#CD3A36, 10)
-
-
-
-// new stuff
+    background-color: $quartz-red
 
 %circle-button
   display: block
@@ -135,7 +127,7 @@ $button-border-color: #d4d4d4
   border: solid 1px #E4E6E6
   border-radius: 50%
   &:hover
-    border-color: $teal
+    border-color: $oxide-blue
 
   float: left
   margin-right: 1rem
@@ -167,13 +159,14 @@ $button-border-color: #d4d4d4
   display: inline-block
   height: 28px
   padding: 0 0.8em
-  border: 1px solid #f1f1f1
-  color: #f1f1f1
+  border: 1px solid $pebble-grey
+  color: $pebble-grey
   border-radius: 2px
   text-align: center
   line-height: 1.8
   font-size: 14px
   font-weight: 300
+  cursor: pointer
   [class^="icon"]
     margin-right: .3em
 
@@ -207,7 +200,7 @@ $button-border-color: #d4d4d4
     background-color: lighten($bg-color, 10)
 
 .button-delete
-  @include buttons($red)
+  @include buttons($brick-red)
 
 .button-cancel
   @include buttons(#A0A8A8)

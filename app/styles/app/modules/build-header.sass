@@ -3,15 +3,15 @@
   border: 1px solid $cream-dark
   clear: both
 
-  @include colorRows($green, 'passed', 12px)
-  @include colorRows($red, 'failed', 12px)
-  @include colorRows($red, 'errored', 12px)
-  @include colorRows($grey, 'canceled', 12px)
-  @include colorRows($yellow-bg, 'started', 12px, true, $yellow-font)
-  @include colorRows($yellow-bg, 'queued', 12px, true, $yellow-font)
-  @include colorRows($yellow-bg, 'booting', 12px, true, $yellow-font)
-  @include colorRows($yellow-bg, 'received', 12px, true, $yellow-font)
-  @include colorRows($yellow-bg, 'created', 12px, true, $yellow-font)
+  @include colorRows($turf-green, 'passed', 12px)
+  @include colorRows($brick-red, 'failed', 12px)
+  @include colorRows($brick-red, 'errored', 12px)
+  @include colorRows($cement-grey, 'canceled', 12px)
+  @include colorRows($canary-yellow, 'started', 12px, true, $dozer-yellow)
+  @include colorRows($canary-yellow, 'queued', 12px, true, $dozer-yellow)
+  @include colorRows($canary-yellow, 'booting', 12px, true, $dozer-yellow)
+  @include colorRows($canary-yellow, 'received', 12px, true, $dozer-yellow)
+  @include colorRows($canary-yellow, 'created', 12px, true, $dozer-yellow)
 
   @media #{$medium-up}
     display: flex
