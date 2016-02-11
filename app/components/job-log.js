@@ -6,12 +6,17 @@ export default Ember.Component.extend({
   didReceiveAttrs: function(options) {
     this._super(...arguments);
 
-    if(options.oldAttrs && options.oldAttrs.job && options.oldAttrs.job.value) {
-      this.teardownLog(options.oldAttrs.job.value);
-    }
+    let oldJob = options.oldAttrs && options.oldAttrs.job && options.oldAttrs.job.value,
+        newJob = options.newAttrs && options.newAttrs.job && options.newAttrs.job.value;
 
-    if(options.newAttrs && options.newAttrs.job && options.newAttrs.job.value) {
-      this.setupLog(options.newAttrs.job.value);
+    if(newJob !== oldJob) {
+      if(newJob) {
+        this.setupLog(newJob);
+      }
+
+      if(oldJob) {
+        this.teardownLog(oldJob);
+      }
     }
   },
 
