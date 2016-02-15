@@ -23,10 +23,5 @@ export default Ember.Component.extend(Polling, {
         scrollTop: 0
       }, 200);
     }
-  },
-
-  click() {
-    this.scrollTop();
-    return this.get('routing').transitionTo('repo', this.get('repo.slug').split('/'));
   }
 });
