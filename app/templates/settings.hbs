@@ -32,10 +32,10 @@
 
     <ul class="settings-list--crons">
       {{#each crons as |cron|}}
-        <li>{{add-cron cron=cron}}</li>
+        <li>{{cron-job cron=cron}}</li>
       {{/each}}
-      <li>{{add-cron2 repo=repo}}</li>
-      <li>{{add-cron repo=repo}}</li>
+      <li>{{cron-job}}</li><!-- for testing only -->
+      <li>{{add-cron-job repo=repo}}</li>
     </ul>
 
 
