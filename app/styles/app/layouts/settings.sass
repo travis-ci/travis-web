@@ -62,9 +62,6 @@
   @extend %settings-row
   padding: .4em .5em
 
-.settings-cron
-  height: auto
-
 .settings-sshkey
   @extend %settings-row
   padding: .6em .5em
@@ -117,7 +114,7 @@
     word-break: normal
     white-space: nowrap
 
-.env-var-value
+.env-var-value, .cron-jon-value
   @extend %settings-value-section
   white-space: nowrap
   width: 76%
@@ -138,9 +135,9 @@
       position: 0.8em 0.7em
   .is-public &
     input
-      background-image: none;
-      padding: 0.3em 0 0.4em 0.9em;
-      font-size: 14px;
+      background-image: none
+      padding: 0.3em 0 0.4em 0.9em
+      font-size: 14px
 
 %settings-action-section
   display: inline-block
@@ -163,7 +160,7 @@
   @media #{$xlarge-up}
     width: grid-calc(4, 36)
 
-.env-var-action, .cron-action
+.env-var-action, .cron-job-action
   @extend %settings-action-section
   a
     padding: 1em
@@ -182,5 +179,3 @@
     width: 1.1em
     height: 1.4em
     margin: .2em auto 0
-
-

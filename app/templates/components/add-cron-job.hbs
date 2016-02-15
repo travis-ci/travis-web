@@ -2,7 +2,7 @@
   <div class="form-elem select">
     <span class="label">Branch</span>
     {{#x-select value=branch}}
-      {{#each branches as |branch|}}
+      {{#each repo.branches as |branch|}}
         {{#x-option value=branch}}{{branch}}{{/x-option}}
       {{/each}}
     {{/x-select}}
@@ -16,7 +16,7 @@
     {{/x-select}}
   </div>
   <div class="form-elem">
-    {{travis-switch active=public description="Only if no new commit after last cron build"}}
+    {{travis-switch active=disable_by_build description="Only if no new commit after last cron build"}}
   </div>
   <div class="form-elem">
   {{#if isSaving}}

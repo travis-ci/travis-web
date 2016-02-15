@@ -1,55 +1,27 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['form--cron', 'settings-cron'],
-  classNameBindings: ['nameIsBlank:form-error'],
-  store: Ember.inject.service(),
+  classNames: ['settings-cron'],
+  isDeleting: false,
+  actionType: 'Save',
 
-  isValid() {
-    if (Ember.isBlank(this.get('name'))) {
-      this.set('nameIsBlank', true);
-      return false;
+  disable_by_build: function(key) {
+    var value = ''
+    if (this.get('cron.disable_by_build')) {
+      value = 'Only '
     } else {
-      return true;
+      value = 'Even ';
     }
-  },
-
-  reset() {
-    return this.setProperties({
-      name: null,
-      value: null,
-      "public": null
-    });
-  },
+    return value + 'if no new commit after last cron build';
+  }.property('cron.disable_by_build'),
 
   actions: {
-    save() {
-      var env_var, self;
-      if (this.get('isSaving')) {
+    "delete": function() {
+      if (this.get('isDeleting')) {
         return;
       }
-      this.set('isSaving', true);
-      if (this.isValid()) {
-        env_var = this.get('store').createRecord('env_var', {
-          name: this.get('name'),
-          value: this.get('value'),
-          "public": this.get('public'),
-          repo: this.get('repo')
-        });
-        self = this;
-        return env_var.save().then(() => {
-          this.set('isSaving', false);
-          return this.reset();
-        }, () => {
-          return this.set('isSaving', false);
-        });
-      } else {
-        return this.set('isSaving', false);
-      }
-    },
-
-    nameChanged() {
-      return this.set('nameIsBlank', false);
+      this.set('isDeleting', true);
+      return this.get('cron').destroyRecord();
     }
   }
 });

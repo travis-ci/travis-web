@@ -16,9 +16,9 @@ export default Ember.Component.extend({
 
   reset() {
     return this.setProperties({
-      name: null,
-      value: null,
-      "public": null
+      branch: null,
+      interval: null,
+      "disable_by_build": null
     });
   },
 
@@ -51,5 +51,10 @@ export default Ember.Component.extend({
     nameChanged() {
       return this.set('nameIsBlank', false);
     }
+  },
+
+  intervals: function(key) {
+    return ['monthly', 'weekly', 'daily'];
   }
+
 });
