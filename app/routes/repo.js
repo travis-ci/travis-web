@@ -1,8 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
+import ScrollResetMixin from 'travis/mixins/scroll-reset';
 import Ember from 'ember';
 
-export default TravisRoute.extend({
+export default TravisRoute.extend(ScrollResetMixin, {
   store: Ember.inject.service(),
 
   titleToken(model) {
