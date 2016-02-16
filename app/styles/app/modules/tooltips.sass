@@ -82,44 +82,64 @@
     &:before
       left: 2.5em
 
-.tooltip-jobs
-  display: inline-block
+
+// trying to rewrite
+
+$tooltip-spacing: 4em
+$tooltip-arrow-width: .8em
+  
+[data-tooltip]
   position: relative
+  display: inline-block
   vertical-align: middle
-  @extend %tooltip
-  .tooltip-bubble
-    top: -3.8em
-    left: -.5em
-    height: 3.2em
-    padding: .3em .4em
-    &:before
-      left: 0.6em
-  .tooltip-trigger
-    vertical-align: baseline
-
-.tooltip.job-os
-  .tooltip-bubble
-    top: -2.2em
-    height: 1.6em
-    padding: 0.1em .4em
-    &:before
-      left: 0
-      right: 0
-      margin: auto
-
-
-.tooltip--requests
-  @extend %tooltip
-  position: absolute
-  right: 0
-  bottom: 0
-  .tooltip-trigger
-    margin: .2em .5em
-  .tooltip-bubble
-    top: -3.6em
-    right: 0
-    width: 10em
-    height: 3em
+  &:after
+    content: attr(data-tooltip)
+    padding: 0.2em 0.3em
+    color: white
+    border-radius: 2px
+    bottom: $tooltip-spacing
     white-space: normal
+    font-size: 12px
+  &:before
+    content: ""
+    width: $tooltip-arrow-width
+    height: $tooltip-arrow-width
+    transform: rotate(45deg)
+    bottom: $tooltip-spacing - $tooltip-arrow-width
+
+  &:after,
+  &:before
+    display: block
+    position: absolute
+    background: $asphalt-grey
+    left: 0
+    right: 0
+    margin: auto
+    display: none
+
+  &:hover,
+  &:active
+    &:after,
     &:before
-      right: .8em
+      display: block
+
+.job-os[data-tooltip]
+  $tooltip-spacing: 3em
+  &:after
+    bottom: $tooltip-spacing
+  &:before
+    bottom: $tooltip-spacing - $tooltip-arrow-width 
+
+
+.request-item
+  [data-tooltip]
+    $tooltip-spacing: 3em
+    width: 7em
+    text-align: center
+    &:after
+      bottom: $tooltip-spacing
+    &:before
+      bottom: $tooltip-spacing - $tooltip-arrow-width 
+
+.tooltip-jobs
+  

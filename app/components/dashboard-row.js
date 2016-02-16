@@ -7,9 +7,8 @@ const { service } = Ember.inject;
 
 export default Ember.Component.extend({
   permissions: service(),
-
   tagName: 'li',
-  classNameBindings: ['repo.default_branch.last_build.state'],
+  classNameBindings: ['repo.default_branch.last_build.state', 'repo.active:is-active'],
   classNames: ['rows', 'rows--dashboard'],
   isLoading: false,
   isTriggering: false,
@@ -28,13 +27,19 @@ export default Ember.Component.extend({
     return this.get('permissions').hasAdminPermission(this.get('repo'));
   }),
 
+  openDropup: function() {
+    var self = this;
+    this.toggleProperty('dropupIsOpen');
+    Ember.run.later((function() { self.toggleProperty('dropupIsOpen'); }), 2000);
+  },
+
   actions: {
     tiggerBuild(branch) {
       this.set('isTriggering', true);
       return this.triggerBuild();
     },
     openDropup() {
-      this.toggleProperty('dropupIsOpen');
+      this.openDropup();
     }
   }
 });

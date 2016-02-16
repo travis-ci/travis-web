@@ -23,13 +23,18 @@
   margin-bottom: 4rem
 
 .starred-empty
-  border: dotted 1px $pebble-grey
+  border: dotted 1px rgba($cement-grey, 0.8)
   border-radius: 2px
   text-align: center
   padding: 2rem 0
-  font-size: 20px
+  font-size: 18px
   color: $cement-grey
-
+  span
+    @extend %icon-star
+    padding-left: 2em
+    background-size: 24px 24px
+    background-repeat: no-repeat
+    
 .dash-star
   &:hover,
   &:active
@@ -40,10 +45,6 @@
     svg path
       stroke: $dozer-yellow
       fill: $canary-yellow
-
-.dash-header
-  order: 2
-  flex: 0 0 20%
 
 .dash-head
   flex: 0 0 2%
@@ -62,9 +63,19 @@
 .dash-body
   flex-grow: 1
   position: relative
-
   @media #{$medium-up}
     padding: 0 1.5em 0
+
+
+.dash-main
+  @media #{$small-only}
+    padding: 0 1em
+  @media #{$medium-up}
+    display: flex
+    flex-flow: row nowrap
+    align-items: center
+    justify-content: space-between
+    height: 80px
 
 .dash-aside
   @media #{$medium-up}
@@ -72,40 +83,38 @@
     width: 100%
     bottom: 0
     overflow: hidden
-
-.dash-main
+    z-index: 0
+    
+section[class^="dash-"]
   @media #{$small-only}
-    padding: 0 1em
-  @media #{$medium-up}
-    display: flex
-    flex-flow: row wrap
-    align-items: center
-    justify-content: space-between
-    height: 80px
+    margin-top: 1em
+
+.dash-header
+  position: relative
+  flex: 0 0 19%
 
 .dash-default
-  order: 3
-  flex: 0 0 20%
-
-  @media #{$small-only}
-    margin-top: 2em
+  flex: 0 0 19%
 
 .dash-menu
-  order: 5
   flex: 0 0 3%
 
-.dash-last-build
-  display: flex
-  order: 4
-  flex: 0 0 55%
-  flex-flow: row wrap
-  justify-content: space-between
+.dash-last
+  flex: 0 0 19%
 
-  @media #{$small-only}
-    margin-top: 2em
-  @media #{$medium-up}
-    align-items: center
-    padding-right: 3em
+.dash-commit
+  flex: 0 0 17%
 
-    > div
-      flex: 0 0 33%
+.dash-finished
+  flex: 0 0 21%
+  
+.activate-repo-button
+  @extend %button
+  background-color: $pebble-grey
+  color: $cement-grey
+  font-size: 14px
+  cursor: default
+  &.is-active:hover
+    background-color: $oxide-blue
+    color: white
+    cursor: pointer

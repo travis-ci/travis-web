@@ -15,7 +15,26 @@ export default Ember.Controller.extend({
       if (item.get('default_branch')) {
         return item.get('default_branch.last_build') !== null;
       }
-    }).sortBy('default_branch.last_build.finished_at').reverse();
+    }).sort(function(a, b) {
+      
+      if (a.default_branch.last_build.finished_at === null) {
+        return -1;
+      }
+      if (b.default_branch.last_build.finished_at === null) {
+        return 1;
+      }
+      if (a.default_branch.last_build.finished_at < b.default_branch.last_build.finished_at) {
+        return 1;
+      }
+      if (a.default_branch.last_build.finished_at > b.default_branch.last_build.finished_at) {
+        return -1;
+      }
+      if (a.default_branch.last_build.finished_at === b.default_branch.last_build.finished_at) {
+        return 0;
+      }
+
+    });
+    
     if (org) {
       repos = repos.filter(function(item, index) {
         return item.get('owner.login') === org;
@@ -28,6 +47,7 @@ export default Ember.Controller.extend({
         return item.slug.match(new RegExp(filter));
       });
     }
+    this.inactive();
   }.property('filter', 'model', 'org'),
 
   updateFilter() {

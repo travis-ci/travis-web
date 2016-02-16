@@ -7,20 +7,6 @@
 .top.landing-page .topbar
   background-color: #fff
 
-  .button--signin
-    background-color: #ffffff
-    background-image: inline-image('landing-page/signingithub.svg')
-    background-size: 16px 16px
-    border: 2px solid rgba($cement-grey, .4)
-    color: $cement-grey
-  .button--signingin
-    border: 2px solid $turf-green
-  .button--signin:hover
-    background-color: $turf-green
-    background-image: inline-image('landing-page/signingithub-hover.svg')
-    border: 2px solid $turf-green
-    color: #fff
-
 .landing-centered-wrapper
   .button
     .sync-spinner
@@ -37,7 +23,7 @@
     font-size: 5em
     line-height: 1em
     font-weight: 300
-    color: $cement-grey
+    color: rgba($asphalt-grey, .8)
     margin-bottom: 0
 
   .hero, .oss-testing, .customers, .recent-builds, .free-for-oss, .private-repos, .features-list, .build-flows, .user-testimonials
@@ -56,6 +42,7 @@
 
     p
       line-height: 1.5em
+      font-color: $asphalt-grey
       font-size: 1.7em
 
   .hero.z-1
@@ -77,11 +64,10 @@
     margin-bottom: -192px
 
   #laptop img
-    border: 2px solid lighten($cement-grey, 20)
+    border: 2px solid rgba($cement-grey, 0.2)
     border-radius: 2px
 
   .hero
-    background-color: $pebble-grey
     h1
       color: $oxide-blue
       line-height: 1.2em
@@ -99,13 +85,11 @@
       color: #fff
       font-size: 2em
       font-weight: 300
-      padding: 0.5em
       margin: 1.3em 0 1.3em 0
       border-radius: 2px
-      border: 0
 
       &:hover
-        background-color: lighten($turf-green, 20)
+        background-color: rgba($turf-green, .8)
 
     .sign-in-mascot
       padding-right: 10px
@@ -140,6 +124,40 @@
     .left
       text-align: left
       padding: 0 0 0 12%
+
+  .recent-builds
+    min-height: 44rem
+
+  .recent-builds-text
+    text-align: center
+    h2
+      color: $brick-red
+      text-align: right
+      margin: 0
+
+    p
+      text-align: right
+      margin-top: 0.5em
+      margin-bottom: 2em
+
+    img
+      margin-bottom: 20px
+
+    ul
+      padding-left: 0
+
+    li
+      background-color: #fff
+      border-radius: 4px
+      color: #828282
+      font-weight: 400
+      margin-bottom: 20px
+      list-style-type: none
+      position: relative
+      height: 120px
+      width: 100%
+      padding: 10px 0 0 60px
+      text-align: left
 
   .free-for-oss
     text-align: center
@@ -176,7 +194,12 @@
       text-align: right
 
     a
-      text-decoration: underline
+      text-decoration: none
+      border-bottom: 1px solid $asphalt-grey
+      transition: all 200ms ease
+      &:hover
+        border-bottom: none
+        color: $cement-grey
 
     .mobile-envelope
       display: none
@@ -196,9 +219,7 @@
       padding-top: 40px
 
     p
-      font-size: 1.15em
-      font-weight: 300
-      text-align: center
+      font-size: 16px
 
     br.mobile-break
       display: none
@@ -271,7 +292,6 @@
         p
           font-size: 13px
           line-height: 1.5em
-          color: $asphalt-grey
 
     .divider-line-horizontal
       width: 50px
@@ -370,7 +390,7 @@
     .build-flows .branch-bf .divider-line-vertical
       width: 3px
       height: 40px
-      background: lighten($cement-grey, 30)
+      background: $pebble-grey
       display: inline-block
       margin-bottom: 10px
 

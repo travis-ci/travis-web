@@ -1,9 +1,9 @@
 .top .cta
-  border-bottom: 2px solid #E4E4E4
-  border-top: 2px solid #E4E4E4
+  border-bottom: 2px solid rgba($cement-grey, 0.2)
+  border-top: 2px solid rgba($cement-grey, 0.2)
   line-height: 2.7em
   font-size: 16px
-  color: #71AE76
+  color: $turf-green
   text-align: right
   padding-right: 1rem
   background-color: #fff
@@ -13,16 +13,24 @@
     position: relative
     margin: auto
     padding: 0
-
-  .arrow
-    display: block
-    position: absolute
-    top: -11px
-    right: 66px
-    background-image: inline-image('cta-arrow.svg')
-    background-repeat: no-repeat
-    width: 20px
-    height: 12px
+    &:after,
+    &:before
+      content: ""
+      display: block
+      width: 13px
+      position: absolute
+      transform: rotate(45deg)
+    &:after
+      height: 13px
+      background: rgba($cement-grey, 0.1)
+      top: -0.4rem
+      right: 4rem
+    &:before
+      height: 15px
+      background: white
+      top: -0.3rem
+      right: 57px
+      z-index: 1
 
   @media #{$medium-up}
     display: block
@@ -32,10 +40,10 @@
   display: none !important
 
 .landing-pro .top
-  border-bottom: 1px solid #f1f1f1
+  border-bottom: 1px solid $pebble-grey
 
 .top
-  background-color: #f1f1f1
+  background-color: $pebble-grey
 
 .topbar
   height: $top-height

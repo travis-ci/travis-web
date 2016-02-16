@@ -23,7 +23,9 @@ export default TravisRoute.extend({
         }
       }).map(function(repo) {
         return Ember.Object.create(repo);
-      }).sortBy('default_branch.last_build.finished_at');
+      });
     });
   }
 });
+
+

@@ -1,6 +1,11 @@
 <div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
-  <h1 id="logo" class="logo">{{#link-to "main" alt="Travis CI"}}Travis CI{{/link-to}}</h1>
-
+  <h1 id="logo" class="logo" {{action "cheatcode" on="doubleClick"}}>
+    {{#if isDashboard}}
+      {{#link-to "dashboard" alt="Travis CI"}}Travis CI{{/link-to}}
+    {{else}}
+      {{#link-to "main" alt="Travis CI"}}Travis CI{{/link-to}}
+    {{/if}}
+    </h1>
   <div class="navigation-toggle">
     <button type="button" id="tofuburger" class="tofuburger" {{action 'toggleBurgerMenu'}}>Toggle Menu</button>
   </div>
@@ -62,7 +67,7 @@
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
-          <button class="signed-out button--signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
+          <button class="signed-out button-signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
           {{#link-to "profile" class="navigation-anchor signed-in"}}
@@ -71,7 +76,7 @@
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
-          <button class="signing-in button--signingin">Signing In <span class="loading-indicator--white"><i></i><i></i><i></i></span></button>
+          <button class="signing-in button-signingin">Signing In {{loading-indicator inline=true}}</button>
         {{/if}}
         {{#if auth.signedIn}}
           <ul class="navigation-nested">
@@ -98,7 +103,6 @@
 {{#if showCta}}
   <div class="cta">
     <p class="row">
-      <span class="arrow"></span>
       Help make Open Source a better place and start building better software today!
     </p>
   </div>

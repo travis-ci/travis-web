@@ -7,6 +7,9 @@
   .row
     max-width: 1024px
 
+  .footer
+    margin-top: 5rem
+
   .main
     margin: auto
     max-width: 1024px
@@ -54,7 +57,6 @@
     margin-bottom: -99999px
     padding-bottom: 100034px
 
-
 @media #{$large-up}
 
   #left, .wrapper-main
@@ -97,3 +99,26 @@
   .non-centered .wrapper-main
     width: grid-calc(31, 36)
     margin-left: grid-calc(5, 36)
+
+
+.cheatcode
+  aside#left
+    display: none
+
+  .wrapper-main
+    width: auto !important
+    min-height: 83vh
+    float: none !important
+    margin: auto !important
+
+  #main,
+  .topbar
+    width: 1024px !important
+    margin: auto !important
+    padding-bottom: 0 !important
+    padding-left: 0 !important
+    padding-rigth: 0 !important
+
+  footer.hidden
+    display: block
+    margin-top: 5rem

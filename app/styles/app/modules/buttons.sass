@@ -1,26 +1,30 @@
-$button-border-color: #d4d4d4
+%button
+  font-family: $font-family-sans-serif
+  display: inline-block
+  cursor: pointer
+  white-space: nowrap
+  border-radius: 2px
+  border: none
+  vertical-align: middle
+  padding: 0.8rem
+  line-height: 1
+  text-decoration: none
 
 .button,
 .btn
-  font-family: $font-family-sans-serif
+  @extend %button
   position: relative
   overflow: visible
-  display: inline-block
-  padding: 5px 10px
-  cursor: pointer
   outline: none
-  text-decoration: none
   text-align: center
   color: white
-  white-space: nowrap
-  border-radius: 2px
   background-color: $pebble-grey
 
 .button:hover,
 .button:focus,
 .button:active,
 .button.active
-  border-color: $button-border-color
+  border-color: $pebble-grey
   background-color: $cement-grey
   text-decoration: none
   color: #fff
@@ -31,37 +35,30 @@ $button-border-color: #d4d4d4
   border-bottom-color: #2356c4
   background-color: #40454f
 
-.button--signin,
-.button--signingin
-  display: inline-block
+.button-signin,
+.button-signingin
+  @extend %button
+  height: 36px
   color: #fff
-  font-size: $font-size-s
-  line-height: 1
-  text-decoration: none
-  border-radius: 4px
-  border: none
-  vertical-align: middle
-  background:
-    color: $turf-green
+  font-size: 14px
+  background-color: $turf-green
+  .loading-indicator
+    vertical-align: top
+    margin-left: .3em
+    i
+      background-color: white
+      width: 6px
+      height: 6px
 
-.button--signin
-  padding: 0.6em 2em 0.55em 0.6em
-  cursor: pointer
+.button-signin
+  @extend %icon-github-white
+  padding-right: 2.2em
   background:
-    image: inline-image('ui/github-signin.svg')
+    size: 16px
+    position: 95%
     repeat: no-repeat
-    position: 95.5% 45%
   &:hover
-    background-color: #73c78d
-    text-decoration: none
-
-.button--signingin
-  padding: 0.6em 0.6em 0.45em
-  span
-    display: inline-block
-    padding: 0 .2em
-    position: relative
-    top: -0.15em
+    background-color: rgba($turf-green, 0.8)
 
 .button--green
   border: none
@@ -86,8 +83,8 @@ $button-border-color: #d4d4d4
   &:hover
     background-color: darken(#39a85b, 10)
 
-#auth #navigation .button--signin,
-#auth #navigation .button--signingin
+#auth #navigation .button-signin,
+#auth #navigation .button-signingin
   display: none
 
 .button--grey
