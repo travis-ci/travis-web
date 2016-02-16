@@ -5,7 +5,7 @@
       {{#if build.isPullRequest}}
         {{#link-to "build" build.repo build}}
           <small>PR #{{build.pullRequestNumber}}</small>
-          {{{format-message build.pullRequestTitle short="true" repoBinding=build.repo}}}
+          {{{format-message build.pullRequestTitle short="true" repo=build.repo}}}
         {{/link-to}}
       {{else}}
         {{#link-to "build" build.repo build}}
@@ -15,7 +15,7 @@
     </h2>
     {{#unless build.isPullRequest}}
       <div class="row-message">
-        {{{format-message build.commit.message short="true" repoBinding=build.repo}}}
+        {{{format-message build.commit.message short="true" repo=build.repo}}}
       </div>
     {{/unless}}
   </div>
