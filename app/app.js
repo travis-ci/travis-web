@@ -27,21 +27,6 @@ var App = Ember.Application.extend(Ember.Evented, {
     return Travis.lookup('controller:flash').loadFlashes([options]);
   },
 
-  toggleSidebar() {
-    var element;
-    $('body').toggleClass('maximized');
-    element = $('<span></span>');
-    $('#top .profile').append(element);
-    Ember.run.later((function() {
-      return element.remove();
-    }), 10);
-    element = $('<span></span>');
-    $('#repo').append(element);
-    return Ember.run.later((function() {
-      return element.remove();
-    }), 10);
-  },
-
   ready() {
     if (location.hash.slice(0, 2) === '#!') {
       location.href = location.href.replace('#!/', '');
