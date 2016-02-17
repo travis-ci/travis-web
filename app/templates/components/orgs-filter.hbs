@@ -1,36 +1,34 @@
-<div class="filter filter--org">
-  <div class="filter-current">
-    {{#if orgs.isLoading}}
-      {{loading-indicator}}
-    {{else}}
-      <a {{action 'toggleOrgFilter'}} title="">
-        {{#if selected }}
-          <img src="{{selected.avatar_url}}" alt="{{org.login}}">
-          {{#if selected.name}}
-            {{selected.name}}
-          {{else}}
-            {{selected.login}}
-          {{/if}}
+<div class="filter-current">
+  {{#if orgs.isLoading}}
+    {{loading-indicator}}
+  {{else}}
+    <a {{action 'toggleOrgFilter'}} title="">
+      {{#if selected }}
+        <img src="{{selected.avatar_url}}" alt="{{org.login}}">
+        {{#if selected.name}}
+          {{selected.name}}
         {{else}}
-          All organizations
+          {{selected.login}}
         {{/if}}
-      </a><span class="icon-arrow-down"></span>
-    {{/if}}
-  </div>
-  <ul class="filter-dropdown {{if showFilter 'is-open'}}">
-    {{#if selected }}
-      <li><a title="" {{action 'select'}}>All organizations</a></li>
-    {{/if}}
-    {{#each orgs as |org|}}
-      <li>
-        <a title="" {{action 'select' org}}><img src="{{org.avatar_url}}" alt="">
-          {{#if org.name }}
-            {{org.name}}
-          {{else}}
-            {{org.login}}
-          {{/if}}
-        </a>
-      </li>
-    {{/each}}
-  </ul>
+      {{else}}
+        All organizations
+      {{/if}}
+    </a><span class="icon-arrow-down"></span>
+  {{/if}}
 </div>
+<ul class="filter-dropdown {{if showFilter 'is-open'}}">
+  {{#if selected }}
+    <li><a title="" {{action 'select'}}>All organizations</a></li>
+  {{/if}}
+  {{#each orgs as |org|}}
+  <li>
+    <a title="" {{action 'select' org}}><img src="{{org.avatar_url}}" alt="">
+      {{#if org.name }}
+        {{org.name}}
+      {{else}}
+        {{org.login}}
+      {{/if}}
+    </a>
+  </li>
+  {{/each}}
+</ul>
