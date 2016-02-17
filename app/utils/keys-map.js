@@ -30,7 +30,8 @@ languageConfigKeys = {
   lein: 'Lein',
   compiler: 'Compiler',
   crystal: 'Crystal',
-  osx_image: 'Xcode'
+  osx_image: 'Xcode',
+  r: 'R'
 };
 
 configKeys = {
