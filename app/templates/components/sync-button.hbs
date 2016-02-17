@@ -3,8 +3,8 @@
     <span class="loading-indicator--white"><i></i><i></i><i></i></span>Syncing from GitHub
   </div>
 {{else}}
-  <p class="sync-last">Last synced {{format-time user.syncedAt}}</p>
   <button {{action 'sync'}} class="button" type="button">
     <span class="icon-trigger"></span>Sync account
   </button>
+  <p class="sync-last">Last synced {{format-time user.syncedAt}}</p>
 {{/if}}
