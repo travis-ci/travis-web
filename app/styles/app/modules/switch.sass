@@ -13,15 +13,15 @@
     padding: 3px 3px 3px 4px
     vertical-align: middle
     overflow: visible
-    background-color: #E2E1E2
-    border-radius: 4px
+    background-color: darken($pebble-grey, 10)
+    border-radius: 2px
     border: none
     cursor: pointer
     span
       width: $switch-inner-width
       height: $switch-inner-heigth
-      border-radius: 4px
-      background-color: #A5A4A4
+      border-radius: 2px
+      background-color: $cement-grey
       color: white
       text-align: center
       font-weight: 300
@@ -50,9 +50,9 @@
 
   &.active
     .switch-inner
-      background-color: #B8D6B9
+      background-color: darken($seed-green, 10)
       span
-        background-color: #3BA85D
+        background-color: $turf-green
     .on
       display: inline-block
     .off

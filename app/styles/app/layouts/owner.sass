@@ -1,9 +1,10 @@
 .owner-header
+  display: flex
+  flex-flow: row wrap
+  justify-content: flex-start
+  align-items: center
   padding: 0 $column-gutter/2
   margin-bottom: 3rem
-  color: #969496
-  a
-    color: #969496
   .owner-title
     margin: .3em 0 .2em
     font-size: 36px
@@ -22,60 +23,25 @@
       text-decoration: underline
   img
     border-radius: 50%
-    background-color: #F4F3ED
-
-  .sync-button
-    margin-top: .8rem
-    p, button
-      margin: 0
-  .sync-last
-    color: #969496
-    font-size: $font-size-sm
-
-.owner-avatar,
-.owner-info
-  @extend %inline-block
-  vertical-align: middle
+    background-color: $pebble-grey
 
 .owner-avatar
-  width: grid-calc(4, 12)
+  flex: 0 0 20%
   @media #{$medium-up}
-    width: grid-calc(2, 12)
+    flex: 0 0 17%
 
 .owner-info
-  width: grid-calc(7, 12)
+  flex: 1 0 75%
   @media #{$medium-up}
-    width: grid-calc(29, 36)
-    position: relative
-    overflow: hidden
-    &:after
-      content: ""
-      @include fadeOut(right, -90deg, white)
+    flex: 1 0 80%
+  position: relative
+  overflow: hidden
+  &:after
+    content: ""
+    @include fadeOut(right, -90deg, white)
 
 .tabs--owner
   padding : 0 $column-gutter/2
-
-  .active,
-  .active:hover,
-    position: relative
-    color: $oxide-blue
-    &:after
-      content: ""
-      position: absolute
-      left: 0
-      bottom: -0.25em
-      width: 100%
-      height: 2px
-      background-color: $oxide-blue
-  .active
-    font-weight: 600
-
-.tabnav--owner
-  margin-bottom: 1.5rem
-  @media #{$medium-up}
-    height: 2.2em
-    border-bottom: solid 2px $cream-dark
-
 
 .owner-tiles
   padding: 0

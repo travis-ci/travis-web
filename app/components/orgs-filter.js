@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
-  classNames: ['dashboard-filter'],
+  classNames: ['organisation-filter'],
   actions: {
     toggleOrgFilter() {
       this.toggleProperty('showFilter');

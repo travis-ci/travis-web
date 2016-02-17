@@ -1,38 +1,42 @@
-$dropdown-border: #C3D9DB
-
-.dropdown--db
-  @include resetul
-  border-radius: 4px
-  position: absolute
-  padding: .8em .5em
-  z-index: 90
-  width: 12.5em;
-  right: 0;
-  top: 4em;
-  border: 2px $oxide-blue solid;
-  background-color: white
-  display: none
-  a
-    display: block
-    padding: 0.4em 1em .2em
-    &:hover
-      background-color: $oxide-blue
-      color: white
-  &:before
-    content: ""
-    width: 1.2em
-    height: 1.2em
-    display: block
-    position: absolute
-    top: -0.7em;
-    right: 1.1em;
-    background-color: white
-    border-top: solid 2px $oxide-blue;
-    border-left: solid 2px $oxide-blue;
-    transform: rotate(45deg);
-
-.filter
+.option-button
   position: relative
+  width: 17em
+  @media #{$small-only}
+    &.display
+      .option-dropdown
+        display: block
+  @media #{$medium-up}
+    &:hover
+      .option-dropdown
+        display: block
+      .option-display
+        color: $oxide-blue
+        border-color: $oxide-blue
+      .option-tofu
+        border-color: $oxide-blue
+        background-image: inline-image('/line-icons/icon-tofuburger-teal.svg')
+
+$dropdown-button-height: 30px
+$dropdown-button-margin: -9px
+
+.option-display
+  display: flex
+  height: $dropdown-button-height
+  padding: 0
+  border: 1px solid $pebble-grey
+  color: $asphalt-grey
+  border-radius: 2px
+  text-align: center
+  line-height: 2
+  font-size: 14px
+  cursor: pointer
+  text-align: left
+  white-space: nowrap
+  .label-align
+    flex-grow: 1
+    padding: 0 1em
+    line-height: 2
+    overflow: hidden
   img
     max-width: 20px
     max-height: 20px
@@ -41,39 +45,59 @@ $dropdown-border: #C3D9DB
     border-radius: 50%
     overflow: hidden
 
-.filter--org
-  float: left
+.option-tofu
+  width: 2em
+  height: 2em
+  display: inline-block
+  vertical-align: top
+  background:
+    image: inline-image('/line-icons/icon-tofuburger.svg')
+    repeat: no-repeat
+    size: 20px
+    position: 50%
+  @media #{$medium-up}
+    border-left: 1px solid $pebble-grey
 
-.filter-current
-  padding: .9em 0
-  cursor: pointer
-  a
-    color: $oxide-blue
-
-.filter-dropdown
-  @include resetul
-  position: absolute
-  top: 3em
-  min-width: 14em
-  background-color: white
-  border-radius: 2px
-  overflow: hidden
-  border: 1px solid $cream-dark
-  border-top: none
-  z-index: 40
+.option-dropdown
   display: none
-  li
-    white-space: nowrap
+  position: absolute
+  top: $dropdown-button-height + ($dropdown-button-margin * .8)
+  width: 100%
+  padding: 0
+  margin: 6px 0 0
+  list-style: none
+  z-index: 60
+  background-color: white
+  border: 1px solid $oxide-blue
   a
-    display: inline-block
-    width: 100%
-    padding: 10px 10px 10px 20px
+    display: block
+    padding: .5em 1em
+    font-size: 14px
+    color: $oxide-blue
     &:hover
       color: white
-      background : $oxide-blue
-  .is-selected
-    a
-      font-weight: 600
+      background-color: $oxide-blue
 
-  &.is-open
+
+.option-search
+  input[type="text"]
     display: block
+    padding-left: 1em
+    outline: none
+    border-bottom: 1px solid $oxide-blue
+    border-radius: 0
+
+
+.option-list
+  list-style: none
+  padding: 0
+  margin: 0
+  a
+    color: $asphalt-grey
+    cursor: pointer
+  img
+    width: 22px
+    height: 22px
+    vertical-align: top
+    margin-right: .3em
+    border-radius: 50%

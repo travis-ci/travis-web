@@ -131,9 +131,8 @@ p.profile-user-last
     vertical-align: middle
   .profile-settings
     display: inline-block
-    padding: .2em .2em .2em .5em;
-    height: 28px;
-    vertical-align: bottom;
+    padding: .2em .2em .2em .5em
+    height: 28px
     .icon
       width: 14px
       height: 14px
@@ -145,7 +144,7 @@ p.profile-user-last
   display: inline-block !important
 
 .profile-repo
-  border-radius: 4px
+  border-radius: 2px
   position: relative
   display: inline-block
   width: grid-calc(13, 24)
@@ -162,21 +161,22 @@ p.profile-user-last
   .sync-spinner
     vertical-align: top
   &:hover
-    background-color: #ededec
+    background-color: $pebble-grey
     &:after
       content: ""
-      @include fadeOut(right, -90deg, #ededec)
+      @include fadeOut(right, -90deg, $pebble-grey)
   .active &:hover
-    background-color: #e2eee2
+    background-color: $seed-green
     &:after
       content: ""
-      @include fadeOut(right, -90deg, #e2eee2)
+      @include fadeOut(right, -90deg, $seed-green)
   @media #{$medium-up}
     width: grid-calc(18, 24)
     height: 30px
     &:hover
       span
         display: inline-block
+        color: $cement-grey
   @media #{$large-up}
     width: grid-calc(19, 24)
 
