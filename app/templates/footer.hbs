@@ -1,18 +1,18 @@
 <footer class="footer">
   <div class="inner">
     <div class="footer-elem">
-      <img src="/images/ui/footer-logo.svg">
+      <div class="travis-footer" aria-hidden=true></div>
     </div>
 
     {{#unless config.enterprise}}
       <div class="footer-elem">
-        <h3>&copy;Travis CI, GmbH</h3>
+        <h3 class="footer-title">&copy;Travis CI, GmbH</h3>
         <p>Rigaer Straße 8<br>10247 Berlin, Germany <br>
         <a href="https://docs.travis-ci.com/imprint.html">Imprint</a></p>
       </div>
     {{/unless}}
     <div class="footer-elem">
-      <h3>Help</h3>
+      <h3 class="footer-title">Help</h3>
       <ul>
         <li><a href="https://docs.travis-ci.com">Documentation</a></li>
         {{#unless config.enterprise}}
@@ -25,7 +25,7 @@
     {{#unless config.enterprise}}
       {{#if config.pro}}
         <div class="footer-elem">
-          <h3>Legal</h3>
+          <h3 class="footer-title">Legal</h3>
           <ul>
             <li><a href="https://docs.travis-ci.com/imprint.html">Imprint</a></li>
             <li><a href="https://billing.travis-ci.com/pages/terms">Terms of Service</a></li>
