@@ -1,25 +1,25 @@
 <form {{action "save" on="submit"}}>
   <div class="form-elem select">
     <span class="label">Branch</span>
-    {{#x-select value=branch}}
+    {{#x-select value=selectedBranch required="true"}}
       {{#each branches as |branch|}}
-        {{#x-option value=branch.name}}{{branch.name}}{{/x-option}}
+        {{#x-option value=branch}}{{branch.name}}{{/x-option}}
       {{/each}}
     {{/x-select}}
   </div>
   <div class="form-elem select">
     <span class="label">Interval</span>
-    {{#x-select value=interval}}
+    {{#x-select value=selectedInterval required="true"}}
       {{#each intervals as |interval|}}
         {{#x-option value=interval}}{{interval}}{{/x-option}}
       {{/each}}
     {{/x-select}}
   </div>
   <div class="form-elem">
-    {{travis-switch active=disable_by_build description="Only if no new commit after last cron build"}}
+    {{travis-switch active=disable description="Only if no new commit after last cron build"}}
   </div>
   <div class="form-elem">
-  {{#if isSaving}}
+    {{#if isSaving}}
       {{loading-indicator}}
     {{else}}
       <input type="submit" value="Add" class="form-submit" />
