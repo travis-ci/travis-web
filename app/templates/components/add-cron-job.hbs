@@ -2,8 +2,8 @@
   <div class="form-elem select">
     <span class="label">Branch</span>
     {{#x-select value=branch}}
-      {{#each repo.branches as |branch|}}
-        {{#x-option value=branch}}{{branch}}{{/x-option}}
+      {{#each branches as |branch|}}
+        {{#x-option value=branch.name}}{{branch.name}}{{/x-option}}
       {{/each}}
     {{/x-select}}
   </div>
