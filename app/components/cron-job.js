@@ -6,9 +6,9 @@ export default Ember.Component.extend({
   actionType: 'Save',
 
   disable_by_build: function(key) {
-    var value = ''
+    var value = '';
     if (this.get('cron.disable_by_build')) {
-      value = 'Only '
+      value = 'Only ';
     } else {
       value = 'Even ';
     }
