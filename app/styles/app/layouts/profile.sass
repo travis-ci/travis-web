@@ -13,23 +13,17 @@
   header
     h1
       margin: 0 1.7rem 0 0
-      color: #808080
-      font-size: 35px
+      color: $asphalt-grey
+      font-size: 36px
       font-weight: 400
-      line-height: 1.45
-    p:not(.sync-last)
-      font-size: $font-size-sm
-      color: $cement-grey
-      margin: 2rem 0 1rem 0
-      a
-        color: $cement-grey
-        text-decoration: underline
+
     @media #{$medium-up}
-      .profile-header, .sync-button
+      .profile-header
         display: inline-block
         vertical-align: middle
       .sync-button
-        margin-top: .5em
+        float: right
+        margin-top: .4em
     @media #{$large-up}
       .profile-header
         position: relative
@@ -38,13 +32,6 @@
         overflow: hidden;
         &:after
           @include fadeOut(right, -90deg, white)
-
-  .loading-indicator--white
-    vertical-align: top
-    margin-right: .5em
-  p
-    font-size: $font-size-m
-    color: $cement-grey
 
   .cta-btn
     text-align: right
@@ -111,9 +98,8 @@
 
 .profile-orgs
   h1
-    color: #898b8c
     font-size: $font-size-sm
-    border-bottom: solid 2px $cream-dark
+    border-bottom: solid 2px $pebble-grey
 
 .profile-user
   margin: 1rem 0 2rem
@@ -145,9 +131,8 @@ p.profile-user-last
     vertical-align: middle
   .profile-settings
     display: inline-block
-    padding: .2em .2em .2em .5em;
-    height: 28px;
-    vertical-align: bottom;
+    padding: .2em .2em .2em .5em
+    height: 28px
     .icon
       width: 14px
       height: 14px
@@ -159,7 +144,7 @@ p.profile-user-last
   display: inline-block !important
 
 .profile-repo
-  border-radius: 4px
+  border-radius: 2px
   position: relative
   display: inline-block
   width: grid-calc(13, 24)
@@ -176,34 +161,31 @@ p.profile-user-last
   .sync-spinner
     vertical-align: top
   &:hover
-    background-color: #ededec
+    background-color: $pebble-grey
     &:after
       content: ""
-      @include fadeOut(right, -90deg, #ededec)
+      @include fadeOut(right, -90deg, $pebble-grey)
   .active &:hover
-    background-color: #e2eee2
+    background-color: $seed-green
     &:after
       content: ""
-      @include fadeOut(right, -90deg, #e2eee2)
+      @include fadeOut(right, -90deg, $seed-green)
   @media #{$medium-up}
     width: grid-calc(18, 24)
     height: 30px
     &:hover
       span
         display: inline-block
+        color: $cement-grey
   @media #{$large-up}
     width: grid-calc(19, 24)
 
 
 .profile-additional
-  border-top: solid 2px #f3f2f2
+  border-top: solid 2px $pebble-grey
 .profile-text,
-.profile-additional p
-  color: #adaaab
-  line-height: $line-height-m
-  a
-    color: #adaaab
-    text-decoration: underline
+.profile-additional
+  +linkStyle
 
 .hooks-error
   width: 100%;
