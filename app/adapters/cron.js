@@ -24,7 +24,6 @@ export default ApplicationAdapter.extend({
 
   ajaxOptions(url, type, options) {
     var hash = this._super(url, type, options);
-    var base, hash, token;
 
     hash.headers['accept'] = 'application/json';
     hash.headers['Travis-API-Version'] = '3';
