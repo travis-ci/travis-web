@@ -4,6 +4,7 @@ import config from 'travis/config/environment';
 export default Ember.Component.extend({
   classNames: ['form--cron'],
   store: Ember.inject.service(),
+  default_branch: 'master',
 
   reset() {
     return this.setProperties({
@@ -21,9 +22,9 @@ export default Ember.Component.extend({
       }
       this.set('isSaving', true);
       cron = this.get('store').createRecord('cron', {
-        branchName: this.get('selectedBranch').name,
-        interval: this.get('selectedInterval'),
-        disable_by_build: this.get('disable'),
+        branchName: this.get('selectedBranch') ? this.get('selectedBranch').name : this.get('default_branch'),
+        interval: this.get('selectedInterval') || 'monthly',
+        disable_by_build: this.get('disable') || false,
         repo: this.get('repo')
       });
       self = this;
@@ -42,7 +43,8 @@ export default Ember.Component.extend({
   }.property(),
 
   branches: function() {
-    var result, apiEndpoint, options, repoId;
+    var result, apiEndpoint, options, repoId, context;
+    context = this;
     apiEndpoint = config.apiEndpoint;
     repoId = this.get('repo.id');
     result = Ember.ArrayProxy.create();
@@ -54,6 +56,7 @@ export default Ember.Component.extend({
     }
     $.ajax(apiEndpoint + "/v3/repo/" + repoId + "/branches?exists_on_github=true&sort_by=default_branch,name", options).then(function(response) {
       result.set('count', response['@pagination'].count);
+      context.set('default_branch', response.branches[0].name);
       return result.set('content', response.branches);
     });
     return result;
