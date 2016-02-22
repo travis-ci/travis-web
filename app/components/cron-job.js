@@ -4,6 +4,7 @@ export default Ember.Component.extend({
   classNames: ['settings-cron'],
   isDeleting: false,
   actionType: 'Save',
+  store: Ember.inject.service(),
 
   disable_by_build: function(key) {
     var value = '';
@@ -21,7 +22,9 @@ export default Ember.Component.extend({
         return;
       }
       this.set('isDeleting', true);
-      return this.get('cron').destroyRecord();
+      return this.get('store').findRecord('cron', this.get('cron.id')).then(function(cron) {
+        return cron.destroyRecord();
+      });
     }
   }
 });

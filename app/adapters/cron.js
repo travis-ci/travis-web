@@ -8,8 +8,7 @@ export default ApplicationAdapter.extend({
   },
 
   deleteRecord(store, type, record) {
-    var id = record.id;
-    return this.ajax(this.urlPrefix() + '/cron/' + id, "DELETE");
+    return this.ajax(this.urlPrefix() + '/cron/' + record.id, "DELETE");
   },
 
   createRecord(store, type, record) {
@@ -21,6 +20,17 @@ export default ApplicationAdapter.extend({
     return this.ajax(this.urlPrefix() + '/repo/' + record.branch.repo.id + '/branch/' + record.branch.name + '/cron', "POST", {
       data: data
     });
+  },
+
+  ajaxOptions(url, type, options) {
+    var hash = this._super(url, type, options);
+    var base, hash, token;
+
+    hash.headers['accept'] = 'application/json';
+    hash.headers['Travis-API-Version'] = '3';
+    hash.headers['Content-Type'] = 'application/json';
+
+    return hash;
   }
 
 });
