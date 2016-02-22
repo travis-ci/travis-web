@@ -7,5 +7,6 @@ export default Model.extend({
   branch: belongsTo('branch', { async: true }),
   interval: attr('string'),
   disable_by_build: attr('boolean'),
-  branchName: Ember.computed.alias('branch.name')
+  branchName: attr('string'),
+  repo: belongsTo('repo', { async: true })
 });

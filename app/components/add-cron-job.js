@@ -21,9 +21,10 @@ export default Ember.Component.extend({
       }
       this.set('isSaving', true);
       cron = this.get('store').createRecord('cron', {
-        branch: this.get('selectedBranch'),
+        branchName: this.get('selectedBranch').name,
         interval: this.get('selectedInterval'),
-        disable_by_build: this.get('disable')
+        disable_by_build: this.get('disable'),
+        repo: this.get('repo')
       });
       self = this;
       return cron.save().then(() => {
