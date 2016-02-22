@@ -114,12 +114,10 @@
     word-break: normal
     white-space: nowrap
 
-.env-var-value, .cron-jon-value
+.env-var-value, .cron-job-value, .cron-job-text
   @extend %settings-value-section
   white-space: nowrap
   width: 76%
-  @media #{$medium-up}
-    width: grid-calc(3, 12)
   input
     display: inline-block
     width: 100%
@@ -138,6 +136,18 @@
       background-image: none
       padding: 0.3em 0 0.4em 0.9em
       font-size: 14px
+
+.env-var-value
+  @media #{$medium-up}
+    width: grid-calc(3, 12)
+
+.cron-job-value
+  @media #{$medium-up}
+    width: grid-calc(2, 12)
+
+.cron-job-text
+  @media #{$medium-up}
+    width: grid-calc(4, 12)
 
 %settings-action-section
   display: inline-block
@@ -164,6 +174,10 @@
   @extend %settings-action-section
   a
     padding: 1em
+
+.cron-job-action
+  @media #{$medium-up}
+    width: grid-calc(4, 36)
 
 .ssh-key-action
   @extend %settings-action-section
