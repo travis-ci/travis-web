@@ -6,15 +6,15 @@ import config from 'travis/config/environment';
 export default Ember.Component.extend({
   routing: Ember.inject.service('-routing'),
   tagName: 'li',
-  classNameBindings: ['build.last_build.state'],
+  classNameBindings: ['branch.last_build.state'],
   classNames: ['branch-row', 'row-li'],
   isLoading: false,
   isTriggering: false,
   hasTriggered: false,
 
   urlGithubCommit: function() {
-    return githubCommitUrl(this.get('build.repository.slug'), this.get('build.last_build.commit.sha'));
-  }.property('build.last_build'),
+    return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.last_build.commit.sha'));
+  }.property('branch.last_build'),
 
   getLast5Builds: function() {
     var apiEndpoint, branchName, lastBuilds, options, repoId;
@@ -23,12 +23,12 @@ export default Ember.Component.extend({
       isLoading: true,
       count: 0
     });
-    if (!this.get('build.last_build')) {
+    if (!this.get('branch.last_build')) {
       lastBuilds.set('isLoading', false);
     } else {
       apiEndpoint = config.apiEndpoint;
-      repoId = this.get('build.repository.id');
-      branchName = this.get('build.name');
+      repoId = this.get('branch.repository.id');
+      branchName = this.get('branch.name');
       options = {};
       if (this.get('auth.signedIn')) {
         options.headers = {
@@ -59,7 +59,7 @@ export default Ember.Component.extend({
       return false;
     } else {
       permissions = this.get('auth.currentUser.permissions');
-      if (permissions.contains(parseInt(this.get('build.repository.id')))) {
+      if (permissions.contains(parseInt(this.get('branch.repository.id')))) {
         return true;
       } else {
         return false;
@@ -70,12 +70,12 @@ export default Ember.Component.extend({
   triggerBuild: function() {
     var apiEndpoint, options, repoId;
     apiEndpoint = config.apiEndpoint;
-    repoId = this.get('build.repository.id');
+    repoId = this.get('branch.repository.id');
     options = {
       type: 'POST',
       body: {
         request: {
-          branch: this.get('build.name')
+          branch: this.get('branch.name')
         }
       }
     };

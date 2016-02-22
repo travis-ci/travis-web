@@ -1,7 +1,7 @@
 <div class="two-line fade-out">
   <div class="row-name">
-    <h2 class="row-item">{{status-icon status=build.last_build.state}}
-    <span class="label-align">{{build.name}}</span></h2>
+    <h2 class="row-item">{{status-icon status=branch.last_build.state}}
+    <span class="label-align">{{branch.name}}</span></h2>
   </div>
   <div class="row-builds">
     <div class="row-item">
@@ -21,7 +21,7 @@
       </g>
     </svg></span>
     <span class="label-align">
-    {{#if build.last_build}}
+    {{#if branch.last_build}}
       {{#if getLast5Builds.isLoading}}
         {{loading-indicator inline=true}}
       {{else}}
@@ -36,22 +36,22 @@
 <div class="two-line row-last-build fade-out">
   <div class="row-request">
     <div class="row-item">
-      {{#if build.last_build}}
-        {{#link-to "build" build.last_build.id}}
-          {{request-icon event=build.last_build.event_type state=build.last_build.state}}
-          <span class="label-align">#{{build.last_build.number}} {{build.last_build.state}}</span>
+      {{#if branch.last_build}}
+        {{#link-to "build" branch.last_build.id}}
+          {{request-icon event=branch.last_build.event_type state=branch.last_build.state}}
+          <span class="label-align">#{{branch.last_build.number}} {{branch.last_build.state}}</span>
         {{/link-to}}
       {{else}}
-        {{request-icon event=build.last_build.eventType state=build.last_build.state}} -
+        {{request-icon event=branch.last_build.eventType state=branch.last_build.state}} -
       {{/if}}
     </div>
   </div>
   <div class="row-calendar">
-    <div class="row-item" title="{{pretty-date build.last_build.finished_at}}">
+    <div class="row-item" title="{{pretty-date branch.last_build.finished_at}}">
       <span class="icon-calendar"></span>
       <span class="label-align">
-      {{#if build.last_build}}
-        {{format-time build.last_build.finished_at}}
+      {{#if branch.last_build}}
+        {{format-time branch.last_build.finished_at}}
       {{else}}
         -
       {{/if}}</span>
@@ -64,8 +64,8 @@
       <a href="{{urlGithubCommit}}" title="commit on GitHub">
       <span class="icon-github"></span>
       <span class="label-align">
-      {{#if build.last_build}}
-        {{format-sha build.last_build.commit.sha}}
+      {{#if branch.last_build}}
+        {{format-sha branch.last_build.commit.sha}}
       {{else}}
         -
       {{/if}}</span>
@@ -73,8 +73,8 @@
   </div>
   <div class="row-commiter">
     <div class="row-item">
-      {{#if build.last_build}}
-        <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar"><span class="label-align">{{build.last_build.commit.committer.name}}</span>
+      {{#if branch.last_build}}
+        <img src="{{branch.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar"><span class="label-align">{{branch.last_build.commit.committer.name}}</span>
       {{else}}
         <div class="avatar"></div><span class="label-align">no commits yet</span>
       {{/if}}
