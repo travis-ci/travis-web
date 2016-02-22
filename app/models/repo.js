@@ -131,15 +131,14 @@ Repo.reopen({
   }.property(),
 
   branches: function() {
-    var builds;
-    builds = this.store.query('build', {
-      repository_id: this.get('id'),
-      branches: true
+    var branches;
+    branches = this.store.query('branch', {
+      repository_id: this.get('id')
     });
-    builds.then(function() {
-      return builds.set('isLoaded', true);
+    branches.then(function() {
+      return branches.set('isLoaded', true);
     });
-    return builds;
+    return branches;
   }.property(),
 
   owner: function() {
