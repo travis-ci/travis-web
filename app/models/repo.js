@@ -143,6 +143,18 @@ Repo.reopen({
     return branches;
   }.property(),
 
+  crons: function() {
+    var crons;
+    crons = this.store.query('cron', {
+      repository_id: this.get('id')
+    });
+
+    crons.then(function() {
+      return crons.set('isLoaded', true);
+    });
+    return crons;
+  }.property(),
+
   owner: function() {
     return (this.get('slug') || '').split('/')[0];
   }.property('slug'),

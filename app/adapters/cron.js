@@ -25,6 +25,12 @@ export default ApplicationAdapter.extend({
     });
   },
 
+  query(store, type, query) {
+    var repo_id = query["repository_id"];
+    delete query["repository_id"];
+    return this.ajax( this.urlPrefix() + '/v3/repo/' + repo_id + '/crons', "GET", query);
+  },
+
   ajaxOptions(url, type, options) {
     var hash = this._super(url, type, options);
 

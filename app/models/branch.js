@@ -11,5 +11,5 @@ export default Model.extend({
 
   crons: hasMany('crons', { inverse: 'branch' }),
   builds: hasMany('builds', { inverse: 'branch' }),
-  repo: belongsTo('repo', { inverse: 'defaultBranch' }),
+  repo: belongsTo('repo', { inverse: 'defaultBranch' })
 });
