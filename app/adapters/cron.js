@@ -17,7 +17,7 @@ export default ApplicationAdapter.extend({
     serializer = store.serializerFor(type.modelName);
     serializer.serializeIntoHash(data, type, record, {});
 
-    return this.ajax(this.urlPrefix() + '/repo/' + data.repo + '/branch/' + data.branch_name + '/cron', "POST", {
+    return this.ajax(this.urlPrefix() + data.branch + '/cron', "POST", {
       data: {
         disable_by_build: data.disable_by_build,
         interval: data.interval

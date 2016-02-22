@@ -2,8 +2,10 @@
   <div class="form-elem select">
     <span class="label">Branch</span>
     {{#x-select value=selectedBranch required="true"}}
-      {{#each branches as |branch|}}
-        {{#x-option value=branch}}{{branch.name}}{{/x-option}}
+      {{#each repo.branches as |branch|}}
+        {{#if branch.exists_on_github}}
+          {{#x-option value=branch}}{{branch.name}}{{/x-option}}
+        {{/if}}
       {{/each}}
     {{/x-select}}
   </div>

@@ -133,8 +133,10 @@ Repo.reopen({
   branches: function() {
     var branches;
     branches = this.store.query('branch', {
-      repository_id: this.get('id')
+      repository_id: this.get('id'),
+      sort_by: "default_branch,name"
     });
+
     branches.then(function() {
       return branches.set('isLoaded', true);
     });

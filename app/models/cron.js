@@ -6,7 +6,5 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 export default Model.extend({
   branch: belongsTo('branch', { async: true }),
   interval: attr('string'),
-  disable_by_build: attr('boolean'),
-  branchName: attr('string'),
-  repo: belongsTo('repo', { async: true })
+  disable_by_build: attr('boolean')
 });
