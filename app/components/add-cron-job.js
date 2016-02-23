@@ -15,23 +15,39 @@ export default Ember.Component.extend({
 
   actions: {
     save() {
-      var cron, self;
+      var cron, self, store, repo_id, branch;
+
       if (this.get('isSaving')) {
         return;
       }
-      this.set('isSaving', true);
-      cron = this.get('store').createRecord('cron', {
-        branch: this.get('selectedBranch') ? this.get('selectedBranch') : this.get('repo.branches').toArray()[0],
-        interval: this.get('selectedInterval') || 'monthly',
-        disable_by_build: this.get('disable') || false
-      });
+
       self = this;
-      return cron.save().then(() => {
-        this.set('isSaving', false);
-        return this.reset();
-      }, () => {
-         this.set('isSaving', false);
-        return this.reset();
+      store = this.get('store');
+      repo_id = this.get('repo.id');
+      branch = this.get('selectedBranch') ? this.get('selectedBranch') : this.get('repo.branches').toArray()[0];
+
+      store.filter('cron', {
+        repository_id: repo_id
+      }, function(c) {
+        return c.get('branch.repoId') === repo_id && c.get('branch.name') == branch.get('name');
+      }).then(function(existing_crons){
+        if(existing_crons.toArray()[0]){
+          store.unloadRecord(existing_crons.toArray()[0]);
+        }
+
+        self.set('isSaving', true);
+        cron = store.createRecord('cron', {
+          branch: branch,
+          interval: self.get('selectedInterval') || 'monthly',
+          disable_by_build: self.get('disable') || false
+        });
+        return cron.save().then(() => {
+          self.set('isSaving', false);
+          return self.reset();
+        }, () => {
+          self.set('isSaving', false);
+          return self.reset();
+        });
       });
     }
   },
