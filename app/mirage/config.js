@@ -1,9 +1,10 @@
 import Ember from 'ember';
+import Mirage from 'ember-cli-mirage';
 
 export default function() {
   let _turnIntoV3Singular = function(type, record) {
     record['@type'] = type;
-    record['@href'] = `/${type}/${record.id}`
+    record['@href'] = `/${type}/${record.id}`;
 
     return record;
   };
@@ -11,22 +12,46 @@ export default function() {
   let turnIntoV3 = function(type, payload) {
     let response;
     if(Ember.isArray(payload)) {
-      let records = payload.map( (record) => { return _turnIntoV3Singular(type, record) } );
+      let records = payload.map( (record) => { return _turnIntoV3Singular(type, record); } );
 
       let pluralized = Ember.String.pluralize(type);
       response = {};
       response['@type'] = pluralized;
-      response['@href'] = `/${pluralized}`
+      response['@href'] = `/${pluralized}`;
       response[pluralized] = records;
     } else {
       response = _turnIntoV3Singular(type, payload);
     }
-
     return response;
   };
 
-  this.get('/v3/repos', function(db, request) {
+  this.get('/repos', function(db, request) {
     return turnIntoV3('repository', db.repositories);
+  });
+  this.get('/repo/:slug', function(db, request) {
+
+    let repos = db.repositories.filter((repo) => {
+      return decodeURIComponent(request.params.slug) === repo.slug;
+    });
+    return turnIntoV3('repository', repos[0]);
+  });
+  this.get('/jobs/:id', function(db, request) {
+    return {job: db.jobs.find(request.params.id), commit: db.commits[0]};
+  });
+  this.get('/jobs', function(db, request) {
+    return {jobs: db.jobs};
+  });
+  this.get('/builds/:id', function(db, request) {
+    return {build: db.builds.find(request.params.id), commit: db.commits[0]};
+  });
+  this.get('/jobs/:id/log', function(db, request) {
+    let log = db.logs.find(request.params.id);
+
+    if(log) {
+      return { log: { parts: [{ id: log.id, number: 1, content: log.content}] }};
+    } else {
+      new Mirage.Response(404, {}, {});
+    }
   });
 
   this.get('/v3/repos', function(db, request) {
