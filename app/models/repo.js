@@ -144,15 +144,12 @@ Repo.reopen({
   }.property(),
 
   crons: function() {
-    var crons;
-    crons = this.store.query('cron', {
-      repository_id: this.get('id')
+    var id = this.get('id');
+    return this.store.filter('cron', {
+      repository_id: id
+    }, function(cron) {
+      return cron.get('branch.repoId') === id;
     });
-
-    crons.then(function() {
-      return crons.set('isLoaded', true);
-    });
-    return crons;
   }.property(),
 
   owner: function() {
