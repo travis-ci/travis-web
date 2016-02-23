@@ -70,10 +70,6 @@
   &.received,
   &.created
     line-height: 3
-  .icon
-    width: 24px
-    height: 24px
-    vertical-align: middle
 
 .job-number
   display: inline-block
@@ -81,24 +77,15 @@
     flex: 0 0 7em
     padding-right: 1em
     border-right: 1px solid $cream-dark
-.icon-hash
-  width: 20px
-  height: 20px
-  vertical-align: middle
-  @extend %icon
-  @extend %icon-line-hash
 
 .job-os
   position: relative
   pointer-events: none
   .icon
-    width: 16px
+    width: 18px
     height: 20px
     vertical-align: middle
     padding-left: 1.5em
-    background:
-      size: auto 18px
-      repeat: no-repeat
   @media #{$medium-up}
     flex: 0 0 4em
     text-align: center
@@ -127,11 +114,8 @@
       @include fadeOut(right, -90deg, white)
 
 .icon-lang
-  width: 16px
-  height: 13px
   margin-right: .3em
-  vertical-align: middle
-  @extend %icon
+  @extend .icon
   @extend %icon-line-language
 
 .job-env
@@ -149,7 +133,6 @@
   width: 14px
   height: 14px
   margin-right: .3em
-  vertical-align: middle
   @extend %icon
   @extend %icon-line-environment
 

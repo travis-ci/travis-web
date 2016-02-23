@@ -10,6 +10,7 @@
     width: 100%
     @media #{$medium-up}
       margin-top: 0
+      margin-bottom: 4px
       display: block
   li
     flex: 0 0 8em
@@ -76,13 +77,13 @@
     left: .5em
 
   .tab-arrow
+    @extend %icon-line-arrowtabs
     display: inline-block
     position: absolute
-    top: 5px
-    left: -19px
-    width: .7em
+    top: 1px
+    left: -22px
+    width: 1em
     height:  1.3em
     background:
       size: auto 100%
       repeat: no-repeat
-      image: inline-image('line-icons/icon-arrow-tabs.svg')

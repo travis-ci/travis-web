@@ -1,15 +1,12 @@
 .help
-  display: inline-block
+  @extend %icon-line-question
+  @extend %icon
   height: 19px
   width: 16px
   margin: -4px 0 0 3px
-  vertical-align: middle
   background:
-    image: inline-image('ui/help.svg')
-    repeat: no-repeat
     position: 0 1px
     color: transparent
-    size: 100%
   cursor: pointer
 
 .popup
@@ -19,25 +16,23 @@
   transform: translate(-50%, -50%)
   height: auto
   padding: 2em
-  color: #565656
+  color: $asphalt-grey
   z-index: 99
   background-color: white
   border-radius: 2px
-
   display: none
   background-color: #fff
-  border: solid 10px #f1f1f1
+  border: solid 10px $pebble-grey
 
   &:before
     content: ""
-
   .close
     position: absolute
     display: block
     right: 5px
     top: 8px
-    width: 30px
-    height: 30px
+    width: 20px
+    height: 20px
     text-indent: 999%
     overflow: hidden
     white-space: nowrap

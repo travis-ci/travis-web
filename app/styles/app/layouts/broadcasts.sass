@@ -3,7 +3,7 @@
   height: $top-height
   width: 40px
   margin-left: 1em
-  line-height: $top-height
+  line-height: 2.5
   cursor: pointer
   vertical-align: middle
   @media #{$medium-up}
@@ -57,15 +57,14 @@
     height: auto
 
   .icon-close
+    @extend %icon-line-failed
     position: absolute
     bottom: 0
     right: 0
     display: inline-block
     width: 1.2em
     height: 1.2em
-    background:
-      image: inline-image('line-icons/icon-failed.svg')
-      repeat: no-repeat
+    background-repeat: no-repeat
 
   @media #{$medium-up}
     position: absolute
@@ -94,61 +93,33 @@
   &.announcement
     background-color: $turf-green
 
-
 .icon-broadcast
   display: inline-block
-  width: 1.3em
-  height: 2em
+  width: 16px
+  height: 16px
   vertical-align: middle
   svg
     overflow: visible
-  .tower-path
-    fill: #AEAEAE
-  .radio-wave--right,
-  .radio-wave--left
-    display: none
+    .path
+      stroke: $cement-grey
+      fill: none
   &:hover,
   &.is-open
-    .tower-path
-      fill: #818181
+    .path
+      stroke: $asphalt-grey
 
   &.warning
-    .tower-path
-      fill: #DB4141
+    .path
+      stroke: $brick-red
     &:hover,
     &.is-open
-      .tower-path
-        fill: #BA1717
+      .path
+        stroke: $brick-red
 
   &.announcement
-    .tower-path
-      fill: #3CA85B
+    .path
+      stroke: $turf-green
     &:hover,
     &.is-open
-      .tower-path
-        fill: #238C3E
-
-  &.announcement,
-  &.warning
-    .radio-wave--right,
-    .radio-wave--left
-      display: block
-
-  .radio-wave--right
-    .tower-path
-      transform-origin: left center
-      animation: pulsating-right 1.5s linear infinite
-
-  .radio-wave--left
-    .tower-path
-      transform-origin: right center
-      animation: pulsating-left 1.5s linear infinite
-
-
-// @keyframes pulsating-right
-//   40%
-//    transform: translateX(1px) scale(1.1)
-
-//@keyframes pulsating-left
-//  40%
-//    transform: translateX(-1px) scale(1.1)
+      .path
+        stroke: $turf-green
