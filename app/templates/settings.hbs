@@ -31,7 +31,7 @@
     <h2 class="small-title">Cron Builds</h2>
 
     <ul class="settings-list--crons">
-      {{#each repo.crons as |cron|}}
+      {{#each repo.sortedCrons as |cron|}}
         <li>{{cron-job cron=cron}}</li>
       {{/each}}
 
