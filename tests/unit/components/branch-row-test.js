@@ -43,7 +43,7 @@ test('it renders', function() {
     }
   };
   component = this.subject({
-    build: attributes
+    branch: attributes
   });
   this.render();
   ok(component.$().hasClass('passed'), 'component should have state class (passed)');

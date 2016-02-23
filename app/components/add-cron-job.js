@@ -29,7 +29,7 @@ export default Ember.Component.extend({
       store.filter('cron', {
         repository_id: repo_id
       }, function(c) {
-        return c.get('branch.repoId') === repo_id && c.get('branch.name') == branch.get('name');
+        return c.get('branch.repoId') === repo_id && c.get('branch.name') === branch.get('name');
       }).then(function(existing_crons){
         if(existing_crons.toArray()[0]){
           store.unloadRecord(existing_crons.toArray()[0]);
