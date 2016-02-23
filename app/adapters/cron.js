@@ -4,7 +4,7 @@ import ApplicationAdapter from 'travis/adapters/application';
 export default ApplicationAdapter.extend({
 
   findRecord(store, type, id, record) {
-    return this.ajax(this.urlPrefix() + '/cron/' + id, 'GET');
+    return this.ajax(this.urlPrefix() + '/cron/' + id, "GET");
   },
 
   deleteRecord(store, type, record) {
@@ -26,8 +26,8 @@ export default ApplicationAdapter.extend({
   },
 
   query(store, type, query) {
-    var repo_id = query["repository_id"];
-    delete query["repository_id"];
+    var repo_id = query['repository_id'];
+    delete query['repository_id'];
     return this.ajax( this.urlPrefix() + '/v3/repo/' + repo_id + '/crons', "GET", query);
   },
 

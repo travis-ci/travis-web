@@ -14,6 +14,6 @@ export default Model.extend({
   repo: belongsTo('repo', { inverse: 'defaultBranch' }),
 
   repoId: function() {
-    return this.get('id').split("/")[3];
+    return this.get('id').split('/')[3];
   }.property('id')
 });
