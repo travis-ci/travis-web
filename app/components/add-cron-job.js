@@ -23,8 +23,8 @@ export default Ember.Component.extend({
 
       self = this;
       store = this.get('store');
-      repo_id = this.get('repo.id');
-      branch = this.get('selectedBranch') ? this.get('selectedBranch') : this.get('repo.branches').toArray()[0];
+      repo_id = this.get('branches').toArray()[0].get('repoId');
+      branch = this.get('selectedBranch') ? this.get('selectedBranch') : this.get('branches').toArray()[0];
 
       store.filter('cron', {
         repository_id: repo_id

@@ -2,7 +2,7 @@
   <div class="form-elem select">
     <span class="label">Branch</span>
     {{#x-select value=selectedBranch required="true"}}
-      {{#each repo.branches as |branch|}}
+      {{#each branches as |branch|}}
         {{#if branch.exists_on_github}}
           {{#x-option value=branch}}{{branch.name}}{{/x-option}}
         {{/if}}
