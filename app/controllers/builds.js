@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
     var id, number, type;
     id = this.get('repo.id');
     number = this.get('builds.lastObject.number');
-    type = this.get('tab') === "builds" ? 'push' : 'pull_request';
+    type = this.get('tab') === "builds" ? 'push' : this.get('tab').substr(0, this.get('tab').length-1);
     this.olderThanNumber(id, number, type);
   },
 
@@ -27,6 +27,10 @@ export default Ember.Controller.extend({
 
   displayBranches: function() {
     return this.get('tab') === 'branches';
+  }.property('tab'),
+
+  displayCrons: function() {
+    return this.get('tab') === 'crons';
   }.property('tab'),
 
   noticeData: function() {

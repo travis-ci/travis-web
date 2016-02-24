@@ -89,6 +89,10 @@ export default Ember.Controller.extend({
     return this.connectTab('pull_requests');
   },
 
+  viewCrons() {
+    return this.connectTab('crons');
+  },
+
   viewBranches() {
     return this.connectTab('branches');
   },
