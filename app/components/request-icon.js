@@ -13,6 +13,10 @@ export default Ember.Component.extend({
     return this.get('event') === 'pull_request';
   }.property('event'),
 
+  isCron: function() {
+    return this.get('event') === 'cron';
+  }.property('event'),
+
   isAPI: function() {
     return this.get('event') === 'api';
   }.property('event'),
