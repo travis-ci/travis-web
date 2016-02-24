@@ -28,7 +28,7 @@
     {{/if}}
   </li>
   {{#if repo.slug}}
-    {{#if repo.crons.length}}
+    {{#if repo.cronJobs.length}}
       <li id="tab_crons" class={{classCrons}}>
         {{#link-to "crons" repo}}
           Crons
