@@ -19,6 +19,18 @@ export default TravisRoute.extend({
     return repo.get('envVars.promise');
   },
 
+  fetchCronJobs() {
+    var repo;
+    repo = this.modelFor('repo');
+    return repo.get('cronJobs.promise');
+  },
+
+  fetchBranches() {
+    var repo;
+    repo = this.modelFor('repo');
+    return repo.get('branches.promise');
+  },
+
   fetchCustomSshKey() {
     var repo, self;
     repo = this.modelFor('repo');
@@ -71,6 +83,8 @@ export default TravisRoute.extend({
     return Ember.RSVP.hash({
       settings: this.modelFor('repo').fetchSettings(),
       envVars: this.fetchEnvVars(),
+      cronJobs: this.fetchCronJobs(),
+      branches: this.fetchBranches(),
       sshKey: this.fetchSshKey(),
       customSshKey: this.fetchCustomSshKey(),
       hasPushAccess: this.hasPushAccess(),

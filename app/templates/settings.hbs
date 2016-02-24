@@ -31,7 +31,7 @@
     <h2 class="small-title">Cron Builds</h2>
 
     <ul class="settings-list--crons">
-      {{#each repo.sortedCrons as |cron|}}
+      {{#each cronJobs as |cron|}}
         <li>{{cron-job cron=cron}}</li>
       {{/each}}
 
@@ -39,7 +39,7 @@
     </ul>
 
   </section>
-  
+
 {{#if config.endpoints.sshKey}}
   <section class="settings-section">
     <h2 class="small-title">SSH Key</h2>

@@ -150,16 +150,12 @@ Repo.reopen({
   }.property(),
 
   branches: function() {
-    var branches;
-    branches = this.store.query('branch', {
-      repository_id: this.get('id'),
-      sort_by: 'default_branch,name'
+    var id = this.get('id');
+    return this.store.filter('branch', {
+      repository_id: id
+    }, function(b) {
+      return b.get('repoId') === id;
     });
-
-    branches.then(function() {
-      return branches.set('isLoaded', true);
-    });
-    return branches;
   }.property(),
 
   cronJobs: function() {
