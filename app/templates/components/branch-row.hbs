@@ -46,7 +46,7 @@
           {{/link-to}}
         {{/if}}
       {{else}}
-        {{request-icon event=lastBuild.eventType state=lastBuild.state}} -
+        <span class="label-align">-</span>
       {{/if}}
     </div>
   </div>
@@ -99,12 +99,14 @@
 </div>
 <div class="one-line is-relative">
   <ul class="build-tiles">
-  {{#if getLast5Builds.isLoading}}
-    {{loading-indicator center=true}}
-  {{else}}
-    {{#each  getLast5Builds.content as |buildTile|}}
-      {{build-tile build=buildTile}}
-    {{/each}}
-  {{/if}}
+    {{#if hasBuilds}}
+      {{#if getLast5Builds.isLoading}}
+        {{loading-indicator center=true}}
+      {{else}}
+        {{#each  getLast5Builds.content as |buildTile|}}
+          {{build-tile build=buildTile}}
+        {{/each}}
+      {{/if}}
+    {{/if}}
   </ul>
 </div>

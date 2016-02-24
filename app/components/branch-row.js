@@ -17,8 +17,8 @@ export default Ember.Component.extend({
   }.property('lastBuild'),
 
   hasBuilds: function() {
-    return this.get('branch.last_build') || this.get('getLast5Builds').count > 0;
-  }.property('branch.last_build', 'getLast5Builds'),
+    return this.get('branch.last_build') && this.get('getLast5Builds').count > 0;
+  }.property('branch.last_build', 'getLast5Builds.isLoading', 'getLast5Builds'),
 
   getLast5Builds: function() {
     var apiEndpoint, branchName, lastBuilds, options, repoId;
