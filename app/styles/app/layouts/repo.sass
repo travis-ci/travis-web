@@ -42,78 +42,8 @@
     justify-content: space-between
     border-bottom: 2px #f1f1f1 solid
 
-
-$dropdown-button-height: 30px
-$dropdown-button-margin: -9px
-
-.settings-button
-  display: block
-  height: $dropdown-button-height
-  padding: 0
-  border: 1px solid $pebble-grey
-  color: $asphalt-grey
-  border-radius: 2px
-  text-align: center
-  line-height: 2
-  font-size: 14px
-  cursor: pointer
-  .label-align
-    padding: 0 1em
-  &:hover,
-  &:active,
-  // .display &,
-  .settings-menu:hover &
-    color: $oxide-blue
-    border-color: $oxide-blue
-    .settings-tofu
-      border-color: $oxide-blue
-      background-image: inline-image('/line-icons/icon-tofuburger-teal.svg')
-
-  @media #{$medium-up}
-    margin-top: $dropdown-button-margin
-
-.settings-dropdown
-  display: none
-  position: absolute
-  top: $dropdown-button-height + ($dropdown-button-margin * .8)
-  width: 100%
-  padding: 0
-  margin: 6px 0 0
-  list-style: none
-  z-index: 60
-  background-color: white
-  border: 1px solid $oxide-blue
-  a
-    display: block
-    padding: .4em 1em .5em 2.4em
-    font-size: 14px
-    color: $oxide-blue
-    &:hover
-      color: white
-      background-color: $oxide-blue
-  @media #{$medium-up}
-    margin-top: -3px
-
-.settings-tofu
-  width: 2em
-  height: 2em
-  display: inline-block
-  vertical-align: top
-  background:
-    image: inline-image('/line-icons/icon-tofuburger.svg')
-    repeat: no-repeat
-    size: 20px
-    position: 50%
-  @media #{$medium-up}
-    border-left: 1px solid $pebble-grey
-
-.settings-menu
-  position: relative
-  @media #{$small-only}
-    &.display
-      .settings-dropdown
-        display: block
-  @media #{$medium-up}
-    &:hover
-      .settings-dropdown
-        display: block
+  .option-button
+    width: 10em
+    margin-top: -9px
+    .option-dropdown a
+       padding-left: 2.4em

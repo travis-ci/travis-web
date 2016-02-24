@@ -1,30 +1,33 @@
-<div id="filters" class="dashboard-filter">
-  <div class="row">
-      {{orgs-filter orgs=orgs selected=selectedOrg action="selectOrg"}}
-    <div class="float-right">
-      {{sync-button user=auth.currentUser}}
-    </div>
+<div class="inner">
+  <div class="dashboard-header">
+    {{orgs-filter orgs=orgs selected=selectedOrg action="selectOrg"}}
+    {{sync-button user=auth.currentUser}}
   </div>
-</div>
 
-<div class="dashboard wrapper-main">
-  {{!-- <section class="dashboard-starred">
-    <div class="row">
-      <div class="dashboard--empty">
-        <p><span class="icon icon-star"></span>Want to keep an eye on certain projects? Star repositories below to add them in this section.</p>
+  <div class="dashboard-repos">
+
+    <section class="dashboard-section dashboard-starred">
+      <h2 class="small-title">Starred repositories</h2>
+      <div class="starred-empty">
+        <span>You can keep track of your favorite repositories here once you start starring!</span>
       </div>
-    </div>
-  </section> --}}
+    </section>
 
-  <ul class="dashboard-active">
-    {{#each filteredRepositories as |repo|}}
-      {{dashboard-row repo=repo}}
-    {{else}}
-      {{no-repos}}
-    {{/each}}
-  </ul>
-  {{!-- <hr> --}}
+    <section class="dashboard-section dashboard-active">
+      <h2 class="small-title">All repositories</h2>
+      <ul class="repo-list">
+         {{#each filteredRepositories as |repo|}}
+          {{dashboard-row repo=repo}}
+        {{else}}
+          {{no-repos}}
+        {{/each}}
+      </ul>
+    </section>
 
-  <ul class="dashboard-inactive">
-  </ul>
+    <section class="dashboard-section dashboard-inactive">
+      <h2 class="small-title">Inactive repositories</h2>
+      <ul class="repo-list">
+      </ul>
+    </section>
+  </div>
 </div>

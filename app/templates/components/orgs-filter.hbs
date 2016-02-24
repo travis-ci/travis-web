@@ -1,9 +1,9 @@
-<div class="filter filter--org">
-  <div class="filter-current">
-    {{#if orgs.isLoading}}
-      {{loading-indicator}}
-    {{else}}
-      <a {{action 'toggleOrgFilter'}} title="">
+<div class="option-button">
+ {{#if orgs.isLoading}}
+    {{loading-indicator}}
+  {{else}}
+    <a href="#" title="" class="option-display" {{action 'toggleOrgFilter'}}>
+      <span class="label-align">
         {{#if selected }}
           <img src="{{selected.avatar_url}}" alt="{{org.login}}">
           {{#if selected.name}}
@@ -14,14 +14,18 @@
         {{else}}
           All organizations
         {{/if}}
-      </a><span class="icon-arrow-down"></span>
-    {{/if}}
-  </div>
-  <ul class="filter-dropdown {{if showFilter 'is-open'}}">
-    {{#if selected }}
-      <li><a title="" {{action 'select'}}>All organizations</a></li>
-    {{/if}}
-    {{#each orgs as |org|}}
+      </span><span class="option-tofu"></span>
+    </a>
+  {{/if}}
+  <div class="option-dropdown {{if showFilter 'is-open'}}">
+    <div class="option-search">
+      <input type="text">
+    </div>
+    <div class="option-list">
+      {{#if selected }}
+        <li><a title="" {{action 'select'}}>All organizations</a></li>
+      {{/if}}
+      {{#each orgs as |org|}}
       <li>
         <a title="" {{action 'select' org}}><img src="{{org.avatar_url}}" alt="">
           {{#if org.name }}
@@ -31,6 +35,7 @@
           {{/if}}
         </a>
       </li>
-    {{/each}}
-  </ul>
+      {{/each}}
+    </div>
+  </div>
 </div>

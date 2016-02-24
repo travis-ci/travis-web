@@ -1,19 +1,10 @@
 {{#if user.isSyncing }}
-  <button class="button is-syncing">
+   <div class="button is-syncing">
     <span class="loading-indicator--white"><i></i><i></i><i></i></span>Syncing from GitHub
-  </button>
+  </div>
 {{else}}
-  <button {{action 'sync'}} class="button">
-    <span class="icon">
-      <svg x="0px" y="0px" viewBox="0 1 18 18" xml:space="preserve">
-        <g id="Trigger">
-          <path fill="#A7AEAE" d="M17.2,7.9C17,7.6,16.6,7.7,16.3,8l-1,1.2C14.9,6,12.2,3.6,9,3.6c-3.6,0-6.4,2.9-6.4,6.4s2.9,6.4,6.4,6.4
-            c1.8,0,3.6-0.8,4.8-2.2c0.2-0.3,0.2-0.7-0.1-0.9c-0.3-0.2-0.7-0.2-0.9,0.1c-1,1.1-2.4,1.7-3.9,1.7c-2.8,0-5.1-2.3-5.1-5.1
-            S6.1,4.9,9,4.9c2.7,0,4.9,2.1,5.1,4.7l-1.7-1.1c-0.3-0.2-0.7-0.1-0.9,0.2s-0.1,0.7,0.2,0.9l2.8,1.8c0,0,0,0,0,0
-            c0.1,0.1,0.2,0.1,0.3,0.1c0.1,0,0.2,0,0.3-0.1c0,0,0.1,0,0.1-0.1c0,0,0.1-0.1,0.1-0.1l2-2.4C17.6,8.5,17.5,8.1,17.2,7.9z"/>
-        </g>
-      </svg>
-    </span>Sync account
+  <button {{action 'sync'}} class="button" type="button">
+    <span class="icon-trigger"></span>Sync account
   </button>
-  <p class="sync-last">last synced {{format-time user.syncedAt}}</p>
+  <p class="sync-last">Last synced {{format-time user.syncedAt}}</p>
 {{/if}}

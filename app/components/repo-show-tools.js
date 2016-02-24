@@ -3,7 +3,7 @@ import config from 'travis/config/environment';
 
 export default Ember.Component.extend({
   popup: Ember.inject.service(),
-  classNames: ['settings-menu'],
+  classNames: ['option-button'],
   classNameBindings: ['isOpen:display'],
   isOpen: false,
 

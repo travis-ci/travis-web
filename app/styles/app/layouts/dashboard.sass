@@ -1,4 +1,28 @@
-.dashboard-active,
-.dashbaord-inactive
+.repo-list
   list-style: none
   padding: 0
+
+
+.dashboard-header
+  width: 100%
+  display: flex
+  flex-flow: column-reverse wrap
+  justify-content: space-between
+  padding: 2em 0
+  @media #{$medium-up}
+    flex-direction: row
+    align-items: baseline
+
+.dashboard-repos
+  padding-bottom: 5rem
+
+.dashboard-section
+  margin-bottom: 4rem
+
+.starred-empty
+  border: dotted 1px $pebble-grey
+  border-radius: 2px
+  text-align: center
+  padding: 2rem 0
+  font-size: 20px
+  color: $cement-grey
