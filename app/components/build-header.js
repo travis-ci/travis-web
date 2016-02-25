@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { gravatarImage } from 'travis/utils/urls';
-import GithubUrlPropertievs from 'travis/mixins/github-url-properties';
+import GithubUrlProperties from 'travis/mixins/github-url-properties';
 import { durationFrom, safe } from 'travis/utils/helpers';
 import { githubCommit } from 'travis/utils/urls';
 
