@@ -46,28 +46,9 @@ test('it renders', function() {
     branch: attributes
   });
   this.render();
+  ok(component.$().hasClass('passed'), 'component should have state class (passed)');
   equal(component.$('.row-name .label-align').text().trim(), 'master', 'should display correct branch name');
-});
-
-test('it renders correctly without build', function() {
-  var attributes, component;
-  attributes = {
-    name: "master",
-    repository: {
-      id: 15038,
-      name: "php-test-staging",
-      slug: "travis-repos/php-test-staging"
-    },
-    default_branch: true,
-    exists_on_github: true
-  };
-  component = this.subject({
-    branch: attributes
-  });
-  this.render();
-  equal(component.$('.row-name .label-align').text().trim(), 'master', 'should display correct branch name');
-  equal(component.$('.row-request .label-align').text().trim(), '-', 'should display build number and state');
-  equal(component.$('.row-commiter .label-align').text().trim(), 'no commits yet', 'should display correct commiter name');
-  return equal(component.$('.row-commit .label-align').text().trim(), '-', 'should display correct commit sha');
-
+  equal(component.$('.row-request .label-align').text().trim(), '#1 passed', 'should display build number and state');
+  equal(component.$('.row-commiter .label-align').text().trim(), 'Dan Buch', 'should display correct commiter name');
+  return equal(component.$('.row-commit .label-align').text().trim(), 'a82f6ba', 'should display correct commit sha');
 });
