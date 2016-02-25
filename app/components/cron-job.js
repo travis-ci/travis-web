@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   actionType: 'Save',
   store: Ember.inject.service(),
 
-  disable_by_build: function(key) {
+  disableByBuild: function(key) {
     var value = '';
     if (this.get('cron.disable_by_build')) {
       value = 'Only ';
