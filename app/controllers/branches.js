@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import GithubUrlPropertievs from 'travis/mixins/github-url-properties';
+import GithubUrlProperties from 'travis/mixins/github-url-properties';
 
 export default Ember.Controller.extend({
   defaultBranch: function() {

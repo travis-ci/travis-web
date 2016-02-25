@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import GithubUrlPropertievs from 'travis/mixins/github-url-properties';
+import GithubUrlProperties from 'travis/mixins/github-url-properties';
 
-export default Ember.Controller.extend(GithubUrlPropertievs, {
+export default Ember.Controller.extend(GithubUrlProperties, {
   repoController: Ember.inject.controller('repo'),
   repoBinding: 'repoController.repo',
   commitBinding: 'build.commit',
