@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   logBinding: 'job.log',
+  classNames: ['job-log'],
 
   didReceiveAttrs: function(options) {
     this._super(...arguments);
@@ -25,7 +26,10 @@ export default Ember.Component.extend({
   },
 
   setupLog(job) {
-    job.get('log').fetch();
+    this.set('error', false);
+    job.get('log').fetch().then(function() { }, () => {
+      this.set('error', true);
+    });
     job.subscribe();
   }
 });

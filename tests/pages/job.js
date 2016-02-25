@@ -9,5 +9,6 @@ export default PageObject.create({
   message: text('.build-title'),
   state: text('.build-status'),
   author: text('.commit-author'),
-  log: text('#log')
+  log: text('#log'),
+  logError: text('.job-log .notice')
 });

@@ -50,7 +50,7 @@ export default function() {
     if(log) {
       return { log: { parts: [{ id: log.id, number: 1, content: log.content}] }};
     } else {
-      new Mirage.Response(404, {}, {});
+      return new Mirage.Response(404, {}, {});
     }
   });
 
