@@ -11,6 +11,8 @@ export default Ember.Controller.extend({
     return this.get('user.name') || this.get('user.login');
   }.property('user.login', 'user.name'),
 
+  isDashboard: false,
+
   defineTowerColor(broadcastArray) {
     if (!broadcastArray) {
       return '';
@@ -68,6 +70,12 @@ export default Ember.Controller.extend({
   }.property('broadcasts'),
 
   actions: {
+
+    cheatcode() {
+      $('body').toggleClass('cheatcode');
+      this.toggleProperty('isDashboard');
+    },
+
     toggleBurgerMenu() {
       this.toggleProperty('is-open');
       return false;
