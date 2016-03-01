@@ -97,10 +97,10 @@ Repo.reopen({
     var array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
-      event_type: ['push', 'api', 'crons'],
+      event_type: ['push', 'api', 'cron'],
       repository_id: id
     }, function(b) {
-      return b.get('repo.id') + '' === id + '' && (b.get('eventType') === 'push' || b.get('eventType') === 'api' || b.get('eventType') === 'crons');
+      return b.get('repo.id') + '' === id + '' && (b.get('eventType') === 'push' || b.get('eventType') === 'api' || b.get('eventType') === 'cron');
     });
     array = ExpandableRecordArray.create({
       type: 'build',

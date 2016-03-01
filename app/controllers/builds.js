@@ -49,7 +49,7 @@ export default Ember.Controller.extend({
     if (type != null) {
       options.event_type = type.replace(/s$/, '');
       if (options.event_type === 'push') {
-        options.event_type = ['push', 'api'];
+        options.event_type = ['push', 'api', 'cron'];
       }
     }
     return this.store.query('build', options);
