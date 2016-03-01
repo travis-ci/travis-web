@@ -73,5 +73,6 @@ run Travis::Web::App.build(
   code_climate_url: ENV['CODE_CLIMATE_URL'],
   assets_host: ENV['ASSETS_HOST'],
   ajax_polling: ENV['AJAX_POLLING'],
-  github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
+  github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL'],
+  pendo_key: ENV['PENDO_KEY']
 )
