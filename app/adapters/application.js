@@ -47,5 +47,11 @@ export default ActiveModelAdapter.extend({
     }
 
     return this._super(...arguments);
+  },
+
+  // this can be removed once this PR is merged and live:
+  // https://github.com/emberjs/data/pull/4204
+  findRecord(store, type, id, snapshot) {
+    return this.ajax(this.buildURL(type.modelName, id, snapshot, 'findRecord'), 'GET');
   }
 });
