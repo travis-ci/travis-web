@@ -6,10 +6,16 @@ export default Ember.Service.extend({
   allowFinishedBuilds: false,
 
   init() {
-    Visibility.every(Config.intervals.updateTimes, this.updateTimes.bind(this));
-    setInterval(this.resetAllowFinishedBuilds.bind(this), 60000);
+    this.set('visibilityId', Visibility.every(Config.intervals.updateTimes, this.updateTimes.bind(this)));
+    this.set('intervalId', setInterval(this.resetAllowFinishedBuilds.bind(this), 60000));
 
     return this._super(...arguments);
+  },
+
+  willDestroy() {
+    Visibility.stop(this.get('visibilityId'));
+    clearInterval(this.get('intervalId'));
+    this._super(...arguments);
   },
 
   resetAllowFinishedBuilds() {
