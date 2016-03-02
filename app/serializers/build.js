@@ -63,7 +63,7 @@ var Serializer = V2FallbackSerializer.extend({
     var data, href, id, repoId, result;
 
     // TODO: remove this after switching to V3 entirely
-    if(!resourceHash['@type'] && resourceHash.commit && resourceHash.commit.branch_is_default) {
+    if(!resourceHash['@type'] && resourceHash.commit && resourceHash.commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
           commit = resourceHash.commit;
       let branch = {

@@ -21,7 +21,7 @@ export default Model.extend(DurationCalculations, {
   tags: attr(),
   repositoryPrivate: attr(),
   repositorySlug: attr(),
-  _config: attr('object'),
+  _config: attr(),
 
   repo: belongsTo('repo', { async: true }),
   build: belongsTo('build', { async: true }),
