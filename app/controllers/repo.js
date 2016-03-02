@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { githubRepo, statusImage } from 'travis/utils/urls';
 import config from 'travis/config/environment';
+import eventually from 'travis/utils/eventually';
 
 
 const { controller, service } = Ember.inject;
@@ -128,9 +129,12 @@ export default Ember.Controller.extend({
   },
 
   _lastBuildDidChange() {
-    var build;
-    build = this.get('repo.lastBuild');
-    return this.set('build', build);
+    let lastBuild = this.get('repo.lastBuild');
+    if(lastBuild) {
+      eventually(lastBuild, (build) => {
+        this.set('build', build);
+      });
+    }
   },
 
   stopObservingLastBuild() {
