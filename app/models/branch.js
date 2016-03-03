@@ -9,7 +9,6 @@ export default Model.extend({
   lastBuild: belongsTo('build'),
   exists_on_github: attr('boolean'),
 
-  crons: hasMany('crons', { inverse: 'branch' }),
   builds: hasMany('builds', { inverse: 'branch' }),
   repo: belongsTo('repo', { inverse: 'defaultBranch' }),
 
