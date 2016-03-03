@@ -3,6 +3,9 @@ import Mirage from 'ember-cli-mirage';
 
 export default function() {
   let _turnIntoV3Singular = function(type, record) {
+    if(record.attrs) {
+      record = record.attrs;
+    }
     record['@type'] = type;
     record['@href'] = `/${type}/${record.id}`;
 
@@ -25,30 +28,28 @@ export default function() {
     return response;
   };
 
-  this.get('/repos', function(db, request) {
-    return turnIntoV3('repository', db.repositories);
+  this.get('/repos', function(schema, request) {
+    return turnIntoV3('repository', schema.repository.all());
   });
-  this.get('/repo/:slug', function(db, request) {
 
-    let repos = db.repositories.filter((repo) => {
-      return decodeURIComponent(request.params.slug) === repo.slug;
-    });
+  this.get('/repo/:slug', function(schema, request) {
+    let repos = schema.repository.where({ slug: decodeURIComponent(request.params.slug) });
     return turnIntoV3('repository', repos[0]);
   });
-  this.get('/jobs/:id', function(db, request) {
-    return {job: db.jobs.find(request.params.id), commit: db.commits[0]};
+  this.get('/jobs/:id', function(schema, request) {
+    return {job: schema.job.find(request.params.id).attrs, commit: schema.commit.all()[0].attrs};
   });
-  this.get('/jobs', function(db, request) {
-    return {jobs: db.jobs};
+  this.get('/jobs', function(schema, request) {
+    return {jobs: schema.job.all()};
   });
-  this.get('/builds/:id', function(db, request) {
-    return {build: db.builds.find(request.params.id), commit: db.commits[0]};
+  this.get('/builds/:id', function(schema, request) {
+    return {build: schema.build.find(request.params.id).attrs, commit: schema.commit.all()[0].attrs};
   });
-  this.get('/jobs/:id/log', function(db, request) {
-    let log = db.logs.find(request.params.id);
+  this.get('/jobs/:id/log', function(schema, request) {
+    let log = schema.log.find(request.params.id);
 
     if(log) {
-      return { log: { parts: [{ id: log.id, number: 1, content: log.content}] }};
+      return { log: { parts: [{ id: log.attrs.id, number: 1, content: log.attrs.content}] }};
     } else {
       return new Mirage.Response(404, {}, {});
     }

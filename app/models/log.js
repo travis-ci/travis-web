@@ -28,12 +28,14 @@ var Request = Ember.Object.extend({
       return $.ajax({
         url: this.redirectTo(xhr),
         type: 'GET',
-        success: this.handlers.text
+        success: (body) => {
+          Ember.run(this, function() { this.handlers.text(body); });
+        }
       });
     } else if (this.isJson(xhr, body)) {
-      return this.handlers.json(body);
+      return Ember.run(this, function() { this.handlers.json(body); });
     } else {
-      return this.handlers.text(body);
+      return Ember.run(this, function() { this.handlers.text(body); });
     }
   },
 
