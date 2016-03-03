@@ -103,7 +103,7 @@ var Controller = Ember.Controller.extend({
   },
 
   runningJobs: function() {
-    if(!this.get('config.pro')) { return [] };
+    if(!this.get('config.pro')) { return []; }
     var result;
 
     result = this.store.filter('job', {}, function(job) {
@@ -118,7 +118,7 @@ var Controller = Ember.Controller.extend({
   }.property('config.pro'),
 
   queuedJobs: function() {
-    if(!this.get('config.pro')) { return [] };
+    if(!this.get('config.pro')) { return []; }
 
     var result;
     result = this.get('store').filter('job', function(job) {
