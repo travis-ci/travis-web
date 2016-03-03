@@ -2,6 +2,7 @@
   vertical-align: middle
   display: flex
   flex-flow: row-reverse wrap
+  position: relative
   .button
     position: relative
     z-index: 2
@@ -14,11 +15,14 @@
     &:hover
       background-color: $oxide-blue
   .sync-last
-    position: relative
+    position: absolute
+    left: -15em
+    top: 0
     z-index: -1
     transition: transform 150ms ease, opacity 250ms ease
     transform: translateX(80%)
     opacity: 0
+    background: white
   .button:hover ~ .sync-last
     transform: translateX(0)
     opacity: 1
