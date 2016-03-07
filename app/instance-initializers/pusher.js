@@ -10,7 +10,8 @@ initialize = function(applicationInstance) {
       instantiate: false
     });
     app.inject('route', 'pusher', 'pusher:main');
-    return app.pusher.store = applicationInstance.lookup('service:store');
+    app.inject('component', 'pusher', 'pusher:main');
+    app.pusher.store = applicationInstance.lookup('service:store');
   }
 };
 

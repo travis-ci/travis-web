@@ -63,7 +63,14 @@
   <h2 class="page-title">This is not an active repository</h2>
   <p class="page-notice">Want to start testing this project on Travis CI?</p>
   <a href="http://docs.travis-ci.com/user/getting-started/" class="button button--green">Read the Docs on Getting Started</a>
-  {{#if user.pushPermissions.length}}
-    <p>If this repository is already in active use, <br> make sure it’s activated on {{#link-to "account" repo.owner}}your profile{{/link-to}}.</p>
+
+  {{#if canActivate}}
+    <p>You can activate the repository on {{#link-to "account" repo.owner}}your profile{{/link-to}},<br/>
+    or by clicking the button below:</p>
+
+    <button {{action 'activate'}} class="button button--green">Activate</button>
+    {{#if isActivating}}
+      {{loading-indicator}}
+    {{/if}}
   {{/if}}
 </div>
