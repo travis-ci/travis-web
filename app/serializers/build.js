@@ -16,6 +16,14 @@ var Serializer = V2FallbackSerializer.extend({
     return result;
   },
 
+  normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
+    if (payload.commit) {
+      payload.build.commit = payload.commit;
+      delete payload.build.commit_id;
+    }
+    return this._super(...arguments);
+  },
+
   normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
     var result;
     if (payload.commits) {

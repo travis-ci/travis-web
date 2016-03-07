@@ -1,5 +1,9 @@
-{{#if log.isLoaded}}
-  {{log-content job=job log=log}}
+{{#if error}}
+  <p class="notice">There was an error while trying to fetch the log.</p>
 {{else}}
-  {{loading-indicator}}
+  {{#if log.isLoaded}}
+    {{log-content job=job log=log}}
+  {{else}}
+    {{loading-indicator}}
+  {{/if}}
 {{/if}}
