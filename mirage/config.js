@@ -37,13 +37,15 @@ export default function() {
     return turnIntoV3('repository', repos[0]);
   });
   this.get('/jobs/:id', function(schema, request) {
-    return {job: schema.job.find(request.params.id).attrs, commit: schema.commit.all()[0].attrs};
+    let job = schema.job.find(request.params.id).attrs;
+    return {job: job, commit: schema.commit.find(job.commit_id).attrs};
   });
   this.get('/jobs', function(schema, request) {
     return {jobs: schema.job.all()};
   });
   this.get('/builds/:id', function(schema, request) {
-    return {build: schema.build.find(request.params.id).attrs, commit: schema.commit.all()[0].attrs};
+    let build = schema.build.find(request.params.id).attrs;
+    return {build: build, commit: schema.commit.find(build.commit_id).attrs};
   });
   this.get('/jobs/:id/log', function(schema, request) {
     let log = schema.log.find(request.params.id);
@@ -53,10 +55,6 @@ export default function() {
     } else {
       return new Mirage.Response(404, {}, {});
     }
-  });
-
-  this.get('/v3/repos', function(db, request) {
-    return turnIntoV3('repository', db.repositories);
   });
 
   // These comments are here to help you get started. Feel free to delete them.
