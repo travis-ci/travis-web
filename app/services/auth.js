@@ -140,7 +140,7 @@ export default Ember.Service.extend({
             data.user.token = user.token;
             this.storeData(data, this.get('sessionStorage'));
             this.storeData(data, this.get('storage'));
-            return Travis.trigger('user:refreshed', data.user);
+            Travis.trigger('user:refreshed', data.user);
           }
         } else {
           return Ember.RSVP.Promise.reject();

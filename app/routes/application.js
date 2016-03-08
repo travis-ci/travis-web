@@ -9,8 +9,13 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     this._super.apply(this, arguments);
     return this.get('auth').refreshUserData().then( () => {
       this.setupPendo();
-    }, () => {
-      return this.get('auth').signOut();
+    }, (xhr) => {
+      // if xhr is not defined it means that scopes are not correct,
+      // so log the user out. Also log the user out if the response is 401
+      // or 403
+      if(!xhr || (xhr.status === 401 || xhr.status === 403)) {
+        return this.get('auth').signOut();
+      }
     });
   },
 
