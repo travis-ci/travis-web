@@ -1,8 +1,8 @@
 <div class="tile {{repo.lastBuildState}}">
   <h2 class="tile-title {{repo.lastBuildState}}">
     {{#if repo.slug}}
-      {{#link-to "repo" repo}}
       {{status-icon status=repo.lastBuildState}}
+      {{#link-to "repo" repo}}
       <span class="label-align">{{repo.slug}}</span>
       {{/link-to}}
     {{/if}}
@@ -11,8 +11,8 @@
   {{#if repo.slug}}
     {{#if repo.lastBuildId}}
       <p class="tile-title float-right {{repo.lastBuildState}}">
+        <span class="icon-hash"></span>
         {{#link-to "build" repo repo.lastBuildId}}
-          <span class="icon-hash"></span>
           <span class="label-align">{{repo.lastBuildNumber}}</span>
         {{/link-to}}
       </p>

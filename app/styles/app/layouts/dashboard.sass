@@ -2,6 +2,9 @@
   list-style: none
   padding: 0
 
+.dashboard .centered
+  @media #{$small-only}
+    padding: 0 1em
 
 .dashboard-header
   width: 100%
@@ -26,3 +29,83 @@
   padding: 2rem 0
   font-size: 20px
   color: $cement-grey
+
+.dash-star
+  &:hover,
+  &:active
+    svg path
+      stroke-width: 2px
+
+  &.is-starred
+    svg path
+      stroke: $dozer-yellow
+      fill: $canary-yellow
+
+.dash-header
+  order: 2
+  flex: 0 0 20%
+
+.dash-head
+  flex: 0 0 2%
+  display: flex
+  padding: 0 1em
+  margin-bottom: 1em
+  justify-content: space-between
+  align-items: flex-end
+  @media #{$medium-up}
+    flex: 0 0 3em
+    display: block
+    margin-bottom: 0
+    height: 55px
+    border-right: 1px solid rgba($asphalt-grey, .2)
+
+.dash-body
+  flex-grow: 1
+  position: relative
+
+  @media #{$medium-up}
+    padding: 0 1.5em 0
+
+.dash-aside
+  @media #{$medium-up}
+    position: absolute
+    width: 100%
+    bottom: 0
+    overflow: hidden
+
+.dash-main
+  @media #{$small-only}
+    padding: 0 1em
+  @media #{$medium-up}
+    display: flex
+    flex-flow: row wrap
+    align-items: center
+    justify-content: space-between
+    height: 80px
+
+.dash-default
+  order: 3
+  flex: 0 0 20%
+
+  @media #{$small-only}
+    margin-top: 2em
+
+.dash-menu
+  order: 5
+  flex: 0 0 3%
+
+.dash-last-build
+  display: flex
+  order: 4
+  flex: 0 0 55%
+  flex-flow: row wrap
+  justify-content: space-between
+
+  @media #{$small-only}
+    margin-top: 2em
+  @media #{$medium-up}
+    align-items: center
+    padding-right: 3em
+
+    > div
+      flex: 0 0 33%

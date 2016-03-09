@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'span',
-  classNames: ['status-icon', 'icon'],
+  classNames: ['request-icon', 'icon'],
   classNameBindings: ['event', 'state'],
 
   isPush: function() {

@@ -11,30 +11,10 @@
 </header>
 
 <div class="tabs--owner">
-{{!--   <nav class="tabnav tabnav--owner row" role="tablist">
-    <ul class="tab">
-      <li role="presentational">{{#link-to 'owner.repositories' owner.login}}All Repositories{{/link-to}}</li>
-      <li role="presentational">{{#link-to 'owner.running' owner.login}}Running Builds{{/link-to}}</li>
-      <li role="presentational"><a href="#" title="" role="tab">Members</a></li>
-    </ul>
-  </nav> --}}
-
   <div class="tabbody">
     <section role="tabpanel">
       {{outlet}}
     </section>
-
-    {{!-- <section role="tabpanel">
-      <ul class="memberlist">
-        <li class="columns small-6 large-4">
-          <img src="//placehold.it/50x50" alt="">
-          <div class="memberlist-names">
-            <h2>Firstname Lastname</h2>
-            <p>githubhandle</p>
-          </div>
-        </li>
-      </ul>
-    </section> --}}
   </div>
 </div>
 {{/travis-layout}}

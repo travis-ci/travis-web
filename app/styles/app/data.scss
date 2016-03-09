@@ -1,0 +1,38 @@
+$stateMap: (
+  passed: (
+    color: $turf-green,
+    color-bg: $seed-green
+  ),
+  failed: (
+    color: $brick-red,
+    color-bg: $quartz-red
+  ),
+  errored: (
+    color: $brick-red,
+    color-bg: $quartz-red
+  ),
+  canceled: (
+    color: $cement-grey,
+    color-bg: $pebble-grey
+  ),
+  created: (
+    color: $canary-yellow,
+    color-bg: $dozer-yellow
+  ),
+  started: (
+    color: $canary-yellow,
+    color-bg: $dozer-yellow
+  ),
+  booting: (
+    color: $canary-yellow,
+    color-bg: $dozer-yellow
+  ),
+  queued: (
+    color: $canary-yellow,
+    color-bg: $dozer-yellow
+  ),
+  received: (
+    color: $canary-yellow,
+    color-bg: $dozer-yellow
+  )
+);
