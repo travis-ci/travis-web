@@ -56,6 +56,9 @@ export default function() {
       return new Mirage.Response(404, {}, {});
     }
   });
+  this.get('/dashboard', function(schema, request) {
+    // repos and orgs?
+  });
 
   // These comments are here to help you get started. Feel free to delete them.
 
