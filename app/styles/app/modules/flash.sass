@@ -1,6 +1,5 @@
 .flash
   @include resetul
-  font-size: 18px
   text-align: center
   height: 0
   li
@@ -12,8 +11,6 @@
     height: 0
     animation: comeIn 7s 1 ease
     z-index: 90
-  li.broadcast
-    height: auto
 
   .close
     @extend .icon
@@ -27,21 +24,18 @@
     padding: .4em 0
     margin: 0
 
-  li.broadcast p
-    padding: .7em 5em
-
   .success,
   .notice
     color: $turf-green
     background-color: $seed-green
     .close
-      @extend .icon--dismiss-green
+      @extend .icon-line-cross-green
 
   .error
     color: $brick-red
     background-color: $quartz-red
     .close
-      @extend .icon--dismiss-red
+      @extend .icon-line-cross-red
 
 @keyframes comeIn
   0%

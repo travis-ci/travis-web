@@ -185,16 +185,15 @@ p.profile-user-last
   +linkStyle
 
 .hooks-error
-  width: 100%;
-  padding: 0 $column-gutter/2;
-  margin-top: 3.3rem;
+  width: 100%
+  margin-top: 1.3rem
   p
     position: relative
-    padding: $column-gutter/2 $column-gutter*2 $column-gutter/2 $column-gutter/2;
-    color: #de4248
-    background-color: #f1b6ad
+    padding: .7em 1.5em .7em 0.5em
+    color: $brick-red
+    background-color: $quartz-red
     a
-      color: #de4248
+      color: $brick-red
       text-decoration: underline
     &:after
       content: ""
@@ -203,14 +202,14 @@ p.profile-user-last
       left: 1.5em
       width: 1.2em
       height: 1.2em
-      background: #f1b6ad
+      background: $quartz-red
       transform: rotate(45deg)
   .close
     @extend .icon
+    @extend %icon-line-cross-red
     position: absolute
     top: 1em
     right: 1em
-    @extend .icon--dismiss-red
 
 .profile-token-toggle
   .icon-eye
