@@ -65,3 +65,6 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   travis-web!
+
+BUNDLED WITH
+   1.10.1
