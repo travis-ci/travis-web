@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 
   tagName: 'span',
-  classNames: ['avatar'],
+  classNameBindings: ['small:avatar--small:avatar'],
 
   userInitials: function() {
     var name = this.get('name');

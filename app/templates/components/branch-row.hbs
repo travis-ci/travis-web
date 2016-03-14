@@ -60,9 +60,9 @@
   <div class="row-commiter">
     <div class="row-item">
       {{#if build.last_build}}
-        <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar"><span class="label-align">{{build.last_build.commit.committer.name}}</span>
+        <img src="{{build.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar--small"><span class="label-align">{{build.last_build.commit.committer.name}}</span>
       {{else}}
-        <div class="avatar"></div><span class="label-align">no commits yet</span>
+        <div class="avatar--small"></div><span class="label-align">no commits yet</span>
       {{/if}}
     </div>
   </div>
