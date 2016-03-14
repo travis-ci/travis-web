@@ -23,15 +23,15 @@
 .jobs-item
   border: 1px solid $cream-dark
   margin-bottom: 5px
-  @include colorJobs($turf-green, 'passed', 6px, $seed-green)
-  @include colorJobs($brick-red, 'failed', 6px, $quartz-red)
-  @include colorJobs($brick-red, 'errored', 6px, $quartz-red)
-  @include colorJobs($cement-grey, 'canceled', 6px, $pebble-grey)
-  @include colorJobs($canary-yellow, 'started', 6px, $haze-yellow, true)
-  @include colorJobs($canary-yellow, 'queued', 6px, $haze-yellow, true)
-  @include colorJobs($canary-yellow, 'booting', 6px, $haze-yellow, true)
-  @include colorJobs($canary-yellow, 'received', 6px, $haze-yellow, true)
-  @include colorJobs($canary-yellow, 'created', 6px, $haze-yellow, true)
+  @include colorJobs($turf-green, 'passed', 3px, $seed-green)
+  @include colorJobs($brick-red, 'failed', 3px, $quartz-red)
+  @include colorJobs($brick-red, 'errored', 3px, $quartz-red)
+  @include colorJobs($cement-grey, 'canceled', 3px, $pebble-grey)
+  @include colorJobs($canary-yellow, 'started', 3px, $haze-yellow, true)
+  @include colorJobs($canary-yellow, 'queued', 3px, $haze-yellow, true)
+  @include colorJobs($canary-yellow, 'booting', 3px, $haze-yellow, true)
+  @include colorJobs($canary-yellow, 'received', 3px, $haze-yellow, true)
+  @include colorJobs($canary-yellow, 'created', 3px, $haze-yellow, true)
 
   @include colorFadeOut('passed', $seed-green)
   @include colorFadeOut('failed', $quartz-red)
@@ -52,7 +52,6 @@
       justify-content: space-between
       align-items: center
       height: 34px
-      padding-left: 0.5em
 
 .section-title
   font-size: 16px
@@ -64,12 +63,6 @@
   display: inline-block
   @media #{$medium-up}
     flex: 0 0 2em
-
-  &.started,
-  &.booting,
-  &.received,
-  &.created
-    line-height: 3
 
 .job-number
   display: inline-block
