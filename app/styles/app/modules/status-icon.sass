@@ -1,3 +1,25 @@
+.status-icon *,
+.request-icon *
+  fill: none
+  stroke: $cement-grey
+  stroke-linecap: round
+  stroke-linejoin: round
+  stroke-miterlimit: 10
+  stroke-width: 2px
+
+.status-icon
+  @extend %icon
+  width: 13px
+  height: 14px
+  line-height: 0
+  margin-right: .3rem
+
+.request-icon
+  @extend %icon
+  width: 16px
+  height: 19px
+  margin-right: .1rem
+
 .status-icon
   .is-rotating
     width: 17px
