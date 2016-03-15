@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import Permissions from 'travis/mixins/permissions';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(Permissions, {
   popup: Ember.inject.service(),
   classNames: ['option-button'],
   classNameBindings: ['isOpen:display'],
@@ -22,37 +23,16 @@ export default Ember.Component.extend({
       return this.toggleProperty('isOpen');
     }
   },
-
-  hasPermission: function() {
-    var permissions;
-    if (permissions = this.get('currentUser.permissions')) {
-      return permissions.contains(parseInt(this.get('repo.id')));
-    }
-  }.property('currentUser.permissions.length', 'repo.id'),
-
-  hasPushPermission: function() {
-    var permissions;
-    if (permissions = this.get('currentUser.pushPermissions')) {
-      return permissions.contains(parseInt(this.get('repo.id')));
-    }
-  }.property('currentUser.pushPermissions.length', 'repo.id'),
-
-  hasAdminPermission: function() {
-    var permissions;
-    if (permissions = this.get('currentUser.adminPermissions')) {
-      return permissions.contains(parseInt(this.get('repo.id')));
-    }
-  }.property('currentUser.adminPermissions.length', 'repo.id'),
-
   displaySettingsLink: function() {
-    return this.get('hasPushPermission');
-  }.property('hasPushPermission'),
+    return this.hasPushPermission(this.get('currentUser'), this.get('repo.id'));
+  }.property('currentUser.pushPermissions', 'repo.id'),
 
   displayCachesLink: function() {
-    return this.get('hasPushPermission') && config.endpoints.caches;
-  }.property('hasPushPermission'),
+    return this.hasPushPermission(this.get('currentUser'), this.get('repo.id')) && config.endpoints.caches;
+  }.property('currentUser.pushPermissions', 'repo.id'),
 
   displayStatusImages: function() {
-    return this.get('hasPermission');
-  }.property('hasPermission')
+    return this.hasPermission(this.get('currentUser'), this.get('repo.id'));
+  }.property('currentUser.permissions', 'repo.id')
+
 });
