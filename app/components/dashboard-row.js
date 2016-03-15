@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import config from 'travis/config/environment';
+import Permissions from 'travis/mixins/permissions';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(Permissions, {
   tagName: 'li',
   classNameBindings: ['repo.default_branch.last_build.state'],
   classNames: ['rows', 'rows--dashboard'],
@@ -14,6 +15,14 @@ export default Ember.Component.extend({
   urlGithubCommit: function() {
     return githubCommitUrl(this.get('repo.slug'), this.get('repo.default_branch.last_build.commit.sha'));
   }.property('repo'),
+
+  displayMenuTofu: function() {
+    return this.hasPushPermission(this.get('currentUser'), this.get('repo.id'));
+  },
+
+  displayActivateLink: function() {
+    return this.hasAdminPermission(this.get('currentUser'), this.get('repo.id'));
+  },
 
   actions: {
     tiggerBuild(branch) {
