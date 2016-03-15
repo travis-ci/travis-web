@@ -60,16 +60,28 @@
         </div>
       </section>
 
-      <div class="dash-menu">
-        <div class="dropup {{if dropupIsOpen "is-open"}}">
-          <button type="button" class="dropup-tofu" {{action "openDropup"}}>open action menu</button>
-          <ul class="dropup-list">
-            <li><a href="#" title="Trigger a new build"><span class="icon-trigger"></span><span class="label-align">Trigger a build</span></a></li>
-            <li><a href="#" title="Deactivate builds for this repository"><span class="icon-deactivate"></span><span class="label-align">Deactivate repository</span></a></li>
-            <li><a href="#" title="See the settings for this repository"><span class="icon-settings"></span><span class="label-align">Settings</span></a></li>
-          </ul>
+      {{#if displayMenuTofu}}
+        <div class="dash-menu">
+          <div class="dropup {{if dropupIsOpen "is-open"}}">
+            <button type="button" class="dropup-tofu" {{action "openDropup"}}>open action menu</button>
+            <ul class="dropup-list">
+              <li><a href="#" title="Trigger a new build">
+                <span class="icon-trigger"></span>
+                <span class="label-align">Trigger a build</span></a></li>
+              {{#if displayActiavteLink}}
+                <li><a href="#" title="Deactivate builds for this repository">
+                  <span class="icon-deactivate"></span>
+                  <span class="label-align">Deactivate repository</span></a></li>
+              {{/if}}
+              <li>
+                {{#link-to 'settings' repo title="Settings for this repository"}}
+                <span class="icon-settings"></span>
+                <span class="label-align">Settings</span>
+                {{/link-to}}</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      {{/if}}
     </div>
 
     <aside class="dash-aside">
