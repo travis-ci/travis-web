@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-import Permissions from 'travis/mixins/permissions';
+import { hasPermission, hasPushPermission } from 'travis/utils/permission';
 
-export default Ember.Component.extend(Permissions, {
+export default Ember.Component.extend({
   popup: Ember.inject.service(),
   classNames: ['option-button'],
   classNameBindings: ['isOpen:display'],
@@ -24,15 +24,15 @@ export default Ember.Component.extend(Permissions, {
     }
   },
   displaySettingsLink: function() {
-    return this.hasPushPermission(this.get('currentUser'), this.get('repo.id'));
+    return hasPushPermission(this.get('currentUser'), this.get('repo.id'));
   }.property('currentUser.pushPermissions', 'repo.id'),
 
   displayCachesLink: function() {
-    return this.hasPushPermission(this.get('currentUser'), this.get('repo.id')) && config.endpoints.caches;
+    return hasPushPermission(this.get('currentUser'), this.get('repo.id')) && config.endpoints.caches;
   }.property('currentUser.pushPermissions', 'repo.id'),
 
   displayStatusImages: function() {
-    return this.hasPermission(this.get('currentUser'), this.get('repo.id'));
+    return hasPermission(this.get('currentUser'), this.get('repo.id'));
   }.property('currentUser.permissions', 'repo.id')
 
 });

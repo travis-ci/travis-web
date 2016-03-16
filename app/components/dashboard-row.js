@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import config from 'travis/config/environment';
-import Permissions from 'travis/mixins/permissions';
+import { hasAdminPermission, hasPushPermission } from 'travis/utils/permission';
 
-export default Ember.Component.extend(Permissions, {
+export default Ember.Component.extend({
   tagName: 'li',
   classNameBindings: ['repo.default_branch.last_build.state'],
   classNames: ['rows', 'rows--dashboard'],
@@ -17,11 +17,11 @@ export default Ember.Component.extend(Permissions, {
   }.property('repo'),
 
   displayMenuTofu: function() {
-    return this.hasPushPermission(this.get('currentUser'), this.get('repo.id'));
+    return hasPushPermission(this.get('currentUser'), this.get('repo.id'));
   },
 
   displayActivateLink: function() {
-    return this.hasAdminPermission(this.get('currentUser'), this.get('repo.id'));
+    return hasAdminPermission(this.get('currentUser'), this.get('repo.id'));
   },
 
   actions: {
