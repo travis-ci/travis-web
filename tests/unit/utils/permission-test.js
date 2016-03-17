@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { hasPermission } from 'travis/utils/permission';
+import { hasPermission, hasPushPermission, hasAdminPermission } from 'travis/utils/permission';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | permission');
