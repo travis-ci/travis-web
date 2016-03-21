@@ -46,7 +46,7 @@
       {{/if}}
       {{#unless commit.authorIsCommitter}}
         {{#if commit.committerName}}
-          {{user-avatar url=commit.committerAvatarUrlOrGravatar name=commit.committerName smll=true}}
+          {{user-avatar url=commit.committerAvatarUrlOrGravatar name=commit.committerName small=true}}
           <span class="label-align">{{commit.committerName}} committed</span>
         {{/if}}
       {{/unless}}
