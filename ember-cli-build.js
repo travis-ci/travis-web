@@ -15,9 +15,9 @@ module.exports = function(defaults) {
 
     if (assetsHost = process.env.ASSETS_HOST) {
       if (assetsHost.substr(-1) !== '/') {
-        assetsHost = assetsHost + '/'
+        assetsHost = assetsHost + '/';
       }
-      fingerprint.prepend = assetsHost
+      fingerprint.prepend = assetsHost;
     }
   }
 
@@ -40,6 +40,7 @@ module.exports = function(defaults) {
   app.import('vendor/log.js');
   app.import('vendor/customerio.js');
   app.import('bower_components/moment/moment.js');
+  app.import('bower_components/keymaster/keymaster.js');
 
   return app.toTree();
 };

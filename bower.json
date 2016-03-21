@@ -19,7 +19,8 @@
     "pretender": "~0.12.0",
     "lodash": "~3.7.0",
     "Faker": "~3.0.0",
-    "ceibo": "1.0.0"
+    "ceibo": "1.0.0",
+    "keymaster": "~1.6.3"
   },
   "resolutions": {
     "ember": "2.2.1",
