@@ -172,6 +172,13 @@ export default TravisRoute.extend({
         nationality: 'italy',
         country: 'austria',
         image: 'laura'
+      }, {
+        name: 'Ana Rosas',
+        title: 'Software Baker',
+        handle: 'ana_rosas',
+        nationality: 'mexico',
+        country: 'mexico',
+        image: 'ana'
       }
     ];
   }

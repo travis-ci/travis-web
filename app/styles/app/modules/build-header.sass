@@ -3,15 +3,15 @@
   border: 1px solid $cream-dark
   clear: both
 
-  @include colorRows($turf-green, 'passed', 12px)
-  @include colorRows($brick-red, 'failed', 12px)
-  @include colorRows($brick-red, 'errored', 12px)
-  @include colorRows($cement-grey, 'canceled', 12px)
-  @include colorRows($canary-yellow, 'started', 12px, true, $dozer-yellow)
-  @include colorRows($canary-yellow, 'queued', 12px, true, $dozer-yellow)
-  @include colorRows($canary-yellow, 'booting', 12px, true, $dozer-yellow)
-  @include colorRows($canary-yellow, 'received', 12px, true, $dozer-yellow)
-  @include colorRows($canary-yellow, 'created', 12px, true, $dozer-yellow)
+  @include colorRows($turf-green, 'passed', 10px)
+  @include colorRows($brick-red, 'failed', 10px)
+  @include colorRows($brick-red, 'errored', 10px)
+  @include colorRows($cement-grey, 'canceled', 10px)
+  @include colorRows($canary-yellow, 'started', 10px, true, $dozer-yellow)
+  @include colorRows($canary-yellow, 'queued', 10px, true, $dozer-yellow)
+  @include colorRows($canary-yellow, 'booting', 10px, true, $dozer-yellow)
+  @include colorRows($canary-yellow, 'received', 10px, true, $dozer-yellow)
+  @include colorRows($canary-yellow, 'created', 10px, true, $dozer-yellow)
 
   @media #{$medium-up}
     display: flex
@@ -30,7 +30,7 @@
   font-size: 16px
   @media #{$medium-up}
     flex: 1 1 65%
-    padding-left: 2.5rem
+    padding-left: 2.2rem
 
 .build-tools
   padding: 1rem 0 1rem 3rem
@@ -52,14 +52,10 @@
   font-weight: $font-weight-normal
   font-size: 16px
 
-  .status-icon
-    width: 1.7rem
-    height: 1.8rem
-    vertical-align: middle
-
 .build-title
   .status-icon
-    margin-left: -2rem
+    margin-left: -1.9rem
+    margin-right: 0.7rem
 
 .commit-info
   font-size: 15px

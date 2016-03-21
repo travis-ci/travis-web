@@ -1,0 +1,52 @@
+.status-icon *,
+.request-icon *
+  fill: none
+  stroke: $cement-grey
+  stroke-linecap: round
+  stroke-linejoin: round
+  stroke-miterlimit: 10
+  stroke-width: 2px
+
+.status-icon
+  @extend %icon
+  width: 13px
+  height: 14px
+  line-height: 0
+  margin-right: .3rem
+
+.request-icon
+  @extend %icon
+  width: 16px
+  height: 19px
+  margin-right: .1rem
+
+.status-icon
+  .is-rotating
+    width: 17px
+    height: 18px
+    line-height: 0.9
+    text-align: center
+    transform-origin: center center
+    will-change: transform
+    animation: rotation 3s infinite ease
+    .circle
+      display: inline-block
+      vertical-align: middle
+      width: 5px
+      height: 5px
+      border: solid 1px $dozer-yellow
+      border-radius: 50%
+      transform-origin: center center
+
+  &.started,
+  &.received,
+  &.created
+    height: 19px
+
+@keyframes rotation
+  0%
+    transform: rotateZ(0deg)
+  45%, 55%
+    transform: rotateZ(180deg)
+  100%
+    transform: rotateZ(360deg)

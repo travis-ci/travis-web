@@ -1,0 +1,38 @@
+.lastbuilds
+  list-style: none
+  margin: 0
+  padding: 0
+  width: 100%
+  display: flex
+  justify-content: flex-start
+  @media #{$small-only}
+    flex-flow: row wrap
+    margin-top: 1em
+
+  li
+    flex: 0 0 20%
+    height: 30px
+    @each $key, $value in $stateMap
+      &.#{$key}
+        background-color: map-get($value, color)
+
+    @media #{$medium-up}
+      flex: 0 0 10%
+      margin-right: 2px
+      transform: translateY(25px)
+      transition: transform 150ms ease
+      &:hover
+        transform: translateY(0)
+  a
+    display: block
+    width: 100%
+    height: 30%
+    padding-top: 4px
+    color: white
+    text-align: center
+
+  .status-icon
+    svg *
+      stroke: white !important
+    .circle
+      border-color: white !important

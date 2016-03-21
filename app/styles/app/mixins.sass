@@ -36,15 +36,6 @@
   bottom: 0
   margin: auto
 
-%inline-block
-  display: inline-block
-
-%section-title
-  font-size: $font-size-sm
-  color: $cement-grey
-  font-weight: 400
-
-
 =linkStyle
   a
     text-decoration: none
@@ -67,9 +58,34 @@
 
 // @todo simplyfiy coloring mixins
 =colorStatusIcons($color, $status)
-  .status-icon.#{$status}
+  .status-icon.#{$status},
+  .request-icon.#{$status}
     svg *
-      fill: $color
+      stroke: $color
+
+=rowBorder
+  border: 1px solid lighten($cement-grey, 20)
+  border-radius: 2px
+
+=rowColor($status, $color, $color-bg: $color)
+  &.#{$status}
+    .color
+      color: $color
+      a
+        color: $color
+        text-decoration: none
+        &:hover,
+        &:active
+          border-bottom: 1px solid $color
+    .status-icon g > *,
+    .request-icon g > *
+      stroke: $color-bg
+    .background
+      background-color: $color-bg
+
+=rowBg($width, $status, $color)
+  &.#{$status}
+    background: linear-gradient(to right, $color 0%, $color $width, white $width, white 100%) no-repeat
 
 =statusColors($color, $status, $width, $color2: $color, $building:false)
   &.#{$status}
@@ -80,9 +96,9 @@
       color: $color
       &:hover
         border-color: $color
-    .row-name .status-icon g > *,
-    .row-request .icon-request g > *
-      fill: $color
+    .status-icon g > *,
+    .request-icon g > *
+      stroke: $color
 
     .build a,
     .repo-title a
@@ -119,4 +135,7 @@
     @include colorStatusIcons($color, $status)
     &:hover,
     &:active
-      @include colorBg($bg-start, $status, $width, $hover)
+      background-color: $hover
+      border-left: $width solid $color
+      a
+        margin-left: - $width + 1px

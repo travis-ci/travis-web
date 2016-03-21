@@ -103,6 +103,7 @@ var Controller = Ember.Controller.extend({
   },
 
   runningJobs: function() {
+    if(!this.get('config.pro')) { return []; }
     var result;
 
     result = this.store.filter('job', {}, function(job) {
@@ -114,9 +115,11 @@ var Controller = Ember.Controller.extend({
     });
 
     return result;
-  }.property(),
+  }.property('config.pro'),
 
   queuedJobs: function() {
+    if(!this.get('config.pro')) { return []; }
+
     var result;
     result = this.get('store').filter('job', function(job) {
       return ['created'].indexOf(job.get('state')) !== -1;
@@ -127,7 +130,7 @@ var Controller = Ember.Controller.extend({
     });
 
     return result;
-  }.property(),
+  }.property('config.pro'),
 
   recentRepos: function() {
     return [];

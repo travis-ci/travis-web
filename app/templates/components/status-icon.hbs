@@ -1,54 +1,40 @@
-
 {{#if isEmpty}}
-  <svg version="1.1" id="Layer_1" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
-    <g id="NoBuild">
-      <g>
-        <path fill="#A7AEAE" d="M10,16.2c-3.4,0-6.1-2.8-6.1-6.2S6.6,3.8,10,3.8s6.1,2.8,6.1,6.2S13.4,16.2,10,16.2z M10,5.2
-          c-2.7,0-4.9,2.2-4.9,4.8s2.2,4.8,4.9,4.8s4.9-2.2,4.9-4.8S12.7,5.2,10,5.2z"/>
-      </g>
-    </g>
+  <svg version="1.1" id="icon-nobuilds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 17" xml:space="preserve">
+  <g id="nobuilds">
+  <circle cx="7.5" cy="7.5" r="7"/>
+  </g>
   </svg>
 {{else}}
   {{#if hasPassed}}
-    <svg version="1.1" id="Layer_1"  x="0px" y="0px"
-       viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
-      <g id="Passed">
-        <path fill="#A7AEAE" d="M9.6,14.4c-0.1,0-0.3-0.1-0.4-0.1l-4-3.3c-0.3-0.2-0.3-0.6-0.1-0.9S5.8,9.8,6.1,10l3.4,2.8l4.9-7.5
-          C14.6,5,15,4.9,15.3,5.1c0.3,0.2,0.4,0.6,0.2,0.9l-5.3,8.1C10.1,14.3,9.9,14.4,9.6,14.4C9.7,14.4,9.7,14.4,9.6,14.4z"/>
-      </g>
+    <svg version="1.1" id="icon-passed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 16" xml:space="preserve">
+    <g><polyline style="stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;"id="passed" points="14.5,1.5 6.499,13.716 0.5,8.78 "/></g>
     </svg>
   {{/if}}
 
   {{#if hasFailed}}
-    <svg version="1.1" id="Layer_1" x="0px" y="0px"
-       viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
-      <g id="Failed">
-        <path fill="#A7AEAE" d="M10.9,10l3.9-3.9c0.2-0.2,0.2-0.6,0-0.9c-0.2-0.2-0.6-0.2-0.9,0L10,9.1L6.1,5.2c-0.2-0.2-0.6-0.2-0.9,0
-          c-0.2,0.2-0.2,0.6,0,0.9L9.1,10l-3.9,3.9c-0.2,0.2-0.2,0.6,0,0.9C5.3,14.9,5.5,15,5.6,15s0.3-0.1,0.4-0.2l3.9-3.9l3.9,3.9
-          c0.1,0.1,0.3,0.2,0.4,0.2c0.2,0,0.3-0.1,0.4-0.2c0.2-0.2,0.2-0.6,0-0.9L10.9,10z"/>
-      </g>
+    <svg version="1.1" id="icon-failed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 17" xml:space="preserve">
+    <g id="failed">
+    <line x1="0.5" y1="0.5" x2="14.5" y2="14.5"/>
+    <line x1="14.5" y1="0.5" x2="0.5" y2="14.5"/>
+    </g>
     </svg>
   {{/if}}
 
   {{#if wasCanceled}}
-    <svg version="1.1" id="Layer_1" x="0px" y="0px"
-       viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
-      <g id="Cancelled">
-        <path fill="#A7AEAE" d="M10,3.3c-3.7,0-6.6,3-6.6,6.7s3,6.7,6.6,6.7s6.6-3,6.6-6.7S13.7,3.3,10,3.3z M15.4,10
-          c0,1.3-0.5,2.5-1.3,3.4L6.5,6C7.5,5.2,8.7,4.7,10,4.7C13,4.7,15.4,7,15.4,10z M4.6,10c0-1.2,0.4-2.2,1-3.1l7.5,7.4
-          c-0.9,0.7-2,1-3.2,1C7,15.3,4.6,13,4.6,10z"/>
-      </g>
+    <svg version="1.1" id="icon-canceled" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 17" xml:space="preserve">
+    <g id="canceled">
+    <line x1="2.542" y1="2.938" x2="12.306" y2="12.551"/>
+    <circle cx="7.5" cy="7.5" r="7"/>
+    </g>
     </svg>
   {{/if}}
 
   {{#if hasErrored}}
-    <svg version="1.1" id="Layer_1" x="0px" y="0px"
-       viewBox="-519 391 20 20" style="enable-background:new -518 391 20 20;" xml:space="preserve">
-      <g>
-          <path fill="#A5ACAD" d="M-508.9,403.2c-0.3,0-0.6-0.3-0.6-0.6V395c0-0.3,0.3-0.6,0.6-0.6s0.6,0.3,0.6,0.6v7.6
-            C-508.2,402.9-508.5,403.2-508.9,403.2z"/>
-          <circle fill="#A5ACAD" cx="-508.9" cy="406.5" r="1.2"/>
-      </g>
+    <svg version="1.1" id="icon-errored" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 16 17" xml:space="preserve">
+    <g id="errored">
+    <circle cx="7.5" cy="13.986" r="0.97"/>
+    <line x1="7.5" y1="0.5" x2="7.5" y2="10.646"/>
+    </g>
     </svg>
   {{/if}}
 

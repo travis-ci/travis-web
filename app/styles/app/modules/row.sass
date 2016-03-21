@@ -11,6 +11,46 @@
   vertical-align: middle
   line-height: 1.5
 
+.rows
+  +rowBorder
+  display: flex
+  flex-flow: column wrap
+  margin-bottom: 1rem
+  @each $key, $value in $stateMap
+    +rowColor(#{$key}, map-get($value, color))
+
+  @media #{$medium-up}
+    position: relative
+    flex-flow: row nowrap
+    justify-content: space-between
+    align-items: center
+
+  .label
+    margin: 0
+    font-size: 10px
+    color: $cement-grey
+    text-transform: uppercase
+    font-weight: 600
+
+  .row-label,
+  .row-label a
+    font-size: $font-size-m
+    color: $cement-grey
+
+  .row-label
+    margin: 0
+    a:hover,
+    a:active
+      border-bottom: 1px solid $cement-grey
+
+  .row-content
+    margin: 0
+    font-size: 16px
+    a:hover,
+    a:active
+      border-bottom: 1px solid $asphalt-grey
+
+// old! remove this
 .row-li
   position: relative
   border: 1px solid $cream-dark
@@ -20,7 +60,6 @@
 
   h2, h3, small
     margin: 0
-    font-weight: $font-weight-normal
     font-size: 16px
   small
     font-weight: $font-weight-bold
@@ -70,22 +109,6 @@
       text-align: center
       @media #{$medium-up}
         display: block
-
-  .icon
-    width: 1.3em
-    height: 1.3em
-    margin-right: .2em
-    display: inline-block
-    vertical-align: middle
-
-  .avatar
-    display: inline-block
-    width: 16px
-    height: 16px
-    margin: 0 .4em 0 .1em
-    border-radius: 50%
-    vertical-align: middle
-    background-color: #E9EBEB
 
   @include statusColors($turf-green, 'passed', 10px)
   @include statusColors($brick-red, 'failed', 10px)

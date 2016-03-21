@@ -1,111 +1,80 @@
-
-<div class="two-line fade-out">
-  <div class="row-name row-item row-color"> 
-    <h3>{{#link-to "owner" repo.owner.login}}{{status-icon status=repo.default_branch.last_build.state}} {{repo.owner.login}}{{/link-to}}</h3>
-    <h2>{{#link-to "repo" repo.owner.login repo.name}}<span class="label-align">{{repo.name}}</span>{{/link-to}}</h2>
-  </div>
-</div>
-
-<div class="one-line fade-out">
-  <div class="row-request">
-    <div class="row-item">
-    {{#link-to "build" repo.owner.login repo.name repo.default_branch.last_build.id}}
-      {{request-icon event=repo.default_branch.last_build.event_type state=repo.default_branch.last_build.state}}
-      <span class="label-align">#{{repo.default_branch.last_build.number}} {{repo.default_branch.last_build.state}} on {{repo.default_branch.name}}</span>
-    {{/link-to}}
-    </div>
-  </div>
-</div>
-
-<div class="one-line">
-  <div class="row-commit">
-    <div class="row-item">
-      <a href="{{urlGithubCommit}}" title="commit on GitHub">
-        <span class="icon-github"></span>
-        <span class="label-align">
-          {{format-sha repo.default_branch.last_build.commit.sha}}
-        </span>
-      </a>
-    </div>
-  </div>
-</div>
-
-<div class="one-line">
-  <div class="row-calendar">
-    <div class="row-item" title="{{repo.default_branch.last_build.finished_at}}">
-      <span class="icon-calendar"></span>
-      <span class="label-align">
-      {{#if repo.default_branch.last_build}}
-        {{format-time repo.default_branch.last_build.finished_at}}
-      {{else}}
-        -
-      {{/if}}</span>
-      </div>
-  </div>
-</div>
-{{!-- 
-<div class="one-line is-relative">
-  <div class="row-nav dropup-trigger">
-    <div class="row-item">
-      <a href="#"><span class="icon icon-tofu">
-        <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
-          <g id="Tofuburger">
-            <path fill="#A7AEAE" d="M17.9,6.2H2.1C1.8,6.2,1.5,6,1.5,5.6C1.5,5.3,1.8,5,2.1,5h15.7c0.4,0,0.6,0.3,0.6,0.6
-              C18.5,6,18.2,6.2,17.9,6.2z"/>
-            <path fill="#A7AEAE" d="M17.9,10.6H2.1c-0.4,0-0.6-0.3-0.6-0.6s0.3-0.6,0.6-0.6h15.7c0.4,0,0.6,0.3,0.6,0.6S18.2,10.6,17.9,10.6z
-              "/>
-            <path fill="#A7AEAE" d="M17.9,15H2.1c-0.4,0-0.6-0.3-0.6-0.6c0-0.3,0.3-0.6,0.6-0.6h15.7c0.4,0,0.6,0.3,0.6,0.6
-              C18.5,14.7,18.2,15,17.9,15z"/>
-          </g>
+  <div class="dash-head">
+    <a href="#" class="dash-star is-starred" title="(un-) star this repo"><span class="icon-star">
+      <svg version="1.1" id="icon-star" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve" alt="star repository">
+      <path id="star" d="M7.159,1.035c0.188-0.38,0.495-0.38,0.683,0l1.596,3.234c0.188,0.38,0.685,0.741,1.105,0.802
+	l3.569,0.519c0.42,0.061,0.515,0.353,0.211,0.649l-2.583,2.517c-0.304,0.296-0.494,0.88-0.422,1.298l0.61,3.555
+	c0.072,0.418-0.177,0.599-0.552,0.401l-3.192-1.678c-0.375-0.197-0.99-0.197-1.365,0l-3.192,1.678
+	c-0.375,0.197-0.624,0.017-0.552-0.401l0.61-3.555c0.072-0.418-0.118-1.002-0.422-1.298L0.678,6.24
+	C0.374,5.944,0.469,5.652,0.889,5.591l3.569-0.519c0.42-0.061,0.917-0.422,1.105-0.802L7.159,1.035z"/>
         </svg>
-      </span></a></div>
+    </span></a>
+    <span class="icon-lock">private repo</span>
+  </div>
+  <div class="dash-body">
+    <div class="dash-main">
+      <header class="fade-out dash-header">
+        <h2 class="row-label">{{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}}</h2>
+        <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name}}{{repo.name}}{{/link-to}}</h1>
+      </header>
+
+      <section class="dash-default">
+        <h3 class="label">Default branch</h3>
+        <p class="row-content color">
+          {{request-icon event=repo.default_branch.last_build.event_type state=repo.default_branch.last_build.state}}
+          {{repo.default_branch.name}} is {{repo.default_branch.last_build.state}}
+        </p>
+      </section>
+
+      <section class="dash-last-build">
+        <div>
+          <h3 class="label">Last build</h3>
+          <p class="row-content color">
+            {{status-icon status=repo.default_branch.last_build.state}}
+            {{#link-to "build" repo.owner.login repo.name repo.default_branch.last_build.id}}
+            <span class="label-align">#{{repo.default_branch.last_build.number}} {{repo.default_branch.last_build.state}}</span>
+            {{/link-to}}
+          </p>
+        </div>
+        <div>
+          <h3 class="label">Last commit</h3>
+          <p class="row-content">
+            <span class="icon-github"></span>
+            <a href="{{urlGithubCommit}}" title="See the commit on Github">
+              <span class="label-align">
+                {{format-sha repo.default_branch.last_build.commit.sha}}
+              </span>
+            </a>
+          </p>
+        </div>
+        <div>
+          <h3 class="label">Last commit completed</h3>
+          <p class="row-content" title="{{repo.default_branch.last_build.finished_at}}">
+            <span class="icon-calendar"></span>
+            <span class="label-align">
+              {{#if repo.default_branch.last_build}}
+                {{format-time repo.default_branch.last_build.finished_at}}
+              {{else}}
+                running
+              {{/if}}</span>
+          </p>
+        </div>
+      </section>
+
+      <div class="dash-menu">
+        <div class="dropup {{if dropupIsOpen "is-open"}}">
+          <button type="button" class="dropup-tofu" {{action "openDropup"}}>open action menu</button>
+          <ul class="dropup-list">
+            <li><a href="#" title="Trigger a new build"><span class="icon-trigger"></span><span class="label-align">Trigger a build</span></a></li>
+            <li><a href="#" title="Deactivate builds for this repository"><span class="icon-deactivate"></span><span class="label-align">Deactivate repository</span></a></li>
+            <li><a href="#" title="See the settings for this repository"><span class="icon-settings"></span><span class="label-align">Settings</span></a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="dropup--blue">
-      <ul>
-        <li><a {{action 'deactivateRepo'}}>
-          <span class="icon icon-eye">
-            <svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
-              <g id="Failed">
-                <path fill="#A7AEAE" d="M10.9,10l3.9-3.9c0.2-0.2,0.2-0.6,0-0.9c-0.2-0.2-0.6-0.2-0.9,0L10,9.1L6.1,5.2c-0.2-0.2-0.6-0.2-0.9,0
-                  c-0.2,0.2-0.2,0.6,0,0.9L9.1,10l-3.9,3.9c-0.2,0.2-0.2,0.6,0,0.9C5.3,14.9,5.5,15,5.6,15s0.3-0.1,0.4-0.2l3.9-3.9l3.9,3.9
-                  c0.1,0.1,0.3,0.2,0.4,0.2c0.2,0,0.3-0.1,0.4-0.2c0.2-0.2,0.2-0.6,0-0.9L10.9,10z"/>
-              </g>
-            </svg>
-          </span>
-          <span class="dropup-item">Deactivate</span></a>
-        </li>
-        <li>
-          {{#if hasTriggered}}
-            <span class="icon">
-              <svg version="1.1" id="Layer_1"  x="0px" y="0px"
-                 viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
-                <g id="Passed">
-                  <path fill="#A7AEAE" d="M9.6,14.4c-0.1,0-0.3-0.1-0.4-0.1l-4-3.3c-0.3-0.2-0.3-0.6-0.1-0.9S5.8,9.8,6.1,10l3.4,2.8l4.9-7.5
-                    C14.6,5,15,4.9,15.3,5.1c0.3,0.2,0.4,0.6,0.2,0.9l-5.3,8.1C10.1,14.3,9.9,14.4,9.6,14.4C9.7,14.4,9.7,14.4,9.6,14.4z"/>
-                </g>
-              </svg>
-            </span>
-            <span class="dropup-item no-link">Build triggered</span>
-          {{else}}
-            {{#if isTriggering}}
-              {{loading-indicator}}
-            {{else}}
-              <a {{action 'tiggerBuild'}}>
-                <span class="icon icon-trigger">
-                  <svg x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
-                    <g id="Trigger">
-                      <path fill="#A7AEAE" d="M17.2,7.9C17,7.6,16.6,7.7,16.3,8l-1,1.2C14.9,6,12.2,3.6,9,3.6c-3.6,0-6.4,2.9-6.4,6.4s2.9,6.4,6.4,6.4
-                        c1.8,0,3.6-0.8,4.8-2.2c0.2-0.3,0.2-0.7-0.1-0.9c-0.3-0.2-0.7-0.2-0.9,0.1c-1,1.1-2.4,1.7-3.9,1.7c-2.8,0-5.1-2.3-5.1-5.1
-                        S6.1,4.9,9,4.9c2.7,0,4.9,2.1,5.1,4.7l-1.7-1.1c-0.3-0.2-0.7-0.1-0.9,0.2s-0.1,0.7,0.2,0.9l2.8,1.8c0,0,0,0,0,0
-                        c0.1,0.1,0.2,0.1,0.3,0.1c0.1,0,0.2,0,0.3-0.1c0,0,0.1,0,0.1-0.1c0,0,0.1-0.1,0.1-0.1l2-2.4C17.6,8.5,17.5,8.1,17.2,7.9z"/>
-                    </g>
-                  </svg>
-                </span>
-                <span class="dropup-item">Trigger a build</span>
-              </a>
-            {{/if}}
-          {{/if}}
-        </li>
+
+    <aside class="dash-aside">
+      <ul class="lastbuilds">
+        {{lastbuild-tile repo=repo build=repo.default_branch.last_build}}
       </ul>
-    </div>
-</div> --}}
+    </aside>
+  </div>

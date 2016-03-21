@@ -124,8 +124,9 @@ $button-border-color: #d4d4d4
   overflow: hidden
   width: 28px
   height: 28px
-  border: solid 1px #E4E6E6
+  border: solid 1px rgba($cement-grey, 0.2)
   border-radius: 50%
+  cursor: pointer
   &:hover
     border-color: $oxide-blue
 
@@ -140,8 +141,9 @@ $button-border-color: #d4d4d4
   @extend %circle-button
   @extend %icon-line-cross
   background:
+    position: 6px 6px
     repeat: no-repeat
-    size: auto 100%
+    size: 14px 14px
   &:hover
     @extend %icon-line-cross-teal
 
@@ -149,9 +151,9 @@ $button-border-color: #d4d4d4
   @extend %circle-button
   @extend %icon-line-trigger
   background:
-    position: 2px 1px
+    position: 6px 5px
     repeat: no-repeat
-    size: 24px 24px
+    size: 16px 16px
   &:hover
     @extend %icon-line-trigger-teal
 
@@ -213,4 +215,4 @@ $button-border-color: #d4d4d4
     position: 4px 1px
   cursor: pointer
   @extend .button--grey
-  @extend %icon-line-eye
+  @extend %icon-line-eye-white

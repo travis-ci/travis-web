@@ -46,10 +46,15 @@
       width: 22%
   a:hover
     text-decoration: underline
-  .icon
-    width: 1.3em
-    height: 1.4em
-    vertical-align: middle
+
+  .icon-clock,
+  .icon-calendar,
+  .icon-hash
+    width: 14px
+    height: 14px
+  .status-icon
+    width: 12px
+    height: 16px
 
 .tabnav--sidebar
   font-size: 14px
@@ -75,7 +80,8 @@
     margin-right: 0.8em
   @media (min-width: #{lower-bound($large-range)})
     ul
-        height: 2em
+      height: 2em
+      margin-bottom: -5px
   @media (max-width: #{lower-bound($large-range)})
     li
       display: block !important
