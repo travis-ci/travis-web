@@ -3,21 +3,18 @@ import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import Ember from 'ember';
 
+let { service } = Ember.inject;
+
 export default TravisRoute.extend(BuildFaviconMixin, {
+  flashes: service(),
   needsAuth: false,
 
   beforeModel() {
     this._super(...arguments);
-    return this.get('auth').refreshUserData().then( () => {
+    if(this.signedIn()) {
       this.setupPendo();
-    }, (xhr) => {
-      // if xhr is not defined it means that scopes are not correct,
-      // so log the user out. Also log the user out if the response is 401
-      // or 403
-      if(!xhr || (xhr.status === 401 || xhr.status === 403)) {
-        return this.get('auth').signOut();
-      }
-    });
+    }
+    //this.get('auth').refreshUserData()
   },
 
   renderTemplate: function() {
@@ -115,6 +112,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     afterSignIn() {
       var transition;
       this.setupPendo();
+      this.get('flashes').clear();
       if (transition = this.auth.get('afterSignInTransition')) {
         this.auth.set('afterSignInTransition', null);
         return transition.retry();
@@ -124,6 +122,8 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     },
 
     afterSignOut() {
+      this.controllerFor('repos').reset();
+      this.controllerFor('repo').reset();
       this.setDefault();
       if (this.get('config').pro) {
         return this.transitionTo('home-pro');

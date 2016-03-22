@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | profile', {
       login: 'feministkilljoy',
       repos_count: 3
     });
-    
+
     signInUser(currentUser);
 
     const organization = server.create('account', {
@@ -84,7 +84,7 @@ test('view token', function(assert) {
   profilePage.token.show();
 
   andThen(function() {
-    assert.equal(profilePage.token.value, 'abc123');
+    assert.equal(profilePage.token.value, 'testUserToken');
   });
 });
 
