@@ -29,7 +29,7 @@ export default TravisRoute.extend({
         image: 'fritz'
       }, {
         name: 'Konstantin Haase',
-        title: 'Haase of Pain',
+        title: 'Haase of Engineering',
         handle: 'konstantinhaase',
         nationality: 'germany',
         country: 'switzerland',
