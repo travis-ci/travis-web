@@ -20,9 +20,27 @@ export default TravisRoute.extend({
   },
 
   fetchCronJobs() {
-    var repo;
-    repo = this.modelFor('repo');
-    return repo.get('cronJobs.promise');
+    var repo = this.modelFor('repo');
+    var apiEndpoint = config.apiEndpoint;
+
+    return $.ajax(apiEndpoint + "/v3/repo/" + repo.get('id'), {
+      headers: {
+        Authorization: 'token ' + this.auth.token()
+      }
+    }).then(function(response) {
+      if(response["@permissions"]["create_cron"]) {
+        return Ember.Object.create({
+          enabled: true,
+          jobs: repo.get('cronJobs.promise')
+        });
+      } else {
+        return Ember.Object.create({
+          enabled: false,
+          jobs: []
+        });
+      }
+    });
+
   },
 
   fetchBranches() {
