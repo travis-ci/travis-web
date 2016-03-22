@@ -1,29 +1,29 @@
 
-var hasPermission = function(currentUser, repoId) {
+var hasPermission = function(user, repoId) {
   var id = parseInt(repoId);
   var permissions;
-  if (currentUser) {
-    if (permissions = currentUser.get('permissions')) {
+  if (user) {
+    if (permissions = user.get('permissions')) {
       return permissions.contains(id);
     }
   }
 };
 
-var hasPushPermission = function(currentUser, repoId) {
+var hasPushPermission = function(user, repoId) {
   var id = parseInt(repoId);
   var permissions;
-  if (currentUser) {
-    if (permissions = currentUser.get('pushPermissions')) {
+  if (user) {
+    if (permissions = user.get('pushPermissions')) {
       return permissions.contains(id);
     }
   }
 };
 
-var hasAdminPermission = function(currentUser, repoId) {
+var hasAdminPermission = function(user, repoId) {
   var id = parseInt(repoId);
   var permissions;
-  if (currentUser) {
-    if (permissions = currentUser.get('adminPermissions')) {
+  if (user) {
+    if (permissions = user.get('adminPermissions')) {
       return permissions.contains(id);
     }
   }
