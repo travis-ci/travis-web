@@ -141,7 +141,7 @@ class Travis::Web::App
 
     def expires(file)
       if fingerprinted?(file)
-        (server_start + age).httpdate 
+        (server_start + age).httpdate
       else
         '0'
       end
@@ -189,6 +189,7 @@ class Travis::Web::App
       pusher['key'] = options[:pusher_key] if options[:pusher_key]
       pusher['host'] = options[:pusher_host] if options[:pusher_host]
       pusher['path'] = options[:pusher_path] if options[:pusher_path]
+      pusher['channel_prefix'] = options[:pusher_channel_prefix] if options[:pusher_channel_prefix]
       config['pusher'] = pusher
 
       config['ember-cli-pendo'] = { apiKey: options[:pendo_key] }
