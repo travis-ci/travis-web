@@ -59,6 +59,7 @@ run Travis::Web::App.build(
   pusher_key:      ENV['PUSHER_KEY'],
   pusher_host:     ENV['PUSHER_HOST'] || 'ws.pusherapp.com',
   pusher_path:     ENV['PUSHER_PATH'],
+  pusher_channel_prefix: ENV['PUSHER_CHANNEL_PREFIX'],
   ga_code:         ENV['GA_CODE'],
   root:            File.expand_path('../../dist', __FILE__),
   server_start:    Time.now,
