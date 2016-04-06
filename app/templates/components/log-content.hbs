@@ -13,16 +13,6 @@
           <span class="label-align">This job is running on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a>.</span></p>
         {{/if}}
       {{/if}}
-
-      {{#if job.displayGceNotice}}
-        {{#if job.isFinished}}
-          <p class="notice--blue"><span class="icon-flag"></span>
-          <span class="label-align">This job ran on our new platform for Precise builds. Please read <a href="https://blog.travis-ci.com/2015-11-27-moving-to-a-more-elastic-future" title="Blog post on infrastructure migration">our blog post for more information</a>.</span></p>
-        {{else}}
-          <p class="notice--blue"><span class="icon-flag"></span>
-          <span class="label-align">This job is running on our new platform for Legacy Precise builds. Please read <a href="https://blog.travis-ci.com/2015-11-27-moving-to-a-more-elastic-future" title="Blog post on infrastructure migration">our blog post for more information</a>.</span></p>
-        {{/if}}
-      {{/if}}
     {{/if}}
   {{/unless}}
 
