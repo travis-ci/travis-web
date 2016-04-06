@@ -56,7 +56,6 @@
 
     p
       line-height: 1.5em
-      font-color: #606162
       font-size: 1.7em
 
   .hero.z-1
@@ -78,13 +77,13 @@
     margin-bottom: -192px
 
   #laptop img
-    border: 2px solid #d8dadc
+    border: 2px solid lighten($cement-grey, 20)
     border-radius: 2px
 
   .hero
-    background-color: #f6f6f6
+    background-color: $pebble-grey
     h1
-      color: #339999
+      color: $oxide-blue
       line-height: 1.2em
       margin-bottom: 0
 
@@ -96,7 +95,7 @@
       display: none
 
     .button
-      background-color: #39a85b
+      background-color: $turf-green
       color: #fff
       font-size: 2em
       font-weight: 300
@@ -106,7 +105,7 @@
       border: 0
 
       &:hover
-        background-color: #73c78d
+        background-color: lighten($turf-green, 20)
 
     .sign-in-mascot
       padding-right: 10px
@@ -154,11 +153,16 @@
     br.mobile-no-break
       display: inline-block
 
+  .os-numbers
+    width: 80%
+    @media #{$medium-up}
+      width: 60%
+
   .private-repos
     text-align: center
 
     h2
-      color: #339999
+      color: $oxide-blue
       margin: 0
       text-align: right
 
@@ -177,15 +181,12 @@
       display: inline-block
 
   .features-list
-    background-color: #f6f6f6
-
     h2
       margin: 0
 
     h3
       font-size: 1.4em
       font-weight: 300
-      color: #413c3c
       text-align: center
       margin-bottom: 35px
       padding-top: 40px
@@ -193,7 +194,6 @@
     p
       font-size: 1.15em
       font-weight: 300
-      color: #606162
       text-align: center
 
     br.mobile-break
@@ -240,7 +240,6 @@
       margin-top: 1.6rem;
 
     li
-      font-color: #606162
       font-size: 1.7em
       line-height: 1.7em
       &:before
@@ -255,7 +254,7 @@
     text-align: center
 
     h2
-      color: #909295
+      color: $cement-grey
 
     h2#pr-bf-margin
       margin-top: 90px
@@ -266,14 +265,14 @@
         width: 120px
 
         p
-          font-size: 1em
+          font-size: 13px
           line-height: 1.5em
-          color: #5f6062
+          color: $asphalt-grey
 
     .divider-line-horizontal
       width: 50px
       height: 3px
-      background: #eaeaec
+      background: lighten($cement-grey, 30)
       display: inline-block
       margin-bottom: 75px
 
@@ -284,13 +283,11 @@
     margin-bottom: 50px
 
     h2
-      color: #418793
+      color: $oxide-blue
       text-align: right
 
     p
       font-size: 1.2em
-      font-weight: 300
-      color: #606162
       margin: 0
       display: inline-block
 
@@ -369,7 +366,7 @@
     .build-flows .branch-bf .divider-line-vertical
       width: 3px
       height: 40px
-      background: #eaeaec
+      background: lighten($cement-grey, 30)
       display: inline-block
       margin-bottom: 10px
 
