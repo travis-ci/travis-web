@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   isOpen: false,
 
   click(event) {
-    if ($(event.target).is('a') && $(event.target).parents('.settings-dropdown').length) {
+    if ($(event.target).is('a') && $(event.target).parents('.settings-dropdown').length) {      
       return this.closeMenu();
     }
   },
@@ -19,20 +19,20 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    menu() {
+    menu() {            
       return this.toggleProperty('isOpen');
     }
   },
   displaySettingsLink: function() {
     return hasPushPermission(this.get('currentUser'), this.get('repo.id'));
-  }.property('currentUser.pushPermissions', 'repo.id'),
+  }.property('currentUser.pushPermissions.length', 'repo'),
 
   displayCachesLink: function() {
     return hasPushPermission(this.get('currentUser'), this.get('repo.id')) && config.endpoints.caches;
-  }.property('currentUser.pushPermissions', 'repo.id'),
+  }.property('currentUser.pushPermissions.length', 'repo'),
 
   displayStatusImages: function() {
     return hasPermission(this.get('currentUser'), this.get('repo.id'));
-  }.property('currentUser.permissions', 'repo.id')
+  }.property('currentUser.permissions.length', 'repo.id')
 
 });
