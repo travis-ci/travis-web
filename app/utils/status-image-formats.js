@@ -27,7 +27,7 @@ rstStatusImage = (function(url, slug, branch) {
 });
 
 podStatusImage = (function(url, slug, branch) {
-  return "=for HTML <a href=\"" + url + "\"><img src=\"" + (statusImageUrl(slug, branch)) + "\"></a>";
+  return "=for html <a href=\"" + url + "\"><img src=\"" + (statusImageUrl(slug, branch)) + "\"></a>";
 });
 
 ccxmlStatusUrl = (function(slug, branch) {
