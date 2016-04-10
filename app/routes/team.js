@@ -179,6 +179,20 @@ export default TravisRoute.extend({
         nationality: 'mexico',
         country: 'mexico',
         image: 'ana'
+      }, {
+        name: 'Igor Wiedler',
+        title: 'webmaster',
+        handle: 'igorwhilefalse',
+        nationality: 'switzerland',
+        country: 'germany',
+        image: 'igor'
+      }, {
+        name: 'Carmen Andoh',
+        title: 'SRE- Snazzy Rsync Empress',
+        handle: 'caelestisca',
+        nationality: 'usa',
+        country: 'usa',
+        image: 'carmen'
       }
     ];
   }

@@ -190,6 +190,7 @@ class Travis::Web::App
       pusher['host'] = options[:pusher_host] if options[:pusher_host]
       pusher['path'] = options[:pusher_path] if options[:pusher_path]
       pusher['channelPrefix'] = options[:pusher_channel_prefix] if options[:pusher_channel_prefix]
+      Added Igor and Carmen to the team page
       config['pusher'] = pusher
 
       config['ember-cli-pendo'] = { apiKey: options[:pendo_key] }
