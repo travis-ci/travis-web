@@ -183,7 +183,7 @@ export default TravisRoute.extend({
         name: 'Igor Wiedler',
         title: 'webmaster',
         handle: 'igorwhilefalse',
-        nationality: 'switzerland',
+        nationality: 'ukswitzerland',
         country: 'germany',
         image: 'igor'
       }, {
