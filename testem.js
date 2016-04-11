@@ -1,9 +1,22 @@
-{
+/*jshint node:true*/
+
+var launchInCI = function() {
+  if (process.env.TRAVIS) {
+    if (process.env.TRAVIS_PULL_REQUEST) {
+      console.log('will run with phantom');
+      return ['PhantomJS'];
+    } else {
+      return ['SL_chrome', 'SL_firefox'];
+    }
+  } else {
+    return ['PhantomJS'];
+  }
+};
+
+module.exports = {
   "framework": "qunit",
   "test_page": "tests/index.html?hidepassed",
-  "launch_in_ci": [
-    "PhantomJS"
-  ],
+  "launch_in_ci": launchInCI(),
   "launch_in_dev": [
     "PhantomJS"
   ],
