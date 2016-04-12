@@ -10,6 +10,7 @@ module.exports = function(defaults) {
     fingerprint = false;
   } else {
     fingerprint = {
+      exclude: ['images/emoji'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
     };
 
