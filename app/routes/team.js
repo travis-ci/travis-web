@@ -173,6 +173,12 @@ export default TravisRoute.extend({
         country: 'austria',
         image: 'laura'
       }, {
+        name: 'Maren Brechler',
+        title: 'Number Juggler',
+        nationality: 'germany',
+        country: 'germany',
+        image: 'maren'
+      }, {
         name: 'Ana Rosas',
         title: 'Software Baker',
         handle: 'ana_rosas',
@@ -193,6 +199,13 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'usa',
         image: 'carmen'
+      }, {
+        name: 'Buck Doyle',
+        title: 'Jorts enthusiast',
+        handle: 'buckdoyle',
+        nationality: 'none',
+        country: 'none',
+        image: 'buck'
       }
     ];
   }
