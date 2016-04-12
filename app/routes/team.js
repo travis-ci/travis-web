@@ -199,13 +199,6 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'usa',
         image: 'carmen'
-      }, {
-        name: 'Buck Doyle',
-        title: 'Jorts enthusiast',
-        handle: 'buckdoyle',
-        nationality: 'none',
-        country: 'none',
-        image: 'buck'
       }
     ];
   }
