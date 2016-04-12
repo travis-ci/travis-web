@@ -1,15 +1,10 @@
 /*jshint node:true*/
 
 var launchInCI = function() {
-  if (process.env.TRAVIS) {
-    if (process.env.TRAVIS_PULL_REQUEST) {
-      console.log('will run with phantom');
-      return ['PhantomJS'];
-    } else {
-      return ['SL_chrome', 'SL_firefox'];
-    }
-  } else {
+  if (!process.env.TRAVIS || process.env.TRAVIS_PULL_REQUEST) {
     return ['PhantomJS'];
+  } else {
+    return ['SL_chrome', 'SL_firefox'];
   }
 };
 
