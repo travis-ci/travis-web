@@ -39,9 +39,6 @@ install:
   - npm install
   - bower install
 
-before_script:
-  - ruby ci/prepare_testem.rb
-
 script:
   - ember try $EMBER_VERSION
 
