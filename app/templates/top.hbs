@@ -14,7 +14,7 @@
     {{#each broadcasts.content as |broadcast|}}
       <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}} <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a></p></li>
     {{else}}
-      <li><p>There are no broadcasts transmitted</p></li>
+      <li><p>There are no broadcasts</p></li>
     {{/each}}
     </ul>
   {{/if}}
