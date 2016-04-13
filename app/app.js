@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
+import getOwner from 'ember-getowner-polyfill';
 import config from './config/environment';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
@@ -19,12 +20,8 @@ var App = Ember.Application.extend(Ember.Evented, {
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
 
-  lookup() {
-    return this.__container__.lookup.apply(this.__container__, arguments);
-  },
-
   flash(options) {
-    return Travis.lookup('controller:flash').loadFlashes([options]);
+    return Ember.getOwner(Travis).lookup('controller:flash').loadFlashes([options]);
   },
 
   toggleSidebar() {

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import config from './config/environment';
 import Location from 'travis/utils/location';
+import getOwner from 'ember-getowner-polyfill';
 
 var Router = Ember.Router.extend({
   location: function() {

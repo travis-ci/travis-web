@@ -1,6 +1,8 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
+import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   needsAuth: false,
@@ -99,7 +101,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     error(error) {
       var authController;
       if (error === 'needs-auth') {
-        authController = this.container.lookup('controller:auth');
+        authController = Ember.getOwner(this).lookup('controller:auth');
         authController.set('redirected', true);
         return this.transitionTo('auth');
       } else {

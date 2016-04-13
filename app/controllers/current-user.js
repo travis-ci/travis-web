@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
 
 export default Ember.Controller.extend({
   sync() {
@@ -11,7 +12,7 @@ export default Ember.Controller.extend({
     var user;
     if ((user = this.get('model')) && user.get('isSyncing') && !user.get('syncedAt')) {
       return Ember.run.scheduleOnce('routerTransitions', this, function() {
-        return this.container.lookup('router:main').send('renderFirstSync');
+        return Ember.getOwner(this).lookup('router:main').send('renderFirstSync');
       });
     }
   }.observes('isSyncing', 'auth.currentUser')
