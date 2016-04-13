@@ -28,6 +28,7 @@ GEM
     rack-test (0.6.2)
       rack (>= 1.0)
     rake (10.1.1)
+    redis (3.2.2)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
@@ -61,10 +62,11 @@ DEPENDENCIES
   rack-protection (~> 1.3)
   rack-ssl (~> 1.3)
   rake
+  redis
   rspec (~> 2.11)
   sinatra
   sinatra-contrib
   travis-web!
 
 BUNDLED WITH
-   1.10.1
+   1.11.2
