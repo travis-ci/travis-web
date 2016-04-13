@@ -48,6 +48,7 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.5.1",
+    "ember-getowner-polyfill": "1.0.1",
     "ember-resolver": "^2.0.3",
     "ember-try": "0.0.7",
     "emberx-select": "2.0.2",
