@@ -15,7 +15,7 @@ module.exports = function(defaults) {
     fingerprint = {
       exclude: ['images/emoji'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
-      prepend: '//s3.amazonaws.com/' + s3Bucket + '/',
+      prepend: '//' + s3Bucket + '.s3.amazonaws.com/',
     };
   }
 
