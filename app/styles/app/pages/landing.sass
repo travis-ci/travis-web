@@ -11,14 +11,14 @@
     background-color: #ffffff
     background-image: inline-image('landing-page/signingithub.svg')
     background-size: 16px 16px
-    border: 2px solid #e4e7e7
-    color: #a0a8a8
+    border: 2px solid rgba($cement-grey, .4)
+    color: $cement-grey
   .button--signingin
-    border: 2px solid #3FA75F
+    border: 2px solid $turf-green
   .button--signin:hover
-    background-color: #73c78d
+    background-color: $turf-green
     background-image: inline-image('landing-page/signingithub-hover.svg')
-    border: 2px solid #73c78d
+    border: 2px solid $turf-green
     color: #fff
 
 .landing-centered-wrapper
@@ -37,7 +37,7 @@
     font-size: 5em
     line-height: 1em
     font-weight: 300
-    color: #8f9294
+    color: $cement-grey
     margin-bottom: 0
 
   .hero, .oss-testing, .customers, .recent-builds, .free-for-oss, .private-repos, .features-list, .build-flows, .user-testimonials
@@ -52,7 +52,7 @@
       font-size: 3.3em
       line-height: 1.15em
       font-weight: 300
-      color: #39a85b
+      color: $turf-green
 
     p
       line-height: 1.5em
@@ -129,7 +129,11 @@
 
     br.mobile-break
       display: none
-
+  .os-numbers
+    width: 80%
+    @media #{$medium-up}
+      width: 60%
+      
   .customers
     text-align: center
 
