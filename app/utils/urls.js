@@ -1,6 +1,6 @@
 import config from 'travis/config/environment';
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
+
 var ccXml, email, githubAdmin, githubCommit, githubNetwork, githubPullRequest,
     githubRepo, githubWatchers, gravatarImage, plainTextLog, statusImage;
 

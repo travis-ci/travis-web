@@ -2,7 +2,6 @@ import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   needsAuth: false,

@@ -1,5 +1,4 @@
 import TravisRoute from 'travis/routes/basic';
-import getOwner from 'ember-getowner-polyfill';
 
 export default TravisRoute.extend({
   setupController: function() {

@@ -1,5 +1,4 @@
 import config from 'travis/config/environment';
-import getOwner from 'ember-getowner-polyfill';
 import Ember from 'ember';
 
 export default Ember.Service.extend({

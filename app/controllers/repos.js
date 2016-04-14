@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
 import Config from 'travis/config/environment';
-import getOwner from 'ember-getowner-polyfill';
 
 var sortCallback = function(repo1, repo2) {
   // this function could be made simpler, but I think it's clearer this way

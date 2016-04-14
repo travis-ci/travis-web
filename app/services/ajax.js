@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-import getOwner from 'ember-getowner-polyfill';
 var default_options;
 
 jQuery.support.cors = true;

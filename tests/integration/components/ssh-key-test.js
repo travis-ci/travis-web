@@ -2,7 +2,6 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
-import getOwner from 'ember-getowner-polyfill';
 
 moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
   integration: true

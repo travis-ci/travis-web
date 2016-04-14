@@ -3,7 +3,6 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
-import getOwner from 'ember-getowner-polyfill';
 
 moduleForComponent('add-ssh-key', 'Integration | Component | add ssh-key', {
   integration: true
