@@ -49,4 +49,5 @@ notifications:
 # FIXME this needs refinement, obvs
 after_success:
   - "test $EMBER_VERSION == 'default' && ember deploy prod | grep 'revision=' | cut -d '=' -f 2 >> index_key"
+  - "cat index_key"
   - "echo 'Access the deployment at https://travis-web-production-next.herokuapp.com/?index_key=`cat index_key`'"
