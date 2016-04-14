@@ -75,7 +75,8 @@ class Travis::Web::App
     # route[1]["Date"] = Time.now.httpdate
     # route
 
-    response_for("index.html")
+    req = Rack::Request.new(env)
+    response_for("index.html", {params: req.params})
   end
 
   private
@@ -92,7 +93,7 @@ class Travis::Web::App
     end
 
     def response_for(file, options = {})
-      content = content_for(file)
+      content = content_for(file, options)
       if fingerprinted?(file)
         headers = {
           'Content-Length'   => content.bytesize.to_s,
@@ -121,11 +122,11 @@ class Travis::Web::App
       [ 200, headers, [content] ]
     end
 
-    def content_for(file)
+    def content_for(file, options)
       if index?(file)
         redis = Redis.new
         project = 'travis'
-        index_key = redis.get("#{project}:index:current")
+        index_key = options[:params]["index_key"] || redis.get("#{project}:index:current")
         redis.get("#{project}:index:#{index_key}")
       else
         content = File.read(file)
