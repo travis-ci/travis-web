@@ -35,7 +35,7 @@ githubAdmin = function(slug) {
 statusImage = function(slug, branch) {
   var token;
   if (config.pro) {
-    token = Ember.getOwner(Travis).lookup('controller:currentUser').get('model.token');
+    token = Travis.__container__.lookup('controller:currentUser').get('model.token');
     return (location.protocol + "//" + location.host + "/" + slug + ".svg?token=" + token) + (branch ? "&branch=" + branch : '');
   } else {
     return (location.protocol + "//" + location.host + "/" + slug + ".svg") + (branch ? "?branch=" + (encodeURIComponent(branch)) : '');
@@ -50,7 +50,7 @@ ccXml = function(slug, branch) {
   }
   if (config.pro) {
     delimiter = url.indexOf('?') === -1 ? '?' : '&';
-    token = Ember.getOwner(Travis).lookup('controller:currentUser').get('model.token');
+    token = Travis.__container__.lookup('controller:currentUser').get('model.token');
     url = "" + url + delimiter + "token=" + token;
   }
   return url;
