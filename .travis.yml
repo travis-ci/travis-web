@@ -48,4 +48,4 @@ notifications:
 
 # FIXME this needs refinement, obvs
 after_success:
-  "test $EMBER_VERSION == 'default' && ember deploy prod --activate"
+  "test $EMBER_VERSION == 'default' && ember deploy prod"
