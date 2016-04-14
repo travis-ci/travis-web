@@ -29,8 +29,8 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'qa' || deployTarget === 'prod') {
     ENV.build.environment = 'production';
-    ENV.s3.accessKeyId = process.env.AWS_KEY;
-    ENV.s3.secretAccessKey = process.env.AWS_SECRET;
+    ENV.s3.accessKeyId = process.env.MAINTENANCE_S3_ACCESS_KEY_ID;
+    ENV.s3.secretAccessKey = process.env.MAINTENANCE_S3_SECRET_ACCESS_KEY;
   }
 
   if (deployTarget === 'qa') {
