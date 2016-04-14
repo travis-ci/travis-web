@@ -65,6 +65,13 @@ class Travis::Web::App
     name = env['travis.alt'] || :default
     routers[name] ||= create_router(alt: name)
     route = routers[name].call(env)
+    puts "routers"
+    puts routers.inspect
+    puts "env:"
+    puts env
+    puts "name: #{name}"
+    puts "route!"
+    puts route.inspect
     route[1]["Date"] = Time.now.httpdate
     route
   end
