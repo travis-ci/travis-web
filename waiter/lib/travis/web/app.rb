@@ -62,18 +62,20 @@ class Travis::Web::App
   end
 
   def call(env)
-    name = env['travis.alt'] || :default
-    routers[name] ||= create_router(alt: name)
-    route = routers[name].call(env)
-    puts "routers"
-    puts routers.inspect
-    puts "env:"
-    puts env
-    puts "name: #{name}"
-    puts "route!"
-    puts route.inspect
-    route[1]["Date"] = Time.now.httpdate
-    route
+    # name = env['travis.alt'] || :default
+    # routers[name] ||= create_router(alt: name)
+    # route = routers[name].call(env)
+    # puts "routers"
+    # puts routers.inspect
+    # puts "env:"
+    # puts env
+    # puts "name: #{name}"
+    # puts "route!"
+    # puts route.inspect
+    # route[1]["Date"] = Time.now.httpdate
+    # route
+
+    response_for("index.html")
   end
 
   private
