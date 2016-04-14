@@ -19,12 +19,8 @@ var App = Ember.Application.extend(Ember.Evented, {
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
 
-  lookup() {
-    return this.__container__.lookup.apply(this.__container__, arguments);
-  },
-
   flash(options) {
-    return Travis.lookup('controller:flash').loadFlashes([options]);
+    return Ember.getOwner(Travis).lookup('controller:flash').loadFlashes([options]);
   },
 
   toggleSidebar() {

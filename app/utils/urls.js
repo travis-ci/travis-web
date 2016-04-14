@@ -1,4 +1,6 @@
 import config from 'travis/config/environment';
+import Ember from 'ember';
+
 var ccXml, email, githubAdmin, githubCommit, githubNetwork, githubPullRequest,
     githubRepo, githubWatchers, gravatarImage, plainTextLog, statusImage;
 
@@ -33,7 +35,7 @@ githubAdmin = function(slug) {
 statusImage = function(slug, branch) {
   var token;
   if (config.pro) {
-    token = Travis.__container__.lookup('controller:currentUser').get('model.token');
+    token = Ember.getOwner(Travis).lookup('controller:currentUser').get('model.token');
     return (location.protocol + "//" + location.host + "/" + slug + ".svg?token=" + token) + (branch ? "&branch=" + branch : '');
   } else {
     return (location.protocol + "//" + location.host + "/" + slug + ".svg") + (branch ? "?branch=" + (encodeURIComponent(branch)) : '');
@@ -48,7 +50,7 @@ ccXml = function(slug, branch) {
   }
   if (config.pro) {
     delimiter = url.indexOf('?') === -1 ? '?' : '&';
-    token = Travis.__container__.lookup('controller:currentUser').get('model.token');
+    token = Ember.getOwner(Travis).lookup('controller:currentUser').get('model.token');
     url = "" + url + delimiter + "token=" + token;
   }
   return url;

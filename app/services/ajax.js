@@ -64,7 +64,7 @@ export default Ember.Service.extend({
     success = options.success || (function() {});
     options.success = (data, status, xhr) => {
       if (data != null ? data.flash : void 0) {
-        Travis.lookup('controller:flash').loadFlashes(data.flash);
+        Ember.getOwner(Travis).lookup('controller:flash').loadFlashes(data.flash);
       }
       if (data != null) {
         delete data.flash;
@@ -75,7 +75,7 @@ export default Ember.Service.extend({
     options.error = (data, status, xhr) => {
       console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(data)));
       if (data != null ? data.flash : void 0) {
-        Travis.lookup('controller:flash').pushObject(data.flash);
+        Ember.getOwner(Travis).lookup('controller:flash').pushObject(data.flash);
       }
       if (data != null) {
         delete data.flash;

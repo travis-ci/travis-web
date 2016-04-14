@@ -1,7 +1,8 @@
 import TravisRoute from 'travis/routes/basic';
+import Ember from 'ember';
 
 export default TravisRoute.extend({
   setupController(controller) {
-    return this.container.lookup('controller:repos').activate('owned');
+    return Ember.getOwner(this).lookup('controller:repos').activate('owned');
   }
 });

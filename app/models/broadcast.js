@@ -30,7 +30,7 @@ var Broadcast = Model.extend({
 Broadcast.reopenClass({
   seen: function() {
     var seenBroadcasts;
-    seenBroadcasts = Travis.lookup('service:storage').getItem('travis.seen_broadcasts');
+    seenBroadcasts = Ember.getOwner(Travis).lookup('service:storage').getItem('travis.seen_broadcasts');
     if (seenBroadcasts != null) {
       seenBroadcasts = JSON.parse(seenBroadcasts);
     }
