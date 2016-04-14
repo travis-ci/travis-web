@@ -6,20 +6,17 @@ module.exports = function(defaults) {
   var fingerprint,
       assetsHost;
 
+  // FIXME: this should not have dev hardcoded
+  var s3Bucket = require('./config/deploy')('dev').s3.bucket;
+
   if (process.env.DISABLE_FINGERPRINTS) {
     fingerprint = false;
   } else {
     fingerprint = {
       exclude: ['images/emoji'],
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
+      prepend: '//s3.amazonaws.com/' + s3Bucket + '/',
     };
-
-    if (assetsHost = process.env.ASSETS_HOST) {
-      if (assetsHost.substr(-1) !== '/') {
-        assetsHost = assetsHost + '/'
-      }
-      fingerprint.prepend = assetsHost
-    }
   }
 
   var app = new EmberApp({
