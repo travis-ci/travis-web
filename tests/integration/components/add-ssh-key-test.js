@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
+import getOwner from 'ember-getowner-polyfill';
 
 moduleForComponent('add-ssh-key', 'Integration | Component | add ssh-key', {
   integration: true
@@ -12,7 +13,7 @@ test('it adds an ssh key on submit', function(assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = this.container.lookup('service:store');
+  var store = Ember.getOwner(this).lookup('service:store');
 
   var repo;
   Ember.run(function() {
@@ -47,7 +48,7 @@ test('it throws an error if value for ssh key is blank', function(assert) {
   assert.expect(5);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = this.container.lookup('service:store');
+  var store = Ember.getOwner(this).lookup('service:store');
 
   var repo;
   Ember.run(function() {

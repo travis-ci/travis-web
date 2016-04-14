@@ -15,7 +15,7 @@ var Router = Ember.Router.extend({
       // we should probably think about a more general way to
       // do this, location should not know about auth status
       return Location.create({
-        auth: this.container.lookup('service:auth')
+        auth: Ember.getOwner(this).lookup('service:auth')
       });
     }
   }.property(),
