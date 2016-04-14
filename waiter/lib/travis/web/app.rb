@@ -5,6 +5,7 @@ require 'delegate'
 require 'time'
 require 'json'
 require 'travis/utils/deep_merge'
+require 'redis'
 
 class Travis::Web::App
   autoload :AltVersions,    'travis/web/app/alt_versions'
@@ -82,7 +83,7 @@ class Travis::Web::App
     end
 
     def response_for(file, options = {})
-      content = File.read(file)
+      content = content_for(file)
       if fingerprinted?(file)
         headers = {
           'Content-Length'   => content.bytesize.to_s,
@@ -109,6 +110,17 @@ class Travis::Web::App
       end
 
       [ 200, headers, [content] ]
+    end
+
+    def content_for(file)
+      if index?(file)
+        redis = Redis.new
+        project = 'travis'
+        index_key = redis.get("#{project}:index:current")
+        redis.get("#{project}:index:#{index_key}")
+      else
+        content = File.read(file)
+      end
     end
 
     def each_file
