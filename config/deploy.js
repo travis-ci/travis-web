@@ -1,7 +1,7 @@
 var VALID_DEPLOY_TARGETS = [ //update these to match what you call your deployment targets
   'dev',
   'qa',
-  'prod'
+  'pull-request'
 ];
 
 module.exports = function(deployTarget) {
@@ -26,7 +26,7 @@ module.exports = function(deployTarget) {
     ENV.plugins = ['build', 'redis']; // only care about deploying index.html into redis in dev
   }
 
-  if (deployTarget === 'qa' || deployTarget === 'prod') {
+  if (deployTarget === 'qa' || deployTarget === 'pull-request') {
     ENV.build.environment = 'production';
     ENV.s3.accessKeyId = process.env.AWS_KEY;
     ENV.s3.secretAccessKey = process.env.AWS_SECRET;
@@ -36,7 +36,7 @@ module.exports = function(deployTarget) {
     ENV.redis.url = process.env.QA_REDIS_URL;
   }
 
-  if (deployTarget === 'prod') {
+  if (deployTarget === 'pull-request') {
     ENV.redis.url = process.env.REDIS_URL;
 
     ENV.github = {
