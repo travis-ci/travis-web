@@ -12,7 +12,6 @@ module.exports = function(deployTarget) {
       keyPrefix: 'travis:index'
     },
     s3: {
-      prefix: 'travis',
       bucket: 'travis-web-production-next',
       region: 'eu-west-1'
     }
