@@ -76,7 +76,7 @@ class Travis::Web::App
     # route
 
     req = Rack::Request.new(env)
-    response_for("index.html", {params: req.params})
+    response_for("index.html", {params: req.params, host: req.host})
   end
 
   private
@@ -126,7 +126,10 @@ class Travis::Web::App
       if index?(file)
         redis = Redis.new
         project = 'travis'
-        index_key = options[:params]["index_key"] || redis.get("#{project}:index:current")
+
+        host = options[:host]
+
+        index_key = host.split('.')[0] || redis.get("#{project}:index:current")
         redis.get("#{project}:index:#{index_key}")
       else
         content = File.read(file)
