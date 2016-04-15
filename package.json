@@ -29,6 +29,7 @@
     "ember-cli-babel": "^5.1.6",
     "ember-cli-dependency-checker": "^1.2.0",
     "ember-cli-deploy": "0.6.0",
+    "ember-cli-deploy-github": "0.3.0",
     "ember-cli-deploy-lightning-pack": "0.6.1",
     "ember-cli-deprecation-workflow": "0.1.6",
     "ember-cli-document-title": "0.2.0",
