@@ -53,4 +53,4 @@ after_success:
   - "cat deploy_output | grep 'revision=' | cut -d '=' -f 2 >> index_key"
   - "cat index_key"
   - "echo \"Access the deployment at https://travis-web-production-next.herokuapp.com/?index_key=`cat index_key`\""
-  - "curl -X POST --data "{\\"state\\": \\"success\\", \\"target_url\\": \\"https://travis-web-production-next.herokuapp.com/?index_key=`cat index_key`\\", \\"description\\": \\"Visit a deployment for this commit\\", \\"context\\": \\"deployment\\"}" -H \\"Authorization: token $GITHUB_TOKEN\\" https://api.github.com/repos/travis-ci/travis-web/statuses/$TRAVIS_COMMIT"
+  - "curl -X POST --data \"{\\\"state\\\": \\\"success\\\", \\\"target_url\\\": \\\"https://travis-web-production-next.herokuapp.com/?index_key=`cat index_key`\\\", \\\"description\\\": \\\"Visit a deployment for this commit\\\", \\\"context\\\": \\\"deployment\\\"}\" -H \"Authorization: token $GITHUB_TOKEN\" https://api.github.com/repos/travis-ci/travis-web/statuses/$TRAVIS_COMMIT"
