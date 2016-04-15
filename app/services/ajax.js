@@ -1,17 +1,16 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-var default_options;
 
 jQuery.support.cors = true;
 
-default_options = {
-  accepts: {
-    json: 'application/json; version=2'
-  }
-};
-
 export default Ember.Service.extend({
   auth: Ember.inject.service(),
+
+  default_options: {
+    accepts: {
+      json: 'application/json; version=2'
+    }
+  },
 
   get(url, callback, errorCallback) {
     return this.ajax(url, 'get', {
@@ -38,11 +37,15 @@ export default Ember.Service.extend({
     return true;
   },
 
+  getEndpoint() {
+    return config.apiEndpoint || '';
+  },
+
   ajax(url, method, options) {
     var accepts, base, data, delimeter, endpoint, error, key, name, params, promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
     method = method || "GET";
     method = method.toUpperCase();
-    endpoint = config.apiEndpoint || '';
+    endpoint = this.getEndpoint();
     options = options || {};
     token = Ember.get(this, 'auth').token();
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
@@ -83,7 +86,7 @@ export default Ember.Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    options = $.extend(options, default_options);
+    options = $.extend(options, this.default_options);
 
     if (options.data && (method === "GET" || method === "HEAD")) {
       params = jQuery.param(options.data);

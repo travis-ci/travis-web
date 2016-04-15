@@ -22,6 +22,7 @@ if (Config.useV3API) {
 
 Build.reopen({
   ajax: Ember.inject.service(),
+  v3Ajax: Ember.inject.service(),
   state: attr(),
   number: attr('number'),
   message: attr('string'),
@@ -125,11 +126,11 @@ Build.reopen({
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post("/builds/" + (this.get('id')) + "/cancel");
+    return this.get('v3Ajax').post("/build/" + (this.get('id')) + "/cancel");
   },
 
   restart() {
-    return this.get('ajax').post("/builds/" + (this.get('id')) + "/restart");
+    return this.get('v3Ajax').post("/build/" + (this.get('id')) + "/restart");
   },
 
   formattedFinishedAt: function() {
