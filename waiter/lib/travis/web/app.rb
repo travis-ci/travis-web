@@ -128,8 +128,10 @@ class Travis::Web::App
 
         host = options[:host]
         branch = host.split('.')[0]
+        puts "branch: #{branch}"
 
         index_key = redis.get("#{branch}:index:current")
+        puts "index key: #{index_key}"
         redis.get("#{branch}:index:#{index_key}")
       else
         content = File.read(file)
