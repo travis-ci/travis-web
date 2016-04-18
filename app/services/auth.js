@@ -214,7 +214,7 @@ export default Ember.Service.extend({
     //         as a direct response to either manual sign in or autoSignIn (right now
     //         we treat both cases behave the same in terms of sent events which I think
     //         makes it more complicated than it should be).
-    router = this.container.lookup('router:main');
+    router = Ember.getOwner(this).lookup('router:main');
     try {
       return router.send(name);
     } catch (error1) {

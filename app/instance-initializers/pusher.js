@@ -2,16 +2,15 @@ import config from 'travis/config/environment';
 import TravisPusher from 'travis/utils/pusher';
 var PusherInitializer, initialize;
 
-initialize = function(data) {
-  var application;
-  application = data.application;
+initialize = function(applicationInstance) {
+  const app = applicationInstance.application;
   if (config.pusher.key) {
-    application.pusher = new TravisPusher(config.pusher, data.container.lookup('service:ajax'));
-    application.register('pusher:main', application.pusher, {
+    app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:ajax'));
+    app.register('pusher:main', app.pusher, {
       instantiate: false
     });
-    application.inject('route', 'pusher', 'pusher:main');
-    return application.pusher.store = data.container.lookup('service:store');
+    app.inject('route', 'pusher', 'pusher:main');
+    return app.pusher.store = applicationInstance.lookup('service:store');
   }
 };
 

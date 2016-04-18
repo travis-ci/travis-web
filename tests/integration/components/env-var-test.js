@@ -4,7 +4,6 @@ import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
 
-
 moduleForComponent('env-var', 'Integration | Component | env-var', {
   integration: true
 });
@@ -13,7 +12,7 @@ test('it renders an env-var with private value', function(assert) {
   assert.expect(2);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = this.container.lookup('service:store');
+  var store = Ember.getOwner(this).lookup('service:store');
   Ember.run(() => {
     var envVar = store.push({data: { id: 1, type: 'env-var', attributes: { name: 'foo', value: 'bar', public: false}}});
     this.set('envVar', envVar);
@@ -30,7 +29,7 @@ test('it renders an env-var with public value', function(assert) {
   assert.expect(2);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = this.container.lookup('service:store');
+  var store = Ember.getOwner(this).lookup('service:store');
   Ember.run(() => {
     var envVar = store.push({data: { id: 1, type: 'env-var', attributes: { name: 'foo', value: 'bar', public: true}}});
     this.set('envVar', envVar);

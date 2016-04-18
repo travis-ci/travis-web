@@ -12,7 +12,7 @@ test('it adds an ssh key on submit', function(assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = this.container.lookup('service:store');
+  var store = Ember.getOwner(this).lookup('service:store');
 
   var repo;
   Ember.run(function() {
@@ -47,7 +47,7 @@ test('it throws an error if value for ssh key is blank', function(assert) {
   assert.expect(5);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = this.container.lookup('service:store');
+  var store = Ember.getOwner(this).lookup('service:store');
 
   var repo;
   Ember.run(function() {

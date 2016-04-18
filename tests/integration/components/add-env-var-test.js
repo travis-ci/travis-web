@@ -4,7 +4,6 @@ import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
 
-
 moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
   integration: true
 });
@@ -14,7 +13,7 @@ test('it adds an env var on submit', function(assert) {
 
   // this shouldn't be needed, probably some bug in tests setup with new ember-data
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = this.container.lookup('service:store');
+  var store = Ember.getOwner(this).lookup('service:store');
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
   var repo;
@@ -66,7 +65,7 @@ test('it adds a public env var on submit', function(assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = this.container.lookup('service:store');
+  var store = Ember.getOwner(this).lookup('service:store');
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
   var repo;
