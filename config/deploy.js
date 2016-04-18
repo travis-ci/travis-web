@@ -37,7 +37,7 @@ module.exports = function(deployTarget) {
   }
 
   if (deployTarget === 'pull-request') {
-    ENV.redis.keyPrefix = process.env.TRAVIS_PULL_REQUEST_BRANCH_NAME;
+    ENV.redis.keyPrefix = process.env.TRAVIS_PULL_REQUEST_BRANCH;
     ENV.redis.url = process.env.REDIS_URL;
 
     ENV.github = {
