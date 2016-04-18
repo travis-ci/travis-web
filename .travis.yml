@@ -48,4 +48,4 @@ notifications:
 
 # FIXME this needs refinement, obvs
 after_success:
-  - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && ./deploy-pull-request.sh"
+  - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && ./deploy-pull-request.sh"
