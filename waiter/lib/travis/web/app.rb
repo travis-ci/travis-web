@@ -125,12 +125,12 @@ class Travis::Web::App
     def content_for(file, options)
       if index?(file)
         redis = Redis.new
-        project = 'travis'
 
         host = options[:host]
+        branch = host.split('.')[0]
 
-        index_key = host.split('.')[0] || redis.get("#{project}:index:current")
-        redis.get("#{project}:index:#{index_key}")
+        index_key = redis.get("#{branch}:index:current")
+        redis.get("#{branch}:index:#{index_key}")
       else
         content = File.read(file)
       end
