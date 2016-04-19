@@ -25,16 +25,6 @@ module.exports = function(deployTarget) {
 
     ENV.redis.keyPrefix = process.env.TRAVIS_PULL_REQUEST_BRANCH;
     ENV.redis.url = process.env.REDIS_URL;
-
-    ENV.github = {
-      token: process.env.GITHUB_TOKEN,
-      userOrOrganization: 'travis-ci',
-      repo: 'travis-web',
-      publicURL: 'https://travis-web-production-next.herokuapp.com/?index_key={{versionSha}}',
-      // FIXME is there an environment variable for this?
-      commitUser: 'backspace',
-      commitSha: process.env.TRAVIS_COMMIT
-    };
   }
 
   return ENV;
