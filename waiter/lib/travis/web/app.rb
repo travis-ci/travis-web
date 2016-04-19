@@ -5,7 +5,6 @@ require 'delegate'
 require 'time'
 require 'json'
 require 'travis/utils/deep_merge'
-require 'redis'
 
 class Travis::Web::App
   autoload :AltVersions,    'travis/web/app/alt_versions'
@@ -62,21 +61,11 @@ class Travis::Web::App
   end
 
   def call(env)
-    # name = env['travis.alt'] || :default
-    # routers[name] ||= create_router(alt: name)
-    # route = routers[name].call(env)
-    # puts "routers"
-    # puts routers.inspect
-    # puts "env:"
-    # puts env
-    # puts "name: #{name}"
-    # puts "route!"
-    # puts route.inspect
-    # route[1]["Date"] = Time.now.httpdate
-    # route
-
-    req = Rack::Request.new(env)
-    response_for("index.html", {params: req.params, host: req.host})
+    name = env['travis.alt'] || :default
+    routers[name] ||= create_router(alt: name)
+    route = routers[name].call(env)
+    route[1]["Date"] = Time.now.httpdate
+    route
   end
 
   private
@@ -93,7 +82,7 @@ class Travis::Web::App
     end
 
     def response_for(file, options = {})
-      content = content_for(file, options)
+      content = File.read(file)
       if fingerprinted?(file)
         headers = {
           'Content-Length'   => content.bytesize.to_s,
@@ -120,22 +109,6 @@ class Travis::Web::App
       end
 
       [ 200, headers, [content] ]
-    end
-
-    def content_for(file, options)
-      if index?(file)
-        redis = Redis.new
-
-        host = options[:host]
-        branch = host.split('.')[0]
-        puts "branch: #{branch}"
-
-        index_key = redis.get("#{branch}:current")
-        puts "index key: #{index_key}"
-        redis.get("#{branch}:#{index_key}")
-      else
-        content = File.read(file)
-      end
     end
 
     def each_file
