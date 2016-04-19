@@ -2,7 +2,6 @@ import Ember from 'ember';
 import LimitedArray from 'travis/utils/limited-array';
 
 export default Ember.Service.extend({
-  store: Ember.inject.service(),
   currentUserBinding: 'auth.currentUser',
 
   init() {
@@ -74,5 +73,4 @@ export default Ember.Service.extend({
   notice(message) {
     this.display('notice', message);
   }
-
 });

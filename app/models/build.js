@@ -129,7 +129,7 @@ Build.reopen({
   },
 
   restart() {
-    return this.get('ajax').post("/builds/" + (this.get('id')) + "/restart");
+    return this.get('ajax').post(`/builds/${this.get('id')}/restart`);
   },
 
   formattedFinishedAt: function() {

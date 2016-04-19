@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Mixin.create({
+  flashes: service(),
+
   restarting: false,
   cancelling: false,
 
@@ -23,16 +27,22 @@ export default Ember.Mixin.create({
 
   actions: {
     restart: function() {
-      var onFinished;
       if (this.get('restarting')) {
         return;
       }
       this.set('restarting', true);
-      onFinished = () => {
+      var onSuccess = () => {
         this.set('restarting', false);
+        this.get('flashes').notice('The build was successfully restarted.');
       };
-      return this.get('item').restart().then(onFinished, onFinished);
+
+      var onError = () => {
+        this.set('restarting', false);
+        this.get('flashes').error('An error occurred. The build could not be restarted.');
+      };
+      return this.get('item').restart().then(onSuccess, onError);
     },
+
     cancel: function() {
       var type;
       if (this.get('cancelling')) {
@@ -43,23 +53,15 @@ export default Ember.Mixin.create({
       type = this.get('type');
       return this.get('item').cancel().then(() => {
         this.set('cancelling', false);
-        return Travis.flash({
-          success: (type.capitalize()) + " has been successfully canceled."
-        });
+        this.get('flashes').notice(`${type.capitalize()} has been successfully cancelled.`);
       }, (xhr) => {
         this.set('cancelling', false);
         if (xhr.status === 422) {
-          return Travis.flash({
-            error: "This " + type + " can't be canceled"
-          });
+          return this.get('flashes').error(`This ${type} can't be cancelled`);
         } else if (xhr.status === 403) {
-          return Travis.flash({
-            error: "You don't have sufficient access to cancel this " + type
-          });
+          return this.get('flashes').error(`You don't have sufficient access to cancel this ${type}`);
         } else {
-          return Travis.flash({
-            error: "An error occured when canceling the " + type
-          });
+          return this.get('flashes').error(`An error occured when canceling the ${type}`);
         }
       });
     }

@@ -19,10 +19,6 @@ var App = Ember.Application.extend(Ember.Evented, {
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
 
-  flash(options) {
-    return Ember.getOwner(Travis).lookup('controller:flash').loadFlashes([options]);
-  },
-
   toggleSidebar() {
     var element;
     $('body').toggleClass('maximized');
