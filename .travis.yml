@@ -65,6 +65,5 @@ deploy:
     branch: master
     condition: "$EMBER_VERSION = default"
 
-# FIXME this needs refinement, obvs
 after_success:
   - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && ./config/deployment/deploy-pull-request.sh"
