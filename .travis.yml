@@ -40,7 +40,7 @@ install:
   - bower install
 
 script:
-  - ember try $EMBER_VERSION
+  - ember try:one $EMBER_VERSION
 
 notifications:
   campfire:
