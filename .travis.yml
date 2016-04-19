@@ -4,15 +4,15 @@ node_js: stable
 
 env:
   - EMBER_VERSION=default
-  # - EMBER_VERSION=release
-  # - EMBER_VERSION=beta
-  # - EMBER_VERSION=canary
+  - EMBER_VERSION=release
+  - EMBER_VERSION=beta
+  - EMBER_VERSION=canary
 
 matrix:
   allow_failures:
-    # - env: EMBER_VERSION=release
-    # - env: EMBER_VERSION=beta
-    # - env: EMBER_VERSION=canary
+    - env: EMBER_VERSION=release
+    - env: EMBER_VERSION=beta
+    - env: EMBER_VERSION=canary
 
   fast_finish: true
 
