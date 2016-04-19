@@ -16,9 +16,9 @@ module.exports = function(defaults) {
 
     if (assetsHost = process.env.ASSETS_HOST) {
       if (assetsHost.substr(-1) !== '/') {
-        assetsHost = assetsHost + '/'
+        assetsHost = assetsHost + '/';
       }
-      fingerprint.prepend = assetsHost
+      fingerprint.prepend = assetsHost;
     } else {
       var s3Bucket = require('./config/deploy')('pull-request').s3.bucket;
       fingerprint.prepend = '//' + s3Bucket + '.s3.amazonaws.com/';
