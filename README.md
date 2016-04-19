@@ -76,3 +76,20 @@ To add another member just add the info in the same style as the previous ones. 
 
 The order of value pairs does not matter, the quotationmarks do. Name and title will be displayed as they are. The handle will be used to generate a link to Twitter and displayed with a '@' in front of it. Nationality and country determine the flags. Please use the name of the country and not the adjective (like 'germany' and NOT 'german'). Image is the identifier to find the right image and animated gif. 'mrt' in the example will result in `team-mrt.png` and `mrt-animated.gif`.
 Add the images themselves to `public/images/team/` and additional flags to `public/images/pro-landing/`. Mind the naming conventions already in place.
+
+### Deploying
+
+`ember-cli-deploy` is available for deploying pull requests. See `after_success`
+in `.travis.yaml` and associated scripts for details. It uses the “lightning
+strategy” of deploying assets to S3 and `index.html` to a Redis server. You can
+deploy from your own machine too:
+
+```
+AWS_KEY=key AWS_SECRET=secret REDIS_URL=redis TRAVIS_PULL_REQUEST_BRANCH=branch \
+ember deploy pull-request --activate
+```
+
+After success, your deployment will be available at branch.test-deployments.travis-ci.org.
+
+The Redis server is at [`travis-web-index`](https://github.com/travis-ci/travis-web-index).
+Eventually we can move to using `ember-cli-deploy` for all deployments.
