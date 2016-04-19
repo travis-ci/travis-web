@@ -14,6 +14,7 @@ module.exports = function(deployTarget) {
       region: 'eu-west-1'
     }
   };
+
   if (VALID_DEPLOY_TARGETS.indexOf(deployTarget) === -1) {
     throw new Error('Invalid deployTarget ' + deployTarget);
   }
