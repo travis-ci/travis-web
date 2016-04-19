@@ -6,8 +6,7 @@ module.exports = function(defaults) {
   var fingerprint,
       assetsHost;
 
-  // FIXME: this should not have dev hardcoded
-  var s3Bucket = require('./config/deploy')('dev').s3.bucket;
+  var s3Bucket = require('./config/deploy')('pull-request').s3.bucket;
 
   if (process.env.DISABLE_FINGERPRINTS) {
     fingerprint = false;

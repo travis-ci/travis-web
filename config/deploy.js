@@ -1,5 +1,5 @@
 var VALID_DEPLOY_TARGETS = [
-  'qa',
+  'pull-request',
 ];
 
 module.exports = function(deployTarget) {
