@@ -6,16 +6,23 @@ module.exports = function(defaults) {
   var fingerprint,
       assetsHost;
 
-  var s3Bucket = require('./config/deploy')('pull-request').s3.bucket;
-
   if (process.env.DISABLE_FINGERPRINTS) {
     fingerprint = false;
   } else {
     fingerprint = {
       exclude: ['images/emoji'],
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
-      prepend: '//' + s3Bucket + '.s3.amazonaws.com/',
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
     };
+
+    if (assetsHost = process.env.ASSETS_HOST) {
+       if (assetsHost.substr(-1) !== '/') {
+         assetsHost = assetsHost + '/'
+       }
+       fingerprint.prepend = assetsHost
+     } else {
+       var s3Bucket = require('./config/deploy')('pull-request').s3.bucket;
+       fingerprint.prepend = '//' + s3Bucket + '.s3.amazonaws.com/';
+     }
   }
 
   var app = new EmberApp({
