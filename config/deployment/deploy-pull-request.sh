@@ -5,4 +5,4 @@ export TRAVIS_PULL_REQUEST_BRANCH=`curl -sH "Authorization: token $GITHUB_TOKEN"
 echo $TRAVIS_PULL_REQUEST_BRANCH
 
 ember deploy pull-request --activate --verbose
-./update-github-status.sh
+./config/deployment/update-github-status.sh
