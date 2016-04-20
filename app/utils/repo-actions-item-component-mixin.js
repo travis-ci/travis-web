@@ -25,6 +25,17 @@ export default Ember.Mixin.create({
     return this.get('item.canRestart') && this.get('userHasPermissionForRepo');
   }.property('userHasPermissionForRepo', 'item.canRestart'),
 
+  displayFlashError(status) {
+    let type = this.get('type');
+    if (status === 422 || status === 400) {
+      this.get('flashes').error(`This ${type} can't be cancelled`);
+    } else if (status === 403) {
+      this.get('flashes').error(`You don't have sufficient access to cancel this ${type}`);
+    } else {
+      this.get('flashes').error(`An error occured when canceling the ${type}`);
+    }
+  },
+
   actions: {
     restart: function() {
       if (this.get('restarting')) {
@@ -36,9 +47,10 @@ export default Ember.Mixin.create({
         this.get('flashes').notice('The build was successfully restarted.');
       };
 
-      var onError = () => {
+      var onError = (xhr) => {
         this.set('restarting', false);
         this.get('flashes').error('An error occurred. The build could not be restarted.');
+        this.displayFlashError(xhr.status);
       };
       return this.get('item').restart().then(onSuccess, onError);
     },
@@ -56,13 +68,7 @@ export default Ember.Mixin.create({
         this.get('flashes').notice(`${type.capitalize()} has been successfully cancelled.`);
       }, (xhr) => {
         this.set('cancelling', false);
-        if (xhr.status === 422) {
-          return this.get('flashes').error(`This ${type} can't be cancelled`);
-        } else if (xhr.status === 403) {
-          return this.get('flashes').error(`You don't have sufficient access to cancel this ${type}`);
-        } else {
-          return this.get('flashes').error(`An error occured when canceling the ${type}`);
-        }
+        this.displayFlashError(xhr.status);
       });
     }
   }

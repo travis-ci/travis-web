@@ -119,7 +119,7 @@ Build.reopen({
   }.property('rawConfigKeys.length'),
 
   canCancel: function() {
-    return this.get('jobs').filterBy('canCancel').length;
+    return this.get('jobs').filterBy('canCancel', true).length;
   }.property('jobs.@each.canCancel', 'jobs', 'jobs.[]'),
 
   canRestart: Ember.computed.alias('isFinished'),
@@ -129,7 +129,7 @@ Build.reopen({
   },
 
   restart() {
-    return this.get('ajax').post(`/builds/${this.get('id')}/restart`);
+    return Ember.$.post(`/builds/${this.get('id')}/restart`);
   },
 
   formattedFinishedAt: function() {

@@ -33,10 +33,6 @@ export default Ember.Service.extend({
   loadFlashes(msgs) {
     var i, len, msg, results, type;
 
-    var callback = function() {
-      return this.get('flashes.content').removeObject(msg);
-    };
-
     results = [];
     for (i = 0, len = msgs.length; i < len; i++) {
       msg = msgs[i];
@@ -46,9 +42,19 @@ export default Ember.Service.extend({
         message: msg[type]
       };
       this.get('flashes').unshiftObject(msg);
-      results.push(Ember.run.later(this, callback, 15000));
+      this.removeFlash(msg);
     }
     return results;
+  },
+
+  removeFlash(msg) {
+    setTimeout(() => {
+      Ember.run(this, () => {
+        if (this.get('flashes.content')) {
+          return this.get('flashes.content').removeObject(msg);
+        }
+      });
+    }, 15000);
   },
 
   close(msg) {
