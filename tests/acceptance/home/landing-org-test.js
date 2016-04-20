@@ -1,0 +1,15 @@
+import { test } from 'qunit';
+import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import orgLandingPage from 'travis/tests/pages/landing-org';
+
+moduleForAcceptance('Acceptance | home/landing org test');
+
+test('view langding page when unauthenticated', function(assert) {
+  orgLandingPage
+    .visit();
+
+  andThen(function() {
+    assert.equal(currentPath(), 'home');
+    assert.equal(orgLandingPage.heroText, 'Test and Deploy with Confidence');
+  });
+});
