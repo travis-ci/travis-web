@@ -94,7 +94,7 @@ export default DS.Store.extend({
     // things I want to update here:
     if (type === 'build' && (json.repository || json.repo)) {
       data = json.repository || json.repo;
-      if (Config.useV3API) {
+      if (Config.featureFlags.useV3API) {
         default_branch = data.default_branch;
         if (default_branch) {
           default_branch.default_branch = true;

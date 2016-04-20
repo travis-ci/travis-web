@@ -139,7 +139,7 @@ var Controller = Ember.Controller.extend({
   updateTimes() {
     let records = this.get('repos');
 
-    if(Config.useV3API) {
+    if(this.features.useV3API) {
       let callback = (record) => { return record.get('lastBuild'); };
       records = records.filter(callback).map(callback);
     }
@@ -170,7 +170,7 @@ var Controller = Ember.Controller.extend({
           return reposRecordArray;
         };
 
-        if(Config.useV3API) {
+        if(this.features.useV3API) {
           user.get('_rawPermissions').then( (data) => {
             Repo.accessibleBy(this.store, data.pull).then(callback);
           });
