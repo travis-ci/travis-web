@@ -2,7 +2,6 @@
 
 module.exports = function(environment) {
   var ENV = {
-    useV3API: false,
     modulePrefix: 'travis',
     environment: environment,
     baseURL: '/',
@@ -27,6 +26,11 @@ module.exports = function(environment) {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com'
     },
+
+    featureFlags: {
+      useV3API: false
+    },
+
     pro: false,
     enterprise: false,
     endpoints: {},
