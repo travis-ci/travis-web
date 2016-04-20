@@ -34,9 +34,9 @@ export default function() {
     return { accounts: users.map(user => Ember.merge(user.attrs, {type: 'user'})) };
   });
 
-  // FIXME some response is required for the profile acceptance test; add later
-  this.get('/hooks', () => {
-    return { hooks: [] };
+  this.get('/hooks', (schema, request) => {
+    const hooks = schema.hook.where({'owner_name': request.queryParams.owner_name});
+    return { hooks: hooks.map(hook => hook.attrs) };
   });
 
   this.get('/users/:id', (schema, request) => {
@@ -96,6 +96,8 @@ export default function() {
       return new Mirage.Response(404, {}, {});
     }
   });
+
+  this.logging = true;
 }
 
 /*
