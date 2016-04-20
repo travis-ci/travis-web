@@ -16,8 +16,9 @@ matrix:
 
   fast_finish: true
 
-addons:
-  sauce_connect: true
+# TODO restore Sauce Connect when it’s actually being used
+# addons:
+#   sauce_connect: true
 
 sudo: false
 
