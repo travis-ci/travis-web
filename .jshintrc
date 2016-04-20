@@ -13,7 +13,8 @@
     "Log",
     "moment",
     "Pusher",
-    "md5"
+    "md5",
+    "withFeature"
   ],
   "browser": true,
   "boss": true,
