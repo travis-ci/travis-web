@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.1.2'
+ruby '2.3.0'
 
 gem 'travis-web', path: 'waiter'
 gem 'puma'
