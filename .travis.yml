@@ -66,4 +66,4 @@ deploy:
     condition: "$EMBER_VERSION = default"
 
 after_success:
-  - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && ./config/deployment/deploy-pull-request.sh"
+  - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
