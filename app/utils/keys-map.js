@@ -11,6 +11,7 @@ languageConfigKeys = {
   python: 'Python',
   scala: 'Scala',
   smalltalk: 'Smalltalk',
+  smalltalk_config: 'Config',
   ruby: 'Ruby',
   d: 'D',
   julia: 'Julia',
