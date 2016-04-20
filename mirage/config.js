@@ -28,6 +28,17 @@ export default function() {
     return response;
   };
 
+  this.get('/accounts', (schema, request) => {
+    const users = schema.user.all();
+    // FIXME unclear on account/user difference
+    return { accounts: users.map(user => Ember.merge(user.attrs, {type: 'user'})) };
+  });
+
+  // FIXME some response is required for the profile acceptance test; add later
+  this.get('/hooks', () => {
+    return { hooks: [] };
+  });
+
   this.get('/users/:id', (schema, request) => {
     let user = schema.user.find(request.params.id);
     if (user) {
