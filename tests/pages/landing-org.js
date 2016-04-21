@@ -10,9 +10,10 @@ export default PageObject.create({
   visit: visitable('/'),
   heroText: text('#hero-copy h1'),
   headerLinks: collection({
-    itemScope: 'nav#navigation ul',
+    scope: 'nav#navigation ul',
+    itemScope: 'li a',
     item: {
-      linkText: text('li', { at: 0 }),
+      linkText: text(),
     }
   }),
   helpLink: text('nav#navigation ul li span')

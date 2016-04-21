@@ -11,6 +11,9 @@ test('view landing page when unauthenticated', function(assert) {
     .visit();
 
   andThen(function() {
+    assert.equal(proLandingPage.headerLinks(0).linkText, 'About Us', 'displays about us link');
+    assert.equal(proLandingPage.headerLinks(1).linkText, 'Plans & Pricing', 'displays pricing links');
+    assert.equal(proLandingPage.headerLinks(2).linkText, 'Enterprise', 'displays enterprise links');
     assert.equal(proLandingPage.heroText, 'Build apps with confidence');
   });
 });
