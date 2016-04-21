@@ -113,7 +113,7 @@ var LogModel = Ember.Object.extend({
 
   fetch() {
     var handlers, id;
-    if (this.features.isEnabled('debugging')) {
+    if (this.features.debugging) {
       console.log('log model: fetching log');
     }
     this.clearParts();
@@ -167,7 +167,7 @@ var LogModel = Ember.Object.extend({
 
   loadParts(parts) {
     var i, len, part;
-    if (this.features.isEnabled('debugging')) {
+    if (this.features.debugging) {
       console.log('log model: load parts');
     }
     for (i = 0, len = parts.length; i < len; i++) {

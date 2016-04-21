@@ -70,7 +70,7 @@ export default Ember.Service.extend({
     };
     error = options.error || function() {};
     options.error = (data, status, xhr) => {
-      if (this.features.isEnabled('debugging')) {
+      if (this.features.debugging) {
         console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(data)));
       }
       return error.call(this, data, status, xhr);

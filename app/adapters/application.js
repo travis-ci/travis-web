@@ -46,7 +46,7 @@ export default ActiveModelAdapter.extend({
 
   handleResponse(status, headers, payload) {
     if (status > 299) {
-      if (this.features.isEnabled('debugging')) {
+      if (this.features.debugging) {
         console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
       }
     }
