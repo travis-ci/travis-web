@@ -29,9 +29,10 @@ export default function() {
   };
 
   this.get('/accounts', (schema, request) => {
-    const users = schema.user.all();
-    // FIXME unclear on account/user difference
-    return { accounts: users.map(user => Ember.merge(user.attrs, {type: 'user'})) };
+    const users = schema.user.all().map(user => Ember.merge(user.attrs, {type: 'user'}));
+    const accounts = schema.account.all().map(account => account.attrs);
+
+    return { accounts: users.concat(accounts) };
   });
 
   this.get('/hooks', (schema, request) => {
