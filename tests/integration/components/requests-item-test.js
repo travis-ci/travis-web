@@ -1,8 +1,21 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+const { getOwner } = Ember;
+
+let featuresService = Ember.Service.extend({
+  isEnabled() {
+    return false;
+  }
+});
+
 moduleForComponent('requests-item', 'Integration | Component | requests-item', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.register('service:features', featuresService);
+    getOwner(this).inject('component', 'features', 'service:features');
+  }
 });
 
 test('it renders request data', function(assert) {
