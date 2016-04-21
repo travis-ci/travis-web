@@ -35,5 +35,14 @@ export default PageObject.create({
 
     show: clickable('a.profile-token-toggle'),
     value: text('strong')
-  }
+  },
+
+  accounts: collection({
+    scope: '.profile-orgs',
+    itemScope: '.account',
+
+    item: {
+      repositoryCount: text('p strong')
+    }
+  })
 });
