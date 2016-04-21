@@ -7,16 +7,22 @@ let {
   visitable
 } = PageObject;
 
-export default PageObject.create({
-  visit: visitable('profile/:username'),
-  name: text('.profile-header h1'),
-
-  hooks: collection({
+function hooksCollection(scope) {
+  return collection({
+    scope: scope,
     itemScope: '.profile-hooklist .row',
 
     item: {
       name: text('a.profile-repo'),
       isActive: hasClass('active', '.switch--icon')
     }
-  })
+  });
+}
+
+export default PageObject.create({
+  visit: visitable('profile/:username'),
+  name: text('.profile-header h1'),
+
+  administerableHooks: hooksCollection('#administerable-hooks'),
+  unadministerableHooks: hooksCollection('#unadministerable-hooks')
 });
