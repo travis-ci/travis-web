@@ -30,9 +30,9 @@ module.exports = function(environment) {
     featureFlags: {
       useV3API: false,
       pro: false,
+      enterprise: false
     },
 
-    enterprise: false,
     endpoints: {},
     intervals: { updateTimes: 1000 },
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',

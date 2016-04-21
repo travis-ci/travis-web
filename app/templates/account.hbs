@@ -1,7 +1,7 @@
 {{#if allHooks.isLoaded}}
 
 <header>
-  {{#unless config.enterprise}}
+  {{#unless features.enterprise}}
     {{#if config.billingEndpoint}}
       <div class="cta-btn">
         {{#if subscribeButtonInfo.subscribed}}
@@ -24,7 +24,7 @@
     {{sync-button user=auth.currentUser}}
 
     {{#if user.isSyncing}}
-      {{#unless config.enterprise}}
+      {{#unless features.enterprise}}
         {{#if features.pro}}
           <p>We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
         {{else}}

@@ -2,7 +2,7 @@
 
 <section id="log-container" class="log">
 
-  {{#unless config.enterprise}}
+  {{#unless features.enterprise}}
     {{#if auth.signedIn}}
       {{#if job.isLegacyInfrastructure}}
         {{#if job.isFinished}}
