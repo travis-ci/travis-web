@@ -46,7 +46,11 @@ test('view profile', function(assert) {
     assert.equal(profilePage.name, 'Sara Ahmed');
 
     assert.equal(profilePage.hooks().count, 2, 'expected two hooks');
+
     assert.equal(profilePage.hooks(0).name, 'feministkilljoy/living-a-feminist-life');
+    assert.ok(profilePage.hooks(0).isActive, 'expected active hook to appear active');
+
     assert.equal(profilePage.hooks(1).name, 'feministkilljoy/willful-subjects');
+    assert.notOk(profilePage.hooks(1).isActive, 'expected inactive hook to appear inactive');
   });
 });
