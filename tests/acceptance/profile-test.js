@@ -62,7 +62,7 @@ test('view profile', function(assert) {
   andThen(function() {
     assert.equal(profilePage.name, 'Sara Ahmed');
 
-    assert.equal(profilePage.accounts().count, 2, 'expected two account');
+    assert.equal(profilePage.accounts().count, 2, 'expected two accounts');
 
     assert.equal(profilePage.accounts(0).repositoryCount, 3);
     assert.equal(profilePage.accounts(1).repositoryCount, 30);
