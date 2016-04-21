@@ -1,8 +1,10 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  clickable,
   collection,
   hasClass,
+  isHidden,
   text,
   visitable
 } = PageObject;
@@ -24,5 +26,14 @@ export default PageObject.create({
   name: text('.profile-header h1'),
 
   administerableHooks: hooksCollection('#administerable-hooks'),
-  unadministerableHooks: hooksCollection('#unadministerable-hooks')
+  unadministerableHooks: hooksCollection('#unadministerable-hooks'),
+
+  token: {
+    scope: '.profile-user-last',
+
+    isHidden: 'strong',
+
+    show: clickable('a.profile-token-toggle'),
+    value: text('strong')
+  }
 });

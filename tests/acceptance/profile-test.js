@@ -63,5 +63,13 @@ test('view profile', function(assert) {
     assert.notOk(profilePage.administerableHooks(1).isActive, 'expected inactive hook to appear inactive');
 
     assert.equal(profilePage.unadministerableHooks().count, 1, 'expected one unadministerable hook');
+
+    assert.ok(profilePage.token.isHidden, 'expected token to be hidden by default');
+  });
+
+  profilePage.token.show();
+
+  andThen(function() {
+    assert.equal(profilePage.token.value, 'abc123');
   });
 });
