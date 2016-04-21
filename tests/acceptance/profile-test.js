@@ -95,3 +95,17 @@ test('view token', function(assert) {
     assert.equal(profilePage.token.value, 'abc123');
   });
 });
+
+test('updating hooks', function(assert) {
+  profilePage.visit({username: 'feministkilljoy'});
+
+  profilePage.administerableHooks(0).toggle();
+  profilePage.administerableHooks(1).toggle();
+  profilePage.unadministerableHooks(0).toggle();
+
+  andThen(() => {
+    assert.notOk(server.db.hooks[0].active, 'expected formerly active hook to be inactive');
+    assert.ok(server.db.hooks[1].active, 'expected formerly inactive hook to be active');
+    assert.ok(server.db.hooks[2].active, 'expected unadministerable hook to be unchanged');
+  });
+});
