@@ -40,6 +40,11 @@ export default function() {
     return { hooks: hooks.map(hook => hook.attrs) };
   });
 
+  this.put('/hooks/:id', (schema, request) => {
+    const user = schema.hook.find(request.params.id);
+    return user.update(JSON.parse(request.requestBody).hook);
+  });
+
   this.get('/users/:id', (schema, request) => {
     let user = schema.user.find(request.params.id);
     if (user) {
