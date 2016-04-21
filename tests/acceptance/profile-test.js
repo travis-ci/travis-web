@@ -78,7 +78,6 @@ test('view profile', function(assert) {
     assert.equal(profilePage.unadministerableHooks().count, 1, 'expected one unadministerable hook');
 
     assert.ok(profilePage.token.isHidden, 'expected token to be hidden by default');
-    return pauseTest();
   });
 
   profilePage.token.show();
