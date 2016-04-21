@@ -17,6 +17,8 @@ export default TravisRoute.extend({
           this.controller.set('landingContent', 'landing-pages/org');
         }
       }
+    } else {
+      console.log('omg what do we do here');
     }
   }
 });
