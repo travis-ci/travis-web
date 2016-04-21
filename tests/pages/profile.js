@@ -42,6 +42,7 @@ export default PageObject.create({
     itemScope: '.account',
 
     item: {
+      name: text('h2'),
       repositoryCount: text('p strong')
     }
   })
