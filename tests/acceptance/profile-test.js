@@ -79,7 +79,13 @@ test('view profile', function(assert) {
     assert.notOk(profilePage.administerableHooks(1).isActive, 'expected inactive hook to appear inactive');
 
     assert.equal(profilePage.unadministerableHooks().count, 1, 'expected one unadministerable hook');
+  });
+});
 
+test('view token', function(assert) {
+  profilePage.visit({username: 'feministkilljoy'});
+
+  andThen(() => {
     assert.ok(profilePage.token.isHidden, 'expected token to be hidden by default');
   });
 
