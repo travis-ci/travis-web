@@ -171,7 +171,7 @@ Repo.reopen({
 
   updateTimes() {
     var lastBuild;
-    if (this.featureFlags.useV3API) {
+    if (Config.featureFlags.useV3API) {
       if (lastBuild = this.get('lastBuild')) {
         return lastBuild.updateTimes();
       }
@@ -208,7 +208,7 @@ Repo.reopenClass({
 
   accessibleBy(store, reposIdsOrlogin) {
     var login, promise, repos, reposIds;
-    if (this.featureFlags.useV3API) {
+    if (Config.featureFlags.useV3API) {
       reposIds = reposIdsOrlogin;
       repos = store.filter('repo', function(repo) {
         return reposIds.indexOf(parseInt(repo.get('id'))) !== -1;
@@ -235,7 +235,7 @@ Repo.reopenClass({
 
   search(store, ajax, query) {
     var promise, queryString, result;
-    if (this.featureFlags.useV3API) {
+    if (Config.featureFlags.useV3API) {
       queryString = $.param({
         search: query,
         orderBy: 'name',

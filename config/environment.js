@@ -28,10 +28,10 @@ module.exports = function(environment) {
     },
 
     featureFlags: {
-      useV3API: false
+      useV3API: false,
+      pro: false,
     },
 
-    pro: false,
     enterprise: false,
     endpoints: {},
     intervals: { updateTimes: 1000 },

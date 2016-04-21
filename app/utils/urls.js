@@ -34,7 +34,7 @@ githubAdmin = function(slug) {
 
 statusImage = function(slug, branch) {
   var token;
-  if (config.pro) {
+  if (config.featureFlags.pro) {
     token = Travis.__container__.lookup('controller:currentUser').get('model.token');
     return (location.protocol + "//" + location.host + "/" + slug + ".svg?token=" + token) + (branch ? "&branch=" + branch : '');
   } else {
@@ -48,7 +48,7 @@ ccXml = function(slug, branch) {
   if (branch) {
     url = url + "?branch=" + branch;
   }
-  if (config.pro) {
+  if (config.featureFlags.pro) {
     delimiter = url.indexOf('?') === -1 ? '?' : '&';
     token = Travis.__container__.lookup('controller:currentUser').get('model.token');
     url = "" + url + delimiter + "token=" + token;

@@ -59,7 +59,7 @@ var App = Ember.Application.extend(Ember.Evented, {
   },
 
   onUserUpdate(user) {
-    if (config.pro) {
+    if (config.featureFlags.pro) {
       this.identifyCustomer(user);
     }
     if (config.userlike) {
@@ -74,7 +74,7 @@ var App = Ember.Application.extend(Ember.Evented, {
       return;
     }
     channels = user.channels;
-    if (config.pro) {
+    if (config.featureFlags.pro) {
       channels = channels.map(function(channel) {
         if (channel.match(/^private-/)) {
           return channel;

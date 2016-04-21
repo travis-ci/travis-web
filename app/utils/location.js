@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.HistoryLocation.extend({
+  features: service(),
+
   init: function() {
     this._super(...arguments);
 
@@ -23,7 +27,7 @@ export default Ember.HistoryLocation.extend({
       if (this.get('auth.signedIn')) {
         return '/repositories';
       } else {
-        if (config.pro) {
+        if (this.features.pro) {
           return '/home-pro';
         } else {
           return '/home';

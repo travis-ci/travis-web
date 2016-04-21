@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
-import Config from 'travis/config/environment';
+import config from 'travis/config/environment';
 
 var sortCallback = function(repo1, repo2) {
   // this function could be made simpler, but I think it's clearer this way
@@ -96,14 +96,14 @@ var Controller = Ember.Controller.extend({
   }.property('startedJobsCount', 'queuedJobs.length'),
 
   init() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (!Ember.testing) {
       Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
 
   runningJobs: function() {
-    if(!this.get('config.pro')) { return []; }
+    if(!this.features.pro) { return []; }
     var result;
 
     result = this.store.filter('job', {}, function(job) {
@@ -115,10 +115,10 @@ var Controller = Ember.Controller.extend({
     });
 
     return result;
-  }.property('config.pro'),
+  }.property('features.pro'),
 
   queuedJobs: function() {
-    if(!this.get('config.pro')) { return []; }
+    if(!this.features.pro) { return []; }
 
     var result;
     result = this.get('store').filter('job', function(job) {
@@ -130,7 +130,7 @@ var Controller = Ember.Controller.extend({
     });
 
     return result;
-  }.property('config.pro'),
+  }.property('features.pro'),
 
   recentRepos: function() {
     return [];
@@ -139,7 +139,7 @@ var Controller = Ember.Controller.extend({
   updateTimes() {
     let records = this.get('repos');
 
-    if(this.features.useV3API) {
+    if(this.get('features.useV3API')) {
       let callback = (record) => { return record.get('lastBuild'); };
       records = records.filter(callback).map(callback);
     }
@@ -170,7 +170,7 @@ var Controller = Ember.Controller.extend({
           return reposRecordArray;
         };
 
-        if(this.features.useV3API) {
+        if(this.features && this.features.useV3API) {
           user.get('_rawPermissions').then( (data) => {
             Repo.accessibleBy(this.store, data.pull).then(callback);
           });

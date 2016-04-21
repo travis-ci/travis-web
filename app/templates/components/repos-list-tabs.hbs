@@ -4,7 +4,7 @@
       <a href="#" {{action showMyRepositories}}>My Repositories</a>
     </li>
 
-    {{#if config.pro}}
+    {{#if features.pro}}
       <li id="tab_running" class={{classRunning}}>
         <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
       </li>

@@ -21,7 +21,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   renderTemplate: function() {
-    if (this.get('config').pro) {
+    if (this.features.pro) {
       $('body').addClass('pro');
     }
     return this._super.apply(this, arguments);
@@ -30,7 +30,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   activate() {
     var repos;
     this.get('stylesheetsManager').disable('dashboard');
-    if (!config.pro) {
+    if (!this.features.pro) {
       repos = this.get('store').peekAll('repo');
       repos.forEach((repo) => {
         return this.subscribeToRepo(repo);
@@ -125,7 +125,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
     afterSignOut() {
       this.setDefault();
-      if (this.get('config').pro) {
+      if (this.features.pro) {
         return this.transitionTo('home-pro');
       } else {
         return this.transitionTo('home');

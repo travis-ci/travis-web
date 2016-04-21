@@ -1,9 +1,12 @@
 import Model from 'travis/models/model';
 import Job from 'travis/models/job';
 import Ember from 'ember';
-import config from 'travis/config/environment';
+
+const { service } = Ember.inject;
 
 var Request = Ember.Object.extend({
+  features: service(),
+
   HEADERS: {
     accept: 'application/json; chunked=true; version=2, text/plain; version=2'
   },
@@ -21,7 +24,7 @@ var Request = Ember.Object.extend({
   },
 
   handle(body, status, xhr) {
-    if (config.pro) {
+    if (this.features.pro) {
       this.log.set('token', xhr.getResponseHeader('X-Log-Access-Token'));
     }
     if (xhr.status === 204) {

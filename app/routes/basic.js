@@ -1,4 +1,3 @@
-import config from 'travis/config/environment';
 import Ember from 'ember';
 
 export default Ember.Route.extend({
@@ -27,6 +26,6 @@ export default Ember.Route.extend({
 
   needsAuth: function() {
     // on pro, we need to auth on every route
-    return config.pro;
+    return this.features.pro;
   }.property()
 });
