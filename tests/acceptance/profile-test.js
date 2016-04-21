@@ -10,6 +10,13 @@ moduleForAcceptance('Acceptance | profile', {
       repos_count: 3
     });
 
+    const organization = server.create('account', {
+      name: 'Goldsmiths',
+      type: 'organization',
+      login: 'goldsmiths',
+      repos_count: 30
+    });
+
     const activeHook = server.create('hook', {
       name: 'living-a-feminist-life',
       owner_name: 'feministkilljoy',
@@ -55,8 +62,10 @@ test('view profile', function(assert) {
   andThen(function() {
     assert.equal(profilePage.name, 'Sara Ahmed');
 
-    assert.equal(profilePage.accounts().count, 1, 'expected one account');
+    assert.equal(profilePage.accounts().count, 2, 'expected two account');
+
     assert.equal(profilePage.accounts(0).repositoryCount, 3);
+    assert.equal(profilePage.accounts(1).repositoryCount, 30);
 
     assert.equal(profilePage.administerableHooks().count, 2, 'expected two administerable hooks');
 
@@ -69,6 +78,7 @@ test('view profile', function(assert) {
     assert.equal(profilePage.unadministerableHooks().count, 1, 'expected one unadministerable hook');
 
     assert.ok(profilePage.token.isHidden, 'expected token to be hidden by default');
+    return pauseTest();
   });
 
   profilePage.token.show();
