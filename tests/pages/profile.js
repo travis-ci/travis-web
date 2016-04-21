@@ -2,8 +2,9 @@ import PageObject from 'travis/tests/page-object';
 
 let {
   collection,
-  visitable,
-  text
+  hasClass,
+  text,
+  visitable
 } = PageObject;
 
 export default PageObject.create({
@@ -14,7 +15,8 @@ export default PageObject.create({
     itemScope: '.profile-hooklist .row',
 
     item: {
-      name: text('a.profile-repo')
+      name: text('a.profile-repo'),
+      isActive: hasClass('active', '.switch--icon')
     }
   })
 });
