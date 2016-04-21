@@ -9,7 +9,6 @@ test('view langding page when unauthenticated', function(assert) {
     .visit();
 
   andThen(function() {
-    assert.equal(currentPath(), 'home');
     assert.equal(orgLandingPage.heroText, 'Test and Deploy with Confidence');
   });
 });

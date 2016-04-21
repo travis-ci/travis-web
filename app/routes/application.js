@@ -98,10 +98,8 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     },
 
     error(error) {
-      var authController;
       if (error === 'needs-auth') {
-        authController = Ember.getOwner(this).lookup('controller:auth');
-        authController.set('redirected', true);
+        this.controllerFor('auth').set('redirected', true);
         return this.transitionTo('auth');
       } else {
         return true;

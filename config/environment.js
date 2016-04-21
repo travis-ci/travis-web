@@ -48,9 +48,9 @@ module.exports = function(environment) {
       //       we could just remove it from ruby process and rely
       //       on things set here, but I haven't tested that yet.
 
-      featureFlags: {
-        pro: true;
-      }
+      ENV.featureFlags = {
+        pro: true
+      };
 
       ENV.apiEndpoint = 'https://api.travis-ci.com';
       ENV.pusher.key = '59236bc0716a551eab40';
