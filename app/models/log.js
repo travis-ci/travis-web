@@ -3,6 +3,8 @@ import Job from 'travis/models/job';
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 var Request = Ember.Object.extend({
   HEADERS: {
     accept: 'application/json; chunked=true; version=2, text/plain; version=2'
@@ -55,6 +57,7 @@ var Request = Ember.Object.extend({
 });
 
 var LogModel = Ember.Object.extend({
+  features: service(),
   version: 0,
   isLoaded: false,
   length: 0,
@@ -110,7 +113,7 @@ var LogModel = Ember.Object.extend({
 
   fetch() {
     var handlers, id;
-    if (Log.DEBUG) {
+    if (this.features.isEnabled('debugging')) {
       console.log('log model: fetching log');
     }
     this.clearParts();
@@ -164,7 +167,9 @@ var LogModel = Ember.Object.extend({
 
   loadParts(parts) {
     var i, len, part;
-    console.log('log model: load parts');
+    if (this.features.isEnabled('debugging')) {
+      console.log('log model: load parts');
+    }
     for (i = 0, len = parts.length; i < len; i++) {
       part = parts[i];
       this.append(part);

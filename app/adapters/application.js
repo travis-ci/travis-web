@@ -5,6 +5,7 @@ import ActiveModelAdapter from 'active-model-adapter';
 const { service } = Ember.inject;
 
 export default ActiveModelAdapter.extend({
+  features: service(),
   auth: service(),
   host: config.apiEndpoint,
   coalesceFindRequests: true,
@@ -45,7 +46,9 @@ export default ActiveModelAdapter.extend({
 
   handleResponse(status, headers, payload) {
     if (status > 299) {
-      console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
+      if (this.features.isEnabled('debugging')) {
+        console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
+      }
     }
 
     return this._super(...arguments);
