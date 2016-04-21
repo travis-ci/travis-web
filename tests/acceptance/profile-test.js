@@ -36,7 +36,7 @@ moduleForAcceptance('Acceptance | profile', {
       owner_name: 'feministkilljoy',
       active: true,
       admin: false
-    })
+    });
 
     const otherHook = server.create('hook', {
       name: 'feminism-is-for-everybody',
