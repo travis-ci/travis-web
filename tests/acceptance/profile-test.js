@@ -6,7 +6,8 @@ moduleForAcceptance('Acceptance | profile', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
-      login: 'feministkilljoy'
+      login: 'feministkilljoy',
+      repos_count: 3
     });
 
     const activeHook = server.create('hook', {
@@ -53,6 +54,9 @@ test('view profile', function(assert) {
 
   andThen(function() {
     assert.equal(profilePage.name, 'Sara Ahmed');
+
+    assert.equal(profilePage.accounts().count, 1, 'expected one account');
+    assert.equal(profilePage.accounts(0).repositoryCount, 3);
 
     assert.equal(profilePage.administerableHooks().count, 2, 'expected two administerable hooks');
 
