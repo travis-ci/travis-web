@@ -26,6 +26,6 @@ export default Ember.Route.extend({
 
   needsAuth: function() {
     // on pro, we need to auth on every route
-    return this.features.pro;
+    return this.features.isEnabled('pro');
   }.property()
 });

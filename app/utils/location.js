@@ -27,7 +27,7 @@ export default Ember.HistoryLocation.extend({
       if (this.get('auth.signedIn')) {
         return '/repositories';
       } else {
-        if (this.features.pro) {
+        if (this.features.isEnabled('pro')) {
           return '/home-pro';
         } else {
           return '/home';

@@ -4,7 +4,7 @@ export default BasicRoute.extend({
   needsAuth: false,
 
   redirect() {
-    if (!this.features.pro) {
+    if (!this.features.isEnabled('pro')) {
       return this.transitionTo('/');
     }
   }

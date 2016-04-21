@@ -181,7 +181,7 @@ export default Ember.Component.extend({
     var id, url;
     if (id = this.get('log.job.id')) {
       url = plainTextLogUrl(id);
-      if (this.features.pro) {
+      if (this.features.isEnabled('pro')) {
         url += "&access_token=" + (this.get('job.log.token'));
       }
       return url;
