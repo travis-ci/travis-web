@@ -97,8 +97,6 @@ export default function() {
       return new Mirage.Response(404, {}, {});
     }
   });
-
-  this.logging = true;
 }
 
 /*
