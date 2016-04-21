@@ -12,14 +12,23 @@ moduleForAcceptance('Acceptance | profile', {
     const activeHook = server.create('hook', {
       name: 'living-a-feminist-life',
       owner_name: 'feministkilljoy',
-      active: true
+      active: true,
+      admin: true
     });
 
     const inactiveHook = server.create('hook', {
       name: 'willful-subjects',
       owner_name: 'feministkilljoy',
-      active: false
+      active: false,
+      admin: true
     });
+
+    const unadministerableHook = server.create('hook', {
+      name: 'affect-theory-reader',
+      owner_name: 'feministkilljoy',
+      active: true,
+      admin: false
+    })
 
     const otherHook = server.create('hook', {
       name: 'feminism-is-for-everybody',
@@ -45,12 +54,14 @@ test('view profile', function(assert) {
   andThen(function() {
     assert.equal(profilePage.name, 'Sara Ahmed');
 
-    assert.equal(profilePage.hooks().count, 2, 'expected two hooks');
+    assert.equal(profilePage.administerableHooks().count, 2, 'expected two administerable hooks');
 
-    assert.equal(profilePage.hooks(0).name, 'feministkilljoy/living-a-feminist-life');
-    assert.ok(profilePage.hooks(0).isActive, 'expected active hook to appear active');
+    assert.equal(profilePage.administerableHooks(0).name, 'feministkilljoy/living-a-feminist-life');
+    assert.ok(profilePage.administerableHooks(0).isActive, 'expected active hook to appear active');
 
-    assert.equal(profilePage.hooks(1).name, 'feministkilljoy/willful-subjects');
-    assert.notOk(profilePage.hooks(1).isActive, 'expected inactive hook to appear inactive');
+    assert.equal(profilePage.administerableHooks(1).name, 'feministkilljoy/willful-subjects');
+    assert.notOk(profilePage.administerableHooks(1).isActive, 'expected inactive hook to appear inactive');
+
+    assert.equal(profilePage.unadministerableHooks().count, 1, 'expected one unadministerable hook');
   });
 });
