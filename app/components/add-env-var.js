@@ -26,7 +26,7 @@ export default Ember.Component.extend({
 
   actions: {
     save() {
-      var env_var, self;
+      var env_var;
       if (this.get('isSaving')) {
         return;
       }
@@ -38,7 +38,6 @@ export default Ember.Component.extend({
           "public": this.get('public'),
           repo: this.get('repo')
         });
-        self = this;
         return env_var.save().then(() => {
           this.set('isSaving', false);
           return this.reset();
