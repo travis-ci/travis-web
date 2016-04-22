@@ -2,8 +2,10 @@ import DS from 'ember-data';
 import Config from 'travis/config/environment';
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default DS.Store.extend({
-  auth: Ember.inject.service(),
+  auth: service(),
   defaultAdapter: 'application',
   adapter: 'application',
 

@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
   classNames: ['form--envvar'],
   classNameBindings: ['nameIsBlank:form-error'],
-  store: Ember.inject.service(),
+  store: service(),
 
   isValid() {
     if (Ember.isBlank(this.get('name'))) {

@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  ajax: Ember.inject.service(),
+  ajax: service(),
   tagName: 'li',
   classNames: ['cache-item'],
   classNameBindings: ['cache.type'],

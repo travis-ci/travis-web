@@ -2,8 +2,10 @@ import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default TravisRoute.extend({
-  ajax: Ember.inject.service(),
+  ajax: service(),
   needsAuth: true,
 
   setupController: function(controller, model) {

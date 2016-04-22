@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  auth: Ember.inject.service(),
+  auth: service(),
 
   currentUserBinding: 'auth.currentUser',
 

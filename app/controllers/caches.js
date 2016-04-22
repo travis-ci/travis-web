@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
+const { service, controller } = Ember.inject;
+
 export default Ember.Controller.extend({
-  ajax: Ember.inject.service(),
-  repoController: Ember.inject.controller('repo'),
+  ajax: service(),
+  repoController: controller('repo'),
   repo: Ember.computed.alias('repoController.repo'),
   isDeleting: false,
 

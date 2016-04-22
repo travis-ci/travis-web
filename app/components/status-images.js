@@ -2,9 +2,11 @@ import Ember from 'ember';
 import { format as formatStatusImage } from 'travis/utils/status-image-formats';
 import Config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  popup: Ember.inject.service(),
-  auth: Ember.inject.service(),
+  popup: service(),
+  auth: service(),
   popupNameBinding: 'popup.popupName',
 
   id: 'status-images',

@@ -1,11 +1,13 @@
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Service.extend({
-  store: Ember.inject.service(),
-  storage: Ember.inject.service(),
-  sessionStorage: Ember.inject.service(),
-  ajax: Ember.inject.service(),
+  store: service(),
+  storage: service(),
+  sessionStorage: service(),
+  ajax: service(),
   state: "signed-out",
   receivingEnd: location.protocol + "//" + location.host,
 

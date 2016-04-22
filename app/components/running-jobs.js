@@ -2,9 +2,11 @@ import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend(Polling, {
-  store: Ember.inject.service(),
-  updateTimesService: Ember.inject.service('updateTimes'),
+  store: service(),
+  updateTimesService: service('updateTimes'),
 
   pollHook(store) {
     return this.get('store').find('job', {});

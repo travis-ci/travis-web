@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  store: Ember.inject.service(),
-  updateTimesService: Ember.inject.service('updateTimes'),
+  store: service(),
+  updateTimesService: service('updateTimes'),
 
   init() {
     this._super.apply(this, arguments);

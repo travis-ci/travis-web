@@ -7,6 +7,7 @@ import Config from 'travis/config/environment';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 
+const { service } = Ember.inject;
 var Build;
 
 if (Config.useV3API) {
@@ -21,7 +22,7 @@ if (Config.useV3API) {
 }
 
 Build.reopen({
-  ajax: Ember.inject.service(),
+  ajax: service(),
   state: attr(),
   number: attr('number'),
   message: attr('string'),

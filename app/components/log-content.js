@@ -58,8 +58,10 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
   }
 });
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  popup: Ember.inject.service(),
+  popup: service(),
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
   currentUserBinding: 'auth.currentUser',
