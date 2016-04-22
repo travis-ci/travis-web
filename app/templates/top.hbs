@@ -5,7 +5,7 @@
     <button type="button" id="tofuburger" class="tofuburger" {{action 'toggleBurgerMenu'}}>Toggle Menu</button>
   </div>
 
-{{#unless config.enterprise}}
+{{#unless features.enterprise}}
   {{#if auth.signedIn}}
 
     {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus}}
@@ -23,8 +23,8 @@
   <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
 
-    {{#unless config.enterprise}}
-      {{#unless config.pro}}
+    {{#unless features.enterprise}}
+      {{#unless features.pro}}
         <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
         <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
         <li>
@@ -36,7 +36,7 @@
         </li>
       {{/unless}}
 
-      {{#if config.pro}}
+      {{#if features.pro}}
         {{#unless auth.signedIn}}
           <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
           <li><a href="/plans" title="" class="navigation-anchor">Plans & Pricing</a></li>
@@ -79,7 +79,7 @@
               {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
             </li>
             {{#if config.billingEndpoint}}
-              {{#unless config.enterprise}}
+              {{#unless features.enterprise}}
                 <li>
                   <a href={{config.billingEndpoint}}>Billing</a>
                 </li>

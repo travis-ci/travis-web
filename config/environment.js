@@ -2,7 +2,6 @@
 
 module.exports = function(environment) {
   var ENV = {
-    useV3API: false,
     modulePrefix: 'travis',
     environment: environment,
     baseURL: '/',
@@ -27,8 +26,13 @@ module.exports = function(environment) {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com'
     },
-    pro: false,
-    enterprise: false,
+
+    featureFlags: {
+      useV3API: false,
+      pro: false,
+      enterprise: false
+    },
+
     endpoints: {},
     intervals: { updateTimes: 1000 },
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
@@ -43,7 +47,11 @@ module.exports = function(environment) {
       //       it would be nice to move it to one place. In theory
       //       we could just remove it from ruby process and rely
       //       on things set here, but I haven't tested that yet.
-      ENV.pro = true;
+
+      ENV.featureFlags = {
+        pro: true
+      };
+
       ENV.apiEndpoint = 'https://api.travis-ci.com';
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';

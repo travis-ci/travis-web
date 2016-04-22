@@ -95,7 +95,7 @@ export default Ember.Controller.extend({
     }
   },
   showCta: function() {
-    return !this.get('auth.signedIn') && !this.get('config.pro') && !this.get('landingPage');
+    return !this.get('auth.signedIn') && !this.features.isEnabled('pro') && !this.get('landingPage');
   }.property('auth.signedIn', 'landingPage'),
 
   classProfile: function() {

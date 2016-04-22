@@ -5,7 +5,6 @@ import config from 'travis/config/environment';
 import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls';
 
 Log.DEBUG = false;
-
 Log.LIMIT = 10000;
 
 Log.Scroll = function(options) {
@@ -182,7 +181,7 @@ export default Ember.Component.extend({
     var id, url;
     if (id = this.get('log.job.id')) {
       url = plainTextLogUrl(id);
-      if (config.pro) {
+      if (this.features.isEnabled('pro')) {
         url += "&access_token=" + (this.get('job.log.token'));
       }
       return url;

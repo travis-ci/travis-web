@@ -44,9 +44,8 @@ export default Ember.Component.extend({
   }.property('request'),
 
   message: function() {
-    var message;
-    message = this.get('request.message');
-    if (config.pro && message === "private repository") {
+    var message = this.get('request.message');
+    if (this.features.isEnabled('pro') && message === "private repository") {
       return '';
     } else if (!message) {
       return 'Build created successfully ';

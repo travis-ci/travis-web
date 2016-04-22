@@ -9,7 +9,7 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 
 var Build;
 
-if (Config.useV3API) {
+if (Config.featureFlags.useV3API) {
   Build = Model.extend(DurationCalculations, {
     branch: belongsTo('branch', { async: false, inverse: 'builds' }),
     branchName: Ember.computed.alias('branch.name')

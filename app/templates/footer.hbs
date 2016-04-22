@@ -4,7 +4,7 @@
       <div class="travis-footer" aria-hidden=true></div>
     </div>
 
-    {{#unless config.enterprise}}
+    {{#unless features.enterprise}}
       <div class="footer-elem">
         <h3 class="footer-title">&copy;Travis CI, GmbH</h3>
         <p>Rigaer Straße 8<br>10247 Berlin, Germany <br>
@@ -15,15 +15,15 @@
       <h3 class="footer-title">Help</h3>
       <ul>
         <li><a href="https://docs.travis-ci.com">Documentation</a></li>
-        {{#unless config.enterprise}}
+        {{#unless features.enterprise}}
           <li><a href="https://blog.travis-ci.com/">Blog</a></li>
           <li><a href="mailto:support@travis-ci.com">Email</a></li>
           <li><a href="https://twitter.com/travisci">Twitter</a></li>
         {{/unless}}
       </ul>
     </div>
-    {{#unless config.enterprise}}
-      {{#if config.pro}}
+    {{#unless features.enterprise}}
+      {{#if features.pro}}
         <div class="footer-elem">
           <h3 class="footer-title">Legal</h3>
           <ul>

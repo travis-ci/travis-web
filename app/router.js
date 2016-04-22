@@ -3,21 +3,7 @@ import config from './config/environment';
 import Location from 'travis/utils/location';
 
 var Router = Ember.Router.extend({
-  location: function() {
-    if (Ember.testing) {
-      return 'none';
-    } else {
-      // this is needed, because in the location
-      // we need to decide if repositories or home needs
-      // to be displayed, based on the current login status
-      //
-      // we should probably think about a more general way to
-      // do this, location should not know about auth status
-      return Location.create({
-        auth: Ember.getOwner(this).lookup('service:auth')
-      });
-    }
-  }.property(),
+  location: config.locationType,
 
   generate() {
     var url;
@@ -25,6 +11,7 @@ var Router = Ember.Router.extend({
     return this.get('location').formatURL(url);
   },
 
+  // do we need this still?
   handleURL(url) {
     url = url.replace(/#.*?$/, '');
     return this._super(url);
@@ -57,7 +44,7 @@ Router.map(function() {
       this.route('pullRequests', { path: '/pull_requests', resetNamespace: true });
       this.route('requests', { path: '/requests', resetNamespace: true });
       if (config.endpoints.caches) {
-        this.resource('caches', { path: '/caches' });
+        this.route('caches', { path: '/caches' });
       }
       this.route('request', { path: '/requests/:request_id', resetNamespace: true });
       this.route('settings', { resetNamespace: true }, function() {
@@ -66,7 +53,7 @@ Router.map(function() {
           this.route('new');
         });
         if (config.endpoints.sshKey) {
-          this.resource('ssh_key');
+          this.route('ssh_key');
         }
       });
     });
