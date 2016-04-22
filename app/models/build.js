@@ -2,7 +2,7 @@ import { durationFrom, configKeys, compact } from 'travis/utils/helpers';
 import configKeysMap from 'travis/utils/keys-map';
 import Ember from 'ember';
 import Model from 'travis/models/model';
-import DurationCalculations from 'travis/utils/duration-calculations';
+import DurationCalculations from 'travis/mixins/duration-calculations';
 import Config from 'travis/config/environment';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
