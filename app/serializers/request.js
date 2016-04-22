@@ -12,7 +12,7 @@ var Serializer = V2FallbackSerializer.extend({
     if (key === 'repo') {
       return 'repository_id';
     } else {
-      return this._super.apply(this, arguments);
+      return this._super(...arguments);
     }
   },
 
@@ -28,7 +28,7 @@ var Serializer = V2FallbackSerializer.extend({
         }
       });
     }
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   }
 });
 

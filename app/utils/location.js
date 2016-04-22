@@ -18,7 +18,7 @@ export default Ember.HistoryLocation.extend({
 
   getURL: function() {
     var url;
-    url = this._super.apply(this, arguments);
+    url = this._super(...arguments);
     if (location.pathname === '/' && !config.enterprise) {
       if (this.get('auth.signedIn')) {
         return '/repositories';

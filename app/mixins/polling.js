@@ -12,12 +12,12 @@ export default Ember.Mixin.create({
   },
 
   didInsertElement() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     return this.startPolling();
   },
 
   willDestroyElement() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     return this.stopPolling();
   },
 

@@ -22,7 +22,7 @@ export default Ember.Service.extend({
 
   willDestroy() {
     var interval;
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (interval = this.get('interval')) {
       return clearInterval(interval);
     }

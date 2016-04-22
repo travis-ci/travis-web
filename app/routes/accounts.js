@@ -17,7 +17,7 @@ export default TravisRoute.extend({
   },
 
   renderTemplate() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     return this.render('profile_accounts', {
       outlet: 'left',
       into: 'profile'

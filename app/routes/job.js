@@ -47,7 +47,7 @@ export default TravisRoute.extend({
     buildController.set('sendFaviconStateChanges', true);
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   }
 
 });

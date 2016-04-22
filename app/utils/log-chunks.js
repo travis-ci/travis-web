@@ -4,7 +4,7 @@ var LogChunks = Ember.ArrayProxy.extend({
   timeout: 30000,
   init: function() {
     this.setTimeout();
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
 
   resetTimeout: function() {
@@ -85,7 +85,7 @@ var LogChunks = Ember.ArrayProxy.extend({
 
   contentArrayDidChange: function(array, index, removedCount, addedCount) {
     var addedObjects, i, len, part;
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (addedCount) {
       addedObjects = array.slice(index, index + addedCount);
       for (i = 0, len = addedObjects.length; i < len; i++) {

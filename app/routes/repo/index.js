@@ -3,7 +3,7 @@ import Config from 'travis/config/environment';
 
 export default TravisRoute.extend({
   setupController(controller, model) {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     return this.controllerFor('repo').activate('current');
   },
 
@@ -13,12 +13,12 @@ export default TravisRoute.extend({
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
     this.stopObservingRepoStatus();
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
 
   activate() {
     this.observeRepoStatus();
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
 
   observeRepoStatus() {

@@ -8,7 +8,7 @@ export default TravisRoute.extend({
   needsAuth: true,
 
   setupController(controller) {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     return this.controllerFor('repo').activate('caches');
   },
 
