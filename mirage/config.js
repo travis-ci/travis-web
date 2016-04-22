@@ -28,6 +28,23 @@ export default function() {
     return response;
   };
 
+  this.get('/accounts', (schema, request) => {
+    const users = schema.user.all().map(user => Ember.merge(user.attrs, {type: 'user'}));
+    const accounts = schema.account.all().map(account => account.attrs);
+
+    return { accounts: users.concat(accounts) };
+  });
+
+  this.get('/hooks', (schema, request) => {
+    const hooks = schema.hook.where({'owner_name': request.queryParams.owner_name});
+    return { hooks: hooks.map(hook => hook.attrs) };
+  });
+
+  this.put('/hooks/:id', (schema, request) => {
+    const user = schema.hook.find(request.params.id);
+    return user.update(JSON.parse(request.requestBody).hook);
+  });
+
   this.get('/users/:id', (schema, request) => {
     let user = schema.user.find(request.params.id);
     if (user) {
