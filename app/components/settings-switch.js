@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
+  flashes: service(),
   tagName: 'a',
   classNames: ['switch'],
   classNameBindings: ['active'],
@@ -18,9 +21,7 @@ export default Ember.Component.extend({
       return this.set('isSaving', false);
     }, () => {
       this.set('isSaving', false);
-      return Travis.flash({
-        error: 'There was an error while saving settings. Please try again.'
-      });
+      return this.get('flashes').error('There was an error while saving settings. Please try again.');
     });
   }
 });

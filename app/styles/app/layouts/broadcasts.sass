@@ -46,7 +46,7 @@
     font-size: .9em
     word-wrap: break-word
   a:not(.icon-close)
-    display: block
+   
     line-height: 1.45
     text-decoration: underline
 
@@ -57,14 +57,15 @@
     height: auto
 
   .icon-close
-    @extend %icon-line-failed
+    @extend %icon-line-cross
     position: absolute
     bottom: 0
     right: 0
     display: inline-block
-    width: 1.2em
-    height: 1.2em
+    width: 1em
+    height: 1em
     background-repeat: no-repeat
+    cursor: pointer
 
   @media #{$medium-up}
     position: absolute
@@ -72,7 +73,7 @@
     left: 145px
     width: 27em
     height: auto
-    margin-left: -0.7em
+    margin-left: -0.4em
     .centered &
       left: 133px
     &:after

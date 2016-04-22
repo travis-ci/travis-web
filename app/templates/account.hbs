@@ -1,6 +1,7 @@
 {{#if allHooks.isLoaded}}
 
-  <header>
+<header>
+  {{#unless config.enterprise}}
     {{#if config.billingEndpoint}}
       <div class="cta-btn">
         {{#if subscribeButtonInfo.subscribed}}
@@ -14,6 +15,7 @@
         {{/if}}
       </div>
     {{/if}}
+  {{/unless}}
 
     <div class="profile-header">
       <h1>{{accountName}}</h1>

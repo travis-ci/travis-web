@@ -79,7 +79,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV['ember-cli-mirage'] = {
       enabled: false
-    }
+    };
   }
 
   if (environment === 'test') {
@@ -100,7 +100,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV['ember-cli-mirage'] = {
       enabled: false
-    }
+    };
   }
 
   // TODO: I insert values from ENV here, but in production
@@ -117,7 +117,7 @@ module.exports = function(environment) {
     'style-src': "'self' https://fonts.googleapis.com",
     'media-src': "'self'",
     'frame-src': "'self' " + ENV.apiEndpoint
-  }
+  };
 
   return ENV;
 };

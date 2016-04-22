@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import { hasPermission, hasPushPermission } from 'travis/utils/permission';
 
 export default Ember.Component.extend({
   popup: Ember.inject.service(),
@@ -8,7 +9,7 @@ export default Ember.Component.extend({
   isOpen: false,
 
   click(event) {
-    if ($(event.target).is('a') && $(event.target).parents('.settings-dropdown').length) {
+    if ($(event.target).is('a') && $(event.target).parents('.settings-dropdown').length) {      
       return this.closeMenu();
     }
   },
@@ -18,41 +19,20 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    menu() {
+    menu() {            
       return this.toggleProperty('isOpen');
     }
   },
-
-  hasPermission: function() {
-    var permissions;
-    if (permissions = this.get('currentUser.permissions')) {
-      return permissions.contains(parseInt(this.get('repo.id')));
-    }
-  }.property('currentUser.permissions.length', 'repo.id'),
-
-  hasPushPermission: function() {
-    var permissions;
-    if (permissions = this.get('currentUser.pushPermissions')) {
-      return permissions.contains(parseInt(this.get('repo.id')));
-    }
-  }.property('currentUser.pushPermissions.length', 'repo.id'),
-
-  hasAdminPermission: function() {
-    var permissions;
-    if (permissions = this.get('currentUser.adminPermissions')) {
-      return permissions.contains(parseInt(this.get('repo.id')));
-    }
-  }.property('currentUser.adminPermissions.length', 'repo.id'),
-
   displaySettingsLink: function() {
-    return this.get('hasPushPermission');
-  }.property('hasPushPermission'),
+    return hasPushPermission(this.get('currentUser'), this.get('repo.id'));
+  }.property('currentUser.pushPermissions.length', 'repo'),
 
   displayCachesLink: function() {
-    return this.get('hasPushPermission') && config.endpoints.caches;
-  }.property('hasPushPermission'),
+    return hasPushPermission(this.get('currentUser'), this.get('repo.id')) && config.endpoints.caches;
+  }.property('currentUser.pushPermissions.length', 'repo'),
 
   displayStatusImages: function() {
-    return this.get('hasPermission');
-  }.property('hasPermission')
+    return hasPermission(this.get('currentUser'), this.get('repo.id'));
+  }.property('currentUser.permissions.length', 'repo.id')
+
 });

@@ -12,7 +12,7 @@
     margin-bottom: 2em
     border:
       width: 2px
-      color: #E8E8E8
+      color: rgba($cement-grey, .2)
       style: solid
 
     @media #{$medium-up}
@@ -52,19 +52,19 @@
       color: $color
 
   .plan--red
-    +colorPlans($red, #FCF0F0, false)
+    +colorPlans($brick-red, lighten($brick-red, 40), false)
     .list--check li:before
       background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjREI0MjQyIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
   .plan--green
-    +colorPlans($green, #73c78d)
+    +colorPlans($turf-green, lighten($turf-green, 10))
     .list--check li:before
       background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjMzlBODVCIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
   .plan--teal
-    +colorPlans($teal, #8CC8CE)
+    +colorPlans($oxide-blue, lighten($oxide-blue, 10))
     .list--check li:before
       background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNDBBM0FEIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
   .plan--yellow
-    +colorPlans($yellow, #EFD97C)
+    +colorPlans($dozer-yellow, lighten($dozer-yellow, 10))
     .list--check li:before
       background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjRTVDMDI1IiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
 
@@ -129,7 +129,7 @@
       flex: 0 0 100%
       padding: 1em 1.5em 1.7em
       margin-bottom: 2em
-      border: solid 1px #E8E8E8
+      border: solid 1px rgba($cement-grey, .2)
       @media #{$medium-up}
         flex: 0 0 48%
 

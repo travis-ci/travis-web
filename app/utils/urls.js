@@ -1,4 +1,6 @@
 import config from 'travis/config/environment';
+import Ember from 'ember';
+
 var ccXml, email, githubAdmin, githubCommit, githubNetwork, githubPullRequest,
     githubRepo, githubWatchers, gravatarImage, plainTextLog, statusImage;
 
