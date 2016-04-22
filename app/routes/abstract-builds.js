@@ -18,7 +18,7 @@ export default TravisRoute.extend({
 
   deactivate() {
     this.controllerFor('repo').removeObserver(this.get('path'), this, 'contentDidChange');
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
 
   contentDidChange() {

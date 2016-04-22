@@ -13,7 +13,7 @@ export default Ember.Component.extend(Polling, {
   },
 
   init() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (!Ember.testing) {
       return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }

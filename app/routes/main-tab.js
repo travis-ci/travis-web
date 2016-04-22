@@ -9,7 +9,7 @@ export default TravisRoute.extend({
   },
 
   setupController() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     this.controllerFor('repo').activate('index');
     this.controllerFor('repos').activate(this.get('reposTabName'));
     return this.setCurrentRepoObservers();
@@ -20,7 +20,7 @@ export default TravisRoute.extend({
     if (repos = this.controllerFor('repos')) {
       repos.removeObserver('repos.firstObject', this, 'currentRepoDidChange');
     }
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
 
   currentRepoDidChange() {

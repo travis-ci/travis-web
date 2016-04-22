@@ -20,7 +20,7 @@ export default TravisRoute.extend({
 
   beforeModel() {
     this.controllerFor('loading').set('layoutName', 'simple');
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
   actions: {
 

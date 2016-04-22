@@ -98,7 +98,7 @@ var Controller = Ember.Controller.extend({
   }.property('startedJobsCount', 'queuedJobs.length'),
 
   init() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (!Ember.testing) {
       Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
     }

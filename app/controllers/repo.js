@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
   }.property('repo.isLoading'),
 
   init() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (!Ember.testing) {
       Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
     }

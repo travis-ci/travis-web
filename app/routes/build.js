@@ -29,7 +29,7 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     this.controllerFor('job').set('job', null);
     return this.controllerFor('build').set('build', null);
   }

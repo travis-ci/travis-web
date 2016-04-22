@@ -31,7 +31,7 @@ var Router = Ember.Router.extend({
   },
 
   didTransition() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (config.gaCode) {
       _gaq.push(['_trackPageview', location.pathname]);
     }

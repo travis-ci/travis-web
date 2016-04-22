@@ -4,7 +4,7 @@ export default SimpleLayoutRoute.extend({
   setupController(controller) {
     var existingUser;
 
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     existingUser = document.location.hash.match(/#existing[_-]user/);
     return controller.set('existingUser', existingUser);
   }

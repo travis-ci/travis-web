@@ -10,7 +10,7 @@ export default TravisRoute.extend({
 
   renderTemplate() {
     $('body').attr('id', 'profile');
-    this._super.apply(this, arguments);
+    this._super(...arguments);
 
     return this.render('loading', {
       outlet: 'left',
