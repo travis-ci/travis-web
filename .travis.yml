@@ -39,7 +39,7 @@ install:
   - bower install
 
 script:
-  - ember try:one $EMBER_VERSION
+  - ember try:one $EMBER_VERSION --- ember test --reporter dot
 
 notifications:
   campfire:
