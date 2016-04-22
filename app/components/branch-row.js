@@ -3,8 +3,10 @@ import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  routing: Ember.inject.service('-routing'),
+  routing: service('-routing'),
   tagName: 'li',
   classNameBindings: ['build.last_build.state'],
   classNames: ['branch-row', 'row-li'],

@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  popup: Ember.inject.service(),
+  popup: service(),
   classNames: ['application'],
 
   click(event) {

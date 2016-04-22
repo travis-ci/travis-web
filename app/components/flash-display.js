@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  flashes: Ember.inject.service(),
+  flashes: service(),
   classNames: ['flash'],
   tagName: 'ul',
   messagesBinding: 'flashes.messages',

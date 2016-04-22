@@ -7,8 +7,10 @@ import DurationCalculations from 'travis/utils/duration-calculations';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 
+const { service } = Ember.inject;
+
 export default Model.extend(DurationCalculations, {
-  ajax: Ember.inject.service(),
+  ajax: service(),
   logId: attr(),
   queue: attr(),
   state: attr(),

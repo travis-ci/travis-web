@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  store: Ember.inject.service('store'),
+  store: service(),
 
   pollHook: function(store) {
     var contentType, repositoryId;

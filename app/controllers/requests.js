@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
+const { controller } = Ember.inject;
+
 export default Ember.Controller.extend({
-  repoController: Ember.inject.controller('repo'),
+  repoController: controller('repo'),
 
   lintUrl: function() {
     var slug;
