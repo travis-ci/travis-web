@@ -21,7 +21,7 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    menu() {            
+    menu() {
       return this.toggleProperty('isOpen');
     }
   },
