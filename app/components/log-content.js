@@ -67,7 +67,7 @@ export default Ember.Component.extend({
   currentUserBinding: 'auth.currentUser',
 
   didInsertElement() {
-    if (Log.DEBUG) {
+    if (this.features.debugging) {
       console.log('log view: did insert');
     }
     this._super(...arguments);
@@ -161,7 +161,7 @@ export default Ember.Component.extend({
   partsDidChange(parts, start, _, added) {
     Ember.run.schedule('afterRender', this, function() {
       var i, j, len, part, ref, ref1, ref2, results;
-      if (Log.DEBUG) {
+      if (this.features.debugging) {
         console.log('log view: parts did change');
       }
       if (this.get('_state') !== 'inDOM') {
