@@ -71,7 +71,9 @@ export default function() {
     let repos = schema.repository.where({ slug: decodeURIComponent(request.params.slug) });
     return turnIntoV3('repository', repos[0]);
   });
-
+  this.get('/v3/repo/:id/crons', function(schema, request) {
+    return turnIntoV3('crons', schema.cron.all());
+  });
   this.get('/jobs/:id', function(schema, request) {
     let job = schema.job.find(request.params.id).attrs;
     return {job: job, commit: schema.commit.find(job.commit_id).attrs};

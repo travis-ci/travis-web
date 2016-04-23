@@ -99,10 +99,10 @@ Repo.reopen({
     var array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
-      event_type: ['push', 'api'],
+      event_type: ['push', 'api', 'cron'],
       repository_id: id
     }, function(b) {
-      return b.get('repo.id') + '' === id + '' && (b.get('eventType') === 'push' || b.get('eventType') === 'api');
+      return b.get('repo.id') + '' === id + '' && (b.get('eventType') === 'push' || b.get('eventType') === 'api' || b.get('eventType') === 'cron');
     });
     array = ExpandableRecordArray.create({
       type: 'build',
@@ -132,17 +132,46 @@ Repo.reopen({
     return array;
   }.property(),
 
-  branches: function() {
-    var builds;
-    builds = this.store.query('build', {
-      repository_id: this.get('id'),
-      branches: true
+  crons: function() {
+    var array, builds, id;
+    id = this.get('id');
+    builds = this.store.filter('build', {
+      event_type: 'cron',
+      repository_id: id
+    }, function(b) {
+      return b.get('repo.id') + '' === id + '' && b.get('eventType') === 'cron';
     });
-    builds.then(function() {
-      return builds.set('isLoaded', true);
+    array = ExpandableRecordArray.create({
+      type: 'build',
+      content: Ember.A([])
     });
-    return builds;
+    array.load(builds);
+    id = this.get('id');
+    array.observe(builds);
+    return array;
   }.property(),
+
+  branches: function() {
+    var id = this.get('id');
+    return this.store.filter('branch', {
+      repository_id: id
+    }, function(b) {
+      return b.get('repoId') === id;
+    });
+  }.property(),
+
+  cronJobs: function() {
+    var id = this.get('id');
+    return this.store.filter('cron', {
+      repository_id: id
+    }, function(cron) {
+      return cron.get('branch.repoId') === id;
+    });
+  }.property(),
+
+  sortedCrons: Ember.computed.sort('cronJobs', function(a, b) {
+    return a.get('branch.name') > b.get('branch.name');
+  }),
 
   owner: function() {
     return (this.get('slug') || '').split('/')[0];

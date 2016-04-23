@@ -14,12 +14,17 @@ export default Ember.Component.extend({
 
     if (contentType === 'builds') {
       return store.query('build', {
-        event_type: 'push',
+        event_type: ['push', 'cron'],
         repository_id: repositoryId
       });
     } else if (contentType === 'pull_requests') {
       return store.filter('build', {
         event_type: 'pull_request',
+        repository_id: repositoryId
+      });
+    } else if (contentType === 'crons') {
+      return store.filter('build', {
+        event_type: 'cron',
         repository_id: repositoryId
       });
     } else {

@@ -28,7 +28,7 @@
       display: inline-block
       width: grid-calc(11, 24)
 
-.settings-list--envvars
+.settings-list--envvars, .settings-list--crons
   @extend %settings-list
 
 .settings-input
@@ -55,7 +55,7 @@
   border-radius: 2px
   background-color: $pebble-grey
 
-.settings-envvar
+.settings-envvar, .settings-cron
   @extend %settings-row
   padding: .4em .5em
 
@@ -111,12 +111,10 @@
     word-break: normal
     white-space: nowrap
 
-.env-var-value
+.env-var-value, .cron-job-value, .cron-job-text
   @extend %settings-value-section
   white-space: nowrap
   width: 76%
-  @media #{$medium-up}
-    width: grid-calc(3, 12)
   input
     display: inline-block
     width: 100%
@@ -132,9 +130,21 @@
       position: 0.5em 0.5em
   .is-public &
     input
-      background-image: none;
-      padding: 0.3em 0 0.4em 0.9em;
-      font-size: 14px;
+      background-image: none
+      padding: 0.3em 0 0.4em 0.9em
+      font-size: 14px
+
+.env-var-value
+  @media #{$medium-up}
+    width: grid-calc(3, 12)
+
+.cron-job-value
+  @media #{$medium-up}
+    width: grid-calc(2, 12)
+
+.cron-job-text
+  @media #{$medium-up}
+    width: grid-calc(4, 12)
 
 %settings-action-section
   display: inline-block
@@ -151,10 +161,14 @@
   @media #{$xlarge-up}
     width: grid-calc(4, 36)
 
-.env-var-action
+.env-var-action, .cron-job-action
   @extend %settings-action-section
   a
     padding: 1em
+
+.cron-job-action
+  @media #{$medium-up}
+    width: grid-calc(4, 36)
 
 .ssh-key-action
   @extend %settings-action-section
