@@ -23,7 +23,6 @@ export default Ember.Component.extend({
         return;
       }
 
-      self = this;
       store = this.get('store');
       repo_id = this.get('branches').toArray()[0].get('repoId');
       branch = this.get('selectedBranch') ? this.get('selectedBranch') : this.get('branches').toArray()[0];
@@ -32,22 +31,22 @@ export default Ember.Component.extend({
         repository_id: repo_id
       }, function(c) {
         return c.get('branch.repoId') === repo_id && c.get('branch.name') === branch.get('name');
-      }).then(function(existing_crons){
+      }).then((existing_crons) => {
         if(existing_crons.toArray()[0]){
           store.unloadRecord(existing_crons.toArray()[0]);
         }
 
-        self.set('isSaving', true);
+        this.set('isSaving', true);
         cron = store.createRecord('cron', {
           branch: branch,
-          interval: self.get('selectedInterval') || 'monthly',
-          disable_by_build: self.get('disable') || false
+          interval: this.get('selectedInterval') || 'monthly',
+          disable_by_build: this.get('disable') || false
         });
-        self.reset();
+        this.reset();
         return cron.save().then(() => {
-          self.set('isSaving', false);
+          this.set('isSaving', false);
         }, () => {
-          self.set('isSaving', false);
+          this.set('isSaving', false);
         });
       });
     }
