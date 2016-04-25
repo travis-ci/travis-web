@@ -2,6 +2,8 @@ import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
 
+import './store-user-session';
+
 export default function startApp(attrs) {
   let application;
 

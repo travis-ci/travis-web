@@ -49,7 +49,8 @@
     "currentRouteName",
     "jQuery",
     "Visibility",
-    "Travis"
+    "Travis",
+    "storeUserSession"
   ],
   "node": false,
   "browser": false,

@@ -5,10 +5,7 @@ import buildPage from 'travis/tests/pages/build';
 moduleForAcceptance('Acceptance | builds/restart', {
   beforeEach() {
     const currentUser = server.create('user');
-    let localStorageUser = JSON.parse(JSON.stringify(currentUser.attrs));
-    localStorageUser.token = "abc123";
-    window.localStorage.setItem('travis.token', 'testUserToken');
-    window.localStorage.setItem('travis.user', JSON.stringify(localStorageUser));
+    storeUserSession(currentUser);
   }
 });
 
