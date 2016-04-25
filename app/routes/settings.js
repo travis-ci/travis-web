@@ -33,7 +33,7 @@ export default TravisRoute.extend({
       if(response["@permissions"]["create_cron"]) {
         return Ember.Object.create({
           enabled: true,
-          jobs: repo.get('cronJobs.promise')
+          jobs: repo.get('cronJobs')
         });
       } else {
         return Ember.Object.create({
