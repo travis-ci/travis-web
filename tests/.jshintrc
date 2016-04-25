@@ -50,7 +50,7 @@
     "jQuery",
     "Visibility",
     "Travis",
-    "storeUserSession"
+    "signInUser"
   ],
   "node": false,
   "browser": false,

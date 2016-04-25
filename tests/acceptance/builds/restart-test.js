@@ -5,7 +5,7 @@ import buildPage from 'travis/tests/pages/build';
 moduleForAcceptance('Acceptance | builds/restart', {
   beforeEach() {
     const currentUser = server.create('user');
-    storeUserSession(currentUser);
+    signInUser(currentUser);
   }
 });
 
