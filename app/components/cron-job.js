@@ -1,10 +1,12 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
   classNames: ['settings-cron'],
   isDeleting: false,
   actionType: 'Save',
-  store: Ember.inject.service(),
+  store: service(),
 
   disableByBuild: function(key) {
     var value = '';

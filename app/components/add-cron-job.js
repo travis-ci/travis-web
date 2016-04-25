@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
   classNames: ['form--cron'],
-  store: Ember.inject.service(),
+  store: service(),
 
   reset() {
     return this.setProperties({
