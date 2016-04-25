@@ -9,9 +9,9 @@ export default Ember.Component.extend({
 
   reset() {
     return this.setProperties({
-      branch: null,
-      interval: null,
-      disable_by_build: null
+      selectedBranch: null,
+      selectedInterval: null,
+      disable: null
     });
   },
 
