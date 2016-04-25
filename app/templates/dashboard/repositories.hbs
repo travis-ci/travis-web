@@ -15,13 +15,7 @@
 
     <section class="dashboard-section dashboard-active">
       <h2 class="small-title">All repositories</h2>
-      <ul class="repo-list">
-         {{#each filteredRepositories as |repo|}}
-          {{dashboard-row repo=repo}}
-        {{else}}
-          {{no-repos}}
-        {{/each}}
-      </ul>
+      {{dashboard-repositories-list filter=filter}}
     </section>
 
     <section class="dashboard-section dashboard-inactive">

@@ -1,0 +1,7 @@
+<ul class="repo-list">
+   {{#each repositories as |repo|}}
+    {{dashboard-row repo=repo}}
+  {{else}}
+    {{no-repos}}
+  {{/each}}
+</ul>

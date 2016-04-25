@@ -6,29 +6,29 @@ export default Ember.Controller.extend({
   filter: null,
   org: null,
 
-  filteredRepositories: function() {
-    var filter, org, repos;
-    filter = this.get('filter');
-    repos = this.get('model');
-    org = this.get('org');
-    repos = repos.filter(function(item, index) {
-      if (item.get('default_branch')) {
-        return item.get('default_branch.last_build') !== null;
-      }
-    }).sortBy('default_branch.last_build.finished_at').reverse();
-    if (org) {
-      repos = repos.filter(function(item, index) {
-        return item.get('owner.login') === org;
-      });
-    }
-    if (Ember.isBlank(filter)) {
-      return repos;
-    } else {
-      return repos.filter(function(item, index) {
-        return item.slug.match(new RegExp(filter));
-      });
-    }
-  }.property('filter', 'model', 'org'),
+//  filteredRepositories: function() {
+//    var filter, org, repos;
+//    filter = this.get('filter');
+//    repos = this.get('model');
+//    org = this.get('org');
+//    repos = repos.filter(function(item, index) {
+//      if (item.get('default_branch')) {
+//        return item.get('default_branch.last_build') !== null;
+//      }
+//    }).sortBy('default_branch.last_build.finished_at').reverse();
+//    if (org) {
+//      repos = repos.filter(function(item, index) {
+//        return item.get('owner.login') === org;
+//      });
+//    }
+//    if (Ember.isBlank(filter)) {
+//      return repos;
+//    } else {
+//      return repos.filter(function(item, index) {
+//        return item.slug.match(new RegExp(filter));
+//      });
+//    }
+//  }.property('filter', 'model', 'org'),
 
   updateFilter() {
     var value;

@@ -4,12 +4,12 @@
   {{else}}
     <a href="#" title="" class="option-display" {{action 'toggleOrgFilter'}}>
       <span class="label-align">
-        {{#if selected }}
-          <img src="{{selected.avatar_url}}" alt="{{org.login}}">
-          {{#if selected.name}}
-            {{selected.name}}
+        {{#if selectedOrg }}
+          <img src="{{selectedOrg.avatar_url}}" alt="{{selectedOrg.login}}">
+          {{#if selectedOrg.name}}
+            {{selectedOrg.name}}
           {{else}}
-            {{selected.login}}
+            {{selectedOrg.login}}
           {{/if}}
         {{else}}
           All organizations
