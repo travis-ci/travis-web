@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   store: service(),
 
   reset() {
-    return this.setProperties({
+    this.setProperties({
       selectedBranch: null,
       selectedInterval: null,
       disable: null
