@@ -48,11 +48,6 @@ moduleForAcceptance('Acceptance | profile', {
     localStorageUser.token = "abc123";
     window.localStorage.setItem('travis.token', 'testUserToken');
     window.localStorage.setItem('travis.user', JSON.stringify(localStorageUser));
-  },
-
-  afterEach() {
-    window.localStorage.clear();
-    window.sessionStorage.clear();
   }
 });
 

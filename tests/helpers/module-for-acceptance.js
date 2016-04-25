@@ -18,6 +18,9 @@ export default function(name, options = {}) {
       if (options.afterEach) {
         options.afterEach.apply(this, arguments);
       }
+
+      window.localStorage.clear();
+      window.sessionStorage.clear();
     }
   });
 }
