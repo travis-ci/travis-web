@@ -108,6 +108,10 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
+
+    ENV.sourcemaps = {
+      enabled: true
+    }
   }
 
   // TODO: I insert values from ENV here, but in production
