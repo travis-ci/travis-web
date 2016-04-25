@@ -43,12 +43,11 @@ export default Ember.Component.extend({
           interval: self.get('selectedInterval') || 'monthly',
           disable_by_build: self.get('disable') || false
         });
+        self.reset();
         return cron.save().then(() => {
           self.set('isSaving', false);
-          return self.reset();
         }, () => {
           self.set('isSaving', false);
-          return self.reset();
         });
       });
     }
