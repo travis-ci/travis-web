@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
   classNames: ['form--envvar'],
   classNameBindings: ['nameIsBlank:form-error'],
-  store: Ember.inject.service(),
+  store: service(),
 
   isValid() {
     if (Ember.isBlank(this.get('name'))) {
@@ -24,7 +26,7 @@ export default Ember.Component.extend({
 
   actions: {
     save() {
-      var env_var, self;
+      var env_var;
       if (this.get('isSaving')) {
         return;
       }
@@ -36,7 +38,6 @@ export default Ember.Component.extend({
           "public": this.get('public'),
           repo: this.get('repo')
         });
-        self = this;
         return env_var.save().then(() => {
           this.set('isSaving', false);
           return this.reset();

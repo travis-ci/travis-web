@@ -7,6 +7,8 @@ import Ember from 'ember';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 
+const { service } = Ember.inject;
+
 var Repo;
 
 if (Config.useV3API) {
@@ -65,7 +67,7 @@ if (Config.useV3API) {
 }
 
 Repo.reopen({
-  ajax: Ember.inject.service(),
+  ajax: service(),
   slug: attr(),
   description: attr(),
   "private": attr('boolean'),

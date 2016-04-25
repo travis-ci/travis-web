@@ -10,8 +10,10 @@ default_options = {
   }
 };
 
+const { service } = Ember.inject;
+
 export default Ember.Service.extend({
-  auth: Ember.inject.service(),
+  auth: service(),
 
   get(url, callback, errorCallback) {
     return this.ajax(url, 'get', {

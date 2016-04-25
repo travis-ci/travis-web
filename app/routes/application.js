@@ -7,7 +7,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   needsAuth: false,
 
   beforeModel() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     return this.get('auth').refreshUserData().then( () => {
       this.setupPendo();
     }, (xhr) => {
@@ -24,7 +24,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     if (this.get('config').pro) {
       $('body').addClass('pro');
     }
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
 
   activate() {

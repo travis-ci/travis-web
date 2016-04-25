@@ -6,7 +6,7 @@ export default ApplicationAdapter.extend({
 
   buildURL(type, id, record) {
     var delimiter, repoId, url;
-    url = this._super.apply(this, arguments);
+    url = this._super(...arguments);
     if (record && record.belongsTo('repo') && (repoId = record.belongsTo('repo').id)) {
       delimiter = url.indexOf('?') !== -1 ? '&' : '?';
       url = "" + url + delimiter + "repository_id=" + repoId;

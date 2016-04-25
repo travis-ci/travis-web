@@ -58,8 +58,10 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
   }
 });
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  popup: Ember.inject.service(),
+  popup: service(),
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
   currentUserBinding: 'auth.currentUser',
@@ -68,7 +70,7 @@ export default Ember.Component.extend({
     if (Log.DEBUG) {
       console.log('log view: did insert');
     }
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     Ember.run.scheduleOnce('afterRender', this, 'createEngine');
   },
 
@@ -129,7 +131,7 @@ export default Ember.Component.extend({
   },
 
   didUpdateAttrs(changes) {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (!changes.oldAttrs) {
       return;
     }

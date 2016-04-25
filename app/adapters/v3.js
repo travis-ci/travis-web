@@ -2,8 +2,10 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
 
+const { service } = Ember.inject;
+
 export default RESTAdapter.extend({
-  auth: Ember.inject.service(),
+  auth: service(),
   host: config.apiEndpoint,
 
   sortQueryParams: false,

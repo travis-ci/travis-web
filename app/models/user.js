@@ -5,11 +5,13 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 import {gravatarImage} from '../utils/urls';
 
+const { service } = Ember.inject;
+
 export default Model.extend({
-  ajax: Ember.inject.service(),
+  ajax: service(),
 
   // TODO: this totally not should be needed here
-  sessionStorage: Ember.inject.service(),
+  sessionStorage: service(),
 
   name: attr(),
   email: attr(),

@@ -19,7 +19,7 @@ export default MainTabRoute.extend({
   },
 
   deactivate() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     return this.controllerFor('repos').set('search', void 0);
   }
 });

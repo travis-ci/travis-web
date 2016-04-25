@@ -2,14 +2,16 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 import { hasPermission, hasPushPermission } from 'travis/utils/permission';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  popup: Ember.inject.service(),
+  popup: service(),
   classNames: ['option-button'],
   classNameBindings: ['isOpen:display'],
   isOpen: false,
 
   click(event) {
-    if ($(event.target).is('a') && $(event.target).parents('.settings-dropdown').length) {      
+    if ($(event.target).is('a') && $(event.target).parents('.settings-dropdown').length) {
       return this.closeMenu();
     }
   },
@@ -19,7 +21,7 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    menu() {            
+    menu() {
       return this.toggleProperty('isOpen');
     }
   },

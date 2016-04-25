@@ -6,7 +6,7 @@ export default Ember.Route.extend({
     if (this.routeName !== 'error') {
       this.controllerFor('error').set('layoutName', null);
     }
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
 
   beforeModel(transition) {
@@ -17,7 +17,7 @@ export default Ember.Route.extend({
       this.auth.set('afterSignInTransition', transition);
       return Ember.RSVP.reject("needs-auth");
     } else {
-      return this._super.apply(this, arguments);
+      return this._super(...arguments);
     }
   },
 

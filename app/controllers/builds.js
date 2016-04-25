@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
+const { controller } = Ember.inject;
+
 export default Ember.Controller.extend({
   buildsSorting: ['number:desc'],
   builds: Ember.computed.sort('model', 'buildsSorting'),
-  repoController: Ember.inject.controller('repo'),
+  repoController: controller('repo'),
   repoBinding: 'repoController.repo',
   tabBinding: 'repoController.tab',
   isLoadedBinding: 'model.isLoaded',

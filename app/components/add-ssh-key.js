@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
   classNames: ['form--sshkey'],
   classNameBindings: ['valueError:form-error'],
-  store: Ember.inject.service(),
+  store: service(),
   isSaving: false,
 
   didInsertElement() {

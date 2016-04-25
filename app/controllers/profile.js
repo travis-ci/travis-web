@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
+const { controller } = Ember.inject;
+
 export default Ember.Controller.extend({
   name: 'profile',
-  accountController: Ember.inject.controller('account'),
-  accountsController: Ember.inject.controller('accounts'),
+  accountController: controller('account'),
+  accountsController: controller('accounts'),
   userBinding: 'auth.currentUser',
   accountBinding: 'accountController.model',
 

@@ -2,8 +2,10 @@ import config from 'travis/config/environment';
 import Ember from 'ember';
 import ActiveModelAdapter from 'active-model-adapter';
 
+const { service } = Ember.inject;
+
 export default ActiveModelAdapter.extend({
-  auth: Ember.inject.service(),
+  auth: service(),
   host: config.apiEndpoint,
   coalesceFindRequests: true,
 
@@ -11,7 +13,7 @@ export default ActiveModelAdapter.extend({
   // new records only when there're no records in the store. This will change
   // to a different strategy in 2.0: when you run `findAll` it will not get any
   // new data initially, but it will try loading new data in the background.
-  // 
+  //
   // I'm disabling the new behaviour for now.
   shouldBackgroundReloadRecord() {
     return false;

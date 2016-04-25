@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import { githubCommit } from 'travis/utils/urls';
 
+const { controller } = Ember.inject;
+
 export default Ember.Controller.extend({
-  repoController: Ember.inject.controller('repo'),
+  repoController: controller('repo'),
   repoBinding: 'repoController.repo',
   commitBinding: 'job.commit',
   currentUserBinding: 'auth.currentUser',

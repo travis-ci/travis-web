@@ -49,9 +49,11 @@ var sortCallback = function(repo1, repo2) {
 
 
 
+const { controller, service } = Ember.inject;
+
 var Controller = Ember.Controller.extend({
-  ajax: Ember.inject.service(),
-  updateTimesService: Ember.inject.service('updateTimes'),
+  ajax: service(),
+  updateTimesService: service('updateTimes'),
 
   actions: {
     activate: function(name) {
@@ -82,7 +84,7 @@ var Controller = Ember.Controller.extend({
   },
 
   isLoaded: false,
-  repoController: Ember.inject.controller('repo'),
+  repoController: controller('repo'),
   currentUserBinding: 'auth.currentUser',
 
   selectedRepo: function() {
@@ -96,7 +98,7 @@ var Controller = Ember.Controller.extend({
   }.property('startedJobsCount', 'queuedJobs.length'),
 
   init() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (!Ember.testing) {
       Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
     }

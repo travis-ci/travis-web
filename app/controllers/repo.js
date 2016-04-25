@@ -3,14 +3,16 @@ import { githubRepo, statusImage } from 'travis/utils/urls';
 import config from 'travis/config/environment';
 
 
-export default Ember.Controller.extend({
-  updateTimesService: Ember.inject.service('updateTimes'),
-  popup: Ember.inject.service(),
+const { controller, service } = Ember.inject;
 
-  jobController: Ember.inject.controller('job'),
-  buildController: Ember.inject.controller('build'),
-  buildsController: Ember.inject.controller('builds'),
-  reposController: Ember.inject.controller('repos'),
+export default Ember.Controller.extend({
+  updateTimesService: service('updateTimes'),
+  popup: service(),
+
+  jobController: controller('job'),
+  buildController: controller('build'),
+  buildsController: controller('builds'),
+  reposController: controller('repos'),
   reposBinding: 'reposController.repos',
   currentUserBinding: 'auth.currentUser',
 
@@ -48,7 +50,7 @@ export default Ember.Controller.extend({
   }.property('repo.isLoading'),
 
   init() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     if (!Ember.testing) {
       Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
     }

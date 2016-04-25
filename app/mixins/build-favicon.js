@@ -16,7 +16,7 @@ export default Ember.Mixin.create({
 
   init() {
     this.faviconManager = new FaviconManager();
-    return this._super.apply(this, arguments);
+    return this._super(...arguments);
   },
 
   setFaviconForState(state) {

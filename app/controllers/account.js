@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 
   init() {
     var self;
-    this._super.apply(this, arguments);
+    this._super(...arguments);
     self = this;
     return Travis.on("user:synced", (function() {
       return self.reloadHooks();

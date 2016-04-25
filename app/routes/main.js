@@ -5,7 +5,7 @@ export default TravisRoute.extend({
   renderTemplate() {
     $('body').attr('id', 'home');
 
-    this._super.apply(this, arguments);
+    this._super(...arguments);
 
     return this.render('repos', {
       outlet: 'left',
