@@ -52,8 +52,6 @@ export default Ember.Component.extend({
     }
   },
 
-  intervals: function() {
-    return ['monthly', 'weekly', 'daily'];
-  }.property()
+  intervals: ['monthly', 'weekly', 'daily']
 
 });

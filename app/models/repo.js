@@ -169,10 +169,6 @@ Repo.reopen({
     });
   }.property(),
 
-  sortedCrons: Ember.computed.sort('cronJobs', function(a, b) {
-    return a.get('branch.name') > b.get('branch.name');
-  }),
-
   owner: function() {
     return (this.get('slug') || '').split('/')[0];
   }.property('slug'),

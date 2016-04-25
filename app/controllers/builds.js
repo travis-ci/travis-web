@@ -15,7 +15,9 @@ export default Ember.Controller.extend({
     var id, number, type;
     id = this.get('repo.id');
     number = this.get('builds.lastObject.number');
-    type = this.get('tab') === "builds" ? 'push' : this.get('tab').substr(0, this.get('tab').length-1);
+    const tabName = this.get('tab');
+    const singularTab = tabName.substr(0, tabName.length-1);
+    type = this.get('tab') === "builds" ? 'push' : singularTab;
     this.olderThanNumber(id, number, type);
   },
 
