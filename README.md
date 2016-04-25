@@ -51,7 +51,7 @@ certificate with `--ssl-key` and `--ssl-cert`.
 
 ### Running tests
 
-To run a test suite execute:
+To run the test suite execute:
 
     ember test
 
