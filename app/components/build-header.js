@@ -8,6 +8,17 @@ export default Ember.Component.extend({
   tagName: 'section',
   classNames: ['build-header'],
   classNameBindings: ['item.state'],
+  attributeBindings: ['jobId:data-job-id'],
+
+  jobId: function() {
+    if (this.get('item.build')) {
+      return this.get('item.id');
+    } else {
+      let ids = [];
+      this.item.get('jobs').forEach(function(item) { ids.push(item.id); });
+      return ids.join(' ');
+    }
+  }.property('item'),
 
   isJob: function() {
     if (this.get('item.build')) {
