@@ -25,8 +25,23 @@
 
     {{add-env-var repo=repo}}
 
-
   </section>
+
+  {{#if model.cronJobs.enabled}}
+    <section class="settings-section">
+      <h2 class="small-title">Cron Jobs</h2>
+
+      <ul class="settings-list--crons">
+        {{#each model.cronJobs.jobs as |cron|}}
+          <li>{{cron-job cron=cron}}</li>
+        {{/each}}
+
+        <li>{{add-cron-job branches=branches}}</li>
+      </ul>
+
+    </section>
+  {{/if}}
+
 {{#if config.endpoints.sshKey}}
   <section class="settings-section">
     <h2 class="small-title">SSH Key</h2>

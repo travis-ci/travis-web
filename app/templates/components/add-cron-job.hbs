@@ -1,0 +1,30 @@
+<form {{action "save" on="submit"}}>
+  <div class="form-elem select">
+    <span class="label">Branch</span>
+    {{#x-select value=selectedBranch required="true"}}
+      {{#each branches as |branch|}}
+        {{#if branch.exists_on_github}}
+          {{#x-option value=branch}}{{branch.name}}{{/x-option}}
+        {{/if}}
+      {{/each}}
+    {{/x-select}}
+  </div>
+  <div class="form-elem select">
+    <span class="label">Interval</span>
+    {{#x-select value=selectedInterval required="true"}}
+      {{#each intervals as |interval|}}
+        {{#x-option value=interval}}{{interval}}{{/x-option}}
+      {{/each}}
+    {{/x-select}}
+  </div>
+  <div class="form-elem">
+    {{travis-switch active=disable description="Only if no new commit after last cron build"}}
+  </div>
+  <div class="form-elem">
+    {{#if isSaving}}
+      {{loading-indicator}}
+    {{else}}
+      <input type="submit" value="Add" class="form-submit" />
+    {{/if}}
+  </div>
+</form>

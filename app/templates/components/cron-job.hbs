@@ -1,0 +1,16 @@
+<div class="cron-job-value">{{cron.branch.name}}</div>
+<div class="cron-job-value">{{cron.interval}}</div>
+<div class="cron-job-value">{{pretty-date cron.next_enqueuing}}</div>
+<div class="cron-job-text">{{disableByBuild}}</div>
+<div class="cron-job-action">
+  <div class="tooltip">
+    {{#if isDeleting}}
+      {{loading-indicator}}
+    {{else}}
+      <a href="#" title="" {{action "delete" on="click"}}>
+        <span class="icon-delete"></span>
+      </a>
+      <div class="tooltip-bubble">Delete</div>
+    {{/if}}
+  </div>
+</div>

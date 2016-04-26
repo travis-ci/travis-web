@@ -7,7 +7,12 @@ export default Model.extend({
   name: attr('string'),
   defaultBranch: attr('boolean'),
   lastBuild: belongsTo('build'),
+  exists_on_github: attr('boolean'),
 
   builds: hasMany('builds', { inverse: 'branch' }),
-  repo: belongsTo('repo', { inverse: 'defaultBranch' })
+  repo: belongsTo('repo', { inverse: 'defaultBranch' }),
+
+  repoId: function() {
+    return this.get('id').split('/')[3];
+  }.property('id')
 });

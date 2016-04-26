@@ -4,7 +4,7 @@
       <section>
         <h2 class="small-title">Default Branch</h2>
         <ul class="blank-list">
-          {{branch-row build=defaultBranch}}
+          {{branch-row branch=defaultBranch}}
         </ul>
       </section>
     {{/if}}
@@ -14,7 +14,7 @@
         <h2 class="small-title">Active Branches</h2>
         <ul class="blank-list">
           {{#each activeBranches as |branch|}}
-            {{branch-row build=branch}}
+            {{branch-row branch=branch}}
           {{/each}}
         </ul>
       </section>
@@ -25,7 +25,7 @@
         <h2 class="small-title">Inactive Branches</h2>
         <ul class="blank-list">
           {{#each inactiveBranches as |branch|}}
-            {{branch-row build=branch inactive=true}}
+            {{branch-row branch=branch inactive=true}}
           {{/each}}
         </ul>
       </section>

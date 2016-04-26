@@ -99,10 +99,10 @@ Repo.reopen({
     var array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
-      event_type: ['push', 'api'],
+      event_type: ['push', 'api', 'cron'],
       repository_id: id
     }, function(b) {
-      return b.get('repo.id') + '' === id + '' && (b.get('eventType') === 'push' || b.get('eventType') === 'api');
+      return b.get('repo.id') + '' === id + '' && (b.get('eventType') === 'push' || b.get('eventType') === 'api' || b.get('eventType') === 'cron');
     });
     array = ExpandableRecordArray.create({
       type: 'build',
@@ -132,16 +132,41 @@ Repo.reopen({
     return array;
   }.property(),
 
+  crons: function() {
+    var array, builds, id;
+    id = this.get('id');
+    builds = this.store.filter('build', {
+      event_type: 'cron',
+      repository_id: id
+    }, function(b) {
+      return b.get('repo.id') + '' === id + '' && b.get('eventType') === 'cron';
+    });
+    array = ExpandableRecordArray.create({
+      type: 'build',
+      content: Ember.A([])
+    });
+    array.load(builds);
+    id = this.get('id');
+    array.observe(builds);
+    return array;
+  }.property(),
+
   branches: function() {
-    var builds;
-    builds = this.store.query('build', {
-      repository_id: this.get('id'),
-      branches: true
+    var id = this.get('id');
+    return this.store.filter('branch', {
+      repository_id: id
+    }, function(b) {
+      return b.get('repoId') === id;
     });
-    builds.then(function() {
-      return builds.set('isLoaded', true);
+  }.property(),
+
+  cronJobs: function() {
+    var id = this.get('id');
+    return this.store.filter('cron', {
+      repository_id: id
+    }, function(cron) {
+      return cron.get('branch.repoId') === id;
     });
-    return builds;
   }.property(),
 
   owner: function() {
