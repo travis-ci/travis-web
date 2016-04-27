@@ -1,15 +1,9 @@
 .missing-notice
   text-align: center
-
-  p a
-    color: $cement-grey
-    text-decoration: underline
-
-  a.button
-    font-size: 14px
+  .button
+    font-size: 16px
 
 .page-title
-  color: #434343
   font-size: 36px
   font-weight: 200
   line-height: 1
@@ -17,15 +11,16 @@
 
 .page-notice
   font-size: $font-size-m
-  color: #8d8d8d
+  +linkStyle
 
 .page-graphic
-  width: 80%
-  height: auto
-  max-width: 310px
+  height: 180px
+  width: 310px
   margin: 5.75rem auto 0
   padding: 0 2em
   line-height: 0
   border-bottom: 1px solid #DEDCDB
-  @media #{$medium-up}
-    width: 32%
+  svg
+    width: 100%
+    height: 100%
+

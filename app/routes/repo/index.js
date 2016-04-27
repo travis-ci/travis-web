@@ -4,7 +4,8 @@ import Config from 'travis/config/environment';
 export default TravisRoute.extend({
   setupController(controller, model) {
     this._super(...arguments);
-    return this.controllerFor('repo').activate('current');
+    this.controllerFor('repo').activate('current');
+    controller.set('repo', model);
   },
 
   deactivate() {
