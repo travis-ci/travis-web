@@ -10,7 +10,7 @@ moduleForAcceptance('Acceptance | profile', {
       repos_count: 3
     });
     
-    storeUserSession(currentUser);
+    signInUser(currentUser);
 
     const organization = server.create('account', {
       name: 'Goldsmiths',
