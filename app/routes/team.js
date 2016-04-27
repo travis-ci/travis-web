@@ -71,7 +71,7 @@ export default TravisRoute.extend({
         image: 'justine'
       }, {
         name: 'Hiro Asari',
-        title: 'International Man of IPAs',
+        title: 'Time Zone Nerd',
         handle: 'hiro_asari',
         nationality: 'japan',
         country: 'usa',
