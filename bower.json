@@ -4,7 +4,7 @@
     "ember": "2.5.1",
     "ember-cli-shims": "0.1.1",
     "ember-cli-test-loader": "0.2.2",
-    "ember-load-initializers": "0.1.7",
+    "ember-load-initializers": "0.5.1",
     "ember-qunit": "0.4.16",
     "ember-qunit-notifications": "0.1.0",
     "jquery": "~2.2",
