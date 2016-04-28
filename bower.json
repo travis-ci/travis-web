@@ -12,7 +12,7 @@
     "visibilityjs": "~1.2.1",
     "JavaScript-MD5": "~2.3.0",
     "moment": "~2.13.0",
-    "jquery-timeago": "~1.4.1",
+    "jquery-timeago": "~1.5.2",
     "pusher": "~2.2.3",
     "ember-resolver": "~0.1.20",
     "pretender": "~0.12.0",
