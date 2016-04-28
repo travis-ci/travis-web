@@ -3,7 +3,12 @@ import RavenLogger from 'ember-cli-sentry/services/raven';
 export default RavenLogger.extend({
   // whitelist benign "errors"
   whitelistMessages: [
-    'TransitionAborted'
+    'TransitionAborted',
+    'UnrecognizedURLError',
+    'not found',
+    'returned a 403',
+    'returned a 404',
+    'Adapter operation failed',
   ],
 
   unhandledPromiseErrorMessage: '',
