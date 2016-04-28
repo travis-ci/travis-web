@@ -23,17 +23,14 @@
 
     {{sync-button user=auth.currentUser}}
 
-    {{#if user.isSyncing}}
-      {{#unless config.enterprise}}
-        {{#if config.pro}}
-          <p>We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
-        {{else}}
-          <p>We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
-        {{/if}}
-      {{/unless}}
-    {{/if}}
+    {{#unless config.enterprise}}
+      {{#if config.pro}}
+        <p class="helptext">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+      {{else}}
+        <p class="helptext">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+      {{/if}}
+    {{/unless}}
   </header>
-
 
   <section class="profile-getstarted">
     {{!-- <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a> --}}
