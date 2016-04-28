@@ -1,6 +1,10 @@
 import RavenLogger from 'ember-cli-sentry/services/raven';
 
 export default RavenLogger.extend({
+  // whitelist benign "errors"
+  whitelistMessages: [
+    'TransitionAborted'
+  ],
 
   unhandledPromiseErrorMessage: '',
 
@@ -16,11 +20,25 @@ export default RavenLogger.extend({
     return this._super(...arguments);
   },
 
-  ignoreError() {
-    return this._super();
+  ignoreError(error) {
+    if (!this.shouldReportError()) {
+      return true;
+    } else {
+      let { message } = error;
+      return this.get('whitelistMessages').any((whitelistedMessage) => {
+        return message.includes(whitelistedMessage);
+      });
+    }
   },
 
   callRaven(/* methodName, ...optional */) {
     return this._super(...arguments);
+  },
+
+  shouldReportError() {
+    // Sentry recommends only reporting a small subset of the actual
+    // frontend errors. This can get *very* noisy otherwise.
+    var sampleRate = 10;
+    return (Math.random() * 100 <= sampleRate);
   }
 });
