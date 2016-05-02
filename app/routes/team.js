@@ -206,6 +206,13 @@ export default TravisRoute.extend({
         nationality: 'none',
         country: 'none',
         image: 'buck'
+      }, {
+        name: 'Curtis Ekstrom',
+        title: 'Fallen for JavaScript',
+        handle: 'clekstro',
+        nationality: 'usa',
+        country: 'germany',
+        image: 'curtis'
       }
     ];
   }
