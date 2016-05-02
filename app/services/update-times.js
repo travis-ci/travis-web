@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Config from 'travis/config/environment';
+import eventually from 'travis/utils/eventually';
 
 export default Ember.Service.extend({
   records: [],
@@ -28,7 +29,11 @@ export default Ember.Service.extend({
     records.filter((record) => {
       return this.get('allowFinishedBuilds') || !record.get('isFinished');
     }).forEach((record) => {
-      record.updateTimes();
+      eventually(record, function(resolvedRecord) {
+        if(resolvedRecord) {
+          resolvedRecord.updateTimes();
+        }
+      });
     });
 
     this.set('records', []);

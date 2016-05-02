@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import eventually from 'travis/utils/eventually';
 
 const { service } = Ember.inject;
 
@@ -55,7 +56,7 @@ export default Ember.Mixin.create({
         this.get('flashes').error('An error occurred. The build could not be restarted.');
         this.displayFlashError(xhr.status, 'restart');
       };
-      return this.get('item').restart().then(onSuccess, onError);
+      eventually(this.get('item'), record => record.restart().then(onSuccess, onError) );
     },
 
     cancel: function() {
@@ -66,12 +67,14 @@ export default Ember.Mixin.create({
       this.set('cancelling', true);
 
       type = this.get('type');
-      return this.get('item').cancel().then(() => {
-        this.set('cancelling', false);
-        this.get('flashes').notice(`${type.capitalize()} has been successfully cancelled.`);
-      }, (xhr) => {
-        this.set('cancelling', false);
-        this.displayFlashError(xhr.status, 'cancel');
+      eventually(this.get('item'), (record) => {
+        record.cancel().then(() => {
+          this.set('cancelling', false);
+          this.get('flashes').notice(`${type.capitalize()} has been successfully cancelled.`);
+        }, (xhr) => {
+          this.set('cancelling', false);
+          this.displayFlashError(xhr.status, 'cancel');
+        });
       });
     }
   }

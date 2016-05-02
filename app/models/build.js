@@ -27,7 +27,7 @@ Build.reopen({
   number: attr('number'),
   message: attr('string'),
   _duration: attr('number'),
-  _config: attr('object'),
+  _config: attr(),
   _startedAt: attr(),
   _finishedAt: attr('string'),
   pullRequest: attr('boolean'),
