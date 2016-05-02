@@ -56,5 +56,8 @@
     "ember-try": "0.2.2",
     "emberx-select": "2.1.2",
     "loader.js": "^4.0.2"
+  },
+  "dependencies": {
+    "pusher-js": "^3.0.0"
   }
 }
