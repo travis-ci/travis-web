@@ -2,6 +2,8 @@ import Ember from 'ember';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
+/* globals HS */
+import initHsBeacon from 'travis/utils/init-hs-beacon';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
@@ -38,6 +40,7 @@ var App = Ember.Application.extend(Ember.Evented, {
     if (location.hash.slice(0, 2) === '#!') {
       location.href = location.href.replace('#!/', '');
     }
+    
     this.on('user:signed_in', function(user) {
       return Travis.onUserUpdate(user);
     });
@@ -48,8 +51,8 @@ var App = Ember.Application.extend(Ember.Evented, {
       return Travis.onUserUpdate(user);
     });
     return this.on('user:signed_out', function() {
-      if (config.userlike) {
-        return Travis.removeUserlike();
+      if (config.beacon) {
+        return Travis.destroyBeacon();
       }
     });
   },
@@ -62,10 +65,28 @@ var App = Ember.Application.extend(Ember.Evented, {
     if (config.pro) {
       this.identifyCustomer(user);
     }
-    if (config.userlike) {
-      this.setupUserlike(user);
+    if (config.pro && config.beacon) {
+      this.setupBeacon();
+      this.identifyHSBeacon(user);
     }
     return this.subscribePusher(user);
+  },
+
+  destroyBeacon() {
+    HS.beacon.ready(function() {
+      return HS.beacon.destroy();
+    });
+  },
+
+  setupBeacon() {
+
+    if (window.HS) {
+      HS.beacon.ready(function() {
+        HS.beacon.init();
+      });  
+    } else {
+      initHsBeacon();
+    }
   },
 
   subscribePusher(user) {
@@ -86,26 +107,17 @@ var App = Ember.Application.extend(Ember.Evented, {
     return Travis.pusher.subscribeAll(channels);
   },
 
-  setupUserlike(user) {
-    var btn, s, userlikeData;
-    btn = document.getElementById('userlikeCustomTab');
-    btn.classList.add("logged-in");
-    userlikeData = window.userlikeData = {};
-    userlikeData.user = {};
-    userlikeData.user.name = user.login;
-    userlikeData.user.email = user.email;
-    if (!document.getElementById('userlike-script')) {
-      s = document.createElement('script');
-      s.id = 'userlike-script';
-      s.src = '//userlike-cdn-widgets.s3-eu-west-1.amazonaws.com/0327dbb23382ccbbb91b445b76e8a91d4b37d90ef9f2faf84e11177847ff7bb9.js';
-      return document.body.appendChild(s);
+  identifyHSBeacon(user) {
+    if (HS && HS.beacon) {
+      HS.beacon.ready(function() {
+        return HS.beacon.identify({
+          name: user.name,
+          email: user.email,
+          login: user.login,
+          last_synced_at: user.synced_at
+        });
+      });
     }
-  },
-
-  removeUserlike() {
-    var btn;
-    btn = document.getElementById('userlikeCustomTab');
-    return btn.classList.remove("logged-in");
   },
 
   identifyCustomer(user) {
