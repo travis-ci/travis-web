@@ -7,6 +7,10 @@ export default Ember.Service.extend({
   init() {
     this._super(...arguments);
 
+    this.setup();
+  },
+
+  setup() {
     this.set('flashes', LimitedArray.create({
       limit: 1,
       content: []
@@ -59,6 +63,10 @@ export default Ember.Service.extend({
 
   close(msg) {
     return this.get('flashes').removeObject(msg);
+  },
+
+  clear() {
+    this.setup();
   },
 
   display(type, message) {
