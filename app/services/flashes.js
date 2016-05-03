@@ -62,14 +62,14 @@ export default Ember.Service.extend({
   },
 
   display(type, message) {
-    if(!['error', 'notice', 'warning'].contains(type)) {
-      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'warning' types");
+    if(!['error', 'notice', 'success'].contains(type)) {
+      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
     this.loadFlashes([{ [type]: message }]);
   },
 
-  warning(message) {
-    this.display('warning', message);
+  success(message) {
+    this.display('success', message);
   },
 
   error(message) {
