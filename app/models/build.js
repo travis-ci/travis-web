@@ -17,7 +17,9 @@ if (Config.useV3API) {
   });
 } else {
   Build = Model.extend(DurationCalculations, {
-      branchName: Ember.computed.alias('commit.branch')
+    branchName: Ember.computed.alias('commit.branch'),
+    // this is not used in V2, but makes it easier to test serializers
+    branch: belongsTo('branch', { async: false, inverse: 'builds' }),
   });
 }
 
