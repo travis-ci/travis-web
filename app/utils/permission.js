@@ -1,23 +1,20 @@
-
-var hasPermission = function(user, repo) {
-  let id = isNaN(repo) ? repo.get('id') : parseInt(repo);
+let checkPermission = function(user, repo, permissionsType) {
+  let id = isNaN(repo) ? repo.get('id') : repo;
   if(user) {
-    return user.get('permissions').contains(id);
+    return user.get(permissionsType).contains(parseInt(id));
   }
 };
 
-var hasPushPermission = function(user, repo) {
-  let id = isNaN(repo) ? repo.get('id') : parseInt(repo);
-  if(user) {
-    return user.get('pushPermissions').contains(id);
-  }
+let hasPermission = function(user, repo) {
+  return checkPermission(user, repo, 'permissions');
 };
 
-var hasAdminPermission = function(user, repo) {
-  let id = isNaN(repo) ? repo.get('id') : parseInt(repo);
-  if(user) {
-    return user.get('adminPermissions').contains(id);
-  }
+let hasPushPermission = function(user, repo) {
+  return checkPermission(user, repo, 'pushPermissions');
+};
+
+let hasAdminPermission = function(user, repo) {
+  return checkPermission(user, repo, 'adminPermissions');
 };
 
 export {hasPermission, hasPushPermission, hasAdminPermission};

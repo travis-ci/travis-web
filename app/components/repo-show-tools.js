@@ -31,7 +31,7 @@ export default Ember.Component.extend({
   }.property('permissions.all', 'repo'),
 
   displayCachesLink: function() {
-    return this.get('permissions').hasPushPermission(this.get('repo')) && config.endpoints.caches;
+    return this.get('permissions').hasPushPermission(this.get('repo'));
   }.property('permissions.all', 'repo'),
 
   displayStatusImages: function() {
