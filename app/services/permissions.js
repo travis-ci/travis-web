@@ -6,6 +6,11 @@ const { service } = Ember.inject;
 export default Ember.Service.extend({
   auth: service(),
 
+  init() {
+    this.get('all');
+    return this._super(...arguments);
+  },
+
   currentUser: Ember.computed.alias('auth.currentUser'),
   // This is computed property that can be used to allow any properties that
   // use permissions service to add dependencies easier. So instead of depending
