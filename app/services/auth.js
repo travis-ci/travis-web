@@ -4,6 +4,7 @@ import Ember from 'ember';
 const { service } = Ember.inject;
 
 export default Ember.Service.extend({
+  flashes: service(),
   store: service(),
   storage: service(),
   sessionStorage: service(),
@@ -27,26 +28,23 @@ export default Ember.Service.extend({
 
   signOut: function() {
     var user;
-    this.get('storage').removeItem('travis.user');
-    this.get('storage').removeItem('travis.token');
     this.get('sessionStorage').clear();
+    this.get('storage').clear();
     this.set('state', 'signed-out');
-    this.set('user', void 0);
+    this.set('user', null);
 
-    if (user = this.get('currentUser')) {
-      this.get('store').unloadAll('user');
-    }
+    this.get('store').unloadAll();
 
     this.set('currentUser', null);
     this.sendToApp('afterSignOut');
 
-    return Travis.trigger('user:signed_out');
+    Travis.trigger('user:signed_out');
   },
 
   signIn(data) {
     var url;
     if (data) {
-      return this.autoSignIn(data);
+      this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
       url = (this.get('endpoint')) + "/auth/post_message?origin=" + this.receivingEnd;
@@ -62,6 +60,16 @@ export default Ember.Service.extend({
 
     if (data) {
       this.setData(data);
+      this.refreshUserData().then( () => {
+      }, (xhr) => {
+        // if xhr is not defined it means that scopes are not correct,
+        // so log the user out. Also log the user out if the response is 401
+        // or 403
+        if(!xhr || (xhr.status === 401 || xhr.status === 403)) {
+          this.get('flashes').error("You've been signed out, because your access token has expired.");
+          this.signOut();
+        }
+      });
     }
   },
 
@@ -122,7 +130,7 @@ export default Ember.Service.extend({
     this.set('currentUser', user);
     this.set('state', 'signed-in');
     Travis.trigger('user:signed_in', data.user);
-    return this.sendToApp('afterSignIn');
+    this.sendToApp('afterSignIn');
   },
 
   refreshUserData(user) {

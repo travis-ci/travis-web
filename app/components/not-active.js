@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
-  flashes: Ember.inject.service(),
+  flashes: service(),
 
   canActivate: function() {
     let user = this.get('user');

@@ -23,6 +23,10 @@ export default Ember.Controller.extend({
   builds: Ember.computed.alias('buildsController.content'),
   job: Ember.computed.alias('jobController.job'),
 
+  reset() {
+    this.set('repo', null);
+  },
+
   isEmpty: function() {
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
   }.property('repos.isLoaded', 'repos.length'),

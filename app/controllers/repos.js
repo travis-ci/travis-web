@@ -154,16 +154,22 @@ var Controller = Ember.Controller.extend({
     return this[("view_" + tab).camelize()](params);
   },
 
+  reset() {
+    this.set('_repos', null);
+    this.set('ownedRepos', null);
+  },
+
   viewOwned() {
     var repos, user;
 
     if (repos = this.get('ownedRepos')) {
       return this.set('_repos', repos);
     } else if (!this.get('fetchingOwnedRepos')) {
-      this.set('fetchingOwnedRepos', true);
       this.set('isLoaded', false);
 
       if (user = this.get('currentUser')) {
+        this.set('fetchingOwnedRepos', true);
+
         let callback = (reposRecordArray) => {
           this.set('isLoaded', true);
           this.set('_repos', reposRecordArray);
@@ -172,13 +178,15 @@ var Controller = Ember.Controller.extend({
           return reposRecordArray;
         };
 
+        let onError = () => this.set('fetchingOwnedRepos', false);
+
         if(Config.useV3API) {
           user.get('_rawPermissions').then( (data) => {
-            Repo.accessibleBy(this.store, data.pull).then(callback);
-          });
+            Repo.accessibleBy(this.store, data.pull).then(callback, onError);
+          }, onError);
         } else {
           let login = user.get('login');
-          Repo.accessibleBy(this.store, login).then(callback);
+          Repo.accessibleBy(this.store, login).then(callback, onError);
         }
       }
     }

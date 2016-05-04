@@ -7,6 +7,10 @@ export default Ember.Service.extend({
   init() {
     this._super(...arguments);
 
+    this.setup();
+  },
+
+  setup() {
     this.set('flashes', LimitedArray.create({
       limit: 1,
       content: []
@@ -61,15 +65,19 @@ export default Ember.Service.extend({
     return this.get('flashes').removeObject(msg);
   },
 
+  clear() {
+    this.setup();
+  },
+
   display(type, message) {
-    if(!['error', 'notice', 'warning'].contains(type)) {
-      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'warning' types");
+    if(!['error', 'notice', 'success'].contains(type)) {
+      console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
     this.loadFlashes([{ [type]: message }]);
   },
 
-  warning(message) {
-    this.display('warning', message);
+  success(message) {
+    this.display('success', message);
   },
 
   error(message) {

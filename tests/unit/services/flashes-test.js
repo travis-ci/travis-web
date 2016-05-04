@@ -15,23 +15,23 @@ test('it allows to show an error', function(assert) {
   assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was an error!', type: 'error' }, 'there should be an error message in flashes');
 });
 
-test('it allows to show an notice', function(assert) {
+test('it allows to show a notice', function(assert) {
   let service = this.subject();
 
   assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
 
-  service.notice('There was an notice!');
+  service.notice('There was a notice!');
 
-  assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was an notice!', type: 'notice' }, 'there should be an notice message in flashes');
+  assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was a notice!', type: 'notice' }, 'there should be a notice message in flashes');
 });
 
-test('it allows to show an warning', function(assert) {
+test('it allows to show a success', function(assert) {
   let service = this.subject();
 
   assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
 
-  service.warning('There was an warning!');
+  service.success('There was a success!');
 
-  assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was an warning!', type: 'warning' }, 'there should be an warning message in flashes');
+  assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was a success!', type: 'success' }, 'there should be a notice message in flashes');
 });
 

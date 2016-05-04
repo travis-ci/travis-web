@@ -1,11 +1,12 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-import { hasPermission, hasPushPermission } from 'travis/utils/permission';
 
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
   popup: service(),
+  permissions: service(),
+
   classNames: ['option-button'],
   classNameBindings: ['isOpen:display'],
   isOpen: false,
@@ -26,15 +27,15 @@ export default Ember.Component.extend({
     }
   },
   displaySettingsLink: function() {
-    return hasPushPermission(this.get('currentUser'), this.get('repo.id'));
-  }.property('currentUser.pushPermissions.length', 'repo'),
+    return this.get('permissions').hasPushPermission(this.get('repo'));
+  }.property('permissions.all', 'repo'),
 
   displayCachesLink: function() {
-    return hasPushPermission(this.get('currentUser'), this.get('repo.id')) && config.endpoints.caches;
-  }.property('currentUser.pushPermissions.length', 'repo'),
+    return this.get('permissions').hasPushPermission(this.get('repo')) && config.endpoints.caches;
+  }.property('permissions.all', 'repo'),
 
   displayStatusImages: function() {
-    return hasPermission(this.get('currentUser'), this.get('repo.id'));
-  }.property('currentUser.permissions.length', 'repo.id')
+    return this.get('permissions').hasPermission(this.get('repo'));
+  }.property('permissions.all', 'repo'),
 
 });

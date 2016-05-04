@@ -1,31 +1,22 @@
 
-var hasPermission = function(user, repoId) {
-  var id = parseInt(repoId);
-  var permissions;
-  if (user) {
-    if (permissions = user.get('permissions')) {
-      return permissions.contains(id);
-    }
+var hasPermission = function(user, repo) {
+  let id = isNaN(repo) ? repo.get('id') : parseInt(repo);
+  if(user) {
+    return user.get('permissions').contains(id);
   }
 };
 
-var hasPushPermission = function(user, repoId) {
-  var id = parseInt(repoId);
-  var permissions;
-  if (user) {
-    if (permissions = user.get('pushPermissions')) {
-      return permissions.contains(id);
-    }
+var hasPushPermission = function(user, repo) {
+  let id = isNaN(repo) ? repo.get('id') : parseInt(repo);
+  if(user) {
+    return user.get('pushPermissions').contains(id);
   }
 };
 
-var hasAdminPermission = function(user, repoId) {
-  var id = parseInt(repoId);
-  var permissions;
-  if (user) {
-    if (permissions = user.get('adminPermissions')) {
-      return permissions.contains(id);
-    }
+var hasAdminPermission = function(user, repo) {
+  let id = isNaN(repo) ? repo.get('id') : parseInt(repo);
+  if(user) {
+    return user.get('adminPermissions').contains(id);
   }
 };
 

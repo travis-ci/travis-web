@@ -7,6 +7,8 @@ const { service } = Ember.inject;
 
 export default Ember.Component.extend({
   routing: service('-routing'),
+  permissions: service(),
+
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
   classNames: ['branch-row', 'row-li'],
@@ -56,18 +58,8 @@ export default Ember.Component.extend({
   }.property(),
 
   canTrigger: function() {
-    var permissions;
-    if (!this.get('auth.signedIn')) {
-      return false;
-    } else {
-      permissions = this.get('auth.currentUser.permissions');
-      if (permissions.contains(parseInt(this.get('branch.repository.id')))) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }.property(),
+    return this.get('permissions').hasPermission(this.get('branch.repository'));
+  }.property('permissions.all', 'build.repository'),
 
   triggerBuild: function() {
     var apiEndpoint, options, repoId;

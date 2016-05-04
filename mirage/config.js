@@ -46,9 +46,13 @@ export default function() {
   });
 
   this.get('/users/:id', (schema, request) => {
-    let user = schema.user.find(request.params.id);
-    if (user) {
-      return { user: user.attrs };
+    if(request.requestHeaders.Authorization === 'token testUserToken') {
+      let user = schema.user.find(request.params.id);
+      if (user) {
+        return { user: user.attrs };
+      }
+    } else {
+      return new Mirage.Response(403, {}, {});
     }
   });
 
