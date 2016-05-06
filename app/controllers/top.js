@@ -94,6 +94,12 @@ export default Ember.Controller.extend({
       this.get('broadcasts.content').removeObject(broadcast);
       this.set('broadcasts.lastBroadcastStatus', this.defineTowerColor(this.get('broadcasts.content')));
       return false;
+    },
+
+    help() {
+      if (window.HS) {
+        window.HS.beacon.open();
+      }
     }
   },
   showCta: function() {
