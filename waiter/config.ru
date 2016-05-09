@@ -22,6 +22,8 @@ end
 
 use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
 
+use Travis::Web::SentryDeployHook
+
 use Travis::Web::SetToken
 use Travis::Web::Allow
 
