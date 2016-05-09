@@ -18,6 +18,18 @@ And open http://localhost:4200 in the browser.
 
 Alternatively you can run `ember build --watch` and start the server with `waiter/script/server`
 
+### Waiter Workarounds
+
+Should you encounter issues installing Puma while bundling Waiter on a recent
+OSX version, you need to tinker with Homebrew:
+
+``` bash
+brew install openssl
+brew link --force openssl
+```
+
+You should then be able to run `bundle install` as usual.
+
 ### Running the app in private repos mode
 
 At the moment Travis CI is available as two separate sites - https://travis-ci.org for Open Source
