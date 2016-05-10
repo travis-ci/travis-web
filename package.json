@@ -51,7 +51,6 @@
     "ember-data-filter": "1.13.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.5",
-    "ember-git-version": "0.1.0",
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
     "ember-try": "0.2.2",
