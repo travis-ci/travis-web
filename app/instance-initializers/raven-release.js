@@ -10,7 +10,7 @@ export function initialize(appInstance) {
   }
 
   let env = window.location.href;
-  let domain = env === 'https://travis-ci.org/' ? 'org' : 'com';
+  let domain = env.includes('.org') ? 'org' : 'com';
   let release = `${domain}-${sha}`;
 
   window.Raven.setRelease(release);
