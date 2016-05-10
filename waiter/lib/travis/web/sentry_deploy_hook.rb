@@ -15,7 +15,7 @@ class Travis::Web::SentryDeployHook < Sinatra::Base
     request_body = {
       version: params["head"],
       ref: params["head_long"],
-      commit_location: "#{settings.github_commit_url}/#{params["head_long"]}"
+      url: "#{settings.github_commit_url}/#{params["head_long"]}"
     }.to_json
 
     url = URI(settings.sentry_releases_endpoint)
