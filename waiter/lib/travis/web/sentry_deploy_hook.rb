@@ -33,7 +33,7 @@ class Travis::Web::SentryDeployHook < Sinatra::Base
 
   def determine_version(url, sha)
     return sha unless url
-    domain = url.include?(".org") ? "org" : "com"
+    domain = url.include?("travis-web-production") ? "org" : "com"
     "#{domain}-#{sha}"
   end
 end
