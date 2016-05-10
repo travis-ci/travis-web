@@ -12,8 +12,10 @@ class Travis::Web::SentryDeployHook < Sinatra::Base
 
 
   post '/deploy/hooks/sentry' do
+    version = determine_version(params["url"])
+
     request_body = {
-      version: params["head"],
+      version: version,
       ref: params["head_long"],
       url: "#{settings.github_commit_url}/#{params["head_long"]}"
     }.to_json
@@ -26,6 +28,16 @@ class Travis::Web::SentryDeployHook < Sinatra::Base
 
     Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
       http.request(request)
+    end
+  end
+
+  def determine_version(url)
+    if params["url"] && params["url"].include?(".org")
+      version = "org-#{params["head"]}"
+    elsif params["url"] && params["url"].include?(".com")
+      version = "org-#{params["head"]}"
+    else
+      version = params["head"]
     end
   end
 end
