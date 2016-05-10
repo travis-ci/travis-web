@@ -12,7 +12,7 @@ class Travis::Web::SentryDeployHook < Sinatra::Base
 
 
   post '/deploy/hooks/sentry' do
-    version = determine_version(params["url"])
+    version = determine_version(params["url"], params["head"])
 
     request_body = {
       version: version,
@@ -31,13 +31,9 @@ class Travis::Web::SentryDeployHook < Sinatra::Base
     end
   end
 
-  def determine_version(url)
-    if params["url"] && params["url"].include?(".org")
-      version = "org-#{params["head"]}"
-    elsif params["url"] && params["url"].include?(".com")
-      version = "org-#{params["head"]}"
-    else
-      version = params["head"]
-    end
+  def determine_version(url, sha)
+    return sha unless url
+    domain = url.include?(".org") ? "org" : "com"
+    "#{domain}-#{sha}"
   end
 end
