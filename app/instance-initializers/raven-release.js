@@ -1,11 +1,13 @@
 import config from 'travis/config/environment';
 
 export function initialize(appInstance) {
+  let sha;
   if (config.environment === 'production') {
-    let sha = config.release;
+    sha = config.release;
   } else {
-    let sha = appInstance.application.version.slice(6, -1);
+    sha = appInstance.application.version.slice(6, -1);
   }
+
   console.log(sha);
 
   let env = window.location.href;
