@@ -106,6 +106,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    ENV.release = process.env.SOURCE_VERSION || "-";
     ENV['ember-cli-mirage'] = {
       enabled: false
     };

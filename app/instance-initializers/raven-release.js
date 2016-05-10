@@ -2,7 +2,7 @@ import config from 'travis/config/environment';
 
 export function initialize(appInstance) {
   if (config.environment === 'production') {
-    let sha = process.env.SOURCE_VERSION || "-"
+    let sha = config.release;
   } else {
     let sha = appInstance.application.version.slice(6, -1);
   }
