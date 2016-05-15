@@ -24,18 +24,6 @@
     <ul>
 
     {{#unless config.enterprise}}
-      {{#unless config.pro}}
-        <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
-        <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
-        <li>
-          <span class="navigation-anchor">Help</span>
-          <ul class="navigation-nested">
-            <li><a href="https://docs.travis-ci.com">Docs</a></li>
-            <li><a href="https://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
-          </ul>
-        </li>
-      {{/unless}}
-
       {{#if config.pro}}
         {{#unless auth.signedIn}}
           <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
@@ -53,7 +41,19 @@
             </ul>
           </li>
         {{/unless}}
+        <li><button class="navigation-anchor" onclick={{action "help"}}>Help</button></li>
+      {{else}}
+        <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
+        <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+        <li>
+          <span class="navigation-anchor">Help</span>
+          <ul class="navigation-nested">
+            <li><a href="https://docs.travis-ci.com">Docs</a></li>
+            <li><a href="https://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
+          </ul>
+        </li>
       {{/if}}
+
     {{else}}
       {{#if auth.signedIn}}
         <li><a class="navigation-anchor" title="Documentation" href="https://docs.travis-ci.com">Docs</a></li>
