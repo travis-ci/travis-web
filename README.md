@@ -1,5 +1,5 @@
 ## Travis CI ember web client
-[![Build Status](https://travis-ci.org/travis-ci/travis-web.png?branch=master)](https://travis-ci.org/travis-ci/travis-web)
+[![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
 ### Running the app
 
 The app is developed using [Ember CLI](http://ember-cli.com). It requires nodejs
