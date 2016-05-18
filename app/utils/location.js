@@ -25,11 +25,15 @@ export default Ember.HistoryLocation.extend({
       } else {
         if (config.pro) {
           return '/home-pro';
-        } else if (config.enterprise) {
-          return '/';
         } else {
           return '/home';
         }
+      }
+    } else if (location.pathname === '/' && config.enterprise) {
+      if (this.get('auth.signedIn')) {
+        return '/repositories';
+      } else {
+        return '/auth';
       }
     }
     return url;
