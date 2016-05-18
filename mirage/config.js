@@ -81,7 +81,7 @@ export default function() {
 
   this.get('/repos/:id/settings', function(schema, request) {
     const repo = schema.repository.find(request.params.id);
-    return repo.settings;
+    return {settings: repo.settings};
   });
 
   this.get('/settings/env_vars', function(schema, request) {
