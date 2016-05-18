@@ -78,6 +78,38 @@ export default function() {
   this.get('/v3/repo/:id/crons', function(schema, request) {
     return turnIntoV3('crons', schema.cron.all());
   });
+
+  this.get('/repos/:id/settings', function(schema, request) {
+    const repo = schema.repository.find(request.params.id);
+    return repo.settings;
+  });
+
+  this.get('/settings/env_vars', function(schema, request) {
+    // FIXME placeholder
+    const repo = schema.repository.find(request.queryParams.repository_id);
+    return {env_vars: repo.env_vars};
+  });
+
+  this.get('/settings/ssh_key/:repo_id', function() {
+    // FIXME placeholder
+    return {file: 'not found'};
+  });
+
+  this.get('/v3/repo/:id', function(schema, request) {
+    const repo = schema.repository.find(request.params.id);
+    return turnIntoV3('repository', repo);
+  });
+
+  this.get('/v3/repo/:id/branches', function(schema) {
+    // FIXME placeholder
+    return turnIntoV3('branch', schema.branch.all());
+  });
+
+  this.get('/repos/:id/key', function() {
+    // FIXME placeholder
+    return {key: 'hello', fingerprint: 'yes'};
+  });
+
   this.get('/jobs/:id', function(schema, request) {
     let job = schema.job.find(request.params.id).attrs;
     return {job: job, commit: schema.commit.find(job.commit_id).attrs};
