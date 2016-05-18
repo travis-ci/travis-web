@@ -22,12 +22,15 @@ moduleForAcceptance('Acceptance | repo settings', {
     const repository = server.create('repository', {
       name: 'living-a-feminist-life',
 
+      // FIXME this is maybe not the best way to create dependent models
       settings: {
         builds_only_with_travis_yml: true,
         build_pushes: true
       },
 
-      env_vars: []
+      env_vars: [],
+
+      "@permissions": []
     });
 
     const branch = server.create('branch', {something: true});
