@@ -13,5 +13,11 @@ export default PageObject.create({
     scope: 'section.settings-section li:first-of-type .switch',
 
     isActive: hasClass('active')
+  },
+
+  buildPushes: {
+    scope: 'section.settings-section li:nth-of-type(2) .switch',
+
+    isActive: hasClass('active')
   }
 });

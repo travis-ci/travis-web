@@ -51,5 +51,6 @@ test('view settings', function(assert) {
 
   andThen(function() {
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected build-only-with-travis-yml to be enabled');
+    assert.ok(settingsPage.buildPushes.isActive, 'expected build-pushes to be enabled');
   });
 });
