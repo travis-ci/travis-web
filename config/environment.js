@@ -28,7 +28,7 @@ module.exports = function(environment) {
       host: 'ws.pusherapp.com'
     },
     pro: false,
-    enterprise: false,
+    enterprise: process.env.TRAVIS_ENTERPRISE || false,
     endpoints: {},
     intervals: { updateTimes: 1000 },
     statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',

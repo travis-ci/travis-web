@@ -25,6 +25,8 @@ export default Ember.HistoryLocation.extend({
       } else {
         if (config.pro) {
           return '/home-pro';
+        } else if (config.enterprise) {
+          return '/';
         } else {
           return '/home';
         }

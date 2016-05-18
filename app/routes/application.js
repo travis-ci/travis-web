@@ -127,6 +127,8 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       this.setDefault();
       if (this.get('config').pro) {
         return this.transitionTo('home-pro');
+      } else if (this.get('config.enterprise')) {
+        return this.transitionTo('auth');
       } else {
         return this.transitionTo('home');
       }
