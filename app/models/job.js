@@ -86,13 +86,6 @@ export default Model.extend(DurationCalculations, {
     }
   },
 
-  sponsor: function() {
-    return {
-      name: "Blue Box",
-      url: "http://bluebox.net"
-    };
-  }.property(),
-
   configValues: function() {
     var config, keys;
     config = this.get('config');
