@@ -13,7 +13,7 @@ test('it renders', function() {
     "private": false,
     default_branch: {
       name: "master",
-      last_build: {
+      current_build: {
         number: "25",
         state: "passed",
         duration: 252,

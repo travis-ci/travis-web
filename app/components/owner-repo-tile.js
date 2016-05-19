@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   classNames: ['owner-tile', 'row-li'],
   classNameBindings: ['currentBuild.state'],
 
-  currentBuild: alias('repo.default_branch.last_build'),
+  currentBuild: alias('repo.default_branch.current_build'),
 
   ownerName: function() {
     return this.get('repo.slug').split(/\//)[0];
