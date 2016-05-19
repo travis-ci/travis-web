@@ -10,13 +10,13 @@ export default PageObject.create({
   visit: visitable(':organization/:repo/settings'),
 
   buildOnlyWithTravisYml: {
-    scope: 'section.settings-section li:first-of-type .switch',
+    scope: 'section.settings-section .builds_only_with_travis_yml.switch',
 
     isActive: hasClass('active')
   },
 
   buildPushes: {
-    scope: 'section.settings-section li:nth-of-type(2) .switch',
+    scope: 'section.settings-section .build_pushes.switch',
 
     isActive: hasClass('active')
   }
