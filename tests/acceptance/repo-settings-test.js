@@ -52,12 +52,12 @@ test('view settings', function(assert) {
   settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
 
   andThen(function() {
-    assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected build-only-with-travis-yml to be enabled');
-    assert.ok(settingsPage.buildPushes.isActive, 'expected build-pushes to be enabled');
+    assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
+    assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
 
     assert.ok(settingsPage.limitConcurrentBuilds.isActive, 'expected concurrent builds to be limited');
     assert.equal(settingsPage.limitConcurrentBuilds.value, '1919');
 
-    assert.ok(settingsPage.buildPullRequests.isActive, 'expected build-pull-requests to be enabled');
+    assert.ok(settingsPage.buildPullRequests.isActive, 'expected builds for pull requests');
   });
 });
