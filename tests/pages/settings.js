@@ -45,5 +45,17 @@ export default PageObject.create({
       isPublic: hasClass('is-public'),
       value: value('input')
     }
+  }),
+
+  crons: collection({
+    scope: '.settings-list--crons',
+    itemScope: '.settings-cron',
+
+    item: {
+      branchName: text('.cron-job-value:nth-child(1)'),
+      interval: text('.cron-job-value:nth-child(2)'),
+      nextEnqueuing: text('.cron-job-value:nth-child(3)'),
+      disableByBuildText: text('.cron-job-text')
+    }
   })
 });

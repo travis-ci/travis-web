@@ -76,7 +76,14 @@ export default function() {
     return turnIntoV3('repository', repos[0]);
   });
   this.get('/v3/repo/:id/crons', function(schema, request) {
-    return turnIntoV3('crons', schema.cron.all());
+    return turnIntoV3('crons', schema.cron.all().map(cron => {
+      // FIXME perhaps turnIntoV3 needs to handle related data somehow?
+      cron.attrs.branch = {
+        "@href": cron.attrs.branchId
+      };
+
+      return cron;
+    }));
   });
 
   this.get('/repos/:id/settings', function(schema, request) {

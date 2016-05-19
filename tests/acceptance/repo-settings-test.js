@@ -35,11 +35,39 @@ moduleForAcceptance('Acceptance | repo settings', {
         {id: 'b', name: 'published', public: null, value: null}
       ],
 
-      "@permissions": []
+      "@permissions": {
+        "create_cron": true
+      }
     });
 
-    const branch = server.create('branch', {something: true});
     const repoId = parseInt(repository.id);
+
+    const dailyBranch = server.create('branch', {
+      name: 'daily-branch',
+      id: `/v3/repos/${repoId}/branches/daily-branch`
+    });
+
+    const weeklyBranch = server.create('branch', {
+      name: 'weekly-branch',
+      id: `/v3/repos/${repoId}/branches/weekly-branch`
+    });
+
+    server.create('cron', {
+      interval: 'daily',
+      disable_by_build: false,
+      next_enqueuing: '2016-05-20T13:00:00Z',
+      repository_id: repoId,
+      branchId: dailyBranch.id
+    });
+
+    server.create('cron', {
+      interval: 'weekly',
+      disable_by_build: true,
+      next_enqueuing: '2016-05-20T14:00:00Z',
+      repository_id: repoId,
+      branchId: weeklyBranch.id
+    });
+
 
     server.create('permissions', {
       admin: [repoId],
@@ -70,5 +98,16 @@ test('view settings', function(assert) {
     assert.equal(settingsPage.environmentVariables(1).name, 'published');
     assert.notOk(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to not be public');
     assert.equal(settingsPage.environmentVariables(1).value, '••••••••••••••••');
+
+    assert.equal(settingsPage.crons(0).branchName, 'daily-branch');
+    assert.equal(settingsPage.crons(0).interval, 'daily');
+    // FIXME how to check this without time zone nightmares?
+    assert.equal(settingsPage.crons(0).nextEnqueuing, 'May 20, 2016 6:00:00');
+    assert.ok(settingsPage.crons(0).disableByBuildText.indexOf('Even') === 0, 'expected cron to run even if no new commit after last build');
+
+    assert.equal(settingsPage.crons(1).branchName, 'weekly-branch');
+    assert.equal(settingsPage.crons(1).interval, 'weekly');
+    assert.equal(settingsPage.crons(1).nextEnqueuing, 'May 20, 2016 7:00:00');
+    assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only') === 0, 'expected cron to run only if no new commit after last build');
   });
 });
