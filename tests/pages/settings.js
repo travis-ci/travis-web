@@ -27,5 +27,11 @@ export default PageObject.create({
 
     isActive: hasClass('active', '.switch'),
     value: value('input')
+  },
+
+  buildPullRequests: {
+    scope: 'section.settings-section .build_pull_requests.switch',
+
+    isActive: hasClass('active')
   }
 });

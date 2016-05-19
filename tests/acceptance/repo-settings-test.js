@@ -26,7 +26,8 @@ moduleForAcceptance('Acceptance | repo settings', {
       settings: {
         builds_only_with_travis_yml: true,
         build_pushes: true,
-        maximum_number_of_builds: 1919
+        maximum_number_of_builds: 1919,
+        build_pull_requests: true
       },
 
       env_vars: [],
@@ -56,5 +57,7 @@ test('view settings', function(assert) {
 
     assert.ok(settingsPage.limitConcurrentBuilds.isActive, 'expected concurrent builds to be limited');
     assert.equal(settingsPage.limitConcurrentBuilds.value, '1919');
+
+    assert.ok(settingsPage.buildPullRequests.isActive, 'expected build-pull-requests to be enabled');
   });
 });
