@@ -17,12 +17,12 @@ export default Ember.Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  buildState: alias('branch.last_build.state'),
-  eventType: alias('branch.last_build.event_type'),
+  buildState: alias('branch.current_build.state'),
+  eventType: alias('branch.current_build.event_type'),
 
   urlGithubCommit: function() {
-    return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.last_build.commit.sha'));
-  }.property('branch.last_build'),
+    return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.current_build.commit.sha'));
+  }.property('branch.current_build'),
 
   getLast5Builds: function() {
     var apiEndpoint, branchName, lastBuilds, options, repoId;
@@ -31,7 +31,7 @@ export default Ember.Component.extend({
       isLoading: true,
       count: 0
     });
-    if (!this.get('branch.last_build')) {
+    if (!this.get('branch.current_build')) {
       lastBuilds.set('isLoading', false);
     } else {
       apiEndpoint = config.apiEndpoint;

@@ -16,7 +16,7 @@ test('it renders data correctly', function() {
     },
     default_branch: true,
     exists_on_github: true,
-    last_build: {
+    current_build: {
       id: 393177,
       number: "1",
       state: "passed",
