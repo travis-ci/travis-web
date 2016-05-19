@@ -1,11 +1,13 @@
+import Ember from 'ember';
 import { test, moduleForComponent } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+
 moduleForComponent('owner-repo-tile', 'OwnerRepoTileComponent', {
-  needs: ['helper:format-time', 'helper:format-duration', 'helper:format-sha', 'component:status-icon', 'component:request-icon']
+  integration:true
 });
 
 test('it renders', function() {
-  var attributes, component;
-  attributes = {
+  const repo = Ember.Object.create({
     slug: "travis-ci/travis-chat",
     active: false,
     "private": false,
@@ -25,13 +27,14 @@ test('it renders', function() {
         }
       }
     }
-  };
-  component = this.subject({
-    repo: attributes
   });
-  this.render();
-  ok(component.$().hasClass('passed'), 'component should have state class (passed)');
-  equal(component.$('.row-item:nth-of-type(1)').text().trim(), 'travis-chat', 'should display correct repo name');
-  equal(component.$('.row-item:nth-of-type(3)').text().trim(), 'master', 'should display branch name');
-  return equal(component.$('.row-item:nth-of-type(4)').text().trim(), '16fff34', 'should display correct commit sha');
+
+  this.set('repo', repo);
+
+  this.render(hbs`{{owner-repo-tile repo=repo}}`);
+
+  ok(this.$().find('.owner-tile').hasClass('passed'), 'component should have state class (passed)');
+  equal(this.$('.row-item:nth-of-type(1)').text().trim(), 'travis-chat', 'should display correct repo name');
+  equal(this.$('.row-item:nth-of-type(3) span.label-align').text().trim(), 'master', 'should display branch name');
+  return equal(this.$('.row-item:nth-of-type(4)').text().trim(), '16fff34', 'should display correct commit sha');
 });
