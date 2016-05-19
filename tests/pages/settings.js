@@ -1,7 +1,9 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  clickable,
   collection,
+  fillable,
   hasClass,
   text,
   value,
@@ -14,26 +16,31 @@ export default PageObject.create({
   buildOnlyWithTravisYml: {
     scope: 'section.settings-section .builds_only_with_travis_yml.switch',
 
-    isActive: hasClass('active')
+    isActive: hasClass('active'),
+    toggle: clickable()
   },
 
   buildPushes: {
     scope: 'section.settings-section .build_pushes.switch',
 
-    isActive: hasClass('active')
+    isActive: hasClass('active'),
+    toggle: clickable()
   },
 
   limitConcurrentBuilds: {
     scope: 'section.settings-section .limit-concurrent-builds',
 
     isActive: hasClass('active', '.switch'),
-    value: value('input')
+    value: value('input'),
+    fill: fillable('input'),
+    toggle: clickable('.switch')
   },
 
   buildPullRequests: {
     scope: 'section.settings-section .build_pull_requests.switch',
 
-    isActive: hasClass('active')
+    isActive: hasClass('active'),
+    toggle: clickable()
   },
 
   environmentVariables: collection({

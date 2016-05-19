@@ -110,3 +110,49 @@ test('view settings', function(assert) {
     assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only') === 0, 'expected cron to run only if no new commit after last build');
   });
 });
+
+test('change general settings', function(assert) {
+  settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
+
+  const requestBodies = [];
+
+  server.patch('/repos/1/settings', function(schema, request) {
+    requestBodies.push(JSON.parse(request.requestBody));
+  });
+
+  settingsPage.buildPushes.toggle();
+
+  andThen(() => {
+    assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
+    assert.deepEqual(requestBodies.pop(), {settings: {build_pushes: false}});
+  });
+
+  settingsPage.buildOnlyWithTravisYml.toggle();
+
+  andThen(() => {
+    assert.notOk(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
+    assert.deepEqual(requestBodies.pop(), {settings: {builds_only_with_travis_yml: false}});
+  });
+
+  settingsPage.buildPullRequests.toggle();
+
+  andThen(() => {
+    assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
+    assert.deepEqual(requestBodies.pop(), {settings: {build_pull_requests: false}});
+  });
+
+  // FIXME unable to trigger a change of this value
+  // settingsPage.limitConcurrentBuilds.fill('2010');
+  //
+  // andThen(() => {
+  //   assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
+  //   assert.deepEqual(requestBodies.pop(), {settings: {maximum_number_of_builds: 2010}});
+  // });
+
+  settingsPage.limitConcurrentBuilds.toggle();
+
+  andThen(() => {
+    assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
+    assert.deepEqual(requestBodies.pop(), {settings: {maximum_number_of_builds: 0}});
+  });
+});
