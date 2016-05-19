@@ -56,6 +56,15 @@ export default PageObject.create({
     }
   }),
 
+  environmentVariableForm: {
+    scope: '.form--envvar',
+
+    fillName: fillable('input[placeholder=Name]'),
+    fillValue: fillable('input[placeholder=Value]'),
+    makePublic: clickable('.switch'),
+    add: clickable('input[type=submit]')
+  },
+
   crons: collection({
     scope: '.settings-list--crons',
     itemScope: '.settings-cron',

@@ -174,4 +174,26 @@ test('delete and create environment variables', function(assert) {
     assert.equal(settingsPage.environmentVariables().count, 1, 'expected only one environment variable to remain');
     assert.equal(settingsPage.environmentVariables(0).name, 'published', 'expected the formerly-second variable to be first');
   });
+
+  const requestBodies = [];
+
+  server.post('/settings/env_vars', function(schema, request) {
+    const parsedRequestBody = JSON.parse(request.requestBody);
+    requestBodies.push(parsedRequestBody);
+    return parsedRequestBody;
+  });
+
+  settingsPage.environmentVariableForm.fillName('drafted');
+  settingsPage.environmentVariableForm.fillValue('true');
+  settingsPage.environmentVariableForm.makePublic();
+  settingsPage.environmentVariableForm.add();
+
+  andThen(() => {
+    assert.equal(settingsPage.environmentVariables(1).name, 'drafted');
+    assert.ok(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
+    assert.equal(settingsPage.environmentVariables(1).value, 'true');
+
+    // FIXME again hardcoded repository ID
+    assert.deepEqual(requestBodies.pop(), {env_var: {name: 'drafted', value: 'true', public: true, repository_id: '1'}});
+  });
 });
