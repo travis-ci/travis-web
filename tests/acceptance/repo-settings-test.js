@@ -116,6 +116,7 @@ test('change general settings', function(assert) {
 
   const requestBodies = [];
 
+  // FIXME this should not have the repository ID hardcoded
   server.patch('/repos/1/settings', function(schema, request) {
     requestBodies.push(JSON.parse(request.requestBody));
   });
