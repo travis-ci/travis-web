@@ -4,17 +4,21 @@ import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 
 const { service } = Ember.inject;
+const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   routing: service('-routing'),
   permissions: service(),
 
   tagName: 'li',
-  classNameBindings: ['branch.last_build.state'],
+  classNameBindings: ['buildState'],
   classNames: ['branch-row', 'row-li'],
   isLoading: false,
   isTriggering: false,
   hasTriggered: false,
+
+  buildState: alias('branch.last_build.state'),
+  eventType: alias('branch.last_build.event_type'),
 
   urlGithubCommit: function() {
     return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.last_build.commit.sha'));

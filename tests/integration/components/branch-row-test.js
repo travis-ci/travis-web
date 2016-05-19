@@ -4,7 +4,6 @@ import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('branch-row', 'Integration | Component | branch row', {
   integration: true
-  // needs: ['helper:format-time', 'helper:format-duration', 'helper:pretty-date', 'helper:format-sha', 'component:build-tile', 'component:status-icon', 'component:request-icon', 'component:loading-indicator']
 });
 
 test('it renders data correctly', function() {
@@ -46,13 +45,12 @@ test('it renders data correctly', function() {
   });
 
   this.set('branch', branch);
-  console.log('passed', branch.last_build.state);
 
   this.render(hbs`{{branch-row branch=branch}}`);
 
-  ok(this.$().hasClass('passed'), 'component should have state class (passed)');
+  ok(this.$().find('.branch-row').hasClass('passed'), 'component should have state class (passed)');
   equal(this.$('.row-name .label-align').text().trim(), 'master', 'should display correct branch name');
   equal(this.$('.row-request .label-align').text().trim(), '#1 passed', 'should display build number and state');
   equal(this.$('.row-commiter .label-align').text().trim(), 'Dan Buch', 'should display correct commiter name');
-  return equal(this.$('.row-commit .label-align').text().trim(), 'a82f6ba', 'should display correct commit sha');
+  equal(this.$('.row-commit .label-align').text().trim(), 'a82f6ba', 'should display correct commit sha');
 });
