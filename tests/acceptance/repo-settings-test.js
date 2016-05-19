@@ -30,7 +30,10 @@ moduleForAcceptance('Acceptance | repo settings', {
         build_pull_requests: true
       },
 
-      env_vars: [],
+      env_vars: [
+        {id: 'a', name: 'intersectionality', public: true, value: 'Kimberlé Crenshaw'},
+        {id: 'b', name: 'published', public: null, value: null}
+      ],
 
       "@permissions": []
     });
@@ -59,5 +62,13 @@ test('view settings', function(assert) {
     assert.equal(settingsPage.limitConcurrentBuilds.value, '1919');
 
     assert.ok(settingsPage.buildPullRequests.isActive, 'expected builds for pull requests');
+
+    assert.equal(settingsPage.environmentVariables(0).name, 'intersectionality');
+    assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
+    assert.equal(settingsPage.environmentVariables(0).value, 'Kimberlé Crenshaw');
+
+    assert.equal(settingsPage.environmentVariables(1).name, 'published');
+    assert.notOk(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to not be public');
+    assert.equal(settingsPage.environmentVariables(1).value, '••••••••••••••••');
   });
 });

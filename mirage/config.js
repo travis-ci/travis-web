@@ -87,7 +87,7 @@ export default function() {
   this.get('/settings/env_vars', function(schema, request) {
     // FIXME placeholder
     const repo = schema.repository.find(request.queryParams.repository_id);
-    return {env_vars: repo.env_vars};
+    return {env_vars: repo.env_vars.map(envVar => { envVar.repository_id = request.queryParams.repository_id; return envVar; })};
   });
 
   this.get('/settings/ssh_key/:repo_id', function() {

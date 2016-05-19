@@ -1,6 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  collection,
   hasClass,
   text,
   value,
@@ -33,5 +34,16 @@ export default PageObject.create({
     scope: 'section.settings-section .build_pull_requests.switch',
 
     isActive: hasClass('active')
-  }
+  },
+
+  environmentVariables: collection({
+    scope: '.settings-list--envvars',
+    itemScope: '.settings-envvar',
+
+    item: {
+      name: text('.env-var-name'),
+      isPublic: hasClass('is-public'),
+      value: value('input')
+    }
+  })
 });
