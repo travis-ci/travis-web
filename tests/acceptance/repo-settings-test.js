@@ -40,6 +40,8 @@ moduleForAcceptance('Acceptance | repo settings', {
       }
     });
 
+    this.repository = repository;
+
     const repoId = parseInt(repository.id);
 
     const dailyBranch = server.create('branch', {
@@ -116,8 +118,7 @@ test('change general settings', function(assert) {
 
   const requestBodies = [];
 
-  // FIXME this should not have the repository ID hardcoded
-  server.patch('/repos/1/settings', function(schema, request) {
+  server.patch(`/repos/${this.repository.id}/settings`, function(schema, request) {
     requestBodies.push(JSON.parse(request.requestBody));
   });
 
@@ -193,7 +194,6 @@ test('delete and create environment variables', function(assert) {
     assert.ok(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
     assert.equal(settingsPage.environmentVariables(1).value, 'true');
 
-    // FIXME again hardcoded repository ID
-    assert.deepEqual(requestBodies.pop(), {env_var: {name: 'drafted', value: 'true', public: true, repository_id: '1'}});
+    assert.deepEqual(requestBodies.pop(), {env_var: {name: 'drafted', value: 'true', public: true, repository_id: this.repository.id}});
   });
 });
