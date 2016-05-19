@@ -55,7 +55,7 @@ moduleForAcceptance('Acceptance | repo settings', {
     server.create('cron', {
       interval: 'daily',
       disable_by_build: false,
-      next_enqueuing: '2016-05-20T13:00:00Z',
+      next_enqueuing: '2016-05-20T13:19:19Z',
       repository_id: repoId,
       branchId: dailyBranch.id
     });
@@ -63,7 +63,7 @@ moduleForAcceptance('Acceptance | repo settings', {
     server.create('cron', {
       interval: 'weekly',
       disable_by_build: true,
-      next_enqueuing: '2016-05-20T14:00:00Z',
+      next_enqueuing: '2016-05-20T14:20:10Z',
       repository_id: repoId,
       branchId: weeklyBranch.id
     });
@@ -101,13 +101,12 @@ test('view settings', function(assert) {
 
     assert.equal(settingsPage.crons(0).branchName, 'daily-branch');
     assert.equal(settingsPage.crons(0).interval, 'daily');
-    // FIXME how to check this without time zone nightmares?
-    assert.equal(settingsPage.crons(0).nextEnqueuing, 'May 20, 2016 6:00:00');
+    assert.ok(settingsPage.crons(0).nextEnqueuing.indexOf(':19'), 'expected cron next enqueuing to match');
     assert.ok(settingsPage.crons(0).disableByBuildText.indexOf('Even') === 0, 'expected cron to run even if no new commit after last build');
 
     assert.equal(settingsPage.crons(1).branchName, 'weekly-branch');
     assert.equal(settingsPage.crons(1).interval, 'weekly');
-    assert.equal(settingsPage.crons(1).nextEnqueuing, 'May 20, 2016 7:00:00');
+    assert.ok(settingsPage.crons(1).nextEnqueuing.indexOf(':11'), 'expected cron next enqueuing to match');
     assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only') === 0, 'expected cron to run only if no new commit after last build');
   });
 });
