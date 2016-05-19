@@ -52,10 +52,10 @@ export default PageObject.create({
     itemScope: '.settings-cron',
 
     item: {
-      branchName: text('.cron-job-value:nth-child(1)'),
-      interval: text('.cron-job-value:nth-child(2)'),
-      nextEnqueuing: text('.cron-job-value:nth-child(3)'),
-      disableByBuildText: text('.cron-job-text')
+      branchName: text('.branch-name'),
+      interval: text('.interval'),
+      nextEnqueuing: text('.next-enqueuing'),
+      disableByBuildText: text('.disable-by-build')
     }
   })
 });
