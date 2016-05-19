@@ -12,11 +12,6 @@ Ember.LinkComponent.reopen({
 });
 
 var App = Ember.Application.extend(Ember.Evented, {
-  LOG_TRANSITIONS: true,
-  LOG_TRANSITIONS_INTERNAL: true,
-  LOG_ACTIVE_GENERATION: true,
-  LOG_MODULE_RESOLVER: true,
-  LOG_VIEW_LOOKUPS: true,
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
@@ -40,7 +35,7 @@ var App = Ember.Application.extend(Ember.Evented, {
     if (location.hash.slice(0, 2) === '#!') {
       location.href = location.href.replace('#!/', '');
     }
-    
+
     this.on('user:signed_in', function(user) {
       return Travis.onUserUpdate(user);
     });
@@ -83,7 +78,7 @@ var App = Ember.Application.extend(Ember.Evented, {
     if (window.HS) {
       HS.beacon.ready(function() {
         HS.beacon.init();
-      });  
+      });
     } else {
       initHsBeacon();
     }
