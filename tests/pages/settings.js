@@ -50,7 +50,9 @@ export default PageObject.create({
     item: {
       name: text('.env-var-name'),
       isPublic: hasClass('is-public'),
-      value: value('input')
+      value: value('input'),
+
+      delete: clickable('.icon-delete')
     }
   }),
 

@@ -157,3 +157,21 @@ test('change general settings', function(assert) {
     assert.deepEqual(requestBodies.pop(), {settings: {maximum_number_of_builds: 0}});
   });
 });
+
+test('delete and create environment variables', function(assert) {
+  settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
+
+  const deletedIds = [];
+
+  server.delete('/settings/env_vars/:id', function(schema, request) {
+    deletedIds.push(request.params.id);
+  });
+
+  settingsPage.environmentVariables(0).delete();
+
+  andThen(() => {
+    assert.equal(deletedIds.pop(), 'a', 'expected the server to have received a deletion request for the first environment variable');
+    assert.equal(settingsPage.environmentVariables().count, 1, 'expected only one environment variable to remain');
+    assert.equal(settingsPage.environmentVariables(0).name, 'published', 'expected the formerly-second variable to be first');
+  });
+});
