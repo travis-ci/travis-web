@@ -147,6 +147,11 @@ export default function() {
       return new Mirage.Response(404, {}, {});
     }
   });
+
+  // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
+  // this.pretender.handledRequest = function(verb, path, request) {
+  //   console.log("Handled this request:", `${verb} ${path}`, request);
+  // }
 }
 
 /*
