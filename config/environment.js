@@ -107,6 +107,8 @@ module.exports = function(environment) {
 
     ENV.apiEndpoint = '';
     ENV.statusPageStatusUrl =  null;
+
+    ENV.sentry.development = true;
   }
 
   if (environment === 'production') {
