@@ -3,8 +3,8 @@ import { githubRepo, statusImage } from 'travis/utils/urls';
 import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
 
-
-const { controller, service } = Ember.inject;
+const { service, controller } = Ember.inject;
+const { alias } = Ember.computed;
 
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
@@ -14,8 +14,8 @@ export default Ember.Controller.extend({
   buildController: controller('build'),
   buildsController: controller('builds'),
   reposController: controller('repos'),
-  reposBinding: 'reposController.repos',
-  currentUserBinding: 'auth.currentUser',
+  repos: alias('reposController.repos'),
+  currentUser: alias('auth.currentUser'),
 
   classNames: ['repo'],
 

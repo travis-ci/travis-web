@@ -2,9 +2,13 @@ import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
 
 const { service } = Ember.inject;
+const { alias } = Ember.computed;
 
 export default Ember.Mixin.create({
   flashes: service(),
+  auth: service(),
+
+  user: alias('auth.currentUser'),
 
   restarting: false,
   cancelling: false,

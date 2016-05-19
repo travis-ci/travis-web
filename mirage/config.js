@@ -87,6 +87,10 @@ export default function() {
     return {jobs: schema.job.all()};
   });
 
+  this.get('/builds', function(schema, request) {
+    return {builds: schema.build.all()};
+  });
+
   this.get('/builds/:id', function(schema, request) {
     let build = schema.build.find(request.params.id).attrs;
     let jobs = schema.job.where({build_id: build.id}).map(job => job.attrs);

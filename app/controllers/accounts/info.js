@@ -1,8 +1,11 @@
 import Ember from 'ember';
 
-const { controller } = Ember.inject;
+const { alias } = Ember.computed;
+const { controller, service } = Ember.inject;
 
 export default Ember.Controller.extend({
+  auth: service(),
   repos: controller(),
-  userBinding: 'auth.currentUser'
+
+  user: alias('auth.currentUser'),
 });
