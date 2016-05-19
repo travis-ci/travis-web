@@ -1,11 +1,13 @@
 import Ember from 'ember';
 
+const { alias } = Ember.computed;
+
 export default Ember.Component.extend({
   classNames: ['media', 'account'],
   tagName: 'li',
   classNameBindings: ['type', 'selected'],
-  typeBinding: 'account.type',
-  selectedBinding: 'account.selected',
+  type: alias('account.type'),
+  selected: alias('account.selected'),
   tokenIsVisible: false,
 
   name: function() {

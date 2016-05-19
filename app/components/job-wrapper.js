@@ -5,8 +5,6 @@ import Polling from 'travis/mixins/polling';
 
 export default Ember.Component.extend({
   pollModels: 'job.build',
-  commitBinding: 'job.commit',
-  currentItemBinding: 'job',
 
   color: function() {
     return colorForState(this.get('job.state'));

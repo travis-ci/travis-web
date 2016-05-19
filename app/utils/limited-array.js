@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import limit from 'travis/utils/computed-limit';
 
+const { alias } = Ember.computed;
+
 export default Ember.ArrayProxy.extend({
   limit: 10,
-  isLoadedBinding: 'content.isLoaded',
+  isLoaded: alias('content.isLoaded'),
   arrangedContent: limit('content', 'limit'),
 
   totalLength: function() {

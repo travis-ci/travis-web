@@ -2,6 +2,8 @@ import Ember from 'ember';
 import attr from 'ember-data/attr';
 import Model from 'travis/models/model';
 
+const { alias } = Ember.computed;
+
 export default Model.extend({
   name: attr(),
   type: attr(),
@@ -9,5 +11,5 @@ export default Model.extend({
   reposCount: attr('number'),
   subscribed: attr('boolean'),
   education: attr('boolean'),
-  loginBinding: 'id'
+  login: alias('id')
 });

@@ -1,8 +1,13 @@
 import Ember from 'ember';
 import LimitedArray from 'travis/utils/limited-array';
 
+const { service } = Ember.inject;
+const { alias } = Ember.computed;
+
 export default Ember.Service.extend({
-  currentUserBinding: 'auth.currentUser',
+  auth: service(),
+  store: service(),
+  currentUser: alias('auth.currentUser'),
 
   init() {
     this._super(...arguments);
