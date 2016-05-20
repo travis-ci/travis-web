@@ -1,7 +1,7 @@
 <div class="row-item fade-out">
   <div clas="one-line">
     <h2 class="repo-title">
-    {{status-icon status=repo.default_branch.last_build.state}}
+    {{status-icon status=currentBuild.state}}
     {{#link-to "repo" ownerName repoName }}
       <span class="label-align">{{repoName}}</span>
     {{/link-to}}

@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
     repos = this.get('model');
     return repos = repos.filter(function(item, index) {
       return item.exists_on_github && !item.default_branch;
-    }).sortBy('last_build.finished_at').reverse();
+    }).sortBy('current_build.finished_at').reverse();
   }.property('model'),
 
   inactiveBranches: function() {
@@ -32,6 +32,6 @@ export default Ember.Controller.extend({
     repos = this.get('model');
     return repos = repos.filter(function(item, index) {
       return !item.exists_on_github && !item.default_branch;
-    }).sortBy('last_build.finished_at').reverse();
+    }).sortBy('current_build.finished_at').reverse();
   }.property('model')
 });

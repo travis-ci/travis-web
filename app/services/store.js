@@ -105,7 +105,7 @@ export default DS.Store.extend({
 
         // a build is a synchronous relationship on a branch model, so we need to
         // have a build record present when we put default_branch from a repository
-        // model into the store. We don't send last_build's payload in pusher, so
+        // model into the store. We don't send current_build's payload in pusher, so
         // we need to get it here, if it's not already in the store. In the future
         // we may decide to make this relationship async, but I don't want to
         // change the code at the moment
