@@ -73,7 +73,9 @@ export default PageObject.create({
       branchName: text('.branch-name'),
       interval: text('.interval'),
       nextEnqueuing: text('.next-enqueuing'),
-      disableByBuildText: text('.disable-by-build')
+      disableByBuildText: text('.disable-by-build'),
+
+      delete: clickable('.icon-delete')
     }
   })
 });

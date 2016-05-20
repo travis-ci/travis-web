@@ -86,6 +86,16 @@ export default function() {
     }));
   });
 
+  this.get('/cron/:id', function(schema, request) {
+    const cron = schema.cron.find(request.params.id);
+
+    if (cron) {
+      return turnIntoV3('crons', cron);
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
+  });
+
   this.get('/repos/:id/settings', function(schema, request) {
     const repo = schema.repository.find(request.params.id);
     return {settings: repo.settings};

@@ -54,7 +54,7 @@ moduleForAcceptance('Acceptance | repo settings', {
       id: `/v3/repos/${repoId}/branches/weekly-branch`
     });
 
-    server.create('cron', {
+    this.dailyCron = server.create('cron', {
       interval: 'daily',
       disable_by_build: false,
       next_enqueuing: '2016-05-20T13:19:19Z',
@@ -195,5 +195,24 @@ test('delete and create environment variables', function(assert) {
     assert.equal(settingsPage.environmentVariables(1).value, 'true');
 
     assert.deepEqual(requestBodies.pop(), {env_var: {name: 'drafted', value: 'true', public: true, repository_id: this.repository.id}});
+  });
+});
+
+test('delete and create crons', function(assert) {
+  settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
+
+  const deletedIds = [];
+
+  server.delete('/cron/:id', function(schema, request) {
+    deletedIds.push(request.params.id);
+    schema.db.crons.remove(request.params.id);
+    return {};
+  });
+
+  settingsPage.crons(0).delete();
+
+  andThen(() => {
+    assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
+    assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
   });
 });
