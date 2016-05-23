@@ -1,13 +1,9 @@
 import Ember from 'ember';
 
-const { alias } = Ember.computed;
-
 export default Ember.Component.extend({
   tagName: 'li',
   classNames: ['owner-tile', 'row-li'],
-  classNameBindings: ['currentBuild.state'],
-
-  currentBuild: alias('repo.default_branch.current_build'),
+  classNameBindings: ['repo.default_branch.last_build.state'],
 
   ownerName: function() {
     return this.get('repo.slug').split(/\//)[0];
@@ -19,10 +15,10 @@ export default Ember.Component.extend({
 
   isAnimating: function() {
     var animationStates, state;
-    state = this.get('currentBuild.state');
+    state = this.get('repo.default_branch.last_build.state');
     animationStates = ['received', 'queued', 'started', 'booting'];
     if (animationStates.indexOf(state) !== -1) {
       return true;
     }
-  }.property('currentBuild.state')
+  }.property('repo.default_branch.last_build.state')
 });

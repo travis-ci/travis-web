@@ -19,11 +19,11 @@ export default TravisRoute.extend({
     }).then(function(response) {
       return response.repositories.filter(function(repo) {
         if (repo.default_branch) {
-          return repo.default_branch.current_build;
+          return repo.default_branch.last_build;
         }
       }).map(function(repo) {
         return Ember.Object.create(repo);
-      }).sortBy('default_branch.current_build.finished_at');
+      }).sortBy('default_branch.last_build.finished_at');
     });
   }
 });

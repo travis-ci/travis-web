@@ -13,9 +13,9 @@ export default Ember.Controller.extend({
     org = this.get('org');
     repos = repos.filter(function(item, index) {
       if (item.get('default_branch')) {
-        return item.get('default_branch.current_build') !== null;
+        return item.get('default_branch.last_build') !== null;
       }
-    }).sortBy('default_branch.current_build.finished_at').reverse();
+    }).sortBy('default_branch.last_build.finished_at').reverse();
     if (org) {
       repos = repos.filter(function(item, index) {
         return item.get('owner.login') === org;

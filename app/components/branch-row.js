@@ -4,25 +4,21 @@ import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 
 const { service } = Ember.inject;
-const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   routing: service('-routing'),
   permissions: service(),
 
   tagName: 'li',
-  classNameBindings: ['buildState'],
+  classNameBindings: ['branch.last_build.state'],
   classNames: ['branch-row', 'row-li'],
   isLoading: false,
   isTriggering: false,
   hasTriggered: false,
 
-  buildState: alias('branch.current_build.state'),
-  eventType: alias('branch.current_build.event_type'),
-
   urlGithubCommit: function() {
-    return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.current_build.commit.sha'));
-  }.property('branch.current_build'),
+    return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.last_build.commit.sha'));
+  }.property('branch.last_build'),
 
   getLast5Builds: function() {
     var apiEndpoint, branchName, lastBuilds, options, repoId;
@@ -31,7 +27,7 @@ export default Ember.Component.extend({
       isLoading: true,
       count: 0
     });
-    if (!this.get('branch.current_build')) {
+    if (!this.get('branch.last_build')) {
       lastBuilds.set('isLoading', false);
     } else {
       apiEndpoint = config.apiEndpoint;

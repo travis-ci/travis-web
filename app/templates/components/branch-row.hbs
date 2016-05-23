@@ -1,13 +1,13 @@
 <div class="two-line fade-out">
   <div class="row-name">
-    <h2 class="row-item">{{status-icon status=buildState}}
+    <h2 class="row-item">{{status-icon status=branch.last_build.state}}
     <span class="label-align">{{branch.name}}</span></h2>
   </div>
   <div class="row-builds">
     <div class="row-item">
     <span class="icon icon-line-build"></span>
     <span class="label-align">
-    {{#if branch.current_build}}
+    {{#if branch.last_build}}
       {{#if getLast5Builds.isLoading}}
         {{loading-indicator inline=true}}
       {{else}}
@@ -22,22 +22,22 @@
 <div class="two-line row-last-build fade-out">
   <div class="row-request">
     <div class="row-item">
-      {{#if branch.current_build}}
-        {{request-icon event=eventType state=buildState}}
-        {{#link-to "build" branch.current_build.id}}
-          <span class="label-align">#{{branch.current_build.number}} {{buildState}}</span>
+      {{#if branch.last_build}}
+        {{request-icon event=branch.last_build.event_type state=branch.last_build.state}}
+        {{#link-to "build" branch.last_build.id}}
+          <span class="label-align">#{{branch.last_build.number}} {{branch.last_build.state}}</span>
         {{/link-to}}
       {{else}}
-        {{request-icon event=eventType state=buildState}} -
+        {{request-icon event=branch.last_build.eventType state=branch.last_build.state}} -
       {{/if}}
     </div>
   </div>
   <div class="row-calendar">
-    <div class="row-item" title="{{pretty-date branch.current_build.finished_at}}">
+    <div class="row-item" title="{{pretty-date branch.last_build.finished_at}}">
       <span class="icon-calendar"></span>
       <span class="label-align">
-      {{#if branch.current_build}}
-        {{format-time branch.current_build.finished_at}}
+      {{#if branch.last_build}}
+        {{format-time branch.last_build.finished_at}}
       {{else}}
         -
       {{/if}}</span>
@@ -50,8 +50,8 @@
       <span class="icon-github"></span>
       <a href="{{urlGithubCommit}}" title="commit on GitHub">
       <span class="label-align">
-      {{#if branch.current_build}}
-        {{format-sha branch.current_build.commit.sha}}
+      {{#if branch.last_build}}
+        {{format-sha branch.last_build.commit.sha}}
       {{else}}
         -
       {{/if}}</span>
@@ -59,8 +59,8 @@
   </div>
   <div class="row-commiter">
     <div class="row-item">
-      {{#if branch.current_build}}
-        <img src="{{branch.current_build.commit.committer.avatar_url}}" alt="avatar" class="avatar--small"><span class="label-align">{{branch.current_build.commit.committer.name}}</span>
+      {{#if branch.last_build}}
+        <img src="{{branch.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar--small"><span class="label-align">{{branch.last_build.commit.committer.name}}</span>
       {{else}}
         <div class="avatar--small"></div><span class="label-align">no commits yet</span>
       {{/if}}
