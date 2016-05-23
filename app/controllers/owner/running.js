@@ -6,8 +6,8 @@ export default Ember.Controller.extend({
     var data, repos;
     data = this.get('model');
     repos = data.repositories.filter(function(item, index) {
-      if (item.default_branch.last_build !== null) {
-        if (item.default_branch.last_build.state === 'started') {
+      if (item.default_branch.current_build !== null) {
+        if (item.default_branch.current_build.state === 'started') {
           return item;
         }
       }
