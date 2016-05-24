@@ -17,6 +17,7 @@ test('restarting build', function(assert) {
   let job = server.create('job', {number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit_id: commit.id});
   let log = server.create('log', { id: job.id });
   let repoId = parseInt(repo.id);
+
   server.create('permissions', {
     admin: [repoId],
     push: [repoId],

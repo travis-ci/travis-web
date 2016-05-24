@@ -3,7 +3,7 @@
   {{loading-indicator}}
 {{else}}
 
-  {{build-header item=build user=auth.currentUser commit=commit repo=repo}}
+  {{build-header item=build commit=build.commit repo=repo}}
 
   {{#if build.isMatrix}}
     {{#if jobsLoaded}}

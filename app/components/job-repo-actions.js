@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import RepoActionsItemComponentMixin from 'travis/mixins/repo-actions-item-component-mixin';
 
+const { alias } = Ember.computed;
+
 export default Ember.Component.extend(RepoActionsItemComponentMixin, {
-  item: Ember.computed.alias('job'),
+  item: alias('job'),
   type: 'job'
 });

@@ -1,8 +1,24 @@
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 
+let userStub = Ember.Object.extend({
+  hasAccessToRepo: function(repo) {
+    ok(repo.get('id', 44));
+    ok(true, 'hasAccessToRepo was called');
+    return false;
+  }
+}).create();
+
+// stub auth service
+const authStub = Ember.Service.extend({
+  currentUser: userStub
+});
+
 moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
-  unit: true
+  unit: true,
+  beforeEach() {
+    this.register('service:auth', authStub);
+  }
 });
 
 test('it shows cancel button if canCancel is true', function() {
@@ -63,15 +79,7 @@ test('it properly checks for user permissions for a repo', function() {
   repo = Ember.Object.create({
     id: 44
   });
-  user = Ember.Object.extend({
-    hasAccessToRepo: function(repo) {
-      ok(repo.get('id', 44));
-      ok(true, 'hasAccessToRepo was called');
-      return false;
-    }
-  }).create();
   component = this.subject({
-    user: user,
     repo: repo
   });
   return ok(!component.get('userHasPermissionForRepo'), 'user should not have access to a repo');

@@ -1,15 +1,16 @@
 import Ember from 'ember';
 
 const { controller } = Ember.inject;
+const { alias } = Ember.computed;
 
 export default Ember.Controller.extend({
   buildsSorting: ['number:desc'],
   builds: Ember.computed.sort('model', 'buildsSorting'),
   repoController: controller('repo'),
-  repoBinding: 'repoController.repo',
-  tabBinding: 'repoController.tab',
-  isLoadedBinding: 'model.isLoaded',
-  isLoadingBinding: 'model.isLoading',
+  repo: alias('repoController.repo'),
+  tab: alias('repoController.tab'),
+  isLoaded: alias('model.isLoaded'),
+  isLoading: alias('model.isLoading'),
 
   showMore() {
     var id, number, type;

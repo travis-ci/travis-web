@@ -1,15 +1,15 @@
 import Ember from 'ember';
 import { githubCommit } from 'travis/utils/urls';
 
-const { controller } = Ember.inject;
+const { service, controller } = Ember.inject;
+const { alias } = Ember.computed;
 
 export default Ember.Controller.extend({
+  auth: service(),
   repoController: controller('repo'),
-  repoBinding: 'repoController.repo',
-  commitBinding: 'job.commit',
-  currentUserBinding: 'auth.currentUser',
-  tabBinding: 'repoController.tab',
-  currentItemBinding: 'job',
+  repo: alias('repoController.repo'),
+  currentUser: alias('auth.currentUser'),
+  tab: alias('repoController.tab'),
 
   urlGithubCommit: function() {
     return githubCommit(this.get('repo.slug'), this.get('commit.sha'));

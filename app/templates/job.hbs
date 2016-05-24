@@ -1,7 +1,7 @@
 {{#job-wrapper repo=repo job=job}}
 {{#if job.isLoaded}}
 
-  {{build-header item=job user=auth.currentUser commit=job.commit repo=repo}}
+  {{build-header item=job commit=job.commit repo=repo}}
 
   {{job-log job=job}}
 

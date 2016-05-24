@@ -1,16 +1,17 @@
 import Ember from 'ember';
 import GithubUrlProperties from 'travis/mixins/github-url-properties';
 
-const { controller } = Ember.inject;
+const { service, controller } = Ember.inject;
+const { alias } = Ember.computed;
 
 export default Ember.Controller.extend(GithubUrlProperties, {
+  auth: service(),
   repoController: controller('repo'),
-  repoBinding: 'repoController.repo',
-  commitBinding: 'build.commit',
-  currentUserBinding: 'auth.currentUser',
-  tabBinding: 'repoController.tab',
+
+  repo: alias('repoController.repo'),
+  currentUser: alias('auth.currentUser'),
+  tab: alias('repoController.tab'),
   sendFaviconStateChanges: true,
-  currentItemBinding: 'build',
 
   jobsLoaded: function() {
     var jobs;
