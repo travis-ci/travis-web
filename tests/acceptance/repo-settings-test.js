@@ -143,13 +143,12 @@ test('change general settings', function(assert) {
     assert.deepEqual(requestBodies.pop(), {settings: {build_pull_requests: false}});
   });
 
-  // FIXME unable to trigger a change of this value
-  // settingsPage.limitConcurrentBuilds.fill('2010');
-  //
-  // andThen(() => {
-  //   assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
-  //   assert.deepEqual(requestBodies.pop(), {settings: {maximum_number_of_builds: 2010}});
-  // });
+  settingsPage.limitConcurrentBuilds.fill('2010');
+
+  andThen(() => {
+    assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
+    assert.deepEqual(requestBodies.pop(), {settings: {maximum_number_of_builds: 2010}});
+  });
 
   settingsPage.limitConcurrentBuilds.toggle();
 

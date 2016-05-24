@@ -12,10 +12,10 @@ export default Ember.Component.extend({
     return description;
   }.property('enabled'),
 
-  limitChanged() {
+  limitChanged(value) {
     var limit, repo, savingFinished;
     repo = this.get('repo');
-    limit = parseInt(this.get('value'));
+    limit = parseInt(value);
     if (limit) {
       this.set('isSaving', true);
       savingFinished = () => {
