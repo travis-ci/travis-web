@@ -12,9 +12,4 @@ export default TravisRoute.extend({
       into: 'main'
     });
   },
-
-  setupController(controller) {
-    // TODO: this is redundant with repositories and recent routes
-    // @container.lookup('controller:repos').activate('owned')
-  }
 });
