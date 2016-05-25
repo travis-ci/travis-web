@@ -75,10 +75,10 @@ export default Ember.Controller.extend({
 
   actions: {
 
-    cheatcode() {
-      $('body').toggleClass('cheatcode');
-      this.toggleProperty('isDashboard');
-    },
+    // cheatcode() {
+    //   $('body').toggleClass('cheatcode');
+    //   this.toggleProperty('isDashboard');
+    // },
 
     toggleBurgerMenu() {
       this.toggleProperty('is-open');
