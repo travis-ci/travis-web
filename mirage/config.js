@@ -125,7 +125,6 @@ export default function() {
   });
 
   this.get('/v3/repo/:id/branches', function(schema) {
-    // FIXME placeholder
     return turnIntoV3('branch', schema.branches.all().models);
   });
 
