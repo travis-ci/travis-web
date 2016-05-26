@@ -192,8 +192,6 @@ class Travis::Web::App
       pusher['channelPrefix'] = options[:pusher_channel_prefix] if options[:pusher_channel_prefix]
       config['pusher'] = pusher
 
-      config['ember-cli-pendo'] = { apiKey: options[:pendo_key] }
-
       config['gaCode'] = options[:ga_code] if options[:ga_code]
       config['pro'] = options[:pro] if options[:pro]
       config['enterprise'] = options[:enterprise] if options[:enterprise]
