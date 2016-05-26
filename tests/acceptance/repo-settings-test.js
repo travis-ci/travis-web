@@ -30,14 +30,23 @@ moduleForAcceptance('Acceptance | repo settings', {
         build_pull_requests: true
       },
 
-      env_vars: [
-        {id: 'a', name: 'intersectionality', public: true, value: 'Kimberlé Crenshaw'},
-        {id: 'b', name: 'published', public: null, value: null}
-      ],
-
       "@permissions": {
         "create_cron": true
       }
+    });
+
+    repository.createEnvVar({
+      id: 'a',
+      name: 'intersectionality',
+      public: true,
+      value: 'Kimberlé Crenshaw'
+    });
+
+    repository.createEnvVar({
+      id: 'b',
+      name: 'published',
+      public: null,
+      value: null
     });
 
     this.repository = repository;

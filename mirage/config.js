@@ -104,9 +104,14 @@ export default function() {
   });
 
   this.get('/settings/env_vars', function(schema, request) {
-    // FIXME placeholder
     const repo = schema.repositories.find(request.queryParams.repository_id);
-    return {env_vars: repo.env_vars.map(envVar => { envVar.repository_id = request.queryParams.repository_id; return envVar; })};
+
+    return {
+      env_vars: repo.envVars.models.map(envVar => {
+        envVar.attrs.repository_id = envVar.repositoryId;
+        return envVar;
+      })
+    };
   });
 
   this.get('/settings/ssh_key/:repo_id', function() {
