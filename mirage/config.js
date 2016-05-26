@@ -129,7 +129,7 @@ export default function() {
   });
 
   this.get('/repos/:id/key', function() {
-    // FIXME placeholder
+    // FIXME add tests where these are present
     return {key: 'hello', fingerprint: 'yes'};
   });
 
