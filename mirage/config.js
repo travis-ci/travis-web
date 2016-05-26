@@ -115,7 +115,7 @@ export default function() {
   });
 
   this.get('/settings/ssh_key/:repo_id', function() {
-    // FIXME placeholder
+    // FIXME add tests where these are present
     return {file: 'not found'};
   });
 
