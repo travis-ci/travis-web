@@ -20,6 +20,8 @@
         <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
       </header>
 
+
+  {{#if repo.active}}
     {{#if repo.default_branch.last_build}}
       <section class="dash-last">
         <h3 class="label">Last build</h3>
@@ -64,6 +66,7 @@
         </p>
       </section>
     {{/if}}
+  {{/if}}
 
     {{#if repo.active}}
       {{#if displayMenuTofu}}
