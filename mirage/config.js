@@ -68,7 +68,6 @@ export default function() {
   });
 
   this.get('/repos', function(schema, request) {
-    // return { repos: schema.repositories.all() };
     return turnIntoV3('repository', schema.repositories.all());
   });
 
