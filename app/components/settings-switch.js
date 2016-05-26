@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   flashes: service(),
   tagName: 'a',
   classNames: ['switch'],
-  classNameBindings: ['active'],
+  classNameBindings: ['active', 'key'],
 
   click() {
     var setting;

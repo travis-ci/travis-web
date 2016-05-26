@@ -14,8 +14,8 @@ export default function() {
 
   let turnIntoV3 = function(type, payload) {
     let response;
-    if(Ember.isArray(payload.models)) {
-      let records = payload.models.map( (record) => { return _turnIntoV3Singular(type, record); } );
+    if(Ember.isArray(payload)) {
+      let records = payload.map( (record) => { return _turnIntoV3Singular(type, record); } );
 
       let pluralized = Ember.String.pluralize(type);
       response = {};
@@ -68,8 +68,7 @@ export default function() {
   });
 
   this.get('/repos', function(schema, request) {
-    // return { repos: schema.repositories.all() };
-    return turnIntoV3('repository', schema.repositories.all());
+    return turnIntoV3('repository', schema.repositories.all().models);
   });
 
   this.get('/repo/:slug', function(schema, request) {
@@ -77,8 +76,63 @@ export default function() {
     return turnIntoV3('repository', repos[0]);
   });
   this.get('/v3/repo/:id/crons', function(schema, request) {
-    return turnIntoV3('crons', schema.crons.all());
+    const crons = schema.crons.all().models.map(cron => {
+      // TODO adapt turnIntoV3 to handle related models
+      cron.attrs.branch = {
+        "@href": cron.attrs.branchId
+      };
+
+      return cron;
+    });
+
+    return turnIntoV3('crons', crons);
   });
+
+  this.get('/cron/:id', function(schema, request) {
+    const cron = schema.crons.find(request.params.id);
+
+    if (cron) {
+      return turnIntoV3('crons', cron);
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
+  });
+
+  this.get('/repos/:id/settings', function(schema, request) {
+    const settings = schema.settings.where({repositoryId: request.params.id}).models[0];
+    return {settings: settings};
+  });
+
+  this.get('/settings/env_vars', function(schema, request) {
+    const envVars = schema.envVars.where({repositoryId: request.queryParams.repository_id});
+
+    return {
+      env_vars: envVars.models.map(envVar => {
+        envVar.attrs.repository_id = envVar.repositoryId;
+        return envVar;
+      })
+    };
+  });
+
+  this.get('/settings/ssh_key/:repo_id', function() {
+    // FIXME add tests where these are present
+    return {file: 'not found'};
+  });
+
+  this.get('/v3/repo/:id', function(schema, request) {
+    const repo = schema.repositories.find(request.params.id);
+    return turnIntoV3('repository', repo);
+  });
+
+  this.get('/v3/repo/:id/branches', function(schema) {
+    return turnIntoV3('branch', schema.branches.all().models);
+  });
+
+  this.get('/repos/:id/key', function() {
+    // FIXME add tests where these are present
+    return {key: 'hello', fingerprint: 'yes'};
+  });
+
   this.get('/jobs/:id', function(schema, request) {
     let job = schema.jobs.find(request.params.id).attrs;
     return {job: job, commit: schema.commits.find(job.commit_id).attrs};
@@ -113,6 +167,11 @@ export default function() {
       return new Mirage.Response(404, {}, {});
     }
   });
+
+  // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
+  // this.pretender.handledRequest = function(verb, path, request) {
+  //   console.log("Handled this request:", `${verb} ${path}`, request);
+  // }
 }
 
 /*
