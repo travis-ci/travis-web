@@ -22,6 +22,7 @@ moduleForAcceptance('Acceptance | repo settings', {
     const repository = server.create('repository', {
       name: 'living-a-feminist-life',
 
+      // FIXME figure out how to define this more cleanly
       "@permissions": {
         "create_cron": true
       }
