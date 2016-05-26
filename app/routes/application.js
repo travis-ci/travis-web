@@ -11,9 +11,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
   beforeModel() {
     this._super(...arguments);
-    if(this.signedIn()) {
-      this.setupPendo();
-    }
     //this.get('auth').refreshUserData()
   },
 
@@ -65,24 +62,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     }
   },
 
-  setupPendo() {
-    if(!window.pendo) {
-      return;
-    }
-
-    let user = this.get('auth.currentUser');
-
-    var options = {
-      visitor: {
-        id: user.get('id'),
-        github_login: user.get('login'),
-        email: user.get('email')
-      }
-    };
-
-    window.pendo.identify(options);
-  },
-
   actions: {
     redirectToGettingStarted() {
       // do nothing, we handle it only in index path
@@ -111,7 +90,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
     afterSignIn() {
       var transition;
-      this.setupPendo();
       this.get('flashes').clear();
       if (transition = this.auth.get('afterSignInTransition')) {
         this.auth.set('afterSignInTransition', null);
