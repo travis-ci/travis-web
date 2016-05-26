@@ -104,10 +104,10 @@ export default function() {
   });
 
   this.get('/settings/env_vars', function(schema, request) {
-    const repo = schema.repositories.find(request.queryParams.repository_id);
+    const envVars = schema.envVars.where({repositoryId: request.queryParams.repository_id});
 
     return {
-      env_vars: repo.envVars.models.map(envVar => {
+      env_vars: envVars.models.map(envVar => {
         envVar.attrs.repository_id = envVar.repositoryId;
         return envVar;
       })
