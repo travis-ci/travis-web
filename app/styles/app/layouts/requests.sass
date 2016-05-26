@@ -1,6 +1,7 @@
 =requestFadeOut($status, $color)
   @media #{$medium-up}
     &.#{$status}:hover
+      padding-left: 0
       .status-icon.api
         svg
           background-color: $color
@@ -19,8 +20,8 @@
   margin-bottom: 5px
   font-size: 15px
   padding-left: 1em
-  @include colorJobs($turf-green, 'accepted', 6px, rgba($turf-green, .1))
-  @include colorJobs($brick-red, 'rejected', 6px, rgba($brick-red, .1))
+  @include colorJobs($turf-green, 'accepted', 3px, rgba($turf-green, .1))
+  @include colorJobs($brick-red, 'rejected', 3px, rgba($brick-red, .1))
 
   @include requestFadeOut('accepted',#ECF6EF)
   @include requestFadeOut('rejected', #FBECEB)
@@ -36,9 +37,9 @@
   @media #{$medium-up}
     display: flex
     justify-content: space-between
-    flex-flow: row wrap
+    flex-flow: row nowrap
     align-items: center
-    padding: .3em 0
+    padding: .3em 0 .3em 2px
     white-space: nowrap
 
     .row-item:first-of-type

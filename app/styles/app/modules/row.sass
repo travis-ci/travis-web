@@ -16,8 +16,9 @@
   display: flex
   flex-flow: column wrap
   margin-bottom: 1rem
-  @each $key, $value in $stateMap
-    +rowColor(#{$key}, map-get($value, color))
+  &.is-active
+    @each $key, $value in $stateMap
+      +rowColor(#{$key}, map-get($value, color))
 
   @media #{$medium-up}
     position: relative
@@ -46,6 +47,7 @@
   .row-content
     margin: 0
     font-size: 16px
+    white-space: nowrap
     a:hover,
     a:active
       border-bottom: 1px solid $asphalt-grey

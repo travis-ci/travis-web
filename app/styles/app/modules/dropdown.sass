@@ -115,8 +115,6 @@ $dropdown-button-margin: -9px
     margin-right: .3em
     border-radius: 50%
 
-
-
 .dropup
   &.is-open
     .dropup-list
@@ -145,6 +143,9 @@ $dropdown-button-margin: -9px
   &:hover,
   &:active
     @extend %icon-line-tofu-teal
+    outline: none
+
+  &:focus
     outline: none
 
 .dropup-list
@@ -178,7 +179,7 @@ $dropdown-button-margin: -9px
   @media #{$medium-up}
     position: absolute
     right: 0
-    top: -7em
+    bottom: 5em
     margin: 0
     background-color: white
     border: 1px solid $oxide-blue

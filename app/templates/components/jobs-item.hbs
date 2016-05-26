@@ -8,10 +8,9 @@
     <span class="label-align" aria-label="Job number">{{job.number}}</span>
   </div>
 
-  <div class="job-os {{job.config.os}} tooltip">
+  <div class="job-os {{job.config.os}} tooltip" data-tooltip="{{job.config.os}}">
     {{#if job.config.os}}
-      <span class="icon tooltip-trigger" aria-label="Operating System">{{job.config.os}}</span>
-      <div class="tooltip-bubble" aria-hidden="true">{{job.config.os}}</div>
+      <span class="icon" aria-label="{{job.config.os}} operating system">{{job.config.os}}</span>
     {{/if}}
   </div>
 
