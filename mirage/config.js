@@ -99,8 +99,8 @@ export default function() {
   });
 
   this.get('/repos/:id/settings', function(schema, request) {
-    const repo = schema.repositories.find(request.params.id);
-    return {settings: repo.settings};
+    const settings = schema.settings.where({repositoryId: request.params.id}).models[0];
+    return {settings: settings};
   });
 
   this.get('/settings/env_vars', function(schema, request) {

@@ -22,17 +22,16 @@ moduleForAcceptance('Acceptance | repo settings', {
     const repository = server.create('repository', {
       name: 'living-a-feminist-life',
 
-      // FIXME this is maybe not the best way to create dependent models
-      settings: {
-        builds_only_with_travis_yml: true,
-        build_pushes: true,
-        maximum_number_of_builds: 1919,
-        build_pull_requests: true
-      },
-
       "@permissions": {
         "create_cron": true
       }
+    });
+
+    repository.createSetting({
+      builds_only_with_travis_yml: true,
+      build_pushes: true,
+      maximum_number_of_builds: 1919,
+      build_pull_requests: true,
     });
 
     repository.createEnvVar({
