@@ -14,8 +14,8 @@ export default function() {
 
   let turnIntoV3 = function(type, payload) {
     let response;
-    if(Ember.isArray(payload.models)) {
-      let records = payload.models.map( (record) => { return _turnIntoV3Singular(type, record); } );
+    if(Ember.isArray(payload)) {
+      let records = payload.map( (record) => { return _turnIntoV3Singular(type, record); } );
 
       let pluralized = Ember.String.pluralize(type);
       response = {};
@@ -68,7 +68,7 @@ export default function() {
   });
 
   this.get('/repos', function(schema, request) {
-    return turnIntoV3('repository', schema.repositories.all());
+    return turnIntoV3('repository', schema.repositories.all().models);
   });
 
   this.get('/repo/:slug', function(schema, request) {
@@ -85,8 +85,7 @@ export default function() {
       return cron;
     });
 
-    // FIXME this is a temporary workaround for turnIntoV3 now requiring a models property
-    return turnIntoV3('crons', { models: crons });
+    return turnIntoV3('crons', crons);
   });
 
   this.get('/cron/:id', function(schema, request) {
@@ -122,7 +121,7 @@ export default function() {
 
   this.get('/v3/repo/:id/branches', function(schema) {
     // FIXME placeholder
-    return turnIntoV3('branch', schema.branches.all());
+    return turnIntoV3('branch', schema.branches.all().models);
   });
 
   this.get('/repos/:id/key', function() {
