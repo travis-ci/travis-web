@@ -8,6 +8,14 @@ export default Ember.Component.extend({
   actionType: 'Save',
   store: service(),
 
+  isOverdue: function(key) {
+    var time = this.get('cron.next_enqueuing');
+    if (time + 1 > Time.now){
+      return true
+    }
+    return false
+  }.property('cron.next_enqueuing'),
+
   disableByBuild: function(key) {
     var value = '';
     if (this.get('cron.disable_by_build')) {
