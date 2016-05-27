@@ -51,7 +51,13 @@ moduleForAcceptance('Acceptance | profile', {
 test('view profile', function(assert) {
   profilePage.visit({username: 'feministkilljoy'});
 
-  andThen(function() {
+  andThen(() => {
+    assert.deepEqual(this.application.__container__.lookup('service:metrics').get('identifications.firstObject'), {
+      distinctId: '1',
+      email: 'test@travis-ci.com',
+      username: 'feministkilljoy'
+    });
+
     assert.equal(profilePage.name, 'Sara Ahmed');
 
     assert.equal(profilePage.accounts().count, 2, 'expected two accounts');

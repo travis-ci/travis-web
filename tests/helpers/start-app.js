@@ -14,6 +14,19 @@ export default function startApp(attrs) {
     application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
+
+    application.__container__.registry.register('service:metrics', Ember.Service.extend({
+      identifications: [],
+
+      identify(options) {
+        this.get('identifications').push(options);
+      },
+
+      trackPage() {
+        
+      }
+    }));
+
   });
 
   // TODO: I'm not sure if this is the best thing to do, but it seems
