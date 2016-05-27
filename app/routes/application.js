@@ -7,8 +7,6 @@ let { service } = Ember.inject;
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   flashes: service(),
-  metrics: Ember.inject.service(),
-
   needsAuth: false,
 
   beforeModel() {
@@ -21,20 +19,6 @@ export default TravisRoute.extend(BuildFaviconMixin, {
       $('body').addClass('pro');
     }
     return this._super(...arguments);
-  },
-
-  didTransition() {
-    this._super(...arguments);
-    this._trackPage();
-  },
-
-  _trackPage() {
-    Ember.run.scheduleOnce('afterRender', this, () => {
-      const page = document.location.pathname;
-      const title = this.getWithDefault('currentRouteName', 'unknown');
-
-      Ember.get(this, 'metrics').trackPage({ page, title });
-    });
   },
 
   activate() {
