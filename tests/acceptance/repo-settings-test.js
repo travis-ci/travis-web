@@ -95,7 +95,8 @@ test('view settings', function(assert) {
 
   andThen(function() {
     shouldHaveTrackPageCall(assert, {
-      title: 'settings'
+      title: 'settings',
+      account_uid: 'travis-ci'
     });
 
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');

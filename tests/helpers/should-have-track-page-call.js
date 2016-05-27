@@ -5,4 +5,5 @@ export default Ember.Test.registerHelper('shouldHaveTrackPageCall', function(app
 
   // TODO figure out how to include the current path in the test environment to assert against
   assert.equal(options.title, lastTrackedPage.title, 'expected last tracked page title to match');
+  assert.equal(options.account_uid, lastTrackedPage.account_uid, 'expected last tracked page account_uid to match');
 });

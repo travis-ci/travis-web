@@ -9,7 +9,15 @@ export default Ember.Mixin.create({
       const page = document.location.pathname;
       const title = this.getWithDefault('routeName', 'unknown');
 
-      Ember.get(this, 'metrics').trackPage({ page, title });
+      const options = { page, title };
+
+      const repo = this.modelFor('repo');
+
+      if (repo) {
+        options.account_uid = repo.get('owner');
+      }
+
+      Ember.get(this, 'metrics').trackPage(options);
     });
   })
 });
