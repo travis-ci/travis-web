@@ -4,6 +4,7 @@ import config from '../../config/environment';
 
 import './sign-in-user';
 import './should-have-identify-call';
+import './should-have-track-page-call';
 
 export default function startApp(attrs) {
   let application;
@@ -23,8 +24,10 @@ export default function startApp(attrs) {
         this.get('identifications').push(options);
       },
 
-      trackPage() {
-        
+      trackedPages: [],
+
+      trackPage(options) {
+        this.get('trackedPages').push(options);
       }
     }));
 

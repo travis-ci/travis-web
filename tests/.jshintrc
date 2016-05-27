@@ -51,7 +51,8 @@
     "Visibility",
     "Travis",
     "signInUser",
-    "shouldHaveIdentifyCall"
+    "shouldHaveIdentifyCall",
+    "shouldHaveTrackPageCall"
   ],
   "node": false,
   "browser": false,

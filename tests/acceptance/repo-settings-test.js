@@ -94,6 +94,10 @@ test('view settings', function(assert) {
   settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
 
   andThen(function() {
+    shouldHaveTrackPageCall(assert, {
+      title: 'settings'
+    });
+
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
     assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
 
