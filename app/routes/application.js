@@ -7,10 +7,14 @@ let { service } = Ember.inject;
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   flashes: service(),
+  metrics: service(),
   needsAuth: false,
 
   beforeModel() {
     this._super(...arguments);
+    if (this.signedIn()) {
+      this.identifyMetrics();
+    }
     //this.get('auth').refreshUserData()
   },
 
@@ -62,6 +66,15 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     }
   },
 
+  identifyMetrics() {
+    const user = this.get('auth.currentUser');
+    this.get('metrics').identify({
+      distinctId: user.get('id'),
+      email: user.get('email'),
+      username: user.get('login')
+    });
+  },
+
   actions: {
     redirectToGettingStarted() {
       // do nothing, we handle it only in index path
@@ -90,6 +103,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
     afterSignIn() {
       var transition;
+      this.identifyMetrics();
       this.get('flashes').clear();
       if (transition = this.auth.get('afterSignInTransition')) {
         this.auth.set('afterSignInTransition', null);
