@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 
   isOverdue: function(key) {
     var time = this.get('cron.next_enqueuing');
-    if (time + 1 > Time.now){
+    if (time + 1 > Date.now()){
       return true
     }
     return false
