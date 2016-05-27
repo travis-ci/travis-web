@@ -52,7 +52,7 @@ test('view profile', function(assert) {
   profilePage.visit({username: 'feministkilljoy'});
 
   andThen(() => {
-    assert.deepEqual(this.application.__container__.lookup('service:metrics').get('identifications.firstObject'), {
+    shouldHaveIdentifyCall(assert, {
       distinctId: '1',
       email: 'test@travis-ci.com',
       username: 'feministkilljoy'

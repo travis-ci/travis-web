@@ -3,6 +3,7 @@ import Application from '../../app';
 import config from '../../config/environment';
 
 import './sign-in-user';
+import './should-have-identify-call';
 
 export default function startApp(attrs) {
   let application;
