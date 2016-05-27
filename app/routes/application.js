@@ -7,12 +7,13 @@ let { service } = Ember.inject;
 
 export default TravisRoute.extend(BuildFaviconMixin, {
   flashes: service(),
+  metrics: service(),
   needsAuth: false,
 
   beforeModel() {
     this._super(...arguments);
-    if(this.signedIn()) {
-      this.setupPendo();
+    if (this.signedIn()) {
+      this.identifyMetrics();
     }
     //this.get('auth').refreshUserData()
   },
@@ -65,22 +66,13 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     }
   },
 
-  setupPendo() {
-    if(!window.pendo) {
-      return;
-    }
-
-    let user = this.get('auth.currentUser');
-
-    var options = {
-      visitor: {
-        id: user.get('id'),
-        github_login: user.get('login'),
-        email: user.get('email')
-      }
-    };
-
-    window.pendo.identify(options);
+  identifyMetrics() {
+    const user = this.get('auth.currentUser');
+    this.get('metrics').identify({
+      distinctId: user.get('id'),
+      email: user.get('email'),
+      username: user.get('login')
+    });
   },
 
   actions: {
@@ -111,7 +103,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
     afterSignIn() {
       var transition;
-      this.setupPendo();
+      this.identifyMetrics();
       this.get('flashes').clear();
       if (transition = this.auth.get('afterSignInTransition')) {
         this.auth.set('afterSignInTransition', null);

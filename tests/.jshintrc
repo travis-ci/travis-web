@@ -50,7 +50,9 @@
     "jQuery",
     "Visibility",
     "Travis",
-    "signInUser"
+    "signInUser",
+    "shouldHaveIdentifyCall",
+    "shouldHaveTrackPageCall"
   ],
   "node": false,
   "browser": false,

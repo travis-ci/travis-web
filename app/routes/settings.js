@@ -1,10 +1,11 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
+import TrackCurrentPage from 'travis/mixins/track-current-page';
 import Ember from 'ember';
 
 const { service } = Ember.inject;
 
-export default TravisRoute.extend({
+export default TravisRoute.extend(TrackCurrentPage, {
   ajax: service(),
   needsAuth: true,
 

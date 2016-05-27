@@ -3,6 +3,8 @@ import Application from '../../app';
 import config from '../../config/environment';
 
 import './sign-in-user';
+import './should-have-identify-call';
+import './should-have-track-page-call';
 
 export default function startApp(attrs) {
   let application;
@@ -14,6 +16,21 @@ export default function startApp(attrs) {
     application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
+
+    application.__container__.registry.register('service:metrics', Ember.Service.extend({
+      identifications: [],
+
+      identify(options) {
+        this.get('identifications').push(options);
+      },
+
+      trackedPages: [],
+
+      trackPage(options) {
+        this.get('trackedPages').push(options);
+      }
+    }));
+
   });
 
   // TODO: I'm not sure if this is the best thing to do, but it seems

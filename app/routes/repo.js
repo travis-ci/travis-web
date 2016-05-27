@@ -1,11 +1,12 @@
 import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
+import TrackCurrentPage from 'travis/mixins/track-current-page';
 import Ember from 'ember';
 
 const { service } = Ember.inject;
 
-export default TravisRoute.extend(ScrollResetMixin, {
+export default TravisRoute.extend(ScrollResetMixin, TrackCurrentPage, {
   store: service(),
 
   titleToken(model) {
