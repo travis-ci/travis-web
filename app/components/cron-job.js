@@ -11,9 +11,9 @@ export default Ember.Component.extend({
   isOverdue: function(key) {
     var time = this.get('cron.next_enqueuing');
     if (time + 1 > Date.now()){
-      return true
+      return true;
     }
-    return false
+    return false;
   }.property('cron.next_enqueuing'),
 
   disableByBuild: function(key) {
