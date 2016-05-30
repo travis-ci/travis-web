@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   actionType: 'Save',
   store: service(),
 
-  enqueuingText: function(key) {
+  intervalText: function(key) {
     var interval = this.get('cron.interval');
     var creationTime = new Date(this.get('cron.created_at'));
     var hours = creationTime.getHours();
