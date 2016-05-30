@@ -1,10 +1,6 @@
 <div class="cron-job-value branch-name">{{cron.branch.name}}</div>
 <div class="cron-job-value interval">{{cron.interval}}</div>
-{{#if isOverdue}}
-  <div class="cron-job-text next-enqueuing">soon</div>
-{{else}}
-  <div class="cron-job-value next-enqueuing">{{pretty-date cron.next_enqueuing}}</div>
-{{/if}}
+<div class="cron-job-text next-enqueuing">{{enqueuingText}}</div>
 <div class="cron-job-text disable-by-build">{{disableByBuild}}</div>
 <div class="cron-job-action">
   <div class="tooltip">

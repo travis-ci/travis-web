@@ -8,12 +8,39 @@ export default Ember.Component.extend({
   actionType: 'Save',
   store: service(),
 
-  isOverdue: function(key) {
-    var time = Date.parse(this.get('cron.next_enqueuing'));
-    if (time + (60 * 1000) > Date.now()){
-      return true;
+  enqueuingText: function(key) {
+    var interval = this.get('cron.interval');
+    var creationTime = Date.parse(this.get('cron.created_at'));
+    var text = "";
+    switch interval {
+      case 'monthly':
+        var post = 'th';
+        var day = creationTime.getDate();
+        if day = 1 {
+          post = 'st';
+        } else if day = 2 {
+          post = 'nd';
+        } else if day = 3 {
+          post = 'rd';
+        }
+        text = 'Every ' + day + post + 'of the month at ' + creationTime.getHours();
+        break;
+      case 'weekly':
+        var weekday = new Array(7);
+        weekday[0]=  "Sunday";
+        weekday[1] = "Monday";
+        weekday[2] = "Tuesday";
+        weekday[3] = "Wednesday";
+        weekday[4] = "Thursday";
+        weekday[5] = "Friday";
+        weekday[6] = "Saturday";
+        text = 'Every ' + weekday[creationTime.getDay()] + ' at ' + creationTime.getHours();
+        break;
+      case 'daily':
+        text = 'Every day at ' + creationTime.getHours();
+        break;
     }
-    return false;
+    return text;
   }.property('cron.next_enqueuing'),
 
   disableByBuild: function(key) {
