@@ -162,8 +162,8 @@ var Controller = Ember.Controller.extend({
   viewOwned() {
     var repos, user;
 
-    if (repos = this.get('ownedRepos')) {
-      return this.set('_repos', repos);
+    if (!Ember.isEmpty(this.get('ownedRepos'))) {
+      return this.set('_repos', this.get('ownedRepos'));
     } else if (!this.get('fetchingOwnedRepos')) {
       this.set('isLoaded', false);
 
@@ -239,6 +239,7 @@ var Controller = Ember.Controller.extend({
   repos: function() {
     var repos = this.get('_repos');
 
+
     if(repos && repos.toArray) {
       repos = repos.toArray();
     }
@@ -246,7 +247,11 @@ var Controller = Ember.Controller.extend({
     if(repos && repos.sort) {
       return repos.sort(sortCallback);
     } else {
-      return [];
+      if (Ember.isArray(repos)) {
+        return repos;
+      } else {
+        return [];
+      }
     }
   }.property('_repos.[]', '_repos.@each.lastBuildFinishedAt',
              '_repos.@each.lastBuildId')

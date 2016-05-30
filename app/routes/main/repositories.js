@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import MainTabRoute from 'travis/routes/main-tab';
 
 export default MainTabRoute.extend({
@@ -5,6 +6,8 @@ export default MainTabRoute.extend({
   reposTabName: 'owned',
 
   afterModel() {
-    return this.controllerFor('repos').possiblyRedirectToGettingStartedPage();
+    if (Ember.isEmpty(this.store.peekAll('repo'))) {
+      return this.controllerFor('repos').possiblyRedirectToGettingStartedPage();
+    }
   }
 });

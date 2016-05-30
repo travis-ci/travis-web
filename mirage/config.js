@@ -42,6 +42,7 @@ export default function() {
 
   this.put('/hooks/:id', (schema, request) => {
     const user = schema.hooks.find(request.params.id);
+    server.create('repository', { id: request.params.id });
     return user.update(JSON.parse(request.requestBody).hook);
   });
 

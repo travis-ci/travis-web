@@ -1,11 +1,18 @@
-import PageObject from 'travis/tests/page-object';
+import {
+  create,
+  visitable,
+  clickable,
+  collection,
+  text
+} from 'ember-cli-page-object';
 
-let {
-  visitable
-} = PageObject;
-
-export default PageObject.create({
-
-
-
+export default create({
+  visit: visitable('/'),
+  navigateToProfilePage: clickable('#profile-page-link'),
+  sidebarRepositories: collection({
+    itemScope: 'ul.repos-list',
+    item: {
+      name: text('.tile h2.tile-title span.label-align')
+    }
+  })
 });

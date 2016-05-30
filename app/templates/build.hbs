@@ -3,17 +3,21 @@
   {{loading-indicator}}
 {{else}}
 
-  {{build-header item=build commit=build.commit repo=repo}}
+  {{#if build}}
+    {{build-header item=build commit=build.commit repo=repo}}
 
-  {{#if build.isMatrix}}
-    {{#if jobsLoaded}}
-      {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
-      {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
+    {{#if build.isMatrix}}
+      {{#if jobsLoaded}}
+        {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
+        {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
+      {{else}}
+        {{loading-indicator center=true}}
+      {{/if}}
     {{else}}
-      {{loading-indicator center=true}}
+      {{job-log job=build.jobs.firstObject}}
     {{/if}}
   {{else}}
-    {{job-log job=build.jobs.firstObject}}
+    {{no-builds}}
   {{/if}}
 
 {{/if}}
