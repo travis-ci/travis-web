@@ -22,13 +22,13 @@
 
 
   {{#if repo.active}}
-    {{#if repo.default_branch.last_build}}
+    {{#if repo.currentBuild}}
       <section class="dash-last">
         <h3 class="label">Last build</h3>
         <p class="row-content color">
-          {{status-icon status=repo.default_branch.last_build.state}}
-          {{#link-to "build" repo.owner.login repo.name repo.default_branch.last_build.id title="Last build on the default branch"}}
-          <span class="label-align">#{{repo.default_branch.last_build.number}} {{repo.default_branch.last_build.state}}</span>
+          {{status-icon status=repo.currentBuild.state}}
+          {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the default branch"}}
+          <span class="label-align">#{{repo.currentBuild.number}} {{repo.currentBuild.state}}</span>
           {{/link-to}}
         </p>
       </section>
@@ -37,31 +37,31 @@
     <section class="dash-default">
       <h3 class="label">Default branch</h3>
       <p class="row-content color">
-        {{request-icon event=repo.default_branch.last_build.event_type state=repo.default_branch.last_build.state}}
+        {{request-icon event=repo.currentBuild.event_type state=repo.currentBuild.state}}
         {{repo.default_branch.name}}
-        {{#if repo.active}} {{repo.default_branch.last_build.state}}{{/if}}
+        {{#if repo.active}} {{repo.currentBuild.state}}{{/if}}
       </p>
     </section>
 
-    {{#if repo.default_branch.last_build}}
+    {{#if repo.currentBuild}}
       <section class="dash-commit">
         <h3 class="label">Commit</h3>
         <p class="row-content">
           <span class="icon-github"></span>
           <a href="{{urlGithubCommit}}" title="See the commit on Github">
             <span class="label-align">
-              {{format-sha repo.default_branch.last_build.commit.sha}}
+              {{format-sha repo.currentBuild.commit.sha}}
             </span>
           </a>
         </p>
       </section>
       <section class="dash-finished">
         <h3 class="label">Finished</h3>
-        <p class="row-content" title="{{repo.default_branch.last_build.finished_at}}">
+        <p class="row-content" title="{{repo.currentBuild.finished_at}}">
           <span class="icon-calendar"></span>
           <span class="label-align">
-            {{#if repo.default_branch.last_build}}
-              {{format-time repo.default_branch.last_build.finished_at}}
+            {{#if repo.currentBuild}}
+              {{format-time repo.currentBuild.finished_at}}
             {{else}}running{{/if}}</span>
         </p>
       </section>
@@ -105,7 +105,7 @@
     {{#if repo.active}}
       <aside class="dash-aside">
         <ul class="lastbuilds">
-          {{lastbuild-tile repo=repo build=repo.default_branch.last_build}}
+          {{lastbuild-tile repo=repo build=repo.currentBuild}}
         </ul>
       </aside>
     {{/if}}

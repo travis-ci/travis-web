@@ -239,7 +239,6 @@ var Controller = Ember.Controller.extend({
   repos: function() {
     var repos = this.get('_repos');
 
-
     if(repos && repos.toArray) {
       repos = repos.toArray();
     }

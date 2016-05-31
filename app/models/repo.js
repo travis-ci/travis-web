@@ -238,12 +238,13 @@ Repo.reopenClass({
     if (Config.useV3API) {
       reposIds = reposIdsOrlogin;
       repos = store.filter('repo', function(repo) {
-        return reposIds.indexOf(parseInt(repo.get('id'))) !== -1;
+        let repoId = parseInt(repo.get('id'));
+        return reposIds.contains(repoId);
       });
       promise = new Ember.RSVP.Promise(function(resolve, reject) {
         return store.query('repo', {
           'repository.active': 'true',
-          sort_by: 'default_branch.last_build:desc',
+          sort_by: 'currentBuild:desc',
           limit: 30
         }).then(function() {
           return resolve(repos);
