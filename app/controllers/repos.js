@@ -151,6 +151,8 @@ var Controller = Ember.Controller.extend({
   activate(tab, params) {
     this.set('sortProperties', ['sortOrder']);
     this.set('tab', tab);
+    // find the data based on tab
+    // tab == 'owned' => viewOwned invoked
     return this[("view_" + tab).camelize()](params);
   },
 
@@ -160,9 +162,11 @@ var Controller = Ember.Controller.extend({
   },
 
   viewOwned() {
+    console.log('controller loading repos');
     var repos, user;
 
     if (!Ember.isEmpty(this.get('ownedRepos'))) {
+      console.log('found some repos', this.get('ownedRepos').mapBy('slug'));
       return this.set('_repos', this.get('ownedRepos'));
     } else if (!this.get('fetchingOwnedRepos')) {
       this.set('isLoaded', false);
@@ -239,13 +243,15 @@ var Controller = Ember.Controller.extend({
   repos: function() {
     var repos = this.get('_repos');
 
-
     if(repos && repos.toArray) {
       repos = repos.toArray();
     }
 
     if(repos && repos.sort) {
-      return repos.sort(sortCallback);
+      let sorted = repos.sort(sortCallback);
+      console.log('sorted amount', sorted.length);
+      console.log(sorted.map(function(repo) { return { slug: repo.get('slug'), lastBuildFinishedAt: repo.get('lastBuildFinishedAt') } }));
+      return sorted;
     } else {
       if (Ember.isArray(repos)) {
         return repos;
@@ -253,8 +259,7 @@ var Controller = Ember.Controller.extend({
         return [];
       }
     }
-  }.property('_repos.[]', '_repos.@each.lastBuildFinishedAt',
-             '_repos.@each.lastBuildId')
+  }.property('_repos.[]', '_repos.@each.lastBuildFinishedAt', '_repos.@each.lastBuildId')
 });
 
 export default Controller;
