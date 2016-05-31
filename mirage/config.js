@@ -74,7 +74,7 @@ export default function() {
 
   this.get('/repo/:slug', function(schema, request) {
     let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
-    return turnIntoV3('repository', repos[0]);
+    return turnIntoV3('repository', repos.models[0]);
   });
   this.get('/v3/repo/:id/crons', function(schema, request) {
     const crons = schema.crons.all().models.map(cron => {

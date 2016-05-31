@@ -20,6 +20,15 @@ test('signed in but without repositories', function(assert) {
 });
 
 test('added repository while onboarding persists to dashboard', function(assert) {
+  let repoId = 1;
+
+  server.create('permissions', {
+    admin: [repoId],
+    push: [repoId],
+    pull: [repoId],
+    permissions: [repoId],
+  });
+
   dashboardPage
     .visit()
     .navigateToProfilePage();
@@ -44,6 +53,7 @@ test('added repository while onboarding persists to dashboard', function(assert)
 
   andThen(() => {
     assert.notEqual(currentURL(), '/getting_started');
-    assert.equal(dashboardPage.sidebarRepositories(0).name, "travis-ci/travis-web", "Newly enabled repository should display in sidebar");
+    assert.equal(dashboardPage.sidebarRepositories(0).name, "testuser/test-repo", "Newly enabled repository should display in sidebar");
   });
+
 });
