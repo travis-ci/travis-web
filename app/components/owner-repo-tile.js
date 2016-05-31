@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: 'li',
   classNames: ['owner-tile', 'row-li'],
-  classNameBindings: ['repo.default_branch.last_build.state'],
+  classNameBindings: ['repo.currentBuild.state'],
 
   ownerName: function() {
     return this.get('repo.slug').split(/\//)[0];
@@ -15,10 +15,10 @@ export default Ember.Component.extend({
 
   isAnimating: function() {
     var animationStates, state;
-    state = this.get('repo.default_branch.last_build.state');
+    state = this.get('repo.currentBuild.state');
     animationStates = ['received', 'queued', 'started', 'booting'];
     if (animationStates.indexOf(state) !== -1) {
       return true;
     }
-  }.property('repo.default_branch.last_build.state')
+  }.property('repo.currentBuild.state')
 });
