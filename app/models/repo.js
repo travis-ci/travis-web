@@ -16,7 +16,10 @@ if (Config.useV3API) {
     defaultBranch: belongsTo('branch', {
       async: false
     }),
-    lastBuild: Ember.computed.oneWay('defaultBranch.lastBuild'),
+    currentBuild: belongsTo('build', {
+      async: false
+    }),
+    lastBuild: Ember.computed.alias('currentBuild'),
     lastBuildFinishedAt: Ember.computed.oneWay('lastBuild.finishedAt'),
     lastBuildId: Ember.computed.oneWay('lastBuild.id'),
     lastBuildState: Ember.computed.oneWay('lastBuild.state'),
@@ -244,7 +247,7 @@ Repo.reopenClass({
       promise = new Ember.RSVP.Promise(function(resolve, reject) {
         return store.query('repo', {
           'repository.active': 'true',
-          sort_by: 'currentBuild:desc',
+          sort_by: 'repository.current_build:desc',
           limit: 30
         }).then(function() {
           return resolve(repos);
