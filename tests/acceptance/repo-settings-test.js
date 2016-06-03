@@ -111,11 +111,13 @@ test('view settings', function(assert) {
     assert.equal(settingsPage.environmentVariables(1).value, '••••••••••••••••');
 
     assert.equal(settingsPage.crons(0).branchName, 'daily-branch');
-    assert.ok(settingsPage.crons(0).enqueuingInterval.indexOf('Enqueuing every day after') === 0, 'Shows daily enqueuing text');
+    assert.equal(settingsPage.crons(0).interval, 'daily');
+    assert.ok(settingsPage.crons(0).nextEnqueuing.indexOf(':19'), 'expected cron next enqueuing to match');
     assert.ok(settingsPage.crons(0).disableByBuildText.indexOf('Even') === 0, 'expected cron to run even if no new commit after last build');
 
     assert.equal(settingsPage.crons(1).branchName, 'weekly-branch');
-    assert.ok(settingsPage.crons(1).enqueuingInterval.indexOf('Enqueuing every') === 0, 'Shows weekly enqueuing text');
+    assert.equal(settingsPage.crons(1).interval, 'weekly');
+    assert.ok(settingsPage.crons(1).nextEnqueuing.indexOf(':11'), 'expected cron next enqueuing to match');
     assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only') === 0, 'expected cron to run only if no new commit after last build');
   });
 });

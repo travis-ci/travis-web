@@ -71,7 +71,8 @@ export default PageObject.create({
 
     item: {
       branchName: text('.branch-name'),
-      enqueuingInterval: text('.enqueuing-interval'),
+      interval: text('.interval'),
+      nextEnqueuing: text('.next-enqueuing'),
       disableByBuildText: text('.disable-by-build'),
 
       delete: clickable('.icon-delete')

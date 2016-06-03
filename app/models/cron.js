@@ -7,5 +7,5 @@ export default Model.extend({
   branch: belongsTo('branch', { async: true }),
   interval: attr('string'),
   disable_by_build: attr('boolean'),
-  created_at: attr('string')
+  next_enqueuing: attr('string')
 });
