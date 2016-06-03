@@ -1,4 +1,5 @@
 import RavenLogger from 'ember-cli-sentry/services/raven';
+import config from 'travis/config/environment';
 
 export default RavenLogger.extend({
   // whitelist benign "errors"
@@ -43,7 +44,11 @@ export default RavenLogger.extend({
   shouldReportError() {
     // Sentry recommends only reporting a small subset of the actual
     // frontend errors. This can get *very* noisy otherwise.
-    var sampleRate = 10;
-    return (Math.random() * 100 <= sampleRate);
+    if (config.enterprise) {
+      return false;
+    } else {
+      var sampleRate = 10;
+      return (Math.random() * 100 <= sampleRate);
+    }
   }
 });
