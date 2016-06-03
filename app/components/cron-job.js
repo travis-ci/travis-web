@@ -49,13 +49,13 @@ export default Ember.Component.extend({
 
     switch (interval) {
       case 'monthly':
-        text = 'Every ' + dayOfMonth(creationTime) + ' of the month at ' + time;
+        text = 'Enqueuing every ' + dayOfMonth(creationTime) + ' of the month after ' + time;
         break;
       case 'weekly':
-        text = 'Every ' + dayOfWeek(creationTime) + ' at ' + time;
+        text = 'Enqueuing every ' + dayOfWeek(creationTime) + ' after ' + time;
         break;
       case 'daily':
-        text = 'Every day at ' + time;
+        text = 'Enqueuing every day after ' + time;
         break;
     }
     return text;
