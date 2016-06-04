@@ -13,12 +13,11 @@
     "JavaScript-MD5": "~2.3.0",
     "moment": "~2.13.0",
     "jquery-timeago": "~1.5.2",
-    "pusher": "~2.2.3",
     "ember-resolver": "~0.1.20",
     "pretender": "~1.1.0",
     "lodash": "~4.11.2",
     "Faker": "~3.1.0",
     "ceibo": "2.0.0",
-    "raven-js": "~2.1"
+    "raven-js": "~2.3"
   }
 }
