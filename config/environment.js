@@ -31,15 +31,12 @@ module.exports = function(environment) {
     enterprise: !!process.env.TRAVIS_ENTERPRISE || false,
     endpoints: {},
     intervals: { updateTimes: 1000 },
-    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false
   };
 
-
-  ENV.sentry = {
-    dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334'
-  }
+  var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
+  var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
 
   if (typeof process !== 'undefined') {
     if (process.env.TRAVIS_PRO && !process.env.TRAVIS_ENTERPRISE) {
@@ -54,6 +51,10 @@ module.exports = function(environment) {
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
+      ENV.statusPageStatusUrl = statusPageStatusUrl;
+      ENV.sentry = {
+        dsn: sentryDSN
+      };
       ENV.endpoints = {
         sshKey: true,
         caches: true
@@ -88,7 +89,11 @@ module.exports = function(environment) {
       enabled: false
     };
 
-    ENV.sentry.development = true;
+    ENV.sentry = {
+      development: true
+    }
+
+    ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
   if (environment === 'test') {
@@ -108,7 +113,9 @@ module.exports = function(environment) {
     ENV.apiEndpoint = '';
     ENV.statusPageStatusUrl =  null;
 
-    ENV.sentry.development = true;
+    ENV.sentry = {
+      development: true
+    }
   }
 
   if (environment === 'production') {
@@ -122,6 +129,12 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
+
+    ENV.sentry = {
+      dsn: sentryDSN
+    };
+
+    ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
   // TODO: I insert values from ENV here, but in production

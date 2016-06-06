@@ -180,10 +180,18 @@ class Travis::Web::App
     def set_config(string, opts = {})
       # TODO: clean up
       config = {}
+
+      config['enterprise'] = options[:enterprise] if options[:enterprise]
+      if config['enterprise']
+        config['pagesEndpoint'] = false
+        config['billingEndpoint'] = false
+      else
+        config['pagesEndpoint'] = options[:pages_endpoint] if options[:pages_endpoint]
+        config['billingEndpoint'] = options[:billing_endpoint] if options[:billing_endpoint]
+      end
+
       config['defaultTitle'] = title
       config['apiEndpoint'] = options[:api_endpoint] if options[:api_endpoint]
-      config['pagesEndpoint'] = options[:pages_endpoint] if options[:pages_endpoint]
-      config['billingEndpoint'] = options[:billing_endpoint] if options[:billing_endpoint]
       config['sourceEndpoint'] = options[:source_endpoint] if options[:source_endpoint]
       pusher = {}
       pusher['key'] = options[:pusher_key] if options[:pusher_key]
@@ -194,11 +202,7 @@ class Travis::Web::App
 
       config['gaCode'] = options[:ga_code] if options[:ga_code]
       config['pro'] = options[:pro] if options[:pro]
-      config['enterprise'] = options[:enterprise] if options[:enterprise]
 
-      config['codeClimate'] = options[:code_climate] if options[:code_climate]
-      config['codeClimateUrl'] = options[:code_climate_url] if options[:code_climate_url]
-      config['charmKey'] = options[:charm_key] if options[:charm_key]
       config['githubOrgsOauthAccessSettingsUrl'] = options[:github_orgs_oauth_access_settings_url]
       config['ajaxPolling'] = true if options[:ajax_polling]
       config['userlike'] = true if options[:userlike]
