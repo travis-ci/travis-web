@@ -529,29 +529,7 @@ li {
   padding-top: 5px;
   padding-left: 14px;
 }
-/* line 1, /Users/justine/Projects/travis-web/assets/styles/app/charm.sass */
-#CHARM_TAB {
-  display: none;
-}
 
-/* line 5, /Users/justine/Projects/travis-web/assets/styles/app/charm.sass */
-.pro #CHARM_TAB {
-  display: block;
-  -webkit-transform: translateY(0) rotate(270deg) !important;
-  -moz-transform: translateY(0) rotate(270deg) !important;
-  transform: translateY(0) rotate(270deg) !important;
-  background-image: url(/images/ui/charmtab.png);
-  margin-left: -135px !important;
-  margin-top: -112px !important;
-  top: 100% !important;
-  left: 100% !important;
-}
-/* line 16, /Users/justine/Projects/travis-web/assets/styles/app/charm.sass */
-.pro #CHARM_TAB:hover {
-  -webkit-transform: translateY(-7px) rotate(270deg) !important;
-  -moz-transform: translateY(-7px) rotate(270deg) !important;
-  transform: translateY(-7px) rotate(270deg) !important;
-}
 /* line 1, /Users/justine/Projects/travis-web/assets/styles/app/components/travis-switch.sass */
 .settings-row {
   margin-top: 20px;
