@@ -65,7 +65,6 @@ run Travis::Web::App.build(
   caches_enabled:  ENV['CACHES_ENABLED'],
   ssh_key_enabled: ENV['SSH_KEY_ENABLED'],
   pusher_log_fallback:  ENV['PUSHER_LOG_FALLBACK'],
-  charm_key:        ENV['CHARM_KEY'],
   customer_io_site_id: ENV['CUSTOMER_IO_SITE_ID'],
   pro: ENV['TRAVIS_PRO'],
   enterprise: ENV['TRAVIS_ENTERPRISE'],

@@ -196,7 +196,6 @@ class Travis::Web::App
       config['pro'] = options[:pro] if options[:pro]
       config['enterprise'] = options[:enterprise] if options[:enterprise]
 
-      config['charmKey'] = options[:charm_key] if options[:charm_key]
       config['githubOrgsOauthAccessSettingsUrl'] = options[:github_orgs_oauth_access_settings_url]
       config['ajaxPolling'] = true if options[:ajax_polling]
       config['userlike'] = true if options[:userlike]
