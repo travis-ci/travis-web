@@ -13,9 +13,9 @@ moduleForAcceptance('Acceptance | profile', {
     signInUser(currentUser);
 
     const organization = server.create('account', {
-      name: 'Goldsmiths',
+      name: 'Feminist Killjoys',
       type: 'organization',
-      login: 'goldsmiths',
+      login: 'killjoys',
       repos_count: 30
     });
 
@@ -59,7 +59,7 @@ test('view profile', function(assert) {
     assert.equal(profilePage.accounts(0).name, 'Sara Ahmed');
     assert.equal(profilePage.accounts(0).repositoryCount, 3);
 
-    assert.equal(profilePage.accounts(1).name, 'Goldsmiths');
+    assert.equal(profilePage.accounts(1).name, 'Feminist Killjoys');
     assert.equal(profilePage.accounts(1).repositoryCount, 30);
 
     assert.equal(profilePage.administerableHooks().count, 2, 'expected two administerable hooks');

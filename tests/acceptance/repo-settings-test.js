@@ -13,9 +13,9 @@ moduleForAcceptance('Acceptance | repo settings', {
     signInUser(currentUser);
 
     const organization = server.create('account', {
-      name: 'Goldsmiths',
+      name: 'Feminist Killjoys',
       type: 'organization',
-      login: 'goldsmiths',
+      login: 'killjoys',
       repos_count: 30
     });
 
@@ -91,7 +91,7 @@ moduleForAcceptance('Acceptance | repo settings', {
 });
 
 test('view settings', function(assert) {
-  settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
+  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
 
   andThen(function() {
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
@@ -123,7 +123,7 @@ test('view settings', function(assert) {
 });
 
 test('change general settings', function(assert) {
-  settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
+  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
 
   const requestBodies = [];
 
@@ -168,7 +168,7 @@ test('change general settings', function(assert) {
 });
 
 test('delete and create environment variables', function(assert) {
-  settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
+  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
 
   const deletedIds = [];
 
@@ -207,7 +207,7 @@ test('delete and create environment variables', function(assert) {
 });
 
 test('delete and create crons', function(assert) {
-  settingsPage.visit({organization: 'goldsmiths', repo: 'living-a-feminist-life'});
+  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
 
   const deletedIds = [];
 
