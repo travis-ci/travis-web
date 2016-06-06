@@ -130,8 +130,10 @@ export default function() {
   });
 
   this.get('/repos/:id/key', function() {
-    // FIXME add tests where these are present
-    return {key: 'hello', fingerprint: 'yes'};
+    return {
+      key: 'A PUBLIC KEY!',
+      fingerprint: 'aa:bb:cc:dd'
+    };
   });
 
   this.get('/jobs/:id', function(schema, request) {

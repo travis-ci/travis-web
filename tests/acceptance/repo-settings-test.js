@@ -119,6 +119,9 @@ test('view settings', function(assert) {
     assert.equal(settingsPage.crons(1).interval, 'weekly');
     assert.ok(settingsPage.crons(1).nextEnqueuing.indexOf(':11'), 'expected cron next enqueuing to match');
     assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only') === 0, 'expected cron to run only if no new commit after last build');
+
+    assert.equal(settingsPage.sshKey.name, 'no custom key set');
+    assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
   });
 });
 
