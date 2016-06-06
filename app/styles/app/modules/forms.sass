@@ -92,10 +92,11 @@ textarea
       padding-right: 5px
   @media #{$medium-up}
     .form-elem:first-of-type,
-    .form-elem:nth-of-type(2)
-      width: 21.5%
+    .form-elem:nth-of-type(2),
     .form-elem:nth-of-type(3)
-      width: 42%
+      width: grid-calc(3, 12)
+      margin-right: 0em
+      padding-right: 5px
     .form-elem:last-of-type
       width: 6%
 

@@ -49,13 +49,13 @@ export default Ember.Component.extend({
 
     switch (interval) {
       case 'monthly':
-        text = 'Enqueuing every ' + dayOfMonth(creationTime) + ' of the month after ' + time;
+        text = 'Enqueues the ' + dayOfMonth(creationTime) + ' of every month after ' + time;
         break;
       case 'weekly':
-        text = 'Enqueuing every ' + dayOfWeek(creationTime) + ' after ' + time;
+        text = 'Enqueues each ' + dayOfWeek(creationTime) + ' after ' + time;
         break;
       case 'daily':
-        text = 'Enqueuing every day after ' + time;
+        text = 'Enqueues each day after ' + time;
         break;
     }
     return text;
@@ -63,13 +63,11 @@ export default Ember.Component.extend({
 
 
   disableByBuild: function(key) {
-    var value = '';
     if (this.get('cron.disable_by_build')) {
-      value = 'Only ';
+      return 'Only if no new commit';
     } else {
-      value = 'Even ';
+      return 'Always run';
     }
-    return value + 'if no new commit after last cron build';
   }.property('cron.disable_by_build'),
 
   actions: {

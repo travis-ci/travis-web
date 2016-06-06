@@ -40,7 +40,7 @@ export default Ember.Component.extend({
         cron = store.createRecord('cron', {
           branch: branch,
           interval: this.get('selectedInterval') || 'monthly',
-          disable_by_build: this.get('disable') || false
+          disable_by_build: this.get('selectedOption') || false
         });
         this.reset();
         return cron.save().then(() => {
@@ -52,6 +52,8 @@ export default Ember.Component.extend({
     }
   },
 
-  intervals: ['monthly', 'weekly', 'daily']
+  intervals: ['monthly', 'weekly', 'daily'],
+
+  options: ['Only run if no new commits', 'Always run']
 
 });
