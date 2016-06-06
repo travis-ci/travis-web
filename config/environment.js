@@ -115,7 +115,7 @@ module.exports = function(environment) {
 
     ENV.sentry = {
       development: true
-    }
+    };
   }
 
   if (environment === 'production') {
