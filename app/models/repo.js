@@ -16,21 +16,11 @@ if (Config.useV3API) {
     defaultBranch: belongsTo('branch', {
       async: false
     }),
-    currentBuild: Ember.computed('builds', function() {
-      let builds = this.get('builds');
-      if (builds.length) {
-        let sorted = builds.sortBy('finishedAt:desc');
-        return sorted.
-      }
+    currentBuild: belongsTo('build', {
+      async: true, inverse: 'repoCurrentBuild'
     }),
-    builds: hasMany('build', { async: true }),
-    lastBuild: Ember.computed.alias('currentBuild'),
-    lastBuildFinishedAt: Ember.computed.oneWay('lastBuild.finishedAt'),
-    lastBuildId: Ember.computed.oneWay('lastBuild.id'),
-    lastBuildState: Ember.computed.oneWay('lastBuild.state'),
-    lastBuildNumber: Ember.computed.oneWay('lastBuild.number'),
-    lastBuildStartedAt: Ember.computed.oneWay('lastBuild.startedAt'),
-    lastBuildDuration: Ember.computed.oneWay('lastBuild.duration')
+    currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
+    currentBuildId: Ember.computed.oneWay('currentBuild.id'),
   });
 } else {
   Repo = Model.extend({
@@ -185,16 +175,6 @@ Repo.reopen({
     return (this.get('slug') || '').split('/')[1];
   }.property('slug'),
 
-  sortOrderForLandingPage: function() {
-    var state;
-    state = this.get('lastBuildState');
-    if (state !== 'passed' && state !== 'failed') {
-      return 0;
-    } else {
-      return parseInt(this.get('lastBuildId'));
-    }
-  }.property('lastBuildId', 'lastBuildState'),
-
   stats: function() {
     if (this.get('slug')) {
       return this.get('_stats') || $.get("https://api.github.com/repos/" + this.get('slug'), (data) => {
@@ -205,13 +185,13 @@ Repo.reopen({
   }.property('slug'),
 
   updateTimes() {
-    var lastBuild;
+    var currentBuild;
     if (Config.useV3API) {
-      if (lastBuild = this.get('lastBuild')) {
-        return lastBuild.updateTimes();
+      if (currentBuild = this.get('currentBuild')) {
+        return currentBuild.updateTimes();
       }
     } else {
-      return this.notifyPropertyChange('lastBuildDuration');
+      return this.notifyPropertyChange('currentBuild.duration');
     }
   },
 
@@ -252,7 +232,7 @@ Repo.reopenClass({
       promise = new Ember.RSVP.Promise(function(resolve, reject) {
         return store.query('repo', {
           'repository.active': 'true',
-          sort_by: 'repository.current_build:desc',
+          sort_by: 'current_build_id:desc',
           limit: 30
         }).then(function() {
           return resolve(repos);

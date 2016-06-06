@@ -26,7 +26,6 @@ export default Ember.Service.extend({
   updateTimes() {
     let records = this.get('records');
 
-    console.log('records', records);
     records.filter((record) => {
       return this.get('allowFinishedBuilds') || !record.get('isFinished');
     }).forEach((record) => {
