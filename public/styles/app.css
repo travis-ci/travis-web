@@ -70,19 +70,6 @@
   color: #999;
 }
 
-/* line 51, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
-#code-climate a {
-  text-decoration: underline;
-  font-weight: bold;
-}
-/* line 56, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
-#code-climate img#code-climate-logo {
-  float: right;
-  width: 150px;
-  margin-top: 5px;
-  margin-right: 10px;
-}
-
 /* line 62, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
 #actions {
   float: right;
@@ -103,10 +90,6 @@
 /* line 75, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
 #actions li.remove-log a {
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMTU0cHgiIGhlaWdodD0iMTUycHgiIHZpZXdCb3g9IjAgMCAxNTQgMTUyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxNTQgMTUyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMTMwLjM1MSwzNC4yNjEgMTMwLjM1MSwxNi43ODkgODYuMjkyLDE2Ljc4OSAxMDEuNjk3LDM0LjI2MSAJIi8+DQoJPHBvbHlnb24gZmlsbD0iI0ZGRkZGRiIgcG9pbnRzPSIxNTQuMDA4LDY3LjgxNyAxNTQuMDA4LDUwLjM0OCA5OC43NDMsNTAuMzQ4IDgzLjMzNyw2Ny44MTcgCSIvPg0KCTxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMTQ0Ljg4LDEwMS4zNzcgMTQ0Ljg4LDgzLjkyNyA4Ny43ODEsODMuOTI3IDEwMy4xNjUsMTAxLjM3NyAJIi8+DQoJPHBvbHlnb24gZmlsbD0iI0ZGRkZGRiIgcG9pbnRzPSIxMDkuMzk2LDEzNC45NTggMTA5LjM5NiwxMTcuNDg1IDk3LjI2NiwxMTcuNDg1IDgxLjg3MywxMzQuOTU4IAkiLz4NCjwvZz4NCjxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iNjAuODM2LDczLjM1OCA4OS42OTcsNDAuNjMxIDczLjg0MiwyMi42NTIgNDQuOTY4LDU1LjM4OSAxNi4wOTYsMjIuNjUyIDAuMjM5LDQwLjYzMSANCgkyOS4xMDIsNzMuMzU4IDAuMjM5LDEwNi4wODMgMTYuMDk2LDEyNC4wNzUgNDQuOTY4LDkxLjMzOCA3My44NDIsMTI0LjA3NSA4OS42OTcsMTA2LjA4MyAiLz4NCjwvc3ZnPg0K');
-}
-/* line 78, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
-#actions li.code-climate a {
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iNDBweCIgaGVpZ2h0PSI0MHB4IiB2aWV3Qm94PSIwIDAgNDAgNDAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDQwIDQwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMjMuNDg2LDE5Ljk2NyAyNi40MSwxNi45MjUgMzQuNzEsMjUuNTU1IDM5LDIxLjA5IDI2LjQxLDggMTkuMTk1LDE1LjUwMyAiLz4NCjxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMi42OTEsMjMuNzc3IDEsMjUuNTM4IDUuMjkyLDMwIDYuOTgzLDI4LjIzOCAxMi41MDgsMjIuNDk3IDEzLjU5LDIxLjM2OSAxNy44NjIsMjUuODE0IDIxLjg4OCwzMCANCgkyNi4xNzgsMjUuNTM1IDIyLjE1MiwyMS4zNTMgMTcuODYyLDE2Ljg4OSAxMy41OSwxMi40NDYgIi8+DQo8L3N2Zz4NCg==');
 }
 /* line 82, /Users/justine/Projects/travis-web/assets/styles/app/main/tools.sass */
 #actions li.icon span.loading {
@@ -2434,24 +2417,6 @@ pre#log .duration {
   width: 400px;
 }
 
-/* line 102, /Users/justine/Projects/travis-web/assets/styles/app/popup.sass */
-#code-climate {
-  width: 500px;
-  padding: 5px 20px;
-  margin-left: -250px;
-}
-/* line 107, /Users/justine/Projects/travis-web/assets/styles/app/popup.sass */
-#code-climate pre {
-  padding: 5px 10px;
-}
-/* line 110, /Users/justine/Projects/travis-web/assets/styles/app/popup.sass */
-#code-climate ol {
-  padding-left: 15px;
-}
-/* line 112, /Users/justine/Projects/travis-web/assets/styles/app/popup.sass */
-#code-climate img#code-climate-logo {
-  margin-right: 50px;
-}
 /* line 4, /Users/justine/Projects/travis-web/assets/styles/app/pro.sass */
 .pro #log-container {
   padding-bottom: 1.2em;
