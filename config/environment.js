@@ -36,10 +36,7 @@ module.exports = function(environment) {
   };
 
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
-
-  ENV.sentry = {
-    dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334'
-  }
+  var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
 
   if (typeof process !== 'undefined') {
     if (process.env.TRAVIS_PRO && !process.env.TRAVIS_ENTERPRISE) {
@@ -55,6 +52,9 @@ module.exports = function(environment) {
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
       ENV.statusPageStatusUrl = statusPageStatusUrl;
+      ENV.sentry = {
+        dsn: sentryDSN
+      };
       ENV.endpoints = {
         sshKey: true,
         caches: true
@@ -89,7 +89,10 @@ module.exports = function(environment) {
       enabled: false
     };
 
-    ENV.sentry.development = true;
+    ENV.sentry = {
+      development: true
+    }
+
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
@@ -110,7 +113,9 @@ module.exports = function(environment) {
     ENV.apiEndpoint = '';
     ENV.statusPageStatusUrl =  null;
 
-    ENV.sentry.development = true;
+    ENV.sentry = {
+      development: true
+    }
   }
 
   if (environment === 'production') {
@@ -123,6 +128,10 @@ module.exports = function(environment) {
     ENV.release = process.env.SOURCE_VERSION || "-";
     ENV['ember-cli-mirage'] = {
       enabled: false
+    };
+
+    ENV.sentry = {
+      dsn: sentryDSN
     };
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
