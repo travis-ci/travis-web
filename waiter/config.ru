@@ -41,9 +41,6 @@ if ENV['TRAVIS_PRO']
 
   ENV['PUSHER_KEY'] ||= "59236bc0716a551eab40"
   ENV['GA_CODE'] ||= "UA-24868285-5"
-
-  ENV['CODE_CLIMATE_URL'] ||= "https://codeclimate.com/partners/travisci"
-  ENV['CODE_CLIMATE'] = 'true' unless ENV.has_key?('CODE_CLIMATE')
 end
 
 if ENV['TRAVIS_ENTERPRISE']
@@ -72,8 +69,6 @@ run Travis::Web::App.build(
   customer_io_site_id: ENV['CUSTOMER_IO_SITE_ID'],
   pro: ENV['TRAVIS_PRO'],
   enterprise: ENV['TRAVIS_ENTERPRISE'],
-  code_climate: ENV['CODE_CLIMATE'],
-  code_climate_url: ENV['CODE_CLIMATE_URL'],
   assets_host: ENV['ASSETS_HOST'],
   ajax_polling: ENV['AJAX_POLLING'],
   github_orgs_oauth_access_settings_url: ENV['GITHUB_ORGS_OAUTH_ACCESS_SETTINGS_URL']
