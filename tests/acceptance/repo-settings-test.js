@@ -234,6 +234,7 @@ test('delete and set SSH keys', function(assert) {
   andThen(function() {
     assert.equal(settingsPage.sshKey.name, 'no custom key set');
     assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
+    assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
   });
 
 });

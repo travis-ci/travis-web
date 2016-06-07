@@ -5,6 +5,7 @@ let {
   collection,
   fillable,
   hasClass,
+  isVisible,
   text,
   value,
   visitable
@@ -83,6 +84,7 @@ export default PageObject.create({
     name: text('.ssh-key-name span:last-child'),
     fingerprint: text('.ssh-key-value span:last-child'),
 
-    delete: clickable('.icon-delete')
+    delete: clickable('.icon-delete'),
+    cannotBeDeleted: isVisible('.icon-delete-disabled')
   }
 });
