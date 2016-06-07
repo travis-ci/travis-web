@@ -4,8 +4,11 @@ export default Ember.Controller.extend({
   envVars: Ember.computed.filterBy('model.envVars', 'isNew', false),
   freeBranches: function() {
     var cronJobs = this.get('model.cronJobs.jobs');
-      return this.get('model.branches').filter(function(branch) {
-        return ! cronJobs.any(function(cron) {
+    var branches = this.get('model.branches').filter(function(branch) {
+      return branch.get('exists_on_github');
+    });
+    return branches.filter(function(branch) {
+      return ! cronJobs.any(function(cron) {
         return branch.get('name') === cron.get('branch').get('name');
       });
     });
