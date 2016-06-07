@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
         return branch.get('name') === cron.get('branch').get('name');
       });
     });
-  }.property('model.cronJobs','cronJobs','this.model.cronJobs'),
+  }.property('model.cronJobs.jobs.@each'),
 
   freeSortedBranches: Ember.computed.sort('freeBranches', function(a, b) {
     if(a.get('defaultBranch')) {
