@@ -241,9 +241,17 @@ test('delete and create crons', function(assert) {
 test('delete and set SSH keys', function(assert) {
   settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
 
+  const deletedIds = [];
+
+  server.delete('/settings/ssh_key/:id', function(schema, request) {
+    deletedIds.push(request.params.id);
+  });
+
   settingsPage.sshKey.delete();
 
   andThen(function() {
+    assert.equal(deletedIds.pop(), '1', 'expected the server to have received a deletion request for the SSH key');
+
     assert.equal(settingsPage.sshKey.name, 'no custom key set');
     assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
     assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
