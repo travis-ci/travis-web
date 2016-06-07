@@ -75,7 +75,7 @@
           <span class="label-align">{{#if item.isFinished}}Total time{{else}}Running for{{/if}} <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time></span></li>
       {{/if}}
     {{/unless}}
-    <li title="{{pretty-date item.finishedAt}}" class="commit-calendar">
+    <li title="{{unless item.isFinished 'not finished yet' item.finishedAt}}" class="commit-calendar">
       <span class="icon-calendar" aria-hidden="true"></span>
       <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time></li>
   </ul>
