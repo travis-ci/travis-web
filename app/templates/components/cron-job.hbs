@@ -1,6 +1,5 @@
-<div class="cron-job-value branch-name">{{cron.branch.name}}</div>
-<div class="cron-job-value interval">{{cron.interval}}</div>
-<div class="cron-job-value next-enqueuing">{{pretty-date cron.next_enqueuing}}</div>
+<div class="cron-job-text branch-name">{{cron.branch.name}}</div>
+<div class="cron-job-text enqueuing-interval">{{intervalText}}</div>
 <div class="cron-job-text disable-by-build">{{disableByBuild}}</div>
 <div class="cron-job-action">
   <div class="tooltip">
