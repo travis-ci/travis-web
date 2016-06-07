@@ -249,8 +249,8 @@ test('delete and set SSH keys', function(assert) {
 
   settingsPage.sshKey.delete();
 
-  andThen(function() {
-    assert.equal(deletedIds.pop(), '1', 'expected the server to have received a deletion request for the SSH key');
+  andThen(() => {
+    assert.equal(deletedIds.pop(), this.repository.id, 'expected the server to have received a deletion request for the SSH key');
 
     assert.equal(settingsPage.sshKey.name, 'no custom key set');
     assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
