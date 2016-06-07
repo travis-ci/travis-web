@@ -69,13 +69,14 @@ export default function() {
   });
 
   this.get('/repos', function(schema, request) {
-    return turnIntoV3('repository', schema.repositories.all().models);
+    return schema.repositories.all();
   });
 
   this.get('/repo/:slug', function(schema, request) {
     let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
     return turnIntoV3('repository', repos.models[0]);
   });
+
   this.get('/v3/repo/:id/crons', function(schema, request) {
     const crons = schema.crons.all().models.map(cron => {
       // TODO adapt turnIntoV3 to handle related models
