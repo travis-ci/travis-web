@@ -14,9 +14,6 @@ var sortCallback = function(repo1, repo2) {
   var finishedAt1 = repo1.get('currentBuild.finishedAt');
   var finishedAt2 = repo2.get('currentBuild.finishedAt');
 
-  console.log('repo1', repo1.get('slug'), buildId1, finishedAt1)
-  console.log('repo2', repo2.get('slug'), buildId2, finishedAt2)
-
   if(!buildId1 && !buildId2) {
     // if both repos lack builds, put newer repo first
     return repo1.get('id') > repo2.get('id') ? -1 : 1;
@@ -165,11 +162,9 @@ var Controller = Ember.Controller.extend({
   },
 
   viewOwned() {
-    console.log('controller loading repos');
     var repos, user;
 
     if (!Ember.isEmpty(this.get('ownedRepos'))) {
-      console.log('found some repos', this.get('ownedRepos').mapBy('slug'));
       return this.set('_repos', this.get('ownedRepos'));
     } else if (!this.get('fetchingOwnedRepos')) {
       this.set('isLoaded', false);
@@ -252,8 +247,6 @@ var Controller = Ember.Controller.extend({
 
     if(repos && repos.sort) {
       let sorted = repos.sort(sortCallback);
-      console.log('sorted amount', sorted.length);
-      console.log(sorted.map(function(repo) { return { slug: repo.get('slug'), lastBuildFinishedAt: repo.get('lastBuildFinishedAt') } }));
       return sorted;
     } else {
       if (Ember.isArray(repos)) {
