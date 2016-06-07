@@ -115,9 +115,14 @@ export default function() {
     };
   });
 
-  this.get('/settings/ssh_key/:repo_id', function() {
-    // FIXME add tests where these are present
-    return {file: 'not found'};
+  this.get('/settings/ssh_key/:repo_id', function(schema, request) {
+    return {
+      ssh_key: {
+        id: request.params.repo_id,
+        description: 'testy',
+        fingerprint: 'dd:cc:bb:aa'
+      }
+    };
   });
 
   this.get('/v3/repo/:id', function(schema, request) {
