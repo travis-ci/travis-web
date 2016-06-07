@@ -116,12 +116,9 @@ export default function() {
   });
 
   this.get('/settings/ssh_key/:repo_id', function(schema, request) {
+    const key = schema.sshKeys.where({repositoryId: request.params.repo_id, type: 'custom'}).models[0];
     return {
-      ssh_key: {
-        id: request.params.repo_id,
-        description: 'testy',
-        fingerprint: 'dd:cc:bb:aa'
-      }
+      ssh_key: key
     };
   });
 
@@ -134,10 +131,11 @@ export default function() {
     return turnIntoV3('branch', schema.branches.all().models);
   });
 
-  this.get('/repos/:id/key', function() {
+  this.get('/repos/:id/key', function(schema, request) {
+    const key = schema.sshKeys.where({repositoryId: request.params.id, type: 'default'}).models[0];
     return {
-      key: 'A PUBLIC KEY!',
-      fingerprint: 'aa:bb:cc:dd'
+      key: key.attrs.key,
+      fingerprint: key.attrs.fingerprint
     };
   });
 

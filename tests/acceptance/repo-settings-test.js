@@ -49,6 +49,18 @@ moduleForAcceptance('Acceptance | repo settings', {
       value: null
     });
 
+    repository.createCustomSshKey({
+      description: 'testy',
+      fingerprint: 'dd:cc:bb:aa',
+      type: 'custom'
+    });
+
+    repository.createDefaultSshKey({
+      type: 'default',
+      fingerprint: 'aa:bb:cc:dd',
+      key: 'A PUBLIC KEY!'
+    });
+
     this.repository = repository;
 
     const repoId = parseInt(repository.id);
