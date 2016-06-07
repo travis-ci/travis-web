@@ -111,7 +111,7 @@
     word-break: normal
     white-space: nowrap
 
-.env-var-value, .cron-job-value, .cron-job-text
+.env-var-value, .cron-job-text
   @extend %settings-value-section
   white-space: nowrap
   width: 76%
@@ -138,13 +138,10 @@
   @media #{$medium-up}
     width: grid-calc(3, 12)
 
-.cron-job-value
-  @media #{$medium-up}
-    width: grid-calc(2, 12)
-
 .cron-job-text
   @media #{$medium-up}
-    width: grid-calc(4, 12)
+    width: grid-calc(3, 12)
+    padding-right: 5px
 
 %settings-action-section
   display: inline-block
