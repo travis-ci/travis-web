@@ -86,5 +86,13 @@ export default PageObject.create({
 
     delete: clickable('.icon-delete'),
     cannotBeDeleted: isVisible('.icon-delete-disabled')
+  },
+
+  sshKeyForm: {
+    scope: '.form--sshkey',
+
+    fillDescription: fillable('input.ssh-description'),
+    fillKey: fillable('textarea.ssh-value'),
+    add: clickable('input[type=submit]')
   }
 });

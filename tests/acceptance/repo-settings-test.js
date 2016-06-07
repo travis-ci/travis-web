@@ -257,4 +257,24 @@ test('delete and set SSH keys', function(assert) {
     assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
   });
 
+  const requestBodies = [];
+
+  server.patch(`/settings/ssh_key/${this.repository.id}`, function(schema, request) {
+    requestBodies.push(JSON.parse(request.requestBody));
+    return {};
+  });
+
+  settingsPage.sshKeyForm.fillDescription('hey');
+  settingsPage.sshKeyForm.fillKey('hello');
+  settingsPage.sshKeyForm.add();
+
+  andThen(() => {
+    assert.deepEqual(requestBodies.pop(), {
+      ssh_key: {
+        id: this.repository.id,
+        description: 'hey',
+        value: 'hello'
+      }
+    });
+  });
 });
