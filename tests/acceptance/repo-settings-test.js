@@ -225,3 +225,15 @@ test('delete and create crons', function(assert) {
     assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
   });
 });
+
+test('delete and set SSH keys', function(assert) {
+  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
+
+  settingsPage.sshKey.delete();
+
+  andThen(function() {
+    assert.equal(settingsPage.sshKey.name, 'no custom key set');
+    assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
+  });
+
+});

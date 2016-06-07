@@ -81,6 +81,8 @@ export default PageObject.create({
   sshKey: {
     scope: '.settings-sshkey',
     name: text('.ssh-key-name span:last-child'),
-    fingerprint: text('.ssh-key-value span:last-child')
+    fingerprint: text('.ssh-key-value span:last-child'),
+
+    delete: clickable('.icon-delete')
   }
 });
