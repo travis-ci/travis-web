@@ -16,9 +16,14 @@ if (Config.useV3API) {
     defaultBranch: belongsTo('branch', {
       async: false
     }),
-    currentBuild: belongsTo('build', {
-      async: false
+    currentBuild: Ember.computed('builds', function() {
+      let builds = this.get('builds');
+      if (builds.length) {
+        let sorted = builds.sortBy('finishedAt:desc');
+        return sorted.
+      }
     }),
+    builds: hasMany('build', { async: true }),
     lastBuild: Ember.computed.alias('currentBuild'),
     lastBuildFinishedAt: Ember.computed.oneWay('lastBuild.finishedAt'),
     lastBuildId: Ember.computed.oneWay('lastBuild.id'),
