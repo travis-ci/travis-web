@@ -66,9 +66,6 @@ Router.map(function() {
         this.route('env_vars', { resetNamespace: true }, function() {
           this.route('new');
         });
-        if (config.endpoints.sshKey) {
-          this.resource('ssh_key');
-        }
       });
     });
   });
