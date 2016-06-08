@@ -28,7 +28,25 @@ moduleForAcceptance('Acceptance | repo branches', {
     const primaryBranch = server.create('branch', {
       name: 'primary',
       id: `/v3/repos/${repoId}/branches/primary`,
-      default_branch: true
+      default_branch: true,
+
+      // FIXME how to serialise related resources in V3?
+
+      repository: {
+        '@type': 'repository',
+        '@href': `/v3/repo/${repoId}`,
+        '@representation': 'minimal',
+        id: repoId,
+        name: repository.name
+      },
+
+      last_build: {
+        '@type': 'build',
+        '@href': '/v3/build/111',
+        '@representation': 'minimal',
+        id: '111',
+        state: 'passed'
+      }
     });
   }
 });
@@ -38,5 +56,6 @@ test('view branches', function(assert) {
 
   andThen(() => {
     assert.equal(branchesPage.defaultBranch.name, 'primary');
+    assert.ok(branchesPage.defaultBranch.passed, 'expected default branch last build to have passed');
   });
 });

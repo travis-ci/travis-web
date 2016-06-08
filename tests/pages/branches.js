@@ -1,6 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  hasClass,
   text,
   visitable
 } = PageObject;
@@ -11,6 +12,7 @@ export default PageObject.create({
   defaultBranch: {
     scope: '.branch-row',
 
-    name: text('.row-name .label-align')
+    name: text('.row-name .label-align'),
+    passed: hasClass('passed')
   }
 });
