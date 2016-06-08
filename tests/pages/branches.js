@@ -13,6 +13,7 @@ export default PageObject.create({
     scope: '.branch-row',
 
     name: text('.row-name .label-align'),
+    buildCount: text('.row-builds .label-align'),
     passed: hasClass('passed')
   }
 });

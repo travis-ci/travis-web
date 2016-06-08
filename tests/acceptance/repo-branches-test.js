@@ -48,6 +48,10 @@ moduleForAcceptance('Acceptance | repo branches', {
         state: 'passed'
       }
     });
+
+    primaryBranch.createBuild({
+      state: 'passed'
+    });
   }
 });
 
@@ -57,5 +61,6 @@ test('view branches', function(assert) {
   andThen(() => {
     assert.equal(branchesPage.defaultBranch.name, 'primary');
     assert.ok(branchesPage.defaultBranch.passed, 'expected default branch last build to have passed');
+    assert.equal(branchesPage.defaultBranch.buildCount, '1 builds');
   });
 });

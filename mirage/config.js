@@ -165,6 +165,16 @@ export default function() {
     };
   });
 
+  this.get('/v3/repo/:repo_id/builds', (schema, request) => {
+    const branch = schema.branches.where({name: request.queryParams['branch.name']}).models[0];
+    const builds = schema.builds.where({branchId: branch.id});
+
+    // FIXME handle pagination in mock V3 API
+    const response = turnIntoV3('build', builds.models);
+    response['@pagination'] = {count: 1};
+    return response;
+  });
+
   this.get('/jobs/:id/log', function(schema, request) {
     let log = schema.logs.find(request.params.id);
     if(log) {
