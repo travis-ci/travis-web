@@ -34,11 +34,20 @@ githubAdmin = function(slug) {
 
 statusImage = function(slug, branch) {
   var token;
+  var prefix = location.protocol + "//" + location.host;
+
+  // the ruby app (waiter) does an indirect, internal redirect to api on build status images
+  // but that does not work if you only run `ember serve`
+  // so in development we use the api endpoint deireclty
+  if (config.environment === 'development') {
+    prefix = config.apiEndpoint;
+  }
+  
   if (config.pro) {
     token = Travis.__container__.lookup('controller:currentUser').get('model.token');
-    return (location.protocol + "//" + location.host + "/" + slug + ".svg?token=" + token) + (branch ? "&branch=" + branch : '');
+    return (prefix + "/" + slug + ".svg?token=" + token) + (branch ? "&branch=" + branch : '');
   } else {
-    return (location.protocol + "//" + location.host + "/" + slug + ".svg") + (branch ? "?branch=" + (encodeURIComponent(branch)) : '');
+    return (prefix + "/" + slug + ".svg") + (branch ? "?branch=" + (encodeURIComponent(branch)) : '');
   }
 };
 
