@@ -49,6 +49,18 @@ moduleForAcceptance('Acceptance | repo settings', {
       value: null
     });
 
+    repository.createCustomSshKey({
+      description: 'testy',
+      fingerprint: 'dd:cc:bb:aa',
+      type: 'custom'
+    });
+
+    repository.createDefaultSshKey({
+      type: 'default',
+      fingerprint: 'aa:bb:cc:dd',
+      key: 'A PUBLIC KEY!'
+    });
+
     this.repository = repository;
 
     const repoId = parseInt(repository.id);
@@ -117,6 +129,9 @@ test('view settings', function(assert) {
     assert.equal(settingsPage.crons(1).branchName, 'weekly-branch');
     assert.ok(settingsPage.crons(1).enqueuingInterval.indexOf('Enqueues each') === 0, 'Shows weekly enqueuing text');
     assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only if no new commit') === 0, 'expected cron to run only if no new commit after last build');
+
+    assert.equal(settingsPage.sshKey.name, 'testy');
+    assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
   });
 });
 
@@ -220,5 +235,49 @@ test('delete and create crons', function(assert) {
   andThen(() => {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
     assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
+  });
+});
+
+test('delete and set SSH keys', function(assert) {
+  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
+
+  const deletedIds = [];
+
+  server.delete('/settings/ssh_key/:id', function(schema, request) {
+    deletedIds.push(request.params.id);
+  });
+
+  settingsPage.sshKey.delete();
+
+  andThen(() => {
+    assert.equal(deletedIds.pop(), this.repository.id, 'expected the server to have received a deletion request for the SSH key');
+
+    assert.equal(settingsPage.sshKey.name, 'no custom key set');
+    assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
+    assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
+  });
+
+  const requestBodies = [];
+
+  server.patch(`/settings/ssh_key/${this.repository.id}`, (schema, request) => {
+    const newKey = JSON.parse(request.requestBody);
+    requestBodies.push(newKey);
+    newKey.id = this.repository.id;
+
+    return {
+      ssh_key: newKey
+    };
+  });
+
+  settingsPage.sshKeyForm.fillDescription('hey');
+  settingsPage.sshKeyForm.fillKey('hello');
+  settingsPage.sshKeyForm.add();
+
+  andThen(() => {
+    assert.deepEqual(requestBodies.pop().ssh_key, {
+      id: this.repository.id,
+      description: 'hey',
+      value: 'hello'
+    });
   });
 });

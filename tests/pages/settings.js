@@ -5,6 +5,7 @@ let {
   collection,
   fillable,
   hasClass,
+  isVisible,
   text,
   value,
   visitable
@@ -76,5 +77,22 @@ export default PageObject.create({
 
       delete: clickable('.icon-delete')
     }
-  })
+  }),
+
+  sshKey: {
+    scope: '.settings-sshkey',
+    name: text('.ssh-key-name span:last-child'),
+    fingerprint: text('.ssh-key-value span:last-child'),
+
+    delete: clickable('.icon-delete'),
+    cannotBeDeleted: isVisible('.icon-delete-disabled')
+  },
+
+  sshKeyForm: {
+    scope: '.form--sshkey',
+
+    fillDescription: fillable('input.ssh-description'),
+    fillKey: fillable('textarea.ssh-value'),
+    add: clickable('input[type=submit]')
+  }
 });

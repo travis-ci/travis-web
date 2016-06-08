@@ -115,7 +115,10 @@ module.exports = function(environment) {
 
     ENV.sentry = {
       development: true
-    }
+    };
+    ENV.endpoints = {
+      sshKey: true
+    };
   }
 
   if (environment === 'production') {

@@ -115,9 +115,11 @@ export default function() {
     };
   });
 
-  this.get('/settings/ssh_key/:repo_id', function() {
-    // FIXME add tests where these are present
-    return {file: 'not found'};
+  this.get('/settings/ssh_key/:repo_id', function(schema, request) {
+    const key = schema.sshKeys.where({repositoryId: request.params.repo_id, type: 'custom'}).models[0];
+    return {
+      ssh_key: key
+    };
   });
 
   this.get('/v3/repo/:id', function(schema, request) {
@@ -129,9 +131,12 @@ export default function() {
     return turnIntoV3('branch', schema.branches.all().models);
   });
 
-  this.get('/repos/:id/key', function() {
-    // FIXME add tests where these are present
-    return {key: 'hello', fingerprint: 'yes'};
+  this.get('/repos/:id/key', function(schema, request) {
+    const key = schema.sshKeys.where({repositoryId: request.params.id, type: 'default'}).models[0];
+    return {
+      key: key.attrs.key,
+      fingerprint: key.attrs.fingerprint
+    };
   });
 
   this.get('/jobs/:id', function(schema, request) {
