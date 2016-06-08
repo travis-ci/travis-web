@@ -259,9 +259,14 @@ test('delete and set SSH keys', function(assert) {
 
   const requestBodies = [];
 
-  server.patch(`/settings/ssh_key/${this.repository.id}`, function(schema, request) {
-    requestBodies.push(JSON.parse(request.requestBody));
-    return {};
+  server.patch(`/settings/ssh_key/${this.repository.id}`, (schema, request) => {
+    const newKey = JSON.parse(request.requestBody);
+    requestBodies.push(newKey);
+    newKey.id = this.repository.id;
+
+    return {
+      ssh_key: newKey
+    };
   });
 
   settingsPage.sshKeyForm.fillDescription('hey');
@@ -269,12 +274,10 @@ test('delete and set SSH keys', function(assert) {
   settingsPage.sshKeyForm.add();
 
   andThen(() => {
-    assert.deepEqual(requestBodies.pop(), {
-      ssh_key: {
-        id: this.repository.id,
-        description: 'hey',
-        value: 'hello'
-      }
+    assert.deepEqual(requestBodies.pop().ssh_key, {
+      id: this.repository.id,
+      description: 'hey',
+      value: 'hello'
     });
   });
 });
