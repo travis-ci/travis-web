@@ -26,6 +26,8 @@ export default PageObject.create({
         failed: hasClass('failed'),
         errored: hasClass('errored'),
         empty: is(':empty'),
+
+        number: text('.build-tile-number')
       }
     })
   }

@@ -42,15 +42,18 @@ moduleForAcceptance('Acceptance | repo branches', {
     });
 
     primaryBranch.createBuild({
-      state: 'failed'
+      state: 'failed',
+      number: '1917'
     });
 
     primaryBranch.createBuild({
-      state: 'errored'
+      state: 'errored',
+      number: '1918'
     });
 
     primaryBranch.createBuild({
-      state: 'passed'
+      state: 'passed',
+      number: '1919'
     });
   }
 });
@@ -66,8 +69,14 @@ test('view branches', function(assert) {
     const buildTiles = branchesPage.defaultBranch.buildTiles;
 
     assert.ok(buildTiles(0).passed, 'expected most recent build to have passed');
+    assert.equal(buildTiles(0).number, '#1919');
+
     assert.ok(buildTiles(1).errored, 'expected second-most recent build to have errored');
+    assert.equal(buildTiles(1).number, '#1918');
+
     assert.ok(buildTiles(2).failed, 'expected third-most recent build to have failed');
+    assert.equal(buildTiles(2).number, '#1917');
+
     assert.ok(buildTiles(3).empty, 'expected fourth tile to be empty');
   });
 });
