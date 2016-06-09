@@ -132,7 +132,15 @@ export default function() {
       const builds = schema.builds.where({branchId: branch.id});
 
       if (builds.models.length) {
-        branch.attrs.last_build = builds.models[builds.models.length - 1].attrs;
+        const lastBuild = builds.models[builds.models.length - 1];
+
+        branch.attrs.last_build = lastBuild.attrs;
+
+        if (lastBuild.commit) {
+          // FIXME there should be a hasOne relationship here but I couldn’t get that working…
+          const commit = lastBuild.commit.models[0];
+          branch.attrs.last_build.commit = commit;
+        }
       }
 
       return branch;

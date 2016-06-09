@@ -19,6 +19,7 @@ export default PageObject.create({
     passed: hasClass('passed'),
 
     request: text('.row-request .label-align'),
+    commitSha: text('.row-commit .label-align'),
 
     buildTiles: collection({
       itemScope: '.build-tiles li',
