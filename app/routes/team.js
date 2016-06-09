@@ -227,6 +227,13 @@ export default TravisRoute.extend({
         nationality: 'india',
         country: 'germany',
         image: 'aakriti'
+      }, {
+        name: 'Renée Hendricksen',
+        title: 'Ski Lift Operator',
+        handle: 'gigglegirl4e',
+        nationality: 'usa',
+        country: 'usa',
+        image: 'renee'
       }
     ];
   }
