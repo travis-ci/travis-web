@@ -18,6 +18,8 @@ export default PageObject.create({
     buildCount: text('.row-builds .label-align'),
     passed: hasClass('passed'),
 
+    request: text('.row-request .label-align'),
+
     buildTiles: collection({
       itemScope: '.build-tiles li',
 
