@@ -5,7 +5,6 @@ export default TravisRoute.extend({
   setupController(controller, model) {
     this._super(...arguments);
     this.controllerFor('repo').activate('current');
-    console.log('model', model.get('currentBuild'));
     controller.set('repo', model);
   },
 
@@ -37,7 +36,6 @@ export default TravisRoute.extend({
 
   renderTemplate() {
     let controller = this.controllerFor('repo');
-    console.log('current build exists', controller.get('repo.currentBuildId'));
 
     if(!controller.get('repo.active')) {
       this.render('repo/not-active');

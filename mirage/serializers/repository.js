@@ -6,17 +6,18 @@ export default JSONAPISerializer.extend({
     return this.turnIntoV3('repository', repository.models);
   },
 
-  _turnIntoV3Singular(type, record) {
-    if(record.attrs) {
-      record = record.attrs;
+  _turnIntoV3Singular(type, mirageRecord) {
+    let record;
+    if(mirageRecord.attrs) {
+      record = mirageRecord.attrs;
     }
     record['@type'] = type;
-    record['@href'] = `/${type}/${record.id}`;
+    record['@href'] = `/${type}/${mirageRecord.id}`;
 
-    if (record && record._schema && record._schema.builds) {
-      let build = record._schema.builds.first();
+    if (mirageRecord && mirageRecord._schema && mirageRecord._schema.builds) {
+      let build = mirageRecord._schema.builds.first();
       if (build) {
-        record['currentBuild'] = build;
+        record['current_build'] = build.attrs;
       }
     }
 
