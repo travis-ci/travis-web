@@ -220,6 +220,13 @@ export default TravisRoute.extend({
         nationality: 'uk',
         country: 'germany',
         image: 'joe'
+      }, {
+        name: 'Aakriti Gupta',
+        title: 'Custodian of the Hard Hat',
+        handle: 'aakri_tea',
+        nationality: 'india',
+        country: 'germany',
+        image: 'aakriti'
       }
     ];
   }
