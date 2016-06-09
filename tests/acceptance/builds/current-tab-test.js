@@ -29,7 +29,7 @@ test('renders most recent repository without builds', function(assert) {
   });
 });
 
-QUnit.only('renders most recent repository and most recent build when builds present', function(assert) {
+test('renders most recent repository and most recent build when builds present', function(assert) {
   let repo =  server.create('repository', {slug: 'travis-ci/travis-web'});
   let branch = server.create('branch', {});
   let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
@@ -50,6 +50,6 @@ QUnit.only('renders most recent repository and most recent build when builds pre
 
   andThen(function() {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
-    // assert.equal(currentRepoTab.showsNoBuildsMessaging, 'No builds for this repository', 'Current tab shows no builds message');
+    assert.ok(currentRepoTab.showsCurrentBuild, 'Shows current build');
   });
 });
