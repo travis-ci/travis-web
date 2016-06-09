@@ -51,9 +51,13 @@ moduleForAcceptance('Acceptance | repo branches', {
       number: '1918'
     });
 
+    const oneYearAgo = new Date();
+    oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
+
     const lastBuild = primaryBranch.createBuild({
       state: 'passed',
-      number: '1919'
+      number: '1919',
+      finished_at: oneYearAgo
     });
 
     lastBuild.createCommit({
@@ -73,6 +77,7 @@ test('view branches', function(assert) {
     assert.equal(branchesPage.defaultBranch.request, '#1919 passed');
     assert.equal(branchesPage.defaultBranch.commitSha, '1234567');
     assert.equal(branchesPage.defaultBranch.committer, 'Sara Ahmed');
+    assert.equal(branchesPage.defaultBranch.commitDate, 'about a year ago');
 
     const buildTiles = branchesPage.defaultBranch.buildTiles;
 

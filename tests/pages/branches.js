@@ -21,6 +21,7 @@ export default PageObject.create({
     request: text('.row-request .label-align'),
     commitSha: text('.row-commit .label-align'),
     committer: text('.row-commiter .label-align'),
+    commitDate: text('.row-calendar .label-align'),
 
     buildTiles: collection({
       itemScope: '.build-tiles li',
