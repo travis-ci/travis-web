@@ -128,7 +128,15 @@ export default function() {
   });
 
   this.get('/v3/repo/:id/branches', function(schema) {
-    return turnIntoV3('branch', schema.branches.all().models);
+    return turnIntoV3('branch', schema.branches.all().models.map(branch => {
+      const builds = schema.builds.where({branchId: branch.id});
+
+      if (builds.models.length) {
+        branch.attrs.last_build = builds.models[builds.models.length - 1].attrs;
+      }
+
+      return branch;
+    }));
   });
 
   this.get('/repos/:id/key', function(schema, request) {
@@ -170,7 +178,7 @@ export default function() {
     const builds = schema.builds.where({branchId: branch.id});
 
     // FIXME handle pagination in mock V3 API
-    const response = turnIntoV3('build', builds.models);
+    const response = turnIntoV3('build', builds.models.reverse());
     response['@pagination'] = {count: builds.models.length};
     return response;
   });

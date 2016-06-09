@@ -38,19 +38,7 @@ moduleForAcceptance('Acceptance | repo branches', {
         '@representation': 'minimal',
         id: repoId,
         name: repository.name
-      },
-
-      last_build: {
-        '@type': 'build',
-        '@href': '/v3/build/111',
-        '@representation': 'minimal',
-        id: '111',
-        state: 'passed'
       }
-    });
-
-    primaryBranch.createBuild({
-      state: 'passed'
     });
 
     primaryBranch.createBuild({
@@ -59,6 +47,10 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     primaryBranch.createBuild({
       state: 'errored'
+    });
+
+    primaryBranch.createBuild({
+      state: 'passed'
     });
   }
 });
@@ -74,8 +66,8 @@ test('view branches', function(assert) {
     const buildTiles = branchesPage.defaultBranch.buildTiles;
 
     assert.ok(buildTiles(0).passed, 'expected most recent build to have passed');
-    assert.ok(buildTiles(1).failed, 'expected second-most recent build to have failed');
-    assert.ok(buildTiles(2).errored, 'expected third-most recent build to have failed');
+    assert.ok(buildTiles(1).errored, 'expected second-most recent build to have errored');
+    assert.ok(buildTiles(2).failed, 'expected third-most recent build to have failed');
     assert.ok(buildTiles(3).empty, 'expected fourth tile to be empty');
   });
 });
