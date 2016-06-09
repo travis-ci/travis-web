@@ -171,7 +171,7 @@ export default function() {
 
     // FIXME handle pagination in mock V3 API
     const response = turnIntoV3('build', builds.models);
-    response['@pagination'] = {count: 1};
+    response['@pagination'] = {count: builds.models.length};
     return response;
   });
 

@@ -1,7 +1,9 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  collection,
   hasClass,
+  is,
   text,
   visitable
 } = PageObject;
@@ -14,6 +16,17 @@ export default PageObject.create({
 
     name: text('.row-name .label-align'),
     buildCount: text('.row-builds .label-align'),
-    passed: hasClass('passed')
+    passed: hasClass('passed'),
+
+    buildTiles: collection({
+      itemScope: '.build-tiles li',
+
+      item: {
+        passed: hasClass('passed'),
+        failed: hasClass('failed'),
+        errored: hasClass('errored'),
+        empty: is(':empty'),
+      }
+    })
   }
 });

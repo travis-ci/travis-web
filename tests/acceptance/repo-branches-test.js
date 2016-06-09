@@ -52,6 +52,14 @@ moduleForAcceptance('Acceptance | repo branches', {
     primaryBranch.createBuild({
       state: 'passed'
     });
+
+    primaryBranch.createBuild({
+      state: 'failed'
+    });
+
+    primaryBranch.createBuild({
+      state: 'errored'
+    });
   }
 });
 
@@ -61,6 +69,13 @@ test('view branches', function(assert) {
   andThen(() => {
     assert.equal(branchesPage.defaultBranch.name, 'primary');
     assert.ok(branchesPage.defaultBranch.passed, 'expected default branch last build to have passed');
-    assert.equal(branchesPage.defaultBranch.buildCount, '1 builds');
+    assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
+
+    const buildTiles = branchesPage.defaultBranch.buildTiles;
+
+    assert.ok(buildTiles(0).passed, 'expected most recent build to have passed');
+    assert.ok(buildTiles(1).failed, 'expected second-most recent build to have failed');
+    assert.ok(buildTiles(2).errored, 'expected third-most recent build to have failed');
+    assert.ok(buildTiles(3).empty, 'expected fourth tile to be empty');
   });
 });
