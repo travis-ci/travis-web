@@ -57,7 +57,8 @@ moduleForAcceptance('Acceptance | repo branches', {
     });
 
     lastBuild.createCommit({
-      sha: '1234567890'
+      sha: '1234567890',
+      committer: currentUser
     });
   }
 });
@@ -71,6 +72,7 @@ test('view branches', function(assert) {
     assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
     assert.equal(branchesPage.defaultBranch.request, '#1919 passed');
     assert.equal(branchesPage.defaultBranch.commitSha, '1234567');
+    assert.equal(branchesPage.defaultBranch.committer, 'Sara Ahmed');
 
     const buildTiles = branchesPage.defaultBranch.buildTiles;
 

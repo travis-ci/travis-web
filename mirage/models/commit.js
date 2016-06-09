@@ -1,5 +1,6 @@
 import { Model, belongsTo } from 'ember-cli-mirage';
 
 export default Model.extend({
-  build: belongsTo()
+  build: belongsTo(),
+  committer: belongsTo('user')
 });

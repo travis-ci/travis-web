@@ -140,6 +140,11 @@ export default function() {
           // FIXME there should be a hasOne relationship here but I couldn’t get that working…
           const commit = lastBuild.commit.models[0];
           branch.attrs.last_build.commit = commit;
+
+          if (commit.committer) {
+            // FIXME this is obviously OUT OF CONTROL
+            branch.attrs.last_build.commit.attrs.committer = commit.committer.attrs;
+          }
         }
       }
 
