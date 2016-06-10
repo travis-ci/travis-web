@@ -21,7 +21,6 @@ matrix:
 sudo: false
 
 cache:
-  branch: md5deep
   directories:
     - node_modules
     - bower_components
