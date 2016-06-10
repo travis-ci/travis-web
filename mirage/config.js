@@ -141,7 +141,7 @@ export default function() {
           const commit = lastBuild.commit.models[0];
           branch.attrs.last_build.commit = commit;
 
-          if (commit.committer) {
+          if (commit && commit.committer) {
             // FIXME this is obviously OUT OF CONTROL
             branch.attrs.last_build.commit.attrs.committer = commit.committer.attrs;
           }

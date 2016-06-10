@@ -42,7 +42,8 @@ export default PageObject.create({
     itemScope: '.branch-row',
 
     item: {
-      name: text('.row-name .label-align')
+      name: text('.row-name .label-align'),
+      failed: hasClass('failed')
     }
   }),
 
@@ -51,7 +52,8 @@ export default PageObject.create({
     itemScope: '.branch-row',
 
     item: {
-      name: text('.row-name .label-align')
+      name: text('.row-name .label-align'),
+      errored: hasClass('errored')
     }
   })
 });

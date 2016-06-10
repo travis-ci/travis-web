@@ -55,10 +55,14 @@ moduleForAcceptance('Acceptance | repo branches', {
       committer: currentUser
     });
 
-    server.create('branch', {
+    const activeBranch = server.create('branch', {
       name: 'edits',
       id: `/v3/repos/${repoId}/branches/edits`,
       exists_on_github: true
+    });
+
+    activeBranch.createBuild({
+      state: 'failed'
     });
 
     server.create('branch', {
@@ -67,10 +71,14 @@ moduleForAcceptance('Acceptance | repo branches', {
       exists_on_github: false
     });
 
-    server.create('branch', {
+    const newerInactiveBranch = server.create('branch', {
       name: 'old-edits',
       id: `/v3/repos/${repoId}/branches/old-edits`,
       exists_on_github: false
+    });
+
+    newerInactiveBranch.createBuild({
+      state: 'errored'
     });
   }
 });
@@ -102,9 +110,11 @@ test('view branches', function(assert) {
 
     assert.equal(branchesPage.activeBranches().count, 1, 'expected one active branch');
     assert.equal(branchesPage.activeBranches(0).name, 'edits');
+    assert.ok(branchesPage.activeBranches(0).failed, 'expected active branch to have failed');
 
     assert.equal(branchesPage.inactiveBranches().count, 2, 'expected two inactive branches');
     assert.equal(branchesPage.inactiveBranches(0).name, 'old-edits');
+    assert.ok(branchesPage.inactiveBranches(0).errored, 'expected first inactive branch to have errored');
     assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
   });
 });
