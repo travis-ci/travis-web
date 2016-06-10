@@ -234,6 +234,13 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'usa',
         image: 'renee'
+      }, {
+        name: 'Brandon Ferguson',
+        title: 'Actual Human Muppet',
+        handle: 'bnferguson',
+        nationality: 'usa',
+        country: 'netherlands',
+        image: 'bmoney'
       }
     ];
   }
