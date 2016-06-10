@@ -28,17 +28,7 @@ moduleForAcceptance('Acceptance | repo branches', {
     const primaryBranch = server.create('branch', {
       name: 'primary',
       id: `/v3/repos/${repoId}/branches/primary`,
-      default_branch: true,
-
-      // FIXME how to serialise related resources in V3?
-
-      repository: {
-        '@type': 'repository',
-        '@href': `/v3/repo/${repoId}`,
-        '@representation': 'minimal',
-        id: repoId,
-        name: repository.name
-      }
+      default_branch: true
     });
 
     primaryBranch.createBuild({
@@ -68,45 +58,19 @@ moduleForAcceptance('Acceptance | repo branches', {
     server.create('branch', {
       name: 'edits',
       id: `/v3/repos/${repoId}/branches/edits`,
-      exists_on_github: true,
-
-      // FIXME see above
-
-      repository: {
-        '@type': 'repository',
-        '@href': `/v3/repo/${repoId}`,
-        '@representation': 'minimal',
-        id: repoId,
-        name: repository.name
-      }
+      exists_on_github: true
     });
 
     server.create('branch', {
       name: 'older-edits',
       id: `/v3/repos/${repoId}/branches/older-edits`,
-      exists_on_github: false,
-
-      repository: {
-        '@type': 'repository',
-        '@href': `/v3/repo/${repoId}`,
-        '@representation': 'minimal',
-        id: repoId,
-        name: repository.name
-      }
+      exists_on_github: false
     });
 
     server.create('branch', {
       name: 'old-edits',
       id: `/v3/repos/${repoId}/branches/old-edits`,
-      exists_on_github: false,
-
-      repository: {
-        '@type': 'repository',
-        '@href': `/v3/repo/${repoId}`,
-        '@representation': 'minimal',
-        id: repoId,
-        name: repository.name
-      }
+      exists_on_github: false
     });
   }
 });
