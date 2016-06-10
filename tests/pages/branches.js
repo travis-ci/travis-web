@@ -12,7 +12,7 @@ export default PageObject.create({
   visit: visitable(':organization/:repo/branches'),
 
   defaultBranch: {
-    scope: '.branch-row',
+    scope: '.default-branch .branch-row',
 
     name: text('.row-name .label-align'),
     buildCount: text('.row-builds .label-align'),
@@ -35,5 +35,14 @@ export default PageObject.create({
         number: text('.build-tile-number')
       }
     })
-  }
+  },
+
+  activeBranches: collection({
+    scope: '.active-branches',
+    itemScope: '.branch-row',
+
+    item: {
+      name: text('.row-name .label-align')
+    }
+  })
 });

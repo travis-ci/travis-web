@@ -64,6 +64,22 @@ moduleForAcceptance('Acceptance | repo branches', {
       sha: '1234567890',
       committer: currentUser
     });
+
+    server.create('branch', {
+      name: 'edits',
+      id: `/v3/repos/${repoId}/branches/edits`,
+      exists_on_github: true,
+
+      // FIXME see above
+
+      repository: {
+        '@type': 'repository',
+        '@href': `/v3/repo/${repoId}`,
+        '@representation': 'minimal',
+        id: repoId,
+        name: repository.name
+      }
+    });
   }
 });
 
@@ -91,5 +107,8 @@ test('view branches', function(assert) {
     assert.equal(buildTiles(2).number, '#1917');
 
     assert.ok(buildTiles(3).empty, 'expected fourth tile to be empty');
+
+    assert.equal(branchesPage.activeBranches().count, 1, 'expected one active branch');
+    assert.equal(branchesPage.activeBranches(0).name, 'edits');
   });
 });
