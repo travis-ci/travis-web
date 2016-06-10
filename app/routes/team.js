@@ -241,6 +241,13 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'netherlands',
         image: 'bmoney'
+      }, {
+        name: 'Anna Nagy',
+        title: 'Trainspotter',
+        handle: 'acnagy',
+        nationality: 'usa',
+        country: 'usa',
+        image: 'anna'
       }
     ];
   }
