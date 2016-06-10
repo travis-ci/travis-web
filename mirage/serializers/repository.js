@@ -14,11 +14,9 @@ export default JSONAPISerializer.extend({
     record['@type'] = type;
     record['@href'] = `/${type}/${mirageRecord.id}`;
 
-    if (mirageRecord && mirageRecord._schema && mirageRecord._schema.builds) {
-      let build = mirageRecord._schema.builds.first();
-      if (build) {
-        record['current_build'] = build.attrs;
-      }
+    let build = mirageRecord._schema.builds.first();
+    if (build) {
+      record['current_build'] = build.attrs;
     }
 
     return record;

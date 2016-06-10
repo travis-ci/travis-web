@@ -29,7 +29,6 @@ test('visiting /builds/branches-tab', function(assert) {
     .visit();
 
   andThen(function() {
-    pauseTest();
     assert.ok(branchesRepoTab.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
   });
 });
