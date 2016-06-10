@@ -1,14 +1,14 @@
 {{#if account.subscribed}}
-  <a class="btn btn-activated" href={{account.billingUrl}}>
+  <a class="button" href={{account.billingUrl}}>
     Subscription active!
   </a>
 {{else}}
   {{#if account.education}}
-    <a class="btn btn-activated" href={{account.billingUrl}}>
+    <a class="button" href={{account.billingUrl}}>
       Educational account!
     </a>
   {{else}}
-    <a class="btn btn-activate" href={{account.billingUrl}}>
+    <a class="button" href={{account.billingUrl}}>
       Sign up this account!
     </a>
   {{/if}}

@@ -5,12 +5,12 @@
     {{#if config.billingEndpoint}}
       <div class="cta-btn">
         {{#if subscribeButtonInfo.subscribed}}
-          <a class="btn btn-activated" href={{billingUrl}}>Subscription active!</a>
+          <a class="button" href={{billingUrl}}>Subscription active!</a>
         {{else}}
           {{#if subscribeButtonInfo.education}}
-            <a class="btn btn-activated" href={{billingUrl}}>Educational account!</a>
+            <a class="button" href={{billingUrl}}>Educational account!</a>
           {{else}}
-            <a class="btn btn-activate" href={{billingUrl}}> Sign up this account!</a>
+            <a class="button" href={{billingUrl}}> Sign up this account!</a>
           {{/if}}
         {{/if}}
       </div>

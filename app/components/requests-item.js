@@ -39,10 +39,6 @@ export default Ember.Component.extend({
     }
   }.property('request.isAccepted'),
 
-  hasBranchName: function() {
-    return this.get('request.branchName');
-  }.property('request'),
-
   message: function() {
     var message;
     message = this.get('request.message');
