@@ -44,5 +44,14 @@ export default PageObject.create({
     item: {
       name: text('.row-name .label-align')
     }
+  }),
+
+  inactiveBranches: collection({
+    scope: '.inactive-branches',
+    itemScope: '.branch-row',
+
+    item: {
+      name: text('.row-name .label-align')
+    }
   })
 });

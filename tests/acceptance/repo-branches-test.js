@@ -80,6 +80,34 @@ moduleForAcceptance('Acceptance | repo branches', {
         name: repository.name
       }
     });
+
+    server.create('branch', {
+      name: 'older-edits',
+      id: `/v3/repos/${repoId}/branches/older-edits`,
+      exists_on_github: false,
+
+      repository: {
+        '@type': 'repository',
+        '@href': `/v3/repo/${repoId}`,
+        '@representation': 'minimal',
+        id: repoId,
+        name: repository.name
+      }
+    });
+
+    server.create('branch', {
+      name: 'old-edits',
+      id: `/v3/repos/${repoId}/branches/old-edits`,
+      exists_on_github: false,
+
+      repository: {
+        '@type': 'repository',
+        '@href': `/v3/repo/${repoId}`,
+        '@representation': 'minimal',
+        id: repoId,
+        name: repository.name
+      }
+    });
   }
 });
 
@@ -110,5 +138,9 @@ test('view branches', function(assert) {
 
     assert.equal(branchesPage.activeBranches().count, 1, 'expected one active branch');
     assert.equal(branchesPage.activeBranches(0).name, 'edits');
+
+    assert.equal(branchesPage.inactiveBranches().count, 2, 'expected two inactive branches');
+    assert.equal(branchesPage.inactiveBranches(0).name, 'old-edits');
+    assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
   });
 });
