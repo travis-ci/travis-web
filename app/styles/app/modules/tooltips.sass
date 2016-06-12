@@ -141,5 +141,12 @@ $tooltip-arrow-width: .8em
     &:before
       bottom: $tooltip-spacing - $tooltip-arrow-width 
 
-.tooltip-jobs
-  
+.tooltip-jobs[data-tooltip]
+  $tooltip-spacing: 3em
+  text-align: center
+  &:after
+    bottom: $tooltip-spacing
+    width: 9em
+    left: -3.5em
+  &:before
+    bottom: $tooltip-spacing - $tooltip-arrow-width
