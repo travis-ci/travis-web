@@ -22,6 +22,11 @@ export default function() {
       response['@type'] = pluralized;
       response['@href'] = `/${pluralized}`;
       response[pluralized] = records;
+
+      // This minimal implementation satisfies the branch-row component fetch.
+      response['@pagination'] = {
+        count: payload.length
+      };
     } else {
       response = _turnIntoV3Singular(type, payload);
     }
@@ -190,10 +195,7 @@ export default function() {
     const branch = schema.branches.where({name: request.queryParams['branch.name']}).models[0];
     const builds = schema.builds.where({branchId: branch.id});
 
-    // FIXME handle pagination in mock V3 API
-    const response = turnIntoV3('build', builds.models.reverse());
-    response['@pagination'] = {count: builds.models.length};
-    return response;
+    return turnIntoV3('build', builds.models.reverse());
   });
 
   this.get('/jobs/:id/log', function(schema, request) {
