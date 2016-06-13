@@ -133,28 +133,7 @@ export default function() {
   });
 
   this.get('/v3/repo/:id/branches', function(schema) {
-    return turnIntoV3('branch', schema.branches.all().models.map(branch => {
-      const builds = branch.builds;
-
-      if (branch.builds && branch.builds.models.length) {
-        const lastBuild = branch.builds.models[builds.models.length - 1];
-
-        branch.attrs.last_build = lastBuild.attrs;
-
-        if (lastBuild.commit) {
-          // FIXME there should be a hasOne relationship here but I couldn’t get that working…
-          const commit = lastBuild.commit.models[0];
-          branch.attrs.last_build.commit = commit;
-
-          if (commit && commit.committer) {
-            // FIXME this is obviously OUT OF CONTROL
-            branch.attrs.last_build.commit.attrs.committer = commit.committer.attrs;
-          }
-        }
-      }
-
-      return branch;
-    }));
+    return schema.branches.all();
   });
 
   this.get('/repos/:id/key', function(schema, request) {
@@ -208,9 +187,9 @@ export default function() {
   });
 
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
-  // this.pretender.handledRequest = function(verb, path, request) {
-  //   console.log("Handled this request:", `${verb} ${path}`, request);
-  // }
+  this.pretender.handledRequest = function(verb, path, request) {
+    console.log("Handled this request:", `${verb} ${path}`, request);
+  }
 }
 
 /*
