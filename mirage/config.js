@@ -134,10 +134,10 @@ export default function() {
 
   this.get('/v3/repo/:id/branches', function(schema) {
     return turnIntoV3('branch', schema.branches.all().models.map(branch => {
-      const builds = schema.builds.where({branchId: branch.id});
+      const builds = branch.builds;
 
-      if (builds.models.length) {
-        const lastBuild = builds.models[builds.models.length - 1];
+      if (branch.builds && branch.builds.models.length) {
+        const lastBuild = branch.builds.models[builds.models.length - 1];
 
         branch.attrs.last_build = lastBuild.attrs;
 
