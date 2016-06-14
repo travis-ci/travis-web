@@ -59,12 +59,7 @@ var App = Ember.Application.extend(Ember.Evented, {
   },
 
   setupBeacon() {
-
-    if (window.HS) {
-      HS.beacon.ready(function() {
-        HS.beacon.init();
-      });
-    } else {
+    if (!window.HS) {
       initHsBeacon();
     }
   },
@@ -83,6 +78,7 @@ var App = Ember.Application.extend(Ember.Evented, {
           return "private-" + channel;
         }
       });
+      
     }
     return Travis.pusher.subscribeAll(channels);
   },
