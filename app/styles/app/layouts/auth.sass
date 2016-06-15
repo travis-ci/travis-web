@@ -1,54 +1,24 @@
+.auth-page
+  padding: 70px 0
+  text-align: center
 
-#auth
-  #main
-    margin: 0 auto
-    padding: 100px 50px 0 50px
-    height: 100px
-    width: 400px
-    min-width: auto
-    max-height: 400px
-    border-radius: 8px
+  h1
+    color: $oxide-blue
+    font-size: 36px
+    @media #{$medium-up}
+      font-size: 50px
 
-    h2
-      color: #919191
-      font-weight: 400
-      text-align: center
-      margin-bottom: 50px
-
-    h3
-      font-size: 35px
-      color: #337389
-      text-align: center
-      margin: 0
-      line-height: 1
-
-    p
-      text-align: center
-
-      a
-        display: inline
-        padding: 15px 30px
-        border: 0
-        background-color: #a53230
-        font-size: 20px
-        color: #ffffff
-        width: 200px
-        text-align: center
-      a:hover
-        display: inline
-        text-decoration: underline
-
-    span
-      display: inline-block
-      text-align: center
-
-    .mascot
-      display: block
-      margin: 0 0 50px 0
-      height: 150px
-      background: inline-image('travis-mascot-150.png') 50% 0 no-repeat
-      background-size: 150px 150px
-
+.button-auth
+  @extend %button
+  font-size: 24px
+  padding: 0.8em
+  font-weight: 300
+  background-color: $agate-blue
+  color: white
+  &:hover,
+  &:active
+    background-color: $oxide-blue
+  
 #insufficient-permissions
   width: 850px
   margin: 0 auto

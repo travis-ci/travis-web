@@ -2,12 +2,14 @@
 {{#if redirected}}
 {{/if}}
 
-<span class="mascot"></span>
-<h3>Hey, we're so glad <br> you're here!</h3>
+<div class="auth-page">
+
+<img src="/images/logos/TravisCI-Mascot-1.svg" alt="Travis CI mascot" width="200" height="200">
+<h1>Hey, we're so glad <br> you're here!</h1>
 <h2>In order to view your repositories, <br> please sign in.</h2>
 
 <p>
-  <a href="#" {{action "signIn" target="auth"}}>
+  <a href="#" {{action "signIn" target="auth"}} title="Sign into Travis CI" class="button-auth">
     {{#if auth.signingIn}}
       Signing in...
     {{else}}
@@ -15,4 +17,7 @@
     {{/if}}
   </a>
 </p>
+
+</div>
+
 {{/travis-layout}}
