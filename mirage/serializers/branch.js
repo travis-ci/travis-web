@@ -1,7 +1,5 @@
 import { Serializer } from 'ember-cli-mirage';
 
-import BuildSerializer from './build';
-
 export default Serializer.extend({
   serialize(object, request) {
     return {
@@ -12,7 +10,7 @@ export default Serializer.extend({
         if (branch.builds && branch.builds.models.length) {
           const lastBuild = branch.builds.models[builds.models.length - 1];
 
-          branch.attrs.last_build = new BuildSerializer().serialize(lastBuild, request);
+          branch.attrs.last_build = this.serializerFor('build').serialize(lastBuild, request);
         }
 
         return branch.attrs;

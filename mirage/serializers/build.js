@@ -1,7 +1,5 @@
 import { Serializer } from 'ember-cli-mirage';
 
-import CommitSerializer from './commit';
-
 export default Serializer.extend({
   serialize(object, request) {
     const response = object.attrs;
@@ -11,7 +9,7 @@ export default Serializer.extend({
       const commit = object.commit.models[0];
 
       if (commit) {
-        response.commit = new CommitSerializer().serialize(commit, request);
+        response.commit = this.serializerFor('commit').serialize(commit, request);
       }
     }
 
