@@ -1,13 +1,7 @@
-import { Serializer } from 'ember-cli-mirage';
+import { RestSerializer } from 'ember-cli-mirage';
 
-export default Serializer.extend({
-  serialize(object, request) {
-    const response = object.attrs;
-
-    if (object.committer) {
-      response.committer = object.committer.attrs
-    }
-
-    return response;
-  }
+export default RestSerializer.extend({
+  include: ['committer'],
+  embed: true,
+  root: false
 });
