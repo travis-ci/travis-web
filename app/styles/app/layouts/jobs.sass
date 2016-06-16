@@ -3,7 +3,6 @@
     &.#{$status}:hover
       .job-lang,
       .job-env
-        overflow: hidden
         &:after
           @include fadeOut(right, -90deg, $color)
       .job-lang:hover,
@@ -102,11 +101,11 @@
       @extend %icon-line-mac
 
 .job-lang
+  overflow: hidden
   @media #{$medium-up}
     flex: 1 1 20%
     position: relative
     white-space: nowrap
-    overflow:hidden
     &:after
       content: ""
       @include fadeOut(right, -90deg, white)
