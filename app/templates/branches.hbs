@@ -1,7 +1,7 @@
 {{#if branchesExist}}
   <div class="branches">
     {{#if defaultBranch}}
-      <section>
+      <section class='default-branch'>
         <h2 class="small-title">Default Branch</h2>
         <ul class="blank-list">
           {{branch-row branch=defaultBranch}}
@@ -10,7 +10,7 @@
     {{/if}}
 
     {{#if activeBranches.length}}
-      <section>
+      <section class='active-branches'>
         <h2 class="small-title">Active Branches</h2>
         <ul class="blank-list">
           {{#each activeBranches as |branch|}}
@@ -21,7 +21,7 @@
     {{/if}}
 
     {{#if inactiveBranches.length}}
-      <section>
+      <section class='inactive-branches'>
         <h2 class="small-title">Inactive Branches</h2>
         <ul class="blank-list">
           {{#each inactiveBranches as |branch|}}

@@ -49,9 +49,12 @@ export default Ember.Component.extend({
             array.push({});
           }
         }
-        lastBuilds.set('count', response['@pagination'].count);
-        lastBuilds.set('content', array);
-        return lastBuilds.set('isLoading', false);
+
+        Ember.run(() => {
+          lastBuilds.set('count', response['@pagination'].count);
+          lastBuilds.set('content', array);
+          lastBuilds.set('isLoading', false);
+        });
       });
     }
     return lastBuilds;

@@ -22,6 +22,11 @@ export default function() {
       response['@type'] = pluralized;
       response['@href'] = `/${pluralized}`;
       response[pluralized] = records;
+
+      // This minimal implementation satisfies the branch-row component fetch.
+      response['@pagination'] = {
+        count: payload.length
+      };
     } else {
       response = _turnIntoV3Singular(type, payload);
     }
@@ -128,7 +133,7 @@ export default function() {
   });
 
   this.get('/v3/repo/:id/branches', function(schema) {
-    return turnIntoV3('branch', schema.branches.all().models);
+    return schema.branches.all();
   });
 
   this.get('/repos/:id/key', function(schema, request) {
@@ -165,6 +170,13 @@ export default function() {
     };
   });
 
+  this.get('/v3/repo/:repo_id/builds', (schema, request) => {
+    const branch = schema.branches.where({name: request.queryParams['branch.name']}).models[0];
+    const builds = schema.builds.where({branchId: branch.id});
+
+    return turnIntoV3('build', builds.models.reverse());
+  });
+
   this.get('/jobs/:id/log', function(schema, request) {
     let log = schema.logs.find(request.params.id);
     if(log) {
@@ -177,6 +189,10 @@ export default function() {
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
   // this.pretender.handledRequest = function(verb, path, request) {
   //   console.log("Handled this request:", `${verb} ${path}`, request);
+  //   try {
+  //     const responseJson = JSON.parse(request.responseText);
+  //     console.log(responseJson);
+  //   } catch (e) {}
   // }
 }
 
