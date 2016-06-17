@@ -154,7 +154,7 @@ export default function() {
   });
 
   this.get('/builds', function(schema, request) {
-    return {builds: schema.builds.all()};
+    return {builds: schema.builds.all().models};
   });
 
   this.get('/builds/:id', function(schema, request) {
