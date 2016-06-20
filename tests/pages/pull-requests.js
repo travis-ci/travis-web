@@ -15,7 +15,7 @@ export default PageObject.create({
     itemScope: '.build-list .pr-row',
 
     item: {
-      name: text('.row-name .label-align'),
+      name: text('.build-info a'),
       buildCount: text('.row-builds .label-align'),
 
       passed: hasClass('passed'),
@@ -23,9 +23,9 @@ export default PageObject.create({
       errored: hasClass('errored'),
 
       request: text('.row-request .label-align'),
-      commitSha: text('.row-commit .label-align'),
-      committer: text('.row-commiter .label-align'),
-      commitDate: text('.row-calendar .label-align')
+      commitSha: text('.icon-github + .label-align'),
+      committer: text('.row-committer .label-align'),
+      commitDate: text('.icon-calendar + .label-align')
     }
   })
 });
