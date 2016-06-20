@@ -41,6 +41,7 @@ moduleForAcceptance('Acceptance | repo pull requests', {
     };
 
     lastBuild.createCommit(commitAttributes);
+    lastBuild.save();
 
     const failedPullRequest = server.create('branch');
 
@@ -51,6 +52,7 @@ moduleForAcceptance('Acceptance | repo pull requests', {
     });
 
     failedBuild.createCommit(commitAttributes);
+    failedBuild.save();
 
     const erroredPullRequest = server.create('branch');
 
@@ -61,6 +63,7 @@ moduleForAcceptance('Acceptance | repo pull requests', {
     });
 
     erroredBuild.createCommit(commitAttributes);
+    erroredBuild.save();
   }
 });
 
