@@ -6,18 +6,10 @@ moduleForAcceptance('Acceptance | repo pull requests', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
-      login: 'feministkilljoy',
-      repos_count: 3
+      login: 'feministkilljoy'
     });
 
     signInUser(currentUser);
-
-    const organization = server.create('account', {
-      name: 'Feminist Killjoys',
-      type: 'organization',
-      login: 'killjoys',
-      repos_count: 30
-    });
 
     const repository = server.create('repository', {
       name: 'living-a-feminist-life'
@@ -25,11 +17,7 @@ moduleForAcceptance('Acceptance | repo pull requests', {
 
     const repoId = parseInt(repository.id);
 
-    const primaryBranch = server.create('branch', {
-      name: 'primary',
-      id: `/v3/repos/${repoId}/branches/primary`,
-      default_branch: true
-    });
+    const primaryBranch = server.create('branch');
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
@@ -39,7 +27,6 @@ moduleForAcceptance('Acceptance | repo pull requests', {
       number: '1919',
       finished_at: oneYearAgo,
       event_type: 'pull_request',
-      pull_request: true,
       pull_request_number: 2010,
       repository_id: repoId,
       pull_request_title: 'A pull request'
@@ -52,29 +39,21 @@ moduleForAcceptance('Acceptance | repo pull requests', {
 
     lastBuild.createCommit(commitAttributes);
 
-    const failedPullRequest = server.create('branch', {
-      name: 'failed',
-      id: '/v3/repos/${repoId}/branches/failed'
-    });
+    const failedPullRequest = server.create('branch');
 
     const failedBuild = failedPullRequest.createBuild({
       state: 'failed',
       event_type: 'pull_request',
-      pull_request: true,
       repository_id: repoId
     });
 
     failedBuild.createCommit(commitAttributes);
 
-    const erroredPullRequest = server.create('branch', {
-      name: 'errored',
-      id: '/v3/repos/${repoId}/branches/errored'
-    });
+    const erroredPullRequest = server.create('branch');
 
     const erroredBuild = erroredPullRequest.createBuild({
       state: 'errored',
       event_type: 'pull_request',
-      pull_request: true,
       repository_id: repoId
     });
 
