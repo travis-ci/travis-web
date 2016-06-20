@@ -21,9 +21,9 @@ export default PageObject.create({
       failed: hasClass('failed'),
       errored: hasClass('errored'),
 
-      commitSha: text('.icon-github + .label-align'),
+      commitSha: text('.row-commit .label-align'),
       committer: text('.row-committer .label-align'),
-      commitDate: text('.icon-calendar + .label-align')
+      commitDate: text('.row-calendar .label-align')
     }
   })
 });
