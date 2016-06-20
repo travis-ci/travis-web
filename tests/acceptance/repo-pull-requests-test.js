@@ -22,10 +22,13 @@ moduleForAcceptance('Acceptance | repo pull requests', {
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
 
+    const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000*60*5);
+
     const lastBuild = primaryBranch.createBuild({
       state: 'passed',
       number: '1919',
       finished_at: oneYearAgo,
+      started_at: beforeOneYearAgo,
       event_type: 'pull_request',
       pull_request_number: 2010,
       repository_id: repoId,
@@ -74,6 +77,7 @@ test('view pull requests', function(assert) {
     assert.equal(pullRequest.committer, 'Sara Ahmed');
     assert.equal(pullRequest.commitSha, '1234567');
     assert.equal(pullRequest.commitDate, 'about a year ago');
+    assert.equal(pullRequest.duration, '5 min');
 
     assert.ok(pullRequestsPage.pullRequests(1).failed, 'expected the second pull request to have failed');
     assert.ok(pullRequestsPage.pullRequests(2).errored, 'expected the third pull request to have errored');

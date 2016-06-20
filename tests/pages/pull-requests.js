@@ -23,7 +23,8 @@ export default PageObject.create({
 
       commitSha: text('.row-commit .label-align'),
       committer: text('.row-committer .label-align'),
-      commitDate: text('.row-calendar .label-align')
+      commitDate: text('.row-calendar .label-align'),
+      duration: text('.row-duration .label-align')
     }
   })
 });
