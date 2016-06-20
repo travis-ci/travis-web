@@ -3,9 +3,7 @@
     <span class="label">Branch</span>
     {{#x-select value=selectedBranch required="true"}}
       {{#each branches as |branch|}}
-        {{#if branch.exists_on_github}}
-          {{#x-option value=branch}}{{branch.name}}{{/x-option}}
-        {{/if}}
+        {{#x-option value=branch}}{{branch.name}}{{/x-option}}
       {{/each}}
     {{/x-select}}
   </div>
