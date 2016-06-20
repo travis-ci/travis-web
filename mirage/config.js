@@ -154,7 +154,15 @@ export default function() {
   });
 
   this.get('/builds', function(schema, request) {
-    return {builds: schema.builds.all()};
+    return {builds: schema.builds.all().models.map(build => {
+      const commit = build.commit.models[0];
+
+      if (commit) {
+        build.attrs.commit_id = commit.id;
+      }
+
+      return build;
+    }), commits: schema.commits.all().models};
   });
 
   this.get('/builds/:id', function(schema, request) {
