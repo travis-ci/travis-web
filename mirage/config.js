@@ -42,7 +42,7 @@ export default function() {
 
   this.get('/hooks', (schema, request) => {
     const hooks = schema.hooks.where({'owner_name': request.queryParams.owner_name});
-    return { hooks: hooks.models.map(hook => hook.attrs) };
+    return hooks;
   });
 
   this.put('/hooks/:id', (schema, request) => {
@@ -102,8 +102,7 @@ export default function() {
   this.get('/cron/:id');
 
   this.get('/repos/:id/settings', function(schema, request) {
-    const settings = schema.settings.where({repositoryId: request.params.id}).models[0];
-    return {settings: settings};
+    return schema.settings.where({repositoryId: request.params.id}).models[0];
   });
 
   this.get('/settings/env_vars', function(schema, request) {
@@ -146,9 +145,7 @@ export default function() {
     return {job: job, commit: schema.commits.find(job.commit_id).attrs};
   });
 
-  this.get('/jobs', function(schema, request) {
-    return {jobs: schema.jobs.all()};
-  });
+  this.get('/jobs');
 
   this.get('/builds', function(schema, request) {
     return {builds: schema.builds.all().models.map(build => {
