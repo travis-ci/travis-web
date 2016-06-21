@@ -99,17 +99,7 @@ export default function() {
     return turnIntoV3('crons', crons);
   });
 
-  this.get('/cron/:id', function(schema, request) {
-    const cron = schema.crons.find(request.params.id);
-
-    if (cron) {
-      return {
-        cron: cron
-      }
-    } else {
-      return new Mirage.Response(404, {}, {});
-    }
-  });
+  this.get('/cron/:id');
 
   this.get('/repos/:id/settings', function(schema, request) {
     const settings = schema.settings.where({repositoryId: request.params.id}).models[0];
