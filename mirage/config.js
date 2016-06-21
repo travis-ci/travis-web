@@ -74,13 +74,18 @@ export default function() {
   });
 
   this.get('/repos', function(schema, request) {
-    return turnIntoV3('repository', schema.repositories.all().models);
+    return {
+      repos: schema.repositories.all().models
+    };
   });
 
   this.get('/repo/:slug', function(schema, request) {
     let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
-    return turnIntoV3('repository', repos[0]);
+    return {
+      repo: repos[0]
+    };
   });
+
   this.get('/v3/repo/:id/crons', function(schema, request) {
     const crons = schema.crons.all().models.map(cron => {
       // TODO adapt turnIntoV3 to handle related models
@@ -98,7 +103,9 @@ export default function() {
     const cron = schema.crons.find(request.params.id);
 
     if (cron) {
-      return turnIntoV3('crons', cron);
+      return {
+        cron: cron
+      }
     } else {
       return new Mirage.Response(404, {}, {});
     }
