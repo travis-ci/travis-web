@@ -22,7 +22,10 @@ export default Serializer.extend({
       const results = response.models.map(model => this._serializeModel(model, request));
       const pluralType = Ember.String.pluralize(response.modelName);
       const result = {
-        '@type': pluralType
+        '@type': pluralType,
+        '@pagination': {
+          count: response.models.length
+        }
       };
 
       result[pluralType] = results;

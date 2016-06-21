@@ -66,12 +66,15 @@ test('it serialises a singular V3 response when requested via a header or path s
   assert.deepEqual(pathResult, expectedV3Response, 'expected a V3 request path to produce a V3 response');
 });
 
-test('it serialises a plural V3 response', function(assert) {
+test('it serialises a paginated plural V3 response', function(assert) {
   const books = this.schema.books.all();
   const result = this.registry.serialize(books, v3HeaderRequest);
 
   assert.deepEqual(result, {
     '@type': 'books',
+    '@pagination': {
+      count: 2
+    },
     books: [
       {
         id: '1',
