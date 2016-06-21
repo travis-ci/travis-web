@@ -117,10 +117,7 @@ export default function() {
   });
 
   this.get('/settings/ssh_key/:repo_id', function(schema, request) {
-    const key = schema.sshKeys.where({repositoryId: request.params.repo_id, type: 'custom'}).models[0];
-    return {
-      ssh_key: key
-    };
+    return schema.sshKeys.where({repositoryId: request.params.repo_id, type: 'custom'}).models[0];
   });
 
   this.get('/v3/repo/:id', function(schema, request) {
@@ -187,13 +184,13 @@ export default function() {
   });
 
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
-  // this.pretender.handledRequest = function(verb, path, request) {
-  //   console.log("Handled this request:", `${verb} ${path}`, request);
-  //   try {
-  //     const responseJson = JSON.parse(request.responseText);
-  //     console.log(responseJson);
-  //   } catch (e) {}
-  // }
+  this.pretender.handledRequest = function(verb, path, request) {
+    console.log("Handled this request:", `${verb} ${path}`, request);
+    try {
+      const responseJson = JSON.parse(request.responseText);
+      console.log(responseJson);
+    } catch (e) {}
+  }
 }
 
 /*
