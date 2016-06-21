@@ -13,7 +13,7 @@ const TravisSerializer = Serializer.extend({
     // FIXME is there a way to call Serializer.serialize without this.super?
     let result = this._serializeModel(response, request);
 
-    if (request && request.requestHeaders && request.requestHeaders['Travis-API-Version'] === '3') {
+    if (this._requestIsForV3(request)) {
       result['@type'] = response.modelName;
       return result;
     } else {
@@ -21,6 +21,22 @@ const TravisSerializer = Serializer.extend({
       wrappedResult[response.modelName] = result;
       return wrappedResult;
     }
+  },
+
+  _requestIsForV3(request) {
+    if (!request) {
+      return false;
+    }
+
+    return this._requestHasV3Header(request) || this._requestHasV3Path(request);
+  },
+
+  _requestHasV3Header(request) {
+    return request.requestHeaders && request.requestHeaders['Travis-API-Version'] === '3';
+  },
+
+  _requestHasV3Path(request) {
+    return request.url && request.url.indexOf('/v3') === 0;
   }
 });
 
@@ -50,6 +66,10 @@ const v3HeaderRequest = {
   }
 };
 
+const v3PathRequest = {
+  url: '/v3/something'
+};
+
 test('it serialises V2 by default', function(assert) {
   const book = this.schema.books.find(1);
   const result = this.registry.serialize(book);
@@ -62,13 +82,18 @@ test('it serialises V2 by default', function(assert) {
   });
 });
 
-test('it serialises V3 when requested via a header', function(assert) {
+test('it serialises V3 when requested via a header or path starting with /v3', function(assert) {
   const book = this.schema.books.find(1);
-  const result = this.registry.serialize(book, v3HeaderRequest);
 
-  assert.deepEqual(result, {
+  const expectedV3Response = {
     '@type': 'book',
     id: '1',
     title: 'Willful Subjects'
-  });
+  };
+
+  const headerResult = this.registry.serialize(book, v3HeaderRequest);
+  assert.deepEqual(headerResult, expectedV3Response, 'expected a V3 request header to produce a V3 response');
+
+  const pathResult = this.registry.serialize(book, v3PathRequest);
+  assert.deepEqual(pathResult, expectedV3Response, 'expected a V3 request path to produce a V3 response');
 });
