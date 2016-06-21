@@ -8,18 +8,31 @@ import Db from 'ember-cli-mirage/db';
 import SerializerRegistry from 'ember-cli-mirage/serializer-registry';
 import { module, test } from 'qunit';
 
+import Ember from 'ember';
+
 const TravisSerializer = Serializer.extend({
   serialize(response, request) {
-    // FIXME is there a way to call Serializer.serialize without this.super?
-    let result = this._serializeModel(response, request);
+    if (this.isModel(response)) {
+      // FIXME is there a way to call Serializer.serialize without this.super?
+      let result = this._serializeModel(response, request);
 
-    if (this._requestIsForV3(request)) {
-      result['@type'] = response.modelName;
-      return result;
+      if (this._requestIsForV3(request)) {
+        result['@type'] = response.modelName;
+        return result;
+      } else {
+        const wrappedResult = {};
+        wrappedResult[response.modelName] = result;
+        return wrappedResult;
+      }
     } else {
-      const wrappedResult = {};
-      wrappedResult[response.modelName] = result;
-      return wrappedResult;
+      const results = response.models.map(model => this._serializeModel(model, request));
+      const pluralType = Ember.String.pluralize(response.modelName);
+      const result = {
+        '@type': pluralType
+      };
+
+      result[pluralType] = results;
+      return result;
     }
   },
 
@@ -49,6 +62,7 @@ module('Integration | Serializer | TravisSerializer', {
     });
 
     this.schema.books.create({title: 'Willful Subjects'});
+    this.schema.books.create({title: 'On Being Included'});
 
     this.registry = new SerializerRegistry(this.schema, {
       application: TravisSerializer
@@ -82,7 +96,7 @@ test('it serialises V2 by default', function(assert) {
   });
 });
 
-test('it serialises V3 when requested via a header or path starting with /v3', function(assert) {
+test('it serialises a singular V3 response when requested via a header or path starting with /v3', function(assert) {
   const book = this.schema.books.find(1);
 
   const expectedV3Response = {
@@ -96,4 +110,23 @@ test('it serialises V3 when requested via a header or path starting with /v3', f
 
   const pathResult = this.registry.serialize(book, v3PathRequest);
   assert.deepEqual(pathResult, expectedV3Response, 'expected a V3 request path to produce a V3 response');
+});
+
+test('it serialises a plural V3 response', function(assert) {
+  const books = this.schema.books.all();
+  const result = this.registry.serialize(books, v3HeaderRequest);
+
+  assert.deepEqual(result, {
+    '@type': 'books',
+    books: [
+      {
+        id: '1',
+        title: 'Willful Subjects'
+      },
+      {
+        id: '2',
+        title: 'On Being Included'
+      }
+    ]
+  });
 });
