@@ -9,7 +9,19 @@ import SerializerRegistry from 'ember-cli-mirage/serializer-registry';
 import { module, test } from 'qunit';
 
 const TravisSerializer = Serializer.extend({
+  serialize(response, request) {
+    // FIXME is there a way to call Serializer.serialize without this.super?
+    let result = this._serializeModel(response, request);
 
+    if (request && request.requestHeaders && request.requestHeaders['Travis-API-Version'] === '3') {
+      result['@type'] = response.modelName;
+      return result;
+    } else {
+      const wrappedResult = {};
+      wrappedResult[response.modelName] = result;
+      return wrappedResult;
+    }
+  }
 });
 
 module('Integration | Serializer | TravisSerializer', {
@@ -32,7 +44,13 @@ module('Integration | Serializer | TravisSerializer', {
   }
 });
 
-test('it serializes', function(assert) {
+const v3HeaderRequest = {
+  requestHeaders: {
+    'Travis-API-Version': '3'
+  }
+};
+
+test('it serialises V2 by default', function(assert) {
   const book = this.schema.books.find(1);
   const result = this.registry.serialize(book);
 
@@ -41,5 +59,16 @@ test('it serializes', function(assert) {
       id: '1',
       title: 'Willful Subjects'
     }
+  });
+});
+
+test('it serialises V3 when requested via a header', function(assert) {
+  const book = this.schema.books.find(1);
+  const result = this.registry.serialize(book, v3HeaderRequest);
+
+  assert.deepEqual(result, {
+    '@type': 'book',
+    id: '1',
+    title: 'Willful Subjects'
   });
 });
