@@ -12,11 +12,14 @@ module('Integration | Serializer | TravisSerializer', {
     let db = new Db();
     this.schema = new Schema(db);
     this.schema.registerModels({
-      book: Model.extend()
+      book: Model.extend(),
+      blogPost: Model.extend()
     });
 
     this.schema.books.create({title: 'Willful Subjects'});
     this.schema.books.create({title: 'On Being Included'});
+
+    this.schema.blogPosts.create({title: 'Equality Credentials'});
 
     this.registry = new SerializerRegistry(this.schema, {
       application: TravisSerializer
@@ -46,6 +49,18 @@ test('it serialises V2 by default', function(assert) {
     book: {
       id: '1',
       title: 'Willful Subjects'
+    }
+  });
+});
+
+test('it serialises V2 multi-word keys with an underscore', function(assert) {
+  const blogPost = this.schema.blogPosts.find(1);
+  const result = this.registry.serialize(blogPost);
+
+  assert.deepEqual(result, {
+    blog_post: {
+      id: '1',
+      title: 'Equality Credentials'
     }
   });
 });

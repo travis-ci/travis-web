@@ -15,7 +15,7 @@ export default Serializer.extend({
         return result;
       } else {
         const wrappedResult = {};
-        wrappedResult[response.modelName] = result;
+        wrappedResult[this.keyForModel(response.modelName)] = result;
         return wrappedResult;
       }
     } else {
@@ -38,6 +38,10 @@ export default Serializer.extend({
         return result;
       }
     }
+  },
+
+  keyForModel(modelName) {
+    return Ember.String.underscore(modelName);
   },
 
   _requestIsForV3(request) {
