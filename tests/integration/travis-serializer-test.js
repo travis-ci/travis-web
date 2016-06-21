@@ -50,6 +50,24 @@ test('it serialises V2 by default', function(assert) {
   });
 });
 
+test('it serialises a plural V2 response', function(assert) {
+  const books = this.schema.books.all();
+  const result = this.registry.serialize(books);
+
+  assert.deepEqual(result, {
+    books: [
+      {
+        id: '1',
+        title: 'Willful Subjects'
+      },
+      {
+        id: '2',
+        title: 'On Being Included'
+      }
+    ]
+  });
+});
+
 test('it serialises a singular V3 response when requested via a header or path starting with /v3', function(assert) {
   const book = this.schema.books.find(1);
 
