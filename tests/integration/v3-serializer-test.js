@@ -40,12 +40,15 @@ module('Integration | Mirage Serializer | V3Serializer', {
   }
 });
 
-test('it serialises a collection with underscored property keys', function(assert) {
+test('it serialises a collection with underscored property keys and pagination', function(assert) {
   const books = this.schema.books.all();
   const result = this.registry.serialize(books);
 
   assert.deepEqual(result, {
     '@type': 'books',
+    '@pagination': {
+      count: 2
+    },
     books: [{
       id: '1',
       author_id: '1',
