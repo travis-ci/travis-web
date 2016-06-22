@@ -1,21 +1,16 @@
 import { ActiveModelSerializer } from 'ember-cli-mirage';
 
 export default ActiveModelSerializer.extend({
-  serialize(object, request) {
-    // TODO is there any way to avoid this nightmare?
+  embed: true,
 
-    ActiveModelSerializer.prototype.embed = true;
+  serialize(object, request) {
+    let json = ActiveModelSerializer.prototype.serialize.apply(this, arguments);
 
     if (this.isModel(object)) {
-      ActiveModelSerializer.prototype.root = false;
-    } else {
-      ActiveModelSerializer.prototype.root = true;
+      json = json[this._keyForModelOrCollection(object)]
     }
 
-    const json = ActiveModelSerializer.prototype.serialize.apply(this, arguments);
     json['@type'] = this._keyForModelOrCollection(object);
-
-    ActiveModelSerializer.prototype.embed = false;
 
     return json;
   }
