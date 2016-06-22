@@ -54,3 +54,15 @@ test('it serialises a collection with underscored property keys', function(asser
     }]
   });
 });
+
+test('it serialises a single resource with its properties included directly', function(assert) {
+  const book = this.schema.books.find(1);
+  const result = this.registry.serialize(book);
+
+  assert.deepEqual(result, {
+    '@type': 'book',
+    id: '1',
+    author_id: '1',
+    title: 'Willful Subjects'
+  });
+});
