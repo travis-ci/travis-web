@@ -1,47 +1,15 @@
 import Serializer from 'ember-cli-mirage/serializer';
 
-import { hasMany, belongsTo } from 'ember-cli-mirage';
-
-import Ember from 'ember';
+import V2Serializer from './v2';
+import V3Serializer from './v3';
 
 export default Serializer.extend({
   serialize(response, request) {
-    if (this.isModel(response)) {
-      // FIXME is there a way to call Serializer.serialize without this.super?
-      let result = this._serializeModel(response, request);
-
-      if (this._requestIsForV3(request)) {
-        result['@type'] = response.modelName;
-        return result;
-      } else {
-        const wrappedResult = {};
-        wrappedResult[this.keyForModel(response.modelName)] = result;
-        return wrappedResult;
-      }
+    if (this._requestIsForV3(request)) {
+      return this.serializerFor('v3').serialize(response, request);
     } else {
-      const results = response.models.map(model => this._serializeModel(model, request));
-      const pluralType = Ember.String.pluralize(response.modelName);
-
-      if (this._requestIsForV3(request)) {
-        const result = {
-          '@type': pluralType,
-          '@pagination': {
-            count: response.models.length
-          }
-        };
-
-        result[pluralType] = results;
-        return result;
-      } else {
-        const result = {};
-        result[pluralType] = results;
-        return result;
-      }
+      return this.serializerFor('v2').serialize(response, request);
     }
-  },
-
-  keyForModel(modelName) {
-    return Ember.String.underscore(modelName);
   },
 
   _requestIsForV3(request) {

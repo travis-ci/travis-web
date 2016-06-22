@@ -1,4 +1,6 @@
 import TravisSerializer from 'travis/mirage/serializers/travis';
+import V2Serializer from 'travis/mirage/serializers/v2';
+import V3Serializer from 'travis/mirage/serializers/v3';
 
 import Schema from 'ember-cli-mirage/orm/schema';
 import Model from 'ember-cli-mirage/orm/model';
@@ -22,7 +24,9 @@ module('Integration | Serializer | TravisSerializer', {
     this.schema.blogPosts.create({title: 'Equality Credentials'});
 
     this.registry = new SerializerRegistry(this.schema, {
-      application: TravisSerializer
+      application: TravisSerializer,
+      v2: V2Serializer,
+      v3: V3Serializer
     });
   },
 

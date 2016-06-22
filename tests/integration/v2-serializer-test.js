@@ -19,13 +19,16 @@ module('Integration | Mirage Serializer | V2Serializer', {
       }),
       author: Model.extend({
         books: hasMany()
-      })
+      }),
+      blogPost: Model.extend()
     });
 
     const author = this.schema.authors.create({name: 'Sara Ahmed'});
 
     author.createBook({title: 'Willful Subjects'});
     author.createBook({title: 'On Being Included'});
+
+    this.schema.blogPosts.create({title: 'Equality Credentials'});
 
     this.registry = new SerializerRegistry(this.schema, {
       application: V2Serializer
@@ -80,5 +83,17 @@ test('it sideloads included resources', function(assert) {
       author_id: '1',
       title: 'On Being Included'
     }]
+  });
+});
+
+test('it uses an underscored container key', function(assert) {
+  const blogPost = this.schema.blogPosts.find(1);
+  const result = this.registry.serialize(blogPost);
+
+  assert.deepEqual(result, {
+    blog_post: {
+      id: '1',
+      title: 'Equality Credentials'
+    }
   });
 });
