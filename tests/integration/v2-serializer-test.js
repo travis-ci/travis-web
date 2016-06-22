@@ -53,3 +53,32 @@ test('it serialises with underscored property keys', function(assert) {
     }]
   });
 });
+
+test('it sideloads included resources', function(assert) {
+  const registryWithInclusion = new SerializerRegistry(this.schema, {
+    application: V2Serializer,
+    author: V2Serializer.extend({
+      include: ['books']
+    })
+  });
+
+  const authors = this.schema.authors.all();
+  const result = registryWithInclusion.serialize(authors);
+
+  assert.deepEqual(result, {
+    authors: [{
+      id: '1',
+      book_ids: ['1', '2'],
+      name: 'Sara Ahmed'
+    }],
+    books: [{
+      id: '1',
+      author_id: '1',
+      title: 'Willful Subjects'
+    }, {
+      id: '2',
+      author_id: '1',
+      title: 'On Being Included'
+    }]
+  });
+});
