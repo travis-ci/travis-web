@@ -14,6 +14,7 @@ test('visiting /builds/branches-tab', function(assert) {
   let branch = server.create('branch', {active: true});
   let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
   let build = server.create('build', {number: '5', repository: repo, state: 'passed', commit_id: commit.id});
+  build.createCommit();
   let job = server.create('job', {number: '1234.1', repository: repo, state: 'passed', build_id: build.id, commit_id: commit.id});
   let log = server.create('log', { id: job.id });
   let repoId = parseInt(repo.id);

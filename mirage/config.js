@@ -167,9 +167,15 @@ export default function() {
   });
 
   this.get('/builds/:id', function(schema, request) {
-    let build = schema.builds.find(request.params.id).attrs;
+    let build = schema.builds.find(request.params.id);
     let jobs = schema.jobs.where({build_id: build.id}).models.map(job => job.attrs);
-    return {build: build, jobs: jobs, commit: schema.commits.find(build.commit_id).attrs};
+    let commit = build.commit.models[0];
+
+    if (commit) {
+      build.attrs.commit_id = commit.id;
+    }
+
+    return {build: build.attrs, jobs: jobs, commit: schema.commits.find(commit.id).attrs};
   });
 
   this.post('/builds/:id/restart', (schema, request) => {
