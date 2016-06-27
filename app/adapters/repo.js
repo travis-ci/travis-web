@@ -15,9 +15,9 @@ export default Adapter.extend({
 
     if(Config.useV3API) {
       if(hash.data.include) {
-        hash.data.include += ',repository.default_branch,branch.last_build,build.commit';
+        hash.data.include += ',build.branch,repository.default_branch,repository.current_build,build.commit';
       } else {
-        hash.data.include = 'repository.default_branch,branch.last_build,build.commit';
+        hash.data.include = 'build.branch,repository.default_branch,repository.current_build,build.commit';
       }
     }
 

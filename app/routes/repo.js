@@ -28,7 +28,8 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   serialize(repo) {
     var name, owner, ref, slug;
-    slug = repo.get ? repo.get('slug') : repo.slug;
+    // slugs are sometimes unknown ???
+    slug = Ember.getWithDefault(repo, 'slug', 'unknown/unknown');
     ref = slug.split('/');
     owner = ref[0];
     name = ref[1];

@@ -9,22 +9,22 @@ var sortCallback = function(repo1, repo2) {
   // this function could be made simpler, but I think it's clearer this way
   // what're we really trying to achieve
 
-  var lastBuildId1 = repo1.get('lastBuildId');
-  var lastBuildId2 = repo2.get('lastBuildId');
+  var buildId1 = repo1.get('currentBuild.id');
+  var buildId2 = repo2.get('currentBuild.id');
+  var finishedAt1 = repo1.get('currentBuild.finishedAt');
+  var finishedAt2 = repo2.get('currentBuild.finishedAt');
 
-  if(!lastBuildId1 && !lastBuildId2) {
+  if(!buildId1 && !buildId2) {
     // if both repos lack builds, put newer repo first
     return repo1.get('id') > repo2.get('id') ? -1 : 1;
-  } else if(lastBuildId1 && !lastBuildId2) {
+  } else if(buildId1 && !buildId2) {
     // if only repo1 has a build, it goes first
     return -1;
-  } else if(lastBuildId2 && !lastBuildId1) {
+  } else if(buildId2 && !buildId1) {
     // if only repo2 has a build, it goes first
     return 1;
   }
 
-  var finishedAt1 = repo1.get('lastBuildFinishedAt');
-  var finishedAt2 = repo2.get('lastBuildFinishedAt');
 
   if(finishedAt1) {
     finishedAt1 = new Date(finishedAt1);
@@ -44,7 +44,7 @@ var sortCallback = function(repo1, repo2) {
     return -1;
   } else {
     // none of the builds finished, put newer build first
-    return lastBuildId1 > lastBuildId2 ? -1 : 1;
+    return buildId1 > buildId2 ? -1 : 1;
   }
 
   throw "should not happen";
@@ -142,7 +142,7 @@ var Controller = Ember.Controller.extend({
     let records = this.get('repos');
 
     if(Config.useV3API) {
-      let callback = (record) => { return record.get('lastBuild'); };
+      let callback = (record) => { return record.get('currentBuild'); };
       records = records.filter(callback).map(callback);
     }
     this.get('updateTimesService').push(records);
@@ -151,6 +151,8 @@ var Controller = Ember.Controller.extend({
   activate(tab, params) {
     this.set('sortProperties', ['sortOrder']);
     this.set('tab', tab);
+    // find the data based on tab
+    // tab == 'owned' => viewOwned invoked
     return this[("view_" + tab).camelize()](params);
   },
 
@@ -239,13 +241,13 @@ var Controller = Ember.Controller.extend({
   repos: function() {
     var repos = this.get('_repos');
 
-
     if(repos && repos.toArray) {
       repos = repos.toArray();
     }
 
     if(repos && repos.sort) {
-      return repos.sort(sortCallback);
+      let sorted = repos.sort(sortCallback);
+      return sorted;
     } else {
       if (Ember.isArray(repos)) {
         return repos;
@@ -253,8 +255,8 @@ var Controller = Ember.Controller.extend({
         return [];
       }
     }
-  }.property('_repos.[]', '_repos.@each.lastBuildFinishedAt',
-             '_repos.@each.lastBuildId')
+  }.property('_repos.[]', '_repos.@each.currentBuildFinishedAt',
+             '_repos.@each.currentBuildId')
 });
 
 export default Controller;

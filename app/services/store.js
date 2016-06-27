@@ -101,7 +101,7 @@ export default DS.Store.extend({
         if (default_branch) {
           default_branch.default_branch = true;
         }
-        last_build_id = default_branch.last_build_id;
+        last_build_id = default_branch.current_build_id;
 
         // a build is a synchronous relationship on a branch model, so we need to
         // have a build record present when we put default_branch from a repository
