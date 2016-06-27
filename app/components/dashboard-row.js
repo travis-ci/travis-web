@@ -4,23 +4,20 @@ import config from 'travis/config/environment';
 import { hasAdminPermission, hasPushPermission } from 'travis/utils/permission';
 
 const { service } = Ember.inject;
-const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   permissions: service(),
   tagName: 'li',
-  classNameBindings: ['currentBuild.state', 'repo.active:is-active'],
+  classNameBindings: ['repo.default_branch.last_build.state', 'repo.active:is-active'],
   classNames: ['rows', 'rows--dashboard'],
   isLoading: false,
   isTriggering: false,
   hasTriggered: false,
   dropupIsOpen: false,
 
-  currentBuild: alias('repo.currentBuild'),
-
   urlGithubCommit: function() {
-    return githubCommitUrl(this.get('repo.slug'), this.get('currentBuild.commit.sha'));
-  }.property('repo.slug', 'currentBuild.commit.sha'),
+    return githubCommitUrl(this.get('repo.slug'), this.get('repo.default_branch.last_build.commit.sha'));
+  }.property('repo'),
 
   displayMenuTofu: Ember.computed('permissions.all', 'repo', function() {
     return this.get('permissions').hasPushPermission(this.get('repo'));

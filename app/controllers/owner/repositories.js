@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
         if (item.active) {
           return item;
         }
-      }).sortBy('currentBuild.finished_at').reverse();
+      }).sortBy('default_branch.last_build.finished_at').reverse();
     }
     return repos;
   }.property('model')

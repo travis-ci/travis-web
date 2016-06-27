@@ -16,8 +16,8 @@ export default Ember.Component.extend(Polling, {
   }.property('selectedRepo'),
 
   color: function() {
-    return colorForState(this.get('repo.currentBuild.state'));
-  }.property('repo.currentBuild.state'),
+    return colorForState(this.get('repo.lastBuildState'));
+  }.property('repo.lastBuildState'),
 
   scrollTop: function() {
     if (window.scrollY > 0) {

@@ -16,11 +16,13 @@ if (Config.useV3API) {
     defaultBranch: belongsTo('branch', {
       async: false
     }),
-    currentBuild: belongsTo('build', {
-      async: true, inverse: 'repoCurrentBuild'
-    }),
-    currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
-    currentBuildId: Ember.computed.oneWay('currentBuild.id'),
+    lastBuild: Ember.computed.oneWay('defaultBranch.lastBuild'),
+    lastBuildFinishedAt: Ember.computed.oneWay('lastBuild.finishedAt'),
+    lastBuildId: Ember.computed.oneWay('lastBuild.id'),
+    lastBuildState: Ember.computed.oneWay('lastBuild.state'),
+    lastBuildNumber: Ember.computed.oneWay('lastBuild.number'),
+    lastBuildStartedAt: Ember.computed.oneWay('lastBuild.startedAt'),
+    lastBuildDuration: Ember.computed.oneWay('lastBuild.duration')
   });
 } else {
   Repo = Model.extend({
@@ -175,6 +177,16 @@ Repo.reopen({
     return (this.get('slug') || '').split('/')[1];
   }.property('slug'),
 
+  sortOrderForLandingPage: function() {
+    var state;
+    state = this.get('lastBuildState');
+    if (state !== 'passed' && state !== 'failed') {
+      return 0;
+    } else {
+      return parseInt(this.get('lastBuildId'));
+    }
+  }.property('lastBuildId', 'lastBuildState'),
+
   stats: function() {
     if (this.get('slug')) {
       return this.get('_stats') || $.get("https://api.github.com/repos/" + this.get('slug'), (data) => {
@@ -185,13 +197,13 @@ Repo.reopen({
   }.property('slug'),
 
   updateTimes() {
-    var currentBuild;
+    var lastBuild;
     if (Config.useV3API) {
-      if (currentBuild = this.get('currentBuild')) {
-        return currentBuild.updateTimes();
+      if (lastBuild = this.get('lastBuild')) {
+        return lastBuild.updateTimes();
       }
     } else {
-      return this.notifyPropertyChange('currentBuild.duration');
+      return this.notifyPropertyChange('lastBuildDuration');
     }
   },
 
@@ -226,13 +238,12 @@ Repo.reopenClass({
     if (Config.useV3API) {
       reposIds = reposIdsOrlogin;
       repos = store.filter('repo', function(repo) {
-        let repoId = parseInt(repo.get('id'));
-        return reposIds.contains(repoId);
+        return reposIds.indexOf(parseInt(repo.get('id'))) !== -1;
       });
       promise = new Ember.RSVP.Promise(function(resolve, reject) {
         return store.query('repo', {
           'repository.active': 'true',
-          sort_by: 'current_build_id:desc',
+          sort_by: 'default_branch.last_build:desc',
           limit: 30
         }).then(function() {
           return resolve(repos);

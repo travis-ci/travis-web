@@ -36,8 +36,8 @@ export default Ember.Controller.extend({
   }.property('repo.slug'),
 
   showCurrentBuild: function() {
-    return this.get('repo.currentBuild.id') && this.get('repo.active');
-  }.property('repo.currentBuild.id', 'repo.active'),
+    return this.get('repo.lastBuildId') && this.get('repo.active');
+  }.property('repo.lastBuildId', 'repo.active'),
 
   actions: {
     statusImages() {
@@ -128,26 +128,26 @@ export default Ember.Controller.extend({
     return this.connectTab('settings');
   },
 
-  currentBuildDidChange() {
-    return Ember.run.scheduleOnce('actions', this, this._currentBuildDidChange);
+  lastBuildDidChange() {
+    return Ember.run.scheduleOnce('actions', this, this._lastBuildDidChange);
   },
 
-  _currentBuildDidChange() {
-    let currentBuild = this.get('repo.currentBuild');
-    if(currentBuild) {
-      eventually(currentBuild, (build) => {
+  _lastBuildDidChange() {
+    let lastBuild = this.get('repo.lastBuild');
+    if(lastBuild) {
+      eventually(lastBuild, (build) => {
         this.set('build', build);
       });
     }
   },
 
   stopObservingLastBuild() {
-    return this.removeObserver('repo.currentBuild', this, 'currentBuildDidChange');
+    return this.removeObserver('repo.lastBuild', this, 'lastBuildDidChange');
   },
 
   observeLastBuild() {
-    this.currentBuildDidChange();
-    return this.addObserver('repo.currentBuild', this, 'currentBuildDidChange');
+    this.lastBuildDidChange();
+    return this.addObserver('repo.lastBuild', this, 'lastBuildDidChange');
   },
 
   connectTab(tab) {

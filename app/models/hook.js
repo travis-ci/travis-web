@@ -47,8 +47,7 @@ export default Model.extend({
             id: this.get('id'),
             type: 'repo',
             attributes: {
-              active: true,
-              slug: `${this.get('ownerName')}/${this.get('name')}`
+              active: true
             }
           }
         });

@@ -12,25 +12,29 @@ export default Ember.Controller.extend({
     repos = this.get('model');
     org = this.get('org');
     repos = repos.filter(function(item, index) {
-      return item.get('currentBuild') !== null;
+      if (item.get('default_branch')) {
+        return item.get('default_branch.last_build') !== null;
+      }
     }).sort(function(a, b) {
-      if (a.currentBuild.finished_at === null) {
+      
+      if (a.default_branch.last_build.finished_at === null) {
         return -1;
       }
-      if (b.currentBuild.finished_at === null) {
+      if (b.default_branch.last_build.finished_at === null) {
         return 1;
       }
-      if (a.currentBuild.finished_at < b.currentBuild.finished_at) {
+      if (a.default_branch.last_build.finished_at < b.default_branch.last_build.finished_at) {
         return 1;
       }
-      if (a.currentBuild.finished_at > b.currentBuild.finished_at) {
+      if (a.default_branch.last_build.finished_at > b.default_branch.last_build.finished_at) {
         return -1;
       }
-      if (a.currentBuild.finished_at === b.currentBuild.finished_at) {
+      if (a.default_branch.last_build.finished_at === b.default_branch.last_build.finished_at) {
         return 0;
       }
-    });
 
+    });
+    
     if (org) {
       repos = repos.filter(function(item, index) {
         return item.get('owner.login') === org;

@@ -20,8 +20,7 @@ moduleForAcceptance('Acceptance | repo branches', {
     });
 
     const repository = server.create('repository', {
-      name: 'living-a-feminist-life',
-      slug: 'killjoys/living-a-feminist-life'
+      name: 'living-a-feminist-life'
     });
 
     const repoId = parseInt(repository.id);
@@ -35,15 +34,11 @@ moduleForAcceptance('Acceptance | repo branches', {
     primaryBranch.createBuild({
       state: 'failed',
       number: '1917'
-    }).createCommit({
-      sha: 'abc124'
     });
 
     primaryBranch.createBuild({
       state: 'errored',
       number: '1918'
-    }).createCommit({
-      sha: 'abc125'
     });
 
     const oneYearAgo = new Date();
@@ -84,16 +79,6 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     newerInactiveBranch.createBuild({
       state: 'errored'
-    }).createCommit({
-      sha: 'abc134',
-      committer: currentUser
-    });
-
-    server.create('permissions', {
-      admin: [repoId],
-      push: [repoId],
-      pull: [repoId],
-      permissions: [repoId],
     });
   }
 });

@@ -12,17 +12,10 @@ moduleForAcceptance('Acceptance | repo pull requests', {
     signInUser(currentUser);
 
     const repository = server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      name: 'living-a-feminist-life'
     });
 
     const repoId = parseInt(repository.id);
-
-    server.create('permissions', {
-      admin: [repoId],
-      push: [repoId],
-      pull: [repoId],
-      permissions: [repoId],
-    });
 
     const primaryBranch = server.create('branch');
 

@@ -74,14 +74,13 @@ export default function() {
   });
 
   this.get('/repos', function(schema, request) {
-    return schema.repositories.all();
+    return turnIntoV3('repository', schema.repositories.all().models);
   });
 
   this.get('/repo/:slug', function(schema, request) {
     let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
-    return turnIntoV3('repository', repos.models[0]);
+    return turnIntoV3('repository', repos[0]);
   });
-
   this.get('/v3/repo/:id/crons', function(schema, request) {
     const crons = schema.crons.all().models.map(cron => {
       // TODO adapt turnIntoV3 to handle related models
@@ -167,15 +166,9 @@ export default function() {
   });
 
   this.get('/builds/:id', function(schema, request) {
-    let build = schema.builds.find(request.params.id);
+    let build = schema.builds.find(request.params.id).attrs;
     let jobs = schema.jobs.where({build_id: build.id}).models.map(job => job.attrs);
-    let commit = build.commit.models[0];
-
-    if (commit) {
-      build.attrs.commit_id = commit.id;
-    }
-
-    return {build: build.attrs, jobs: jobs, commit: schema.commits.find(commit.id).attrs};
+    return {build: build, jobs: jobs, commit: schema.commits.find(build.commit_id).attrs};
   });
 
   this.post('/builds/:id/restart', (schema, request) => {
