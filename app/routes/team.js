@@ -22,7 +22,7 @@ export default TravisRoute.extend({
         image: 'josh'
       }, {
         name: 'Fritz Thielemann',
-        title: 'Admin Adventures',
+        title: 'Money Rainmaker',
         handle: 'fritzek',
         nationality: 'germany',
         country: 'germany',
