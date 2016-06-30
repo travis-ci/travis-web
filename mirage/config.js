@@ -98,7 +98,7 @@ export default function() {
   this.get('/cron/:id');
 
   this.get('/repos/:id/settings', function(schema, request) {
-    return schema.settings.where({repositoryId: request.params.id}).models[0];
+    return this.serialize(schema.settings.where({repositoryId: request.params.id}).models[0], 'v2');
   });
 
   this.get('/settings/env_vars', function(schema, request) {
@@ -113,7 +113,7 @@ export default function() {
   });
 
   this.get('/settings/ssh_key/:repo_id', function(schema, request) {
-    return schema.sshKeys.where({repositoryId: request.params.repo_id, type: 'custom'}).models[0];
+    return this.serialize(schema.sshKeys.where({repositoryId: request.params.repo_id, type: 'custom'}).models[0], 'v2');
   });
 
   this.get('/v3/repo/:id', function(schema, request) {
