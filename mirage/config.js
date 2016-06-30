@@ -50,12 +50,9 @@ export default function() {
     return user.update(JSON.parse(request.requestBody).hook);
   });
 
-  this.get('/users/:id', (schema, request) => {
+  this.get('/users/:id', function({users}, request) {
     if(request.requestHeaders.Authorization === 'token testUserToken') {
-      let user = schema.users.find(request.params.id);
-      if (user) {
-        return { user: user.attrs };
-      }
+      return this.serialize(users.find(request.params.id), 'v2');
     } else {
       return new Mirage.Response(403, {}, {});
     }
