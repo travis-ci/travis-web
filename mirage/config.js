@@ -40,9 +40,8 @@ export default function() {
     return { accounts: users.concat(accounts) };
   });
 
-  this.get('/hooks', (schema, request) => {
-    const hooks = schema.hooks.where({'owner_name': request.queryParams.owner_name});
-    return hooks;
+  this.get('/hooks', function({hooks}, {queryParams: {owner_name}}) {
+    return this.serialize(hooks.where({owner_name}), 'v2');
   });
 
   this.put('/hooks/:id', (schema, request) => {
