@@ -55,5 +55,4 @@ export default Ember.Component.extend({
   intervals: ['monthly', 'weekly', 'daily'],
 
   options: ['Always run', 'Only run if no new commits']
-
 });

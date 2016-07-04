@@ -37,6 +37,7 @@ Build.reopen({
   pullRequestNumber: attr('number'),
   eventType: attr('string'),
   repo: belongsTo('repo', { async: true }),
+  repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
   commit: belongsTo('commit', { async: false }),
   jobs: hasMany('job', { async: true }),
 
