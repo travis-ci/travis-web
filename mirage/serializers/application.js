@@ -1,4 +1,3 @@
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import V3Serializer from './v3';
 
-export default JSONAPISerializer.extend({
-});
+export default V3Serializer.extend();
