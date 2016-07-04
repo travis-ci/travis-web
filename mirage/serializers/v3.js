@@ -7,7 +7,7 @@ export default ActiveModelSerializer.extend({
     let json = ActiveModelSerializer.prototype.serialize.apply(this, arguments);
 
     if (this.isModel(object)) {
-      json = json[this._keyForModelOrCollection(object)]
+      json = json[this._keyForModelOrCollection(object)];
     } else {
       json['@pagination'] = {
         count: object.models.length
