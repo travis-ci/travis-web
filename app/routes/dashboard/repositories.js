@@ -19,7 +19,7 @@ export default TravisRoute.extend({
     }).then(function(response) {
       return response.repositories.filter(function(repo) {
         if (repo) {
-          return repo.currentBuild;
+          return repo.current_build;
         }
       }).map(function(repo) {
         return Ember.Object.create(repo);
