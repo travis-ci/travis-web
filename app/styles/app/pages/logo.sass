@@ -61,6 +61,18 @@
     li
       flex: 0 0 15em
 
+  .list--tessa
+    @extend %list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    justify-content: center
+    @media #{$medium-up}
+      width: 80%
+      margin: auto
+    li
+      flex: 0 0 15em
+
   .logo-logos
     margin-top: 6em
     display: flex
