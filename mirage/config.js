@@ -134,8 +134,8 @@ export default function() {
   });
 
   this.get('/jobs/:id', function(schema, request) {
-    let job = schema.jobs.find(request.params.id).attrs;
-    return {job: job, commit: schema.commits.find(job.commit_id).attrs};
+    let job = schema.jobs.find(request.params.id);
+    return this.serialize(job, 'v2-job');
   });
 
   this.get('/jobs');
