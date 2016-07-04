@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   isLoading: false,
 
   githubProfile: function() {
-    return "https://github.com/" + (this.get('model.login'));
+    return this.get('config').sourceEndpoint + "/" + (this.get('model.login'));
   }.property('model'),
 
   avatarURL: function() {
