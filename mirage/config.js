@@ -186,7 +186,7 @@ export default function() {
       const responseJson = JSON.parse(request.responseText);
       console.log(responseJson);
     } catch (e) {}
-  }
+  };
 }
 
 /*
