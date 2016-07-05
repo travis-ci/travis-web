@@ -232,7 +232,7 @@ Repo.reopenClass({
       promise = new Ember.RSVP.Promise(function(resolve, reject) {
         return store.query('repo', {
           'repository.active': 'true',
-          sort_by: 'current_build_id:desc',
+          sort_by: 'current_build:desc',
           limit: 30
         }).then(function() {
           return resolve(repos);
