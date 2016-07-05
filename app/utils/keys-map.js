@@ -32,7 +32,8 @@ languageConfigKeys = {
   compiler: 'Compiler',
   crystal: 'Crystal',
   osx_image: 'Xcode',
-  r: 'R'
+  r: 'R',
+  nix: 'Nix'
 };
 
 configKeys = {
