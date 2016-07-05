@@ -11,7 +11,7 @@ test('it renders', function() {
     slug: "travis-ci/travis-chat",
     active: false,
     "private": false,
-		currentBuild: {
+		current_build: {
 			number: "25",
 			state: "passed",
 			duration: 252,
