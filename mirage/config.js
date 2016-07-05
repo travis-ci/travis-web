@@ -125,6 +125,10 @@ export default function() {
     const branch = schema.branches.where({name: request.queryParams['branch.name']}).models[0];
     const builds = schema.builds.where({branchId: branch.id});
 
+    /**
+      * TODO remove this once the seializers/build is removed.
+      * The modelName causes Mirage to know how to serialise it.
+      */
     return this.serialize({
       models: builds.models.reverse(),
       modelName: 'build'
