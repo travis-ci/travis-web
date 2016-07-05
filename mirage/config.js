@@ -2,37 +2,6 @@ import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 
 export default function() {
-  let _turnIntoV3Singular = function(type, record) {
-    if(record.attrs) {
-      record = record.attrs;
-    }
-    record['@type'] = type;
-    record['@href'] = `/${type}/${record.id}`;
-
-    return record;
-  };
-
-  let turnIntoV3 = function(type, payload) {
-    let response;
-    if(Ember.isArray(payload)) {
-      let records = payload.map( (record) => { return _turnIntoV3Singular(type, record); } );
-
-      let pluralized = Ember.String.pluralize(type);
-      response = {};
-      response['@type'] = pluralized;
-      response['@href'] = `/${pluralized}`;
-      response[pluralized] = records;
-
-      // This minimal implementation satisfies the branch-row component fetch.
-      response['@pagination'] = {
-        count: payload.length
-      };
-    } else {
-      response = _turnIntoV3Singular(type, payload);
-    }
-    return response;
-  };
-
   this.get('/accounts', (schema, request) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, {type: 'user'}));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
