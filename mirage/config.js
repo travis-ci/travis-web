@@ -83,16 +83,7 @@ export default function() {
   });
 
   this.get('/v3/repo/:id/crons', function(schema, request) {
-    const crons = schema.crons.all().models.map(cron => {
-      // TODO adapt turnIntoV3 to handle related models
-      cron.attrs.branch = {
-        "@href": cron.attrs.branchId
-      };
-
-      return cron;
-    });
-
-    return turnIntoV3('crons', crons);
+    return schema.crons.all();
   });
 
   this.get('/cron/:id');
