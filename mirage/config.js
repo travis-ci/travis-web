@@ -111,7 +111,11 @@ export default function() {
 
   this.get('/builds/:id', function(schema, request) {
     const build = schema.builds.find(request.params.id);
-    return {build: build.attrs, jobs: build.jobs.models.map(job => job.attrs), commit: schema.commits.find(build.commit_id).attrs};
+    return {
+      build: build.attrs,
+      jobs: build.jobs.models.map(job => job.attrs),
+      commit: build.commit.attrs
+    };
   });
 
   this.post('/builds/:id/restart', (schema, request) => {
