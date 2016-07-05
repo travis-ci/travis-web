@@ -108,8 +108,7 @@ export default function() {
   });
 
   this.get('/v3/repo/:id', function(schema, request) {
-    const repo = schema.repositories.find(request.params.id);
-    return turnIntoV3('repository', repo);
+    return schema.repositories.find(request.params.id);
   });
 
   this.get('/v3/repo/:id/branches', function(schema) {
