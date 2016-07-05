@@ -154,11 +154,14 @@ export default function() {
     };
   });
 
-  this.get('/v3/repo/:repo_id/builds', (schema, request) => {
+  this.get('/v3/repo/:repo_id/builds', function(schema, request) {
     const branch = schema.branches.where({name: request.queryParams['branch.name']}).models[0];
     const builds = schema.builds.where({branchId: branch.id});
 
-    return turnIntoV3('build', builds.models.reverse());
+    return this.serialize({
+      models: builds.models.reverse(),
+      modelName: 'build'
+    }, 'v3');
   });
 
   this.get('/jobs/:id/log', function(schema, request) {
