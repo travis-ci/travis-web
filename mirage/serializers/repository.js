@@ -3,7 +3,11 @@ import { JSONAPISerializer } from 'ember-cli-mirage';
 
 export default JSONAPISerializer.extend({
   serialize(repository, request) {
-    return this.turnIntoV3('repository', repository.models);
+    if (repository.models) {
+      return this.turnIntoV3('repo', repository.models);
+    } else {
+      return this.turnIntoV3('repo', repository);
+    }
   },
 
   _turnIntoV3Singular(type, mirageRecord) {

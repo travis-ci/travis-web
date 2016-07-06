@@ -59,6 +59,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       sha: '1234567890',
       committer: currentUser
     });
+    lastBuild.save();
 
     const activeBranch = server.create('branch', {
       name: 'edits',
