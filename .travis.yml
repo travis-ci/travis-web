@@ -39,7 +39,7 @@ install:
   - bower install
 
 script:
-  - ember try:one $EMBER_VERSION --- ember test --reporter dot
+  - ember try:one $EMBER_VERSION --- ember exam --split=4 --reporter dot
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
