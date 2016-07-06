@@ -39,15 +39,14 @@ export default function() {
   });
 
   this.get('/repos', function(schema, request) {
-    return {
-      repos: schema.repositories.all().models
-    };
+    return schema.repositories.all();
   });
 
   this.get('/repo/:slug', function(schema, request) {
     let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
+
     return {
-      repo: repos[0]
+      repo: repos.models[0].attrs
     };
   });
 
@@ -111,11 +110,16 @@ export default function() {
 
   this.get('/builds/:id', function(schema, request) {
     const build = schema.builds.find(request.params.id);
-    return {
+    const response = {
       build: build.attrs,
-      jobs: build.jobs.models.map(job => job.attrs),
-      commit: build.commit.attrs
+      jobs: build.jobs.models.map(job => job.attrs)
     };
+
+    if (build.commit) {
+      response.commit = build.commit.attrs;
+    }
+
+    return response;
   });
 
   this.post('/builds/:id/restart', (schema, request) => {

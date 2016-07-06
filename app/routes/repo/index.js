@@ -25,13 +25,13 @@ export default TravisRoute.extend({
   observeRepoStatus() {
     let controller = this.controllerFor('repo');
     controller.addObserver('repo.active', this, 'renderTemplate');
-    controller.addObserver('repo.lastBuildId', this, 'renderTemplate');
+    controller.addObserver('repo.currentBuildId', this, 'renderTemplate');
   },
 
   stopObservingRepoStatus() {
     let controller = this.controllerFor('repo');
     controller.removeObserver('repo.active', this, 'renderTemplate');
-    controller.removeObserver('repo.lastBuildId', this, 'renderTemplate');
+    controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
   },
 
   renderTemplate() {
@@ -39,7 +39,7 @@ export default TravisRoute.extend({
 
     if(!controller.get('repo.active')) {
       this.render('repo/not-active');
-    } else if(!controller.get('repo.lastBuildId')) {
+    } else if(!controller.get('repo.currentBuildId')) {
       this.render('repo/no-build');
     } else {
       this.render('build');

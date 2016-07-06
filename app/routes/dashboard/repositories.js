@@ -18,8 +18,8 @@ export default TravisRoute.extend({
       }
     }).then(function(response) {
       return response.repositories.filter(function(repo) {
-        if (repo.default_branch) {
-          return repo.default_branch.last_build;
+        if (repo) {
+          return repo.current_build;
         }
       }).map(function(repo) {
         return Ember.Object.create(repo);

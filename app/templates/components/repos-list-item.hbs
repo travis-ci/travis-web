@@ -1,7 +1,7 @@
-<div class="tile {{repo.lastBuildState}}">
-  <h2 class="tile-title {{repo.lastBuildState}}">
+<div class="tile {{repo.currentBuild.state}}">
+  <h2 class="tile-title {{repo.currentBuild.state}}">
     {{#if repo.slug}}
-      {{status-icon status=repo.lastBuildState}}
+      {{status-icon status=repo.currentBuild.state}}
       {{#link-to "repo" repo}}
       <span class="label-align">{{repo.slug}}</span>
       {{/link-to}}
@@ -9,11 +9,11 @@
   </h2>
 
   {{#if repo.slug}}
-    {{#if repo.lastBuildId}}
-      <p class="tile-title float-right {{repo.lastBuildState}}">
+    {{#if repo.currentBuild.id}}
+      <p class="tile-title float-right {{repo.currentBuild.state}}">
         <span class="icon-hash"></span>
-        {{#link-to "build" repo repo.lastBuildId}}
-          <span class="label-align">{{repo.lastBuildNumber}}</span>
+        {{#link-to "build" repo repo.currentBuild.id}}
+          <span class="label-align">{{repo.currentBuild.number}}</span>
         {{/link-to}}
       </p>
     {{/if}}
@@ -22,16 +22,16 @@
   <p>
     <span class="icon-clock"></span>
     <span class="label-align">Duration:
-    <time class="duration" datetime="PT{{repo.lastBuildDuration}}S" title={{repo.lastBuildStartedAt}}>
-      {{format-duration repo.lastBuildDuration}}
+    <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title={{repo.currentBuild.startedAt}}>
+      {{format-duration repo.currentBuild.duration}}
     </time></span>
   </p>
 
   <p>
     <span class="icon-calendar"></span>
     <span class="label-align">Finished:
-    <time class="finished_at timeago" datetime={{repo.lastBuildFinishedAt}} title={{repo.lastBuildFinishedAt}}>
-      {{format-time repo.lastBuildFinishedAt}}
+    <time class="finished_at timeago" datetime={{repo.currentBuild.finishedAt}} title={{repo.currentBuild.finishedAt}}>
+      {{format-time repo.currentBuild.finishedAt}}
     </time></span>
   </p>
 </div>

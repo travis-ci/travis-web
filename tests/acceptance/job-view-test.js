@@ -20,7 +20,6 @@ test('visiting job-view', function(assert) {
 
   visit('/travis-ci/travis-web/jobs/'+ job.id);
 
-
   andThen(function() {
     assert.equal(jobPage.branch, 'acceptance-tests');
     assert.equal(jobPage.message, 'acceptance-tests This is a message');
@@ -33,7 +32,6 @@ test('visiting job-view', function(assert) {
 
 
 test('handling log error', function(assert) {
-
   let repo =  server.create('repository', {slug: 'travis-ci/travis-web'});
   let branch = server.create('branch', {});
   let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
