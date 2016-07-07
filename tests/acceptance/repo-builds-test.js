@@ -89,13 +89,6 @@ moduleForAcceptance('Acceptance | repo branches', {
       sha: 'abc134',
       committer: currentUser
     });
-
-    server.create('permissions', {
-      admin: [repoId],
-      push: [repoId],
-      pull: [repoId],
-      permissions: [repoId],
-    });
   }
 });
 
