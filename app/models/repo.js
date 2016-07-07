@@ -9,60 +9,16 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 
 const { service } = Ember.inject;
 
-var Repo;
-
-if (Config.useV3API) {
-  Repo = Model.extend({
-    defaultBranch: belongsTo('branch', {
-      async: false
-    }),
-    currentBuild: belongsTo('build', {
-      async: true, inverse: 'repoCurrentBuild'
-    }),
-    currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
-    currentBuildId: Ember.computed.oneWay('currentBuild.id'),
-  });
-} else {
-  Repo = Model.extend({
-    lastBuildNumber: attr('number'),
-    lastBuildState: attr(),
-    lastBuildStartedAt: attr(),
-    lastBuildFinishedAt: attr(),
-    _lastBuildDuration: attr('number'),
-    lastBuildLanguage: attr(),
-    lastBuildId: attr('number'),
-
-    lastBuildHash: function() {
-      return {
-        id: this.get('lastBuildId'),
-        number: this.get('lastBuildNumber'),
-        repo: this
-      };
-    }.property('lastBuildId', 'lastBuildNumber'),
-
-    lastBuild: function() {
-      var id;
-      if (id = this.get('lastBuildId')) {
-        this.store.findRecord('build', id);
-        return this.store.recordForId('build', id);
-      }
-    }.property('lastBuildId'),
-
-    lastBuildDuration: function() {
-      var duration;
-      duration = this.get('_lastBuildDuration');
-      if (!duration) {
-        duration = durationFromHelper(this.get('lastBuildStartedAt'), this.get('lastBuildFinishedAt'));
-      }
-      return duration;
-    }.property('_lastBuildDuration', 'lastBuildStartedAt', 'lastBuildFinishedAt'),
-
-    isFinished: function() {
-      let state = this.get('lastBuildState');
-      return ['passed', 'failed', 'errored', 'canceled'].contains(state);
-    }.property('lastBuildState')
-  });
-}
+const Repo = Model.extend({
+  defaultBranch: belongsTo('branch', {
+    async: false
+  }),
+  currentBuild: belongsTo('build', {
+    async: true, inverse: 'repoCurrentBuild'
+  }),
+  currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
+  currentBuildId: Ember.computed.oneWay('currentBuild.id'),
+});
 
 Repo.reopen({
   ajax: service(),
@@ -185,13 +141,9 @@ Repo.reopen({
   }.property('slug'),
 
   updateTimes() {
-    var currentBuild;
-    if (Config.useV3API) {
-      if (currentBuild = this.get('currentBuild')) {
-        return currentBuild.updateTimes();
-      }
-    } else {
-      return this.notifyPropertyChange('currentBuild.duration');
+    let currentBuild = this.get('currentBuild');
+    if (currentBuild) {
+      return currentBuild.updateTimes();
     }
   },
 
@@ -223,64 +175,49 @@ Repo.reopenClass({
 
   accessibleBy(store, reposIdsOrlogin) {
     var login, promise, repos, reposIds;
-    if (Config.useV3API) {
-      reposIds = reposIdsOrlogin;
-      repos = store.filter('repo', function(repo) {
-        let repoId = parseInt(repo.get('id'));
-        return reposIds.contains(repoId);
-      });
-      promise = new Ember.RSVP.Promise(function(resolve, reject) {
-        return store.query('repo', {
-          'repository.active': 'true',
-          sort_by: 'current_build:desc',
-          limit: 30
-        }).then(function() {
-          return resolve(repos);
-        }, function() {
-          return reject();
-        });
-      });
-      return promise;
-    } else {
-      login = reposIdsOrlogin;
+    reposIds = reposIdsOrlogin;
+    repos = store.filter('repo', function(repo) {
+      let repoId = parseInt(repo.get('id'));
+      return reposIds.contains(repoId);
+    });
+    promise = new Ember.RSVP.Promise(function(resolve, reject) {
       return store.query('repo', {
-        member: login,
-        orderBy: 'name'
+        'repository.active': 'true',
+        sort_by: 'current_build:desc',
+        limit: 30
+      }).then(function() {
+        return resolve(repos);
+      }, function() {
+        return reject();
       });
-    }
+    });
+    return promise;
   },
 
   search(store, ajax, query) {
     var promise, queryString, result;
-    if (Config.useV3API) {
-      queryString = $.param({
-        search: query,
-        orderBy: 'name',
-        limit: 5
-      });
-      promise = ajax.ajax("/repos?" + queryString, 'get');
-      result = Ember.ArrayProxy.create({
-        content: []
-      });
-      return promise.then(function(data, status, xhr) {
-        var promises;
-        promises = data.repos.map(function(repoData) {
-          return store.findRecord('repo', repoData.id).then(function(record) {
-            result.pushObject(record);
-            result.set('isLoaded', true);
-            return record;
-          });
-        });
-        return Ember.RSVP.allSettled(promises).then(function() {
-          return result;
+    queryString = $.param({
+      search: query,
+      orderBy: 'name',
+      limit: 5
+    });
+    promise = ajax.ajax("/repos?" + queryString, 'get');
+    result = Ember.ArrayProxy.create({
+      content: []
+    });
+    return promise.then(function(data, status, xhr) {
+      var promises;
+      promises = data.repos.map(function(repoData) {
+        return store.findRecord('repo', repoData.id).then(function(record) {
+          result.pushObject(record);
+          result.set('isLoaded', true);
+          return record;
         });
       });
-    } else {
-      return store.query('repo', {
-        search: query,
-        orderBy: 'name'
+      return Ember.RSVP.allSettled(promises).then(function() {
+        return result;
       });
-    }
+    });
   },
 
   withLastBuild(store) {
@@ -301,35 +238,25 @@ Repo.reopenClass({
       return repos.get('firstObject');
     } else {
       promise = null;
-      if (Config.useV3API) {
-        adapter = store.adapterFor('repo');
+      adapter = store.adapterFor('repo');
+      modelClass = store.modelFor('repo');
+      promise = adapter.findRecord(store, modelClass, slug).then(function(payload) {
+        var i, len, r, record, ref, repo, result, serializer;
+        serializer = store.serializerFor('repo');
         modelClass = store.modelFor('repo');
-        promise = adapter.findRecord(store, modelClass, slug).then(function(payload) {
-          var i, len, r, record, ref, repo, result, serializer;
-          serializer = store.serializerFor('repo');
-          modelClass = store.modelFor('repo');
-          result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord');
-          repo = store.push({
-            data: result.data
+        result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord');
+        repo = store.push({
+          data: result.data
+        });
+        ref = result.included;
+        for (i = 0, len = ref.length; i < len; i++) {
+          record = ref[i];
+          r = store.push({
+            data: record
           });
-          ref = result.included;
-          for (i = 0, len = ref.length; i < len; i++) {
-            record = ref[i];
-            r = store.push({
-              data: record
-            });
-          }
-          return repo;
-        });
-      } else {
-        promise = store.query('repo', {
-          slug: slug
-        }).then(function(repos) {
-          return repos.get('firstObject') || (function() {
-            throw "no repos found";
-          })();
-        });
-      }
+        }
+        return repo;
+      });
       return promise["catch"](function() {
         var error;
         error = new Error('repo not found');

@@ -1,10 +1,7 @@
 import V3Adapter from 'travis/adapters/v3';
-import ApplicationAdapter from 'travis/adapters/application';
 import Config from 'travis/config/environment';
 
-let Adapter = Config.useV3API ? V3Adapter : ApplicationAdapter;
-
-export default Adapter.extend({
+export default V3Adapter.extend({
   defaultSerializer: '-repo',
 
   ajaxOptions(url, type, options) {
@@ -13,12 +10,10 @@ export default Adapter.extend({
       hash.data = {};
     }
 
-    if(Config.useV3API) {
-      if(hash.data.include) {
-        hash.data.include += ',build.branch,repository.default_branch,repository.current_build,build.commit';
-      } else {
-        hash.data.include = 'build.branch,repository.default_branch,repository.current_build,build.commit';
-      }
+    if(hash.data.include) {
+      hash.data.include += ',build.branch,repository.default_branch,repository.current_build,build.commit';
+    } else {
+      hash.data.include = 'build.branch,repository.default_branch,repository.current_build,build.commit';
     }
 
     return this._super(url, type, hash);
