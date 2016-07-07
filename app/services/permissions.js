@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { hasPermission, hasPushPermission, hasAdminPermission } from 'travis/utils/permission';
 
 const { service } = Ember.inject;
 
@@ -12,6 +11,7 @@ export default Ember.Service.extend({
   },
 
   currentUser: Ember.computed.alias('auth.currentUser'),
+
   // This is computed property that can be used to allow any properties that
   // use permissions service to add dependencies easier. So instead of depending
   // on each of these things separately, we can depend on all
@@ -23,14 +23,24 @@ export default Ember.Service.extend({
          }),
 
   hasPermission(repo) {
-    return hasPermission(this.get('currentUser'), repo);
+    return this.checkPermission(repo, 'permissions');
   },
 
   hasPushPermission(repo) {
-    return hasPushPermission(this.get('currentUser'), repo);
+    return this.checkPermission(repo, 'pushPermissions');
   },
 
   hasAdminPermission(repo) {
-    return hasAdminPermission(this.get('currentUser'), repo);
-  }
+    return this.checkPermission(repo, 'adminPermissions');
+  },
+
+  checkPermission(repo, permissionsType) {
+    let id = isNaN(repo) ? repo.get('id') : repo;
+    let currentUser = this.get('currentUser');
+    if(currentUser) {
+      return currentUser.get(permissionsType).contains(parseInt(id));
+    } else {
+      return false;
+    }
+  },
 });
