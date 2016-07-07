@@ -91,15 +91,6 @@ moduleForAcceptance('Acceptance | repo settings', {
       repository_id: repoId,
       branchId: weeklyBranch.id
     });
-
-
-    server.create('permissions', {
-      admin: [repoId],
-      push: [repoId],
-      pull: [repoId],
-      permissions: [repoId],
-    });
-
   }
 });
 

@@ -19,13 +19,6 @@ moduleForAcceptance('Acceptance | repo crons', {
 
     const repoId = parseInt(repository.id);
 
-    server.create('permissions', {
-      admin: [repoId],
-      push: [repoId],
-      pull: [repoId],
-      permissions: [repoId],
-    });
-
     const primaryBranch = server.create('branch', {
       name: 'a cron branch yes'
     });

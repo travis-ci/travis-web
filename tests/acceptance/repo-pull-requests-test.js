@@ -17,13 +17,6 @@ moduleForAcceptance('Acceptance | repo pull requests', {
 
     const repoId = parseInt(repository.id);
 
-    server.create('permissions', {
-      admin: [repoId],
-      push: [repoId],
-      pull: [repoId],
-      permissions: [repoId],
-    });
-
     const primaryBranch = server.create('branch');
 
     const oneYearAgo = new Date();

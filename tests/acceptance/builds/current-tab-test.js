@@ -11,14 +11,6 @@ moduleForAcceptance('Acceptance | builds/current tab', {
 
 test('renders most recent repository without builds', function(assert) {
   let repo =  server.create('repository', {slug: 'travis-ci/travis-web'});
-  let repoId = parseInt(repo.id);
-
-  server.create('permissions', {
-    admin: [repoId],
-    push: [repoId],
-    pull: [repoId],
-    permissions: [repoId],
-  });
 
   currentRepoTab
     .visit();
@@ -36,20 +28,12 @@ test('renders most recent repository and most recent build when builds present',
   let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
   let job = server.create('job', {number: '1234.1', repository: repo, state: 'passed', build_id: build.id, commit_id: commit.id});
   let log = server.create('log', { id: job.id });
-  let repoId = parseInt(repo.id);
 
   build.commit = commit;
   commit.build = build;
 
   build.save();
   commit.save();
-
-  server.create('permissions', {
-    admin: [repoId],
-    push: [repoId],
-    pull: [repoId],
-    permissions: [repoId],
-  });
 
   currentRepoTab
     .visit();
