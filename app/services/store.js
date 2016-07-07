@@ -96,30 +96,26 @@ export default DS.Store.extend({
     // things I want to update here:
     if (type === 'build' && (json.repository || json.repo)) {
       data = json.repository || json.repo;
-      if (Config.useV3API) {
-        default_branch = data.default_branch;
-        if (default_branch) {
-          default_branch.default_branch = true;
-        }
-        last_build_id = default_branch.last_build_id;
+      default_branch = data.default_branch;
+      if (default_branch) {
+        default_branch.default_branch = true;
+      }
+      last_build_id = default_branch.last_build_id;
 
-        // a build is a synchronous relationship on a branch model, so we need to
-        // have a build record present when we put default_branch from a repository
-        // model into the store. We don't send last_build's payload in pusher, so
-        // we need to get it here, if it's not already in the store. In the future
-        // we may decide to make this relationship async, but I don't want to
-        // change the code at the moment
-        if (!last_build_id || (build = this.peekRecord('build', last_build_id))) {
-          return this.push(this.normalize('repo', data));
-        } else {
-          return this.findRecord('build', last_build_id).then((function(_this) {
-            return function() {
-              return _this.push(_this.normalize('repo', data));
-            };
-          })(this));
-        }
-      } else {
+      // a build is a synchronous relationship on a branch model, so we need to
+      // have a build record present when we put default_branch from a repository
+      // model into the store. We don't send last_build's payload in pusher, so
+      // we need to get it here, if it's not already in the store. In the future
+      // we may decide to make this relationship async, but I don't want to
+      // change the code at the moment
+      if (!last_build_id || (build = this.peekRecord('build', last_build_id))) {
         return this.push(this.normalize('repo', data));
+      } else {
+        return this.findRecord('build', last_build_id).then((function(_this) {
+          return function() {
+            return _this.push(_this.normalize('repo', data));
+          };
+        })(this));
       }
     }
   }

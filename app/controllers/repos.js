@@ -141,10 +141,9 @@ var Controller = Ember.Controller.extend({
   updateTimes() {
     let records = this.get('repos');
 
-    if(Config.useV3API) {
-      let callback = (record) => { return record.get('currentBuild'); };
-      records = records.filter(callback).map(callback);
-    }
+    let callback = (record) => { return record.get('currentBuild'); };
+    records = records.filter(callback).map(callback);
+
     this.get('updateTimesService').push(records);
   },
 
@@ -182,14 +181,9 @@ var Controller = Ember.Controller.extend({
 
         let onError = () => this.set('fetchingOwnedRepos', false);
 
-        if(Config.useV3API) {
-          user.get('_rawPermissions').then( (data) => {
-            Repo.accessibleBy(this.store, data.pull).then(callback, onError);
-          }, onError);
-        } else {
-          let login = user.get('login');
-          Repo.accessibleBy(this.store, login).then(callback, onError);
-        }
+        user.get('_rawPermissions').then( (data) => {
+          Repo.accessibleBy(this.store, data.pull).then(callback, onError);
+        }, onError);
       }
     }
   },

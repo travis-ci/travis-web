@@ -10,18 +10,10 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 const { service } = Ember.inject;
 var Build;
 
-if (Config.useV3API) {
-  Build = Model.extend(DurationCalculations, {
-    branch: belongsTo('branch', { async: false, inverse: 'builds' }),
-    branchName: Ember.computed.alias('branch.name')
-  });
-} else {
-  Build = Model.extend(DurationCalculations, {
-    branchName: Ember.computed.alias('commit.branch'),
-    // this is not used in V2, but makes it easier to test serializers
-    branch: belongsTo('branch', { async: false, inverse: 'builds' }),
-  });
-}
+Build = Model.extend(DurationCalculations, {
+  branch: belongsTo('branch', { async: false, inverse: 'builds' }),
+  branchName: Ember.computed.alias('branch.name')
+});
 
 Build.reopen({
   ajax: service(),
