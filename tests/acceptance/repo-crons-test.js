@@ -19,9 +19,7 @@ moduleForAcceptance('Acceptance | repo crons', {
 
     const repoId = parseInt(repository.id);
 
-    const primaryBranch = server.create('branch', {
-      name: 'a cron branch yes'
-    });
+    const primaryBranch = server.create('branch');
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
