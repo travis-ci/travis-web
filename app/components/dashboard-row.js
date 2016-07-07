@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import config from 'travis/config/environment';
-import { hasAdminPermission, hasPushPermission } from 'travis/utils/permission';
 
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
