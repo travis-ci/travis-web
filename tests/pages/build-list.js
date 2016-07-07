@@ -9,9 +9,11 @@ let {
 } = PageObject;
 
 export default PageObject.create({
-  visit: visitable(':organization/:repo/pull_requests'),
+  visitBuildHistory: visitable(':organization/:repo/builds'),
+  visitCrons: visitable(':organization/:repo/crons'),
+  visitPullRequests: visitable(':organization/:repo/pull_requests'),
 
-  pullRequests: collection({
+  builds: collection({
     itemScope: '.build-list .pr-row',
 
     item: {
