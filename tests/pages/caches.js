@@ -8,9 +8,9 @@ let {
 } = PageObject;
 
 const cacheComponent = {
-  name: text('.row-item:eq(0) .label-align'),
-  lastModified: text('.row-item:eq(1) .label-align'),
-  size: text('.row-item:eq(2) .label-align'),
+  name: text('.row-branch .label-align'),
+  lastModified: text('.row-calendar .label-align'),
+  size: text('.row-size .label-align'),
 
   delete: clickable('.icon-trash')
 };
@@ -19,12 +19,12 @@ export default PageObject.create({
   visit: visitable(':organization/:repo/caches'),
 
   pushCaches: collection({
-    itemScope: 'ul.caches-list:eq(0) .cache-item',
+    itemScope: '.push-caches .cache-item',
     item: cacheComponent
   }),
 
   pullRequestCaches: collection({
-    itemScope: 'ul.caches-list:eq(1) .cache-item',
+    itemScope: '.pull-request-caches .cache-item',
     item: cacheComponent
   })
 });
