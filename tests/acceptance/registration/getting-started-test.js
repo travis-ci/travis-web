@@ -57,3 +57,32 @@ test('added repository while onboarding persists to dashboard', function(assert)
   });
 
 });
+
+moduleForAcceptance('Acceptance | logged in user with repositories', {
+  beforeEach() {
+    const currentUser = server.create('user', {
+      name: 'Sara Ahmed',
+      login: 'feministkilljoy'
+    });
+
+    signInUser(currentUser);
+
+    server.create('repository', {
+      slug: 'killjoys/living-a-feminist-life'
+    });
+
+    server.create('repository', {
+      slug: 'killjoys/willful-subjects'
+    });
+  }
+});
+
+test('the home page shows the repositories', (assert) => {
+  dashboardPage.visit();
+
+  andThen(() => {
+    assert.equal(dashboardPage.sidebarRepositories().count, 2, 'expected two repositories in the sidebar');
+    assert.equal(dashboardPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
+    assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/living-a-feminist-life');
+  });
+});
