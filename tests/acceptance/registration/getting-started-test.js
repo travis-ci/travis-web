@@ -1,8 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import profilePage from 'travis/tests/pages/profile';
 import dashboardPage from 'travis/tests/pages/dashboard';
-import header from 'travis/tests/pages/header';
 
 moduleForAcceptance('Acceptance | registration/getting started', {
   beforeEach() {
