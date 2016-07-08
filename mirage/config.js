@@ -28,26 +28,30 @@ export default function() {
   });
 
   this.get('/users/permissions', (schema, request) => {
-    /**
-      * TODO: correct the object model to properly connect a user’s repository permissions.
-      * The implementation was returning only a single permissions object; this finds all
-      * of them and combines them. It would likely be better to have permissions be related
-      * to a user and a repository, perhaps as booleans, and synthesised here.
-      */
-    const permissions = schema.permissions.all();
+    const token = request.requestHeaders.Authorization.split(' ')[1];
+    const user = schema.users.where({token}).models[0];
 
-    return permissions.models.reduce((combinedPermissions, permissions) => {
-      ['admin', 'push', 'pull', 'permissions'].forEach(property => {
-        combinedPermissions[property] = combinedPermissions[property].concat(permissions.attrs[property]);
+    if (user) {
+      const permissions = schema.permissions.where({userId: user.id});
+
+      return permissions.models.reduce((combinedPermissions, permissions) => {
+        ['admin', 'push', 'pull', 'permissions'].forEach(property => {
+          // FIXME the permissions factory is not setting these properties to true
+          if (true || permissions.attrs[property]) {
+            combinedPermissions[property].push(parseInt(permissions.repositoryId));
+          }
+        });
+
+        return combinedPermissions;
+      }, {
+        admin: [],
+        push: [],
+        pull: [],
+        permissions: []
       });
-
-      return combinedPermissions;
-    }, {
-      admin: [],
-      push: [],
-      pull: [],
-      permissions: []
-    });
+    } else {
+      return {};
+    }
   });
 
   this.get('/v3/broadcasts', (schema, request) => {

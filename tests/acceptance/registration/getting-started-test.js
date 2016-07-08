@@ -20,21 +20,11 @@ test('signed in but without repositories', function(assert) {
 });
 
 test('added repository while onboarding persists to dashboard', function(assert) {
-  let repoId = 1;
-
-  server.create('permissions', {
-    admin: [repoId],
-    push: [repoId],
-    pull: [repoId],
-    permissions: [repoId],
-  });
-
-  dashboardPage
-    .visit()
-    .navigateToProfilePage();
+  const repo = server.create('repository');
+  profilePage.visit({username: 'testuser'});
 
   andThen(() => {
-    assert.equal(currentURL(), '/profile/testuser');
+    assert.equal(currentURL(), 'profile/testuser');
   });
 
   const inactiveHook = server.create('hook', {
@@ -55,7 +45,6 @@ test('added repository while onboarding persists to dashboard', function(assert)
     assert.notEqual(currentURL(), '/getting_started');
     assert.equal(dashboardPage.sidebarRepositories(0).name, "testuser/test-repo", "Newly enabled repository should display in sidebar");
   });
-
 });
 
 moduleForAcceptance('Acceptance | logged in user with repositories', {
@@ -67,12 +56,17 @@ moduleForAcceptance('Acceptance | logged in user with repositories', {
 
     signInUser(currentUser);
 
-    server.create('repository', {
+    const livingAFeministLife = server.create('repository', {
       slug: 'killjoys/living-a-feminist-life'
     });
 
-    server.create('repository', {
+    const willfulSubjects = server.create('repository', {
       slug: 'killjoys/willful-subjects'
+    });
+
+    server.create('repository', {
+      slug: 'other/other',
+      skipPermissions: true
     });
   }
 });

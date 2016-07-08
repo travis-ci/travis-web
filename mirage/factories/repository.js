@@ -6,13 +6,11 @@ export default Mirage.Factory.extend({
   active: true,
 
   afterCreate(repository, server) {
-    const repoId = parseInt(repository.id);
+    if (!repository.attrs.skipPermissions) {
+      // Creates permissions for first user in the database
+      const user = server.schema.users.all().models[0];
 
-    server.create('permissions', {
-      admin: [repoId],
-      push: [repoId],
-      pull: [repoId],
-      permissions: [repoId],
-    });
+      repository.createPermissions({user});
+    }
   }
 });
