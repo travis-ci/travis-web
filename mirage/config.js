@@ -28,9 +28,28 @@ export default function() {
   });
 
   this.get('/users/permissions', (schema, request) => {
-    let permissions = schema.permissions.find(1);
-    if (permissions) {
-      return permissions.attrs;
+    const token = request.requestHeaders.Authorization.split(' ')[1];
+    const user = schema.users.where({token}).models[0];
+
+    if (user) {
+      const permissions = schema.permissions.where({userId: user.id});
+
+      return permissions.models.reduce((combinedPermissions, permissions) => {
+        ['admin', 'push', 'pull', 'permissions'].forEach(property => {
+          if (permissions.attrs[property]) {
+            combinedPermissions[property].push(parseInt(permissions.repositoryId));
+          }
+        });
+
+        return combinedPermissions;
+      }, {
+        admin: [],
+        push: [],
+        pull: [],
+        permissions: []
+      });
+    } else {
+      return {};
     }
   });
 
