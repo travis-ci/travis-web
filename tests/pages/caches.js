@@ -3,6 +3,7 @@ import PageObject from 'travis/tests/page-object';
 let {
   clickable,
   collection,
+  isVisible,
   text,
   visitable
 } = PageObject;
@@ -17,6 +18,9 @@ const cacheComponent = {
 
 export default PageObject.create({
   visit: visitable(':organization/:repo/caches'),
+
+  deleteAllCaches: clickable('.delete-cache-button'),
+  noCachesExist: isVisible('p.helptext.no-caches'),
 
   pushCaches: collection({
     itemScope: '.push-caches .cache-item',

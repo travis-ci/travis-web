@@ -56,19 +56,28 @@ test('view and delete caches', function(assert) {
     assert.equal(pullRequestCache.name, 'PR.1919');
     assert.equal(pullRequestCache.lastModified, '2 days ago');
     assert.equal(pullRequestCache.size, '19.19MB');
+
+    assert.notOk(page.noCachesExist, 'expected the message that no caches exist to not be present');
   });
 
   const requestBodies = [];
 
   server.delete(`/repos/${this.repository.id}/caches`, function(schema, request) {
-    requestBodies.push(JSON.parse(request.requestBody));
+    requestBodies.push(request.requestBody || 'empty');
   });
 
   page.pushCaches(0).delete();
 
   andThen(() => {
-    assert.deepEqual(requestBodies.pop(), {branch: 'a-branch-name'});
+    assert.deepEqual(JSON.parse(requestBodies.pop()), {branch: 'a-branch-name'});
 
     assert.equal(page.pushCaches().count, 0);
+  });
+
+  page.deleteAllCaches();
+
+  andThen(() => {
+    assert.equal(requestBodies.pop(), 'empty', 'expected the delete all request to have no body');
+    assert.ok(page.noCachesExist, 'expected the message that no caches exist to be displayed');
   });
 });

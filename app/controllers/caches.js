@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'travis/config/environment';
 
 const { service, controller } = Ember.inject;
 
@@ -18,7 +19,7 @@ export default Ember.Controller.extend({
       if (this.get('isDeleting')) {
         return;
       }
-      if (confirm('Are you sure?')) {
+      if (config.skipConfirmations || confirm('Are you sure?')) {
         this.set('isDeleting', true);
         deletingDone = () => {
           return this.set('isDeleting', false);
