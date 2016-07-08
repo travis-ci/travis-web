@@ -19,34 +19,6 @@ test('signed in but without repositories', function(assert) {
   });
 });
 
-test('added repository while onboarding persists to dashboard', function(assert) {
-  const repo = server.create('repository');
-  profilePage.visit({username: 'testuser'});
-
-  andThen(() => {
-    assert.equal(currentURL(), 'profile/testuser');
-  });
-
-  const inactiveHook = server.create('hook', {
-    name: 'test-repo',
-    owner_name: 'testuser',
-    active: false,
-    admin: true
-  });
-
-  profilePage.administerableHooks(0).toggle();
-
-  andThen(() => {
-    assert.ok(server.db.hooks[0].active, 'repo is enabled');
-    header.clickDashboardLink();
-  });
-
-  andThen(() => {
-    assert.notEqual(currentURL(), '/getting_started');
-    assert.equal(dashboardPage.sidebarRepositories(0).name, "testuser/test-repo", "Newly enabled repository should display in sidebar");
-  });
-});
-
 moduleForAcceptance('Acceptance | logged in user with repositories', {
   beforeEach() {
     const currentUser = server.create('user', {
