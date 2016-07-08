@@ -17,6 +17,8 @@ moduleForAcceptance('Acceptance | repo caches', {
       slug: 'killjoys/living-a-feminist-life'
     });
 
+    this.repository = repository;
+
     const oneDayAgo = new Date(new Date().getTime() - 1000*60*60*24);
 
     repository.createCache({
@@ -54,5 +56,17 @@ test('view and delete caches', function(assert) {
     assert.equal(pullRequestCache.name, 'PR.1919');
     assert.equal(pullRequestCache.lastModified, '2 days ago');
     assert.equal(pullRequestCache.size, '19.19MB');
+  });
+
+  const requestBodies = [];
+
+  server.delete(`/repos/${this.repository.id}/caches`, function(schema, request) {
+    requestBodies.push(JSON.parse(request.requestBody));
+  });
+
+  page.pushCaches(0).delete();
+
+  andThen(() => {
+    assert.deepEqual(requestBodies.pop(), {branch: 'a-branch-name'});
   });
 });
