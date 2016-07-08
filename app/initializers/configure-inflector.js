@@ -9,5 +9,6 @@ export default {
   initialize: function() {
     const inflector = Ember.Inflector.inflector;
     inflector.uncountable('permissions');
+    inflector.irregular('cache', 'caches');
   }
 };

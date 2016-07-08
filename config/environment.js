@@ -116,8 +116,11 @@ module.exports = function(environment) {
       development: true
     };
     ENV.endpoints = {
-      sshKey: true
+      sshKey: true,
+      caches: true
     };
+
+    ENV.skipConfirmations = true;
   }
 
   if (environment === 'production') {

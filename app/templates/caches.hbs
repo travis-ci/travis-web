@@ -7,7 +7,7 @@
   </div>
   {{#if model.pushes.length}}
     <h2 class="small-title">Pushes</h2>
-    <ul id="caches" class="caches-list">
+    <ul id="caches" class="caches-list push-caches">
       {{#each  model.pushes as |cache|}}
         {{caches-item cache=cache repo=repo caches=model.pushes}}
       {{/each}}
@@ -16,7 +16,7 @@
 
   {{#if model.pullRequests.length}}
     <h2 class="small-title">Pull Requests</h2>
-    <ul class="caches-list">
+    <ul class="caches-list pull-request-caches">
       {{#each model.pullRequests as |cache|}}
         {{caches-item cache=cache repo=repo caches=model.pullRequests}}
       {{/each}}
@@ -24,5 +24,5 @@
   {{/if}}
 
 {{else}}
-  <p class="helptext">No caches have been created yet,<br>read more on <a href="http://docs.travis-ci.com/user/caching/" title="Documentation on caching">how to setup caching with your build</a>.</p>
+  <p class="helptext no-caches">No caches have been created yet,<br>read more on <a href="http://docs.travis-ci.com/user/caching/" title="Documentation on caching">how to setup caching with your build</a>.</p>
 {{/if}}

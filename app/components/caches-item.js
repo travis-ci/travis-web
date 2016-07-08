@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'travis/config/environment';
 
 const { service } = Ember.inject;
 
@@ -15,7 +16,7 @@ export default Ember.Component.extend({
       if (this.get('isDeleting')) {
         return;
       }
-      if (confirm('Are you sure?')) {
+      if (config.skipConfirmations || confirm('Are you sure?')) {
         this.set('isDeleting', true);
         data = {
           branch: this.get('cache.branch')
