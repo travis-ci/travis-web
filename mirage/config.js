@@ -36,8 +36,7 @@ export default function() {
 
       return permissions.models.reduce((combinedPermissions, permissions) => {
         ['admin', 'push', 'pull', 'permissions'].forEach(property => {
-          // FIXME the permissions factory is not setting these properties to true
-          if (true || permissions.attrs[property]) {
+          if (permissions.attrs[property]) {
             combinedPermissions[property].push(parseInt(permissions.repositoryId));
           }
         });
