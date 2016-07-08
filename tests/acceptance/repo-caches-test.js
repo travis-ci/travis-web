@@ -68,5 +68,7 @@ test('view and delete caches', function(assert) {
 
   andThen(() => {
     assert.deepEqual(requestBodies.pop(), {branch: 'a-branch-name'});
+
+    assert.equal(page.pushCaches().count, 0);
   });
 });
