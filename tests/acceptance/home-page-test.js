@@ -2,7 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
 
-moduleForAcceptance('Acceptance | registration/getting started', {
+moduleForAcceptance('Acceptance | home page for user with no repositories', {
   beforeEach() {
     const currentUser = server.create('user');
     signInUser(currentUser);
@@ -17,7 +17,7 @@ test('signed in but without repositories', function(assert) {
   });
 });
 
-moduleForAcceptance('Acceptance | logged in user with repositories', {
+moduleForAcceptance('Acceptance | home page for user with repositories', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
