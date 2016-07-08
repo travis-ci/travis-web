@@ -79,6 +79,11 @@ export default function() {
     return this.serialize(schema.settings.where({repositoryId: request.params.id}).models[0], 'v2');
   });
 
+  this.get('/repos/:id/caches', function(schema, request) {
+    const caches = schema.caches.where({repositoryId: request.params.id});
+    return this.serialize(caches, 'v2');
+  });
+
   this.get('/settings/env_vars', function(schema, request) {
     const envVars = schema.envVars.where({repositoryId: request.queryParams.repository_id});
 

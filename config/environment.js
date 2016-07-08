@@ -116,7 +116,8 @@ module.exports = function(environment) {
       development: true
     };
     ENV.endpoints = {
-      sshKey: true
+      sshKey: true,
+      caches: true
     };
   }
 
