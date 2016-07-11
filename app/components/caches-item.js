@@ -20,8 +20,6 @@ export default Ember.Component.extend({
 
       yield this.get('ajax').ajax(`/repos/${repo.get('id')}/caches`, 'DELETE', {data});
       return this.get('caches').removeObject(this.get('cache'));
-    } else {
-      return;
     }
   }),
 
