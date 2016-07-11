@@ -1,22 +1,16 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['settings-sshkey'],
-  isDeleting: false,
-  actions: {
-    "delete": function() {
-      var deletingDone;
-      if (this.get('isDeleting')) {
-        return;
-      }
-      this.set('isDeleting', true);
-      deletingDone = () => {
-        return this.set('isDeleting', false);
-      };
-      this.get('key').deleteRecord();
-      return this.get('key').save().then(deletingDone, deletingDone).then(() => {
-        return this.sendAction('sshKeyDeleted');
-      });
-    }
-  }
+
+  delete: task(function * () {
+    try {
+      const key = this.get('key');
+      key.deleteRecord();
+      yield key.save();
+    } catch (e) {}
+
+    this.sendAction('sshKeyDeleted');
+  })
 });
