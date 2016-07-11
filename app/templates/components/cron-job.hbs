@@ -3,10 +3,10 @@
 <div class="cron-job-text disable-by-build">{{disableByBuild}}</div>
 <div class="cron-job-action">
   <div class="tooltip">
-    {{#if isDeleting}}
+    {{#if delete.isRunning}}
       {{loading-indicator}}
     {{else}}
-      <a href="#" title="" {{action "delete" on="click"}}>
+      <a href="#" title="" {{action (perform delete) on="click"}}>
         <span class="icon-delete"></span>
       </a>
       <div class="tooltip-bubble">Delete</div>

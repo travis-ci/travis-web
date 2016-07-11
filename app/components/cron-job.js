@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const { service } = Ember.inject;
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['settings-cron'],
@@ -70,16 +71,7 @@ export default Ember.Component.extend({
     }
   }.property('cron.disable_by_build'),
 
-  actions: {
-    "delete": function() {
-      if (this.get('isDeleting')) {
-        return;
-      }
-      this.set('isDeleting', true);
-
-      return this.get('cron').destroyRecord().then(() => {
-        this.set('isDeleting', false);
-      });
-    }
-  }
+  delete: task(function * (){
+    yield this.get('cron').destroyRecord();
+  })
 });
