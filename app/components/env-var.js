@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['settings-envvar'],
@@ -16,13 +17,7 @@ export default Ember.Component.extend({
     }
   }.property('envVar.value', 'envVar.public'),
 
-  actions: {
-    "delete": function() {
-      if (this.get('isDeleting')) {
-        return;
-      }
-      this.set('isDeleting', true);
-      return this.get('envVar').destroyRecord();
-    }
-  }
+  delete: task(function * () {
+    yield this.get('envVar').destroyRecord();
+  })
 });
