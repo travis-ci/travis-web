@@ -1,4 +1,4 @@
-<form {{action "save" on="submit"}}>
+<form {{action (perform save) on="submit"}}>
   <div class="form-elem select">
     <span class="label">Branch</span>
     {{#x-select value=selectedBranch required="true"}}
@@ -23,7 +23,7 @@
     {{/x-select}}
   </div>
   <div class="form-elem">
-    {{#if isSaving}}
+    {{#if save.isRunning}}
       {{loading-indicator}}
     {{else}}
       <input type="submit" value="Add" class="form-submit" />
