@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const { service } = Ember.inject;
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['form--sshkey'],
@@ -54,34 +55,23 @@ export default Ember.Component.extend({
     }
   },
 
-  actions: {
-    save() {
-      var ssh_key;
+  save: task(function * () {
+    this.set('valueError', false);
 
-      this.set('valueError', false);
-      if (this.get('isSaving')) {
-        return;
-      }
-      this.set('isSaving', true);
-      if (this.isValid()) {
-        ssh_key = this.get('model');
-        ssh_key.setProperties({
-          description: this.get('description'),
-          value: this.get('value')
-        });
-        return ssh_key.save().then(() => {
-          this.set('isSaving', false);
-          this.reset();
-          return this.sendAction('sshKeyAdded', ssh_key);
-        }, (error) => {
-          this.set('isSaving', false);
-          if (error.errors) {
-            return this.addErrorsFromResponse(error.errors);
-          }
-        });
-      } else {
-        return this.set('isSaving', false);
+    if (this.isValid()) {
+      const sshKey = this.get('model');
+      sshKey.setProperties({
+        description: this.get('description'),
+        value: this.get('value')
+      });
+
+      try {
+        yield sshKey.save();
+        this.reset();
+        return this.sendAction('sshKeyAdded', sshKey);
+      } catch ({errors}) {
+        return this.addErrorsFromResponse(errors);
       }
     }
-  }
+  })
 });
