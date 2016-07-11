@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['limit-concurrent-builds'],
@@ -27,27 +28,19 @@ export default Ember.Component.extend({
     }
   },
 
-  actions: {
-    toggle() {
-      var savingFinished;
-      if (!this.get('enabled')) {
-        if (this.get('value') === 0) {
-          return;
-        }
-        if (this.get('isSaving')) {
-          return;
-        }
-        this.set('isSaving', true);
-        savingFinished = () => {
-          return this.set('isSaving', false);
-        };
-        this.get('repo').saveSettings({
+  toggle: task(function * () {
+    if (!this.get('enabled') && this.get('value') !== 0) {
+      try {
+        yield this.get('repo').saveSettings({
           maximum_number_of_builds: 0
-        }).then(savingFinished, savingFinished);
-        return this.set('value', 0);
-      }
-    },
+        });
+      } catch(e) {}
 
+      this.set('value', 0);
+    }
+  }),
+
+  actions: {
     limitChanged() {
       return Ember.run.debounce(this, 'limitChanged', 1000);
     }
