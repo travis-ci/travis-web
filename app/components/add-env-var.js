@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const { service } = Ember.inject;
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['form--envvar'],
@@ -24,31 +25,24 @@ export default Ember.Component.extend({
     });
   },
 
-  actions: {
-    save() {
-      var env_var;
-      if (this.get('isSaving')) {
-        return;
-      }
-      this.set('isSaving', true);
-      if (this.isValid()) {
-        env_var = this.get('store').createRecord('env_var', {
-          name: this.get('name'),
-          value: this.get('value'),
-          "public": this.get('public'),
-          repo: this.get('repo')
-        });
-        return env_var.save().then(() => {
-          this.set('isSaving', false);
-          return this.reset();
-        }, () => {
-          return this.set('isSaving', false);
-        });
-      } else {
-        return this.set('isSaving', false);
-      }
-    },
+  save: task(function * (){
+    if (this.isValid()) {
+      const envVar = this.get('store').createRecord('env_var', {
+        name: this.get('name'),
+        value: this.get('value'),
+        'public': this.get('public'),
+        repo: this.get('repo')
+      });
 
+      try {
+        yield envVar.save();
+        this.reset();
+      } catch(e) {
+      }
+    }
+  }),
+
+  actions: {
     nameChanged() {
       return this.set('nameIsBlank', false);
     }

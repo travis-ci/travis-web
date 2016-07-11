@@ -1,4 +1,4 @@
-<form {{action "save" on="submit"}}>
+<form {{action (perform save) on='submit'}}>
   <div class="form-elem">
     {{input value=name class="env-name" key-up="nameChanged" placeholder="Name"}}
     {{#if nameIsBlank }}
@@ -12,7 +12,7 @@
     {{travis-switch active=public description="Display value in build log"}}
   </div>
   <div class="form-elem">
-    {{#if isSaving}}
+    {{#if save.isRunning}}
       {{loading-indicator}}
     {{else}}
       <input type="submit" value="Add" class="form-submit" />
