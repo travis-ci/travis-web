@@ -11,7 +11,7 @@
   <span class="label-align">{{travis-mb cache.size}}MB</span>
 </div>
 <div class="row-item">
-  <a {{action "delete"}} href="#" class="{{if isDeleting 'deleting'}} delete-cache-icon" title="Delete this cache">
+  <a {{action 'performDelete'}} href="#" class="{{if delete.isRunning 'deleting'}} delete-cache-icon" title="Delete this cache">
     <div class="tooltip">
       <span class="icon-trash">delete cache</span>
       <span class="tooltip-bubble">Delete</span>
