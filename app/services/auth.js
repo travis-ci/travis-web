@@ -1,3 +1,4 @@
+/* global Travis */
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
@@ -27,7 +28,6 @@ export default Ember.Service.extend({
   }.property(),
 
   signOut: function() {
-    var user;
     this.get('sessionStorage').clear();
     this.get('storage').clear();
     this.set('state', 'signed-out');
@@ -134,9 +134,9 @@ export default Ember.Service.extend({
   },
 
   refreshUserData(user) {
-    var data;
     if (!user) {
-      if (data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage'))) {
+      let data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage'));
+      if (data) {
         user = data.user;
       }
     }
@@ -182,7 +182,6 @@ export default Ember.Service.extend({
 
   loadUser(user) {
     var store = this.get('store'),
-        adapter = store.adapterFor('user'),
         userClass = store.modelFor('user'),
         serializer = store.serializerFor('user'),
         normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');

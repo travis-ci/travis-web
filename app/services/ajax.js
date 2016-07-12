@@ -1,3 +1,4 @@
+/* global jQuery */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 var default_options;
@@ -36,12 +37,12 @@ export default Ember.Service.extend({
     });
   },
 
-  needsAuth(method, url) {
+  needsAuth() {
     return true;
   },
 
   ajax(url, method, options) {
-    var accepts, base, data, delimeter, endpoint, error, key, name, params, promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
+    var accepts, data, delimeter, endpoint, error, key, name, params, promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
     method = method || "GET";
     method = method.toUpperCase();
     endpoint = config.apiEndpoint || '';
@@ -69,11 +70,12 @@ export default Ember.Service.extend({
     };
     error = options.error || function() {};
     options.error = (data, status, xhr) => {
+      //eslint-disable-next-line
       console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(data)));
       return error.call(this, data, status, xhr);
     };
 
-    options = $.extend(options, default_options);
+    options = Ember.$.extend(options, default_options);
 
     if (options.data && (method === "GET" || method === "HEAD")) {
       params = jQuery.param(options.data);
@@ -108,7 +110,7 @@ export default Ember.Service.extend({
       return reject = _reject;
     });
     xhr.onreadystatechange = function() {
-      var contentType, data, e;
+      var contentType, data;
       if (xhr.readyState === 4) {
         contentType = xhr.getResponseHeader('Content-Type');
         data = (function() {
@@ -116,7 +118,7 @@ export default Ember.Service.extend({
             try {
               return jQuery.parseJSON(xhr.responseText);
             } catch (error1) {
-              e = error1;
+              // eslint-disable-next-line
               return console.log('error while parsing a response', method, options.url, xhr.responseText);
             }
           } else {

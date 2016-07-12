@@ -76,6 +76,7 @@ export default Ember.Service.extend({
 
   display(type, message) {
     if(!['error', 'notice', 'success'].contains(type)) {
+      // eslint-disable-next-line
       console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
     this.loadFlashes([{ [type]: message }]);
