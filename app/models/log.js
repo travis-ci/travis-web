@@ -1,5 +1,4 @@
-import Model from 'travis/models/model';
-import Job from 'travis/models/job';
+/* global Log */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
@@ -25,14 +24,14 @@ var Request = Ember.Object.extend({
       this.log.set('token', xhr.getResponseHeader('X-Log-Access-Token'));
     }
     if (xhr.status === 204) {
-      return $.ajax({
+      return Ember.$.ajax({
         url: this.redirectTo(xhr),
         type: 'GET',
         success: (body) => {
           Ember.run(this, function() { this.handlers.text(body); });
         }
       });
-    } else if (this.isJson(xhr, body)) {
+    } else if (this.isJson(xhr)) {
       return Ember.run(this, function() { this.handlers.json(body); });
     } else {
       return Ember.run(this, function() { this.handlers.text(body); });
@@ -45,7 +44,7 @@ var Request = Ember.Object.extend({
     return xhr.getResponseHeader('Location');
   },
 
-  isJson(xhr, body) {
+  isJson(xhr) {
 
     // Firefox can't see the Content-Type header on the xhr response due to the wrong
     // status code 204. Should be some redirect code but that doesn't work with CORS.
@@ -79,10 +78,11 @@ var LogModel = Ember.Object.extend({
       },
       data: data,
       success: (function(_this) {
-        return function(body, status, xhr) {
+        return function(body) {
           return Ember.run(_this, function() {
-            var i, len, part, parts, results;
-            if (parts = body.log.parts) {
+            var i, len, part, results;
+            let { parts } = body.log;
+            if (parts) {
               results = [];
               for (i = 0, len = parts.length; i < len; i++) {
                 part = parts[i];
@@ -109,10 +109,8 @@ var LogModel = Ember.Object.extend({
   },
 
   fetch() {
-    var handlers, id;
-    if (Log.DEBUG) {
-      console.log('log model: fetching log');
-    }
+    var handlers;
+    this.debug('log model: fetching log');
     this.clearParts();
     handlers = {
       json: (function(_this) {
@@ -129,10 +127,11 @@ var LogModel = Ember.Object.extend({
         };
       })(this)
     };
-    if (id = this.get('job.id')) {
+    let id = this.get('job.id');
+    if (id) {
       return Request.create({
-        id: id,
-        handlers: handlers,
+        id,
+        handlers,
         log: this,
         ajax: this.get('ajax')
       }).run();
@@ -145,8 +144,8 @@ var LogModel = Ember.Object.extend({
   },
 
   runOnClear() {
-    var callback;
-    if (callback = this.get('onClearCallback')) {
+    let callback = this.get('onClearCallback');
+    if (callback) {
       return callback();
     }
   },
@@ -164,7 +163,7 @@ var LogModel = Ember.Object.extend({
 
   loadParts(parts) {
     var i, len, part;
-    console.log('log model: load parts');
+    this.debug('log model: load parts');
     for (i = 0, len = parts.length; i < len; i++) {
       part = parts[i];
       this.append(part);
@@ -173,13 +172,20 @@ var LogModel = Ember.Object.extend({
   },
 
   loadText(text) {
-    console.log('log model: load text');
+    this.debug('log model: load text');
     this.append({
       number: 1,
       content: text,
       final: true
     });
     return this.set('isLoaded', true);
+  },
+
+  debug(message) {
+    if (Log.DEBUG) {
+      // eslint-disable-next-line
+      console.log(message);
+    }
   }
 });
 
