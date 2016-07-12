@@ -1,11 +1,8 @@
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'travis/models/model';
-import { durationFrom as durationFromHelper } from 'travis/utils/helpers';
-import Build from 'travis/models/build';
-import Config from 'travis/config/environment';
 import Ember from 'ember';
 import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
+import { belongsTo } from 'ember-data/relationships';
 
 const { service } = Ember.inject;
 
@@ -131,7 +128,7 @@ const Repo = Model.extend({
 
   stats: function() {
     if (this.get('slug')) {
-      return this.get('_stats') || $.get("https://api.github.com/repos/" + this.get('slug'), (data) => {
+      return this.get('_stats') || Ember.$.get("https://api.github.com/repos/" + this.get('slug'), (data) => {
         this.set('_stats', data);
         return this.notifyPropertyChange('stats');
       }) && {};
@@ -172,7 +169,7 @@ Repo.reopenClass({
   },
 
   accessibleBy(store, reposIdsOrlogin) {
-    var login, promise, repos, reposIds;
+    var promise, repos, reposIds;
     reposIds = reposIdsOrlogin;
     repos = store.filter('repo', function(repo) {
       let repoId = parseInt(repo.get('id'));
@@ -194,7 +191,7 @@ Repo.reopenClass({
 
   search(store, ajax, query) {
     var promise, queryString, result;
-    queryString = $.param({
+    queryString = Ember.$.param({
       search: query,
       orderBy: 'name',
       limit: 5
@@ -203,9 +200,8 @@ Repo.reopenClass({
     result = Ember.ArrayProxy.create({
       content: []
     });
-    return promise.then(function(data, status, xhr) {
-      var promises;
-      promises = data.repos.map(function(repoData) {
+    return promise.then(function(data) {
+      let promises = data.repos.map(function(repoData) {
         return store.findRecord('repo', repoData.id).then(function(record) {
           result.pushObject(record);
           result.set('isLoaded', true);
@@ -239,7 +235,7 @@ Repo.reopenClass({
       adapter = store.adapterFor('repo');
       modelClass = store.modelFor('repo');
       promise = adapter.findRecord(store, modelClass, slug).then(function(payload) {
-        var i, len, r, record, ref, repo, result, serializer;
+        var i, len, record, ref, repo, result, serializer;
         serializer = store.serializerFor('repo');
         modelClass = store.modelFor('repo');
         result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord');
@@ -249,7 +245,7 @@ Repo.reopenClass({
         ref = result.included;
         for (i = 0, len = ref.length; i < len; i++) {
           record = ref[i];
-          r = store.push({
+          store.push({
             data: record
           });
         }
