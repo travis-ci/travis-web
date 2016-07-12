@@ -6,6 +6,7 @@
   {{#if build}}
     {{build-header item=build commit=build.commit repo=repo}}
 
+
     {{#if build.isMatrix}}
       {{#if jobsLoaded}}
         {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
@@ -18,6 +19,10 @@
         {{job-log job=build.jobs.firstObject}}
       {{/if}}
     {{/if}}
+
+<div id="tab_config">View Config</div>
+<pre id="config_pre">{{formatConfig build.jobs.firstObject._config}}</pre>
+
   {{else}}
     {{no-builds}}
   {{/if}}
