@@ -36,9 +36,15 @@ export default Ember.Component.extend({
       }).then((response) => {
         if(response.active) {
           let pusher = this.get('pusher'),
-              repoId = this.get('repo.id');
+              repo = this.get('repo'),
+              repoId = repo.get('id');
 
-          pusher.subscribe('repo-' + repoId);
+          let channel = 'repo-' + repoId;
+          if(repo.get('private')) {
+            channel = 'private-' + channel;
+          }
+
+          pusher.subscribe(channel);
 
           this.get('repo').set('active', true);
 

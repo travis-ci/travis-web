@@ -9,8 +9,19 @@ export default Ember.Component.extend({
   active: alias('hook.active'),
   click() {
     this.sendAction('onToggle');
+
     let hook = this.get('hook');
-    return hook.toggle().then((function() {}), () => {
+
+    let pusher = this.get('pusher'),
+        repoId = hook.get('id');
+
+    return hook.toggle().then((function() {
+      let channel = 'repo-' + repoId;
+      if(hook.get('private')) {
+        channel = 'private-' + channel;
+      }
+      pusher.subscribe(channel);
+    }), () => {
       this.toggleProperty('hook.active');
       return this.sendAction('onToggleError', hook);
     });
