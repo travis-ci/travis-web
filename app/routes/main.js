@@ -11,5 +11,5 @@ export default TravisRoute.extend({
       outlet: 'left',
       into: 'main'
     });
-  },
+  }
 });

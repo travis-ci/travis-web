@@ -21,6 +21,6 @@ export default V3Adapter.extend({
     var repo_id = query['repository_id'];
     delete query['repository_id'];
     return this.ajax( this.urlPrefix() + '/v3/repo/' + repo_id + '/crons', "GET", query);
-  },
+  }
 
 });

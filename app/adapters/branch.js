@@ -11,6 +11,6 @@ export default ApplicationAdapter.extend({
 
   findRecord(store, type, id, record) {
     return this.ajax(this.urlPrefix() + id, 'GET');
-  },
+  }
 
 });

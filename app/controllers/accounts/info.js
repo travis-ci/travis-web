@@ -7,5 +7,5 @@ export default Ember.Controller.extend({
   auth: service(),
   repos: controller(),
 
-  user: alias('auth.currentUser'),
+  user: alias('auth.currentUser')
 });

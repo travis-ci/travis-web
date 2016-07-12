@@ -46,7 +46,7 @@ export default V2FallbackSerializer.extend({
       });
     }
     return this._super(...arguments);
-  },
+  }
 
 
 });
