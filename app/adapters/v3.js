@@ -16,13 +16,13 @@ export default RESTAdapter.extend({
     'Content-Type': 'application/json'
   },
 
-  ajaxOptions: function(url, type, options) {
+  ajaxOptions: function() {
     var hash = this._super(...arguments);
 
     hash.headers = hash.headers || {};
 
-    var token;
-    if(token = this.get('auth').token()) {
+    let token = this.get('auth').token();
+    if(token) {
       hash.headers['Authorization'] = "token " + token;
     }
 

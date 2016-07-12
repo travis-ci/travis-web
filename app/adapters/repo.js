@@ -1,5 +1,4 @@
 import V3Adapter from 'travis/adapters/v3';
-import Config from 'travis/config/environment';
 
 export default V3Adapter.extend({
   defaultSerializer: '-repo',

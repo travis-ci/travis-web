@@ -1,10 +1,9 @@
-import Ember from 'ember';
 import ApplicationAdapter from 'travis/adapters/application';
 
 export default ApplicationAdapter.extend({
   namespace: 'settings',
 
-  findRecord(store, type, id, record) {
+  findRecord(store, type, id) {
     return this.ajax(this.urlPrefix() + '/ssh_key/' + id, 'GET');
   },
 

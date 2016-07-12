@@ -19,14 +19,13 @@ export default ActiveModelAdapter.extend({
     return false;
   },
 
-  ajaxOptions(url, type, options) {
-    var base, hash, token;
-
-    hash = this._super(...arguments);
+  ajaxOptions() {
+    let hash = this._super(...arguments);
     hash.headers = hash.headers || {};
     hash.headers['accept'] = 'application/json; version=2';
 
-    if (token = this.get('auth').token()) {
+    let token = this.get('auth').token();
+    if (token) {
       if(!hash.headers['Authorization']) {
         hash.headers['Authorization'] = "token " + token;
       }
@@ -45,12 +44,14 @@ export default ActiveModelAdapter.extend({
 
   handleResponse(status, headers, payload) {
     if (status > 299) {
+      // eslint-disable-next-line
       console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
     }
 
     return this._super(...arguments);
   },
 
+  // TODO: remove this now that this has been merged!
   // this can be removed once this PR is merged and live:
   // https://github.com/emberjs/data/pull/4204
   findRecord(store, type, id, snapshot) {

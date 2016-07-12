@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import ApplicationAdapter from 'travis/adapters/application';
 
 export default ApplicationAdapter.extend({
