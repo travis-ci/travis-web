@@ -60,39 +60,7 @@ export default Ember.Component.extend({
     return lastBuilds;
   }.property(),
 
-  canTrigger: function() {
-    return this.get('permissions').hasPermission(this.get('branch.repository'));
-  }.property('permissions.all', 'build.repository'),
-
-  triggerBuild: function() {
-    var apiEndpoint, options, repoId;
-    apiEndpoint = config.apiEndpoint;
-    repoId = this.get('branch.repository.id');
-    options = {
-      type: 'POST',
-      body: {
-        request: {
-          branch: this.get('branch.name')
-        }
-      }
-    };
-    if (this.get('auth.signedIn')) {
-      options.headers = {
-        Authorization: "token " + (this.auth.token())
-      };
-    }
-    return $.ajax(apiEndpoint + "/v3/repo/" + repoId + "/requests", options).then(() => {
-      this.set('isTriggering', false);
-      return this.set('hasTriggered', true);
-    });
-  },
-
   actions: {
-    tiggerBuild(branch) {
-      this.set('isTriggering', true);
-      return this.triggerBuild();
-    },
-
     viewAllBuilds(branch) {
       return this.get('routing').transitionTo('builds');
     }
