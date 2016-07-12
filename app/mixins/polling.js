@@ -21,7 +21,7 @@ export default Ember.Mixin.create({
     return this.stopPolling();
   },
 
-  pollModelDidChange(sender, key, value) {
+  pollModelDidChange(sender, key) {
     return this.pollModel(key);
   },
 
