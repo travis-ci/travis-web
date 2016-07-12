@@ -15,13 +15,13 @@ export default Ember.Component.extend({
     let pusher = this.get('pusher'),
         repoId = hook.get('id');
 
-    return hook.toggle().then((function() {
+    return hook.toggle().then(() => {
       let channel = 'repo-' + repoId;
-      if(hook.get('private')) {
+      if(hook.get('private') || this.get('config').enterprise) {
         channel = 'private-' + channel;
       }
       pusher.subscribe(channel);
-    }), () => {
+    }, () => {
       this.toggleProperty('hook.active');
       return this.sendAction('onToggleError', hook);
     });
