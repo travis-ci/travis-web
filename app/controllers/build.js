@@ -14,8 +14,8 @@ export default Ember.Controller.extend(GithubUrlProperties, {
   sendFaviconStateChanges: true,
 
   jobsLoaded: function() {
-    var jobs;
-    if (jobs = this.get('build.jobs')) {
+    let jobs = this.get('build.jobs');
+    if (jobs) {
       return jobs.isEvery('config');
     }
   }.property('build.jobs.@each.config'),

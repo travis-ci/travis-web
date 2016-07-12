@@ -1,6 +1,6 @@
+/* global Visibility */
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
-import Config from 'travis/config/environment';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -46,8 +46,6 @@ var sortCallback = function(repo1, repo2) {
     // none of the builds finished, put newer build first
     return buildId1 > buildId2 ? -1 : 1;
   }
-
-  throw "should not happen";
 };
 
 var Controller = Ember.Controller.extend({
@@ -161,14 +159,13 @@ var Controller = Ember.Controller.extend({
   },
 
   viewOwned() {
-    var repos, user;
-
     if (!Ember.isEmpty(this.get('ownedRepos'))) {
       return this.set('_repos', this.get('ownedRepos'));
     } else if (!this.get('fetchingOwnedRepos')) {
       this.set('isLoaded', false);
 
-      if (user = this.get('currentUser')) {
+      let user = this.get('currentUser');
+      if (user) {
         this.set('fetchingOwnedRepos', true);
 
         let callback = (reposRecordArray) => {

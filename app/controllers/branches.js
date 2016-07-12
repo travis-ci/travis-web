@@ -1,11 +1,10 @@
 import Ember from 'ember';
-import GithubUrlProperties from 'travis/mixins/github-url-properties';
 
 export default Ember.Controller.extend({
   defaultBranch: function() {
     var output, repos;
     repos = this.get('model');
-    output = repos.filter(function(item, index) {
+    output = repos.filter(function(item) {
       return item.default_branch;
     });
     if (output.length) {
@@ -22,7 +21,7 @@ export default Ember.Controller.extend({
   activeBranches: function() {
     var repos;
     repos = this.get('model');
-    return repos = repos.filter(function(item, index) {
+    return repos = repos.filter(function(item) {
       return item.exists_on_github && !item.default_branch;
     }).sortBy('last_build.finished_at').reverse();
   }.property('model'),
@@ -30,7 +29,7 @@ export default Ember.Controller.extend({
   inactiveBranches: function() {
     var repos;
     repos = this.get('model');
-    return repos = repos.filter(function(item, index) {
+    return repos = repos.filter(function(item) {
       return !item.exists_on_github && !item.default_branch;
     }).sortBy('last_build.finished_at').reverse();
   }.property('model')

@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
     filter = this.get('filter');
     repos = this.get('model');
     org = this.get('org');
-    repos = repos.filter(function(item, index) {
+    repos = repos.filter(function(item) {
       return item.get('currentBuild') !== null;
     }).sort(function(a, b) {
       if (a.currentBuild.finished_at === null) {
@@ -32,18 +32,17 @@ export default Ember.Controller.extend({
     });
 
     if (org) {
-      repos = repos.filter(function(item, index) {
+      repos = repos.filter(function(item) {
         return item.get('owner.login') === org;
       });
     }
     if (Ember.isBlank(filter)) {
       return repos;
     } else {
-      return repos.filter(function(item, index) {
+      return repos.filter(function(item) {
         return item.slug.match(new RegExp(filter));
       });
     }
-    this.inactive();
   }.property('filter', 'model', 'org'),
 
   updateFilter() {
@@ -68,7 +67,7 @@ export default Ember.Controller.extend({
       isLoading: true
     });
     apiEndpoint = config.apiEndpoint;
-    $.ajax(apiEndpoint + '/v3/orgs', {
+    Ember.$.ajax(apiEndpoint + '/v3/orgs', {
       headers: {
         Authorization: 'token ' + this.auth.token()
       }

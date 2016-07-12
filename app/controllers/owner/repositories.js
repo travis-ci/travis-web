@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
     data = this.get('model');
     repos = [];
     if (data.repositories) {
-      repos = data.repositories.filter(function(item, index) {
+      repos = data.repositories.filter(function(item) {
         if (item.active) {
           return item;
         }
