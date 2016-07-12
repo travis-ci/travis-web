@@ -14,9 +14,9 @@
         {{loading-indicator center=true}}
       {{/if}}
     {{else}}
-      {{#if build.jobs}}
-        {{job-log job=build.jobs.firstObject}}
-      {{/if}}
+
+      {{job-tabs job=build.jobs.firstObject}}
+
     {{/if}}
   {{else}}
     {{no-builds}}

@@ -18,9 +18,9 @@
   @include colorRows($canary-yellow, 'created', 8px, true)
 
   .status-icon .is-rotating
-    width: 17px;
-    height: 17px;
-    line-height: 1;
+    width: 17px
+    height: 17px
+    line-height: 1
 
   h2, p
     margin: 0
@@ -56,39 +56,11 @@
     width: 12px
     height: 16px
 
-.tabnav--sidebar
-  font-size: 14px
-  border-bottom: solid 2px $pebble-grey
-  width: 90%
-  margin: auto
 
-  .active a:after,
-  a:hover:after
-    bottom: -1px
-
-  .icon--plus
-    &:after
-      transform: translateX(35%)
-      display: inline-block
-  #tab_new
-    a:hover
-      .icon--plus:after
-        color: $oxide-blue
-      &:after
-        bottom: -1px
-  li
-    margin-right: 0.8em
-  @media (min-width: #{lower-bound($large-range)})
-    ul
-      height: 2em
-      margin-bottom: -5px
-  @media (max-width: #{lower-bound($large-range)})
-    li
-      display: block !important
-      float: none
-    a
-      padding: 0 0 .35em
-      margin-bottom: .8em
+#tab_new
+  a:hover
+    .icon--plus:after
+      color: $oxide-blue
 
 .sidebar-list
   margin-top: 1.4rem
@@ -102,3 +74,6 @@
   margin: 1rem auto
   border: none
   border-bottom: solid 2px #f2f2f2
+  
+.travistab-nav--sidebar
+  padding: 0 1em

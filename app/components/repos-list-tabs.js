@@ -5,6 +5,8 @@ const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   auth: service(),
+  tagName: 'nav',
+  classNames: ['travistab-nav', 'travistab-nav--underline', 'travistab-nav--sidebar'],
 
   currentUser: alias('auth.currentUser'),
 

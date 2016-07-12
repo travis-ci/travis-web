@@ -222,8 +222,8 @@ export default function () {
   });
 
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
-  // this.pretender.handledRequest = function(verb, path, request) {
-  //   console.log("Handled this request:", `${verb} ${path}`, request);
+  // this.pretender.handledRequest = function (verb, path, request) {
+  //   console.log('Handled this request:', `${verb} ${path}`, request);
   //   try {
   //     const responseJson = JSON.parse(request.responseText);
   //     console.log(responseJson);
