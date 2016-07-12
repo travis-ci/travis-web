@@ -1,11 +1,11 @@
-import { durationFrom, configKeys, compact } from 'travis/utils/helpers';
-import configKeysMap from 'travis/utils/keys-map';
+/* global moment, Travis */
+import { compact } from 'travis/utils/helpers';
 import Ember from 'ember';
 import Model from 'travis/models/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
+import { belongsTo } from 'ember-data/relationships';
 
 const { service } = Ember.inject;
 
@@ -58,8 +58,8 @@ export default Model.extend(DurationCalculations, {
   }.property('repositorySlug'),
 
   config: function() {
-    var config;
-    if (config = this.get('_config')) {
+    let config = this.get('_config');
+    if (config) {
       return compact(config);
     } else if (this.get('currentState.stateName') !== 'root.loading') {
       if (this.get('isFetchingConfig')) {
@@ -155,8 +155,8 @@ export default Model.extend(DurationCalculations, {
   }.observes('state'),
 
   formattedFinishedAt: function() {
-    var finishedAt;
-    if (finishedAt = this.get('finishedAt')) {
+    let finishedAt = this.get('finishedAt');
+    if (finishedAt) {
       return moment(finishedAt).format('lll');
     }
   }.property('finishedAt'),
