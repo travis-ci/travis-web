@@ -40,7 +40,7 @@ export default Ember.Component.extend({
               repoId = repo.get('id');
 
           let channel = 'repo-' + repoId;
-          if(repo.get('private')) {
+          if(repo.get('private') || this.get('config').enterprise) {
             channel = 'private-' + channel;
           }
 
