@@ -1,5 +1,5 @@
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
-import Model from 'travis/models/model';
+import Model from 'ember-data/model';
 import Ember from 'ember';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';

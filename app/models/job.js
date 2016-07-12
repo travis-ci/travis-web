@@ -1,7 +1,7 @@
 /* global moment, Travis */
 import { compact } from 'travis/utils/helpers';
 import Ember from 'ember';
-import Model from 'travis/models/model';
+import Model from 'ember-data/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import attr from 'ember-data/attr';

@@ -1,7 +1,7 @@
 import { durationFrom, configKeys, compact } from 'travis/utils/helpers';
 import configKeysMap from 'travis/utils/keys-map';
 import Ember from 'ember';
-import Model from 'travis/models/model';
+import Model from 'ember-data/model';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import Config from 'travis/config/environment';
 import attr from 'ember-data/attr';
