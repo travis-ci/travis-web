@@ -1,3 +1,4 @@
+/* global Travis, _cio */
 import Ember from 'ember';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
@@ -78,7 +79,7 @@ var App = Ember.Application.extend(Ember.Evented, {
           return "private-" + channel;
         }
       });
-      
+
     }
     return Travis.pusher.subscribeAll(channels);
   },
