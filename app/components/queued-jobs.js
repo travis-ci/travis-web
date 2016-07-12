@@ -1,3 +1,4 @@
+/* global Visibility */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 

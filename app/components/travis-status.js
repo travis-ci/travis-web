@@ -9,18 +9,17 @@ export default Ember.Component.extend({
   }.property(),
 
   didInsertElement() {
-    var self, url;
-    if (url = this.get('statusPageStatusUrl')) {
-      self = this;
-      return this.getStatus(url).then(function(response) {
+    let url = this.get('statusPageStatusUrl');
+    if (url) {
+      return this.getStatus(url).then((response) => {
         if (response.status && response.status.indicator) {
-          return self.set('status', response.status.indicator);
+          return this.set('status', response.status.indicator);
         }
       });
     }
   },
 
   getStatus(url) {
-    return $.ajax(url);
+    return Ember.$.ajax(url);
   }
 });

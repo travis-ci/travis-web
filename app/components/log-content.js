@@ -1,3 +1,4 @@
+/* global Travis, Log */
 import Ember from 'ember';
 import LinesSelector from 'travis/utils/lines-selector';
 import LogFolder from 'travis/utils/log-folder';
@@ -18,15 +19,16 @@ Log.Scroll = function(options) {
 };
 
 Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
-  insert: function(log, data, pos) {
+  insert: function() {
     if (this.numbers) {
       this.tryScroll();
     }
     return true;
   },
   tryScroll: function() {
-    var element, ref;
-    if (element = Ember.$("#log p:visible.highlight:first")) {
+    var ref;
+    let element = Ember.$("#log p:visible.highlight:first");
+    if (element) {
       if (this.beforeScroll) {
         this.beforeScroll();
       }
@@ -44,7 +46,7 @@ Log.Limit = function(max_lines, limitedLogCallback) {
 
 Log.Limit.prototype = Log.extend(new Log.Listener(), {
   count: 0,
-  insert: function(log, node, pos) {
+  insert: function(node) {
     if (node.type === 'paragraph' && !node.hidden) {
       this.count += 1;
       if (this.limited) {
@@ -72,6 +74,7 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     if (Log.DEBUG) {
+      //eslint-disable-next-line
       console.log('log view: did insert');
     }
     this._super(...arguments);
@@ -80,6 +83,7 @@ export default Ember.Component.extend({
 
   willDestroyElement() {
     if (Log.DEBUG) {
+      //eslint-disable-next-line
       console.log('log view: will destroy');
     }
     Ember.run.scheduleOnce('afterRender', this, 'teardownLog');
@@ -166,6 +170,7 @@ export default Ember.Component.extend({
     Ember.run.schedule('afterRender', this, function() {
       var i, j, len, part, ref, ref1, ref2, results;
       if (Log.DEBUG) {
+        //eslint-disable-next-line
         console.log('log view: parts did change');
       }
       if (this.get('_state') !== 'inDOM') {
@@ -185,9 +190,9 @@ export default Ember.Component.extend({
   },
 
   plainTextLogUrl: function() {
-    var id, url;
-    if (id = this.get('log.job.id')) {
-      url = plainTextLogUrl(id);
+    let id = this.get('log.job.id');
+    if (id) {
+      let url = plainTextLogUrl(id);
       if (config.pro) {
         url += "&access_token=" + (this.get('job.log.token'));
       }
@@ -200,8 +205,8 @@ export default Ember.Component.extend({
   }.property('permissions.all', 'job.repo'),
 
   canRemoveLog: function() {
-    var job;
-    if (job = this.get('job')) {
+    let job = this.get('job');
+    if (job) {
       return job.get('canRemoveLog') && this.get('hasPermission');
     }
   }.property('job.canRemoveLog', 'hasPermission'),

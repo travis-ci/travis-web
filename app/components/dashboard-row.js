@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
-import config from 'travis/config/environment';
 
 const { service } = Ember.inject;
 const { alias } = Ember.computed;

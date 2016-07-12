@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
-import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 
 const { service } = Ember.inject;
@@ -39,13 +38,15 @@ export default Ember.Component.extend({
           Authorization: "token " + (this.auth.token())
         };
       }
-      $.ajax(apiEndpoint + "/v3/repo/" + repoId + "/builds?branch.name=" + branchName + "&limit=5&build.event_type=push,api,cron", options).then(function(response) {
-        var array, i, j, ref;
+      Ember.$.ajax(apiEndpoint + "/v3/repo/" + repoId + "/builds?branch.name=" + branchName + "&limit=5&build.event_type=push,api,cron", options).then(function(response) {
+        var array, i, ref;
         array = response.builds.map(function(build) {
           return Ember.Object.create(build);
         });
+        // TODO: Clean this up, all we want to do is have 5 elements no matter
+        // what. This code doesn't express that very well.
         if (array.length < 5) {
-          for (i = j = 1, ref = 5 - array.length; j <= ref; i = j += 1) {
+          for (i = 1, ref = 5 - array.length; i <= ref; i += 1) {
             array.push({});
           }
         }
@@ -61,7 +62,7 @@ export default Ember.Component.extend({
   }.property(),
 
   actions: {
-    viewAllBuilds(branch) {
+    viewAllBuilds() {
       return this.get('routing').transitionTo('builds');
     }
   }
