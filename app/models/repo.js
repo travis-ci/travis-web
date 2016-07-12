@@ -10,6 +10,13 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 const { service } = Ember.inject;
 
 const Repo = Model.extend({
+  ajax: service(),
+  slug: attr(),
+  description: attr(),
+  "private": attr('boolean'),
+  githubLanguage: attr(),
+  active: attr(),
+
   defaultBranch: belongsTo('branch', {
     async: false
   }),
@@ -18,15 +25,6 @@ const Repo = Model.extend({
   }),
   currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
   currentBuildId: Ember.computed.oneWay('currentBuild.id'),
-});
-
-Repo.reopen({
-  ajax: service(),
-  slug: attr(),
-  description: attr(),
-  "private": attr('boolean'),
-  githubLanguage: attr(),
-  active: attr(),
 
   withLastBuild() {
     return this.filter(function(repo) {
