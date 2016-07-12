@@ -48,7 +48,7 @@ export default Ember.Service.extend({
     } else {
       this.set('state', 'signing-in');
       url = (this.get('endpoint')) + "/auth/post_message?origin=" + this.receivingEnd;
-      return $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
+      return Ember.$('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
     }
   },
 

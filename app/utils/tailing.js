@@ -17,11 +17,11 @@ export default (function() {
   };
 
   Tailing.prototype.tail = function() {
-    return $(this.tail_selector);
+    return Ember.$(this.tail_selector);
   };
 
   Tailing.prototype.log = function() {
-    return $(this.log_selector);
+    return Ember.$(this.log_selector);
   };
 
 
@@ -86,12 +86,12 @@ export default (function() {
 
   Tailing.prototype.positionButton = function() {
     var max, offset, tail;
-    tail = $('#tail');
+    tail = Ember.$('#tail');
     if (tail.length === 0) {
       return;
     }
-    offset = $(window).scrollTop() - $('#log').offset().top;
-    max = $('#log').height() - $('#tail').height() + 5;
+    offset = Ember.$(window).scrollTop() - Ember.$('#log').offset().top;
+    max = Ember.$('#log').height() - Ember.$('#tail').height() + 5;
     if (offset > max) {
       offset = max;
     }

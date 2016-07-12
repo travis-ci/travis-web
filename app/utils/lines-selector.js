@@ -37,7 +37,7 @@ export default (function() {
     this.element.on('click', 'a', (function(_this) {
       return function(event) {
         var element;
-        element = $(event.target).parent('p');
+        element = Ember.$(event.target).parent('p');
         _this.loadLineNumbers(element, event.shiftKey);
         event.preventDefault();
         return false;

@@ -21,11 +21,11 @@ export default TravisRoute.extend({
   },
 
   activate() {
-    $('.tab.tabs--main li').removeClass('active');
-    return $('#tab_branches').addClass('active');
+    Ember.$('.tab.tabs--main li').removeClass('active');
+    Ember.$('#tab_branches').addClass('active');
   },
 
   deactivate() {
-    return $('#tab_branches').removeClass('active');
+    Ember.$('#tab_branches').removeClass('active');
   }
 });

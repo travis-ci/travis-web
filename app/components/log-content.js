@@ -17,7 +17,7 @@ Log.Scroll = function(options) {
   return this;
 };
 
-Log.Scroll.prototype = $.extend(new Log.Listener(), {
+Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
   insert: function(log, data, pos) {
     if (this.numbers) {
       this.tryScroll();
@@ -26,12 +26,12 @@ Log.Scroll.prototype = $.extend(new Log.Listener(), {
   },
   tryScroll: function() {
     var element, ref;
-    if (element = $("#log p:visible.highlight:first")) {
+    if (element = Ember.$("#log p:visible.highlight:first")) {
       if (this.beforeScroll) {
         this.beforeScroll();
       }
-      $('#main').scrollTop(0);
-      return $('html, body').scrollTop(((ref = element.offset()) != null ? ref.top : void 0) - (window.innerHeight / 3));
+      Ember.$('#main').scrollTop(0);
+      return Ember.$('html, body').scrollTop(((ref = element.offset()) != null ? ref.top : void 0) - (window.innerHeight / 3));
     }
   }
 });
@@ -215,7 +215,7 @@ export default Ember.Component.extend({
   actions: {
     toTop() {
       Travis.tailing.stop();
-      return $(window).scrollTop(0);
+      return Ember.$(window).scrollTop(0);
     },
 
     toggleTailing() {

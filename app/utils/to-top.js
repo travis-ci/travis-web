@@ -19,11 +19,11 @@ export default (function() {
   }
 
   ToTop.prototype.element = function() {
-    return $(this.element_selector);
+    return Ember.$(this.element_selector);
   };
 
   ToTop.prototype.container = function() {
-    return $(this.container_selector);
+    return Ember.$(this.container_selector);
   };
 
   ToTop.prototype.onScroll = function() {
