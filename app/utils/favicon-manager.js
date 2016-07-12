@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 var manager = function(headTag) {
   if (headTag) {
     this.headTag = headTag;

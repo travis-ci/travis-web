@@ -1,5 +1,5 @@
+/* global Travis, md5 */
 import config from 'travis/config/environment';
-import Ember from 'ember';
 
 var ccXml, email, githubAdmin, githubCommit, githubNetwork, githubPullRequest,
     githubRepo, githubWatchers, gravatarImage, plainTextLog, statusImage;
@@ -42,7 +42,7 @@ statusImage = function(slug, branch) {
   if (config.environment === 'development') {
     prefix = config.apiEndpoint;
   }
-  
+
   if (config.pro) {
     token = Travis.__container__.lookup('controller:currentUser').get('model.token');
     return (prefix + "/" + slug + ".svg?token=" + token) + (branch ? "&branch=" + branch : '');

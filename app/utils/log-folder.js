@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default (function() {
   function LogFolder(element) {
     this.element = element;

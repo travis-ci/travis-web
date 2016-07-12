@@ -1,3 +1,4 @@
+/* global Travis, Pusher */
 import ENV from 'travis/config/environment';
 import Ember from 'ember';
 
@@ -62,6 +63,7 @@ TravisPusher.prototype.unsubscribe = function(channel) {
     return;
   }
   channel = this.prefix(channel);
+  //eslint-disable-next-line
   console.log("unsubscribing from " + channel);
   if ((ref = this.pusher) != null ? ref.channel(channel) : void 0) {
     return this.pusher.unsubscribe(channel);
@@ -79,7 +81,6 @@ TravisPusher.prototype.prefix = function(channel) {
 };
 
 TravisPusher.prototype.receive = function(event, data) {
-  var job;
   if (event.substr(0, 6) === 'pusher') {
     return;
   }
@@ -90,7 +91,8 @@ TravisPusher.prototype.receive = function(event, data) {
   // TODO remove job:requeued, once sf-restart-event has been merged
   // TODO this also needs to clear logs on build:created if matrix jobs are already loaded
   if (event === 'job:created' || event === 'job:requeued') {
-    if (job = this.store.peekRecord('job', data.job.id)) {
+    let job = this.store.peekRecord('job', data.job.id);
+    if (job) {
       job.clearLog();
     }
   }
@@ -136,6 +138,7 @@ TravisPusher.prototype.normalize = function(event, data) {
 
 TravisPusher.prototype.warn = function(type, object) {
   if (!this.ignoreWarning(type, object.error)) {
+    //eslint-disable-next-line
     return console.warn(type, object.error);
   }
 };

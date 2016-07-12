@@ -1,3 +1,4 @@
+/* global Travis */
 import emojiDictionary from 'travis/utils/emoji-dictionary';
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import configKeysMap from 'travis/utils/keys-map';
@@ -10,9 +11,9 @@ var _emojize, _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
     durationFrom, formatCommit, formatConfig, formatMessage, formatSha, githubify,
     intersect, mapObject, only, pathFrom, safe, timeAgoInWords, timeInWords, timeago;
 
-timeago = $.timeago;
+timeago = Ember.$.timeago;
 
-mapObject = $.map;
+mapObject = Ember.$.map;
 
 colors = {
   "default": 'yellow',
@@ -23,11 +24,10 @@ colors = {
 };
 
 mapObject = function(elems, callback, arg) {
-  var i, key, ret, value;
+  var key, ret, value;
   value = void 0;
   key = void 0;
   ret = [];
-  i = 0;
   for (key in elems) {
     value = callback(elems[key], key, arg);
     if (value != null) {
@@ -237,7 +237,7 @@ _emojize = function(text) {
   var emojis;
   emojis = text.match(/:\S+?:/g);
   if (emojis !== null) {
-    emojis.uniq().forEach(function(emoji, ix) {
+    emojis.uniq().forEach(function(emoji) {
       var image, strippedEmoji;
       strippedEmoji = emoji.substring(1, emoji.length - 1);
       if (emojiDictionary.indexOf(strippedEmoji) !== -1) {
