@@ -26,11 +26,13 @@ moduleForAcceptance('Acceptance | home page for user with repositories', {
 
     signInUser(currentUser);
 
-    const livingAFeministLife = server.create('repository', {
+    // create active repo
+    server.create('repository', {
       slug: 'killjoys/living-a-feminist-life'
     });
 
-    const willfulSubjects = server.create('repository', {
+    // create active repo
+    server.create('repository', {
       slug: 'killjoys/willful-subjects'
     });
 

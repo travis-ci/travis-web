@@ -7,7 +7,8 @@ moduleForAcceptance('Acceptance | job view');
 test('visiting job-view', function(assert) {
 
   let repo =  server.create('repository', {slug: 'travis-ci/travis-web'});
-  let branch = server.create('branch', {});
+  // create branch
+  server.create('branch', {});
   let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
   let build = server.create('build', {repository_id: repo.id, state: 'passed', commit_id: commit.id, commit});
   let job = server.create('job', {number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit, build});
@@ -16,7 +17,8 @@ test('visiting job-view', function(assert) {
   job.save();
   commit.save();
 
-  let log = server.create('log', { id: job.id });
+  // create log
+  server.create('log', { id: job.id });
 
   visit('/travis-ci/travis-web/jobs/'+ job.id);
 
@@ -33,7 +35,8 @@ test('visiting job-view', function(assert) {
 
 test('handling log error', function(assert) {
   let repo =  server.create('repository', {slug: 'travis-ci/travis-web'});
-  let branch = server.create('branch', {});
+  // create branch
+  server.create('branch', {});
   let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
   let build = server.create('build', {repository_id: repo.id, state: 'passed', commit_id: commit.id, commit});
   let job = server.create('job', {number: '1234.1', reposiptoy_id: repo.id, state: 'passed', build_id: build.id, commit, build});

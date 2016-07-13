@@ -11,11 +11,13 @@ moduleForAcceptance('Acceptance | builds/restart', {
 
 test('restarting build', function(assert) {
   let repo =  server.create('repository', {slug: 'travis-ci/travis-web'});
-  let branch = server.create('branch', {});
+  // create branch
+  server.create('branch', {});
   let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
   let build = server.create('build', {number: '5', repository_id: repo.id, state: 'passed', commit_id: commit.id, commit});
   let job = server.create('job', {number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit_id: commit.id});
-  let log = server.create('log', { id: job.id });
+  // create log
+  server.create('log', { id: job.id });
 
   buildPage
     .visit()
