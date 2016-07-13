@@ -50,27 +50,26 @@ export default Ember.Mixin.create({
         return;
       }
       this.set('restarting', true);
-      var onSuccess = () => {
-        this.set('restarting', false);
-        this.get('flashes').notice('The build was successfully restarted.');
-      };
-
-      var onError = (xhr) => {
-        this.set('restarting', false);
-        this.get('flashes').error('An error occurred. The build could not be restarted.');
-        this.displayFlashError(xhr.status, 'restart');
-      };
-      eventually(this.get('item'), record => record.restart().then(onSuccess, onError) );
+      let type = this.get('type');
+      eventually(this.get('item'), (record) => {
+        record.restart().then(() => {
+          this.set('restarting', false);
+          this.get('flashes').notice(`The ${type} was successfully restarted.`);
+        }, (xhr) => {
+          this.set('restarting', false);
+          this.get('flashes').error(`An error occurred. The ${type} could not be restarted.`);
+          this.displayFlashError(xhr.status, 'restart');
+        });
+      });
     },
 
     cancel: function() {
-      var type;
       if (this.get('cancelling')) {
         return;
       }
       this.set('cancelling', true);
 
-      type = this.get('type');
+      let type = this.get('type');
       eventually(this.get('item'), (record) => {
         record.cancel().then(() => {
           this.set('cancelling', false);

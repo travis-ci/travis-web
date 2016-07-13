@@ -154,6 +154,13 @@ export default function() {
     };
   });
 
+  this.post('/jobs/:id/restart', (/*schema, request*/) => {
+    return {
+      flash: [{notice: "The job was successfully restarted."}],
+      result: true
+    };
+  });
+
   this.get('/v3/repo/:repo_id/builds', function(schema, request) {
     const branch = schema.branches.where({name: request.queryParams['branch.name']}).models[0];
     const builds = schema.builds.where({branchId: branch.id});
