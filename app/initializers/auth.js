@@ -1,4 +1,3 @@
-import TestAuth from 'travis/utils/test-auth';
 var AuthInitializer, initialize;
 
 initialize = function(app) {
