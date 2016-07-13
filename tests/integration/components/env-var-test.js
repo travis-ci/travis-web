@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
 
 moduleForComponent('env-var', 'Integration | Component | env-var', {
