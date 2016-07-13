@@ -66,8 +66,8 @@
     <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner}}your profile{{/link-to}},<br/>
     or by clicking the button below</p>
 
-    <button {{action 'activate'}} class="button button--green">Activate repository</button>
-    {{#if isActivating}}
+    <button {{action (perform activate)}} class="button button--green">Activate repository</button>
+    {{#if activate.isRunning}}
       {{loading-indicator}}
     {{/if}}
   {{/if}}

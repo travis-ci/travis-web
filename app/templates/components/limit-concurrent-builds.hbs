@@ -1,4 +1,4 @@
-{{travis-switch active=enabled description=description action="toggle"}}
+{{travis-switch active=enabled description=description action=(perform toggle)}}
 <div class="tooltip-settings">
   <a href="http://docs.travis-ci.com/user/customizing-the-build/#Limiting-Concurrent-Builds" title="about the concurrency setting">
     <p class="tooltip-bubble">Read more about<br>concurrent builds</p>
@@ -8,6 +8,6 @@
 {{#if enabled}}
   <input value={{value}} onchange={{action limitChanged value="target.value"}} pattern="/^[0-9]+$/">
 {{/if}}
-{{#if isSaving}}
+{{#if toggle.isRunning}}
 {{loading-indicator inline=true}}
 {{/if}}

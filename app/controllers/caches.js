@@ -2,6 +2,7 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 
 const { service, controller } = Ember.inject;
+import { task } from 'ember-concurrency';
 
 export default Ember.Controller.extend({
   ajax: service(),
@@ -13,22 +14,15 @@ export default Ember.Controller.extend({
     return this.get('model.pushes.length') || this.get('model.pullRequests.length');
   }.property('model.pushes.length', 'model.pullRequests.length'),
 
-  actions: {
-    deleteRepoCache() {
-      var deletingDone, repo;
-      if (this.get('isDeleting')) {
-        return;
-      }
-      if (config.skipConfirmations || confirm('Are you sure?')) {
-        this.set('isDeleting', true);
-        deletingDone = () => {
-          return this.set('isDeleting', false);
-        };
-        repo = this.get('repo');
-        return this.get('ajax').ajax("/repos/" + (this.get('repo.id')) + "/caches", "DELETE").then(deletingDone, deletingDone).then(() => {
-          return this.set('model', {});
-        });
-      }
+  deleteRepoCache: task(function * () {
+    if (config.skipConfirmations || confirm('Are you sure?')) {
+      const repo = this.get('repo');
+
+      try {
+        yield this.get('ajax').ajax(`/repos/${this.get('repo.id')}/caches`, 'DELETE');
+      } catch (e) {}
+
+      this.set('model', {});
     }
-  }
+  })
 });

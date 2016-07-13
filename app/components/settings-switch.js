@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const { service } = Ember.inject;
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   flashes: service(),
@@ -8,20 +9,20 @@ export default Ember.Component.extend({
   classNames: ['switch'],
   classNameBindings: ['active', 'key'],
 
-  click() {
-    var setting;
-    if (this.get('isSaving')) {
-      return;
-    }
-    this.set('isSaving', true);
+  save: task(function * () {
     this.toggleProperty('active');
-    setting = {};
+
+    const setting = {};
     setting[this.get('key')] = this.get('active');
-    return this.get('repo').saveSettings(setting).then(() => {
-      return this.set('isSaving', false);
-    }, () => {
-      this.set('isSaving', false);
-      return this.get('flashes').error('There was an error while saving settings. Please try again.');
-    });
+
+    try {
+      yield this.get('repo').saveSettings(setting);
+    } catch (e) {
+      this.get('flashes').error('There was an error while saving settings. Please try again.');
+    }
+  }),
+
+  click() {
+    this.get('save').perform();
   }
 });

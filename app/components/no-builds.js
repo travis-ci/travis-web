@@ -1,20 +1,16 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
-  actions: {
-    triggerBuild() {
-      var apiEndpoint;
-      this.set('isLoading', true);
-      apiEndpoint = config.apiEndpoint;
-      return $.ajax(apiEndpoint + ("/v3/repo/" + (this.get('repo.repo.id')) + "/requests"), {
-        headers: {
-          Authorization: 'token ' + this.get('repo.auth')
-        },
-        type: "POST"
-      }).then(() => {
-        return this.set('isLoading', false);
-      });
-    }
-  }
+  triggerBuild: task(function * () {
+    const apiEndpoint = config.apiEndpoint;
+
+    yield $.ajax(`${apiEndpoint}/v3/repo/${this.get('repo.repo.id')}/requests`, {
+      headers: {
+        Authorization: `token ${this.get('repo.auth')}`
+      },
+      type: 'POST'
+    });
+  })
 });

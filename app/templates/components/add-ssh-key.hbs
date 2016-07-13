@@ -1,4 +1,4 @@
-<form {{action "save" on="submit"}}>
+<form {{action (perform save) on='submit'}}>
   <div class="form-elem">
     {{input value=description class="ssh-description" placeholder="Description"}}
   </div>
@@ -9,7 +9,7 @@
     {{/if}}
   </div>
   <div class="form-elem">
-    {{#if isSaving}}
+    {{#if save.isRunning}}
       {{loading-indicator}}
     {{else}}
       <input type="submit" value="Add" class="form-submit" />
