@@ -36,10 +36,6 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    tiggerBuild(branch) {
-      this.set('isTriggering', true);
-      return this.triggerBuild();
-    },
     openDropup() {
       this.openDropup();
     }
