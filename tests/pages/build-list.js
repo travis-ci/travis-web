@@ -3,7 +3,6 @@ import PageObject from 'travis/tests/page-object';
 let {
   collection,
   hasClass,
-  is,
   text,
   visitable
 } = PageObject;
