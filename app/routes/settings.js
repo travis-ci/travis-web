@@ -25,7 +25,7 @@ export default TravisRoute.extend({
     var repo = this.modelFor('repo');
     var apiEndpoint = config.apiEndpoint;
 
-    return $.ajax(apiEndpoint + "/v3/repo/" + repo.get('id'), {
+    return Ember.$.ajax(apiEndpoint + "/v3/repo/" + repo.get('id'), {
       headers: {
         Authorization: 'token ' + this.auth.token()
       }
@@ -52,9 +52,8 @@ export default TravisRoute.extend({
   },
 
   fetchCustomSshKey() {
-    var repo, self;
+    var repo;
     repo = this.modelFor('repo');
-    self = this;
     return this.store.find('ssh_key', repo.get('id')).then((function(result) {
       if (!result.get('isNew')) {
         return result;
@@ -80,7 +79,7 @@ export default TravisRoute.extend({
     var apiEndpoint, repoId;
     repoId = this.modelFor('repo').get('id');
     apiEndpoint = config.apiEndpoint;
-    return $.ajax(apiEndpoint + "/v3/repo/" + repoId, {
+    return Ember.$.ajax(apiEndpoint + "/v3/repo/" + repoId, {
       headers: {
         Authorization: 'token ' + this.auth.token()
       }

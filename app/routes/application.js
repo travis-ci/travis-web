@@ -11,6 +11,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
   beforeModel() {
     this._super(...arguments);
+    // TODO Remove this entire method if we only call super
     //this.get('auth').refreshUserData()
   },
 
@@ -89,9 +90,9 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     },
 
     afterSignIn() {
-      var transition;
       this.get('flashes').clear();
-      if (transition = this.auth.get('afterSignInTransition')) {
+      let transition = this.auth.get('afterSignInTransition');
+      if (transition) {
         this.auth.set('afterSignInTransition', null);
         return transition.retry();
       } else {
