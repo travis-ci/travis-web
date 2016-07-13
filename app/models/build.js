@@ -1,9 +1,9 @@
-import { durationFrom, configKeys, compact } from 'travis/utils/helpers';
+/* global moment */
+import { configKeys, compact } from 'travis/utils/helpers';
 import configKeysMap from 'travis/utils/keys-map';
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import DurationCalculations from 'travis/mixins/duration-calculations';
-import Config from 'travis/config/environment';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 
@@ -34,8 +34,8 @@ Build.reopen({
   jobs: hasMany('job', { async: true }),
 
   config: function() {
-    var config;
-    if (config = this.get('_config')) {
+    let config = this.get('_config');
+    if (config) {
       return compact(config);
     } else if (this.get('currentState.stateName') !== 'root.loading') {
       if (this.get('isFetchingConfig')) {
@@ -105,7 +105,8 @@ Build.reopen({
     var headers, keys;
     keys = this.get('rawConfigKeys');
     headers = ['Job', 'Duration', 'Finished'];
-    return $.map(headers.concat(keys), function(key) {
+    // TODO: No need to use $.map over Ember's
+    return Ember.$.map(headers.concat(keys), function(key) {
       if (configKeysMap.hasOwnProperty(key)) {
         return configKeysMap[key];
       } else {
@@ -129,8 +130,8 @@ Build.reopen({
   },
 
   formattedFinishedAt: function() {
-    var finishedAt;
-    if (finishedAt = this.get('finishedAt')) {
+    let finishedAt = this.get('finishedAt');
+    if (finishedAt) {
       return moment(finishedAt).format('lll');
     }
   }.property('finishedAt')
