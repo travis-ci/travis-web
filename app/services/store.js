@@ -87,6 +87,8 @@ export default DS.Store.extend({
   loadOne(type, json) {
     var data, default_branch, last_build_id;
 
+    this.push(this.normalize(type, json));
+
     // we get other types of records only in a few situations and
     // it's not always needed to update data, so I'm specyfing which
     // things I want to update here:
@@ -104,8 +106,8 @@ export default DS.Store.extend({
       // we need to get it here, if it's not already in the store. In the future
       // we may decide to make this relationship async, but I don't want to
       // change the code at the moment
-      let build = this.peekRecord('build', last_build_id);
-      if (!last_build_id || build) {
+      let lastBuild = this.peekRecord('build', last_build_id)
+      if (!last_build_id || lastBuild) {
         return this.push(this.normalize('repo', data));
       } else {
         return this.findRecord('build', last_build_id).then((function(_this) {
