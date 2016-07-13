@@ -5,7 +5,7 @@ var fakeHead, manager;
 
 module("Favicon manager", {
   beforeEach() {
-    fakeHead = $('<div id="fake-head"></div>').appendTo($('#qunit-fixture'));
+    fakeHead = Ember.$('<div id="fake-head"></div>').appendTo(Ember.$('#qunit-fixture'));
     return manager = new FaviconManager(fakeHead[0]);
   },
   afterEach() {
@@ -16,7 +16,7 @@ module("Favicon manager", {
 
 test('use <head> tag by default', function() {
   manager = new FaviconManager();
-  return equal(manager.getHeadTag(), $('head')[0]);
+  return equal(manager.getHeadTag(), Ember.$('head')[0]);
 });
 
 test('set favicon if there is no link tag in head', function() {
@@ -36,7 +36,7 @@ test('set favicon if there is no link tag in head', function() {
 
 test('replace exisiting link tag', function() {
   var link, links;
-  fakeHead.append($('<link id="foo" rel="icon"></link>'));
+  fakeHead.append(Ember.$('<link id="foo" rel="icon"></link>'));
   ok('foo', fakeHead.find('link').attr('id'), 'initially link should exist');
   manager.setFavicon('foobar');
   links = fakeHead.find('link');
@@ -53,6 +53,6 @@ test('replace exisiting link tag', function() {
 });
 
 test('find link with rel=icon only', function() {
-  fakeHead.append($('<link id="foo" rel="foo"></link>'));
+  fakeHead.append(Ember.$('<link id="foo" rel="foo"></link>'));
   return ok(!manager.getLinkTag());
 });

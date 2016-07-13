@@ -1,9 +1,10 @@
+// TODO: Convert to integration test
 import { test, moduleForComponent } from 'ember-qunit';
 moduleForComponent('builds-item', {
     needs: ['helper:format-sha', 'helper:format-duration', 'helper:format-time', 'helper:format-message', 'helper:pretty-date', 'component:status-icon', 'component:request-icon', 'component:user-avatar']
 });
 
-test('it renders', function(assert) {
+test('it renders', function() {
   var attributes, component;
   attributes = {
     id: 10000,

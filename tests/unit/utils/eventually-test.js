@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
 
 module("eventually");

@@ -1,6 +1,5 @@
+// TODO: Convert this to full-on integration test
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
-import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('user-avatar', 'UserAvatarComponent | Unit', {
   unit: true

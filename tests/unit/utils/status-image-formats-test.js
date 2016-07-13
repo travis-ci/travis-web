@@ -1,6 +1,4 @@
-import Ember from 'ember';
 import format from 'travis/utils/status-image-formats';
-import config from 'travis/config/environment';
 
 module('Status image formats');
 
