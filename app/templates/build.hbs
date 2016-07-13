@@ -15,14 +15,24 @@
         {{loading-indicator center=true}}
       {{/if}}
     {{else}}
-      {{#if build.jobs}}
-        {{job-log job=build.jobs.firstObject}}
-      {{/if}}
+
+      <div class="travistab">
+        <nav class="travistab-nav">
+          <ul>
+            <li><a href="#" title="Look at this job's log">Job Log</a></li>
+            <li><a href="#" id="tab_config" title="Look at this job's config">View Config</a></li>
+          </ul>
+        </nav>
+        <div class="travistab-body">
+          {{job-log job=build.jobs.firstObject}}
+
+          <div>
+            <pre id="config_pre" class="codedisplay">{{formatConfig build.jobs.firstObject._config}}</pre>
+          </div>
+        </div>
+      </div>
+
     {{/if}}
-
-<div id="tab_config">View Config</div>
-<pre id="config_pre">{{formatConfig build.jobs.firstObject._config}}</pre>
-
   {{else}}
     {{no-builds}}
   {{/if}}
