@@ -43,7 +43,10 @@ Router.map(function() {
     this.route('repo', { path: '/:owner/:name', resetNamespace: true }, function() {
       this.route('index', { path: '/' });
       this.route('branches', { path: '/branches', resetNamespace: true });
-      this.route('build', { path: '/builds/:build_id', resetNamespace: true });
+      this.route('build', { path: '/builds/:build_id', resetNamespace: true }, function() {
+        this.route('log');
+        this.route('config');
+      });
       this.route('job', { path: '/jobs/:job_id', resetNamespace: true });
       this.route('builds', { path: '/builds', resetNamespace: true });
       this.route('pullRequests', { path: '/pull_requests', resetNamespace: true });

@@ -6,7 +6,6 @@
   {{#if build}}
     {{build-header item=build commit=build.commit repo=repo}}
 
-
     {{#if build.isMatrix}}
       {{#if jobsLoaded}}
         {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
@@ -19,16 +18,14 @@
       <div class="travistab">
         <nav class="travistab-nav">
           <ul>
-            <li><a href="#" title="Look at this job's log">Job Log</a></li>
-            <li><a href="#" id="tab_config" title="Look at this job's config">View Config</a></li>
+            <li>{{link-to 'Job log' 'build.log' build title="Look at this job's log"}}</li>
+            <li>{{link-to 'View Config' 'build.config' build id="tab_config" title="Look at this job's config"}}</li>
           </ul>
         </nav>
         <div class="travistab-body">
-          {{job-log job=build.jobs.firstObject}}
 
-          <div>
-            <pre id="config_pre" class="codedisplay">{{formatConfig build.jobs.firstObject._config}}</pre>
-          </div>
+          {{outlet}}
+
         </div>
       </div>
 
