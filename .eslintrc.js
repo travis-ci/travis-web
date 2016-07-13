@@ -12,6 +12,8 @@ module.exports = {
     'browser': true
   },
   rules: {
+    // TODO: Remove this to ensure we handle errors properly in UI
+    "no-empty": ["error", { "allowEmptyCatch": true }]
   },
   globals: {
   }
