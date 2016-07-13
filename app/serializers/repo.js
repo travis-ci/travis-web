@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 import EmbeddedRecordsMixin from 'ember-data/serializers/embedded-records-mixin';
 

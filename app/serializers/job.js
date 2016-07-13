@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
 export default V2FallbackSerializer.extend({
@@ -9,7 +8,7 @@ export default V2FallbackSerializer.extend({
     _startedAt:  { key: 'started_at' }
   },
 
-  keyForV2Relationship(key, typeClass, method) {
+  keyForV2Relationship(key/*, typeClass, method*/) {
     if (key === 'repo') {
       return 'repository_id';
     } else {
@@ -25,7 +24,7 @@ export default V2FallbackSerializer.extend({
     return this._super(modelClass, resourceHash);
   },
 
-  normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
+  normalizeSingleResponse: function(store, primaryModelClass, payload/*, id, requestType*/) {
     if (payload.commit) {
       payload.job.commit = payload.commit;
       delete payload.job.commit_id;
@@ -33,13 +32,11 @@ export default V2FallbackSerializer.extend({
     return this._super(...arguments);
   },
 
-  normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
-    var result;
+  normalizeArrayResponse: function(store, primaryModelClass, payload/*, id, requestType*/) {
     if (payload.commits) {
       payload.jobs.forEach(function(job) {
-        var commit, commit_id;
-        commit_id = job.commit_id;
-        if (commit = payload.commits.findBy('id', commit_id)) {
+        let commit = payload.commits.findBy('id', job.commit_id)
+        if (commit) {
           job.commit = commit;
           return delete job.commit_id;
         }

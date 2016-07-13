@@ -46,7 +46,7 @@ export default JSONSerializer.extend({
     return relationships;
   },
 
-  keyForRelationship(key, typeClass, method) {
+  keyForRelationship(key/*, typeClass, method*/) {
     if(key && key.underscore) {
       return key.underscore();
     } else {
@@ -54,7 +54,7 @@ export default JSONSerializer.extend({
     }
   },
 
-  extractAttributes(modelClass, resourceHash) {
+  extractAttributes(/*modelClass,resourceHash*/) {
     let attributes = this._super(...arguments);
     for(let key in attributes) {
       if(key.startsWith('@')) {
@@ -65,12 +65,12 @@ export default JSONSerializer.extend({
     return attributes;
   },
 
-  normalizeResponse(store, primaryModelClass, payload, id, requestType) {
+  normalizeResponse(store, primaryModelClass, payload/*, id, requestType*/) {
     this._fixReferences(payload);
     return this._super(...arguments);
   },
 
-  normalizeArrayResponse(store, primaryModelClass, payload, id, requestType) {
+  normalizeArrayResponse(store, primaryModelClass, payload/*, id, requestType*/) {
     let documentHash = {
       data: null,
       included: []
@@ -82,8 +82,9 @@ export default JSONSerializer.extend({
       documentHash.meta = meta;
     }
 
-    let items, type;
-    if(type = payload['@type']) {
+    let items;
+    let type = payload['@type'];
+    if(type) {
       items = payload[type];
     } else {
       items = payload[primaryModelClass.modelName.underscore() + 's'];
@@ -100,7 +101,7 @@ export default JSONSerializer.extend({
     return documentHash;
   },
 
-  normalize(modelClass, resourceHash) {
+  normalize(/*modelClass, resourceHash*/) {
     let { data, included } = this._super(...arguments);
     if(!included) {
       included = [];
@@ -142,7 +143,7 @@ export default JSONSerializer.extend({
   },
 
   _fixReferences(payload) {
-    let byHref = {}, href, records;
+    let byHref = {}, records;
     if(payload['@type']) {
       // API V3 doesn't return all of the objects in a full representation
       // If an object is present in one place in the response, all of the
@@ -154,8 +155,10 @@ export default JSONSerializer.extend({
       //
       // First we need to group all of the items in the response by href:
       traverse(payload, (item) => {
-        if(href = item['@href']) {
-          if(records = byHref[href]) {
+        let href = item['@href'];
+        if(href) {
+          let records = byHref[href];
+          if(records) {
             records.push(item);
           } else {
             byHref[href] = [item];

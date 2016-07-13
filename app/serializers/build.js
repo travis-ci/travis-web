@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
 var Serializer = V2FallbackSerializer.extend({
@@ -11,12 +10,10 @@ var Serializer = V2FallbackSerializer.extend({
   },
 
   extractRelationships: function(modelClass, resourceHash) {
-    var result;
-    result = this._super(modelClass, resourceHash);
-    return result;
+    return this._super(modelClass, resourceHash);
   },
 
-  normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
+  normalizeSingleResponse: function(store, primaryModelClass, payload/*, id, requestType*/) {
     if (payload.commit) {
       payload.build.commit = payload.commit;
       delete payload.build.commit_id;
@@ -24,13 +21,11 @@ var Serializer = V2FallbackSerializer.extend({
     return this._super(...arguments);
   },
 
-  normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
-    var result;
+  normalizeArrayResponse: function(store, primaryModelClass, payload/*, id, requestType*/) {
     if (payload.commits) {
       payload.builds.forEach(function(build) {
-        var commit, commit_id;
-        commit_id = build.commit_id;
-        if (commit = payload.commits.findBy('id', commit_id)) {
+        let commit = payload.commits.findBy('id', build.commit_id)
+        if (commit) {
           build.commit = commit;
           return delete build.commit_id;
         }
@@ -39,7 +34,7 @@ var Serializer = V2FallbackSerializer.extend({
     return this._super(...arguments);
   },
 
-  keyForV2Relationship: function(key, typeClass, method) {
+  keyForV2Relationship: function(key/*, typeClass, method*/) {
     if(key === 'jobs') {
       return 'job_ids';
     } else if (key === 'repo') {
@@ -51,7 +46,7 @@ var Serializer = V2FallbackSerializer.extend({
     }
   },
 
-  keyForRelationship(key, typeClass, method) {
+  keyForRelationship(key/*, typeClass, method*/) {
     if (key === 'repo') {
       return 'repository';
     } else {
@@ -60,8 +55,6 @@ var Serializer = V2FallbackSerializer.extend({
   },
 
   normalize: function(modelClass, resourceHash) {
-    var data, href, id, repoId, result;
-
     // TODO: remove this after switching to V3 entirely
     if(!resourceHash['@type'] && resourceHash.commit && resourceHash.commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
@@ -90,11 +83,7 @@ var Serializer = V2FallbackSerializer.extend({
       repository.default_branch['@href'] = `/repo/${repository.id}/branch/${defaultBranchName}`;
     }
 
-    result = this._super(modelClass, resourceHash);
-
-    data = result.data;
-
-    return result;
+    return this._super(modelClass, resourceHash);
   }
 });
 
