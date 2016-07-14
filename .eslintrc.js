@@ -174,53 +174,55 @@ module.exports = {
     // disallow nested ternary expressions
     // 'no-nested-ternary': 2,
 
-    // // disallow use of the Object constructor
-    // 'no-new-object': 2,
+    // disallow use of the Object constructor
+    'no-new-object': 2,
 
-    // // disallow use of unary operators, ++ and --
-    // 'no-plusplus': 0,
+    // disallow use of unary operators, ++ and --
+    'no-plusplus': 0,
 
-    // // disallow certain syntax forms
-    // // http://eslint.org/docs/rules/no-restricted-syntax
-    // 'no-restricted-syntax': [
-    //   2,
-    //   'DebuggerStatement',
-    //   'ForInStatement',
-    //   'LabeledStatement',
-    //   'WithStatement',
-    // ],
+    // disallow certain syntax forms
+    // http://eslint.org/docs/rules/no-restricted-syntax
+    'no-restricted-syntax': [
+      2,
+      'DebuggerStatement',
+      'LabeledStatement',
+      'WithStatement',
+    ],
 
-    // // disallow space between function identifier and application
-    // 'no-spaced-func': 2,
+    // disallow space between function identifier and application
+    'no-spaced-func': 2,
 
-    // // disallow the use of ternary operators
-    // 'no-ternary': 0,
+    // disallow the use of ternary operators
+    'no-ternary': 0,
 
-    // // disallow trailing whitespace at the end of lines
-    // 'no-trailing-spaces': 2,
+    // disallow trailing whitespace at the end of lines
+    'no-trailing-spaces': 2,
 
-    // // disallow dangling underscores in identifiers
-    // 'no-underscore-dangle': [2, { allowAfterThis: false }],
+    // TODO: Figure out how to get this enabled (renaming some things perhaps)
+    // The the default here is to not allow it, but it's necessary for
+    // overriding via this._super(..arguments), so...
+    // disallow dangling underscores in identifiers
+    // 'no-underscore-dangle': [2, { allowAfterThis: true }],
 
-    // // disallow the use of Boolean literals in conditional expressions
-    // // also, prefer `a || b` over `a ? a : b`
-    // // http://eslint.org/docs/rules/no-unneeded-ternary
-    // 'no-unneeded-ternary': [2, { defaultAssignment: false }],
+    // disallow the use of Boolean literals in conditional expressions
+    // also, prefer `a || b` over `a ? a : b`
+    // http://eslint.org/docs/rules/no-unneeded-ternary
+    'no-unneeded-ternary': [2, { defaultAssignment: false }],
 
-    // // disallow whitespace before properties
-    // // http://eslint.org/docs/rules/no-whitespace-before-property
-    // 'no-whitespace-before-property': 2,
+    // disallow whitespace before properties
+    // http://eslint.org/docs/rules/no-whitespace-before-property
+    'no-whitespace-before-property': 2,
 
-    // // require padding inside curly braces
-    // 'object-curly-spacing': [2, 'always'],
+    // require padding inside curly braces
+    'object-curly-spacing': [2, 'always'],
 
-    // // enforce line breaks between braces
-    // // http://eslint.org/docs/rules/object-curly-newline
-    // // TODO: enable once https://github.com/eslint/eslint/issues/6488 is resolved
-    // 'object-curly-newline': [0, {
-    //   ObjectExpression: { minProperties: 0, multiline: true },
-    //   ObjectPattern: { minProperties: 0, multiline: true }
-    // }],
+    // enforce line breaks between braces
+    // http://eslint.org/docs/rules/object-curly-newline
+    // TODO: enable once https://github.com/eslint/eslint/issues/6488 is resolved
+    'object-curly-newline': [0, {
+      ObjectExpression: { minProperties: 0, multiline: true },
+      ObjectPattern: { minProperties: 0, multiline: true }
+    }],
 
     // // enforce "same line" or "multiple line" on object properties.
     // // http://eslint.org/docs/rules/object-property-newline
