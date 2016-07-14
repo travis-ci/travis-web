@@ -38,8 +38,8 @@ Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
   }
 });
 
-Log.Limit = function (max_lines, limitedLogCallback) {
-  this.max_lines = max_lines || 1000;
+Log.Limit = function (maxLines, limitedLogCallback) {
+  this.maxLines = maxLines || 1000;
   this.limitedLogCallback = limitedLogCallback || (function () {});
   return this;
 };
@@ -59,7 +59,7 @@ Log.Limit.prototype = Log.extend(new Log.Listener(), {
 
 Object.defineProperty(Log.Limit.prototype, 'limited', {
   get: function () {
-    return this.count >= this.max_lines;
+    return this.count >= this.maxLines;
   }
 });
 

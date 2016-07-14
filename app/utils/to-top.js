@@ -7,10 +7,10 @@ export default (function () {
   //       situation I prefer a bit less DRY code over simplicity of
   //       the calculations.
 
-  function ToTop(window, element_selector, container_selector) {
+  function ToTop(window, elementSelector, containerSelector) {
     this.window = window;
-    this.element_selector = element_selector;
-    this.container_selector = container_selector;
+    this.elementSelector = elementSelector;
+    this.containerSelector = containerSelector;
     this.position = this.window.scrollTop();
     this.window.scroll(() => {
       return Ember.run.throttle(this, this.onScroll, [], 200, false);
@@ -19,11 +19,11 @@ export default (function () {
   }
 
   ToTop.prototype.element = function () {
-    return Ember.$(this.element_selector);
+    return Ember.$(this.elementSelector);
   };
 
   ToTop.prototype.container = function () {
-    return Ember.$(this.container_selector);
+    return Ember.$(this.containerSelector);
   };
 
   ToTop.prototype.onScroll = function () {

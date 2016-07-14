@@ -91,17 +91,17 @@ export default (function () {
   };
 
   LinesSelector.prototype.setHashValueWithLine = function (line, multiple) {
-    var hash, line_number, lines;
-    line_number = this.getLineNumberFromElement(line);
+    var hash, lineNumber, lines;
+    lineNumber = this.getLineNumberFromElement(line);
     if (multiple && (this.last_selected_line != null)) {
-      lines = [line_number, this.last_selected_line].sort(function (a, b) {
+      lines = [lineNumber, this.last_selected_line].sort(function (a, b) {
         return a - b;
       });
       hash = '#L' + lines[0] + '-L' + lines[1];
     } else {
-      hash = '#L' + line_number;
+      hash = '#L' + lineNumber;
     }
-    this.last_selected_line = line_number;
+    this.last_selected_line = lineNumber;
     return this.location.setHash(hash);
   };
 
