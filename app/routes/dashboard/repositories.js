@@ -29,5 +29,3 @@ export default TravisRoute.extend({
     });
   }
 });
-
-

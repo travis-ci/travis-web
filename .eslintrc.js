@@ -89,83 +89,89 @@ module.exports = {
       ignoreComments: false
     }],
 
-    // // specify the max number of lines in a file
-    // // http://eslint.org/docs/rules/max-lines
-    // 'max-lines': [0, {
-    //   max: 300,
-    //   skipBlankLines: true,
-    //   skipComments: true
-    // }],
+    // specify the max number of lines in a file
+    // http://eslint.org/docs/rules/max-lines
+    'max-lines': [0, {
+      max: 300,
+      skipBlankLines: true,
+      skipComments: true
+    }],
 
-    // // specify the maximum depth callbacks can be nested
-    // 'max-nested-callbacks': 0,
+    // specify the maximum depth callbacks can be nested
+    'max-nested-callbacks': 0,
 
-    // // limits the number of parameters that can be used in the function declaration.
-    // 'max-params': [0, 3],
+    // limits the number of parameters that can be used in the function declaration.
+    'max-params': [0, 3],
 
-    // // specify the maximum number of statement allowed in a function
-    // 'max-statements': [0, 10],
+    // specify the maximum number of statement allowed in a function
+    'max-statements': [0, 10],
 
-    // // restrict the number of statements per line
-    // // http://eslint.org/docs/rules/max-statements-per-line
-    // 'max-statements-per-line': [0, { max: 1 }],
+    // restrict the number of statements per line
+    // http://eslint.org/docs/rules/max-statements-per-line
+    'max-statements-per-line': [0, { max: 1 }],
 
-    // // require a capital letter for constructors
+    // TODO: Figure way around this. Problematic is currently our use of
+    // Ember.A().
+    // require a capital letter for constructors
     // 'new-cap': [2, { newIsCap: true }],
 
-    // // disallow the omission of parentheses when invoking a constructor with no arguments
-    // 'new-parens': 0,
+    // disallow the omission of parentheses when invoking a constructor with no arguments
+    'new-parens': 0,
 
-    // // allow/disallow an empty newline after var statement
-    // 'newline-after-var': 0,
+    // allow/disallow an empty newline after var statement
+    'newline-after-var': 0,
 
-    // // http://eslint.org/docs/rules/newline-before-return
-    // 'newline-before-return': 0,
+    // http://eslint.org/docs/rules/newline-before-return
+    'newline-before-return': 0,
 
-    // // enforces new line after each method call in the chain to make it
-    // // more readable and easy to maintain
-    // // http://eslint.org/docs/rules/newline-per-chained-call
-    // 'newline-per-chained-call': [2, { ignoreChainWithDepth: 4 }],
+    // enforces new line after each method call in the chain to make it
+    // more readable and easy to maintain
+    // http://eslint.org/docs/rules/newline-per-chained-call
+    'newline-per-chained-call': [2, { ignoreChainWithDepth: 4 }],
 
-    // // disallow use of the Array constructor
-    // 'no-array-constructor': 2,
+    // disallow use of the Array constructor
+    'no-array-constructor': 2,
 
-    // // disallow use of bitwise operators
-    // 'no-bitwise': 0,
+    // disallow use of bitwise operators
+    'no-bitwise': 0,
 
-    // // disallow use of the continue statement
-    // 'no-continue': 0,
+    // disallow use of the continue statement
+    'no-continue': 0,
 
-    // // disallow comments inline after code
-    // 'no-inline-comments': 0,
+    // disallow comments inline after code
+    'no-inline-comments': 0,
 
-    // // disallow if as the only statement in an else block
-    // 'no-lonely-if': 0,
+    // disallow if as the only statement in an else block
+    'no-lonely-if': 0,
 
-    // // disallow un-paren'd mixes of different operators
-    // // http://eslint.org/docs/rules/no-mixed-operators
-    // // 'no-mixed-operators': [2, {
-    // //   groups: [
-    // //     ['+', '-', '*', '/', '%', '**'],
-    // //     ['&', '|', '^', '~', '<<', '>>', '>>>'],
-    // //     ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
-    // //     ['&&', '||'],
-    // //     ['in', 'instanceof']
-    // //   ],
-    // //   allowSamePrecedence: false
-    // // }],
+    // TODO: Figure out why this errors out even though
+    // it's documented
+    // disallow un-paren'd mixes of different operators
+    // http://eslint.org/docs/rules/no-mixed-operators
+    // 'no-mixed-operators': [2, {
+    //   groups: [
+    //     ['+', '-', '*', '/', '%', '**'],
+    //     ['&', '|', '^', '~', '<<', '>>', '>>>'],
+    //     ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
+    //     ['&&', '||'],
+    //     ['in', 'instanceof']
+    //   ],
+    //   allowSamePrecedence: false
+    // }],
 
-    // // disallow mixed spaces and tabs for indentation
-    // 'no-mixed-spaces-and-tabs': 2,
+    // disallow mixed spaces and tabs for indentation
+    'no-mixed-spaces-and-tabs': 2,
 
-    // // disallow multiple empty lines and only one newline at the end
-    // 'no-multiple-empty-lines': [2, { max: 2, maxEOF: 1 }],
+    // disallow multiple empty lines and only one newline at the end
+    'no-multiple-empty-lines': [2, { max: 2, maxEOF: 1 }],
 
-    // // disallow negated conditions
-    // // http://eslint.org/docs/rules/no-negated-condition
-    // 'no-negated-condition': 0,
+    // disallow negated conditions
+    // http://eslint.org/docs/rules/no-negated-condition
+    'no-negated-condition': 0,
 
-    // // disallow nested ternary expressions
+    // TODO: Fix use of this in the app. Just don't have the brain power
+    // currently.
+    // disallow nested ternary expressions
     // 'no-nested-ternary': 2,
 
     // // disallow use of the Object constructor
