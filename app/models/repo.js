@@ -51,7 +51,8 @@ const Repo = Model.extend({
       event_type: ['push', 'api', 'cron'],
       repository_id: id
     }, function (b) {
-      return b.get('repo.id') + '' === id + '' && (b.get('eventType') === 'push' || b.get('eventType') === 'api' || b.get('eventType') === 'cron');
+      let eventTypes = ['push', 'api', 'cron'];
+      return b.get('repo.id') + '' === id + '' && eventTypes.include(b.get('eventType'));
     });
     array = ExpandableRecordArray.create({
       type: 'build',

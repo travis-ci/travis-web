@@ -33,7 +33,9 @@ Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
         this.beforeScroll();
       }
       Ember.$('#main').scrollTop(0);
-      return Ember.$('html, body').scrollTop(((ref = element.offset()) != null ? ref.top : void 0) - (window.innerHeight / 3));
+      let offset = element.offset();
+      let scrollTop = ((ref = offset) != null ? ref.top : void 0) - (window.innerHeight / 3);
+      return Ember.$('html, body').scrollTop(scrollTop);
     }
   }
 });
@@ -143,9 +145,11 @@ export default Ember.Component.extend({
     if (!changes.oldAttrs) {
       return;
     }
-    if (changes.newAttrs.job.value && changes.oldAttrs.job.value && changes.newAttrs.job.value !== changes.oldAttrs.job.value) {
-      this.teardownLog(changes.oldAttrs.job.value.get('log'));
-      return this.createEngine(changes.newAttrs.job.value.get('log'));
+    let newJobValue = changes.newAttrs.job.value;
+    let oldJobValue = changes.oldAttrs.job.value;
+    if (oldJobValue && newJobValue && newJobValue !== oldJobValue) {
+      this.teardownLog(oldJobValue.get('log'));
+      return this.createEngine(newJobValue.get('log'));
     }
   },
 
@@ -180,6 +184,8 @@ export default Ember.Component.extend({
       results = [];
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         part = ref[i];
+        // My brain can't process this right now.
+        // eslint-disable-next-line
         if ((ref1 = this.engine) != null ? (ref2 = ref1.limit) != null ? ref2.limited : void 0 : void 0) {
           break;
         }

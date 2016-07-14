@@ -78,7 +78,11 @@ export default JSONSerializer.extend({
 
     let meta = this.extractMeta(store, primaryModelClass, payload);
     if (meta) {
-      Ember.assert('The `meta` returned from `extractMeta` has to be an object, not "' + Ember.typeOf(meta) + '".', Ember.typeOf(meta) === 'object');
+      let metaType = Ember.typeOf(meta);
+      let metaIsObject = metaType == 'object';
+      let errorMessage =
+        `The 'meta' returned from 'extractMeta' has to be an object, not ${metaType}.`;
+      Ember.assert(errorMessage, metaIsObject);
       documentHash.meta = meta;
     }
 

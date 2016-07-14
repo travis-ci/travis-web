@@ -42,7 +42,9 @@ var LogChunks = Ember.ArrayProxy.extend({
       existing = content.mapBy('number');
       all = (function () {
         results = [];
-        for (var i = 1, ref = last.number; 1 <= ref ? i <= ref : i >= ref; 1 <= ref ? i++ : i--) { results.push(i); }
+        for (var i = 1, ref = last.number; 1 <= ref ? i <= ref : i >= ref; 1 <= ref ? i++ : i--) {
+          results.push(i);
+        }
         return results;
       }).apply(this);
       missing = all.removeObjects(existing);

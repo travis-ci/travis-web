@@ -42,9 +42,9 @@ export default Ember.Service.extend({
   },
 
   ajax(url, method, options) {
-    var accepts, data, delimeter, endpoint, error, key, name, params, promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
-    method = method || 'GET';
-    method = method.toUpperCase();
+    var accepts, data, delimeter, endpoint, error, key, name, params,
+      promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
+    method = (method || 'GET').toUpperCase();
     endpoint = config.apiEndpoint || '';
     options = options || {};
     token = Ember.get(this, 'auth').token();
@@ -135,7 +135,9 @@ export default Ember.Service.extend({
       }
     };
     data = options.data;
-    if (typeof options.data === 'object' && (Ember.isNone(options.contentType) || options.contentType.match(/application\/json/))) {
+    let contentType = options.contentType;
+    let isJSON = Ember.isNone(contentType) || contentType.match(/application\/json/);
+    if (typeof options.data === 'object' && isJSON) {
       data = JSON.stringify(data);
     }
     if (data) {

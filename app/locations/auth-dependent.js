@@ -44,7 +44,8 @@ export default Ember.HistoryLocation.extend({
   },
 
   formatURL: function (logicalPath) {
-    if (!config.enterprise && (logicalPath === '/repositories' || logicalPath === '/home' || logicalPath === '/home-pro')) {
+    let rootRedirects = ['/repositories', '/home', 'home-pro'];
+    if (!config.enterprise && rootRedirects.contains(logicalPath)) {
       return '/';
     } else {
       return this._super(...arguments);

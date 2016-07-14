@@ -102,7 +102,8 @@ export default Ember.Controller.extend({
       seenBroadcasts.push(id);
       this.get('storage').setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts));
       this.get('broadcasts.content').removeObject(broadcast);
-      this.set('broadcasts.lastBroadcastStatus', this.defineTowerColor(this.get('broadcasts.content')));
+      let status = this.defineTowerColor(this.get('broadcasts.content'));
+      this.set('broadcasts.lastBroadcastStatus', status);
       return false;
     }
   },

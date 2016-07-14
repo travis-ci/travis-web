@@ -1,6 +1,6 @@
 /* global Visibility */
 import Ember from 'ember';
-import Config from 'travis/config/environment';
+import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
 
 export default Ember.Service.extend({
@@ -8,8 +8,16 @@ export default Ember.Service.extend({
   allowFinishedBuilds: false,
 
   init() {
-    this.set('visibilityId', Visibility.every(Config.intervals.updateTimes, this.updateTimes.bind(this)));
-    this.set('intervalId', setInterval(this.resetAllowFinishedBuilds.bind(this), 60000));
+    let visibilityId = Visibility.every(
+      config.intervals.updateTimes,
+      this.updateTimes.bind(this)
+    );
+    this.set('visibilityId', visibilityId);
+    let intervalId = setInterval(
+      this.resetAllowFinishedBuilds.bind(this),
+      60000
+    );
+    this.set('intervalId', intervalId);
 
     return this._super(...arguments);
   },

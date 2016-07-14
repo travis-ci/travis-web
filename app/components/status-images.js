@@ -33,7 +33,8 @@ export default Ember.Component.extend({
         };
       }
 
-      Ember.$.ajax(apiEndpoint + '/v3/repo/' + repoId + '/branches?limit=100', options).then(function (response) {
+      let url = `${apiEndpoint}/v3/repo/${repoId}/branches?limit=100`;
+      Ember.$.ajax(url, options).then(function (response) {
         if (response.branches.length) {
           array.pushObjects(response.branches.map((branch) => { return branch.name; }));
         } else {

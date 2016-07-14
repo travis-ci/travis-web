@@ -16,7 +16,9 @@ export default Ember.Component.extend({
   hasTriggered: false,
 
   urlGithubCommit: Ember.computed('branch.last_build', function () {
-    return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.last_build.commit.sha'));
+    let slug = this.get('branch.repository.slug');
+    let commitSha = this.get('branch.last_build.commit.sha');
+    return githubCommitUrl(slug, commitSha);
   }),
 
   getLast5Builds: Ember.computed(function () {
@@ -38,7 +40,11 @@ export default Ember.Component.extend({
           Authorization: 'token ' + (this.auth.token())
         };
       }
-      Ember.$.ajax(apiEndpoint + '/v3/repo/' + repoId + '/builds?branch.name=' + branchName + '&limit=5&build.event_type=push,api,cron', options).then(function (response) {
+      let path = `${apiEndpoint}/v3/repo/${repoId}/builds`;
+      let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
+      let url = `${path}${params}`;
+
+      Ember.$.ajax(url, options).then(function (response) {
         var array, i, ref;
         array = response.builds.map(function (build) {
           return Ember.Object.create(build);
