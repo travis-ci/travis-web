@@ -23,7 +23,7 @@ module.exports = function(defaults) {
         }
         fingerprint.prepend = assetsHost;
       } else {
-        var s3Bucket = require('./config/deploy')('pull-request').s3.bucket;
+        var s3Bucket = require('./config/deploy')(process.env.DEPLOY_TARGET).s3.bucket;
         fingerprint.prepend = '//' + s3Bucket + '.s3.amazonaws.com/';
       }
     }
