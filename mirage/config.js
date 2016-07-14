@@ -159,6 +159,15 @@ export default function() {
     }
   });
 
+  this.post('/builds/:id/cancel', (schema, request) => {
+    let build = schema.builds.find(request.params.id);
+    if (build) {
+      return new Mirage.Response(204, {}, {});
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
+  });
+
   this.post('/jobs/:id/restart', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
