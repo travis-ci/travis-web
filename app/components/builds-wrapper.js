@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Polling from 'travis/mixins/polling';
 
 const { service } = Ember.inject;
 

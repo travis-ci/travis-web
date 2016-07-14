@@ -1,8 +1,9 @@
+/* global server */
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 
 export default function() {
-  this.get('/accounts', (schema, request) => {
+  this.get('/accounts', (schema/*, request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, {type: 'user'}));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
 
@@ -53,11 +54,11 @@ export default function() {
     }
   });
 
-  this.get('/v3/broadcasts', (schema, request) => {
+  this.get('/v3/broadcasts', (/*schema, request*/) => {
     return { broadcasts: [] };
   });
 
-  this.get('/repos', function(schema, request) {
+  this.get('/repos', function(schema/*, request*/) {
     return schema.repositories.all();
   });
 
@@ -69,7 +70,7 @@ export default function() {
     };
   });
 
-  this.get('/v3/repo/:id/crons', function(schema, request) {
+  this.get('/v3/repo/:id/crons', function(schema/*, request*/) {
     return schema.crons.all();
   });
 
@@ -122,7 +123,7 @@ export default function() {
 
   this.get('/jobs');
 
-  this.get('/builds', function(schema, request) {
+  this.get('/builds', function(schema/*, request*/) {
     return {builds: schema.builds.all().models.map(build => {
       if (build.commit) {
         build.attrs.commit_id = build.commit.id;
@@ -147,11 +148,47 @@ export default function() {
   });
 
   this.post('/builds/:id/restart', (schema, request) => {
-    return {
-      flash: [{notice: "The build was successfully restarted."}],
-      result: true
-    };
+    let build = schema.builds.find(request.params.id);
+    if (build) {
+      return {
+        flash: [{notice: "The build was successfully restarted."}],
+        result: true
+      };
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
   });
+
+  this.post('/builds/:id/cancel', (schema, request) => {
+    let build = schema.builds.find(request.params.id);
+    if (build) {
+      return new Mirage.Response(204, {}, {});
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
+  });
+
+  this.post('/jobs/:id/restart', (schema, request) => {
+    let job = schema.jobs.find(request.params.id);
+    if (job) {
+      return {
+        flash: [{notice: "The job was successfully restarted."}],
+        result: true
+      };
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
+  });
+
+  this.post('/jobs/:id/cancel', (schema, request) => {
+    let job = schema.jobs.find(request.params.id);
+    if (job) {
+      return new Mirage.Response(204, {}, {});
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
+  });
+
 
   this.get('/v3/repo/:repo_id/builds', function(schema, request) {
     const branch = schema.branches.where({name: request.queryParams['branch.name']}).models[0];

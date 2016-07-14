@@ -63,7 +63,7 @@ export default Ember.Component.extend({
   }.property('cron.created_at'),
 
 
-  disableByBuild: function(key) {
+  disableByBuild: function() {
     if (this.get('cron.disable_by_build')) {
       return 'Only if no new commit';
     } else {

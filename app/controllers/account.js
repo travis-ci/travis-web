@@ -1,3 +1,4 @@
+/* global Travis */
 import Ember from 'ember';
 
 const { service } = Ember.inject;
@@ -28,9 +29,9 @@ export default Ember.Controller.extend({
   },
 
   reloadHooks() {
-    var hooks, login;
-    if (login = this.get('model.login')) {
-      hooks = this.store.query('hook', {
+    let login = this.get('model.login');
+    if (login) {
+      let hooks = this.store.query('hook', {
         all: true,
         owner_name: login
       });
@@ -46,8 +47,8 @@ export default Ember.Controller.extend({
   }.property('model.name', 'model.login'),
 
   hooks: function() {
-    var hooks;
-    if (!(hooks = this.get('allHooks'))) {
+    let hooks = this.get('allHooks');
+    if (!hooks) {
       this.reloadHooks();
     }
     return this.get('allHooks').filter(function(hook) {
@@ -56,8 +57,8 @@ export default Ember.Controller.extend({
   }.property('allHooks.length', 'allHooks'),
 
   hooksWithoutAdmin: function() {
-    var hooks;
-    if (!(hooks = this.get('allHooks'))) {
+    let hooks = this.get('allHooks');
+    if (!hooks) {
       this.reloadHooks();
     }
     return this.get('allHooks').filter(function(hook) {

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   triggerBuild: task(function * () {
     const apiEndpoint = config.apiEndpoint;
 
-    yield $.ajax(`${apiEndpoint}/v3/repo/${this.get('repo.repo.id')}/requests`, {
+    yield Ember.$.ajax(`${apiEndpoint}/v3/repo/${this.get('repo.repo.id')}/requests`, {
       headers: {
         Authorization: `token ${this.get('repo.auth')}`
       },

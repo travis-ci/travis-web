@@ -5,7 +5,7 @@ export default TravisRoute.extend({
     return "Build #" + (model.get('number'));
   },
 
-  serialize(model, params) {
+  serialize(model/*, params*/) {
     var id;
     id = model.get ? model.get('id') : model;
     return {

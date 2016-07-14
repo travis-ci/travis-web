@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
   user: alias('auth.currentUser'),
   account: alias('accountController.model'),
 
-  activate(action, params) {
+  activate(action) {
     return this[("view_" + action).camelize()]();
   },
 

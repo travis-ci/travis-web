@@ -1,3 +1,4 @@
+/* global define */
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';

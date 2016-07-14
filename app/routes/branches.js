@@ -3,7 +3,7 @@ import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 
 export default TravisRoute.extend({
-  model(params) {
+  model(/*params*/) {
     var allTheBranches, apiEndpoint, options, repoId;
     apiEndpoint = config.apiEndpoint;
     repoId = this.modelFor('repo').get('id');
@@ -14,18 +14,18 @@ export default TravisRoute.extend({
         Authorization: "token " + (this.auth.token())
       };
     }
-    return $.ajax(apiEndpoint + "/v3/repo/" + repoId + "/branches?include=build.commit&limit=100", options).then(function(response) {
+    return Ember.$.ajax(apiEndpoint + "/v3/repo/" + repoId + "/branches?include=build.commit&limit=100", options).then(function(response) {
       allTheBranches = response.branches;
       return allTheBranches;
     });
   },
 
   activate() {
-    $('.tab.tabs--main li').removeClass('active');
-    return $('#tab_branches').addClass('active');
+    Ember.$('.tab.tabs--main li').removeClass('active');
+    Ember.$('#tab_branches').addClass('active');
   },
 
   deactivate() {
-    return $('#tab_branches').removeClass('active');
+    Ember.$('#tab_branches').removeClass('active');
   }
 });

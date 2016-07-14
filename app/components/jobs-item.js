@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { colorForState } from 'travis/utils/helpers';
 import { languageConfigKeys } from 'travis/utils/keys-map';
 
 export default Ember.Component.extend({
@@ -8,12 +7,14 @@ export default Ember.Component.extend({
   classNames: ['jobs-item'],
 
   languages: function() {
-    var config, gemfile, key, languageName, output, version;
+    var gemfile, key, languageName, output;
     output = [];
-    if (config = this.get('job.config')) {
+    let config = this.get('job.config');
+    if (config) {
       for (key in languageConfigKeys) {
         languageName = languageConfigKeys[key];
-        if (version = config[key]) {
+        let version = config[key];
+        if (version) {
           output.push(languageName + ': ' + version);
         }
       }
@@ -26,10 +27,11 @@ export default Ember.Component.extend({
   }.property('job.config'),
 
   environment: function() {
-    var env, gemfile;
-    if (env = this.get('job.config.env')) {
+    let env = this.get('job.config.env');
+    let gemfile = this.get('job.config.gemfile');
+    if (env) {
       return env;
-    } else if (gemfile = this.get('job.config.gemfile')) {
+    } else if (gemfile) {
       return "Gemfile: " + gemfile;
     }
   }.property('job.config.env', 'job.config.gemfile')

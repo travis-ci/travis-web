@@ -75,7 +75,7 @@ test('user can restart if she has permissions to a repo and job is restartable',
 });
 
 test('it properly checks for user permissions for a repo', function() {
-  var component, repo, user;
+  var component, repo;
   expect(3);
   repo = Ember.Object.create({
     id: 44

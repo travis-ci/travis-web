@@ -4,7 +4,6 @@ let {
   clickable,
   collection,
   hasClass,
-  isHidden,
   text,
   visitable
 } = PageObject;

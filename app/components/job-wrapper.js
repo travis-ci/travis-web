@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { colorForState } from 'travis/utils/helpers';
 import { githubCommit } from 'travis/utils/urls';
-import Polling from 'travis/mixins/polling';
 
 export default Ember.Component.extend({
   pollModels: 'job.build',

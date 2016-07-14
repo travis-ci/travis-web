@@ -1,3 +1,4 @@
+/* global Travis */
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
@@ -27,7 +28,6 @@ export default Ember.Service.extend({
   }.property(),
 
   signOut: function() {
-    var user;
     this.get('sessionStorage').clear();
     this.get('storage').clear();
     this.set('state', 'signed-out');
@@ -48,7 +48,7 @@ export default Ember.Service.extend({
     } else {
       this.set('state', 'signing-in');
       url = (this.get('endpoint')) + "/auth/post_message?origin=" + this.receivingEnd;
-      return $('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
+      return Ember.$('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
     }
   },
 
@@ -134,9 +134,9 @@ export default Ember.Service.extend({
   },
 
   refreshUserData(user) {
-    var data;
     if (!user) {
-      if (data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage'))) {
+      let data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage'));
+      if (data) {
         user = data.user;
       }
     }
@@ -182,7 +182,6 @@ export default Ember.Service.extend({
 
   loadUser(user) {
     var store = this.get('store'),
-        adapter = store.adapterFor('user'),
         userClass = store.modelFor('user'),
         serializer = store.serializerFor('user'),
         normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
@@ -205,12 +204,14 @@ export default Ember.Service.extend({
   },
 
   expectedOrigin() {
-    var endpoint;
-    endpoint = this.get('endpoint');
-    if (endpoint[0] === '/') {
+    let endpoint = this.get('endpoint');
+    if (endpoint && endpoint[0] === '/') {
       return this.receivingEnd;
     } else {
-      return endpoint.match(/^https?:\/\/[^\/]*/)[0];
+      let matches = endpoint.match(/^https?:\/\/[^\/]*/);
+      if (matches && matches.length) {
+        return matches[0];
+      }
     }
   },
 

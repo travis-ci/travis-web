@@ -1,3 +1,4 @@
+/* global signInUser */
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import authPage from 'travis/tests/pages/auth';

@@ -16,24 +16,24 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
-    var repos;
-    if (repos = this.controllerFor('repos')) {
+    let repos = this.controllerFor('repos');
+    if (repos) {
       repos.removeObserver('repos.firstObject', this, 'currentRepoDidChange');
     }
     return this._super(...arguments);
   },
 
   currentRepoDidChange() {
-    var repo;
-    if (repo = this.controllerFor('repos').get('repos.firstObject')) {
+    let repo = this.controllerFor('repos').get('repos.firstObject');
+    if (repo) {
       return this.controllerFor('repo').set('repo', repo);
     }
   },
 
   setCurrentRepoObservers() {
-    var repos;
     this.currentRepoDidChange();
-    if (repos = this.controllerFor('repos')) {
+    let repos = this.controllerFor('repos');
+    if (repos) {
       return repos.addObserver('repos.firstObject', this, 'currentRepoDidChange');
     }
   },

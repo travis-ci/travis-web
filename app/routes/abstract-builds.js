@@ -1,7 +1,7 @@
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
-  titleToken(model) {
+  titleToken(/*model*/) {
     return this.get('contentType').replace('_', ' ').capitalize();
   },
 

@@ -107,9 +107,8 @@ test('it stops reloading models after they were removed from polling', function(
 });
 
 test('it runs a hook on each interval', function() {
-  var history, source;
+  var source;
   expect(1);
-  history = [];
   service = Polling.create({
     pollingInterval: 20
   });
@@ -132,9 +131,8 @@ test('it runs a hook on each interval', function() {
 });
 
 test('it will not run pollHook if the source is destroyed', function() {
-  var history, source;
+  var source;
   expect(1);
-  history = [];
   service = Polling.create({
     pollingInterval: 20
   });

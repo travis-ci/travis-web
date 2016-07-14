@@ -12,7 +12,8 @@ moduleForAcceptance('Acceptance | repo settings', {
 
     signInUser(currentUser);
 
-    const organization = server.create('account', {
+    // create organizatin
+    server.create('account', {
       name: 'Feminist Killjoys',
       type: 'organization',
       login: 'killjoys',
@@ -33,7 +34,7 @@ moduleForAcceptance('Acceptance | repo settings', {
       builds_only_with_travis_yml: true,
       build_pushes: true,
       maximum_number_of_builds: 1919,
-      build_pull_requests: true,
+      build_pull_requests: true
     });
 
     repository.createEnvVar({

@@ -1,10 +1,12 @@
+import Ember from 'ember';
+
 export default (function() {
   function LogFolder(element) {
     this.element = element;
     this.element.on('click', '.fold', (function(_this) {
       return function(event) {
         var folder;
-        folder = _this.getFolderFromLine($(event.target));
+        folder = _this.getFolderFromLine(Ember.$(event.target));
         _this.toggle(folder);
         event.preventDefault();
         return false;

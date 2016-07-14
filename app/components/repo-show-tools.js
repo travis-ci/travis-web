@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   currentUser: alias('auth.currentUser'),
 
   click(event) {
-    if ($(event.target).is('a') && $(event.target).parents('.settings-dropdown').length) {
+    if (Ember.$(event.target).is('a') && Ember.$(event.target).parents('.settings-dropdown').length) {
       return this.closeMenu();
     }
   },
@@ -40,5 +40,5 @@ export default Ember.Component.extend({
 
   displayStatusImages: function() {
     return this.get('permissions').hasPermission(this.get('repo'));
-  }.property('permissions.all', 'repo'),
+  }.property('permissions.all', 'repo')
 });

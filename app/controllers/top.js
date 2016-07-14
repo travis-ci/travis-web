@@ -52,7 +52,7 @@ export default Ember.Controller.extend({
       } else {
         seenBroadcasts = [];
       }
-      $.ajax(apiEndpoint + "/v3/broadcasts", options).then((response) => {
+      Ember.$.ajax(apiEndpoint + "/v3/broadcasts", options).then((response) => {
         var receivedBroadcasts;
         if (response.broadcasts.length) {
           receivedBroadcasts = response.broadcasts.filter(function(broadcast) {

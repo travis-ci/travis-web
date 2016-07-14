@@ -1,9 +1,10 @@
+// TODO: Convert to integration test
 import { test, moduleForComponent } from 'ember-qunit';
 moduleForComponent('loading-indicator', {
   unit: true
 });
 
-test('it renders', function(assert) {
+test('it renders', function() {
   var component;
   component = this.subject({
     center: true

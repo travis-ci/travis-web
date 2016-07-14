@@ -5,16 +5,15 @@ export default TravisRoute.extend({
     return "Job #" + (model.get('number'));
   },
 
-  serialize(model, params) {
-    var id;
-    id = model.get ? model.get('id') : model;
+  serialize(model/*, params*/) {
+    let id = model.get ? model.get('id') : model;
     return {
       job_id: id
     };
   },
 
   setupController(controller, model) {
-    var buildController, buildPromise, repo;
+    var buildController, repo;
     if (model && !model.get) {
       model = this.store.recordForId('job', model);
       this.store.find('job', model);
@@ -24,7 +23,8 @@ export default TravisRoute.extend({
     repo.activate('job');
     buildController = this.controllerFor('build');
     model.get('repo');
-    if (buildPromise = model.get('build')) {
+    let buildPromise = model.get('build');
+    if (buildPromise) {
       buildPromise.then( (build) => {
         build = this.store.recordForId('build', build.get('id'));
         return buildController.set('build', build);

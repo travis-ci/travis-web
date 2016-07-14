@@ -1,6 +1,6 @@
+/* global Visibility */
 import Ember from 'ember';
 import { githubRepo, statusImage } from 'travis/utils/urls';
-import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
 
 const { service, controller } = Ember.inject;
@@ -151,8 +151,7 @@ export default Ember.Controller.extend({
   },
 
   connectTab(tab) {
-    var name;
-    name = tab === 'current' ? 'build' : tab;
+    tab === 'current' ? 'build' : tab;
     return this.set('tab', tab);
   },
 

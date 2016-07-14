@@ -12,7 +12,8 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     signInUser(currentUser);
 
-    const organization = server.create('account', {
+    // create organization
+    server.create('account', {
       name: 'Feminist Killjoys',
       type: 'organization',
       login: 'killjoys',

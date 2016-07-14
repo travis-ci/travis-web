@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import Model from 'travis/models/model';
+import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   name: attr(),

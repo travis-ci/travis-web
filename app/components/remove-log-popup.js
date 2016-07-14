@@ -7,13 +7,13 @@ export default Ember.Component.extend({
 
   actions: {
     close() {
-      $('.popup').removeClass('display');
+      Ember.$('.popup').removeClass('display');
       return false;
     },
 
     removeLog() {
       var job = this.get('job');
-      $('.popup').removeClass('display');
+      Ember.$('.popup').removeClass('display');
 
       return job.removeLog().then(function() {
         return this.get('flashes').success('Log has been successfully removed.');

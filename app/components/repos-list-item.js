@@ -21,7 +21,7 @@ export default Ember.Component.extend(Polling, {
 
   scrollTop: function() {
     if (window.scrollY > 0) {
-      return $('html, body').animate({
+      return Ember.$('html, body').animate({
         scrollTop: 0
       }, 200);
     }

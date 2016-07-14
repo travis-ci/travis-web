@@ -1,3 +1,4 @@
+/* global Visibility */
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import config from 'travis/config/environment';
@@ -8,7 +9,7 @@ export default Ember.Component.extend(Polling, {
   store: service(),
   updateTimesService: service('updateTimes'),
 
-  pollHook(store) {
+  pollHook() {
     return this.get('store').find('job', {});
   },
 

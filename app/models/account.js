@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import attr from 'ember-data/attr';
-import Model from 'travis/models/model';
+import Model from 'ember-data/model';
 
 const { alias } = Ember.computed;
 

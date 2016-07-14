@@ -16,13 +16,11 @@ export default Ember.Controller.extend({
 
   deleteRepoCache: task(function * () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
-      const repo = this.get('repo');
-
       try {
         yield this.get('ajax').ajax(`/repos/${this.get('repo.id')}/caches`, 'DELETE');
       } catch (e) {}
 
-      this.set('model', {});
+      this.set('model', Ember.Object.create());
     }
   })
 });

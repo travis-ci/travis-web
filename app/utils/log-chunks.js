@@ -29,7 +29,7 @@ var LogChunks = Ember.ArrayProxy.extend({
   },
 
   triggerMissingParts: function() {
-    var after, all, callback, content, existing, i, last, missing, ref, results;
+    var after, all, callback, content, existing, last, missing, results;
     callback = this.get('missingPartsCallback');
     if (!callback) {
       return;

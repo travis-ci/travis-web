@@ -37,7 +37,7 @@ export default (function() {
     this.element.on('click', 'a', (function(_this) {
       return function(event) {
         var element;
-        element = $(event.target).parent('p');
+        element = Ember.$(event.target).parent('p');
         _this.loadLineNumbers(element, event.shiftKey);
         event.preventDefault();
         return false;
@@ -56,11 +56,11 @@ export default (function() {
   };
 
   LinesSelector.prototype.highlightLines = function(tries) {
-    var elements, lines;
     tries = tries || 0;
     this.removeAllHighlights();
-    if (lines = this.getSelectedLines()) {
-      elements = this.element.find('p:visible').slice(lines.first - 1, lines.last);
+    let lines = this.getSelectedLines();
+    if (lines) {
+      let elements = this.element.find('p:visible').slice(lines.first - 1, lines.last);
       if (elements.length) {
         elements.addClass('highlight');
       } else if (tries < 4) {
@@ -77,8 +77,9 @@ export default (function() {
   };
 
   LinesSelector.prototype.unfoldLines = function() {
-    var index, l, line, lines, results;
-    if (lines = this.getSelectedLines()) {
+    var index, l, line, results;
+    let lines = this.getSelectedLines();
+    if (lines) {
       results = [];
       for (index in lines) {
         l = lines[index];
@@ -113,10 +114,10 @@ export default (function() {
   };
 
   LinesSelector.prototype.getSelectedLines = function() {
-    var first, last, match;
-    if (match = this.location.getHash().match(/#L(\d+)(-L(\d+))?$/)) {
-      first = match[1];
-      last = match[3] || match[1];
+    let match = this.location.getHash().match(/#L(\d+)(-L(\d+))?$/);
+    if (match) {
+      let first = match[1];
+      let last = match[3] || match[1];
       return {
         first: first,
         last: last

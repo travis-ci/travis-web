@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import fillIn from '../../helpers/fill-in';
 
 moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
   integration: true
@@ -9,8 +8,6 @@ moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
 
 test('it renders the default ssh key if no custom key is set', function(assert) {
   assert.expect(2);
-
-  var store = Ember.getOwner(this).lookup('service:store');
 
   var key = Ember.Object.create({fingerprint: 'fingerprint'});
   this.set('key', key);

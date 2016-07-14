@@ -1,9 +1,9 @@
+/* global Travis */
 import Ember from 'ember';
-import Model from 'travis/models/model';
+import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
-import {gravatarImage} from '../utils/urls';
+import { gravatarImage } from '../utils/urls';
 
 const { service } = Ember.inject;
 
@@ -93,9 +93,9 @@ export default Model.extend({
   }.property(),
 
   hasAccessToRepo(repo) {
-    var id, permissions;
-    id = repo.get ? repo.get('id') : repo;
-    if (permissions = this.get('permissions')) {
+    let id = repo.get ? repo.get('id') : repo;
+    let permissions = this.get('permissions');
+    if (permissions) {
       return permissions.contains(parseInt(id));
     }
   },

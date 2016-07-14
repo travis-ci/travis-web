@@ -1,7 +1,5 @@
 import Ember from 'ember';
-import { gravatarImage } from 'travis/utils/urls';
-import GithubUrlProperties from 'travis/mixins/github-url-properties';
-import { durationFrom, safe } from 'travis/utils/helpers';
+import { durationFrom } from 'travis/utils/helpers';
 import { githubCommit } from 'travis/utils/urls';
 
 export default Ember.Component.extend({

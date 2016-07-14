@@ -7,7 +7,7 @@ export default Ember.ArrayProxy.extend({
   promise: function() {
     var self;
     self = this;
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+    return new Ember.RSVP.Promise(function(resolve) {
       var observer;
       observer = function() {
         if (self.get('isLoaded')) {
@@ -44,7 +44,7 @@ export default Ember.ArrayProxy.extend({
     });
   },
 
-  observedArrayWillChange(array, index, removedCount, addedCount) {
+  observedArrayWillChange(array, index, removedCount) {
     var i, len, object, removedObjects, results;
     removedObjects = array.slice(index, index + removedCount);
     results = [];
@@ -77,8 +77,8 @@ export default Ember.ArrayProxy.extend({
   },
 
   pushObject(record) {
-    var content;
-    if (content = this.get('content')) {
+    let content = this.get('content');
+    if (content) {
       if (!content.contains(record)) {
         return content.pushObject(record);
       }

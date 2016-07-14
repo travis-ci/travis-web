@@ -3,14 +3,12 @@ import Storage from 'travis/utils/hash-storage';
 
 export default Ember.Service.extend({
   init: function() {
-    var err, storage;
-    storage = null;
+    let storage;
     try {
       storage = window.localStorage || (function() {
         throw 'no storage';
       })();
     } catch (error) {
-      err = error;
       storage = Storage.create();
     }
     return this.set('storage', storage);

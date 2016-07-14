@@ -1,9 +1,7 @@
-import Ember from 'ember';
-import Model from 'travis/models/model';
-import Build from 'travis/models/build';
+import Model from 'ember-data/model';
 import { gravatarImage } from 'travis/utils/urls';
 import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
+import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   sha: attr(),

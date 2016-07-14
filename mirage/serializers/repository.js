@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { JSONAPISerializer } from 'ember-cli-mirage';
 
 export default JSONAPISerializer.extend({
-  serialize(repository, request) {
+  serialize(repository/*, request */) {
     if (repository.models) {
       return this.turnIntoV3('repo', repository.models);
     } else {

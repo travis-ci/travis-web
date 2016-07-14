@@ -1,3 +1,4 @@
+/* global _gaq */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 

@@ -1,5 +1,4 @@
 import DS from 'ember-data';
-import Config from 'travis/config/environment';
 import Ember from 'ember';
 
 const { service } = Ember.inject;
@@ -23,10 +22,9 @@ export default DS.Store.extend({
   },
 
   canHandleEvent(event, data) {
-    var callback, name, ref, ref1, type;
+    var callback, name, ref, ref1;
     ref = event.split(':');
     name = ref[0];
-    type = ref[1];
     ref1 = this.get('pusherEventHandlerGuards');
     for (name in ref1) {
       callback = ref1[name];
@@ -87,9 +85,9 @@ export default DS.Store.extend({
   },
 
   loadOne(type, json) {
-    var build, data, default_branch, last_build_id, record;
+    var data, default_branch, last_build_id;
 
-    record = this.push(this.normalize(type, json));
+    this.push(this.normalize(type, json));
 
     // we get other types of records only in a few situations and
     // it's not always needed to update data, so I'm specyfing which
@@ -108,7 +106,8 @@ export default DS.Store.extend({
       // we need to get it here, if it's not already in the store. In the future
       // we may decide to make this relationship async, but I don't want to
       // change the code at the moment
-      if (!last_build_id || (build = this.peekRecord('build', last_build_id))) {
+      let lastBuild = this.peekRecord('build', last_build_id)
+      if (!last_build_id || lastBuild) {
         return this.push(this.normalize('repo', data));
       } else {
         return this.findRecord('build', last_build_id).then((function(_this) {

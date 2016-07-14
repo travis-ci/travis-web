@@ -10,6 +10,6 @@ export default TravisRoute.extend({
   },
 
   model(params, transition) {
-    return $.get(config.apiEndpoint + ("/v3/owner/" + transition.params.owner.owner + "?include=user.repositories,organization.repositories,build.commit,repository.active"));
+    return Ember.$.get(config.apiEndpoint + ("/v3/owner/" + transition.params.owner.owner + "?include=user.repositories,organization.repositories,build.commit,repository.active"));
   }
 });
