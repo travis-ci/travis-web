@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   isLoading: false,
-  running: function () {
+  running: Ember.computed('model', function () {
     var data, repos;
     data = this.get('model');
     repos = data.repositories.filter(function (item) {
@@ -13,5 +13,5 @@ export default Ember.Controller.extend({
       }
     });
     return repos;
-  }.property('model')
+  })
 });

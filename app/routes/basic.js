@@ -25,8 +25,8 @@ export default Ember.Route.extend({
     return this.controllerFor('currentUser').get('model');
   },
 
-  needsAuth: function () {
+  needsAuth: Ember.computed(function () {
     // on pro, we need to auth on every route
     return config.pro;
-  }.property()
+  })
 });

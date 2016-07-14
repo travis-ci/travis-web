@@ -33,31 +33,31 @@ export default Model.extend(DurationCalculations, {
   pullRequestNumber: Ember.computed.alias('build.pullRequestNumber'),
   pullRequestTitle: Ember.computed.alias('build.pullRequestTitle'),
 
-  log: function () {
+  log: Ember.computed(function () {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
       ajax: this.get('ajax')
     });
-  }.property(),
+  }),
 
-  startedAt: function () {
+  startedAt: Ember.computed('_startedAt', 'notStarted', function () {
     if (!this.get('notStarted')) {
       return this.get('_startedAt');
     }
-  }.property('_startedAt', 'notStarted'),
+  }),
 
-  finishedAt: function () {
+  finishedAt: Ember.computed('_finishedAt', 'notStarted', function () {
     if (!this.get('notStarted')) {
       return this.get('_finishedAt');
     }
-  }.property('_finishedAt', 'notStarted'),
+  }),
 
-  repoSlug: function () {
+  repoSlug: Ember.computed('repositorySlug', function () {
     return this.get('repositorySlug');
-  }.property('repositorySlug'),
+  }),
 
-  config: function () {
+  config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
       return compact(config);
@@ -68,17 +68,17 @@ export default Model.extend(DurationCalculations, {
       this.set('isFetchingConfig', true);
       return this.reload();
     }
-  }.property('_config'),
+  }),
 
-  isFinished: function () {
+  isFinished: Ember.computed('state', function () {
     var ref;
     return (ref = this.get('state')) === 'passed' || ref === 'failed' || ref === 'errored' || ref === 'canceled';
-  }.property('state'),
+  }),
 
-  notStarted: function () {
+  notStarted: Ember.computed('state', function () {
     var ref;
     return (ref = this.get('state')) === 'queued' || ref === 'created' || ref === 'received';
-  }.property('state'),
+  }),
 
   clearLog() {
     if (this.get('isLogAccessed')) {
@@ -86,7 +86,7 @@ export default Model.extend(DurationCalculations, {
     }
   },
 
-  configValues: function () {
+  configValues: Ember.computed('config', 'build.rawConfigKeys.length', function () {
     var config, keys;
     config = this.get('config');
     keys = this.get('build.rawConfigKeys');
@@ -97,11 +97,11 @@ export default Model.extend(DurationCalculations, {
     } else {
       return [];
     }
-  }.property('config', 'build.rawConfigKeys.length'),
+  }),
 
-  canCancel: function () {
+  canCancel: Ember.computed('isFinished', function () {
     return !this.get('isFinished');
-  }.property('isFinished'),
+  }),
 
   canRestart: Ember.computed.alias('isFinished'),
 
@@ -148,38 +148,38 @@ export default Model.extend(DurationCalculations, {
     }
   },
 
-  onStateChange: function () {
+  onStateChange: Ember.observer('state', function () {
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }
-  }.observes('state'),
+  }),
 
-  formattedFinishedAt: function () {
+  formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
       return moment(finishedAt).format('lll');
     }
-  }.property('finishedAt'),
+  }),
 
-  canRemoveLog: function () {
+  canRemoveLog: Ember.computed('log.removed', function () {
     return !this.get('log.removed');
-  }.property('log.removed'),
+  }),
 
-  slug: function () {
+  slug: Ember.computed(function () {
     return (this.get('repo.slug')) + ' #' + (this.get('number'));
-  }.property(),
+  }),
 
-  isLegacyInfrastructure: function () {
+  isLegacyInfrastructure: Ember.computed('queue', function () {
     if (this.get('queue') === 'builds.linux') {
       return true;
     }
-  }.property('queue'),
+  }),
 
-  displayGceNotice: function () {
+  displayGceNotice: Ember.computed('queue', 'config.dist', function () {
     if (this.get('queue') === 'builds.gce' && this.get('config.dist') === 'precise') {
       return true;
     } else {
       return false;
     }
-  }.property('queue', 'config.dist')
+  })
 });

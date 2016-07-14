@@ -69,9 +69,9 @@ var Controller = Ember.Controller.extend({
     }
   },
 
-  tabOrIsLoadedDidChange: function () {
+  tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
     return this.possiblyRedirectToGettingStartedPage();
-  }.observes('isLoaded', 'tab', 'repos.length'),
+  }),
 
   possiblyRedirectToGettingStartedPage() {
     return Ember.run.scheduleOnce('routerTransitions', this, function () {
@@ -85,15 +85,15 @@ var Controller = Ember.Controller.extend({
   repoController: controller('repo'),
   currentUser: alias('auth.currentUser'),
 
-  selectedRepo: function () {
+  selectedRepo: Ember.computed('repoController.repo', 'repoController.repo.content', function () {
     return this.get('repoController.repo.content') || this.get('repoController.repo');
-  }.property('repoController.repo', 'repoController.repo.content'),
+  }),
 
   startedJobsCount: Ember.computed.alias('runningJobs.length'),
 
-  allJobsCount: function () {
+  allJobsCount: Ember.computed('startedJobsCount', 'queuedJobs.length', function () {
     return this.get('startedJobsCount') + this.get('queuedJobs.length');
-  }.property('startedJobsCount', 'queuedJobs.length'),
+  }),
 
   init() {
     this._super(...arguments);
@@ -102,7 +102,7 @@ var Controller = Ember.Controller.extend({
     }
   },
 
-  runningJobs: function () {
+  runningJobs: Ember.computed('config.pro', function () {
     if (!this.get('config.pro')) { return []; }
     var result;
 
@@ -115,9 +115,9 @@ var Controller = Ember.Controller.extend({
     });
 
     return result;
-  }.property('config.pro'),
+  }),
 
-  queuedJobs: function () {
+  queuedJobs: Ember.computed('config.pro', function () {
     if (!this.get('config.pro')) { return []; }
 
     var result;
@@ -130,11 +130,11 @@ var Controller = Ember.Controller.extend({
     });
 
     return result;
-  }.property('config.pro'),
+  }),
 
-  recentRepos: function () {
+  recentRepos: Ember.computed(function () {
     return [];
-  }.property(),
+  }),
 
   updateTimes() {
     let records = this.get('repos');
@@ -196,13 +196,13 @@ var Controller = Ember.Controller.extend({
     });
   },
 
-  searchObserver: function () {
+  searchObserver: Ember.observer('search', function () {
     var search;
     search = this.get('search');
     if (search) {
       return this.searchFor(search);
     }
-  }.observes('search'),
+  }),
 
   searchFor(phrase) {
     if (this.searchLater) {
@@ -213,7 +213,7 @@ var Controller = Ember.Controller.extend({
     }), 500);
   },
 
-  noReposMessage: function () {
+  noReposMessage: Ember.computed('tab', function () {
     var tab;
     tab = this.get('tab');
     if (tab === 'owned') {
@@ -223,31 +223,35 @@ var Controller = Ember.Controller.extend({
     } else {
       return 'Could not find any repos';
     }
-  }.property('tab'),
+  }),
 
-  showRunningJobs: function () {
+  showRunningJobs: Ember.computed('tab', function () {
     return this.get('tab') === 'running';
-  }.property('tab'),
+  }),
 
-  repos: function () {
-    var repos = this.get('_repos');
+  repos: Ember.computed(
+    '_repos.[]',
+    '_repos.@each.currentBuildFinishedAt',
+    '_repos.@each.currentBuildId',
+    function () {
+      var repos = this.get('_repos');
 
-    if (repos && repos.toArray) {
-      repos = repos.toArray();
-    }
+      if (repos && repos.toArray) {
+        repos = repos.toArray();
+      }
 
-    if (repos && repos.sort) {
-      let sorted = repos.sort(sortCallback);
-      return sorted;
-    } else {
-      if (Ember.isArray(repos)) {
-        return repos;
+      if (repos && repos.sort) {
+        let sorted = repos.sort(sortCallback);
+        return sorted;
       } else {
-        return [];
+        if (Ember.isArray(repos)) {
+          return repos;
+        } else {
+          return [];
+        }
       }
     }
-  }.property('_repos.[]', '_repos.@each.currentBuildFinishedAt',
-             '_repos.@each.currentBuildId')
+  )
 });
 
 export default Controller;

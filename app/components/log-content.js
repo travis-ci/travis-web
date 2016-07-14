@@ -189,7 +189,7 @@ export default Ember.Component.extend({
     });
   },
 
-  plainTextLogUrl: function () {
+  plainTextLogUrl: Ember.computed('job.log.id', 'job.log.token', function () {
     let id = this.get('log.job.id');
     if (id) {
       let url = plainTextLogUrl(id);
@@ -198,22 +198,22 @@ export default Ember.Component.extend({
       }
       return url;
     }
-  }.property('job.log.id', 'job.log.token'),
+  }),
 
-  hasPermission: function () {
+  hasPermission: Ember.computed('permissions.all', 'job.repo', function () {
     return this.get('permissions').hasPermission(this.get('job.repo'));
-  }.property('permissions.all', 'job.repo'),
+  }),
 
-  canRemoveLog: function () {
+  canRemoveLog: Ember.computed('job.canRemoveLog', 'hasPermission', function () {
     let job = this.get('job');
     if (job) {
       return job.get('canRemoveLog') && this.get('hasPermission');
     }
-  }.property('job.canRemoveLog', 'hasPermission'),
+  }),
 
-  showToTop: function () {
+  showToTop: Ember.computed('log.hasContent', 'job.canRemoveLog', function () {
     return this.get('log.hasContent') && this.get('job.canRemoveLog');
-  }.property('log.hasContent', 'job.canRemoveLog'),
+  }),
 
   showTailing: Ember.computed.alias('showToTop'),
 

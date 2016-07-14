@@ -6,31 +6,31 @@ export default Ember.Component.extend({
   classNameBindings: ['status'],
   attributeBindings: ['label:aria-label', 'label:title'],
 
-  label: function () {
+  label: Ember.computed('status', function () {
     return 'Job ' + this.get('status');
-  }.property('status'),
+  }),
 
-  hasPassed: function () {
+  hasPassed: Ember.computed('status', function () {
     return this.get('status') === 'passed' || this.get('status') === 'accepted';
-  }.property('status'),
+  }),
 
-  hasFailed: function () {
+  hasFailed: Ember.computed('status', function () {
     return this.get('status') === 'failed' || this.get('status') === 'rejected';
-  }.property('status'),
+  }),
 
-  hasErrored: function () {
+  hasErrored: Ember.computed('status', function () {
     return this.get('status') === 'errored';
-  }.property('status'),
+  }),
 
-  wasCanceled: function () {
+  wasCanceled: Ember.computed('status', function () {
     return this.get('status') === 'canceled';
-  }.property('status'),
+  }),
 
-  isRunning: function () {
+  isRunning: Ember.computed('status', function () {
     return this.get('status') === 'started' || this.get('status') === 'queued' || this.get('status') === 'booting' || this.get('status') === 'received' || this.get('status') === 'created';
-  }.property('status'),
+  }),
 
-  isEmpty: function () {
+  isEmpty: Ember.computed('status', function () {
     if (!this.get('status')) {
       return true;
     } else {
@@ -40,5 +40,5 @@ export default Ember.Component.extend({
         return false;
       }
     }
-  }.property('status')
+  })
 });

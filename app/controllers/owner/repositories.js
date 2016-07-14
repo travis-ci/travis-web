@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   isLoading: false,
-  repos: function () {
+  repos: Ember.computed('model', function () {
     var data, repos;
     data = this.get('model');
     repos = [];
@@ -14,5 +14,5 @@ export default Ember.Controller.extend({
       }).sortBy('default_branch.last_build.finished_at').reverse();
     }
     return repos;
-  }.property('model')
+  })
 });

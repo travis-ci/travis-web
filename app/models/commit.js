@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Model from 'ember-data/model';
 import { gravatarImage } from 'travis/utils/urls';
 import attr from 'ember-data/attr';
@@ -18,11 +19,11 @@ export default Model.extend({
 
   build: belongsTo('build'),
 
-  subject: function () {
+  subject: Ember.computed('message', function () {
     return this.get('message').split('\n', 1)[0];
-  }.property('message'),
+  }),
 
-  body: function () {
+  body: Ember.computed('message', function () {
     var message;
     message = this.get('message');
     if (message.indexOf('\n') > 0) {
@@ -30,13 +31,19 @@ export default Model.extend({
     } else {
       return '';
     }
-  }.property('message'),
+  }),
 
-  authorIsCommitter: function () {
-    return this.get('authorName') === this.get('committerName') && this.get('authorEmail') === this.get('committerEmail');
-  }.property('authorName', 'authorEmail', 'committerName', 'committerEmail'),
+  authorIsCommitter: Ember.computed(
+    'authorName',
+    'authorEmail',
+    'committerName',
+    'committerEmail',
+    function () {
+      return this.get('authorName') === this.get('committerName') && this.get('authorEmail') === this.get('committerEmail');
+    }
+  ),
 
-  authorAvatarUrlOrGravatar: function () {
+  authorAvatarUrlOrGravatar: Ember.computed('authorEmail', 'authorAvatarUrl', function () {
     var url = this.get('authorAvatarUrl');
 
     if (!url) {
@@ -44,9 +51,9 @@ export default Model.extend({
     }
 
     return url;
-  }.property('authorEmail', 'authorAvatarUrl'),
+  }),
 
-  committerAvatarUrlOrGravatar: function () {
+  committerAvatarUrlOrGravatar: Ember.computed('committerEmail', 'committerAvatarUrl', function () {
     var url = this.get('committerAvatarUrl');
 
     if (!url) {
@@ -54,5 +61,5 @@ export default Model.extend({
     }
 
     return url;
-  }.property('committerEmail', 'committerAvatarUrl')
+  })
 });

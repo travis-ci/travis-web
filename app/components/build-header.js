@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   classNameBindings: ['item.state'],
   attributeBindings: ['jobId:data-job-id'],
 
-  jobId: function () {
+  jobId: Ember.computed('item', function () {
     if (this.get('item.build')) {
       return this.get('item.id');
     } else {
@@ -17,21 +17,21 @@ export default Ember.Component.extend({
       jobs.forEach(function (item) { ids.push(item.id); });
       return ids.join(' ');
     }
-  }.property('item'),
+  }),
 
-  isJob: function () {
+  isJob: Ember.computed('item', function () {
     if (this.get('item.build')) {
       return true;
     } else {
       return false;
     }
-  }.property('item'),
+  }),
 
-  urlGithubCommit: function () {
+  urlGithubCommit: Ember.computed('item', function () {
     return githubCommit(this.get('repo.slug'), this.get('commit.sha'));
-  }.property('item'),
+  }),
 
-  elapsedTime: function () {
+  elapsedTime: Ember.computed('item.startedAt', 'item.finishedAt', 'item.duration', function () {
     return durationFrom(this.get('item.startedAt'), this.get('item.finishedAt'));
-  }.property('item.startedAt', 'item.finishedAt', 'item.duration')
+  })
 });

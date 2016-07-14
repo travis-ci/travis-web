@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   actionType: 'Save',
   store: service(),
 
-  intervalText: function () {
+  intervalText: Ember.computed('cron.created_at', function () {
     function timeOfDay(creationTime) {
       var hours = creationTime.getHours();
       var ampm = hours >= 12 ? 'pm' : 'am';
@@ -60,16 +60,16 @@ export default Ember.Component.extend({
         break;
     }
     return text;
-  }.property('cron.created_at'),
+  }),
 
 
-  disableByBuild: function () {
+  disableByBuild: Ember.computed('cron.disable_by_build', function () {
     if (this.get('cron.disable_by_build')) {
       return 'Only if no new commit';
     } else {
       return 'Always run';
     }
-  }.property('cron.disable_by_build'),
+  }),
 
   delete: task(function * () {
     yield this.get('cron').destroyRecord();

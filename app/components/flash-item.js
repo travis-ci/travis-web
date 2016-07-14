@@ -4,9 +4,9 @@ export default Ember.Component.extend({
   tagName: 'li',
   classNameBindings: ['type'],
 
-  type: function () {
+  type: Ember.computed('flash.type', function () {
     return this.get('flash.type') || 'broadcast';
-  }.property('flash.type'),
+  }),
 
   actions: {
     close() {

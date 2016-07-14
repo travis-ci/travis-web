@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
   filter: null,
   org: null,
 
-  filteredRepositories: function () {
+  filteredRepositories: Ember.computed('filter', 'model', 'org', function () {
     var filter, org, repos;
     filter = this.get('filter');
     repos = this.get('model');
@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
         return item.slug.match(new RegExp(filter));
       });
     }
-  }.property('filter', 'model', 'org'),
+  }),
 
   updateFilter() {
     var value;
@@ -56,11 +56,11 @@ export default Ember.Controller.extend({
     return this.set('filter', value);
   },
 
-  selectedOrg: function () {
+  selectedOrg: Ember.computed('org', 'orgs.[]', function () {
     return this.get('orgs').findBy('login', this.get('org'));
-  }.property('org', 'orgs.[]'),
+  }),
 
-  orgs: function () {
+  orgs: Ember.computed(function () {
     var apiEndpoint, orgs;
     orgs = Ember.ArrayProxy.create({
       content: [],
@@ -80,7 +80,7 @@ export default Ember.Controller.extend({
       return orgs.set('isLoading', false);
     });
     return orgs;
-  }.property(),
+  }),
 
   actions: {
     updateFilter(value) {
