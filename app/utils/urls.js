@@ -33,7 +33,6 @@ githubAdmin = function (slug) {
 };
 
 statusImage = function (slug, branch) {
-  var token;
   var prefix = location.protocol + '//' + location.host;
 
   // the ruby app (waiter) does an indirect, internal redirect to api on build status images
@@ -43,11 +42,14 @@ statusImage = function (slug, branch) {
     prefix = config.apiEndpoint;
   }
 
+  let branchParam = branch ? `?branch=${encodeURIComponent(branch)}` : '';
+
   if (config.pro) {
-    token = Travis.__container__.lookup('controller:currentUser').get('model.token');
-    return (prefix + '/' + slug + '.svg?token=' + token) + (branch ? '&branch=' + branch : '');
+    let token = Travis.__container__.lookup('controller:currentUser').get('model.token');
+    let tokenParam = `&token=${token}`;
+    return `${prefix}/${slug}.svg${branchParam}${tokenParam}`;
   } else {
-    return (prefix + '/' + slug + '.svg') + (branch ? '?branch=' + (encodeURIComponent(branch)) : '');
+    return `${prefix}/${slug}.svg${branchParam}`;
   }
 };
 
@@ -73,4 +75,16 @@ gravatarImage = function (email, size) {
   return 'https://www.gravatar.com/avatar/' + (md5(email)) + '?s=' + size + '&d=blank';
 };
 
-export { plainTextLog, githubPullRequest, githubCommit, githubRepo, githubWatchers, githubNetwork, githubAdmin, statusImage, ccXml, email, gravatarImage };
+export {
+  plainTextLog,
+  githubPullRequest,
+  githubCommit,
+  githubRepo,
+  githubWatchers,
+  githubNetwork,
+  githubAdmin,
+  statusImage,
+  ccXml,
+  email,
+  gravatarImage
+};

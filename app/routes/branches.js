@@ -14,7 +14,12 @@ export default TravisRoute.extend({
         Authorization: 'token ' + (this.auth.token())
       };
     }
-    return Ember.$.ajax(apiEndpoint + '/v3/repo/' + repoId + '/branches?include=build.commit&limit=100', options).then(function (response) {
+
+    let path = `${apiEndpoint}/v3/repo/${repoId}/branches`;
+    let includes = `include=build.commit&limit=100`;
+    let url = `${path}?include=${includes}`;
+
+    return Ember.$.ajax(url, options).then(function (response) {
       allTheBranches = response.branches;
       return allTheBranches;
     });

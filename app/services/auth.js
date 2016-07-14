@@ -66,7 +66,8 @@ export default Ember.Service.extend({
         // so log the user out. Also log the user out if the response is 401
         // or 403
         if (!xhr || (xhr.status === 401 || xhr.status === 403)) {
-          this.get('flashes').error("You've been signed out, because your access token has expired.");
+          let errorText = "You've been signed out, because your access token has expired."
+          this.get('flashes').error(errorText);
           this.signOut();
         }
       });
@@ -135,7 +136,8 @@ export default Ember.Service.extend({
 
   refreshUserData(user) {
     if (!user) {
-      let data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage'));
+      let data = this.userDataFrom(this.get('sessionStorage')) ||
+                 this.userDataFrom(this.get('storage'));
       if (data) {
         user = data.user;
       }
@@ -193,7 +195,8 @@ export default Ember.Service.extend({
   receiveMessage(event) {
     if (event.origin === this.expectedOrigin()) {
       if (event.data === 'redirect') {
-        return window.location = (this.get('endpoint')) + '/auth/handshake?redirect_uri=' + location;
+        let endpoint = this.get('endpoint');
+        window.location = `${endpoint}/auth/handshake?redirect_uri=${location}`;
       } else if (event.data.user != null) {
         if (event.data.travis_token) {
           event.data.user.token = event.data.travis_token;
@@ -241,7 +244,8 @@ export default Ember.Service.extend({
   }),
 
   gravatarUrl: Ember.computed('currentUser.gravatarId', function () {
-    return location.protocol + '//www.gravatar.com/avatar/' + (this.get('currentUser.gravatarId')) + '?s=48&d=mm';
+    let gravatarId = this.get('currentUser.gravatarId');
+    return `${location.protocol}//www.gravatar.com/avatar/${gravatarId}?s=48&d=mm`;
   }),
 
   permissions: Ember.computed.alias('currentUser.permissions')

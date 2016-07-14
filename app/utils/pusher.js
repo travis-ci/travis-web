@@ -155,7 +155,9 @@ TravisPusher.prototype.ignoreCode = function (code) {
 };
 
 TravisPusher.prototype.ignoreMessage = function (message) {
-  return message.indexOf('Existing subscription') === 0 || message.indexOf('No current subscription') === 0;
+  let existingSubscription = message.indexOf('Existing subscription') === 0;
+  let noSubscription = message.indexOf('No current subscription') === 0;
+  return existingSubscription || noSubscription;
 };
 
 Pusher.SockJSTransport.isSupported = function () {
@@ -196,17 +198,18 @@ if (ENV.pro) {
     }
   };
   Pusher.getDefaultStrategy = function (config) {
+    let pusherPath = ENV.pusher.path || '';
     return [
       [
         ':def', 'ws_options', {
-          hostUnencrypted: config.wsHost + ':' + config.wsPort + (ENV.pusher.path && ('/' + ENV.pusher.path) || ''),
-          hostEncrypted: config.wsHost + ':' + config.wssPort + (ENV.pusher.path && ('/' + ENV.pusher.path) || ''),
+          hostUnencrypted: `${config.wsHost}:${config.wsPort}/${pusherPath}`,
+          hostEncrypted: `${config.wsHost}:${config.wssPort}/${pusherPath}`,
           path: config.path
         }
       ], [
         ':def', 'sockjs_options', {
-          hostUnencrypted: config.httpHost + ':' + config.httpPort,
-          hostEncrypted: config.httpHost + ':' + config.httpsPort
+          hostUnencrypted: `${config.httpHost}:${config.httpPort}`,
+          hostEncrypted: `${config.httpHost}:${config.httpsPort}`
         }
       ], [
         ':def', 'timeouts', {
@@ -222,6 +225,7 @@ if (ENV.pro) {
             maxPingDelay: config.activity_timeout
           }
         ]
+      // eslint-disable-next-line
       ], [':def_transport', 'ws', 'ws', 3, ':ws_options', ':ws_manager'], [':def_transport', 'flash', 'flash', 2, ':ws_options', ':ws_manager'], [':def_transport', 'sockjs', 'sockjs', 1, ':sockjs_options'], [':def', 'ws_loop', [':sequential', ':timeouts', ':ws']], [':def', 'flash_loop', [':sequential', ':timeouts', ':flash']], [':def', 'sockjs_loop', [':sequential', ':timeouts', ':sockjs']], [':def', 'strategy', [':cached', 1800000, [':first_connected', [':if', [':is_supported', ':ws'], [':best_connected_ever', ':ws_loop', [':delayed', 2000, [':sockjs_loop']]], [':if', [':is_supported', ':flash'], [':best_connected_ever', ':flash_loop', [':delayed', 2000, [':sockjs_loop']]], [':sockjs_loop']]]]]]
     ];
   };

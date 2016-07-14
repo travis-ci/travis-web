@@ -27,7 +27,9 @@ export default Ember.Component.extend({
   }),
 
   isRunning: Ember.computed('status', function () {
-    return this.get('status') === 'started' || this.get('status') === 'queued' || this.get('status') === 'booting' || this.get('status') === 'received' || this.get('status') === 'created';
+    let status = this.get('status');
+    let runningStates = ['started', 'queued', 'booting', 'received', 'created'];
+    return runningStates.contains(status);
   }),
 
   isEmpty: Ember.computed('status', function () {

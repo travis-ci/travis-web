@@ -34,7 +34,8 @@ export default Ember.Object.extend({
   }),
 
   gravatarUrl: Ember.computed('currentUser.gravatarId', function () {
-    return location.protocol + '//www.gravatar.com/avatar/' + (this.get('currentUser.gravatarId')) + '?s=48&d=mm';
+    let gravatarId = this.get('currentUser.gravatarId');
+    return `${location.protocol}//www.gravatar.com/avatar/${gravatarId}?s=48&d=mm`;
   }),
 
   permissions: Ember.computed.alias('currentUser.permissions'),

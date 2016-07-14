@@ -55,13 +55,15 @@ Build.reopen({
   }),
 
   isFinished: Ember.computed('state', function () {
-    var ref;
-    return (ref = this.get('state')) === 'passed' || ref === 'failed' || ref === 'errored' || ref === 'canceled';
+    let state = this.get('state');
+    let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
+    return finishedStates.contains(state);
   }),
 
   notStarted: Ember.computed('state', function () {
-    var ref;
-    return (ref = this.get('state')) === 'queued' || ref === 'created' || ref === 'received';
+    let state = this.get('state');
+    let waitingStates = ['queued', 'created', 'received'];
+    return waitingStates.contains(state);
   }),
 
   startedAt: Ember.computed('_startedAt', 'notStarted', function () {

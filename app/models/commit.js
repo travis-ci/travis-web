@@ -39,7 +39,9 @@ export default Model.extend({
     'committerName',
     'committerEmail',
     function () {
-      return this.get('authorName') === this.get('committerName') && this.get('authorEmail') === this.get('committerEmail');
+      let namesMatch = this.get('authorName') === this.get('committerName');
+      let emailsMatch = this.get('authorEmail') === this.get('committerEmail');
+      return namesMatch && emailsMatch;
     }
   ),
 

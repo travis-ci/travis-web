@@ -56,7 +56,9 @@ var Serializer = V2FallbackSerializer.extend({
 
   normalize: function (modelClass, resourceHash) {
     // TODO: remove this after switching to V3 entirely
-    if (!resourceHash['@type'] && resourceHash.commit && resourceHash.commit.hasOwnProperty('branch_is_default')) {
+    let type = resourceHash['@type'];
+    let commit = resourceHash.commit;
+    if (!type && commit && commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
         commit = resourceHash.commit;
       let branch = {

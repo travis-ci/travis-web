@@ -15,7 +15,11 @@ export default TravisRoute.extend({
         Authorization: 'token ' + (this.auth.token())
       };
     }
-    return Ember.$.ajax(config.apiEndpoint + ('/v3/owner/' + params.owner + '?include=organization.repositories,repository.default_branch,build.commit'), options);
+    let { owner } = params;
+    let { apiEndpoint } = config;
+    let includes = '?include=organization.repositories,repository.default_branch,build.commit';
+    let url = `${apiEndpoint}/v3/owner/${owner}${includes}`;
+    return Ember.$.ajax(url, options);
   },
 
   beforeModel() {
@@ -25,7 +29,9 @@ export default TravisRoute.extend({
   actions: {
 
     error(error, /* transition, originRoute*/) {
-      let message = error.status === 404 ? this.transitionTo('error404') : 'There was an error while loading data, please try again.';
+      let is404 = error.status === 404;
+      let errorText = 'There was an error while loading data, please try again.'
+      let message = is404 ? this.transitionTo('error404') : errorText;
       this.controllerFor('error').set('layoutName', 'simple');
       this.controllerFor('error').set('message', message);
       return true;
