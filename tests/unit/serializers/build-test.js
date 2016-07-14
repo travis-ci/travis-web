@@ -16,13 +16,13 @@ test('it normalizes the singular response', function () {
       event_type: 'push',
       pull_request: false,
       pull_request_title: null,
-      pull_request_number:null,
+      pull_request_number: null,
       config: { 'language': 'ruby' },
       state: 'passed',
       started_at: '2016-02-24T16:37:54Z',
-      finished_at:'2016-02-24T16:40:10Z',
+      finished_at: '2016-02-24T16:40:10Z',
       duration: 72,
-      job_ids:[5, 6]
+      job_ids: [5, 6]
     },
     commit: {
       id: 3,
@@ -50,7 +50,7 @@ test('it normalizes the singular response', function () {
       finished_at: '2016-02-24T16:38:19Z',
       queue: 'builds.docker',
       allow_failure: false,
-      tags:null
+      tags: null
     }, {
       id: 6,
       repository_id: 2,
@@ -64,7 +64,7 @@ test('it normalizes the singular response', function () {
       finished_at: '2016-02-24T16:38:19Z',
       queue: 'builds.docker',
       allow_failure: false,
-      tags:null
+      tags: null
     }]
   };
 

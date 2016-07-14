@@ -3,7 +3,7 @@ import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('owner-repo-tile', 'OwnerRepoTileComponent', {
-  integration:true
+  integration: true
 });
 
 test('it renders', function () {

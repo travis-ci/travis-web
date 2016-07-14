@@ -41,26 +41,26 @@ module.exports = {
     // enforce newline at the end of file, with no multiple empty lines
     'eol-last': 2,
 
-    // // enforces use of function declarations or expressions
-    // 'func-style': 0,
+    // enforces use of function declarations or expressions
+    'func-style': 0,
 
-    // // Blacklist certain identifiers to prevent them being used
-    // // http://eslint.org/docs/rules/id-blacklist
-    // 'id-blacklist': 0,
+    // Blacklist certain identifiers to prevent them being used
+    // http://eslint.org/docs/rules/id-blacklist
+    'id-blacklist': 0,
 
-    // // this option enforces minimum and maximum identifier lengths
-    // // (variable names, property names etc.)
-    // 'id-length': 0,
+    // this option enforces minimum and maximum identifier lengths
+    // (variable names, property names etc.)
+    'id-length': 0,
 
-    // // require identifiers to match the provided regular expression
-    // 'id-match': 0,
+    // require identifiers to match the provided regular expression
+    'id-match': 0,
 
-    // // this option sets a specific tab width for your code
-    // // http://eslint.org/docs/rules/indent
-    // indent: [2, 2, { SwitchCase: 1, VariableDeclarator: 1}],
+    // this option sets a specific tab width for your code
+    // http://eslint.org/docs/rules/indent
+    indent: [2, 2, { SwitchCase: 1, VariableDeclarator: 1}],
 
-    // // enforces spacing between keys and values in object literal properties
-    // 'key-spacing': [2, { beforeColon: false, afterColon: true }],
+    // enforces spacing between keys and values in object literal properties
+    'key-spacing': [2, { beforeColon: false, afterColon: true }],
 
     // // require a space before & after certain keywords
     // 'keyword-spacing': [2, {

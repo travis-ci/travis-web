@@ -5,7 +5,7 @@ export default V2FallbackSerializer.extend({
   attrs: {
     _config: { key: 'config' },
     _finishedAt: { key: 'finished_at' },
-    _startedAt:  { key: 'started_at' }
+    _startedAt: { key: 'started_at' }
   },
 
   keyForV2Relationship(key/* , typeClass, method*/) {
