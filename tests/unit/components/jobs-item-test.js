@@ -4,7 +4,7 @@ moduleForComponent('jobs-item', 'JobsItemComponent', {
   needs: ['helper:format-duration', 'helper:pretty-date', 'component:status-icon']
 });
 
-test('it renders', function() {
+test('it renders', function () {
   var attributes, component, job;
   attributes = {
     id: 10,
@@ -31,7 +31,7 @@ test('it renders', function() {
   return equal(component.$('.job-duration').text().trim(), '1 min 40 sec', 'duration should be displayed');
 });
 
-test('outputs info on not set properties', function() {
+test('outputs info on not set properties', function () {
   var component, job;
   job = Ember.Object.create();
   component = this.subject({
@@ -42,7 +42,7 @@ test('outputs info on not set properties', function() {
   return ok(component.$('.job-lang').text().match(/no language set/), 'a message about no language being set should be displayed');
 });
 
-test('when env is not set, gemfile is displayed in the env section', function() {
+test('when env is not set, gemfile is displayed in the env section', function () {
   var attributes, component, job;
   attributes = {
     id: 10,
@@ -63,7 +63,7 @@ test('when env is not set, gemfile is displayed in the env section', function() 
   return equal(component.$('.job-env .label-align').text().trim(), 'Gemfile: foo/Gemfile', 'env should be displayed');
 });
 
-test('when env is set, gemfile is displayed in the language section', function() {
+test('when env is set, gemfile is displayed in the language section', function () {
   var attributes, component, job;
   attributes = {
     id: 10,

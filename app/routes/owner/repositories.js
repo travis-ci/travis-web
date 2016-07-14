@@ -16,11 +16,11 @@ export default TravisRoute.extend({
 
     if (this.get('auth.signedIn')) {
       options.headers = {
-        Authorization: "token " + (this.auth.token())
+        Authorization: 'token ' + (this.auth.token())
       };
     }
 
-    return Ember.$.ajax(config.apiEndpoint + ("/v3/owner/" + transition.params.owner.owner + "?include=owner.repositories,repository.default_branch,build.commit,repository.current_build"), options).then(function(response) {
+    return Ember.$.ajax(config.apiEndpoint + ('/v3/owner/' + transition.params.owner.owner + '?include=owner.repositories,repository.default_branch,build.commit,repository.current_build'), options).then(function (response) {
       return response;
     });
   }

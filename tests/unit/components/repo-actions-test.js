@@ -5,7 +5,7 @@ moduleForComponent('repo-actions', 'RepoActionsComponent', {
   needs: ['component:build-repo-actions', 'component:job-repo-actions']
 });
 
-test('it renders', function() {
+test('it renders', function () {
 
   var component;
   component = this.subject({});

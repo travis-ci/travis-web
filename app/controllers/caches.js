@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
   repo: Ember.computed.alias('repoController.repo'),
   isDeleting: false,
 
-  cachesExist: function() {
+  cachesExist: function () {
     return this.get('model.pushes.length') || this.get('model.pullRequests.length');
   }.property('model.pushes.length', 'model.pullRequests.length'),
 

@@ -4,7 +4,7 @@ import config from 'travis/config/environment';
 export default Ember.Component.extend({
   status: null,
 
-  statusPageStatusUrl: function() {
+  statusPageStatusUrl: function () {
     return config.statusPageStatusUrl;
   }.property(),
 

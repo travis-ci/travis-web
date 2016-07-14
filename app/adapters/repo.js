@@ -5,11 +5,11 @@ export default V3Adapter.extend({
 
   ajaxOptions(url, type, options) {
     var hash = options || {};
-    if(!hash.data) {
+    if (!hash.data) {
       hash.data = {};
     }
 
-    if(hash.data.include) {
+    if (hash.data.include) {
       hash.data.include += ',build.branch,repository.default_branch,repository.current_build,build.commit';
     } else {
       hash.data.include = 'build.branch,repository.default_branch,repository.current_build,build.commit';

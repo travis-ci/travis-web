@@ -8,11 +8,11 @@ var Request = Ember.Object.extend({
   },
 
   run() {
-    return this.get('ajax').ajax("/jobs/" + this.id + "/log?cors_hax=true", 'GET', {
+    return this.get('ajax').ajax('/jobs/' + this.id + '/log?cors_hax=true', 'GET', {
       dataType: 'text',
       headers: this.HEADERS,
       success: (body, status, xhr) => {
-        return Ember.run(this, function() {
+        return Ember.run(this, function () {
           return this.handle(body, status, xhr);
         });
       }
@@ -28,13 +28,13 @@ var Request = Ember.Object.extend({
         url: this.redirectTo(xhr),
         type: 'GET',
         success: (body) => {
-          Ember.run(this, function() { this.handlers.text(body); });
+          Ember.run(this, function () { this.handlers.text(body); });
         }
       });
     } else if (this.isJson(xhr)) {
-      return Ember.run(this, function() { this.handlers.json(body); });
+      return Ember.run(this, function () { this.handlers.json(body); });
     } else {
-      return Ember.run(this, function() { this.handlers.text(body); });
+      return Ember.run(this, function () { this.handlers.text(body); });
     }
   },
 
@@ -71,15 +71,15 @@ var LogModel = Ember.Object.extend({
     if (after) {
       data['after'] = after;
     }
-    return this.get('ajax').ajax("/jobs/" + (this.get('job.id')) + "/log", 'GET', {
+    return this.get('ajax').ajax('/jobs/' + (this.get('job.id')) + '/log', 'GET', {
       dataType: 'json',
       headers: {
         accept: 'application/json; chunked=true; version=2'
       },
       data: data,
-      success: (function(_this) {
-        return function(body) {
-          return Ember.run(_this, function() {
+      success: (function (_this) {
+        return function (body) {
+          return Ember.run(_this, function () {
             var i, len, part, results;
             let { parts } = body.log;
             if (parts) {
@@ -96,7 +96,7 @@ var LogModel = Ember.Object.extend({
     });
   },
 
-  parts: function() {
+  parts: function () {
     return Ember.ArrayProxy.create({
       content: []
     });
@@ -113,16 +113,16 @@ var LogModel = Ember.Object.extend({
     this.debug('log model: fetching log');
     this.clearParts();
     handlers = {
-      json: (function(_this) {
-        return function(json) {
+      json: (function (_this) {
+        return function (json) {
           if (json['log']['removed_at']) {
             _this.set('removed', true);
           }
           return _this.loadParts(json['log']['parts']);
         };
       })(this),
-      text: (function(_this) {
-        return function(text) {
+      text: (function (_this) {
+        return function (text) {
           return _this.loadText(text);
         };
       })(this)

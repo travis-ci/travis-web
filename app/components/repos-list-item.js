@@ -11,15 +11,15 @@ export default Ember.Component.extend(Polling, {
   classNames: ['repo'],
   classNameBindings: ['selected'],
 
-  selected: function() {
+  selected: function () {
     return this.get('repo') === this.get('selectedRepo');
   }.property('selectedRepo'),
 
-  color: function() {
+  color: function () {
     return colorForState(this.get('repo.currentBuild.state'));
   }.property('repo.currentBuild.state'),
 
-  scrollTop: function() {
+  scrollTop: function () {
     if (window.scrollY > 0) {
       return Ember.$('html, body').animate({
         scrollTop: 0

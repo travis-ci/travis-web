@@ -5,15 +5,15 @@ export default Ember.Component.extend({
   classNames: ['owner-tile', 'row-li'],
   classNameBindings: ['repo.current_build.state'],
 
-  ownerName: function() {
+  ownerName: function () {
     return this.get('repo.slug').split(/\//)[0];
   }.property('repo.slug'),
 
-  repoName: function() {
+  repoName: function () {
     return this.get('repo.slug').split(/\//)[1];
   }.property('repo.slug'),
 
-  isAnimating: function() {
+  isAnimating: function () {
     var animationStates, state;
     state = this.get('repo.current_build.state');
     animationStates = ['received', 'queued', 'started', 'booting'];

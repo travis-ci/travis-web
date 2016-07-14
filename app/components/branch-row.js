@@ -15,11 +15,11 @@ export default Ember.Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  urlGithubCommit: function() {
+  urlGithubCommit: function () {
     return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.last_build.commit.sha'));
   }.property('branch.last_build'),
 
-  getLast5Builds: function() {
+  getLast5Builds: function () {
     var apiEndpoint, branchName, lastBuilds, options, repoId;
     lastBuilds = Ember.ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
@@ -35,12 +35,12 @@ export default Ember.Component.extend({
       options = {};
       if (this.get('auth.signedIn')) {
         options.headers = {
-          Authorization: "token " + (this.auth.token())
+          Authorization: 'token ' + (this.auth.token())
         };
       }
-      Ember.$.ajax(apiEndpoint + "/v3/repo/" + repoId + "/builds?branch.name=" + branchName + "&limit=5&build.event_type=push,api,cron", options).then(function(response) {
+      Ember.$.ajax(apiEndpoint + '/v3/repo/' + repoId + '/builds?branch.name=' + branchName + '&limit=5&build.event_type=push,api,cron', options).then(function (response) {
         var array, i, ref;
-        array = response.builds.map(function(build) {
+        array = response.builds.map(function (build) {
           return Ember.Object.create(build);
         });
         // TODO: Clean this up, all we want to do is have 5 elements no matter

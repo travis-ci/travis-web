@@ -4,7 +4,7 @@ export function initialize(appInstance) {
   let sha;
   // this is Heroku-specific, will not work in other environments
   if (config.environment === 'production') {
-    sha = config.release.slice(0,7);
+    sha = config.release.slice(0, 7);
   } else {
     sha = appInstance.application.version.slice(6, -1);
   }

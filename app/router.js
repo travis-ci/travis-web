@@ -4,7 +4,7 @@ import config from './config/environment';
 import Location from 'travis/utils/location';
 
 var Router = Ember.Router.extend({
-  location: function() {
+  location: function () {
     if (Ember.testing) {
       return 'none';
     } else {
@@ -39,17 +39,17 @@ var Router = Ember.Router.extend({
   }
 });
 
-Router.map(function() {
-  this.route('dashboard', { resetNamespace: true }, function() {
+Router.map(function () {
+  this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
-  this.route('main', { path: '/', resetNamespace: true }, function() {
+  this.route('main', { path: '/', resetNamespace: true }, function () {
     this.route('getting_started', { resetNamespace: true });
     this.route('recent');
     this.route('repositories');
     this.route('my_repositories');
     this.route('search', { path: '/search/:phrase' });
-    this.route('repo', { path: '/:owner/:name', resetNamespace: true }, function() {
+    this.route('repo', { path: '/:owner/:name', resetNamespace: true }, function () {
       this.route('index', { path: '/' });
       this.route('branches', { path: '/branches', resetNamespace: true });
       this.route('build', { path: '/builds/:build_id', resetNamespace: true });
@@ -62,9 +62,9 @@ Router.map(function() {
         this.route('caches', { path: '/caches', resetNamespace: true });
       }
       this.route('request', { path: '/requests/:request_id', resetNamespace: true });
-      this.route('settings', { resetNamespace: true }, function() {
+      this.route('settings', { resetNamespace: true }, function () {
         this.route('index', { path: '/' });
-        this.route('env_vars', { resetNamespace: true }, function() {
+        this.route('env_vars', { resetNamespace: true }, function () {
           this.route('new');
         });
         if (config.endpoints.sshKey) {
@@ -83,13 +83,13 @@ Router.map(function() {
   this.route('plans', { path: '/plans' });
   this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
-  this.route('profile', { path: '/profile', resetNamespace: true }, function() {
-    this.route('accounts', { path: '/', resetNamespace: true }, function() {
+  this.route('profile', { path: '/profile', resetNamespace: true }, function () {
+    this.route('accounts', { path: '/', resetNamespace: true }, function () {
       this.route('account', { path: '/:login', resetNamespace: true });
       this.route('info', { path: '/info' });
     });
   });
-  this.route('owner', { path: '/:owner', resetNamespace: true }, function() {
+  this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
   this.route('error404', { path: '/404' });

@@ -22,27 +22,27 @@ export default Model.extend({
   syncedAt: attr(),
   repoCount: attr('number'),
 
-  fullName: function() {
+  fullName: function () {
     return this.get('name') || this.get('login');
   }.property('name', 'login'),
 
-  isSyncingDidChange: function() {
-    return Ember.run.next(this, function() {
+  isSyncingDidChange: function () {
+    return Ember.run.next(this, function () {
       if (this.get('isSyncing')) {
         return this.poll();
       }
     });
   }.observes('isSyncing'),
 
-  urlGithub: function() {
-    return config.sourceEndpoint + "/" + (this.get('login'));
+  urlGithub: function () {
+    return config.sourceEndpoint + '/' + (this.get('login'));
   }.property(),
 
-  _rawPermissions: function() {
+  _rawPermissions: function () {
     return this.get('ajax').get('/users/permissions');
   }.property(),
 
-  permissions: function() {
+  permissions: function () {
     var permissions;
     permissions = Ember.ArrayProxy.create({
       content: []
@@ -53,7 +53,7 @@ export default Model.extend({
     return permissions;
   }.property(),
 
-  adminPermissions: function() {
+  adminPermissions: function () {
     var permissions;
     permissions = Ember.ArrayProxy.create({
       content: []
@@ -64,7 +64,7 @@ export default Model.extend({
     return permissions;
   }.property(),
 
-  pullPermissions: function() {
+  pullPermissions: function () {
     var permissions;
     permissions = Ember.ArrayProxy.create({
       content: []
@@ -75,7 +75,7 @@ export default Model.extend({
     return permissions;
   }.property(),
 
-  pushPermissions: function() {
+  pushPermissions: function () {
     var permissions;
     permissions = Ember.ArrayProxy.create({
       content: []
@@ -86,7 +86,7 @@ export default Model.extend({
     return permissions;
   }.property(),
 
-  pushPermissionsPromise: function() {
+  pushPermissionsPromise: function () {
     return this.get('_rawPermissions').then((data) => {
       return data.pull;
     });
@@ -100,14 +100,14 @@ export default Model.extend({
     }
   },
 
-  type: function() {
+  type: function () {
     return 'user';
   }.property(),
 
   sync() {
     var self;
     self = this;
-    return this.get('ajax').post('/users/sync', {}, function() {
+    return this.get('ajax').post('/users/sync', {}, function () {
       return self.setWithSession('isSyncing', true);
     });
   },
@@ -117,7 +117,7 @@ export default Model.extend({
       var self;
       if (data.user.is_syncing) {
         self = this;
-        return setTimeout(function() {
+        return setTimeout(function () {
           return self.poll();
         }, 3000);
       } else {
@@ -137,7 +137,7 @@ export default Model.extend({
     return this.get('sessionStorage').setItem('travis.user', JSON.stringify(user));
   },
 
-  avatarUrl: function() {
+  avatarUrl: function () {
     return gravatarImage(this.get('email'), 36);
   }.property('email')
 });

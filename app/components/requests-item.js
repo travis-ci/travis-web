@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   classNameBindings: ['requestClass'],
   tagName: 'li',
 
-  isGHPages: function() {
+  isGHPages: function () {
     var message = this.get('request.message');
     if (message === 'github pages branch') {
       return true;
@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     }
   }.property('request.message'),
 
-  requestClass: function() {
+  requestClass: function () {
     if (this.get('request.isAccepted')) {
       return 'accepted';
     } else {
@@ -23,7 +23,7 @@ export default Ember.Component.extend({
     }
   }.property('content.isAccepted'),
 
-  type: function() {
+  type: function () {
     if (this.get('request.isPullRequest')) {
       return 'pull_request';
     } else {
@@ -31,7 +31,7 @@ export default Ember.Component.extend({
     }
   }.property('request.isPullRequest'),
 
-  status: function() {
+  status: function () {
     if (this.get('request.isAccepted')) {
       return 'Accepted';
     } else {
@@ -39,10 +39,10 @@ export default Ember.Component.extend({
     }
   }.property('request.isAccepted'),
 
-  message: function() {
+  message: function () {
     var message;
     message = this.get('request.message');
-    if (config.pro && message === "private repository") {
+    if (config.pro && message === 'private repository') {
       return '';
     } else if (!message) {
       return 'Build created successfully ';

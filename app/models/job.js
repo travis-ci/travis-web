@@ -33,7 +33,7 @@ export default Model.extend(DurationCalculations, {
   pullRequestNumber: Ember.computed.alias('build.pullRequestNumber'),
   pullRequestTitle: Ember.computed.alias('build.pullRequestTitle'),
 
-  log: function() {
+  log: function () {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
@@ -41,23 +41,23 @@ export default Model.extend(DurationCalculations, {
     });
   }.property(),
 
-  startedAt: function() {
+  startedAt: function () {
     if (!this.get('notStarted')) {
       return this.get('_startedAt');
     }
   }.property('_startedAt', 'notStarted'),
 
-  finishedAt: function() {
+  finishedAt: function () {
     if (!this.get('notStarted')) {
       return this.get('_finishedAt');
     }
   }.property('_finishedAt', 'notStarted'),
 
-  repoSlug: function() {
+  repoSlug: function () {
     return this.get('repositorySlug');
   }.property('repositorySlug'),
 
-  config: function() {
+  config: function () {
     let config = this.get('_config');
     if (config) {
       return compact(config);
@@ -70,12 +70,12 @@ export default Model.extend(DurationCalculations, {
     }
   }.property('_config'),
 
-  isFinished: function() {
+  isFinished: function () {
     var ref;
     return (ref = this.get('state')) === 'passed' || ref === 'failed' || ref === 'errored' || ref === 'canceled';
   }.property('state'),
 
-  notStarted: function() {
+  notStarted: function () {
     var ref;
     return (ref = this.get('state')) === 'queued' || ref === 'created' || ref === 'received';
   }.property('state'),
@@ -86,12 +86,12 @@ export default Model.extend(DurationCalculations, {
     }
   },
 
-  configValues: function() {
+  configValues: function () {
     var config, keys;
     config = this.get('config');
     keys = this.get('build.rawConfigKeys');
     if (config && keys) {
-      return keys.map(function(key) {
+      return keys.map(function (key) {
         return config[key];
       });
     } else {
@@ -99,18 +99,18 @@ export default Model.extend(DurationCalculations, {
     }
   }.property('config', 'build.rawConfigKeys.length'),
 
-  canCancel: function() {
+  canCancel: function () {
     return !this.get('isFinished');
   }.property('isFinished'),
 
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post("/jobs/" + (this.get('id')) + "/cancel");
+    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/cancel');
   },
 
   removeLog() {
-    return this.get('ajax').patch("/jobs/" + (this.get('id')) + "/log").then(() => {
+    return this.get('ajax').patch('/jobs/' + (this.get('id')) + '/log').then(() => {
       return this.reloadLog();
     });
   },
@@ -121,7 +121,7 @@ export default Model.extend(DurationCalculations, {
   },
 
   restart() {
-    return this.get('ajax').post("/jobs/" + (this.get('id')) + "/restart");
+    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/restart');
   },
 
   appendLog(part) {
@@ -134,7 +134,7 @@ export default Model.extend(DurationCalculations, {
     }
     this.set('subscribed', true);
     if (Travis.pusher) {
-      return Travis.pusher.subscribe("job-" + (this.get('id')));
+      return Travis.pusher.subscribe('job-' + (this.get('id')));
     }
   },
 
@@ -144,38 +144,38 @@ export default Model.extend(DurationCalculations, {
     }
     this.set('subscribed', false);
     if (Travis.pusher) {
-      return Travis.pusher.unsubscribe("job-" + (this.get('id')));
+      return Travis.pusher.unsubscribe('job-' + (this.get('id')));
     }
   },
 
-  onStateChange: function() {
+  onStateChange: function () {
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }
   }.observes('state'),
 
-  formattedFinishedAt: function() {
+  formattedFinishedAt: function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
       return moment(finishedAt).format('lll');
     }
   }.property('finishedAt'),
 
-  canRemoveLog: function() {
+  canRemoveLog: function () {
     return !this.get('log.removed');
   }.property('log.removed'),
 
-  slug: function() {
-    return (this.get('repo.slug')) + " #" + (this.get('number'));
-  } .property(),
+  slug: function () {
+    return (this.get('repo.slug')) + ' #' + (this.get('number'));
+  }.property(),
 
-  isLegacyInfrastructure: function() {
+  isLegacyInfrastructure: function () {
     if (this.get('queue') === 'builds.linux') {
       return true;
     }
   }.property('queue'),
 
-  displayGceNotice: function() {
+  displayGceNotice: function () {
     if (this.get('queue') === 'builds.gce' && this.get('config.dist') === 'precise') {
       return true;
     } else {

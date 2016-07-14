@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
   currentUser: alias('auth.currentUser'),
 
-  classRecent: function() {
+  classRecent: function () {
     if (this.get('tab') === 'recent') {
       return 'active';
     } else if (this.get('tab') === 'search' && this.get('auth.signedIn')) {
@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     }
   }.property('tab'),
 
-  classRunning: function() {
+  classRunning: function () {
     var classes;
     classes = [];
     if (this.get('tab') === 'running') {
@@ -25,7 +25,7 @@ export default Ember.Component.extend({
     return classes.join(' ');
   }.property('tab'),
 
-  classOwned: function() {
+  classOwned: function () {
     var classes;
     classes = [];
     if (this.get('tab') === 'owned') {
@@ -37,13 +37,13 @@ export default Ember.Component.extend({
     return classes.join(' ');
   }.property('tab', 'currentUser'),
 
-  classSearch: function() {
+  classSearch: function () {
     if (this.get('tab') === 'search') {
       return 'active';
     }
   }.property('tab'),
 
-  classNew: function() {
+  classNew: function () {
     if (this.get('currentUser')) {
       return 'display-inline';
     }

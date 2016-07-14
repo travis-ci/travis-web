@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default (function() {
+export default (function () {
   // NOTE: I could have probably extract fixed positioning from
   //       Tailing, but then I would need to parametrize positionElement
   //       function to make it flexible to handle both cases. In that
@@ -18,19 +18,19 @@ export default (function() {
     return this;
   }
 
-  ToTop.prototype.element = function() {
+  ToTop.prototype.element = function () {
     return Ember.$(this.element_selector);
   };
 
-  ToTop.prototype.container = function() {
+  ToTop.prototype.container = function () {
     return Ember.$(this.container_selector);
   };
 
-  ToTop.prototype.onScroll = function() {
+  ToTop.prototype.onScroll = function () {
     return this.positionElement();
   };
 
-  ToTop.prototype.positionElement = function() {
+  ToTop.prototype.positionElement = function () {
     var container, containerHeight, element, max, offset, windowHeight;
     element = this.element();
     container = this.container();

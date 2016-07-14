@@ -15,7 +15,7 @@ export default Ember.Route.extend({
     }
     if (!this.signedIn() && this.get('needsAuth')) {
       this.auth.set('afterSignInTransition', transition);
-      return Ember.RSVP.reject("needs-auth");
+      return Ember.RSVP.reject('needs-auth');
     } else {
       return this._super(...arguments);
     }
@@ -25,7 +25,7 @@ export default Ember.Route.extend({
     return this.controllerFor('currentUser').get('model');
   },
 
-  needsAuth: function() {
+  needsAuth: function () {
     // on pro, we need to auth on every route
     return config.pro;
   }.property()

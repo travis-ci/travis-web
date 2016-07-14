@@ -5,37 +5,37 @@ export default Ember.Component.extend({
   classNames: ['tabnav'],
   ariaRole: 'tablist',
 
-  classCurrent: function() {
+  classCurrent: function () {
     if (this.get('tab') === 'current') {
       return 'active';
     }
   }.property('tab'),
 
-  classBuilds: function() {
+  classBuilds: function () {
     if (this.get('tab') === 'builds') {
       return 'active';
     }
   }.property('tab'),
 
-  classPullRequests: function() {
+  classPullRequests: function () {
     if (this.get('tab') === 'pull_requests') {
       return 'active';
     }
   }.property('tab'),
 
-  classCrons: function() {
+  classCrons: function () {
     if (this.get('tab') === 'crons') {
       return 'active';
     }
   }.property('tab'),
 
-  classBranches: function() {
+  classBranches: function () {
     if (this.get('tab') === 'branches') {
       return 'active';
     }
   }.property('tab'),
 
-  classBuild: function() {
+  classBuild: function () {
     var classes, tab;
     tab = this.get('tab');
     classes = [];
@@ -48,31 +48,31 @@ export default Ember.Component.extend({
     return classes.join(' ');
   }.property('tab'),
 
-  classJob: function() {
+  classJob: function () {
     if (this.get('tab') === 'job') {
       return 'active';
     }
   }.property('tab'),
 
-  classRequests: function() {
+  classRequests: function () {
     if (this.get('tab') === 'requests') {
       return 'active';
     }
   }.property('tab'),
 
-  classCaches: function() {
+  classCaches: function () {
     if (this.get('tab') === 'caches') {
       return 'active';
     }
   }.property('tab'),
 
-  classSettings: function() {
+  classSettings: function () {
     if (this.get('tab') === 'settings') {
       return 'active';
     }
   }.property('tab'),
 
-  classRequest: function() {
+  classRequest: function () {
     if (this.get('tab') === 'request') {
       return 'active';
     }

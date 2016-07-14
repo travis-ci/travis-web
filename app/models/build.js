@@ -33,7 +33,7 @@ Build.reopen({
   commit: belongsTo('commit', { async: false }),
   jobs: hasMany('job', { async: true }),
 
-  config: function() {
+  config: function () {
     let config = this.get('_config');
     if (config) {
       return compact(config);
@@ -46,53 +46,53 @@ Build.reopen({
     }
   }.property('_config'),
 
-  isPullRequest: function() {
+  isPullRequest: function () {
     return this.get('eventType') === 'pull_request' || this.get('pullRequest');
   }.property('eventType'),
 
-  isMatrix: function() {
+  isMatrix: function () {
     return this.get('jobs.length') > 1;
   }.property('jobs.length'),
 
-  isFinished: function() {
+  isFinished: function () {
     var ref;
     return (ref = this.get('state')) === 'passed' || ref === 'failed' || ref === 'errored' || ref === 'canceled';
   }.property('state'),
 
-  notStarted: function() {
+  notStarted: function () {
     var ref;
     return (ref = this.get('state')) === 'queued' || ref === 'created' || ref === 'received';
   }.property('state'),
 
-  startedAt: function() {
+  startedAt: function () {
     if (!this.get('notStarted')) {
       return this.get('_startedAt');
     }
   }.property('_startedAt', 'notStarted'),
 
-  finishedAt: function() {
+  finishedAt: function () {
     if (!this.get('notStarted')) {
       return this.get('_finishedAt');
     }
   }.property('_finishedAt', 'notStarted'),
 
-  requiredJobs: function() {
-    return this.get('jobs').filter(function(data) {
+  requiredJobs: function () {
+    return this.get('jobs').filter(function (data) {
       return !data.get('allowFailure');
     });
   }.property('jobs.@each.allowFailure'),
 
-  allowedFailureJobs: function() {
-    return this.get('jobs').filter(function(data) {
+  allowedFailureJobs: function () {
+    return this.get('jobs').filter(function (data) {
       return data.get('allowFailure');
     });
   }.property('jobs.@each.allowFailure'),
 
-  rawConfigKeys: function() {
+  rawConfigKeys: function () {
     var keys;
     keys = [];
-    this.get('jobs').forEach(function(job) {
-      return configKeys(job.get('config')).forEach(function(key) {
+    this.get('jobs').forEach(function (job) {
+      return configKeys(job.get('config')).forEach(function (key) {
         if (!keys.contains(key)) {
           return keys.pushObject(key);
         }
@@ -101,12 +101,12 @@ Build.reopen({
     return keys;
   }.property('config', 'jobs.@each.config'),
 
-  configKeys: function() {
+  configKeys: function () {
     var headers, keys;
     keys = this.get('rawConfigKeys');
     headers = ['Job', 'Duration', 'Finished'];
     // TODO: No need to use $.map over Ember's
-    return Ember.$.map(headers.concat(keys), function(key) {
+    return Ember.$.map(headers.concat(keys), function (key) {
       if (configKeysMap.hasOwnProperty(key)) {
         return configKeysMap[key];
       } else {
@@ -115,21 +115,21 @@ Build.reopen({
     });
   }.property('rawConfigKeys.length'),
 
-  canCancel: function() {
+  canCancel: function () {
     return this.get('jobs').filterBy('canCancel', true).length;
   }.property('jobs.@each.canCancel', 'jobs', 'jobs.[]'),
 
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post("/builds/" + (this.get('id')) + "/cancel");
+    return this.get('ajax').post('/builds/' + (this.get('id')) + '/cancel');
   },
 
   restart() {
     return this.get('ajax').post(`/builds/${this.get('id')}/restart`);
   },
 
-  formattedFinishedAt: function() {
+  formattedFinishedAt: function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
       return moment(finishedAt).format('lll');

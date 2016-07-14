@@ -6,24 +6,24 @@ import config from 'travis/config/environment';
 import Ember from 'ember';
 
 var _emojize, _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
-    _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
-    _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
-    durationFrom, formatCommit, formatConfig, formatMessage, formatSha, githubify,
-    intersect, mapObject, only, pathFrom, safe, timeAgoInWords, timeInWords, timeago;
+  _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
+  _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
+  durationFrom, formatCommit, formatConfig, formatMessage, formatSha, githubify,
+  intersect, mapObject, only, pathFrom, safe, timeAgoInWords, timeInWords, timeago;
 
 timeago = Ember.$.timeago;
 
 mapObject = Ember.$.map;
 
 colors = {
-  "default": 'yellow',
+  'default': 'yellow',
   passed: 'green',
   failed: 'red',
   errored: 'red',
   canceled: 'gray'
 };
 
-mapObject = function(elems, callback, arg) {
+mapObject = function (elems, callback, arg) {
   var key, ret, value;
   value = void 0;
   key = void 0;
@@ -37,7 +37,7 @@ mapObject = function(elems, callback, arg) {
   return ret.concat.apply([], ret);
 };
 
-only = function(object) {
+only = function (object) {
   var key, keys, result;
   keys = Array.prototype.slice.apply(arguments);
   object = (typeof keys[0] === 'object' ? keys.shift() : this);
@@ -50,13 +50,13 @@ only = function(object) {
   return result;
 };
 
-intersect = function(array, other) {
-  return array.filter(function(element) {
+intersect = function (array, other) {
+  return array.filter(function (element) {
     return other.indexOf(element) !== -1;
   });
 };
 
-compact = function(object) {
+compact = function (object) {
   var key, ref, result, value;
   result = {};
   ref = object || {};
@@ -69,29 +69,29 @@ compact = function(object) {
   return result;
 };
 
-safe = function(string) {
+safe = function (string) {
   return new Ember.Handlebars.SafeString(string);
 };
 
-colorForState = function(state) {
+colorForState = function (state) {
   return colors[state] || colors['default'];
 };
 
-formatCommit = function(sha, branch) {
-  return formatSha(sha) + (branch ? " (" + branch + ")" : '');
+formatCommit = function (sha, branch) {
+  return formatSha(sha) + (branch ? ' (' + branch + ')' : '');
 };
 
-formatSha = function(sha) {
+formatSha = function (sha) {
   return (sha || '').substr(0, 7);
 };
 
-formatConfig = function(config) {
+formatConfig = function (config) {
   var values;
   config = only(config, Object.keys(configKeysMap));
-  values = mapObject(config, function(value, key) {
+  values = mapObject(config, function (value, key) {
     value = (value && value.join ? value.join(', ') : value) || '';
-    if (key === 'rvm' && ("" + value).match(/^\d+$/)) {
-      value = value + ".0";
+    if (key === 'rvm' && ('' + value).match(/^\d+$/)) {
+      value = value + '.0';
     }
     return '%@: %@'.fmt(configKeysMap[key], value);
   });
@@ -102,7 +102,7 @@ formatConfig = function(config) {
   }
 };
 
-formatMessage = function(message, options) {
+formatMessage = function (message, options) {
   message = message || '';
   if (options.short) {
     message = message.split(/\n/)[0];
@@ -117,13 +117,13 @@ formatMessage = function(message, options) {
   return message;
 };
 
-timeAgoInWords = function(date) {
+timeAgoInWords = function (date) {
   if (date) {
     return timeago(date);
   }
 };
 
-durationFrom = function(started, finished) {
+durationFrom = function (started, finished) {
   started = started && _toUtc(new Date(_normalizeDateString(started)));
   finished = finished ? _toUtc(new Date(_normalizeDateString(finished))) : _nowUtc();
   if (started && finished) {
@@ -133,7 +133,7 @@ durationFrom = function(started, finished) {
   }
 };
 
-timeInWords = function(duration) {
+timeInWords = function (duration) {
   var days, hours, minutes, result, seconds;
   days = Math.floor(duration / 86400);
   hours = Math.floor(duration % 86400 / 3600);
@@ -163,8 +163,8 @@ timeInWords = function(duration) {
   }
 };
 
-githubify = function(text, owner, repo) {
-  text = text.replace(_githubReferenceRegexp, function(reference, matchedOwner, matchedRepo, matchedNumber) {
+githubify = function (text, owner, repo) {
+  text = text.replace(_githubReferenceRegexp, function (reference, matchedOwner, matchedRepo, matchedNumber) {
     return _githubReferenceLink(reference, {
       owner: owner,
       repo: repo
@@ -174,10 +174,10 @@ githubify = function(text, owner, repo) {
       number: matchedNumber
     });
   });
-  text = text.replace(_githubUserRegexp, function(reference, username) {
+  text = text.replace(_githubUserRegexp, function (reference, username) {
     return _githubUserLink(reference, username);
   });
-  text = text.replace(_githubCommitReferenceRegexp, function(reference, matchedOwner, matchedRepo, matchedSHA) {
+  text = text.replace(_githubCommitReferenceRegexp, function (reference, matchedOwner, matchedRepo, matchedSHA) {
     return _githubCommitReferenceLink(reference, {
       owner: owner,
       repo: repo
@@ -190,32 +190,32 @@ githubify = function(text, owner, repo) {
   return text;
 };
 
-_githubReferenceRegexp = new RegExp("([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)", 'g');
+_githubReferenceRegexp = new RegExp('([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)', 'g');
 
-_githubReferenceLink = function(reference, current, matched) {
+_githubReferenceLink = function (reference, current, matched) {
   var owner, repo;
   owner = matched.owner || current.owner;
   repo = matched.repo || current.repo;
-  return "<a href=\"" + config.sourceEndpoint + "/" + owner + "/" + repo + "/issues/" + matched.number + "\">" + reference + "</a>";
+  return '<a href="' + config.sourceEndpoint + '/' + owner + '/' + repo + '/issues/' + matched.number + '">' + reference + '</a>';
 };
 
-_githubUserRegexp = new RegExp("\\B@([\\w-]+)", 'g');
+_githubUserRegexp = new RegExp('\\B@([\\w-]+)', 'g');
 
-_githubUserLink = function(reference, username) {
-  return "<a href=\"" + config.sourceEndpoint + "/" + username + "\">" + reference + "</a>";
+_githubUserLink = function (reference, username) {
+  return '<a href="' + config.sourceEndpoint + '/' + username + '">' + reference + '</a>';
 };
 
-_githubCommitReferenceRegexp = new RegExp("([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)", 'g');
+_githubCommitReferenceRegexp = new RegExp('([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)', 'g');
 
-_githubCommitReferenceLink = function(reference, current, matched) {
+_githubCommitReferenceLink = function (reference, current, matched) {
   var owner, repo, url;
   owner = matched.owner || current.owner;
   repo = matched.repo || current.repo;
-  url = "" + (githubCommitUrl(owner + "/" + repo, matched.sha));
-  return "<a href=\"" + url + "\">" + reference + "</a>";
+  url = '' + (githubCommitUrl(owner + '/' + repo, matched.sha));
+  return '<a href="' + url + '">' + reference + '</a>';
 };
 
-_normalizeDateString = function(string) {
+_normalizeDateString = function (string) {
   if (window.JHW) {
     string = string.replace('T', ' ').replace(/-/g, '/');
     string = string.replace('Z', '').replace(/\..*$/, '');
@@ -223,21 +223,21 @@ _normalizeDateString = function(string) {
   return string;
 };
 
-_nowUtc = function() {
+_nowUtc = function () {
   // TODO: we overwrite Travis.currentDate in tests, so we need to leave this
   // global usage as it is for now, but it should be removed at some point
   return _toUtc(Travis.currentDate());
 };
 
-_toUtc = function(date) {
+_toUtc = function (date) {
   return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds());
 };
 
-_emojize = function(text) {
+_emojize = function (text) {
   var emojis;
   emojis = text.match(/:\S+?:/g);
   if (emojis !== null) {
-    emojis.uniq().forEach(function(emoji) {
+    emojis.uniq().forEach(function (emoji) {
       var image, strippedEmoji;
       strippedEmoji = emoji.substring(1, emoji.length - 1);
       if (emojiDictionary.indexOf(strippedEmoji) !== -1) {
@@ -249,18 +249,18 @@ _emojize = function(text) {
   return text;
 };
 
-_escape = function(text) {
+_escape = function (text) {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 };
 
-configKeys = function(config) {
+configKeys = function (config) {
   if (!config) {
     return [];
   }
   return intersect(Object.keys(config), Object.keys(configKeysMap));
 };
 
-pathFrom = function(url) {
+pathFrom = function (url) {
   return (url || '').split('/').pop();
 };
 

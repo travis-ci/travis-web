@@ -7,10 +7,10 @@ export default Ember.Controller.extend({
 
   model: Ember.computed.alias('auth.currentUser'),
 
-  syncingDidChange: function() {
+  syncingDidChange: function () {
     var user;
     if ((user = this.get('model')) && user.get('isSyncing') && !user.get('syncedAt')) {
-      return Ember.run.scheduleOnce('routerTransitions', this, function() {
+      return Ember.run.scheduleOnce('routerTransitions', this, function () {
         return Ember.getOwner(this).lookup('router:main').send('renderFirstSync');
       });
     }

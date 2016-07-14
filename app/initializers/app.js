@@ -1,6 +1,6 @@
 var Initializer, initialize;
 
-initialize = function(app) {
+initialize = function (app) {
   if (typeof window !== 'undefined') {
     return window.Travis = app;
   }
@@ -11,6 +11,6 @@ Initializer = {
   initialize: initialize
 };
 
-export {initialize};
+export { initialize };
 
 export default Initializer;

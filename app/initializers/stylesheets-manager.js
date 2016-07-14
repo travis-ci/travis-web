@@ -3,15 +3,15 @@ import Ember from 'ember';
 var StylesheetsManagerInitializer, initialize, stylesheetsManager;
 
 stylesheetsManager = Ember.Object.create({
-  enable: function(id) {
-    return Ember.$("#" + id).removeAttr('disabled');
+  enable: function (id) {
+    return Ember.$('#' + id).removeAttr('disabled');
   },
-  disable: function(id) {
-    return Ember.$("#" + id).attr('disabled', 'disabled');
+  disable: function (id) {
+    return Ember.$('#' + id).attr('disabled', 'disabled');
   }
 });
 
-initialize = function(application) {
+initialize = function (application) {
   application.register('stylesheetsManager:main', stylesheetsManager, {
     instantiate: false
   });
@@ -23,6 +23,6 @@ StylesheetsManagerInitializer = {
   initialize: initialize
 };
 
-export {initialize};
+export { initialize };
 
 export default StylesheetsManagerInitializer;

@@ -16,12 +16,12 @@ export default TravisRoute.extend({
       headers: {
         Authorization: 'token ' + this.auth.token()
       }
-    }).then(function(response) {
-      return response.repositories.filter(function(repo) {
+    }).then(function (response) {
+      return response.repositories.filter(function (repo) {
         if (repo) {
           return repo.current_build;
         }
-      }).map(function(repo) {
+      }).map(function (repo) {
         return Ember.Object.create(repo);
       });
     });

@@ -25,7 +25,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
 
-    const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000*60*5);
+    const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 5);
 
     const lastBuild = branch.createBuild({
       state: 'passed',
@@ -80,8 +80,8 @@ moduleForAcceptance('Acceptance | repo build list routes', {
   }
 });
 
-test('view crons', function(assert) {
-  page.visitCrons({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('view crons', function (assert) {
+  page.visitCrons({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
     assert.equal(page.builds().count, 1, 'expected one cron build');
@@ -97,8 +97,8 @@ test('view crons', function(assert) {
   });
 });
 
-test('view build history', function(assert) {
-  page.visitBuildHistory({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('view build history', function (assert) {
+  page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
     assert.equal(page.builds().count, 3, 'expected three builds');
@@ -117,8 +117,8 @@ test('view build history', function(assert) {
   });
 });
 
-test('view pull requests', function(assert) {
-  page.visitPullRequests({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('view pull requests', function (assert) {
+  page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
     assert.equal(page.builds().count, 1, 'expected one pull request build');

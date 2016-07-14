@@ -30,8 +30,8 @@ export default Ember.Service.extend({
     records.filter((record) => {
       return this.get('allowFinishedBuilds') || !record.get('isFinished');
     }).forEach((record) => {
-      eventually(record, function(resolvedRecord) {
-        if(resolvedRecord) {
+      eventually(record, function (resolvedRecord) {
+        if (resolvedRecord) {
           resolvedRecord.updateTimes();
         }
       });
@@ -39,7 +39,7 @@ export default Ember.Service.extend({
 
     this.set('records', []);
 
-    if(this.get('allowFinishedBuilds')) {
+    if (this.get('allowFinishedBuilds')) {
       this.set('allowFinishedBuilds', false);
     }
   },
@@ -47,16 +47,16 @@ export default Ember.Service.extend({
   pushObject(record) {
     let records = this.get('records');
 
-    if(!records.contains(record)) {
+    if (!records.contains(record)) {
       records.pushObject(record);
     }
   },
 
   push(model) {
-    if(!model) { return; }
+    if (!model) { return; }
 
-    if(model.forEach) {
-      model.forEach( (element) => {
+    if (model.forEach) {
+      model.forEach((element) => {
         this.pushObject(element);
       });
     } else {

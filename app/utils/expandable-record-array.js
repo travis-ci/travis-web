@@ -4,12 +4,12 @@ export default Ember.ArrayProxy.extend({
   isLoaded: false,
   isLoading: false,
 
-  promise: function() {
+  promise: function () {
     var self;
     self = this;
-    return new Ember.RSVP.Promise(function(resolve) {
+    return new Ember.RSVP.Promise(function (resolve) {
       var observer;
-      observer = function() {
+      observer = function () {
         if (self.get('isLoaded')) {
           resolve(self);
           self.removeObserver('isLoaded', observer);
@@ -24,9 +24,9 @@ export default Ember.ArrayProxy.extend({
 
   load(array) {
     this.set('isLoading', true);
-    return array.then((function(_this) {
-      return function() {
-        array.forEach(function(record) {
+    return array.then((function (_this) {
+      return function () {
+        array.forEach(function (record) {
           if (!_this.contains(record)) {
             return _this.pushObject(record);
           }

@@ -23,12 +23,12 @@ module('Integration | Mirage Serializer | V2Serializer', {
       blogPost: Model.extend()
     });
 
-    const author = this.schema.authors.create({name: 'Sara Ahmed'});
+    const author = this.schema.authors.create({ name: 'Sara Ahmed' });
 
-    author.createBook({title: 'Willful Subjects'});
-    author.createBook({title: 'On Being Included'});
+    author.createBook({ title: 'Willful Subjects' });
+    author.createBook({ title: 'On Being Included' });
 
-    this.schema.blogPosts.create({title: 'Equality Credentials'});
+    this.schema.blogPosts.create({ title: 'Equality Credentials' });
 
     this.registry = new SerializerRegistry(this.schema, {
       application: V2Serializer
@@ -40,7 +40,7 @@ module('Integration | Mirage Serializer | V2Serializer', {
   }
 });
 
-test('it serialises with underscored property keys', function(assert) {
+test('it serialises with underscored property keys', function (assert) {
   const books = this.schema.books.all();
   const result = this.registry.serialize(books);
 
@@ -57,7 +57,7 @@ test('it serialises with underscored property keys', function(assert) {
   });
 });
 
-test('it sideloads included resources', function(assert) {
+test('it sideloads included resources', function (assert) {
   const registryWithInclusion = new SerializerRegistry(this.schema, {
     application: V2Serializer,
     author: V2Serializer.extend({
@@ -86,7 +86,7 @@ test('it sideloads included resources', function(assert) {
   });
 });
 
-test('it uses an underscored container key', function(assert) {
+test('it uses an underscored container key', function (assert) {
   const blogPost = this.schema.blogPosts.find(1);
   const result = this.registry.serialize(blogPost);
 

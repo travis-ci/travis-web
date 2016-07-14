@@ -27,15 +27,15 @@ export default Ember.Controller.extend({
     this.set('repo', null);
   },
 
-  isEmpty: function() {
+  isEmpty: function () {
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
   }.property('repos.isLoaded', 'repos.length'),
 
-  statusImageUrl: function() {
+  statusImageUrl: function () {
     return statusImage(this.get('repo.slug'));
   }.property('repo.slug'),
 
-  showCurrentBuild: function() {
+  showCurrentBuild: function () {
     return this.get('repo.currentBuild.id') && this.get('repo.active');
   }.property('repo.currentBuild.id', 'repo.active'),
 
@@ -46,11 +46,11 @@ export default Ember.Controller.extend({
     }
   },
 
-  slug: function() {
+  slug: function () {
     return this.get('repo.slug');
   }.property('repo.slug'),
 
-  isLoading: function() {
+  isLoading: function () {
     return this.get('repo.isLoading');
   }.property('repo.isLoading'),
 
@@ -75,7 +75,7 @@ export default Ember.Controller.extend({
 
   activate(action) {
     this.stopObservingLastBuild();
-    return this[("view_" + action).camelize()]();
+    return this[('view_' + action).camelize()]();
   },
 
   viewIndex() {
@@ -134,7 +134,7 @@ export default Ember.Controller.extend({
 
   _currentBuildDidChange() {
     let currentBuild = this.get('repo.currentBuild');
-    if(currentBuild) {
+    if (currentBuild) {
       eventually(currentBuild, (build) => {
         this.set('build', build);
       });
@@ -155,7 +155,7 @@ export default Ember.Controller.extend({
     return this.set('tab', tab);
   },
 
-  urlGithub: function() {
+  urlGithub: function () {
     return githubRepo(this.get('repo.slug'));
   }.property('repo.slug')
 });

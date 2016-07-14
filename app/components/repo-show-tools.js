@@ -30,15 +30,15 @@ export default Ember.Component.extend({
       return this.toggleProperty('isOpen');
     }
   },
-  displaySettingsLink: function() {
+  displaySettingsLink: function () {
     return this.get('permissions').hasPushPermission(this.get('repo'));
   }.property('permissions.all', 'repo'),
 
-  displayCachesLink: function() {
+  displayCachesLink: function () {
     return this.get('permissions').hasPushPermission(this.get('repo')) && config.endpoints.caches;
   }.property('permissions.all', 'repo'),
 
-  displayStatusImages: function() {
+  displayStatusImages: function () {
     return this.get('permissions').hasPermission(this.get('repo'));
   }.property('permissions.all', 'repo')
 });
