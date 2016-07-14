@@ -57,37 +57,37 @@ module.exports = {
 
     // this option sets a specific tab width for your code
     // http://eslint.org/docs/rules/indent
-    indent: [2, 2, { SwitchCase: 1, VariableDeclarator: 1}],
+    'indent': [2, 2, { SwitchCase: 1, VariableDeclarator: 1}],
 
     // enforces spacing between keys and values in object literal properties
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
 
-    // // require a space before & after certain keywords
-    // 'keyword-spacing': [2, {
-    //   before: true,
-    //   after: true,
-    //   overrides: {
-    //     return: { after: true },
-    //     throw: { after: true },
-    //     case: { after: true }
-    //   }
-    // }],
+    // require a space before & after certain keywords
+    'keyword-spacing': [2, {
+      before: true,
+      after: true,
+      overrides: {
+        return: { after: true },
+        throw: { after: true },
+        case: { after: true }
+      }
+    }],
 
-    // // disallow mixed 'LF' and 'CRLF' as linebreaks
-    // 'linebreak-style': 0,
+    // disallow mixed 'LF' and 'CRLF' as linebreaks
+    'linebreak-style': 0,
 
-    // // enforces empty lines around comments
-    // 'lines-around-comment': 0,
+    // enforces empty lines around comments
+    'lines-around-comment': 0,
 
-    // // specify the maximum depth that blocks can be nested
-    // 'max-depth': [0, 4],
+    // specify the maximum depth that blocks can be nested
+    'max-depth': [0, 4],
 
-    // // specify the maximum length of a line in your program
-    // // http://eslint.org/docs/rules/max-len
-    // 'max-len': [2, 100, 2, {
-    //   ignoreUrls: true,
-    //   ignoreComments: false
-    // }],
+    // specify the maximum length of a line in your program
+    // http://eslint.org/docs/rules/max-len
+    'max-len': [2, 100, 2, {
+      ignoreUrls: true,
+      ignoreComments: false
+    }],
 
     // // specify the max number of lines in a file
     // // http://eslint.org/docs/rules/max-lines
