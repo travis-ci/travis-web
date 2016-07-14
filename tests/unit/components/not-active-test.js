@@ -13,7 +13,7 @@ moduleForComponent('not-active', 'Unit | Component | not active', {
   }
 });
 
-test('canActivate returns true if a user has access to a repo', function(assert) {
+test('canActivate returns true if a user has access to a repo', function (assert) {
   let component = this.subject();
   let repo = Ember.Object.create({ id: 1 });
 
@@ -22,13 +22,13 @@ test('canActivate returns true if a user has access to a repo', function(assert)
   assert.ok(component.get('canActivate'));
 });
 
-test("canActivate returns false if user doesn't exist", function(assert) {
+test("canActivate returns false if user doesn't exist", function (assert) {
   let component = this.subject();
 
   assert.ok(!component.get('canActivate'));
 });
 
-test("canActivate returns false if user doesn't push access to the repo", function(assert) {
+test("canActivate returns false if user doesn't push access to the repo", function (assert) {
   let component = this.subject();
 
   let repo = Ember.Object.create({ id: 2 });

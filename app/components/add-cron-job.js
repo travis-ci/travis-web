@@ -20,7 +20,7 @@ export default Ember.Component.extend({
     const repoId = this.get('branches.firstObject.repoId');
     const branch = this.get('selectedBranch') ? this.get('selectedBranch') : this.get('branches.firstObject');
 
-    const existingCrons = yield store.filter('cron', {repository_id: repoId}, (c) => {
+    const existingCrons = yield store.filter('cron', { repository_id: repoId }, (c) => {
       return c.get('branch.repoId') === repoId && c.get('branch.name') === branch.get('name');
     });
 

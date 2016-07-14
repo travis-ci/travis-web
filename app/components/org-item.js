@@ -10,15 +10,15 @@ export default Ember.Component.extend({
   selected: alias('account.selected'),
   tokenIsVisible: false,
 
-  name: function() {
+  name: function () {
     return this.get('account.name') || this.get('account.login');
   }.property('account'),
 
-  avatarUrl: function() {
+  avatarUrl: function () {
     return this.get('account.avatarUrl') || false;
   }.property('account'),
 
-  isUser: function() {
+  isUser: function () {
     return this.get('account.type') === 'user';
   }.property('account'),
 

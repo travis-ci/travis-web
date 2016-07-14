@@ -3,16 +3,16 @@ moduleForComponent('hooks-list-item', 'HooksListItemComponent', {
   needs: ['component:hook-switch']
 });
 
-test('it renders', function() {
+test('it renders', function () {
   var attributes, component;
   attributes = {
     id: 10000,
-    name: "foo-bar",
-    owner_name: "foo",
-    description: "A foo repo",
+    name: 'foo-bar',
+    owner_name: 'foo',
+    description: 'A foo repo',
     active: true,
-    urlGithub: "https://github.com/foo/foobar",
-    slug: "foo/foo-bar"
+    urlGithub: 'https://github.com/foo/foobar',
+    slug: 'foo/foo-bar'
   };
   component = this.subject({
     hook: attributes

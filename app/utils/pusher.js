@@ -2,7 +2,7 @@
 import ENV from 'travis/config/environment';
 import Ember from 'ember';
 
-var TravisPusher = function(config, ajaxService) {
+var TravisPusher = function (config, ajaxService) {
   this.init(config, ajaxService);
   TravisPusher.ajaxService = ajaxService;
   return this;
@@ -10,7 +10,7 @@ var TravisPusher = function(config, ajaxService) {
 
 TravisPusher.prototype.active_channels = [];
 
-TravisPusher.prototype.init = function(config, ajaxService) {
+TravisPusher.prototype.init = function (config, ajaxService) {
   this.ajaxService = ajaxService;
   Pusher.warn = this.warn.bind(this);
   if (config.host) {
@@ -22,7 +22,7 @@ TravisPusher.prototype.init = function(config, ajaxService) {
   });
 };
 
-TravisPusher.prototype.subscribeAll = function(channels) {
+TravisPusher.prototype.subscribeAll = function (channels) {
   var channel, i, len, results;
   results = [];
   for (i = 0, len = channels.length; i < len; i++) {
@@ -32,7 +32,7 @@ TravisPusher.prototype.subscribeAll = function(channels) {
   return results;
 };
 
-TravisPusher.prototype.unsubscribeAll = function(channels) {
+TravisPusher.prototype.unsubscribeAll = function (channels) {
   var channel, i, len, results;
   results = [];
   for (i = 0, len = channels.length; i < len; i++) {
@@ -42,22 +42,22 @@ TravisPusher.prototype.unsubscribeAll = function(channels) {
   return results;
 };
 
-TravisPusher.prototype.subscribe = function(channel) {
+TravisPusher.prototype.subscribe = function (channel) {
   var ref;
   if (!channel) {
     return;
   }
   channel = this.prefix(channel);
   if (!((ref = this.pusher) != null ? ref.channel(channel) : void 0)) {
-    return this.pusher.subscribe(channel).bind_all((function(_this) {
-      return function(event, data) {
+    return this.pusher.subscribe(channel).bind_all((function (_this) {
+      return function (event, data) {
         return _this.receive(event, data);
       };
     })(this));
   }
 };
 
-TravisPusher.prototype.unsubscribe = function(channel) {
+TravisPusher.prototype.unsubscribe = function (channel) {
   var ref;
   if (!channel) {
     return;
@@ -70,17 +70,17 @@ TravisPusher.prototype.unsubscribe = function(channel) {
   }
 };
 
-TravisPusher.prototype.prefix = function(channel) {
+TravisPusher.prototype.prefix = function (channel) {
   var prefix;
   prefix = ENV.pusher.channelPrefix || '';
   if (channel.indexOf(prefix) !== 0) {
-    return "" + prefix + channel;
+    return '' + prefix + channel;
   } else {
     return channel;
   }
 };
 
-TravisPusher.prototype.receive = function(event, data) {
+TravisPusher.prototype.receive = function (event, data) {
   if (event.substr(0, 6) === 'pusher') {
     return;
   }
@@ -96,14 +96,14 @@ TravisPusher.prototype.receive = function(event, data) {
       job.clearLog();
     }
   }
-  return Ember.run.next((function(_this) {
-    return function() {
+  return Ember.run.next((function (_this) {
+    return function () {
       return _this.store.receivePusherEvent(event, data);
     };
   })(this));
 };
 
-TravisPusher.prototype.normalize = function(event, data) {
+TravisPusher.prototype.normalize = function (event, data) {
   switch (event) {
     case 'build:started':
     case 'build:finished':
@@ -136,29 +136,29 @@ TravisPusher.prototype.normalize = function(event, data) {
   }
 };
 
-TravisPusher.prototype.warn = function(type, object) {
+TravisPusher.prototype.warn = function (type, object) {
   if (!this.ignoreWarning(type, object.error)) {
     //eslint-disable-next-line
     return console.warn(type, object.error);
   }
 };
 
-TravisPusher.prototype.ignoreWarning = function(type, error) {
+TravisPusher.prototype.ignoreWarning = function (type, error) {
   var code, message, ref, ref1;
   code = (error != null ? (ref = error.data) != null ? ref.code : void 0 : void 0) || 0;
   message = (error != null ? (ref1 = error.data) != null ? ref1.message : void 0 : void 0) || '';
   return this.ignoreCode(code) || this.ignoreMessage(message);
 };
 
-TravisPusher.prototype.ignoreCode = function(code) {
+TravisPusher.prototype.ignoreCode = function (code) {
   return code === 1006;
 };
 
-TravisPusher.prototype.ignoreMessage = function(message) {
+TravisPusher.prototype.ignoreMessage = function (message) {
   return message.indexOf('Existing subscription') === 0 || message.indexOf('No current subscription') === 0;
 };
 
-Pusher.SockJSTransport.isSupported = function() {
+Pusher.SockJSTransport.isSupported = function () {
   if (ENV.pusher.host !== 'ws.pusherapp.com') {
     return false;
   }
@@ -166,13 +166,13 @@ Pusher.SockJSTransport.isSupported = function() {
 
 if (ENV.pro) {
   Pusher.channel_auth_transport = 'bulk_ajax';
-  Pusher.authorizers.bulk_ajax = function(socketId, _callback) {
+  Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
     var channels, name, names;
     channels = Travis.pusher.pusher.channels;
     channels.callbacks = channels.callbacks || [];
     name = this.channel.name;
     names = Object.keys(channels.channels);
-    channels.callbacks.push(function(auths) {
+    channels.callbacks.push(function (auths) {
       return _callback(false, {
         auth: auths[name]
       });
@@ -182,7 +182,7 @@ if (ENV.pro) {
       return TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
         socket_id: socketId,
         channels: names
-      }, function(data) {
+      }, function (data) {
         var callback, i, len, ref, results;
         channels.fetching = false;
         ref = channels.callbacks;
@@ -195,34 +195,34 @@ if (ENV.pro) {
       });
     }
   };
-  Pusher.getDefaultStrategy = function(config) {
+  Pusher.getDefaultStrategy = function (config) {
     return [
       [
-        ":def", "ws_options", {
-          hostUnencrypted: config.wsHost + ":" + config.wsPort + (ENV.pusher.path && ("/" + ENV.pusher.path) || ''),
-          hostEncrypted: config.wsHost + ":" + config.wssPort + (ENV.pusher.path && ("/" + ENV.pusher.path) || ''),
+        ':def', 'ws_options', {
+          hostUnencrypted: config.wsHost + ':' + config.wsPort + (ENV.pusher.path && ('/' + ENV.pusher.path) || ''),
+          hostEncrypted: config.wsHost + ':' + config.wssPort + (ENV.pusher.path && ('/' + ENV.pusher.path) || ''),
           path: config.path
         }
       ], [
-        ":def", "sockjs_options", {
-          hostUnencrypted: config.httpHost + ":" + config.httpPort,
-          hostEncrypted: config.httpHost + ":" + config.httpsPort
+        ':def', 'sockjs_options', {
+          hostUnencrypted: config.httpHost + ':' + config.httpPort,
+          hostEncrypted: config.httpHost + ':' + config.httpsPort
         }
       ], [
-        ":def", "timeouts", {
+        ':def', 'timeouts', {
           loop: true,
           timeout: 15000,
           timeoutLimit: 60000
         }
       ], [
-        ":def", "ws_manager", [
-          ":transport_manager", {
+        ':def', 'ws_manager', [
+          ':transport_manager', {
             lives: 2,
             minPingDelay: 10000,
             maxPingDelay: config.activity_timeout
           }
         ]
-      ], [":def_transport", "ws", "ws", 3, ":ws_options", ":ws_manager"], [":def_transport", "flash", "flash", 2, ":ws_options", ":ws_manager"], [":def_transport", "sockjs", "sockjs", 1, ":sockjs_options"], [":def", "ws_loop", [":sequential", ":timeouts", ":ws"]], [":def", "flash_loop", [":sequential", ":timeouts", ":flash"]], [":def", "sockjs_loop", [":sequential", ":timeouts", ":sockjs"]], [":def", "strategy", [":cached", 1800000, [":first_connected", [":if", [":is_supported", ":ws"], [":best_connected_ever", ":ws_loop", [":delayed", 2000, [":sockjs_loop"]]], [":if", [":is_supported", ":flash"], [":best_connected_ever", ":flash_loop", [":delayed", 2000, [":sockjs_loop"]]], [":sockjs_loop"]]]]]]
+      ], [':def_transport', 'ws', 'ws', 3, ':ws_options', ':ws_manager'], [':def_transport', 'flash', 'flash', 2, ':ws_options', ':ws_manager'], [':def_transport', 'sockjs', 'sockjs', 1, ':sockjs_options'], [':def', 'ws_loop', [':sequential', ':timeouts', ':ws']], [':def', 'flash_loop', [':sequential', ':timeouts', ':flash']], [':def', 'sockjs_loop', [':sequential', ':timeouts', ':sockjs']], [':def', 'strategy', [':cached', 1800000, [':first_connected', [':if', [':is_supported', ':ws'], [':best_connected_ever', ':ws_loop', [':delayed', 2000, [':sockjs_loop']]], [':if', [':is_supported', ':flash'], [':best_connected_ever', ':flash_loop', [':delayed', 2000, [':sockjs_loop']]], [':sockjs_loop']]]]]]
     ];
   };
 }

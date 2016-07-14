@@ -3,14 +3,14 @@ moduleForComponent('caches-item', 'CachesItemComponent', {
   needs: ['helper:format-time', 'helper:travis-mb', 'component:request-icon']
 });
 
-test('it renders', function() {
+test('it renders', function () {
   var attributes, component;
   attributes = {
     repository_id: 10,
     size: 1024 * 1024,
-    branch: "master",
-    last_modified: "2015-04-16T11:25:00Z",
-    type: "push"
+    branch: 'master',
+    last_modified: '2015-04-16T11:25:00Z',
+    type: 'push'
   };
   component = this.subject({
     cache: attributes

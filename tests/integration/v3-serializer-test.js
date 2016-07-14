@@ -22,10 +22,10 @@ module('Integration | Mirage Serializer | V3Serializer', {
       })
     });
 
-    const author = this.schema.authors.create({name: 'Sara Ahmed'});
+    const author = this.schema.authors.create({ name: 'Sara Ahmed' });
 
-    author.createBook({title: 'Willful Subjects'});
-    author.createBook({title: 'On Being Included'});
+    author.createBook({ title: 'Willful Subjects' });
+    author.createBook({ title: 'On Being Included' });
 
     this.registry = new SerializerRegistry(this.schema, {
       application: V3Serializer,
@@ -40,7 +40,7 @@ module('Integration | Mirage Serializer | V3Serializer', {
   }
 });
 
-test('it serialises a collection with underscored property keys and pagination', function(assert) {
+test('it serialises a collection with underscored property keys and pagination', function (assert) {
   const books = this.schema.books.all();
   const result = this.registry.serialize(books);
 
@@ -69,7 +69,7 @@ test('it serialises a collection with underscored property keys and pagination',
   });
 });
 
-test('it serialises a single resource with its properties included directly and a related resource embedded', function(assert) {
+test('it serialises a single resource with its properties included directly and a related resource embedded', function (assert) {
   const book = this.schema.books.find(1);
   const registryWithInclusion = new SerializerRegistry(this.schema, {
     application: V3Serializer,

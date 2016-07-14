@@ -25,8 +25,8 @@ moduleForAcceptance('Acceptance | repo settings', {
       slug: 'killjoys/living-a-feminist-life',
 
       // FIXME figure out how to define this more cleanly
-      "@permissions": {
-        "create_cron": true
+      '@permissions': {
+        'create_cron': true
       }
     });
 
@@ -95,10 +95,10 @@ moduleForAcceptance('Acceptance | repo settings', {
   }
 });
 
-test('view settings', function(assert) {
-  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('view settings', function (assert) {
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
-  andThen(function() {
+  andThen(function () {
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
     assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
 
@@ -128,12 +128,12 @@ test('view settings', function(assert) {
   });
 });
 
-test('change general settings', function(assert) {
-  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('change general settings', function (assert) {
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const requestBodies = [];
 
-  server.patch(`/repos/${this.repository.id}/settings`, function(schema, request) {
+  server.patch(`/repos/${this.repository.id}/settings`, function (schema, request) {
     requestBodies.push(JSON.parse(request.requestBody));
   });
 
@@ -141,44 +141,44 @@ test('change general settings', function(assert) {
 
   andThen(() => {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
-    assert.deepEqual(requestBodies.pop(), {settings: {build_pushes: false}});
+    assert.deepEqual(requestBodies.pop(), { settings: { build_pushes: false } });
   });
 
   settingsPage.buildOnlyWithTravisYml.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
-    assert.deepEqual(requestBodies.pop(), {settings: {builds_only_with_travis_yml: false}});
+    assert.deepEqual(requestBodies.pop(), { settings: { builds_only_with_travis_yml: false } });
   });
 
   settingsPage.buildPullRequests.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
-    assert.deepEqual(requestBodies.pop(), {settings: {build_pull_requests: false}});
+    assert.deepEqual(requestBodies.pop(), { settings: { build_pull_requests: false } });
   });
 
   settingsPage.limitConcurrentBuilds.fill('2010');
 
   andThen(() => {
     assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
-    assert.deepEqual(requestBodies.pop(), {settings: {maximum_number_of_builds: 2010}});
+    assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 2010 } });
   });
 
   settingsPage.limitConcurrentBuilds.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
-    assert.deepEqual(requestBodies.pop(), {settings: {maximum_number_of_builds: 0}});
+    assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 0 } });
   });
 });
 
-test('delete and create environment variables', function(assert) {
-  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('delete and create environment variables', function (assert) {
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
 
-  server.delete('/settings/env_vars/:id', function(schema, request) {
+  server.delete('/settings/env_vars/:id', function (schema, request) {
     deletedIds.push(request.params.id);
   });
 
@@ -192,7 +192,7 @@ test('delete and create environment variables', function(assert) {
 
   const requestBodies = [];
 
-  server.post('/settings/env_vars', function(schema, request) {
+  server.post('/settings/env_vars', function (schema, request) {
     const parsedRequestBody = JSON.parse(request.requestBody);
     requestBodies.push(parsedRequestBody);
     return parsedRequestBody;
@@ -208,16 +208,16 @@ test('delete and create environment variables', function(assert) {
     assert.ok(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
     assert.equal(settingsPage.environmentVariables(1).value, 'true');
 
-    assert.deepEqual(requestBodies.pop(), {env_var: {name: 'drafted', value: 'true', public: true, repository_id: this.repository.id}});
+    assert.deepEqual(requestBodies.pop(), { env_var: { name: 'drafted', value: 'true', public: true, repository_id: this.repository.id } });
   });
 });
 
-test('delete and create crons', function(assert) {
-  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('delete and create crons', function (assert) {
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
 
-  server.delete('/cron/:id', function(schema, request) {
+  server.delete('/cron/:id', function (schema, request) {
     deletedIds.push(request.params.id);
     schema.db.crons.remove(request.params.id);
     return {};
@@ -231,12 +231,12 @@ test('delete and create crons', function(assert) {
   });
 });
 
-test('delete and set SSH keys', function(assert) {
-  settingsPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('delete and set SSH keys', function (assert) {
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
 
-  server.delete('/settings/ssh_key/:id', function(schema, request) {
+  server.delete('/settings/ssh_key/:id', function (schema, request) {
     deletedIds.push(request.params.id);
   });
 

@@ -5,7 +5,7 @@ import Repo from 'travis/models/repo';
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
 
-var sortCallback = function(repo1, repo2) {
+var sortCallback = function (repo1, repo2) {
   // this function could be made simpler, but I think it's clearer this way
   // what're we really trying to achieve
 
@@ -14,32 +14,32 @@ var sortCallback = function(repo1, repo2) {
   var finishedAt1 = repo1.get('currentBuild.finishedAt');
   var finishedAt2 = repo2.get('currentBuild.finishedAt');
 
-  if(!buildId1 && !buildId2) {
+  if (!buildId1 && !buildId2) {
     // if both repos lack builds, put newer repo first
     return repo1.get('id') > repo2.get('id') ? -1 : 1;
-  } else if(buildId1 && !buildId2) {
+  } else if (buildId1 && !buildId2) {
     // if only repo1 has a build, it goes first
     return -1;
-  } else if(buildId2 && !buildId1) {
+  } else if (buildId2 && !buildId1) {
     // if only repo2 has a build, it goes first
     return 1;
   }
 
 
-  if(finishedAt1) {
+  if (finishedAt1) {
     finishedAt1 = new Date(finishedAt1);
   }
-  if(finishedAt2) {
+  if (finishedAt2) {
     finishedAt2 = new Date(finishedAt2);
   }
 
-  if(finishedAt1 && finishedAt2) {
+  if (finishedAt1 && finishedAt2) {
     // if both builds finished, put newer first
     return finishedAt1.getTime() > finishedAt2.getTime() ? -1 : 1;
-  } else if(finishedAt1 && !finishedAt2) {
+  } else if (finishedAt1 && !finishedAt2) {
     // if repo1 finished, but repo2 didn't, put repo2 first
     return 1;
-  } else if(finishedAt2 && !finishedAt1) {
+  } else if (finishedAt2 && !finishedAt1) {
     // if repo2 finisher, but repo1 didn't, put repo1 first
     return -1;
   } else {
@@ -54,13 +54,13 @@ var Controller = Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
 
   actions: {
-    activate: function(name) {
+    activate: function (name) {
       return this.activate(name);
     },
-    showRunningJobs: function() {
+    showRunningJobs: function () {
       return this.activate('running');
     },
-    showMyRepositories: function() {
+    showMyRepositories: function () {
       if (this.get('tab') === 'running') {
         return this.activate('owned');
       } else {
@@ -69,12 +69,12 @@ var Controller = Ember.Controller.extend({
     }
   },
 
-  tabOrIsLoadedDidChange: function() {
+  tabOrIsLoadedDidChange: function () {
     return this.possiblyRedirectToGettingStartedPage();
   }.observes('isLoaded', 'tab', 'repos.length'),
 
   possiblyRedirectToGettingStartedPage() {
-    return Ember.run.scheduleOnce('routerTransitions', this, function() {
+    return Ember.run.scheduleOnce('routerTransitions', this, function () {
       if (this.get('tab') === 'owned' && this.get('isLoaded') && this.get('repos.length') === 0) {
         return Ember.getOwner(this).lookup('router:main').send('redirectToGettingStarted');
       }
@@ -85,13 +85,13 @@ var Controller = Ember.Controller.extend({
   repoController: controller('repo'),
   currentUser: alias('auth.currentUser'),
 
-  selectedRepo: function() {
+  selectedRepo: function () {
     return this.get('repoController.repo.content') || this.get('repoController.repo');
   }.property('repoController.repo', 'repoController.repo.content'),
 
   startedJobsCount: Ember.computed.alias('runningJobs.length'),
 
-  allJobsCount: function() {
+  allJobsCount: function () {
     return this.get('startedJobsCount') + this.get('queuedJobs.length');
   }.property('startedJobsCount', 'queuedJobs.length'),
 
@@ -102,37 +102,37 @@ var Controller = Ember.Controller.extend({
     }
   },
 
-  runningJobs: function() {
-    if(!this.get('config.pro')) { return []; }
+  runningJobs: function () {
+    if (!this.get('config.pro')) { return []; }
     var result;
 
-    result = this.store.filter('job', {}, function(job) {
+    result = this.store.filter('job', {}, function (job) {
       return ['queued', 'started', 'received'].indexOf(job.get('state')) !== -1;
     });
     result.set('isLoaded', false);
-    result.then(function() {
+    result.then(function () {
       return result.set('isLoaded', true);
     });
 
     return result;
   }.property('config.pro'),
 
-  queuedJobs: function() {
-    if(!this.get('config.pro')) { return []; }
+  queuedJobs: function () {
+    if (!this.get('config.pro')) { return []; }
 
     var result;
-    result = this.get('store').filter('job', function(job) {
+    result = this.get('store').filter('job', function (job) {
       return ['created'].indexOf(job.get('state')) !== -1;
     });
     result.set('isLoaded', false);
-    result.then(function() {
+    result.then(function () {
       result.set('isLoaded', true);
     });
 
     return result;
   }.property('config.pro'),
 
-  recentRepos: function() {
+  recentRepos: function () {
     return [];
   }.property(),
 
@@ -150,7 +150,7 @@ var Controller = Ember.Controller.extend({
     this.set('tab', tab);
     // find the data based on tab
     // tab == 'owned' => viewOwned invoked
-    return this[("view_" + tab).camelize()](params);
+    return this[('view_' + tab).camelize()](params);
   },
 
   reset() {
@@ -178,7 +178,7 @@ var Controller = Ember.Controller.extend({
 
         let onError = () => this.set('fetchingOwnedRepos', false);
 
-        user.get('_rawPermissions').then( (data) => {
+        user.get('_rawPermissions').then((data) => {
           Repo.accessibleBy(this.store, data.pull).then(callback, onError);
         }, onError);
       }
@@ -190,13 +190,13 @@ var Controller = Ember.Controller.extend({
   viewSearch(phrase) {
     this.set('search', phrase);
     this.set('isLoaded', false);
-    Repo.search(this.store, this.get('ajax'), phrase).then( (reposRecordArray) => {
+    Repo.search(this.store, this.get('ajax'), phrase).then((reposRecordArray) => {
       this.set('isLoaded', true);
       this.set('_repos', reposRecordArray);
     });
   },
 
-  searchObserver: function() {
+  searchObserver: function () {
     var search;
     search = this.get('search');
     if (search) {
@@ -208,12 +208,12 @@ var Controller = Ember.Controller.extend({
     if (this.searchLater) {
       Ember.run.cancel(this.searchLater);
     }
-    this.searchLater = Ember.run.later(this, (function() {
+    this.searchLater = Ember.run.later(this, (function () {
       this.transitionToRoute('main.search', phrase.replace(/\//g, '%2F'));
     }), 500);
   },
 
-  noReposMessage: function() {
+  noReposMessage: function () {
     var tab;
     tab = this.get('tab');
     if (tab === 'owned') {
@@ -225,18 +225,18 @@ var Controller = Ember.Controller.extend({
     }
   }.property('tab'),
 
-  showRunningJobs: function() {
+  showRunningJobs: function () {
     return this.get('tab') === 'running';
   }.property('tab'),
 
-  repos: function() {
+  repos: function () {
     var repos = this.get('_repos');
 
-    if(repos && repos.toArray) {
+    if (repos && repos.toArray) {
       repos = repos.toArray();
     }
 
-    if(repos && repos.sort) {
+    if (repos && repos.sort) {
       let sorted = repos.sort(sortCallback);
       return sorted;
     } else {

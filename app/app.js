@@ -22,16 +22,16 @@ var App = Ember.Application.extend(Ember.Evented, {
       location.href = location.href.replace('#!/', '');
     }
 
-    this.on('user:signed_in', function(user) {
+    this.on('user:signed_in', function (user) {
       return Travis.onUserUpdate(user);
     });
-    this.on('user:refreshed', function(user) {
+    this.on('user:refreshed', function (user) {
       return Travis.onUserUpdate(user);
     });
-    this.on('user:synced', function(user) {
+    this.on('user:synced', function (user) {
       return Travis.onUserUpdate(user);
     });
-    return this.on('user:signed_out', function() {
+    return this.on('user:signed_out', function () {
       if (config.beacon) {
         return Travis.destroyBeacon();
       }
@@ -54,7 +54,7 @@ var App = Ember.Application.extend(Ember.Evented, {
   },
 
   destroyBeacon() {
-    HS.beacon.ready(function() {
+    HS.beacon.ready(function () {
       return HS.beacon.destroy();
     });
   },
@@ -72,11 +72,11 @@ var App = Ember.Application.extend(Ember.Evented, {
     }
     channels = user.channels;
     if (config.pro) {
-      channels = channels.map(function(channel) {
+      channels = channels.map(function (channel) {
         if (channel.match(/^private-/)) {
           return channel;
         } else {
-          return "private-" + channel;
+          return 'private-' + channel;
         }
       });
 
@@ -86,7 +86,7 @@ var App = Ember.Application.extend(Ember.Evented, {
 
   identifyHSBeacon(user) {
     if (HS && HS.beacon) {
-      HS.beacon.ready(function() {
+      HS.beacon.ready(function () {
         return HS.beacon.identify({
           name: user.name,
           email: user.email,

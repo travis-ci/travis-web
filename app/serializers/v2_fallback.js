@@ -4,7 +4,7 @@ export default V3Serializer.extend({
   isNewSerializerAPI: true,
 
   extractRelationships(modelClass, resourceHash) {
-    if(resourceHash['@type']) {
+    if (resourceHash['@type']) {
       return this._super(...arguments);
     } else {
       let relationships = {};
@@ -36,13 +36,13 @@ export default V3Serializer.extend({
   },
 
   normalize(modelClass, resourceHash) {
-    if(resourceHash['@type']) {
+    if (resourceHash['@type']) {
       return this._super(...arguments);
     } else {
       var modelKey = modelClass.modelName;
       var attributes = resourceHash[modelKey];
-      if(attributes) {
-        for(var key in attributes) {
+      if (attributes) {
+        for (var key in attributes) {
           resourceHash[key] = attributes[key];
         }
 
@@ -51,33 +51,33 @@ export default V3Serializer.extend({
       }
 
       let { data, included } = this._super(...arguments);
-      if(!included) {
+      if (!included) {
         included = [];
       }
       let store = this.store;
 
-      if(data.relationships) {
+      if (data.relationships) {
         Object.keys(data.relationships).forEach(function (key) {
           let relationship = data.relationships[key];
-          let process = function(data) {
-            if(Object.keys(data).sort()+'' !== 'id,type' || (data['@href'] && data.type === 'branch')) {
+          let process = function (data) {
+            if (Object.keys(data).sort() + '' !== 'id,type' || (data['@href'] && data.type === 'branch')) {
               // no need to add records if they have only id and type
               let type = key === 'defaultBranch' ? 'branch' : key.singularize();
               let serializer = store.serializerFor(type);
               let modelClass = store.modelFor(type);
               let normalized = serializer.normalize(modelClass, data);
               included.push(normalized.data);
-              if(normalized.included) {
-                normalized.included.forEach(function(item) {
+              if (normalized.included) {
+                normalized.included.forEach(function (item) {
                   included.push(item);
                 });
               }
             }
           };
 
-          if(Array.isArray(relationship.data)) {
+          if (Array.isArray(relationship.data)) {
             relationship.data.forEach(process);
-          } else if(relationship && relationship.data) {
+          } else if (relationship && relationship.data) {
             process(relationship.data);
           }
         });
@@ -87,7 +87,7 @@ export default V3Serializer.extend({
     }
   },
 
-  keyForV2Relationship(key/*, typeClass, method*/) {
+  keyForV2Relationship(key/* , typeClass, method*/) {
     return key.underscore() + '_id';
   }
 });

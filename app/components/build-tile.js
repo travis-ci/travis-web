@@ -5,10 +5,10 @@ export default Ember.Component.extend({
   classNameBindings: ['build.state'],
   attributeBindings: ['title'],
 
-  title: function() {
+  title: function () {
     var num, state;
     num = this.get('build.number');
     state = this.get('build.state');
-    return "Build #" + num + " " + state;
+    return 'Build #' + num + ' ' + state;
   }.property('build')
 });

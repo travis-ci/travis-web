@@ -2,7 +2,7 @@
 import config from 'travis/config/environment';
 var GAInitializer, initialize;
 
-initialize = function(/*application*/) {
+initialize = function (/* application*/) {
   var ga, s;
   if (config.gaCode) {
     window._gaq = [];
@@ -21,6 +21,6 @@ GAInitializer = {
   initialize: initialize
 };
 
-export {initialize};
+export { initialize };
 
 export default GAInitializer;

@@ -5,11 +5,11 @@ export default Ember.Component.extend({
   classNames: ['owner-tile', 'row-li'],
   classNameBindings: ['repo.default_branch.last_build.state'],
 
-  ownerName: function() {
+  ownerName: function () {
     return this.get('repo.slug').split(/\//)[0];
   }.property('repo.slug'),
 
-  repoName: function() {
+  repoName: function () {
     return this.get('repo.slug').split(/\//)[1];
   }.property('repo.slug'),
 

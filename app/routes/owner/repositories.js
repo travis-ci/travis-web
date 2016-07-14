@@ -16,7 +16,7 @@ export default TravisRoute.extend({
 
     if (this.get('auth.signedIn')) {
       options.headers = {
-        Authorization: "token " + (this.auth.token())
+        Authorization: 'token ' + (this.auth.token())
       };
     }
 

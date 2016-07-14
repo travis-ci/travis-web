@@ -3,19 +3,19 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   isLoading: false,
 
-  githubProfile: function() {
-    return this.get('config').sourceEndpoint + "/" + (this.get('model.login'));
+  githubProfile: function () {
+    return this.get('config').sourceEndpoint + '/' + (this.get('model.login'));
   }.property('model'),
 
-  avatarURL: function() {
+  avatarURL: function () {
     if (this.get('model.avatar_url')) {
-      return (this.get('model.avatar_url')) + "?s=125";
+      return (this.get('model.avatar_url')) + '?s=125';
     } else {
       return 'https://secure.gravatar.com/avatar/?d=mm&s=125';
     }
   }.property('model'),
 
-  owner: function() {
+  owner: function () {
     var data;
     data = this.get('model');
     return {

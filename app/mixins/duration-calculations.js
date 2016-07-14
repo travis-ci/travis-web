@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { durationFrom } from 'travis/utils/helpers';
 
 export default Ember.Mixin.create({
-  duration: function() {
+  duration: function () {
     let duration = this.get('_duration');
     if (this.get('notStarted')) {
       return null;

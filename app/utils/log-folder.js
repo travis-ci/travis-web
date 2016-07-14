@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default (function() {
+export default (function () {
   function LogFolder(element) {
     this.element = element;
     let handlerSelector = '.fold';
@@ -8,8 +8,7 @@ export default (function() {
       .off('click', handlerSelector) // remove any previous click handlers
       .on('click', handlerSelector, (function(_this) {
       return function(event) {
-        var folder;
-        folder = _this.getFolderFromLine(Ember.$(event.target));
+        let folder = _this.getFolderFromLine(Ember.$(event.target));
         _this.toggle(folder);
         event.preventDefault();
         return false;
@@ -17,7 +16,7 @@ export default (function() {
     })(this));
   }
 
-  LogFolder.prototype.fold = function(line) {
+  LogFolder.prototype.fold = function (line) {
     var folder;
     folder = this.getFolderFromLine(line);
     if (folder.hasClass('open')) {
@@ -25,7 +24,7 @@ export default (function() {
     }
   };
 
-  LogFolder.prototype.unfold = function(line) {
+  LogFolder.prototype.unfold = function (line) {
     var folder;
     folder = this.getFolderFromLine(line);
     if (!folder.hasClass('open')) {
@@ -33,11 +32,11 @@ export default (function() {
     }
   };
 
-  LogFolder.prototype.toggle = function(folder) {
+  LogFolder.prototype.toggle = function (folder) {
     return folder.toggleClass('open');
   };
 
-  LogFolder.prototype.getFolderFromLine = function(line) {
+  LogFolder.prototype.getFolderFromLine = function (line) {
     return line.parent('.fold');
   };
 

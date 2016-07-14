@@ -8,11 +8,11 @@ export default Ember.ArrayProxy.extend({
   isLoaded: alias('content.isLoaded'),
   arrangedContent: limit('content', 'limit'),
 
-  totalLength: function() {
+  totalLength: function () {
     return this.get('content.length');
   }.property('content.length'),
 
-  leftLength: function() {
+  leftLength: function () {
     var left, limit, totalLength;
     totalLength = this.get('totalLength');
     limit = this.get('limit');
@@ -24,7 +24,7 @@ export default Ember.ArrayProxy.extend({
     }
   }.property('totalLength', 'limit'),
 
-  isMore: function() {
+  isMore: function () {
     return this.get('leftLength') > 0;
   }.property('leftLength'),
 

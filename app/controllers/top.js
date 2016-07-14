@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
 
   user: alias('auth.currentUser'),
 
-  userName: function() {
+  userName: function () {
     return this.get('user.name') || this.get('user.login');
   }.property('user.login', 'user.name'),
 
@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
     }
   },
 
-  broadcasts: function() {
+  broadcasts: function () {
     var apiEndpoint, broadcasts, options, seenBroadcasts;
     if (this.get('auth.signedIn')) {
       broadcasts = Ember.ArrayProxy.create({
@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
       options = {};
       options.type = 'GET';
       options.headers = {
-        Authorization: "token " + (this.auth.token())
+        Authorization: 'token ' + (this.auth.token())
       };
       seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
       if (seenBroadcasts) {
@@ -52,16 +52,16 @@ export default Ember.Controller.extend({
       } else {
         seenBroadcasts = [];
       }
-      Ember.$.ajax(apiEndpoint + "/v3/broadcasts", options).then((response) => {
+      Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options).then((response) => {
         var receivedBroadcasts;
         if (response.broadcasts.length) {
-          receivedBroadcasts = response.broadcasts.filter(function(broadcast) {
+          receivedBroadcasts = response.broadcasts.filter(function (broadcast) {
             if (!broadcast.expired) {
               if (seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
                 return broadcast;
               }
             }
-          }).map(function(broadcast) {
+          }).map(function (broadcast) {
             return Ember.Object.create(broadcast);
           }).reverse();
         }
@@ -106,11 +106,11 @@ export default Ember.Controller.extend({
       return false;
     }
   },
-  showCta: function() {
+  showCta: function () {
     return !this.get('auth.signedIn') && !this.get('config.pro') && !this.get('landingPage');
   }.property('auth.signedIn', 'landingPage'),
 
-  classProfile: function() {
+  classProfile: function () {
     var classes = ['profile menu'];
 
     if (this.get('tab') === 'profile') {

@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   tagName: 'li',
   classNameBindings: ['type'],
 
-  type: function() {
+  type: function () {
     return this.get('flash.type') || 'broadcast';
   }.property('flash.type'),
 

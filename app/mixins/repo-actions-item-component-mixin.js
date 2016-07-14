@@ -13,7 +13,7 @@ export default Ember.Mixin.create({
   restarting: false,
   cancelling: false,
 
-  userHasPermissionForRepo: function() {
+  userHasPermissionForRepo: function () {
     var repo, user;
     repo = this.get('repo');
     user = this.get('user');
@@ -22,11 +22,11 @@ export default Ember.Mixin.create({
     }
   }.property('user.permissions.[]', 'repo', 'user'),
 
-  canCancel: function() {
+  canCancel: function () {
     return this.get('item.canCancel') && this.get('userHasPermissionForRepo');
   }.property('userHasPermissionForRepo', 'item.canCancel'),
 
-  canRestart: function() {
+  canRestart: function () {
     return this.get('item.canRestart') && this.get('userHasPermissionForRepo');
   }.property('userHasPermissionForRepo', 'item.canRestart'),
 
@@ -45,7 +45,7 @@ export default Ember.Mixin.create({
   },
 
   actions: {
-    restart: function() {
+    restart: function () {
       if (this.get('restarting')) {
         return;
       }
@@ -63,7 +63,7 @@ export default Ember.Mixin.create({
       });
     },
 
-    cancel: function() {
+    cancel: function () {
       if (this.get('cancelling')) {
         return;
       }

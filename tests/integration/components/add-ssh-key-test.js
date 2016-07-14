@@ -8,15 +8,15 @@ moduleForComponent('add-ssh-key', 'Integration | Component | add ssh-key', {
   integration: true
 });
 
-test('it adds an ssh key on submit', function(assert) {
+test('it adds an ssh key on submit', function (assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
   var store = Ember.getOwner(this).lookup('service:store');
 
   var repo;
-  Ember.run(function() {
-    repo  = store.push({data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web'}}});
+  Ember.run(function () {
+    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
   this.set('repo', repo);
@@ -39,19 +39,19 @@ test('it adds an ssh key on submit', function(assert) {
   assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
 
   var done = assert.async();
-  setTimeout(function() { done(); }, 500);
+  setTimeout(function () { done(); }, 500);
 });
 
 
-test('it throws an error if value for ssh key is blank', function(assert) {
+test('it throws an error if value for ssh key is blank', function (assert) {
   assert.expect(5);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
   var store = Ember.getOwner(this).lookup('service:store');
 
   var repo;
-  Ember.run(function() {
-    repo  = store.push({data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web'}}});
+  Ember.run(function () {
+    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
   this.set('repo', repo);

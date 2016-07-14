@@ -9,22 +9,22 @@ export default Model.extend({
   description: attr(),
   active: attr('boolean'),
   admin: attr('boolean'),
-  "private": attr('boolean'),
+  'private': attr('boolean'),
 
-  account: function() {
+  account: function () {
     return this.get('slug').split('/')[0];
   }.property('slug'),
 
-  slug: function() {
-    return (this.get('ownerName')) + "/" + (this.get('name'));
+  slug: function () {
+    return (this.get('ownerName')) + '/' + (this.get('name'));
   }.property('ownerName', 'name'),
 
-  urlGithub: function() {
-    return config.sourceEndpoint + "/" + (this.get('slug'));
+  urlGithub: function () {
+    return config.sourceEndpoint + '/' + (this.get('slug'));
   }.property(),
 
-  urlGithubAdmin: function() {
-    return config.sourceEndpoint + "/" + (this.get('slug')) + "/settings/hooks#travis_minibucket";
+  urlGithubAdmin: function () {
+    return config.sourceEndpoint + '/' + (this.get('slug')) + '/settings/hooks#travis_minibucket';
   }.property(),
 
   toggle() {

@@ -15,9 +15,9 @@ export default Ember.Component.extend({
       var job = this.get('job');
       Ember.$('.popup').removeClass('display');
 
-      return job.removeLog().then(function() {
+      return job.removeLog().then(function () {
         return this.get('flashes').success('Log has been successfully removed.');
-      }, function(xhr) {
+      }, function (xhr) {
         if (xhr.status === 409) {
           return this.get('flashes').error('Log can\'t be removed');
         } else if (xhr.status === 401) {

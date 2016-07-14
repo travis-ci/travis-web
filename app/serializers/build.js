@@ -9,11 +9,11 @@ var Serializer = V2FallbackSerializer.extend({
     _duration: { key: 'duration' }
   },
 
-  extractRelationships: function(modelClass, resourceHash) {
+  extractRelationships: function (modelClass, resourceHash) {
     return this._super(modelClass, resourceHash);
   },
 
-  normalizeSingleResponse: function(store, primaryModelClass, payload/*, id, requestType*/) {
+  normalizeSingleResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commit) {
       payload.build.commit = payload.commit;
       delete payload.build.commit_id;
@@ -21,10 +21,10 @@ var Serializer = V2FallbackSerializer.extend({
     return this._super(...arguments);
   },
 
-  normalizeArrayResponse: function(store, primaryModelClass, payload/*, id, requestType*/) {
+  normalizeArrayResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commits) {
-      payload.builds.forEach(function(build) {
-        let commit = payload.commits.findBy('id', build.commit_id)
+      payload.builds.forEach(function (build) {
+        let commit = payload.commits.findBy('id', build.commit_id);
         if (commit) {
           build.commit = commit;
           return delete build.commit_id;
@@ -34,8 +34,8 @@ var Serializer = V2FallbackSerializer.extend({
     return this._super(...arguments);
   },
 
-  keyForV2Relationship: function(key/*, typeClass, method*/) {
-    if(key === 'jobs') {
+  keyForV2Relationship: function (key/* , typeClass, method*/) {
+    if (key === 'jobs') {
       return 'job_ids';
     } else if (key === 'repo') {
       return 'repository_id';
@@ -46,7 +46,7 @@ var Serializer = V2FallbackSerializer.extend({
     }
   },
 
-  keyForRelationship(key/*, typeClass, method*/) {
+  keyForRelationship(key/* , typeClass, method*/) {
     if (key === 'repo') {
       return 'repository';
     } else {
@@ -54,25 +54,25 @@ var Serializer = V2FallbackSerializer.extend({
     }
   },
 
-  normalize: function(modelClass, resourceHash) {
+  normalize: function (modelClass, resourceHash) {
     // TODO: remove this after switching to V3 entirely
-    if(!resourceHash['@type'] && resourceHash.commit && resourceHash.commit.hasOwnProperty('branch_is_default')) {
+    if (!resourceHash['@type'] && resourceHash.commit && resourceHash.commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
-          commit = resourceHash.commit;
+        commit = resourceHash.commit;
       let branch = {
         name: commit.branch,
         default_branch: commit.branch_is_default,
-        "@href": `/repo/${build.repository_id}/branch/${commit.branch}`
+        '@href': `/repo/${build.repository_id}/branch/${commit.branch}`
       };
       resourceHash.build.branch = branch;
     }
 
     // fix pusher payload, it doesn't include a branch record:
-    if(!resourceHash['@type'] && resourceHash.build &&
+    if (!resourceHash['@type'] && resourceHash.build &&
        resourceHash.repository && resourceHash.repository.default_branch) {
       let branchName = resourceHash.build.branch,
-          repository = resourceHash.repository,
-          defaultBranchName = repository.default_branch.name;
+        repository = resourceHash.repository,
+        defaultBranchName = repository.default_branch.name;
 
       resourceHash.build.branch = {
         name: branchName,
