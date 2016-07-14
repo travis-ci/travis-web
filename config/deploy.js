@@ -1,17 +1,21 @@
 var VALID_DEPLOY_TARGETS = [
-  'pull-request',
+  'org-production-pull-request',
+  'com-production-pull-request'
 ];
 
 module.exports = function(deployTarget) {
   var ENV = {
-    build: {},
+    build: {
+      environment: 'production'
+    },
     redis: {
       allowOverwrite: true,
-      keyPrefix: 'travis:index'
+      keyPrefix: process.env.TRAVIS_PULL_REQUEST_BRANCH
     },
     s3: {
-      bucket: 'travis-web-production-next',
-      region: 'eu-west-1'
+      region: 'eu-west-1',
+      accessKeyId: process.env.AWS_KEY,
+      secretAccessKey: process.env.AWS_SECRET
     }
   };
 
@@ -19,13 +23,14 @@ module.exports = function(deployTarget) {
     throw new Error('Invalid deployTarget ' + deployTarget);
   }
 
-  if (deployTarget === 'pull-request') {
-    ENV.build.environment = 'production';
-    ENV.s3.accessKeyId = process.env.AWS_KEY;
-    ENV.s3.secretAccessKey = process.env.AWS_SECRET;
+  if (deployTarget === 'org-production-pull-request') {
+    ENV.s3.bucket = 'travis-web-production-next';
+    ENV.redis.url = process.env.ORG_PRODUCTION_REDIS_URL;
+  }
 
-    ENV.redis.keyPrefix = process.env.TRAVIS_PULL_REQUEST_BRANCH;
-    ENV.redis.url = process.env.REDIS_URL;
+  if (deployTarget === 'com-production-pull-request') {
+    ENV.s3.bucket = 'travis-pro-web-production-next';
+    ENV.redis.url = process.env.COM_PRODUCTION_REDIS_URL;
   }
 
   return ENV;
