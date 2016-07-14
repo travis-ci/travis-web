@@ -134,12 +134,20 @@ $tooltip-arrow-width: .8em
 .request-item
   [data-tooltip]
     $tooltip-spacing: 3em
+    position: absolute
+    top: .5em
+    right: 0
     width: 7em
     text-align: center
+    z-index: 3
     &:after
       bottom: $tooltip-spacing
     &:before
-      bottom: $tooltip-spacing - $tooltip-arrow-width 
+      bottom: $tooltip-spacing - $tooltip-arrow-width
+    @media #{$medium-up}
+      width: 3em
+    @media #{$xlarge-up}
+      width: 7em
 
 .tooltip-jobs[data-tooltip]
   $tooltip-spacing: 3em

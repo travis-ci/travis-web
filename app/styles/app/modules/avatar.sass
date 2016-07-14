@@ -13,16 +13,14 @@
   position: relative
   vertical-align: middle
   border-radius: 50%
-  background-color: white
   overflow: hidden
-
   .pseudo-avatar
     +absoluteCenter
     border: 1px solid $cement-grey
     border-radius: 50%
     background: white
-    z-index: 1
     transform: scale(.95)
+    z-index: 1
     &:after
       content: attr(data-initials)
       +absoluteCenter
