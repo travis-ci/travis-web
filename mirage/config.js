@@ -147,18 +147,28 @@ export default function() {
     return response;
   });
 
-  this.post('/builds/:id/restart', (/*schema, request*/) => {
-    return {
-      flash: [{notice: "The build was successfully restarted."}],
-      result: true
-    };
+  this.post('/builds/:id/restart', (schema, request) => {
+    let build = schema.builds.find(request.params.id);
+    if (build) {
+      return {
+        flash: [{notice: "The build was successfully restarted."}],
+        result: true
+      };
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
   });
 
-  this.post('/jobs/:id/restart', (/*schema, request*/) => {
-    return {
-      flash: [{notice: "The job was successfully restarted."}],
-      result: true
-    };
+  this.post('/jobs/:id/restart', (schema, request) => {
+    let job = schema.jobs.find(request.params.id);
+    if (job) {
+      return {
+        flash: [{notice: "The job was successfully restarted."}],
+        result: true
+      };
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
   });
 
   this.get('/v3/repo/:repo_id/builds', function(schema, request) {

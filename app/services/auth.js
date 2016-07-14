@@ -204,12 +204,14 @@ export default Ember.Service.extend({
   },
 
   expectedOrigin() {
-    var endpoint;
-    endpoint = this.get('endpoint');
-    if (endpoint[0] === '/') {
+    let endpoint = this.get('endpoint');
+    if (endpoint && endpoint[0] === '/') {
       return this.receivingEnd;
     } else {
-      return endpoint.match(/^https?:\/\/[^\/]*/)[0];
+      let matches = endpoint.match(/^https?:\/\/[^\/]*/);
+      if (matches && matches.length) {
+        return matches[0];
+      }
     }
   },
 

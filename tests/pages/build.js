@@ -9,5 +9,6 @@ let {
 export default PageObject.create({
   visit: visitable('travis-ci/travis-web/builds/1'),
   restartBuild: clickable('.button-circle-trigger'),
-  restartedNotification: text('p.flash-message')
+  restartedNotification: text('p.flash-message'),
+  singleJobLogText: text('.log-body pre')
 });
