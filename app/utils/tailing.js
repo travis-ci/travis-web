@@ -24,8 +24,6 @@ export default (function () {
     return Ember.$(this.logSelector);
   };
 
-
-
   Tailing.prototype.run = function () {
     this.autoScroll();
     this.positionButton();
