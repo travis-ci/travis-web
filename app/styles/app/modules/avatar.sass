@@ -22,6 +22,7 @@
     border-radius: 50%
     background: white
     z-index: 1
+    transform: scale(.95)
     &:after
       content: attr(data-initials)
       +absoluteCenter
@@ -36,6 +37,11 @@
     +absoluteCenter
     z-index: 2
     border-radius: 50%
+    width: 100%
+    height: 100%
+
+  .pseudo-avatar ~ .real-avatar.avatar--small
+    background-color: white
 
 .profile
   .avatar
