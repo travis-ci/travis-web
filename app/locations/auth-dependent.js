@@ -16,6 +16,10 @@ export default Ember.HistoryLocation.extend({
     }
   },
 
+  auth: Ember.computed(function() {
+    return Ember.getOwner(this).lookup('service:auth');
+  }),
+
   getURL: function() {
     var url;
     url = this._super(...arguments);
