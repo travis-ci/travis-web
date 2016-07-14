@@ -17,5 +17,7 @@ export default PageObject.create({
   logError: text('.job-log .notice'),
 
   restartJob: clickable('.button-circle-trigger'),
-  restartedNotification: text('p.flash-message')
+  cancelJob: clickable('.button-circle-cancel'),
+  restartedNotification: text('p.flash-message'),
+  cancelledNotification: text('p.flash-message')
 });

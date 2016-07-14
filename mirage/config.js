@@ -180,6 +180,16 @@ export default function() {
     }
   });
 
+  this.post('/jobs/:id/cancel', (schema, request) => {
+    let job = schema.jobs.find(request.params.id);
+    if (job) {
+      return new Mirage.Response(204, {}, {});
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
+  });
+
+
   this.get('/v3/repo/:repo_id/builds', function(schema, request) {
     const branch = schema.branches.where({name: request.queryParams['branch.name']}).models[0];
     const builds = schema.builds.where({branchId: branch.id});
