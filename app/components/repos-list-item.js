@@ -11,13 +11,13 @@ export default Ember.Component.extend(Polling, {
   classNames: ['repo'],
   classNameBindings: ['selected'],
 
-  selected: function () {
+  selected: Ember.computed('selectedRepo', function () {
     return this.get('repo') === this.get('selectedRepo');
-  }.property('selectedRepo'),
+  }),
 
-  color: function () {
+  color: Ember.computed('repo.currentBuild.state', function () {
     return colorForState(this.get('repo.currentBuild.state'));
-  }.property('repo.currentBuild.state'),
+  }),
 
   scrollTop: function () {
     if (window.scrollY > 0) {

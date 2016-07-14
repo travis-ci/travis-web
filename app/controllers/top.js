@@ -11,9 +11,9 @@ export default Ember.Controller.extend({
 
   user: alias('auth.currentUser'),
 
-  userName: function () {
+  userName: Ember.computed('user.login', 'user.name', function () {
     return this.get('user.name') || this.get('user.login');
-  }.property('user.login', 'user.name'),
+  }),
 
   isDashboard: false,
 
@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
     }
   },
 
-  broadcasts: function () {
+  broadcasts: Ember.computed('broadcasts', function () {
     var apiEndpoint, broadcasts, options, seenBroadcasts;
     if (this.get('auth.signedIn')) {
       broadcasts = Ember.ArrayProxy.create({
@@ -71,7 +71,7 @@ export default Ember.Controller.extend({
       });
       return broadcasts;
     }
-  }.property('broadcasts'),
+  }),
 
   actions: {
 
@@ -106,11 +106,11 @@ export default Ember.Controller.extend({
       return false;
     }
   },
-  showCta: function () {
+  showCta: Ember.computed('auth.signedIn', 'landingPage', function () {
     return !this.get('auth.signedIn') && !this.get('config.pro') && !this.get('landingPage');
-  }.property('auth.signedIn', 'landingPage'),
+  }),
 
-  classProfile: function () {
+  classProfile: Ember.computed('tab', 'auth.state', function () {
     var classes = ['profile menu'];
 
     if (this.get('tab') === 'profile') {
@@ -120,5 +120,5 @@ export default Ember.Controller.extend({
     classes.push(this.get('controller.auth.state') || 'signed-out');
 
     return classes.join(' ');
-  }.property('tab', 'auth.state')
+  })
 });

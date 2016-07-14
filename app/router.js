@@ -4,7 +4,7 @@ import config from './config/environment';
 import Location from 'travis/utils/location';
 
 var Router = Ember.Router.extend({
-  location: function () {
+  location: Ember.computed(function () {
     if (Ember.testing) {
       return 'none';
     } else {
@@ -18,7 +18,7 @@ var Router = Ember.Router.extend({
         auth: Ember.getOwner(this).lookup('service:auth')
       });
     }
-  }.property(),
+  }),
 
   generate() {
     var url;

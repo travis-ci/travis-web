@@ -12,7 +12,7 @@ export default Ember.Component.extend({
 
   user: alias('auth.currentUser'),
 
-  canActivate: function () {
+  canActivate: Ember.computed('user.pushPermissions.[]', 'repo', function () {
     let user = this.get('user');
     if (user) {
       let permissions = user.get('pushPermissions'),
@@ -22,7 +22,7 @@ export default Ember.Component.extend({
     } else {
       return false;
     }
-  }.property('user.pushPermissions.[]', 'repo'),
+  }),
 
   activate: task(function * () {
     const apiEndpoint = config.apiEndpoint;

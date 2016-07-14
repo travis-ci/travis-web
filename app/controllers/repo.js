@@ -27,17 +27,17 @@ export default Ember.Controller.extend({
     this.set('repo', null);
   },
 
-  isEmpty: function () {
+  isEmpty: Ember.computed('repos.isLoaded', 'repos.length', function () {
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
-  }.property('repos.isLoaded', 'repos.length'),
+  }),
 
-  statusImageUrl: function () {
+  statusImageUrl: Ember.computed('repo.slug', function () {
     return statusImage(this.get('repo.slug'));
-  }.property('repo.slug'),
+  }),
 
-  showCurrentBuild: function () {
+  showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
     return this.get('repo.currentBuild.id') && this.get('repo.active');
-  }.property('repo.currentBuild.id', 'repo.active'),
+  }),
 
   actions: {
     statusImages() {
@@ -46,13 +46,13 @@ export default Ember.Controller.extend({
     }
   },
 
-  slug: function () {
+  slug: Ember.computed('repo.slug', function () {
     return this.get('repo.slug');
-  }.property('repo.slug'),
+  }),
 
-  isLoading: function () {
+  isLoading: Ember.computed('repo.isLoading', function () {
     return this.get('repo.isLoading');
-  }.property('repo.isLoading'),
+  }),
 
   init() {
     this._super(...arguments);
@@ -155,7 +155,7 @@ export default Ember.Controller.extend({
     return this.set('tab', tab);
   },
 
-  urlGithub: function () {
+  urlGithub: Ember.computed('repo.slug', function () {
     return githubRepo(this.get('repo.slug'));
-  }.property('repo.slug')
+  })
 });

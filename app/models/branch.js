@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
@@ -11,7 +12,7 @@ export default Model.extend({
   builds: hasMany('builds', { inverse: 'branch' }),
   repo: belongsTo('repo', { inverse: 'defaultBranch' }),
 
-  repoId: function () {
+  repoId: Ember.computed('id', function () {
     return this.get('id').split('/')[3];
-  }.property('id')
+  })
 });

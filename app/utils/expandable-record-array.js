@@ -4,7 +4,7 @@ export default Ember.ArrayProxy.extend({
   isLoaded: false,
   isLoading: false,
 
-  promise: function () {
+  promise: Ember.computed(function () {
     var self;
     self = this;
     return new Ember.RSVP.Promise(function (resolve) {
@@ -20,7 +20,7 @@ export default Ember.ArrayProxy.extend({
         return self.addObserver('isLoaded', observer);
       }
     });
-  }.property(),
+  }),
 
   load(array) {
     this.set('isLoading', true);

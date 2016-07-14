@@ -33,7 +33,7 @@ Build.reopen({
   commit: belongsTo('commit', { async: false }),
   jobs: hasMany('job', { async: true }),
 
-  config: function () {
+  config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
       return compact(config);
@@ -44,51 +44,51 @@ Build.reopen({
       this.set('isFetchingConfig', true);
       return this.reload();
     }
-  }.property('_config'),
+  }),
 
-  isPullRequest: function () {
+  isPullRequest: Ember.computed('eventType', function () {
     return this.get('eventType') === 'pull_request' || this.get('pullRequest');
-  }.property('eventType'),
+  }),
 
-  isMatrix: function () {
+  isMatrix: Ember.computed('jobs.length', function () {
     return this.get('jobs.length') > 1;
-  }.property('jobs.length'),
+  }),
 
-  isFinished: function () {
+  isFinished: Ember.computed('state', function () {
     var ref;
     return (ref = this.get('state')) === 'passed' || ref === 'failed' || ref === 'errored' || ref === 'canceled';
-  }.property('state'),
+  }),
 
-  notStarted: function () {
+  notStarted: Ember.computed('state', function () {
     var ref;
     return (ref = this.get('state')) === 'queued' || ref === 'created' || ref === 'received';
-  }.property('state'),
+  }),
 
-  startedAt: function () {
+  startedAt: Ember.computed('_startedAt', 'notStarted', function () {
     if (!this.get('notStarted')) {
       return this.get('_startedAt');
     }
-  }.property('_startedAt', 'notStarted'),
+  }),
 
-  finishedAt: function () {
+  finishedAt: Ember.computed('_finishedAt', 'notStarted', function () {
     if (!this.get('notStarted')) {
       return this.get('_finishedAt');
     }
-  }.property('_finishedAt', 'notStarted'),
+  }),
 
-  requiredJobs: function () {
+  requiredJobs: Ember.computed('jobs.@each.allowFailure', function () {
     return this.get('jobs').filter(function (data) {
       return !data.get('allowFailure');
     });
-  }.property('jobs.@each.allowFailure'),
+  }),
 
-  allowedFailureJobs: function () {
+  allowedFailureJobs: Ember.computed('jobs.@each.allowFailure', function () {
     return this.get('jobs').filter(function (data) {
       return data.get('allowFailure');
     });
-  }.property('jobs.@each.allowFailure'),
+  }),
 
-  rawConfigKeys: function () {
+  rawConfigKeys: Ember.computed('config', 'jobs.@each.config', function () {
     var keys;
     keys = [];
     this.get('jobs').forEach(function (job) {
@@ -99,9 +99,9 @@ Build.reopen({
       });
     });
     return keys;
-  }.property('config', 'jobs.@each.config'),
+  }),
 
-  configKeys: function () {
+  configKeys: Ember.computed('rawConfigKeys.length', function () {
     var headers, keys;
     keys = this.get('rawConfigKeys');
     headers = ['Job', 'Duration', 'Finished'];
@@ -113,11 +113,11 @@ Build.reopen({
         return key;
       }
     });
-  }.property('rawConfigKeys.length'),
+  }),
 
-  canCancel: function () {
+  canCancel: Ember.computed('jobs.@each.canCancel', 'jobs', 'jobs.[]', function () {
     return this.get('jobs').filterBy('canCancel', true).length;
-  }.property('jobs.@each.canCancel', 'jobs', 'jobs.[]'),
+  }),
 
   canRestart: Ember.computed.alias('isFinished'),
 
@@ -129,12 +129,12 @@ Build.reopen({
     return this.get('ajax').post(`/builds/${this.get('id')}/restart`);
   },
 
-  formattedFinishedAt: function () {
+  formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
       return moment(finishedAt).format('lll');
     }
-  }.property('finishedAt')
+  })
 
 });
 

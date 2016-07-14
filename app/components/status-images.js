@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   classNames: ['popup', 'status-images'],
   formats: ['Image URL', 'Markdown', 'Textile', 'Rdoc', 'AsciiDoc', 'RST', 'Pod', 'CCTray'],
 
-  branches: function () {
+  branches: Ember.computed('popupName', 'repo', function () {
     let repoId = this.get('repo.id'),
       popupName = this.get('popupName');
 
@@ -48,7 +48,7 @@ export default Ember.Component.extend({
       // if status images popup is not open, don't fetch any branches
       return [];
     }
-  }.property('popupName', 'repo'),
+  }),
 
   actions: {
     close() {
@@ -56,10 +56,10 @@ export default Ember.Component.extend({
     }
   },
 
-  statusString: function () {
+  statusString: Ember.computed('format', 'repo.slug', 'branch', function () {
     let format = this.get('format') || this.get('formats.firstObject'),
       branch = this.get('branch') || 'master';
 
     return formatStatusImage(format, this.get('repo.slug'), branch);
-  }.property('format', 'repo.slug', 'branch')
+  })
 });

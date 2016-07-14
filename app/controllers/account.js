@@ -42,11 +42,11 @@ export default Ember.Controller.extend({
     }
   },
 
-  accountName: function () {
+  accountName: Ember.computed('model.name', 'model.login', function () {
     return this.get('model.name') || this.get('model.login');
-  }.property('model.name', 'model.login'),
+  }),
 
-  hooks: function () {
+  hooks: Ember.computed('allHooks.length', 'allHooks', function () {
     let hooks = this.get('allHooks');
     if (!hooks) {
       this.reloadHooks();
@@ -54,9 +54,9 @@ export default Ember.Controller.extend({
     return this.get('allHooks').filter(function (hook) {
       return hook.get('admin');
     });
-  }.property('allHooks.length', 'allHooks'),
+  }),
 
-  hooksWithoutAdmin: function () {
+  hooksWithoutAdmin: Ember.computed('allHooks.length', 'allHooks', function () {
     let hooks = this.get('allHooks');
     if (!hooks) {
       this.reloadHooks();
@@ -64,27 +64,27 @@ export default Ember.Controller.extend({
     return this.get('allHooks').filter(function (hook) {
       return !hook.get('admin');
     });
-  }.property('allHooks.length', 'allHooks'),
+  }),
 
-  showPrivateReposHint: function () {
+  showPrivateReposHint: Ember.computed(function () {
     return this.config.show_repos_hint === 'private';
-  }.property(),
+  }),
 
-  showPublicReposHint: function () {
+  showPublicReposHint: Ember.computed(function () {
     return this.config.show_repos_hint === 'public';
-  }.property(),
+  }),
 
-  billingUrl: function () {
+  billingUrl: Ember.computed('model.name', 'model.login', function () {
     var id;
     id = this.get('model.type') === 'user' ? 'user' : this.get('model.login');
     return this.config.billingEndpoint + '/subscriptions/' + id;
-  }.property('model.name', 'model.login'),
+  }),
 
-  subscribeButtonInfo: function () {
+  subscribeButtonInfo: Ember.computed('model.login', 'model.type', function () {
     return {
       billingUrl: this.get('billingUrl'),
       subscribed: this.get('model.subscribed'),
       education: this.get('model.education')
     };
-  }.property('model.login', 'model.type')
+  })
 });

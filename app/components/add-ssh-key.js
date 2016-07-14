@@ -41,9 +41,9 @@ export default Ember.Component.extend({
     });
   },
 
-  valueChanged: function () {
+  valueChanged: Ember.observer('value', function () {
     return this.set('valueError', false);
-  }.observes('value'),
+  }),
 
   addErrorsFromResponse(errArr) {
     var error = errArr[0].detail;

@@ -34,7 +34,7 @@ const Repo = Model.extend({
     return this.store.recordForId('ssh_key', this.get('id'));
   },
 
-  envVars: function () {
+  envVars: Ember.computed(function () {
     var id;
     id = this.get('id');
     return this.store.filter('env_var', {
@@ -42,9 +42,9 @@ const Repo = Model.extend({
     }, function (v) {
       return v.get('repo.id') === id;
     });
-  }.property(),
+  }),
 
-  builds: function () {
+  builds: Ember.computed(function () {
     var array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
@@ -60,9 +60,9 @@ const Repo = Model.extend({
     array.load(builds);
     array.observe(builds);
     return array;
-  }.property(),
+  }),
 
-  pullRequests: function () {
+  pullRequests: Ember.computed(function () {
     var array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
@@ -79,9 +79,9 @@ const Repo = Model.extend({
     id = this.get('id');
     array.observe(builds);
     return array;
-  }.property(),
+  }),
 
-  crons: function () {
+  crons: Ember.computed(function () {
     var array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
@@ -98,42 +98,42 @@ const Repo = Model.extend({
     id = this.get('id');
     array.observe(builds);
     return array;
-  }.property(),
+  }),
 
-  branches: function () {
+  branches: Ember.computed(function () {
     var id = this.get('id');
     return this.store.filter('branch', {
       repository_id: id
     }, function (b) {
       return b.get('repoId') === id;
     });
-  }.property(),
+  }),
 
-  cronJobs: function () {
+  cronJobs: Ember.computed(function () {
     var id = this.get('id');
     return this.store.filter('cron', {
       repository_id: id
     }, function (cron) {
       return cron.get('branch.repoId') === id;
     });
-  }.property(),
+  }),
 
-  owner: function () {
+  owner: Ember.computed('slug', function () {
     return (this.get('slug') || '').split('/')[0];
-  }.property('slug'),
+  }),
 
-  name: function () {
+  name: Ember.computed('slug', function () {
     return (this.get('slug') || '').split('/')[1];
-  }.property('slug'),
+  }),
 
-  stats: function () {
+  stats: Ember.computed('slug', function () {
     if (this.get('slug')) {
       return this.get('_stats') || Ember.$.get('https://api.github.com/repos/' + this.get('slug'), (data) => {
         this.set('_stats', data);
         return this.notifyPropertyChange('stats');
       }) && {};
     }
-  }.property('slug'),
+  }),
 
   updateTimes() {
     let currentBuild = this.get('currentBuild');

@@ -23,9 +23,9 @@ export default Ember.Service.extend({
     return this.get('sessionStorage').getItem('travis.token');
   },
 
-  endpoint: function () {
+  endpoint: Ember.computed(function () {
     return config.authEndpoint || config.apiEndpoint;
-  }.property(),
+  }),
 
   signOut: function () {
     this.get('sessionStorage').clear();
@@ -161,17 +161,17 @@ export default Ember.Service.extend({
     }
   },
 
-  signedIn: function () {
+  signedIn: Ember.computed('state', function () {
     return this.get('state') === 'signed-in';
-  }.property('state'),
+  }),
 
-  signedOut: function () {
+  signedOut: Ember.computed('state', function () {
     return this.get('state') === 'signed-out';
-  }.property('state'),
+  }),
 
-  signingIn: function () {
+  signingIn: Ember.computed('state', function () {
     return this.get('state') === 'signing-in';
-  }.property('state'),
+  }),
 
   storeData(data, storage) {
     if (data.token) {
@@ -236,13 +236,13 @@ export default Ember.Service.extend({
     }
   },
 
-  userName: function () {
+  userName: Ember.computed('currentUser.login', 'currentUser.name', function () {
     return this.get('currentUser.name') || this.get('currentUser.login');
-  }.property('currentUser.login', 'currentUser.name'),
+  }),
 
-  gravatarUrl: function () {
+  gravatarUrl: Ember.computed('currentUser.gravatarId', function () {
     return location.protocol + '//www.gravatar.com/avatar/' + (this.get('currentUser.gravatarId')) + '?s=48&d=mm';
-  }.property('currentUser.gravatarId'),
+  }),
 
   permissions: Ember.computed.alias('currentUser.permissions')
 });

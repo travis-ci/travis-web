@@ -55,7 +55,7 @@ var LogChunks = Ember.ArrayProxy.extend({
     return callback(missing, after);
   },
 
-  last: function () {
+  last: Ember.computed('content.[]', 'final', function () {
     var i, last, len, max, part, ref;
     max = -1;
     last = null;
@@ -68,11 +68,11 @@ var LogChunks = Ember.ArrayProxy.extend({
       }
     }
     return last;
-  }.property('content.[]', 'final'),
+  }),
 
-  final: function () {
+  final: Ember.computed(function () {
     return this.get('content').findBy('final', true);
-  }.property(),
+  }),
 
   tryFinalizing: function () {
     var content, last;

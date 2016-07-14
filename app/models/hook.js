@@ -11,21 +11,21 @@ export default Model.extend({
   admin: attr('boolean'),
   'private': attr('boolean'),
 
-  account: function () {
+  account: Ember.computed('slug', function () {
     return this.get('slug').split('/')[0];
-  }.property('slug'),
+  }),
 
-  slug: function () {
+  slug: Ember.computed('ownerName', 'name', function () {
     return (this.get('ownerName')) + '/' + (this.get('name'));
-  }.property('ownerName', 'name'),
+  }),
 
-  urlGithub: function () {
+  urlGithub: Ember.computed(function () {
     return config.sourceEndpoint + '/' + (this.get('slug'));
-  }.property(),
+  }),
 
-  urlGithubAdmin: function () {
+  urlGithubAdmin: Ember.computed(function () {
     return config.sourceEndpoint + '/' + (this.get('slug')) + '/settings/hooks#travis_minibucket';
-  }.property(),
+  }),
 
   toggle() {
     if (this.get('isSaving')) {

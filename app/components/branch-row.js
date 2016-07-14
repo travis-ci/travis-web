@@ -15,11 +15,11 @@ export default Ember.Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  urlGithubCommit: function () {
+  urlGithubCommit: Ember.computed('branch.last_build', function () {
     return githubCommitUrl(this.get('branch.repository.slug'), this.get('branch.last_build.commit.sha'));
-  }.property('branch.last_build'),
+  }),
 
-  getLast5Builds: function () {
+  getLast5Builds: Ember.computed(function () {
     var apiEndpoint, branchName, lastBuilds, options, repoId;
     lastBuilds = Ember.ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
@@ -59,7 +59,7 @@ export default Ember.Component.extend({
       });
     }
     return lastBuilds;
-  }.property(),
+  }),
 
   actions: {
     viewAllBuilds() {

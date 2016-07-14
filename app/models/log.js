@@ -96,11 +96,11 @@ var LogModel = Ember.Object.extend({
     });
   },
 
-  parts: function () {
+  parts: Ember.computed(function () {
     return Ember.ArrayProxy.create({
       content: []
     });
-  }.property(),
+  }),
 
   clearParts() {
     var parts;

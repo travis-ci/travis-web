@@ -22,28 +22,28 @@ export default Ember.Controller.extend({
     this.olderThanNumber(id, number, type);
   },
 
-  displayShowMoreButton: function () {
+  displayShowMoreButton: Ember.computed('tab', 'builds.lastObject.number', function () {
     return this.get('tab') !== 'branches' && parseInt(this.get('builds.lastObject.number')) > 1;
-  }.property('tab', 'builds.lastObject.number'),
+  }),
 
-  displayPullRequests: function () {
+  displayPullRequests: Ember.computed('tab', function () {
     return this.get('tab') === 'pull_requests';
-  }.property('tab'),
+  }),
 
-  displayBranches: function () {
+  displayBranches: Ember.computed('tab', function () {
     return this.get('tab') === 'branches';
-  }.property('tab'),
+  }),
 
-  displayCrons: function () {
+  displayCrons: Ember.computed('tab', function () {
     return this.get('tab') === 'crons';
-  }.property('tab'),
+  }),
 
-  noticeData: function () {
+  noticeData: Ember.computed('repo', function () {
     return {
       repo: this.get('repo'),
       auth: this.auth.token()
     };
-  }.property('repo'),
+  }),
 
   olderThanNumber(id, number, type) {
     var options;

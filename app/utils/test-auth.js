@@ -29,27 +29,27 @@ export default Ember.Object.extend({
   // TODO: we use these properties in templates, but there
   //       really should be something like a 'session' service that can be
   //       injected where we need it
-  userName: function () {
+  userName: Ember.computed('currentUser.login', 'currentUser.name', function () {
     return this.get('currentUser.name') || this.get('currentUser.login');
-  }.property('currentUser.login', 'currentUser.name'),
+  }),
 
-  gravatarUrl: function () {
+  gravatarUrl: Ember.computed('currentUser.gravatarId', function () {
     return location.protocol + '//www.gravatar.com/avatar/' + (this.get('currentUser.gravatarId')) + '?s=48&d=mm';
-  }.property('currentUser.gravatarId'),
+  }),
 
   permissions: Ember.computed.alias('currentUser.permissions'),
 
-  signedIn: function () {
+  signedIn: Ember.computed('state', function () {
     return this.get('state') === 'signed-in';
-  }.property('state'),
+  }),
 
-  signedOut: function () {
+  signedOut: Ember.computed('state', function () {
     return this.get('state') === 'signed-out';
-  }.property('state'),
+  }),
 
-  signingIn: function () {
+  signingIn: Ember.computed('state', function () {
     return this.get('state') === 'signing-in';
-  }.property('state'),
+  }),
 
   token() {
     if (this.get('state') === 'signed-in') {

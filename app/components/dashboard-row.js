@@ -16,9 +16,9 @@ export default Ember.Component.extend({
 
   currentBuild: alias('repo.currentBuild'),
 
-  urlGithubCommit: function () {
+  urlGithubCommit: Ember.computed('repo.slug', 'currentBuild.commit.sha', function () {
     return githubCommitUrl(this.get('repo.slug'), this.get('currentBuild.commit.sha'));
-  }.property('repo.slug', 'currentBuild.commit.sha'),
+  }),
 
   displayMenuTofu: Ember.computed('permissions.all', 'repo', function () {
     return this.get('permissions').hasPushPermission(this.get('repo'));

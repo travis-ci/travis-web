@@ -22,7 +22,7 @@ export default Ember.Service.extend({
     }));
   },
 
-  messages: function () {
+  messages: Ember.computed('flashes.[]', 'flashes.length', function () {
     var flashes, model;
 
     flashes = this.get('flashes');
@@ -31,7 +31,7 @@ export default Ember.Service.extend({
       model.pushObjects(flashes.toArray().reverse());
     }
     return model.uniq();
-  }.property('flashes.[]', 'flashes.length'),
+  }),
 
   // TODO: when we rewrite all of the place where we use `loadFlashes` we could
   // rewrite this class and make the implementation better, because right now
