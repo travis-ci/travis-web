@@ -16,21 +16,21 @@ module.exports = {
     // enforce spacing inside array brackets
     'array-bracket-spacing': [2, 'never'],
 
-    // // enforce spacing inside single-line blocks
-    // // http://eslint.org/docs/rules/block-spacing
-    // 'block-spacing': [2, 'always'],
+    // enforce spacing inside single-line blocks
+    // http://eslint.org/docs/rules/block-spacing
+    'block-spacing': [2, 'always'],
 
-    // // enforce one true brace style
-    // 'brace-style': [2, '1tbs', { allowSingleLine: true }],
+    // enforce one true brace style
+    'brace-style': [2, '1tbs', { allowSingleLine: true }],
 
-    // // require camel case names
-    // camelcase: [2, { properties: 'never' }],
+    // require camel case names
+    camelcase: [2, { properties: 'never' }],
 
-    // // enforce spacing before and after comma
-    // 'comma-spacing': [2, { before: false, after: true }],
+    // enforce spacing before and after comma
+    'comma-spacing': [2, { before: false, after: true }],
 
-    // // enforce one true comma style
-    // 'comma-style': [2, 'last'],
+    // enforce one true comma style
+    'comma-style': [2, 'last'],
 
     // // disallow padding inside computed properties
     // 'computed-property-spacing': [2, 'never'],
