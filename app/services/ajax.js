@@ -1,11 +1,11 @@
 /* global jQuery */
 import Ember from 'ember';
 import config from 'travis/config/environment';
-var default_options;
+var defaultOptions;
 
 jQuery.support.cors = true;
 
-default_options = {
+defaultOptions = {
   accepts: {
     json: 'application/json; version=2'
   }
@@ -75,7 +75,7 @@ export default Ember.Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    options = Ember.$.extend(options, default_options);
+    options = Ember.$.extend(options, defaultOptions);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
       params = jQuery.param(options.data);

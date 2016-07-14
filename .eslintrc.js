@@ -24,7 +24,7 @@ module.exports = {
     'brace-style': [2, '1tbs', { allowSingleLine: true }],
 
     // require camel case names
-    camelcase: [2, { properties: 'never' }],
+    'camelcase': [2, { properties: 'never' }],
 
     // enforce spacing before and after comma
     'comma-spacing': [2, { before: false, after: true }],
@@ -32,8 +32,8 @@ module.exports = {
     // enforce one true comma style
     'comma-style': [2, 'last'],
 
-    // // disallow padding inside computed properties
-    // 'computed-property-spacing': [2, 'never'],
+    // disallow padding inside computed properties
+    'computed-property-spacing': [2, 'never'],
 
     // // enforces consistent naming when capturing the current execution context
     // 'consistent-this': 0,

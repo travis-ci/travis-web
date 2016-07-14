@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 export default (function () {
-  function Tailing(window1, tail_selector, log_selector) {
+  function Tailing(window1, tailSelector, logSelector) {
     this.window = window1;
-    this.tail_selector = tail_selector;
-    this.log_selector = log_selector;
+    this.tailSelector = tailSelector;
+    this.logSelector = logSelector;
     this.position = this.window.scrollTop();
     this.window.scroll(() => {
       return Ember.run.throttle(this, this.onScroll, [], 200, false);
@@ -17,11 +17,11 @@ export default (function () {
   };
 
   Tailing.prototype.tail = function () {
-    return Ember.$(this.tail_selector);
+    return Ember.$(this.tailSelector);
   };
 
   Tailing.prototype.log = function () {
-    return Ember.$(this.log_selector);
+    return Ember.$(this.logSelector);
   };
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import DS from 'ember-data';
 import Ember from 'ember';
 
