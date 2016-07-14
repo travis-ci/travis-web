@@ -77,7 +77,8 @@ export default function () {
   this.get('/cron/:id');
 
   this.get('/repos/:id/settings', function (schema, request) {
-    return this.serialize(schema.settings.where({ repositoryId: request.params.id }).models[0], 'v2');
+    let settings = schema.settings.where({ repositoryId: request.params.id }).models[0];
+    return this.serialize(settings, 'v2');
   });
 
   this.get('/repos/:id/caches', function (schema, request) {
@@ -97,7 +98,11 @@ export default function () {
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
-    return this.serialize(schema.sshKeys.where({ repositoryId: request.params.repo_id, type: 'custom' }).models[0], 'v2');
+    let sshKeys = schema.sshKeys.where({
+      repositoryId: request.params.repo_id,
+      type: 'custom'
+    }).models[0];
+    return this.serialize(sshKeys, 'v2');
   });
 
   this.get('/v3/repo/:id', function (schema, request) {
@@ -109,7 +114,10 @@ export default function () {
   });
 
   this.get('/repos/:id/key', function (schema, request) {
-    const key = schema.sshKeys.where({ repositoryId: request.params.id, type: 'default' }).models[0];
+    const key = schema.sshKeys.where({
+      repositoryId: request.params.id,
+      type: 'default'
+    }).models[0];
     return {
       key: key.attrs.key,
       fingerprint: key.attrs.fingerprint
