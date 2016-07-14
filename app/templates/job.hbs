@@ -3,7 +3,19 @@
 
   {{build-header item=job commit=job.commit repo=repo}}
 
-  {{job-log job=job}}
+   <div class="travistab">
+     <nav class="travistab-nav">
+       <ul>
+         <li>{{link-to 'Job log' 'job.index' job id="tab_log" title="Look at this job's log"}}</li>
+         <li>{{link-to 'View Config' 'job.config' job id="tab_config" title="Look at this job's config"}}</li>
+       </ul>
+     </nav>
+     <div class="travistab-body">
+
+       {{outlet}}
+
+     </div>
+   </div>
 
 {{else}}
   <div id="job">

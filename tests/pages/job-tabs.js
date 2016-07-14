@@ -4,7 +4,7 @@ import {
   text,
   clickable,
   isVisible,
-  isHidden
+  isHidden,
 } from 'ember-cli-page-object';
 
 export default create({
@@ -18,7 +18,8 @@ export default create({
   logTab: {
     isShowing: isVisible('.job-log'),
     isHidden: isHidden('.job-log'),
-    active: hasClass('active', '#tab_log')
+    active: hasClass('active', '#tab_log'),
+    click: clickable('#tab_log')
   }
   
 });

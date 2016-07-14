@@ -1,7 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import currentRepoTab from 'travis/tests/pages/repo-tabs/current';
-import buildTabs from 'travis/tests/pages/build-tabs';
+import jobTabs from 'travis/tests/pages/job-tabs';
 
 moduleForAcceptance('Acceptance | builds/current tab', {
   beforeEach() {
@@ -49,21 +49,18 @@ test('renders most recent repository and most recent build when builds present',
     // unreliability is that we assert before the build information has been
     // resolved. I'm actually not sure how this ever worked before.
     assert.ok(currentRepoTab.showsCurrentBuild, 'Shows current build');
-
-    window.buildTabs = buildTabs;
-    console.log(currentURL());
-    debugger
-    assert.ok(buildTabs.logTab.isShowing, 'Displays the log');
-    assert.ok(buildTabs.configTab.isHidden, 'Job config is hidden');
+    
+    assert.ok(jobTabs.logTab.isShowing, 'Displays the log');
+    assert.ok(jobTabs.configTab.isHidden, 'Job config is hidden');
   });
 
-  buildTabs.configTab.click();
+  jobTabs.configTab.click();
 
   andThen(function() {
-    assert.equal(buildTabs.configTab.contents, '[{\"language\":\"Hello\"}]');
+    assert.equal(jobTabs.configTab.contents, '[{\"language\":\"Hello\"}]');
 
-    assert.ok(buildTabs.configTab.isShowing, 'Displays the job config');
-    assert.ok(buildTabs.logTab.isHidden, 'Job log is hidden');
+    assert.ok(jobTabs.configTab.isShowing, 'Displays the job config');
+    assert.ok(jobTabs.logTab.isHidden, 'Job log is hidden');
   });
   
   
