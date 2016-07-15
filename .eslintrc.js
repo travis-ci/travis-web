@@ -280,27 +280,27 @@ module.exports = {
     // http://eslint.org/docs/rules/space-before-function-paren
     'space-before-function-paren': [2, { anonymous: 'always', named: 'never' }],
 
-    // // require or disallow spaces inside parentheses
-    // 'space-in-parens': [2, 'never'],
+    // require or disallow spaces inside parentheses
+    'space-in-parens': [2, 'never'],
 
-    // // require spaces around operators
-    // 'space-infix-ops': 2,
+    // require spaces around operators
+    'space-infix-ops': 2,
 
-    // // Require or disallow spaces before/after unary operators
-    // 'space-unary-ops': 0,
+    // Require or disallow spaces before/after unary operators
+    'space-unary-ops': 0,
 
-    // // require or disallow a space immediately following the // or /* in a comment
-    // 'spaced-comment': [2, 'always', {
-    //   exceptions: ['-', '+'],
-    //   markers: ['=', '!']           // space here to support sprockets directives
-    // }],
+    // require or disallow a space immediately following the // or /* in a comment
+    'spaced-comment': [2, 'always', {
+      exceptions: ['-', '+'],
+      markers: ['=', '!']           // space here to support sprockets directives
+    }],
 
-    // // require or disallow the Unicode Byte Order Mark
-    // // http://eslint.org/docs/rules/unicode-bom
-    // // 'unicode-bom': [2, 'never'],
+    // require or disallow the Unicode Byte Order Mark
+    // http://eslint.org/docs/rules/unicode-bom
+    'unicode-bom': [2, 'never'],
 
-    // // require regex literals to be wrapped in parentheses
-    // 'wrap-regex': 0
+    // require regex literals to be wrapped in parentheses
+    'wrap-regex': 0
   },
   globals: {
   }
