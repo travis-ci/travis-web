@@ -12,10 +12,10 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   beforeModel() {
     this._super(...arguments);
     // TODO Remove this entire method if we only call super
-    // this.get('auth').refreshUserData()
+    //this.get('auth').refreshUserData()
   },
 
-  renderTemplate: function () {
+  renderTemplate: function() {
     if (this.get('config').pro) {
       Ember.$('body').addClass('pro');
     }
@@ -47,9 +47,9 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     });
   },
 
-  subscribeToRepo: function (repo) {
+  subscribeToRepo: function(repo) {
     if (this.pusher) {
-      return this.pusher.subscribe('repo-' + (repo.get('id')));
+      return this.pusher.subscribe("repo-" + (repo.get('id')));
     }
   },
 

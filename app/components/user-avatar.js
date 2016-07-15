@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   tagName: 'span',
   classNameBindings: ['small:avatar--small:avatar'],
 
-  userInitials: Ember.computed('userInitials', function () {
+  userInitials: function() {
     var name = this.get('name');
     var arr = name.split(' ');
     var initials = '';
@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     } else {
       initials = arr[0].split('')[0];
     }
-    return initials;
-  })
+      return initials;
+  }.property('userInitials')
 
 });

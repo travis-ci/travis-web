@@ -10,7 +10,7 @@ var TextField = Ember.TextField.extend({
   }
 });
 
-export default function (params, hash, options, env) {
+export default function(params, hash, options, env) {
   var onEvent;
   Ember.assert('You can only pass attributes to the `input` helper, not arguments', params.length);
   onEvent = hash.on;

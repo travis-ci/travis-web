@@ -1,11 +1,11 @@
 /* global jQuery */
 import Ember from 'ember';
 import config from 'travis/config/environment';
-var defaultOptions;
+var default_options;
 
 jQuery.support.cors = true;
 
-defaultOptions = {
+default_options = {
   accepts: {
     json: 'application/json; version=2'
   }
@@ -42,19 +42,19 @@ export default Ember.Service.extend({
   },
 
   ajax(url, method, options) {
-    var accepts, data, delimeter, endpoint, error, key, name, params,
-      promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
-    method = (method || 'GET').toUpperCase();
+    var accepts, data, delimeter, endpoint, error, key, name, params, promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
+    method = method || "GET";
+    method = method.toUpperCase();
     endpoint = config.apiEndpoint || '';
     options = options || {};
     token = Ember.get(this, 'auth').token();
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
       options.headers = options.headers || {};
-      if (!options.headers['Authorization']) {
-        options.headers['Authorization'] = 'token ' + token;
+      if(!options.headers['Authorization']) {
+        options.headers['Authorization'] = "token " + token;
       }
     }
-    options.url = url = '' + endpoint + url;
+    options.url = url = "" + endpoint + url;
     options.type = method;
     options.dataType = options.dataType || 'json';
     options.context = this;
@@ -64,20 +64,20 @@ export default Ember.Service.extend({
     if (method !== 'GET' && method !== 'HEAD') {
       options.contentType = options.contentType || 'application/json; charset=utf-8';
     }
-    success = options.success || (function () {});
-    options.success = function (data, status, xhr) {
+    success = options.success || (function() {});
+    options.success = function(data, status, xhr) {
       return success.call(this, data, status, xhr);
     };
-    error = options.error || function () {};
+    error = options.error || function() {};
     options.error = (data, status, xhr) => {
       //eslint-disable-next-line
       console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(data)));
       return error.call(this, data, status, xhr);
     };
 
-    options = Ember.$.extend(options, defaultOptions);
+    options = Ember.$.extend(options, default_options);
 
-    if (options.data && (method === 'GET' || method === 'HEAD')) {
+    if (options.data && (method === "GET" || method === "HEAD")) {
       params = jQuery.param(options.data);
       delimeter = url.indexOf('?') === -1 ? '?' : '&';
       url = url + delimeter + params;
@@ -105,15 +105,15 @@ export default Ember.Service.extend({
     }
     resolve = null;
     reject = null;
-    promise = new Ember.RSVP.Promise(function (_resolve, _reject) {
+    promise = new Ember.RSVP.Promise(function(_resolve, _reject) {
       resolve = _resolve;
       return reject = _reject;
     });
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
       var contentType, data;
       if (xhr.readyState === 4) {
         contentType = xhr.getResponseHeader('Content-Type');
-        data = (function () {
+        data = (function() {
           if (contentType && contentType.match(/application\/json/)) {
             try {
               return jQuery.parseJSON(xhr.responseText);
@@ -135,9 +135,7 @@ export default Ember.Service.extend({
       }
     };
     data = options.data;
-    let contentType = options.contentType;
-    let isJSON = Ember.isNone(contentType) || contentType.match(/application\/json/);
-    if (typeof options.data === 'object' && isJSON) {
+    if (typeof options.data === "object" && (Ember.isNone(options.contentType) || options.contentType.match(/application\/json/))) {
       data = JSON.stringify(data);
     }
     if (data) {

@@ -1,6 +1,6 @@
 var PusherInitializer, initialize;
 
-initialize = function (/* application*/) {
+initialize = function(/*application*/) {
   return null;
 };
 
@@ -10,6 +10,6 @@ PusherInitializer = {
   initialize: initialize
 };
 
-export { initialize };
+export {initialize};
 
 export default PusherInitializer;

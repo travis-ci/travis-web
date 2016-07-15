@@ -9,13 +9,13 @@ export default TravisRoute.extend({
     }
   },
 
-  setupController(/* controller, account*/) {
+  setupController(/*controller, account*/) {
     this._super(...arguments);
     return this.controllerFor('profile').activate('hooks');
   },
 
   model(params) {
-    return this.modelFor('accounts').find(function (account) {
+    return this.modelFor('accounts').find(function(account) {
       return account.get('login') === params.login;
     });
   },

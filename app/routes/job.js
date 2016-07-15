@@ -2,10 +2,10 @@ import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   titleToken(model) {
-    return 'Job #' + (model.get('number'));
+    return "Job #" + (model.get('number'));
   },
 
-  serialize(model/* , params*/) {
+  serialize(model/*, params*/) {
     let id = model.get ? model.get('id') : model;
     return {
       job_id: id
@@ -25,7 +25,7 @@ export default TravisRoute.extend({
     model.get('repo');
     let buildPromise = model.get('build');
     if (buildPromise) {
-      buildPromise.then((build) => {
+      buildPromise.then( (build) => {
         build = this.store.recordForId('build', build.get('id'));
         return buildController.set('build', build);
       });

@@ -7,7 +7,7 @@ export default TravisRoute.extend({
   ajax: service(),
   needsAuth: true,
 
-  setupController(/* controller*/) {
+  setupController(/*controller*/) {
     this._super(...arguments);
     return this.controllerFor('repo').activate('caches');
   },
@@ -15,10 +15,10 @@ export default TravisRoute.extend({
   model() {
     var repo;
     repo = this.modelFor('repo');
-    return this.get('ajax').get('/repos/' + (repo.get('id')) + '/caches').then(function (data) {
+    return this.get('ajax').get("/repos/" + (repo.get('id')) + "/caches").then(function(data) {
       var branch, cache, caches, pullRequests, pushes;
       caches = {};
-      data['caches'].forEach(function (cacheData) {
+      data["caches"].forEach(function(cacheData) {
         var branch, cache;
         branch = cacheData.branch;
         cache = caches[branch];
@@ -36,10 +36,10 @@ export default TravisRoute.extend({
       for (branch in caches) {
         cache = caches[branch];
         if (/PR./.test(branch)) {
-          cache.type = 'pull_request';
+          cache.type = "pull_request";
           pullRequests.push(cache);
         } else {
-          cache.type = 'push';
+          cache.type = "push";
           pushes.push(cache);
         }
       }

@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
     var self;
     this._super(...arguments);
     self = this;
-    return Travis.on('user:synced', (function () {
+    return Travis.on("user:synced", (function() {
       return self.reloadHooks();
     }));
   },
@@ -35,56 +35,56 @@ export default Ember.Controller.extend({
         all: true,
         owner_name: login
       });
-      hooks.then(function () {
+      hooks.then(function() {
         return hooks.set('isLoaded', true);
       });
       return this.set('allHooks', hooks);
     }
   },
 
-  accountName: Ember.computed('model.name', 'model.login', function () {
+  accountName: function() {
     return this.get('model.name') || this.get('model.login');
-  }),
+  }.property('model.name', 'model.login'),
 
-  hooks: Ember.computed('allHooks.length', 'allHooks', function () {
+  hooks: function() {
     let hooks = this.get('allHooks');
     if (!hooks) {
       this.reloadHooks();
     }
-    return this.get('allHooks').filter(function (hook) {
+    return this.get('allHooks').filter(function(hook) {
       return hook.get('admin');
     });
-  }),
+  }.property('allHooks.length', 'allHooks'),
 
-  hooksWithoutAdmin: Ember.computed('allHooks.length', 'allHooks', function () {
+  hooksWithoutAdmin: function() {
     let hooks = this.get('allHooks');
     if (!hooks) {
       this.reloadHooks();
     }
-    return this.get('allHooks').filter(function (hook) {
+    return this.get('allHooks').filter(function(hook) {
       return !hook.get('admin');
     });
-  }),
+  }.property('allHooks.length', 'allHooks'),
 
-  showPrivateReposHint: Ember.computed(function () {
+  showPrivateReposHint: function() {
     return this.config.show_repos_hint === 'private';
-  }),
+  }.property(),
 
-  showPublicReposHint: Ember.computed(function () {
+  showPublicReposHint: function() {
     return this.config.show_repos_hint === 'public';
-  }),
+  }.property(),
 
-  billingUrl: Ember.computed('model.name', 'model.login', function () {
+  billingUrl: function() {
     var id;
     id = this.get('model.type') === 'user' ? 'user' : this.get('model.login');
-    return this.config.billingEndpoint + '/subscriptions/' + id;
-  }),
+    return this.config.billingEndpoint + "/subscriptions/" + id;
+  }.property('model.name', 'model.login'),
 
-  subscribeButtonInfo: Ember.computed('model.login', 'model.type', function () {
+  subscribeButtonInfo: function() {
     return {
       billingUrl: this.get('billingUrl'),
       subscribed: this.get('model.subscribed'),
       education: this.get('model.education')
     };
-  })
+  }.property('model.login', 'model.type')
 });

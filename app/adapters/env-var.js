@@ -8,7 +8,7 @@ export default ApplicationAdapter.extend({
     url = this._super(...arguments);
     if (record && record.belongsTo('repo') && (repoId = record.belongsTo('repo').id)) {
       delimiter = url.indexOf('?') !== -1 ? '&' : '?';
-      url = '' + url + delimiter + 'repository_id=' + repoId;
+      url = "" + url + delimiter + "repository_id=" + repoId;
     }
     return url;
   },
@@ -19,7 +19,7 @@ export default ApplicationAdapter.extend({
     serializer = store.serializerFor(type.modelName);
     serializer.serializeIntoHash(data, type, record);
     var id = record.id;
-    return this.ajax(this.buildURL(type.modelName, id, record), 'PATCH', {
+    return this.ajax(this.buildURL(type.modelName, id, record), "PATCH", {
       data: data
     });
   }

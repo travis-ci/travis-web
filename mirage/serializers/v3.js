@@ -3,7 +3,7 @@ import { ActiveModelSerializer } from 'ember-cli-mirage';
 export default ActiveModelSerializer.extend({
   embed: true,
 
-  serialize(object/* , request */) {
+  serialize(object/*, request */) {
     let json = ActiveModelSerializer.prototype.serialize.apply(this, arguments);
 
     if (this.isModel(object)) {

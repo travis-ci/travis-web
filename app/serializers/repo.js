@@ -12,7 +12,7 @@ var Serializer = V2FallbackSerializer.extend(EmbeddedRecordsMixin, {
   // },
 
   normalizeResponse(store, primaryModelClass, payload, id, requestType) {
-    if (!id && requestType === 'findRecord') {
+    if(!id && requestType === 'findRecord') {
       id = payload.id;
     }
 

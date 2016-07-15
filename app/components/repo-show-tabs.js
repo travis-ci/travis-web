@@ -5,37 +5,37 @@ export default Ember.Component.extend({
   classNames: ['tabnav'],
   ariaRole: 'tablist',
 
-  classCurrent: Ember.computed('tab', function () {
+  classCurrent: function() {
     if (this.get('tab') === 'current') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classBuilds: Ember.computed('tab', function () {
+  classBuilds: function() {
     if (this.get('tab') === 'builds') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classPullRequests: Ember.computed('tab', function () {
+  classPullRequests: function() {
     if (this.get('tab') === 'pull_requests') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classCrons: Ember.computed('tab', function () {
+  classCrons: function() {
     if (this.get('tab') === 'crons') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classBranches: Ember.computed('tab', function () {
+  classBranches: function() {
     if (this.get('tab') === 'branches') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classBuild: Ember.computed('tab', function () {
+  classBuild: function() {
     var classes, tab;
     tab = this.get('tab');
     classes = [];
@@ -46,35 +46,35 @@ export default Ember.Component.extend({
       classes.push('display-inline');
     }
     return classes.join(' ');
-  }),
+  }.property('tab'),
 
-  classJob: Ember.computed('tab', function () {
+  classJob: function() {
     if (this.get('tab') === 'job') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classRequests: Ember.computed('tab', function () {
+  classRequests: function() {
     if (this.get('tab') === 'requests') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classCaches: Ember.computed('tab', function () {
+  classCaches: function() {
     if (this.get('tab') === 'caches') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classSettings: Ember.computed('tab', function () {
+  classSettings: function() {
     if (this.get('tab') === 'settings') {
       return 'active';
     }
-  }),
+  }.property('tab'),
 
-  classRequest: Ember.computed('tab', function () {
+  classRequest: function() {
     if (this.get('tab') === 'request') {
       return 'active';
     }
-  })
+  }.property('tab')
 });

@@ -5,11 +5,12 @@ moduleForComponent('user-avatar', 'UserAvatarComponent | Unit', {
   unit: true
 });
 
-test('it renders', function () {
-  var name = 'Hello Test';
-  var url = 'https://someurl.com/someimage.jpg';
+test('it renders', function() {
 
-  var component = this.subject({ url: url, name: name });
+  var name = "Hello Test";
+  var url = "https://someurl.com/someimage.jpg";
+
+  var component = this.subject({url: url, name: name});
   this.render();
 
   ok(component.$().hasClass('avatar'), 'component should have right class');

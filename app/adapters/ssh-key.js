@@ -9,7 +9,7 @@ export default ApplicationAdapter.extend({
 
   deleteRecord(store, type, record) {
     var id = record.id;
-    return this.ajax(this.urlPrefix() + '/ssh_key/' + id, 'DELETE');
+    return this.ajax(this.urlPrefix() + '/ssh_key/' + id, "DELETE");
   },
 
   createRecord(store, type, record) {
@@ -21,7 +21,7 @@ export default ApplicationAdapter.extend({
     });
 
     var id = record.id;
-    return this.ajax(this.urlPrefix() + '/ssh_key/' + id, 'PATCH', {
+    return this.ajax(this.urlPrefix() + '/ssh_key/' + id, "PATCH", {
       data: data
     });
   }

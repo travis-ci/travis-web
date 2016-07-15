@@ -5,7 +5,7 @@ moduleForComponent('jobs-list', 'JobsListComponent', {
   needs: ['helper:format-duration', 'component:jobs-item']
 });
 
-test('it renders a list of jobs', function () {
+test('it renders a list of jobs', function() {
   var component, jobs;
   jobs = [
     Ember.Object.create({
@@ -27,7 +27,7 @@ test('it renders a list of jobs', function () {
   return ok(component.$('.jobs-item:nth(1)').hasClass('failed'), 'failed class should be applied to a job');
 });
 
-test('it renders "Allowed Failures" version without a `required` property', function () {
+test('it renders "Allowed Failures" version without a `required` property', function() {
   var component, jobs;
   jobs = [
     Ember.Object.create({

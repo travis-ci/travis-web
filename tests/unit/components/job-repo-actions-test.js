@@ -2,7 +2,7 @@ import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 
 let userStub = Ember.Object.extend({
-  hasAccessToRepo: function (repo) {
+  hasAccessToRepo: function(repo) {
     ok(repo.get('id', 44));
     ok(true, 'hasAccessToRepo was called');
     return false;
@@ -21,7 +21,7 @@ moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
   }
 });
 
-test('it shows cancel button if canCancel is true', function () {
+test('it shows cancel button if canCancel is true', function() {
   var component;
   component = this.subject({
     canCancel: true
@@ -30,7 +30,7 @@ test('it shows cancel button if canCancel is true', function () {
   return ok(component.$('a[title="Cancel job"]').length, 'cancel link should be visible');
 });
 
-test('it shows restart button if canRestart is true', function () {
+test('it shows restart button if canRestart is true', function() {
   var component;
   component = this.subject({
     canRestart: true
@@ -39,7 +39,7 @@ test('it shows restart button if canRestart is true', function () {
   return ok(component.$('a[title="Restart job"]').length, 'restart link should be visible');
 });
 
-test('user can cancel if she has permissions to a repo and job is cancelable', function () {
+test('user can cancel if she has permissions to a repo and job is cancelable', function() {
   var component, job;
   job = Ember.Object.create({
     canCancel: false,
@@ -56,7 +56,7 @@ test('user can cancel if she has permissions to a repo and job is cancelable', f
   return ok(component.get('canCancel'));
 });
 
-test('user can restart if she has permissions to a repo and job is restartable', function () {
+test('user can restart if she has permissions to a repo and job is restartable', function() {
   var component, job;
   job = Ember.Object.create({
     canRestart: false,
@@ -73,7 +73,7 @@ test('user can restart if she has permissions to a repo and job is restartable',
   return ok(component.get('canRestart'));
 });
 
-test('it properly checks for user permissions for a repo', function () {
+test('it properly checks for user permissions for a repo', function() {
   var component, repo;
   expect(3);
   repo = Ember.Object.create({

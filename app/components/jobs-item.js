@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   classNameBindings: ['job.state'],
   classNames: ['jobs-item'],
 
-  languages: Ember.computed('job.config', function () {
+  languages: function() {
     var gemfile, key, languageName, output;
     output = [];
     let config = this.get('job.config');
@@ -20,19 +20,19 @@ export default Ember.Component.extend({
       }
       gemfile = this.get('job.config.gemfile');
       if (gemfile && this.get('job.config.env')) {
-        output.push('Gemfile: ' + gemfile);
+        output.push("Gemfile: " + gemfile);
       }
     }
     return output.join(' ');
-  }),
+  }.property('job.config'),
 
-  environment: Ember.computed('job.config.env', 'job.config.gemfile', function () {
+  environment: function() {
     let env = this.get('job.config.env');
     let gemfile = this.get('job.config.gemfile');
     if (env) {
       return env;
     } else if (gemfile) {
-      return 'Gemfile: ' + gemfile;
+      return "Gemfile: " + gemfile;
     }
-  })
+  }.property('job.config.env', 'job.config.gemfile')
 });

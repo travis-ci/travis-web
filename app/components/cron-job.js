@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   actionType: 'Save',
   store: service(),
 
-  intervalText: Ember.computed('cron.created_at', function () {
+  intervalText: function() {
     function timeOfDay(creationTime) {
       var hours = creationTime.getHours();
       var ampm = hours >= 12 ? 'pm' : 'am';
@@ -20,24 +20,24 @@ export default Ember.Component.extend({
 
     function dayOfWeek(creationTime) {
       var weekday = new Array(7);
-      weekday[0] = 'Sunday';
-      weekday[1] = 'Monday';
-      weekday[2] = 'Tuesday';
-      weekday[3] = 'Wednesday';
-      weekday[4] = 'Thursday';
-      weekday[5] = 'Friday';
-      weekday[6] = 'Saturday';
+      weekday[0] = "Sunday";
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
       return weekday[creationTime.getDay()];
     }
 
     function dayOfMonth(creationTime) {
       var post = 'th';
       var day = creationTime.getDate();
-      if (day === 1) {
+      if ( day === 1 ){
         post = 'st';
-      } else if (day === 2) {
+      } else if ( day === 2 ){
         post = 'nd';
-      } else if (day === 3) {
+      } else if ( day === 3 ){
         post = 'rd';
       }
       return day + post;
@@ -45,7 +45,7 @@ export default Ember.Component.extend({
 
     var interval = this.get('cron.interval');
     var creationTime = new Date(this.get('cron.created_at'));
-    var text = '';
+    var text = "";
     var time = timeOfDay(creationTime);
 
     switch (interval) {
@@ -60,18 +60,18 @@ export default Ember.Component.extend({
         break;
     }
     return text;
-  }),
+  }.property('cron.created_at'),
 
 
-  disableByBuild: Ember.computed('cron.disable_by_build', function () {
+  disableByBuild: function() {
     if (this.get('cron.disable_by_build')) {
       return 'Only if no new commit';
     } else {
       return 'Always run';
     }
-  }),
+  }.property('cron.disable_by_build'),
 
-  delete: task(function * () {
+  delete: task(function * (){
     yield this.get('cron').destroyRecord();
   })
 });

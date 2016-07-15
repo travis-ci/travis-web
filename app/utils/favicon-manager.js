@@ -1,21 +1,21 @@
-var manager = function (headTag) {
+var manager = function(headTag) {
   if (headTag) {
     this.headTag = headTag;
   }
   return this;
 };
 
-manager.prototype.getHeadTag = function () {
+manager.prototype.getHeadTag = function() {
   return this.headTag || document.getElementsByTagName('head')[0];
 };
 
-manager.prototype.setFavicon = function (href) {
+manager.prototype.setFavicon = function(href) {
   var head, link, oldLink;
   head = this.getHeadTag();
   oldLink = this.getLinkTag();
   link = this.createLinkTag();
   head.appendChild(link);
-  setTimeout(function () {
+  setTimeout(function() {
     return link.setAttribute('href', href);
   }, 10);
   if (oldLink) {
@@ -23,7 +23,7 @@ manager.prototype.setFavicon = function (href) {
   }
 };
 
-manager.prototype.getLinkTag = function () {
+manager.prototype.getLinkTag = function() {
   var i, len, link, links;
   links = this.getHeadTag().getElementsByTagName('link');
   if (links.length) {
@@ -36,7 +36,7 @@ manager.prototype.getLinkTag = function () {
   }
 };
 
-manager.prototype.createLinkTag = function () {
+manager.prototype.createLinkTag = function() {
   var link;
   link = document.createElement('link');
   link.setAttribute('rel', 'icon');

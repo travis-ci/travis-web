@@ -6,14 +6,14 @@ export default Ember.Controller.extend({
   filter: null,
   org: null,
 
-  filteredRepositories: Ember.computed('filter', 'model', 'org', function () {
+  filteredRepositories: function() {
     var filter, org, repos;
     filter = this.get('filter');
     repos = this.get('model');
     org = this.get('org');
-    repos = repos.filter(function (item) {
+    repos = repos.filter(function(item) {
       return item.get('currentBuild') !== null;
-    }).sort(function (a, b) {
+    }).sort(function(a, b) {
       if (a.currentBuild.finished_at === null) {
         return -1;
       }
@@ -32,18 +32,18 @@ export default Ember.Controller.extend({
     });
 
     if (org) {
-      repos = repos.filter(function (item) {
+      repos = repos.filter(function(item) {
         return item.get('owner.login') === org;
       });
     }
     if (Ember.isBlank(filter)) {
       return repos;
     } else {
-      return repos.filter(function (item) {
+      return repos.filter(function(item) {
         return item.slug.match(new RegExp(filter));
       });
     }
-  }),
+  }.property('filter', 'model', 'org'),
 
   updateFilter() {
     var value;
@@ -56,11 +56,11 @@ export default Ember.Controller.extend({
     return this.set('filter', value);
   },
 
-  selectedOrg: Ember.computed('org', 'orgs.[]', function () {
+  selectedOrg: function() {
     return this.get('orgs').findBy('login', this.get('org'));
-  }),
+  }.property('org', 'orgs.[]'),
 
-  orgs: Ember.computed(function () {
+  orgs: function() {
     var apiEndpoint, orgs;
     orgs = Ember.ArrayProxy.create({
       content: [],
@@ -71,16 +71,16 @@ export default Ember.Controller.extend({
       headers: {
         Authorization: 'token ' + this.auth.token()
       }
-    }).then(function (response) {
+    }).then(function(response) {
       var array;
-      array = response.organizations.map(function (org) {
+      array = response.organizations.map(function(org) {
         return Ember.Object.create(org);
       });
       orgs.set('content', array);
       return orgs.set('isLoading', false);
     });
     return orgs;
-  }),
+  }.property(),
 
   actions: {
     updateFilter(value) {

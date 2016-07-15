@@ -16,9 +16,7 @@ export default Ember.Component.extend({
   currentUser: alias('auth.currentUser'),
 
   click(event) {
-    let isLink = Ember.$(event.target).is('a');
-    let inSettingsDropdown = Ember.$(event.target).parents('.settings-dropdown').length;
-    if (isLink && inSettingsDropdown) {
+    if (Ember.$(event.target).is('a') && Ember.$(event.target).parents('.settings-dropdown').length) {
       return this.closeMenu();
     }
   },
@@ -32,15 +30,15 @@ export default Ember.Component.extend({
       return this.toggleProperty('isOpen');
     }
   },
-  displaySettingsLink: Ember.computed('permissions.all', 'repo', function () {
+  displaySettingsLink: function() {
     return this.get('permissions').hasPushPermission(this.get('repo'));
-  }),
+  }.property('permissions.all', 'repo'),
 
-  displayCachesLink: Ember.computed('permissions.all', 'repo', function () {
+  displayCachesLink: function() {
     return this.get('permissions').hasPushPermission(this.get('repo')) && config.endpoints.caches;
-  }),
+  }.property('permissions.all', 'repo'),
 
-  displayStatusImages: Ember.computed('permissions.all', 'repo', function () {
+  displayStatusImages: function() {
     return this.get('permissions').hasPermission(this.get('repo'));
-  })
+  }.property('permissions.all', 'repo')
 });

@@ -5,25 +5,25 @@ export default Ember.Component.extend({
   classNames: ['request-icon', 'icon'],
   classNameBindings: ['event', 'state'],
 
-  isPush: Ember.computed('event', function () {
+  isPush: function() {
     return this.get('event') === 'push';
-  }),
+  }.property('event'),
 
-  isPR: Ember.computed('event', function () {
+  isPR: function() {
     return this.get('event') === 'pull_request';
-  }),
+  }.property('event'),
 
-  isCron: Ember.computed('event', function () {
+  isCron: function() {
     return this.get('event') === 'cron';
-  }),
+  }.property('event'),
 
-  isAPI: Ember.computed('event', function () {
+  isAPI: function() {
     return this.get('event') === 'api';
-  }),
+  }.property('event'),
 
-  isEmpty: Ember.computed('event', function () {
+  isEmpty: function() {
     if (this.get('event') === null || this.get('event') === null) {
       return true;
     }
-  })
+  }.property('event')
 });

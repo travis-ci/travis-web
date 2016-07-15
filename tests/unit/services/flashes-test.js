@@ -5,7 +5,7 @@ moduleFor('service:flashes', 'Unit | Service | flashes', {
   // needs: ['service:foo']
 });
 
-test('it allows to show an error', function (assert) {
+test('it allows to show an error', function(assert) {
   let service = this.subject();
 
   assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
@@ -15,7 +15,7 @@ test('it allows to show an error', function (assert) {
   assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was an error!', type: 'error' }, 'there should be an error message in flashes');
 });
 
-test('it allows to show a notice', function (assert) {
+test('it allows to show a notice', function(assert) {
   let service = this.subject();
 
   assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');
@@ -25,7 +25,7 @@ test('it allows to show a notice', function (assert) {
   assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was a notice!', type: 'notice' }, 'there should be a notice message in flashes');
 });
 
-test('it allows to show a success', function (assert) {
+test('it allows to show a success', function(assert) {
   let service = this.subject();
 
   assert.equal(service.get('flashes.length'), 0, 'precond - flashes initializes with 0 elements');

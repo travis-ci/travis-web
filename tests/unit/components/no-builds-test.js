@@ -3,7 +3,7 @@ moduleForComponent('no-builds', {
   unit: true
 });
 
-test('it renders', function (assert) {
+test('it renders', function(assert) {
   var component;
   assert.expect(2);
   component = this.subject();

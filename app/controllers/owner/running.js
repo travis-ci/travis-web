@@ -2,10 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   isLoading: false,
-  running: Ember.computed('model', function () {
+  running: function() {
     var data, repos;
     data = this.get('model');
-    repos = data.repositories.filter(function (item) {
+    repos = data.repositories.filter(function(item) {
       if (item.currentBuild !== null) {
         if (item.currentBuild.state === 'started') {
           return item;
@@ -13,5 +13,5 @@ export default Ember.Controller.extend({
       }
     });
     return repos;
-  })
+  }.property('model')
 });

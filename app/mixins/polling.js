@@ -27,9 +27,9 @@ export default Ember.Mixin.create({
 
   pollModel(property) {
     var model = this.get(property),
-      currentPollModels = this.get('currentPollModels');
+        currentPollModels = this.get('currentPollModels');
 
-    if (currentPollModels[property]) {
+    if(currentPollModels[property]) {
       this.get('polling').stopPolling(currentPollModels[property]);
     }
     currentPollModels[property] = model;
@@ -40,7 +40,7 @@ export default Ember.Mixin.create({
 
     if (model) {
       if (model.then) {
-        return model.then(function (resolved) {
+        return model.then(function(resolved) {
           return addToPolling(resolved);
         });
       } else {
@@ -63,7 +63,7 @@ export default Ember.Mixin.create({
       if (!Ember.isArray(pollModels)) {
         pollModels = [pollModels];
       }
-      pollModels.forEach((property) => {
+      pollModels.forEach( (property) => {
         this.pollModel(property);
         this.addObserver(property, this, 'pollModelDidChange');
       });
@@ -80,7 +80,7 @@ export default Ember.Mixin.create({
       if (!Ember.isArray(pollModels)) {
         pollModels = [pollModels];
       }
-      pollModels.forEach((property) => {
+      pollModels.forEach( (property) => {
         this.stopPollingModel(property);
         this.removeObserver(property, this, 'pollModelDidChange');
       });

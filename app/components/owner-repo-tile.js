@@ -5,20 +5,20 @@ export default Ember.Component.extend({
   classNames: ['owner-tile', 'row-li'],
   classNameBindings: ['repo.current_build.state'],
 
-  ownerName: Ember.computed('repo.slug', function () {
+  ownerName: function() {
     return this.get('repo.slug').split(/\//)[0];
-  }),
+  }.property('repo.slug'),
 
-  repoName: Ember.computed('repo.slug', function () {
+  repoName: function() {
     return this.get('repo.slug').split(/\//)[1];
-  }),
+  }.property('repo.slug'),
 
-  isAnimating: Ember.computed('repo.current_build.state', function () {
+  isAnimating: function() {
     var animationStates, state;
     state = this.get('repo.current_build.state');
     animationStates = ['received', 'queued', 'started', 'booting'];
     if (animationStates.indexOf(state) !== -1) {
       return true;
     }
-  })
+  }.property('repo.current_build.state')
 });

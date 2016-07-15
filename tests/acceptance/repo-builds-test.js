@@ -93,8 +93,8 @@ moduleForAcceptance('Acceptance | repo branches', {
   }
 });
 
-test('view branches', function (assert) {
-  branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+test('view branches', function(assert) {
+  branchesPage.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
 
   andThen(() => {
     assert.equal(branchesPage.defaultBranch.name, 'primary');

@@ -17,7 +17,7 @@ moduleForAcceptance('Acceptance | repo caches', {
 
     this.repository = repository;
 
-    const oneDayAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
+    const oneDayAgo = new Date(new Date().getTime() - 1000*60*60*24);
 
     repository.createCache({
       branch: 'a-branch-name',
@@ -25,7 +25,7 @@ moduleForAcceptance('Acceptance | repo caches', {
       size: 89407938
     });
 
-    const twoDaysAgo = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2);
+    const twoDaysAgo = new Date(new Date().getTime() - 1000*60*60*24*2);
 
     repository.createCache({
       branch: 'PR.1919',
@@ -35,8 +35,8 @@ moduleForAcceptance('Acceptance | repo caches', {
   }
 });
 
-test('view and delete caches', function (assert) {
-  page.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+test('view and delete caches', function(assert) {
+  page.visit({organization: 'killjoys', repo: 'living-a-feminist-life'});
 
   andThen(() => {
     assert.equal(page.pushCaches().count, 1, 'expected one push cache');
@@ -60,14 +60,14 @@ test('view and delete caches', function (assert) {
 
   const requestBodies = [];
 
-  server.delete(`/repos/${this.repository.id}/caches`, function (schema, request) {
+  server.delete(`/repos/${this.repository.id}/caches`, function(schema, request) {
     requestBodies.push(request.requestBody || 'empty');
   });
 
   page.pushCaches(0).delete();
 
   andThen(() => {
-    assert.deepEqual(JSON.parse(requestBodies.pop()), { branch: 'a-branch-name' });
+    assert.deepEqual(JSON.parse(requestBodies.pop()), {branch: 'a-branch-name'});
 
     assert.equal(page.pushCaches().count, 0);
   });

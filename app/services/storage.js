@@ -2,10 +2,10 @@ import Ember from 'ember';
 import Storage from 'travis/utils/hash-storage';
 
 export default Ember.Service.extend({
-  init: function () {
+  init: function() {
     let storage;
     try {
-      storage = window.localStorage || (function () {
+      storage = window.localStorage || (function() {
         throw 'no storage';
       })();
     } catch (error) {
@@ -13,16 +13,16 @@ export default Ember.Service.extend({
     }
     return this.set('storage', storage);
   },
-  getItem: function (key) {
-    return this.get('storage').getItem(key);
+  getItem: function(key) {
+    return this.get("storage").getItem(key);
   },
-  setItem: function (key, value) {
-    return this.get('storage').setItem(key, value);
+  setItem: function(key, value) {
+    return this.get("storage").setItem(key, value);
   },
-  removeItem: function (key) {
-    return this.get('storage').removeItem(key);
+  removeItem: function(key) {
+    return this.get("storage").removeItem(key);
   },
-  clear: function () {
-    return this.get('storage').clear();
+  clear: function() {
+    return this.get("storage").clear();
   }
 });

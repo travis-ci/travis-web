@@ -8,7 +8,7 @@ moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
   integration: true
 });
 
-test('it adds an env var on submit', function (assert) {
+test('it adds an env var on submit', function(assert) {
   assert.expect(6);
 
   // this shouldn't be needed, probably some bug in tests setup with new ember-data
@@ -17,8 +17,8 @@ test('it adds an env var on submit', function (assert) {
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
   var repo;
-  Ember.run(function () {
-    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+  Ember.run(function() {
+    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web'}}});
   });
 
   this.set('repo', repo);
@@ -40,10 +40,10 @@ test('it adds an env var on submit', function (assert) {
   assert.ok(!envVar.get('public'), 'env var should be private');
 
   var done = assert.async();
-  setTimeout(function () { done(); }, 500);
+  setTimeout(function() { done(); }, 500);
 });
 
-test('it shows an error if no name is present', function (assert) {
+test('it shows an error if no name is present', function(assert) {
   assert.expect(3);
 
   this.render(hbs`{{add-env-var repo=repo}}`);
@@ -61,7 +61,7 @@ test('it shows an error if no name is present', function (assert) {
   assert.ok(!this.$('.form-error-message').length, 'the error message should be removed after value is changed');
 });
 
-test('it adds a public env var on submit', function (assert) {
+test('it adds a public env var on submit', function(assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
@@ -69,8 +69,8 @@ test('it adds a public env var on submit', function (assert) {
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
   var repo;
-  Ember.run(function () {
-    repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
+  Ember.run(function() {
+    repo  = store.push({data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web'}}});
   });
 
   this.set('repo', repo);
@@ -94,5 +94,5 @@ test('it adds a public env var on submit', function (assert) {
   assert.ok(envVar.get('public'), 'env var should be public');
 
   var done = assert.async();
-  setTimeout(function () { done(); }, 500);
+  setTimeout(function() { done(); }, 500);
 });

@@ -5,7 +5,7 @@ const { service } = Ember.inject;
 export default Ember.Component.extend({
   store: service(),
 
-  pollHook: function (store) {
+  pollHook: function(store) {
     var contentType, repositoryId;
     contentType = this.get('contentType');
     repositoryId = this.get('repo.id');

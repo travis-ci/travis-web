@@ -11,11 +11,11 @@ export default Ember.Controller.extend({
   currentUser: alias('auth.currentUser'),
   tab: alias('repoController.tab'),
 
-  urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
+  urlGithubCommit: function() {
     return githubCommit(this.get('repo.slug'), this.get('commit.sha'));
-  }),
+  }.property('repo.slug', 'commit.sha'),
 
-  jobStateDidChange: Ember.observer('job.state', function () {
+  jobStateDidChange: function() {
     return this.send('faviconStateDidChange', this.get('job.state'));
-  })
+  }.observes('job.state')
 });

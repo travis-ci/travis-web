@@ -6,33 +6,31 @@ export default Ember.Component.extend({
   classNameBindings: ['status'],
   attributeBindings: ['label:aria-label', 'label:title'],
 
-  label: Ember.computed('status', function () {
+  label: function() {
     return 'Job ' + this.get('status');
-  }),
+  }.property('status'),
 
-  hasPassed: Ember.computed('status', function () {
+  hasPassed: function() {
     return this.get('status') === 'passed' || this.get('status') === 'accepted';
-  }),
+  }.property('status'),
 
-  hasFailed: Ember.computed('status', function () {
+  hasFailed: function() {
     return this.get('status') === 'failed' || this.get('status') === 'rejected';
-  }),
+  }.property('status'),
 
-  hasErrored: Ember.computed('status', function () {
+  hasErrored: function() {
     return this.get('status') === 'errored';
-  }),
+  }.property('status'),
 
-  wasCanceled: Ember.computed('status', function () {
+  wasCanceled: function() {
     return this.get('status') === 'canceled';
-  }),
+  }.property('status'),
 
-  isRunning: Ember.computed('status', function () {
-    let status = this.get('status');
-    let runningStates = ['started', 'queued', 'booting', 'received', 'created'];
-    return runningStates.contains(status);
-  }),
+  isRunning: function() {
+    return this.get('status') === 'started' || this.get('status') === 'queued' || this.get('status') === 'booting' || this.get('status') === 'received' || this.get('status') === 'created';
+  }.property('status'),
 
-  isEmpty: Ember.computed('status', function () {
+  isEmpty: function() {
     if (!this.get('status')) {
       return true;
     } else {
@@ -42,5 +40,5 @@ export default Ember.Component.extend({
         return false;
       }
     }
-  })
+  }.property('status')
 });

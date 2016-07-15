@@ -3,7 +3,7 @@ moduleForComponent('requests-item', {
   needs: ['helper:format-message', 'helper:format-time', 'helper:github-commit-link', 'component:status-icon', 'component:request-icon']
 });
 
-test('it renders request data', function (assert) {
+test('it renders request data', function(assert) {
   var component, request, yesterday;
   yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -35,7 +35,7 @@ test('it renders request data', function (assert) {
   return assert.equal(component.$('.row-item:nth-child(5)').text().trim(), '10', 'build number should be displayed');
 });
 
-test('it renders PR number if a request is a PR', function (assert) {
+test('it renders PR number if a request is a PR', function(assert) {
   var component, request;
   request = {
     id: 1,

@@ -10,9 +10,9 @@ export default Ember.Controller.extend({
   repo: Ember.computed.alias('repoController.repo'),
   isDeleting: false,
 
-  cachesExist: Ember.computed('model.pushes.length', 'model.pullRequests.length', function () {
+  cachesExist: function() {
     return this.get('model.pushes.length') || this.get('model.pullRequests.length');
-  }),
+  }.property('model.pushes.length', 'model.pullRequests.length'),
 
   deleteRepoCache: task(function * () {
     if (config.skipConfirmations || confirm('Are you sure?')) {

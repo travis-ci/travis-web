@@ -21,11 +21,11 @@ export default Ember.Component.extend({
     return this.setProperties({
       name: null,
       value: null,
-      'public': null
+      "public": null
     });
   },
 
-  save: task(function * () {
+  save: task(function * (){
     if (this.isValid()) {
       const envVar = this.get('store').createRecord('env_var', {
         name: this.get('name'),
@@ -37,7 +37,7 @@ export default Ember.Component.extend({
       try {
         yield envVar.save();
         this.reset();
-      } catch (e) {
+      } catch(e) {
       }
     }
   }),

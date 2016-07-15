@@ -16,22 +16,22 @@ export default Ember.Component.extend({
 
   currentBuild: alias('repo.currentBuild'),
 
-  urlGithubCommit: Ember.computed('repo.slug', 'currentBuild.commit.sha', function () {
+  urlGithubCommit: function() {
     return githubCommitUrl(this.get('repo.slug'), this.get('currentBuild.commit.sha'));
-  }),
+  }.property('repo.slug', 'currentBuild.commit.sha'),
 
-  displayMenuTofu: Ember.computed('permissions.all', 'repo', function () {
+  displayMenuTofu: Ember.computed('permissions.all', 'repo', function() {
     return this.get('permissions').hasPushPermission(this.get('repo'));
   }),
 
-  displayActivateLink: Ember.computed('permissions.all', 'repo', function () {
+  displayActivateLink: Ember.computed('permissions.all', 'repo', function() {
     return this.get('permissions').hasAdminPermission(this.get('repo'));
   }),
 
-  openDropup: function () {
+  openDropup: function() {
     var self = this;
     this.toggleProperty('dropupIsOpen');
-    Ember.run.later((function () { self.toggleProperty('dropupIsOpen'); }), 2000);
+    Ember.run.later((function() { self.toggleProperty('dropupIsOpen'); }), 2000);
   },
 
   actions: {

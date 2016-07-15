@@ -212,7 +212,7 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'germany',
         image: 'curtis'
-      }, {
+      },{
         name: 'Joe Corcoran',
         title: 'Bulldozer',
         handle: 'josephcorcoran',

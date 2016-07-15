@@ -57,16 +57,16 @@ export default Ember.Service.extend({
   },
 
   poll() {
-    this.get('watchedModels').forEach(function (model) {
+    this.get('watchedModels').forEach(function(model) {
       return model.reload();
     });
 
-    return this.get('sources').forEach((source) => {
-      if (Ember.get(source, 'isDestroyed')) {
-        return this.get('sources').removeObject(source);
-      } else {
-        return source.pollHook();
-      }
+    return this.get('sources').forEach( (source) => {
+     if (Ember.get(source, 'isDestroyed')) {
+       return this.get('sources').removeObject(source);
+     } else {
+       return source.pollHook();
+     }
     });
   }
 });

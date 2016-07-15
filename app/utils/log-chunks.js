@@ -2,22 +2,22 @@ import Ember from 'ember';
 
 var LogChunks = Ember.ArrayProxy.extend({
   timeout: 30000,
-  init: function () {
+  init: function() {
     this.setTimeout();
     return this._super(...arguments);
   },
 
-  resetTimeout: function () {
+  resetTimeout: function() {
     var id;
     id = this.get('timeoutId');
     clearTimeout(id);
     return this.setTimeout();
   },
 
-  setTimeout: function () {
+  setTimeout: function() {
     var id;
-    id = setTimeout((function (_this) {
-      return function () {
+    id = setTimeout((function(_this) {
+      return function() {
         if (_this.get('finalized') || _this.get('isDestroyed')) {
           return;
         }
@@ -28,7 +28,7 @@ var LogChunks = Ember.ArrayProxy.extend({
     return this.set('timeoutId', id);
   },
 
-  triggerMissingParts: function () {
+  triggerMissingParts: function() {
     var after, all, callback, content, existing, last, missing, results;
     callback = this.get('missingPartsCallback');
     if (!callback) {
@@ -40,11 +40,9 @@ var LogChunks = Ember.ArrayProxy.extend({
     after = null;
     if (last) {
       existing = content.mapBy('number');
-      all = (function () {
+      all = (function() {
         results = [];
-        for (var i = 1, ref = last.number; 1 <= ref ? i <= ref : i >= ref; 1 <= ref ? i++ : i--) {
-          results.push(i);
-        }
+        for (var i = 1, ref = last.number; 1 <= ref ? i <= ref : i >= ref; 1 <= ref ? i++ : i--){ results.push(i); }
         return results;
       }).apply(this);
       missing = all.removeObjects(existing);
@@ -57,7 +55,7 @@ var LogChunks = Ember.ArrayProxy.extend({
     return callback(missing, after);
   },
 
-  last: Ember.computed('content.[]', 'final', function () {
+  last: function() {
     var i, last, len, max, part, ref;
     max = -1;
     last = null;
@@ -70,13 +68,13 @@ var LogChunks = Ember.ArrayProxy.extend({
       }
     }
     return last;
-  }),
+  }.property('content.[]', 'final'),
 
-  final: Ember.computed(function () {
+  final: function() {
     return this.get('content').findBy('final', true);
-  }),
+  }.property(),
 
-  tryFinalizing: function () {
+  tryFinalizing: function() {
     var content, last;
     content = this.get('content');
     last = this.get('last');
@@ -85,7 +83,7 @@ var LogChunks = Ember.ArrayProxy.extend({
     }
   },
 
-  contentArrayDidChange: function (array, index, removedCount, addedCount) {
+  contentArrayDidChange: function(array, index, removedCount, addedCount) {
     var addedObjects, i, len, part;
     this._super(...arguments);
     if (addedCount) {
@@ -96,8 +94,8 @@ var LogChunks = Ember.ArrayProxy.extend({
           this.notifyPropertyChange('final');
         }
       }
-      return Ember.run(this, function () {
-        return Ember.run.once(this, function () {
+      return Ember.run(this, function() {
+        return Ember.run.once(this, function() {
           this.tryFinalizing();
           return this.resetTimeout();
         });

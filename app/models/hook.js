@@ -9,23 +9,23 @@ export default Model.extend({
   description: attr(),
   active: attr('boolean'),
   admin: attr('boolean'),
-  'private': attr('boolean'),
+  "private": attr('boolean'),
 
-  account: Ember.computed('slug', function () {
+  account: function() {
     return this.get('slug').split('/')[0];
-  }),
+  }.property('slug'),
 
-  slug: Ember.computed('ownerName', 'name', function () {
-    return (this.get('ownerName')) + '/' + (this.get('name'));
-  }),
+  slug: function() {
+    return (this.get('ownerName')) + "/" + (this.get('name'));
+  }.property('ownerName', 'name'),
 
-  urlGithub: Ember.computed(function () {
-    return config.sourceEndpoint + '/' + (this.get('slug'));
-  }),
+  urlGithub: function() {
+    return config.sourceEndpoint + "/" + (this.get('slug'));
+  }.property(),
 
-  urlGithubAdmin: Ember.computed(function () {
-    return config.sourceEndpoint + '/' + (this.get('slug')) + '/settings/hooks#travis_minibucket';
-  }),
+  urlGithubAdmin: function() {
+    return config.sourceEndpoint + "/" + (this.get('slug')) + "/settings/hooks#travis_minibucket";
+  }.property(),
 
   toggle() {
     if (this.get('isSaving')) {

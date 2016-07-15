@@ -2,10 +2,10 @@ import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   titleToken(model) {
-    return 'Build #' + (model.get('number'));
+    return "Build #" + (model.get('number'));
   },
 
-  serialize(model/* , params*/) {
+  serialize(model/*, params*/) {
     var id;
     id = model.get ? model.get('id') : model;
     return {
