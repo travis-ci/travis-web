@@ -34,11 +34,7 @@ export default Ember.Controller.extend({
     return this.get('tab') === 'branches';
   }.property('tab'),
 
-  displayCrons: function() {
-    return this.get('tab') === 'crons';
-  }.property('tab'),
-
-  noticeData: function() {
+  noticeData: function () {
     return {
       repo: this.get('repo'),
       auth: this.auth.token()

@@ -47,7 +47,6 @@ Router.map(function() {
       this.route('job', { path: '/jobs/:job_id', resetNamespace: true });
       this.route('builds', { path: '/builds', resetNamespace: true });
       this.route('pullRequests', { path: '/pull_requests', resetNamespace: true });
-      this.route('crons', { path: '/crons', resetNamespace: true });
       this.route('requests', { path: '/requests', resetNamespace: true });
       if (config.endpoints.caches) {
         this.route('caches', { path: '/caches', resetNamespace: true });

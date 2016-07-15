@@ -21,11 +21,6 @@ export default Ember.Component.extend({
         event_type: 'pull_request',
         repository_id: repositoryId
       });
-    } else if (contentType === 'crons') {
-      return store.filter('build', {
-        event_type: 'cron',
-        repository_id: repositoryId
-      });
     } else {
       return store.query('build', {
         repository_id: repositoryId,

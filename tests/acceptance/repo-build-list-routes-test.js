@@ -80,25 +80,8 @@ moduleForAcceptance('Acceptance | repo build list routes', {
   }
 });
 
-test('view crons', function(assert) {
-  page.visitCrons({organization: 'killjoys', repo: 'living-a-feminist-life'});
-
-  andThen(() => {
-    assert.equal(page.builds().count, 1, 'expected one cron build');
-
-    const build = page.builds(0);
-
-    assert.ok(build.passed, 'expected the cron to have passed');
-    assert.equal(build.name, 'successful-cron-branch');
-    assert.equal(build.committer, 'Sara Ahmed');
-    assert.equal(build.commitSha, '1234567');
-    assert.equal(build.commitDate, 'about a year ago');
-    assert.equal(build.duration, '5 min');
-  });
-});
-
-test('view build history', function(assert) {
-  page.visitBuildHistory({organization: 'killjoys', repo: 'living-a-feminist-life'});
+test('view build history', function (assert) {
+  page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
     assert.equal(page.builds().count, 3, 'expected three builds');

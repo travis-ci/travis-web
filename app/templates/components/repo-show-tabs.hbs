@@ -27,15 +27,6 @@
       {{/link-to}}
     {{/if}}
   </li>
-  {{#if repo.slug}}
-    {{#if repo.cronJobs}}
-      <li id="tab_crons" class={{classCrons}}>
-        {{#link-to "crons" repo}}
-          Crons
-        {{/link-to}}
-      </li>
-    {{/if}}
-  {{/if}}
   <li id="tab_build" class={{classBuild}}>
     {{#if build.id}}
       {{#if repo.slug}}
