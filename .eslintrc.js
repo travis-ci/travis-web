@@ -260,9 +260,9 @@ module.exports = {
     // specify whether double or single quotes should be used
     quotes: [2, 'single', { avoidEscape: true }],
 
-    // // do not require jsdoc
-    // // http://eslint.org/docs/rules/require-jsdoc
-    // 'require-jsdoc': 0,
+    // do not require jsdoc
+    // http://eslint.org/docs/rules/require-jsdoc
+    'require-jsdoc': 0,
 
     // // require or disallow use of semicolons instead of ASI
     // semi: [2, 'always'],
