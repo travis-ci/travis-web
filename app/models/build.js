@@ -33,7 +33,7 @@ Build.reopen({
   commit: belongsTo('commit', { async: false }),
   jobs: hasMany('job', { async: true }),
 
-  config: function() {
+  config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
       return compact(config);
@@ -44,97 +44,99 @@ Build.reopen({
       this.set('isFetchingConfig', true);
       return this.reload();
     }
-  }.property('_config'),
+  }),
 
-  isPullRequest: function() {
+  isPullRequest: Ember.computed('eventType', function () {
     return this.get('eventType') === 'pull_request' || this.get('pullRequest');
-  }.property('eventType'),
+  }),
 
-  isMatrix: function() {
+  isMatrix: Ember.computed('jobs.length', function () {
     return this.get('jobs.length') > 1;
-  }.property('jobs.length'),
+  }),
 
-  isFinished: function() {
-    var ref;
-    return (ref = this.get('state')) === 'passed' || ref === 'failed' || ref === 'errored' || ref === 'canceled';
-  }.property('state'),
+  isFinished: Ember.computed('state', function () {
+    let state = this.get('state');
+    let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
+    return finishedStates.contains(state);
+  }),
 
-  notStarted: function() {
-    var ref;
-    return (ref = this.get('state')) === 'queued' || ref === 'created' || ref === 'received';
-  }.property('state'),
+  notStarted: Ember.computed('state', function () {
+    let state = this.get('state');
+    let waitingStates = ['queued', 'created', 'received'];
+    return waitingStates.contains(state);
+  }),
 
-  startedAt: function() {
+  startedAt: Ember.computed('_startedAt', 'notStarted', function () {
     if (!this.get('notStarted')) {
       return this.get('_startedAt');
     }
-  }.property('_startedAt', 'notStarted'),
+  }),
 
-  finishedAt: function() {
+  finishedAt: Ember.computed('_finishedAt', 'notStarted', function () {
     if (!this.get('notStarted')) {
       return this.get('_finishedAt');
     }
-  }.property('_finishedAt', 'notStarted'),
+  }),
 
-  requiredJobs: function() {
-    return this.get('jobs').filter(function(data) {
+  requiredJobs: Ember.computed('jobs.@each.allowFailure', function () {
+    return this.get('jobs').filter(function (data) {
       return !data.get('allowFailure');
     });
-  }.property('jobs.@each.allowFailure'),
+  }),
 
-  allowedFailureJobs: function() {
-    return this.get('jobs').filter(function(data) {
+  allowedFailureJobs: Ember.computed('jobs.@each.allowFailure', function () {
+    return this.get('jobs').filter(function (data) {
       return data.get('allowFailure');
     });
-  }.property('jobs.@each.allowFailure'),
+  }),
 
-  rawConfigKeys: function() {
+  rawConfigKeys: Ember.computed('config', 'jobs.@each.config', function () {
     var keys;
     keys = [];
-    this.get('jobs').forEach(function(job) {
-      return configKeys(job.get('config')).forEach(function(key) {
+    this.get('jobs').forEach(function (job) {
+      return configKeys(job.get('config')).forEach(function (key) {
         if (!keys.contains(key)) {
           return keys.pushObject(key);
         }
       });
     });
     return keys;
-  }.property('config', 'jobs.@each.config'),
+  }),
 
-  configKeys: function() {
+  configKeys: Ember.computed('rawConfigKeys.length', function () {
     var headers, keys;
     keys = this.get('rawConfigKeys');
     headers = ['Job', 'Duration', 'Finished'];
     // TODO: No need to use $.map over Ember's
-    return Ember.$.map(headers.concat(keys), function(key) {
+    return Ember.$.map(headers.concat(keys), function (key) {
       if (configKeysMap.hasOwnProperty(key)) {
         return configKeysMap[key];
       } else {
         return key;
       }
     });
-  }.property('rawConfigKeys.length'),
+  }),
 
-  canCancel: function() {
+  canCancel: Ember.computed('jobs.@each.canCancel', 'jobs', 'jobs.[]', function () {
     return this.get('jobs').filterBy('canCancel', true).length;
-  }.property('jobs.@each.canCancel', 'jobs', 'jobs.[]'),
+  }),
 
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post("/builds/" + (this.get('id')) + "/cancel");
+    return this.get('ajax').post('/builds/' + (this.get('id')) + '/cancel');
   },
 
   restart() {
     return this.get('ajax').post(`/builds/${this.get('id')}/restart`);
   },
 
-  formattedFinishedAt: function() {
+  formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
       return moment(finishedAt).format('lll');
     }
-  }.property('finishedAt')
+  })
 
 });
 

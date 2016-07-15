@@ -2,7 +2,7 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 
 export default Ember.HistoryLocation.extend({
-  init: function() {
+  init: function () {
     this._super(...arguments);
 
     var auth = this.get('auth');
@@ -16,7 +16,7 @@ export default Ember.HistoryLocation.extend({
     }
   },
 
-  getURL: function() {
+  getURL: function () {
     var url;
     url = this._super(...arguments);
     if (location.pathname === '/' && !config.enterprise) {
@@ -39,8 +39,9 @@ export default Ember.HistoryLocation.extend({
     return url;
   },
 
-  formatURL: function(logicalPath) {
-    if (!config.enterprise && (logicalPath === '/repositories' || logicalPath === '/home' || logicalPath === '/home-pro')) {
+  formatURL: function (logicalPath) {
+    let rootRedirects = ['/repositories', '/home', 'home-pro'];
+    if (!config.enterprise && rootRedirects.contains(logicalPath)) {
       return '/';
     } else {
       return this._super(...arguments);

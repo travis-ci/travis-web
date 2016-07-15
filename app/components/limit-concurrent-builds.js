@@ -4,14 +4,14 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   classNames: ['limit-concurrent-builds'],
 
-  description: function() {
+  description: Ember.computed('enabled', function () {
     var description;
-    description = "Limit concurrent jobs";
+    description = 'Limit concurrent jobs';
     if (this.get('enabled')) {
-      description += "  ";
+      description += '  ';
     }
     return description;
-  }.property('enabled'),
+  }),
 
   limitChanged(value) {
     var limit, repo, savingFinished;
@@ -34,7 +34,7 @@ export default Ember.Component.extend({
         yield this.get('repo').saveSettings({
           maximum_number_of_builds: 0
         });
-      } catch(e) {}
+      } catch (e) {}
 
       this.set('value', 0);
     }

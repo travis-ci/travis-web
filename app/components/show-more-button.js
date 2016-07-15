@@ -10,13 +10,13 @@ export default Ember.Component.extend({
   attributeBindings: ['disabled'],
   disabled: alias('isLoading'),
 
-  buttonLabel: function() {
+  buttonLabel: Ember.computed('isLoading', function () {
     if (this.get('isLoading')) {
       return 'Loading';
     } else {
       return 'Show more';
     }
-  }.property('isLoading'),
+  }),
 
   click() {
     return this.attrs.showMore();

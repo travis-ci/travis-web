@@ -9,7 +9,7 @@ export default Mirage.Factory.extend({
     if (!repository.attrs.skipPermissions) {
       // Creates permissions for first user in the database
       const user = server.schema.users.all().models[0];
-      server.create('permissions', {user, repository});
+      server.create('permissions', { user, repository });
     }
   }
 });

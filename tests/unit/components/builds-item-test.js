@@ -1,10 +1,10 @@
 // TODO: Convert to integration test
 import { test, moduleForComponent } from 'ember-qunit';
 moduleForComponent('builds-item', {
-    needs: ['helper:format-sha', 'helper:format-duration', 'helper:format-time', 'helper:format-message', 'helper:pretty-date', 'component:status-icon', 'component:request-icon', 'component:user-avatar']
+  needs: ['helper:format-sha', 'helper:format-duration', 'helper:format-time', 'helper:format-message', 'helper:pretty-date', 'component:status-icon', 'component:request-icon', 'component:user-avatar']
 });
 
-test('it renders', function() {
+test('it renders', function () {
   var attributes, component;
   attributes = {
     id: 10000,
@@ -15,7 +15,7 @@ test('it renders', function() {
     pullRequest: false,
     eventType: 'push',
     commit: {
-      sha: "a5e8093098f9c0fb46856b753fb8943c7fbf26f3",
+      sha: 'a5e8093098f9c0fb46856b753fb8943c7fbf26f3',
       branch: 'foobarbranch',
       authorName: 'Test Author',
       authorEmail: 'author@example.com'

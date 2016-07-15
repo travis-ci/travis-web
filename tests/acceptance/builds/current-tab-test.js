@@ -9,25 +9,25 @@ moduleForAcceptance('Acceptance | builds/current tab', {
   }
 });
 
-test('renders most recent repository without builds', function(assert) {
-  server.create('repository', {slug: 'travis-ci/travis-web'});
+test('renders most recent repository without builds', function (assert) {
+  server.create('repository', { slug: 'travis-ci/travis-web' });
 
   currentRepoTab
     .visit();
 
-  andThen(function() {
+  andThen(function () {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
     assert.equal(currentRepoTab.showsNoBuildsMessaging, 'No builds for this repository', 'Current tab shows no builds message');
   });
 });
 
-test('renders most recent repository and most recent build when builds present', function(assert) {
-  let repo =  server.create('repository', {slug: 'travis-ci/travis-web'});
+test('renders most recent repository and most recent build when builds present', function (assert) {
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
-  let build = server.create('build', {number: '5', repository: repo, state: 'passed'});
-  let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
-  let job = server.create('job', {number: '1234.1', repository: repo, state: 'passed', build_id: build.id, commit_id: commit.id});
+  let build = server.create('build', { number: '5', repository: repo, state: 'passed' });
+  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build_id: build.id, commit_id: commit.id });
   // create branch
   server.create('log', { id: job.id });
 
@@ -40,7 +40,7 @@ test('renders most recent repository and most recent build when builds present',
   currentRepoTab
     .visit();
 
-  andThen(function() {
+  andThen(function () {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
     assert.ok(currentRepoTab.showsCurrentBuild, 'Shows current build');
   });

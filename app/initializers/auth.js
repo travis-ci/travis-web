@@ -1,6 +1,6 @@
 var AuthInitializer, initialize;
 
-initialize = function(app) {
+initialize = function (app) {
   app.inject('route', 'auth', 'service:auth');
   app.inject('controller', 'auth', 'service:auth');
   app.inject('application', 'auth', 'service:auth');
@@ -14,6 +14,6 @@ AuthInitializer = {
   initialize: initialize
 };
 
-export {initialize};
+export { initialize };
 
 export default AuthInitializer;

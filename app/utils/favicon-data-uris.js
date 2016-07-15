@@ -1,4 +1,4 @@
-var __inlineImageDataUri__ = function() {}; // in case image inliner doesn't run
+var __inlineImageDataUri__ = function () {}; // in case image inliner doesn't run
 
 var uris = {
   default: __inlineImageDataUri__('favicon.png'),
@@ -8,6 +8,6 @@ var uris = {
   yellow: __inlineImageDataUri__('favicon-yellow.png')
 };
 
-export default function(type) {
+export default function (type) {
   return uris[type] || uris.default;
 }

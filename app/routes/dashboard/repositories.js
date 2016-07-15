@@ -12,20 +12,20 @@ export default TravisRoute.extend({
   model() {
     var apiEndpoint;
     apiEndpoint = config.apiEndpoint;
-    return Ember.$.ajax(apiEndpoint + '/v3/repos?repository.active=true&include=repository.default_branch,build.commit', {
+    let queryParams = '?repository.active=true&include=repository.default_branch,build.commit';
+    let url = `${apiEndpoint}/v3/repos${queryParams}`;
+    return Ember.$.ajax(url, {
       headers: {
         Authorization: 'token ' + this.auth.token()
       }
-    }).then(function(response) {
-      return response.repositories.filter(function(repo) {
+    }).then(function (response) {
+      return response.repositories.filter(function (repo) {
         if (repo) {
           return repo.current_build;
         }
-      }).map(function(repo) {
+      }).map(function (repo) {
         return Ember.Object.create(repo);
       });
     });
   }
 });
-
-

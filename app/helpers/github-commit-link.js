@@ -2,7 +2,7 @@ import { formatCommit, safe } from 'travis/utils/helpers';
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import Ember from 'ember';
 
-export default Ember.Helper.helper(function(params) {
+export default Ember.Helper.helper(function (params) {
   var commitSha, sha, slug, url;
 
   slug = params[0];
