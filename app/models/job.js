@@ -72,7 +72,7 @@ export default Model.extend(DurationCalculations, {
 
   isFinished: Ember.computed('state', function () {
     let state = this.get('state');
-    let finishedStates = ['passes', 'failed', 'errored', 'canceled'];
+    let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.contains(state);
   }),
 
