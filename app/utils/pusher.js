@@ -199,11 +199,15 @@ if (ENV.pro) {
   };
   Pusher.getDefaultStrategy = function (config) {
     let pusherPath = ENV.pusher.path || '';
+    if (pusherPath) {
+      pusherPath = `/${pusherPath}`;
+    }
+    console.log(`${config.wsHost}:${config.wssPort}${pusherPath}`);
     return [
       [
         ':def', 'ws_options', {
-          hostUnencrypted: `${config.wsHost}:${config.wsPort}/${pusherPath}`,
-          hostEncrypted: `${config.wsHost}:${config.wssPort}/${pusherPath}`,
+          hostUnencrypted: `${config.wsHost}:${config.wsPort}${pusherPath}`,
+          hostEncrypted: `${config.wsHost}:${config.wssPort}${pusherPath}`,
           path: config.path
         }
       ], [
