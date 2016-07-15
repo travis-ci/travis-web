@@ -79,7 +79,6 @@ var App = Ember.Application.extend(Ember.Evented, {
           return 'private-' + channel;
         }
       });
-
     }
     return Travis.pusher.subscribeAll(channels);
   },

@@ -105,5 +105,4 @@ export default (function () {
   };
 
   return Tailing;
-
 })();

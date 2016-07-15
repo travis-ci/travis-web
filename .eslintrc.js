@@ -224,34 +224,41 @@ module.exports = {
       ObjectPattern: { minProperties: 0, multiline: true }
     }],
 
-    // // enforce "same line" or "multiple line" on object properties.
-    // // http://eslint.org/docs/rules/object-property-newline
-    // // 'object-property-newline': [2, {
-    // //   allowMultiplePropertiesPerLine: true,
-    // // }],
+    // TODO: Rule not found
+    // enforce "same line" or "multiple line" on object properties.
+    // http://eslint.org/docs/rules/object-property-newline
+    // 'object-property-newline': [2, {
+    //   allowMultiplePropertiesPerLine: true,
+    // }],
 
-    // // allow just one var statement per function
+    // TODO: Consider re-enabling later
+    // allow just one var statement per function
     // 'one-var': [2, 'never'],
 
-    // // require a newline around variable declaration
-    // // http://eslint.org/docs/rules/one-var-declaration-per-line
+    // TODO: Re-evaluate including this once we've cleaned up some of the
+    // biolerplate around Coffee -> JS conversion that created a *ton* of vars
+    // require a newline around variable declaration
+    // http://eslint.org/docs/rules/one-var-declaration-per-line
     // 'one-var-declaration-per-line': [2, 'always'],
 
-    // // require assignment operator shorthand where possible or prohibit it entirely
-    // 'operator-assignment': 0,
+    // require assignment operator shorthand where possible or prohibit it entirely
+    'operator-assignment': 0,
 
-    // // enforce operators to be placed before or after line breaks
-    // 'operator-linebreak': 0,
+    // enforce operators to be placed before or after line breaks
+    'operator-linebreak': 0,
 
-    // // enforce padding within blocks
-    // 'padded-blocks': [2, 'never'],
+    // enforce padding within blocks
+    'padded-blocks': [2, 'never'],
 
-    // // require quotes around object literal property names
-    // // http://eslint.org/docs/rules/quote-props.html
+    // TODO: Wait on enforcing this until we figure out a way to handle AJAX
+    // Headers in a sane way. We should use unquoted always unless numbers,
+    // keywords *or constants* (or things that look like them).
+    // require quotes around object literal property names
+    // http://eslint.org/docs/rules/quote-props.html
     // 'quote-props': [2, 'as-needed', { keywords: false, unnecessary: true, numbers: false }],
 
-    // // specify whether double or single quotes should be used
-    // quotes: [2, 'single', { avoidEscape: true }],
+    // specify whether double or single quotes should be used
+    quotes: [2, 'single', { avoidEscape: true }],
 
     // // do not require jsdoc
     // // http://eslint.org/docs/rules/require-jsdoc

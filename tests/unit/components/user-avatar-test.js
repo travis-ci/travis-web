@@ -6,7 +6,6 @@ moduleForComponent('user-avatar', 'UserAvatarComponent | Unit', {
 });
 
 test('it renders', function () {
-
   var name = 'Hello Test';
   var url = 'https://someurl.com/someimage.jpg';
 

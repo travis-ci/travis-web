@@ -42,7 +42,6 @@ export default TravisRoute.extend({
         });
       }
     });
-
   },
 
   fetchBranches() {
