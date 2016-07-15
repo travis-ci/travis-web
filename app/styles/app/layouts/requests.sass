@@ -9,7 +9,7 @@
           background-color: $color
       .fade-out
         &:after
-          @include fadeOut(right, -90deg, $color)
+          @include fadeOut(right, -90deg, $color, 30%)
 
 .requests
   padding: 0
@@ -17,21 +17,18 @@
   list-style: none
 
 .request-item
-  position: relative
-  border: 1px solid $cream-dark
-  margin-bottom: 5px
-  font-size: 15px
-  padding-left: 1em
   @include colorJobs($turf-green, 'accepted', 3px, rgba($turf-green, .1))
   @include colorJobs($brick-red, 'rejected', 3px, rgba($brick-red, .1))
-
   @include requestFadeOut('accepted',#ECF6EF)
   @include requestFadeOut('rejected', #FBECEB)
-
+  position: relative
+  margin-bottom: 5px
+  padding-left: 1em
+  font-size: 15px
+  border: 1px solid $pebble-grey
   strong
-    font-weight: $font-weight-bold
     margin-right: .5em
-
+    font-weight: $font-weight-bold
   a:hover,
   a:active
     text-decoration: underline
@@ -43,7 +40,8 @@
     align-items: center
     padding: .3em 0 .3em 2px
     white-space: nowrap
-
+    .row-item.fade-out
+      position: relative
     .row-item:first-of-type
       flex: 0 0 3em
       padding-left: .7em
