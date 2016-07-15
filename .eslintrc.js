@@ -264,21 +264,21 @@ module.exports = {
     // http://eslint.org/docs/rules/require-jsdoc
     'require-jsdoc': 0,
 
-    // // require or disallow use of semicolons instead of ASI
-    // semi: [2, 'always'],
+    // require or disallow use of semicolons instead of ASI
+    semi: [2, 'always'],
 
-    // // enforce spacing before and after semicolons
-    // 'semi-spacing': [2, { before: false, after: true }],
+    // enforce spacing before and after semicolons
+    'semi-spacing': [2, { before: false, after: true }],
 
-    // // sort variables within the same declaration block
-    // 'sort-vars': 0,
+    // sort variables within the same declaration block
+    'sort-vars': 0,
 
-    // // require or disallow space before blocks
-    // 'space-before-blocks': 2,
+    // require or disallow space before blocks
+    'space-before-blocks': 2,
 
-    // // require or disallow space before function opening parenthesis
-    // // http://eslint.org/docs/rules/space-before-function-paren
-    // 'space-before-function-paren': [2, { anonymous: 'always', named: 'never' }],
+    // require or disallow space before function opening parenthesis
+    // http://eslint.org/docs/rules/space-before-function-paren
+    'space-before-function-paren': [2, { anonymous: 'always', named: 'never' }],
 
     // // require or disallow spaces inside parentheses
     // 'space-in-parens': [2, 'never'],

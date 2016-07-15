@@ -25,7 +25,7 @@ export default V3Serializer.extend({
             data = this.extractRelationship(relationshipMeta.type, relationshipHash);
           } else if (relationshipMeta.kind === 'hasMany') {
             data = relationshipHash.map((item) => {
-              return this.extractRelationship(relationshipMeta.type, item)
+              return this.extractRelationship(relationshipMeta.type, item);
             });
           }
           relationship = { data };
