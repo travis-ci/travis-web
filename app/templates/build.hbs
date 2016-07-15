@@ -15,19 +15,12 @@
       {{/if}}
     {{else}}
 
-      <div class="travistab">
-        <nav class="travistab-nav">
-          <ul>
-            <li>{{link-to 'Job log' 'build.index' build id="tab_log" title="Look at this job's log"}}</li>
-            <li>{{link-to 'View Config' 'build.config' build id="tab_config" title="Look at this job's config"}}</li>
-          </ul>
-        </nav>
-        <div class="travistab-body">
 
-          {{outlet}}
-
-        </div>
-      </div>
+      {{#if build.jobs}}
+       {{job-tabs job=build.jobs.firstObject needsBuildRoute=true}}
+      {{else}}
+        Looks like your build doesn't have any jobs. That's weird though.
+      {{/if}}
 
     {{/if}}
   {{else}}

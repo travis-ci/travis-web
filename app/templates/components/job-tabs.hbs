@@ -1,0 +1,16 @@
+<nav class="travistab-nav travistab-nav--underline">
+  <ul>
+    {{#if needsBuildRoute}}
+      <li>{{link-to 'Job log' 'build.index' job id="tab_log" title="Look at this job's log"}}</li>
+      <li>{{link-to 'View Config' 'build.config' job id="tab_config" title="Look at this job's config"}}</li>
+    {{else}}
+      <li>{{link-to 'Job log' 'job.index' job id="tab_log" title="Look at this job's log"}}</li>
+      <li>{{link-to 'View Config' 'job.config' job id="tab_config" title="Look at this job's config"}}</li>
+    {{/if}}
+  </ul>
+</nav>
+<div class="travistab-body">
+
+  {{outlet}}
+
+</div>
