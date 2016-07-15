@@ -1,24 +1,15 @@
 /* global _gaq */
 import Ember from 'ember';
 import config from './config/environment';
-import Location from 'travis/utils/location';
 
 var Router = Ember.Router.extend({
-  location: function() {
-    if (Ember.testing) {
-      return 'none';
-    } else {
-      // this is needed, because in the location
-      // we need to decide if repositories or home needs
-      // to be displayed, based on the current login status
-      //
-      // we should probably think about a more general way to
-      // do this, location should not know about auth status
-      return Location.create({
-        auth: Ember.getOwner(this).lookup('service:auth')
-      });
-    }
-  }.property(),
+  // this is needed, because in the location
+  // we need to decide if repositories or home needs
+  // to be displayed, based on the current login status
+  //
+  // we should probably think about a more general way to
+  // do this, location should not know about auth status
+  location: Ember.testing ? 'none' : 'auth-dependent',
 
   generate() {
     var url;
