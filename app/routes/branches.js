@@ -16,7 +16,7 @@ export default TravisRoute.extend({
     }
 
     let path = `${apiEndpoint}/v3/repo/${repoId}/branches`;
-    let includes = `include=build.commit&limit=100`;
+    let includes = 'include=build.commit&limit=100';
     let url = `${path}?include=${includes}`;
 
     return Ember.$.ajax(url, options).then(function (response) {

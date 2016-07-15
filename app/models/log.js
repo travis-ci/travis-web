@@ -45,7 +45,6 @@ var Request = Ember.Object.extend({
   },
 
   isJson(xhr) {
-
     // Firefox can't see the Content-Type header on the xhr response due to the wrong
     // status code 204. Should be some redirect code but that doesn't work with CORS.
     var type = xhr.getResponseHeader('Content-Type') || '';

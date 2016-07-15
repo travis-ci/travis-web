@@ -5,7 +5,6 @@ import jobPage from 'travis/tests/pages/job';
 moduleForAcceptance('Acceptance | job view');
 
 test('visiting job-view', function (assert) {
-
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});

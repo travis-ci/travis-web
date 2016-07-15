@@ -15,7 +15,6 @@ test('it renders the default ssh key if no custom key is set', function (assert)
 
   assert.equal(this.$('.ssh-key-name').text().trim(), 'no custom key set', 'should display that no custom key is set');
   assert.equal(this.$('.ssh-key-value').text().trim(), 'fingerprint', 'should display default key fingerprint');
-
 });
 
 test('it renders the custom ssh key if custom key is set', function (assert) {
@@ -33,7 +32,6 @@ test('it renders the custom ssh key if custom key is set', function (assert) {
 
   assert.equal(this.$('.ssh-key-name').text().trim(), 'fookey', 'should display key description');
   assert.equal(this.$('.ssh-key-value').text().trim(), 'somethingthing', 'should display custom key fingerprint');
-
 });
 
 
@@ -74,5 +72,4 @@ test('it does not delete the custom key if permissions are insufficient', functi
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=false}}`);
 
   assert.ok(Ember.isEmpty(this.$('.ssh-key-action').find('a')), 'delete link should not be displayed');
-
 });

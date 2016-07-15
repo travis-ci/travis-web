@@ -21,7 +21,6 @@ test('it renders an env-var with private value', function (assert) {
 
   assert.equal(this.$('.env-var-name').text(), 'foo', 'name should be displayed');
   assert.equal(this.$('.env-var-value input').val(), '••••••••••••••••', 'value should be hidden');
-
 });
 
 test('it renders an env-var with public value', function (assert) {
@@ -38,7 +37,6 @@ test('it renders an env-var with public value', function (assert) {
 
   assert.equal(this.$('.env-var-name').text(), 'foo', 'name should be displayed');
   assert.equal(this.$('.env-var-value input').val(), 'bar', 'value should not be hidden');
-
 });
 
 // test('it deletes an env-var', function(assert) {

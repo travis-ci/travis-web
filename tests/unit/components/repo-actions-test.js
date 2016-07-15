@@ -6,9 +6,7 @@ moduleForComponent('repo-actions', 'RepoActionsComponent', {
 });
 
 test('it renders', function () {
-
-  var component;
-  component = this.subject({});
+  let component = this.subject({});
   this.render();
   return ok(component.$().hasClass('repo-main-tools'), 'component has class');
 });

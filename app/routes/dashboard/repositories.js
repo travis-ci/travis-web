@@ -12,7 +12,7 @@ export default TravisRoute.extend({
   model() {
     var apiEndpoint;
     apiEndpoint = config.apiEndpoint;
-    let queryParams = `?repository.active=true&include=repository.default_branch,build.commit`;
+    let queryParams = '?repository.active=true&include=repository.default_branch,build.commit';
     let url = `${apiEndpoint}/v3/repos${queryParams}`;
     return Ember.$.ajax(url, {
       headers: {

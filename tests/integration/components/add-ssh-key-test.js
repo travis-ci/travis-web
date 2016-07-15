@@ -73,5 +73,4 @@ test('it throws an error if value for ssh key is blank', function (assert) {
 
   fillIn(this.$('.ssh-value'), 'bar');
   assert.ok(!this.$('.form-error-message').length, 'error message is removed if value is filled in');
-
 });
