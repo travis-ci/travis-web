@@ -30,7 +30,7 @@ export default TravisRoute.extend({
 
     error(error, /* transition, originRoute*/) {
       let is404 = error.status === 404;
-      let errorText = 'There was an error while loading data, please try again.'
+      let errorText = 'There was an error while loading data, please try again.';
       let message = is404 ? this.transitionTo('error404') : errorText;
       this.controllerFor('error').set('layoutName', 'simple');
       this.controllerFor('error').set('message', message);

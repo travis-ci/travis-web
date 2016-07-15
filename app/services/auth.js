@@ -66,7 +66,7 @@ export default Ember.Service.extend({
         // so log the user out. Also log the user out if the response is 401
         // or 403
         if (!xhr || (xhr.status === 401 || xhr.status === 403)) {
-          let errorText = "You've been signed out, because your access token has expired."
+          let errorText = "You've been signed out, because your access token has expired.";
           this.get('flashes').error(errorText);
           this.signOut();
         }
