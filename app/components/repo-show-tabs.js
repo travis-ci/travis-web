@@ -2,8 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'nav',
-  classNames: ['tabnav'],
-  ariaRole: 'tablist',
+  classNames: ['travistab-nav'],
 
   classCurrent: function() {
     if (this.get('tab') === 'current') {
