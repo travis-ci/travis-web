@@ -15,11 +15,7 @@ const jobComponent = {
     isFailed: hasClass('failed')
   },
 
-  number: {
-    scope: '.job-number',
-    text: text('.label-align')
-  },
-
+  number: text('.job-number .label-align'),
   env: text('.job-env .label-align'),
   os: text('.job-os span'),
   language: text('.job-lang .label-align')
