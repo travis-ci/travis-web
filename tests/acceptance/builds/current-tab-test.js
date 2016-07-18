@@ -31,17 +31,14 @@ test('renders most recent repository and most recent build when builds present',
   // create branch
   server.create('log', { id: job.id });
 
-  build.commit = commit;
-  commit.build = build;
-
-  build.save();
-  commit.save();
+  build.update('commit', commit);
+  commit.update('build', build);
 
   currentRepoTab
     .visit();
 
   andThen(function() {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
-    assert.ok(currentRepoTab.showsCurrentBuild, 'Shows current build');
+    assert.equal(currentRepoTab.showsCurrentBuild, 'acceptance-tests This is a message', 'Shows current build');
   });
 });
