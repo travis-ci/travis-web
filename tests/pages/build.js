@@ -8,6 +8,23 @@ let {
   text
 } = PageObject;
 
+const jobComponent = {
+  state: {
+    scope: '.job-state',
+    isPassed: hasClass('passed'),
+    isFailed: hasClass('failed')
+  },
+
+  number: {
+    scope: '.job-number',
+    text: text('.label-align')
+  },
+
+  env: text('.job-env .label-align'),
+  os: text('.job-os span'),
+  language: text('.job-lang .label-align')
+};
+
 export default PageObject.create({
   visit: visitable('travis-ci/travis-web/builds/1'),
   restartBuild: clickable('.button-circle-trigger'),
@@ -16,25 +33,17 @@ export default PageObject.create({
   cancelledNotification: text('p.flash-message'),
   singleJobLogText: text('.log-body pre'),
 
-  jobs: collection({
-    scope: '.jobs-list',
+  requiredJobs: collection({
+    scope: '.jobs-list:eq(0)',
     itemScope: '.jobs-item',
 
-    item: {
-      state: {
-        scope: '.job-state',
-        isPassed: hasClass('passed'),
-        isFailed: hasClass('failed')
-      },
+    item: jobComponent
+  }),
 
-      number: {
-        scope: '.job-number',
-        text: text('.label-align')
-      },
+  allowedFailureJobs: collection({
+    scope: '.jobs-list:eq(1)',
+    itemScope: '.jobs-item',
 
-      env: text('.job-env .label-align'),
-      os: text('.job-os span'),
-      language: text('.job-lang .label-align')
-    }
+    item: jobComponent
   })
 });
