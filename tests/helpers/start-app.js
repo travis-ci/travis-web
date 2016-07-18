@@ -16,11 +16,5 @@ export default function startApp(attrs) {
     application.injectTestHelpers();
   });
 
-  // TODO: I'm not sure if this is the best thing to do, but it seems
-  // easiest for now. That way in tests I can just write:
-  //
-  //     application.auth.signInForTests()
-  application.auth = application.__container__.lookup('auth:main');
-
   return application;
 }
