@@ -4,37 +4,37 @@
 <div class="row-item fade-out">
   <div clas="one-line">
     <h2 class="repo-title">
-    {{status-icon status=repo.current_build.state}}
+    {{status-icon status=repo.default_branch.last_build.state}}
     {{#link-to "repo" ownerName repoName }}
       <span class="label-align">{{repoName}}</span>
     {{/link-to}}
     </h2>
   </div>
 </div>
-{{#if repo.current_build}}
+{{#if repo.default_branch.last_build}}
   <div class="row-item row-color">
     <div class="one-line">
-      {{#link-to "build" ownerName repoName repo.current_build.id}}
+      {{#link-to "build" ownerName repoName repo.default_branch.last_build.id}}
         <span class="icon-hash">
           </span>
-        <span class="label-align">{{repo.current_build.number}}</span>
+        <span class="label-align">{{repo.default_branch.last_build.number}}</span>
       {{/link-to}}
     </div>
   </div>
 
   <div class="row-item fade-out">
     <div class="one-line">
-      {{request-icon event=repo.current_build.event_type}}
+      {{request-icon event=repo.default_branch.last_build.event_type}}
       <span class="label-align">{{repo.default_branch.name}}</span>
     </div>
   </div>
 
   <div class="row-item">
     <div class="one-line">
-      <a href="{{repo.current_build.commit.compare_url}}">
+      <a href="{{repo.default_branch.last_build.commit.compare_url}}">
         <span class="icon-github">
         </span>
-        <span class="label-align">{{format-sha repo.current_build.commit.sha}}</span>
+        <span class="label-align">{{format-sha repo.default_branch.last_build.commit.sha}}</span>
       </a>
     </div>
   </div>
@@ -43,8 +43,8 @@
     <div class="one-line">
       <span class="icon-calendar">
       </span>
-      <span class="build-status label-align">{{repo.current_build.state}}</span>
-      <span class="finished-at label-align">{{format-time repo.current_build.finished_at}}</span>
+      <span class="build-status label-align">{{repo.default_branch.last_build.state}}</span>
+      <span class="finished-at label-align">{{format-time repo.default_branch.last_build.finished_at}}</span>
     </div>
   </div>
 {{else}}
