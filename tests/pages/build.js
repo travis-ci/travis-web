@@ -32,7 +32,8 @@ export default PageObject.create({
         text: text('.label-align')
       },
 
-      env: text('.job-env .label-align')
+      env: text('.job-env .label-align'),
+      os: text('.job-os span')
     }
   })
 });
