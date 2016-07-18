@@ -22,8 +22,8 @@ module.exports = function(defaults) {
           assetsHost = assetsHost + '/';
         }
         fingerprint.prepend = assetsHost;
-      } else {
-        var s3Bucket = require('./config/deploy')('pull-request').s3.bucket;
+      } else if (process.env.DEPLOY_TARGET) {
+        var s3Bucket = require('./config/deploy')(process.env.DEPLOY_TARGET).s3.bucket;
         fingerprint.prepend = '//' + s3Bucket + '.s3.amazonaws.com/';
       }
     }
