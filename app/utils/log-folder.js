@@ -3,7 +3,10 @@ import Ember from 'ember';
 export default (function() {
   function LogFolder(element) {
     this.element = element;
-    this.element.on('click', '.fold', (function(_this) {
+    let handlerSelector = '.fold';
+    this.element
+      .off('click', handlerSelector) // remove any previous click handlers
+      .on('click', handlerSelector, (function(_this) {
       return function(event) {
         var folder;
         folder = _this.getFolderFromLine(Ember.$(event.target));
