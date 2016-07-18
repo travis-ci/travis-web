@@ -41,13 +41,13 @@ test('visiting build matrix', function(assert) {
   let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
   let build = server.create('build', {repository_id: repo.id, state: 'passed', commit_id: commit.id, commit});
 
-  let firstJob = server.create('job', {number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit, build});
+  let firstJob = server.create('job', {number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, config: {env: 'JORTS'}, commit, build});
   commit.job = firstJob;
 
   firstJob.save();
   commit.save();
 
-  let secondJob = server.create('job', {number: '1234.2', repository_id: repo.id, state: 'passed', build_id: build.id, commit, build});
+  let secondJob = server.create('job', {number: '1234.2', repository_id: repo.id, state: 'passed', build_id: build.id, config: {env: 'JANTS'}, commit, build});
   commit.job = secondJob;
 
   secondJob.save();
@@ -61,9 +61,11 @@ test('visiting build matrix', function(assert) {
     const firstJobRow = buildPage.jobs(0);
     assert.ok(firstJobRow.state.isPassed, 'expected the first job to have passed');
     assert.equal(firstJobRow.number.text, '1234.1');
+    assert.equal(firstJobRow.env, 'JORTS');
 
     const secondJobRow = buildPage.jobs(1);
     assert.equal(secondJobRow.number.text, '1234.2');
+    assert.equal(secondJobRow.env, 'JANTS');
   });
 });
 

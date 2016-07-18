@@ -30,7 +30,9 @@ export default PageObject.create({
       number: {
         scope: '.job-number',
         text: text('.label-align')
-      }
+      },
+
+      env: text('.job-env .label-align')
     }
   })
 });
