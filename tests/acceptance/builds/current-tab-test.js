@@ -31,17 +31,20 @@ test('renders most recent repository and most recent build when builds present',
   // create branch
   server.create('log', { id: job.id });
 
-  build.commit = commit;
-  commit.build = build;
-
-  build.save();
-  commit.save();
+  build.update('commit', commit);
+  commit.update('build', build);
 
   currentRepoTab
     .visit();
 
   andThen(function() {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
+  });
+
+  andThen(function() {
+    // TODO: This shouldn't be necessary. The cause for this test's
+    // unreliability is that we assert before the build information has been
+    // resolved. I'm actually not sure how this ever worked before.
     assert.ok(currentRepoTab.showsCurrentBuild, 'Shows current build');
   });
 });

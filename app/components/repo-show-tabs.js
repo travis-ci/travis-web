@@ -23,13 +23,7 @@ export default Ember.Component.extend({
     }
   }.property('tab'),
 
-  classCrons: function() {
-    if (this.get('tab') === 'crons') {
-      return 'active';
-    }
-  }.property('tab'),
-
-  classBranches: function() {
+  classBranches: function () {
     if (this.get('tab') === 'branches') {
       return 'active';
     }

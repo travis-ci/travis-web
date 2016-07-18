@@ -68,11 +68,6 @@
     {{#if isBranch}}
       <h2 class="page-title">No other branches for this repository</h2>
     {{else}}
-      {{#if isCron}}
-        <h2 class="page-title">No cron builds for this repository yet</h2>
-        <p class="page-notice">Want to know when your configured builds will be enqueued?</p>
-        {{#link-to "settings" repo class="button button--green"}}Go to the Settings Page{{/link-to}}
-      {{else}}
         <h2 class="page-title">No builds for this repository</h2>
         <p class="page-notice">Want to start testing this project on Travis CI?</p>
         <a href="http://docs.travis-ci.com/user/getting-started/" class="button button--green">Read the Docs on Getting Started</a>
@@ -81,7 +76,6 @@
         {{else}}
           <a href="#" class="button button--green" {{action (perform triggerBuild)}}>Trigger the first build</a>
         {{/if}} --}}
-      {{/if}}
     {{/if}}
   {{/if}}
 </div>

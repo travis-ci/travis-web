@@ -9,7 +9,6 @@ let {
 
 export default PageObject.create({
   visitBuildHistory: visitable(':organization/:repo/builds'),
-  visitCrons: visitable(':organization/:repo/crons'),
   visitPullRequests: visitable(':organization/:repo/pull_requests'),
 
   builds: collection({
