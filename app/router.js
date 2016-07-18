@@ -65,6 +65,7 @@ Router.map(function() {
           this.route('ssh_key');
         }
       });
+      this.route('config');
     });
   });
 
