@@ -16,11 +16,10 @@
     {{else}}
 
 
-      {{#if build.jobs}}
-       {{job-tabs job=build.jobs.firstObject needsBuildRoute=true}}
-      {{else}}
-        Looks like your build doesn't have any jobs. That's weird though.
-      {{/if}}
+      {{outlet}}
+
+      {{job-tabs job=build.jobs.firstObject needsBuildRoute=true}}
+
 
     {{/if}}
   {{else}}

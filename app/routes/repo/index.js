@@ -1,4 +1,5 @@
 import TravisRoute from 'travis/routes/basic';
+import Config from 'travis/config/environment';
 
 export default TravisRoute.extend({
   setupController(controller, model) {
@@ -8,6 +9,8 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
+    var repo;
+    repo = this.controllerFor('repo');
     this.controllerFor('build').set('build', null);
     this.controllerFor('job').set('job', null);
     this.stopObservingRepoStatus();
