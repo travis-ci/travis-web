@@ -6,7 +6,7 @@ export default Ember.Service.extend({
   ajaxPolling: true,
 
   init() {
-    var interval;
+    let interval;
     this._super(...arguments);
     this.set('watchedModels', []);
     this.set('sources', []);
@@ -29,7 +29,7 @@ export default Ember.Service.extend({
   },
 
   startPollingHook(source) {
-    var sources;
+    let sources;
     sources = this.get('sources');
     if (!sources.contains(source)) {
       return sources.pushObject(source);
@@ -37,13 +37,13 @@ export default Ember.Service.extend({
   },
 
   stopPollingHook(source) {
-    var sources;
+    let sources;
     sources = this.get('sources');
     return sources.removeObject(source);
   },
 
   startPolling(model) {
-    var watchedModels;
+    let watchedModels;
     watchedModels = this.get('watchedModels');
     if (!watchedModels.contains(model)) {
       return watchedModels.pushObject(model);
@@ -51,15 +51,13 @@ export default Ember.Service.extend({
   },
 
   stopPolling(model) {
-    var watchedModels;
+    let watchedModels;
     watchedModels = this.get('watchedModels');
     return watchedModels.removeObject(model);
   },
 
   poll() {
-    this.get('watchedModels').forEach(function (model) {
-      return model.reload();
-    });
+    this.get('watchedModels').forEach(model => model.reload());
 
     return this.get('sources').forEach((source) => {
       if (Ember.get(source, 'isDestroyed')) {

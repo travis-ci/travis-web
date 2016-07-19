@@ -32,7 +32,7 @@ export default RavenLogger.extend({
     } else {
       let { message } = error;
       return this.get('whitelistMessages').any((whitelistedMessage) => {
-        return message.includes(whitelistedMessage);
+        message.includes(whitelistedMessage);
       });
     }
   },
@@ -47,7 +47,7 @@ export default RavenLogger.extend({
     if (config.enterprise) {
       return false;
     } else {
-      var sampleRate = 10;
+      const sampleRate = 10;
       return (Math.random() * 100 <= sampleRate);
     }
   }

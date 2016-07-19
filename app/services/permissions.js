@@ -15,12 +15,10 @@ export default Ember.Service.extend({
   // This is computed property that can be used to allow any properties that
   // use permissions service to add dependencies easier. So instead of depending
   // on each of these things separately, we can depend on all
-  all: Ember.computed('currentUser.permissions', 'currentUser.permissions.[]',
-         'currentUser.pushPermissions', 'currentUser.pushPermissions.[]',
-         'currentUser.adminPermissions', 'currentUser.adminPermissions.[]',
-         function () {
-           return;
-         }),
+  // eslint-disable-next-line
+  all: Ember.computed('currentUser.permissions', 'currentUser.permissions.[]', 'currentUser.pushPermissions', 'currentUser.pushPermissions.[]', 'currentUser.adminPermissions', 'currentUser.adminPermissions.[]', function () {
+    return void 0;
+  }),
 
   hasPermission(repo) {
     return this.checkPermission(repo, 'permissions');
