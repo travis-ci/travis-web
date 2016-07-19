@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   layoutName: Ember.computed({
     get() {
       if (this._layoutName) {
-        return 'layouts/' + this._layoutName;
+        return `layouts/${this._layoutName}`;
       }
     },
 

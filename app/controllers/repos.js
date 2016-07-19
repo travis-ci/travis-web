@@ -5,14 +5,14 @@ import Repo from 'travis/models/repo';
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
 
-var sortCallback = function (repo1, repo2) {
+const sortCallback = (repo1, repo2) => {
   // this function could be made simpler, but I think it's clearer this way
   // what're we really trying to achieve
 
-  var buildId1 = repo1.get('currentBuild.id');
-  var buildId2 = repo2.get('currentBuild.id');
-  var finishedAt1 = repo1.get('currentBuild.finishedAt');
-  var finishedAt2 = repo2.get('currentBuild.finishedAt');
+  const buildId1 = repo1.get('currentBuild.id');
+  const buildId2 = repo2.get('currentBuild.id');
+  let finishedAt1 = repo1.get('currentBuild.finishedAt');
+  let finishedAt2 = repo2.get('currentBuild.finishedAt');
 
   if (!buildId1 && !buildId2) {
     // if both repos lack builds, put newer repo first
@@ -48,19 +48,19 @@ var sortCallback = function (repo1, repo2) {
   }
 };
 
-var Controller = Ember.Controller.extend({
+const Controller = Ember.Controller.extend({
   auth: service(),
   ajax: service(),
   updateTimesService: service('updateTimes'),
 
   actions: {
-    activate: function (name) {
+    activate(name) {
       return this.activate(name);
     },
-    showRunningJobs: function () {
+    showRunningJobs() {
       return this.activate('running');
     },
-    showMyRepositories: function () {
+    showMyRepositories() {
       if (this.get('tab') === 'running') {
         return this.activate('owned');
       } else {
@@ -104,15 +104,12 @@ var Controller = Ember.Controller.extend({
 
   runningJobs: Ember.computed('config.pro', function () {
     if (!this.get('config.pro')) { return []; }
-    var result;
+    let result;
 
-    result = this.store.filter('job', {}, function (job) {
-      return ['queued', 'started', 'received'].indexOf(job.get('state')) !== -1;
-    });
+    const runningStatuses = ['queued', 'started', 'received'];
+    result = this.store.filter('job', {}, job => runningStatuses.contains(job.get('state')));
     result.set('isLoaded', false);
-    result.then(function () {
-      return result.set('isLoaded', true);
-    });
+    result.then(() => result.set('isLoaded', true));
 
     return result;
   }),
@@ -120,26 +117,22 @@ var Controller = Ember.Controller.extend({
   queuedJobs: Ember.computed('config.pro', function () {
     if (!this.get('config.pro')) { return []; }
 
-    var result;
-    result = this.get('store').filter('job', function (job) {
-      return ['created'].indexOf(job.get('state')) !== -1;
-    });
+    let result;
+    result = this.get('store').filter('job', job => ['created'].indexOf(job.get('state')) !== -1);
     result.set('isLoaded', false);
-    result.then(function () {
+    result.then(() => {
       result.set('isLoaded', true);
     });
 
     return result;
   }),
 
-  recentRepos: Ember.computed(function () {
-    return [];
-  }),
+  recentRepos: Ember.computed(() => []),
 
   updateTimes() {
     let records = this.get('repos');
 
-    let callback = (record) => { return record.get('currentBuild'); };
+    let callback = (record) => { record.get('currentBuild'); };
     records = records.filter(callback).map(callback);
 
     this.get('updateTimesService').push(records);
@@ -150,7 +143,7 @@ var Controller = Ember.Controller.extend({
     this.set('tab', tab);
     // find the data based on tab
     // tab == 'owned' => viewOwned invoked
-    return this[('view_' + tab).camelize()](params);
+    return this[(`view_${tab}`).camelize()](params);
   },
 
   reset() {
@@ -197,7 +190,7 @@ var Controller = Ember.Controller.extend({
   },
 
   searchObserver: Ember.observer('search', function () {
-    var search;
+    let search;
     search = this.get('search');
     if (search) {
       return this.searchFor(search);
@@ -214,7 +207,7 @@ var Controller = Ember.Controller.extend({
   },
 
   noReposMessage: Ember.computed('tab', function () {
-    var tab;
+    let tab;
     tab = this.get('tab');
     if (tab === 'owned') {
       return 'You don\'t have any repos set up on Travis CI';
@@ -234,7 +227,7 @@ var Controller = Ember.Controller.extend({
     '_repos.@each.currentBuildFinishedAt',
     '_repos.@each.currentBuildId',
     function () {
-      var repos = this.get('_repos');
+      let repos = this.get('_repos');
 
       if (repos && repos.toArray) {
         repos = repos.toArray();

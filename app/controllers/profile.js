@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
   account: alias('accountController.model'),
 
   activate(action) {
-    return this[('view_' + action).camelize()]();
+    return this[(`view_${action}`).camelize()]();
   },
 
   viewHooks() {

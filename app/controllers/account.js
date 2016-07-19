@@ -10,12 +10,10 @@ export default Ember.Controller.extend({
   user: alias('auth.currentUser'),
 
   init() {
-    var self;
+    let self;
     this._super(...arguments);
     self = this;
-    return Travis.on('user:synced', (function () {
-      return self.reloadHooks();
-    }));
+    return Travis.on('user:synced', (() => self.reloadHooks()));
   },
 
   actions: {
@@ -35,9 +33,7 @@ export default Ember.Controller.extend({
         all: true,
         owner_name: login
       });
-      hooks.then(function () {
-        return hooks.set('isLoaded', true);
-      });
+      hooks.then(() => hooks.set('isLoaded', true));
       return this.set('allHooks', hooks);
     }
   },
@@ -51,9 +47,7 @@ export default Ember.Controller.extend({
     if (!hooks) {
       this.reloadHooks();
     }
-    return this.get('allHooks').filter(function (hook) {
-      return hook.get('admin');
-    });
+    return this.get('allHooks').filter(hook => hook.get('admin'));
   }),
 
   hooksWithoutAdmin: Ember.computed('allHooks.length', 'allHooks', function () {
@@ -61,9 +55,7 @@ export default Ember.Controller.extend({
     if (!hooks) {
       this.reloadHooks();
     }
-    return this.get('allHooks').filter(function (hook) {
-      return !hook.get('admin');
-    });
+    return this.get('allHooks').filter(hook => !hook.get('admin'));
   }),
 
   showPrivateReposHint: Ember.computed(function () {
@@ -75,9 +67,9 @@ export default Ember.Controller.extend({
   }),
 
   billingUrl: Ember.computed('model.name', 'model.login', function () {
-    var id;
+    let id;
     id = this.get('model.type') === 'user' ? 'user' : this.get('model.login');
-    return this.config.billingEndpoint + '/subscriptions/' + id;
+    return `${this.config.billingEndpoint}/subscriptions/${id}`;
   }),
 
   subscribeButtonInfo: Ember.computed('model.login', 'model.type', function () {

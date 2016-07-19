@@ -33,7 +33,7 @@ export default Ember.Controller.extend({
   },
 
   broadcasts: Ember.computed('broadcasts', function () {
-    var apiEndpoint, broadcasts, options, seenBroadcasts;
+    let apiEndpoint, broadcasts, options, seenBroadcasts;
     if (this.get('auth.signedIn')) {
       broadcasts = Ember.ArrayProxy.create({
         content: [],
@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
       options = {};
       options.type = 'GET';
       options.headers = {
-        Authorization: 'token ' + (this.auth.token())
+        Authorization: `token ${this.auth.token()}`
       };
       seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
       if (seenBroadcasts) {
@@ -52,18 +52,16 @@ export default Ember.Controller.extend({
       } else {
         seenBroadcasts = [];
       }
-      Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options).then((response) => {
-        var receivedBroadcasts;
+      Ember.$.ajax(`${apiEndpoint}/v3/broadcasts`, options).then((response) => {
+        let receivedBroadcasts;
         if (response.broadcasts.length) {
-          receivedBroadcasts = response.broadcasts.filter(function (broadcast) {
+          receivedBroadcasts = response.broadcasts.filter(broadcast => {
             if (!broadcast.expired) {
               if (seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
                 return broadcast;
               }
             }
-          }).map(function (broadcast) {
-            return Ember.Object.create(broadcast);
-          }).reverse();
+          }).map(broadcast => Ember.Object.create(broadcast)).reverse();
         }
         broadcasts.set('lastBroadcastStatus', this.defineTowerColor(receivedBroadcasts));
         broadcasts.set('content', receivedBroadcasts);
@@ -91,7 +89,7 @@ export default Ember.Controller.extend({
     },
 
     markBroadcastAsSeen(broadcast) {
-      var id, seenBroadcasts;
+      let id, seenBroadcasts;
       id = broadcast.get('id').toString();
       seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
       if (seenBroadcasts) {
@@ -112,7 +110,7 @@ export default Ember.Controller.extend({
   }),
 
   classProfile: Ember.computed('tab', 'auth.state', function () {
-    var classes = ['profile menu'];
+    const classes = ['profile menu'];
 
     if (this.get('tab') === 'profile') {
       classes.push('active');

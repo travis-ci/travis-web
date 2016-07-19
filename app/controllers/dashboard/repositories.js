@@ -7,13 +7,11 @@ export default Ember.Controller.extend({
   org: null,
 
   filteredRepositories: Ember.computed('filter', 'model', 'org', function () {
-    var filter, org, repos;
+    let filter, org, repos;
     filter = this.get('filter');
     repos = this.get('model');
     org = this.get('org');
-    repos = repos.filter(function (item) {
-      return item.get('currentBuild') !== null;
-    }).sort(function (a, b) {
+    repos = repos.filter(item => item.get('currentBuild') !== null).sort((a, b) => {
       if (a.currentBuild.finished_at === null) {
         return -1;
       }
@@ -32,21 +30,17 @@ export default Ember.Controller.extend({
     });
 
     if (org) {
-      repos = repos.filter(function (item) {
-        return item.get('owner.login') === org;
-      });
+      repos = repos.filter(item => item.get('owner.login') === org);
     }
     if (Ember.isBlank(filter)) {
       return repos;
     } else {
-      return repos.filter(function (item) {
-        return item.slug.match(new RegExp(filter));
-      });
+      return repos.filter(item => item.slug.match(new RegExp(filter)));
     }
   }),
 
   updateFilter() {
-    var value;
+    let value;
     value = this.get('_lastFilterValue');
     this.transitionToRoute({
       queryParams: {
@@ -61,21 +55,19 @@ export default Ember.Controller.extend({
   }),
 
   orgs: Ember.computed(function () {
-    var apiEndpoint, orgs;
+    let apiEndpoint, orgs;
     orgs = Ember.ArrayProxy.create({
       content: [],
       isLoading: true
     });
     apiEndpoint = config.apiEndpoint;
-    Ember.$.ajax(apiEndpoint + '/v3/orgs', {
+    Ember.$.ajax(`${apiEndpoint}/v3/orgs`, {
       headers: {
-        Authorization: 'token ' + this.auth.token()
+        Authorization: `token ${this.auth.token()}`
       }
-    }).then(function (response) {
-      var array;
-      array = response.organizations.map(function (org) {
-        return Ember.Object.create(org);
-      });
+    }).then(response => {
+      let array;
+      array = response.organizations.map(org => Ember.Object.create(org));
       orgs.set('content', array);
       return orgs.set('isLoading', false);
     });
@@ -89,7 +81,7 @@ export default Ember.Controller.extend({
     },
 
     selectOrg(org) {
-      var login;
+      let login;
       login = org ? org.get('login') : null;
       return this.set('org', login);
     }

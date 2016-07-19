@@ -75,7 +75,7 @@ export default Ember.Controller.extend({
 
   activate(action) {
     this.stopObservingLastBuild();
-    return this[('view_' + action).camelize()]();
+    return this[(`view_${action}`).camelize()]();
   },
 
   viewIndex() {

@@ -4,16 +4,18 @@ export default Ember.Controller.extend({
   envVars: Ember.computed.filterBy('model.envVars', 'isNew', false),
 
   branchesWithoutCron: Ember.computed('model.cronJobs.jobs.@each', function () {
-    var cronJobs = this.get('model.cronJobs.jobs');
-    var branches = this.get('model.branches').filter(function (branch) {
-      return branch.get('exists_on_github');
+    const cronJobs = this.get('model.cronJobs.jobs');
+    const branches = this.get('model.branches').filter(branch => {
+      branch.get('exists_on_github');
     });
-    return branches.filter(function (branch) {
-      return ! cronJobs.any(cron => branch.get('name') === cron.get('branch.name'));
+    return branches.filter(branch => {
+      !cronJobs.any(cron => {
+        branch.get('name') === cron.get('branch.name');
+      });
     });
   }),
 
-  sortedBranchesWithoutCron: Ember.computed.sort('branchesWithoutCron', function (a, b) {
+  sortedBranchesWithoutCron: Ember.computed.sort('branchesWithoutCron', (a, b) => {
     if (a.get('defaultBranch')) {
       return -1;
     } else if (b.get('defaultBranch')) {

@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
   isLoading: alias('model.isLoading'),
 
   showMore() {
-    var id, number, type;
+    let id, number, type;
     id = this.get('repo.id');
     number = this.get('builds.lastObject.number');
     const tabName = this.get('tab');
@@ -42,7 +42,7 @@ export default Ember.Controller.extend({
   }),
 
   olderThanNumber(id, number, type) {
-    var options;
+    let options;
     options = {
       repository_id: id,
       after_number: number
