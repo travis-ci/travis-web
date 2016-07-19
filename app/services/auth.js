@@ -10,10 +10,10 @@ export default Ember.Service.extend({
   storage: service(),
   sessionStorage: service(),
   ajax: service(),
-  state: "signed-out",
-  receivingEnd: location.protocol + "//" + location.host,
+  state: 'signed-out',
+  receivingEnd: location.protocol + '//' + location.host,
 
-  init: function() {
+  init: function () {
     return window.addEventListener('message', (e) => {
       return this.receiveMessage(e);
     });
@@ -23,11 +23,11 @@ export default Ember.Service.extend({
     return this.get('sessionStorage').getItem('travis.token');
   },
 
-  endpoint: function() {
+  endpoint: Ember.computed(function () {
     return config.authEndpoint || config.apiEndpoint;
-  }.property(),
+  }),
 
-  signOut: function() {
+  signOut: function () {
     this.get('sessionStorage').clear();
     this.get('storage').clear();
     this.set('state', 'signed-out');
@@ -47,26 +47,27 @@ export default Ember.Service.extend({
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      url = (this.get('endpoint')) + "/auth/post_message?origin=" + this.receivingEnd;
+      url = (this.get('endpoint')) + '/auth/post_message?origin=' + this.receivingEnd;
       return Ember.$('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
     }
   },
 
   autoSignIn(data) {
-    if(!data) {
+    if (!data) {
       data = this.userDataFrom(this.get('sessionStorage')) ||
              this.userDataFrom(this.get('storage'));
     }
 
     if (data) {
       this.setData(data);
-      this.refreshUserData().then( () => {
+      this.refreshUserData().then(() => {
       }, (xhr) => {
         // if xhr is not defined it means that scopes are not correct,
         // so log the user out. Also log the user out if the response is 401
         // or 403
-        if(!xhr || (xhr.status === 401 || xhr.status === 403)) {
-          this.get('flashes').error("You've been signed out, because your access token has expired.");
+        if (!xhr || (xhr.status === 401 || xhr.status === 403)) {
+          let errorText = "You've been signed out, because your access token has expired.";
+          this.get('flashes').error(errorText);
           this.signOut();
         }
       });
@@ -105,8 +106,8 @@ export default Ember.Service.extend({
     if (config.pro) {
       fieldsToValidate.push('channels');
     }
-    return fieldsToValidate.every((function(_this) {
-      return function(field) {
+    return fieldsToValidate.every((function (_this) {
+      return function (field) {
         return _this.validateHas(field, user);
       };
     })(this)) && (isTravisBecome || user.correct_scopes);
@@ -135,13 +136,14 @@ export default Ember.Service.extend({
 
   refreshUserData(user) {
     if (!user) {
-      let data = this.userDataFrom(this.get('sessionStorage')) || this.userDataFrom(this.get('storage'));
+      let data = this.userDataFrom(this.get('sessionStorage')) ||
+                 this.userDataFrom(this.get('storage'));
       if (data) {
         user = data.user;
       }
     }
     if (user) {
-      return this.get('ajax').get("/users/" + user.id).then( (data) => {
+      return this.get('ajax').get('/users/' + user.id).then((data) => {
         var userRecord;
         if (data.user.correct_scopes) {
           userRecord = this.loadUser(data.user);
@@ -161,17 +163,17 @@ export default Ember.Service.extend({
     }
   },
 
-  signedIn: function() {
+  signedIn: Ember.computed('state', function () {
     return this.get('state') === 'signed-in';
-  }.property('state'),
+  }),
 
-  signedOut: function() {
+  signedOut: Ember.computed('state', function () {
     return this.get('state') === 'signed-out';
-  }.property('state'),
+  }),
 
-  signingIn: function() {
+  signingIn: Ember.computed('state', function () {
     return this.get('state') === 'signing-in';
-  }.property('state'),
+  }),
 
   storeData(data, storage) {
     if (data.token) {
@@ -182,9 +184,9 @@ export default Ember.Service.extend({
 
   loadUser(user) {
     var store = this.get('store'),
-        userClass = store.modelFor('user'),
-        serializer = store.serializerFor('user'),
-        normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
+      userClass = store.modelFor('user'),
+      serializer = store.serializerFor('user'),
+      normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
 
     store.push(normalized);
     return store.recordForId('user', user.id);
@@ -193,7 +195,8 @@ export default Ember.Service.extend({
   receiveMessage(event) {
     if (event.origin === this.expectedOrigin()) {
       if (event.data === 'redirect') {
-        return window.location = (this.get('endpoint')) + "/auth/handshake?redirect_uri=" + location;
+        let endpoint = this.get('endpoint');
+        window.location = `${endpoint}/auth/handshake?redirect_uri=${location}`;
       } else if (event.data.user != null) {
         if (event.data.travis_token) {
           event.data.user.token = event.data.travis_token;
@@ -236,13 +239,14 @@ export default Ember.Service.extend({
     }
   },
 
-  userName: function() {
+  userName: Ember.computed('currentUser.login', 'currentUser.name', function () {
     return this.get('currentUser.name') || this.get('currentUser.login');
-  }.property('currentUser.login', 'currentUser.name'),
+  }),
 
-  gravatarUrl: function() {
-    return location.protocol + "//www.gravatar.com/avatar/" + (this.get('currentUser.gravatarId')) + "?s=48&d=mm";
-  }.property('currentUser.gravatarId'),
+  gravatarUrl: Ember.computed('currentUser.gravatarId', function () {
+    let gravatarId = this.get('currentUser.gravatarId');
+    return `${location.protocol}//www.gravatar.com/avatar/${gravatarId}?s=48&d=mm`;
+  }),
 
   permissions: Ember.computed.alias('currentUser.permissions')
 });

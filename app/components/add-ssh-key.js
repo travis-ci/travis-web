@@ -41,9 +41,9 @@ export default Ember.Component.extend({
     });
   },
 
-  valueChanged: function() {
+  valueChanged: Ember.observer('value', function () {
     return this.set('valueError', false);
-  }.observes('value'),
+  }),
 
   addErrorsFromResponse(errArr) {
     var error = errArr[0].detail;
@@ -69,7 +69,7 @@ export default Ember.Component.extend({
         yield sshKey.save();
         this.reset();
         return this.sendAction('sshKeyAdded', sshKey);
-      } catch ({errors}) {
+      } catch ({ errors }) {
         return this.addErrorsFromResponse(errors);
       }
     }

@@ -1,7 +1,7 @@
 import config from 'travis/config/environment';
 var ConfigInitializer, initialize;
 
-initialize = function(application) {
+initialize = function (application) {
   application.register('config:main', config, {
     instantiate: false
   });
@@ -15,6 +15,6 @@ ConfigInitializer = {
   initialize: initialize
 };
 
-export {initialize};
+export { initialize };
 
 export default ConfigInitializer;

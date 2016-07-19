@@ -1,7 +1,8 @@
+import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
-  titleToken(/*model*/) {
+  titleToken(/* model*/) {
     return this.get('contentType').replace('_', ' ').capitalize();
   },
 
@@ -27,9 +28,9 @@ export default TravisRoute.extend({
     return this.controllerFor('builds').set('model', this.controllerFor('repo').get(path));
   },
 
-  path: function() {
+  path: Ember.computed('contentType', function () {
     var type;
     type = this.get('contentType');
-    return "repo." + (type.camelize());
-  }.property('contentType')
+    return 'repo.' + (type.camelize());
+  })
 });

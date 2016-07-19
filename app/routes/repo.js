@@ -42,7 +42,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
 
   model(params) {
     var slug;
-    slug = params.owner + "/" + params.name;
+    slug = params.owner + '/' + params.name;
     return Repo.fetchBySlug(this.get('store'), slug);
   },
 

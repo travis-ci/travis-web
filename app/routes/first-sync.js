@@ -19,16 +19,16 @@ export default SimpleLayoutRoute.extend({
     controller = this.controllerFor('firstSync');
     if (!controller.get('isSyncing')) {
       self = this;
-      return Ember.run.later(this, function() {
+      return Ember.run.later(this, function () {
         return this.store.query('repo', {
           member: this.get('controller.user.login')
-        }).then(function(repos) {
+        }).then(function (repos) {
           if (repos.get('length')) {
             return self.transitionTo('main');
           } else {
             return self.transitionTo('profile');
           }
-        }).then(null, function(e) {
+        }).then(null, function (e) {
           // eslint-disable-next-line
           return console.log('There was a problem while redirecting from first sync', e);
         });
@@ -37,7 +37,7 @@ export default SimpleLayoutRoute.extend({
   },
 
   actions: {
-    redirectToGettingStarted: function() {
+    redirectToGettingStarted: function () {
       // do nothing, we are showing first sync, so it's normal that there is
       // no owned repos
     }

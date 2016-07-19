@@ -9,7 +9,7 @@ export default Ember.Component.extend({
 
   actions: {
     handleToggleError() {
-      return this.set("showError", true);
+      return this.set('showError', true);
     },
 
     close() {
@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     },
 
     resetErrors() {
-      return this.set("showError", false);
+      return this.set('showError', false);
     }
   }
 });

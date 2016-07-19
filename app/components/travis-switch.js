@@ -5,9 +5,9 @@ export default Ember.Component.extend({
   classNames: ['travis-switch', 'switch'],
   classNameBindings: ['_active:active'],
 
-  _active: function() {
+  _active: Ember.computed('target.active', 'active', function () {
     return this.get('target.active') || this.get('active');
-  }.property('target.active', 'active'),
+  }),
 
   click() {
     var target;
@@ -19,7 +19,7 @@ export default Ember.Component.extend({
         this.set('active', !this.get('active'));
       }
     }
-    return Ember.run.next(this, function() {
+    return Ember.run.next(this, function () {
       return this.sendAction('action', target);
     });
   }

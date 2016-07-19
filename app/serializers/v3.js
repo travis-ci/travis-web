@@ -1,22 +1,22 @@
 import Ember from 'ember';
 import JSONSerializer from 'ember-data/serializers/json';
 
-var traverse = function(object, callback) {
-  if(!object) {
+var traverse = function (object, callback) {
+  if (!object) {
     return;
   }
 
-  if(typeof(object) === 'object' && !Ember.isArray(object)) {
+  if (typeof(object) === 'object' && !Ember.isArray(object)) {
     callback(object);
   }
 
-  if(Ember.isArray(object)) {
-    for(let item of object) {
+  if (Ember.isArray(object)) {
+    for (let item of object) {
       traverse(item, callback);
     }
-  } else if(typeof object === 'object') {
-    for(let key in object) {
-      if(object.hasOwnProperty(key)) {
+  } else if (typeof object === 'object') {
+    for (let key in object) {
+      if (object.hasOwnProperty(key)) {
         let item = object[key];
         traverse(item, callback);
       }
@@ -28,14 +28,14 @@ export default JSONSerializer.extend({
   isNewSerializerAPI: true,
 
   extractRelationship(type, hash) {
-    if(hash && !hash.id && hash['@href']) {
+    if (hash && !hash.id && hash['@href']) {
       hash.id = hash['@href'];
     }
 
     let relationshipHash = this._super(...arguments);
-    if(relationshipHash && relationshipHash['@type']) {
+    if (relationshipHash && relationshipHash['@type']) {
       relationshipHash.type = relationshipHash['@type'];
-    } else if(relationshipHash && !relationshipHash.type) {
+    } else if (relationshipHash && !relationshipHash.type) {
       relationshipHash.type = type;
     }
     return relationshipHash;
@@ -46,18 +46,18 @@ export default JSONSerializer.extend({
     return relationships;
   },
 
-  keyForRelationship(key/*, typeClass, method*/) {
-    if(key && key.underscore) {
+  keyForRelationship(key/* , typeClass, method*/) {
+    if (key && key.underscore) {
       return key.underscore();
     } else {
       return key;
     }
   },
 
-  extractAttributes(/*modelClass,resourceHash*/) {
+  extractAttributes(/* modelClass,resourceHash*/) {
     let attributes = this._super(...arguments);
-    for(let key in attributes) {
-      if(key.startsWith('@')) {
+    for (let key in attributes) {
+      if (key.startsWith('@')) {
         delete attributes.key;
       }
     }
@@ -65,12 +65,12 @@ export default JSONSerializer.extend({
     return attributes;
   },
 
-  normalizeResponse(store, primaryModelClass, payload/*, id, requestType*/) {
+  normalizeResponse(store, primaryModelClass, payload/* , id, requestType*/) {
     this._fixReferences(payload);
     return this._super(...arguments);
   },
 
-  normalizeArrayResponse(store, primaryModelClass, payload/*, id, requestType*/) {
+  normalizeArrayResponse(store, primaryModelClass, payload/* , id, requestType*/) {
     let documentHash = {
       data: null,
       included: []
@@ -78,13 +78,17 @@ export default JSONSerializer.extend({
 
     let meta = this.extractMeta(store, primaryModelClass, payload);
     if (meta) {
-      Ember.assert('The `meta` returned from `extractMeta` has to be an object, not "' + Ember.typeOf(meta) + '".', Ember.typeOf(meta) === 'object');
+      let metaType = Ember.typeOf(meta);
+      let metaIsObject = metaType == 'object';
+      let errorMessage =
+        `The 'meta' returned from 'extractMeta' has to be an object, not ${metaType}.`;
+      Ember.assert(errorMessage, metaIsObject);
       documentHash.meta = meta;
     }
 
     let items;
     let type = payload['@type'];
-    if(type) {
+    if (type) {
       items = payload[type];
     } else {
       items = payload[primaryModelClass.modelName.underscore() + 's'];
@@ -101,18 +105,18 @@ export default JSONSerializer.extend({
     return documentHash;
   },
 
-  normalize(/*modelClass, resourceHash*/) {
+  normalize(/* modelClass, resourceHash*/) {
     let { data, included } = this._super(...arguments);
-    if(!included) {
+    if (!included) {
       included = [];
     }
     let store = this.store;
 
-    if(data.relationships) {
+    if (data.relationships) {
       Object.keys(data.relationships).forEach(function (key) {
         let relationship = data.relationships[key];
-        let process = function(data) {
-          if(data['@representation'] !== 'standard') {
+        let process = function (data) {
+          if (data['@representation'] !== 'standard') {
             return;
           }
           let type = data['@type'];
@@ -120,16 +124,16 @@ export default JSONSerializer.extend({
           let modelClass = store.modelFor(type);
           let normalized = serializer.normalize(modelClass, data);
           included.push(normalized.data);
-          if(normalized.included) {
-            normalized.included.forEach(function(item) {
+          if (normalized.included) {
+            normalized.included.forEach(function (item) {
               included.push(item);
             });
           }
         };
 
-        if(Array.isArray(relationship.data)) {
+        if (Array.isArray(relationship.data)) {
           relationship.data.forEach(process);
-        } else if(relationship && relationship.data) {
+        } else if (relationship && relationship.data) {
           process(relationship.data);
         }
       });
@@ -144,7 +148,7 @@ export default JSONSerializer.extend({
 
   _fixReferences(payload) {
     let byHref = {}, records;
-    if(payload['@type']) {
+    if (payload['@type']) {
       // API V3 doesn't return all of the objects in a full representation
       // If an object is present in one place in the response, all of the
       // other occurences will be just references of a kind - they will just
@@ -156,9 +160,9 @@ export default JSONSerializer.extend({
       // First we need to group all of the items in the response by href:
       traverse(payload, (item) => {
         let href = item['@href'];
-        if(href) {
+        if (href) {
           let records = byHref[href];
-          if(records) {
+          if (records) {
             records.push(item);
           } else {
             byHref[href] = [item];
@@ -168,13 +172,13 @@ export default JSONSerializer.extend({
 
       // Then we can choose a record with an id for each href and put the id
       // in all of the other occurences.
-      for(let href in byHref) {
+      for (let href in byHref) {
         records = byHref[href];
-        let recordWithAnId = records.find( (record) => record.id );
-        if(recordWithAnId) {
-          for(let record of records) {
+        let recordWithAnId = records.find((record) => record.id);
+        if (recordWithAnId) {
+          for (let record of records) {
             record.id = recordWithAnId.id;
-            //record['@type'] = recordWithAnId['@type'];
+            // record['@type'] = recordWithAnId['@type'];
           }
         }
       }

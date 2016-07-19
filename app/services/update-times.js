@@ -1,6 +1,6 @@
 /* global Visibility */
 import Ember from 'ember';
-import Config from 'travis/config/environment';
+import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
 
 export default Ember.Service.extend({
@@ -8,8 +8,16 @@ export default Ember.Service.extend({
   allowFinishedBuilds: false,
 
   init() {
-    this.set('visibilityId', Visibility.every(Config.intervals.updateTimes, this.updateTimes.bind(this)));
-    this.set('intervalId', setInterval(this.resetAllowFinishedBuilds.bind(this), 60000));
+    let visibilityId = Visibility.every(
+      config.intervals.updateTimes,
+      this.updateTimes.bind(this)
+    );
+    this.set('visibilityId', visibilityId);
+    let intervalId = setInterval(
+      this.resetAllowFinishedBuilds.bind(this),
+      60000
+    );
+    this.set('intervalId', intervalId);
 
     return this._super(...arguments);
   },
@@ -30,8 +38,8 @@ export default Ember.Service.extend({
     records.filter((record) => {
       return this.get('allowFinishedBuilds') || !record.get('isFinished');
     }).forEach((record) => {
-      eventually(record, function(resolvedRecord) {
-        if(resolvedRecord) {
+      eventually(record, function (resolvedRecord) {
+        if (resolvedRecord) {
           resolvedRecord.updateTimes();
         }
       });
@@ -39,7 +47,7 @@ export default Ember.Service.extend({
 
     this.set('records', []);
 
-    if(this.get('allowFinishedBuilds')) {
+    if (this.get('allowFinishedBuilds')) {
       this.set('allowFinishedBuilds', false);
     }
   },
@@ -47,16 +55,16 @@ export default Ember.Service.extend({
   pushObject(record) {
     let records = this.get('records');
 
-    if(!records.contains(record)) {
+    if (!records.contains(record)) {
       records.pushObject(record);
     }
   },
 
   push(model) {
-    if(!model) { return; }
+    if (!model) { return; }
 
-    if(model.forEach) {
-      model.forEach( (element) => {
+    if (model.forEach) {
+      model.forEach((element) => {
         this.pushObject(element);
       });
     } else {

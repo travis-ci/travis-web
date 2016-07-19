@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   classNames: ['helpscout-link'],
   attributeBindings: ['href', 'title'],
   href: 'mailto:support@travis-ci.com',
-  title:'Ask Travis CI support for help',
+  title: 'Ask Travis CI support for help',
 
   click: (event) => {
     event.preventDefault();

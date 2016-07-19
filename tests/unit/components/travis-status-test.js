@@ -5,13 +5,13 @@ moduleForComponent('travis-status', 'TravisStatusComponent', {
   unit: true
 });
 
-test('adds incident class to .status-circle', function() {
+test('adds incident class to .status-circle', function () {
   var component;
   expect(3);
   component = this.subject();
-  component.statusPageStatusUrl = "https://status-url.example.com";
-  component.getStatus = function() {
-    return new Ember.RSVP.Promise(function(resolve/*, reject*/) {
+  component.statusPageStatusUrl = 'https://status-url.example.com';
+  component.getStatus = function () {
+    return new Ember.RSVP.Promise(function (resolve/* , reject*/) {
       return resolve({
         status: {
           indicator: 'major'
