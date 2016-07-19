@@ -1,8 +1,8 @@
 import config from 'travis/config/environment';
 import TravisPusher from 'travis/utils/pusher';
-var PusherInitializer, initialize;
+let PusherInitializer, initialize;
 
-initialize = function (applicationInstance) {
+initialize = applicationInstance => {
   const app = applicationInstance.application;
   if (config.pusher.key) {
     app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:ajax'));
@@ -18,7 +18,7 @@ initialize = function (applicationInstance) {
 PusherInitializer = {
   name: 'pusher',
   after: 'ember-data',
-  initialize: initialize
+  initialize
 };
 
 export { initialize };
