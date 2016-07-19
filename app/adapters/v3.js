@@ -16,14 +16,14 @@ export default RESTAdapter.extend({
     'Content-Type': 'application/json'
   },
 
-  ajaxOptions: function () {
-    var hash = this._super(...arguments);
+  ajaxOptions() {
+    const hash = this._super(...arguments);
 
     hash.headers = hash.headers || {};
 
     let token = this.get('auth').token();
     if (token) {
-      hash.headers['Authorization'] = 'token ' + token;
+      hash.headers['Authorization'] = `token ${token}`;
     }
 
     return hash;
@@ -31,11 +31,11 @@ export default RESTAdapter.extend({
 
   // TODO: I shouldn't override this method as it's private, a better way would
   // be to create my own URL generator
-  _buildURL: function (modelName, id) {
-    var url = [];
-    var host = Ember.get(this, 'host');
-    var prefix = this.urlPrefix();
-    var path;
+  _buildURL(modelName, id) {
+    let url = [];
+    const host = Ember.get(this, 'host');
+    const prefix = this.urlPrefix();
+    let path;
 
     if (modelName) {
       path = this.pathForType(modelName, id);
@@ -47,14 +47,14 @@ export default RESTAdapter.extend({
 
     url = url.join('/');
     if (!host && url && url.charAt(0) !== '/') {
-      url = '/' + url;
+      url = `/${url}`;
     }
 
     return url;
   },
 
-  pathForType: function (modelName, id) {
-    var underscored = Ember.String.underscore(modelName);
+  pathForType(modelName, id) {
+    const underscored = Ember.String.underscore(modelName);
     return id ? underscored :  Ember.String.pluralize(underscored);
   },
 

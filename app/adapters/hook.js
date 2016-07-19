@@ -1,3 +1,4 @@
+/* eslint-disable */
 import ApplicationAdapter from 'travis/adapters/application';
 
 export default ApplicationAdapter.extend({

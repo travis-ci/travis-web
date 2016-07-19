@@ -6,7 +6,7 @@ export default V3Adapter.extend({
   includes: 'build.branch,repository.default_branch,repository.current_build,build.commit',
 
   ajaxOptions(url, type, options) {
-    var hash = options || {};
+    const hash = options || {};
     if (!hash.data) {
       hash.data = {};
     }

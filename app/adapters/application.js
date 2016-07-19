@@ -27,7 +27,7 @@ export default ActiveModelAdapter.extend({
     let token = this.get('auth').token();
     if (token) {
       if (!hash.headers['Authorization']) {
-        hash.headers['Authorization'] = 'token ' + token;
+        hash.headers['Authorization'] = `token ${token}`;
       }
     }
 
@@ -37,7 +37,7 @@ export default ActiveModelAdapter.extend({
   findMany(store, type, ids) {
     return this.ajax(this.buildURL(type.modelName), 'GET', {
       data: {
-        ids: ids
+        ids
       }
     });
   },
@@ -45,7 +45,7 @@ export default ActiveModelAdapter.extend({
   handleResponse(status, headers, payload) {
     if (status > 299) {
       // eslint-disable-next-line
-      console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
+      console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(payload)}`);
     }
 
     return this._super(...arguments);
