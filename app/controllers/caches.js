@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     return this.get('model.pushes.length') || this.get('model.pullRequests.length');
   }),
 
-  deleteRepoCache: task(function * () {
+  deleteRepoCache: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
       try {
         yield this.get('ajax').ajax(`/repos/${this.get('repo.id')}/caches`, 'DELETE');

@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     });
   },
 
-  save: task(function * () {
+  save: task(function* () {
     const store = this.get('store');
     const repoId = this.get('branches.firstObject.repoId');
     const branch = this.get('selectedBranch') || this.get('branches.firstObject');

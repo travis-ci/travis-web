@@ -28,7 +28,7 @@ export default Ember.Component.extend({
     }
   },
 
-  toggle: task(function * () {
+  toggle: task(function* () {
     if (!this.get('enabled') && this.get('value') !== 0) {
       try {
         yield this.get('repo').saveSettings({

@@ -55,7 +55,7 @@ export default Ember.Component.extend({
     }
   },
 
-  save: task(function * () {
+  save: task(function* () {
     this.set('valueError', false);
 
     if (this.isValid()) {

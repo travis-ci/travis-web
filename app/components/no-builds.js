@@ -3,7 +3,7 @@ import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
-  triggerBuild: task(function * () {
+  triggerBuild: task(function* () {
     const apiEndpoint = config.apiEndpoint;
 
     yield Ember.$.ajax(`${apiEndpoint}/v3/repo/${this.get('repo.repo.id')}/requests`, {

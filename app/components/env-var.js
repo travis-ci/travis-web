@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  delete: task(function * () {
+  delete: task(function* () {
     yield this.get('envVar').destroyRecord();
   })
 });

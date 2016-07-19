@@ -25,7 +25,7 @@ export default Ember.Component.extend({
     });
   },
 
-  save: task(function * () {
+  save: task(function* () {
     if (this.isValid()) {
       const envVar = this.get('store').createRecord('env_var', {
         name: this.get('name'),

@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  activate: task(function * () {
+  activate: task(function* () {
     const apiEndpoint = config.apiEndpoint;
     const repo = this.get('repo');
     const repoId = this.get('repo.id');
