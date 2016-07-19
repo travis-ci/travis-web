@@ -372,7 +372,7 @@ module.exports = {
     // require let or const instead of var
     'no-var': 2,
 
-    // TODO: ESLint complains about current config
+    // TODO: Fix this later after more discussion
     // require method and property shorthand syntax for object literals
     // http://eslint.org/docs/rules/object-shorthand
     // 'object-shorthand': [2, 'always', {
@@ -386,7 +386,7 @@ module.exports = {
       allowUnboundThis: true,
     }],
 
-    // TODO: ESLint complains about current config
+    // TODO: Fix this later after more discussion
     // suggest using of const declaration for variables that are never modified after declared
     // 'prefer-const': [2, {
     //   destructuring: 'any',
@@ -400,7 +400,7 @@ module.exports = {
 
     // use rest parameters instead of arguments
     // http://eslint.org/docs/rules/prefer-rest-params
-    'prefer-rest-params': 2,
+    // 'prefer-rest-params': 2,
 
     // suggest using the spread operator instead of .apply()
     // http://eslint.org/docs/rules/prefer-spread
