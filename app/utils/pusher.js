@@ -197,11 +197,13 @@ if (ENV.pro) {
       });
     }
   };
+
   Pusher.getDefaultStrategy = function (config) {
     let pusherPath = ENV.pusher.path || '';
     if (pusherPath) {
       pusherPath = `/${pusherPath}`;
     }
+    // eslint-disable-next-line
     console.log(`${config.wsHost}:${config.wssPort}${pusherPath}`);
     return [
       [

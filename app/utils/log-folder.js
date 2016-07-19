@@ -6,14 +6,14 @@ export default (function () {
     let handlerSelector = '.fold';
     this.element
       .off('click', handlerSelector) // remove any previous click handlers
-      .on('click', handlerSelector, (function(_this) {
-      return function(event) {
-        let folder = _this.getFolderFromLine(Ember.$(event.target));
-        _this.toggle(folder);
-        event.preventDefault();
-        return false;
-      };
-    })(this));
+      .on('click', handlerSelector, (function (_this) {
+        return function (event) {
+          let folder = _this.getFolderFromLine(Ember.$(event.target));
+          _this.toggle(folder);
+          event.preventDefault();
+          return false;
+        };
+      })(this));
   }
 
   LogFolder.prototype.fold = function (line) {

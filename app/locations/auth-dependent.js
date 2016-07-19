@@ -16,11 +16,11 @@ export default Ember.HistoryLocation.extend({
     }
   },
 
-  auth: Ember.computed(function() {
+  auth: Ember.computed(function () {
     return Ember.getOwner(this).lookup('service:auth');
   }),
 
-  getURL: function() {
+  getURL: function () {
     var url;
     url = this._super(...arguments);
     if (location.pathname === '/' && !config.enterprise) {
