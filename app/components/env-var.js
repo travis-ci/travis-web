@@ -9,13 +9,13 @@ export default Ember.Component.extend({
   actionType: 'Save',
   showValueField: Ember.computed.alias('public'),
 
-  value: function() {
+  value: Ember.computed('envVar.value', 'envVar.public', function () {
     if (this.get('envVar.public')) {
       return this.get('envVar.value');
     } else {
       return '••••••••••••••••';
     }
-  }.property('envVar.value', 'envVar.public'),
+  }),
 
   delete: task(function * () {
     yield this.get('envVar').destroyRecord();

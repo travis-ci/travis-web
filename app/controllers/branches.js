@@ -1,36 +1,36 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  defaultBranch: function() {
+  defaultBranch: Ember.computed('model', function () {
     var output, repos;
     repos = this.get('model');
-    output = repos.filter(function(item) {
+    output = repos.filter(function (item) {
       return item.default_branch;
     });
     if (output.length) {
       return output[0];
     }
-  }.property('model'),
+  }),
 
-  branchesExist: function() {
+  branchesExist: Ember.computed('model', function () {
     var branches = this.get('model');
 
     return branches.length;
-  }.property('model'),
+  }),
 
-  activeBranches: function() {
+  activeBranches: Ember.computed('model', function () {
     var repos;
     repos = this.get('model');
-    return repos = repos.filter(function(item) {
+    return repos = repos.filter(function (item) {
       return item.exists_on_github && !item.default_branch;
     }).sortBy('last_build.finished_at').reverse();
-  }.property('model'),
+  }),
 
-  inactiveBranches: function() {
+  inactiveBranches: Ember.computed('model', function () {
     var repos;
     repos = this.get('model');
-    return repos = repos.filter(function(item) {
+    return repos = repos.filter(function (item) {
       return !item.exists_on_github && !item.default_branch;
     }).sortBy('last_build.finished_at').reverse();
-  }.property('model')
+  })
 });

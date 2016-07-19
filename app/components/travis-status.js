@@ -4,9 +4,9 @@ import config from 'travis/config/environment';
 export default Ember.Component.extend({
   status: null,
 
-  statusPageStatusUrl: function() {
+  statusPageStatusUrl: Ember.computed(function () {
     return config.statusPageStatusUrl;
-  }.property(),
+  }),
 
   didInsertElement() {
     let url = this.get('statusPageStatusUrl');

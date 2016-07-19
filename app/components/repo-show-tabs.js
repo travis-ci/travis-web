@@ -5,31 +5,31 @@ export default Ember.Component.extend({
   classNames: ['tabnav'],
   ariaRole: 'tablist',
 
-  classCurrent: function() {
+  classCurrent: Ember.computed('tab', function () {
     if (this.get('tab') === 'current') {
       return 'active';
     }
-  }.property('tab'),
+  }),
 
-  classBuilds: function() {
+  classBuilds: Ember.computed('tab', function () {
     if (this.get('tab') === 'builds') {
       return 'active';
     }
-  }.property('tab'),
+  }),
 
-  classPullRequests: function() {
+  classPullRequests: Ember.computed('tab', function () {
     if (this.get('tab') === 'pull_requests') {
       return 'active';
     }
-  }.property('tab'),
+  }),
 
-  classBranches: function () {
+  classBranches: Ember.computed('tab', function () {
     if (this.get('tab') === 'branches') {
       return 'active';
     }
-  }.property('tab'),
+  }),
 
-  classBuild: function() {
+  classBuild: Ember.computed('tab', function () {
     var classes, tab;
     tab = this.get('tab');
     classes = [];
@@ -40,35 +40,35 @@ export default Ember.Component.extend({
       classes.push('display-inline');
     }
     return classes.join(' ');
-  }.property('tab'),
+  }),
 
-  classJob: function() {
+  classJob: Ember.computed('tab', function () {
     if (this.get('tab') === 'job') {
       return 'active';
     }
-  }.property('tab'),
+  }),
 
-  classRequests: function() {
+  classRequests: Ember.computed('tab', function () {
     if (this.get('tab') === 'requests') {
       return 'active';
     }
-  }.property('tab'),
+  }),
 
-  classCaches: function() {
+  classCaches: Ember.computed('tab', function () {
     if (this.get('tab') === 'caches') {
       return 'active';
     }
-  }.property('tab'),
+  }),
 
-  classSettings: function() {
+  classSettings: Ember.computed('tab', function () {
     if (this.get('tab') === 'settings') {
       return 'active';
     }
-  }.property('tab'),
+  }),
 
-  classRequest: function() {
+  classRequest: Ember.computed('tab', function () {
     if (this.get('tab') === 'request') {
       return 'active';
     }
-  }.property('tab')
+  })
 });

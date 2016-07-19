@@ -13,22 +13,22 @@ export default Ember.Mixin.create({
   restarting: false,
   cancelling: false,
 
-  userHasPermissionForRepo: function() {
+  userHasPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
     var repo, user;
     repo = this.get('repo');
     user = this.get('user');
     if (user && repo) {
       return user.hasAccessToRepo(repo);
     }
-  }.property('user.permissions.[]', 'repo', 'user'),
+  }),
 
-  canCancel: function() {
+  canCancel: Ember.computed('userHasPermissionForRepo', 'item.canCancel', function () {
     return this.get('item.canCancel') && this.get('userHasPermissionForRepo');
-  }.property('userHasPermissionForRepo', 'item.canCancel'),
+  }),
 
-  canRestart: function() {
+  canRestart: Ember.computed('userHasPermissionForRepo', 'item.canRestart', function () {
     return this.get('item.canRestart') && this.get('userHasPermissionForRepo');
-  }.property('userHasPermissionForRepo', 'item.canRestart'),
+  }),
 
   displayFlashError(status, action) {
     let type = this.get('type');
@@ -45,7 +45,7 @@ export default Ember.Mixin.create({
   },
 
   actions: {
-    restart: function() {
+    restart: function () {
       if (this.get('restarting')) {
         return;
       }
@@ -63,7 +63,7 @@ export default Ember.Mixin.create({
       });
     },
 
-    cancel: function() {
+    cancel: function () {
       if (this.get('cancelling')) {
         return;
       }

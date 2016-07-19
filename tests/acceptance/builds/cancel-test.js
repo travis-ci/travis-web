@@ -9,13 +9,13 @@ moduleForAcceptance('Acceptance | builds/cancel', {
   }
 });
 
-test('cancelling build', function(assert) {
-  let repository =  server.create('repository', {slug: 'travis-ci/travis-web'});
+test('cancelling build', function (assert) {
+  let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
-  let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
-  let build = server.create('build', {number: '5', repository_id: repository.id, state: 'running', commit_id: commit.id, commit});
-  let job = server.create('job', {number: '1234.1', repository_id: repository.id, state: 'running', build, commit_id: commit.id});
+  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let build = server.create('build', { number: '5', repository_id: repository.id, state: 'running', commit_id: commit.id, commit });
+  let job = server.create('job', { number: '1234.1', repository_id: repository.id, state: 'running', build, commit_id: commit.id });
   // create log
   server.create('log', { id: job.id });
 
@@ -23,7 +23,7 @@ test('cancelling build', function(assert) {
     .visit()
     .cancelBuild();
 
-  andThen(function() {
+  andThen(function () {
     assert.equal(buildPage.cancelledNotification, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
   });
 });

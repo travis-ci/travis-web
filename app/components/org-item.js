@@ -10,17 +10,17 @@ export default Ember.Component.extend({
   selected: alias('account.selected'),
   tokenIsVisible: false,
 
-  name: function() {
+  name: Ember.computed('account', function () {
     return this.get('account.name') || this.get('account.login');
-  }.property('account'),
+  }),
 
-  avatarUrl: function() {
+  avatarUrl: Ember.computed('account', function () {
     return this.get('account.avatarUrl') || false;
-  }.property('account'),
+  }),
 
-  isUser: function() {
+  isUser: Ember.computed('account', function () {
     return this.get('account.type') === 'user';
-  }.property('account'),
+  }),
 
   actions: {
     tokenVisibility() {

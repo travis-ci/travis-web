@@ -11,9 +11,9 @@ export default Ember.Controller.extend({
 
   user: alias('auth.currentUser'),
 
-  userName: function() {
+  userName: Ember.computed('user.login', 'user.name', function () {
     return this.get('user.name') || this.get('user.login');
-  }.property('user.login', 'user.name'),
+  }),
 
   isDashboard: false,
 
@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
     }
   },
 
-  broadcasts: function() {
+  broadcasts: Ember.computed('broadcasts', function () {
     var apiEndpoint, broadcasts, options, seenBroadcasts;
     if (this.get('auth.signedIn')) {
       broadcasts = Ember.ArrayProxy.create({
@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
       options = {};
       options.type = 'GET';
       options.headers = {
-        Authorization: "token " + (this.auth.token())
+        Authorization: 'token ' + (this.auth.token())
       };
       seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
       if (seenBroadcasts) {
@@ -52,16 +52,16 @@ export default Ember.Controller.extend({
       } else {
         seenBroadcasts = [];
       }
-      Ember.$.ajax(apiEndpoint + "/v3/broadcasts", options).then((response) => {
+      Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options).then((response) => {
         var receivedBroadcasts;
         if (response.broadcasts.length) {
-          receivedBroadcasts = response.broadcasts.filter(function(broadcast) {
+          receivedBroadcasts = response.broadcasts.filter(function (broadcast) {
             if (!broadcast.expired) {
               if (seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
                 return broadcast;
               }
             }
-          }).map(function(broadcast) {
+          }).map(function (broadcast) {
             return Ember.Object.create(broadcast);
           }).reverse();
         }
@@ -71,7 +71,7 @@ export default Ember.Controller.extend({
       });
       return broadcasts;
     }
-  }.property('broadcasts'),
+  }),
 
   actions: {
 
@@ -102,15 +102,16 @@ export default Ember.Controller.extend({
       seenBroadcasts.push(id);
       this.get('storage').setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts));
       this.get('broadcasts.content').removeObject(broadcast);
-      this.set('broadcasts.lastBroadcastStatus', this.defineTowerColor(this.get('broadcasts.content')));
+      let status = this.defineTowerColor(this.get('broadcasts.content'));
+      this.set('broadcasts.lastBroadcastStatus', status);
       return false;
     }
   },
-  showCta: function() {
+  showCta: Ember.computed('auth.signedIn', 'landingPage', function () {
     return !this.get('auth.signedIn') && !this.get('config.pro') && !this.get('landingPage');
-  }.property('auth.signedIn', 'landingPage'),
+  }),
 
-  classProfile: function() {
+  classProfile: Ember.computed('tab', 'auth.state', function () {
     var classes = ['profile menu'];
 
     if (this.get('tab') === 'profile') {
@@ -120,5 +121,5 @@ export default Ember.Controller.extend({
     classes.push(this.get('controller.auth.state') || 'signed-out');
 
     return classes.join(' ');
-  }.property('tab', 'auth.state')
+  })
 });

@@ -13,20 +13,20 @@ export default Ember.Controller.extend(GithubUrlProperties, {
   tab: alias('repoController.tab'),
   sendFaviconStateChanges: true,
 
-  jobsLoaded: function() {
+  jobsLoaded: Ember.computed('build.jobs.@each.config', function () {
     let jobs = this.get('build.jobs');
     if (jobs) {
       return jobs.isEvery('config');
     }
-  }.property('build.jobs.@each.config'),
+  }),
 
-  loading: function() {
+  loading: Ember.computed('build.isLoading', function () {
     return this.get('build.isLoading');
-  }.property('build.isLoading'),
+  }),
 
-  buildStateDidChange: function() {
+  buildStateDidChange: Ember.observer('build.state', function () {
     if (this.get('sendFaviconStateChanges')) {
       return this.send('faviconStateDidChange', this.get('build.state'));
     }
-  }.observes('build.state')
+  })
 });
