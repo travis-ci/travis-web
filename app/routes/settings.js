@@ -8,7 +8,7 @@ export default TravisRoute.extend({
   ajax: service(),
   needsAuth: true,
 
-  setupController: function (controller, model) {
+  setupController(controller, model) {
     this._super(...arguments);
     controller.set('repo', this.modelFor('repo'));
     this.controllerFor('repo').activate('settings');
@@ -16,20 +16,20 @@ export default TravisRoute.extend({
   },
 
   fetchEnvVars() {
-    var repo;
+    let repo;
     repo = this.modelFor('repo');
     return repo.get('envVars.promise');
   },
 
   fetchCronJobs() {
-    var repo = this.modelFor('repo');
-    var apiEndpoint = config.apiEndpoint;
+    const repo = this.modelFor('repo');
+    const apiEndpoint = config.apiEndpoint;
 
-    return Ember.$.ajax(apiEndpoint + '/v3/repo/' + repo.get('id'), {
+    return Ember.$.ajax(`${apiEndpoint}/v3/repo/${repo.get('id')}`, {
       headers: {
-        Authorization: 'token ' + this.auth.token()
+        Authorization: `token ${this.auth.token()}`
       }
-    }).then(function (response) {
+    }).then(response => {
       if (response['@permissions']['create_cron']) {
         return Ember.Object.create({
           enabled: true,
@@ -45,19 +45,19 @@ export default TravisRoute.extend({
   },
 
   fetchBranches() {
-    var repo;
+    let repo;
     repo = this.modelFor('repo');
     return repo.get('branches.promise');
   },
 
   fetchCustomSshKey() {
-    var repo;
+    let repo;
     repo = this.modelFor('repo');
-    return this.store.find('ssh_key', repo.get('id')).then((function (result) {
+    return this.store.find('ssh_key', repo.get('id')).then((result => {
       if (!result.get('isNew')) {
         return result;
       }
-    }), function (xhr) {
+    }), xhr => {
       if (xhr.status === 404) {
         return false;
       }
@@ -65,35 +65,32 @@ export default TravisRoute.extend({
   },
 
   fetchSshKey() {
-    var repo;
+    let repo;
     repo = this.modelFor('repo');
-    return this.get('ajax').get('/repos/' + (repo.get('id')) + '/key', (data) => {
-      return Ember.Object.create({
+    return this.get('ajax').get(`/repos/${repo.get('id')}/key`, (data) => {
+      Ember.Object.create({
         fingerprint: data.fingerprint
       });
     });
   },
 
   fetchRepositoryActiveFlag() {
-    var apiEndpoint, repoId;
+    let apiEndpoint, repoId;
     repoId = this.modelFor('repo').get('id');
     apiEndpoint = config.apiEndpoint;
-    return Ember.$.ajax(apiEndpoint + '/v3/repo/' + repoId, {
+    return Ember.$.ajax(`${apiEndpoint}/v3/repo/${repoId}`, {
       headers: {
-        Authorization: 'token ' + this.auth.token()
+        Authorization: `token ${this.auth.token()}`
       }
-    }).then(function (response) {
-      return response.active;
-    });
+    }).then(response => response.active);
   },
 
   hasPushAccess() {
-    var repoId;
+    let repoId;
     repoId = parseInt(this.modelFor('repo').get('id'));
-    return this.auth.get('currentUser').get('pushPermissionsPromise').then(function (permissions) {
-      return permissions.filter(function (item) {
-        return item === repoId;
-      });
+    let promise = this.auth.get('currentUser.pushPermissionsPromise');
+    return promise.then(permissions => {
+      permissions.filter(item => item === repoId);
     });
   },
 

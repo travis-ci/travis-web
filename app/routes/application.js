@@ -15,7 +15,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     // this.get('auth').refreshUserData()
   },
 
-  renderTemplate: function () {
+  renderTemplate() {
     if (this.get('config').pro) {
       Ember.$('body').addClass('pro');
     }
@@ -23,12 +23,12 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   },
 
   activate() {
-    var repos;
+    let repos;
     this.get('stylesheetsManager').disable('dashboard');
     if (!config.pro) {
       repos = this.get('store').peekAll('repo');
       repos.forEach((repo) => {
-        return this.subscribeToRepo(repo);
+        this.subscribeToRepo(repo);
       });
       return repos.addArrayObserver(this, {
         willChange: 'reposWillChange',
@@ -40,16 +40,16 @@ export default TravisRoute.extend(BuildFaviconMixin, {
   reposWillChange() {},
 
   reposDidChange(array, start, removedCount, addedCount) {
-    var addedRepos;
+    let addedRepos;
     addedRepos = array.slice(start, start + addedCount);
     return addedRepos.forEach((repo) => {
-      return this.subscribeToRepo(repo);
+      this.subscribeToRepo(repo);
     });
   },
 
-  subscribeToRepo: function (repo) {
+  subscribeToRepo(repo) {
     if (this.pusher) {
-      return this.pusher.subscribe('repo-' + (repo.get('id')));
+      return this.pusher.subscribe(`repo-${repo.get('id')}`);
     }
   },
 
@@ -75,7 +75,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     },
 
     error(error) {
-      var authController;
+      let authController;
       if (error === 'needs-auth') {
         authController = Ember.getOwner(this).lookup('controller:auth');
         authController.set('redirected', true);

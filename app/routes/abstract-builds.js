@@ -23,14 +23,14 @@ export default TravisRoute.extend({
   },
 
   contentDidChange() {
-    var path;
+    let path;
     path = this.get('path');
     return this.controllerFor('builds').set('model', this.controllerFor('repo').get(path));
   },
 
   path: Ember.computed('contentType', function () {
-    var type;
+    let type;
     type = this.get('contentType');
-    return 'repo.' + (type.camelize());
+    return `repo.${type.camelize()}`;
   })
 });

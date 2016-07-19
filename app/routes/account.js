@@ -15,9 +15,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    return this.modelFor('accounts').find(function (account) {
-      return account.get('login') === params.login;
-    });
+    return this.modelFor('accounts').find(account => account.get('login') === params.login);
   },
 
   serialize(account) {

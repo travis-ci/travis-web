@@ -6,7 +6,7 @@ export default TravisRoute.extend({
   needsAuth: false,
 
   titleToken(model) {
-    return '' + model.name;
+    return `${model.name}`;
   },
 
   model(params, transition) {

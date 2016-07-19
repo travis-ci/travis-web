@@ -4,10 +4,8 @@ export default TravisRoute.extend({
   titleToken: 'Settings',
 
   model() {
-    var repo;
+    let repo;
     repo = this.modelFor('repo');
-    return repo.fetchSettings().then(function (settings) {
-      return repo.set('settings', settings);
-    });
+    return repo.fetchSettings().then(settings => repo.set('settings', settings));
   }
 });

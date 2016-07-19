@@ -2,11 +2,11 @@ import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   titleToken(model) {
-    return 'Build #' + (model.get('number'));
+    return `Build #${model.get('number')}`;
   },
 
   serialize(model/* , params*/) {
-    var id;
+    let id;
     id = model.get ? model.get('id') : model;
     return {
       build_id: id
@@ -14,7 +14,7 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    var repo;
+    let repo;
     if (model && !model.get) {
       model = this.store.recordForId('build', model);
       this.store.find('build', model);

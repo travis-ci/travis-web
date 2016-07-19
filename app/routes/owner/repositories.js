@@ -6,17 +6,17 @@ export default TravisRoute.extend({
   needsAuth: false,
 
   titleToken(model) {
-    var name = model.name || model.login;
+    const name = model.name || model.login;
     return name;
   },
 
   model(params, transition) {
-    var options;
+    let options;
     options = {};
 
     if (this.get('auth.signedIn')) {
       options.headers = {
-        Authorization: 'token ' + (this.auth.token())
+        Authorization: `token ${this.auth.token()}`
       };
     }
 

@@ -8,11 +8,10 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    var options;
-    options = {};
+    const options = {};
     if (this.get('auth.signedIn')) {
       options.headers = {
-        Authorization: 'token ' + (this.auth.token())
+        Authorization: `token ${this.auth.token()}`
       };
     }
     let { owner } = params;
