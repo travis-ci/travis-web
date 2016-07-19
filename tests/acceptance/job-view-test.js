@@ -32,26 +32,26 @@ test('visiting job-view', function (assert) {
   });
 });
 
-test('visiting build matrix', function(assert) {
-  let repo =  server.create('repository', {slug: 'travis-ci/travis-web'});
+test('visiting build matrix', function (assert) {
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
 
-  let commit = server.create('commit', {author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true});
-  let build = server.create('build', {repository_id: repo.id, state: 'passed', commit_id: commit.id, commit});
+  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
 
-  let firstJob = server.create('job', {number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, config: {env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5}, commit, build});
+  let firstJob = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
   commit.job = firstJob;
 
   firstJob.save();
   commit.save();
 
-  server.create('job', {number: '1234.2', repository_id: repo.id, state: 'passed', build_id: build.id, config: {env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2}, commit, build});
-  server.create('job', {allow_failure: true, number: '1234.999', repository_id: repo.id, state: 'failed', build_id: build.id, commit, build});
+  server.create('job', { number: '1234.2', repository_id: repo.id, state: 'passed', build_id: build.id, config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build });
+  server.create('job', { allow_failure: true, number: '1234.999', repository_id: repo.id, state: 'failed', build_id: build.id, commit, build });
 
   visit(`/travis-ci/travis-web/builds/${build.id}`);
 
-  andThen(function() {
+  andThen(function () {
     assert.equal(buildPage.requiredJobs().count, 2, 'expected two required jobs in the matrix');
 
     const firstJobRow = buildPage.requiredJobs(0);
