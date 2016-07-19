@@ -5,11 +5,11 @@ import { githubCommit } from 'travis/utils/urls';
 export default Ember.Component.extend({
   pollModels: 'job.build',
 
-  color: function() {
+  color: Ember.computed('job.state', function () {
     return colorForState(this.get('job.state'));
-  }.property('job.state'),
+  }),
 
-  urlGithubCommit: function() {
+  urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
     return githubCommit(this.get('repo.slug'), this.get('commit.sha'));
-  }.property('repo.slug', 'commit.sha')
+  })
 });

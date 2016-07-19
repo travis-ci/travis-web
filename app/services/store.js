@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import DS from 'ember-data';
 import Ember from 'ember';
 
@@ -106,12 +107,12 @@ export default DS.Store.extend({
       // we need to get it here, if it's not already in the store. In the future
       // we may decide to make this relationship async, but I don't want to
       // change the code at the moment
-      let lastBuild = this.peekRecord('build', last_build_id)
+      let lastBuild = this.peekRecord('build', last_build_id);
       if (!last_build_id || lastBuild) {
         return this.push(this.normalize('repo', data));
       } else {
-        return this.findRecord('build', last_build_id).then((function(_this) {
-          return function() {
+        return this.findRecord('build', last_build_id).then((function (_this) {
+          return function () {
             return _this.push(_this.normalize('repo', data));
           };
         })(this));

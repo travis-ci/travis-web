@@ -22,27 +22,27 @@ export default Model.extend({
   syncedAt: attr(),
   repoCount: attr('number'),
 
-  fullName: function() {
+  fullName: Ember.computed('name', 'login', function () {
     return this.get('name') || this.get('login');
-  }.property('name', 'login'),
+  }),
 
-  isSyncingDidChange: function() {
-    return Ember.run.next(this, function() {
+  isSyncingDidChange: Ember.observer('isSyncing', function () {
+    return Ember.run.next(this, function () {
       if (this.get('isSyncing')) {
         return this.poll();
       }
     });
-  }.observes('isSyncing'),
+  }),
 
-  urlGithub: function() {
-    return config.sourceEndpoint + "/" + (this.get('login'));
-  }.property(),
+  urlGithub: Ember.computed(function () {
+    return config.sourceEndpoint + '/' + (this.get('login'));
+  }),
 
-  _rawPermissions: function() {
+  _rawPermissions: Ember.computed(function () {
     return this.get('ajax').get('/users/permissions');
-  }.property(),
+  }),
 
-  permissions: function() {
+  permissions: Ember.computed(function () {
     var permissions;
     permissions = Ember.ArrayProxy.create({
       content: []
@@ -51,9 +51,9 @@ export default Model.extend({
       return permissions.set('content', data.permissions);
     });
     return permissions;
-  }.property(),
+  }),
 
-  adminPermissions: function() {
+  adminPermissions: Ember.computed(function () {
     var permissions;
     permissions = Ember.ArrayProxy.create({
       content: []
@@ -62,9 +62,9 @@ export default Model.extend({
       return permissions.set('content', data.admin);
     });
     return permissions;
-  }.property(),
+  }),
 
-  pullPermissions: function() {
+  pullPermissions: Ember.computed(function () {
     var permissions;
     permissions = Ember.ArrayProxy.create({
       content: []
@@ -73,9 +73,9 @@ export default Model.extend({
       return permissions.set('content', data.pull);
     });
     return permissions;
-  }.property(),
+  }),
 
-  pushPermissions: function() {
+  pushPermissions: Ember.computed(function () {
     var permissions;
     permissions = Ember.ArrayProxy.create({
       content: []
@@ -84,13 +84,13 @@ export default Model.extend({
       return permissions.set('content', data.push);
     });
     return permissions;
-  }.property(),
+  }),
 
-  pushPermissionsPromise: function() {
+  pushPermissionsPromise: Ember.computed(function () {
     return this.get('_rawPermissions').then((data) => {
       return data.pull;
     });
-  }.property(),
+  }),
 
   hasAccessToRepo(repo) {
     let id = repo.get ? repo.get('id') : repo;
@@ -100,14 +100,14 @@ export default Model.extend({
     }
   },
 
-  type: function() {
+  type: Ember.computed(function () {
     return 'user';
-  }.property(),
+  }),
 
   sync() {
     var self;
     self = this;
-    return this.get('ajax').post('/users/sync', {}, function() {
+    return this.get('ajax').post('/users/sync', {}, function () {
       return self.setWithSession('isSyncing', true);
     });
   },
@@ -117,7 +117,7 @@ export default Model.extend({
       var self;
       if (data.user.is_syncing) {
         self = this;
-        return setTimeout(function() {
+        return setTimeout(function () {
           return self.poll();
         }, 3000);
       } else {
@@ -137,7 +137,7 @@ export default Model.extend({
     return this.get('sessionStorage').setItem('travis.user', JSON.stringify(user));
   },
 
-  avatarUrl: function() {
+  avatarUrl: Ember.computed('email', function () {
     return gravatarImage(this.get('email'), 36);
-  }.property('email')
+  })
 });

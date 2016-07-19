@@ -53,10 +53,10 @@ moduleForAcceptance('Acceptance | profile', {
   }
 });
 
-test('view profile', function(assert) {
-  profilePage.visit({username: 'feministkilljoy'});
+test('view profile', function (assert) {
+  profilePage.visit({ username: 'feministkilljoy' });
 
-  andThen(function() {
+  andThen(function () {
     assert.equal(profilePage.name, 'Sara Ahmed');
 
     assert.equal(profilePage.accounts().count, 2, 'expected two accounts');
@@ -79,8 +79,8 @@ test('view profile', function(assert) {
   });
 });
 
-test('view token', function(assert) {
-  profilePage.visit({username: 'feministkilljoy'});
+test('view token', function (assert) {
+  profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
     assert.ok(profilePage.token.isHidden, 'expected token to be hidden by default');
@@ -88,13 +88,13 @@ test('view token', function(assert) {
 
   profilePage.token.show();
 
-  andThen(function() {
+  andThen(function () {
     assert.equal(profilePage.token.value, 'testUserToken');
   });
 });
 
-test('updating hooks', function(assert) {
-  profilePage.visit({username: 'feministkilljoy'});
+test('updating hooks', function (assert) {
+  profilePage.visit({ username: 'feministkilljoy' });
 
   profilePage.administerableHooks(0).toggle();
   profilePage.administerableHooks(1).toggle();

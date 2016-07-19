@@ -33,31 +33,31 @@ export default Model.extend(DurationCalculations, {
   pullRequestNumber: Ember.computed.alias('build.pullRequestNumber'),
   pullRequestTitle: Ember.computed.alias('build.pullRequestTitle'),
 
-  log: function() {
+  log: Ember.computed(function () {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
       ajax: this.get('ajax')
     });
-  }.property(),
+  }),
 
-  startedAt: function() {
+  startedAt: Ember.computed('_startedAt', 'notStarted', function () {
     if (!this.get('notStarted')) {
       return this.get('_startedAt');
     }
-  }.property('_startedAt', 'notStarted'),
+  }),
 
-  finishedAt: function() {
+  finishedAt: Ember.computed('_finishedAt', 'notStarted', function () {
     if (!this.get('notStarted')) {
       return this.get('_finishedAt');
     }
-  }.property('_finishedAt', 'notStarted'),
+  }),
 
-  repoSlug: function() {
+  repoSlug: Ember.computed('repositorySlug', function () {
     return this.get('repositorySlug');
-  }.property('repositorySlug'),
+  }),
 
-  config: function() {
+  config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
       return compact(config);
@@ -68,17 +68,19 @@ export default Model.extend(DurationCalculations, {
       this.set('isFetchingConfig', true);
       return this.reload();
     }
-  }.property('_config'),
+  }),
 
-  isFinished: function() {
-    var ref;
-    return (ref = this.get('state')) === 'passed' || ref === 'failed' || ref === 'errored' || ref === 'canceled';
-  }.property('state'),
+  isFinished: Ember.computed('state', function () {
+    let state = this.get('state');
+    let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
+    return finishedStates.contains(state);
+  }),
 
-  notStarted: function() {
-    var ref;
-    return (ref = this.get('state')) === 'queued' || ref === 'created' || ref === 'received';
-  }.property('state'),
+  notStarted: Ember.computed('state', function () {
+    let state = this.get('state');
+    let waitingStates = ['queued', 'created', 'received'];
+    return waitingStates.contains(state);
+  }),
 
   clearLog() {
     if (this.get('isLogAccessed')) {
@@ -86,31 +88,31 @@ export default Model.extend(DurationCalculations, {
     }
   },
 
-  configValues: function() {
+  configValues: Ember.computed('config', 'build.rawConfigKeys.length', function () {
     var config, keys;
     config = this.get('config');
     keys = this.get('build.rawConfigKeys');
     if (config && keys) {
-      return keys.map(function(key) {
+      return keys.map(function (key) {
         return config[key];
       });
     } else {
       return [];
     }
-  }.property('config', 'build.rawConfigKeys.length'),
+  }),
 
-  canCancel: function() {
+  canCancel: Ember.computed('isFinished', function () {
     return !this.get('isFinished');
-  }.property('isFinished'),
+  }),
 
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post("/jobs/" + (this.get('id')) + "/cancel");
+    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/cancel');
   },
 
   removeLog() {
-    return this.get('ajax').patch("/jobs/" + (this.get('id')) + "/log").then(() => {
+    return this.get('ajax').patch('/jobs/' + (this.get('id')) + '/log').then(() => {
       return this.reloadLog();
     });
   },
@@ -121,7 +123,7 @@ export default Model.extend(DurationCalculations, {
   },
 
   restart() {
-    return this.get('ajax').post("/jobs/" + (this.get('id')) + "/restart");
+    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/restart');
   },
 
   appendLog(part) {
@@ -134,7 +136,7 @@ export default Model.extend(DurationCalculations, {
     }
     this.set('subscribed', true);
     if (Travis.pusher) {
-      return Travis.pusher.subscribe("job-" + (this.get('id')));
+      return Travis.pusher.subscribe('job-' + (this.get('id')));
     }
   },
 
@@ -144,42 +146,42 @@ export default Model.extend(DurationCalculations, {
     }
     this.set('subscribed', false);
     if (Travis.pusher) {
-      return Travis.pusher.unsubscribe("job-" + (this.get('id')));
+      return Travis.pusher.unsubscribe('job-' + (this.get('id')));
     }
   },
 
-  onStateChange: function() {
+  onStateChange: Ember.observer('state', function () {
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }
-  }.observes('state'),
+  }),
 
-  formattedFinishedAt: function() {
+  formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
       return moment(finishedAt).format('lll');
     }
-  }.property('finishedAt'),
+  }),
 
-  canRemoveLog: function() {
+  canRemoveLog: Ember.computed('log.removed', function () {
     return !this.get('log.removed');
-  }.property('log.removed'),
+  }),
 
-  slug: function() {
-    return (this.get('repo.slug')) + " #" + (this.get('number'));
-  } .property(),
+  slug: Ember.computed(function () {
+    return (this.get('repo.slug')) + ' #' + (this.get('number'));
+  }),
 
-  isLegacyInfrastructure: function() {
+  isLegacyInfrastructure: Ember.computed('queue', function () {
     if (this.get('queue') === 'builds.linux') {
       return true;
     }
-  }.property('queue'),
+  }),
 
-  displayGceNotice: function() {
+  displayGceNotice: Ember.computed('queue', 'config.dist', function () {
     if (this.get('queue') === 'builds.gce' && this.get('config.dist') === 'precise') {
       return true;
     } else {
       return false;
     }
-  }.property('queue', 'config.dist')
+  })
 });

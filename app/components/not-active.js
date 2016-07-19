@@ -12,21 +12,20 @@ export default Ember.Component.extend({
 
   user: alias('auth.currentUser'),
 
-  canActivate: function() {
+  canActivate: Ember.computed('user.pushPermissions.[]', 'repo', function () {
     let user = this.get('user');
-    if(user) {
+    if (user) {
       let permissions = user.get('pushPermissions'),
-          repoId = parseInt(this.get('repo.id'));
+        repoId = parseInt(this.get('repo.id'));
 
       return permissions.contains(repoId);
     } else {
       return false;
     }
-  }.property('user.pushPermissions.[]', 'repo'),
+  }),
 
   activate: task(function * () {
     const apiEndpoint = config.apiEndpoint;
-    const repo = this.get('repo');
     const repoId = this.get('repo.id');
 
     try {
@@ -38,15 +37,7 @@ export default Ember.Component.extend({
       });
 
       if (response.active) {
-        const pusher = this.get('pusher');
-
-        let channel = `repo-${repoId}`;
-
-        if (repo.get('private') || this.get('config').enterprise) {
-          channel = `private-${channel}`;
-        }
-
-        pusher.subscribe(`repo-${repoId}`);
+        this.get('pusher').subscribe(`repo-${repoId}`);
 
         this.get('repo').set('active', true);
         this.get('flashes').success('Repository has been successfully activated.');

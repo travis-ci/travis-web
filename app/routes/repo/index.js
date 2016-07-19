@@ -34,9 +34,9 @@ export default TravisRoute.extend({
   renderTemplate() {
     let controller = this.controllerFor('repo');
 
-    if(!controller.get('repo.active')) {
+    if (!controller.get('repo.active')) {
       this.render('repo/not-active');
-    } else if(!controller.get('repo.currentBuildId')) {
+    } else if (!controller.get('repo.currentBuildId')) {
       this.render('repo/no-build');
     } else {
       this.render('build');

@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
-export default (function() {
-  function Tailing(window1, tail_selector, log_selector) {
+export default (function () {
+  function Tailing(window1, tailSelector, logSelector) {
     this.window = window1;
-    this.tail_selector = tail_selector;
-    this.log_selector = log_selector;
+    this.tailSelector = tailSelector;
+    this.logSelector = logSelector;
     this.position = this.window.scrollTop();
     this.window.scroll(() => {
       return Ember.run.throttle(this, this.onScroll, [], 200, false);
@@ -16,17 +16,15 @@ export default (function() {
     timeout: 200
   };
 
-  Tailing.prototype.tail = function() {
-    return Ember.$(this.tail_selector);
+  Tailing.prototype.tail = function () {
+    return Ember.$(this.tailSelector);
   };
 
-  Tailing.prototype.log = function() {
-    return Ember.$(this.log_selector);
+  Tailing.prototype.log = function () {
+    return Ember.$(this.logSelector);
   };
 
-
-
-  Tailing.prototype.run = function() {
+  Tailing.prototype.run = function () {
     this.autoScroll();
     this.positionButton();
     if (this.active()) {
@@ -34,7 +32,7 @@ export default (function() {
     }
   };
 
-  Tailing.prototype.toggle = function() {
+  Tailing.prototype.toggle = function () {
     if (this.active()) {
       return this.stop();
     } else {
@@ -42,24 +40,24 @@ export default (function() {
     }
   };
 
-  Tailing.prototype.active = function() {
+  Tailing.prototype.active = function () {
     return this.tail().hasClass('active');
   };
 
-  Tailing.prototype.start = function() {
+  Tailing.prototype.start = function () {
     this.tail().addClass('active');
     return this.run();
   };
 
-  Tailing.prototype.isActive = function() {
+  Tailing.prototype.isActive = function () {
     return this.tail().hasClass('active');
   };
 
-  Tailing.prototype.stop = function() {
+  Tailing.prototype.stop = function () {
     return this.tail().removeClass('active');
   };
 
-  Tailing.prototype.autoScroll = function() {
+  Tailing.prototype.autoScroll = function () {
     var logBottom, winBottom;
     if (!this.active()) {
       return false;
@@ -74,7 +72,7 @@ export default (function() {
     }
   };
 
-  Tailing.prototype.onScroll = function() {
+  Tailing.prototype.onScroll = function () {
     var position;
     this.positionButton();
     position = this.window.scrollTop();
@@ -84,7 +82,7 @@ export default (function() {
     return this.position = position;
   };
 
-  Tailing.prototype.positionButton = function() {
+  Tailing.prototype.positionButton = function () {
     var max, offset, tail;
     tail = Ember.$('#tail');
     if (tail.length === 0) {
@@ -107,5 +105,4 @@ export default (function() {
   };
 
   return Tailing;
-
 })();

@@ -6,7 +6,7 @@ export default TravisRoute.extend({
   model() {
     var repo;
     repo = this.modelFor('repo');
-    return repo.fetchSettings().then(function(settings) {
+    return repo.fetchSettings().then(function (settings) {
       return repo.set('settings', settings);
     });
   }

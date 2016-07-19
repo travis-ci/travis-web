@@ -10,7 +10,7 @@ export default BasicRoute.extend({
     return this.controllerFor('top').set('landingPage', false);
   },
 
-  setupController(controller/*, model*/) {
+  setupController(controller/* , model*/) {
     return controller.set('repos', this.get('repos'));
   }
 });

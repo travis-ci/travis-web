@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   classNameBindings: ['color'],
   pollModels: 'build',
 
-  color: function() {
+  color: Ember.computed('build.state', function () {
     return colorForState(this.get('build.state'));
-  }.property('build.state')
+  })
 });

@@ -12,41 +12,43 @@ Log.DEBUG = false;
 
 Log.LIMIT = 10000;
 
-Log.Scroll = function(options) {
+Log.Scroll = function (options) {
   options = options || {};
   this.beforeScroll = options.beforeScroll;
   return this;
 };
 
 Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
-  insert: function() {
+  insert: function () {
     if (this.numbers) {
       this.tryScroll();
     }
     return true;
   },
-  tryScroll: function() {
+  tryScroll: function () {
     var ref;
-    let element = Ember.$("#log p:visible.highlight:first");
+    let element = Ember.$('#log p:visible.highlight:first');
     if (element) {
       if (this.beforeScroll) {
         this.beforeScroll();
       }
       Ember.$('#main').scrollTop(0);
-      return Ember.$('html, body').scrollTop(((ref = element.offset()) != null ? ref.top : void 0) - (window.innerHeight / 3));
+      let offset = element.offset();
+      let scrollTop = ((ref = offset) != null ? ref.top : void 0) - (window.innerHeight / 3);
+      return Ember.$('html, body').scrollTop(scrollTop);
     }
   }
 });
 
-Log.Limit = function(max_lines, limitedLogCallback) {
-  this.max_lines = max_lines || 1000;
-  this.limitedLogCallback = limitedLogCallback || (function() {});
+Log.Limit = function (maxLines, limitedLogCallback) {
+  this.maxLines = maxLines || 1000;
+  this.limitedLogCallback = limitedLogCallback || (function () {});
   return this;
 };
 
 Log.Limit.prototype = Log.extend(new Log.Listener(), {
   count: 0,
-  insert: function(node) {
+  insert: function (node) {
     if (node.type === 'paragraph' && !node.hidden) {
       this.count += 1;
       if (this.limited) {
@@ -58,8 +60,8 @@ Log.Limit.prototype = Log.extend(new Log.Listener(), {
 });
 
 Object.defineProperty(Log.Limit.prototype, 'limited', {
-  get: function() {
-    return this.count >= this.max_lines;
+  get: function () {
+    return this.count >= this.maxLines;
   }
 });
 
@@ -143,9 +145,11 @@ export default Ember.Component.extend({
     if (!changes.oldAttrs) {
       return;
     }
-    if (changes.newAttrs.job.value && changes.oldAttrs.job.value && changes.newAttrs.job.value !== changes.oldAttrs.job.value) {
-      this.teardownLog(changes.oldAttrs.job.value.get('log'));
-      return this.createEngine(changes.newAttrs.job.value.get('log'));
+    let newJobValue = changes.newAttrs.job.value;
+    let oldJobValue = changes.oldAttrs.job.value;
+    if (oldJobValue && newJobValue && newJobValue !== oldJobValue) {
+      this.teardownLog(oldJobValue.get('log'));
+      return this.createEngine(newJobValue.get('log'));
     }
   },
 
@@ -167,7 +171,7 @@ export default Ember.Component.extend({
   },
 
   partsDidChange(parts, start, _, added) {
-    Ember.run.schedule('afterRender', this, function() {
+    Ember.run.schedule('afterRender', this, function () {
       var i, j, len, part, ref, ref1, ref2, results;
       if (Log.DEBUG) {
         //eslint-disable-next-line
@@ -180,6 +184,8 @@ export default Ember.Component.extend({
       results = [];
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         part = ref[i];
+        // My brain can't process this right now.
+        // eslint-disable-next-line
         if ((ref1 = this.engine) != null ? (ref2 = ref1.limit) != null ? ref2.limited : void 0 : void 0) {
           break;
         }
@@ -189,31 +195,31 @@ export default Ember.Component.extend({
     });
   },
 
-  plainTextLogUrl: function() {
+  plainTextLogUrl: Ember.computed('job.log.id', 'job.log.token', function () {
     let id = this.get('log.job.id');
     if (id) {
       let url = plainTextLogUrl(id);
       if (config.pro) {
-        url += "&access_token=" + (this.get('job.log.token'));
+        url += '&access_token=' + (this.get('job.log.token'));
       }
       return url;
     }
-  }.property('job.log.id', 'job.log.token'),
+  }),
 
-  hasPermission: function() {
+  hasPermission: Ember.computed('permissions.all', 'job.repo', function () {
     return this.get('permissions').hasPermission(this.get('job.repo'));
-  }.property('permissions.all', 'job.repo'),
+  }),
 
-  canRemoveLog: function() {
+  canRemoveLog: Ember.computed('job.canRemoveLog', 'hasPermission', function () {
     let job = this.get('job');
     if (job) {
       return job.get('canRemoveLog') && this.get('hasPermission');
     }
-  }.property('job.canRemoveLog', 'hasPermission'),
+  }),
 
-  showToTop: function() {
+  showToTop: Ember.computed('log.hasContent', 'job.canRemoveLog', function () {
     return this.get('log.hasContent') && this.get('job.canRemoveLog');
-  }.property('log.hasContent', 'job.canRemoveLog'),
+  }),
 
   showTailing: Ember.computed.alias('showToTop'),
 
@@ -242,5 +248,5 @@ export default Ember.Component.extend({
   },
 
   // don't remove this, it's needed as an empty willChange callback
-  noop: function() {}
+  noop: function () {}
 });
