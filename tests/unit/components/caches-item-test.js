@@ -4,7 +4,7 @@ moduleForComponent('caches-item', 'CachesItemComponent', {
 });
 
 test('it renders', function () {
-  var attributes, component;
+  let attributes, component;
   attributes = {
     repository_id: 10,
     size: 1024 * 1024,

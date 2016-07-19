@@ -60,7 +60,7 @@ test('view and delete caches', function (assert) {
 
   const requestBodies = [];
 
-  server.delete(`/repos/${this.repository.id}/caches`, function (schema, request) {
+  server.delete(`/repos/${this.repository.id}/caches`, (schema, request) => {
     requestBodies.push(request.requestBody || 'empty');
   });
 

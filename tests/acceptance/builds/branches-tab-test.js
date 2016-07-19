@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | builds/branches tab', {
   }
 });
 
-test('visiting /builds/branches-tab', function (assert) {
+test('visiting /builds/branches-tab', assert => {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', { active: true });
@@ -23,7 +23,7 @@ test('visiting /builds/branches-tab', function (assert) {
   branchesRepoTab
     .visit();
 
-  andThen(function () {
+  andThen(() => {
     assert.ok(branchesRepoTab.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
   });
 });

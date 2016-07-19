@@ -5,7 +5,7 @@ moduleForComponent('jobs-item', 'JobsItemComponent', {
 });
 
 test('it renders', function () {
-  var attributes, component, job;
+  let attributes, component, job;
   attributes = {
     id: 10,
     state: 'passed',
@@ -20,7 +20,7 @@ test('it renders', function () {
   };
   job = Ember.Object.create(attributes);
   component = this.subject({
-    job: job
+    job
   });
   this.render();
   ok(component.$().hasClass('passed'), 'component should have a state class (passed)');
@@ -32,10 +32,10 @@ test('it renders', function () {
 });
 
 test('outputs info on not set properties', function () {
-  var component, job;
+  let component, job;
   job = Ember.Object.create();
   component = this.subject({
-    job: job
+    job
   });
   this.render();
   ok(component.$('.job-env').text().match(/no environment variables set/), 'a message for no env vars should be displayed');
@@ -43,7 +43,7 @@ test('outputs info on not set properties', function () {
 });
 
 test('when env is not set, gemfile is displayed in the env section', function () {
-  var attributes, component, job;
+  let attributes, component, job;
   attributes = {
     id: 10,
     state: 'passed',
@@ -56,7 +56,7 @@ test('when env is not set, gemfile is displayed in the env section', function ()
   };
   job = Ember.Object.create(attributes);
   component = this.subject({
-    job: job
+    job
   });
   this.render();
   equal(component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2', 'langauges list should be displayed');
@@ -64,7 +64,7 @@ test('when env is not set, gemfile is displayed in the env section', function ()
 });
 
 test('when env is set, gemfile is displayed in the language section', function () {
-  var attributes, component, job;
+  let attributes, component, job;
   attributes = {
     id: 10,
     state: 'passed',
@@ -78,7 +78,7 @@ test('when env is set, gemfile is displayed in the language section', function (
   };
   job = Ember.Object.create(attributes);
   component = this.subject({
-    job: job
+    job
   });
   this.render();
   equal(component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2 Gemfile: foo/Gemfile', 'Gemfile should be displayed in languages section');

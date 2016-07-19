@@ -53,10 +53,10 @@ moduleForAcceptance('Acceptance | profile', {
   }
 });
 
-test('view profile', function (assert) {
+test('view profile', assert => {
   profilePage.visit({ username: 'feministkilljoy' });
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(profilePage.name, 'Sara Ahmed');
 
     assert.equal(profilePage.accounts().count, 2, 'expected two accounts');
@@ -79,7 +79,7 @@ test('view profile', function (assert) {
   });
 });
 
-test('view token', function (assert) {
+test('view token', assert => {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
@@ -88,12 +88,12 @@ test('view token', function (assert) {
 
   profilePage.token.show();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(profilePage.token.value, 'testUserToken');
   });
 });
 
-test('updating hooks', function (assert) {
+test('updating hooks', assert => {
   profilePage.visit({ username: 'feministkilljoy' });
 
   profilePage.administerableHooks(0).toggle();

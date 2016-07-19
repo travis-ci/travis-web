@@ -4,7 +4,7 @@ moduleForComponent('requests-item', {
 });
 
 test('it renders request data', function (assert) {
-  var component, request, yesterday;
+  let component, request, yesterday;
   yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   request = {
@@ -24,7 +24,7 @@ test('it renders request data', function (assert) {
     isAccepted: true
   };
   component = this.subject({
-    request: request
+    request
   });
   this.render();
   assert.equal(component.$('.row-item:nth-child(2) strong').text().trim(), 'dev');
@@ -36,14 +36,14 @@ test('it renders request data', function (assert) {
 });
 
 test('it renders PR number if a request is a PR', function (assert) {
-  var component, request;
+  let component, request;
   request = {
     id: 1,
     isPullRequest: true,
     pullRequestNumber: 20
   };
   component = this.subject({
-    request: request
+    request
   });
   this.render();
   return assert.equal(component.$('.row-item:nth-child(2) strong').text().trim(), '#20');

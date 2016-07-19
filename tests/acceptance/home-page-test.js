@@ -9,10 +9,10 @@ moduleForAcceptance('Acceptance | home page for user with no repositories', {
   }
 });
 
-test('signed in but without repositories', function (assert) {
+test('signed in but without repositories', assert => {
   dashboardPage.visit();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(currentURL(), '/getting_started');
   });
 });

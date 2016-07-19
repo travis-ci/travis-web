@@ -3,47 +3,46 @@ import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 
-var hookRuns = 0,
-  pollingChangesHistory = [];
+let hookRuns = 0, pollingChangesHistory = [];
 
-define('travis/components/polling-test', [], function () {
-  var PollingService;
+define('travis/components/polling-test', [], () => {
+  let PollingService;
   PollingService = Ember.Object.extend({
-    startPolling: function (model) {
+    startPolling(model) {
       return pollingChangesHistory.push({
         type: 'start',
-        model: model
+        model
       });
     },
-    stopPolling: function (model) {
+    stopPolling(model) {
       return pollingChangesHistory.push({
         type: 'stop',
-        model: model
+        model
       });
     },
-    startPollingHook: function (source) {
+    startPollingHook(source) {
       return pollingChangesHistory.push({
         type: 'start-hook',
-        source: source + ''
+        source: `${source}`
       });
     },
-    stopPollingHook: function (source) {
+    stopPollingHook(source) {
       return pollingChangesHistory.push({
         type: 'stop-hook',
-        source: source + ''
+        source: `${source}`
       });
     }
   });
   return Ember.Component.extend(Polling, {
-    init: function () {
-      this._super.apply(this, arguments);
+    init() {
+      this._super(...arguments);
       return this.set('polling', PollingService.create());
     },
     pollModels: ['model1', 'model2'],
-    pollHook: function () {
+    pollHook() {
       return hookRuns += 1;
     },
-    toString: function () {
+    toString() {
       return '<PollingTestingComponent>';
     }
   });
@@ -51,21 +50,19 @@ define('travis/components/polling-test', [], function () {
 
 moduleForComponent('polling-test', 'PollingMixin', {
   needs: [],
-  setup: function () {
+  setup() {
     hookRuns = 0;
     return pollingChangesHistory = [];
   }
 });
 
 test('it properly stops polling hook without any models', function () {
-  var component, expected;
+  let component, expected;
   component = this.subject({
     pollModels: null
   });
   this.render();
-  Ember.run(function () {
-    return component.destroy();
-  });
+  Ember.run(() => component.destroy());
   expected = [
     {
       type: 'start-hook',
@@ -79,16 +76,14 @@ test('it properly stops polling hook without any models', function () {
 });
 
 test('it works even if one of the model is null', function () {
-  var component, expected;
+  let component, expected;
   component = this.subject({
     model1: {
       name: 'model1'
     }
   });
   this.render();
-  Ember.run(function () {
-    return component.destroy();
-  });
+  Ember.run(() => component.destroy());
   expected = [
     {
       type: 'start',
@@ -112,7 +107,7 @@ test('it works even if one of the model is null', function () {
 });
 
 test('it polls for both models if they are present', function () {
-  var component, expected;
+  let component, expected;
   component = this.subject({
     model1: {
       name: 'model1'
@@ -122,9 +117,7 @@ test('it polls for both models if they are present', function () {
     }
   });
   this.render();
-  Ember.run(function () {
-    return component.destroy();
-  });
+  Ember.run(() => component.destroy());
   expected = [
     {
       type: 'start',
@@ -158,21 +151,17 @@ test('it polls for both models if they are present', function () {
 });
 
 test('it detects model changes', function () {
-  var component, expected;
+  let component, expected;
   component = this.subject({
     model1: {
       name: 'foo'
     }
   });
   this.render();
-  Ember.run(function () {
-    return component.set('model1', {
-      name: 'bar'
-    });
-  });
-  Ember.run(function () {
-    return component.destroy();
-  });
+  Ember.run(() => component.set('model1', {
+    name: 'bar'
+  }));
+  Ember.run(() => component.destroy());
   expected = [
     {
       type: 'start',

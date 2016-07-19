@@ -12,10 +12,10 @@ test('it adds an ssh key on submit', function (assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
+  const store = Ember.getOwner(this).lookup('service:store');
 
-  var repo;
-  Ember.run(function () {
+  let repo;
+  Ember.run(() => {
     repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
@@ -23,7 +23,7 @@ test('it adds an ssh key on submit', function (assert) {
 
   this.render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
 
-  var sshKey = store.peekAll('ssh_key').objectAt(0);
+  const sshKey = store.peekAll('ssh_key').objectAt(0);
 
   assert.ok(! sshKey.get('description'), 'description should be blank');
   assert.ok(! sshKey.get('value'), 'value should be blank');
@@ -38,8 +38,8 @@ test('it adds an ssh key on submit', function (assert) {
   assert.equal(sshKey.get('value'), 'bar', 'value should be set');
   assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
 
-  var done = assert.async();
-  setTimeout(function () { done(); }, 500);
+  const done = assert.async();
+  setTimeout(() => { done(); }, 500);
 });
 
 
@@ -47,10 +47,10 @@ test('it throws an error if value for ssh key is blank', function (assert) {
   assert.expect(5);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
+  const store = Ember.getOwner(this).lookup('service:store');
 
-  var repo;
-  Ember.run(function () {
+  let repo;
+  Ember.run(() => {
     repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
@@ -58,7 +58,7 @@ test('it throws an error if value for ssh key is blank', function (assert) {
 
   this.render(hbs`{{add-ssh-key repo=repo sshKeyAdded="sshKeyAdded"}}`);
 
-  var sshKey = store.peekAll('ssh_key').objectAt(0);
+  const sshKey = store.peekAll('ssh_key').objectAt(0);
 
   assert.ok(! sshKey.get('description'), 'description should be blank');
   assert.ok(! sshKey.get('value'), 'value should be blank');

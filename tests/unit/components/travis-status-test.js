@@ -6,19 +6,15 @@ moduleForComponent('travis-status', 'TravisStatusComponent', {
 });
 
 test('adds incident class to .status-circle', function () {
-  var component;
+  let component;
   expect(3);
   component = this.subject();
   component.statusPageStatusUrl = 'https://status-url.example.com';
-  component.getStatus = function () {
-    return new Ember.RSVP.Promise(function (resolve/* , reject*/) {
-      return resolve({
-        status: {
-          indicator: 'major'
-        }
-      });
-    });
-  };
+  component.getStatus = () => new Ember.RSVP.Promise(resolve/* , reject*/ => resolve({
+    status: {
+      indicator: 'major'
+    }
+  }));
 
   ok(!component.get('status'), 'status is initially not set');
   this.render();

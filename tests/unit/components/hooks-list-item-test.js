@@ -4,7 +4,7 @@ moduleForComponent('hooks-list-item', 'HooksListItemComponent', {
 });
 
 test('it renders', function () {
-  var attributes, component;
+  let attributes, component;
   attributes = {
     id: 10000,
     name: 'foo-bar',

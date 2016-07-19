@@ -13,11 +13,11 @@ test('it adds an env var on submit', function (assert) {
 
   // this shouldn't be needed, probably some bug in tests setup with new ember-data
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
+  const store = Ember.getOwner(this).lookup('service:store');
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-  var repo;
-  Ember.run(function () {
+  let repo;
+  Ember.run(() => {
     repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
@@ -32,15 +32,15 @@ test('it adds an env var on submit', function (assert) {
 
   assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 
-  var envVar = store.peekAll('envVar').objectAt(0);
+  const envVar = store.peekAll('envVar').objectAt(0);
 
   assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
   assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
   assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
   assert.ok(!envVar.get('public'), 'env var should be private');
 
-  var done = assert.async();
-  setTimeout(function () { done(); }, 500);
+  const done = assert.async();
+  setTimeout(() => { done(); }, 500);
 });
 
 test('it shows an error if no name is present', function (assert) {
@@ -65,11 +65,11 @@ test('it adds a public env var on submit', function (assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
+  const store = Ember.getOwner(this).lookup('service:store');
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
-  var repo;
-  Ember.run(function () {
+  let repo;
+  Ember.run(() => {
     repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
@@ -86,13 +86,13 @@ test('it adds a public env var on submit', function (assert) {
 
   assert.equal(store.peekAll('envVar').get('length'), 1, 'env var should be added to store');
 
-  var envVar = store.peekAll('envVar').objectAt(0);
+  const envVar = store.peekAll('envVar').objectAt(0);
 
   assert.equal(envVar.get('name'), 'FOO', 'name should be set for the env var');
   assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
   assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
   assert.ok(envVar.get('public'), 'env var should be public');
 
-  var done = assert.async();
-  setTimeout(function () { done(); }, 500);
+  const done = assert.async();
+  setTimeout(() => { done(); }, 500);
 });

@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | builds/cancel', {
   }
 });
 
-test('cancelling build', function (assert) {
+test('cancelling build', assert => {
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
@@ -23,7 +23,7 @@ test('cancelling build', function (assert) {
     .visit()
     .cancelBuild();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(buildPage.cancelledNotification, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
   });
 });

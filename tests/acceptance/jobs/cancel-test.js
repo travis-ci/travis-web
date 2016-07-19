@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | jobs/cancel', {
   }
 });
 
-test('restarting job', function (assert) {
+test('restarting job', assert => {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
@@ -28,7 +28,7 @@ test('restarting job', function (assert) {
     .visit()
     .cancelJob();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(jobPage.cancelledNotification, 'Job has been successfully cancelled.', 'cancelled job notification should be displayed');
   });
 });

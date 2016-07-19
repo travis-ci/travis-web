@@ -93,7 +93,7 @@ moduleForAcceptance('Acceptance | repo branches', {
   }
 });
 
-test('view branches', function (assert) {
+test('view branches', assert => {
   branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {

@@ -95,10 +95,10 @@ moduleForAcceptance('Acceptance | repo settings', {
   }
 });
 
-test('view settings', function (assert) {
+test('view settings', assert => {
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
-  andThen(function () {
+  andThen(() => {
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
     assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
 
@@ -133,7 +133,7 @@ test('change general settings', function (assert) {
 
   const requestBodies = [];
 
-  server.patch(`/repos/${this.repository.id}/settings`, function (schema, request) {
+  server.patch(`/repos/${this.repository.id}/settings`, (schema, request) => {
     requestBodies.push(JSON.parse(request.requestBody));
   });
 
@@ -178,7 +178,7 @@ test('delete and create environment variables', function (assert) {
 
   const deletedIds = [];
 
-  server.delete('/settings/env_vars/:id', function (schema, request) {
+  server.delete('/settings/env_vars/:id', (schema, request) => {
     deletedIds.push(request.params.id);
   });
 
@@ -192,7 +192,7 @@ test('delete and create environment variables', function (assert) {
 
   const requestBodies = [];
 
-  server.post('/settings/env_vars', function (schema, request) {
+  server.post('/settings/env_vars', (schema, request) => {
     const parsedRequestBody = JSON.parse(request.requestBody);
     requestBodies.push(parsedRequestBody);
     return parsedRequestBody;
@@ -217,7 +217,7 @@ test('delete and create crons', function (assert) {
 
   const deletedIds = [];
 
-  server.delete('/cron/:id', function (schema, request) {
+  server.delete('/cron/:id', (schema, request) => {
     deletedIds.push(request.params.id);
     schema.db.crons.remove(request.params.id);
     return {};
@@ -236,7 +236,7 @@ test('delete and set SSH keys', function (assert) {
 
   const deletedIds = [];
 
-  server.delete('/settings/ssh_key/:id', function (schema, request) {
+  server.delete('/settings/ssh_key/:id', (schema, request) => {
     deletedIds.push(request.params.id);
   });
 

@@ -5,7 +5,7 @@ moduleForComponent('loading-indicator', {
 });
 
 test('it renders', function () {
-  var component;
+  let component;
   component = this.subject({
     center: true
   });

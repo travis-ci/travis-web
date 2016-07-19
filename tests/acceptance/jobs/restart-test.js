@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | jobs/restart', {
   }
 });
 
-test('restarting job', function (assert) {
+test('restarting job', assert => {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
@@ -28,7 +28,7 @@ test('restarting job', function (assert) {
     .visit()
     .restartJob();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(jobPage.restartedNotification, 'The job was successfully restarted.', 'restarted notification should display proper job restarted text');
   });
 });

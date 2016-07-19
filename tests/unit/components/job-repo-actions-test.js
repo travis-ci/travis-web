@@ -2,7 +2,7 @@ import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 
 let userStub = Ember.Object.extend({
-  hasAccessToRepo: function (repo) {
+  hasAccessToRepo(repo) {
     ok(repo.get('id', 44));
     ok(true, 'hasAccessToRepo was called');
     return false;
@@ -22,7 +22,7 @@ moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
 });
 
 test('it shows cancel button if canCancel is true', function () {
-  var component;
+  let component;
   component = this.subject({
     canCancel: true
   });
@@ -31,7 +31,7 @@ test('it shows cancel button if canCancel is true', function () {
 });
 
 test('it shows restart button if canRestart is true', function () {
-  var component;
+  let component;
   component = this.subject({
     canRestart: true
   });
@@ -40,13 +40,13 @@ test('it shows restart button if canRestart is true', function () {
 });
 
 test('user can cancel if she has permissions to a repo and job is cancelable', function () {
-  var component, job;
+  let component, job;
   job = Ember.Object.create({
     canCancel: false,
     userHasPermissionForRepo: true
   });
   component = this.subject({
-    job: job,
+    job,
     userHasPermissionForRepo: false
   });
   ok(!component.get('canCancel'));
@@ -57,13 +57,13 @@ test('user can cancel if she has permissions to a repo and job is cancelable', f
 });
 
 test('user can restart if she has permissions to a repo and job is restartable', function () {
-  var component, job;
+  let component, job;
   job = Ember.Object.create({
     canRestart: false,
     userHasPermissionForRepo: true
   });
   component = this.subject({
-    job: job,
+    job,
     userHasPermissionForRepo: false
   });
   ok(!component.get('canRestart'));
@@ -74,13 +74,13 @@ test('user can restart if she has permissions to a repo and job is restartable',
 });
 
 test('it properly checks for user permissions for a repo', function () {
-  var component, repo;
+  let component, repo;
   expect(3);
   repo = Ember.Object.create({
     id: 44
   });
   component = this.subject({
-    repo: repo
+    repo
   });
   return ok(!component.get('userHasPermissionForRepo'), 'user should not have access to a repo');
 });

@@ -80,7 +80,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
   }
 });
 
-test('view build history', function (assert) {
+test('view build history', assert => {
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
@@ -100,7 +100,7 @@ test('view build history', function (assert) {
   });
 });
 
-test('view pull requests', function (assert) {
+test('view pull requests', assert => {
   page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {

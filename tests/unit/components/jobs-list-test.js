@@ -6,7 +6,7 @@ moduleForComponent('jobs-list', 'JobsListComponent', {
 });
 
 test('it renders a list of jobs', function () {
-  var component, jobs;
+  let component, jobs;
   jobs = [
     Ember.Object.create({
       id: 1,
@@ -17,7 +17,7 @@ test('it renders a list of jobs', function () {
     })
   ];
   component = this.subject({
-    jobs: jobs,
+    jobs,
     required: true
   });
   this.render();
@@ -28,14 +28,14 @@ test('it renders a list of jobs', function () {
 });
 
 test('it renders "Allowed Failures" version without a `required` property', function () {
-  var component, jobs;
+  let component, jobs;
   jobs = [
     Ember.Object.create({
       id: 1
     })
   ];
   component = this.subject({
-    jobs: jobs
+    jobs
   });
   this.render();
   return ok(component.$('.section-title').text().match(/Allowed Failures/));

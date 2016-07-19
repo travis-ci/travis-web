@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | builds/restart', {
   }
 });
 
-test('restarting build', function (assert) {
+test('restarting build', assert => {
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
@@ -23,7 +23,7 @@ test('restarting build', function (assert) {
     .visit()
     .restartBuild();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(buildPage.restartedNotification, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
     assert.equal(buildPage.singleJobLogText, 'Hello log', 'shows log text of single build job');
   });

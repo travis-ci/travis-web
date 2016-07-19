@@ -9,19 +9,19 @@ moduleForAcceptance('Acceptance | builds/current tab', {
   }
 });
 
-test('renders most recent repository without builds', function (assert) {
+test('renders most recent repository without builds', assert => {
   server.create('repository', { slug: 'travis-ci/travis-web' });
 
   currentRepoTab
     .visit();
 
-  andThen(function () {
+  andThen(() => {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
     assert.equal(currentRepoTab.showsNoBuildsMessaging, 'No builds for this repository', 'Current tab shows no builds message');
   });
 });
 
-test('renders most recent repository and most recent build when builds present', function (assert) {
+test('renders most recent repository and most recent build when builds present', assert => {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
@@ -37,11 +37,11 @@ test('renders most recent repository and most recent build when builds present',
   currentRepoTab
     .visit();
 
-  andThen(function () {
+  andThen(() => {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
   });
 
-  andThen(function () {
+  andThen(() => {
     // TODO: This shouldn't be necessary. The cause for this test's
     // unreliability is that we assert before the build information has been
     // resolved. I'm actually not sure how this ever worked before.

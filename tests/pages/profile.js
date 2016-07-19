@@ -10,7 +10,7 @@ let {
 
 function hooksCollection(scope) {
   return collection({
-    scope: scope,
+    scope,
     itemScope: '.profile-hooklist .row',
 
     item: {

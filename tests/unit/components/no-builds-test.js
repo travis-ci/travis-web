@@ -4,7 +4,7 @@ moduleForComponent('no-builds', {
 });
 
 test('it renders', function (assert) {
-  var component;
+  let component;
   assert.expect(2);
   component = this.subject();
   assert.equal(component._state, 'preRender');

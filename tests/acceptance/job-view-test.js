@@ -4,7 +4,7 @@ import jobPage from 'travis/tests/pages/job';
 
 moduleForAcceptance('Acceptance | job view');
 
-test('visiting job-view', function (assert) {
+test('visiting job-view', assert => {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
@@ -19,9 +19,9 @@ test('visiting job-view', function (assert) {
   // create log
   server.create('log', { id: job.id });
 
-  visit('/travis-ci/travis-web/jobs/' + job.id);
+  visit(`/travis-ci/travis-web/jobs/${job.id}`);
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(jobPage.branch, 'acceptance-tests');
     assert.equal(jobPage.message, 'acceptance-tests This is a message');
     assert.equal(jobPage.state, '#1234.1 passed');
@@ -32,7 +32,7 @@ test('visiting job-view', function (assert) {
 });
 
 
-test('handling log error', function (assert) {
+test('handling log error', assert => {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   // create branch
   server.create('branch', {});
@@ -45,9 +45,9 @@ test('handling log error', function (assert) {
   job.save();
   commit.save();
 
-  visit('/travis-ci/travis-web/jobs/' + job.id);
+  visit(`/travis-ci/travis-web/jobs/${job.id}`);
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(jobPage.branch, 'acceptance-tests');
     assert.equal(jobPage.message, 'acceptance-tests This is a message');
     assert.equal(jobPage.state, '#1234.1 passed');
