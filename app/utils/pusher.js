@@ -203,8 +203,6 @@ if (ENV.pro) {
     if (pusherPath) {
       pusherPath = `/${pusherPath}`;
     }
-    // eslint-disable-next-line
-    console.log(`${config.wsHost}:${config.wssPort}${pusherPath}`);
     return [
       [
         ':def', 'ws_options', {
