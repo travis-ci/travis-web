@@ -1,6 +1,6 @@
-var AuthInitializer, initialize;
+let AuthInitializer, initialize;
 
-initialize = function (app) {
+initialize = app => {
   app.inject('route', 'auth', 'service:auth');
   app.inject('controller', 'auth', 'service:auth');
   app.inject('application', 'auth', 'service:auth');
@@ -11,7 +11,7 @@ initialize = function (app) {
 AuthInitializer = {
   name: 'auth',
   after: 'ember-data',
-  initialize: initialize
+  initialize
 };
 
 export { initialize };

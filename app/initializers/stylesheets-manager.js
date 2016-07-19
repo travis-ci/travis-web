@@ -1,17 +1,17 @@
 import Ember from 'ember';
 
-var StylesheetsManagerInitializer, initialize, stylesheetsManager;
+let StylesheetsManagerInitializer, initialize, stylesheetsManager;
 
 stylesheetsManager = Ember.Object.create({
-  enable: function (id) {
-    return Ember.$('#' + id).removeAttr('disabled');
+  enable(id) {
+    return Ember.$(`#${id}`).removeAttr('disabled');
   },
-  disable: function (id) {
-    return Ember.$('#' + id).attr('disabled', 'disabled');
+  disable(id) {
+    return Ember.$(`#${id}`).attr('disabled', 'disabled');
   }
 });
 
-initialize = function (application) {
+initialize = application => {
   application.register('stylesheetsManager:main', stylesheetsManager, {
     instantiate: false
   });
@@ -20,7 +20,7 @@ initialize = function (application) {
 
 StylesheetsManagerInitializer = {
   name: 'inject-stylesheets-manager',
-  initialize: initialize
+  initialize
 };
 
 export { initialize };

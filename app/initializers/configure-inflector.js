@@ -6,7 +6,7 @@ import config from 'travis/config/environment';
 const initializer = {
   name: 'inflector',
 
-  initialize: function () {
+  initialize() {
     const inflector = Ember.Inflector.inflector;
     inflector.uncountable('permissions');
     inflector.irregular('cache', 'caches');

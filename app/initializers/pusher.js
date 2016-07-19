@@ -1,13 +1,11 @@
-var PusherInitializer, initialize;
+let PusherInitializer, initialize;
 
-initialize = function (/* application*/) {
-  return null;
-};
+initialize = () => null;
 
 PusherInitializer = {
   name: 'pusher',
   after: 'ember-data',
-  initialize: initialize
+  initialize
 };
 
 export { initialize };

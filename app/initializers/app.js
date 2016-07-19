@@ -1,6 +1,6 @@
-var Initializer, initialize;
+let Initializer, initialize;
 
-initialize = function (app) {
+initialize = app => {
   if (typeof window !== 'undefined') {
     return window.Travis = app;
   }
@@ -8,7 +8,7 @@ initialize = function (app) {
 
 Initializer = {
   name: 'app',
-  initialize: initialize
+  initialize
 };
 
 export { initialize };
