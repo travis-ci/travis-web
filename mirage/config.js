@@ -1,4 +1,4 @@
-/* global server */
+/* eslint-disable */
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 

@@ -29,7 +29,9 @@ export default JSONAPISerializer.extend({
   turnIntoV3(type, payload) {
     let response;
     if (Ember.isArray(payload)) {
-      let records = payload.map((record) => { return this._turnIntoV3Singular(type, record); });
+      let records = payload.map((record) => {
+        this._turnIntoV3Singular(type, record);
+      });
       let pluralized = Ember.String.pluralize(type);
       response = {};
       response['@type'] = pluralized;
