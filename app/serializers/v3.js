@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import JSONSerializer from 'ember-data/serializers/json';
 
-var traverse = function (object, callback) {
+const traverse = (object, callback) => {
   if (!object) {
     return;
   }
@@ -91,7 +91,7 @@ export default JSONSerializer.extend({
     if (type) {
       items = payload[type];
     } else {
-      items = payload[primaryModelClass.modelName.underscore() + 's'];
+      items = payload[`${primaryModelClass.modelName.underscore()}s`];
     }
 
     documentHash.data = items.map((item) => {
@@ -113,9 +113,9 @@ export default JSONSerializer.extend({
     let store = this.store;
 
     if (data.relationships) {
-      Object.keys(data.relationships).forEach(function (key) {
+      Object.keys(data.relationships).forEach(key => {
         let relationship = data.relationships[key];
-        let process = function (data) {
+        let process = data => {
           if (data['@representation'] !== 'standard') {
             return;
           }
@@ -125,7 +125,7 @@ export default JSONSerializer.extend({
           let normalized = serializer.normalize(modelClass, data);
           included.push(normalized.data);
           if (normalized.included) {
-            normalized.included.forEach(function (item) {
+            normalized.included.forEach(item => {
               included.push(item);
             });
           }

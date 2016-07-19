@@ -24,7 +24,7 @@ export default V2FallbackSerializer.extend({
     return this._super(modelClass, resourceHash);
   },
 
-  normalizeSingleResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
+  normalizeSingleResponse(store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commit) {
       payload.job.commit = payload.commit;
       delete payload.job.commit_id;
@@ -32,9 +32,9 @@ export default V2FallbackSerializer.extend({
     return this._super(...arguments);
   },
 
-  normalizeArrayResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
+  normalizeArrayResponse(store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commits) {
-      payload.jobs.forEach(function (job) {
+      payload.jobs.forEach(job => {
         let commit = payload.commits.findBy('id', job.commit_id);
         if (commit) {
           job.commit = commit;

@@ -1,6 +1,6 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
-var Serializer = V2FallbackSerializer.extend({
+const Serializer = V2FallbackSerializer.extend({
   isNewSerializerAPI: true,
   attrs: {
     _config: { key: 'config' },
@@ -9,11 +9,11 @@ var Serializer = V2FallbackSerializer.extend({
     _duration: { key: 'duration' }
   },
 
-  extractRelationships: function (modelClass, resourceHash) {
+  extractRelationships(modelClass, resourceHash) {
     return this._super(modelClass, resourceHash);
   },
 
-  normalizeSingleResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
+  normalizeSingleResponse(store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commit) {
       payload.build.commit = payload.commit;
       delete payload.build.commit_id;
@@ -21,9 +21,9 @@ var Serializer = V2FallbackSerializer.extend({
     return this._super(...arguments);
   },
 
-  normalizeArrayResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
+  normalizeArrayResponse(store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commits) {
-      payload.builds.forEach(function (build) {
+      payload.builds.forEach(build => {
         let commit = payload.commits.findBy('id', build.commit_id);
         if (commit) {
           build.commit = commit;
@@ -34,7 +34,7 @@ var Serializer = V2FallbackSerializer.extend({
     return this._super(...arguments);
   },
 
-  keyForV2Relationship: function (key/* , typeClass, method*/) {
+  keyForV2Relationship(key/* , typeClass, method*/) {
     if (key === 'jobs') {
       return 'job_ids';
     } else if (key === 'repo') {
@@ -54,7 +54,7 @@ var Serializer = V2FallbackSerializer.extend({
     }
   },
 
-  normalize: function (modelClass, resourceHash) {
+  normalize(modelClass, resourceHash) {
     // TODO: remove this after switching to V3 entirely
     let type = resourceHash['@type'];
     let commit = resourceHash.commit;

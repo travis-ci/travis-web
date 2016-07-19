@@ -25,7 +25,7 @@ export default V3Serializer.extend({
             data = this.extractRelationship(relationshipMeta.type, relationshipHash);
           } else if (relationshipMeta.kind === 'hasMany') {
             data = relationshipHash.map((item) => {
-              return this.extractRelationship(relationshipMeta.type, item);
+              this.extractRelationship(relationshipMeta.type, item);
             });
           }
           relationship = { data };
@@ -44,10 +44,10 @@ export default V3Serializer.extend({
     if (resourceHash['@type']) {
       return this._super(...arguments);
     } else {
-      var modelKey = modelClass.modelName;
-      var attributes = resourceHash[modelKey];
+      const modelKey = modelClass.modelName;
+      const attributes = resourceHash[modelKey];
       if (attributes) {
-        for (var key in attributes) {
+        for (const key in attributes) {
           resourceHash[key] = attributes[key];
         }
 
@@ -62,10 +62,10 @@ export default V3Serializer.extend({
       let store = this.store;
 
       if (data.relationships) {
-        Object.keys(data.relationships).forEach(function (key) {
+        Object.keys(data.relationships).forEach(key => {
           let relationship = data.relationships[key];
-          let process = function (data) {
-            let withOnlyIdAndType = Object.keys(data).sort() + '' !== 'id,type';
+          let process = data => {
+            let withOnlyIdAndType = `${Object.keys(data).sort()}` !== 'id,type';
             let branchWithHref = data['@href'] && data.type === 'branch';
             if (withOnlyIdAndType || branchWithHref) {
               // no need to add records if they have only id and type
@@ -75,7 +75,7 @@ export default V3Serializer.extend({
               let normalized = serializer.normalize(modelClass, data);
               included.push(normalized.data);
               if (normalized.included) {
-                normalized.included.forEach(function (item) {
+                normalized.included.forEach(item => {
                   included.push(item);
                 });
               }
@@ -95,6 +95,6 @@ export default V3Serializer.extend({
   },
 
   keyForV2Relationship(key/* , typeClass, method*/) {
-    return key.underscore() + '_id';
+    return `${key.underscore()}_id`;
   }
 });
