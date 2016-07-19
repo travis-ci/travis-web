@@ -14,7 +14,7 @@ export default Ember.Mixin.create({
   cancelling: false,
 
   userHasPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
-    var repo, user;
+    let repo, user;
     repo = this.get('repo');
     user = this.get('user');
     if (user && repo) {
@@ -45,7 +45,7 @@ export default Ember.Mixin.create({
   },
 
   actions: {
-    restart: function () {
+    restart() {
       if (this.get('restarting')) {
         return;
       }
@@ -63,7 +63,7 @@ export default Ember.Mixin.create({
       });
     },
 
-    cancel: function () {
+    cancel() {
       if (this.get('cancelling')) {
         return;
       }

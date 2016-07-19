@@ -26,23 +26,20 @@ export default Ember.Mixin.create({
   },
 
   pollModel(property) {
-    var model = this.get(property),
-      currentPollModels = this.get('currentPollModels');
+    const model = this.get(property), currentPollModels = this.get('currentPollModels');
 
     if (currentPollModels[property]) {
       this.get('polling').stopPolling(currentPollModels[property]);
     }
     currentPollModels[property] = model;
 
-    var addToPolling = () => {
-      return this.get('polling').startPolling(model);
+    const addToPolling = () => {
+      this.get('polling').startPolling(model);
     };
 
     if (model) {
       if (model.then) {
-        return model.then(function (resolved) {
-          return addToPolling(resolved);
-        });
+        return model.then(resolved => addToPolling(resolved));
       } else {
         return addToPolling(model);
       }
@@ -50,14 +47,14 @@ export default Ember.Mixin.create({
   },
 
   stopPollingModel(property) {
-    var model = this.get(property);
+    const model = this.get(property);
     if (model) {
       return this.get('polling').stopPolling(model);
     }
   },
 
   startPolling() {
-    var pollModels;
+    let pollModels;
     pollModels = this.get('pollModels');
     if (pollModels) {
       if (!Ember.isArray(pollModels)) {
@@ -74,7 +71,7 @@ export default Ember.Mixin.create({
   },
 
   stopPolling() {
-    var pollModels = this.get('pollModels');
+    let pollModels = this.get('pollModels');
 
     if (pollModels) {
       if (!Ember.isArray(pollModels)) {
