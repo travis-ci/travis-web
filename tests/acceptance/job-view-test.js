@@ -47,13 +47,7 @@ test('visiting build matrix', function(assert) {
   firstJob.save();
   commit.save();
 
-  let secondJob = server.create('job', {number: '1234.2', repository_id: repo.id, state: 'passed', build_id: build.id, config: {env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2}, commit, build});
-  commit.job = secondJob;
-
-  secondJob.save();
-  commit.save();
-
-  // Create allowed failure
+  server.create('job', {number: '1234.2', repository_id: repo.id, state: 'passed', build_id: build.id, config: {env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2}, commit, build});
   server.create('job', {allow_failure: true, number: '1234.999', repository_id: repo.id, state: 'failed', build_id: build.id, commit, build});
 
   visit(`/travis-ci/travis-web/builds/${build.id}`);
