@@ -26,7 +26,6 @@ export default Ember.Component.extend({
 
   activate: task(function * () {
     const apiEndpoint = config.apiEndpoint;
-    const repo = this.get('repo');
     const repoId = this.get('repo.id');
 
     try {
@@ -38,15 +37,7 @@ export default Ember.Component.extend({
       });
 
       if (response.active) {
-        const pusher = this.get('pusher');
-
-        let channel = `repo-${repoId}`;
-
-        if (repo.get('private') || this.get('config').enterprise) {
-          channel = `private-${channel}`;
-        }
-
-        pusher.subscribe(`repo-${repoId}`);
+        this.get('pusher').subscribe(`repo-${repoId}`);
 
         this.get('repo').set('active', true);
         this.get('flashes').success('Repository has been successfully activated.');
