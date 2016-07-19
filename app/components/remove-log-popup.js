@@ -12,7 +12,7 @@ export default Ember.Component.extend({
     },
 
     removeLog() {
-      var job = this.get('job');
+      const job = this.get('job');
       Ember.$('.popup').removeClass('display');
 
       return job.removeLog().then(function () {

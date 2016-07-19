@@ -11,15 +11,15 @@ export default Ember.Component.extend({
 
   intervalText: Ember.computed('cron.created_at', function () {
     function timeOfDay(creationTime) {
-      var hours = creationTime.getHours();
-      var ampm = hours >= 12 ? 'pm' : 'am';
+      let hours = creationTime.getHours();
+      const ampm = hours >= 12 ? 'pm' : 'am';
       hours = hours % 12;
       hours = hours !== 0 ? hours : 12;
-      return hours + ' ' + ampm;
+      return `${hours} ${ampm}`;
     }
 
     function dayOfWeek(creationTime) {
-      var weekday = new Array(7);
+      const weekday = new Array(7);
       weekday[0] = 'Sunday';
       weekday[1] = 'Monday';
       weekday[2] = 'Tuesday';
@@ -31,8 +31,8 @@ export default Ember.Component.extend({
     }
 
     function dayOfMonth(creationTime) {
-      var post = 'th';
-      var day = creationTime.getDate();
+      let post = 'th';
+      const day = creationTime.getDate();
       if (day === 1) {
         post = 'st';
       } else if (day === 2) {
@@ -43,20 +43,20 @@ export default Ember.Component.extend({
       return day + post;
     }
 
-    var interval = this.get('cron.interval');
-    var creationTime = new Date(this.get('cron.created_at'));
-    var text = '';
-    var time = timeOfDay(creationTime);
+    const interval = this.get('cron.interval');
+    const creationTime = new Date(this.get('cron.created_at'));
+    let text = '';
+    const time = timeOfDay(creationTime);
 
     switch (interval) {
       case 'monthly':
-        text = 'Enqueues the ' + dayOfMonth(creationTime) + ' of every month after ' + time;
+        text = `Enqueues the ${dayOfMonth(creationTime)} of every month after ${time}`;
         break;
       case 'weekly':
-        text = 'Enqueues each ' + dayOfWeek(creationTime) + ' after ' + time;
+        text = `Enqueues each ${dayOfWeek(creationTime)} after ${time}`;
         break;
       case 'daily':
-        text = 'Enqueues each day after ' + time;
+        text = `Enqueues each day after ${time}`;
         break;
     }
     return text;

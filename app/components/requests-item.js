@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   tagName: 'li',
 
   isGHPages: Ember.computed('request.message', function () {
-    var message = this.get('request.message');
+    const message = this.get('request.message');
     if (message === 'github pages branch') {
       return true;
     } else {
@@ -40,7 +40,7 @@ export default Ember.Component.extend({
   }),
 
   message: Ember.computed('request.message', function () {
-    var message;
+    let message;
     message = this.get('request.message');
     if (config.pro && message === 'private repository') {
       return '';

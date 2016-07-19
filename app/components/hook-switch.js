@@ -16,9 +16,9 @@ export default Ember.Component.extend({
       repoId = hook.get('id');
 
     return hook.toggle().then(() => {
-      let channel = 'repo-' + repoId;
+      let channel = `repo-${repoId}`;
       if (hook.get('private') || this.get('config').enterprise) {
-        channel = 'private-' + channel;
+        channel = `private-${channel}`;
       }
       pusher.subscribe(channel);
     }, () => {

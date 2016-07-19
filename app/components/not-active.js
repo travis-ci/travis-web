@@ -46,7 +46,7 @@ export default Ember.Component.extend({
           channel = `private-${channel}`;
         }
 
-        pusher.subscribe(`repo-${repoId}`);
+        pusher.subscribe(channel);
 
         this.get('repo').set('active', true);
         this.get('flashes').success('Repository has been successfully activated.');

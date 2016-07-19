@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   }),
 
   classRunning: Ember.computed('tab', function () {
-    var classes;
+    let classes;
     classes = [];
     if (this.get('tab') === 'running') {
       classes.push('active');
@@ -26,7 +26,7 @@ export default Ember.Component.extend({
   }),
 
   classOwned: Ember.computed('tab', 'currentUser', function () {
-    var classes;
+    let classes;
     classes = [];
     if (this.get('tab') === 'owned') {
       classes.push('active');

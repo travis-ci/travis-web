@@ -21,7 +21,7 @@ export default Ember.Component.extend({
     const branch = this.get('selectedBranch') || this.get('branches.firstObject');
 
     const existingCrons = yield store.filter('cron', { repository_id: repoId }, (c) => {
-      return c.get('branch.repoId') === repoId && c.get('branch.name') === branch.get('name');
+      c.get('branch.repoId') === repoId && c.get('branch.name') === branch.get('name');
     });
 
     if (existingCrons.get('firstObject')) {
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
     }
 
     const cron = store.createRecord('cron', {
-      branch: branch,
+      branch,
       interval: this.get('selectedInterval') || 'monthly',
       disable_by_build: this.get('selectedOption') || false
     });

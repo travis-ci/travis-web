@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   attributeBindings: ['label:aria-label', 'label:title'],
 
   label: Ember.computed('status', function () {
-    return 'Job ' + this.get('status');
+    return `Job ${this.get('status')}`;
   }),
 
   hasPassed: Ember.computed('status', function () {

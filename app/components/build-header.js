@@ -14,7 +14,7 @@ export default Ember.Component.extend({
     } else {
       let ids = [];
       let jobs = this.get('item.jobs') || [];
-      jobs.forEach(function (item) { ids.push(item.id); });
+      jobs.forEach(item => { ids.push(item.id); });
       return ids.join(' ');
     }
   }),

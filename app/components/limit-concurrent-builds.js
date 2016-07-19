@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   classNames: ['limit-concurrent-builds'],
 
   description: Ember.computed('enabled', function () {
-    var description;
+    let description;
     description = 'Limit concurrent jobs';
     if (this.get('enabled')) {
       description += '  ';
@@ -14,13 +14,13 @@ export default Ember.Component.extend({
   }),
 
   limitChanged(value) {
-    var limit, repo, savingFinished;
+    let limit, repo, savingFinished;
     repo = this.get('repo');
     limit = parseInt(value);
     if (limit) {
       this.set('isSaving', true);
       savingFinished = () => {
-        return this.set('isSaving', false);
+        this.set('isSaving', false);
       };
       return repo.saveSettings({
         maximum_number_of_builds: limit

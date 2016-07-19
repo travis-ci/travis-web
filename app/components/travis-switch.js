@@ -10,7 +10,7 @@ export default Ember.Component.extend({
   }),
 
   click() {
-    var target;
+    let target;
     target = this.get('target');
     if (this.get('toggleAutomatically') !== 'false') {
       if (target) {
