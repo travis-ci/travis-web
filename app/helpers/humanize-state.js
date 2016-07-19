@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
-export default Ember.Helper.helper(function (params) {
-  var state = params[0];
+export default Ember.Helper.helper(params => {
+  const state = params[0];
   if (state === 'received') {
     return 'booting';
   } else {
