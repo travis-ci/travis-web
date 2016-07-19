@@ -2,10 +2,10 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 
 export default Ember.HistoryLocation.extend({
-  init: function () {
+  init() {
     this._super(...arguments);
 
-    var auth = this.get('auth');
+    const auth = this.get('auth');
     if (auth) {
       // location's getURL is first called before we even
       // get to routes, so autoSignIn won't be called in
@@ -20,8 +20,8 @@ export default Ember.HistoryLocation.extend({
     return Ember.getOwner(this).lookup('service:auth');
   }),
 
-  getURL: function () {
-    var url;
+  getURL() {
+    let url;
     url = this._super(...arguments);
     if (location.pathname === '/' && !config.enterprise) {
       if (this.get('auth.signedIn')) {
@@ -43,7 +43,7 @@ export default Ember.HistoryLocation.extend({
     return url;
   },
 
-  formatURL: function (logicalPath) {
+  formatURL(logicalPath) {
     let rootRedirects = ['/repositories', '/home', 'home-pro'];
     if (!config.enterprise && rootRedirects.contains(logicalPath)) {
       return '/';
