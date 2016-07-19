@@ -89,13 +89,11 @@ export default Model.extend(DurationCalculations, {
   },
 
   configValues: Ember.computed('config', 'build.rawConfigKeys.length', function () {
-    var config, keys;
+    let config, keys;
     config = this.get('config');
     keys = this.get('build.rawConfigKeys');
     if (config && keys) {
-      return keys.map(function (key) {
-        return config[key];
-      });
+      return keys.map(key => config[key]);
     } else {
       return [];
     }
@@ -108,12 +106,12 @@ export default Model.extend(DurationCalculations, {
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/cancel');
+    return this.get('ajax').post(`/jobs/${this.get('id')}/cancel`);
   },
 
   removeLog() {
-    return this.get('ajax').patch('/jobs/' + (this.get('id')) + '/log').then(() => {
-      return this.reloadLog();
+    return this.get('ajax').patch(`/jobs/${this.get('id')}/log`).then(() => {
+      this.reloadLog();
     });
   },
 
@@ -123,7 +121,7 @@ export default Model.extend(DurationCalculations, {
   },
 
   restart() {
-    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/restart');
+    return this.get('ajax').post(`/jobs/${this.get('id')}/restart`);
   },
 
   appendLog(part) {
@@ -136,7 +134,7 @@ export default Model.extend(DurationCalculations, {
     }
     this.set('subscribed', true);
     if (Travis.pusher) {
-      return Travis.pusher.subscribe('job-' + (this.get('id')));
+      return Travis.pusher.subscribe(`job-${this.get('id')}`);
     }
   },
 
@@ -146,7 +144,7 @@ export default Model.extend(DurationCalculations, {
     }
     this.set('subscribed', false);
     if (Travis.pusher) {
-      return Travis.pusher.unsubscribe('job-' + (this.get('id')));
+      return Travis.pusher.unsubscribe(`job-${this.get('id')}`);
     }
   },
 
@@ -168,7 +166,7 @@ export default Model.extend(DurationCalculations, {
   }),
 
   slug: Ember.computed(function () {
-    return (this.get('repo.slug')) + ' #' + (this.get('number'));
+    return `${this.get('repo.slug')} #${this.get('number')}`;
   }),
 
   isLegacyInfrastructure: Ember.computed('queue', function () {

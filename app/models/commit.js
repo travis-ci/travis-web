@@ -24,7 +24,7 @@ export default Model.extend({
   }),
 
   body: Ember.computed('message', function () {
-    var message;
+    let message;
     message = this.get('message');
     if (message.indexOf('\n') > 0) {
       return message.substr(message.indexOf('\n') + 1).trim();
@@ -46,7 +46,7 @@ export default Model.extend({
   ),
 
   authorAvatarUrlOrGravatar: Ember.computed('authorEmail', 'authorAvatarUrl', function () {
-    var url = this.get('authorAvatarUrl');
+    let url = this.get('authorAvatarUrl');
 
     if (!url) {
       url = gravatarImage(this.get('authorEmail'), 40);
@@ -56,7 +56,7 @@ export default Model.extend({
   }),
 
   committerAvatarUrlOrGravatar: Ember.computed('committerEmail', 'committerAvatarUrl', function () {
-    var url = this.get('committerAvatarUrl');
+    let url = this.get('committerAvatarUrl');
 
     if (!url) {
       url = gravatarImage(this.get('committerEmail'), 40);

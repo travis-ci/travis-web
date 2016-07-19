@@ -8,7 +8,7 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 
 const { service } = Ember.inject;
-var Build;
+let Build;
 
 Build = Model.extend(DurationCalculations, {
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
@@ -79,36 +79,30 @@ Build.reopen({
   }),
 
   requiredJobs: Ember.computed('jobs.@each.allowFailure', function () {
-    return this.get('jobs').filter(function (data) {
-      return !data.get('allowFailure');
-    });
+    return this.get('jobs').filter(data => !data.get('allowFailure'));
   }),
 
   allowedFailureJobs: Ember.computed('jobs.@each.allowFailure', function () {
-    return this.get('jobs').filter(function (data) {
-      return data.get('allowFailure');
-    });
+    return this.get('jobs').filter(data => data.get('allowFailure'));
   }),
 
   rawConfigKeys: Ember.computed('config', 'jobs.@each.config', function () {
-    var keys;
+    let keys;
     keys = [];
-    this.get('jobs').forEach(function (job) {
-      return configKeys(job.get('config')).forEach(function (key) {
-        if (!keys.contains(key)) {
-          return keys.pushObject(key);
-        }
-      });
-    });
+    this.get('jobs').forEach(job => configKeys(job.get('config')).forEach(key => {
+      if (!keys.contains(key)) {
+        return keys.pushObject(key);
+      }
+    }));
     return keys;
   }),
 
   configKeys: Ember.computed('rawConfigKeys.length', function () {
-    var headers, keys;
+    let headers, keys;
     keys = this.get('rawConfigKeys');
     headers = ['Job', 'Duration', 'Finished'];
     // TODO: No need to use $.map over Ember's
-    return Ember.$.map(headers.concat(keys), function (key) {
+    return Ember.$.map(headers.concat(keys), key => {
       if (configKeysMap.hasOwnProperty(key)) {
         return configKeysMap[key];
       } else {
@@ -124,7 +118,7 @@ Build.reopen({
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post('/builds/' + (this.get('id')) + '/cancel');
+    return this.get('ajax').post(`/builds/${this.get('id')}/cancel`);
   },
 
   restart() {

@@ -16,15 +16,15 @@ export default Model.extend({
   }),
 
   slug: Ember.computed('ownerName', 'name', function () {
-    return (this.get('ownerName')) + '/' + (this.get('name'));
+    return `${this.get('ownerName')}/${this.get('name')}`;
   }),
 
   urlGithub: Ember.computed(function () {
-    return config.sourceEndpoint + '/' + (this.get('slug'));
+    return `${config.sourceEndpoint}/${this.get('slug')}`;
   }),
 
   urlGithubAdmin: Ember.computed(function () {
-    return config.sourceEndpoint + '/' + (this.get('slug')) + '/settings/hooks#travis_minibucket';
+    return `${config.sourceEndpoint}/${this.get('slug')}/settings/hooks#travis_minibucket`;
   }),
 
   toggle() {

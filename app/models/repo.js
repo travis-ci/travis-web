@@ -24,35 +24,31 @@ const Repo = Model.extend({
   currentBuildId: Ember.computed.oneWay('currentBuild.id'),
 
   withLastBuild() {
-    return this.filter(function (repo) {
-      return repo.get('lastBuildId');
-    });
+    return this.filter(repo => repo.get('lastBuildId'));
   },
 
-  sshKey: function () {
+  sshKey() {
     this.store.find('ssh_key', this.get('id'));
     return this.store.recordForId('ssh_key', this.get('id'));
   },
 
   envVars: Ember.computed(function () {
-    var id;
+    let id;
     id = this.get('id');
     return this.store.filter('env_var', {
       repository_id: id
-    }, function (v) {
-      return v.get('repo.id') === id;
-    });
+    }, v => v.get('repo.id') === id);
   }),
 
   builds: Ember.computed(function () {
-    var array, builds, id;
+    let array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
       repository_id: id
-    }, function (b) {
+    }, b => {
       let eventTypes = ['push', 'api', 'cron'];
-      return b.get('repo.id') + '' === id + '' && eventTypes.contains(b.get('eventType'));
+      return `${b.get('repo.id')}` === `${id}` && eventTypes.contains(b.get('eventType'));
     });
     array = ExpandableRecordArray.create({
       type: 'build',
@@ -64,14 +60,12 @@ const Repo = Model.extend({
   }),
 
   pullRequests: Ember.computed(function () {
-    var array, builds, id;
+    let array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
       event_type: 'pull_request',
       repository_id: id
-    }, function (b) {
-      return b.get('repo.id') + '' === id + '' && b.get('eventType') === 'pull_request';
-    });
+    }, b => `${b.get('repo.id')}` === `${id}` && b.get('eventType') === 'pull_request');
     array = ExpandableRecordArray.create({
       type: 'build',
       content: Ember.A([])
@@ -83,14 +77,12 @@ const Repo = Model.extend({
   }),
 
   crons: Ember.computed(function () {
-    var array, builds, id;
+    let array, builds, id;
     id = this.get('id');
     builds = this.store.filter('build', {
       event_type: 'cron',
       repository_id: id
-    }, function (b) {
-      return b.get('repo.id') + '' === id + '' && b.get('eventType') === 'cron';
-    });
+    }, b => `${b.get('repo.id')}` === `${id}` && b.get('eventType') === 'cron');
     array = ExpandableRecordArray.create({
       type: 'build',
       content: Ember.A([])
@@ -102,21 +94,17 @@ const Repo = Model.extend({
   }),
 
   branches: Ember.computed(function () {
-    var id = this.get('id');
+    const id = this.get('id');
     return this.store.filter('branch', {
       repository_id: id
-    }, function (b) {
-      return b.get('repoId') === id;
-    });
+    }, b => b.get('repoId') === id);
   }),
 
   cronJobs: Ember.computed(function () {
-    var id = this.get('id');
+    const id = this.get('id');
     return this.store.filter('cron', {
       repository_id: id
-    }, function (cron) {
-      return cron.get('branch.repoId') === id;
-    });
+    }, cron => cron.get('branch.repoId') === id);
   }),
 
   owner: Ember.computed('slug', function () {
@@ -129,7 +117,7 @@ const Repo = Model.extend({
 
   stats: Ember.computed('slug', function () {
     if (this.get('slug')) {
-      return this.get('_stats') || Ember.$.get('https://api.github.com/repos/' + this.get('slug'), (data) => {
+      return this.get('_stats') || Ember.$.get(`https://api.github.com/repos/${this.get('slug')}`, (data) => {
         this.set('_stats', data);
         return this.notifyPropertyChange('stats');
       }) && {};
@@ -144,21 +132,19 @@ const Repo = Model.extend({
   },
 
   regenerateKey(options) {
-    return this.get('ajax').ajax('/repos/' + this.get('id') + '/key', 'post', options);
+    return this.get('ajax').ajax(`/repos/${this.get('id')}/key`, 'post', options);
   },
 
   fetchSettings() {
-    return this.get('ajax').ajax('/repos/' + this.get('id') + '/settings', 'get', {
+    return this.get('ajax').ajax(`/repos/${this.get('id')}/settings`, 'get', {
       forceAuth: true
-    }).then(function (data) {
-      return data['settings'];
-    });
+    }).then(data => data['settings']);
   },
 
   saveSettings(settings) {
-    return this.get('ajax').ajax('/repos/' + this.get('id') + '/settings', 'patch', {
+    return this.get('ajax').ajax(`/repos/${this.get('id')}/settings`, 'patch', {
       data: {
-        settings: settings
+        settings
       }
     });
   }
@@ -170,64 +156,52 @@ Repo.reopenClass({
   },
 
   accessibleBy(store, reposIdsOrlogin) {
-    var promise, repos, reposIds;
+    let promise, repos, reposIds;
     reposIds = reposIdsOrlogin;
-    repos = store.filter('repo', function (repo) {
+    repos = store.filter('repo', repo => {
       let repoId = parseInt(repo.get('id'));
       return reposIds.contains(repoId);
     });
-    promise = new Ember.RSVP.Promise(function (resolve, reject) {
-      return store.query('repo', {
-        'repository.active': 'true',
-        sort_by: 'current_build:desc',
-        limit: 30
-      }).then(function () {
-        return resolve(repos);
-      }, function () {
-        return reject();
-      });
-    });
+    promise = new Ember.RSVP.Promise((resolve, reject) => store.query('repo', {
+      'repository.active': 'true',
+      sort_by: 'current_build:desc',
+      limit: 30
+    }).then(() => resolve(repos), () => reject()));
     return promise;
   },
 
   search(store, ajax, query) {
-    var promise, queryString, result;
+    let promise, queryString, result;
     queryString = Ember.$.param({
       search: query,
       orderBy: 'name',
       limit: 5
     });
-    promise = ajax.ajax('/repos?' + queryString, 'get');
+    promise = ajax.ajax(`/repos?${queryString}`, 'get');
     result = Ember.ArrayProxy.create({
       content: []
     });
-    return promise.then(function (data) {
-      let promises = data.repos.map(function (repoData) {
-        return store.findRecord('repo', repoData.id).then(function (record) {
+    return promise.then(data => {
+      let promises = data.repos.map(repoData => {
+        store.findRecord('repo', repoData.id).then(record => {
           result.pushObject(record);
           result.set('isLoaded', true);
           return record;
         });
       });
-      return Ember.RSVP.allSettled(promises).then(function () {
-        return result;
-      });
+      return Ember.RSVP.allSettled(promises).then(() => result);
     });
   },
 
   withLastBuild(store) {
-    var repos;
-    repos = store.filter('repo', {}, function (build) {
-      return build.get('lastBuildId');
-    });
-    repos.then(function () {
-      return repos.set('isLoaded', true);
-    });
+    let repos;
+    repos = store.filter('repo', {}, build => build.get('lastBuildId'));
+    repos.then(() => repos.set('isLoaded', true));
     return repos;
   },
 
   fetchBySlug(store, slug) {
-    var adapter, modelClass, promise, repos;
+    let adapter, modelClass, promise, repos;
     repos = store.peekAll('repo').filterBy('slug', slug);
     if (repos.get('length') > 0) {
       return repos.get('firstObject');
@@ -235,8 +209,8 @@ Repo.reopenClass({
       promise = null;
       adapter = store.adapterFor('repo');
       modelClass = store.modelFor('repo');
-      promise = adapter.findRecord(store, modelClass, slug).then(function (payload) {
-        var i, len, record, ref, repo, result, serializer;
+      promise = adapter.findRecord(store, modelClass, slug).then(payload => {
+        let i, len, record, ref, repo, result, serializer;
         serializer = store.serializerFor('repo');
         modelClass = store.modelFor('repo');
         result = serializer.normalizeResponse(store, modelClass, payload, null, 'findRecord');
@@ -252,8 +226,8 @@ Repo.reopenClass({
         }
         return repo;
       });
-      return promise['catch'](function () {
-        var error;
+      return promise['catch'](() => {
+        let error;
         error = new Error('repo not found');
         error.slug = slug;
         throw error;
