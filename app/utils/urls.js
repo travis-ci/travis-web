@@ -42,14 +42,11 @@ statusImage = function (slug, branch) {
     prefix = config.apiEndpoint;
   }
 
-  let branchParam = branch ? `?branch=${encodeURIComponent(branch)}` : '';
-
   if (config.pro) {
     let token = Travis.__container__.lookup('controller:currentUser').get('model.token');
-    let tokenParam = `?token=${token}`;
-    return `${prefix}/${slug}.svg${tokenParam}${branchParam}`;
+    return `${prefix}/${slug}.svg?token=${token}${branch ? '&branch=' + branch : ''}`;
   } else {
-    return `${prefix}/${slug}.svg${branchParam}`;
+    return `${prefix}/${slug}.svg${branch ? '?branch=' + (encodeURIComponent(branch)) : ''}`;
   }
 };
 
