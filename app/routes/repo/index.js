@@ -43,6 +43,7 @@ export default TravisRoute.extend({
       this.render('repo/no-build');
     } else {
       this.render('build');
+      this.render('job-log', { into: 'build', controller: 'job' })
     }
   }
 });

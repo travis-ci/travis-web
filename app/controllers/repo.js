@@ -137,6 +137,9 @@ export default Ember.Controller.extend({
     if(currentBuild) {
       eventually(currentBuild, (build) => {
         this.set('build', build);
+        if(build.get('jobs.length') === 1) {
+          this.set('job', build.get('jobs.firstObject'));
+        }
       });
     }
   },
