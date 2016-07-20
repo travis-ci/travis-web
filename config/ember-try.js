@@ -19,7 +19,10 @@ module.exports = {
     {
       name: "canary",
       dependencies: {
-        "ember": "canary"
+        "ember": "backspace/ember#guard-emberView"
+      },
+      resolutions: {
+        "ember": "guard-emberView"
       }
     }
   ]
