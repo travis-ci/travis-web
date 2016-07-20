@@ -46,8 +46,8 @@ statusImage = function (slug, branch) {
 
   if (config.pro) {
     let token = Travis.__container__.lookup('controller:currentUser').get('model.token');
-    let tokenParam = `&token=${token}`;
-    return `${prefix}/${slug}.svg${branchParam}${tokenParam}`;
+    let tokenParam = `?token=${token}`;
+    return `${prefix}/${slug}.svg${tokenParam}${branchParam}`;
   } else {
     return `${prefix}/${slug}.svg${branchParam}`;
   }
