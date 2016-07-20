@@ -1,3 +1,4 @@
+/* global Travis */
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
@@ -63,7 +64,15 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     }
   },
 
+  shortcuts: {
+    'up, down': 'disableTailing'
+  },
+
   actions: {
+    disableTailing() {
+      Travis.tailing.stop();
+    },
+
     redirectToGettingStarted() {
       // do nothing, we handle it only in index path
     },

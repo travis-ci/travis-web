@@ -19,6 +19,7 @@
     "lodash": "~4.11.2",
     "Faker": "~3.1.0",
     "ceibo": "2.0.0",
-    "raven-js": "~2.1"
+    "raven-js": "~2.1",
+    "ember-shortcuts": "~0.0.9"
   }
 }
