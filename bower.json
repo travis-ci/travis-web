@@ -1,7 +1,7 @@
 {
   "name": "travis",
   "dependencies": {
-    "ember": "components/ember#1c8244bdffc9fea65b2f6cc01168b0a69ce62e62",
+    "ember": "components/ember#19d69b45a106d6e555c9f75db6354495635b34bf",
     "ember-cli-shims": "0.1.1",
     "ember-cli-test-loader": "0.2.2",
     "ember-load-initializers": "0.5.1",
@@ -22,6 +22,6 @@
     "raven-js": "~2.1"
   },
   "resolutions": {
-    "ember": "1c8244bdffc9fea65b2f6cc01168b0a69ce62e62"
+    "ember": "19d69b45a106d6e555c9f75db6354495635b34bf"
   }
 }
