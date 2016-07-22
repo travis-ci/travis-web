@@ -8,10 +8,6 @@ import initHsBeacon from 'travis/utils/init-hs-beacon';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
-Ember.LinkComponent.reopen({
-  attributeBindings: ['alt']
-});
-
 // This can be set per environment in config/environment.js
 var debuggingEnabled = config.featureFlags['debug-logging'];
 
