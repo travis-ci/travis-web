@@ -37,7 +37,8 @@ export default Model.extend(DurationCalculations, {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
-      ajax: this.get('ajax')
+      ajax: this.get('ajax'),
+      container: Ember.getOwner(this)
     });
   }),
 

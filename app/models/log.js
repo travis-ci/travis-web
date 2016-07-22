@@ -1,4 +1,3 @@
-/* global Log */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
@@ -52,7 +51,11 @@ var Request = Ember.Object.extend({
   }
 });
 
+const { service } = Ember.inject;
+
 var LogModel = Ember.Object.extend({
+  features: service(),
+
   version: 0,
   isLoaded: false,
   length: 0,
@@ -181,7 +184,7 @@ var LogModel = Ember.Object.extend({
   },
 
   debug(message) {
-    if (Log.DEBUG) {
+    if (this.get('features').isEnabled('debug-logging')) {
       // eslint-disable-next-line
       console.log(message);
     }
