@@ -3,9 +3,10 @@ import TravisRoute from 'travis/routes/basic';
 export default TravisRoute.extend({
   renderTemplate() {
     this.render('repo');
-    return this.render('build', {
+    this.render('build', {
       into: 'repo'
     });
+    this.render('job-log', { into: 'build', controller: 'job' });
   },
 
   setupController() {
