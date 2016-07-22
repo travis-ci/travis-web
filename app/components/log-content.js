@@ -73,7 +73,7 @@ export default Ember.Component.extend({
   currentUser: alias('auth.currentUser'),
 
   didInsertElement() {
-    if (this.features.isEnabled('debug-logging')) {
+    if (this.get('features.debugLogging')) {
       //eslint-disable-next-line
       console.log('log view: did insert');
     }
@@ -82,7 +82,7 @@ export default Ember.Component.extend({
   },
 
   willDestroyElement() {
-    if (this.features.isEnabled('debug-logging')) {
+    if (this.get('features.debugLogging')) {
       //eslint-disable-next-line
       console.log('log view: will destroy');
     }
@@ -171,7 +171,7 @@ export default Ember.Component.extend({
   partsDidChange(parts, start, _, added) {
     Ember.run.schedule('afterRender', this, function () {
       var i, j, len, part, ref, ref1, ref2, results;
-      if (this.features.isEnabled('debug-logging')) {
+      if (this.get('features.debugLogging')) {
         //eslint-disable-next-line
         console.log('log view: parts did change');
       }

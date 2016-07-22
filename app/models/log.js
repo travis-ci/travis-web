@@ -184,7 +184,7 @@ var LogModel = Ember.Object.extend({
   },
 
   debug(message) {
-    if (this.get('features').isEnabled('debug-logging')) {
+    if (this.get('features.debugLogging')) {
       // eslint-disable-next-line
       console.log(message);
     }
