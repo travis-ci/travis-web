@@ -28,6 +28,11 @@
 
 .build-commit
   font-size: 16px
+  overflow: hidden
+  position: relative
+  &:after
+    content: ""
+    +fadeOut(right, -90deg, white, 20%)
   @media #{$medium-up}
     flex: 1 1 65%
     padding-left: 2.2rem
@@ -56,6 +61,8 @@
   .status-icon
     margin-left: -1.9rem
     margin-right: 0.7rem
+  @media #{$medium-up}
+    white-space: nowrap
 
 .commit-info
   font-size: 15px
