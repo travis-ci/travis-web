@@ -52,7 +52,6 @@ module.exports = function(defaults) {
   app.import('vendor/log.js');
   app.import('vendor/customerio.js');
   app.import('bower_components/moment/moment.js');
-  app.import('bower_components/ember-shortcuts/ember-shortcuts.js');
 
   return app.toTree();
 };

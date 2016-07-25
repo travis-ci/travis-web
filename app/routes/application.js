@@ -4,9 +4,11 @@ import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import Ember from 'ember';
 
+import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
+
 let { service } = Ember.inject;
 
-export default TravisRoute.extend(BuildFaviconMixin, {
+export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
   needsAuth: false,
 
@@ -64,8 +66,9 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     }
   },
 
-  shortcuts: {
-    'up, down': 'disableTailing'
+  keyboardShortcuts: {
+    'up': 'disableTailing',
+    'down': 'disableTailing'
   },
 
   actions: {
