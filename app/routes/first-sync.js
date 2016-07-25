@@ -29,8 +29,10 @@ export default SimpleLayoutRoute.extend({
             return self.transitionTo('profile');
           }
         }).then(null, function (e) {
-          // eslint-disable-next-line
-          return console.log('There was a problem while redirecting from first sync', e);
+          if (this.get('features.debugLogging')) {
+            // eslint-disable-next-line
+            return console.log('There was a problem while redirecting from first sync', e);
+          }
         });
       }, this.get('config').syncingPageRedirectionTime);
     }

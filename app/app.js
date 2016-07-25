@@ -12,10 +12,20 @@ Ember.LinkComponent.reopen({
   attributeBindings: ['alt']
 });
 
+// This can be set per environment in config/environment.js
+var debuggingEnabled = config.featureFlags['debug-logging'];
+
 var App = Ember.Application.extend(Ember.Evented, {
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
+
+  // Configure global logging based on debug feature flag
+  LOG_TRANSITIONS: debuggingEnabled,
+  LOG_TRANSITIONS_INTERNAL: debuggingEnabled,
+  LOG_ACTIVE_GENERATION: debuggingEnabled,
+  LOG_MODULE_RESOLVER: debuggingEnabled,
+  LOG_VIEW_LOOKUPS: debuggingEnabled,
 
   ready() {
     if (location.hash.slice(0, 2) === '#!') {

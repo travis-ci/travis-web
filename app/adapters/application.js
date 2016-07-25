@@ -44,8 +44,10 @@ export default ActiveModelAdapter.extend({
 
   handleResponse(status, headers, payload) {
     if (status > 299) {
-      // eslint-disable-next-line
-      console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
+      if (this.get('features.debugLogging')) {
+        // eslint-disable-next-line
+        console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(payload)));
+      }
     }
 
     return this._super(...arguments);

@@ -71,6 +71,29 @@ You can also start an interactive test runner for easier development:
 
     ember test --serve
 
+### Feature Flags
+
+`travis-web` is beginning the transition to use feature flags wherever it makes
+sense. To enable/disable/add/remove a feature flag for the application, you can
+edit the `config/environment.js` file. For instance, to enable `some-feature`, you would
+simply add/update the file like so:
+
+```js
+  {
+    featureFlags: {
+      'some-feature': true
+    }
+  }
+```
+
+This uses the awesome [ember-feature-flags](https://github.com/kategengler/ember-feature-flags) addon under the hood, so be sure to read its own
+documentation for more information.
+
+### Debugging
+
+Ember's default logging has been disabled in all environments by default and
+moved to a feature flag. To enable it, simply edit the `debug-logging` feature
+flag as mentioned previously in the `Feature Flags` section.
 
 ### Updating the team page
 
