@@ -7,15 +7,18 @@ export default Ember.Component.extend({
 
   userInitials: Ember.computed('userInitials', function () {
     let name = this.get('name');
-    let arr = name.split(' ');
-    let initials = '';
+    if (name) {
+      let arr = name.split(' ');
+      let initials = '';
 
-    if (arr.length >= 2) {
-      initials = arr[0].split('')[0] + arr[1].split('')[0];
+      if (arr.length >= 2) {
+        initials = arr[0].split('')[0] + arr[1].split('')[0];
+      } else {
+        initials = arr[0].split('')[0];
+      }
+      return initials;
     } else {
-      initials = arr[0].split('')[0];
+      return '';
     }
-    return initials;
   })
-
 });
