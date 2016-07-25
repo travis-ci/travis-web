@@ -134,7 +134,8 @@ Build.reopen({
   formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
-      return moment(finishedAt).format('lll');
+      var m = moment(finishedAt);
+      return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   })
 
