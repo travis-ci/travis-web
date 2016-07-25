@@ -15,6 +15,7 @@ const { service } = Ember.inject;
 
 export default Ember.Service.extend({
   auth: service(),
+  features: service(),
 
   get(url, callback, errorCallback) {
     return this.ajax(url, 'get', {
@@ -70,8 +71,10 @@ export default Ember.Service.extend({
     };
     error = options.error || function () {};
     options.error = (data, status, xhr) => {
-      //eslint-disable-next-line
-      console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(data)));
+      if (Ember.get(this, 'features').get('debugLogging')) {
+        //eslint-disable-next-line
+        console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(data)));
+      }
       return error.call(this, data, status, xhr);
     };
 
@@ -118,8 +121,10 @@ export default Ember.Service.extend({
             try {
               return jQuery.parseJSON(xhr.responseText);
             } catch (error1) {
-              // eslint-disable-next-line
-              return console.log('error while parsing a response', method, options.url, xhr.responseText);
+              if (Ember.get(this, 'features').get('debugLogging')) {
+                // eslint-disable-next-line
+                console.log('error while parsing a response', method, options.url, xhr.responseText);
+              }
             }
           } else {
             return xhr.responseText;

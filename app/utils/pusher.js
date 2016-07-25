@@ -71,8 +71,7 @@ TravisPusher.prototype.unsubscribe = function (channel) {
 };
 
 TravisPusher.prototype.prefix = function (channel) {
-  var prefix;
-  prefix = ENV.pusher.channelPrefix || '';
+  let prefix = ENV.pusher.channelPrefix || '';
   if (channel.indexOf(prefix) !== 0) {
     return '' + prefix + channel;
   } else {
