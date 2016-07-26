@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { languageConfigKeys } from 'travis/utils/keys-map';
+import jobConfigLanguage from 'travis/utils/job-config-language';
 
 export default Ember.Component.extend({
   tagName: 'li',
@@ -7,23 +7,7 @@ export default Ember.Component.extend({
   classNames: ['jobs-item'],
 
   languages: Ember.computed('job.config', function () {
-    var gemfile, key, languageName, output;
-    output = [];
-    let config = this.get('job.config');
-    if (config) {
-      for (key in languageConfigKeys) {
-        languageName = languageConfigKeys[key];
-        let version = config[key];
-        if (version) {
-          output.push(languageName + ': ' + version);
-        }
-      }
-      gemfile = this.get('job.config.gemfile');
-      if (gemfile && this.get('job.config.env')) {
-        output.push('Gemfile: ' + gemfile);
-      }
-    }
-    return output.join(' ');
+    return jobConfigLanguage(this.get('job.config'));
   }),
 
   environment: Ember.computed('job.config.env', 'job.config.gemfile', function () {
