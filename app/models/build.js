@@ -8,30 +8,29 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 
 const { service } = Ember.inject;
-var Build;
 
-Build = Model.extend(DurationCalculations, {
-  branch: belongsTo('branch', { async: false, inverse: 'builds' }),
-  branchName: Ember.computed.alias('branch.name')
-});
-
-Build.reopen({
+export default Model.extend(DurationCalculations, {
   ajax: service(),
+
   state: attr(),
   number: attr('number'),
-  message: attr('string'),
-  _duration: attr('number'),
+  duration: attr('number'),
   _config: attr(),
-  _startedAt: attr(),
-  _finishedAt: attr('string'),
+  startedAt: attr('string'),
+  finishedAt: attr('string'),
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
   eventType: attr('string'),
+
+  branch: belongsTo('branch', { async: false, inverse: 'builds' }),
   repo: belongsTo('repo', { async: true }),
   repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
   commit: belongsTo('commit', { async: false }),
   jobs: hasMany('job', { async: true }),
+
+  branchName: Ember.computed.alias('branch.name'),
+  message: Ember.computed.alias('commit.message'),
 
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
@@ -66,17 +65,19 @@ Build.reopen({
     return waitingStates.contains(state);
   }),
 
-  startedAt: Ember.computed('_startedAt', 'notStarted', function () {
-    if (!this.get('notStarted')) {
-      return this.get('_startedAt');
-    }
-  }),
+  // startedAtTime: Ember.computed('startedAt', 'notStarted', function () {
+  //   if (!this.get('notStarted')) {
+  //     return this.get('startedAt');
+  //   }
+  // }),
 
-  finishedAt: Ember.computed('_finishedAt', 'notStarted', function () {
-    if (!this.get('notStarted')) {
-      return this.get('_finishedAt');
-    }
-  }),
+  // finishedAtTime: Ember.computed('finishedAt', 'notStarted', function () {
+  //   console.log('notStarted ?', this.get('notStarted'));
+  //   console.log('finishedAt in model', this.get('finishedAt'));
+  //   if (!this.get('notStarted')) {
+  //     return this.get('finishedAt');
+  //   }
+  // }),
 
   requiredJobs: Ember.computed('jobs.@each.allowFailure', function () {
     return this.get('jobs').filter(function (data) {
@@ -138,7 +139,4 @@ Build.reopen({
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   })
-
 });
-
-export default Build;

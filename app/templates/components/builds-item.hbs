@@ -9,19 +9,19 @@
         {{/link-to}}
       {{else}}
         {{#link-to "build" build.repo build}}
-          {{build.commit.branch}}
+          {{branch.name}}
         {{/link-to}}
       {{/if}}
     </h2>
     {{#unless build.isPullRequest}}
       <div class="row-message">
-        {{{format-message build.commit.message short="true" repo=build.repo}}}
+        {{{format-message commit.message short="true" repo=build.repo}}}
       </div>
     {{/unless}}
   </div>
   <div class="row-item row-committer">
-    {{user-avatar url=build.commit.authorAvatarUrlOrGravatar name=build.commit.authorName small=true}}
-    <span class="label-align">{{build.commit.authorName}}</span>
+    {{user-avatar url=commit.authorAvatarUrlOrGravatar name=commit.authorName small=true}}
+    <span class="label-align">{{commit.authorName}}</span>
   </div>
 </div>
 
@@ -37,7 +37,7 @@
   <div class="row-item row-commit">
     <a href="{{urlGithubCommit}}" title="See the commit on GitHub">
       <span class="icon-github"></span>
-      <span class="label-align">{{format-sha build.commit.sha}}</span>
+      <span class="label-align">{{format-sha commit.sha}}</span>
     </a>
   </div>
 </div>

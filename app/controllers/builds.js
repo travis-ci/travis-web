@@ -45,7 +45,8 @@ export default Ember.Controller.extend({
     var options;
     options = {
       repository_id: id,
-      after_number: number
+      after_number: number,
+      include: 'branch'
     };
     if (type != null) {
       options.event_type = type.replace(/s$/, '');

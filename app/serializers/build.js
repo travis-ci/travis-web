@@ -2,90 +2,104 @@ import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
 var Serializer = V2FallbackSerializer.extend({
   isNewSerializerAPI: true,
-  attrs: {
-    _config: { key: 'config' },
-    _finishedAt: { key: 'finished_at' },
-    _startedAt: { key: 'started_at' },
-    _duration: { key: 'duration' }
+
+  normalizeQueryResponse(store, primaryModelClass, payload, id, requestType) {
+    let { builds } = payload;
+    let normalizedResponse =  {
+      data: this.serializedRecords(builds),
+      included: this.includedRecords(builds),
+    };
+    console.log('final version', normalizedResponse);
+    return normalizedResponse;
   },
 
-  extractRelationships: function (modelClass, resourceHash) {
-    return this._super(modelClass, resourceHash);
+  serializedRecords(builds) {
+    return builds.map(record => {
+      console.log('finished at in serializer', record.finished_at);
+      let attributes = {
+        duration: record.duration,
+        started_at: record.started_at,
+        number: record.number,
+        branch: record.branch,
+        event_type: record.event_type,
+        finished_at: record.finished_at,
+        state: record.state
+      };
+
+      let serialized = {
+        type: 'build',
+        id: record.id,
+        attributes,
+        relationships: this.relationshipsFor(record)
+      };
+
+      return serialized;
+    });
   },
 
-  normalizeSingleResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
-    if (payload.commit) {
-      payload.build.commit = payload.commit;
-      delete payload.build.commit_id;
-    }
-    return this._super(...arguments);
+  includedRecords(builds) {
+    let included = [];
+    builds.map(record => {
+      let { commit, branch } = record;
+      included.push(this.generateIncludesForCommit(commit));
+      included.push(this.generateIncludesForBranch(branch));
+    });
+
+    return included;
   },
 
-  normalizeArrayResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
-    if (payload.commits) {
-      payload.builds.forEach(function (build) {
-        let commit = payload.commits.findBy('id', build.commit_id);
-        if (commit) {
-          build.commit = commit;
-          return delete build.commit_id;
+  relationshipsFor(build) {
+    return {
+      commit: {
+        data: {
+          type: 'commit',
+          id: build.commit.id
         }
-      });
-    }
-    return this._super(...arguments);
+      },
+      branch: {
+        data: {
+          type: 'branch',
+          id: build.branch['@href']
+        }
+      }
+    };
   },
 
-  keyForV2Relationship: function (key/* , typeClass, method*/) {
-    if (key === 'jobs') {
-      return 'job_ids';
-    } else if (key === 'repo') {
-      return 'repository_id';
-    } else if (key === 'commit') {
-      return key;
-    } else {
-      return this._super(...arguments);
-    }
+  generateIncludesForCommit(commit) {
+    let {
+      committed_at,
+      compare_url,
+      id,
+      message,
+      ref,
+      sha
+    } = commit;
+
+    return {
+      type: 'commit',
+      id: commit.id,
+      attributes: {
+        committed_at,
+        compare_url,
+        id,
+        message,
+        ref,
+        sha
+      }
+    };
   },
 
-  keyForRelationship(key/* , typeClass, method*/) {
-    if (key === 'repo') {
-      return 'repository';
-    } else {
-      return this._super(...arguments);
-    }
-  },
+  generateIncludesForBranch(branch) {
+    let { name } = branch;
+    let id = branch['@href'];
 
-  normalize: function (modelClass, resourceHash) {
-    // TODO: remove this after switching to V3 entirely
-    let type = resourceHash['@type'];
-    let commit = resourceHash.commit;
-    if (!type && commit && commit.hasOwnProperty('branch_is_default')) {
-      let build = resourceHash.build,
-        commit = resourceHash.commit;
-      let branch = {
-        name: commit.branch,
-        default_branch: commit.branch_is_default,
-        '@href': `/repo/${build.repository_id}/branch/${commit.branch}`
-      };
-      resourceHash.build.branch = branch;
-    }
-
-    // fix pusher payload, it doesn't include a branch record:
-    if (!resourceHash['@type'] && resourceHash.build &&
-       resourceHash.repository && resourceHash.repository.default_branch) {
-      let branchName = resourceHash.build.branch,
-        repository = resourceHash.repository,
-        defaultBranchName = repository.default_branch.name;
-
-      resourceHash.build.branch = {
-        name: branchName,
-        default_branch: branchName === defaultBranchName,
-        '@href': `/repo/${repository.id}/branch/${branchName}`
-      };
-
-      repository.default_branch['@href'] = `/repo/${repository.id}/branch/${defaultBranchName}`;
-    }
-
-    return this._super(modelClass, resourceHash);
+    return {
+      type: 'branch',
+      id,
+      attributes: {
+        name
+      }
+    };
   }
 });
 

@@ -47,8 +47,7 @@ const Repo = Model.extend({
   builds: Ember.computed(function () {
     var array, builds, id;
     id = this.get('id');
-    builds = this.store.filter('build', {
-      event_type: ['push', 'api', 'cron'],
+    builds = this.store.query('build', {
       repository_id: id
     }, function (b) {
       let eventTypes = ['push', 'api', 'cron'];

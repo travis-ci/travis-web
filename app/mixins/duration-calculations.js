@@ -3,14 +3,12 @@ import { durationFrom } from 'travis/utils/helpers';
 
 export default Ember.Mixin.create({
   duration: Ember.computed(
-    '_duration',
+    'duration',
     'finishedAt',
     'startedAt',
     'notStarted',
-    '_finishedAt',
-    '_startedAt',
     function () {
-      let duration = this.get('_duration');
+      let duration = this.get('duration');
       if (this.get('notStarted')) {
         return null;
       } else if (duration) {

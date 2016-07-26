@@ -6,7 +6,11 @@ export default Ember.Component.extend({
   classNameBindings: ['build.state'],
   classNames: ['row-li', 'pr-row'],
 
-  urlGithubCommit: Ember.computed('build.commit.sha', function () {
-    return githubCommitUrl(this.get('build.repo.slug'), this.get('build.commit.sha'));
+  commit: Ember.computed.alias('build.commit'),
+  repo: Ember.computed.alias('build.repo'),
+  branch: Ember.computed.alias('build.branch'),
+
+  urlGithubCommit: Ember.computed('commit.sha', 'repo.slug', function () {
+    return githubCommitUrl(this.get('repo.slug'), this.get('commit.sha'));
   })
 });
