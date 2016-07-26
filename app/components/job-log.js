@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  logBinding: 'job.log',
+  log: Ember.computed.alias('job.log'),
   classNames: ['job-log'],
 
   didReceiveAttrs: function (options) {
