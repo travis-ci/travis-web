@@ -33,6 +33,7 @@
     "ember-cli-deprecation-workflow": "0.2.3",
     "ember-cli-document-title": "0.3.1",
     "ember-cli-eslint": "1.7.0",
+    "ember-cli-fastboot": "1.0.0-beta.4",
     "ember-cli-htmlbars": "^1.0.8",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-inject-live-reload": "^1.4.0",
@@ -52,6 +53,7 @@
     "ember-export-application-global": "^1.0.5",
     "ember-feature-flags": "3.0.0",
     "ember-load-initializers": "^0.5.1",
+    "ember-network": "0.3.0",
     "ember-resolver": "^2.0.3",
     "emberx-select": "2.1.2",
     "loader.js": "^4.0.10"
