@@ -67,8 +67,14 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   keyboardShortcuts: {
-    'up': 'disableTailing',
-    'down': 'disableTailing'
+    'up': {
+      action: 'disableTailing',
+      preventDefault: false
+    },
+    'down': {
+      action: 'disableTailing',
+      preventDefault: false
+    }
   },
 
   actions: {
