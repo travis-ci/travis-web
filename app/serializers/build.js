@@ -1,6 +1,6 @@
-import V2FallbackSerializer from 'travis/serializers/v2_fallback';
+import V3Serializer from 'travis/serializers/v3';
 
-var Serializer = V2FallbackSerializer.extend({
+export default V3Serializer.extend({
   isNewSerializerAPI: true,
 
   normalizeQueryResponse(store, primaryModelClass, payload, id, requestType) {
@@ -15,14 +15,12 @@ var Serializer = V2FallbackSerializer.extend({
 
   serializedRecords(builds) {
     return builds.map(record => {
-      console.log('finished at in serializer', record.finished_at);
       let attributes = {
         duration: record.duration,
-        started_at: record.started_at,
+        'started-at': record.started_at,
         number: record.number,
-        branch: record.branch,
-        event_type: record.event_type,
-        finished_at: record.finished_at,
+        'event-type': record.event_type,
+        'finished-at': record.finished_at,
         state: record.state
       };
 
@@ -40,9 +38,10 @@ var Serializer = V2FallbackSerializer.extend({
   includedRecords(builds) {
     let included = [];
     builds.map(record => {
-      let { commit, branch } = record;
+      let { commit, branch, repository } = record;
       included.push(this.generateIncludesForCommit(commit));
       included.push(this.generateIncludesForBranch(branch));
+      included.push(this.generateIncludesForRepository(repository));
     });
 
     return included;
@@ -60,6 +59,12 @@ var Serializer = V2FallbackSerializer.extend({
         data: {
           type: 'branch',
           id: build.branch['@href']
+        }
+      },
+      repo: {
+        data: {
+          type: 'repo',
+          id: build.repository.id
         }
       }
     };
@@ -89,6 +94,19 @@ var Serializer = V2FallbackSerializer.extend({
     };
   },
 
+  generateIncludesForRepository(repository) {
+    let { name, slug } = repository;
+
+    return {
+      type: 'repo',
+      id: repository.id,
+      attributes: {
+        name,
+        slug
+      }
+    };
+  },
+
   generateIncludesForBranch(branch) {
     let { name } = branch;
     let id = branch['@href'];
@@ -100,7 +118,5 @@ var Serializer = V2FallbackSerializer.extend({
         name
       }
     };
-  }
+  },
 });
-
-export default Serializer;
