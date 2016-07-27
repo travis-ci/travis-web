@@ -10,17 +10,17 @@ export default Ember.Component.extend({
   isSaving: false,
 
   didInsertElement() {
-    var id = this.get('repo.id');
-    var model = this.get('store').recordForId('ssh_key', id);
+    let id = this.get('repo.id');
+    let model = this.get('store').recordForId('ssh_key', id);
 
     if (model) {
       this.get('store').unloadRecord(model);
-      var typeMap = this.get('store').typeMapFor(model.constructor);
-      var idToRecord = typeMap.idToRecord;
+      let typeMap = this.get('store').typeMapFor(model.constructor);
+      let idToRecord = typeMap.idToRecord;
       delete idToRecord[id];
     }
 
-    model = this.get('store').createRecord('ssh_key', { id: id });
+    model = this.get('store').createRecord('ssh_key', { id });
 
     return this.set('model', model);
   },
@@ -46,7 +46,7 @@ export default Ember.Component.extend({
   }),
 
   addErrorsFromResponse(errArr) {
-    var error = errArr[0].detail;
+    let error = errArr[0].detail;
 
     if (error.code === 'not_a_private_key') {
       return this.set('valueError', 'This key is not a private key.');
@@ -55,7 +55,7 @@ export default Ember.Component.extend({
     }
   },
 
-  save: task(function * () {
+  save: task(function* () {
     this.set('valueError', false);
 
     if (this.isValid()) {

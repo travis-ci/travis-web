@@ -19,7 +19,7 @@ export default Ember.Component.extend(Polling, {
     return colorForState(this.get('repo.currentBuild.state'));
   }),
 
-  scrollTop: function () {
+  scrollTop() {
     if (window.scrollY > 0) {
       return Ember.$('html, body').animate({
         scrollTop: 0

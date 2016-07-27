@@ -22,7 +22,7 @@ export default Ember.Component.extend({
   }),
 
   getLast5Builds: Ember.computed(function () {
-    var apiEndpoint, branchName, lastBuilds, options, repoId;
+    let apiEndpoint, branchName, lastBuilds, options, repoId;
     lastBuilds = Ember.ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
       isLoading: true,
@@ -37,18 +37,16 @@ export default Ember.Component.extend({
       options = {};
       if (this.get('auth.signedIn')) {
         options.headers = {
-          Authorization: 'token ' + (this.auth.token())
+          Authorization: `token ${this.auth.token()}`
         };
       }
       let path = `${apiEndpoint}/v3/repo/${repoId}/builds`;
       let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
       let url = `${path}${params}`;
 
-      Ember.$.ajax(url, options).then(function (response) {
-        var array, i, ref;
-        array = response.builds.map(function (build) {
-          return Ember.Object.create(build);
-        });
+      Ember.$.ajax(url, options).then(response => {
+        let array, i, ref;
+        array = response.builds.map(build => Ember.Object.create(build));
         // TODO: Clean this up, all we want to do is have 5 elements no matter
         // what. This code doesn't express that very well.
         if (array.length < 5) {

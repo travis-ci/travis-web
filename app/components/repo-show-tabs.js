@@ -30,7 +30,7 @@ export default Ember.Component.extend({
   }),
 
   classBuild: Ember.computed('tab', function () {
-    var classes, tab;
+    let classes, tab;
     tab = this.get('tab');
     classes = [];
     if (tab === 'build') {

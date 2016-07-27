@@ -10,21 +10,20 @@ const { alias } = Ember.computed;
 
 Log.LIMIT = 10000;
 
-Log.Scroll = function (options) {
-  options = options || {};
+Log.Scroll = function (options = {}) {
   this.beforeScroll = options.beforeScroll;
   return this;
 };
 
 Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
-  insert: function () {
+  insert() {
     if (this.numbers) {
       this.tryScroll();
     }
     return true;
   },
-  tryScroll: function () {
-    var ref;
+  tryScroll() {
+    let ref;
     let element = Ember.$('#log p:visible.highlight:first');
     if (element) {
       if (this.beforeScroll) {
@@ -40,13 +39,13 @@ Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
 
 Log.Limit = function (maxLines, limitedLogCallback) {
   this.maxLines = maxLines || 1000;
-  this.limitedLogCallback = limitedLogCallback || (function () {});
+  this.limitedLogCallback = limitedLogCallback || ((() => {}));
   return this;
 };
 
 Log.Limit.prototype = Log.extend(new Log.Listener(), {
   count: 0,
-  insert: function (node) {
+  insert(node) {
     if (node.type === 'paragraph' && !node.hidden) {
       this.count += 1;
       if (this.limited) {
@@ -58,7 +57,7 @@ Log.Limit.prototype = Log.extend(new Log.Listener(), {
 });
 
 Object.defineProperty(Log.Limit.prototype, 'limited', {
-  get: function () {
+  get() {
     return this.count >= this.maxLines;
   }
 });
@@ -90,7 +89,7 @@ export default Ember.Component.extend({
   },
 
   teardownLog(log) {
-    var parts, ref;
+    let parts, ref;
     if (log || (log = this.get('log'))) {
       parts = log.get('parts');
       parts.removeArrayObserver(this, {
@@ -107,7 +106,7 @@ export default Ember.Component.extend({
   },
 
   clearLogElement() {
-    var logElement = this.$('#log');
+    let logElement = this.$('#log');
     if (logElement && logElement[0]) {
       logElement[0].innerHTML = '';
     }
@@ -122,11 +121,11 @@ export default Ember.Component.extend({
       });
       this.scroll = new Log.Scroll({
         beforeScroll: () => {
-          return this.unfoldHighlight();
+          this.unfoldHighlight();
         }
       });
       this.limit = new Log.Limit(Log.LIMIT, () => {
-        return this.set('limited', true);
+        this.set('limited', true);
       });
       this.engine = Log.create({
         listeners: [this.scroll, this.limit]
@@ -156,7 +155,7 @@ export default Ember.Component.extend({
   },
 
   observeParts(log) {
-    var parts;
+    let parts;
     if (log || (log = this.get('log'))) {
       parts = log.get('parts');
       parts.addArrayObserver(this, {
@@ -170,7 +169,7 @@ export default Ember.Component.extend({
 
   partsDidChange(parts, start, _, added) {
     Ember.run.schedule('afterRender', this, function () {
-      var i, j, len, part, ref, ref1, ref2, results;
+      let i, j, len, part, ref, ref1, ref2, results;
       if (this.get('features.debugLogging')) {
         //eslint-disable-next-line
         console.log('log view: parts did change');
@@ -198,7 +197,7 @@ export default Ember.Component.extend({
     if (id) {
       let url = plainTextLogUrl(id);
       if (config.pro) {
-        url += '&access_token=' + (this.get('job.log.token'));
+        url += `&access_token=${this.get('job.log.token')}`;
       }
       return url;
     }
@@ -246,5 +245,5 @@ export default Ember.Component.extend({
   },
 
   // don't remove this, it's needed as an empty willChange callback
-  noop: function () {}
+  noop() {}
 });

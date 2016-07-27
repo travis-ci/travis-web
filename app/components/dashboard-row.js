@@ -28,10 +28,10 @@ export default Ember.Component.extend({
     return this.get('permissions').hasAdminPermission(this.get('repo'));
   }),
 
-  openDropup: function () {
-    var self = this;
+  openDropup() {
+    let self = this;
     this.toggleProperty('dropupIsOpen');
-    Ember.run.later((function () { self.toggleProperty('dropupIsOpen'); }), 2000);
+    Ember.run.later((() => { self.toggleProperty('dropupIsOpen'); }), 2000);
   },
 
   actions: {

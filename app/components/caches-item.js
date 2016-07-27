@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   classNameBindings: ['cache.type'],
   isDeleting: false,
 
-  delete: task(function * () {
+  delete: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {
       const data = {
         branch: this.get('cache.branch')
