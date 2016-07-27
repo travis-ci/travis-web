@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'travis',
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     locationType: 'auto',
     defaultTitle: 'Travis CI',
     EmberENV: {
