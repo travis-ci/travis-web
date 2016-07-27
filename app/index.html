@@ -11,8 +11,8 @@
     {{content-for "head"}}
 
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/travis.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/travis.css">
     <link rel="mask-icon" href="images/favicon.svg" color="black">
 
     {{content-for "head-footer"}}
@@ -32,8 +32,8 @@
     </noscript>
     {{content-for "body"}}
 
-    <script src="assets/vendor.js"></script>
-    <script src="assets/travis.js"></script>
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/travis.js"></script>
 
     {{content-for "body-footer"}}
 
