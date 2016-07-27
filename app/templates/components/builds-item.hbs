@@ -44,9 +44,11 @@
 
 <div class="two-line">
   <div class="row-item row-duration">
-    <div title="{{format-duration build.duration}}">
+    <div title="{{format-duration build.runningTime}}">
       <span class="icon-clock"></span>
-      <time class="label-align" datetime="PT{{build.duration}}S">{{format-duration build.duration}}</time>
+      <time class="label-align" datetime="PT{{build.runningTime}}S">
+        {{format-duration build.runningTime}}
+      </time>
     </div>
   </div>
   <div class="row-item row-calendar">

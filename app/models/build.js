@@ -16,8 +16,8 @@ export default Model.extend(DurationCalculations, {
   number: attr('number'),
   duration: attr('number'),
   _config: attr(),
-  startedAt: attr('string'),
-  finishedAt: attr('string'),
+  startedAt: attr('date'),
+  finishedAt: attr('date'),
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
@@ -64,20 +64,6 @@ export default Model.extend(DurationCalculations, {
     let waitingStates = ['queued', 'created', 'received'];
     return waitingStates.contains(state);
   }),
-
-  // startedAtTime: Ember.computed('startedAt', 'notStarted', function () {
-  //   if (!this.get('notStarted')) {
-  //     return this.get('startedAt');
-  //   }
-  // }),
-
-  // finishedAtTime: Ember.computed('finishedAt', 'notStarted', function () {
-  //   console.log('notStarted ?', this.get('notStarted'));
-  //   console.log('finishedAt in model', this.get('finishedAt'));
-  //   if (!this.get('notStarted')) {
-  //     return this.get('finishedAt');
-  //   }
-  // }),
 
   requiredJobs: Ember.computed('jobs.@each.allowFailure', function () {
     return this.get('jobs').filter(function (data) {
@@ -134,8 +120,9 @@ export default Model.extend(DurationCalculations, {
 
   formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
+    console.log('formattedFinishedAt', finishedAt);
     if (finishedAt) {
-      var m = moment(finishedAt);
+      var m = moment(new Date(finishedAt));
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   })

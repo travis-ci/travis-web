@@ -31,7 +31,8 @@ export default Ember.Component.extend({
     return githubCommit(this.get('repo.slug'), this.get('commit.sha'));
   }),
 
-  elapsedTime: Ember.computed('item.startedAt', 'item.finishedAt', 'item.duration', function () {
+  elapsedTime: Ember.computed('item.startedAt', 'item.finishedAt', 'item.runningTime', function () {
+    console.log(durationFrom(this.get('item.startedAt'), this.get('item.finishedAt')));
     return durationFrom(this.get('item.startedAt'), this.get('item.finishedAt'));
   })
 });

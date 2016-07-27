@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { durationFrom } from 'travis/utils/helpers';
 
 export default Ember.Mixin.create({
-  duration: Ember.computed(
+  runningTime: Ember.computed(
     'duration',
     'finishedAt',
     'startedAt',
@@ -20,7 +20,7 @@ export default Ember.Mixin.create({
   ),
 
   updateTimes() {
-    this.notifyPropertyChange('duration');
+    this.notifyPropertyChange('runningTime');
     return this.notifyPropertyChange('finishedAt');
   }
 });

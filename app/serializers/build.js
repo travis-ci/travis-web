@@ -15,6 +15,7 @@ export default V3Serializer.extend({
 
   serializedRecords(builds) {
     return builds.map(record => {
+      console.log('finished-at', record.finished_at);
       let attributes = {
         duration: record.duration,
         'started-at': record.started_at,
@@ -76,7 +77,6 @@ export default V3Serializer.extend({
       compare_url,
       id,
       message,
-      ref,
       sha
     } = commit;
 
@@ -84,11 +84,10 @@ export default V3Serializer.extend({
       type: 'commit',
       id: commit.id,
       attributes: {
-        committed_at,
-        compare_url,
+        'committed-at': committed_at,
+        'compare-url': compare_url,
         id,
         message,
-        ref,
         sha
       }
     };
