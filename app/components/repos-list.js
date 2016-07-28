@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var ReposListComponent = Ember.Component.extend({
+let ReposListComponent = Ember.Component.extend({
   tagName: 'ul',
   classNames: ['repos-list']
 });

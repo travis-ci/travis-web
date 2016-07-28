@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   }),
 
   isAnimating: Ember.computed('repo.default_branch.last_build.state', function () {
-    var animationStates, state;
+    let animationStates, state;
     state = this.get('repo.default_branch.last_build.state');
     animationStates = ['received', 'queued', 'started', 'booting'];
     if (animationStates.indexOf(state) !== -1) {

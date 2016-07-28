@@ -29,14 +29,14 @@ export default Ember.Component.extend({
 
       if (this.get('auth.signedIn')) {
         options.headers = {
-          Authorization: 'token ' + (this.auth.token())
+          Authorization: `token ${this.auth.token()}`
         };
       }
 
       let url = `${apiEndpoint}/v3/repo/${repoId}/branches?limit=100`;
-      Ember.$.ajax(url, options).then(function (response) {
+      Ember.$.ajax(url, options).then(response => {
         if (response.branches.length) {
-          array.pushObjects(response.branches.map((branch) => { return branch.name; }));
+          array.pushObjects(response.branches.map((branch) => { branch.name; }));
         } else {
           array.pushObject('master');
         }

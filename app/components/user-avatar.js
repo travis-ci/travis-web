@@ -6,9 +6,9 @@ export default Ember.Component.extend({
   classNameBindings: ['small:avatar--small:avatar'],
 
   userInitials: Ember.computed('userInitials', function () {
-    var name = this.get('name');
-    var arr = name.split(' ');
-    var initials = '';
+    let name = this.get('name');
+    let arr = name.split(' ');
+    let initials = '';
 
     if (arr.length >= 2) {
       initials = arr[0].split('')[0] + arr[1].split('')[0];

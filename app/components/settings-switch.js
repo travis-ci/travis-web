@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   classNames: ['switch'],
   classNameBindings: ['active', 'key'],
 
-  save: task(function * () {
+  save: task(function* () {
     this.toggleProperty('active');
 
     const setting = {};

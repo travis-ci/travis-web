@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     if (env) {
       return env;
     } else if (gemfile) {
-      return 'Gemfile: ' + gemfile;
+      return `Gemfile: ${gemfile}`;
     }
   })
 });
