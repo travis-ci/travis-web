@@ -188,3 +188,313 @@ test('it normalizes the singular response', function () {
   };
   deepEqual(expectedResult, result);
 });
+
+test('it normalizes the plural v3 response', function () {
+  QUnit.dump.maxDepth = 10;
+
+  let payload = {
+    '@type': 'builds',
+    '@href': '/repo/1398458/builds',
+    '@representation': 'standard',
+    '@pagination': {
+      'limit': 25,
+      'offset': 0,
+      'count': 19371,
+      'is_first': true,
+      'is_last': false,
+      'next': {
+        '@href': '/repo/1398458/builds?limit=25&offset=25',
+        'offset': 25,
+        'limit': 25
+      },
+      'prev': null,
+      'first': {
+        '@href': '/repo/1398458/builds',
+        'offset': 0,
+        'limit': 25
+      },
+      'last': {
+        '@href': '/repo/1398458/builds?limit=25&offset=19350',
+        'offset': 19350,
+        'limit': 25
+      }
+    },
+    'builds': [
+      {
+        '@type': 'build',
+        '@href': '/build/148292327',
+        '@representation': 'standard',
+        '@permissions': {
+          'read': true,
+          'cancel': true,
+          'restart': true
+        },
+        'id': 148292327,
+        'number': '15264',
+        'state': 'failed',
+        'duration': 686,
+        'event_type': 'push',
+        'previous_state': 'failed',
+        'started_at': '2016-07-29T12:13:18Z',
+        'finished_at': '2016-07-29T12:18:15Z',
+        'repository': {
+          '@type': 'repository',
+          '@href': '/repo/1398458',
+          '@representation': 'minimal',
+          'id': 1398458,
+          'name': 'travis-rubies',
+          'slug': 'travis-ci/travis-rubies'
+        },
+        'branch': {
+          '@type': 'branch',
+          '@href': '/repo/1398458/branch/build',
+          '@representation': 'minimal',
+          'name': 'build'
+        },
+        'commit': {
+          '@type': 'commit',
+          '@representation': 'minimal',
+          'id': 42097345,
+          'sha': '48f6dd71bdcce16bfac61bbad8ecdb31e5233fd7',
+          'ref': 'refs/heads/build',
+          'message': 'trigger new build for ruby-head-clang (c463366)',
+          'compare_url': 'https://github.com/travis-ci/travis-rubies/compare/e720a5dd5e71...48f6dd71bdcc',
+          'committed_at': '2016-07-29T12:06:04Z'
+        },
+        'jobs': [
+          {
+            '@type': 'job',
+            '@href': '/job/148292328',
+            '@representation': 'minimal',
+            'id': 148292328
+          },
+          {
+            '@type': 'job',
+            '@href': '/job/148292329',
+            '@representation': 'minimal',
+            'id': 148292329
+          },
+          {
+            '@type': 'job',
+            '@href': '/job/148292330',
+            '@representation': 'minimal',
+            'id': 148292330
+          },
+          {
+            '@type': 'job',
+            '@href': '/job/148292331',
+            '@representation': 'minimal',
+            'id': 148292331
+          },
+          {
+            '@type': 'job',
+            '@href': '/job/148292332',
+            '@representation': 'minimal',
+            'id': 148292332
+          }
+        ]
+      },
+      {
+        '@type': 'build',
+        '@href': '/build/148292316',
+        '@representation': 'standard',
+        '@permissions': {
+          'read': true,
+          'cancel': true,
+          'restart': true
+        },
+        'id': 148292316,
+        'number': '15263',
+        'state': 'failed',
+        'duration': 828,
+        'event_type': 'push',
+        'previous_state': 'failed',
+        'started_at': '2016-07-29T12:06:57Z',
+        'finished_at': '2016-07-29T12:12:35Z',
+        'repository': {
+          '@type': 'repository',
+          '@href': '/repo/1398458',
+          '@representation': 'minimal',
+          'id': 1398458,
+          'name': 'travis-rubies',
+          'slug': 'travis-ci/travis-rubies'
+        },
+        'branch': {
+          '@type': 'branch',
+          '@href': '/repo/1398458/branch/build',
+          '@representation': 'minimal',
+          'name': 'build'
+        },
+        'commit': {
+          '@type': 'commit',
+          '@representation': 'minimal',
+          'id': 42097342,
+          'sha': 'e720a5dd5e71d9f6640a6fa256ca534113ae4092',
+          'ref': 'refs/heads/build',
+          'message': 'trigger new build for ruby-head (c463366)',
+          'compare_url': 'https://github.com/travis-ci/travis-rubies/compare/5fc77b27c59a...e720a5dd5e71',
+          'committed_at': '2016-07-29T12:06:02Z'
+        },
+        'jobs': [
+          {
+            '@type': 'job',
+            '@href': '/job/148292317',
+            '@representation': 'minimal',
+            'id': 148292317
+          },
+          {
+            '@type': 'job',
+            '@href': '/job/148292318',
+            '@representation': 'minimal',
+            'id': 148292318
+          },
+          {
+            '@type': 'job',
+            '@href': '/job/148292319',
+            '@representation': 'minimal',
+            'id': 148292319
+          },
+          {
+            '@type': 'job',
+            '@href': '/job/148292320',
+            '@representation': 'minimal',
+            'id': 148292320
+          },
+          {
+            '@type': 'job',
+            '@href': '/job/148292321',
+            '@representation': 'minimal',
+            'id': 148292321
+          }
+        ]
+      }
+    ]
+  };
+
+  let store = this.store();
+  let serializer = store.serializerFor('build');
+  let result = serializer.normalizeResponse(store, store.modelFor('build'), payload, null, 'query');
+
+  let expectedResult = {
+    'data': [
+      {
+        'attributes': {
+          'duration': 686,
+          'event-type': 'push',
+          'finished-at': '2016-07-29T12:18:15Z',
+          'number': '15264',
+          'started-at': '2016-07-29T12:13:18Z',
+          'state': 'failed'
+        },
+        'id': 148292327,
+        'relationships': {
+          'branch': {
+            'data': {
+              'id': '/repo/1398458/branch/build',
+              'type': 'branch'
+            }
+          },
+          'commit': {
+            'data': {
+              'id': 42097345,
+              'type': 'commit'
+            }
+          },
+          'repo': {
+            'data': {
+              'id': 1398458,
+              'type': 'repo'
+            }
+          }
+        },
+        'type': 'build'
+      },
+      {
+        'attributes': {
+          'duration': 828,
+          'event-type': 'push',
+          'finished-at': '2016-07-29T12:12:35Z',
+          'number': '15263',
+          'started-at': '2016-07-29T12:06:57Z',
+          'state': 'failed'
+        },
+        'id': 148292316,
+        'relationships': {
+          'branch': {
+            'data': {
+              'id': '/repo/1398458/branch/build',
+              'type': 'branch'
+            }
+          },
+          'commit': {
+            'data': {
+              'id': 42097342,
+              'type': 'commit'
+            }
+          },
+          'repo': {
+            'data': {
+              'id': 1398458,
+              'type': 'repo'
+            }
+          }
+        },
+        'type': 'build'
+      }
+    ],
+    'included': [
+      {
+        'attributes': {
+          'committed-at': '2016-07-29T12:06:04Z',
+          'compare-url': 'https://github.com/travis-ci/travis-rubies/compare/e720a5dd5e71...48f6dd71bdcc',
+          'message': 'trigger new build for ruby-head-clang (c463366)',
+          'sha': '48f6dd71bdcce16bfac61bbad8ecdb31e5233fd7'
+        },
+        'id': 42097345,
+        'type': 'commit'
+      },
+      {
+        'attributes': {
+          'name': 'build'
+        },
+        'id': '/repo/1398458/branch/build',
+        'type': 'branch'
+      },
+      {
+        'attributes': {
+          'name': 'travis-rubies',
+          'slug': 'travis-ci/travis-rubies'
+        },
+        'id': 1398458,
+        'type': 'repo'
+      },
+      {
+        'attributes': {
+          'committed-at': '2016-07-29T12:06:02Z',
+          'compare-url': 'https://github.com/travis-ci/travis-rubies/compare/5fc77b27c59a...e720a5dd5e71',
+          'message': 'trigger new build for ruby-head (c463366)',
+          'sha': 'e720a5dd5e71d9f6640a6fa256ca534113ae4092'
+        },
+        'id': 42097342,
+        'type': 'commit'
+      },
+      {
+        'attributes': {
+          'name': 'build'
+        },
+        'id': '/repo/1398458/branch/build',
+        'type': 'branch'
+      },
+      {
+        'attributes': {
+          'name': 'travis-rubies',
+          'slug': 'travis-ci/travis-rubies'
+        },
+        'id': 1398458,
+        'type': 'repo'
+      }
+    ]
+  };
+
+  deepEqual(result, expectedResult);
+});

@@ -29,11 +29,23 @@ export default RESTAdapter.extend({
     return hash;
   },
 
+  findRecord(store, type, id, snapshot) {
+    let url = `${this.get('host')}/build/${id}`;
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      Ember.$.ajax(url, this.ajaxOptions()).then(function(data) {
+        Ember.run(null, resolve, data);
+      }, function(jqXHR) {
+        jqXHR.then = null; // tame jQuery's ill mannered promises
+        Ember.run(null, reject, jqXHR);
+      });
+    });
+  },
+
   query(store, type, query, recordArray) {
     let { repository_id } = query;
     let url = `${this.get('host')}/repo/${repository_id}/builds`;
     return new Ember.RSVP.Promise((resolve, reject) => {
-      Ember.$.ajax(url, this.ajaxOptions()).then(function(data) {
+      Ember.$.ajax(url, this.ajaxOptions()).then((data) => {
         console.log('response data', data);
         Ember.run(null, resolve, data);
       }, function(jqXHR) {

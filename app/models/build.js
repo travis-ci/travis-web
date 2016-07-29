@@ -16,8 +16,8 @@ export default Model.extend(DurationCalculations, {
   number: attr('number'),
   duration: attr('number'),
   _config: attr(),
-  startedAt: attr('date'),
-  finishedAt: attr('date'),
+  startedAt: attr(),
+  finishedAt: attr(),
   pullRequest: attr('boolean'),
   pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
@@ -111,11 +111,11 @@ export default Model.extend(DurationCalculations, {
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post('/builds/' + (this.get('id')) + '/cancel');
+    return this.get('ajax').post('/build/' + (this.get('id')) + '/cancel');
   },
 
   restart() {
-    return this.get('ajax').post(`/builds/${this.get('id')}/restart`);
+    return this.get('ajax').post(`/build/${this.get('id')}/restart`);
   },
 
   formattedFinishedAt: Ember.computed('finishedAt', function () {

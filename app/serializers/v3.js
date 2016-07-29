@@ -56,6 +56,7 @@ export default JSONSerializer.extend({
 
   extractAttributes(/* modelClass,resourceHash*/) {
     let attributes = this._super(...arguments);
+
     for (let key in attributes) {
       if (key.startsWith('@')) {
         delete attributes.key;
@@ -105,7 +106,7 @@ export default JSONSerializer.extend({
     return documentHash;
   },
 
-  normalize(/* modelClass, resourceHash*/) {
+  normalize(modelClass, resourceHash) {
     let { data, included } = this._super(...arguments);
     if (!included) {
       included = [];

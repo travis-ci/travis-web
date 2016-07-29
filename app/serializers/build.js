@@ -3,37 +3,73 @@ import V3Serializer from 'travis/serializers/v3';
 export default V3Serializer.extend({
   isNewSerializerAPI: true,
 
+  extractRelationships(modelClass, resourceHash) {
+    let build = resourceHash;
+    console.log('jobs', build.jobs);
+    resourceHash.relationships =  {
+      commit: {
+        data: {
+          type: 'commit',
+          id: build.commit.id
+        }
+      },
+      branch: {
+        data: {
+          type: 'branch',
+          id: build.branch['@href']
+        }
+      },
+      repo: {
+        data: {
+          type: 'repo',
+          id: build.repository.id
+        }
+      },
+      job: {
+        data: build.jobs.map(job => {
+          return {
+            data: {
+              type: 'job',
+              id: job.id
+            }
+          };
+        })
+      }
+    };
+    return this._super(...arguments);
+  },
+
   normalizeQueryResponse(store, primaryModelClass, payload, id, requestType) {
     let { builds } = payload;
     let normalizedResponse =  {
       data: this.serializedRecords(builds),
       included: this.includedRecords(builds),
     };
-    console.log('final version', normalizedResponse);
     return normalizedResponse;
   },
 
   serializedRecords(builds) {
-    return builds.map(record => {
-      console.log('finished-at', record.finished_at);
-      let attributes = {
-        duration: record.duration,
-        'started-at': record.started_at,
-        number: record.number,
-        'event-type': record.event_type,
-        'finished-at': record.finished_at,
-        state: record.state
-      };
+    return builds.map(record => this.serializeRecord(record));
+  },
 
-      let serialized = {
-        type: 'build',
-        id: record.id,
-        attributes,
-        relationships: this.relationshipsFor(record)
-      };
+  serializeRecord(record) {
+    let attributes = {
+      duration: record.duration,
+      'started-at': record.started_at,
+      number: record.number,
+      'event-type': record.event_type,
+      'finished-at': record.finished_at,
+      state: record.state
+    };
 
-      return serialized;
-    });
+    let serialized = {
+      type: 'build',
+      id: record.id,
+      attributes,
+      relationships: this.relationshipsFor(record)
+    };
+
+    return serialized;
   },
 
   includedRecords(builds) {
@@ -75,7 +111,6 @@ export default V3Serializer.extend({
     let {
       committed_at,
       compare_url,
-      id,
       message,
       sha
     } = commit;
@@ -86,7 +121,6 @@ export default V3Serializer.extend({
       attributes: {
         'committed-at': committed_at,
         'compare-url': compare_url,
-        id,
         message,
         sha
       }
