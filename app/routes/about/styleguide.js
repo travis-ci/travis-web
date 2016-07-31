@@ -1,5 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
-  needsAuth: false  
+  needsAuth: true,
+
 });

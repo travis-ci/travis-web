@@ -71,7 +71,10 @@ Router.map(function () {
   this.route('home');
   this.route('home-pro', { path: '/home-pro' });
   this.route('plans', { path: '/plans' });
-  this.route('team', { path: '/about' });
+  this.route('about', { path: '/about' }, function () {
+    this.route('index', { path: '/' });
+    this.route('styleguide', { path: '/styleguide' });
+  });
   this.route('logo', { path: '/logo' });
   this.route('profile', { path: '/profile', resetNamespace: true }, function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
