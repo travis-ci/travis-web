@@ -10,22 +10,7 @@ export default TravisRoute.extend({
   },
 
   model() {
-    var apiEndpoint;
-    apiEndpoint = config.apiEndpoint;
-    let queryParams = '?repository.active=true&include=repository.default_branch,build.commit';
-    let url = `${apiEndpoint}/v3/repos${queryParams}`;
-    return Ember.$.ajax(url, {
-      headers: {
-        Authorization: 'token ' + this.auth.token()
-      }
-    }).then(function (response) {
-      return response.repositories.filter(function (repo) {
-        if (repo) {
-          return repo.current_build;
-        }
-      }).map(function (repo) {
-        return Ember.Object.create(repo);
-      });
-    });
+    let repos = this.store.query('repo', {active: true});
+    return repos;
   }
 });
