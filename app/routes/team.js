@@ -247,6 +247,13 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'usa',
         image: 'anna'
+      }, {
+        name: 'Lena Reinhard',
+        title: 'Team Lead',
+        handle: 'lrnrd',
+        nationality: 'germany',
+        country: 'germany',
+        image: 'lena'
       }
     ];
   }
