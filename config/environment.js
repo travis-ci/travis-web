@@ -31,6 +31,11 @@ module.exports = function (environment) {
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
 
+    featureFlags: {
+      'debug-logging': false,
+      'dashboard': true
+    },
+
     heap: {
       projectId: '1049054202'
     }

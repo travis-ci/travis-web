@@ -15,8 +15,6 @@ export default Ember.Controller.extend({
     return this.get('user.name') || this.get('user.login');
   }),
 
-  isDashboard: false,
-
   defineTowerColor(broadcastArray) {
     if (!broadcastArray) {
       return '';
