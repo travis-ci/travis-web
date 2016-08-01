@@ -23,7 +23,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   activate() {
     var repos;
-    this.get('stylesheetsManager').disable('dashboard');
     if (!this.get('features.proVersion')) {
       repos = this.get('store').peekAll('repo');
       repos.forEach((repo) => {
