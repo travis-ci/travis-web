@@ -1,6 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import dashboardPage from 'travis/tests/pages/dashboard';
+import sidebarPage from 'travis/tests/pages/sidebar';
 
 moduleForAcceptance('Acceptance | home/with repositories', {
   beforeEach() {
@@ -29,11 +29,11 @@ moduleForAcceptance('Acceptance | home/with repositories', {
 });
 
 test('the home page shows the repositories', (assert) => {
-  dashboardPage.visit();
+  sidebarPage.visit();
 
   andThen(() => {
-    assert.equal(dashboardPage.sidebarRepositories().count, 2, 'expected two repositories in the sidebar');
-    assert.equal(dashboardPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
-    assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/living-a-feminist-life');
+    assert.equal(sidebarPage.sidebarRepositories().count, 2, 'expected two repositories in the sidebar');
+    assert.equal(sidebarPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
+    assert.equal(sidebarPage.sidebarRepositories(1).name, 'killjoys/living-a-feminist-life');
   });
 });

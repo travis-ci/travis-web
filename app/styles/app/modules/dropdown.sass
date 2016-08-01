@@ -1,6 +1,7 @@
 .option-button
   position: relative
   width: 17em
+  .is-open &,
   &:hover
     .option-dropdown
       display: block
@@ -28,7 +29,7 @@ $dropdown-button-margin: -9px
   display: flex
   height: $dropdown-button-height
   padding: 0
-  border: 1px solid $pebble-grey
+  border: 1px solid lighten($cement-grey, 20)
   color: $asphalt-grey
   border-radius: 2px
   text-align: center
@@ -42,7 +43,7 @@ $dropdown-button-margin: -9px
     padding: 0 1em
     line-height: 2
     overflow: hidden
-  img
+  .avatar
     max-width: 20px
     max-height: 20px
     margin-right: .5em
@@ -71,7 +72,7 @@ $dropdown-button-margin: -9px
   transform: rotate(90deg)
   background-size: 14px
   @media #{$medium-up}
-    border-bottom: 1px solid $pebble-grey
+    border-bottom: 1px solid lighten($cement-grey, 20)
 
 .option-dropdown
   display: none
@@ -114,91 +115,3 @@ $dropdown-button-margin: -9px
     vertical-align: top
     margin-right: .3em
     border-radius: 50%
-
-.dropup
-  &.is-open
-    .dropup-list
-      display: block
-    .dropup-tofu
-      @extend %icon-line-tofu-teal
-      outline: none
-
-.dropup-tofu
-  @extend %icon-line-tofu
-  background:
-    color: transparent
-    size: 100%
-    repeat: no-repeat
-    position: 0 5px
-  width: 2.5em
-  height: 2.5em
-  border: none
-  text-indent: 999%
-  overflow: hidden
-  white-space: nowrap
-  cursor: pointer
-  display: none
-  @media #{$medium-up}
-    display: inline-block
-  &:hover,
-  &:active
-    @extend %icon-line-tofu-teal
-    outline: none
-
-  &:focus
-    outline: none
-
-.dropup-list
-  list-style: none
-  padding: 0
-  margin: 2em 0 0
-  background-color: white
-  text-align: center
-
-  li
-    display: inline-block
-  a
-    display: inline-block
-    width: 100%
-    padding: 0.5em 1em
-    background-color: white
-    [class^="icon-"]
-      margin-right: .3rem
-    &:hover,
-    &:active
-      background: $oxide-blue
-      color: white
-      .icon-trigger
-        @extend %icon-line-trigger-white
-      .icon-deactivate
-        @extend %icon-line-cross-white
-        border-color: white
-      .icon-settings
-        @extend %icon-line-cog-white
-
-  @media #{$medium-up}
-    position: absolute
-    right: 0
-    bottom: 5em
-    margin: 0
-    background-color: white
-    border: 1px solid $oxide-blue
-    border-radius: 2px
-    display: none
-    z-index: 2
-    text-align: left
-    li
-      display: block
-      &:last-of-type
-        &:after
-          content: ""
-          display: block
-          width: 1.6em
-          height: 1.6em
-          border: 1px solid $oxide-blue
-          background: white
-          transform: rotate(45deg)
-          position: absolute
-          bottom: -0.7em
-          right: 1.7em
-          z-index: -1

@@ -3,26 +3,19 @@
   text-align: center
   height: 0
   li
-    top: 0
     position: relative
   li.notice, li.success, li.error
     opacity: 0
-    max-height: 3.5rem
-    height: 0
-    animation: comeIn 7s 1 ease
+    animation: fadeFlashInOut 7s 1 ease
     z-index: 90
+    height: 2.8rem
 
   .close
     @extend .icon
     position: absolute
     top: 1em
     right: 1em
-    width: 1.1rem
-    height: 1.1rem
-
-  p
-    padding: .4em 0
-    margin: 0
+    cursor: pointer
 
   .success,
   .notice
@@ -37,19 +30,21 @@
     .close
       @extend %icon-line-cross-red
 
-@keyframes comeIn
-  0%
+.flash-message
+  padding: .9em 0
+  margin: 0
+  line-height: 1
+  font-size: 1rem
+    
+@keyframes fadeFlashInOut
+  2%
     opacity: 1
-    height: 0
-    top: -10em
+    transfrom: translateY(-50%)
   5%
-    height: 3.5rem
-    top: 0
-  95%
-    height: 3.5rem
+    transform: translateY(0)
+  98%
+    transform: translateY(0)
     opacity: 1
-  99%
-    height: 3.5em
   100%
-    height: 0
+    transform: translateY(-50%)
     opacity: 0
