@@ -1,22 +1,21 @@
 <div class="inner">
   <div class="dashboard-header">
-    {{orgs-filter orgs=orgs selected=selectedOrg action="selectOrg"}}
+    {{orgs-filter orgs=model.accounts selected=selectedOrg action="selectOrg"}}
     {{sync-button}}
   </div>
 
   <div class="dashboard-repos">
-
-    <section class="dashboard-section dashboard-starred">
+    <!-- <section class="dashboard-section dashboard-starred">
       <h2 class="small-title">Starred repositories</h2>
       <div class="starred-empty">
         <span>You can keep track of your favorite repositories here once you start starring!</span>
       </div>
-    </section>
+    </section> -->
 
     <section class="dashboard-section dashboard-active">
-      <h2 class="small-title">All repositories</h2>
+      <!-- <h2 class="small-title">All repositories</h2> -->
       <ul class="repo-list">
-         {{#each filteredRepositories as |repo|}}
+        {{#each filteredRepos as |repo|}}
           {{dashboard-row repo=repo}}
         {{else}}
           {{no-repos}}
@@ -24,10 +23,10 @@
       </ul>
     </section>
 
-    <section class="dashboard-section dashboard-inactive">
+    <!-- <section class="dashboard-section dashboard-inactive">
       <h2 class="small-title">Inactive repositories</h2>
       <ul class="repo-list">
       </ul>
-    </section>
+    </section> -->
   </div>
 </div>
