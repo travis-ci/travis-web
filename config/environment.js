@@ -33,16 +33,15 @@ module.exports = function (environment) {
     intervals: { updateTimes: 1000 },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
-
     logLimit: 10000,
-
     emojiPrepend: ''
   };
 
   ENV.featureFlags = {
     'debug-logging': false,
     'pro-version': !!process.env.TRAVIS_PRO || false,
-    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
+    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false,
+    'dashboard': true
   };
 
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
@@ -131,6 +130,10 @@ module.exports = function (environment) {
       },
       defaultBreakpoints: ['desktop']
     };
+    ENV.featureFlags = {
+      'debug-logging': false,
+      'dashboard': false
+    }
   }
 
   if (environment === 'production') {

@@ -1,4 +1,4 @@
-<div class="dash-head">
+<!--<div class="dash-head">
     <a href="#" class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo"><span class="icon-star">
       <svg version="1.1" id="icon-star" x="0px" y="0px" viewBox="0 0 15 15" xml:space="preserve" alt="star repository">
       <path id="star" d="M7.159,1.035c0.188-0.38,0.495-0.38,0.683,0l1.596,3.234c0.188,0.38,0.685,0.741,1.105,0.802
@@ -11,102 +11,109 @@
     {{#if features.proVersion}}
       <span class="icon-lock">private repo</span>
     {{/if}}
-  </div>
-  <div class="dash-body">
-    <div class="dash-main">
-      <header class="fade-out dash-header">
-        <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}</h2>
-
-        <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
-      </header>
-
+  </div>-->
+<div class="dash-body">
+  <div class="dash-main">
+    <header class="fade-out dash-header">
+      <h2 class="row-label">{{#link-to "owner" repo.owner title=repo.owner}}{{repo.owner}}{{/link-to}}</h2>
+      <h1 class="row-content">{{#link-to "repo" repo.owner repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
+    </header>
 
   {{#if repo.active}}
-    {{#if repo.currentBuild}}
-      <section class="dash-last">
-        <h3 class="label">Last build</h3>
-        <p class="row-content color">
-          {{status-icon status=repo.currentBuild.state}}
-          {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the default branch"}}
-          <span class="label-align">#{{repo.currentBuild.number}} {{repo.currentBuild.state}}</span>
-          {{/link-to}}
-        </p>
-      </section>
-    {{/if}}
-
-    <section class="dash-default">
+    <section class="dash-default {{repo.defaultBranch.lastBuild.state}} ">
       <h3 class="label">Default branch</h3>
       <p class="row-content color">
-        {{request-icon event=repo.currentBuild.event_type state=repo.currentBuild.state}}
-        {{repo.default_branch.name}}
-        {{#if repo.active}} {{repo.currentBuild.state}}{{/if}}
+        {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
+        {{#if repo.defaultBranch.lastBuild.id}}
+          {{#link-to "build" repo.owner repo.name repo.defaultBranch.lastBuild.id title="Last build on the default branch"}}
+            {{repo.defaultBranch.name}} {{repo.defaultBranch.lastBuild.state}}
+          {{/link-to}}
+        {{else}}
+          <span title="Default branch has never been built">{{repo.defaultBranch.name}}</span>
+        {{/if}}
       </p>
     </section>
 
     {{#if repo.currentBuild}}
-      <section class="dash-commit">
-        <h3 class="label">Commit</h3>
-        <p class="row-content">
-          <span class="icon-github"></span>
-          <a href="{{urlGithubCommit}}" title="See the commit on Github">
-            <span class="label-align">
-              {{format-sha repo.currentBuild.commit.sha}}
-            </span>
-          </a>
-        </p>
-      </section>
-      <section class="dash-finished">
-        <h3 class="label">Finished</h3>
-        <p class="row-content" title="{{repo.currentBuild.finished_at}}">
-          <span class="icon-calendar"></span>
+    <section class="dash-last {{repo.currentBuild.state}}">
+      <h3 class="label">Last build</h3>
+      <p class="row-content color">
+        {{status-icon status=repo.currentBuild.state}}
+        {{#link-to "build" repo.owner repo.name repo.currentBuild.id title="Last build on the repo"}}
+        <span class="label-align">#{{repo.currentBuild.number}} {{repo.currentBuild.state}}</span>
+        {{/link-to}}
+      </p>
+    </section>
+    <section class="dash-commit">
+      <h3 class="label">Commit</h3>
+      <p class="row-content">
+        <span class="icon-github"></span>
+        <a href="{{urlGithubCommit}}" title="See the last commit on Github">
           <span class="label-align">
-            {{#if repo.currentBuild}}
-              {{format-time repo.currentBuild.finished_at}}
-            {{else}}running{{/if}}</span>
-        </p>
-      </section>
-    {{/if}}
-  {{/if}}
+            {{format-sha repo.currentBuild.commit.sha}}
+          </span>
+        </a>
+      </p>
+    </section>
+    <section class="dash-finished">
+      <h3 class="label">Finished</h3>
+      <p class="row-content" title="{{repo.currentBuild.finishedAt}}">
+        <span class="icon-calendar"></span>
+        <span class="label-align">
+          {{#if repo.currentBuild.finishedAt}}
+          {{format-time repo.currentBuild.finishedAt}}
+          {{else}}still running{{/if}}</span>
+      </p>
+    </section>
 
-    {{#if repo.active}}
       {{#if displayMenuTofu}}
-        <div class="dash-menu">
-          <div class="dropup {{if dropupIsOpen "is-open"}}">
-            <button type="button" class="dropup-tofu" {{action "openDropup"}}>open action menu</button>
-            <ul class="dropup-list">
-              <li><a href="#" title="Trigger a new build">
+      <div class="dash-menu">
+        {{#if isTriggering}}
+        {{loading-indicator}}
+        {{else}}
+        <div class="dropup {{if dropupIsOpen "is-open"}}">
+          <button type="button" class="dropup-tofu" {{action "openDropup"}}>open action menu</button>
+          <ul class="dropup-list">
+            <li><a href="#" title="Trigger a build on the default branch" {{action 'triggerBuild'}}>
                 <span class="icon-trigger"></span>
                 <span class="label-align">Trigger a build</span></a></li>
-              {{#if displayActiavteLink}}
-                <li><a href="#" title="Deactivate builds for this repository">
-                  <span class="icon-deactivate"></span>
-                  <span class="label-align">Deactivate repository</span></a></li>
-              {{/if}}
-              <li>
-                {{#link-to 'settings' repo title="Settings for this repository"}}
-                <span class="icon-settings"></span>
-                <span class="label-align">Settings</span>
-                {{/link-to}}</li>
-            </ul>
-          </div>
+            <li>
+              {{#link-to 'settings' repo title="Settings for this repository"}}
+              <span class="icon-settings"></span>
+              <span class="label-align">Settings</span>
+              {{/link-to}}</li>
+          </ul>
         </div>
-      {{/if}}
-    {{else}}
-      <div class="dash-button">
-        {{#if displayActivateLink}}
-          <button type="button" class="activate-repo-button is-active" {{action 'activateRepo'}}>Activate repository</button>
-        {{else}}
-          <p class="activate-repo-button" data-tooltip="You need admin rights to activate a repository">Actiavte repository</p>
         {{/if}}
       </div>
-    {{/if}}
-    </div>
+      {{/if}}
 
-    {{#if repo.active}}
-      <aside class="dash-aside">
-        <ul class="lastbuilds">
-          {{lastbuild-tile repo=repo build=repo.currentBuild}}
-        </ul>
-      </aside>
+    {{else}}
+      <div class="dash-bo-build">
+        <p class="dash-helptext helptext">There is no build on this repo yet</p>
+        {{#if isTriggering}}
+          {{loading-indicator}}
+        {{else}}
+          <button class="button--blue" {{action 'triggerBuild'}} title="Trigger a build on the default branch">Trigger a build</button>  {{/if}}
+      </div>
     {{/if}}
+
+  {{else}}
+    <!--<div class="dash-button">
+        {{#if displayActivateLink}}
+        <button type="button" class="activate-repo-button is-active" {{action 'activateRepo'}}>Activate repository</button>
+        {{else}}
+        <p class="activate-repo-button" data-tooltip="You need admin rights to activate a repository">Actiavte repository</p>
+        {{/if}}
+    </div>-->
+  {{/if}}
   </div>
+
+  <!--<aside class="dash-aside">
+      <ul class="lastbuilds">
+        {{#each repo.lastBuilds as |build|}}
+        {{lastbuild-tile repo=repo build=build}}
+        {{/each}}
+      </ul>
+  </aside>-->
+</div>
