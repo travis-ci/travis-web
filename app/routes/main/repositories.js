@@ -18,5 +18,11 @@ export default MainTabRoute.extend({
     if (Ember.isEmpty(this.store.peekAll('repo'))) {
       return this.controllerFor('repos').possiblyRedirectToGettingStartedPage();
     }
+  },
+
+  redirect() {
+    if (this.get('features.dashboard')) {
+      return this.transitionTo('dashboard');
+    }
   }
 });

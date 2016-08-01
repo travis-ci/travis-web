@@ -1,41 +1,40 @@
 <div class="option-button">
- {{#if orgs.isLoading}}
-    {{loading-indicator}}
-  {{else}}
-    <a href="#" title="" class="option-display" {{action 'toggleOrgFilter'}}>
-      <span class="label-align">
-        {{#if selected }}
-          <img src="{{selected.avatar_url}}" alt="{{org.login}}">
-          {{#if selected.name}}
-            {{selected.name}}
-          {{else}}
-            {{selected.login}}
-          {{/if}}
+  <a href="#" title="Open account filter" class="option-display" {{action 'toggleOrgFilter'}}>
+    <span class="label-align">
+      {{#if selected}}
+        {{user-avatar url=selected.avatarUrl name=selected.name small=true}}
+        {{#if selected.name}}
+          {{selected.name}}
         {{else}}
-          All organizations
+          {{selected.login}}
         {{/if}}
-      </span><span class="option-arrow"></span>
-    </a>
-  {{/if}}
-  <div class="option-dropdown {{if showFilter 'is-open'}}">
-    <div class="option-search">
+      {{else}}
+        All accounts
+      {{/if}}
+    </span><span class="option-arrow"></span>
+  </a>
+  <div class="option-dropdown">
+    <!--<div class="option-search">
       <input type="text">
-    </div>
-    <div class="option-list">
+    </div>-->
+    <ul class="option-list">
       {{#if selected }}
-        <li><a title="" {{action 'select'}}>All organizations</a></li>
+        <li><a title="Select all accounts" {{action 'select'}}>All accounts</a></li>
       {{/if}}
       {{#each orgs as |org|}}
       <li>
-        <a title="" {{action 'select' org}}><img src="{{org.avatar_url}}" alt="">
+        <a title="Select {{org.login}}" {{action 'select' org}}>
+          {{user-avatar url=org.avatarUrl name=org.name small=true}}
+          <span class="label-align">
           {{#if org.name }}
             {{org.name}}
           {{else}}
             {{org.login}}
           {{/if}}
+          </span>
         </a>
       </li>
       {{/each}}
-    </div>
+    </ul>
   </div>
 </div>
