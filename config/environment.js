@@ -35,7 +35,6 @@ module.exports = function (environment) {
       'debug-logging': false,
       'dashboard': true
     },
-
     heap: {
       projectId: '1049054202'
     }
@@ -129,6 +128,11 @@ module.exports = function (environment) {
     };
 
     ENV.skipConfirmations = true;
+
+    ENV.featureFlags = {
+      'debug-logging': false,
+      'dashboard': false
+    }
   }
 
   if (environment === 'production') {

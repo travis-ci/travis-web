@@ -7,6 +7,12 @@ export default TravisRoute.extend({
     }
   },
 
+  beforeModel() {
+    if (!this.get('features.dashboard')) {
+      this.transitionTo('main');
+    }
+  },
+
   model() {
     let repos = this.store.query('repo', { active: true });
     return repos;
