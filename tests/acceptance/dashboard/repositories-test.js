@@ -1,6 +1,5 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import withFeature from 'travis/tests/helpers/with-feature';
 
 moduleForAcceptance('Acceptance | dashboard/repositories', {
   beforeEach() {
@@ -27,6 +26,7 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
 
 test('visiting /dashboard/ with feature flag enabled', function (assert) {
   withFeature('dashboard');
+
   visit('/dashboard/');
 
   andThen(() => {
