@@ -36,7 +36,8 @@ export default Ember.Component.extend({
       let url = `${apiEndpoint}/v3/repo/${repoId}/branches?limit=100`;
       Ember.$.ajax(url, options).then(response => {
         if (response.branches.length) {
-          array.pushObjects(response.branches.map((branch) => { branch.name; }));
+          let branchNames = response.branches.map(branch => branch.name);
+          array.pushObjects(branchNames);
         } else {
           array.pushObject('master');
         }
