@@ -5,16 +5,15 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
+  committer: attr(),
   sha: attr(),
   branch: attr(),
   message: attr(),
   compareUrl: attr(),
-  authorName: attr(),
+  author: attr(),
   authorEmail: attr(),
-  committerName: attr(),
   committerEmail: attr(),
   committedAt: attr(),
-  committerAvatarUrl: attr(),
   authorAvatarUrl: attr(),
 
   build: belongsTo('build'),
@@ -32,6 +31,10 @@ export default Model.extend({
       return '';
     }
   }),
+
+  authorName: Ember.computed.alias('author.name'),
+  committerName: Ember.computed.alias('committer.name'),
+  committerAvatarUrl: Ember.computed.alias('committer.avatar_url'),
 
   authorIsCommitter: Ember.computed(
     'authorName',
@@ -57,6 +60,7 @@ export default Model.extend({
 
   committerAvatarUrlOrGravatar: Ember.computed('committerEmail', 'committerAvatarUrl', function () {
     var url = this.get('committerAvatarUrl');
+    console.log('url', url);
 
     if (!url) {
       url = gravatarImage(this.get('committerEmail'), 40);

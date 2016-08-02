@@ -56,7 +56,8 @@ var App = Ember.Application.extend(Ember.Evented, {
       this.setupBeacon();
       this.identifyHSBeacon(user);
     }
-    return this.subscribePusher(user);
+    // DO NOT COMMIT THIS!!!!!!! Just for debugging without constant WS updates
+    // return this.subscribePusher(user);
   },
 
   destroyBeacon() {

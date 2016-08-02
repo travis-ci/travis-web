@@ -67,11 +67,13 @@ export default JSONSerializer.extend({
   },
 
   normalizeResponse(store, primaryModelClass, payload/* , id, requestType*/) {
+    console.log('calling normalizeResponse in v3 serializer');
     this._fixReferences(payload);
     return this._super(...arguments);
   },
 
   normalizeArrayResponse(store, primaryModelClass, payload/* , id, requestType*/) {
+    console.log('calling normalizeArrayResponse in v3 serializer');
     let documentHash = {
       data: null,
       included: []

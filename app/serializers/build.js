@@ -3,10 +3,14 @@ import V3Serializer from 'travis/serializers/v3';
 export default V3Serializer.extend({
   isNewSerializerAPI: true,
 
+  pushPayload(store, payload) {
+    console.log('payload is serialized???', payload);
+    return this._super(...arguments);
+  },
+
   extractRelationships(modelClass, resourceHash) {
     let build = resourceHash;
-    console.log('jobs', build.jobs);
-    resourceHash.relationships =  {
+    return {
       commit: {
         data: {
           type: 'commit',
@@ -36,7 +40,6 @@ export default V3Serializer.extend({
         })
       }
     };
-    return this._super(...arguments);
   },
 
   normalizeQueryResponse(store, primaryModelClass, payload, id, requestType) {
@@ -45,6 +48,7 @@ export default V3Serializer.extend({
       data: this.serializedRecords(builds),
       included: this.includedRecords(builds),
     };
+    console.log('normalizedResponse', normalizedResponse);
     return normalizedResponse;
   },
 
@@ -55,10 +59,10 @@ export default V3Serializer.extend({
   serializeRecord(record) {
     let attributes = {
       duration: record.duration,
-      'started-at': record.started_at,
+      'startedAt': record.started_at,
       number: record.number,
-      'event-type': record.event_type,
-      'finished-at': record.finished_at,
+      'eventType': record.event_type,
+      'finishedAt': record.finished_at,
       state: record.state
     };
 
@@ -82,6 +86,26 @@ export default V3Serializer.extend({
     });
 
     return included;
+  },
+
+  includedRecord(build) {
+    let included = [];
+    let { commit, branch, repository } = build;
+    included.push(this.generateIncludesForCommit(commit));
+    included.push(this.generateIncludesForBranch(branch));
+    included.push(this.generateIncludesForRepository(repository));
+
+    return included;
+  },
+
+  normalizeSingleResponse(store, primaryModelClass, payload, id, requestType) {
+    console.log('singleResponse payload', payload);
+    let normalizedResponse =  {
+      data: this.serializeRecord(payload),
+      included: this.includedRecord(payload),
+    };
+    console.log('normalizedResponse', normalizedResponse);
+    return normalizedResponse;
   },
 
   relationshipsFor(build) {
@@ -108,11 +132,14 @@ export default V3Serializer.extend({
   },
 
   generateIncludesForCommit(commit) {
+    console.log('commit attributes', commit);
     let {
       committed_at,
       compare_url,
       message,
-      sha
+      sha,
+      author,
+      committer
     } = commit;
 
     return {
@@ -121,6 +148,8 @@ export default V3Serializer.extend({
       attributes: {
         'committed-at': committed_at,
         'compare-url': compare_url,
+        author,
+        committer,
         message,
         sha
       }

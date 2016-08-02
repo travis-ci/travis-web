@@ -42,11 +42,12 @@ export default RESTAdapter.extend({
   },
 
   query(store, type, query, recordArray) {
+    console.log('query', query);
     let { repository_id } = query;
-    let url = `${this.get('host')}/repo/${repository_id}/builds`;
+    let url = `${this.get('host')}/repo/${repository_id}/builds?event_type=push&include=build.commit`;
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.ajax(url, this.ajaxOptions()).then((data) => {
-        console.log('response data', data);
+        console.log('v3 builds response data', data);
         Ember.run(null, resolve, data);
       }, function(jqXHR) {
         jqXHR.then = null; // tame jQuery's ill mannered promises

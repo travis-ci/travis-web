@@ -45,6 +45,7 @@ const Repo = Model.extend({
   }),
 
   builds: Ember.computed(function () {
+    console.log('this is where we request our builds from');
     var array, builds, id;
     id = this.get('id');
     builds = this.store.query('build', {
@@ -235,6 +236,7 @@ Repo.reopenClass({
       adapter = store.adapterFor('repo');
       modelClass = store.modelFor('repo');
       promise = adapter.findRecord(store, modelClass, slug).then(function (payload) {
+        console.log('repo payload', payload);
         var i, len, record, ref, repo, result, serializer;
         serializer = store.serializerFor('repo');
         modelClass = store.modelFor('repo');

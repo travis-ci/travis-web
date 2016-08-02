@@ -13,14 +13,14 @@ export default Model.extend(DurationCalculations, {
   ajax: service(),
 
   state: attr(),
-  number: attr('number'),
-  duration: attr('number'),
-  _config: attr(),
   startedAt: attr(),
   finishedAt: attr(),
-  pullRequest: attr('boolean'),
-  pullRequestTitle: attr(),
-  pullRequestNumber: attr('number'),
+  number: attr('number'),
+  duration: attr('number'),
+  // _config: attr(),
+  // pullRequest: attr('boolean'),
+  // pullRequestTitle: attr(),
+  // pullRequestNumber: attr('number'),
   eventType: attr('string'),
 
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
@@ -120,7 +120,6 @@ export default Model.extend(DurationCalculations, {
 
   formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
-    console.log('formattedFinishedAt', finishedAt);
     if (finishedAt) {
       var m = moment(new Date(finishedAt));
       return m.isValid() ? m.format('lll') : 'not finished yet';

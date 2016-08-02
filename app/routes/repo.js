@@ -19,6 +19,8 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   setupController(controller, model) {
+    // this fetches data for the sidebar, so we do this in the setupController
+    // hook to fetch data without blocking the UI
     this.controllerFor('repos').activate('owned');
     if (model && !model.get) {
       model = this.get('store').find('repo', model.id);
@@ -27,20 +29,14 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   serialize(repo) {
-    var name, owner, ref, slug;
     // slugs are sometimes unknown ???
-    slug = Ember.getWithDefault(repo, 'slug', 'unknown/unknown');
-    ref = slug.split('/');
-    owner = ref[0];
-    name = ref[1];
-
-    return {
-      owner: owner,
-      name: name
-    };
+    let slug = Ember.getWithDefault(repo, 'slug', 'unknown/unknown');
+    let [ owner, name ] = slug.split('/');
+    return { owner, name };
   },
 
   model(params) {
+    console.log('repo route model');
     var slug;
     slug = params.owner + '/' + params.name;
     return Repo.fetchBySlug(this.get('store'), slug);
