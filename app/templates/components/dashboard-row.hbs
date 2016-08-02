@@ -1,5 +1,5 @@
-<div class="dash-head">
-    <!-- <a href="#" class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo"><span class="icon-star">
+<!--<div class="dash-head">
+    <a href="#" class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo"><span class="icon-star">
       <svg version="1.1" id="icon-star" x="0px" y="0px" viewBox="0 0 15 15" xml:space="preserve" alt="star repository">
       <path id="star" d="M7.159,1.035c0.188-0.38,0.495-0.38,0.683,0l1.596,3.234c0.188,0.38,0.685,0.741,1.105,0.802
 	l3.569,0.519c0.42,0.061,0.515,0.353,0.211,0.649l-2.583,2.517c-0.304,0.296-0.494,0.88-0.422,1.298l0.61,3.555
@@ -7,48 +7,48 @@
 	c-0.375,0.197-0.624,0.017-0.552-0.401l0.61-3.555c0.072-0.418-0.118-1.002-0.422-1.298L0.678,6.24
 	C0.374,5.944,0.469,5.652,0.889,5.591l3.569-0.519c0.42-0.061,0.917-0.422,1.105-0.802L7.159,1.035z"/>
         </svg>
-    </span></a> -->
+    </span></a>
     {{#if features.proVersion}}
       <span class="icon-lock">private repo</span>
     {{/if}}
-  </div>
+  </div>-->
   <div class="dash-body">
     <div class="dash-main">
       <header class="fade-out dash-header">
-        <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}</h2>
+        <h2 class="row-label">{{#link-to "owner" repo.owner title=repo.owner}}{{repo.owner}}{{/link-to}}</h2>
 
-        <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
+        <h1 class="row-content">{{#link-to "repo" repo.owner repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
       </header>
 
-
   {{#if repo.active}}
+    <section class="dash-default">
+      <h3 class="label">Default branch</h3>
+      <p class="row-content color">
+        {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
+        {{#link-to "build" repo.owner repo.name repo.defaultBranch.lastBuild.id title="Last build on the default branch"}}
+        {{repo.defaultBranch.name}}
+        {{#if repo.active}} {{repo.defaultBranch.lastBuild.state}}{{/if}}{{/link-to}}
+      </p>
+    </section>
+
     {{#if repo.currentBuild}}
       <section class="dash-last">
         <h3 class="label">Last build</h3>
         <p class="row-content color">
           {{status-icon status=repo.currentBuild.state}}
-          {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the default branch"}}
+          {{#link-to "build" repo.owner repo.name repo.currentBuild.id title="Last build on the repo"}}
           <span class="label-align">#{{repo.currentBuild.number}} {{repo.currentBuild.state}}</span>
           {{/link-to}}
         </p>
       </section>
     {{/if}}
 
-    <section class="dash-default">
-      <h3 class="label">Default branch</h3>
-      <p class="row-content color">
-        {{request-icon event=repo.currentBuild.event_type state=repo.currentBuild.state}}
-        {{repo.default_branch.name}}
-        {{#if repo.active}} {{repo.currentBuild.state}}{{/if}}
-      </p>
-    </section>
-
     {{#if repo.currentBuild}}
       <section class="dash-commit">
         <h3 class="label">Commit</h3>
         <p class="row-content">
           <span class="icon-github"></span>
-          <a href="{{urlGithubCommit}}" title="See the commit on Github">
+          <a href="{{urlGithubCommit}}" title="See the last commit on Github">
             <span class="label-align">
               {{format-sha repo.currentBuild.commit.sha}}
             </span>
@@ -57,11 +57,11 @@
       </section>
       <section class="dash-finished">
         <h3 class="label">Finished</h3>
-        <p class="row-content" title="{{repo.currentBuild.finished_at}}">
+        <p class="row-content" title="{{repo.currentBuild.finishedAt}}">
           <span class="icon-calendar"></span>
           <span class="label-align">
             {{#if repo.currentBuild}}
-              {{format-time repo.currentBuild.finished_at}}
+              {{format-time repo.currentBuild.finishedAt}}
             {{else}}running{{/if}}</span>
         </p>
       </section>

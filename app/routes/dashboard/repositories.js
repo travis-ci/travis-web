@@ -14,7 +14,8 @@ export default TravisRoute.extend({
   },
 
   model() {
-    let repos = this.store.query('repo', { active: true });
+    const repos = this.store.query('repo', { active: true, withLastBuild: true });
+    
     return repos;
   }
 });
