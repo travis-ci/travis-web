@@ -11,6 +11,7 @@ var launchInCI = function() {
 module.exports = {
   "framework": "qunit",
   "test_page": "tests/index.html?hidepassed",
+  "parallel": 4,
   "launch_in_ci": launchInCI(),
   "launch_in_dev": [
     "PhantomJS"
