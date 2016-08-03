@@ -1,10 +1,8 @@
-/*jshint node:true*/
-/* global require, module */
+/* eslint-env node */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-module.exports = function(defaults) {
-  var fingerprint,
-      assetsHost;
+module.exports = function () {
+  var fingerprint;
 
   if (process.env.DISABLE_FINGERPRINTS) {
     fingerprint = false;
@@ -17,7 +15,8 @@ module.exports = function(defaults) {
     if (process.env.TRAVIS_ENTERPRISE) {
       fingerprint.prepend = '/';
     } else {
-      if (assetsHost = process.env.ASSETS_HOST) {
+      var assetsHost = process.env.ASSETS_HOST;
+      if (assetsHost) {
         if (assetsHost.substr(-1) !== '/') {
           assetsHost = assetsHost + '/';
         }
