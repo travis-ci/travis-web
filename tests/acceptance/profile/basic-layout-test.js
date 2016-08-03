@@ -2,7 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 
-moduleForAcceptance('Acceptance | profile', {
+moduleForAcceptance('Acceptance | profile/basic layout', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
@@ -76,33 +76,5 @@ test('view profile', function (assert) {
     assert.notOk(profilePage.administerableHooks(1).isActive, 'expected inactive hook to appear inactive');
 
     assert.equal(profilePage.unadministerableHooks().count, 1, 'expected one unadministerable hook');
-  });
-});
-
-test('view token', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
-
-  andThen(() => {
-    assert.ok(profilePage.token.isHidden, 'expected token to be hidden by default');
-  });
-
-  profilePage.token.show();
-
-  andThen(function () {
-    assert.equal(profilePage.token.value, 'testUserToken');
-  });
-});
-
-test('updating hooks', function (assert) {
-  profilePage.visit({ username: 'feministkilljoy' });
-
-  profilePage.administerableHooks(0).toggle();
-  profilePage.administerableHooks(1).toggle();
-  profilePage.unadministerableHooks(0).toggle();
-
-  andThen(() => {
-    assert.notOk(server.db.hooks[0].active, 'expected formerly active hook to be inactive');
-    assert.ok(server.db.hooks[1].active, 'expected formerly inactive hook to be active');
-    assert.ok(server.db.hooks[2].active, 'expected unadministerable hook to be unchanged');
   });
 });
