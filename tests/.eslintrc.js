@@ -6,7 +6,8 @@ module.exports = {
   },
   globals: {
     server: true,
-    signInUser: true
+    signInUser: true,
+    withFeature: true
   },
   rules: {
     'max-len': 0
