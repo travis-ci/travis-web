@@ -6,9 +6,11 @@
     {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repo settings"}}<span class="icon-settings"></span>{{/link-to}}
   {{/if}}
 </div>
-<a href={{hook.urlGithub}} rel="nofollow" class="profile-repo">
+
+{{#link-to "repo" hook.ownerName hook.name class="profile-repo"}}
   {{hook.slug}}
-  <span>{{hook.description}}</span></a>
+  <span>{{hook.description}}</span>
+{{/link-to}}
 
 {{#if showError}}
   <div class="hooks-error">
