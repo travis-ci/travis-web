@@ -1,7 +1,7 @@
 {
   "name": "travis",
   "dependencies": {
-    "ember": "2.7.0",
+    "ember": "alpha",
     "ember-cli-shims": "0.1.1",
     "ember-load-initializers": "0.5.1",
     "ember-qunit": "0.4.20",
@@ -20,5 +20,8 @@
     "ceibo": "2.0.0",
     "raven-js": "~2.1",
     "mousetrap": "~1.5.2"
+  },
+  "resolutions": {
+    "ember": "alpha"
   }
 }
