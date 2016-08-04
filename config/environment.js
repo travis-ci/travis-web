@@ -33,11 +33,21 @@ module.exports = function(environment) {
 
     featureFlags: {
       'debug-logging': false
+    },
+
+    heap: {
+      projectId: '1049054202'
     }
   };
 
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
   var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
+
+  if (process.env.TRAVIS_ENTERPRISE || environment !== 'production') {
+    ENV.heap = {
+      development: true
+    }
+  }
 
   if (typeof process !== 'undefined') {
     if (process.env.TRAVIS_PRO && !process.env.TRAVIS_ENTERPRISE) {
