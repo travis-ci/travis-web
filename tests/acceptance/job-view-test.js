@@ -47,7 +47,7 @@ test('visiting job-view', function (assert) {
   andThen(function () {
     assert.ok(jobTabs.configTab.isShowing, 'displays the config');
     assert.ok(jobTabs.logTab.isHidden, 'log is hidden');
-    assert.equal(jobTabs.configTab.contents, '[ { \"language\": \"Hello\" } ]');
+    assert.equal(jobTabs.configTab.contents, '{ \"language\": \"Hello\" }');
   });
 });
 
