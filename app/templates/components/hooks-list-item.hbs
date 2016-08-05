@@ -1,9 +1,13 @@
 <div class="profile-hooks profile-switch">
-  {{hook-switch hook=hook onToggleError="handleToggleError" onToggle="resetErrors"}}
-  {{#if hook.isSaving}}
-    {{loading-indicator inline=true}}
+  {{#if admin}}
+    {{hook-switch hook=hook onToggleError="handleToggleError" onToggle="resetErrors"}}
+    {{#if hook.isSaving}}
+      {{loading-indicator inline=true}}
+    {{else}}
+      {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repo settings"}}<span class="icon-settings"></span>{{/link-to}}
+    {{/if}}
   {{else}}
-    {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repo settings"}}<span class="icon-settings"></span>{{/link-to}}
+    {{hook-switch hook=hook disabled=true}}
   {{/if}}
 </div>
 
