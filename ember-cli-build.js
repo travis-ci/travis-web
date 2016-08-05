@@ -38,8 +38,7 @@ module.exports = function () {
     },
     fingerprint: fingerprint,
     sourcemaps: {
-      enabled: true,
-      extensions: ['js']
+      enabled: false
     },
     'ember-prism': {
       'components': ['scss', 'javascript', 'json'], //needs to be an array, or undefined.
