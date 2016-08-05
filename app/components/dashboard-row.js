@@ -31,7 +31,7 @@ export default Ember.Component.extend({
   openDropup() {
     let self = this;
     this.toggleProperty('dropupIsOpen');
-    Ember.run.later((() => { self.toggleProperty('dropupIsOpen'); }), 2000);
+    // Ember.run.later((() => { self.toggleProperty('dropupIsOpen'); }), 2000);
   },
 
   actions: {
