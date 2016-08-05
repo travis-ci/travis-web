@@ -31,8 +31,7 @@ module.exports = function () {
   var app = new EmberApp({
     fingerprint: fingerprint,
     sourcemaps: {
-      enabled: true,
-      extensions: ['js']
+      enabled: false
     },
     vendorFiles: {
       // next line is needed to prevent ember-cli to load

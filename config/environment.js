@@ -37,6 +37,7 @@ module.exports = function (environment) {
   };
 
   ENV.featureFlags = {
+    'user-feature-flags': false,
     'debug-logging': false,
     'pro-version': !!process.env.TRAVIS_PRO || false,
     'dashboard': true
@@ -96,7 +97,7 @@ module.exports = function (environment) {
 
   if (environment === 'development') {
     ENV['ember-cli-mirage'] = {
-      enabled: false
+      enabled: true
     };
 
     ENV.sentry = {
@@ -137,7 +138,7 @@ module.exports = function (environment) {
   if (environment === 'production') {
     ENV.release = process.env.SOURCE_VERSION || '-';
     ENV['ember-cli-mirage'] = {
-      enabled: false
+      enabled: true
     };
 
     ENV.sentry = {
