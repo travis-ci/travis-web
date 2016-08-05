@@ -78,6 +78,9 @@ module.exports = function(environment) {
         security: ENV.billingEndpoint + "/pages/security",
         terms: ENV.billingEndpoint + "/pages/terms"
       };
+      ENV.heap = {
+        projectId: '1556722898'
+      }
     }
 
     if (process.env.API_ENDPOINT) {
