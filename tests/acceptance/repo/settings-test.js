@@ -1,6 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import settingsPage from 'travis/tests/pages/settings';
+import repositorySettingsPage from 'travis/tests/pages/repository-settings';
 
 moduleForAcceptance('Acceptance | repo settings', {
   beforeEach() {
@@ -96,40 +96,40 @@ moduleForAcceptance('Acceptance | repo settings', {
 });
 
 test('view settings', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  repositorySettingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(function () {
-    assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
-    assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
+    assert.ok(repositorySettingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
+    assert.ok(repositorySettingsPage.buildPushes.isActive, 'expected builds for pushes');
 
-    assert.ok(settingsPage.limitConcurrentBuilds.isActive, 'expected concurrent builds to be limited');
-    assert.equal(settingsPage.limitConcurrentBuilds.value, '1919');
+    assert.ok(repositorySettingsPage.limitConcurrentBuilds.isActive, 'expected concurrent builds to be limited');
+    assert.equal(repositorySettingsPage.limitConcurrentBuilds.value, '1919');
 
-    assert.ok(settingsPage.buildPullRequests.isActive, 'expected builds for pull requests');
+    assert.ok(repositorySettingsPage.buildPullRequests.isActive, 'expected builds for pull requests');
 
-    assert.equal(settingsPage.environmentVariables(0).name, 'intersectionality');
-    assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
-    assert.equal(settingsPage.environmentVariables(0).value, 'Kimberlé Crenshaw');
+    assert.equal(repositorySettingsPage.environmentVariables(0).name, 'intersectionality');
+    assert.ok(repositorySettingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
+    assert.equal(repositorySettingsPage.environmentVariables(0).value, 'Kimberlé Crenshaw');
 
-    assert.equal(settingsPage.environmentVariables(1).name, 'published');
-    assert.notOk(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to not be public');
-    assert.equal(settingsPage.environmentVariables(1).value, '••••••••••••••••');
+    assert.equal(repositorySettingsPage.environmentVariables(1).name, 'published');
+    assert.notOk(repositorySettingsPage.environmentVariables(1).isPublic, 'expected environment variable to not be public');
+    assert.equal(repositorySettingsPage.environmentVariables(1).value, '••••••••••••••••');
 
-    assert.equal(settingsPage.crons(0).branchName, 'daily-branch');
-    assert.ok(settingsPage.crons(0).enqueuingInterval.indexOf('Enqueues each day after') === 0, 'Shows daily enqueuing text');
-    assert.ok(settingsPage.crons(0).disableByBuildText.indexOf('Always run') === 0, 'expected cron to run even if no new commit after last build');
+    assert.equal(repositorySettingsPage.crons(0).branchName, 'daily-branch');
+    assert.ok(repositorySettingsPage.crons(0).enqueuingInterval.indexOf('Enqueues each day after') === 0, 'Shows daily enqueuing text');
+    assert.ok(repositorySettingsPage.crons(0).disableByBuildText.indexOf('Always run') === 0, 'expected cron to run even if no new commit after last build');
 
-    assert.equal(settingsPage.crons(1).branchName, 'weekly-branch');
-    assert.ok(settingsPage.crons(1).enqueuingInterval.indexOf('Enqueues each') === 0, 'Shows weekly enqueuing text');
-    assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only if no new commit') === 0, 'expected cron to run only if no new commit after last build');
+    assert.equal(repositorySettingsPage.crons(1).branchName, 'weekly-branch');
+    assert.ok(repositorySettingsPage.crons(1).enqueuingInterval.indexOf('Enqueues each') === 0, 'Shows weekly enqueuing text');
+    assert.ok(repositorySettingsPage.crons(1).disableByBuildText.indexOf('Only if no new commit') === 0, 'expected cron to run only if no new commit after last build');
 
-    assert.equal(settingsPage.sshKey.name, 'testy');
-    assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
+    assert.equal(repositorySettingsPage.sshKey.name, 'testy');
+    assert.equal(repositorySettingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
   });
 });
 
 test('change general settings', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  repositorySettingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const requestBodies = [];
 
@@ -137,44 +137,44 @@ test('change general settings', function (assert) {
     requestBodies.push(JSON.parse(request.requestBody));
   });
 
-  settingsPage.buildPushes.toggle();
+  repositorySettingsPage.buildPushes.toggle();
 
   andThen(() => {
-    assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
+    assert.notOk(repositorySettingsPage.buildPushes.isActive, 'expected no builds for pushes');
     assert.deepEqual(requestBodies.pop(), { settings: { build_pushes: false } });
   });
 
-  settingsPage.buildOnlyWithTravisYml.toggle();
+  repositorySettingsPage.buildOnlyWithTravisYml.toggle();
 
   andThen(() => {
-    assert.notOk(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
+    assert.notOk(repositorySettingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
     assert.deepEqual(requestBodies.pop(), { settings: { builds_only_with_travis_yml: false } });
   });
 
-  settingsPage.buildPullRequests.toggle();
+  repositorySettingsPage.buildPullRequests.toggle();
 
   andThen(() => {
-    assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
+    assert.notOk(repositorySettingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
     assert.deepEqual(requestBodies.pop(), { settings: { build_pull_requests: false } });
   });
 
-  settingsPage.limitConcurrentBuilds.fill('2010');
+  repositorySettingsPage.limitConcurrentBuilds.fill('2010');
 
   andThen(() => {
-    assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
+    assert.equal(repositorySettingsPage.limitConcurrentBuilds.value, '2010');
     assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 2010 } });
   });
 
-  settingsPage.limitConcurrentBuilds.toggle();
+  repositorySettingsPage.limitConcurrentBuilds.toggle();
 
   andThen(() => {
-    assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
+    assert.notOk(repositorySettingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
     assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 0 } });
   });
 });
 
 test('delete and create environment variables', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  repositorySettingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
 
@@ -182,12 +182,12 @@ test('delete and create environment variables', function (assert) {
     deletedIds.push(request.params.id);
   });
 
-  settingsPage.environmentVariables(0).delete();
+  repositorySettingsPage.environmentVariables(0).delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), 'a', 'expected the server to have received a deletion request for the first environment variable');
-    assert.equal(settingsPage.environmentVariables().count, 1, 'expected only one environment variable to remain');
-    assert.equal(settingsPage.environmentVariables(0).name, 'published', 'expected the formerly-second variable to be first');
+    assert.equal(repositorySettingsPage.environmentVariables().count, 1, 'expected only one environment variable to remain');
+    assert.equal(repositorySettingsPage.environmentVariables(0).name, 'published', 'expected the formerly-second variable to be first');
   });
 
   const requestBodies = [];
@@ -198,22 +198,22 @@ test('delete and create environment variables', function (assert) {
     return parsedRequestBody;
   });
 
-  settingsPage.environmentVariableForm.fillName('drafted');
-  settingsPage.environmentVariableForm.fillValue('true');
-  settingsPage.environmentVariableForm.makePublic();
-  settingsPage.environmentVariableForm.add();
+  repositorySettingsPage.environmentVariableForm.fillName('drafted');
+  repositorySettingsPage.environmentVariableForm.fillValue('true');
+  repositorySettingsPage.environmentVariableForm.makePublic();
+  repositorySettingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables(1).name, 'drafted');
-    assert.ok(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
-    assert.equal(settingsPage.environmentVariables(1).value, 'true');
+    assert.equal(repositorySettingsPage.environmentVariables(1).name, 'drafted');
+    assert.ok(repositorySettingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
+    assert.equal(repositorySettingsPage.environmentVariables(1).value, 'true');
 
     assert.deepEqual(requestBodies.pop(), { env_var: { name: 'drafted', value: 'true', public: true, repository_id: this.repository.id } });
   });
 });
 
 test('delete and create crons', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  repositorySettingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
 
@@ -223,16 +223,16 @@ test('delete and create crons', function (assert) {
     return {};
   });
 
-  settingsPage.crons(0).delete();
+  repositorySettingsPage.crons(0).delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
-    assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
+    assert.equal(repositorySettingsPage.crons().count, 1, 'expected only one cron to remain');
   });
 });
 
 test('delete and set SSH keys', function (assert) {
-  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+  repositorySettingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
 
@@ -240,14 +240,14 @@ test('delete and set SSH keys', function (assert) {
     deletedIds.push(request.params.id);
   });
 
-  settingsPage.sshKey.delete();
+  repositorySettingsPage.sshKey.delete();
 
   andThen(() => {
     assert.equal(deletedIds.pop(), this.repository.id, 'expected the server to have received a deletion request for the SSH key');
 
-    assert.equal(settingsPage.sshKey.name, 'no custom key set');
-    assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
-    assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
+    assert.equal(repositorySettingsPage.sshKey.name, 'no custom key set');
+    assert.equal(repositorySettingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
+    assert.ok(repositorySettingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
   });
 
   const requestBodies = [];
@@ -262,9 +262,9 @@ test('delete and set SSH keys', function (assert) {
     };
   });
 
-  settingsPage.sshKeyForm.fillDescription('hey');
-  settingsPage.sshKeyForm.fillKey('hello');
-  settingsPage.sshKeyForm.add();
+  repositorySettingsPage.sshKeyForm.fillDescription('hey');
+  repositorySettingsPage.sshKeyForm.fillKey('hello');
+  repositorySettingsPage.sshKeyForm.add();
 
   andThen(() => {
     assert.deepEqual(requestBodies.pop().ssh_key, {
