@@ -11,12 +11,10 @@ export default Ember.Service.extend({
   sessionStorage: service(),
   ajax: service(),
   state: 'signed-out',
-  receivingEnd: location.protocol + '//' + location.host,
+  receivingEnd: `${location.protocol}//${location.host}`,
 
-  init: function () {
-    return window.addEventListener('message', (e) => {
-      return this.receiveMessage(e);
-    });
+  init() {
+    return window.addEventListener('message', e => this.receiveMessage(e));
   },
 
   token() {
@@ -27,11 +25,9 @@ export default Ember.Service.extend({
     return JSON.parse(this.get('sessionStorage').getItem('travis.user'))['token'];
   },
 
-  endpoint: Ember.computed(function () {
-    return config.authEndpoint || config.apiEndpoint;
-  }),
+  endpoint: config.authEndpoint || config.apiEndpoint,
 
-  signOut: function () {
+  signOut() {
     this.get('sessionStorage').clear();
     this.get('storage').clear();
     this.set('state', 'signed-out');
@@ -46,12 +42,12 @@ export default Ember.Service.extend({
   },
 
   signIn(data) {
-    var url;
+    let url;
     if (data) {
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      url = (this.get('endpoint')) + '/auth/post_message?origin=' + this.receivingEnd;
+      url = `${this.get('endpoint')}/auth/post_message?origin=${this.receivingEnd}`;
       return Ember.$('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
     }
   },
@@ -79,7 +75,7 @@ export default Ember.Service.extend({
   },
 
   userDataFrom(storage) {
-    var token, user, userJSON;
+    let token, user, userJSON;
     userJSON = storage.getItem('travis.user');
     if (userJSON != null) {
       user = JSON.parse(userJSON);
@@ -90,8 +86,8 @@ export default Ember.Service.extend({
     token = storage.getItem('travis.token');
     if (user && token && this.validateUser(user)) {
       return {
-        user: user,
-        token: token
+        user,
+        token
       };
     } else {
       storage.removeItem('travis.user');
@@ -101,7 +97,7 @@ export default Ember.Service.extend({
   },
 
   validateUser(user) {
-    var fieldsToValidate, isTravisBecome;
+    let fieldsToValidate, isTravisBecome;
     fieldsToValidate = ['id', 'login', 'token'];
     isTravisBecome = this.get('sessionStorage').getItem('travis.become');
     if (!isTravisBecome) {
@@ -110,11 +106,8 @@ export default Ember.Service.extend({
     if (this.get('features.proVersion')) {
       fieldsToValidate.push('channels');
     }
-    return fieldsToValidate.every((function (_this) {
-      return function (field) {
-        return _this.validateHas(field, user);
-      };
-    })(this)) && (isTravisBecome || user.correct_scopes);
+    return fieldsToValidate.every(field => this.validateHas(field, user)) &&
+      (isTravisBecome || user.correct_scopes);
   },
 
   validateHas(field, user) {
@@ -126,7 +119,7 @@ export default Ember.Service.extend({
   },
 
   setData(data) {
-    var user;
+    let user;
     this.storeData(data, this.get('sessionStorage'));
     if (!this.userDataFrom(this.get('storage'))) {
       this.storeData(data, this.get('storage'));
@@ -147,8 +140,8 @@ export default Ember.Service.extend({
       }
     }
     if (user) {
-      return this.get('ajax').get('/users/' + user.id).then((data) => {
-        var userRecord;
+      return this.get('ajax').get(`/users/${user.id}`).then((data) => {
+        let userRecord;
         if (data.user.correct_scopes) {
           userRecord = this.loadUser(data.user);
           userRecord.get('permissions');
@@ -187,7 +180,7 @@ export default Ember.Service.extend({
   },
 
   loadUser(user) {
-    var store = this.get('store'),
+    let store = this.get('store'),
       userClass = store.modelFor('user'),
       serializer = store.serializerFor('user'),
       normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
@@ -223,7 +216,7 @@ export default Ember.Service.extend({
   },
 
   sendToApp(name) {
-    var error, router;
+    let error, router;
 
     // TODO: this is an ugly solution, we need to do one of 2 things:
     //       * find a way to check if we can already send an event to remove try/catch
