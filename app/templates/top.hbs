@@ -29,7 +29,7 @@
   {{/if}}
 {{/unless}}
 
-  <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
+<nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
     {{#unless config.enterprise}}
       {{#unless features.proVersion}}
@@ -105,6 +105,7 @@
                 </li>
               {{/unless}}
             {{/if}}
+            <li>{{#link-to "features"}}Features{{/link-to}}</li>
             <li>
               <a href="/" {{action "signOut" target=auth}} title="Sign out of Travis">Sign Out</a>
             </li>
