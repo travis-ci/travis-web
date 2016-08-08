@@ -15,15 +15,17 @@ export default Ember.Route.extend({
   beforeModel(transition) {
     if (!this.signedIn()) {
       this.auth.autoSignIn();
+      this.fetchFeatureFlags();
     }
     if (!this.signedIn() && this.get('needsAuth')) {
       this.auth.set('afterSignInTransition', transition);
       return Ember.RSVP.reject('needs-auth');
+    } else if (this.redirectToProfile(transition)) {
+      return this.transitionTo('profile', this.get('auth.currentUser.login'));
     } else {
-      if (this.redirectToProfile(transition)) {
-        return this.transitionTo('profile', this.get('auth.currentUser.login'));
-      }
-      return this._super(...arguments);
+      this.fetchFeatureFlags().then(() => {
+        return this._super(...arguments);
+      });
     }
   },
 
@@ -43,6 +45,14 @@ export default Ember.Route.extend({
        params.owner.owner &&
        params.owner.owner === 'profile') {
       this.transitionTo('account', this.get('auth.currentUser.login'));
+    }
+  },
+
+  fetchFeatureFlags() {
+    if (!this.store.peekAll('feature').length) {
+      return this.store.findAll('feature');
+    } else {
+      return Ember.RSVP.Promise.resolve();
     }
   }
 });

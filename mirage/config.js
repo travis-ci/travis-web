@@ -3,6 +3,9 @@ import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 
 export default function () {
+  this.urlPrefix = 'https://api.travis-ci.org';
+  this.passthrough('https://api.travis-ci.org', 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json');
+
   this.get('/accounts', (schema/* , request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
@@ -208,9 +211,9 @@ export default function () {
     const builds = schema.builds.where({ branchId: branch.id });
 
     /**
-      * TODO remove this once the seializers/build is removed.
-      * The modelName causes Mirage to know how to serialise it.
-      */
+     * TODO remove this once the seializers/build is removed.
+     * The modelName causes Mirage to know how to serialise it.
+     */
     return this.serialize({
       models: builds.models.reverse(),
       modelName: 'build'
@@ -226,6 +229,40 @@ export default function () {
     }
   });
 
+  this.get('/features', () => {
+    return {
+      '@type': 'features',
+      '@href': '/features',
+      '@representation': 'standard',
+      'features': [
+        {
+          '@type': 'feature',
+          '@href': '/feature/123456',
+          '@representation': 'standard',
+          '@permissions': {
+            'enable': true,
+            'disable': true
+          },
+          'id': 123456,
+          'name': 'debug-logging',
+          'description': 'Enable verbose logging of application behavior to help debug issues'
+        },
+        {
+          '@type': 'feature',
+          '@href': '/feature/987654',
+          '@representation': 'standard',
+          '@permissions': {
+            'enable': true,
+            'disable': true
+          },
+          'id': 987654,
+          'name': 'dashboard',
+          'description': 'Enable new dashboard behavior meant to improve the UX'
+        }
+      ]
+    };
+  });
+
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
   // this.pretender.handledRequest = function (verb, path, request) {
   //   console.log('Handled this request:', `${verb} ${path}`, request);
@@ -237,8 +274,8 @@ export default function () {
 }
 
 /*
-You can optionally export a config that is only loaded during tests
-export function testConfig() {
+   You can optionally export a config that is only loaded during tests
+   export function testConfig() {
 
-}
-*/
+   }
+   */
