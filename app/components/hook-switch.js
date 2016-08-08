@@ -1,25 +1,24 @@
 import Ember from 'ember';
 
-const { alias } = Ember.computed;
-
 export default Ember.Component.extend({
   tagName: 'a',
   classNames: ['switch--icon'],
-  classNameBindings: ['active'],
-  active: alias('hook.active'),
+  classNameBindings: ['hook.active:active', 'disabled:disabled', 'disabled:inline-block'],
   click() {
-    this.sendAction('onToggle');
+    if (!this.get('disabled')) {
+      this.sendAction('onToggle');
 
-    let hook = this.get('hook');
+      let hook = this.get('hook');
 
-    let pusher = this.get('pusher'),
-      repoId = hook.get('id');
+      let pusher = this.get('pusher'),
+        repoId = hook.get('id');
 
-    return hook.toggle().then(() => {
-      pusher.subscribe(`repo-${repoId}`);
-    }, () => {
-      this.toggleProperty('hook.active');
-      return this.sendAction('onToggleError', hook);
-    });
+      return hook.toggle().then(() => {
+        pusher.subscribe(`repo-${repoId}`);
+      }, () => {
+        this.toggleProperty('hook.active');
+        return this.sendAction('onToggleError', hook);
+      });
+    }
   }
 });

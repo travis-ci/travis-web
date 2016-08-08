@@ -33,7 +33,6 @@
   </header>
 
   <section class="profile-getstarted">
-    {{!-- <a href="#" class="dismiss"><span class="icon icon--dismiss-grey"></span></a> --}}
     <ol class="row">
       <li class="columns medium-4">
         <figure>
@@ -59,7 +58,7 @@
   <div id="administerable-hooks">
     <ul class="profile-hooklist">
       {{#each hooks as |hook|}}
-        {{hooks-list-item hook=hook}}
+        {{hooks-list-item hook=hook admin=true}}
       {{else}}
         <li>
           {{#if hooksWithoutAdmin.length}}
@@ -75,25 +74,9 @@
   {{#if hooksWithoutAdmin.length}}
     <div id="unadministerable-hooks">
       <p>You require admin rights to enable these repositories</p>
-
       <ul class="profile-hooklist">
         {{#each hooksWithoutAdmin as |hook| }}
-          <li class="{{if hook.active 'active'}} row">
-            <div class="switch--icon inline-block disabled {{if hook.active 'active'}}">
-              <div class="switch-inner">
-                <span class="on">
-                  ON
-                </span>
-                <span class="off">
-                  OFF
-                </span>
-              </div>
-            </div>
-            <a href={{hook.urlGithub}} rel="nofollow" class="profile-repo">
-              {{hook.slug}}
-              <span>{{hook.description}}</span>
-            </a>
-          </li>
+          {{hooks-list-item hook=hook}}
         {{/each}}
       </ul>
     </div>
