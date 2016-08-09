@@ -48,8 +48,9 @@ var sortCallback = function (repo1, repo2) {
   }
 };
 
-var Controller = Ember.Controller.extend({
+export default Ember.Controller.extend({
   auth: service(),
+  tabStates: service(),
   ajax: service(),
   updateTimesService: service('updateTimes'),
 
@@ -58,9 +59,11 @@ var Controller = Ember.Controller.extend({
       return this.activate(name);
     },
     showRunningJobs: function () {
+      this.get('tabStates').set('sidebarTab', 'running');
       return this.activate('running');
     },
     showMyRepositories: function () {
+      this.get('tabStates').set('sidebarTab', 'owned');
       if (this.get('tab') === 'running') {
         return this.activate('owned');
       } else {
@@ -255,5 +258,3 @@ var Controller = Ember.Controller.extend({
     }
   )
 });
-
-export default Controller;
