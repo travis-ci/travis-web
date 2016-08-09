@@ -134,9 +134,13 @@ export default Ember.Controller.extend({
 
   _currentBuildDidChange() {
     let currentBuild = this.get('repo.currentBuild');
-    if (currentBuild) {
+    if (currentBuild && currentBuild.get('id')) {
       eventually(currentBuild, (build) => {
         this.set('build', build);
+
+        if (build.get('jobs.length') === 1) {
+          this.set('job', build.get('jobs.firstObject'));
+        }
       });
     }
   },

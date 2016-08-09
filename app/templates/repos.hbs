@@ -7,7 +7,7 @@
 {{repos-list-tabs tab=tab startedJobsCount=startedJobsCount allJobsCount=allJobsCount showMyRepositories=(action "showMyRepositories") showRunningJobs=(action "showRunningJobs")}}
 
 {{#if showRunningJobs}}
-  <div class="tabbody sidebar-list">
+  <div class="travistab-body sidebar-list">
     <div>
       {{running-jobs jobs=runningJobs}}
     </div>
@@ -17,7 +17,7 @@
     </div>
   </div>
 {{else}}
-  <div class="tabbody sidebar-list">
+  <div class="travistab-body sidebar-list">
     {{#if isLoaded}}
       {{repos-list repos=repos selectedRepo=selectedRepo}}
     {{else}}
@@ -25,4 +25,3 @@
     {{/if}}
   </div>
 {{/if}}
-

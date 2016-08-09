@@ -1,0 +1,11 @@
+<nav class="travistab-nav--secondary">
+  <ul>
+    <li>{{link-to 'Job log' 'job.index' repo job id="tab_log" title="Look at this job's log"}}</li>
+    <li>{{link-to 'View config' 'job.config' repo job id="tab_config" title="Look at this job's config"}}</li>
+  </ul>
+</nav>
+<div class="travistab-body">
+
+  {{outlet}}
+
+</div>
