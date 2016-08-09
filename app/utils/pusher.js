@@ -1,5 +1,5 @@
 /* global Travis, Pusher */
-import ENV from 'travis/config/environment';
+import config from 'travis/config/environment';
 import Ember from 'ember';
 
 var TravisPusher = function (config, ajaxService) {
@@ -71,7 +71,7 @@ TravisPusher.prototype.unsubscribe = function (channel) {
 };
 
 TravisPusher.prototype.prefix = function (channel) {
-  let prefix = ENV.pusher.channelPrefix || '';
+  let prefix = config.pusher.channelPrefix || '';
   if (channel.indexOf(prefix) !== 0) {
     return '' + prefix + channel;
   } else {
@@ -160,12 +160,12 @@ TravisPusher.prototype.ignoreMessage = function (message) {
 };
 
 Pusher.SockJSTransport.isSupported = function () {
-  if (ENV.pusher.host !== 'ws.pusherapp.com') {
+  if (config.pusher.host !== 'ws.pusherapp.com') {
     return false;
   }
 };
 
-if (ENV.pro) {
+if (config.featureFlags['pro-version']) {
   Pusher.channel_auth_transport = 'bulk_ajax';
   Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
     var channels, name, names;
@@ -198,7 +198,7 @@ if (ENV.pro) {
   };
 
   Pusher.getDefaultStrategy = function (config) {
-    let pusherPath = ENV.pusher.path || '';
+    let pusherPath = config.pusher.path || '';
     if (pusherPath) {
       pusherPath = `/${pusherPath}`;
     }

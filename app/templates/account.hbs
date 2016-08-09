@@ -24,7 +24,7 @@
     {{sync-button}}
 
     {{#unless config.enterprise}}
-      {{#if config.pro}}
+      {{#if features.proVersion}}
         <p class="helptext">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
       {{else}}
         <p class="helptext">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>

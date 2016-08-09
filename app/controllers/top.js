@@ -107,8 +107,11 @@ export default Ember.Controller.extend({
       return false;
     }
   },
-  showCta: Ember.computed('auth.signedIn', 'landingPage', function () {
-    return !this.get('auth.signedIn') && !this.get('config.pro') && !this.get('landingPage');
+
+  showCta: Ember.computed('auth.signedIn', 'landingPage', 'features.proVersion', function () {
+    return !this.get('auth.signedIn') &&
+      !this.get('features.proVersion') &&
+      !this.get('landingPage');
   }),
 
   classProfile: Ember.computed('tab', 'auth.state', function () {

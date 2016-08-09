@@ -3,10 +3,10 @@
     <a href="#" {{action showMyRepositories}}>My Repositories</a>
   </li>
 
-  {{#if config.pro}}
-  <li id="tab_running" class={{classRunning}}>
-    <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
-  </li>
+  {{#if features.proVersion}}
+    <li id="tab_running" class={{classRunning}}>
+      <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
+    </li>
   {{/if}}
 
   <li id="tab_new" class={{classNew}}>

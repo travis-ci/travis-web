@@ -1,4 +1,5 @@
-module.exports = function(environment) {
+/* eslint-env node */
+module.exports = function (environment) {
   var ENV = {
     modulePrefix: 'travis',
     environment: environment,
@@ -24,34 +25,34 @@ module.exports = function(environment) {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com'
     },
-    pro: !!process.env.TRAVIS_PRO || false,
     enterprise: !!process.env.TRAVIS_ENTERPRISE || false,
     endpoints: {},
     intervals: { updateTimes: 1000 },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
 
-    featureFlags: {
-      'debug-logging': false,
-      'pro-version': this.pro
-    },
-
     heap: {
       projectId: '1049054202'
     }
   };
 
+  ENV.featureFlags = {
+    'debug-logging': false,
+    'pro-version': !!process.env.TRAVIS_PRO || false
+  };
+
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
   var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
 
+  // Do not collect metrics if in non-production env or enterprise
   if (process.env.TRAVIS_ENTERPRISE || environment !== 'production') {
     ENV.heap = {
       development: true
-    }
+    };
   }
 
   if (typeof process !== 'undefined') {
-    if (ENV.pro && !process.env.TRAVIS_ENTERPRISE) {
+    if (ENV.featureFlags['pro-version'] && !process.env.TRAVIS_ENTERPRISE) {
       // set defaults for pro if it's used
       // TODO: we have the same defaults also in ruby process,
       //       it would be nice to move it to one place. In theory
@@ -99,7 +100,7 @@ module.exports = function(environment) {
 
     ENV.sentry = {
       development: true
-    }
+    };
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
@@ -126,7 +127,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.release = process.env.SOURCE_VERSION || "-";
+    ENV.release = process.env.SOURCE_VERSION || '-';
     ENV['ember-cli-mirage'] = {
       enabled: false
     };

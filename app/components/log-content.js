@@ -2,7 +2,6 @@
 import Ember from 'ember';
 import LinesSelector from 'travis/utils/lines-selector';
 import LogFolder from 'travis/utils/log-folder';
-import config from 'travis/config/environment';
 import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls';
 
 const { service } = Ember.inject;
@@ -196,7 +195,7 @@ export default Ember.Component.extend({
     let id = this.get('log.job.id');
     if (id) {
       let url = plainTextLogUrl(id);
-      if (config.pro) {
+      if (this.get('features.proVersion')) {
         url += `&access_token=${this.get('job.log.token')}`;
       }
       return url;

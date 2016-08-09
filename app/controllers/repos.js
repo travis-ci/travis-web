@@ -102,8 +102,8 @@ var Controller = Ember.Controller.extend({
     }
   },
 
-  runningJobs: Ember.computed('config.pro', function () {
-    if (!this.get('config.pro')) { return []; }
+  runningJobs: Ember.computed('features.proVersion', function () {
+    if (!this.get('features.proVersion')) { return []; }
     var result;
 
     result = this.store.filter('job', {}, function (job) {
@@ -117,8 +117,8 @@ var Controller = Ember.Controller.extend({
     return result;
   }),
 
-  queuedJobs: Ember.computed('config.pro', function () {
-    if (!this.get('config.pro')) { return []; }
+  queuedJobs: Ember.computed('features.proVersion', function () {
+    if (!this.get('features.proVersion')) { return []; }
 
     var result;
     result = this.get('store').filter('job', function (job) {
