@@ -152,10 +152,11 @@ export default Ember.Controller.extend({
 
   activate(tab, params) {
     this.set('sortProperties', ['sortOrder']);
-    this.set('tab', tab);
+    let tabState = this.get('tabStates.sidebarTab');
+    this.set('tab', tabState);
     // find the data based on tab
     // tab == 'owned' => viewOwned invoked
-    return this[('view_' + tab).camelize()](params);
+    return this[('view_' + tabState).camelize()](params);
   },
 
   reset() {

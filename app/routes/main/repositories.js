@@ -3,7 +3,7 @@ import MainTabRoute from 'travis/routes/main-tab';
 
 export default MainTabRoute.extend({
   needsAuth: true,
-  reposTabName: 'owned',
+  // reposTabName: 'owned',
 
   afterModel() {
     if (Ember.isEmpty(this.store.peekAll('repo'))) {
