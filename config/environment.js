@@ -24,7 +24,7 @@ module.exports = function(environment) {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com'
     },
-    pro: false,
+    pro: !!process.env.TRAVIS_PRO || false,
     enterprise: !!process.env.TRAVIS_ENTERPRISE || false,
     endpoints: {},
     intervals: { updateTimes: 1000 },
@@ -32,7 +32,8 @@ module.exports = function(environment) {
     ajaxPolling: false,
 
     featureFlags: {
-      'debug-logging': false
+      'debug-logging': false,
+      'pro-version': this.pro
     },
 
     heap: {
@@ -50,13 +51,12 @@ module.exports = function(environment) {
   }
 
   if (typeof process !== 'undefined') {
-    if (process.env.TRAVIS_PRO && !process.env.TRAVIS_ENTERPRISE) {
+    if (ENV.pro && !process.env.TRAVIS_ENTERPRISE) {
       // set defaults for pro if it's used
       // TODO: we have the same defaults also in ruby process,
       //       it would be nice to move it to one place. In theory
       //       we could just remove it from ruby process and rely
       //       on things set here, but I haven't tested that yet.
-      ENV.pro = true;
       ENV.apiEndpoint = 'https://api.travis-ci.com';
       ENV.pusher.key = '59236bc0716a551eab40';
       ENV.pusher.channelPrefix = 'private-';

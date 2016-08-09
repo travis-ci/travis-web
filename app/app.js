@@ -10,6 +10,7 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 
 // This can be set per environment in config/environment.js
 var debuggingEnabled = config.featureFlags['debug-logging'];
+var proVersion = config.featureFlags['pro-version'];
 
 var App = Ember.Application.extend(Ember.Evented, {
   modulePrefix: config.modulePrefix,
@@ -49,10 +50,10 @@ var App = Ember.Application.extend(Ember.Evented, {
   },
 
   onUserUpdate(user) {
-    if (config.pro) {
+    if (proVersion) {
       this.identifyCustomer(user);
     }
-    if (config.pro && config.beacon) {
+    if (proVersion && config.beacon) {
       this.setupBeacon();
       this.identifyHSBeacon(user);
     }
@@ -77,7 +78,7 @@ var App = Ember.Application.extend(Ember.Evented, {
       return;
     }
     channels = user.channels;
-    if (config.pro) {
+    if (proVersion) {
       channels = channels.map(function (channel) {
         if (channel.match(/^private-/)) {
           return channel;
