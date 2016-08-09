@@ -124,6 +124,11 @@ export default function () {
     };
   });
 
+  this.get('/commits/:id', function (schema, request) {
+    let commit = schema.commits.find(request.params.id);
+    return new Mirage.Response(200, {}, commit.attrs);
+  });
+
   this.get('/jobs/:id', function (schema, request) {
     let job = schema.jobs.find(request.params.id);
     return this.serialize(job, 'v2-job');

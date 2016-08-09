@@ -107,9 +107,11 @@ var Controller = Ember.Controller.extend({
     var result;
 
     result = this.store.filter('job', {}, function (job) {
-      return ['queued', 'started', 'received'].indexOf(job.get('state')) !== -1;
+      return ['queued', 'started', 'received'].contains(job.get('state'));
     });
+
     result.set('isLoaded', false);
+
     result.then(function () {
       return result.set('isLoaded', true);
     });
