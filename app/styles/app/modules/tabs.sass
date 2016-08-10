@@ -1,5 +1,15 @@
 $border-size: 2px
 
+=tabLinkHighlight
+  &:after
+    content: ""
+    position: absolute
+    bottom: - $border-size
+    display: block
+    width: 100%
+    height: 2px
+    background-color: $oxide-blue
+
 %travistab-nav-base
   font-size: 14px
 
@@ -10,6 +20,9 @@ $border-size: 2px
   li
     display: inline-block
     vertical-align: bottom
+    &.active a
+      color: $oxide-blue
+      +tabLinkHighlight
   a
     position: relative
     display: block
@@ -18,15 +31,8 @@ $border-size: 2px
     &:active,
     &.active
       color: $oxide-blue
-      &:after
-        content: ""
-        position: absolute
-        bottom: - $border-size
-        display: block
-        width: 100%
-        height: 2px
-        background-color: $oxide-blue
-   
+      +tabLinkHighlight
+
 .travistab
   margin-top: 2em
 
