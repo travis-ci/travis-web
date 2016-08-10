@@ -20,13 +20,14 @@ export default Model.extend({
   build: belongsTo('build'),
 
   subject: Ember.computed('message', function () {
-    return this.get('message').split('\n', 1)[0];
+    if (this.get('message')) {
+      return this.get('message').split('\n', 1)[0];
+    }
   }),
 
   body: Ember.computed('message', function () {
-    var message;
-    message = this.get('message');
-    if (message.indexOf('\n') > 0) {
+    let message = this.get('message');
+    if (message && message.indexOf('\n') > 0) {
       return message.substr(message.indexOf('\n') + 1).trim();
     } else {
       return '';

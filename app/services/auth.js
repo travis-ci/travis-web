@@ -103,7 +103,7 @@ export default Ember.Service.extend({
     if (!isTravisBecome) {
       fieldsToValidate.push('correct_scopes');
     }
-    if (config.pro) {
+    if (this.get('features.proVersion')) {
       fieldsToValidate.push('channels');
     }
     return fieldsToValidate.every((function (_this) {

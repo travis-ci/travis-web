@@ -7,6 +7,7 @@ const { service } = Ember.inject;
 
 export default TravisRoute.extend(ScrollResetMixin, {
   store: service(),
+  tabStates: service(),
 
   titleToken(model) {
     return model.get('slug');
@@ -19,7 +20,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   setupController(controller, model) {
-    this.controllerFor('repos').activate('owned');
+    this.controllerFor('repos').activate(this.get('tabStates.sidebarTab'));
     if (model && !model.get) {
       model = this.get('store').find('repo', model.id);
     }

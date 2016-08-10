@@ -42,7 +42,7 @@ statusImage = function (slug, branch) {
     prefix = config.apiEndpoint;
   }
 
-  if (config.pro) {
+  if (config.featureFlags['pro-version']) {
     let token = Travis.__container__.lookup('controller:currentUser').get('model.token');
     return `${prefix}/${slug}.svg?token=${token}${branch ? '&branch=' + branch : ''}`;
   } else {
@@ -56,7 +56,7 @@ ccXml = function (slug, branch) {
   if (branch) {
     url = url + '?branch=' + branch;
   }
-  if (config.pro) {
+  if (config.featureFlags['pro-version']) {
     delimiter = url.indexOf('?') === -1 ? '?' : '&';
     token = Travis.__container__.lookup('controller:currentUser').get('model.token');
     url = '' + url + delimiter + 'token=' + token;

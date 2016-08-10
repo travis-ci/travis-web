@@ -29,7 +29,7 @@
     <ul>
 
     {{#unless config.enterprise}}
-      {{#unless config.pro}}
+      {{#unless features.proVersion}}
         <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
         <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
         <li>
@@ -41,7 +41,7 @@
         </li>
       {{/unless}}
 
-      {{#if config.pro}}
+      {{#if features.proVersion}}
         {{#unless auth.signedIn}}
           <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
           <li><a href="/plans" title="" class="navigation-anchor">Plans & Pricing</a></li>

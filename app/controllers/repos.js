@@ -48,8 +48,9 @@ var sortCallback = function (repo1, repo2) {
   }
 };
 
-var Controller = Ember.Controller.extend({
+export default Ember.Controller.extend({
   auth: service(),
+  tabStates: service(),
   ajax: service(),
   updateTimesService: service('updateTimes'),
 
@@ -58,9 +59,11 @@ var Controller = Ember.Controller.extend({
       return this.activate(name);
     },
     showRunningJobs: function () {
+      this.get('tabStates').set('sidebarTab', 'running');
       return this.activate('running');
     },
     showMyRepositories: function () {
+      this.get('tabStates').set('sidebarTab', 'owned');
       if (this.get('tab') === 'running') {
         return this.activate('owned');
       } else {
@@ -102,14 +105,16 @@ var Controller = Ember.Controller.extend({
     }
   },
 
-  runningJobs: Ember.computed('config.pro', function () {
-    if (!this.get('config.pro')) { return []; }
+  runningJobs: Ember.computed('features.proVersion', function () {
+    if (!this.get('features.proVersion')) { return []; }
     var result;
 
     result = this.store.filter('job', {}, function (job) {
-      return ['queued', 'started', 'received'].indexOf(job.get('state')) !== -1;
+      return ['queued', 'started', 'received'].contains(job.get('state'));
     });
+
     result.set('isLoaded', false);
+
     result.then(function () {
       return result.set('isLoaded', true);
     });
@@ -117,8 +122,8 @@ var Controller = Ember.Controller.extend({
     return result;
   }),
 
-  queuedJobs: Ember.computed('config.pro', function () {
-    if (!this.get('config.pro')) { return []; }
+  queuedJobs: Ember.computed('features.proVersion', function () {
+    if (!this.get('features.proVersion')) { return []; }
 
     var result;
     result = this.get('store').filter('job', function (job) {
@@ -147,10 +152,11 @@ var Controller = Ember.Controller.extend({
 
   activate(tab, params) {
     this.set('sortProperties', ['sortOrder']);
-    this.set('tab', tab);
+    let tabState = this.get('tabStates.sidebarTab');
+    this.set('tab', tabState);
     // find the data based on tab
     // tab == 'owned' => viewOwned invoked
-    return this[('view_' + tab).camelize()](params);
+    return this[('view_' + tabState).camelize()](params);
   },
 
   reset() {
@@ -253,5 +259,3 @@ var Controller = Ember.Controller.extend({
     }
   )
 });
-
-export default Controller;

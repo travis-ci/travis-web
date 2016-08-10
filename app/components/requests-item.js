@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'travis/config/environment';
 
 export default Ember.Component.extend({
   classNames: ['request-item'],
@@ -39,10 +38,9 @@ export default Ember.Component.extend({
     }
   }),
 
-  message: Ember.computed('request.message', function () {
-    let message;
-    message = this.get('request.message');
-    if (config.pro && message === 'private repository') {
+  message: Ember.computed('features.proVersion', 'request.message', function () {
+    let message = this.get('request.message');
+    if (this.get('features.proVersion') && message === 'private repository') {
       return '';
     } else if (!message) {
       return 'Build created successfully ';
