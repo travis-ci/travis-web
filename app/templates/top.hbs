@@ -1,6 +1,6 @@
 <div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
   <h1 id="logo" class="logo">
-    {{#if config.featureFlags.dashboard}}
+    {{#if features.dashboard}}
       {{#link-to "dashboard"}}Travis CI{{/link-to}}
     {{else}}
       {{#link-to "main"}}Travis CI{{/link-to}}
