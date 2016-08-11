@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'travis/config/environment';
 
 var Request = Ember.Object.extend({
   HEADERS: {
@@ -18,7 +19,7 @@ var Request = Ember.Object.extend({
   },
 
   handle(body, status, xhr) {
-    if (this.get('features.proVersion')) {
+    if (config.featureFlags['pro-version']) {
       this.log.set('token', xhr.getResponseHeader('X-Log-Access-Token'));
     }
     if (xhr.status === 204) {
