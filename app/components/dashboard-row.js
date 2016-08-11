@@ -7,7 +7,7 @@ const { alias } = Ember.computed;
 export default Ember.Component.extend({
   permissions: service(),
   tagName: 'li',
-  classNameBindings: ['currentBuild.state','repo.active:is-active'],
+  classNameBindings: ['currentBuild.state', 'repo.active:is-active'],
   classNames: ['rows', 'rows--dashboard'],
   isLoading: false,
   isTriggering: false,
@@ -29,7 +29,6 @@ export default Ember.Component.extend({
   }),
 
   openDropup() {
-    let self = this;
     this.toggleProperty('dropupIsOpen');
     // Ember.run.later((() => { self.toggleProperty('dropupIsOpen'); }), 2000);
   },
