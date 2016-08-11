@@ -11,8 +11,8 @@
           <a href="{{urlGithub}}" title="{{repo.name}} on GitHub">{{repo.name}} on Github</a>
         </div>
         <div class="repo-badge">
-          <a href="#" id="status-image-popup" title="build status image" name="status-images" class="open-popup" {{action "statusImages"}}>
-            <img src={{statusImageUrl}} alt="build:{{build.state}}"/>
+          <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "statusImages"}}>
+            <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
           </a>
         </div>
       </header>
