@@ -33,6 +33,15 @@ export default Ember.Component.extend({
     // Ember.run.later((() => { self.toggleProperty('dropupIsOpen'); }), 2000);
   },
 
+  tiggerNewBuild() {
+
+    // send post request to trigger endpoint
+    // set isTriggering
+    // set hasTiggered
+
+    // maybe use ember concurrency?
+  },
+
   actions: {
     openDropup() {
       this.openDropup();

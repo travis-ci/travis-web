@@ -14,8 +14,17 @@ export default TravisRoute.extend({
   },
 
   model() {
+    
     const repos = this.store.query('repo', { active: true, withLastBuild: true });
+      // .then((recordArray) => {
+        // if (recordArray.content && recordArray.content.length) {
 
+          // sort repos
+    
+          // query for last 10 builds on default branch?
+
+        // }   
+      // });
     return repos;
   }
 });
