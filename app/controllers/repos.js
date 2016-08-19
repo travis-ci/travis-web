@@ -84,8 +84,18 @@ export default Ember.Controller.extend({
     yield timeout(500);
 
     this.get('tabStates').set('sidebarTab', 'search');
-    this.activate('search', query);
+
+    yield this.get('performSearchRequest').perform(query);
   }).restartable(),
+
+  performSearchRequest: task(function * (query) {
+    this.set('search', query);
+    this.set('isLoaded', false);
+    Repo.search(this.store, this.get('ajax'), query).then((reposRecordArray) => {
+      this.set('isLoaded', true);
+      this.set('_repos', reposRecordArray);
+    });
+  }),
 
   tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
     return this.possiblyRedirectToGettingStartedPage();
@@ -208,13 +218,8 @@ export default Ember.Controller.extend({
 
   viewRunning() {},
 
-  viewSearch(phrase) {
-    this.set('search', phrase);
-    this.set('isLoaded', false);
-    Repo.search(this.store, this.get('ajax'), phrase).then((reposRecordArray) => {
-      this.set('isLoaded', true);
-      this.set('_repos', reposRecordArray);
-    });
+  viewSearch(query) {
+    this.get('performSearchRequest').perform(query);
   },
 
   searchFor(phrase) {
