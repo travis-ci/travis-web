@@ -69,6 +69,12 @@ export default Ember.Controller.extend({
       } else {
         return this.transitionToRoute('main.repositories');
       }
+    },
+    showSearchResults: function () {
+      let query = this.get('search');
+      this.get('tabStates').set('sidebarTab', 'search');
+      this.activate('search', this.get('search'));
+      return this.searchFor(query);
     }
   },
 
@@ -201,14 +207,6 @@ export default Ember.Controller.extend({
       this.set('_repos', reposRecordArray);
     });
   },
-
-  searchObserver: Ember.observer('search', function () {
-    var search;
-    search = this.get('search');
-    if (search) {
-      return this.searchFor(search);
-    }
-  }),
 
   searchFor(phrase) {
     if (this.searchLater) {
