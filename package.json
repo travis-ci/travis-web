@@ -55,7 +55,7 @@
     "ember-feature-flags": "3.0.0",
     "ember-keyboard-shortcuts": "0.3.0",
     "ember-load-initializers": "^0.5.1",
-    "ember-qunit-nice-errors": "1.0.0",
+    "ember-qunit-nice-errors": "1.1.1",
     "ember-prism": "0.0.7",
     "ember-resolver": "^2.0.3",
     "emberx-select": "2.1.2",
