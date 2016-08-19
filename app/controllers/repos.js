@@ -72,9 +72,9 @@ export default Ember.Controller.extend({
     },
     showSearchResults: function () {
       let query = this.get('search');
+      this.searchFor(query);
       this.get('tabStates').set('sidebarTab', 'search');
       this.activate('search', this.get('search'));
-      return this.searchFor(query);
     }
   },
 
