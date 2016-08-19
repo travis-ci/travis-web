@@ -1,6 +1,7 @@
 /* global Visibility */
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
+import { task } from 'ember-concurrency';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -58,10 +59,12 @@ export default Ember.Controller.extend({
     activate: function (name) {
       return this.activate(name);
     },
+
     showRunningJobs: function () {
       this.get('tabStates').set('sidebarTab', 'running');
       return this.activate('running');
     },
+
     showMyRepositories: function () {
       this.get('tabStates').set('sidebarTab', 'owned');
       if (this.get('tab') === 'running') {
@@ -69,14 +72,25 @@ export default Ember.Controller.extend({
       } else {
         return this.transitionToRoute('main.repositories');
       }
-    },
-    showSearchResults: function () {
-      let query = this.get('search');
-      this.searchFor(query);
-      this.get('tabStates').set('sidebarTab', 'search');
-      this.activate('search', this.get('search'));
     }
   },
+
+  showSearchResults: task(function * () {
+    let query = this.get('search');
+
+    if (query === '') { return; }
+
+    if (this.searchLater) {
+      Ember.run.cancel(this.searchLater);
+    }
+
+    this.searchLater = Ember.run.later(this, (function () {
+      this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
+    }), 500);
+
+    this.get('tabStates').set('sidebarTab', 'search');
+    this.activate('search', query);
+  }).restartable(),
 
   tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
     return this.possiblyRedirectToGettingStartedPage();
