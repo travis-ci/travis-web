@@ -56,7 +56,7 @@ export default TravisRoute.extend({
         image: 'anika'
       }, {
         name: 'Henrik Hodne',
-        title: 'Timezone Experimentalist',
+        title: 'DevOops Engineer',
         handle: 'henrikhodne',
         nationality: 'norway',
         country: 'norway',
