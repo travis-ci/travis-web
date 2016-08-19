@@ -1,7 +1,7 @@
 /* global Visibility */
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -80,13 +80,8 @@ export default Ember.Controller.extend({
 
     if (query === '') { return; }
 
-    if (this.searchLater) {
-      Ember.run.cancel(this.searchLater);
-    }
-
-    this.searchLater = Ember.run.later(this, (function () {
-      this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
-    }), 500);
+    this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
+    yield timeout(500);
 
     this.get('tabStates').set('sidebarTab', 'search');
     this.activate('search', query);
