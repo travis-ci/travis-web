@@ -80,21 +80,20 @@ export default Ember.Controller.extend({
 
     if (query === '') { return; }
 
-    this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
     yield timeout(500);
 
+    this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
     this.get('tabStates').set('sidebarTab', 'search');
-
-    yield this.get('performSearchRequest').perform(query);
   }).restartable(),
 
   performSearchRequest: task(function * (query) {
+    if (!query) { return; }
     this.set('search', query);
     this.set('isLoaded', false);
-    Repo.search(this.store, this.get('ajax'), query).then((reposRecordArray) => {
+    yield(Repo.search(this.store, this.get('ajax'), query).then((reposRecordArray) => {
       this.set('isLoaded', true);
       this.set('_repos', reposRecordArray);
-    });
+    }));
   }),
 
   tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
@@ -220,15 +219,6 @@ export default Ember.Controller.extend({
 
   viewSearch(query) {
     this.get('performSearchRequest').perform(query);
-  },
-
-  searchFor(phrase) {
-    if (this.searchLater) {
-      Ember.run.cancel(this.searchLater);
-    }
-    this.searchLater = Ember.run.later(this, (function () {
-      this.transitionToRoute('main.search', phrase.replace(/\//g, '%2F'));
-    }), 500);
   },
 
   noReposMessage: Ember.computed('tab', function () {
