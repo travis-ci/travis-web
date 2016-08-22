@@ -1,6 +1,7 @@
 /* global Visibility */
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
+import { task, timeout } from 'ember-concurrency';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -58,10 +59,12 @@ export default Ember.Controller.extend({
     activate: function (name) {
       return this.activate(name);
     },
+
     showRunningJobs: function () {
       this.get('tabStates').set('sidebarTab', 'running');
       return this.activate('running');
     },
+
     showMyRepositories: function () {
       this.get('tabStates').set('sidebarTab', 'owned');
       if (this.get('tab') === 'running') {
@@ -71,6 +74,27 @@ export default Ember.Controller.extend({
       }
     }
   },
+
+  showSearchResults: task(function * () {
+    let query = this.get('search');
+
+    if (query === '') { return; }
+
+    yield timeout(500);
+
+    this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
+    this.get('tabStates').set('sidebarTab', 'search');
+  }).restartable(),
+
+  performSearchRequest: task(function * (query) {
+    if (!query) { return; }
+    this.set('search', query);
+    this.set('isLoaded', false);
+    yield(Repo.search(this.store, this.get('ajax'), query).then((reposRecordArray) => {
+      this.set('isLoaded', true);
+      this.set('_repos', reposRecordArray);
+    }));
+  }),
 
   tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
     return this.possiblyRedirectToGettingStartedPage();
@@ -193,30 +217,8 @@ export default Ember.Controller.extend({
 
   viewRunning() {},
 
-  viewSearch(phrase) {
-    this.set('search', phrase);
-    this.set('isLoaded', false);
-    Repo.search(this.store, this.get('ajax'), phrase).then((reposRecordArray) => {
-      this.set('isLoaded', true);
-      this.set('_repos', reposRecordArray);
-    });
-  },
-
-  searchObserver: Ember.observer('search', function () {
-    var search;
-    search = this.get('search');
-    if (search) {
-      return this.searchFor(search);
-    }
-  }),
-
-  searchFor(phrase) {
-    if (this.searchLater) {
-      Ember.run.cancel(this.searchLater);
-    }
-    this.searchLater = Ember.run.later(this, (function () {
-      this.transitionToRoute('main.search', phrase.replace(/\//g, '%2F'));
-    }), 500);
+  viewSearch(query) {
+    this.get('performSearchRequest').perform(query);
   },
 
   noReposMessage: Ember.computed('tab', function () {
