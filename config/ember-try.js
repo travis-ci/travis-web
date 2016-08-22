@@ -13,7 +13,10 @@ module.exports = {
     {
       name: "beta",
       dependencies: {
-        "ember": "beta"
+        "ember": "rwjblue/ember#pr-14110"
+      },
+      resolutions: {
+        'ember': 'pr-14110'
       }
     },
     {
