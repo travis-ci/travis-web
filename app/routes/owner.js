@@ -26,8 +26,8 @@ export default TravisRoute.extend({
     this.controllerFor('loading').set('layoutName', 'simple');
     return this._super(...arguments);
   },
-  actions: {
 
+  actions: {
     error(error, /* transition, originRoute*/) {
       let is404 = error.status === 404;
       let errorText = 'There was an error while loading data, please try again.';

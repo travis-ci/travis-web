@@ -65,9 +65,11 @@ export default Ember.Controller.extend({
             return Ember.Object.create(broadcast);
           }).reverse();
         }
-        broadcasts.set('lastBroadcastStatus', this.defineTowerColor(receivedBroadcasts));
-        broadcasts.set('content', receivedBroadcasts);
-        return broadcasts.set('isLoading', false);
+        Ember.run(() => {
+          broadcasts.set('lastBroadcastStatus', this.defineTowerColor(receivedBroadcasts));
+          broadcasts.set('content', receivedBroadcasts);
+          broadcasts.set('isLoading', false);
+        });
       });
       return broadcasts;
     }
