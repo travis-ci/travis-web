@@ -24,7 +24,7 @@ export default Ember.Component.extend({
 
   actions: {
     tokenVisibility() {
-      return this.toggleProperty('tokenIsVisible');
+      this.toggleProperty('tokenIsVisible');
     }
   }
 });
