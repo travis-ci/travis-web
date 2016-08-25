@@ -190,6 +190,7 @@ class Travis::Web::App
       pusher['host'] = options[:pusher_host] if options[:pusher_host]
       pusher['path'] = options[:pusher_path] if options[:pusher_path]
       pusher['channelPrefix'] = options[:pusher_channel_prefix] if options[:pusher_channel_prefix]
+      pusher['encrypted'] = true
       config['pusher'] = pusher
 
       config['gaCode'] = options[:ga_code] if options[:ga_code]
