@@ -13,9 +13,6 @@
 
   {{#if commit.body }}
     <p class="commit-description">
-      {{#if item.pullRequest}}
-        {{format-message commit.subject repo=item.repo}}<br>
-      {{/if}}
       <span class="monospace">{{format-message commit.body repo=item.repo pre=true}}</span>
     </p>
   {{/if}}
