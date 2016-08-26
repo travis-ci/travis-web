@@ -3,6 +3,7 @@ import PageObject from 'travis/tests/page-object';
 let {
   visitable,
   clickable,
+  isVisible,
   text
 } = PageObject;
 
@@ -15,6 +16,8 @@ export default PageObject.create({
   author: text('.commit-author'),
   log: text('#log'),
   logError: text('.job-log .notice'),
+
+  hasTruncatedLog: isVisible('.log-container p.warning'),
 
   restartJob: clickable('.button-circle-trigger'),
   cancelJob: clickable('.button-circle-cancel'),
