@@ -51,6 +51,7 @@
     "ember-concurrency": "0.7.8",
     "ember-data": "2.7.0",
     "ember-data-filter": "1.13.0",
+    "ember-data-query-path": "1.0.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.5",
     "ember-feature-flags": "3.0.0",
@@ -58,8 +59,11 @@
     "ember-load-initializers": "^0.5.1",
     "ember-prism": "brandonjmckay/ember-prism#30f2782",
     "ember-qunit-nice-errors": "1.1.1",
+    "ember-prism": "0.0.7",
+    "ember-qunit-nice-errors": "1.0.0",
     "ember-resolver": "^2.0.3",
     "emberx-select": "2.2.2",
     "loader.js": "^4.0.10"
-  }
+  },
+  "dependencies": {}
 }
