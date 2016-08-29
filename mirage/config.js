@@ -16,6 +16,8 @@ export default function () {
       'https://api.travis-ci.org/builds/**',
       'https://api.travis-ci.org/jobs',
       'https://api.travis-ci.org/repos',
+      'https://api.travis-ci.org/accounts',
+      'https://api.travis-ci.org/hooks',
       'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
     );
   }

@@ -8,7 +8,7 @@ test('visiting /features directly as guest', function (assert) {
   featurePage.visit();
 
   andThen(function () {
-    assert.equal(currentURL(), '/');
+    assert.equal(currentURL(), '/auth');
   });
 });
 
