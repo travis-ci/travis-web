@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import TravisRoute from 'travis/routes/basic';
 
-export default Ember.Route.extend({
+export default TravisRoute.extend({
   model() {
     return this.store.findAll('feature');
   }

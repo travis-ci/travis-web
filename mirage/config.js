@@ -10,7 +10,14 @@ export default function () {
 
   if (config.environment === 'development') {
     // this.urlPrefix = 'https://api.travis-ci.org';
-    this.passthrough('https://api.travis-ci.org/*', 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json');
+    this.passthrough(
+      'https://api.travis-ci.org/users/**',
+      'https://api.travis-ci.org/v3/**',
+      'https://api.travis-ci.org/builds/**',
+      'https://api.travis-ci.org/jobs',
+      'https://api.travis-ci.org/repos',
+      'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
+    );
   }
 
   this.get('/accounts', (schema/* , request*/) => {
@@ -236,7 +243,8 @@ export default function () {
     }
   });
 
-  this.get('/features', () => {
+  let featuresURL = config.environment === 'test' ? '/features' : 'https://api.travis-ci.org/features';
+  this.get(featuresURL, () => {
     return {
       '@type': 'features',
       '@href': '/features',
