@@ -105,7 +105,9 @@
     {{#if repo.active}}
       <aside class="dash-aside">
         <ul class="lastbuilds">
-          {{lastbuild-tile repo=repo build=repo.currentBuild}}
+          {{#each repo.lastBuilds as |build|}}
+            {{lastbuild-tile repo=repo build=build}}
+          {{/each}}
         </ul>
       </aside>
     {{/if}}
