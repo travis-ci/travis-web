@@ -1,1 +1,39 @@
-{{outlet}}
+<header>
+  <div class="features-hero">
+    <h1>Experimental Features</h1>
+    <p>Here you to opt-in to experimental features we're working on.
+      To enable a feature, simply toggle the corresponding feature. You can
+      return to our standard experience at any time by disabling a given
+      flag.</p>
+  </div>
+  <div class="profile-header">
+    <h1>{{accountName}}</h1>
+  </div>
+</header>
+
+<div id="administerable-hooks">
+  <ul class="profile-hooklist">
+    {{#each hooks as |hook|}}
+      {{hooks-list-item hook=hook admin=true}}
+    {{else}}
+      <li>
+        {{#if hooksWithoutAdmin.length}}
+          Sorry, but we can't find any repositories you have admin access to.
+        {{else}}
+          Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
+
+{{#if hooksWithoutAdmin.length}}
+  <div id="unadministerable-hooks">
+    <p>You require admin rights to enable these repositories</p>
+    <ul class="profile-hooklist">
+      {{#each hooksWithoutAdmin as |hook| }}
+        {{hooks-list-item hook=hook}}
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}

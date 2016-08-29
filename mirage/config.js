@@ -1,10 +1,17 @@
 /* global server */
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
+import config from 'travis/config/environment';
 
 export default function () {
-  this.urlPrefix = 'https://api.travis-ci.org';
-  this.passthrough('https://api.travis-ci.org', 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json');
+  // this.pretender.passthroughRequest = (verb, path, request) => {
+  //   console.log('path', path);
+  // };
+
+  if (config.environment === 'development') {
+    // this.urlPrefix = 'https://api.travis-ci.org';
+    this.passthrough('https://api.travis-ci.org/*', 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json');
+  }
 
   this.get('/accounts', (schema/* , request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
