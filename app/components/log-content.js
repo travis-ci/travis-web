@@ -44,7 +44,7 @@ Log.Limit = function (maxLines, limitedLogCallback) {
 
 Log.Limit.prototype = Log.extend(new Log.Listener(), {
   count: 0,
-  insert(node) {
+  insert(log, node) {
     if (node.type === 'paragraph' && !node.hidden) {
       this.count += 1;
       if (this.limited) {
