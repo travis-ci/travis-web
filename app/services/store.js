@@ -1,11 +1,10 @@
 /* eslint-disable camelcase */
 import DS from 'ember-data';
-import QueryPath from 'ember-data-query-path/mixins/query-path';
 import Ember from 'ember';
 
 const { service } = Ember.inject;
 
-export default DS.Store.extend(QueryPath, {
+export default DS.Store.extend({
   auth: service(),
   defaultAdapter: 'application',
   adapter: 'application',
