@@ -245,39 +245,19 @@ export default function () {
     }
   });
 
+  this.timing = 400; // default
+
   let featuresURL = config.environment === 'test' ? '/features' : 'https://api.travis-ci.org/features';
-  this.get(featuresURL, () => {
-    return {
-      '@type': 'features',
-      '@href': '/features',
-      '@representation': 'standard',
-      'features': [
-        {
-          '@type': 'feature',
-          '@href': '/feature/123456',
-          '@representation': 'standard',
-          '@permissions': {
-            'enable': true,
-            'disable': true
-          },
-          'id': 123456,
-          'name': 'debug-logging',
-          'description': 'Enable verbose logging of application behavior to help debug issues'
-        },
-        {
-          '@type': 'feature',
-          '@href': '/feature/987654',
-          '@representation': 'standard',
-          '@permissions': {
-            'enable': true,
-            'disable': true
-          },
-          'id': 987654,
-          'name': 'dashboard',
-          'description': 'Enable new dashboard behavior meant to improve the UX'
-        }
-      ]
-    };
+  this.get(featuresURL, function (schema) {
+    return this.serialize(schema.features.all());
+  });
+
+  let featurePutURL = config.environment === 'test' ? '/feature/:id' : 'https://api.travis-ci.org/feature/:id';
+  this.put(featurePutURL, function (schema, request) {
+    let feature = schema.features.find(request.params.id);
+    let requestBody = JSON.parse(request.requestBody);
+    feature.update('enabled', requestBody.enabled);
+    return this.serialize(feature);
   });
 
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
