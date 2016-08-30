@@ -1,4 +1,5 @@
 import TravisRoute from 'travis/routes/basic';
+import config from 'travis/config/environment';
 
 export default TravisRoute.extend({
   queryParams: {
@@ -23,6 +24,7 @@ export default TravisRoute.extend({
   },
 
   afterModel(repos) {
+    /*
     const store = this.get('store');
     return repos.map(function (item) {
       let repo = item;
@@ -34,5 +36,6 @@ export default TravisRoute.extend({
       });
       return repo;
     });
+    */
   }
 });
