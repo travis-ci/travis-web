@@ -7,12 +7,5 @@ export default TravisRoute.extend({
     return this.store.findAll('feature');
   },
 
-  actions: {
-    toggleFeature(feature) {
-      feature.toggleProperty('enabled');
-      feature.save();
-    }
-  },
-
   needsAuth: true
 });

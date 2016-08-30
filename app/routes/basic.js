@@ -49,21 +49,25 @@ export default Ember.Route.extend({
   },
 
   fetchAndSetFeatureFlags() {
-    return this.store.findAll('feature').then((payload) => {
-      this.setFeatureFlags(payload);
-    });
+    let existingFeatures = this.store.peekAll('feature');
+    if (!existingFeatures.length) {
+      return this.store.findAll('feature').then((payload) => {
+        this.setFeatureFlags(payload);
+      });
+    } else {
+      return Ember.RSVP.Promise.resolve(existingFeatures).then((payload) => {
+        this.setFeatureFlags(payload);
+      });
+    }
   },
 
   setFeatureFlags(payload) {
-    console.log('payload', content);
-    let features = content.map((feature) => {
+    let features = payload.map((feature) => {
       return {
         feature: Ember.String.dasherize(feature.get('name')),
         enabled: feature.get('enabled')
       };
     });
-    console.log('converted features', features);
     this.get('features').setup(features);
-    console.log('features service settings', this.get('features'));
   }
 });

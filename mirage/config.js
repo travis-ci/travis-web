@@ -4,10 +4,6 @@ import Mirage from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 
 export default function () {
-  // this.pretender.passthroughRequest = (verb, path, request) => {
-  //   console.log('path', path);
-  // };
-
   if (config.environment === 'development') {
     // this.urlPrefix = 'https://api.travis-ci.org';
     this.passthrough(
@@ -249,9 +245,26 @@ export default function () {
 
   let featuresURL = config.environment === 'test' ? '/features' : 'https://api.travis-ci.org/features';
   this.get(featuresURL, function (schema) {
-    console.log('requesting features!!!');
-    server.createList('feature', 3);
-    return this.serialize(schema.features.all());
+    if (config.environment === 'development') {
+      let features = schema.features.all();
+      if (features.length) {
+        return this.serialize(features);
+      } else {
+        schema.db.features.insert([
+          {
+            name: 'Dashboard',
+            description: 'UX improvements over the current implementation',
+            enabled: false
+          },
+          {
+            name: 'Do Nothing Feature',
+            description: 'This feature does absolutely nothing',
+            enabled: true
+          }
+        ]);
+        return this.serialize(schema.features.all());
+      }
+    }
   });
 
   let featurePutURL = config.environment === 'test' ? '/feature/:id' : 'https://api.travis-ci.org/feature/:id';

@@ -24,7 +24,7 @@
           {{#each model as |feature|}}
             <article class="feature">
               <h2>{{feature.name}}</h2>
-              {{feature-toggle feature=feature onToggleError="handleToggleError" onToggle="toggleFeature"}}
+              {{feature-toggle feature=feature loading=toggleFeatureTask.isRunning onToggleError="handleToggleError" onToggle="toggleFeature"}}
               <p>{{feature.description}}</p>
             </article>
           {{else}}
