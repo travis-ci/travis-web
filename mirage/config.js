@@ -249,6 +249,8 @@ export default function () {
 
   let featuresURL = config.environment === 'test' ? '/features' : 'https://api.travis-ci.org/features';
   this.get(featuresURL, function (schema) {
+    console.log('requesting features!!!');
+    server.createList('feature', 3);
     return this.serialize(schema.features.all());
   });
 
