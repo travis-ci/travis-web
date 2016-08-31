@@ -102,13 +102,11 @@
     {{/if}}
     </div>
 
-    {{#if repo.active}}
-      <aside class="dash-aside">
-        <ul class="lastbuilds">
-          {{#each repo.lastBuilds as |build|}}
-            {{lastbuild-tile repo=repo build=build}}
-          {{/each}}
-        </ul>
-      </aside>
-    {{/if}}
+    <!--<aside class="dash-aside">
+      <ul class="lastbuilds">
+        {{#each repo.lastBuilds as |build|}}
+          {{lastbuild-tile repo=repo build=build}}
+        {{/each}}
+      </ul>
+    </aside>-->
   </div>
