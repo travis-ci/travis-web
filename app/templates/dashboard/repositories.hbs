@@ -1,6 +1,6 @@
 <div class="inner">
   <div class="dashboard-header">
-    {{orgs-filter orgs=orgs selected=selectedOrg action="selectOrg"}}
+    {{orgs-filter orgs=model.accounts selected=selectedOrg action="selectOrg"}}
     {{sync-button}}
   </div>
 
@@ -16,7 +16,7 @@
     <section class="dashboard-section dashboard-active">
       <!-- <h2 class="small-title">All repositories</h2> -->
       <ul class="repo-list">
-        {{#each model as |repo|}}
+        {{#each model.repos as |repo|}}
           {{dashboard-row repo=repo}}
         {{else}}
           {{no-repos}}

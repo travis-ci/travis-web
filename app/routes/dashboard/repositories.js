@@ -15,11 +15,16 @@ export default TravisRoute.extend({
   },
 
   model() {
-    return this.store.query('repo', {
-      limit: 7,
-      active: true,
-      withLastBuild: true,
-      sort_by: 'default_branch.last_build:desc'
+    return Ember.RSVP.hash({
+      repos: this.store.query('repo', {
+        limit: 15,
+        active: true,
+        withLastBuild: true,
+        sort_by: 'default_branch.last_build:desc'
+      }),
+      accounts: this.store.query('account', {
+        all: true
+      })
     });
   },
 
