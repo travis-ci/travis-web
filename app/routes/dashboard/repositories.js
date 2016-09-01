@@ -26,19 +26,9 @@ export default TravisRoute.extend({
         all: true
       })
     });
-  },
-
+  }
+/*
   afterModel(model) {
-    let accounts = model.accounts;
-    // filter for weirdness ...
-    let repos = model.repos.filter(function (item) {
-      if (!Ember.isBlank(item.get('currentBuild.state'))) {
-        return item;
-      }
-    });
-
-    return { repos: repos, accounts: accounts };
-    /*
     const store = this.get('store');
     return repos.map(function (item) {
       let repo = item;
@@ -50,6 +40,6 @@ export default TravisRoute.extend({
       });
       return repo;
     });
-    */
   }
+*/
 });
