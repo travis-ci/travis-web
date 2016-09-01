@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import config from 'travis/config/environment';
 
 export default Ember.Controller.extend({
   queryParams: ['account'],
 
-  filteredRepos: Ember.computed('model', 'account', function() {
+  filteredRepos: Ember.computed('model', 'account', function () {
     let login = this.get('account');
     let repos = this.get('model.repos');
 
@@ -31,7 +30,6 @@ export default Ember.Controller.extend({
         }
       });
     }
-    
     return repos;
   }),
 
@@ -39,7 +37,7 @@ export default Ember.Controller.extend({
     let accounts = this.get('model.accounts');
     let filter =  this.get('account');
 
-    let filteredAccount = accounts.filter(function(item) {
+    let filteredAccount = accounts.filter(function (item) {
       if (item.get('login') === filter) {
         return item;
       }
