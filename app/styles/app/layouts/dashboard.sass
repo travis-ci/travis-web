@@ -119,3 +119,8 @@ section[class^="dash-"]
     background-color: $oxide-blue
     color: white
     cursor: pointer
+
+.dash-default,
+.dash-last
+  @each $key, $value in $stateMap
+    +rowColor(#{$key}, map-get($value, color))

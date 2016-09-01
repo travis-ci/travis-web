@@ -21,18 +21,19 @@
       </header>
 
   {{#if repo.active}}
-    <section class="dash-default">
+    <section class="dash-default {{repo.defaultBranch.lastBuild.state}} ">
       <h3 class="label">Default branch</h3>
       <p class="row-content color">
         {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
         {{#link-to "build" repo.owner repo.name repo.defaultBranch.lastBuild.id title="Last build on the default branch"}}
-        {{repo.defaultBranch.name}}
-        {{#if repo.active}} {{repo.defaultBranch.lastBuild.state}}{{/if}}{{/link-to}}
+          {{repo.defaultBranch.name}}
+          {{repo.defaultBranch.lastBuild.state}}
+        {{/link-to}}
       </p>
     </section>
 
     {{#if repo.currentBuild}}
-      <section class="dash-last">
+      <section class="dash-last {{repo.currentBuild.state}}">
         <h3 class="label">Last build</h3>
         <p class="row-content color">
           {{status-icon status=repo.currentBuild.state}}
@@ -41,9 +42,6 @@
           {{/link-to}}
         </p>
       </section>
-    {{/if}}
-
-    {{#if repo.currentBuild}}
       <section class="dash-commit">
         <h3 class="label">Commit</h3>
         <p class="row-content">
@@ -60,9 +58,9 @@
         <p class="row-content" title="{{repo.currentBuild.finishedAt}}">
           <span class="icon-calendar"></span>
           <span class="label-align">
-            {{#if repo.currentBuild}}
+            {{#if repo.currentBuild.finishedAt}}
               {{format-time repo.currentBuild.finishedAt}}
-            {{else}}running{{/if}}</span>
+            {{else}}still running{{/if}}</span>
         </p>
       </section>
     {{/if}}
@@ -92,13 +90,13 @@
         </div>
       {{/if}}
     {{else}}
-      <div class="dash-button">
+      <!--<div class="dash-button">
         {{#if displayActivateLink}}
           <button type="button" class="activate-repo-button is-active" {{action 'activateRepo'}}>Activate repository</button>
         {{else}}
           <p class="activate-repo-button" data-tooltip="You need admin rights to activate a repository">Actiavte repository</p>
         {{/if}}
-      </div>
+      </div>-->
     {{/if}}
     </div>
 
