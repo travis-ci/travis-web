@@ -1,5 +1,5 @@
+import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
-import config from 'travis/config/environment';
 
 export default TravisRoute.extend({
   queryParams: {
@@ -17,7 +17,7 @@ export default TravisRoute.extend({
   model() {
     return Ember.RSVP.hash({
       repos: this.store.query('repo', {
-        limit: 15,
+        limit: 50,
         active: true,
         withLastBuild: true,
         sort_by: 'default_branch.last_build:desc'
@@ -28,7 +28,16 @@ export default TravisRoute.extend({
     });
   },
 
-  afterModel(repos) {
+  afterModel(model) {
+    let accounts = model.accounts;
+    // filter for weirdness ...
+    let repos = model.repos.filter(function (item) {
+      if (!Ember.isBlank(item.get('currentBuild.state'))) {
+        return item;
+      }
+    });
+
+    return { repos: repos, accounts: accounts };
     /*
     const store = this.get('store');
     return repos.map(function (item) {
