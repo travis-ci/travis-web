@@ -9,7 +9,6 @@ export default Ember.Component.extend({
       this.toggleProperty('showFilter');
       return false;
     },
-
     select(org) {
       this.toggleProperty('showFilter');
       return this.sendAction('action', org);
