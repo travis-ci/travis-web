@@ -26,8 +26,7 @@
       <p class="row-content color">
         {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
         {{#link-to "build" repo.owner repo.name repo.defaultBranch.lastBuild.id title="Last build on the default branch"}}
-          {{repo.defaultBranch.name}}
-          {{repo.defaultBranch.lastBuild.state}}
+          {{repo.defaultBranch.name}} {{repo.defaultBranch.lastBuild.state}}
         {{/link-to}}
       </p>
     </section>
