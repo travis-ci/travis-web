@@ -16,7 +16,6 @@
     <div class="dash-main">
       <header class="fade-out dash-header">
         <h2 class="row-label">{{#link-to "owner" repo.owner title=repo.owner}}{{repo.owner}}{{/link-to}}</h2>
-
         <h1 class="row-content">{{#link-to "repo" repo.owner repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
       </header>
 
@@ -67,18 +66,16 @@
 
     {{#if repo.active}}
       {{#if displayMenuTofu}}
-        <div class="dash-menu">
+      <div class="dash-menu">
+        {{#if isTriggering}}
+          {{loading-indicator}}
+        {{else}}
           <div class="dropup {{if dropupIsOpen "is-open"}}">
             <button type="button" class="dropup-tofu" {{action "openDropup"}}>open action menu</button>
             <ul class="dropup-list">
-              <li><a href="#" title="Trigger a new build">
-                <span class="icon-trigger"></span>
-                <span class="label-align">Trigger a build</span></a></li>
-              {{#if displayActiavteLink}}
-                <li><a href="#" title="Deactivate builds for this repository">
-                  <span class="icon-deactivate"></span>
-                  <span class="label-align">Deactivate repository</span></a></li>
-              {{/if}}
+              <li><a href="#" title="Trigger a build on the default branch" {{action 'triggerBuild'}}>
+                  <span class="icon-trigger"></span>
+                  <span class="label-align">Trigger a build</span></a></li>
               <li>
                 {{#link-to 'settings' repo title="Settings for this repository"}}
                 <span class="icon-settings"></span>
@@ -86,7 +83,8 @@
                 {{/link-to}}</li>
             </ul>
           </div>
-        </div>
+        {{/if}}
+      </div>
       {{/if}}
     {{else}}
       <!--<div class="dash-button">

@@ -6,12 +6,12 @@ const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   permissions: service(),
+  ajax: service(),
   tagName: 'li',
   classNameBindings: ['repo.active:is-active'],
   classNames: ['rows', 'rows--dashboard'],
   isLoading: false,
   isTriggering: false,
-  hasTriggered: false,
   dropupIsOpen: false,
 
   currentBuild: alias('repo.currentBuild'),
@@ -24,28 +24,31 @@ export default Ember.Component.extend({
     return this.get('permissions').hasPushPermission(this.get('repo'));
   }),
 
-  displayActivateLink: Ember.computed('permissions.all', 'repo', function () {
-    return this.get('permissions').hasAdminPermission(this.get('repo'));
-  }),
-
   openDropup() {
     this.toggleProperty('dropupIsOpen');
-    Ember.run.later((() => { self.toggleProperty('dropupIsOpen'); }), 2000);
+    Ember.run.later((() => { this.set('dropupIsOpen', false); }), 2000);
   },
 
-  tiggerNewBuild() {
+  triggerBuild() {
+    const self = this;
+    let data = {};
+    data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
 
-    // send post request to trigger endpoint
-    // set isTriggering
-    // set hasTiggered
-
-    // maybe use ember concurrency?
+    this.get('ajax').ajax(`/v3/repo/${this.get('repo.id')}/requests`, 'POST', { data })
+      .then(() => {
+        // console.log(response);
+        self.set('isTriggering', false);
+      });
+    this.set('dropupIsOpen', false);
+    this.set('isTriggering', true);
   },
 
   actions: {
     openDropup() {
       this.openDropup();
+    },
+    triggerBuild() {
+      this.triggerBuild();
     }
   }
 });
-
