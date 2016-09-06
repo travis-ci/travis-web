@@ -128,9 +128,9 @@ export default Ember.Component.extend({
           this.unfoldHighlight();
         }
       });
-      this.limit = new Log.Limit(Log.LIMIT, Ember.run(() => {
-        this.set('limited', true);
-      }));
+      this.limit = new Log.Limit(Log.LIMIT, () => {
+        Ember.run(() => this.set('limited', true));
+      });
       this.engine = Log.create({
         listeners: [this.scroll, this.limit]
       });
