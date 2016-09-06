@@ -37,9 +37,10 @@ export default Ember.Component.extend({
 
     this.get('ajax').ajax(`/v3/repo/${this.get('repo.id')}/requests`, 'POST', { data })
       .then(() => {
-        // console.log(response);
         self.set('isTriggering', false);
-        self.get('flashes').success(`You successfully triggered a build for ${self.get('repo.slug')}. I might take a moment to show up.`);
+        self.get('flashes')
+          .success(`You successfully triggered a build for ${self.get('repo.slug')}.
+                   It might take a moment to show up though.`);
       });
     this.set('dropupIsOpen', false);
     this.set('isTriggering', true);
