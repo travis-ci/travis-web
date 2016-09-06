@@ -53,4 +53,10 @@ test('visiting a job with a truncated log', function (assert) {
   andThen(function () {
     assert.ok(jobPage.hasTruncatedLog);
   });
+
+  jobPage.restartJob();
+
+  andThen(() => {
+    assert.notOk(jobPage.hasTruncatedLog);
+  });
 });
