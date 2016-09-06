@@ -7,6 +7,7 @@ const { alias } = Ember.computed;
 export default Ember.Component.extend({
   permissions: service(),
   ajax: service(),
+  flashes: service(),
   tagName: 'li',
   classNameBindings: ['repo.active:is-active'],
   classNames: ['rows', 'rows--dashboard'],
@@ -38,6 +39,7 @@ export default Ember.Component.extend({
       .then(() => {
         // console.log(response);
         self.set('isTriggering', false);
+        self.get('flashes').success(`You successfully triggered a build for ${self.get('repo.slug')}. I might take a moment to show up.`);
       });
     this.set('dropupIsOpen', false);
     this.set('isTriggering', true);
