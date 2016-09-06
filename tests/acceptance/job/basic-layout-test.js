@@ -16,8 +16,6 @@ test('visiting job-view', function (assert) {
   job.save();
   commit.save();
 
-  console.log('i have an application?', this.application);
-
   // create log
   server.create('log', { id: job.id });
 
@@ -30,9 +28,6 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.author, 'Mr T authored and committed');
 
     assert.equal(jobPage.log, 'Hello log');
-    window.ww = jobPage;
-    window.aaa = this.application;
-    debugger;
     assert.notOk(jobPage.hasTruncatedLog);
   });
 });
