@@ -17,7 +17,7 @@ export default TravisRoute.extend({
   model() {
     return Ember.RSVP.hash({
       repos: this.store.query('repo', {
-        limit: 50,
+        limit: 100,
         active: true,
         withLastBuild: true,
         sort_by: 'default_branch.last_build:desc'
