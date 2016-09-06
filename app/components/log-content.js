@@ -113,6 +113,7 @@ export default Ember.Component.extend({
 
   createEngine(log) {
     if (log || (log = this.get('log'))) {
+      this.set('limited', false);
       this.clearLogElement();
       log.onClear(() => {
         this.teardownLog();
