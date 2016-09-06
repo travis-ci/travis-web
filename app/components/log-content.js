@@ -125,7 +125,11 @@ export default Ember.Component.extend({
         }
       });
       this.limit = new Log.Limit(Log.LIMIT, () => {
-        Ember.run(() => this.set('limited', true));
+        Ember.run(() => {
+          if (!this.isDestroying) {
+            this.set('limited', true);
+          }
+        });
       });
       this.engine = Log.create({
         listeners: [this.scroll, this.limit]
