@@ -30,6 +30,8 @@ export default Ember.Mixin.create({
     return this.get('item.canRestart') && this.get('userHasPermissionForRepo');
   }),
 
+  canDebug: Ember.computed.and('userHasPermissionForRepo', 'item.canDebug'),
+
   displayFlashError(status, action) {
     let type = this.get('type');
     if (status === 422 || status === 400) {

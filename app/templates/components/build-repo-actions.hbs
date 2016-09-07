@@ -17,7 +17,9 @@
     </a>
 
     {{#if features.proVersion}}
-      <a href="#" {{action "debugJob"}} class="action-button--debug" title="Restart as debug job">Debug job</a>
+      {{#if canDebug}}
+        <a href="#" {{action "debugJob"}} class="action-button--debug" title="Restart as debug job">Debug job</a>
+      {{/if}}
     {{/if}}
   {{/if}}
 {{/if}}

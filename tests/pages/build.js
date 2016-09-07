@@ -4,6 +4,7 @@ let {
   clickable,
   collection,
   hasClass,
+  isHidden,
   visitable,
   text
 } = PageObject;
@@ -28,6 +29,8 @@ export default PageObject.create({
   debugBuild: clickable('.action-button--debug'),
   notification: text('p.flash-message'),
   singleJobLogText: text('.log-body pre'),
+
+  hasNoDebugButton: isHidden('.action-button--debug'),
 
   requiredJobs: collection({
     scope: '.jobs-list:eq(0)',

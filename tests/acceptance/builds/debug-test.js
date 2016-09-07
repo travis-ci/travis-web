@@ -37,3 +37,21 @@ test('debugging single-job build', function (assert) {
     assert.equal(buildPage.notification, 'The build was successfully restarted in debug mode.');
   });
 });
+
+test('multi-job builds cannot be debugged', function (assert) {
+  withFeature('pro-version');
+
+  let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  // create branch
+  server.create('branch', {});
+  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let build = server.create('build', { number: '5', repository_id: repository.id, state: 'passed', commit_id: commit.id, commit });
+  server.create('job', { number: '1234.1', repository_id: repository.id, state: 'passed', build, commit_id: commit.id });
+  server.create('job', { number: '1234.2', repository_id: repository.id, state: 'passed', build, commit_id: commit.id });
+
+  buildPage.visit();
+
+  andThen(() => {
+    assert.ok(buildPage.hasNoDebugButton);
+  });
+});
