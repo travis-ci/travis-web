@@ -15,9 +15,9 @@
     <a href="#" {{action "restart"}} class="action-button--restart" title="Restart job">
       Restart job
     </a>
-  {{/if}}
 
-  {{#if features.proVersion}}
-    <a href="#" {{action "debugJob"}} class="action-button--debug" title="Restart as debug job">Debug job</a>
+    {{#if features.proVersion}}
+      <a href="#" {{action "debugJob"}} class="action-button--debug" title="Restart as debug job">Debug job</a>
+    {{/if}}
   {{/if}}
 {{/if}}
