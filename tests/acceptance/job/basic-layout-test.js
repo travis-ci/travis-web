@@ -50,7 +50,7 @@ test('visiting a job with a truncated log', function (assert) {
   const longLog = new Array(config.logLimit + 1).join('🤔\n');
   server.create('log', { id: job.id, content: longLog });
 
-  visit('/travis-ci/travis-web/jobs/' + job.id);
+  jobPage.visit();
 
   // An unfortunate workaround for log displaying being outside Ember facilities.
   //eslint-disable-next-line
