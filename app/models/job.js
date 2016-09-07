@@ -128,8 +128,13 @@ export default Model.extend(DurationCalculations, {
   },
 
   debug() {
-    return this.get('ajax').post(`/job/${this.get('id')}/debug`, {
-      quiet: true
+    return this.get('ajax').ajax(`/job/${this.get('id')}/debug`, 'POST', {
+      data: {
+        quiet: true
+      },
+      headers: {
+        'Travis-API-Version': '3'
+      }
     });
   },
 
