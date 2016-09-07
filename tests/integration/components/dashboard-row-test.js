@@ -1,9 +1,20 @@
 import Ember from 'ember';
 import { test, moduleForComponent } from 'ember-qunit';
+import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
 
+const ajaxStub = Ember.Service.extend({
+  ajax() {
+    // console.log('calling ....');
+  }
+});
+
 moduleForComponent('dashboard-row', 'Integration | Component | dashboard row', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.register('service:ajax', ajaxStub);
+    this.inject.service('ajax', { as: 'ajax' });
+  }
 });
 
 test('it renders data correctly', function () {
@@ -46,8 +57,12 @@ test('it renders data correctly', function () {
 
   ok(this.$().find('.dash-default').hasClass('passed'), 'Indicates right state of default branch last build');
   ok(this.$().find('.dash-last').hasClass('failed'), 'Indicates right state of current build');
-
   equal(this.$().find('.dash-default .row-content a').text().trim(), 'master passed', 'Displays the default branch name and state');
-
   equal(this.$().find('.dash-last .row-content a').text().trim(), '#2 failed', 'Displays the number and state of the current build');
+
+  this.$('.dropup-list a:first-of-type').click();
+
+  wait().then(() => {
+    // expect service mock to be called?
+  });
 });
