@@ -2,6 +2,8 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import jobPage from 'travis/tests/pages/job';
 
+import config from 'travis/config/environment';
+
 moduleForAcceptance('Acceptance | job/basic layout');
 
 test('visiting job-view', function (assert) {
@@ -45,7 +47,7 @@ test('visiting a job with a truncated log', function (assert) {
   commit.save();
 
   // create log
-  const longLog = new Array(10000 + 1).join('🤔\n');
+  const longLog = new Array(config.logLimit + 1).join('🤔\n');
   server.create('log', { id: job.id, content: longLog });
 
   visit('/travis-ci/travis-web/jobs/' + job.id);

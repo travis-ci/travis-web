@@ -4,10 +4,12 @@ import LinesSelector from 'travis/utils/lines-selector';
 import LogFolder from 'travis/utils/log-folder';
 import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls';
 
+import config from 'travis/config/environment';
+
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
 
-Log.LIMIT = 10000;
+Log.LIMIT = config.logLimit;
 
 Log.Scroll = function (options = {}) {
   this.beforeScroll = options.beforeScroll;
