@@ -127,6 +127,12 @@ export default Model.extend(DurationCalculations, {
     return this.get('ajax').post('/jobs/' + (this.get('id')) + '/restart');
   },
 
+  debug() {
+    return this.get('ajax').post(`/job/${this.get('id')}/debug`, {
+      quiet: true
+    });
+  },
+
   appendLog(part) {
     return this.get('log').append(part);
   },

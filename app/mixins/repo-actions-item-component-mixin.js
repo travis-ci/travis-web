@@ -79,6 +79,25 @@ export default Ember.Mixin.create({
           this.displayFlashError(xhr.status, 'cancel');
         });
       });
+    },
+
+    debugJob() {
+      if (this.get('restarting')) {
+        return;
+      }
+      this.set('restarting', true);
+      let type = this.get('type');
+      eventually(this.get('item'), (record) => {
+        record.debug().then(() => {
+          this.set('restarting', false);
+          this.get('flashes').notice(`The ${type} was successfully restarted in debug mode.`);
+        }, (xhr) => {
+          this.set('restarting', false);
+          this.get('flashes')
+            .error(`An error occurred. The ${type} could not be restarted in debug mode.`);
+          this.displayFlashError(xhr.status, 'debug');
+        });
+      });
     }
   }
 });
