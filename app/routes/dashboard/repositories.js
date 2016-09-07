@@ -27,7 +27,7 @@ export default TravisRoute.extend({
       })
     });
   }
-/*
+
   afterModel(model) {
     const store = this.get('store');
     return repos.map(function (item) {
