@@ -25,6 +25,7 @@ export default PageObject.create({
   visit: visitable('travis-ci/travis-web/builds/1'),
   restartBuild: clickable('.action-button--restart'),
   cancelBuild: clickable('.action-button--cancel'),
+  debugBuild: clickable('.action-button--debug'),
   notification: text('p.flash-message'),
   singleJobLogText: text('.log-body pre'),
 

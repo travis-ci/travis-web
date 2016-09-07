@@ -131,6 +131,10 @@ Build.reopen({
     return this.get('ajax').post(`/builds/${this.get('id')}/restart`);
   },
 
+  debug() {
+    return Ember.RSVP.all(this.get('jobs').map(job => job.debug()));
+  },
+
   formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
