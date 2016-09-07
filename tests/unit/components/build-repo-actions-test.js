@@ -28,7 +28,7 @@ test('it shows cancel button if canCancel is true', function () {
     canCancel: true
   });
   this.render();
-  return ok(component.$('a[title="Cancel Build"]').length, 'cancel link should be visible');
+  return ok(component.$('a[title="Cancel build"]').length, 'cancel link should be visible');
 });
 
 test('it shows restart button if canRestart is true', function () {
@@ -37,7 +37,7 @@ test('it shows restart button if canRestart is true', function () {
     canRestart: true
   });
   this.render();
-  return ok(component.$('a[title="Restart Build"]').length, 'restart link should be visible');
+  return ok(component.$('a[title="Restart build"]').length, 'restart link should be visible');
 });
 
 test('user can cancel if she has permissions to a repo and build is cancelable', function () {

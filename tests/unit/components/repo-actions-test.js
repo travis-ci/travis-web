@@ -8,5 +8,5 @@ moduleForComponent('repo-actions', 'RepoActionsComponent', {
 test('it renders', function () {
   let component = this.subject({});
   this.render();
-  return ok(component.$().hasClass('repo-main-tools'), 'component has class');
+  return ok(component.$().hasClass('build-tools'), 'component has class');
 });
