@@ -1,4 +1,4 @@
-<div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
+<div class="wrapper {{if features.dashboard 'cheatcode'}} {{if auth.signedIn 'non-centered' 'centered'}}">
 
   <header id="top" class="top">
     {{render "top"}}
@@ -17,7 +17,7 @@
   </aside>
 </div>
 
-<footer class="{{if auth.signedIn 'hidden'}}">
+<footer>
   {{render "footer"}}
 </footer>
 

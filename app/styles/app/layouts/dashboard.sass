@@ -65,7 +65,7 @@
   position: relative
   @media #{$medium-up}
     padding: 0 1.5em 0
-
+    height: 5rem
 
 .dash-main
   @media #{$small-only}
@@ -79,7 +79,8 @@
 
 .dash-aside
   @media #{$medium-up}
-    position: absolute
+    position: relative
+    top: -2rem
     width: 100%
     bottom: 0
     overflow: hidden
@@ -118,3 +119,8 @@ section[class^="dash-"]
     background-color: $oxide-blue
     color: white
     cursor: pointer
+
+.dash-default,
+.dash-last
+  @each $key, $value in $stateMap
+    +rowColor(#{$key}, map-get($value, color))
