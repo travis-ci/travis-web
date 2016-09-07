@@ -50,6 +50,10 @@ test('visiting a job with a truncated log', function (assert) {
 
   visit('/travis-ci/travis-web/jobs/' + job.id);
 
+  // An unfortunate workaround for log displaying being outside Ember facilities.
+  //eslint-disable-next-line
+  waitForElement('.log-container p.warning');
+
   andThen(function () {
     assert.ok(jobPage.hasTruncatedLog);
   });
