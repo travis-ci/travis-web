@@ -1,5 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
+import dashboardPage from 'travis/tests/pages/dashboard';
 
 moduleForAcceptance('Acceptance | dashboard/repositories', {
   beforeEach() {
@@ -12,6 +13,9 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
     signInUser(currentUser);
 
     server.create('repository', { slug: 'travis-ci/travis-web' });
+    server.create('repository', { slug: 'travis-repos/repo-python' });
+    server.create('repository', { slug: 'travis-repos/repo-clojure' });
+    server.create('repository', { slug: 'travis-ci/travis-lol' });
   }
 });
 
@@ -31,5 +35,6 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
 
   andThen(() => {
     assert.equal(currentURL(), '/dashboard/');
+    assert.equal(dashboardPage.activeRepos().count, 4, 'lists all repos of the user');
   });
 });
