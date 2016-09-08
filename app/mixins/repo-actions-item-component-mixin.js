@@ -13,7 +13,6 @@ export default Ember.Mixin.create({
   user: alias('auth.currentUser'),
 
   restarting: false,
-  cancelling: false,
 
   userHasPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
     var repo, user;
