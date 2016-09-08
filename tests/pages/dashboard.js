@@ -9,7 +9,7 @@ import {
 
 export default create({
   visit: visitable('/dashboard'),
-  accountFilter: clickable('.dashboard-header .organisation-filter'),
+  accountFilter: clickable('.dashboard-header .organisation-filter .option-list a:first-of-type'),
   syncButton: clickable('.dashboard-header .sync-button button'),
   syncButtonIsSyncing: hasClass('is-syncing', '.dashboard-header .sync-button button'),
   activeRepos: collection({
@@ -18,8 +18,8 @@ export default create({
     item: {
       owner: text('.dash-header .row-label a'),
       repoName: text('.dash-header .row-content a'),
-      defaultBranch: text('.dash-default .row-content a'),
-      lastBuild: text('.dash-last .row-content a'),
+      defaultBranch: text('.dash-default a'),
+      lastBuild: text('.dash-last a .label-align'),
       triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a')
     }
   }),
