@@ -43,7 +43,7 @@ export default Ember.Component.extend({
         this.get('flashes').success('Repository has been successfully activated.');
       }
     } catch (e) {
-      this.get('flashes').error('There was an error while trying to active the repository.');
+      this.get('flashes').error('There was an error while trying to activate the repository.');
     }
-  })
+  }).drop()
 });

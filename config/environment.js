@@ -33,7 +33,8 @@ module.exports = function (environment) {
 
     heap: {
       projectId: '1049054202'
-    }
+    },
+    logLimit: 10000
   };
 
   ENV.featureFlags = {
@@ -124,6 +125,8 @@ module.exports = function (environment) {
     };
 
     ENV.skipConfirmations = true;
+
+    ENV.logLimit = 100;
   }
 
   if (environment === 'production') {

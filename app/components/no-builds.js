@@ -12,5 +12,5 @@ export default Ember.Component.extend({
       },
       type: 'POST'
     });
-  })
+  }).drop()
 });

@@ -12,5 +12,5 @@ export default Ember.Component.extend({
     } catch (e) {}
 
     this.sendAction('sshKeyDeleted');
-  })
+  }).drop()
 });

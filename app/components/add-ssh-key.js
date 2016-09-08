@@ -73,5 +73,5 @@ export default Ember.Component.extend({
         return this.addErrorsFromResponse(errors);
       }
     }
-  })
+  }).drop()
 });

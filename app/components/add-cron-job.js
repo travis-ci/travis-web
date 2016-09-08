@@ -37,7 +37,7 @@ export default Ember.Component.extend({
     this.reset();
 
     yield cron.save();
-  }),
+  }).drop(),
 
   intervals: ['monthly', 'weekly', 'daily'],
 
