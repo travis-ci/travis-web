@@ -73,5 +73,5 @@ export default Ember.Component.extend({
 
   delete: task(function* () {
     yield this.get('cron').destroyRecord();
-  })
+  }).drop()
 });

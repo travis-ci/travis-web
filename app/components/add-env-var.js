@@ -40,7 +40,7 @@ export default Ember.Component.extend({
       } catch (e) {
       }
     }
-  }),
+  }).drop(),
 
   actions: {
     nameChanged() {
