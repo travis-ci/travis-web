@@ -1,10 +1,9 @@
-<header id="top" class="top">
+<header id="top" class="top" style={{if features.makeHeaderPink 'background-color: pink;' ''}}>
   <div class="centered">
     {{render "top"}}
   </div>
 </header>
 
-{{log features._flags}}
 <div class="centered" style="background: white;">
   <div class="wrapper-main">
     <div id="main" class="mail" role="main">
@@ -20,6 +19,9 @@
         <h1>{{accountName}}</h1>
       </div>
 
+      {{#if featuresLoading}}
+        {{loading-indicator}}
+      {{else}}
       <div id="administerable-hooks">
         <ul class="profile-hooklist">
           {{#each model as |feature|}}
@@ -34,6 +36,7 @@
           {{/each}}
         </ul>
       </div>
+      {{/if}}
     </div>
   </div>
 </div>

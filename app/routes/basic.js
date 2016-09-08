@@ -4,7 +4,7 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend({
   auth: service(),
-  features: service(),
+  fetchFeatures: service(),
 
   activate() {
     if (this.routeName !== 'error') {
@@ -16,7 +16,7 @@ export default Ember.Route.extend({
   beforeModel(transition) {
     if (!this.signedIn()) {
       this.auth.autoSignIn();
-      this.fetchAndSetFeatureFlags();
+      this.get('fetchFeatures.fetchTask').perform();
     }
     if (!this.signedIn() && this.get('needsAuth')) {
       this.auth.set('afterSignInTransition', transition);
@@ -24,7 +24,7 @@ export default Ember.Route.extend({
     } else if (this.redirectToProfile(transition)) {
       return this.transitionTo('profile', this.get('auth.currentUser.login'));
     } else {
-      this.fetchAndSetFeatureFlags();
+      this.get('fetchFeatures.fetchTask').perform();
       return this._super(...arguments);
     }
   },
@@ -48,30 +48,4 @@ export default Ember.Route.extend({
     }
   },
 
-  fetchAndSetFeatureFlags() {
-    let existingFeatures = this.get('store').peekAll('feature');
-    console.log('existingFeatures?', Ember.isEmpty(existingFeatures));
-    if (Ember.isEmpty(existingFeatures)) {
-      return this.store.findAll('feature').then((payload) => {
-        this.setFeatureFlags(payload);
-        console.log('post request:', Ember.isEmpty(existingFeatures));
-      });
-    }
-    // } else {
-    //   return Ember.RSVP.Promise.resolve(existingFeatures).then((payload) => {
-    //     this.setFeatureFlags(payload);
-    //   });
-    // }
-  },
-
-  setFeatureFlags(featureSet) {
-    console.log('features #', featureSet.length);
-    let features = featureSet.map((feature) => {
-      return {
-        feature: feature.get('dasherizedName'),
-        enabled: feature.get('enabled')
-      };
-    });
-    this.get('features').setup(features);
-  }
 });

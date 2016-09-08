@@ -9,11 +9,15 @@ export default function () {
     this.passthrough(
       'https://api.travis-ci.org/users/**',
       'https://api.travis-ci.org/v3/**',
+      'https://api.travis-ci.org/builds',
       'https://api.travis-ci.org/builds/**',
       'https://api.travis-ci.org/jobs',
+      'https://api.travis-ci.org/jobs/**',
       'https://api.travis-ci.org/repos',
+      'https://api.travis-ci.org/repo/**',
       'https://api.travis-ci.org/accounts',
       'https://api.travis-ci.org/hooks',
+      'https://s3.amazonaws.com/**',
       'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
     );
   }
@@ -247,7 +251,7 @@ export default function () {
   this.get(featuresURL, function (schema) {
     if (config.environment === 'development') {
       let features = schema.features.all();
-      if (features.length) {
+      if (features.models.length) {
         return this.serialize(features);
       } else {
         schema.db.features.insert([
@@ -255,6 +259,11 @@ export default function () {
             name: 'Dashboard',
             description: 'UX improvements over the current implementation',
             enabled: false
+          },
+          {
+            name: 'Make header pink',
+            description: 'This feature changes the background color of the header',
+            enabled: true
           },
           {
             name: 'Do Nothing Feature',
