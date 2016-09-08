@@ -57,7 +57,9 @@ export default Ember.Mixin.create({
 
     yield eventually(this.get('item'), (record) => {
       record.debug().then(() => {
-        this.get('flashes').notice(`The ${type} was successfully restarted in debug mode.`);
+        this.get('flashes')
+          .notice(`The ${type} was successfully restarted in debug mode.
+            Watch the log for a host to connect to.`);
       }, (xhr) => {
         this.get('flashes')
           .error(`An error occurred. The ${type} could not be restarted in debug mode.`);

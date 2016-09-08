@@ -34,7 +34,7 @@ test('debugging single-job build', function (assert) {
 
   andThen(function () {
     assert.deepEqual(requestBodies.pop(), { quiet: true });
-    assert.equal(buildPage.notification, 'The build was successfully restarted in debug mode.');
+    assert.equal(buildPage.notification, 'The build was successfully restarted in debug mode. Watch the log for a host to connect to.');
   });
 });
 

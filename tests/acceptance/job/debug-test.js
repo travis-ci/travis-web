@@ -39,6 +39,6 @@ test('debugging job', function (assert) {
 
   andThen(function () {
     assert.deepEqual(requestBodies.pop(), { quiet: true });
-    assert.equal(jobPage.notification, 'The job was successfully restarted in debug mode.');
+    assert.equal(jobPage.notification, 'The job was successfully restarted in debug mode. Watch the log for a host to connect to.');
   });
 });
