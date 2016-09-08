@@ -38,7 +38,7 @@ export default Ember.Component.extend({
 
       this.set('value', 0);
     }
-  }),
+  }).drop(),
 
   actions: {
     limitChanged() {

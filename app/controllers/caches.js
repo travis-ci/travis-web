@@ -22,5 +22,5 @@ export default Ember.Controller.extend({
 
       this.set('model', Ember.Object.create());
     }
-  })
+  }).drop()
 });

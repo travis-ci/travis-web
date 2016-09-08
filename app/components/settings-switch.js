@@ -20,7 +20,7 @@ export default Ember.Component.extend({
     } catch (e) {
       this.get('flashes').error('There was an error while saving settings. Please try again.');
     }
-  }),
+  }).drop(),
 
   click() {
     this.get('save').perform();
