@@ -4,6 +4,7 @@
   </div>
 </header>
 
+{{log features._flags}}
 <div class="centered" style="background: white;">
   <div class="wrapper-main">
     <div id="main" class="mail" role="main">
@@ -24,7 +25,7 @@
           {{#each model as |feature|}}
             <article class="feature">
               <h2>{{feature.name}}</h2>
-              {{feature-toggle feature=feature loading=toggleFeatureTask.isRunning onToggleError="handleToggleError" onToggle="toggleFeature"}}
+              {{feature-toggle feature=feature}}
               <p>{{feature.description}}</p>
             </article>
           {{else}}

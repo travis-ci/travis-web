@@ -49,22 +49,26 @@ export default Ember.Route.extend({
   },
 
   fetchAndSetFeatureFlags() {
-    let existingFeatures = this.store.peekAll('feature');
-    if (!existingFeatures.length) {
+    let existingFeatures = this.get('store').peekAll('feature');
+    console.log('existingFeatures?', Ember.isEmpty(existingFeatures));
+    if (Ember.isEmpty(existingFeatures)) {
       return this.store.findAll('feature').then((payload) => {
         this.setFeatureFlags(payload);
-      });
-    } else {
-      return Ember.RSVP.Promise.resolve(existingFeatures).then((payload) => {
-        this.setFeatureFlags(payload);
+        console.log('post request:', Ember.isEmpty(existingFeatures));
       });
     }
+    // } else {
+    //   return Ember.RSVP.Promise.resolve(existingFeatures).then((payload) => {
+    //     this.setFeatureFlags(payload);
+    //   });
+    // }
   },
 
-  setFeatureFlags(payload) {
-    let features = payload.map((feature) => {
+  setFeatureFlags(featureSet) {
+    console.log('features #', featureSet.length);
+    let features = featureSet.map((feature) => {
       return {
-        feature: Ember.String.dasherize(feature.get('name')),
+        feature: feature.get('dasherizedName'),
         enabled: feature.get('enabled')
       };
     });
