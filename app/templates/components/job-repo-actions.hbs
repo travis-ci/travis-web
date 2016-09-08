@@ -9,15 +9,15 @@
 {{/if}}
 
 {{#if canRestart}}
-  {{#if restarting}}
+  {{#if restarters.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action "restart"}} class="action-button--restart" title="Restart job">
+    <a href="#" {{action (perform restart)}} class="action-button--restart" title="Restart job">
       Restart job
     </a>
 
     {{#if features.proVersion}}
-      <a href="#" {{action "debug"}} class="action-button--debug" title="Restart as debug job">Debug job</a>
+      <a href="#" {{action (perform debug)}} class="action-button--debug" title="Restart as debug job">Debug job</a>
     {{/if}}
   {{/if}}
 {{/if}}

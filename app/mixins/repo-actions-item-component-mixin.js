@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
 
-import { task } from 'ember-concurrency';
+import { task, taskGroup } from 'ember-concurrency';
 
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
@@ -11,8 +11,6 @@ export default Ember.Mixin.create({
   auth: service(),
 
   user: alias('auth.currentUser'),
-
-  restarting: false,
 
   userHasPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
     var repo, user;
@@ -39,6 +37,35 @@ export default Ember.Mixin.create({
     });
   }).drop(),
 
+  restarters: taskGroup().drop(),
+
+  restart: task(function * () {
+    let type = this.get('type');
+
+    yield eventually(this.get('item'), (record) => {
+      record.restart().then(() => {
+        this.get('flashes').notice(`The ${type} was successfully restarted.`);
+      }, (xhr) => {
+        this.get('flashes').error(`An error occurred. The ${type} could not be restarted.`);
+        this.displayFlashError(xhr.status, 'restart');
+      });
+    });
+  }).group('restarters'),
+
+  debug: task(function * () {
+    let type = this.get('type');
+
+    yield eventually(this.get('item'), (record) => {
+      record.debug().then(() => {
+        this.get('flashes').notice(`The ${type} was successfully restarted in debug mode.`);
+      }, (xhr) => {
+        this.get('flashes')
+          .error(`An error occurred. The ${type} could not be restarted in debug mode.`);
+        this.displayFlashError(xhr.status, 'debug');
+      });
+    });
+  }).group('restarters'),
+
   displayFlashError(status, action) {
     let type = this.get('type');
     if (status === 422 || status === 400) {
@@ -50,45 +77,6 @@ export default Ember.Mixin.create({
     } else {
       let actionTerm = action === 'restart' ? 'restarting' : 'canceling';
       this.get('flashes').error(`An error occured when ${actionTerm} the ${type}`);
-    }
-  },
-
-  actions: {
-    restart: function () {
-      if (this.get('restarting')) {
-        return;
-      }
-      this.set('restarting', true);
-      let type = this.get('type');
-      eventually(this.get('item'), (record) => {
-        record.restart().then(() => {
-          this.set('restarting', false);
-          this.get('flashes').notice(`The ${type} was successfully restarted.`);
-        }, (xhr) => {
-          this.set('restarting', false);
-          this.get('flashes').error(`An error occurred. The ${type} could not be restarted.`);
-          this.displayFlashError(xhr.status, 'restart');
-        });
-      });
-    },
-
-    debug() {
-      if (this.get('restarting')) {
-        return;
-      }
-      this.set('restarting', true);
-      let type = this.get('type');
-      eventually(this.get('item'), (record) => {
-        record.debug().then(() => {
-          this.set('restarting', false);
-          this.get('flashes').notice(`The ${type} was successfully restarted in debug mode.`);
-        }, (xhr) => {
-          this.set('restarting', false);
-          this.get('flashes')
-            .error(`An error occurred. The ${type} could not be restarted in debug mode.`);
-          this.displayFlashError(xhr.status, 'debug');
-        });
-      });
     }
   }
 });
