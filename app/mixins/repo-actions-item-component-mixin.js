@@ -77,7 +77,7 @@ export default Ember.Mixin.create({
       });
     },
 
-    debugJob() {
+    debug() {
       if (this.get('restarting')) {
         return;
       }
