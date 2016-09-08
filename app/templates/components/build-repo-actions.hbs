@@ -1,8 +1,8 @@
 {{#if canCancel}}
-  {{#if cancelling}}
+  {{#if cancel.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <a {{action "cancel"}} class="action-button--cancel" title="Cancel build">
+    <a {{action (perform cancel)}} class="action-button--cancel" title="Cancel build">
       Cancel build
     </a>
   {{/if}}

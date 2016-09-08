@@ -16,6 +16,7 @@ const authStub = Ember.Service.extend({
 
 moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
   unit: true,
+  needs: ['helper:perform'],
   beforeEach() {
     this.register('service:auth', authStub);
   }

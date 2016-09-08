@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
 
+import { task } from 'ember-concurrency';
+
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
 
@@ -25,6 +27,18 @@ export default Ember.Mixin.create({
   canCancel: Ember.computed.and('userHasPermissionForRepo', 'item.canCancel'),
   canRestart: Ember.computed.and('userHasPermissionForRepo', 'item.canRestart'),
   canDebug: Ember.computed.and('userHasPermissionForRepo', 'item.canDebug'),
+
+  cancel: task(function * () {
+    let type = this.get('type');
+
+    yield eventually(this.get('item'), (record) => {
+      record.cancel().then(() => {
+        this.get('flashes').notice(`${type.capitalize()} has been successfully cancelled.`);
+      }, (xhr) => {
+        this.displayFlashError(xhr.status, 'cancel');
+      });
+    });
+  }).drop(),
 
   displayFlashError(status, action) {
     let type = this.get('type');
@@ -55,24 +69,6 @@ export default Ember.Mixin.create({
           this.set('restarting', false);
           this.get('flashes').error(`An error occurred. The ${type} could not be restarted.`);
           this.displayFlashError(xhr.status, 'restart');
-        });
-      });
-    },
-
-    cancel: function () {
-      if (this.get('cancelling')) {
-        return;
-      }
-      this.set('cancelling', true);
-
-      let type = this.get('type');
-      eventually(this.get('item'), (record) => {
-        record.cancel().then(() => {
-          this.set('cancelling', false);
-          this.get('flashes').notice(`${type.capitalize()} has been successfully cancelled.`);
-        }, (xhr) => {
-          this.set('cancelling', false);
-          this.displayFlashError(xhr.status, 'cancel');
         });
       });
     },

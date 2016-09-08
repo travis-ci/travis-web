@@ -1,8 +1,8 @@
 {{#if canCancel}}
-  {{#if cancelling}}
+  {{#if cancel.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action "cancel"}} class="action-button--cancel" title="Cancel job">
+    <a href="#" {{action (perform cancel)}} class="action-button--cancel" title="Cancel job">
       Cancel job
     </a>
   {{/if}}

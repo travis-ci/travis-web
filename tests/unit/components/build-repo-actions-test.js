@@ -16,6 +16,7 @@ const authStub = Ember.Service.extend({
 
 moduleForComponent('build-repo-actions', 'BuildRepoActionsComponent', {
   unit: true,
+  needs: ['helper:perform'],
   beforeEach() {
     this.register('service:auth', authStub);
     this.inject.service('auth');
