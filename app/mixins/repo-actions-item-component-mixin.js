@@ -22,14 +22,8 @@ export default Ember.Mixin.create({
     }
   }),
 
-  canCancel: Ember.computed('userHasPermissionForRepo', 'item.canCancel', function () {
-    return this.get('item.canCancel') && this.get('userHasPermissionForRepo');
-  }),
-
-  canRestart: Ember.computed('userHasPermissionForRepo', 'item.canRestart', function () {
-    return this.get('item.canRestart') && this.get('userHasPermissionForRepo');
-  }),
-
+  canCancel: Ember.computed.and('userHasPermissionForRepo', 'item.canCancel'),
+  canRestart: Ember.computed.and('userHasPermissionForRepo', 'item.canRestart'),
   canDebug: Ember.computed.and('userHasPermissionForRepo', 'item.canDebug'),
 
   displayFlashError(status, action) {
