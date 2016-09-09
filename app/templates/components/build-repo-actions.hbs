@@ -2,7 +2,7 @@
   {{#if cancelling}}
     {{loading-indicator height=true}}
   {{else}}
-    <a {{action "cancel"}} class="button-circle-cancel" title="Cancel Build">
+    <a {{action "cancel"}} class="action-button--cancel" title="Cancel build">
       Cancel build
     </a>
   {{/if}}
@@ -12,7 +12,7 @@
   {{#if restarting}}
     {{loading-indicator height=true}}
   {{else}}
-    <a {{action "restart"}} class="button-circle-trigger" title="Restart Build">
+    <a {{action "restart"}} class="action-button--restart" title="Restart build">
       Restart build
     </a>
   {{/if}}
