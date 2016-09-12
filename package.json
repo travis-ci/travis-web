@@ -63,8 +63,6 @@
     "ember-percy": "^1.2.5",
     "ember-prism": "0.0.8",
     "ember-qunit-nice-errors": "1.1.1",
-    "ember-prism": "0.0.7",
-    "ember-qunit-nice-errors": "1.0.0",
     "ember-resolver": "^2.0.3",
     "emberx-select": "2.2.2",
     "loader.js": "^4.0.10",
