@@ -4,8 +4,7 @@ import Mirage from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 
 export default function () {
-  if (config.environment === 'development') {
-    // this.urlPrefix = 'https://api.travis-ci.org';
+  if (config.environment === 'development' || config.environment === 'production') {
     this.passthrough(
       'https://api.travis-ci.org/users/**',
       'https://api.travis-ci.org/v3/**',
