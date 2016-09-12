@@ -3,13 +3,11 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   queryParams: ['account'],
 
-  
-
-  filteredRepos: Ember.computed('model', 'account', function () {
+  filteredRepos: Ember.computed('model.repos', 'account', function () {
     let login = this.get('account');
     let accountType = this.get('account.type');
     let repos = this.get('model.repos');
-    
+
     repos = repos.filter(function (item) {
       if (!Ember.isBlank(login)) {
         if (Ember.isEqual(accountType, 'user')) {
@@ -22,15 +20,8 @@ export default Ember.Controller.extend({
       } else {
         return item;
       }
-    }).sort(function (a, b) {      
+    }).sort(function (a, b) {
       // check 3 different things
-      // - has a build on default branch?
-      if (Ember.isBlank(a.get('defaultBranch.lastBuild.state'))) {
-        return 1;
-      }
-      if (Ember.isBlank(b.get('defaultBranch.lastBuild.state'))) {
-        return -1;
-      }
       // - has a currentBuild at all
       if (Ember.isBlank(a.get('currentBuild.state'))) {
         return 1;
@@ -54,6 +45,15 @@ export default Ember.Controller.extend({
       if (a.get('currentBuild.finishedAt') === b.get('currentBuild.finishedAt')) {
         return 0;
       }
+
+      // - has a build on default branch?
+      if (Ember.isBlank(a.get('defaultBranch.lastBuild.state'))) {
+        return 1;
+      }
+      if (Ember.isBlank(b.get('defaultBranch.lastBuild.state'))) {
+        return -1;
+      }
+      
     });
     return repos;
   }),
