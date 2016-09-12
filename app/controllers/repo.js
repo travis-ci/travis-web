@@ -149,7 +149,6 @@ export default Ember.Controller.extend({
   },
 
   connectTab(tab) {
-    tab === 'current' ? 'build' : tab;
     return this.set('tab', tab);
   },
 
