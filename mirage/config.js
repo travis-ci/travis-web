@@ -249,30 +249,28 @@ export default function () {
 
   let featuresURL = config.environment === 'test' ? '/features' : 'https://api.travis-ci.org/features';
   this.get(featuresURL, function (schema) {
-    if (config.environment === 'development') {
-      let features = schema.features.all();
-      if (features.models.length) {
-        return this.serialize(features);
-      } else {
-        schema.db.features.insert([
-          {
-            name: 'Dashboard',
-            description: 'UX improvements over the current implementation',
-            enabled: false
-          },
-          {
-            name: 'Make header pink',
-            description: 'This feature changes the background color of the header',
-            enabled: true
-          },
-          {
-            name: 'Do Nothing Feature',
-            description: 'This feature does absolutely nothing',
-            enabled: true
-          }
-        ]);
-        return this.serialize(schema.features.all());
-      }
+    let features = schema.features.all();
+    if (features.models.length) {
+      return this.serialize(features);
+    } else {
+      schema.db.features.insert([
+        {
+          name: 'Dashboard',
+          description: 'UX improvements over the current implementation',
+          enabled: false
+        },
+        {
+          name: 'Make header pink',
+          description: 'This feature changes the background color of the header',
+          enabled: true
+        },
+        {
+          name: 'Do Nothing Feature',
+          description: 'This feature does absolutely nothing',
+          enabled: true
+        }
+      ]);
+      return this.serialize(schema.features.all());
     }
   });
 
