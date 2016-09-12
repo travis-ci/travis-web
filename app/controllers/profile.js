@@ -16,15 +16,6 @@ export default Ember.Controller.extend({
   },
 
   viewHooks() {
-    this.connectTab('hooks');
     return this.get('accountController').reloadHooks();
-  },
-
-  viewUser() {
-    return this.connectTab('user');
-  },
-
-  connectTab(tab) {
-    return this.set('tab', tab);
   }
 });
