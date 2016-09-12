@@ -139,8 +139,14 @@
 
 .cron-job-text
   @media #{$medium-up}
-    width: grid-calc(3, 12)
+    width: grid-calc(5, 30)
     padding-right: 5px
+
+.dont-run-if-recent-build-exists
+  white-space: inherit
+
+.interval
+  text-transform: capitalize
 
 %settings-action-section
   display: inline-block
