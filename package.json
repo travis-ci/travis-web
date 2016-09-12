@@ -41,7 +41,6 @@
     "ember-cli-inline-images": "^0.0.4",
     "ember-cli-mirage": "0.2.1",
     "ember-cli-page-object": "1.4.2",
-    "ember-cli-pretender": "0.6.0",
     "ember-cli-qunit": "^2.0.2",
     "ember-cli-sauce": "^1.1.0",
     "ember-cli-sentry": "2.4.2",
