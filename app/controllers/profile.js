@@ -7,7 +7,6 @@ export default Ember.Controller.extend({
   name: 'profile',
   auth: service(),
   accountController: controller('account'),
-  accountsController: controller('accounts'),
 
   user: alias('auth.currentUser'),
   account: alias('accountController.model'),
