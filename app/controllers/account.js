@@ -10,11 +10,10 @@ export default Ember.Controller.extend({
   user: alias('auth.currentUser'),
 
   init() {
-    var self;
     this._super(...arguments);
-    self = this;
-    return Travis.on('user:synced', (function () {
-      return self.reloadHooks();
+
+    return Travis.on('user:synced', (() => {
+      return this.reloadHooks();
     }));
   },
 
