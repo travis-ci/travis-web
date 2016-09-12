@@ -6,7 +6,6 @@ moduleForAcceptance('Acceptance | job/build matrix');
 
 test('visiting build matrix', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  // create branch
   server.create('branch', {});
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
