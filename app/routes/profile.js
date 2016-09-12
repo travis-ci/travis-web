@@ -5,8 +5,10 @@ export default TravisRoute.extend({
   titleToken: 'Profile',
   needsAuth: true,
 
-  setupController(controller, model) {
-    return this.controllerFor('accounts').set('model', model);
+  model() {
+    return this.store.query('account', {
+      all: true
+    });
   },
 
   renderTemplate() {
