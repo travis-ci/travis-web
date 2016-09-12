@@ -9,9 +9,9 @@ export default TravisRoute.extend({
     }
   },
 
-  setupController(/* controller, account*/) {
+  setupController(controller) {
     this._super(...arguments);
-    return this.controllerFor('profile').activate('hooks');
+    controller.reloadHooks();
   },
 
   model(params) {
