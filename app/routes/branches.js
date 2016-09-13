@@ -30,11 +30,6 @@ export default TravisRoute.extend({
   },
 
   activate() {
-    Ember.$('.tab.tabs--main li').removeClass('active');
-    Ember.$('#tab_branches').addClass('active');
-  },
-
-  deactivate() {
-    Ember.$('#tab_branches').removeClass('active');
+    this.controllerFor('repo').activate('branches');
   }
 });
