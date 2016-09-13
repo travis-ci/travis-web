@@ -4,25 +4,23 @@ export default ApplicationAdapter.extend({
   namespace: 'settings',
 
   findRecord(store, type, id) {
-    return this.ajax(this.urlPrefix() + '/ssh_key/' + id, 'GET');
+    const url = `${this.urlPrefix()}/ssh_key/${id}`;
+    return this.ajax(url, 'GET');
   },
 
   deleteRecord(store, type, record) {
-    var id = record.id;
-    return this.ajax(this.urlPrefix() + '/ssh_key/' + id, 'DELETE');
+    const url = `${this.urlPrefix()}/ssh_key/${record.id}`;
+    return this.ajax(url, 'DELETE');
   },
 
   createRecord(store, type, record) {
-    var data, serializer;
-    data = {};
-    serializer = store.serializerFor(type.modelName);
+    const data = {};
+    const serializer = store.serializerFor(type.modelName);
     serializer.serializeIntoHash(data, type, record, {
       includeId: true
     });
 
-    var id = record.id;
-    return this.ajax(this.urlPrefix() + '/ssh_key/' + id, 'PATCH', {
-      data: data
-    });
+    const url = `${this.urlPrefix()}/ssh_key/${record.id}`;
+    return this.ajax(url, 'PATCH', { data });
   }
 });

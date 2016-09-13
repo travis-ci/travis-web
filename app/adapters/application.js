@@ -27,7 +27,7 @@ export default ActiveModelAdapter.extend({
     let token = this.get('auth').token();
     if (token) {
       if (!hash.headers['Authorization']) {
-        hash.headers['Authorization'] = 'token ' + token;
+        hash.headers['Authorization'] = `token ${token}`;
       }
     }
 
