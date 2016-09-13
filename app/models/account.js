@@ -11,5 +11,12 @@ export default Model.extend({
   reposCount: attr('number'),
   subscribed: attr('boolean'),
   education: attr('boolean'),
-  login: alias('id')
+  login: alias('id'),
+  displayName: Ember.computed('login', 'name', function () {
+    if (Ember.isBlank(this.get('name'))) {
+      return this.get('login');
+    } else {
+      return this.get('name');
+    }
+  })
 });

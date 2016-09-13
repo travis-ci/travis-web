@@ -3,11 +3,7 @@
     <span class="label-align">
       {{#if selected}}
         {{user-avatar url=selected.avatarUrl name=selected.name small=true}}
-        {{#if selected.name}}
-          {{selected.name}}
-        {{else}}
-          {{selected.login}}
-        {{/if}}
+        {{selected.displayName}}
       {{else}}
         All accounts
       {{/if}}
@@ -26,11 +22,7 @@
         <a title="Select {{org.login}}" {{action 'select' org}}>
           {{user-avatar url=org.avatarUrl name=org.name small=true}}
           <span class="label-align">
-          {{#if org.name }}
-            {{org.name}}
-          {{else}}
-            {{org.login}}
-          {{/if}}
+          {{org.displayName}}
           </span>
         </a>
       </li>

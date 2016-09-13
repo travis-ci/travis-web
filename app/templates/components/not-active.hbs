@@ -63,7 +63,7 @@
   <h2 class="page-title">This is not an active repository</h2>
 
   {{#if canActivate}}
-    <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner}}your profile{{/link-to}},<br/>
+    <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner.login}}your profile{{/link-to}},<br/>
     or by clicking the button below</p>
 
     <button {{action (perform activate)}} class="button button--blue">Activate repository</button>
