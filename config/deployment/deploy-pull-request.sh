@@ -18,3 +18,4 @@ then
 else
     echo "Skipping com- and org-staging PR deployments: no 'staging' in branch name."
 fi
+gut
