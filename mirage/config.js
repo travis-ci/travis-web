@@ -1,14 +1,9 @@
-/* eslint-disable */
 /* global server */
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 
 export default function () {
-  if (config.environment === 'production') {
-    console.log('running in production');
-    console.log('api endpoint', config.apiEndpoint);
-  }
   if (config.environment === 'development' || config.environment === 'production') {
     this.passthrough(
       'https://api.travis-ci.org/users/**',
