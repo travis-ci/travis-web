@@ -16,6 +16,7 @@ export default function () {
       'https://api.travis-ci.org/repos',
       'https://api.travis-ci.org/repos/**',
       'https://api.travis-ci.org/repo/**',
+      'https://api.travis-ci.org/settings/**',
       'https://api.travis-ci.org/accounts',
       'https://api.travis-ci.org/hooks',
       'https://s3.amazonaws.com/**',
