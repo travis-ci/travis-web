@@ -24,6 +24,7 @@ export default function () {
       'https://api.travis-ci.org/accounts',
       'https://api.travis-ci.org/hooks',
       'https://s3.amazonaws.com/**',
+      'https://app.getsentry.com/**',
       'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
     );
   }
