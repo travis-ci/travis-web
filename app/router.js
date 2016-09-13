@@ -80,7 +80,6 @@ Router.map(function () {
   this.route('profile', { path: '/profile', resetNamespace: true }, function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
       this.route('account', { path: '/:login', resetNamespace: true });
-      this.route('info', { path: '/info' });
     });
   });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
