@@ -2,14 +2,16 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import jobPage from 'travis/tests/pages/job';
 
-moduleForAcceptance('Acceptance | jobs/restart', {
+moduleForAcceptance('Acceptance | jobs/debug', {
   beforeEach() {
     const currentUser = server.create('user');
     signInUser(currentUser);
   }
 });
 
-test('restarting job', function (assert) {
+test('debugging job', function (assert) {
+  withFeature('pro-version');
+
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   server.create('branch', {});
 
@@ -23,11 +25,19 @@ test('restarting job', function (assert) {
 
   server.create('log', { id: job.id });
 
+  const requestBodies = [];
+
+  server.post(`/job/${job.id}/debug`, function (schema, request) {
+    const parsedRequestBody = JSON.parse(request.requestBody);
+    requestBodies.push(parsedRequestBody);
+  });
+
   jobPage
     .visit()
-    .restartJob();
+    .debugJob();
 
   andThen(function () {
-    assert.equal(jobPage.notification, 'The job was successfully restarted.', 'restarted notification should display proper job restarted text');
+    assert.deepEqual(requestBodies.pop(), { quiet: true });
+    assert.equal(jobPage.notification, 'The job was successfully restarted in debug mode. Watch the log for a host to connect to.');
   });
 });

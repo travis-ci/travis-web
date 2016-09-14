@@ -62,44 +62,46 @@
 #auth #navigation .button-signingin
   display: none
 
-%circle-button
+%action-button
   display: block
-  text-indent: 999%
-  overflow: hidden
-  width: 28px
-  height: 28px
-  border: solid 1px rgba($cement-grey, 0.2)
-  border-radius: 50%
+  width: 8em
+  padding: 0.1em 0.1em 0.1em 2em
+  border: 1px solid $pebble-grey
+  border-radius: 14px
+  font-weight: 400
   cursor: pointer
-  float: left
-  margin-right: 1rem
-  &:hover
-    border-color: $oxide-blue
-  @media #{$medium-up}
-    float: none
-    margin-right: 0
-    margin-bottom: .5em
-
-.button-circle-cancel
-  @extend %circle-button
-  @extend %icon-line-cross
   background:
-    position: 6px 6px
-    repeat: no-repeat
-    size: 14px 14px
-  &:hover
-    @extend %icon-line-cross-teal
-
-.button-circle-trigger
-  @extend %circle-button
-  @extend %icon-line-trigger
-  background:
-    position: 6px 5px
-    repeat: no-repeat
     size: 16px 16px
-  &:hover
+    repeat: no-repeat
+    position: 10px center
+  &:hover,
+  &:active
+    border-color: $oxide-blue
+    color: $oxide-blue
+    text-decoration: none !important
+
+.action-button--restart
+  @extend %action-button
+  @extend %icon-line-trigger
+  &:hover,
+  &:active
     @extend %icon-line-trigger-teal
 
+.action-button--debug
+  @extend %action-button
+  @extend %icon-line-debug
+  &:hover,
+  &:active
+    @extend %icon-line-debug-teal
+
+.action-button--cancel
+  @extend %action-button
+  @extend %icon-line-cross
+  background-size: 14px 14px
+  &:hover,
+  &:active
+    @extend %icon-line-cross-teal
+  
 %log-button
   display: inline-block
   height: 28px

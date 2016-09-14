@@ -19,8 +19,9 @@ export default PageObject.create({
 
   hasTruncatedLog: isVisible('.log-container p.warning'),
 
-  restartJob: clickable('.button-circle-trigger'),
-  cancelJob: clickable('.button-circle-cancel'),
-  restartedNotification: text('p.flash-message'),
-  cancelledNotification: text('p.flash-message')
+  restartJob: clickable('.action-button--restart'),
+  cancelJob: clickable('.action-button--cancel'),
+  debugJob: clickable('.action-button--debug'),
+
+  notification: text('p.flash-message')
 });

@@ -1,19 +1,23 @@
 {{#if canCancel}}
-  {{#if cancelling}}
+  {{#if cancel.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action "cancel"}} class="button-circle-cancel" title="Cancel job">
-      Cancel Job
+    <a href="#" {{action (perform cancel)}} class="action-button--cancel" title="Cancel job">
+      Cancel job
     </a>
   {{/if}}
 {{/if}}
 
 {{#if canRestart}}
-  {{#if restarting}}
+  {{#if restarters.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action "restart"}} class="button-circle-trigger" title="Restart job">
-      Restart Job
+    <a href="#" {{action (perform restart)}} class="action-button--restart" title="Restart job">
+      Restart job
     </a>
+
+    {{#if features.proVersion}}
+      <a href="#" {{action (perform debug)}} class="action-button--debug" title="Restart as debug job">Debug job</a>
+    {{/if}}
   {{/if}}
 {{/if}}

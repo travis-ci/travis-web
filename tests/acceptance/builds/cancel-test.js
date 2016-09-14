@@ -24,6 +24,6 @@ test('cancelling build', function (assert) {
     .cancelBuild();
 
   andThen(function () {
-    assert.equal(buildPage.cancelledNotification, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
+    assert.equal(buildPage.notification, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
   });
 });

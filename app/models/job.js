@@ -127,6 +127,17 @@ export default Model.extend(DurationCalculations, {
     return this.get('ajax').post('/jobs/' + (this.get('id')) + '/restart');
   },
 
+  debug() {
+    return this.get('ajax').ajax(`/job/${this.get('id')}/debug`, 'POST', {
+      data: {
+        quiet: true
+      },
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    });
+  },
+
   appendLog(part) {
     return this.get('log').append(part);
   },

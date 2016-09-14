@@ -77,10 +77,11 @@
       <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time></li>
   </ul>
 </div>
-<div class="build-tools">
+
+<div class='build-tools'>
   {{#if isJob}}
-    {{repo-actions job=item repo=item.repo}}
+    {{job-repo-actions job=item repo=item.repo}}
   {{else}}
-    {{repo-actions build=item repo=item.repo}}
+    {{build-repo-actions build=item repo=item.repo}}
   {{/if}}
 </div>
