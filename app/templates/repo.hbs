@@ -6,7 +6,7 @@
   {{#if repo.isLoaded}}
     <article class="repo-header">
       <header>
-        <h1 class="repo-title">{{#link-to "owner" repo.owner}}{{repo.owner}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
+        <h1 class="repo-title">{{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
         <div class="repo-gh">
           <a href="{{urlGithub}}" title="{{repo.name}} on GitHub">{{repo.name}} on Github</a>
         </div>

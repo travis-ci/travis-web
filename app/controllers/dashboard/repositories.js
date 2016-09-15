@@ -4,16 +4,31 @@ export default Ember.Controller.extend({
   queryParams: ['account'],
 
   filteredRepos: Ember.computed('model.repos', 'account', function () {
-    let login = this.get('account');
-    let accountType = this.get('account.type');
+    let accounts = this.get('model.accounts');
+    let accountParam = this.get('account');
+    let account = accounts.filter(function (x) {
+      if (accountParam) {
+        if (x.id === accountParam) {
+          return x;
+        }
+      } else {
+        return null;
+      }
+    });
+    let type = null;
+    if (account && account[0]) {
+      type = account[0].get('type');
+    }
     let repos = this.get('model.repos');
 
     repos = repos.filter(function (item) {
-      if (!Ember.isBlank(login)) {
-        if (Ember.isEqual(accountType, 'user')) {
-          // everything that does not belong to an org ??
+      if (!Ember.isBlank(account)) {
+        if (Ember.isEqual(type, 'user')) {
+          if (Ember.isEqual(item.get('owner.@type'), 'user')) {
+            return item;
+          }
         } else {
-          if (Ember.isEqual(item.get('owner'), login)) {
+          if (Ember.isEqual(item.get('owner.login'), accountParam)) {
             return item;
           }
         }
