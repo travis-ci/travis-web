@@ -14,7 +14,9 @@ const Repo = Model.extend({
   'private': attr('boolean'),
   githubLanguage: attr(),
   active: attr(),
-
+  owner: attr(),
+  ownerType: Ember.computed.oneWay('owner.@type'),
+  name: attr(),
   defaultBranch: belongsTo('branch', {
     async: false
   }),
@@ -118,14 +120,6 @@ const Repo = Model.extend({
     }, function (cron) {
       return cron.get('branch.repoId') === id;
     });
-  }),
-
-  owner: Ember.computed('slug', function () {
-    return (this.get('slug') || '').split('/')[0];
-  }),
-
-  name: Ember.computed('slug', function () {
-    return (this.get('slug') || '').split('/')[1];
   }),
 
   stats: Ember.computed('slug', function () {

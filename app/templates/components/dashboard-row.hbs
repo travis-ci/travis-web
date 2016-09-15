@@ -15,8 +15,8 @@
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
-      <h2 class="row-label">{{#link-to "owner" repo.owner title=repo.owner}}{{repo.owner}}{{/link-to}}</h2>
-      <h1 class="row-content">{{#link-to "repo" repo.owner repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
+      <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}</h2>
+      <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
     </header>
 
   {{#if repo.active}}
@@ -25,7 +25,7 @@
       <p class="row-content color">
         {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
         {{#if repo.defaultBranch.lastBuild.id}}
-          {{#link-to "build" repo.owner repo.name repo.defaultBranch.lastBuild.id title="Last build on the default branch"}}
+          {{#link-to "build" repo.owner.login repo.name repo.defaultBranch.lastBuild.id title="Last build on the default branch"}}
             {{repo.defaultBranch.name}} {{repo.defaultBranch.lastBuild.state}}
           {{/link-to}}
         {{else}}
@@ -39,7 +39,7 @@
       <h3 class="label">Last build</h3>
       <p class="row-content color">
         {{status-icon status=repo.currentBuild.state}}
-        {{#link-to "build" repo.owner repo.name repo.currentBuild.id title="Last build on the repo"}}
+        {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the repo"}}
         <span class="label-align">#{{repo.currentBuild.number}} {{repo.currentBuild.state}}</span>
         {{/link-to}}
       </p>
