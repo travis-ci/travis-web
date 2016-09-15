@@ -6,7 +6,9 @@ export default Serializer.extend({
     const user = Ember.copy(object.attrs);
     user['@type'] = 'user';
 
-    user.repositories = object._schema.repositories.all().models;
+    user.repositories = object._schema.repositories.where((repo) => {
+      return repo.slug.indexOf(user.login) === 0;
+    }).models;
 
     return user;
   }

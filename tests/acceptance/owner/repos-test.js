@@ -11,12 +11,12 @@ moduleForAcceptance('Acceptance | owner repositories', {
 
     // create active repo
     server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'feministkilljoy/living-a-feminist-life'
     });
 
     // create active repo
     server.create('repository', {
-      slug: 'killjoys/willful-subjects'
+      slug: 'feministkilljoy/willful-subjects'
     });
 
     server.create('repository', {
@@ -30,6 +30,6 @@ test('the owner page shows their repositories', (assert) => {
   ownerPage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
-    assert.equal(ownerPage.repos().count, 3);
+    assert.equal(ownerPage.repos().count, 2);
   });
 });
