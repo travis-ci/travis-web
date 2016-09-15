@@ -4,7 +4,7 @@ import ownerPage from 'travis/tests/pages/owner';
 
 moduleForAcceptance('Acceptance | owner repositories', {
   beforeEach() {
-    const currentUser = server.create('user', {
+    server.create('user', {
       name: 'Sara Ahmed',
       login: 'feministkilljoy'
     });
