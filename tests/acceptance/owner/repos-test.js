@@ -31,5 +31,8 @@ test('the owner page shows their repositories', (assert) => {
 
   andThen(() => {
     assert.equal(ownerPage.repos().count, 2);
+
+    assert.equal(ownerPage.repos(0).name, 'willful-subjects');
+    assert.equal(ownerPage.repos(1).name, 'living-a-feminist-life');
   });
 });
