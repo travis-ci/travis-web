@@ -16,9 +16,15 @@ export default Ember.Service.extend({
 
   fetchTask: task(function* () {
     yield this.get('store').findAll('feature').then((featureSet) => {
-      let features = {};
-      featureSet.map(feature => features[feature.get('dasherizedName')] = feature.get('enabled'));
-      this.get('features').setup(features);
+      let featuresService = this.get('features');
+      featureSet.map((feature) => {
+        let featureName = feature.get('dasherizedName');
+        if (feature.get('enabled')) {
+          featuresService.enable(featureName);
+        } else {
+          featuresService.disable(featureName);
+        }
+      });
     });
   }).drop(),
 });
