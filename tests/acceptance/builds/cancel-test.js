@@ -26,4 +26,5 @@ test('cancelling build', function (assert) {
   andThen(function () {
     assert.equal(buildPage.notification, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
   });
+  percySnapshot(assert);
 });

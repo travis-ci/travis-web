@@ -20,6 +20,7 @@ test('renders most recent repository without builds', function (assert) {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
     assert.equal(currentRepoTab.showsNoBuildsMessaging, 'No builds for this repository', 'Current tab shows no builds message');
   });
+  percySnapshot(assert);
 });
 
 test('renders most recent repository and most recent build when builds present', function (assert) {
@@ -50,6 +51,8 @@ test('renders most recent repository and most recent build when builds present',
     assert.ok(jobTabs.logTab.isShowing, 'Displays the log');
     assert.ok(jobTabs.configTab.isHidden, 'Job config is hidden');
   });
+
+  percySnapshot(assert);
 
   jobTabs.configTab.click();
 

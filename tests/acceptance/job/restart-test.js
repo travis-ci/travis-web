@@ -30,4 +30,5 @@ test('restarting job', function (assert) {
   andThen(function () {
     assert.equal(jobPage.notification, 'The job was successfully restarted.', 'restarted notification should display proper job restarted text');
   });
+  percySnapshot(assert);
 });

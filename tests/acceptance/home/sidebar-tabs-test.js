@@ -67,6 +67,7 @@ test('the home page shows running tab in pro version', (assert) => {
   andThen(() => {
     assert.equal(dashboardPage.sidebarRunningRepositories().count, 1, 'expected no running repositories');
   });
+  percySnapshot(assert);
 });
 
 test('maintains sidebar tab state when viewing running job in pro version', (assert) => {
@@ -80,4 +81,5 @@ test('maintains sidebar tab state when viewing running job in pro version', (ass
   andThen(() => {
     assert.ok(dashboardPage.runningTabIsActive, 'running tab state should persist across route transitions');
   });
+  percySnapshot(assert);
 });

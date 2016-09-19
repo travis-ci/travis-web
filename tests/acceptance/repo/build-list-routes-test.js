@@ -98,6 +98,7 @@ test('view build history', function (assert) {
     assert.ok(page.builds(1).failed, 'expected the second build to have failed');
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
   });
+  percySnapshot(assert);
 });
 
 test('view pull requests', function (assert) {
@@ -115,4 +116,5 @@ test('view pull requests', function (assert) {
     assert.equal(pullRequest.commitDate, 'about a year ago');
     assert.equal(pullRequest.duration, '5 min');
   });
+  percySnapshot(assert);
 });

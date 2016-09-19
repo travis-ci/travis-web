@@ -35,6 +35,7 @@ test('debugging single-job build', function (assert) {
     assert.deepEqual(requestBodies.pop(), { quiet: true });
     assert.equal(buildPage.notification, 'The build was successfully restarted in debug mode. Watch the log for a host to connect to.');
   });
+  percySnapshot(assert);
 });
 
 test('multi-job builds cannot be debugged', function (assert) {
@@ -53,4 +54,5 @@ test('multi-job builds cannot be debugged', function (assert) {
   andThen(() => {
     assert.ok(buildPage.hasNoDebugButton);
   });
+  percySnapshot(assert);
 });

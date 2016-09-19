@@ -31,6 +31,7 @@ test('visiting job-view', function (assert) {
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
   });
+  percySnapshot(assert);
 });
 
 test('visiting a job with a truncated log', function (assert) {

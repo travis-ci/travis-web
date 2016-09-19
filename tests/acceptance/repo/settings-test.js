@@ -126,6 +126,7 @@ test('view settings', function (assert) {
     assert.equal(settingsPage.sshKey.name, 'testy');
     assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
   });
+  percySnapshot(assert);
 });
 
 test('change general settings', function (assert) {
@@ -171,6 +172,7 @@ test('change general settings', function (assert) {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
     assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 0 } });
   });
+  percySnapshot(assert);
 });
 
 test('delete and create environment variables', function (assert) {
@@ -210,6 +212,7 @@ test('delete and create environment variables', function (assert) {
 
     assert.deepEqual(requestBodies.pop(), { env_var: { name: 'drafted', value: 'true', public: true, repository_id: this.repository.id } });
   });
+  percySnapshot(assert);
 });
 
 test('delete and create crons', function (assert) {
@@ -229,6 +232,7 @@ test('delete and create crons', function (assert) {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
     assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
   });
+  percySnapshot(assert);
 });
 
 test('delete and set SSH keys', function (assert) {
@@ -273,4 +277,5 @@ test('delete and set SSH keys', function (assert) {
       value: 'hello'
     });
   });
+  percySnapshot(assert);
 });
