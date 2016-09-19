@@ -2,8 +2,11 @@ import ApplicationAdapter from 'travis/adapters/application';
 
 export default ApplicationAdapter.extend({
   updateRecord(store, type, snapshot) {
-    return this._super(...arguments).then(() => {
-      return { hook: { id: snapshot.id } };
-    });
+    const hook = {
+      hook: {
+        id: snapshot.id
+      }
+    };
+    return this._super(...arguments).then(() => hook);
   }
 });
