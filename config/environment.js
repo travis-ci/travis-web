@@ -37,7 +37,6 @@ module.exports = function (environment) {
   };
 
   ENV.featureFlags = {
-    'user-feature-flags': false,
     'debug-logging': false,
     'pro-version': !!process.env.TRAVIS_PRO || false,
   };

@@ -18,6 +18,25 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     // this.get('auth').refreshUserData()
   },
 
+  model() {
+    if (this.signedIn()) {
+      return this.get('store').findAll('feature');
+    }
+  },
+
+  afterModel(model) {
+    if (!model) { return; }
+    let featuresService = this.get('features');
+    model.map((feature) => {
+      let featureName = feature.get('dasherizedName');
+      if (feature.get('enabled')) {
+        featuresService.enable(featureName);
+      } else {
+        featuresService.disable(featureName);
+      }
+    });
+  },
+
   renderTemplate: function () {
     if (this.get('config').pro) {
       Ember.$('body').addClass('pro');

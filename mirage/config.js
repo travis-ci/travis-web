@@ -265,16 +265,6 @@ export default function () {
           name: 'Dashboard',
           description: 'UX improvements over the current implementation',
           enabled: true
-        },
-        {
-          name: 'Make header pink',
-          description: 'This feature changes the background color of the header',
-          enabled: true
-        },
-        {
-          name: 'Do Nothing Feature',
-          description: 'This feature does absolutely nothing',
-          enabled: true
         }
       ]);
       return this.serialize(schema.features.all());
