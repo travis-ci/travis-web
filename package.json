@@ -24,7 +24,7 @@
     "broccoli-asset-rev": "^2.4.2",
     "broccoli-sass": "0.7.0",
     "ember-ajax": "2.4.1",
-    "ember-cli": "^2.7.0",
+    "ember-cli": "^2.8.0",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-autoprefixer": "^0.6.0",
     "ember-cli-babel": "^5.1.6",
