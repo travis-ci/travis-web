@@ -4,6 +4,8 @@ import Mirage from 'ember-cli-mirage';
 import config from 'travis/config/environment';
 
 export default function () {
+  // TODO: Remove when we are no longer reliant on mocked feature flags in
+  // production
   if (config.environment === 'development' || config.environment === 'production') {
     this.passthrough(
       'https://api.travis-ci.org/users/**',
@@ -256,19 +258,14 @@ export default function () {
 
   let featuresURL = config.environment === 'test' ? '/features' : 'https://api.travis-ci.org/features';
   this.get(featuresURL, function (schema) {
-    let features = schema.features.all();
-    if (features.models.length) {
-      return this.serialize(features);
-    } else {
-      schema.db.features.insert([
-        {
-          name: 'Dashboard',
-          description: 'UX improvements over the current implementation',
-          enabled: true
-        }
-      ]);
-      return this.serialize(schema.features.all());
-    }
+    schema.db.features.insert([
+      {
+        name: 'Dashboard',
+        description: 'UX improvements over the current implementation',
+        enabled: config.environment !== 'test'
+      }
+    ]);
+    return this.serialize(schema.features.all());
   });
 
   let featurePutURL = config.environment === 'test' ? '/feature/:id' : 'https://api.travis-ci.org/feature/:id';

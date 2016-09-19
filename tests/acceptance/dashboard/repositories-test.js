@@ -67,7 +67,21 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
 
 
 test('visiting /dashboard/ with feature flag enabled', function (assert) {
-  withFeature('dashboard');
+  // TODO: Remove this section when we're no longer reliant on a mock response
+  // in production. Can't use withFeature() because it is overridden by the
+  // mirage route which sets it to false by default (breaks other tests if not
+  // disabled).
+  server.get('/features', (schema) => {
+    schema.db.features.insert([
+      {
+        name: 'Dashboard',
+        description: 'UX improvements over the current implementation',
+        enabled: true
+      }
+    ]);
+    return schema.features.all();
+  });
+
   visit('/dashboard/');
 
   andThen(() => {
