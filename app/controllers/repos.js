@@ -1,5 +1,6 @@
 /* global Visibility */
 import Ember from 'ember';
+import config from 'travis/config/environment';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
 
@@ -80,7 +81,7 @@ export default Ember.Controller.extend({
 
     if (query === '') { return; }
 
-    yield timeout(500);
+    yield timeout(config.repositorySearchDebounceRate);
 
     this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
     this.get('tabStates').set('sidebarTab', 'search');

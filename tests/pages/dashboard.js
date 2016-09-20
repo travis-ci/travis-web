@@ -2,6 +2,8 @@ import {
   create,
   visitable,
   clickable,
+  fillable,
+  triggerable,
   collection,
   text,
   hasClass
@@ -28,5 +30,7 @@ export default create({
       name: text('.tile h2.tile-title span.label-align')
     }
   }),
-  viewRunningJob: clickable('p.tile-title a')
+  viewRunningJob: clickable('p.tile-title a'),
+  search: fillable('#left input'),
+  trigger: triggerable('keyup', '#left input', { eventProperties: { keyCode: 13 } })
 });
