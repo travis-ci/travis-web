@@ -31,3 +31,11 @@ test('searching for a repository from dashboard', function (assert) {
     assert.equal(dashboardPage.sidebarRepositories().count, 1, 'expected to see search result in sidebar');
   });
 });
+
+test('reloading a previous search', function (assert) {
+  visit('/search/foo');
+
+  andThen(() => {
+    assert.equal(dashboardPage.sidebarRepositories().count, 1, 'expected to see search result in sidebar');
+  });
+});
