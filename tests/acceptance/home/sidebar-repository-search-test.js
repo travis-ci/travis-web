@@ -11,14 +11,13 @@ moduleForAcceptance('Acceptance | home/sidebar repository search', {
 
     signInUser(currentUser);
 
-    // create active repo
     server.create('repository', {
       slug: 'killjoys/living-a-feminist-life'
     });
   }
 });
 
-test('visiting /home/sidebar-repository-search', function (assert) {
+test('searching for a repository from dashboard', function (assert) {
   dashboardPage
     .visit()
     .search('foo')
@@ -26,5 +25,9 @@ test('visiting /home/sidebar-repository-search', function (assert) {
 
   andThen(() => {
     assert.equal(currentURL(), '/search/foo');
+  });
+
+  andThen(() => {
+    assert.equal(dashboardPage.sidebarRepositories().count, 1, 'expected to see search result in sidebar');
   });
 });
