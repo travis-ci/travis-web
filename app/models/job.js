@@ -124,7 +124,7 @@ export default Model.extend(DurationCalculations, {
   },
 
   restart() {
-    return this.get('ajax').post('/v3/job/' + (this.get('id')) + '/restart');
+    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/restart');
   },
 
   debug() {
