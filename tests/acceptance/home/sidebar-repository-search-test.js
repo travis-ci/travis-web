@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
@@ -24,7 +25,9 @@ test('searching for a repository from dashboard', function (assert) {
     .trigger();
 
   andThen(() => {
-    assert.equal(currentURL(), '/search/foo');
+    Ember.run.next(function () {
+      assert.equal(currentURL(), '/search/foo');
+    });
   });
 
   andThen(() => {

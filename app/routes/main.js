@@ -6,10 +6,15 @@ export default TravisRoute.extend({
     Ember.$('body').attr('id', 'home');
 
     this._super(...arguments);
+  },
 
-    return this.render('repos', {
-      outlet: 'left',
-      into: 'main'
-    });
+  actions: {
+    showRepositories() {
+      this.transitionTo('main.repositories');
+    },
+
+    viewSearchResults(query) {
+      this.transitionTo('main.search', query);
+    }
   }
 });

@@ -78,6 +78,10 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   actions: {
+    redirectToGettingStarted() {
+      return this.transitionTo('getting_started');
+    },
+
     disableTailing() {
       Travis.tailing.stop();
     },
