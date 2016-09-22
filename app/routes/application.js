@@ -10,6 +10,7 @@ let { service } = Ember.inject;
 
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
+  repositories: service(),
   needsAuth: false,
 
   beforeModel() {
@@ -119,8 +120,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     },
 
     afterSignOut() {
-      this.controllerFor('repos').reset();
-      this.controllerFor('repo').reset();
+      this.get('repositories').reset();
       this.setDefault();
       if (this.get('config.enterprise')) {
         return this.transitionTo('auth');

@@ -131,5 +131,10 @@ export default Ember.Service.extend({
         }
       }
     }
-  )
+  ),
+
+  reset() {
+    this.set('_repos', null);
+    this.set('ownedRepos', null);
+  },
 });
