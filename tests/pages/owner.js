@@ -15,9 +15,9 @@ export default PageObject.create({
 
     item: {
       name: text('.repo-title a .label-align'),
-      buildNumber: text('.row-item:eq(1) .label-align'),
+      buildNumber: text('.build-number .label-align'),
       defaultBranch: text('.default-branch .label-align'),
-      commitSha: text('.row-item:eq(3) .label-align'),
+      commitSha: text('.commit-sha .label-align'),
 
       noBuildMessage: text('p.row-item')
     }
