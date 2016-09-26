@@ -10,8 +10,23 @@ moduleForAcceptance('Acceptance | owner repositories', {
     });
 
     // create active repo
-    server.create('repository', {
+    const firstRepository = server.create('repository', {
       slug: 'feministkilljoy/living-a-feminist-life'
+    });
+
+    const primaryBranch = firstRepository.createBranch({
+      name: 'primary',
+      id: `/v3/repos/${firstRepository.id}/branches/primary`,
+      default_branch: true
+    });
+
+    firstRepository.save();
+
+    primaryBranch.createBuild({
+      state: 'failed',
+      number: '1917'
+    }).createCommit({
+      sha: 'abc124'
     });
 
     // create active repo
@@ -33,6 +48,9 @@ test('the owner page shows their repositories', (assert) => {
     assert.equal(ownerPage.repos().count, 2);
 
     assert.equal(ownerPage.repos(0).name, 'willful-subjects');
+    assert.equal(ownerPage.repos(0).noBuildMessage, 'There is no build on the default branch yet.');
+
     assert.equal(ownerPage.repos(1).name, 'living-a-feminist-life');
+    assert.equal(ownerPage.repos(1).defaultBranch, 'primary');
   });
 });

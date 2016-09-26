@@ -14,7 +14,11 @@ export default PageObject.create({
     itemScope: '.owner-tile',
 
     item: {
-      name: text('.repo-title a .label-align')
+      name: text('.repo-title a .label-align'),
+      // FIXME add a class
+      defaultBranch: text('.row-item:eq(2) .label-align'),
+
+      noBuildMessage: text('p.row-item')
     }
   })
 });
