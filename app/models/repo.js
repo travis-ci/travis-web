@@ -155,10 +155,10 @@ const Repo = Model.extend({
     });
   },
 
-  saveSettings(settings) {
-    return this.get('ajax').ajax('/repos/' + this.get('id') + '/settings', 'patch', {
+  saveSetting(name, value) {
+    return this.get('ajax').ajax(`/repos/${this.get('id')}/setting/${name}`, 'patch', {
       data: {
-        settings: settings
+        'setting.value': value
       }
     });
   }
