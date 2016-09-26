@@ -15,7 +15,13 @@ export default Serializer.extend({
 
       if (defaultBranch) {
         data.default_branch = defaultBranch.attrs;
-        data.default_branch.last_build = defaultBranch.builds.models[0].attrs;
+
+        const lastBuild = defaultBranch.builds.models[0];
+
+        if (lastBuild) {
+          data.default_branch.last_build = lastBuild.attrs;
+          data.default_branch.last_build.commit = lastBuild.commit.attrs;
+        }
       }
 
       return data;

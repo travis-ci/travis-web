@@ -22,12 +22,16 @@ moduleForAcceptance('Acceptance | owner repositories', {
 
     firstRepository.save();
 
-    primaryBranch.createBuild({
+    const lastBuild = primaryBranch.createBuild({
       state: 'failed',
       number: '1917'
-    }).createCommit({
+    });
+
+    lastBuild.createCommit({
       sha: 'abc124'
     });
+
+    lastBuild.save();
 
     // create active repo
     server.create('repository', {
@@ -51,6 +55,8 @@ test('the owner page shows their repositories', (assert) => {
     assert.equal(ownerPage.repos(0).noBuildMessage, 'There is no build on the default branch yet.');
 
     assert.equal(ownerPage.repos(1).name, 'living-a-feminist-life');
+    assert.equal(ownerPage.repos(1).buildNumber, '1917');
     assert.equal(ownerPage.repos(1).defaultBranch, 'primary');
+    assert.equal(ownerPage.repos(1).commitSha, 'abc124');
   });
 });
