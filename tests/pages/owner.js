@@ -18,6 +18,7 @@ export default PageObject.create({
       buildNumber: text('.build-number .label-align'),
       defaultBranch: text('.default-branch .label-align'),
       commitSha: text('.commit-sha .label-align'),
+      commitDate: text('.commit-date .finished-at'),
 
       noBuildMessage: text('p.row-item')
     }

@@ -22,9 +22,13 @@ moduleForAcceptance('Acceptance | owner repositories', {
 
     firstRepository.save();
 
+    const oneYearAgo = new Date();
+    oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
+
     const lastBuild = primaryBranch.createBuild({
       state: 'failed',
-      number: '1917'
+      number: '1917',
+      finished_at: oneYearAgo
     });
 
     lastBuild.createCommit({
@@ -50,13 +54,14 @@ test('the owner page shows their repositories', (assert) => {
 
   andThen(() => {
     assert.equal(ownerPage.repos().count, 2);
+    assert.equal(ownerPage.repos(0).name, 'living-a-feminist-life');
 
-    assert.equal(ownerPage.repos(0).name, 'willful-subjects');
-    assert.equal(ownerPage.repos(0).noBuildMessage, 'There is no build on the default branch yet.');
+    assert.equal(ownerPage.repos(0).buildNumber, '1917');
+    assert.equal(ownerPage.repos(0).defaultBranch, 'primary');
+    assert.equal(ownerPage.repos(0).commitSha, 'abc124');
+    assert.equal(ownerPage.repos(0).commitDate, 'about a year ago');
 
-    assert.equal(ownerPage.repos(1).name, 'living-a-feminist-life');
-    assert.equal(ownerPage.repos(1).buildNumber, '1917');
-    assert.equal(ownerPage.repos(1).defaultBranch, 'primary');
-    assert.equal(ownerPage.repos(1).commitSha, 'abc124');
+    assert.equal(ownerPage.repos(1).name, 'willful-subjects');
+    assert.equal(ownerPage.repos(1).noBuildMessage, 'There is no build on the default branch yet.');
   });
 });
