@@ -15,8 +15,7 @@ export default PageObject.create({
 
     item: {
       name: text('.repo-title a .label-align'),
-      // FIXME add a class
-      defaultBranch: text('.row-item:eq(2) .label-align'),
+      defaultBranch: text('.default-branch .label-align'),
 
       noBuildMessage: text('p.row-item')
     }
