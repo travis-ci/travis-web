@@ -148,10 +148,13 @@ const Repo = Model.extend({
   },
 
   fetchSettings() {
-    return this.get('ajax').ajax('/repos/' + this.get('id') + '/settings', 'get', {
+    return this.get('ajax').ajax('/repo/' + this.get('id') + '/settings', 'get', {
+      headers: {
+        'Travis-API-Version': '3'
+      },
       forceAuth: true
-    }).then(function (data) {
-      return data['settings'];
+    }).then(data => {
+      return this._convertV3SettingsToV2(data['user_settings']);
     });
   },
 
@@ -161,6 +164,13 @@ const Repo = Model.extend({
         'setting.value': value
       }
     });
+  },
+
+  _convertV3SettingsToV2(v3Settings) {
+    return v3Settings.reduce((v2Settings, v3Setting) => {
+      v2Settings[v3Setting.name] = v3Setting.value;
+      return v2Settings;
+    }, {});
   }
 });
 

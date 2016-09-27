@@ -30,12 +30,10 @@ moduleForAcceptance('Acceptance | repo settings', {
       }
     });
 
-    repository.createSetting({
-      builds_only_with_travis_yml: true,
-      build_pushes: true,
-      maximum_number_of_builds: 1919,
-      build_pull_requests: true
-    });
+    repository.createSetting({ name: 'builds_only_with_travis_yml', value: true });
+    repository.createSetting({ name: 'build_pushes', value: true });
+    repository.createSetting({ name: 'maximum_number_of_builds', value: 1919 });
+    repository.createSetting({ name: 'build_pull_requests', value: true });
 
     repository.createEnvVar({
       id: 'a',
