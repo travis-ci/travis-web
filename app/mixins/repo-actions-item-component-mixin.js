@@ -21,6 +21,7 @@ export default Ember.Mixin.create({
     }
   }),
 
+  // eslint-disable-next-line
   userHasPullPermissionForRepo: Ember.computed('user.pullPermissions.[]', 'repo', 'user', function () {
     const repo = this.get('repo');
     const user = this.get('user');
@@ -30,6 +31,7 @@ export default Ember.Mixin.create({
     }
   }),
 
+  // eslint-disable-next-line
   userHasPushPermissionForRepo: Ember.computed('user.pushPermissions.[]', 'repo', 'user', function () {
     const repo = this.get('repo');
     const user = this.get('user');
