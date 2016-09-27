@@ -131,7 +131,7 @@ test('change general settings', function (assert) {
 
   const settingToRequestBody = {};
 
-  server.patch(`/repos/${this.repository.id}/setting/:setting`, function (schema, request) {
+  server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
     settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
   });
 
