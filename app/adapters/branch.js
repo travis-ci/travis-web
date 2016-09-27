@@ -2,13 +2,13 @@ import ApplicationAdapter from 'travis/adapters/application';
 
 export default ApplicationAdapter.extend({
   query(store, type, query) {
-    var repo_id = query.repository_id;
+    const repoId = query.repository_id;
     delete query.repository_id;
-    return this.ajax(this.urlPrefix() + '/v3/repo/' + repo_id + '/branches', 'GET', query);
+    const url = `${this.urlPrefix()}/v3/repo/${repoId}/branches`;
+    return this.ajax(url, 'GET', query);
   },
 
   findRecord(store, type, id) {
     return this.ajax(this.urlPrefix() + id, 'GET');
   }
-
 });
