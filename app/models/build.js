@@ -124,7 +124,7 @@ Build.reopen({
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post('/builds/' + (this.get('id')) + '/cancel');
+    return this.get('ajax').postV3('/build/' + (this.get('id')) + '/cancel');
   },
 
   restart() {

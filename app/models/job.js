@@ -109,7 +109,7 @@ export default Model.extend(DurationCalculations, {
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/cancel');
+    return this.get('ajax').postV3('/job/' + (this.get('id')) + '/cancel');
   },
 
   removeLog() {
