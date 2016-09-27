@@ -102,10 +102,7 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  canCancel: Ember.computed('isFinished', function () {
-    return !this.get('isFinished');
-  }),
-
+  canCancel: Ember.computed.not('isFinished'),
   canRestart: Ember.computed.alias('isFinished'),
   canDebug: Ember.computed.alias('isFinished'),
 
