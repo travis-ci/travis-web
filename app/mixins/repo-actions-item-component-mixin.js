@@ -21,9 +21,27 @@ export default Ember.Mixin.create({
     }
   }),
 
-  canCancel: Ember.computed.and('userHasPermissionForRepo', 'item.canCancel'),
-  canRestart: Ember.computed.and('userHasPermissionForRepo', 'item.canRestart'),
-  canDebug: Ember.computed.and('userHasPermissionForRepo', 'item.canDebug'),
+  userHasPullPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
+    const repo = this.get('repo');
+    const user = this.get('user');
+
+    if (user && repo) {
+      return user.hasPullAccessToRepo(repo);
+    }
+  }),
+
+  userHasPushPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
+    const repo = this.get('repo');
+    const user = this.get('user');
+
+    if (user && repo) {
+      return user.hasPushAccessToRepo(repo);
+    }
+  }),
+
+  canCancel: Ember.computed.and('userHasPullPermissionForRepo', 'item.canCancel'),
+  canRestart: Ember.computed.and('userHasPullPermissionForRepo', 'item.canRestart'),
+  canDebug: Ember.computed.and('userHasPushPermissionForRepo', 'item.canDebug'),
 
   cancel: task(function * () {
     let type = this.get('type');
