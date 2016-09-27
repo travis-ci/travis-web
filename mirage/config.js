@@ -160,7 +160,7 @@ export default function () {
     return response;
   });
 
-  this.post('/builds/:id/restart', (schema, request) => {
+  this.post('/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
       return {
@@ -181,7 +181,7 @@ export default function () {
     }
   });
 
-  this.post('/jobs/:id/restart', (schema, request) => {
+  this.post('/job/:id/restart', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
       return {
