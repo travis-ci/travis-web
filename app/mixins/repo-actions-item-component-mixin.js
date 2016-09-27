@@ -21,7 +21,7 @@ export default Ember.Mixin.create({
     }
   }),
 
-  userHasPullPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
+  userHasPullPermissionForRepo: Ember.computed('user.pullPermissions.[]', 'repo', 'user', function () {
     const repo = this.get('repo');
     const user = this.get('user');
 
@@ -30,7 +30,7 @@ export default Ember.Mixin.create({
     }
   }),
 
-  userHasPushPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
+  userHasPushPermissionForRepo: Ember.computed('user.pushPermissions.[]', 'repo', 'user', function () {
     const repo = this.get('repo');
     const user = this.get('user');
 
