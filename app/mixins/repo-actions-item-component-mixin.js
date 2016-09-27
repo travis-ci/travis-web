@@ -45,9 +45,8 @@ export default Ember.Mixin.create({
     yield eventually(this.get('item'), (record) => {
       record.restart().then(() => {
         this.get('flashes').notice(`The ${type} was successfully restarted.`);
-      }, (xhr) => {
+      }, () => {
         this.get('flashes').error(`An error occurred. The ${type} could not be restarted.`);
-        this.displayFlashError(xhr.status, 'restart');
       });
     });
   }).group('restarters'),
@@ -60,10 +59,9 @@ export default Ember.Mixin.create({
         this.get('flashes')
           .notice(`The ${type} was successfully restarted in debug mode.
             Watch the log for a host to connect to.`);
-      }, (xhr) => {
+      }, () => {
         this.get('flashes')
           .error(`An error occurred. The ${type} could not be restarted in debug mode.`);
-        this.displayFlashError(xhr.status, 'debug');
       });
     });
   }).group('restarters'),

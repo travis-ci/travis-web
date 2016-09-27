@@ -160,7 +160,7 @@ export default function () {
     return response;
   });
 
-  this.post('/builds/:id/restart', (schema, request) => {
+  this.post('/v3/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
       return {
@@ -181,7 +181,7 @@ export default function () {
     }
   });
 
-  this.post('/jobs/:id/restart', (schema, request) => {
+  this.post('/v3/job/:id/restart', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
       return {
@@ -201,7 +201,6 @@ export default function () {
       return new Mirage.Response(404, {}, {});
     }
   });
-
 
   this.get('/v3/repo/:repo_id/builds', function (schema, request) {
     const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];
