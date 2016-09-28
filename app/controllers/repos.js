@@ -1,7 +1,6 @@
 /* global Visibility */
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
-import { task } from 'ember-concurrency';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -9,6 +8,7 @@ const { alias } = Ember.computed;
 export default Ember.Controller.extend({
   auth: service(),
   tabStates: service(),
+  repositories: service(),
   ajax: service(),
   updateTimesService: service('updateTimes'),
 
@@ -31,16 +31,6 @@ export default Ember.Controller.extend({
       }
     }
   },
-
-  performSearchRequest: task(function * (query) {
-    if (!query) { return; }
-    this.set('search', query);
-    this.set('isLoaded', false);
-    yield(Repo.search(this.store, this.get('ajax'), query).then((reposRecordArray) => {
-      this.set('isLoaded', true);
-      this.set('_repos', reposRecordArray);
-    }));
-  }),
 
   tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
     return this.possiblyRedirectToGettingStartedPage();
@@ -158,8 +148,8 @@ export default Ember.Controller.extend({
 
   viewRunning() {},
 
-  viewSearch(query) {
-    this.get('performSearchRequest').perform(query);
+  viewSearch() {
+    this.get('repositories.performSearchRequest').perform();
   },
 
   showRunningJobs: Ember.computed('tab', function () {
