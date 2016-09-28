@@ -22,5 +22,4 @@ export default V3Adapter.extend({
     const url = `${this.urlPrefix()}/v3/repo/${repoId}/crons`;
     return this.ajax(url, 'GET', query);
   }
-
 });

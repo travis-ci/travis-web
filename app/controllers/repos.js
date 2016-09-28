@@ -1,8 +1,7 @@
 /* global Visibility */
 import Ember from 'ember';
-import config from 'travis/config/environment';
 import Repo from 'travis/models/repo';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -32,17 +31,6 @@ export default Ember.Controller.extend({
       }
     }
   },
-
-  showSearchResults: task(function * () {
-    let query = this.get('search');
-
-    if (query === '') { return; }
-
-    yield timeout(config.repositorySearchDebounceRate);
-
-    this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
-    this.get('tabStates').set('sidebarTab', 'search');
-  }).restartable(),
 
   performSearchRequest: task(function * (query) {
     if (!query) { return; }
@@ -173,18 +161,6 @@ export default Ember.Controller.extend({
   viewSearch(query) {
     this.get('performSearchRequest').perform(query);
   },
-
-  noReposMessage: Ember.computed('tab', function () {
-    var tab;
-    tab = this.get('tab');
-    if (tab === 'owned') {
-      return 'You don\'t have any repos set up on Travis CI';
-    } else if (tab === 'recent') {
-      return 'Repositories could not be loaded';
-    } else {
-      return 'Could not find any repos';
-    }
-  }),
 
   showRunningJobs: Ember.computed('tab', function () {
     return this.get('tab') === 'running';
