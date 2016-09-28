@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
+import currentRepoTab from 'travis/tests/pages/repo-tabs/current';
 
 moduleForAcceptance('Acceptance | home/sidebar repository search', {
   beforeEach() {
@@ -32,6 +33,7 @@ test('searching for a repository from dashboard', function (assert) {
 
   andThen(() => {
     assert.equal(dashboardPage.sidebarRepositories().count, 1, 'expected to see search result in sidebar');
+    assert.ok(currentRepoTab.currentTabActive, 'Current tab is active when displaying first search result');
   });
 });
 
@@ -40,5 +42,6 @@ test('reloading a previous search', function (assert) {
 
   andThen(() => {
     assert.equal(dashboardPage.sidebarRepositories().count, 1, 'expected to see search result in sidebar');
+    assert.ok(currentRepoTab.currentTabActive, 'Current tab is active when displaying first search result');
   });
 });
