@@ -17,6 +17,8 @@ export default create({
   myReposTabIsActive: hasClass('active', '#tab_owned'),
   navigateToProfilePage: clickable('#profile-page-link'),
 
+  noRepositoriesMessage: text('p.empty'),
+
   sidebarRepositories: collection({
     scope: 'ul.repos-list',
     itemScope: 'li.repo',

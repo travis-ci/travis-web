@@ -14,5 +14,6 @@ test('signed in but without repositories', function (assert) {
 
   andThen(function () {
     assert.equal(currentURL(), '/getting_started');
+    assert.equal(dashboardPage.noRepositoriesMessage, 'Could not find any repos', 'Displays message that there are no active repositories.');
   });
 });

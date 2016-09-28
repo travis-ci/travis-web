@@ -11,5 +11,5 @@ test('it renders', function (assert) {
 
   this.render(hbs`{{repository-sidebar}}`);
 
-  assert.equal(this.$().text().trim(), 'My Repositories');
+  assert.equal(this.$().text().trim().split('\n')[0], 'My Repositories');
 });
