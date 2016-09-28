@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('lastbuild-tile', 'Integration | Component | lastbuild tile', {
   integration: true
@@ -20,4 +21,6 @@ test('it renders', function (assert) {
 
   assert.equal(this.$('.label-align').text().trim(), '#222', 'shows the right build number');
   assert.equal(this.$('li').hasClass('passed'), true, 'has class according to build state');
+
+  percySnapshot(assert);
 });

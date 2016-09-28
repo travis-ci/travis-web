@@ -26,4 +26,5 @@ test('visiting /builds/branches-tab', function (assert) {
   andThen(function () {
     assert.ok(branchesRepoTab.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
   });
+  percySnapshot(assert);
 });

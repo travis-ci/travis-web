@@ -1,12 +1,13 @@
 import Ember from 'ember';
 import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('branch-row', 'Integration | Component | branch row', {
   integration: true
 });
 
-test('it renders data correctly', function () {
+test('it renders data correctly', function (assert) {
   const branch = Ember.Object.create({
     name: 'master',
     repository: {
@@ -53,4 +54,6 @@ test('it renders data correctly', function () {
   equal(this.$('.row-request .label-align').text().trim(), '#1 passed', 'should display build number and state');
   equal(this.$('.row-commiter .label-align').text().trim(), 'Dan Buch', 'should display correct commiter name');
   equal(this.$('.row-commit .label-align').text().trim(), 'a82f6ba', 'should display correct commit sha');
+
+  percySnapshot(assert);
 });

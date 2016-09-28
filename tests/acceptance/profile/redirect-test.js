@@ -14,4 +14,5 @@ test('visiting /profile redirects to /profile/:username', function (assert) {
   andThen(() => {
     assert.equal(currentURL(), '/profile/testuser');
   });
+  percySnapshot(assert);
 });

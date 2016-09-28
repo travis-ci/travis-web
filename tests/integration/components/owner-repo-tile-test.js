@@ -1,12 +1,13 @@
 import Ember from 'ember';
 import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('owner-repo-tile', 'OwnerRepoTileComponent', {
   integration: true
 });
 
-test('it renders', function () {
+test('it renders', function (assert) {
   const repo = Ember.Object.create({
     slug: 'travis-ci/travis-chat',
     active: false,
@@ -49,5 +50,6 @@ test('it renders', function () {
   ok(this.$().find('.owner-tile').hasClass('passed'), 'component should have state class (passed)');
   equal(this.$('.row-item:nth-of-type(1)').text().trim(), 'travis-chat', 'should display correct repo name');
   equal(this.$('.row-item:nth-of-type(3) span.label-align').text().trim(), 'master', 'should display branch name');
+  percySnapshot(assert);
   return equal(this.$('.row-item:nth-of-type(4)').text().trim(), '16fff34', 'should display correct commit sha');
 });

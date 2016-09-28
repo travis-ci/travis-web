@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
   integration: true
@@ -15,6 +16,7 @@ test('it renders the default ssh key if no custom key is set', function (assert)
 
   assert.equal(this.$('.ssh-key-name').text().trim(), 'no custom key set', 'should display that no custom key is set');
   assert.equal(this.$('.ssh-key-value').text().trim(), 'fingerprint', 'should display default key fingerprint');
+  percySnapshot(assert);
 });
 
 test('it renders the custom ssh key if custom key is set', function (assert) {
@@ -32,6 +34,7 @@ test('it renders the custom ssh key if custom key is set', function (assert) {
 
   assert.equal(this.$('.ssh-key-name').text().trim(), 'fookey', 'should display key description');
   assert.equal(this.$('.ssh-key-value').text().trim(), 'somethingthing', 'should display custom key fingerprint');
+  percySnapshot(assert);
 });
 
 
@@ -52,6 +55,7 @@ test('it deletes a custom key if permissions are right', function (assert) {
   this.$('.ssh-key-action a').click();
 
   assert.ok(key.get('isDeleted'), 'key should be deleted');
+  percySnapshot(assert);
 
   // we don't deal with saving records for now, so at least wait till it's done
   var done = assert.async();
@@ -72,4 +76,5 @@ test('it does not delete the custom key if permissions are insufficient', functi
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=false}}`);
 
   assert.ok(Ember.isEmpty(this.$('.ssh-key-action').find('a')), 'delete link should not be displayed');
+  percySnapshot(assert);
 });

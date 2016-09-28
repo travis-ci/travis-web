@@ -57,6 +57,7 @@ test('view and delete caches', function (assert) {
 
     assert.notOk(page.noCachesExist, 'expected the message that no caches exist to not be present');
   });
+  percySnapshot(assert);
 
   const requestBodies = [];
 

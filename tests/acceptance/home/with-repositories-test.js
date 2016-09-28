@@ -36,4 +36,5 @@ test('the home page shows the repositories', (assert) => {
     assert.equal(dashboardPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
     assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/living-a-feminist-life');
   });
+  percySnapshot(assert);
 });
