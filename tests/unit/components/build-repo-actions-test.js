@@ -41,35 +41,35 @@ test('it shows restart button if canRestart is true', function () {
   return ok(component.$('a[title="Restart build"]').length, 'restart link should be visible');
 });
 
-test('user can cancel if she has permissions to a repo and build is cancelable', function () {
+test('user can cancel if she has pull permissions to a repo and build is cancelable', function () {
   var build, component;
   build = Ember.Object.create({
     canCancel: false,
-    userHasPermissionForRepo: true
+    userHasPullPermissionForRepo: true
   });
   component = this.subject({
     build: build,
-    userHasPermissionForRepo: false
+    userHasPullPermissionForRepo: false
   });
   ok(!component.get('canCancel'));
-  component.set('userHasPermissionForRepo', true);
+  component.set('userHasPullPermissionForRepo', true);
   ok(!component.get('canCancel'));
   build.set('canCancel', true);
   return ok(component.get('canCancel'));
 });
 
-test('user can restart if she has permissions to a repo and job is restartable', function () {
+test('user can restart if she has pull permissions to a repo and job is restartable', function () {
   var build, component;
   build = Ember.Object.create({
     canRestart: false,
-    userHasPermissionForRepo: true
+    userHasPullPermissionForRepo: true
   });
   component = this.subject({
     build: build,
-    userHasPermissionForRepo: false
+    userHasPullPermissionForRepo: false
   });
   ok(!component.get('canRestart'));
-  component.set('userHasPermissionForRepo', true);
+  component.set('userHasPullPermissionForRepo', true);
   ok(!component.get('canRestart'));
   build.set('canRestart', true);
   return ok(component.get('canRestart'));

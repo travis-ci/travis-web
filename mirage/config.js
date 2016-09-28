@@ -160,7 +160,7 @@ export default function () {
     return response;
   });
 
-  this.post('/builds/:id/restart', (schema, request) => {
+  this.post('/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
       return {
@@ -172,7 +172,7 @@ export default function () {
     }
   });
 
-  this.post('/builds/:id/cancel', (schema, request) => {
+  this.post('/build/:id/cancel', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
       return new Mirage.Response(204, {}, {});
@@ -181,7 +181,7 @@ export default function () {
     }
   });
 
-  this.post('/jobs/:id/restart', (schema, request) => {
+  this.post('/job/:id/restart', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
       return {
@@ -193,7 +193,7 @@ export default function () {
     }
   });
 
-  this.post('/jobs/:id/cancel', (schema, request) => {
+  this.post('/job/:id/cancel', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
       return new Mirage.Response(204, {}, {});
