@@ -70,7 +70,7 @@ compact = function (object) {
 };
 
 safe = function (string) {
-  return new Ember.Handlebars.SafeString(string);
+  return new Ember.String.htmlSafe(string);
 };
 
 colorForState = function (state) {
