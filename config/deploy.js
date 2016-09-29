@@ -1,4 +1,5 @@
 var VALID_DEPLOY_TARGETS = [
+  'org-staging-pull-request',
   'org-production-pull-request',
   'com-production-pull-request'
 ];
@@ -26,6 +27,12 @@ module.exports = function(deployTarget) {
   if (deployTarget === 'org-production-pull-request') {
     ENV.s3.bucket = 'travis-web-production-next';
     ENV.redis.url = process.env.ORG_PRODUCTION_REDIS_URL;
+  }
+
+  if (deployTarget === 'org-staging-pull-request') {
+    ENV.s3.bucket = 'travis-web-production-next';
+    ENV.redis.url = process.env.ORG_PRODUCTION_REDIS_URL;
+    ENV.redis.keyPrefix = `${process.env.TRAVIS_PULL_REQUEST_BRANCH}-staging`;
   }
 
   if (deployTarget === 'com-production-pull-request') {
