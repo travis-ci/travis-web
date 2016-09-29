@@ -56,7 +56,7 @@
     "ember-feature-flags": "3.0.0",
     "ember-keyboard-shortcuts": "0.3.0",
     "ember-load-initializers": "^0.5.1",
-    "ember-prism": "brandonjmckay/ember-prism#30f2782",
+    "ember-prism": "0.0.8",
     "ember-qunit-nice-errors": "1.1.1",
     "ember-resolver": "^2.0.3",
     "emberx-select": "2.2.2",
