@@ -38,6 +38,8 @@ export default Ember.Component.extend({
         yield envVar.save();
         this.reset();
       } catch (e) {
+        // eslint-disable-next-line
+        console.log('Error saving environment variable!', e);
       }
     }
   }).drop(),
