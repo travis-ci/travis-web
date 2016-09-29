@@ -113,6 +113,10 @@ export default function () {
     return schema.branches.all();
   });
 
+  this.get('/v3/owner/:login', function (schema, request) {
+    return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
+  });
+
   this.get('/repos/:id/key', function (schema, request) {
     const key = schema.sshKeys.where({
       repositoryId: request.params.id,
