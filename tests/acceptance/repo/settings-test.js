@@ -216,6 +216,17 @@ test('delete and create environment variables', function (assert) {
       public: true,
       repository_id: this.repository.id
     } });
+
+    // This will trigger a client-side error
+    server.post('/settings/env_vars', undefined, 403);
+  });
+
+  settingsPage.environmentVariableForm.fillName('willFail');
+  settingsPage.environmentVariableForm.fillValue('true');
+  settingsPage.environmentVariableForm.add();
+
+  andThen(() => {
+    assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
   });
 });
 
