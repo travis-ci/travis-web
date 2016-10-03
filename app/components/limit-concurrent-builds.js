@@ -28,6 +28,8 @@ export default Ember.Component.extend({
   },
 
   toggle: task(function* () {
+    // eslint-disable-next-line
+    console.log(`Clicked toggle. this.get('enabled'): ${this.get('enabled')}, this.get('value'): ${this.get('value')}`);
     if (!this.get('enabled') && this.get('value') !== 0) {
       try {
         yield this.get('repo').saveSetting('maximum_number_of_builds', 0);
