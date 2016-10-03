@@ -21,9 +21,29 @@ export default Ember.Mixin.create({
     }
   }),
 
-  canCancel: Ember.computed.and('userHasPermissionForRepo', 'item.canCancel'),
-  canRestart: Ember.computed.and('userHasPermissionForRepo', 'item.canRestart'),
-  canDebug: Ember.computed.and('userHasPermissionForRepo', 'item.canDebug'),
+  // eslint-disable-next-line
+  userHasPullPermissionForRepo: Ember.computed('user.pullPermissions.[]', 'repo', 'user', function () {
+    const repo = this.get('repo');
+    const user = this.get('user');
+
+    if (user && repo) {
+      return user.hasPullAccessToRepo(repo);
+    }
+  }),
+
+  // eslint-disable-next-line
+  userHasPushPermissionForRepo: Ember.computed('user.pushPermissions.[]', 'repo', 'user', function () {
+    const repo = this.get('repo');
+    const user = this.get('user');
+
+    if (user && repo) {
+      return user.hasPushAccessToRepo(repo);
+    }
+  }),
+
+  canCancel: Ember.computed.and('userHasPullPermissionForRepo', 'item.canCancel'),
+  canRestart: Ember.computed.and('userHasPullPermissionForRepo', 'item.canRestart'),
+  canDebug: Ember.computed.and('userHasPushPermissionForRepo', 'item.canDebug'),
 
   cancel: task(function * () {
     let type = this.get('type');
@@ -45,9 +65,8 @@ export default Ember.Mixin.create({
     yield eventually(this.get('item'), (record) => {
       record.restart().then(() => {
         this.get('flashes').notice(`The ${type} was successfully restarted.`);
-      }, (xhr) => {
+      }, () => {
         this.get('flashes').error(`An error occurred. The ${type} could not be restarted.`);
-        this.displayFlashError(xhr.status, 'restart');
       });
     });
   }).group('restarters'),
@@ -60,10 +79,9 @@ export default Ember.Mixin.create({
         this.get('flashes')
           .notice(`The ${type} was successfully restarted in debug mode.
             Watch the log for a host to connect to.`);
-      }, (xhr) => {
+      }, () => {
         this.get('flashes')
           .error(`An error occurred. The ${type} could not be restarted in debug mode.`);
-        this.displayFlashError(xhr.status, 'debug');
       });
     });
   }).group('restarters'),

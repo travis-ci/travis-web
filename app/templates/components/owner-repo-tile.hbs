@@ -12,7 +12,7 @@
   </div>
 </div>
 {{#if repo.default_branch.last_build}}
-  <div class="row-item row-color">
+  <div class="row-item row-color build-number">
     <div class="one-line">
       {{#link-to "build" ownerName repoName repo.default_branch.last_build.id}}
         <span class="icon-hash">
@@ -22,14 +22,14 @@
     </div>
   </div>
 
-  <div class="row-item fade-out">
+  <div class="row-item fade-out default-branch">
     <div class="one-line">
       {{request-icon event=repo.default_branch.last_build.event_type}}
       <span class="label-align">{{repo.default_branch.name}}</span>
     </div>
   </div>
 
-  <div class="row-item">
+  <div class="row-item commit-sha">
     <div class="one-line">
       <a href="{{repo.default_branch.last_build.commit.compare_url}}">
         <span class="icon-github">
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="row-item fade-out">
+  <div class="row-item fade-out commit-date">
     <div class="one-line">
       <span class="icon-calendar">
       </span>

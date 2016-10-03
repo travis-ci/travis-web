@@ -31,6 +31,16 @@ export default Ember.Service.extend({
     });
   },
 
+  postV3(url, data, callback) {
+    return this.ajax(url, 'post', {
+      data: data,
+      success: callback,
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    });
+  },
+
   patch(url, data, callback) {
     return this.ajax(url, 'patch', {
       data: data,
