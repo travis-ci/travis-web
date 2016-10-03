@@ -42,6 +42,8 @@ export default Ember.Component.extend({
         // eslint-disable-next-line
         console.log('Error saving environment variable!', e);
         this.get('flashes').error('There was an error saving this environment variable.');
+
+        throw e;
       }
     }
   }).drop(),
