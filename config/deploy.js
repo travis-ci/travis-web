@@ -12,7 +12,7 @@ module.exports = function(deployTarget) {
     },
     redis: {
       allowOverwrite: true,
-      keyPrefix: process.env.TRAVIS_PULL_REQUEST_BRANCH
+      keyPrefix: process.env.CLEANED_BRANCH_SUBDOMAIN
     },
     s3: {
       region: 'eu-west-1',
@@ -33,7 +33,7 @@ module.exports = function(deployTarget) {
   if (deployTarget === 'org-staging-pull-request') {
     ENV.s3.bucket = 'travis-web-production-next';
     ENV.redis.url = process.env.ORG_PRODUCTION_REDIS_URL;
-    ENV.redis.keyPrefix = `${process.env.TRAVIS_PULL_REQUEST_BRANCH}-staging`;
+    ENV.redis.keyPrefix = `${process.env.CLEANED_BRANCH_SUBDOMAIN}-staging`;
   }
 
   if (deployTarget === 'com-production-pull-request') {
@@ -44,7 +44,7 @@ module.exports = function(deployTarget) {
   if (deployTarget === 'com-staging-pull-request') {
     ENV.s3.bucket = 'travis-pro-web-production-next';
     ENV.redis.url = process.env.COM_PRODUCTION_REDIS_URL;
-    ENV.redis.keyPrefix = `${process.env.TRAVIS_PULL_REQUEST_BRANCH}-staging`;
+    ENV.redis.keyPrefix = `${process.env.CLEANED_BRANCH_SUBDOMAIN}-staging`;
   }
 
   return ENV;

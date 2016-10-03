@@ -1,3 +1,5 @@
+export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-'`
+
 ember deploy org-production-pull-request --activate --verbose
 TRAVIS_PRO=true ember deploy com-production-pull-request --activate --verbose
 
