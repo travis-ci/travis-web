@@ -22,6 +22,7 @@ export default Ember.Component.extend({
       savingFinished = () => {
         this.set('isSaving', false);
       };
+      this.set('value', value);
       return repo.saveSetting('maximum_number_of_builds', limit)
         .then(savingFinished, savingFinished);
     }
