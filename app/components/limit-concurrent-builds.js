@@ -31,7 +31,10 @@ export default Ember.Component.extend({
     if (!this.get('enabled') && this.get('value') !== 0) {
       try {
         yield this.get('repo').saveSetting('maximum_number_of_builds', 0);
-      } catch (e) {}
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log('Exception setting maximum number of builds to 0', e);
+      }
 
       this.set('value', 0);
     }
