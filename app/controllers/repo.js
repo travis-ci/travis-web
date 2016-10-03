@@ -9,12 +9,18 @@ const { alias } = Ember.computed;
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
   popup: service(),
+  repositories: service(),
 
   jobController: controller('job'),
   buildController: controller('build'),
   buildsController: controller('builds'),
   reposController: controller('repos'),
-  repos: alias('reposController.repos'),
+  repos: alias('repositories.repos'),
+
+  repo: Ember.computed('repos.firstObject', function () {
+    return this.get('repos.firstObject');
+  }),
+
   currentUser: alias('auth.currentUser'),
 
   classNames: ['repo'],

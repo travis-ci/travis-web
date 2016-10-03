@@ -34,7 +34,8 @@ module.exports = function (environment) {
     heap: {
       projectId: '1049054202'
     },
-    logLimit: 10000
+    logLimit: 10000,
+    repositorySearchDebounceRate: 500
   };
 
   ENV.featureFlags = {
@@ -127,6 +128,8 @@ module.exports = function (environment) {
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;
+
+    ENV.repositorySearchDebounceRate = 0;
   }
 
   if (environment === 'production') {

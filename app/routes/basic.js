@@ -4,6 +4,7 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend({
   auth: service(),
+  repositories: service(),
 
   activate() {
     if (this.routeName !== 'error') {

@@ -5,13 +5,13 @@ const { service } = Ember.inject;
 
 export default MainTabRoute.extend({
   tabStates: service(),
+  repositories: service(),
 
   needsAuth: true,
 
   activate() {
-    if (this.get('tabStates.sidebarTab') === 'search') {
-      this.get('tabStates').set('sidebarTab', 'owned');
-    }
+    this.get('tabStates').set('sidebarTab', 'owned');
+    this.get('repositories.requestOwnedRepositories').perform();
   },
 
   afterModel() {

@@ -5,13 +5,7 @@ const { service } = Ember.inject;
 
 export default MainTabRoute.extend({
   tabStates: service(),
-
-  renderTemplate() {
-    this.render('repo');
-    return this.render('build', {
-      into: 'repo'
-    });
-  },
+  repositories: service(),
 
   activate() {
     this.get('tabStates').set('sidebarTab', 'search');
@@ -28,8 +22,12 @@ export default MainTabRoute.extend({
     return params.phrase.replace(/%2F/g, '/');
   },
 
+  afterModel(model) {
+    this.get('repositories').set('searchQuery', model);
+  },
+
   deactivate() {
     this._super(...arguments);
-    return this.controllerFor('repos').set('search', void 0);
+    return this.set('repositories.searchQuery', null);
   }
 });

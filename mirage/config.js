@@ -63,11 +63,19 @@ export default function () {
   });
 
   this.get('/repo/:slug', function (schema, request) {
-    let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
+    let { slug } = request.params;
+    let isId = !isNaN(slug);
+    if (isId) {
+      return {
+        repo: schema.repositories.find(slug)
+      };
+    } else {
+      let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
 
-    return {
-      repo: repos.models[0].attrs
-    };
+      return {
+        repo: repos.models[0].attrs
+      };
+    }
   });
 
   this.get('/v3/repo/:id/crons', function (schema/* , request*/) {
