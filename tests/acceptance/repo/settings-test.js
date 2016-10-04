@@ -192,6 +192,7 @@ test('delete and create environment variables', function (assert) {
 
   server.post('/settings/env_vars', function (schema, request) {
     const parsedRequestBody = JSON.parse(request.requestBody);
+    parsedRequestBody.env_var.id = '1919';
     requestBodies.push(parsedRequestBody);
     return parsedRequestBody;
   });
@@ -206,7 +207,24 @@ test('delete and create environment variables', function (assert) {
     assert.ok(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
     assert.equal(settingsPage.environmentVariables(1).value, 'true');
 
-    assert.deepEqual(requestBodies.pop(), { env_var: { name: 'drafted', value: 'true', public: true, repository_id: this.repository.id } });
+    assert.deepEqual(requestBodies.pop(), { env_var: {
+      id: '1919',
+      name: 'drafted',
+      value: 'true',
+      public: true,
+      repository_id: this.repository.id
+    } });
+
+    // This will trigger a client-side error
+    server.post('/settings/env_vars', undefined, 403);
+  });
+
+  settingsPage.environmentVariableForm.fillName('willFail');
+  settingsPage.environmentVariableForm.fillValue('true');
+  settingsPage.environmentVariableForm.add();
+
+  andThen(() => {
+    assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
   });
 });
 

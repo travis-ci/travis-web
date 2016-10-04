@@ -26,7 +26,6 @@ var sortCallback = function (repo1, repo2) {
     return 1;
   }
 
-
   if (finishedAt1) {
     finishedAt1 = new Date(finishedAt1);
   }
@@ -134,7 +133,7 @@ export default Ember.Controller.extend({
     var result;
 
     result = this.store.filter('job', {}, function (job) {
-      return ['queued', 'started', 'received'].contains(job.get('state'));
+      return ['queued', 'started', 'received'].includes(job.get('state'));
     });
 
     result.set('isLoaded', false);

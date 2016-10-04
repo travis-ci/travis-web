@@ -38,7 +38,7 @@ export default Ember.Service.extend({
     let id = isNaN(repo) ? repo.get('id') : repo;
     let currentUser = this.get('currentUser');
     if (currentUser) {
-      return currentUser.get(permissionsType).contains(parseInt(id));
+      return currentUser.get(permissionsType).includes(parseInt(id));
     } else {
       return false;
     }

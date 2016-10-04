@@ -44,7 +44,7 @@ export default RavenLogger.extend({
   shouldReportError() {
     // Sentry recommends only reporting a small subset of the actual
     // frontend errors. This can get *very* noisy otherwise.
-    if (config.enterprise) {
+    if (config.enterprise || config.sentry.development) {
       return false;
     } else {
       var sampleRate = 10;
