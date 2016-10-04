@@ -19,6 +19,6 @@ test('visiting /features directly when authenticated', function (assert) {
   featurePage.visit();
 
   andThen(function () {
-    assert.equal(currentURL(), '/features');
+    assert.equal(currentURL(), '/settings/features');
   });
 });
