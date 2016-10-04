@@ -35,7 +35,7 @@ export default Ember.Component.extend({
       } catch (e) {
         // eslint-disable-next-line
         this.get('flashes').error('There was an error disabling the concurrent jobs limit.');
-        this.get('raven').handleException(e);
+        this.get('raven').logException(e);
       }
 
       this.set('value', 0);

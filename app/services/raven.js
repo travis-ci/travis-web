@@ -18,7 +18,7 @@ export default RavenLogger.extend({
     this._super(...arguments);
   },
 
-  handleException(e) {
+  logException(e) {
     // eslint-disable-next-line
     console.log('Caught an exception:', e);
 
