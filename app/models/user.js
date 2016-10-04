@@ -21,6 +21,7 @@ export default Model.extend({
   isSyncing: attr('boolean'),
   syncedAt: attr(),
   repoCount: attr('number'),
+  betaProgram: attr('boolean'),
 
   fullName: Ember.computed('name', 'login', function () {
     return this.get('name') || this.get('login');

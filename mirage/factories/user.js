@@ -5,5 +5,6 @@ export default Factory.extend({
   email: 'test@travis-ci.com',
   correct_scopes: true,
   login: 'testuser',
-  synced_at: '2016-01-01T23:04:31Z'
+  synced_at: '2016-01-01T23:04:31Z',
+  beta_program: false
 });

@@ -4,16 +4,27 @@ import featurePage from 'travis/tests/pages/features';
 
 moduleForAcceptance('Acceptance | feature flags/user sets flags');
 
-test('visiting /features directly as guest', function (assert) {
+test('visiting /settings/features directly as guest', function (assert) {
   featurePage.visit();
 
-  andThen(function () {
+  andThen(() => {
     assert.equal(currentURL(), '/auth');
   });
 });
 
-test('visiting /features directly when authenticated', function (assert) {
+test('visiting /settings/features directly when authenticated but without beta program', function (assert) {
   const currentUser = server.create('user');
+  signInUser(currentUser);
+
+  featurePage.visit();
+
+  andThen(function () {
+    assert.equal(currentURL(), '/profile/testuser');
+  });
+});
+
+test('visiting /settings/features directly when authenticated with beta program', function (assert) {
+  const currentUser = server.create('user', { beta_program: true });
   signInUser(currentUser);
 
   featurePage.visit();
