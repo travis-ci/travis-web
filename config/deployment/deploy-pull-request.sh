@@ -12,7 +12,7 @@ then
   TLD=org ENVIRONMENT=staging ./config/deployment/update-github-status.sh
 
   API_ENDPOINT=https://api-staging.travis-ci.com TRAVIS_PRO=true ember deploy com-staging-pull-request --activate --verbose
-  TLD=com ENVIRONMENT=staging .config/deployment/update-github-status.sh
+  TLD=com ENVIRONMENT=staging ./config/deployment/update-github-status.sh
 else
   echo "Skipping com- and org-staging PR deployments: no 'staging' in branch name."
 fi
