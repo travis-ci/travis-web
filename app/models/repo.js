@@ -52,7 +52,7 @@ const Repo = Model.extend({
       repository_id: id
     }, function (b) {
       let eventTypes = ['push', 'api', 'cron'];
-      return b.get('repo.id') + '' === id + '' && eventTypes.contains(b.get('eventType'));
+      return b.get('repo.id') + '' === id + '' && eventTypes.includes(b.get('eventType'));
     });
     array = ExpandableRecordArray.create({
       type: 'build',
@@ -174,7 +174,7 @@ Repo.reopenClass({
     reposIds = reposIdsOrlogin;
     repos = store.filter('repo', function (repo) {
       let repoId = parseInt(repo.get('id'));
-      return reposIds.contains(repoId);
+      return reposIds.includes(repoId);
     });
     promise = new Ember.RSVP.Promise(function (resolve, reject) {
       return store.query('repo', {

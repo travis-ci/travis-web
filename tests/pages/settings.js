@@ -14,6 +14,8 @@ let {
 export default PageObject.create({
   visit: visitable(':organization/:repo/settings'),
 
+  notification: text('p.flash-message'),
+
   buildOnlyWithTravisYml: {
     scope: 'section.settings-section .builds_only_with_travis_yml.switch',
 

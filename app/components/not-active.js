@@ -18,7 +18,7 @@ export default Ember.Component.extend({
       let permissions = user.get('pushPermissions'),
         repoId = parseInt(this.get('repo.id'));
 
-      return permissions.contains(repoId);
+      return permissions.includes(repoId);
     } else {
       return false;
     }

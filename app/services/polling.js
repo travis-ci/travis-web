@@ -31,7 +31,7 @@ export default Ember.Service.extend({
   startPollingHook(source) {
     var sources;
     sources = this.get('sources');
-    if (!sources.contains(source)) {
+    if (!sources.includes(source)) {
       return sources.pushObject(source);
     }
   },
@@ -45,7 +45,7 @@ export default Ember.Service.extend({
   startPolling(model) {
     var watchedModels;
     watchedModels = this.get('watchedModels');
-    if (!watchedModels.contains(model)) {
+    if (!watchedModels.includes(model)) {
       return watchedModels.pushObject(model);
     }
   },

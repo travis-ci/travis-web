@@ -55,7 +55,7 @@ export default Ember.Service.extend({
   pushObject(record) {
     let records = this.get('records');
 
-    if (!records.contains(record)) {
+    if (!records.includes(record)) {
       records.pushObject(record);
     }
   },

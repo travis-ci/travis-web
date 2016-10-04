@@ -57,13 +57,13 @@ Build.reopen({
   isFinished: Ember.computed('state', function () {
     let state = this.get('state');
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
-    return finishedStates.contains(state);
+    return finishedStates.includes(state);
   }),
 
   notStarted: Ember.computed('state', function () {
     let state = this.get('state');
     let waitingStates = ['queued', 'created', 'received'];
-    return waitingStates.contains(state);
+    return waitingStates.includes(state);
   }),
 
   startedAt: Ember.computed('_startedAt', 'notStarted', function () {
@@ -95,7 +95,7 @@ Build.reopen({
     keys = [];
     this.get('jobs').forEach(function (job) {
       return configKeys(job.get('config')).forEach(function (key) {
-        if (!keys.contains(key)) {
+        if (!keys.includes(key)) {
           return keys.pushObject(key);
         }
       });
