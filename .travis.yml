@@ -49,11 +49,11 @@ before_deploy:
   - cp dist/maintenance.html dist/index.html
 
 deploy:
-  skip_cleanup: true
   - provider: s3
     access_key_id: $MAINTENANCE_S3_ACCESS_KEY_ID
     secret_access_key: $MAINTENANCE_S3_SECRET_ACCESS_KEY
     bucket: travis-error-pages
+    skip_cleanup: true
     acl: public_read
     local_dir: dist
     region: us-east-1
@@ -61,11 +61,13 @@ deploy:
       branch: master
       condition: "$EMBER_VERSION = default"
   - provider: script
+    skip_cleanup: true
     script: ./config/deployment/deploy-test-master.sh
     on:
       branch: bd-beta-canary-deployments
       condition: "$EMBER_VERSION = beta"
   - provider: script
+    skip_cleanup: true
     script: ./config/deployment/deploy-test-master.sh
     on:
       branch: bd-beta-canary-deployments
