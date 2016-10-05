@@ -27,7 +27,6 @@
 
   <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
-
     {{#unless config.enterprise}}
       {{#unless features.proVersion}}
         <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
@@ -54,7 +53,6 @@
               <li><a href="mailto:support@travis-ci.com" title="Email the Travis support team">Email Support</a></li>
               <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
               <li><a href="https://twitter.com/travisci" title="Travis in the Twitter-sphere">Twitter</a></li>
-
             </ul>
           </li>
           <li>
@@ -75,7 +73,7 @@
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
-          <button class="signed-out button-signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
+          <button class="signed-out button-signin" type="button" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
           {{#link-to "profile" class="navigation-anchor signed-in"}}
@@ -84,22 +82,22 @@
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
-          <button class="signing-in button-signingin">Signing In {{loading-indicator inline=true}}</button>
+          <button class="signing-in button-signingin" type="button">Signing In {{loading-indicator inline=true}}</button>
         {{/if}}
         {{#if auth.signedIn}}
           <ul class="navigation-nested">
             <li>
-              {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
+              {{#link-to "profile" class="signed-in" title="See the Travis accounts you belong to"}}Accounts{{/link-to}}
             </li>
             {{#if config.billingEndpoint}}
               {{#unless config.enterprise}}
                 <li>
-                  <a href={{config.billingEndpoint}}>Billing</a>
+                  <a href={{config.billingEndpoint}} title="Take a look at your subscriptions">Billing</a>
                 </li>
               {{/unless}}
             {{/if}}
             <li>
-              <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
+              <a href="/" {{action "signOut" target="auth"}} title="Sign out of Travis">Sign Out</a>
             </li>
           </ul>
         {{/if}}
