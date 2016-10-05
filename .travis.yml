@@ -61,17 +61,17 @@ deploy:
       branch: master
       condition: "$EMBER_VERSION = default"
   - provider: script
+    skip_cleanup: true
+    script: ./config/deployment/deploy-test-master.sh
     on:
       branch: bd-beta-canary-deployments
       condition: "$EMBER_VERSION = beta"
-      skip_cleanup: true
-      script: ./config/deployment/deploy-test-master.sh
   - provider: script
+    skip_cleanup: true
+    script: ./config/deployment/deploy-test-master.sh
     on:
       branch: bd-beta-canary-deployments
       condition: "$EMBER_VERSION = canary"
-      skip_cleanup: true
-      script: ./config/deployment/deploy-test-master.sh
 
 after_success:
   - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
