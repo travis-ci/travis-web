@@ -39,7 +39,8 @@ install:
   - bower install
 
 script:
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
+  - echo "joie"
+  #- ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
@@ -61,12 +62,12 @@ deploy:
       condition: "$EMBER_VERSION = default"
   - provider: script
     on:
-      branch: master
+      branch: bd-beta-canary-deployments
       condition: "$EMBER_VERSION = beta"
       script: ./config/deployment/deploy-test-master.sh
   - provider: script
     on:
-      branch: master
+      branch: bd-beta-canary-deployments
       condition: "$EMBER_VERSION = canary"
       script: ./config/deployment/deploy-test-master.sh
 
