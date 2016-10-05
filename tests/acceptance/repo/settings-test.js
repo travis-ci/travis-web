@@ -221,12 +221,12 @@ test('delete and create environment variables', function (assert) {
     server.post('/settings/env_vars', undefined, 403);
   });
 
-  settingsPage.environmentVariableForm.fillName('willFail');
-  settingsPage.environmentVariableForm.fillValue('true');
-  settingsPage.environmentVariableForm.add();
+  repositorySettingsPage.environmentVariableForm.fillName('willFail');
+  repositorySettingsPage.environmentVariableForm.fillValue('true');
+  repositorySettingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
+    assert.equal(repositorySettingsPage.notification, 'There was an error saving this environment variable.');
   });
 });
 
