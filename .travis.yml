@@ -39,8 +39,7 @@ install:
   - bower install
 
 script:
-  - echo "joie"
-  #- ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot -f 'computed-limit'
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
