@@ -139,35 +139,35 @@ test('change general settings', function (assert) {
 
   andThen(() => {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
-    assert.deepEqual(settingToRequestBody.build_pushes, { 'setting.value': false });
+    assert.deepEqual(settingToRequestBody.build_pushes, { 'user_setting.value': false });
   });
 
   settingsPage.buildOnlyWithTravisYml.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
-    assert.deepEqual(settingToRequestBody.builds_only_with_travis_yml, { 'setting.value': false });
+    assert.deepEqual(settingToRequestBody.builds_only_with_travis_yml, { 'user_setting.value': false });
   });
 
   settingsPage.buildPullRequests.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
-    assert.deepEqual(settingToRequestBody.build_pull_requests, { 'setting.value': false });
+    assert.deepEqual(settingToRequestBody.build_pull_requests, { 'user_setting.value': false });
   });
 
   settingsPage.limitConcurrentBuilds.fill('2010');
 
   andThen(() => {
     assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
-    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 2010 });
+    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 2010 });
   });
 
   settingsPage.limitConcurrentBuilds.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
-    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 0 });
+    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 0 });
   });
 });
 

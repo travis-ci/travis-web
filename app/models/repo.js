@@ -161,7 +161,7 @@ const Repo = Model.extend({
   saveSetting(name, value) {
     return this.get('ajax').ajax(`/repo/${this.get('id')}/setting/${name}`, 'patch', {
       data: {
-        'setting.value': value
+        'user_setting.value': value
       }, headers: {
         'Travis-API-Version': '3'
       }
