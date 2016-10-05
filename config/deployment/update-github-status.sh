@@ -1,3 +1,5 @@
+echo env = $ENVIRONMENT and tld = $TLD
+
 if [[ "$ENVIRONMENT" = "staging" ]]
 then
   SUFFIX="-staging"
