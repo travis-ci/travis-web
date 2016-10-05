@@ -39,7 +39,7 @@ install:
   - bower install
 
 script:
-  - ember try:one $EMBER_VERSION --- ember test --reporter dot
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
@@ -48,17 +48,27 @@ before_deploy:
   - cp dist/maintenance.html dist/index.html
 
 deploy:
-  provider: s3
-  access_key_id: $MAINTENANCE_S3_ACCESS_KEY_ID
-  secret_access_key: $MAINTENANCE_S3_SECRET_ACCESS_KEY
-  bucket: travis-error-pages
-  skip_cleanup: true
-  acl: public_read
-  local_dir: dist
-  region: us-east-1
-  on:
-    branch: master
-    condition: "$EMBER_VERSION = default"
+  - provider: s3
+    access_key_id: $MAINTENANCE_S3_ACCESS_KEY_ID
+    secret_access_key: $MAINTENANCE_S3_SECRET_ACCESS_KEY
+    bucket: travis-error-pages
+    skip_cleanup: true
+    acl: public_read
+    local_dir: dist
+    region: us-east-1
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = default"
+  - provider: script
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = beta"
+      script: ./config/deployment/deploy-test-master.sh
+  - provider: script
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = canary"
+      script: ./config/deployment/deploy-test-master.sh
 
 after_success:
   - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
