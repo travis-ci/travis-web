@@ -4,7 +4,7 @@ PATH
     travis-web (0.0.1)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     backports (3.6.8)
     diff-lcs (1.2.5)
