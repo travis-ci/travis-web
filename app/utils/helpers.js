@@ -8,10 +8,9 @@ const emojiConvertor = new EmojiConvertor();
 
 /* global process */
 // FIXME extract this duplicated prepending somehow
-import deployConfig from '../config/deploy';
 let emojiPrepend = '';
 if (process.env.DEPLOY_TARGET) {
-  const s3Bucket = deployConfig(process.env.DEPLOY_TARGET).s3.bucket;
+  const s3Bucket = config.s3.bucket;
   emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
 }
 
