@@ -142,8 +142,9 @@ module.exports = function (environment) {
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
+  // FIXME yeah duplicated!
   if (process.env.DEPLOY_TARGET) {
-    var s3Bucket = require('./config/deploy')(process.env.DEPLOY_TARGET).s3.bucket;
+    var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com/';
   }
 
