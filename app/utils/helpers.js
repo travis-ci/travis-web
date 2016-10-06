@@ -1,10 +1,11 @@
-/* global Travis */
+/* global Travis, EmojiConvertor */
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import configKeysMap from 'travis/utils/keys-map';
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
-import emojione from 'emojione';
+const emojiConvertor = new EmojiConvertor();
+emojiConvertor.img_sets.apple.path = '/assets/emoji/';
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
@@ -108,7 +109,7 @@ formatMessage = function (message, options) {
   if (options.short) {
     message = message.split(/\n/)[0];
   }
-  message = emojione.shortnameToImage(_escape(message));
+  message = emojiConvertor.replace_colons(_escape(message));
   if (options.repo) {
     message = githubify(message, Ember.get(options.repo, 'owner'), Ember.get(options.repo, 'name'));
   }
