@@ -6,10 +6,9 @@ import Ember from 'ember';
 
 const emojiConvertor = new EmojiConvertor();
 
-/* global process */
 // FIXME extract this duplicated prepending somehow
 let emojiPrepend = '';
-if (process.env.DEPLOY_TARGET) {
+if (config.s3 && config.s3.bucket) {
   const s3Bucket = config.s3.bucket;
   emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
 }
