@@ -5,7 +5,7 @@ import config from 'travis/config/environment';
 import Ember from 'ember';
 
 const emojiConvertor = new EmojiConvertor();
-emojiConvertor.img_sets.apple.path = '/assets/emoji/';
+emojiConvertor.img_sets.apple.path = '/images/emoji/';
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
