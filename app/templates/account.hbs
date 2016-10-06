@@ -4,12 +4,12 @@
   {{#unless config.enterprise}}
     {{#if config.billingEndpoint}}
       {{#if subscribeButtonInfo.subscribed}}
-        <p class="notice-banner--green">This account has an active subscription. <a  href={{billingUrl}} title="Go to Travis CI Billing" class="right">Manage your subscription!</a></p>
+        {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
       {{else}}
         {{#if subscribeButtonInfo.education}}
-          <p class="notice-banner--green">This account's subscription is flagged as educational. <a  href={{billingUrl}} title="Go to Travis CI Billing" class="right">Take a  look!</a></p>
+          {{subscription-status-banner color="green" message="This account's subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
         {{else}}
-          <p class="notice-banner--yellow">This account does not have an active subscription. <a  href={{billingUrl}} title="Go to Travis CI Billing" class="right">Sign up this account!</a></p>
+          {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign up this account!" billingUrl=billingUrl}}
         {{/if}}
       {{/if}}
     {{/if}}
