@@ -4,8 +4,19 @@ import configKeysMap from 'travis/utils/keys-map';
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
+import deployConfig from 'travis/config/deploy';
+
 const emojiConvertor = new EmojiConvertor();
-emojiConvertor.img_sets.apple.path = '/images/emoji/';
+
+/* global process */
+// FIXME extract this duplicated prepending somehow
+let emojiPrepend = '';
+if (process.env.DEPLOY_TARGET) {
+  const s3Bucket = deployConfig(process.env.DEPLOY_TARGET).s3.bucket;
+  emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
+}
+
+emojiConvertor.img_sets.apple.path = `${emojiPrepend}/images/emoji/`;
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
