@@ -1,9 +1,8 @@
-/* global Travis, _cio */
+/* global Travis, _cio, HS */
 import Ember from 'ember';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
-/* globals HS */
 import initHsBeacon from 'travis/utils/init-hs-beacon';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
@@ -38,11 +37,6 @@ var App = Ember.Application.extend(Ember.Evented, {
     this.on('user:synced', function (user) {
       return Travis.onUserUpdate(user);
     });
-    return this.on('user:signed_out', function () {
-      if (config.beacon) {
-        return Travis.destroyBeacon();
-      }
-    });
   },
 
   currentDate() {
@@ -58,12 +52,6 @@ var App = Ember.Application.extend(Ember.Evented, {
       this.identifyHSBeacon(user);
     }
     return this.subscribePusher(user);
-  },
-
-  destroyBeacon() {
-    HS.beacon.ready(function () {
-      return HS.beacon.destroy();
-    });
   },
 
   setupBeacon() {
