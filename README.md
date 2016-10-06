@@ -128,3 +128,15 @@ After success, your deployment will be available at branch.test-deployments.trav
 
 The Redis server is at [`travis-web-index`](https://github.com/travis-ci/travis-web-index).
 Eventually we can move to using `ember-cli-deploy` for all deployments.
+
+### Ember beta and canary deployments
+
+Upon a merge to `master`, the application is built with the latest beta and canary versions
+of Ember, running against the production API. This uses the same infrastructure as the
+pull request deployments. You can visit these deployments at:
+* https://ember-beta.travis-ci.org
+* https://ember-beta.travis-ci.com
+* https://ember-canary.travis-ci.org
+* https://ember-canary.travis-ci.com
+
+These deployments are also performed with the weekly cron build.
