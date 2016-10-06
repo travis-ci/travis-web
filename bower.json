@@ -20,6 +20,8 @@
     "ceibo": "2.0.0",
     "raven-js": "~2.1",
     "mousetrap": "~1.5.2",
-    "prism": "^1.5.1"
+    "prism": "^1.5.1",
+    "js-emoji": "~3.0.2",
+    "emoji-data": "~2.4.4"
   }
 }
