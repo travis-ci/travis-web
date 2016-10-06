@@ -1,11 +1,12 @@
 /* global Travis */
-import emojiDictionary from 'travis/utils/emoji-dictionary';
 import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import configKeysMap from 'travis/utils/keys-map';
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
-var _emojize, _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
+import emojione from 'emojione';
+
+var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
   durationFrom, formatCommit, formatConfig, formatMessage, formatSha, githubify,
@@ -107,7 +108,7 @@ formatMessage = function (message, options) {
   if (options.short) {
     message = message.split(/\n/)[0];
   }
-  message = _emojize(_escape(message));
+  message = emojione.shortnameToImage(_escape(message));
   if (options.repo) {
     message = githubify(message, Ember.get(options.repo, 'owner'), Ember.get(options.repo, 'name'));
   }
@@ -231,22 +232,6 @@ _nowUtc = function () {
 
 _toUtc = function (date) {
   return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds());
-};
-
-_emojize = function (text) {
-  var emojis;
-  emojis = text.match(/:\S+?:/g);
-  if (emojis !== null) {
-    emojis.uniq().forEach(function (emoji) {
-      var image, strippedEmoji;
-      strippedEmoji = emoji.substring(1, emoji.length - 1);
-      if (emojiDictionary.indexOf(strippedEmoji) !== -1) {
-        image = '<img class=\'emoji\' title=\'' + emoji + '\' alt=\'' + emoji + '\' src=\'' + '/images/emoji/' + strippedEmoji + '.png\'/>';
-        return text = text.replace(new RegExp(emoji, 'g'), image);
-      }
-    });
-  }
-  return text;
 };
 
 _escape = function (text) {
