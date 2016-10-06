@@ -142,6 +142,11 @@ module.exports = function (environment) {
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
+  if (process.env.DEPLOY_TARGET) {
+    var s3Bucket = require('./config/deploy')(process.env.DEPLOY_TARGET).s3.bucket;
+    ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com/';
+  }
+
   // TODO: I insert values from ENV here, but in production
   // this file is compiled and is not executed on runtime.
   // We don't use CSP at the moment outside of development (ie. we don't

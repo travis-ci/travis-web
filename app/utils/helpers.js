@@ -7,13 +7,7 @@ import Ember from 'ember';
 const emojiConvertor = new EmojiConvertor();
 
 // FIXME extract this duplicated prepending somehow
-let emojiPrepend = '';
-if (config.s3 && config.s3.bucket) {
-  const s3Bucket = config.s3.bucket;
-  emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
-}
-
-emojiConvertor.img_sets.apple.path = `${emojiPrepend}/images/emoji/`;
+emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
