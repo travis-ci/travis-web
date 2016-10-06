@@ -120,14 +120,18 @@ strategy” of deploying assets to S3 and `index.html` to a Redis server. You ca
 deploy from your own machine too:
 
 ```
-AWS_KEY=key AWS_SECRET=secret REDIS_URL=redis TRAVIS_PULL_REQUEST_BRANCH=branch \
-ember deploy pull-request --activate
+AWS_KEY=key AWS_SECRET=secret ORG_PRODUCTION_REDIS_URL=redis TRAVIS_PULL_REQUEST_BRANCH=branch \
+ember deploy org-production-pull-request --activate
 ```
 
 After success, your deployment will be available at branch.test-deployments.travis-ci.org.
 
-The Redis server is at [`travis-web-index`](https://github.com/travis-ci/travis-web-index).
-Eventually we can move to using `ember-cli-deploy` for all deployments.
+See [the documentation](https://github.com/travis-pro/manual/pull/13) for the full list of
+deployment environments and more details.
+
+The Redis server is a modified version of `waiter/lib/travis/web/app.rb`. We will eventually replace
+that with [`travis-web-index`](https://github.com/travis-ci/travis-web-index) and move to using
+`ember-cli-deploy` for all deployments.
 
 ### Ember beta and canary deployments
 
