@@ -145,7 +145,7 @@ module.exports = function (environment) {
   // FIXME yeah duplicated!
   if (process.env.DEPLOY_TARGET) {
     var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
-    ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com/';
+    ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
 
   // TODO: I insert values from ENV here, but in production
