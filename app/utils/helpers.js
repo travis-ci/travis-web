@@ -4,12 +4,11 @@ import configKeysMap from 'travis/utils/keys-map';
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
-import deployConfig from 'travis/config/deploy';
-
 const emojiConvertor = new EmojiConvertor();
 
 /* global process */
 // FIXME extract this duplicated prepending somehow
+import deployConfig from '../config/deploy';
 let emojiPrepend = '';
 if (process.env.DEPLOY_TARGET) {
   const s3Bucket = deployConfig(process.env.DEPLOY_TARGET).s3.bucket;
