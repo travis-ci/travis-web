@@ -5,7 +5,7 @@ export function safeFormatConfig(config) {
   const rejectIfEmptyKeys = ['addons'];
 
   // create deep copy of config
-  let copy = Ember.copy(config[0], true);
+  let copy = Ember.copy(config[0] || {}, true);
 
   rejectKeys.forEach((keyToReject) => {
     delete copy[keyToReject];
