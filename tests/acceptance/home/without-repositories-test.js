@@ -1,6 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import dashboardPage from 'travis/tests/pages/dashboard';
+import sidebarPage from 'travis/tests/pages/sidebar';
 
 moduleForAcceptance('Acceptance | home/without repositories', {
   beforeEach() {
@@ -10,7 +10,7 @@ moduleForAcceptance('Acceptance | home/without repositories', {
 });
 
 test('signed in but without repositories', function (assert) {
-  dashboardPage.visit();
+  sidebarPage.visit();
 
   andThen(function () {
     assert.equal(currentURL(), '/getting_started');

@@ -1,97 +1,88 @@
 import Ember from 'ember';
-import config from 'travis/config/environment';
 
 export default Ember.Controller.extend({
-  queryParams: ['org'],
-  filter: null,
-  org: null,
+  queryParams: ['account'],
 
-  filteredRepositories: Ember.computed('filter', 'model', 'org', function () {
-    var filter, org, repos;
-    filter = this.get('filter');
-    repos = this.get('model');
-    org = this.get('org');
+  filteredRepos: Ember.computed('model.repos', 'account', function () {
+    let accounts = this.get('model.accounts');
+    let accountParam = this.get('account');
+    let account = accounts.filter(function (x) {
+      if (accountParam) {
+        if (x.id === accountParam) {
+          return x;
+        }
+      } else {
+        return null;
+      }
+    });
+    let type = null;
+    if (account && account[0]) {
+      type = account[0].get('type');
+    }
+    let repos = this.get('model.repos');
+
     repos = repos.filter(function (item) {
-      return item.get('currentBuild') !== null;
+      if (!Ember.isBlank(account)) {
+        if (Ember.isEqual(type, 'user')) {
+          if (Ember.isEqual(item.get('owner.@type'), 'user')) {
+            return item;
+          }
+        } else {
+          if (Ember.isEqual(item.get('owner.login'), accountParam)) {
+            return item;
+          }
+        }
+      } else {
+        return item;
+      }
     }).sort(function (a, b) {
-      if (a.currentBuild.finished_at === null) {
-        return -1;
-      }
-      if (b.currentBuild.finished_at === null) {
+      if (Ember.isBlank(a.get('currentBuild.state'))) {
         return 1;
       }
-      if (a.currentBuild.finished_at < b.currentBuild.finished_at) {
-        return 1;
-      }
-      if (a.currentBuild.finished_at > b.currentBuild.finished_at) {
+      if (Ember.isBlank(b.get('currentBuild.state'))) {
         return -1;
       }
-      if (a.currentBuild.finished_at === b.currentBuild.finished_at) {
+      if (Ember.isBlank(a.get('currentBuild.finishedAt'))) {
+        return -1;
+      }
+      if (Ember.isBlank(b.get('currentBuild.finishedAt'))) {
+        return 1;
+      }
+      if (a.get('currentBuild.finishedAt') < b.get('currentBuild.finishedAt')) {
+        return 1;
+      }
+      if (a.get('currentBuild.finishedAt') > b.get('currentBuild.finishedAt')) {
+        return -1;
+      }
+      if (a.get('currentBuild.finishedAt') === b.get('currentBuild.finishedAt')) {
         return 0;
       }
-    });
-
-    if (org) {
-      repos = repos.filter(function (item) {
-        return item.get('owner.login') === org;
-      });
-    }
-    if (Ember.isBlank(filter)) {
-      return repos;
-    } else {
-      return repos.filter(function (item) {
-        return item.slug.match(new RegExp(filter));
-      });
-    }
-  }),
-
-  updateFilter() {
-    var value;
-    value = this.get('_lastFilterValue');
-    this.transitionToRoute({
-      queryParams: {
-        filter: value
+      if (Ember.isBlank(a.get('defaultBranch.lastBuild.state'))) {
+        return 1;
+      }
+      if (Ember.isBlank(b.get('defaultBranch.lastBuild.state'))) {
+        return -1;
       }
     });
-    return this.set('filter', value);
-  },
-
-  selectedOrg: Ember.computed('org', 'orgs.[]', function () {
-    return this.get('orgs').findBy('login', this.get('org'));
+    return repos;
   }),
 
-  orgs: Ember.computed(function () {
-    var apiEndpoint, orgs;
-    orgs = Ember.ArrayProxy.create({
-      content: [],
-      isLoading: true
-    });
-    apiEndpoint = config.apiEndpoint;
-    Ember.$.ajax(apiEndpoint + '/v3/orgs', {
-      headers: {
-        Authorization: 'token ' + this.auth.token()
+  selectedOrg: Ember.computed('account', function () {
+    let accounts = this.get('model.accounts');
+    let filter =  this.get('account');
+
+    let filteredAccount = accounts.filter(function (item) {
+      if (item.get('login') === filter) {
+        return item;
       }
-    }).then(function (response) {
-      var array;
-      array = response.organizations.map(function (org) {
-        return Ember.Object.create(org);
-      });
-      orgs.set('content', array);
-      return orgs.set('isLoading', false);
     });
-    return orgs;
+    return filteredAccount[0];
   }),
 
   actions: {
-    updateFilter(value) {
-      this.set('_lastFilterValue', value);
-      return Ember.run.throttle(this, this.updateFilter, [], 200, false);
-    },
-
     selectOrg(org) {
-      var login;
-      login = org ? org.get('login') : null;
-      return this.set('org', login);
+      let login = Ember.isBlank(org) ? undefined : org.get('login');
+      return this.set('account', login);
     }
   }
 });

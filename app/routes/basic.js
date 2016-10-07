@@ -19,10 +19,9 @@ export default Ember.Route.extend({
     if (!this.signedIn() && this.get('needsAuth')) {
       this.auth.set('afterSignInTransition', transition);
       return Ember.RSVP.reject('needs-auth');
+    } else if (this.redirectToProfile(transition)) {
+      return this.transitionTo('profile', this.get('auth.currentUser.login'));
     } else {
-      if (this.redirectToProfile(transition)) {
-        return this.transitionTo('profile', this.get('auth.currentUser.login'));
-      }
       return this._super(...arguments);
     }
   },
@@ -44,5 +43,6 @@ export default Ember.Route.extend({
        params.owner.owner === 'profile') {
       this.transitionTo('account', this.get('auth.currentUser.login'));
     }
-  }
+  },
+
 });

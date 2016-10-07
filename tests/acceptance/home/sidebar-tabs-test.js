@@ -1,6 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import dashboardPage from 'travis/tests/pages/dashboard';
+import sidebarPage from 'travis/tests/pages/sidebar';
 
 moduleForAcceptance('Acceptance | home/sidebar tabs', {
   beforeEach() {
@@ -60,24 +60,24 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
 test('the home page shows running tab in pro version', (assert) => {
   withFeature('pro-version');
 
-  dashboardPage
+  sidebarPage
     .visit()
     .clickSidebarRunningTab();
 
   andThen(() => {
-    assert.equal(dashboardPage.sidebarRunningRepositories().count, 1, 'expected no running repositories');
+    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected no running repositories');
   });
 });
 
 test('maintains sidebar tab state when viewing running job in pro version', (assert) => {
   withFeature('pro-version');
 
-  dashboardPage
+  sidebarPage
     .visit()
     .clickSidebarRunningTab()
     .viewRunningJob();
 
   andThen(() => {
-    assert.ok(dashboardPage.runningTabIsActive, 'running tab state should persist across route transitions');
+    assert.ok(sidebarPage.runningTabIsActive, 'running tab state should persist across route transitions');
   });
 });

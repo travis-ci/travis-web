@@ -1,6 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  isVisible,
   clickable,
   collection,
   hasClass,
@@ -36,6 +37,8 @@ export default PageObject.create({
     show: clickable('a.profile-token-toggle'),
     value: text('strong')
   },
+
+  betaFeaturesLink: isVisible('a.beta-features'),
 
   accounts: collection({
     scope: '.profile-orgs',

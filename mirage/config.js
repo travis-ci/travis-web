@@ -1,8 +1,32 @@
 /* global server */
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
+import config from 'travis/config/environment';
 
 export default function () {
+  // TODO: Remove when we are no longer reliant on mocked feature flags in
+  // production
+  if (config.environment === 'development' || config.environment === 'production') {
+    this.passthrough(
+      'https://api.travis-ci.org/users/**',
+      'https://api.travis-ci.org/v3/**',
+      'https://api.travis-ci.org/builds',
+      'https://api.travis-ci.org/builds/**',
+      'https://api.travis-ci.org/requests',
+      'https://api.travis-ci.org/jobs',
+      'https://api.travis-ci.org/jobs/**',
+      'https://api.travis-ci.org/repos',
+      'https://api.travis-ci.org/repos/**',
+      'https://api.travis-ci.org/repo/**',
+      'https://api.travis-ci.org/settings/**',
+      'https://api.travis-ci.org/accounts',
+      'https://api.travis-ci.org/hooks',
+      'https://s3.amazonaws.com/**',
+      'https://app.getsentry.com/**',
+      'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
+    );
+  }
+
   this.get('/accounts', (schema/* , request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
@@ -212,9 +236,9 @@ export default function () {
     const builds = schema.builds.where({ branchId: branch.id });
 
     /**
-      * TODO remove this once the seializers/build is removed.
-      * The modelName causes Mirage to know how to serialise it.
-      */
+     * TODO remove this once the seializers/build is removed.
+     * The modelName causes Mirage to know how to serialise it.
+     */
     return this.serialize({
       models: builds.models.reverse(),
       modelName: 'build'
@@ -230,6 +254,28 @@ export default function () {
     }
   });
 
+  this.timing = 400; // default
+
+  let featuresURL = config.environment === 'test' ? '/features' : 'https://api.travis-ci.org/features';
+  this.get(featuresURL, function (schema) {
+    schema.db.features.insert([
+      {
+        name: 'Dashboard',
+        description: 'UX improvements over the current implementation',
+        enabled: config.environment !== 'test'
+      }
+    ]);
+    return this.serialize(schema.features.all());
+  });
+
+  let featurePutURL = config.environment === 'test' ? '/feature/:id' : 'https://api.travis-ci.org/feature/:id';
+  this.put(featurePutURL, function (schema, request) {
+    let feature = schema.features.find(request.params.id);
+    let requestBody = JSON.parse(request.requestBody);
+    feature.update('enabled', requestBody.enabled);
+    return this.serialize(feature);
+  });
+
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
   // this.pretender.handledRequest = function (verb, path, request) {
   //   console.log('Handled this request:', `${verb} ${path}`, request);
@@ -241,8 +287,8 @@ export default function () {
 }
 
 /*
-You can optionally export a config that is only loaded during tests
-export function testConfig() {
+   You can optionally export a config that is only loaded during tests
+   export function testConfig() {
 
-}
-*/
+   }
+   */

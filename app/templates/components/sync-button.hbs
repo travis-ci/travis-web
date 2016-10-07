@@ -1,10 +1,12 @@
 {{#if user.isSyncing }}
    <div class="button is-syncing">
-    <span class="loading-indicator--white"><i></i><i></i><i></i></span>Syncing from GitHub
+     <span class="loading-indicator--white label-align"><i></i><i></i><i></i></span>
+     <span class="label-align">Syncing from GitHub</span>
   </div>
 {{else}}
   <button {{action 'sync'}} class="button" type="button">
-    <span class="icon-trigger"></span>Sync account
+    <span class="icon-trigger"></span>
+    <span class="label-align">Sync account</span>
   </button>
   <p class="sync-last">Last synced {{format-time user.syncedAt}}</p>
 {{/if}}

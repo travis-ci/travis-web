@@ -1,6 +1,6 @@
 <div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
-  <h1 id="logo" class="logo" {{action "cheatcode" on="doubleClick"}}>
-    {{#if isDashboard}}
+  <h1 id="logo" class="logo">
+    {{#if features.dashboard}}
       {{#link-to "dashboard"}}Travis CI{{/link-to}}
     {{else}}
       {{#link-to "main"}}Travis CI{{/link-to}}
@@ -25,7 +25,7 @@
   {{/if}}
 {{/unless}}
 
-  <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
+<nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
     {{#unless config.enterprise}}
       {{#unless features.proVersion}}
