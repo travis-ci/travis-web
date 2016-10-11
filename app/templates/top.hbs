@@ -27,7 +27,6 @@
 
   <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
-
     {{#unless config.enterprise}}
       {{#unless features.proVersion}}
         <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
@@ -35,8 +34,8 @@
         <li>
           <span class="navigation-anchor">Help</span>
           <ul class="navigation-nested">
-            <li><a href="https://docs.travis-ci.com">Docs</a></li>
-            <li><a href="https://docs.travis-ci.com/imprint.html" alt="Imprint">Imprint</a></li>
+            <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
+            <li><a href="https://docs.travis-ci.com/imprint.html" title="Go to the imprint">Imprint</a></li>
           </ul>
         </li>
       {{/unless}}
@@ -44,17 +43,24 @@
       {{#if features.proVersion}}
         {{#unless auth.signedIn}}
           <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
-          <li><a href="/plans" title="" class="navigation-anchor">Plans & Pricing</a></li>
-          <li><a href="https://enterprise.travis-ci.com" title="">Enterprise</a></li>
+          <li><a href="/plans" title="Plans and Prices for Travis CI" class="navigation-anchor">Plans & Pricing</a></li>
+          <li><a href="https://enterprise.travis-ci.com" title="Travis CI for Enterprise">Enterprise</a></li>
         {{else}}
           <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
-          <li><a href="https://docs.travis-ci.com">Docs</a></li>
+          <li>
+            <span class="navigation-anchor">Help</span>
+            <ul class="navigation-nested">
+              <li><a href="mailto:support@travis-ci.com" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
+              <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
+              <li><a href="https://twitter.com/travisci" title="Travis in the Twitter-sphere">Twitter</a></li>
+            </ul>
+          </li>
           <li>
             <span class="navigation-anchor">Legal</span>
             <ul class="navigation-nested">
-              <li><a href={{config.urls.imprint}}>Imprint</a></li>
-              <li><a href={{config.urls.security}}>Security</a></li>
-              <li><a href={{config.urls.terms}}>Terms</a></li>
+              <li><a href={{config.urls.imprint}} title="Go to the imprint">Imprint</a></li>
+              <li><a href={{config.urls.security}} title="Go to our security statement">Security</a></li>
+              <li><a href={{config.urls.terms}} title="Go to our terms of service">Terms</a></li>
             </ul>
           </li>
         {{/unless}}
@@ -67,7 +73,7 @@
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
-          <button class="signed-out button-signin" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
+          <button class="signed-out button-signin" type="button" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
         {{/if}}
         {{#if auth.signedIn}}
           {{#link-to "profile" class="navigation-anchor signed-in"}}
@@ -76,22 +82,22 @@
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
-          <button class="signing-in button-signingin">Signing In {{loading-indicator inline=true}}</button>
+          <button class="signing-in button-signingin" type="button">Signing In {{loading-indicator inline=true}}</button>
         {{/if}}
         {{#if auth.signedIn}}
           <ul class="navigation-nested">
             <li>
-              {{#link-to "profile" class="signed-in"}}Accounts{{/link-to}}
+              {{#link-to "profile" class="signed-in" title="See the Travis accounts you belong to"}}Accounts{{/link-to}}
             </li>
             {{#if config.billingEndpoint}}
               {{#unless config.enterprise}}
                 <li>
-                  <a href={{config.billingEndpoint}}>Billing</a>
+                  <a href={{config.billingEndpoint}} title="Take a look at your subscriptions">Billing</a>
                 </li>
               {{/unless}}
             {{/if}}
             <li>
-              <a href="/" {{action "signOut" target="auth"}}>Sign Out</a>
+              <a href="/" {{action "signOut" target="auth"}} title="Sign out of Travis">Sign Out</a>
             </li>
           </ul>
         {{/if}}

@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'travis-web', path: 'waiter'
 gem 'puma'
