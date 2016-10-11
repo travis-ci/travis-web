@@ -18,6 +18,15 @@ export default RavenLogger.extend({
     this._super(...arguments);
   },
 
+  logException(e) {
+    // eslint-disable-next-line
+    console.log('Caught an exception:', e);
+
+    if (!this.ignoreError(e)) {
+      this.captureException(e);
+    }
+  },
+
   captureMessage(/* message */) {
     return this._super(...arguments);
   },
