@@ -3,8 +3,6 @@ import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 
 export default function () {
-  this.namespace = '/';
-
   this.get('/accounts', (schema/* , request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
