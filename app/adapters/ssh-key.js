@@ -1,7 +1,7 @@
 import ApplicationAdapter from 'travis/adapters/application';
 
 export default ApplicationAdapter.extend({
-  namespace: 'settings',
+  namespace: '/settings',
 
   findRecord(store, type, id) {
     const url = `${this.urlPrefix()}/ssh_key/${id}`;
