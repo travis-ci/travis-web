@@ -30,12 +30,10 @@ moduleForAcceptance('Acceptance | repo settings', {
       }
     });
 
-    repository.createSetting({
-      builds_only_with_travis_yml: true,
-      build_pushes: true,
-      maximum_number_of_builds: 1919,
-      build_pull_requests: true
-    });
+    repository.createSetting({ name: 'builds_only_with_travis_yml', value: true });
+    repository.createSetting({ name: 'build_pushes', value: true });
+    repository.createSetting({ name: 'maximum_number_of_builds', value: 1919 });
+    repository.createSetting({ name: 'build_pull_requests', value: true });
 
     repository.createEnvVar({
       id: 'a',
@@ -131,45 +129,45 @@ test('view settings', function (assert) {
 test('change general settings', function (assert) {
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
-  const requestBodies = [];
+  const settingToRequestBody = {};
 
-  server.patch(`/repos/${this.repository.id}/settings`, function (schema, request) {
-    requestBodies.push(JSON.parse(request.requestBody));
+  server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
+    settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
   });
 
   settingsPage.buildPushes.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
-    assert.deepEqual(requestBodies.pop(), { settings: { build_pushes: false } });
+    assert.deepEqual(settingToRequestBody.build_pushes, { 'user_setting.value': false });
   });
 
   settingsPage.buildOnlyWithTravisYml.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
-    assert.deepEqual(requestBodies.pop(), { settings: { builds_only_with_travis_yml: false } });
+    assert.deepEqual(settingToRequestBody.builds_only_with_travis_yml, { 'user_setting.value': false });
   });
 
   settingsPage.buildPullRequests.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
-    assert.deepEqual(requestBodies.pop(), { settings: { build_pull_requests: false } });
+    assert.deepEqual(settingToRequestBody.build_pull_requests, { 'user_setting.value': false });
   });
 
   settingsPage.limitConcurrentBuilds.fill('2010');
 
   andThen(() => {
     assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
-    assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 2010 } });
+    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 2010 });
   });
 
   settingsPage.limitConcurrentBuilds.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
-    assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 0 } });
+    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 0 });
   });
 });
 
