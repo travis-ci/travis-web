@@ -1,4 +1,4 @@
-export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-'`
+export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' | tr '[:upper:]' '[:lower:]'`
 
 ember deploy org-production-pull-request --activate --verbose
 TLD=org ENVIRONMENT=production ./config/deployment/update-github-status.sh
