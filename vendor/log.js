@@ -249,13 +249,31 @@ removeCarriageReturns = function(string) {
   return string.substr(index + 1);
 };
 
+const foldNameCount = {};
+
 Log.Span = function(id, num, text, classes) {
   var fold, time, _ref;
   Log.Node.apply(this, arguments);
   if (fold = text.match(Log.FOLD)) {
     this.fold = true;
     this.event = fold[1];
-    this.text = this.name = fold[2];
+
+    const foldName = fold[2];
+    this.text = foldName;
+
+    if (!foldNameCount[foldName]) {
+      foldNameCount[foldName] = 0;
+    }
+
+    const foldCount = foldNameCount[foldName];
+
+    this.count = foldNameCount[this.name];
+    this.name = `${foldName}-${foldCount}`;
+    this.visibleName = this.text;
+
+    if (this.event === 'end') {
+      foldNameCount[foldName]++;
+    }
   } else if (time = text.match(Log.TIME)) {
     this.time = true;
     this.event = time[1];
@@ -426,7 +444,7 @@ Log.extend(Log.Line, {
   create: function(log, spans) {
     var line, span, _i, _len;
     if ((span = spans[0]) && span.fold) {
-      line = new Log.Fold(log, span.event, span.name);
+      line = new Log.Fold(log, span.event, span.name, span.visibleName);
     } else {
       line = new Log.Line(log);
     }
@@ -558,11 +576,12 @@ Object.defineProperty(Log.Line.prototype, 'crs', {
   }
 });
 
-Log.Fold = function(log, event, name) {
+Log.Fold = function(log, event, name, visibleName) {
   Log.Line.apply(this, arguments);
   this.fold = true;
   this.event = event;
   this.name = name;
+  this.visibleName = visibleName;
   return this;
 };
 
@@ -616,7 +635,8 @@ Object.defineProperty(Log.Fold.prototype, 'data', {
       type: 'fold',
       id: this.id,
       event: this.event,
-      name: this.name
+      name: this.name,
+      visibleName: this.visibleName
     };
   }
 });
@@ -991,7 +1011,7 @@ Log.extend(Log.Renderer.prototype, {
     fold.setAttribute('id', data.id || ("fold-" + data.event + "-" + data.name));
     fold.setAttribute('class', "fold-" + data.event);
     if (data.event === 'start') {
-      fold.lastChild.lastChild.nodeValue = data.name;
+      fold.lastChild.lastChild.nodeValue = data.visibleName;
     } else {
       fold.removeChild(fold.lastChild);
     }
