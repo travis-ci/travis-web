@@ -5,10 +5,6 @@ var Serializer = V2FallbackSerializer.extend(EmbeddedRecordsMixin, {
   isNewSerializerAPI: true,
 
   attrs: {
-    // current_build: {
-    //   serialize: 'records',
-    //   deserialize: false
-    // }
     permissions: { key: '@permissions' }
   },
 
