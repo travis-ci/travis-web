@@ -266,9 +266,7 @@ Log.Span = function(id, num, text, classes) {
     }
 
     var foldCount = foldNameCount[foldName];
-
-    this.count = foldNameCount[this.name];
-    this.name = foldName = '-' + foldCount;
+    this.name = foldName + '-' + foldCount;
     this.visibleName = this.text;
 
     if (this.event === 'end') {
