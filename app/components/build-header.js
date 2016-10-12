@@ -27,6 +27,15 @@ export default Ember.Component.extend({
     }
   }),
 
+  displayCompare: Ember.computed('item.eventType', function () {
+    let eventType = this.get('item.eventType');
+    if (eventType === 'api' || eventType === 'cron') {
+      return false;
+    } else {
+      return true;
+    }
+  }),
+
   urlGithubCommit: Ember.computed('item', function () {
     return githubCommit(this.get('repo.slug'), this.get('commit.sha'));
   }),
