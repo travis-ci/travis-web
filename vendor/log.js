@@ -249,7 +249,7 @@ removeCarriageReturns = function(string) {
   return string.substr(index + 1);
 };
 
-const foldNameCount = {};
+var foldNameCount = {};
 
 Log.Span = function(id, num, text, classes) {
   var fold, time, _ref;
@@ -258,17 +258,17 @@ Log.Span = function(id, num, text, classes) {
     this.fold = true;
     this.event = fold[1];
 
-    const foldName = fold[2];
+    var foldName = fold[2];
     this.text = foldName;
 
     if (!foldNameCount[foldName]) {
       foldNameCount[foldName] = 0;
     }
 
-    const foldCount = foldNameCount[foldName];
+    var foldCount = foldNameCount[foldName];
 
     this.count = foldNameCount[this.name];
-    this.name = `${foldName}-${foldCount}`;
+    this.name = foldName = '-' + foldCount;
     this.visibleName = this.text;
 
     if (this.event === 'end') {
