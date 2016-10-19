@@ -23,6 +23,8 @@ test('visiting job-view', function (assert) {
   visit('/travis-ci/travis-web/jobs/' + job.id);
 
   andThen(() => {
+    assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
+
     assert.equal(jobPage.branch, 'acceptance-tests');
     assert.equal(jobPage.message, 'acceptance-tests This is a message');
     assert.equal(jobPage.state, '#1234.1 passed');

@@ -57,6 +57,8 @@ test('view profile', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   andThen(function () {
+    assert.equal(document.title, 'Sara Ahmed - Profile - Travis CI');
+
     assert.equal(profilePage.name, 'Sara Ahmed');
 
     assert.equal(profilePage.accounts().count, 2, 'expected two accounts');
