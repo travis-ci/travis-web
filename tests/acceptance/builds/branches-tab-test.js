@@ -24,6 +24,7 @@ test('visiting /builds/branches-tab', function (assert) {
     .visit();
 
   andThen(function () {
+    assert.equal(document.title, 'travis-ci/travis-web - Travis CI');
     assert.ok(branchesRepoTab.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
   });
 });

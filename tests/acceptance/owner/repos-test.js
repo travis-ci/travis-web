@@ -53,6 +53,8 @@ test('the owner page shows their repositories', (assert) => {
   ownerPage.visit({ username: 'feministkilljoy' });
 
   andThen(() => {
+    assert.equal(document.title, 'Sara Ahmed - Travis CI');
+
     assert.equal(ownerPage.repos().count, 2);
     assert.equal(ownerPage.repos(0).name, 'living-a-feminist-life');
 
