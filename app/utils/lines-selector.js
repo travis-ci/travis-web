@@ -46,7 +46,6 @@ export default (function () {
   }
 
   LinesSelector.prototype.willDestroy = function () {
-    this.location.setHash('');
     return this.destroyed = true;
   };
 
