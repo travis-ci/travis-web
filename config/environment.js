@@ -34,7 +34,9 @@ module.exports = function (environment) {
     heap: {
       projectId: '1049054202'
     },
-    logLimit: 10000
+    logLimit: 10000,
+
+    emojiPrepend: ''
   };
 
   ENV.featureFlags = {
