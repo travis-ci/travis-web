@@ -7,6 +7,7 @@ import Ember from 'ember';
 const emojiConvertor = new EmojiConvertor();
 
 emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
+emojiConvertor.include_title = true;
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
