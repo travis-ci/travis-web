@@ -34,7 +34,9 @@ module.exports = function (environment) {
     heap: {
       projectId: '1049054202'
     },
-    logLimit: 10000
+    logLimit: 10000,
+
+    emojiPrepend: ''
   };
 
   ENV.featureFlags = {
@@ -139,6 +141,11 @@ module.exports = function (environment) {
     };
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
+  }
+
+  if (process.env.DEPLOY_TARGET) {
+    var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
+    ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
 
   // TODO: I insert values from ENV here, but in production
