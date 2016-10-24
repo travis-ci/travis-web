@@ -31,3 +31,10 @@ test('it only deletes certain keys if they are empty', (assert) => {
 
   assert.equal(result2, '{\n  \"addons\": {\n    \"foo\": \"bar\"\n  },\n  \"language\": \"clojure\"\n}');
 });
+
+test('it handles an empty config array', assert => {
+  const config = [];
+  const result = safeFormatConfig(config);
+
+  assert.equal(result, '{}');
+});

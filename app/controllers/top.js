@@ -1,3 +1,4 @@
+/* globals HS */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
@@ -100,6 +101,11 @@ export default Ember.Controller.extend({
       this.get('broadcasts.content').removeObject(broadcast);
       let status = this.defineTowerColor(this.get('broadcasts.content'));
       this.set('broadcasts.lastBroadcastStatus', status);
+      return false;
+    },
+
+    helpscoutTrigger() {
+      HS.beacon.open();
       return false;
     }
   },

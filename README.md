@@ -109,7 +109,7 @@ To add another member just add the info in the same style as the previous ones. 
       image: 'mrt'
     }
 
-The order of value pairs does not matter, the quotationmarks do. Name and title will be displayed as they are. The handle will be used to generate a link to Twitter and displayed with a '@' in front of it. Nationality and country determine the flags. Please use the name of the country and not the adjective (like 'germany' and NOT 'german'). Image is the identifier to find the right image and animated gif. 'mrt' in the example will result in `team-mrt.png` and `mrt-animated.gif`.
+The order of value pairs does not matter, the quotation marks do. Name and title will be displayed as they are. The handle will be used to generate a link to Twitter and displayed with a '@' in front of it. Nationality and country determine the flags. Please use the name of the country and not the adjective (like 'germany' and NOT 'german'). Image is the identifier to find the right image and animated gif. 'mrt' in the example will result in `team-mrt.png` and `mrt-animated.gif`.
 Add the images themselves to `public/images/team/` and additional flags to `public/images/pro-landing/`. Mind the naming conventions already in place.
 
 ### Deploying

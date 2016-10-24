@@ -165,7 +165,7 @@ class Travis::Web::App
     end
 
     def set_title(content)
-      content.gsub!(/\{\{title\}\}/, title)
+      content.gsub!(/(<title>).*(<\/title>)/, "\\1#{title}\\2")
     end
 
     def title

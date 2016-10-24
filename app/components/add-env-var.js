@@ -42,9 +42,7 @@ export default Ember.Component.extend({
       } catch (e) {
         // eslint-disable-next-line
         this.get('flashes').error('There was an error saving this environment variable.');
-        if (!this.get('raven').ignoreError(e)) {
-          this.get('raven').captureException(e);
-        }
+        this.get('raven').logException(e);
       }
     }
   }).drop(),
