@@ -34,6 +34,8 @@ module.exports = function(deployTarget) {
       deployTarget === 'org-beta') {
     ENV.s3.bucket = 'travis-web-production-next';
     ENV.redis.url = process.env.ORG_PRODUCTION_REDIS_URL;
+    // FIXME remove this!
+    ENV.build.environment = 'development';
   }
 
   if (deployTarget === 'org-staging-pull-request') {
