@@ -6,11 +6,7 @@ import Ember from 'ember';
 
 const emojiConvertor = new EmojiConvertor();
 
-// FIXME extract this duplicated prepending somehow
 emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
-
-window.convertor = emojiConvertor;
-window.config = config;
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
