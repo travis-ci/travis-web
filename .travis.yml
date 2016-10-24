@@ -44,7 +44,7 @@ install:
   - bower install
 
 script:
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot -f 'computed-limit'
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
@@ -79,3 +79,4 @@ deploy:
 
 after_success:
   - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
+  - "test $EMBER_VERSION == 'beta' && ./config/deployment/deploy-test-master.sh"
