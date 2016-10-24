@@ -97,6 +97,8 @@ test('view branches', function (assert) {
   branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
+    assert.equal(document.title, 'killjoys/living-a-feminist-life - Travis CI');
+
     assert.equal(branchesPage.defaultBranch.name, 'primary');
     assert.ok(branchesPage.defaultBranch.passed, 'expected default branch last build to have passed');
     assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
