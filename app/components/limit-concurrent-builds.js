@@ -22,19 +22,21 @@ export default Ember.Component.extend({
       savingFinished = () => {
         this.set('isSaving', false);
       };
-      return repo.saveSettings({
-        maximum_number_of_builds: limit
-      }).then(savingFinished, savingFinished);
+      this.set('value', value);
+      return repo.saveSetting('maximum_number_of_builds', limit)
+        .then(savingFinished, savingFinished);
     }
   },
 
   toggle: task(function* () {
     if (!this.get('enabled') && this.get('value') !== 0) {
       try {
-        yield this.get('repo').saveSettings({
-          maximum_number_of_builds: 0
-        });
-      } catch (e) {}
+        yield this.get('repo').saveSetting('maximum_number_of_builds', 0);
+      } catch (e) {
+        // eslint-disable-next-line
+        this.get('flashes').error('There was an error disabling the concurrent jobs limit.');
+        this.get('raven').logException(e);
+      }
 
       this.set('value', 0);
     }
