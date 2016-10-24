@@ -137,9 +137,10 @@ module.exports = function (environment) {
       enabled: false
     };
 
-    ENV.sentry = {
-      dsn: sentryDSN
-    };
+    // FIXME uncomment!
+    // ENV.sentry = {
+    //   dsn: sentryDSN
+    // };
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
