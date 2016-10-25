@@ -142,8 +142,8 @@ Log.extend(Log.Nodes.prototype, {
     }
   },
   position: function (item) {
-    var ix, _i, _ref;
-    for (ix = _i = _ref = this.items.length - 1; _i >= 0; ix = _i += -1) {
+    var ix, _i;
+    for (ix = _i = this.items.length - 1; _i >= 0; ix = _i += -1) {
       if (this.items[ix].key < item.key) {
         return ix + 1;
       }
