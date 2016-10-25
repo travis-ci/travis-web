@@ -20,14 +20,16 @@ export default PageObject.create({
     scope: 'section.settings-section .auto_cancel_pr_builds.switch',
 
     exists: isVisible(),
-    isActive: hasClass('active')
+    isActive: hasClass('active'),
+    toggle: clickable()
   },
 
   autoCancelBranchBuilds: {
     scope: 'section.settings-section .auto_cancel_branch_builds',
 
     exists: isVisible(),
-    isActive: hasClass('active')
+    isActive: hasClass('active'),
+    toggle: clickable()
   },
 
   buildOnlyWithTravisYml: {

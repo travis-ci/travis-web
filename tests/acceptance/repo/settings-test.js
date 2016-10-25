@@ -304,4 +304,24 @@ test('on a repository with auto-cancellation', function (assert) {
     assert.notOk(settingsPage.autoCancelPullRequestBuilds.isActive, 'expected auto-cancel PRs to be present but disabled');
     assert.ok(settingsPage.autoCancelBranchBuilds.isActive, 'expected auto-cancel branches to be present and enabled');
   });
+
+  const settingToRequestBody = {};
+
+  server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
+    settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
+  });
+
+  settingsPage.autoCancelPullRequestBuilds.toggle();
+
+  andThen(() => {
+    assert.ok(settingsPage.autoCancelPullRequestBuilds.isActive, 'expected auto-cancel PRs to be enabled');
+    assert.deepEqual(settingToRequestBody.auto_cancel_pr_builds, { 'user_setting.value': true });
+  });
+
+  settingsPage.autoCancelBranchBuilds.toggle();
+
+  andThen(() => {
+    assert.notOk(settingsPage.autoCancelBranchBuilds.isActive, 'expected auto-cancel builds to be disabled');
+    assert.deepEqual(settingToRequestBody.auto_cancel_branch_builds, { 'user_setting.value': false });
+  });
 });
