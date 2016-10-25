@@ -949,7 +949,7 @@ Log.extend(Log.Renderer.prototype, {
     node = this.render(data);
     // eslint-disable-next-line
     if (into = pos != null ? pos.into : void 0) {
-      if (typeof into === 'String') {
+      if (typeof into === 'string') {
         into = document.getElementById(pos != null ? pos.into : void 0);
       }
       if (pos != null ? pos.prepend : void 0) {
@@ -959,13 +959,13 @@ Log.extend(Log.Renderer.prototype, {
       }
     // eslint-disable-next-line
     } else if (after = pos != null ? pos.after : void 0) {
-      if (typeof after === 'String') {
+      if (typeof after === 'string') {
         after = document.getElementById(pos);
       }
       this.insertAfter(node, after);
     // eslint-disable-next-line
     } else if (before = pos != null ? pos.before : void 0) {
-      if (typeof before === 'String') {
+      if (typeof before === 'string') {
         before = document.getElementById(pos != null ? pos.before : void 0);
       }
       this.insertBefore(node, before);
