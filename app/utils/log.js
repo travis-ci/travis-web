@@ -1,3 +1,4 @@
+/* global ansiparse */
 /* eslint-disable no-console, no-control-regex */
 
 var Log = function () {
