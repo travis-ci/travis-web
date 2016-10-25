@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var Log = function() {
   this.autoCloseFold = true;
   this.listeners = [];
@@ -8,6 +10,8 @@ var Log = function() {
   this.times = new Log.Times(this);
   return this;
 };
+
+export default Log;
 
 Log.extend = function(one, other) {
   var name;
@@ -1089,5 +1093,3 @@ Log.extend(Log.Renderer.prototype, {
     }
   }
 });
-
-window.Log = Log;
