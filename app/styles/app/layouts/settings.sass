@@ -28,6 +28,13 @@
       display: inline-block
       width: grid-calc(11, 24)
 
+.settings-list--three-columns
+  @extend %settings-list
+  li
+    @media #{$medium-up}
+      display: inline-block
+      width: grid-calc(8, 24)
+
 .settings-list--envvars, .settings-list--crons
   @extend %settings-list
 
