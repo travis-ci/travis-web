@@ -921,7 +921,7 @@ Log.Limit = function (maxLines) {
 
 Log.Limit.prototype = Log.extend(new Log.Listener, {
   count: 0,
-  insert: function (log, node, pos) {
+  insert: function (log, node) {
     if (node.type === 'paragraph' && !node.hidden) {
       return this.count += 1;
     }
