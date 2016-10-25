@@ -1,4 +1,4 @@
-/* eslint-disable no-control-regex */
+/* eslint-disable no-console, no-control-regex */
 
 var Log = function () {
   this.autoCloseFold = true;
