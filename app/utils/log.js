@@ -914,8 +914,8 @@ Log.Deansi = {
   }
 };
 
-Log.Limit = function (max_lines) {
-  this.max_lines = max_lines || 1000;
+Log.Limit = function (maxLines) {
+  this.maxLines = maxLines || 1000;
   return this;
 };
 
@@ -930,7 +930,7 @@ Log.Limit.prototype = Log.extend(new Log.Listener, {
 
 Object.defineProperty(Log.Limit.prototype, 'limited', {
   get: function () {
-    return this.count >= this.max_lines;
+    return this.count >= this.maxLines;
   }
 });
 
