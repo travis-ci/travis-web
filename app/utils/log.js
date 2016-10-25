@@ -1089,7 +1089,7 @@ Log.extend(Log.Renderer.prototype, {
     if (other.firstChild) {
       return other.insertBefore(node, other.firstChild);
     } else {
-      return appendTo(node, other);
+      return other.appendTo(node, other);
     }
   },
   appendTo: function (node, other) {
