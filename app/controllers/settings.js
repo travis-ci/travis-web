@@ -23,11 +23,14 @@ export default Ember.Controller.extend({
     }
   }),
 
-  showAutoCancellationSwitches: Ember.computed('model.settings.auto_cancel_branch_builds', 'model.settings.auto_cancel_pr_builds', function() {
-    const settings = this.get('model.settings');
+  showAutoCancellationSwitches: Ember.computed(
+    'model.settings.auto_cancel_branch_builds',
+    'model.settings.auto_cancel_pr_builds', function () {
+      const settings = this.get('model.settings');
 
-    return settings.hasOwnProperty('auto_cancel_pr_builds') || settings.hasOwnProperty('auto_cancel_branch_builds');
-  }),
+      return settings.hasOwnProperty('auto_cancel_pr_builds') ||
+        settings.hasOwnProperty('auto_cancel_branch_builds');
+    }),
 
   actions: {
     sshKeyAdded(sshKey) {
