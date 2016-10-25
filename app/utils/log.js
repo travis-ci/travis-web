@@ -471,7 +471,7 @@ Log.extend(Log.Line.prototype, {
       this.cr = true;
     }
     if (this.spans.indexOf(span) > -1) {
-
+      // noop
     } else if ((ix = this.spans.indexOf(span.prev)) > -1) {
       return this.spans.splice(ix + 1, 0, span);
     } else if ((ix = this.spans.indexOf(span.next)) > -1) {
