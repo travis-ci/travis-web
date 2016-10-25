@@ -119,9 +119,11 @@ Log.extend(Log.Nodes.prototype, {
       }
       return item != null ? item.children.first : void 0;
     };
+    // eslint-disable-next-line
     if (item.prev = this.items[ix - 1] || prev((_ref = this.parent) != null ? _ref.prev : void 0)) {
       item.prev.next = item;
     }
+    // eslint-disable-next-line
     if (item.next = this.items[ix + 1] || next((_ref1 = this.parent) != null ? _ref1.next : void 0)) {
       item.next.prev = item;
     }
@@ -256,7 +258,11 @@ var foldNameCount = {};
 Log.Span = function (id, num, text, classes) {
   var fold, time, _ref;
   Log.Node.apply(this, arguments);
-  if (fold = text.match(Log.FOLD)) {
+
+  fold = text.match(Log.FOLD);
+  time = text.match(Log.TIME);
+
+  if (fold) {
     this.fold = true;
     this.event = fold[1];
 
@@ -274,7 +280,7 @@ Log.Span = function (id, num, text, classes) {
     if (this.event === 'end') {
       foldNameCount[foldName]++;
     }
-  } else if (time = text.match(Log.TIME)) {
+  } else if (time) {
     this.time = true;
     this.event = time[1];
     this.name = time[2];
@@ -861,7 +867,10 @@ Log.Deansi = {
       type: 'span',
       text: part.text
     };
-    if (classes = this.classes(part)) {
+
+    classes = this.classes(part);
+
+    if (classes) {
       node['class'] = classes.join(' ');
     }
     return node;
@@ -935,6 +944,7 @@ Log.extend(Log.Renderer.prototype, {
   insert: function (data, pos) {
     var after, before, into, node;
     node = this.render(data);
+    // eslint-disable-next-line
     if (into = pos != null ? pos.into : void 0) {
       if (typeof into === 'String') {
         into = document.getElementById(pos != null ? pos.into : void 0);
@@ -944,11 +954,13 @@ Log.extend(Log.Renderer.prototype, {
       } else {
         this.appendTo(node, into);
       }
+    // eslint-disable-next-line
     } else if (after = pos != null ? pos.after : void 0) {
       if (typeof after === 'String') {
         after = document.getElementById(pos);
       }
       this.insertAfter(node, after);
+    // eslint-disable-next-line
     } else if (before = pos != null ? pos.before : void 0) {
       if (typeof before === 'String') {
         before = document.getElementById(pos != null ? pos.before : void 0);
