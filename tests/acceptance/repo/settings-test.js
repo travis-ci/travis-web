@@ -293,3 +293,15 @@ test('delete and set SSH keys', function (assert) {
     });
   });
 });
+
+test('on a repository with auto-cancellation', function (assert) {
+  this.repository.createSetting({ name: 'auto_cancel_pr_builds', value: false });
+  this.repository.createSetting({ name: 'auto_cancel_branch_builds', value: true });
+
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+
+  andThen(() => {
+    assert.notOk(settingsPage.autoCancelPullRequestBuilds.isActive, 'expected auto-cancel PRs to be present but disabled');
+    assert.ok(settingsPage.autoCancelBranchBuilds.isActive, 'expected auto-cancel branches to be present and enabled');
+  });
+});

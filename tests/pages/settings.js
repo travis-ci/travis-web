@@ -17,15 +17,17 @@ export default PageObject.create({
   notification: text('p.flash-message'),
 
   autoCancelPullRequestBuilds: {
-    scope: 'settings.settings-section .auto_cancel_pr_builds.switch',
+    scope: 'section.settings-section .auto_cancel_pr_builds.switch',
 
-    exists: isVisible()
+    exists: isVisible(),
+    isActive: hasClass('active')
   },
 
   autoCancelBranchBuilds: {
-    scope: 'settings.settings-section .auto_cancel_branch_builds',
+    scope: 'section.settings-section .auto_cancel_branch_builds',
 
     exists: isVisible(),
+    isActive: hasClass('active')
   },
 
   buildOnlyWithTravisYml: {
