@@ -123,6 +123,9 @@ test('view settings', function (assert) {
 
     assert.equal(settingsPage.sshKey.name, 'testy');
     assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
+
+    assert.notOk(settingsPage.autoCancelPullRequestBuilds.exists, 'expected no auto-cancel PRs switch when flag not present in API response');
+    assert.notOk(settingsPage.autoCancelBranchBuilds.exists, 'expected no auto-cancel branches switch when flag not present in API response');
   });
 });
 
