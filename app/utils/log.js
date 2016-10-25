@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 var Log = function() {
   this.autoCloseFold = true;
   this.listeners = [];
