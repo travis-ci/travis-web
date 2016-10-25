@@ -51,13 +51,13 @@ define('travis/components/polling-test', [], function () {
 
 moduleForComponent('polling-test', 'PollingMixin', {
   needs: [],
-  setup: function () {
+  beforeEach() {
     hookRuns = 0;
     return pollingChangesHistory = [];
   }
 });
 
-test('it properly stops polling hook without any models', function () {
+test('it properly stops polling hook without any models', function (assert) {
   var component, expected;
   component = this.subject({
     pollModels: null
@@ -75,10 +75,10 @@ test('it properly stops polling hook without any models', function () {
       source: '<PollingTestingComponent>'
     }
   ];
-  return deepEqual(pollingChangesHistory, expected);
+  assert.deepEqual(pollingChangesHistory, expected);
 });
 
-test('it works even if one of the model is null', function () {
+test('it works even if one of the model is null', function (assert) {
   var component, expected;
   component = this.subject({
     model1: {
@@ -108,10 +108,10 @@ test('it works even if one of the model is null', function () {
       source: '<PollingTestingComponent>'
     }
   ];
-  return deepEqual(pollingChangesHistory, expected);
+  assert.deepEqual(pollingChangesHistory, expected);
 });
 
-test('it polls for both models if they are present', function () {
+test('it polls for both models if they are present', function (assert) {
   var component, expected;
   component = this.subject({
     model1: {
@@ -154,10 +154,10 @@ test('it polls for both models if they are present', function () {
       source: '<PollingTestingComponent>'
     }
   ];
-  return deepEqual(pollingChangesHistory, expected);
+  assert.deepEqual(pollingChangesHistory, expected);
 });
 
-test('it detects model changes', function () {
+test('it detects model changes', function (assert) {
   var component, expected;
   component = this.subject({
     model1: {
@@ -202,5 +202,5 @@ test('it detects model changes', function () {
       source: '<PollingTestingComponent>'
     }
   ];
-  return deepEqual(pollingChangesHistory, expected);
+  assert.deepEqual(pollingChangesHistory, expected);
 });
