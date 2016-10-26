@@ -22,7 +22,7 @@ export default PageObject.create({
   },
 
   autoCancelPushes: {
-    scope: 'section.settings-section .auto_cancel_pushes',
+    scope: 'section.settings-section .auto_cancel_pushes.switch',
 
     exists: isVisible(),
     isActive: hasClass('active'),
