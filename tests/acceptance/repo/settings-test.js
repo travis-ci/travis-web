@@ -124,6 +124,7 @@ test('view settings', function (assert) {
     assert.equal(settingsPage.sshKey.name, 'testy');
     assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
 
+    assert.notOk(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to not exist');
     assert.notOk(settingsPage.autoCancelPullRequestBuilds.exists, 'expected no auto-cancel PRs switch when flag not present in API response');
     assert.notOk(settingsPage.autoCancelBranchBuilds.exists, 'expected no auto-cancel branches switch when flag not present in API response');
   });
@@ -301,6 +302,7 @@ test('on a repository with auto-cancellation', function (assert) {
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
+    assert.ok(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to exist');
     assert.notOk(settingsPage.autoCancelPullRequestBuilds.isActive, 'expected auto-cancel PRs to be present but disabled');
     assert.ok(settingsPage.autoCancelBranchBuilds.isActive, 'expected auto-cancel branches to be present and enabled');
   });

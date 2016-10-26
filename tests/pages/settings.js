@@ -16,6 +16,11 @@ export default PageObject.create({
 
   notification: text('p.flash-message'),
 
+  autoCancellationSection: {
+    scope: 'section.auto-cancellation',
+    exists: isVisible()
+  },
+
   autoCancelPullRequestBuilds: {
     scope: 'section.settings-section .auto_cancel_pr_builds.switch',
 
