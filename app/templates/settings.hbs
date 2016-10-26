@@ -12,6 +12,19 @@
 
   </section>
 
+  {{#if showAutoCancellationSwitches}}
+    <section class="settings-section auto-cancellation">
+      <h2 class="small-title">Auto Cancellation Settings</h2>
+
+      <!-- <p>FIXME Some explanatory text.</p> -->
+
+      <ul class="settings-list--columns">
+        <li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel pushes" key="auto_cancel_pushes"}}</li>
+        <li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull requests" key="auto_cancel_pull_requests"}}</li>
+      </ul>
+    </section>
+  {{/if}}
+
   <section class="settings-section">
     <h2 class="small-title">Environment Variables</h2>
 
