@@ -21,16 +21,16 @@ export default PageObject.create({
     exists: isVisible()
   },
 
-  autoCancelPullRequestBuilds: {
-    scope: 'section.settings-section .auto_cancel_pr_builds.switch',
+  autoCancelPushes: {
+    scope: 'section.settings-section .auto_cancel_pushes',
 
     exists: isVisible(),
     isActive: hasClass('active'),
     toggle: clickable()
   },
 
-  autoCancelBranchBuilds: {
-    scope: 'section.settings-section .auto_cancel_branch_builds',
+  autoCancelPullRequests: {
+    scope: 'section.settings-section .auto_cancel_pull_requests.switch',
 
     exists: isVisible(),
     isActive: hasClass('active'),
