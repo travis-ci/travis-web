@@ -126,7 +126,7 @@ test('view settings', function (assert) {
 
     assert.notOk(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to not exist');
     assert.notOk(settingsPage.autoCancelPushes.exists, 'expected no auto-cancel pushes switch when flag not present in API response');
-    assert.notOk(settingsPage.autoCancelPullRequests.exists, 'expected no auto-cancel pull_requests switch when flag not present in API response');
+    assert.notOk(settingsPage.autoCancelPullRequests.exists, 'expected no auto-cancel pull requests switch when flag not present in API response');
   });
 });
 
@@ -304,7 +304,7 @@ test('on a repository with auto-cancellation', function (assert) {
   andThen(() => {
     assert.ok(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to exist');
     assert.ok(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be present and enabled');
-    assert.notOk(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull_requests to be present but disabled');
+    assert.notOk(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be present but disabled');
   });
 
   const settingToRequestBody = {};
@@ -316,7 +316,7 @@ test('on a repository with auto-cancellation', function (assert) {
   settingsPage.autoCancelPullRequests.toggle();
 
   andThen(() => {
-    assert.ok(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull_requests to be enabled');
+    assert.ok(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be enabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pull_requests, { 'user_setting.value': true });
   });
 
