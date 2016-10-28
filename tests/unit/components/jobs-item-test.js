@@ -59,7 +59,7 @@ test('when env is not set, gemfile is displayed in the env section', function ()
     job: job
   });
   this.render();
-  equal(component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2', 'langauges list should be displayed');
+  equal(component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2', 'languages list should be displayed');
   return equal(component.$('.job-env .label-align').text().trim(), 'Gemfile: foo/Gemfile', 'env should be displayed');
 });
 
