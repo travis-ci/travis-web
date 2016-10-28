@@ -16,7 +16,7 @@
     <section class="settings-section auto-cancellation">
       <h2 class="small-title">Auto Cancellation Settings</h2>
 
-      <!-- <p>FIXME Some explanatory text.</p> -->
+      <p>Auto Cancellation allows you to only run builds for the latest commits in the queue. This setting can be applied to builds for Branch builds and Pull Request builds separately. Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.</p>
 
       <ul class="settings-list--columns">
         <li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel pushes" key="auto_cancel_pushes"}}</li>
