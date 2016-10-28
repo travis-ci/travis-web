@@ -42,7 +42,7 @@ install:
   - npm install -g bower
   - npm install
   - bower install
-  - npm ls
+  - npm ls --json
   - bower ls
 
 script:
