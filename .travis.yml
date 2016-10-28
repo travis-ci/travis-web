@@ -32,8 +32,6 @@ before_install:
   - echo $TRAVIS_PULL_REQUEST_SHA
   - echo $TRAVIS_PULL_REQUEST_BRANCH
   - mkdir travis-phantomjs
-  - npm ls
-  - bower ls
   - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
   - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
   - export PATH=$PWD/travis-phantomjs:$PATH
@@ -44,6 +42,8 @@ install:
   - npm install -g bower
   - npm install
   - bower install
+  - npm ls
+  - bower ls
 
 script:
   - ember try:one $EMBER_VERSION --- ember test --reporter dot
