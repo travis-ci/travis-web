@@ -254,6 +254,13 @@ export default TravisRoute.extend({
         nationality: 'germany',
         country: 'germany',
         image: 'lena'
+      }, {
+        name: 'Sam Wright',
+        title: 'Documentarian',
+        handle: 'plaindocs',
+        nationality: 'none',
+        country: 'germany',
+        image: 'sam'
       }
     ];
   }
