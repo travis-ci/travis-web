@@ -159,8 +159,8 @@ export default TravisRoute.extend({
         country: 'canada',
         image: 'dominic'
       }, {
-        name: 'Liza Brisker',
-        title: 'Brainy Trainee',
+        name: 'Liz Brisker',
+        title: 'Mermaid On Board',
         nationality: 'russia',
         country: 'germany',
         image: 'liz'
