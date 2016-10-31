@@ -40,6 +40,15 @@ export default PageObject.create({
       isCyan: hasClass('cyan'),
       isWhite: hasClass('white'),
       isGrey: hasClass('grey'),
+
+      hasBlackBackground: hasClass('bg-black'),
+      hasRedBackground: hasClass('bg-red'),
+      hasGreenBackground: hasClass('bg-green'),
+      hasYellowBackground: hasClass('bg-yellow'),
+      hasBlueBackground: hasClass('bg-blue'),
+      hasMagentaBackground: hasClass('bg-magenta'),
+      hasCyanBackground: hasClass('bg-cyan'),
+      hasWhiteBackground: hasClass('bg-white')
     }
   }),
 

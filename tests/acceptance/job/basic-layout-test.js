@@ -82,14 +82,14 @@ I am a line between folds.
 travis_fold:start:afold
 I am the first line of a second fold.
 travis_fold:end:afold
-[0K[30;1mI am a black line.
-[0K[31;1mI am a red line.
-[0K[32;1mI am a green line.
-[0K[33;1mI am a yellow line.
-[0K[34;1mI am a blue line.
-[0K[35;1mI am a magenta line.
-[0K[36;1mI am a cyan line.
-[0K[37;1mI am a white line.
+[0K[30;47;1mI am a black line with white background.
+[0K[31;46;1mI am a red line with cyan background.
+[0K[32;45;1mI am a green line with magenta background.
+[0K[33;44;1mI am a yellow line with blue background.
+[0K[34;43;1mI am a blue line yellow background.
+[0K[35;42;1mI am a magenta line with green background.
+[0K[36;41;1mI am a cyan line with red background.
+[0K[37;40;1mI am a white line with black background.
 [0K[90;1mI am a grey line.
 I am the final line.
 `;
@@ -119,13 +119,29 @@ I am the final line.
     assert.equal(jobPage.logLines(4).text, 'I am the first line of a second fold.');
 
     assert.ok(jobPage.logLines(5).isBlack);
+    assert.ok(jobPage.logLines(5).hasWhiteBackground);
+
     assert.ok(jobPage.logLines(6).isRed);
+    assert.ok(jobPage.logLines(6).hasCyanBackground);
+
     assert.ok(jobPage.logLines(7).isGreen);
+    assert.ok(jobPage.logLines(7).hasMagentaBackground);
+
     assert.ok(jobPage.logLines(8).isYellow);
+    assert.ok(jobPage.logLines(8).hasBlueBackground);
+
     assert.ok(jobPage.logLines(9).isBlue);
+    assert.ok(jobPage.logLines(9).hasYellowBackground);
+
     assert.ok(jobPage.logLines(10).isMagenta);
+    assert.ok(jobPage.logLines(10).hasGreenBackground);
+
     assert.ok(jobPage.logLines(11).isCyan);
+    assert.ok(jobPage.logLines(11).hasRedBackground);
+
     assert.ok(jobPage.logLines(12).isWhite);
+    assert.ok(jobPage.logLines(12).hasBlackBackground);
+
     assert.ok(jobPage.logLines(13).isGrey);
 
     assert.equal(jobPage.logLines(14).text, 'I am the final line.');
