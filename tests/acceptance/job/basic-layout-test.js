@@ -74,7 +74,6 @@ test('visiting a job with a complex log', function (assert) {
   commit.save();
 
   const complexLog = `I am the first line.
-[0K[33;1mI am a yellow line.
 travis_fold:start:afold
 I am the first line of a fold.
 I am the second line of a fold.
@@ -83,6 +82,15 @@ I am a line between folds.
 travis_fold:start:afold
 I am the first line of a second fold.
 travis_fold:end:afold
+[0K[30;1mI am a black line.
+[0K[31;1mI am a red line.
+[0K[32;1mI am a green line.
+[0K[33;1mI am a yellow line.
+[0K[34;1mI am a blue line.
+[0K[35;1mI am a magenta line.
+[0K[36;1mI am a cyan line.
+[0K[37;1mI am a white line.
+[0K[90;1mI am a grey line.
 I am the final line.
 `;
   server.create('log', { id: job.id, content: complexLog });
@@ -97,22 +105,30 @@ I am the final line.
 
   andThen(function () {
     assert.equal(jobPage.logLines(0).text, 'I am the first line.');
-    assert.equal(jobPage.logLines(1).text, 'I am a yellow line.');
-    assert.ok(jobPage.logLines(1).isYellow);
 
     assert.equal(jobPage.logFolds(0).name, 'afold');
     assert.notOk(jobPage.logFolds(0).isOpen);
 
-    assert.equal(jobPage.logLines(2).text, 'I am the first line of a fold.');
+    assert.equal(jobPage.logLines(1).text, 'I am the first line of a fold.');
 
-    assert.equal(jobPage.logLines(3).text, 'I am the second line of a fold.');
+    assert.equal(jobPage.logLines(2).text, 'I am the second line of a fold.');
 
-    assert.equal(jobPage.logLines(4).text, 'I am a line between folds.');
+    assert.equal(jobPage.logLines(3).text, 'I am a line between folds.');
 
     assert.equal(jobPage.logFolds(0).name, 'afold');
-    assert.equal(jobPage.logLines(5).text, 'I am the first line of a second fold.');
+    assert.equal(jobPage.logLines(4).text, 'I am the first line of a second fold.');
 
-    assert.equal(jobPage.logLines(6).text, 'I am the final line.');
+    assert.ok(jobPage.logLines(5).isBlack);
+    assert.ok(jobPage.logLines(6).isRed);
+    assert.ok(jobPage.logLines(7).isGreen);
+    assert.ok(jobPage.logLines(8).isYellow);
+    assert.ok(jobPage.logLines(9).isBlue);
+    assert.ok(jobPage.logLines(10).isMagenta);
+    assert.ok(jobPage.logLines(11).isCyan);
+    assert.ok(jobPage.logLines(12).isWhite);
+    assert.ok(jobPage.logLines(13).isGrey);
+
+    assert.equal(jobPage.logLines(14).text, 'I am the final line.');
   });
 
   jobPage.logFolds(0).toggle();

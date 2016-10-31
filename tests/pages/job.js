@@ -26,11 +26,20 @@ export default PageObject.create({
   logLines: collection({
     scope: 'pre#log',
 
-    itemScope: 'p',
+    itemScope: 'p span:first-of-type',
 
     item: {
-      text: text('span:first-of-type'),
-      isYellow: hasClass('yellow', 'span:first-of-type')
+      text: text(),
+
+      isBlack: hasClass('black'),
+      isRed: hasClass('red'),
+      isGreen: hasClass('green'),
+      isYellow: hasClass('yellow'),
+      isBlue: hasClass('blue'),
+      isMagenta: hasClass('magenta'),
+      isCyan: hasClass('cyan'),
+      isWhite: hasClass('white'),
+      isGrey: hasClass('grey'),
     }
   }),
 
