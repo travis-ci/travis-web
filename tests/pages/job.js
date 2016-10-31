@@ -48,7 +48,11 @@ export default PageObject.create({
       hasBlueBackground: hasClass('bg-blue'),
       hasMagentaBackground: hasClass('bg-magenta'),
       hasCyanBackground: hasClass('bg-cyan'),
-      hasWhiteBackground: hasClass('bg-white')
+      hasWhiteBackground: hasClass('bg-white'),
+
+      isBolded: hasClass('bold'),
+      isItalicised: hasClass('italic'),
+      isUnderlined: hasClass('underline')
     }
   }),
 

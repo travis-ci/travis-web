@@ -82,15 +82,15 @@ I am a line between folds.
 travis_fold:start:afold
 I am the first line of a second fold.
 travis_fold:end:afold
-[0K[30;47;1mI am a black line with white background.
-[0K[31;46;1mI am a red line with cyan background.
-[0K[32;45;1mI am a green line with magenta background.
-[0K[33;44;1mI am a yellow line with blue background.
-[0K[34;43;1mI am a blue line yellow background.
-[0K[35;42;1mI am a magenta line with green background.
-[0K[36;41;1mI am a cyan line with red background.
-[0K[37;40;1mI am a white line with black background.
-[0K[90;1mI am a grey line.
+[0K[30;47;1mI am a bold black line with white background.
+[0K[31;46;3mI am an italic red line with cyan background.
+[0K[32;45;4mI am an underlined green line with magenta background.
+[0K[33;44mI am a yellow line with blue background.
+[0K[34;43mI am a blue line yellow background.
+[0K[35;42mI am a magenta line with green background.
+[0K[36;41mI am a cyan line with red background.
+[0K[37;40mI am a white line with black background.
+[0K[90mI am a grey line.
 I am the final line.
 `;
   server.create('log', { id: job.id, content: complexLog });
@@ -120,12 +120,15 @@ I am the final line.
 
     assert.ok(jobPage.logLines(5).isBlack);
     assert.ok(jobPage.logLines(5).hasWhiteBackground);
+    assert.ok(jobPage.logLines(5).isBolded);
 
     assert.ok(jobPage.logLines(6).isRed);
     assert.ok(jobPage.logLines(6).hasCyanBackground);
+    assert.ok(jobPage.logLines(6).isItalicised);
 
     assert.ok(jobPage.logLines(7).isGreen);
     assert.ok(jobPage.logLines(7).hasMagentaBackground);
+    assert.ok(jobPage.logLines(7).isUnderlined);
 
     assert.ok(jobPage.logLines(8).isYellow);
     assert.ok(jobPage.logLines(8).hasBlueBackground);
