@@ -20,11 +20,13 @@
   "license": "MIT",
   "devDependencies": {
     "active-model-adapter": "2.1.1",
+    "ansiparse": "travis-ci/ansiparse",
     "babel-eslint": "^6.1.2",
     "broccoli-asset-rev": "^2.4.2",
     "broccoli-funnel": "^1.0.7",
     "broccoli-sass": "0.7.0",
     "ember-ajax": "2.4.1",
+    "ember-browserify": "^1.1.13",
     "ember-cli": "2.8.0",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-autoprefixer": "^0.6.0",
