@@ -159,8 +159,8 @@ export default TravisRoute.extend({
         country: 'canada',
         image: 'dominic'
       }, {
-        name: 'Liza Brisker',
-        title: 'Brainy Trainee',
+        name: 'Liz Brisker',
+        title: 'Mermaid On Board',
         nationality: 'russia',
         country: 'germany',
         image: 'liz'
@@ -254,6 +254,13 @@ export default TravisRoute.extend({
         nationality: 'germany',
         country: 'germany',
         image: 'lena'
+      }, {
+        name: 'Sam Wright',
+        title: 'Documentarian',
+        handle: 'plaindocs',
+        nationality: 'none',
+        country: 'germany',
+        image: 'sam'
       }
     ];
   }
