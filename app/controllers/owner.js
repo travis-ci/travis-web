@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'travis/config/environment';
 
 export default Ember.Controller.extend({
   isLoading: false,
@@ -10,6 +11,8 @@ export default Ember.Controller.extend({
   avatarURL: Ember.computed('model', function () {
     if (this.get('model.avatar_url')) {
       return (this.get('model.avatar_url')) + '?s=125';
+    } else if (config.gravatarUrl) {
+      return config.gravatarUrl;
     } else {
       return 'https://secure.gravatar.com/avatar/?d=mm&s=125';
     }

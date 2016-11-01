@@ -69,7 +69,11 @@ email = function (email) {
 };
 
 gravatarImage = function (email, size) {
-  return 'https://www.gravatar.com/avatar/' + (md5(email)) + '?s=' + size + '&d=blank';
+  if (config.gravatarUrl) {
+    return `${config.gravatarUrl}?hash=${md5(email)}&s=${size}&d=blank`;
+  } else {
+    return 'https://www.gravatar.com/avatar/' + (md5(email)) + '?s=' + size + '&d=blank';
+  }
 };
 
 export {
