@@ -258,7 +258,7 @@ export default TravisRoute.extend({
         name: 'Sam Wright',
         title: 'Documentarian',
         handle: 'plaindocs',
-        nationality: 'none',
+        nationality: 'uk',
         country: 'germany',
         image: 'sam'
       }
