@@ -20,7 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "active-model-adapter": "2.1.1",
-    "ansiparse": "travis-ci/ansiparse",
+    "ansiparse": "0.1.0",
     "babel-eslint": "^6.1.2",
     "broccoli-asset-rev": "^2.4.2",
     "broccoli-funnel": "^1.0.7",
