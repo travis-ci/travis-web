@@ -16,6 +16,27 @@ export default PageObject.create({
 
   notification: text('p.flash-message'),
 
+  autoCancellationSection: {
+    scope: 'section.auto-cancellation',
+    exists: isVisible()
+  },
+
+  autoCancelPushes: {
+    scope: 'section.settings-section .auto_cancel_pushes.switch',
+
+    exists: isVisible(),
+    isActive: hasClass('active'),
+    toggle: clickable()
+  },
+
+  autoCancelPullRequests: {
+    scope: 'section.settings-section .auto_cancel_pull_requests.switch',
+
+    exists: isVisible(),
+    isActive: hasClass('active'),
+    toggle: clickable()
+  },
+
   buildOnlyWithTravisYml: {
     scope: 'section.settings-section .builds_only_with_travis_yml.switch',
 

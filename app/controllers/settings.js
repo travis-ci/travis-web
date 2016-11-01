@@ -23,6 +23,15 @@ export default Ember.Controller.extend({
     }
   }),
 
+  showAutoCancellationSwitches: Ember.computed(
+    'model.settings.auto_cancel_pushes',
+    'model.settings.auto_cancel_pull_requests', function () {
+      const settings = this.get('model.settings');
+
+      return settings.hasOwnProperty('auto_cancel_pull_requests') ||
+        settings.hasOwnProperty('auto_cancel_pushes');
+    }),
+
   actions: {
     sshKeyAdded(sshKey) {
       return this.set('model.customSshKey', sshKey);
