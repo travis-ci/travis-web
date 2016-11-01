@@ -1,5 +1,6 @@
-/* global ansiparse */
 /* eslint-disable no-console, no-control-regex */
+
+import ansiparse from 'npm:ansiparse';
 
 var Log = function () {
   this.autoCloseFold = true;
