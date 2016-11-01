@@ -46,6 +46,7 @@
     "ember-cli-page-object": "1.4.2",
     "ember-cli-pretender": "0.6.0",
     "ember-cli-qunit": "^2.0.2",
+    "ember-cli-sass": "5.6.0",
     "ember-cli-sauce": "^1.1.0",
     "ember-cli-sentry": "2.4.2",
     "ember-cli-sri": "^2.1.0",
