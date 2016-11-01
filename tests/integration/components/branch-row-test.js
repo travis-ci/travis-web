@@ -33,12 +33,10 @@ test('it renders data correctly', function () {
         compare_url: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
         committed_at: '2014-11-20T18:34:04Z',
         committer: {
-          name: 'Dan Buch',
-          avatar_url: 'https://0.gravatar.com/avatar/563fd372b4d51781853bc85147f06a36'
+          name: 'Dan Buch'
         },
         author: {
-          name: 'Dan Buch',
-          avatar_url: 'https://0.gravatar.com/avatar/563fd372b4d51781853bc85147f06a36'
+          name: 'Dan Buch'
         }
       }
     }
