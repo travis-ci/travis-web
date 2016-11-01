@@ -52,7 +52,6 @@ module.exports = function () {
   app.import('bower_components/visibilityjs/lib/visibility.core.js');
   app.import('bower_components/visibilityjs/lib/visibility.timers.js');
   app.import('bower_components/JavaScript-MD5/js/md5.js');
-  app.import('vendor/customerio.js');
   app.import('bower_components/moment/moment.js');
 
   app.import('bower_components/js-emoji/demo/emoji.css');
