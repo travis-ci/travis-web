@@ -17,6 +17,7 @@ const branchRowComponent = {
   passed: hasClass('passed'),
   failed: hasClass('failed'),
   errored: hasClass('errored'),
+  created: hasClass('created'),
 
   request: text('.row-request .label-align'),
   commitSha: text('.row-commit .label-align'),
