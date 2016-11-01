@@ -125,6 +125,8 @@ module.exports = function (environment) {
       caches: true
     };
 
+    ENV.pusher = {};
+
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;
