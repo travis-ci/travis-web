@@ -1,4 +1,4 @@
-/* global Travis, _cio, HS */
+/* global Travis, HS */
 import Ember from 'ember';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
@@ -44,9 +44,6 @@ var App = Ember.Application.extend(Ember.Evented, {
   },
 
   onUserUpdate(user) {
-    if (proVersion) {
-      this.identifyCustomer(user);
-    }
     if (proVersion && config.beacon) {
       this.setupBeacon();
       this.identifyHSBeacon(user);
@@ -87,18 +84,6 @@ var App = Ember.Application.extend(Ember.Evented, {
           login: user.login,
           last_synced_at: user.synced_at
         });
-      });
-    }
-  },
-
-  identifyCustomer(user) {
-    if (_cio && _cio.identify) {
-      return _cio.identify({
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        created_at: (Date.parse(user.created_at) / 1000) || null,
-        login: user.login
       });
     }
   }

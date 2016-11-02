@@ -1,6 +1,7 @@
-/* global Travis, Log */
+/* global Travis */
 import Ember from 'ember';
 import LinesSelector from 'travis/utils/lines-selector';
+import Log from 'travis/utils/log';
 import LogFolder from 'travis/utils/log-folder';
 import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls';
 
