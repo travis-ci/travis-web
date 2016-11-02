@@ -1,20 +1,11 @@
 import Ember from 'ember';
 
-// Created branches are sorted first, then by finished_at.
-function sortBranchesByCreatedOrFinished(branches) {
-  const sortedByFinishedAt = branches.sortBy('last_build.finished_at').reverse();
+// Branches with no finished_at are first, then by finished_at.
+function sortBranchesByFinished(branches) {
+  const unfinishedBranches = branches.filter(branch => Ember.isNone(Ember.get(branch, 'last_build.finished_at')));
+  const sortedFinishedBranches = branches.filterBy('last_build.finished_at').sortBy('last_build.finished_at').reverse();
 
-  const createdAndNot = sortedByFinishedAt.reduce((createdAndNot, branch) => {
-    if (Ember.get(branch, 'last_build.state') === 'created') {
-      createdAndNot.created.push(branch);
-    } else {
-      createdAndNot.notCreated.push(branch);
-    }
-
-    return createdAndNot;
-  }, { created: [], notCreated: [] });
-
-  return createdAndNot.created.concat(createdAndNot.notCreated);
+  return unfinishedBranches.concat(sortedFinishedBranches);
 }
 
-export default sortBranchesByCreatedOrFinished;
+export default sortBranchesByFinished;
