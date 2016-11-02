@@ -128,3 +128,5 @@ After success, your deployment will be available at branch.test-deployments.trav
 
 The Redis server is at [`travis-web-index`](https://github.com/travis-ci/travis-web-index).
 Eventually we can move to using `ember-cli-deploy` for all deployments.
+
+A README edit so this branch works.
