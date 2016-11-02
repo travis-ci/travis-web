@@ -2,9 +2,9 @@
   {{#if cancel.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action (perform cancel)}} class="action-button--cancel" title="Cancel job">
+    <button {{action (perform cancel)}} class="action-button--cancel" type="button" title="Cancel job">
       Cancel job
-    </a>
+    </button>
   {{/if}}
 {{/if}}
 
@@ -12,13 +12,13 @@
   {{#if restarters.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <a href="#" {{action (perform restart)}} class="action-button--restart" title="Restart job">
+    <button {{action (perform restart)}} class="action-button--restart" title="Restart job" type="button">
       Restart job
-    </a>
+    </button>
 
     {{#if features.proVersion}}
       {{#if canDebug}}
-        <a href="#" {{action (perform debug)}} class="action-button--debug" title="Restart as debug job">Debug job</a>
+        <button {{action (perform debug)}} class="action-button--debug" title="Restart as debug job" type="button">Debug job</button>
       {{/if}}
     {{/if}}
   {{/if}}
