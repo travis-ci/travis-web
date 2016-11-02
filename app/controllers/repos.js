@@ -128,12 +128,14 @@ export default Ember.Controller.extend({
     }
   },
 
-  runningJobs: Ember.computed('features.proVersion', function () {
-    if (!this.get('features.proVersion')) { return []; }
+  runningJobs: Ember.computed(function () {
     var result;
 
+    const user = this.get('currentUser');
+
     result = this.store.filter('job', {}, function (job) {
-      return ['queued', 'started', 'received'].includes(job.get('state'));
+      return ['queued', 'started', 'received'].includes(job.get('state')) &&
+        user.hasAccessToRepo(job.get('repo'));
     });
 
     result.set('isLoaded', false);
@@ -145,12 +147,14 @@ export default Ember.Controller.extend({
     return result;
   }),
 
-  queuedJobs: Ember.computed('features.proVersion', function () {
-    if (!this.get('features.proVersion')) { return []; }
-
+  queuedJobs: Ember.computed(function () {
     var result;
+
+    const user = this.get('currentUser');
+
     result = this.get('store').filter('job', function (job) {
-      return ['created'].indexOf(job.get('state')) !== -1;
+      return ['created'].indexOf(job.get('state')) !== -1 &&
+        user.hasAccessToRepo(job.get('repo'));
     });
     result.set('isLoaded', false);
     result.then(function () {
