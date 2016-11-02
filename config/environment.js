@@ -31,9 +31,6 @@ module.exports = function (environment) {
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
 
-    heap: {
-      projectId: '1049054202'
-    },
     logLimit: 10000,
 
     emojiPrepend: ''
@@ -46,13 +43,6 @@ module.exports = function (environment) {
 
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
   var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
-
-  // Do not collect metrics if in non-production env or enterprise
-  if (process.env.TRAVIS_ENTERPRISE || environment !== 'production') {
-    ENV.heap = {
-      development: true
-    };
-  }
 
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !process.env.TRAVIS_ENTERPRISE) {
@@ -82,9 +72,6 @@ module.exports = function (environment) {
         security: ENV.billingEndpoint + "/pages/security",
         terms: ENV.billingEndpoint + "/pages/terms"
       };
-      ENV.heap = {
-        projectId: '1556722898'
-      }
     }
 
     if (process.env.API_ENDPOINT) {
