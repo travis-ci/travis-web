@@ -112,6 +112,9 @@ module.exports = function (environment) {
       caches: true
     };
 
+    ENV.pusher = {};
+    ENV.gravatarUrl = '/images/travis-crying.png';
+
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;

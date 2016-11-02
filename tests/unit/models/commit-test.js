@@ -1,5 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
+import config from 'travis/config/environment';
+
 moduleForModel('commit', 'Unit | Model | commit', {
   needs: ['model:build']
 });
@@ -15,8 +17,8 @@ test('calculation of avatar urls via Gravatar', function () {
       committerAvatarUrl: null
     });
   });
-  equal(model.get('authorAvatarUrlOrGravatar'), 'https://www.gravatar.com/avatar/5c1e6d6e64e12aca17657581a48005d1?s=40&d=blank', 'correctly sets gravatar image');
-  return equal(model.get('committerAvatarUrlOrGravatar'), 'https://www.gravatar.com/avatar/5c1e6d6e64e12aca17657581a48005d1?s=40&d=blank', 'correctly sets gravatar image');
+  equal(model.get('authorAvatarUrlOrGravatar'), `${config.gravatarUrl}?hash=5c1e6d6e64e12aca17657581a48005d1&s=40&d=blank`, 'correctly sets gravatar image');
+  return equal(model.get('committerAvatarUrlOrGravatar'), `${config.gravatarUrl}?hash=5c1e6d6e64e12aca17657581a48005d1&s=40&d=blank`, 'correctly sets gravatar image');
 });
 
 test('calculation of avatar urls via overriding parameter', function () {
