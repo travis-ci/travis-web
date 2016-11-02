@@ -12,28 +12,21 @@ export default Ember.Controller.extend({
 
   activeBranches: Ember.computed('model', function () {
     const activeBranches = this.get('nonDefaultBranches').filterBy('exists_on_github');
-    return this._sortBranchesByCreatedOrFinished(activeBranches);
+    return this._sortBranchesByFinished(activeBranches);
   }),
 
   inactiveBranches: Ember.computed('model', function () {
     const inactiveBranches = this.get('nonDefaultBranches').filterBy('exists_on_github', false);
-    return this._sortBranchesByCreatedOrFinished(inactiveBranches);
+    return this._sortBranchesByFinished(inactiveBranches);
   }),
 
-  // Created branches are sorted first, then by finished_at.
-  _sortBranchesByCreatedOrFinished(branches) {
-    const sortedByFinishedAt = branches.sortBy('last_build.finished_at').reverse();
+  _sortBranchesByFinished(branches) {
+    const unfinished = branches.filter(branch => {
+      return Ember.isNone(Ember.get(branch, 'last_build.finished_at'));
+    });
+    const sortedFinished = branches.filterBy('last_build.finished_at')
+      .sortBy('last_build.finished_at').reverse();
 
-    const createdAndNot = sortedByFinishedAt.reduce((createdAndNot, branch) => {
-      if (Ember.get(branch, 'last_build.state') === 'created') {
-        createdAndNot.created.push(branch);
-      } else {
-        createdAndNot.notCreated.push(branch);
-      }
-
-      return createdAndNot;
-    }, { created: [], notCreated: [] });
-
-    return createdAndNot.created.concat(createdAndNot.notCreated);
+    return unfinished.concat(sortedFinished);
   }
 });
