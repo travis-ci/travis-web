@@ -6,7 +6,9 @@ export default Ember.Controller.extend({
   }),
 
   branchesExist: Ember.computed.notEmpty('model'),
-  nonDefaultBranches: Ember.computed.filterBy('model', 'default_branch', false),
+  nonDefaultBranches: Ember.computed.filter('model', function (branch) {
+    return !branch.default_branch;
+  }),
 
   activeBranches: Ember.computed('model', function () {
     const activeBranches = this.get('nonDefaultBranches').filterBy('exists_on_github');
