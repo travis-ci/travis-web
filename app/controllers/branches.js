@@ -2,30 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   defaultBranch: Ember.computed('model', function () {
-    const output = this.get('model').filter(function (item) {
-      return item.default_branch;
-    });
-    if (output.length) {
-      return output[0];
-    }
+    return this.get('model').filterBy('default_branch')[0];
   }),
 
-  branchesExist: Ember.computed('model', function () {
-    return this.get('model').length;
-  }),
+  branchesExist: Ember.computed.isPresent('model'),
+  nonDefaultBranches: Ember.computed.filterBy('model', 'default_branch', false),
 
   activeBranches: Ember.computed('model', function () {
-    const branches = this.get('model');
-    return this._sortBranchesByCreatedOrFinished(branches.filter(function (item) {
-      return item.exists_on_github && !item.default_branch;
-    }));
+    const activeBranches = this.get('nonDefaultBranches').filterBy('exists_on_github');
+    return this._sortBranchesByCreatedOrFinished(activeBranches);
   }),
 
   inactiveBranches: Ember.computed('model', function () {
-    const branches = this.get('model');
-    return this._sortBranchesByCreatedOrFinished(branches.filter(function (item) {
-      return !item.exists_on_github && !item.default_branch;
-    }));
+    const inactiveBranches = this.get('nonDefaultBranches').filterBy('exists_on_github', false);
+    return this._sortBranchesByCreatedOrFinished(inactiveBranches);
   }),
 
   // Created branches are sorted first, then by finished_at.
