@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import sortBranches from 'travis/utils/sort-branches';
 
 export default Ember.Controller.extend({
   defaultBranch: Ember.computed('model', function () {
@@ -13,11 +12,21 @@ export default Ember.Controller.extend({
 
   activeBranches: Ember.computed('model', function () {
     const activeBranches = this.get('nonDefaultBranches').filterBy('exists_on_github');
-    return sortBranches(activeBranches);
+    return this._sortBranchesByFinished(activeBranches);
   }),
 
   inactiveBranches: Ember.computed('model', function () {
     const inactiveBranches = this.get('nonDefaultBranches').filterBy('exists_on_github', false);
-    return sortBranches(inactiveBranches);
-  })
+    return this._sortBranchesByFinished(inactiveBranches);
+  }),
+
+  _sortBranchesByFinished(branches) {
+    const unfinished = branches.filter(branch => {
+      return Ember.isNone(Ember.get(branch, 'last_build.finished_at'));
+    });
+    const sortedFinished = branches.filterBy('last_build.finished_at')
+      .sortBy('last_build.finished_at').reverse();
+
+    return unfinished.concat(sortedFinished);
+  }
 });
