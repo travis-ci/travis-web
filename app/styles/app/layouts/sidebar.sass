@@ -2,6 +2,7 @@
   height: auto
   padding: 0.8em 0.5em 0.8em 1.5em
   margin-bottom: .46rem
+  font-size: 14px
   background-color: white
   border-radius: 0
   li:last-child &
@@ -17,19 +18,14 @@
   @include colorRows($canary-yellow, 'received', 8px, true)
   @include colorRows($canary-yellow, 'created', 8px, true)
 
-  .status-icon .is-rotating
-    width: 17px
-    height: 17px
-    line-height: 1
-
   h2, p
     margin: 0
-    font-size: 14px
-    font-weight: 400
+    font-size: inherit
   h2
     position: relative
     display: inline-block
     margin-bottom: .7em
+    padding-left: 1px
     @media #{$medium-up}
       width: 75%
       white-space: nowrap
@@ -56,7 +52,6 @@
     width: 12px
     height: 16px
 
-
 #tab_new
   a:hover
     .icon--plus:after
@@ -66,14 +61,8 @@
   margin-top: 1.4rem
   ul
     @include resetul
-    border-bottom: .46rem solid $cream-light
-    background-color: $cream-light
+    border-bottom: .46rem solid $pebble-grey
+    background-color: $pebble-grey
 
-.sidebar-seperator
-  width: 90%
-  margin: 1rem auto
-  border: none
-  border-bottom: solid 2px #f2f2f2
-  
 .travistab-nav--sidebar
   padding: 0 1em
