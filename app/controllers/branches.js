@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
     return this.get('model').filterBy('default_branch')[0];
   }),
 
-  branchesExist: Ember.computed.isPresent('model'),
+  branchesExist: Ember.computed.notEmpty('model'),
   nonDefaultBranches: Ember.computed.filterBy('model', 'default_branch', false),
 
   activeBranches: Ember.computed('model', function () {
