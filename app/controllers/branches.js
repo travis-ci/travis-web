@@ -36,18 +36,18 @@ export default Ember.Controller.extend({
 
   // Created branches are sorted first, then by finished_at.
   _sortBranchesByCreatedOrFinished(repos) {
-    return repos.sort((a, b) => {
-      console.log(`a: ${Ember.get(a, 'name')} at ${Ember.get(a, 'last_build.finished_at')}`);
-      console.log(`b: ${Ember.get(b, 'name')} at ${Ember.get(b, 'last_build.finished_at')}`);
-      if (Ember.get(a, 'last_build.state') === 'created') {
-        console.log('returning -Infinity for ' + Ember.get(a, 'name'));
+    const sortedByFinishedAt = repos.sortBy('last_build.finished_at').reverse();
 
-        return -Infinity;
+    const createdAndNot = sortedByFinishedAt.reduce((createdAndNot, repo) => {
+      if (Ember.get(repo, 'last_build.state') === 'created') {
+        createdAndNot.created.push(repo);
       } else {
-        // console.log("returning " + (Ember.get(a, 'last_build.finished_at') || Infinity) + ' for ' + Ember.get(a, 'name'));
-
-        return (Ember.get(b, 'last_build.finished_at') || Infinity) - (Ember.get(a, 'last_build.finished_at') || Infinity);
+        createdAndNot.notCreated.push(repo);
       }
-    });
+
+      return createdAndNot;
+    }, { created: [], notCreated: [] });
+
+    return createdAndNot.created.concat(createdAndNot.notCreated);
   }
 });
