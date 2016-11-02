@@ -2,9 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   defaultBranch: Ember.computed('model', function () {
-    var output, repos;
-    repos = this.get('model');
-    output = repos.filter(function (item) {
+    const output = this.get('model').filter(function (item) {
       return item.default_branch;
     });
     if (output.length) {
@@ -13,36 +11,32 @@ export default Ember.Controller.extend({
   }),
 
   branchesExist: Ember.computed('model', function () {
-    var branches = this.get('model');
-
-    return branches.length;
+    return this.get('model').length;
   }),
 
   activeBranches: Ember.computed('model', function () {
-    var repos;
-    repos = this.get('model');
-    return this._sortBranchesByCreatedOrFinished(repos.filter(function (item) {
+    const branches = this.get('model');
+    return this._sortBranchesByCreatedOrFinished(branches.filter(function (item) {
       return item.exists_on_github && !item.default_branch;
     }));
   }),
 
   inactiveBranches: Ember.computed('model', function () {
-    var repos;
-    repos = this.get('model');
-    return this._sortBranchesByCreatedOrFinished(repos.filter(function (item) {
+    const branches = this.get('model');
+    return this._sortBranchesByCreatedOrFinished(branches.filter(function (item) {
       return !item.exists_on_github && !item.default_branch;
     }));
   }),
 
   // Created branches are sorted first, then by finished_at.
-  _sortBranchesByCreatedOrFinished(repos) {
-    const sortedByFinishedAt = repos.sortBy('last_build.finished_at').reverse();
+  _sortBranchesByCreatedOrFinished(branches) {
+    const sortedByFinishedAt = branches.sortBy('last_build.finished_at').reverse();
 
-    const createdAndNot = sortedByFinishedAt.reduce((createdAndNot, repo) => {
-      if (Ember.get(repo, 'last_build.state') === 'created') {
-        createdAndNot.created.push(repo);
+    const createdAndNot = sortedByFinishedAt.reduce((createdAndNot, branch) => {
+      if (Ember.get(branch, 'last_build.state') === 'created') {
+        createdAndNot.created.push(branch);
       } else {
-        createdAndNot.notCreated.push(repo);
+        createdAndNot.notCreated.push(branch);
       }
 
       return createdAndNot;
