@@ -37,6 +37,7 @@ before_install:
   - export PATH=$PWD/travis-phantomjs:$PATH
   - "npm config set spin false"
   - "npm install -g npm@^2"
+  - "echo '😆😭🐛🙃🤔🤗 :bug: :tada:'"
 
 install:
   - npm install -g bower
