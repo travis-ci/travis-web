@@ -67,6 +67,22 @@ export default Ember.Controller.extend({
     return repos;
   }),
 
+  activeRepos: Ember.computed('filteredRepos', function () {
+    return this.get('filteredRepos').filter(function (item) {
+      if (!item.get('starred')) {
+        return item;
+      }
+    });
+  }),
+
+  starredRepos: Ember.computed('filteredRepos', function () {
+    return this.get('filteredRepos').filter(function (item) {
+      if (item.get('starred')) {
+        return item;
+      }
+    });
+  }),
+
   selectedOrg: Ember.computed('account', function () {
     let accounts = this.get('model.accounts');
     let filter =  this.get('account');
@@ -83,6 +99,6 @@ export default Ember.Controller.extend({
     selectOrg(org) {
       let login = Ember.isBlank(org) ? undefined : org.get('login');
       return this.set('account', login);
-    }
+    } 
   }
 });
