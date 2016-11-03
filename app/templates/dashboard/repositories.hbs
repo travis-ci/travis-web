@@ -8,7 +8,7 @@
     <section class="dashboard-section dashboard-starred">
       <h2 class="small-title">Starred repositories</h2>
       {{#each starredRepos as |repo|}}
-        {{dashboard-row repo=repo}}
+        {{dashboard-row repo=repo unstarRepo="unstar"}}
       {{else}}
         <div class="starred-empty">
           <span>You can keep track of your favorite repositories here once you start starring!</span>
@@ -20,7 +20,7 @@
       <h2 class="small-title">Active repositories</h2>
       <ul class="repo-list">
         {{#each activeRepos as |repo|}}
-          {{dashboard-row repo=repo}}
+          {{dashboard-row repo=repo starRepo="star"}}
         {{else}}
           {{no-repos}}
         {{/each}}
