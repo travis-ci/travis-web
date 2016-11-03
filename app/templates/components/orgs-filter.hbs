@@ -1,5 +1,5 @@
 <div class="option-button">
-  <a href="#" title="Open account filter" class="option-display" {{action 'toggleOrgFilter'}}>
+  <button title="Open account filter" class="option-display" {{action 'toggleOrgFilter'}} type="button">
     <span class="label-align">
       {{#if selected}}
         {{user-avatar url=selected.avatarUrl name=selected.name small=true}}
@@ -8,7 +8,7 @@
         All accounts
       {{/if}}
     </span><span class="option-arrow"></span>
-  </a>
+  </button>
   <div class="option-dropdown">
     <!--<div class="option-search">
       <input type="text">
