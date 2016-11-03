@@ -49,23 +49,6 @@ export default Ember.Component.extend({
     this.set('isTriggering', true);
   },
 
-  starRepo() {
-    const self = this;
-    if (!this.get('repo.starred')) {
-      this.get('ajax').ajax(`/v3/repo/${this.get('repo.id')}/star`, 'POST')
-        .then(() => {
-          self.get('flashes')
-            .success(`You successfully starred ${self.get('repo.slug')}`);
-        });
-    } else {
-      this.get('ajax').ajax(`/v3/repo/${this.get('repo.id')}/unstar`, 'POST')
-        .then(() => {
-          self.get('flashes')
-            .success(`You successfully unstarred ${self.get('repo.slug')}`);
-        });
-    }
-  },
-
   actions: {
     openDropup() {
       this.openDropup();
@@ -74,7 +57,11 @@ export default Ember.Component.extend({
       this.triggerBuild();
     },
     starRepo() {
-      this.starRepo();
+      if (this.get('repo.starred')) {
+        this.sendAction('unstarRepo', this.get('repo'));
+      } else {
+        this.sendAction('starRepo', this.get('repo'));
+      }
     }
   }
 });

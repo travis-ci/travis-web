@@ -1,7 +1,10 @@
 import Ember from 'ember';
+const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
   queryParams: ['account'],
+  flashes: service(),
+  ajax: service(),
 
   filteredRepos: Ember.computed('model.repos', 'account', function () {
     let accounts = this.get('model.accounts');
@@ -99,6 +102,20 @@ export default Ember.Controller.extend({
     selectOrg(org) {
       let login = Ember.isBlank(org) ? undefined : org.get('login');
       return this.set('account', login);
+    },
+    star(repo) {
+      this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/star`, 'POST')
+        .then(() => {
+          this.get('flashes')
+            .success(`You successfully starred ${repo.get('slug')}`);
+        });
+    },
+    unstar(repo) {
+      this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/unstar`, 'POST')
+        .then(() => {
+          this.get('flashes')
+            .success(`You successfully unstarred ${repo.get('slug')}`);
+        });
     }
   }
 });
