@@ -43,7 +43,6 @@ module.exports = function (environment) {
     'pro-version': !!process.env.TRAVIS_PRO || false,
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false,
     'dashboard': true
-
   };
 
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
