@@ -51,7 +51,6 @@ export default Ember.Component.extend({
 
   starRepo() {
     const self = this;
-    console.log(this.get('repo.starred'));
     if (!this.get('repo.starred')) {
       this.get('ajax').ajax(`/v3/repo/${this.get('repo.id')}/star`, 'POST')
         .then(() => {
