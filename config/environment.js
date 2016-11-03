@@ -42,6 +42,7 @@ module.exports = function (environment) {
     'user-feature-flags': false,
     'debug-logging': false,
     'pro-version': !!process.env.TRAVIS_PRO || false,
+    'dashboard': true
   };
 
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
