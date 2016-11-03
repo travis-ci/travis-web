@@ -40,11 +40,13 @@
 
   li
     display: inline-block
-  a
+  a,
+  button
     display: inline-block
     width: 100%
     padding: 0.5em 1em
     background-color: white
+    cursor: pointer
     [class^="icon-"]
       margin-right: .3rem
     &:hover,
@@ -62,7 +64,7 @@
   @media #{$medium-up}
     position: absolute
     right: 0
-    bottom: 5em
+    bottom: 4.5em
     margin: 0
     background-color: white
     border: 1px solid $oxide-blue

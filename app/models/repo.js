@@ -17,6 +17,7 @@ const Repo = Model.extend({
   owner: attr(),
   ownerType: Ember.computed.oneWay('owner.@type'),
   name: attr(),
+  starred: attr('boolean'),
   defaultBranch: belongsTo('branch', {
     async: false
   }),

@@ -1,17 +1,13 @@
-<!--<div class="dash-head">
-    <a href="#" class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo"><span class="icon-star">
+<div class="dash-head">
+  <button {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo"><span class="icon-star">
       <svg version="1.1" id="icon-star" x="0px" y="0px" viewBox="0 0 15 15" xml:space="preserve" alt="star repository">
-      <path id="star" d="M7.159,1.035c0.188-0.38,0.495-0.38,0.683,0l1.596,3.234c0.188,0.38,0.685,0.741,1.105,0.802
-	l3.569,0.519c0.42,0.061,0.515,0.353,0.211,0.649l-2.583,2.517c-0.304,0.296-0.494,0.88-0.422,1.298l0.61,3.555
-	c0.072,0.418-0.177,0.599-0.552,0.401l-3.192-1.678c-0.375-0.197-0.99-0.197-1.365,0l-3.192,1.678
-	c-0.375,0.197-0.624,0.017-0.552-0.401l0.61-3.555c0.072-0.418-0.118-1.002-0.422-1.298L0.678,6.24
-	C0.374,5.944,0.469,5.652,0.889,5.591l3.569-0.519c0.42-0.061,0.917-0.422,1.105-0.802L7.159,1.035z"/>
-        </svg>
-    </span></a>
-    {{#if features.proVersion}}
-      <span class="icon-lock">private repo</span>
-    {{/if}}
-  </div>-->
+        <path id="star" d="M7.159,1.035c0.188-0.38,0.495-0.38,0.683,0l1.596,3.234c0.188,0.38,0.685,0.741,1.105,0.802 l3.569,0.519c0.42,0.061,0.515,0.353,0.211,0.649l-2.583,2.517c-0.304,0.296-0.494,0.88-0.422,1.298l0.61,3.555c0.072,0.418-0.177,0.599-0.552,0.401l-3.192-1.678c-0.375-0.197-0.99-0.197-1.365,0l-3.192,1.678 c-0.375,0.197-0.624,0.017-0.552-0.401l0.61-3.555c0.072-0.418-0.118-1.002-0.422-1.298L0.678,6.24 C0.374,5.944,0.469,5.652,0.889,5.591l3.569-0.519c0.42-0.061,0.917-0.422,1.105-0.802L7.159,1.035z"/>
+      </svg>
+  </span></button>
+  {{#if features.proVersion}}
+    <span class="icon-lock">private repo</span>
+  {{/if}}
+</div>
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
@@ -74,9 +70,9 @@
         <div class="dropup {{if dropupIsOpen "is-open"}}">
           <button type="button" class="dropup-tofu" {{action "openDropup"}}>open action menu</button>
           <ul class="dropup-list">
-            <li><a href="#" title="Trigger a build on the default branch" {{action 'triggerBuild'}}>
+            <li><button title="Trigger a build on the default branch" {{action 'triggerBuild'}}>
                 <span class="icon-trigger"></span>
-                <span class="label-align">Trigger a build</span></a></li>
+                <span class="label-align">Trigger a build</span></button></li>
             <li>
               {{#link-to 'settings' repo title="Settings for this repository"}}
               <span class="icon-settings"></span>
