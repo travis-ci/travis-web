@@ -99,6 +99,6 @@ export default Ember.Controller.extend({
     selectOrg(org) {
       let login = Ember.isBlank(org) ? undefined : org.get('login');
       return this.set('account', login);
-    } 
+    }
   }
 });
