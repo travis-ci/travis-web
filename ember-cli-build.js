@@ -41,6 +41,25 @@ module.exports = function () {
     'ember-prism': {
       'components': ['scss', 'javascript', 'json'], //needs to be an array, or undefined.
       'plugins': ['line-highlight']
+    },
+    svg: {
+      optimize: [
+        { removeTitle: false },
+        plugins: [
+          {
+            myCustomPlugin: {
+              type: "perItem",
+              fn: function(item) {
+                item.eachAttr(function(attr) {
+                  if (attr.name === 'id') {
+                    item.removeAttr('id')
+                  }
+                });
+              }
+            }
+          }
+        ]
+      ]
     }
   });
 

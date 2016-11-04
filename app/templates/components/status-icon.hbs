@@ -6,36 +6,19 @@
   </svg>
 {{else}}
   {{#if hasPassed}}
-    <svg version="1.1" id="icon-passed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 16" xml:space="preserve">
-    <g><polyline style="stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;"id="passed" points="14.5,1.5 6.499,13.716 0.5,8.78 "/></g>
-    </svg>
+    {{inline-svg 'images/stroke-icons/icon-passed'}}
   {{/if}}
 
   {{#if hasFailed}}
-    <svg version="1.1" id="icon-failed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 17" xml:space="preserve">
-    <g id="failed">
-    <line x1="0.5" y1="0.5" x2="14.5" y2="14.5"/>
-    <line x1="14.5" y1="0.5" x2="0.5" y2="14.5"/>
-    </g>
-    </svg>
+    {{inline-svg 'images/stroke-icons/icon-failed'}}
   {{/if}}
 
   {{#if wasCanceled}}
-    <svg version="1.1" id="icon-canceled" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 17 17" xml:space="preserve">
-    <g id="canceled">
-    <line x1="2.542" y1="2.938" x2="12.306" y2="12.551"/>
-    <circle cx="7.5" cy="7.5" r="7"/>
-    </g>
-    </svg>
+    {{inline-svg 'images/stroke-icons/icon-canceled'}}
   {{/if}}
 
   {{#if hasErrored}}
-    <svg version="1.1" id="icon-errored" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-1 -1 16 17" xml:space="preserve">
-    <g id="errored">
-    <circle cx="7.5" cy="13.986" r="0.97"/>
-    <line x1="7.5" y1="0.5" x2="7.5" y2="10.646"/>
-    </g>
-    </svg>
+    {{inline-svg 'images/stroke-icons/icon-errored'}}
   {{/if}}
 
   {{#if isRunning}}
