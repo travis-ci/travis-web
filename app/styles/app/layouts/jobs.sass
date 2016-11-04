@@ -81,8 +81,6 @@
   .icon
     width: 18px
     height: 20px
-    vertical-align: middle
-    padding-left: 1.5em
   @media #{$medium-up}
     flex: 0 0 4em
     text-align: center
@@ -92,13 +90,13 @@
       text-indent: 999%
       white-space: nowrap
       overflow: hidden
-
   &.linux
-    .icon
-      @extend %icon-line-linux
+    .icon.mac
+      display: none
   &.osx
-    .icon
-      @extend %icon-line-mac
+    .icon.linux
+      display: none
+      
 
 .job-lang
   overflow: hidden
