@@ -108,11 +108,6 @@
       content: ""
       @include fadeOut(right, -90deg, white)
 
-.icon-lang
-  margin-right: .3em
-  @extend .icon
-  @extend %icon-line-language
-
 .job-env
   @media #{$medium-up}
     flex: 1 1 30%
@@ -123,13 +118,6 @@
       @include fadeOut(right, -90deg, white)
   &.is-empty
     opacity: .5
-
-.icon-env
-  width: 14px
-  height: 14px
-  margin-right: .3em
-  @extend %icon
-  @extend %icon-line-environment
 
 .job-duration
   flex: 1 0 14%
