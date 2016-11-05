@@ -4,12 +4,12 @@ node_js: 5
 
 env:
   - EMBER_VERSION=default
-  - EMBER_VERSION=beta
+  - EMBER_VERSION=😳
   - EMBER_VERSION=canary
 
 matrix:
   allow_failures:
-    - env: EMBER_VERSION=beta
+    - env: EMBER_VERSION=😳
     - env: EMBER_VERSION=canary
 
   fast_finish: true
@@ -18,7 +18,7 @@ matrix:
 # addons:
 #   sauce_connect: true
 
-sudo: false
+sudo: required
 
 cache:
   directories:
@@ -37,6 +37,8 @@ before_install:
   - export PATH=$PWD/travis-phantomjs:$PATH
   - "npm config set spin false"
   - "npm install -g npm@^2"
+  - "echo '😆😭🐛🙃🤔🤗 :bug: :tada:'"
+  - "./echo-emoji.sh"
 
 install:
   - npm install -g bower

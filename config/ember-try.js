@@ -11,7 +11,7 @@ module.exports = {
       }
     },
     {
-      name: "beta",
+      name: "😳",
       dependencies: {
         "ember": "beta"
       }
