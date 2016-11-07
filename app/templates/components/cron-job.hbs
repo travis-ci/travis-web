@@ -6,9 +6,9 @@
     {{#if delete.isRunning}}
       {{loading-indicator}}
     {{else}}
-      <a href="#" title="" {{action (perform delete) on="click"}}>
-        <span class="icon-delete"></span>
-      </a>
+      <button {{action (perform delete) on="click"}} type="button" class="no-button">
+        {{inline-svg 'images/stroke-icons/icon-trash'}}
+      </button>
       <div class="tooltip-bubble">Delete</div>
     {{/if}}
   </div>

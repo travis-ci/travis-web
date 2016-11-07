@@ -1,3 +1,8 @@
+=colorSVG($color)
+  path, polyline, circle, line, polygon, rect, ellipse
+    fill: none
+    stroke: $color
+
 %icon
   display: inline-block
   vertical-align: middle
@@ -10,12 +15,6 @@
   height: 15px
   margin-right: .3em
   @extend %icon
-
-
-=colorSVG($color)
-  path, polyline, circle, line, polygon, rect, ellipse
-    fill: none
-    stroke: $color
   
 .icon svg,
 svg.icon
@@ -36,6 +35,14 @@ svg.icon
     border-color: $oxide-blue
     +colorSVG($oxide-blue)
 
+.icon-trash
+  @extend %icon
+  width: 16px
+  height: 16px
+  &:hover,
+  &:active
+    +colorSVG($brick-red)
+
 %icon-download-log
   background-image: inline-image('stroke-icons/icon-downloadlogs.svg')
 .icon-download-log
@@ -55,39 +62,10 @@ svg.icon
 .icon--search
   background-image: inline-image('stroke-icons/icon-search.svg')
 
-%icon-line-trashcan
-  background-image: inline-image('stroke-icons/icon-trash.svg')
-%icon-line-trashcan-red
-  background-image: inline-image('stroke-icons/icon-trash-red.svg')
-%icon-line-trashcan-disabled
-  background-image: inline-image('stroke-icons/icon-trash-disabled.svg')
-
-.icon-delete
-  @extend .icon
-  @extend %icon-line-trashcan
-.icon-delete-hover
-  @extend %icon-line-trashcan-red
-.icon-delete-disabled
-  @extend %icon-line-trashcan-disabled
-
 %icon-line-arrowtabs
   background-image: inline-image('stroke-icons/icon-arrowtabs.svg')
 %icon-line-arrowtabs-teal
   background-image: inline-image('stroke-icons/icon-arrowtabs-teal.svg')
-
-%icon-line-key
-  background-image: inline-image('stroke-icons/icon-key.svg')
-.icon-key
-  @extend .icon
-  @extend %icon-line-key
-  margin-right: .3rem
-
-%icon-line-fingerprint
-  background-image: inline-image('stroke-icons/icon-fingerprint.svg')
-.icon-fingerprint
-  @extend .icon
-  @extend %icon-line-fingerprint
-  margin-right: .3rem
 
 %icon-line-calendar
   background-image: inline-image('stroke-icons/icon-calendar.svg')
@@ -113,10 +91,6 @@ svg.icon
   width: 17px
   height: 19px
   margin-right: .2rem
-
-.icon-line-build
-  @extend %icon
-  background-image: inline-image('stroke-icons/icon-builds.svg')
 
 %icon-github
   background-image: inline-image('stroke-icons/icon-github.svg')

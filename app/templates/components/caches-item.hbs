@@ -13,7 +13,7 @@
 <div class="row-item">
   <a {{action 'performDelete'}} href="#" class="{{if delete.isRunning 'deleting'}} delete-cache-icon" title="Delete this cache">
     <div class="tooltip">
-      <span class="icon-trash">delete cache</span>
+      {{inline-svg 'images/stroke-icons/icon-trash' class="icon-trash"}}
       <span class="tooltip-bubble">Delete</span>
     </div>
   </a>
