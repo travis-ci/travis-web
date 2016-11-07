@@ -3,7 +3,7 @@
   <span>{{key.description}}</span>
 </div>
 <div class="ssh-key-value">
-  {{inline-svg 'images/stroke-icon/icon-fingerprint' class="icon"}}
+  {{inline-svg 'images/stroke-icons/icon-fingerprint' class="icon"}}
   <span>{{key.fingerprint}}</span>
 </div>
 
@@ -14,14 +14,14 @@
     {{else}}
       {{#if pushAccess}}
         <div class="tooltip">
-          <button {{action (perform delete)}}>
+          <button {{action (perform delete)}} type="button" class="no-button ssh-delete">
             {{inline-svg 'images/stroke-icons/icon-trash' class="icon-trash"}}
           </button>
           <div class="tooltip-bubble">Delete</div>
         </div>
       {{else}}
         <div class="tooltip--height">
-          {{inline-svg 'images/stroke-icons/icon-trash-disabled' class="icon"}}
+          {{inline-svg 'images/stroke-icons/icon-trash-disabled' class="icon ssh-no-delete"}}
           <div class="tooltip-bubble">You can't<br>delete keys</div>
         </div>
       {{/if}}
@@ -30,7 +30,7 @@
 {{else}}
   <div class="ssh-key-action">
     <div class="tooltip--height">
-      {{inline-svg 'images/stroke-icons/icon-trash-disabled' class="icon"}}
+      {{inline-svg 'images/stroke-icons/icon-trash-disabled' class="icon shh-no-delete"}}
       <div class="tooltip-bubble">Default keys <br>cannot be deleted</div>
     </div>
   </div>

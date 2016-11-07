@@ -1,4 +1,5 @@
 import { test, moduleForComponent } from 'ember-qunit';
+
 moduleForComponent('requests-item', {
   needs: ['helper:format-message', 'helper:format-time', 'helper:github-commit-link', 'component:status-icon', 'component:request-icon']
 });

@@ -6,7 +6,7 @@
     {{#if delete.isRunning}}
       {{loading-indicator}}
     {{else}}
-      <button {{action (perform delete) on="click"}} type="button" class="no-button">
+      <button {{action (perform delete) on="click"}} type="button" class="cron-job-delete no-button">
         {{inline-svg 'images/stroke-icons/icon-trash'}}
       </button>
       <div class="tooltip-bubble">Delete</div>

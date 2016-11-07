@@ -76,7 +76,7 @@ export default PageObject.create({
       isPublic: hasClass('is-public'),
       value: value('input'),
 
-      delete: clickable('.icon-delete')
+      delete: clickable('.env-var-delete')
     }
   }),
 
@@ -98,17 +98,17 @@ export default PageObject.create({
       enqueuingInterval: text('.enqueuing-interval'),
       disableByBuildText: text('.disable-by-build'),
 
-      delete: clickable('.icon-delete')
+      delete: clickable('.cron-job-delete')
     }
   }),
 
   sshKey: {
     scope: '.settings-sshkey',
-    name: text('.ssh-key-name span:last-child'),
-    fingerprint: text('.ssh-key-value span:last-child'),
+    name: text('.ssh-key-name span'),
+    fingerprint: text('.ssh-key-value span'),
 
-    delete: clickable('.icon-delete'),
-    cannotBeDeleted: isVisible('.icon-delete-disabled')
+    delete: clickable('.ssh-delete'),
+    cannotBeDeleted: isVisible('.ssh-no-delete')
   },
 
   sshKeyForm: {
