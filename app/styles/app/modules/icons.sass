@@ -11,6 +11,19 @@
   margin-right: .3em
   @extend %icon
 
+
+=colorSVG($color)
+  path, polyline, circle, line, polygon, rect, ellipse
+    fill: none
+    stroke: $color
+  
+.icon svg,
+svg.icon
+  +colorSVG($cement-grey)
+
+.icon.white
+  +colorSVG(white)
+
 %icon-download-log
   background-image: inline-image('stroke-icons/icon-downloadlogs.svg')
 .icon-download-log
