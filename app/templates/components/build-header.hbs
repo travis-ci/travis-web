@@ -22,19 +22,21 @@
           <span class="icon-github" aria-hidden="true"></span>
           <span class="label-align">Commit {{format-sha commit.sha}}</span></a>
       </li>
-      <li>
-        {{#if item.pullRequest}}
-          <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
-            <span class="icon-github" aria-hidden="true"></span>
-            <span class="label-align">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
-        {{else}}
-          {{#if item.commit.compareUrl}}
+      {{#if displayCompare}}
+        <li>
+          {{#if item.pullRequest}}
+            <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
+              <span class="icon-github" aria-hidden="true"></span>
+              <span class="label-align">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
+          {{else}}
+            {{#if item.commit.compareUrl}}
             <a class="commit-compare" title="See the diff on GitHub" href={{item.commit.compareUrl}}>
               <span class="icon-github" aria-hidden="true"></span>
               <span class="label-align">Compare {{short-compare-shas item.commit.compareUrl}}</span></a>
+            {{/if}}
           {{/if}}
-        {{/if}}
-      </li>
+        </li>
+      {{/if}}
     </ul>
     <p class="commit-author">
       {{#if commit.authorName}}
