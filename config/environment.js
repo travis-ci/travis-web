@@ -125,9 +125,15 @@ module.exports = function (environment) {
       enabled: false
     };
 
-    ENV.sentry = {
-      dsn: sentryDSN
-    };
+    if (process.env.DISABLE_SENTRY) {
+      ENV.sentry = {
+        development: true
+      }
+    } else {
+      ENV.sentry = {
+        dsn: sentryDSN
+      };
+    }
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
