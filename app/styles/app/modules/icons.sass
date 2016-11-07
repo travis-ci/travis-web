@@ -24,6 +24,18 @@ svg.icon
 .icon.white
   +colorSVG(white)
 
+.icon-help
+  @extend %icon
+  width: 18px
+  heigth: 18px
+  border-radius: 50%
+  border: 1px solid $pebble-grey
+  padding: 0.2em
+  &:hover,
+  &:active
+    border-color: $oxide-blue
+    +colorSVG($oxide-blue)
+
 %icon-download-log
   background-image: inline-image('stroke-icons/icon-downloadlogs.svg')
 .icon-download-log
@@ -114,31 +126,6 @@ svg.icon
 .icon-line-commit
   @extend %icon
   @extend %icon-github
-
-%icon-line-eye
-  background-image: inline-image('stroke-icons/icon-seemore.svg')
-%icon-line-eye-white
-  background-image: inline-image('stroke-icons/icon-seemore-white.svg')
-
-%icon-line-question
-  background-image: inline-image('stroke-icons/icon-help.svg')
-%icon-line-question-teal
-  background-image: inline-image('stroke-icons/icon-help-teal.svg')
-
-.icon-question
-  width: 18px
-  height: 18px
-  background:
-    repeat: no-repeat
-    position: 3px 3px
-    size: auto 10px
-  display: inline-block
-  border: solid 1px $pebble-grey
-  border-radius: 50%
-  @extend %icon-line-question
-  &:hover
-    border-color: $oxide-blue
-    @extend %icon-line-question-teal
 
 %icon-line-hash
   background-image: inline-image('stroke-icons/icon-hash.svg')
