@@ -83,14 +83,13 @@ module.exports = function (environment) {
     }
   }
 
-  // FIXME move this back!
-  ENV.sentry = {
-    development: true
-  };
-
   if (environment === 'development') {
     ENV['ember-cli-mirage'] = {
       enabled: false
+    };
+
+    ENV.sentry = {
+      development: true
     };
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
@@ -126,10 +125,9 @@ module.exports = function (environment) {
       enabled: false
     };
 
-    // FIXME uncomment!
-    // ENV.sentry = {
-    //   dsn: sentryDSN
-    // };
+    ENV.sentry = {
+      dsn: sentryDSN
+    };
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
