@@ -1,16 +1,17 @@
 @mixin buildTileColors($color, $bg, $status, $extra-hover: $color)
   > .#{$status}
     background-color: $bg
-    .status-icon g > *
-      stroke: $color
+    .status-icon
+      +colorSVG($color)
     &:hover
       background-color: $extra-hover
-      .status-icon g > *
-        stroke: white
+      .status-icon
+        +colorSVG(white)
       .status-icon .circle
         border-color: white
         border-width: 2px
 
+        
 .build-tiles
   height: 4.7em
   margin: 0
@@ -22,7 +23,7 @@
     height: 100%
     float: left
     width: 20%
-    background-color: #F7F7F7
+    background-color: $pebble-grey
     border-right: 1px solid white
     &:last-of-type
       border-right: none
