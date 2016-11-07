@@ -68,13 +68,13 @@ deploy:
     skip_cleanup: true
     script: ./config/deployment/deploy-test-master.sh
     on:
-      branch: bd-beta-canary-deployments
+      branch: master
       condition: "$EMBER_VERSION = beta"
   - provider: script
     skip_cleanup: true
     script: ./config/deployment/deploy-test-master.sh
     on:
-      branch: bd-beta-canary-deployments
+      branch: master
       condition: "$EMBER_VERSION = canary"
 
 after_success:
