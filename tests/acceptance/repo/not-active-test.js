@@ -7,7 +7,10 @@ moduleForAcceptance('Acceptance | repo not active');
 test('view inactive repo when not an admin or signed out', function (assert) {
   server.create('repository', {
     slug: 'musterfrau/a-repo',
-    active: false
+    active: false,
+    permissions: {
+      enable: false
+    }
   });
 
   page.visit({ organization: 'musterfrau', repo: 'a-repo' });
