@@ -8,7 +8,6 @@
     "ember-qunit-notifications": "0.1.0",
     "jquery": "~2.2",
     "qunit": "~1.23.1",
-    "visibilityjs": "~1.2.1",
     "JavaScript-MD5": "~2.3.0",
     "moment": "~2.13.0",
     "jquery-timeago": "~1.5.2",

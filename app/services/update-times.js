@@ -1,7 +1,7 @@
-/* global Visibility */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
+import Visibility from 'npm:visibilityjs';
 
 export default Ember.Service.extend({
   records: [],
