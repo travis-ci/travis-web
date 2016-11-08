@@ -1,4 +1,5 @@
-/* global moment, Travis */
+/* global moment, Travis, Pusher */
+
 import { compact } from 'travis/utils/helpers';
 import Ember from 'ember';
 import Model from 'ember-data/model';
@@ -140,8 +141,14 @@ export default Model.extend(DurationCalculations, {
       return;
     }
     this.set('subscribed', true);
-    if (Travis.pusher) {
-      return Travis.pusher.subscribe('job-' + (this.get('id')));
+
+    if (Travis.pusher && Travis.pusher.ajaxService) {
+      return Travis.pusher.ajaxService.post(Pusher.channel_auth_endpoint, {
+        socket_id: Travis.pusher.pusherSocketId,
+        channels: ['private-job' + this.get('id')]
+      }).then(() => {
+        return Travis.pusher.subscribe('job-' + (this.get('id')));
+      });
     }
   },
 

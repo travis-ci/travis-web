@@ -170,6 +170,7 @@ if (ENV.featureFlags['pro-version']) {
   Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
     var channels, name, names;
     channels = Travis.pusher.pusher.channels;
+    Travis.pusher.pusherSocketId = socketId;
     channels.callbacks = channels.callbacks || [];
     name = this.channel.name;
     names = Object.keys(channels.channels);
