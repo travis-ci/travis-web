@@ -1,7 +1,7 @@
-/* global Visibility */
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
+import Visibility from 'npm:visibilityjs';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
