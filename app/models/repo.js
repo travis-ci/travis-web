@@ -7,6 +7,7 @@ import { belongsTo } from 'ember-data/relationships';
 const { service } = Ember.inject;
 
 const Repo = Model.extend({
+  permissions: attr(),
   ajax: service(),
   slug: attr(),
   description: attr(),

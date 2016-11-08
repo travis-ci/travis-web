@@ -4,12 +4,9 @@ import EmbeddedRecordsMixin from 'ember-data/serializers/embedded-records-mixin'
 var Serializer = V2FallbackSerializer.extend(EmbeddedRecordsMixin, {
   isNewSerializerAPI: true,
 
-  // attrs: {
-  //   current_build: {
-  //     serialize: 'records',
-  //     deserialize: false
-  //   }
-  // },
+  attrs: {
+    permissions: { key: '@permissions' }
+  },
 
   normalizeResponse(store, primaryModelClass, payload, id, requestType) {
     if (!id && requestType === 'findRecord') {

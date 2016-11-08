@@ -214,7 +214,6 @@ export default function () {
     }
   });
 
-
   this.get('/v3/repo/:repo_id/builds', function (schema, request) {
     const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];
     const builds = schema.builds.where({ branchId: branch.id });
