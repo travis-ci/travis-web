@@ -10,7 +10,7 @@ export default Ember.Service.extend({
   init() {
     let visibilityId = Visibility.every(
       config.intervals.updateTimes,
-      this.updateTimes.bind(this)
+      Ember.run.bind(this, 'updateTimes')
     );
     this.set('visibilityId', visibilityId);
     let intervalId = setInterval(
