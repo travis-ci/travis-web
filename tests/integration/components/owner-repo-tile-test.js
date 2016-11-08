@@ -6,7 +6,7 @@ moduleForComponent('owner-repo-tile', 'OwnerRepoTileComponent', {
   integration: true
 });
 
-test('it renders', function () {
+test('it renders', function (assert) {
   const repo = Ember.Object.create({
     slug: 'travis-ci/travis-chat',
     active: false,
@@ -46,8 +46,8 @@ test('it renders', function () {
 
   this.render(hbs`{{owner-repo-tile repo=repo}}`);
 
-  ok(this.$().find('.owner-tile').hasClass('passed'), 'component should have state class (passed)');
-  equal(this.$('.row-item:nth-of-type(1)').text().trim(), 'travis-chat', 'should display correct repo name');
-  equal(this.$('.row-item:nth-of-type(3) span.label-align').text().trim(), 'master', 'should display branch name');
-  return equal(this.$('.row-item:nth-of-type(4)').text().trim(), '16fff34', 'should display correct commit sha');
+  assert.ok(this.$().find('.owner-tile').hasClass('passed'), 'component should have state class (passed)');
+  assert.equal(this.$('.row-item:nth-of-type(1)').text().trim(), 'travis-chat', 'should display correct repo name');
+  assert.equal(this.$('.row-item:nth-of-type(3) span.label-align').text().trim(), 'master', 'should display branch name');
+  assert.equal(this.$('.row-item:nth-of-type(4)').text().trim(), '16fff34', 'should display correct commit sha');
 });
