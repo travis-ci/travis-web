@@ -124,8 +124,8 @@ module.exports = function (environment) {
         tablet: 768,
         desktop: 1280
       },
-      defaultBreakpoints: ['mobile', 'desktop']
-    }
+      defaultBreakpoints: ['desktop']
+    };
   }
 
   if (environment === 'production') {
