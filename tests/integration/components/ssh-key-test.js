@@ -75,5 +75,4 @@ test('it does not delete the custom key if permissions are insufficient', functi
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=false}}`);
 
   assert.ok(Ember.isEmpty(this.$('.ssh-key-action').find('a')), 'delete link should not be displayed');
-  percySnapshot(assert);
 });
