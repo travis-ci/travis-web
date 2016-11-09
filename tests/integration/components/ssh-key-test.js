@@ -14,8 +14,8 @@ test('it renders the default ssh key if no custom key is set', function (assert)
   this.set('key', key);
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-  assert.equal(this.$('.ssh-key-name').text().trim(), 'no custom key set', 'should display that no custom key is set');
-  assert.equal(this.$('.ssh-key-value').text().trim(), 'fingerprint', 'should display default key fingerprint');
+  assert.equal(this.$('.ssh-key-name span').text().trim(), 'no custom key set', 'should display that no custom key is set');
+  assert.equal(this.$('.ssh-key-value span').text().trim(), 'fingerprint', 'should display default key fingerprint');
   percySnapshot(assert);
 });
 
