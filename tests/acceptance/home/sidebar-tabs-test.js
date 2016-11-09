@@ -81,5 +81,4 @@ test('maintains sidebar tab state when viewing running job in pro version', (ass
   andThen(() => {
     assert.ok(dashboardPage.runningTabIsActive, 'running tab state should persist across route transitions');
   });
-  percySnapshot(assert);
 });
