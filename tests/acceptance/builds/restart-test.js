@@ -26,5 +26,4 @@ test('restarting build', function (assert) {
     assert.equal(buildPage.notification, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
     assert.equal(buildPage.singleJobLogText, 'Hello log', 'shows log text of single build job');
   });
-  percySnapshot(assert);
 });
