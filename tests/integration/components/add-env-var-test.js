@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
+import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
   integration: true
