@@ -20,7 +20,6 @@ test('renders most recent repository without builds', function (assert) {
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
     assert.equal(currentRepoTab.showsNoBuildsMessaging, 'No builds for this repository', 'Current tab shows no builds message');
   });
-  percySnapshot(assert);
 });
 
 test('renders most recent repository and most recent build when builds present', function (assert) {
