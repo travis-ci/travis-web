@@ -1,6 +1,6 @@
 <div class="ssh-key-name">
   {{inline-svg 'images/stroke-icons/icon-key' class="icon"}}
-  <span>{{key.description}}</span>
+  <span>{{if key.isCustom key.description 'no custom key set'}}</span>
 </div>
 <div class="ssh-key-value">
   {{inline-svg 'images/stroke-icons/icon-fingerprint' class="icon"}}

@@ -32,8 +32,8 @@ test('it renders the custom ssh key if custom key is set', function (assert) {
   this.set('key', key);
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-  assert.equal(this.$('.ssh-key-name').text().trim(), 'fookey', 'should display key description');
-  assert.equal(this.$('.ssh-key-value').text().trim(), 'somethingthing', 'should display custom key fingerprint');
+  assert.equal(this.$('.ssh-key-name span').text().trim(), 'fookey', 'should display key description');
+  assert.equal(this.$('.ssh-key-value span').text().trim(), 'somethingthing', 'should display custom key fingerprint');
 });
 
 
@@ -51,7 +51,7 @@ test('it deletes a custom key if permissions are right', function (assert) {
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=true}}`);
   this.on('sshKeyDeleted', function () {});
 
-  this.$('.ssh-key-action a').click();
+  this.$('.ssh-key-action button').click();
 
   assert.ok(key.get('isDeleted'), 'key should be deleted');
   percySnapshot(assert);
