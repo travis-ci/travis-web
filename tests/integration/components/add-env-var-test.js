@@ -3,7 +3,6 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
-import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
   integration: true
@@ -40,8 +39,6 @@ test('it adds an env var on submit', function (assert) {
   assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
   assert.ok(!envVar.get('public'), 'env var should be private');
 
-  percySnapshot(assert);
-
   var done = assert.async();
   setTimeout(function () { done(); }, 500);
 });
@@ -58,12 +55,12 @@ test('it shows an error if no name is present', function (assert) {
 
   assert.ok(this.$('.form-error-message').length, 'the error message should be displayed');
 
+  percySnapshot(assert);
+
   fillIn(this.$('.env-name'), 'FOO');
   fillIn(this.$('.env-value'), 'bar');
 
   assert.ok(!this.$('.form-error-message').length, 'the error message should be removed after value is changed');
-
-  percySnapshot(assert);
 });
 
 test('it adds a public env var on submit', function (assert) {
@@ -97,8 +94,6 @@ test('it adds a public env var on submit', function (assert) {
   assert.equal(envVar.get('value'), 'bar', 'value should be set for the env var');
   assert.equal(envVar.get('repo.slug'), 'travis-ci/travis-web', 'repo should be set for the env var');
   assert.ok(envVar.get('public'), 'env var should be public');
-
-  percySnapshot(assert);
 
   var done = assert.async();
   setTimeout(function () { done(); }, 500);

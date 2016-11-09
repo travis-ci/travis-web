@@ -128,7 +128,6 @@ test('view settings', function (assert) {
     assert.notOk(settingsPage.autoCancelPushes.exists, 'expected no auto-cancel pushes switch when flag not present in API response');
     assert.notOk(settingsPage.autoCancelPullRequests.exists, 'expected no auto-cancel pull requests switch when flag not present in API response');
   });
-  percySnapshot(assert);
 });
 
 test('change general settings', function (assert) {
@@ -174,7 +173,6 @@ test('change general settings', function (assert) {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
     assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 0 });
   });
-  percySnapshot(assert);
 });
 
 test('delete and create environment variables', function (assert) {
@@ -252,7 +250,6 @@ test('delete and create crons', function (assert) {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
     assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
   });
-  percySnapshot(assert);
 });
 
 test('delete and set SSH keys', function (assert) {
@@ -297,7 +294,6 @@ test('delete and set SSH keys', function (assert) {
       value: 'hello'
     });
   });
-  percySnapshot(assert);
 });
 
 test('on a repository with auto-cancellation', function (assert) {
@@ -331,4 +327,6 @@ test('on a repository with auto-cancellation', function (assert) {
     assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'user_setting.value': false });
   });
+
+  percySnapshot(assert);
 });

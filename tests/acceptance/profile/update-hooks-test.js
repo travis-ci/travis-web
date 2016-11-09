@@ -65,5 +65,4 @@ test('updating hooks', function (assert) {
     assert.ok(server.db.hooks[1].active, 'expected formerly inactive hook to be active');
     assert.ok(server.db.hooks[2].active, 'expected unadministerable hook to be unchanged');
   });
-  percySnapshot(assert);
 });

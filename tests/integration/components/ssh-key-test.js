@@ -34,7 +34,6 @@ test('it renders the custom ssh key if custom key is set', function (assert) {
 
   assert.equal(this.$('.ssh-key-name').text().trim(), 'fookey', 'should display key description');
   assert.equal(this.$('.ssh-key-value').text().trim(), 'somethingthing', 'should display custom key fingerprint');
-  percySnapshot(assert);
 });
 
 

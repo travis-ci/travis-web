@@ -2,7 +2,6 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
-import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('env-var', 'Integration | Component | env-var', {
   integration: true
@@ -22,8 +21,6 @@ test('it renders an env-var with private value', function (assert) {
 
   assert.equal(this.$('.env-var-name').text(), 'foo', 'name should be displayed');
   assert.equal(this.$('.env-var-value input').val(), '••••••••••••••••', 'value should be hidden');
-
-  percySnapshot(assert);
 });
 
 test('it renders an env-var with public value', function (assert) {
@@ -40,8 +37,6 @@ test('it renders an env-var with public value', function (assert) {
 
   assert.equal(this.$('.env-var-name').text(), 'foo', 'name should be displayed');
   assert.equal(this.$('.env-var-value input').val(), 'bar', 'value should not be hidden');
-
-  percySnapshot(assert);
 });
 
 // test('it deletes an env-var', function(assert) {

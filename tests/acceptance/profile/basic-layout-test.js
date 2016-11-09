@@ -79,5 +79,4 @@ test('view profile', function (assert) {
 
     assert.equal(profilePage.unadministerableHooks().count, 1, 'expected one unadministerable hook');
   });
-  percySnapshot(assert);
 });

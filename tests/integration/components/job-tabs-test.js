@@ -1,6 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('job-tabs', 'Integration | Component | job tabs', {
   integration: true
@@ -13,6 +12,4 @@ test('it renders', function (assert) {
   this.render(hbs`{{job-tabs}}`);
 
   assert.ok(this.$('.travistab-nav'), 'renders the tab nav element');
-
-  percySnapshot(assert);
 });

@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('owner-repo-tile', 'OwnerRepoTileComponent', {
   integration: true
@@ -51,6 +50,4 @@ test('it renders', function (assert) {
   assert.equal(this.$('.row-item:nth-of-type(1)').text().trim(), 'travis-chat', 'should display correct repo name');
   assert.equal(this.$('.row-item:nth-of-type(3) span.label-align').text().trim(), 'master', 'should display branch name');
   assert.equal(this.$('.row-item:nth-of-type(4)').text().trim(), '16fff34', 'should display correct commit sha');
-
-  percySnapshot(assert);
 });

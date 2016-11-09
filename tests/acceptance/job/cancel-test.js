@@ -30,5 +30,4 @@ test('restarting job', function (assert) {
   andThen(function () {
     assert.equal(jobPage.notification, 'Job has been successfully cancelled.', 'cancelled job notification should be displayed');
   });
-  percySnapshot(assert);
 });
