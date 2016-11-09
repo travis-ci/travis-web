@@ -9,7 +9,7 @@ test('view inactive repo when not an admin or signed out', function (assert) {
     slug: 'musterfrau/a-repo',
     active: false,
     permissions: {
-      enable: false
+      admin: false
     }
   });
 
@@ -27,7 +27,7 @@ test('view inactive repo when admin and activate it', function (assert) {
     slug: 'musterfrau/a-repo',
     active: false,
     permissions: {
-      enable: true
+      admin: true
     }
   });
 
