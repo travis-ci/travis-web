@@ -26,6 +26,11 @@ cache:
     - bower_components
 
 before_install:
+  - echo $EMBER_VERSION
+  - echo $TRAVIS_PULL_REQUEST
+  - echo $TRAVIS_SECURE_ENV_VARS
+  - echo $TRAVIS_PULL_REQUEST_SHA
+  - echo $TRAVIS_PULL_REQUEST_BRANCH
   - mkdir travis-phantomjs
   - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
   - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
@@ -39,7 +44,7 @@ install:
   - bower install
 
 script:
-  - ember try:one $EMBER_VERSION --- ember test --reporter dot
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
@@ -48,17 +53,29 @@ before_deploy:
   - cp dist/maintenance.html dist/index.html
 
 deploy:
-  provider: s3
-  access_key_id: $MAINTENANCE_S3_ACCESS_KEY_ID
-  secret_access_key: $MAINTENANCE_S3_SECRET_ACCESS_KEY
-  bucket: travis-error-pages
-  skip_cleanup: true
-  acl: public_read
-  local_dir: dist
-  region: us-east-1
-  on:
-    branch: master
-    condition: "$EMBER_VERSION = default"
+  - provider: s3
+    access_key_id: $MAINTENANCE_S3_ACCESS_KEY_ID
+    secret_access_key: $MAINTENANCE_S3_SECRET_ACCESS_KEY
+    bucket: travis-error-pages
+    skip_cleanup: true
+    acl: public_read
+    local_dir: dist
+    region: us-east-1
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = default"
+  - provider: script
+    skip_cleanup: true
+    script: ./config/deployment/deploy-test-master.sh
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = beta"
+  - provider: script
+    skip_cleanup: true
+    script: ./config/deployment/deploy-test-master.sh
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = canary"
 
 after_success:
   - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"

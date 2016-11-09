@@ -51,12 +51,12 @@
   &:hover
     background-color: rgba($turf-green, 0.8)
 
-.button--green
+.button--blue
   border: none
   color: white
-  background-color: $turf-green
+  background-color: $oxide-blue
   &:hover
-    background-color: #73c78d
+    background-color: darken($oxide-blue, 10)
 
 #auth #navigation .button-signin,
 #auth #navigation .button-signingin
@@ -65,11 +65,12 @@
 %action-button
   display: block
   width: 8em
-  padding: 0.1em 0.1em 0.1em 2em
+  padding: 0.1em 0.5em 0.1em 2em
   border: 1px solid $pebble-grey
   border-radius: 14px
   font-weight: 400
   cursor: pointer
+  white-space: nowrap
   background:
     size: 16px 16px
     repeat: no-repeat

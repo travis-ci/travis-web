@@ -1,5 +1,7 @@
 import format from 'travis/utils/status-image-formats';
 
+const { module, test } = QUnit;
+
 module('Status image formats');
 
 const root = `${location.protocol}//${location.host}`;
@@ -75,14 +77,12 @@ test('it generates a Pod image string with a slug and a branch', function (asser
   assert.equal(pod, `=for html <a href="${secureRoot}/travis-ci/travis-web"><img src="${root}/travis-ci/travis-web.svg?branch=primary"></a>`);
 });
 
-test('it generates CCTray url with a slug', function () {
-  var url;
-  url = format('CCTray', 'travis-ci/travis-web');
-  return equal(url, '#/repos/travis-ci/travis-web/cc.xml');
+test('it generates CCTray url with a slug', function (assert) {
+  let url = format('CCTray', 'travis-ci/travis-web');
+  assert.equal(url, '#/repos/travis-ci/travis-web/cc.xml');
 });
 
-test('it generates CCTray url with a slug and a branch', function () {
-  var url;
-  url = format('CCTray', 'travis-ci/travis-web', 'development');
-  return equal(url, '#/repos/travis-ci/travis-web/cc.xml?branch=development');
+test('it generates CCTray url with a slug and a branch', function (assert) {
+  let url = format('CCTray', 'travis-ci/travis-web', 'development');
+  assert.equal(url, '#/repos/travis-ci/travis-web/cc.xml?branch=development');
 });

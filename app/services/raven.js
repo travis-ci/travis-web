@@ -18,6 +18,15 @@ export default RavenLogger.extend({
     this._super(...arguments);
   },
 
+  logException(e) {
+    // eslint-disable-next-line
+    console.log('Caught an exception:', e);
+
+    if (!this.ignoreError(e)) {
+      this.captureException(e);
+    }
+  },
+
   captureMessage(/* message */) {
     return this._super(...arguments);
   },
@@ -44,7 +53,7 @@ export default RavenLogger.extend({
   shouldReportError() {
     // Sentry recommends only reporting a small subset of the actual
     // frontend errors. This can get *very* noisy otherwise.
-    if (config.enterprise) {
+    if (config.enterprise || config.sentry.development) {
       return false;
     } else {
       var sampleRate = 10;

@@ -7,6 +7,8 @@ export default Ember.Component.extend({
   classNames: ['form--envvar'],
   classNameBindings: ['nameIsBlank:form-error'],
   store: service(),
+  raven: service(),
+  flashes: service(),
 
   isValid() {
     if (Ember.isBlank(this.get('name'))) {
@@ -38,6 +40,9 @@ export default Ember.Component.extend({
         yield envVar.save();
         this.reset();
       } catch (e) {
+        // eslint-disable-next-line
+        this.get('flashes').error('There was an error saving this environment variable.');
+        this.get('raven').logException(e);
       }
     }
   }).drop(),

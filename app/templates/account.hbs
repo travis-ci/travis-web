@@ -3,19 +3,17 @@
 <header>
   {{#unless config.enterprise}}
     {{#if config.billingEndpoint}}
-      <div class="cta-btn">
-        {{#if subscribeButtonInfo.subscribed}}
-          <a class="button" href={{billingUrl}}>Subscription active!</a>
+      {{#if subscribeButtonInfo.subscribed}}
+        {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
+      {{else}}
+        {{#if subscribeButtonInfo.education}}
+          {{subscription-status-banner color="green" message="This account's subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
         {{else}}
-          {{#if subscribeButtonInfo.education}}
-            <a class="button" href={{billingUrl}}>Educational account!</a>
-          {{else}}
-            <a class="button" href={{billingUrl}}> Sign up this account!</a>
-          {{/if}}
+          {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign up this account!" billingUrl=billingUrl}}
         {{/if}}
-      </div>
+      {{/if}}
     {{/if}}
-  {{/unless}}
+   {{/unless}}
 
     <div class="profile-header">
       <h1>{{accountName}}</h1>

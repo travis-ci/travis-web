@@ -1,4 +1,5 @@
-/* global moment, Travis */
+/* global moment, Travis, Pusher */
+
 import { compact } from 'travis/utils/helpers';
 import Ember from 'ember';
 import Model from 'ember-data/model';
@@ -74,13 +75,13 @@ export default Model.extend(DurationCalculations, {
   isFinished: Ember.computed('state', function () {
     let state = this.get('state');
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
-    return finishedStates.contains(state);
+    return finishedStates.includes(state);
   }),
 
   notStarted: Ember.computed('state', function () {
     let state = this.get('state');
     let waitingStates = ['queued', 'created', 'received'];
-    return waitingStates.contains(state);
+    return waitingStates.includes(state);
   }),
 
   clearLog() {
@@ -102,14 +103,12 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  canCancel: Ember.computed('isFinished', function () {
-    return !this.get('isFinished');
-  }),
-
+  canCancel: Ember.computed.not('isFinished'),
   canRestart: Ember.computed.alias('isFinished'),
+  canDebug: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/cancel');
+    return this.get('ajax').postV3('/job/' + (this.get('id')) + '/cancel');
   },
 
   removeLog() {
@@ -124,17 +123,12 @@ export default Model.extend(DurationCalculations, {
   },
 
   restart() {
-    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/restart');
+    return this.get('ajax').postV3('/job/' + (this.get('id')) + '/restart');
   },
 
   debug() {
-    return this.get('ajax').ajax(`/job/${this.get('id')}/debug`, 'POST', {
-      data: {
-        quiet: true
-      },
-      headers: {
-        'Travis-API-Version': '3'
-      }
+    return this.get('ajax').postV3(`/job/${this.get('id')}/debug`, {
+      quiet: true
     });
   },
 
@@ -146,11 +140,27 @@ export default Model.extend(DurationCalculations, {
     if (this.get('subscribed')) {
       return;
     }
+
     this.set('subscribed', true);
-    if (Travis.pusher) {
-      return Travis.pusher.subscribe('job-' + (this.get('id')));
+
+    if (this.get('features.proVersion')) {
+      if (Travis.pusher && Travis.pusher.ajaxService) {
+        return Travis.pusher.ajaxService.post(Pusher.channel_auth_endpoint, {
+          socket_id: Travis.pusher.pusherSocketId,
+          channels: ['private-job-' + this.get('id')]
+        }).then(() => {
+          return Travis.pusher.subscribe(this.get('channelName'));
+        });
+      }
+    } else {
+      return Travis.pusher.subscribe(this.get('channelName'));
     }
   },
+
+  channelName: Ember.computed('features.proVersion', 'id', function () {
+    const prefix = this.get('features.proVersion') ? 'private-job' : 'job';
+    return `${prefix}-${this.get('id')}`;
+  }),
 
   unsubscribe() {
     if (!this.get('subscribed')) {

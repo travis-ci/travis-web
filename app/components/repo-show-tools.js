@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   popup: service(),
   permissions: service(),
 
+  tagName: 'nav',
   classNames: ['option-button'],
   classNameBindings: ['isOpen:display'],
   isOpen: false,

@@ -1,17 +1,9 @@
 import { test, moduleForComponent } from 'ember-qunit';
 import Ember from 'ember';
 
-let userStub = Ember.Object.extend({
-  hasAccessToRepo: function (repo) {
-    ok(repo.get('id', 44));
-    ok(true, 'hasAccessToRepo was called');
-    return false;
-  }
-}).create();
-
 // stub auth service
 const authStub = Ember.Service.extend({
-  currentUser: userStub
+  currentUser: Ember.Object.create()
 });
 
 moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
@@ -22,66 +14,75 @@ moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
   }
 });
 
-test('it shows cancel button if canCancel is true', function () {
+test('it shows cancel button if canCancel is true', function (assert) {
   var component;
   component = this.subject({
     canCancel: true
   });
   this.render();
-  return ok(component.$('a[title="Cancel job"]').length, 'cancel link should be visible');
+  assert.ok(component.$('button[title="Cancel job"]').length, 'cancel button should be visible');
 });
 
-test('it shows restart button if canRestart is true', function () {
+test('it shows restart button if canRestart is true', function (assert) {
   var component;
   component = this.subject({
     canRestart: true
   });
   this.render();
-  return ok(component.$('a[title="Restart job"]').length, 'restart link should be visible');
+  assert.ok(component.$('button[title="Restart job"]').length, 'restart link should be visible');
 });
 
-test('user can cancel if she has permissions to a repo and job is cancelable', function () {
+test('user can cancel if she has pull permissions to a repo and job is cancelable', function (assert) {
   var component, job;
   job = Ember.Object.create({
     canCancel: false,
-    userHasPermissionForRepo: true
+    userHasPullPermissionForRepo: true
   });
   component = this.subject({
     job: job,
-    userHasPermissionForRepo: false
+    userHasPullPermissionForRepo: false
   });
-  ok(!component.get('canCancel'));
-  component.set('userHasPermissionForRepo', true);
-  ok(!component.get('canCancel'));
+  assert.ok(!component.get('canCancel'));
+  component.set('userHasPullPermissionForRepo', true);
+  assert.ok(!component.get('canCancel'));
   job.set('canCancel', true);
-  return ok(component.get('canCancel'));
+  assert.ok(component.get('canCancel'));
 });
 
-test('user can restart if she has permissions to a repo and job is restartable', function () {
+test('user can restart if she has pull permissions to a repo and job is restartable', function (assert) {
   var component, job;
   job = Ember.Object.create({
     canRestart: false,
-    userHasPermissionForRepo: true
+    userHasPullPermissionForRepo: true
   });
   component = this.subject({
     job: job,
-    userHasPermissionForRepo: false
+    userHasPullPermissionForRepo: false
   });
-  ok(!component.get('canRestart'));
-  component.set('userHasPermissionForRepo', true);
-  ok(!component.get('canRestart'));
+  assert.ok(!component.get('canRestart'));
+  component.set('userHasPullPermissionForRepo', true);
+  assert.ok(!component.get('canRestart'));
   job.set('canRestart', true);
-  return ok(component.get('canRestart'));
+  assert.ok(component.get('canRestart'));
 });
 
-test('it properly checks for user permissions for a repo', function () {
-  var component, repo;
-  expect(3);
-  repo = Ember.Object.create({
+test('it properly checks for user permissions for a repo', function (assert) {
+  this.assert = assert;
+  assert.expect(3);
+
+  const repo = Ember.Object.create({
     id: 44
   });
-  component = this.subject({
+
+  const component = this.subject({
     repo: repo
   });
-  return ok(!component.get('userHasPermissionForRepo'), 'user should not have access to a repo');
+
+  component.set('auth.currentUser.hasAccessToRepo', (repo) => {
+    this.assert.ok(repo.get('id', 44));
+    this.assert.ok(true, 'hasAccessToRepo was called');
+    return false;
+  });
+
+  assert.notOk(component.get('userHasPermissionForRepo'), 'user should not have access to a repo');
 });

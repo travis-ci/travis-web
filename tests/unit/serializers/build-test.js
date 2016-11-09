@@ -5,7 +5,7 @@ moduleForModel('build', 'Unit | Serializer | build', {
   needs: ['serializer:build', 'model:commit', 'model:job', 'model:branch']
 });
 
-test('it normalizes the singular response', function () {
+test('it normalizes the singular response', function (assert) {
   QUnit.dump.maxDepth = 10;
   let payload = {
     build: {
@@ -67,7 +67,6 @@ test('it normalizes the singular response', function () {
       tags: null
     }]
   };
-
 
   let store = this.store();
   let serializer = store.serializerFor('build');
@@ -186,5 +185,5 @@ test('it normalizes the singular response', function () {
       }
     ]
   };
-  deepEqual(expectedResult, result);
+  assert.deepEqual(expectedResult, result);
 });

@@ -78,9 +78,17 @@ export default function () {
 
   this.get('/cron/:id');
 
-  this.get('/repos/:id/settings', function (schema, request) {
-    let settings = schema.settings.where({ repositoryId: request.params.id }).models[0];
-    return this.serialize(settings, 'v2');
+  this.get('/repo/:id/settings', function (schema, request) {
+    let settings = schema.settings.where({ repositoryId: request.params.id });
+
+    return {
+      user_settings: settings.models.map(setting => {
+        return {
+          name: setting.attrs.name,
+          value: setting.attrs.value
+        };
+      })
+    };
   });
 
   this.get('/repos/:id/caches', function (schema, request) {
@@ -113,6 +121,10 @@ export default function () {
 
   this.get('/v3/repo/:id/branches', function (schema) {
     return schema.branches.all();
+  });
+
+  this.get('/v3/owner/:login', function (schema, request) {
+    return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });
 
   this.get('/repos/:id/key', function (schema, request) {
@@ -162,7 +174,7 @@ export default function () {
     return response;
   });
 
-  this.post('/builds/:id/restart', (schema, request) => {
+  this.post('/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
       return {
@@ -174,7 +186,7 @@ export default function () {
     }
   });
 
-  this.post('/builds/:id/cancel', (schema, request) => {
+  this.post('/build/:id/cancel', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
       return new Mirage.Response(204, {}, {});
@@ -183,7 +195,7 @@ export default function () {
     }
   });
 
-  this.post('/jobs/:id/restart', (schema, request) => {
+  this.post('/job/:id/restart', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
       return {
@@ -195,7 +207,7 @@ export default function () {
     }
   });
 
-  this.post('/jobs/:id/cancel', (schema, request) => {
+  this.post('/job/:id/cancel', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
       return new Mirage.Response(204, {}, {});
@@ -203,7 +215,6 @@ export default function () {
       return new Mirage.Response(404, {}, {});
     }
   });
-
 
   this.get('/v3/repo/:repo_id/builds', function (schema, request) {
     const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];

@@ -31,10 +31,9 @@ module.exports = function (environment) {
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
 
-    heap: {
-      projectId: '1049054202'
-    },
-    logLimit: 10000
+    logLimit: 10000,
+
+    emojiPrepend: ''
   };
 
   ENV.featureFlags = {
@@ -44,13 +43,6 @@ module.exports = function (environment) {
 
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
   var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
-
-  // Do not collect metrics if in non-production env or enterprise
-  if (process.env.TRAVIS_ENTERPRISE || environment !== 'production') {
-    ENV.heap = {
-      development: true
-    };
-  }
 
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !process.env.TRAVIS_ENTERPRISE) {
@@ -80,9 +72,6 @@ module.exports = function (environment) {
         security: ENV.billingEndpoint + "/pages/security",
         terms: ENV.billingEndpoint + "/pages/terms"
       };
-      ENV.heap = {
-        projectId: '1556722898'
-      }
     }
 
     if (process.env.API_ENDPOINT) {
@@ -108,7 +97,6 @@ module.exports = function (environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     ENV.APP.rootElement = '#ember-testing';
@@ -123,6 +111,8 @@ module.exports = function (environment) {
       sshKey: true,
       caches: true
     };
+
+    ENV.pusher = {};
 
     ENV.skipConfirmations = true;
 
@@ -144,11 +134,22 @@ module.exports = function (environment) {
       enabled: false
     };
 
-    ENV.sentry = {
-      dsn: sentryDSN
-    };
+    if (process.env.DISABLE_SENTRY) {
+      ENV.sentry = {
+        development: true
+      }
+    } else {
+      ENV.sentry = {
+        dsn: sentryDSN
+      };
+    }
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
+  }
+
+  if (process.env.DEPLOY_TARGET) {
+    var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
+    ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
 
   // TODO: I insert values from ENV here, but in production

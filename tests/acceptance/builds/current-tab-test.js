@@ -39,6 +39,7 @@ test('renders most recent repository and most recent build when builds present',
     .visit();
 
   andThen(function () {
+    assert.equal(document.title, 'travis-ci/travis-web - Travis CI');
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
   });
 

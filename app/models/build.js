@@ -57,13 +57,13 @@ Build.reopen({
   isFinished: Ember.computed('state', function () {
     let state = this.get('state');
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
-    return finishedStates.contains(state);
+    return finishedStates.includes(state);
   }),
 
   notStarted: Ember.computed('state', function () {
     let state = this.get('state');
     let waitingStates = ['queued', 'created', 'received'];
-    return waitingStates.contains(state);
+    return waitingStates.includes(state);
   }),
 
   startedAt: Ember.computed('_startedAt', 'notStarted', function () {
@@ -95,7 +95,7 @@ Build.reopen({
     keys = [];
     this.get('jobs').forEach(function (job) {
       return configKeys(job.get('config')).forEach(function (key) {
-        if (!keys.contains(key)) {
+        if (!keys.includes(key)) {
           return keys.pushObject(key);
         }
       });
@@ -124,11 +124,11 @@ Build.reopen({
   canRestart: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post('/builds/' + (this.get('id')) + '/cancel');
+    return this.get('ajax').postV3('/build/' + (this.get('id')) + '/cancel');
   },
 
   restart() {
-    return this.get('ajax').post(`/builds/${this.get('id')}/restart`);
+    return this.get('ajax').postV3(`/build/${this.get('id')}/restart`);
   },
 
   canDebug: Ember.computed('jobs.length', function () {

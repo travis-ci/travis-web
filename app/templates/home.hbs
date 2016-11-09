@@ -7,7 +7,7 @@
 	<p>Easily sync your GitHub projects with Travis CI<br class="mobile-break"> and you’ll be testing your code in minutes!</p>
 
 	{{#if auth.signedOut}}
-	<button {{action "signIn" target="auth"}} class="button"><img src="../images/landing-page/sign-in-mascot.svg" class="sign-in-mascot">Sign Up</button>
+	<button {{action "signIn" target=auth}} class="button"><img src="../images/landing-page/sign-in-mascot.svg" class="sign-in-mascot">Sign Up</button>
 	{{/if}}
 	{{#if auth.signingIn}}
 	<button class="button"><span class="loading-indicator--white"><i></i><i></i><i></i></span>Signing In</button>

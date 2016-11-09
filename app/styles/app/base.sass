@@ -6,17 +6,15 @@
 html,
 body
   height: 100%
-  line-height: 1.45 !important
-  font-size: 14px
-  background: white
-  color: $asphalt-grey
-  background-color: $pebble-grey
   padding: 0
   margin: 0
+  color: $asphalt-grey
+  font-size: 14px
   font-weight: 400
   font-style: normal
-  line-height: 1.45
   font-family: $font-family-sans-serif
+  line-height: 1.45
+  background-color: $pebble-grey
 
 h1, h2, h3, h4, h5, h6
   font-weight: $font-weight-normal
@@ -28,6 +26,13 @@ img
   display: inline-block
   vertical-align: middle
 
+button
+  background: white
+  border: none
+  font-family: $font-family-sans-serif
+  font-size: inherit
+  color: $asphalt-grey
+  
 textarea
   height: auto
   min-height: 50px
@@ -54,10 +59,12 @@ a
 .hidden
   display: none
 
-.emoji
-  vertical-align: middle
+span.emoji
   width: 20px
   height: 20px
+
+span.emoji-sizer
+  margin: -5px 0
 
 .warning
   color: #c00

@@ -1,7 +1,7 @@
-/* global Visibility */
 import Ember from 'ember';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
+import Visibility from 'npm:visibilityjs';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -25,7 +25,6 @@ var sortCallback = function (repo1, repo2) {
     // if only repo2 has a build, it goes first
     return 1;
   }
-
 
   if (finishedAt1) {
     finishedAt1 = new Date(finishedAt1);
@@ -134,7 +133,7 @@ export default Ember.Controller.extend({
     var result;
 
     result = this.store.filter('job', {}, function (job) {
-      return ['queued', 'started', 'received'].contains(job.get('state'));
+      return ['queued', 'started', 'received'].includes(job.get('state'));
     });
 
     result.set('isLoaded', false);

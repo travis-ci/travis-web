@@ -1,7 +1,7 @@
-/* global Visibility */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 import eventually from 'travis/utils/eventually';
+import Visibility from 'npm:visibilityjs';
 
 export default Ember.Service.extend({
   records: [],
@@ -10,7 +10,7 @@ export default Ember.Service.extend({
   init() {
     let visibilityId = Visibility.every(
       config.intervals.updateTimes,
-      this.updateTimes.bind(this)
+      Ember.run.bind(this, 'updateTimes')
     );
     this.set('visibilityId', visibilityId);
     let intervalId = setInterval(
@@ -55,7 +55,7 @@ export default Ember.Service.extend({
   pushObject(record) {
     let records = this.get('records');
 
-    if (!records.contains(record)) {
+    if (!records.includes(record)) {
       records.pushObject(record);
     }
   },

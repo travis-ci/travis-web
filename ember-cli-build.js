@@ -1,5 +1,6 @@
 /* eslint-env node */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var Funnel = require('broccoli-funnel');
 
 module.exports = function () {
   var fingerprint;
@@ -48,13 +49,15 @@ module.exports = function () {
   app.import('vendor/babel-polyfill.js', { prepend: true });
   app.import('bower_components/pusher/dist/pusher.js');
   app.import('bower_components/jquery-timeago/jquery.timeago.js');
-  app.import('bower_components/visibilityjs/lib/visibility.core.js');
-  app.import('bower_components/visibilityjs/lib/visibility.timers.js');
   app.import('bower_components/JavaScript-MD5/js/md5.js');
-  app.import('vendor/ansiparse.js');
-  app.import('vendor/log.js');
-  app.import('vendor/customerio.js');
   app.import('bower_components/moment/moment.js');
 
-  return app.toTree();
+  app.import('bower_components/js-emoji/demo/emoji.css');
+  app.import('bower_components/js-emoji/lib/emoji.js');
+
+  var emojiAssets = new Funnel('bower_components/emoji-data/img-apple-64', {
+    destDir: '/images/emoji'
+  });
+
+  return app.toTree(emojiAssets);
 };

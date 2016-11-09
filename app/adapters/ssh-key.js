@@ -3,6 +3,16 @@ import ApplicationAdapter from 'travis/adapters/application';
 export default ApplicationAdapter.extend({
   namespace: 'settings',
 
+  urlPrefix() {
+    const prefix = this._super(...arguments);
+
+    if (prefix.indexOf('http') === -1) {
+      return `/${prefix}`;
+    } else {
+      return prefix;
+    }
+  },
+
   findRecord(store, type, id) {
     const url = `${this.urlPrefix()}/ssh_key/${id}`;
     return this.ajax(url, 'GET');

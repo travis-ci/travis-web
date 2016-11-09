@@ -1,5 +1,7 @@
 import HashStorage from 'travis/utils/hash-storage';
 
+const { module, test } = QUnit;
+
 module('hash-storage');
 
 test('hash storage behaves like local storage', (assert) => {

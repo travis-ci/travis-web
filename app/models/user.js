@@ -96,7 +96,23 @@ export default Model.extend({
     let id = repo.get ? repo.get('id') : repo;
     let permissions = this.get('permissions');
     if (permissions) {
-      return permissions.contains(parseInt(id));
+      return permissions.includes(parseInt(id));
+    }
+  },
+
+  hasPullAccessToRepo(repo) {
+    const id = repo.get ? repo.get('id') : repo;
+    const permissions = this.get('pullPermissions');
+    if (permissions) {
+      return permissions.includes(parseInt(id));
+    }
+  },
+
+  hasPushAccessToRepo(repo) {
+    const id = repo.get ? repo.get('id') : repo;
+    const permissions = this.get('pushPermissions');
+    if (permissions) {
+      return permissions.includes(parseInt(id));
     }
   },
 

@@ -1,5 +1,7 @@
 import LimitedArray from 'travis/utils/limited-array';
 
+const { module, test } = QUnit;
+
 module('LimitedArray');
 
 test('LimitedArray limits the array it contains', (assert) => {

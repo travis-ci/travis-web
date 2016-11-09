@@ -1,7 +1,7 @@
-/* global Visibility */
 import Ember from 'ember';
 import { githubRepo, statusImage } from 'travis/utils/urls';
 import eventually from 'travis/utils/eventually';
+import Visibility from 'npm:visibilityjs';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
   }),
 
   statusImageUrl: Ember.computed('repo.slug', function () {
-    return statusImage(this.get('repo.slug'));
+    return statusImage(this.get('repo.slug'), this.get('repo.defaultBranch.name'));
   }),
 
   showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
