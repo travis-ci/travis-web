@@ -7,15 +7,22 @@ var Request = Ember.Object.extend({
   },
 
   run() {
-    return this.get('ajax').ajax('/jobs/' + this.id + '/log?cors_hax=true', 'GET', {
-      dataType: 'text',
-      headers: this.HEADERS,
+    return Ember.$.ajax('/log.txt', {
       success: (body, status, xhr) => {
         return Ember.run(this, function () {
           return this.handle(body, status, xhr);
         });
       }
     });
+    // return this.get('ajax').ajax('/jobs/' + this.id + '/log?cors_hax=true', 'GET', {
+    //   dataType: 'text',
+    //   headers: this.HEADERS,
+    //   success: (body, status, xhr) => {
+    //     return Ember.run(this, function () {
+    //       return this.handle(body, status, xhr);
+    //     });
+    //   }
+    // });
   },
 
   handle(body, status, xhr) {

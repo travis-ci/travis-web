@@ -24,7 +24,7 @@ Log.extend = function (one, other) {
 };
 
 Log.extend(Log, {
-  DEBUG: false,
+  DEBUG: true,
   SLICE: 500,
   TIMEOUT: 25,
   FOLD: /fold:(start|end):([\w_\-\.]+)/,
@@ -263,6 +263,11 @@ Log.Span = function (id, num, text, classes) {
   var fold, time, _ref;
   Log.Node.apply(this, arguments);
 
+  if (text.indexOf('Skipping a deployment') > -1) {
+    console.log('we got it!');
+    console.log(text);
+  }
+
   fold = text.match(Log.FOLD);
   time = text.match(Log.TIME);
 
@@ -317,6 +322,15 @@ Log.extend(Log.Span, {
 Log.Span.prototype = Log.extend(new Log.Node, {
   render: function () {
     var tail;
+    if (this.text && this.text.indexOf('Skipping') > -1) {
+      debugger;
+    }
+    if (this.id === '1-6756') {
+      debugger;
+    }
+    if (this.id === '1-6755') {
+      debugger;
+    }
     if (this.time && this.event === 'end' && this.prev) {
       if (Log.DEBUG) {
         console.log('S.0 insert ' + this.id + ' after prev ' + this.prev.id);
@@ -946,6 +960,7 @@ Log.Renderer = function () {
 
 Log.extend(Log.Renderer.prototype, {
   insert: function (data, pos) {
+    console.log("Insert args", arguments);
     var after, before, into, node;
     node = this.render(data);
     // eslint-disable-next-line
@@ -971,6 +986,7 @@ Log.extend(Log.Renderer.prototype, {
       }
       this.insertBefore(node, before);
     } else {
+      console.log("NO OPTIONS!!!! before");
       this.insertBefore(node);
     }
     return node;
