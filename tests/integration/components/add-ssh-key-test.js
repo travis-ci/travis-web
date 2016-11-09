@@ -33,6 +33,8 @@ test('it adds an ssh key on submit', function (assert) {
   fillIn(this.$('.ssh-description'), 'FOO');
   fillIn(this.$('.ssh-value'), 'bar');
 
+  this.$('.form-submit').click();
+
   assert.equal(sshKey.get('description'), 'FOO', 'description should be set');
   assert.equal(sshKey.get('value'), 'bar', 'value should be set');
   assert.equal(sshKey.get('id'), 1, 'ssh key id should still be repo id');
