@@ -15,6 +15,7 @@ matrix:
   fast_finish: true
 
 sudo: false
+dist: trusty
 
 cache:
   directories:
