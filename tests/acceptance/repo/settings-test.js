@@ -230,7 +230,6 @@ test('delete and create environment variables', function (assert) {
   andThen(() => {
     assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
   });
-  percySnapshot(assert);
 });
 
 test('delete and create crons', function (assert) {
