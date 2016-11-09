@@ -13,6 +13,12 @@
           <span class="label-align">This job is running on our legacy infrastructure. Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a>.</span></p>
         {{/if}}
       {{/if}}
+      {{#if job.isTrustySudoFalse}}
+        <p class="notice-banner--yellow"><span class="icon-flag"></span>
+        <span class="label-align">
+          This job {{#if job.isFinished}}ran{{else}}is running{{/if}} on our container-based trusty beta.
+          Please read <a href="http://blog.travis-ci.com/2016-11-08-trusty-container-public-beta/?utm_source=trusty-container-based-beta-notice&utm_medium=banner&utm_campaign=trusty-container-based-beta" title="Trusty container-based beta">our blog post about the public beta</a>.</span></p>
+      {{/if}}
     {{/if}}
   {{/unless}}
 

@@ -200,6 +200,8 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
+  isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
+
   displayGceNotice: Ember.computed('queue', 'config.dist', function () {
     if (this.get('queue') === 'builds.gce' && this.get('config.dist') === 'precise') {
       return true;
