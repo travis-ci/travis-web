@@ -3,6 +3,11 @@
     fill: none
     stroke: $color
 
+=colorSVGFill($color)
+  path, polyline, circle, line, polygon, rect, ellipse
+    fill: $color
+    stroke: none
+
 %icon
   display: inline-block
   vertical-align: middle
@@ -113,11 +118,6 @@ svg.icon
   background-image: inline-image('stroke-icons/icon-settings-teal.svg')
 %icon-line-cog-white
   background-image: inline-image('stroke-icons/icon-settings-white.svg')
-
-%icon-line-tofu
-  background-image: inline-image('stroke-icons/icon-tofuburger.svg')
-%icon-line-tofu-teal
-  background-image: inline-image('stroke-icons/icon-tofuburger-teal.svg')
 
 .icon-settings
   @extend %icon-line-cog

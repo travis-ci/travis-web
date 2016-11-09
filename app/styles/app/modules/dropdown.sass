@@ -8,7 +8,7 @@
       color: $oxide-blue
       border-color: $oxide-blue
     .option-tofu
-      @extend %icon-line-tofu-teal
+      +colorSVGFill($oxide-blue)
       border-color: $oxide-blue
     .option-arrow
       @extend %icon-line-arrowtabs-teal
@@ -60,8 +60,7 @@ $dropdown-button-margin: -9px
     position: 50%
 
 .option-tofu
-  @extend %icon-line-tofu
-  background-size: 20px
+  padding: 0 0.3em
   @media #{$medium-up}
     border-left: 1px solid $pebble-grey
 
@@ -119,11 +118,9 @@ $dropdown-button-margin: -9px
     .dropup-list
       display: block
     .dropup-tofu
-      @extend %icon-line-tofu-teal
       outline: none
 
 .dropup-tofu
-  @extend %icon-line-tofu
   background:
     color: transparent
     size: 100%
@@ -141,7 +138,6 @@ $dropdown-button-margin: -9px
     display: inline-block
   &:hover,
   &:active
-    @extend %icon-line-tofu-teal
     outline: none
 
   &:focus
