@@ -30,6 +30,9 @@ module.exports = function () {
   }
 
   var app = new EmberApp({
+    babel: {
+      includePolyfill: true,
+    },
     fingerprint: fingerprint,
     sourcemaps: {
       enabled: true,
@@ -46,7 +49,6 @@ module.exports = function () {
     }
   });
 
-  app.import('vendor/babel-polyfill.js', { prepend: true });
   app.import('bower_components/pusher/dist/pusher.js');
   app.import('bower_components/jquery-timeago/jquery.timeago.js');
   app.import('bower_components/JavaScript-MD5/js/md5.js');
