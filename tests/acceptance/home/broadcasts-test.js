@@ -56,3 +56,19 @@ test('the broadcast tower shows an announcement', assert => {
     assert.ok(topPage.broadcastTower.hasAnnouncement, 'expected the broadcast tower to have an announcement class');
   });
 });
+
+test('a dismissed broadcast does not highlight the tower', assert => {
+  server.create('broadcast', {
+    category: 'announcement',
+    message: 'Welcome.',
+    id: '2016'
+  });
+
+  localStorage.setItem('travis.seen_broadcasts', JSON.stringify(['2016']));
+
+  dashboardPage.visit();
+
+  andThen(() => {
+    assert.ok(topPage.broadcastTower.hasNoAnnouncement, 'expected the broadcast tower to not have an announcement class');
+  });
+});

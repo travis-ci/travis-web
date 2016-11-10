@@ -17,6 +17,7 @@ export default PageObject.create({
     click: clickable(),
 
     hasAnnouncement: hasClass('announcement'),
+    hasNoAnnouncement: notHasClass('announcement'),
     hasWarning: hasClass('warning')
   },
 
