@@ -38,6 +38,7 @@ test('the broadcast tower shows a warning', (assert) => {
     assert.ok(topPage.broadcasts().isOpen, 'expected the broadcast list to be open');
     assert.equal(topPage.broadcasts().count, 1, 'expected there to be one broadcast');
     assert.ok(topPage.broadcasts(0).isWarning, 'expected the first broadcast to be a warning');
+    assert.equal(topPage.broadcasts(0).message, 'Join the resistance!');
   });
 
   percySnapshot(assert);

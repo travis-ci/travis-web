@@ -4,7 +4,8 @@ let {
   clickable,
   collection,
   hasClass,
-  notHasClass
+  notHasClass,
+  text
 } = PageObject;
 
 export default PageObject.create({
@@ -29,7 +30,9 @@ export default PageObject.create({
 
     item: {
       isAnnouncement: hasClass('announcement', '.broadcast-status'),
-      isWarning: hasClass('warning', '.broadcast-status')
+      isWarning: hasClass('warning', '.broadcast-status'),
+
+      message: text('.message')
     }
   })
 });
