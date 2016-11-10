@@ -23,7 +23,6 @@ cache:
     - bower_components
 
 before_install:
-  - phantomjs -v
   - "npm config set spin false"
   - "npm install -g npm@^2"
 
