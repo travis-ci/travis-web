@@ -1,10 +1,41 @@
 import Ember from 'ember';
+import { task, taskGroup } from 'ember-concurrency';
 const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
   queryParams: ['account'],
   flashes: service(),
   ajax: service(),
+
+  starring: taskGroup().drop(),
+  tasks: Ember.computed(function() {
+    return [
+      this.get('star'),
+      this.get('unstar')
+    ];
+  }),
+
+  star: task(function * (repo) {
+    repo.set('starred', true);
+    try {
+      yield this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/star`, 'POST');
+    } catch (e) {
+      repo.set('starred', false);
+      this.get('flashes')
+        .error(`Something went wrong while trying to star  ${repo.get('slug')}. Please try again.`);
+      };
+  }).group('starring'),
+  
+  unstar: task(function * (repo) {
+    repo.set('starred', false);
+    try {
+      yield this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/unstar`, 'POST');
+    } catch (e) {
+      repo.set('starred', true);
+      this.get('flashes')
+        .error(`Something went wrong while trying to unstar  ${repo.get('slug')}. Please try again.`);          
+    };
+  }).group('starring'),
 
   filteredRepos: Ember.computed('model.repos', 'model.repos.@each.currentBuild.finishedAt', 'account', function () {
     let accounts = this.get('model.accounts');
@@ -88,24 +119,6 @@ export default Ember.Controller.extend({
     selectOrg(org) {
       let login = Ember.isBlank(org) ? undefined : org.get('login');
       return this.set('account', login);
-    },
-    star(repo) {
-      repo.set('starred', true);
-      this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/star`, 'POST')
-        .catch(() => {
-          repo.set('starred', false);
-          this.get('flashes')
-            .error(`Something went wrong while trying to star  ${repo.get('slug')}. Please try again.`);
-        });
-    },
-    unstar(repo) {
-      repo.set('starred', false);
-      this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/unstar`, 'POST')
-        .catch(() => {
-          repo.set('starred', true);
-          this.get('flashes')
-            .error(`Something went wrong while trying to unstar  ${repo.get('slug')}. Please try again.`);          
-        });
     }
   }
 });
