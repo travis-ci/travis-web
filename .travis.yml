@@ -4,13 +4,13 @@ node_js: 5
 
 env:
   - EMBER_VERSION=default
-  - EMBER_VERSION=beta
-  - EMBER_VERSION=canary
+  - PERCY_ENABLE=0 EMBER_VERSION=beta
+  - PERCY_ENABLE=0 EMBER_VERSION=canary
 
 matrix:
   allow_failures:
-    - env: EMBER_VERSION=beta
-    - env: EMBER_VERSION=canary
+    - env: PERCY_ENABLE=0 EMBER_VERSION=beta
+    - env: PERCY_ENABLE=0 EMBER_VERSION=canary
 
   fast_finish: true
 

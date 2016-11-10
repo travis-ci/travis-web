@@ -326,4 +326,6 @@ test('on a repository with auto-cancellation', function (assert) {
     assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
     assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'user_setting.value': false });
   });
+
+  percySnapshot(assert);
 });

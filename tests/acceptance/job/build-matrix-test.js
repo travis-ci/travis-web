@@ -44,4 +44,5 @@ test('visiting build matrix', function (assert) {
     assert.ok(failedJobRow.state.isFailed, 'expected the allowed failure job to have failed');
     assert.equal(failedJobRow.language, 'Ruby');
   });
+  percySnapshot(assert);
 });

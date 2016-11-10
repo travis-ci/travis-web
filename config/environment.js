@@ -117,6 +117,15 @@ module.exports = function (environment) {
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;
+
+    ENV.percy = {
+      breakpointsConfig: {
+        mobile: 375,
+        tablet: 768,
+        desktop: 1280
+      },
+      defaultBreakpoints: ['desktop']
+    };
   }
 
   if (environment === 'production') {
