@@ -9,6 +9,7 @@ export default PageObject.create({
 
   broadcastTower: {
     scope: '.broadcast',
+    hasAnnouncement: hasClass('announcement', '.icon-broadcast'),
     hasWarning: hasClass('warning', '.icon-broadcast')
   }
 });

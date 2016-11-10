@@ -16,19 +16,33 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
     server.create('repository', {
       slug: 'killjoys/living-a-feminist-life'
     });
-
-    server.create('broadcast', {
-      category: 'warning',
-      message: 'Join the resistance!'
-    });
   }
 });
 
 test('the broadcast tower shows a warning', (assert) => {
+  server.create('broadcast', {
+    category: 'warning',
+    message: 'Join the resistance!'
+  });
+
   dashboardPage.visit();
 
   andThen(() => {
     assert.ok(topPage.broadcastTower.hasWarning, 'expected the broadcast tower to have a warning class');
   });
+
   percySnapshot(assert);
+});
+
+test('the broadcast tower shows an announcement', assert => {
+  server.create('broadcast', {
+    category: 'announcement',
+    message: 'We have all joined the resistance.'
+  });
+
+  dashboardPage.visit();
+
+  andThen(() => {
+    assert.ok(topPage.broadcastTower.hasAnnouncement, 'expected the broadcast tower to have an announcement class');
+  });
 });
