@@ -18,7 +18,18 @@ export default create({
     item: {
       owner: text('.dash-header .row-label a'),
       repoName: text('.dash-header .row-content a'),
-      defaultBranch: text('.dash-default a'),
+      defaultBranch: text('.dash-default .row-content a'),
+      lastBuild: text('.dash-last a .label-align'),
+      triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a')
+    }
+  }),
+  starredRepos: collection({
+    scope: '.dashboard-starred .repo-list',
+    itemScope: 'li.rows--dashboard',
+    item: {
+      owner: text('.dash-header .row-label a'),
+      repoName: text('.dash-header .row-content a'),
+      defaultBranch: text('.dash-default .row-content a'),
       lastBuild: text('.dash-last a .label-align'),
       triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a')
     }
