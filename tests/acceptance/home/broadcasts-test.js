@@ -29,6 +29,15 @@ test('the broadcast tower shows a warning', (assert) => {
 
   andThen(() => {
     assert.ok(topPage.broadcastTower.hasWarning, 'expected the broadcast tower to have a warning class');
+    assert.ok(topPage.broadcasts().isClosed, 'expected the broadcast list to be closed');
+  });
+
+  topPage.broadcastTower.click();
+
+  andThen(() => {
+    assert.ok(topPage.broadcasts().isOpen, 'expected the broadcast list to be open');
+    assert.equal(topPage.broadcasts().count, 1, 'expected there to be one broadcast');
+    assert.ok(topPage.broadcasts(0).isWarning, 'expected the first broadcast to be a warning');
   });
 
   percySnapshot(assert);
