@@ -35,11 +35,6 @@ module.exports = function () {
       enabled: true,
       extensions: ['js']
     },
-    vendorFiles: {
-      // next line is needed to prevent ember-cli to load
-      // handlebars (it happens automatically in 0.1.x)
-      'handlebars.js': null
-    },
     'ember-prism': {
       'components': ['scss', 'javascript', 'json'], //needs to be an array, or undefined.
       'plugins': ['line-highlight']
