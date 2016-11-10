@@ -70,21 +70,9 @@ export default Ember.Controller.extend({
     return repos;
   }),
 
-  activeRepos: Ember.computed('filteredRepos', function () {
-    return this.get('filteredRepos').filter(function (item) {
-      if (!item.get('starred')) {
-        return item;
-      }
-    });
-  }),
+  activeRepos: Ember.computed.filterBy('filteredRepos', 'starred', false),
 
-  starredRepos: Ember.computed('filteredRepos', function () {
-    return this.get('filteredRepos').filter(function (item) {
-      if (item.get('starred')) {
-        return item;
-      }
-    });
-  }),
+  starredRepos: Ember.computed.filterBy('filteredRepos', 'starred'),
 
   selectedOrg: Ember.computed('account', function () {
     let accounts = this.get('model.accounts');
@@ -106,6 +94,7 @@ export default Ember.Controller.extend({
     star(repo) {
       this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/star`, 'POST')
         .then(() => {
+          repo.set('starred', true);
           this.get('flashes')
             .success(`You successfully starred ${repo.get('slug')}`);
         });
@@ -113,6 +102,7 @@ export default Ember.Controller.extend({
     unstar(repo) {
       this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/unstar`, 'POST')
         .then(() => {
+          repo.set('starred', false);
           this.get('flashes')
             .success(`You successfully unstarred ${repo.get('slug')}`);
         });
