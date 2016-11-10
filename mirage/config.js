@@ -54,8 +54,8 @@ export default function () {
     }
   });
 
-  this.get('/v3/broadcasts', (/* schema, request*/) => {
-    return { broadcasts: [] };
+  this.get('/v3/broadcasts', schema => {
+    return schema.broadcasts.all();
   });
 
   this.get('/repos', function (schema/* , request*/) {
