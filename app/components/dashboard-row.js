@@ -58,9 +58,9 @@ export default Ember.Component.extend({
     },
     starRepo() {
       if (this.get('repo.starred')) {
-        this.sendAction('unstarRepo', this.get('repo'));
+        this.get('unstar').perform(this.get('repo'));
       } else {
-        this.sendAction('starRepo', this.get('repo'));
+        this.get('star').perform(this.get('repo'));
       }
     }
   }
