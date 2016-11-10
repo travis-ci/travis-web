@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
   flashes: service(),
   ajax: service(),
 
-  filteredRepos: Ember.computed('model.repos', 'account', function () {
+  filteredRepos: Ember.computed('model.repos', 'model.repos.@each.currentBuild.finishedAt', 'account', function () {
     let accounts = this.get('model.accounts');
     let accountParam = this.get('account');
     let account = accounts.filter(function (x) {
@@ -70,8 +70,6 @@ export default Ember.Controller.extend({
     return repos;
   }),
 
-  activeRepos: Ember.computed.filterBy('filteredRepos', 'starred', false),
-
   starredRepos: Ember.computed.filterBy('filteredRepos', 'starred'),
 
   selectedOrg: Ember.computed('account', function () {
@@ -92,19 +90,21 @@ export default Ember.Controller.extend({
       return this.set('account', login);
     },
     star(repo) {
+      repo.set('starred', true);
       this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/star`, 'POST')
-        .then(() => {
-          repo.set('starred', true);
+        .catch(() => {
+          repo.set('starred', false);
           this.get('flashes')
-            .success(`You successfully starred ${repo.get('slug')}`);
+            .error(`Something went wrong while trying to star  ${repo.get('slug')}. Please try again.`);
         });
     },
     unstar(repo) {
+      repo.set('starred', false);
       this.get('ajax').ajax(`/v3/repo/${repo.get('id')}/unstar`, 'POST')
-        .then(() => {
-          repo.set('starred', false);
+        .catch(() => {
+          repo.set('starred', true);
           this.get('flashes')
-            .success(`You successfully unstarred ${repo.get('slug')}`);
+            .error(`Something went wrong while trying to unstar  ${repo.get('slug')}. Please try again.`);          
         });
     }
   }
