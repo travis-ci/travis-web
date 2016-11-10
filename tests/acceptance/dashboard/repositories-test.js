@@ -14,7 +14,7 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
 
     server.create('repository', {
       owner: {
-        name: 'travis-ci',
+        login: 'travis-ci',
         type: 'organization'
       },
       name: 'travis-web',
@@ -22,7 +22,8 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
         branch: { name: 'some-branch' },
         eventType: 'cron',
         number: 2,
-        state: 'failed'
+        state: 'failed',
+        finishedAt: '2016-11-10T14:37:44Z'
       },
       defaultBranch: {
         name: 'master',
@@ -35,24 +36,54 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
     });
     server.create('repository', {
       owner: {
-        name: 'travis-repos',
+        login: 'travis-repos',
         type: 'organization'
       },
-      name: 'repo-python'
+      name: 'repo-python',
+      currentBuild: {
+        branch: { name: 'some-branch' },
+        eventType: 'cron',
+        number: 2,
+        state: 'failed',
+        finishedAt: '2016-11-09T14:37:44Z'
+      },
     });
     server.create('repository', {
       owner: {
-        name: 'travis-repos',
+        login: 'travis-repos',
         type: 'organization'
       },
-      name: 'repo-clojure'
+      name: 'repo-clojure',
+      currentBuild: {
+        branch: { name: 'some-branch' },
+        eventType: 'cron',
+        number: 2,
+        state: 'failed',
+        finishedAt: '2016-11-8T14:37:44Z'
+      },
     });
     server.create('repository', {
       owner: {
-        name: 'travis-ci',
+        login: 'travis-ci',
         type: 'organization'
       },
-      name: 'travis-lol'
+      name: 'travis-lol',
+      starred: true,
+      currentBuild: {
+        branch: { name: 'some-branch' },
+        eventType: 'cron',
+        number: 2,
+        state: 'failed',
+        finishedAt: '2016-11-07T14:37:44Z'
+      },
+      defaultBranch: {
+        name: 'default',
+        lastBuild: {
+          number: 1,
+          eventType: 'cron',
+          state: 'passed',
+        }
+      }
     });
   }
 });
@@ -73,10 +104,12 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
   andThen(() => {
     assert.equal(currentURL(), '/dashboard/');
     assert.equal(dashboardPage.activeRepos().count, 4, 'lists all repos of the user');
-    // assert.equal(dashboardPage.activeRepos(0).owner, 'travis-ci', 'displays owner of repo');
+    assert.equal(dashboardPage.activeRepos(0).owner, 'travis-ci', 'displays owner of repo');
     assert.equal(dashboardPage.activeRepos(0).repoName, 'travis-web', 'displays name of repo');
-    // assert.equal(dashboardPage.activeRepos(0).defaultBranch, 'master passed', 'displays name and status of default branch');
+    // assert.equal(dashboardPage.activeRepos(0).defaultBranch, 'default passed', 'displays name and status of default branch');
     // assert.equal(dashboardPage.activeRepos(0).lastBuild, '#2 failed', 'displays number and status of last build');
+
+    assert.equal(dashboardPage.starredRepos().count, 1, 'lists starred repos in correct section');
   });
 });
 

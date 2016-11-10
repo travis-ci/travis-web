@@ -7,7 +7,7 @@ moduleForComponent('orgs-filter', 'Integration | Component | orgs filter', {
   integration: true
 });
 
-test('it renders data correctly', function () {
+test('it renders data correctly', function (assert) {
   const orgs = [
     Ember.Object.create({
       id: 'lislis',
@@ -35,9 +35,9 @@ test('it renders data correctly', function () {
   this.set('selectedOrg', selectedOrg);
   this.render(hbs`{{orgs-filter orgs=orgs selected=selectedOrg }}`);
 
-  equal(this.$('.option-list').children().length, 2, 'Lists right amount of accounts');
-  equal(this.$('.option-display .label-align').text().trim(), 'All accounts', 'Displays right message if no account is selected');
-  ok(!this.$().hasClass('is-open'), 'Account list is not open per default');
+  assert.equal(this.$('.option-list').children().length, 2, 'Lists right amount of accounts');
+  assert.equal(this.$('.option-display .label-align').text().trim(), 'All accounts', 'Displays right message if no account is selected');
+  assert.ok(!this.$().hasClass('is-open'), 'Account list is not open per default');
   this.$('.option-button .option-display').click();
 
   /*

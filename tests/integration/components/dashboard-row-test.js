@@ -17,7 +17,7 @@ moduleForComponent('dashboard-row', 'Integration | Component | dashboard row', {
   }
 });
 
-test('it renders data correctly', function () {
+test('it renders data correctly', function (assert) {
   const repo = Ember.Object.create({
     active: true,
     currentBuild: {
@@ -55,10 +55,10 @@ test('it renders data correctly', function () {
   this.set('repo', repo);
   this.render(hbs`{{dashboard-row repo=repo}}`);
 
-  ok(this.$().find('.dash-default').hasClass('passed'), 'Indicates right state of default branch last build');
-  ok(this.$().find('.dash-last').hasClass('failed'), 'Indicates right state of current build');
-  // equal(this.$().find('.dash-default .row-content a').text().trim(), 'master passed', 'Displays the default branch name and state');
-  equal(this.$().find('.dash-last .row-content a').text().trim(), '#2 failed', 'Displays the number and state of the current build');
+  assert.ok(this.$().find('.dash-default').hasClass('passed'), 'Indicates right state of default branch last build');
+  assert.ok(this.$().find('.dash-last').hasClass('failed'), 'Indicates right state of current build');
+  // assert.equal(this.$().find('.dash-default .row-content a').text().trim(), 'master passed', 'Displays the default branch name and state');
+  assert.equal(this.$().find('.dash-last .row-content a').text().trim(), '#2 failed', 'Displays the number and state of the current build');
 
   // this.$('.dropup-list a:first-of-type').click();
 
