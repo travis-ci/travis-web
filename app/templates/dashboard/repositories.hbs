@@ -19,7 +19,7 @@
     <section class="dashboard-section dashboard-active">
       <h2 class="small-title">Active repositories</h2>
       <ul class="repo-list">
-        {{#each activeRepos as |repo|}}
+        {{#each filteredRepos as |repo|}}
           {{dashboard-row repo=repo starRepo="star"}}
         {{else}}
           {{no-repos}}
@@ -28,7 +28,7 @@
     </section>
 
     <!-- <section class="dashboard-section dashboard-inactive">
-      <h2 class="small-title">Inactive repositories</h2>
+  h    <h2 class="small-title">Inactive repositories</h2>
       <ul class="repo-list">
       </ul>
     </section> -->
