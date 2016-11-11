@@ -212,25 +212,17 @@ p.profile-user-last
     right: 1em
 
 .profile-token-toggle
-  .icon-eye
+  .icon-seemore
     vertical-align: middle
-    path
-      fill: $cement-grey
-    circle
-      stroke: $cement-grey
-      fill: #fff
     &:hover
-      path
-        fill: $asphalt-grey
-      circle
+      path, ellipse
         stroke: $asphalt-grey
-        fill: #fff
   &.is-visible
-    .icon-eye
-      circle
+    .icon-seemore
+      ellipse
         fill: $cement-grey
       &:hover
-        circle
+        ellipse
           fill: $asphalt-grey
 
 #unadministerable-hooks

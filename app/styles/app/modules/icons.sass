@@ -20,6 +20,13 @@
   height: 15px
   margin-right: .3em
   @extend %icon
+
+.icon-stopwatch
+  +colorSVG($cement-grey)
+  width: 18px
+  height: 18px
+  vertical-align: middle
+  margin-right: .1em
   
 .icon svg,
 svg.icon
@@ -81,36 +88,10 @@ svg.icon
   @extend %icon-line-calendar
   margin-right: .3rem
 
-%icon-line-clock
-  background-image: inline-image('stroke-icons/icon-clock.svg')
-.icon-clock
-  @extend .icon
-  @extend %icon-line-clock
-  margin-right: .2rem
-
-%icon-line-stopwatch
-  background-image: inline-image('stroke-icons/icon-stopwatch.svg')
-.icon-stopwatch
-  @extend %icon
-  @extend %icon-line-stopwatch
-  width: 17px
-  height: 19px
-  margin-right: .2rem
-
 %icon-github
   background-image: inline-image('stroke-icons/icon-github.svg')
 %icon-github-white
   background-image: inline-image('stroke-icons/icon-github-white.svg')
-  
-.icon-line-commit
-  @extend %icon
-  @extend %icon-github
-
-%icon-line-hash
-  background-image: inline-image('stroke-icons/icon-hash.svg')
-.icon-hash
-  @extend .icon
-  @extend %icon-line-hash
 
 %icon-line-cog
   background-image: inline-image('stroke-icons/icon-settings.svg')
