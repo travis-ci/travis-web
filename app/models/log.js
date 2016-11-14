@@ -94,7 +94,12 @@ var LogModel = Ember.Object.extend({
             }
           });
         };
-      })(this)
+      })(this),
+      error: (e => {
+        // eslint-disable-next-line
+        console.log('Got this error fetching the logs:', e);
+        this.get('job').set('logCurrentlyMissing', true);
+      })
     });
   },
 

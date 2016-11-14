@@ -34,6 +34,8 @@ export default Model.extend(DurationCalculations, {
   pullRequestNumber: Ember.computed.alias('build.pullRequestNumber'),
   pullRequestTitle: Ember.computed.alias('build.pullRequestTitle'),
 
+  logCurrentlyMissing: false,
+
   log: Ember.computed(function () {
     this.set('isLogAccessed', true);
     return Log.create({
@@ -84,6 +86,8 @@ export default Model.extend(DurationCalculations, {
     return waitingStates.includes(state);
   }),
 
+  logNotReady: Ember.computed.or('notStarted', 'logCurrentlyMissing'),
+
   clearLog() {
     if (this.get('isLogAccessed')) {
       return this.get('log').clear();
@@ -133,6 +137,7 @@ export default Model.extend(DurationCalculations, {
   },
 
   appendLog(part) {
+    this.set('logCurrentlyMissing', false);
     return this.get('log').append(part);
   },
 
