@@ -19,10 +19,16 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
   }
 });
 
-test('the broadcast tower shows a warning', (assert) => {
+test('the broadcast tower shows a warning even when an announcement exists, broadcasts are listed in reverse order, and closing a broadcast records it', (assert) => {
   server.create('broadcast', {
     category: 'warning',
     message: 'Join the resistance!'
+  });
+
+  server.create('broadcast', {
+    category: 'announcement',
+    message: 'We need you.',
+    id: 2016
   });
 
   dashboardPage.visit();
@@ -36,12 +42,25 @@ test('the broadcast tower shows a warning', (assert) => {
 
   andThen(() => {
     assert.ok(topPage.broadcasts().isOpen, 'expected the broadcast list to be open');
-    assert.equal(topPage.broadcasts().count, 1, 'expected there to be one broadcast');
-    assert.ok(topPage.broadcasts(0).isWarning, 'expected the first broadcast to be a warning');
-    assert.equal(topPage.broadcasts(0).message, 'Join the resistance!');
+    assert.equal(topPage.broadcasts().count, 2, 'expected there to be two broadcasts');
+
+    assert.ok(topPage.broadcasts(0).isAnnouncement, 'expected the first broadcast to be an announcement');
+    assert.equal(topPage.broadcasts(0).message, 'We need you.');
+
+    assert.ok(topPage.broadcasts(1).isWarning, 'expected the second broadcast to be a warning');
+    assert.equal(topPage.broadcasts(1).message, 'Join the resistance!');
   });
 
   percySnapshot(assert);
+
+  topPage.broadcasts(0).dismiss();
+
+  andThen(() => {
+    assert.ok(topPage.broadcasts().count, 1, 'expected there to be one broadcast');
+    assert.ok(topPage.broadcasts(0).isWarning, 'expected the remaining broadcast to be a warning');
+
+    assert.equal(localStorage.getItem('travis.seen_broadcasts'), JSON.stringify(['2016']));
+  });
 });
 
 test('the broadcast tower shows an announcement', assert => {

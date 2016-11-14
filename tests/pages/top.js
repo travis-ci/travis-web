@@ -33,7 +33,9 @@ export default PageObject.create({
       isAnnouncement: hasClass('announcement', '.broadcast-status'),
       isWarning: hasClass('warning', '.broadcast-status'),
 
-      message: text('.message')
+      message: text('.message'),
+
+      dismiss: clickable('.icon-close')
     }
   })
 });
