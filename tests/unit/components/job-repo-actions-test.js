@@ -29,7 +29,7 @@ test('it shows restart button if canRestart is true', function (assert) {
     canRestart: true
   });
   this.render();
-  assert.ok(component.$('button[title="Restart job"]').length, 'restart link should be visible');
+  assert.ok(component.$('button[title="Restart job"]').length, 'restart button should be visible');
 });
 
 test('user can cancel if she has pull permissions to a repo and job is cancelable', function (assert) {
