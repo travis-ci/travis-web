@@ -15,8 +15,7 @@ moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
 });
 
 test('it shows cancel button if canCancel is true', function (assert) {
-  var component;
-  component = this.subject({
+  const component = this.subject({
     canCancel: true
   });
   this.render();
@@ -24,8 +23,7 @@ test('it shows cancel button if canCancel is true', function (assert) {
 });
 
 test('it shows restart button if canRestart is true', function (assert) {
-  var component;
-  component = this.subject({
+  const component = this.subject({
     canRestart: true
   });
   this.render();
@@ -33,12 +31,11 @@ test('it shows restart button if canRestart is true', function (assert) {
 });
 
 test('user can cancel if she has pull permissions to a repo and job is cancelable', function (assert) {
-  var component, job;
-  job = Ember.Object.create({
+  const job = Ember.Object.create({
     canCancel: false,
     userHasPullPermissionForRepo: true
   });
-  component = this.subject({
+  const component = this.subject({
     job: job,
     userHasPullPermissionForRepo: false
   });
@@ -50,12 +47,11 @@ test('user can cancel if she has pull permissions to a repo and job is cancelabl
 });
 
 test('user can restart if she has pull permissions to a repo and job is restartable', function (assert) {
-  var component, job;
-  job = Ember.Object.create({
+  const job = Ember.Object.create({
     canRestart: false,
     userHasPullPermissionForRepo: true
   });
-  component = this.subject({
+  const component = this.subject({
     job: job,
     userHasPullPermissionForRepo: false
   });
