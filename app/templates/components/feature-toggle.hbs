@@ -1,12 +1,12 @@
 {{#if toggleFeatureTask.isRunning}}
   {{loading-indicator}}
 {{else}}
-  <div class="switch-inner">
-    <span class="on">
-      ON
-    </span>
-    <span class="off">
-      OFF
-    </span>
-  </div>
+<div class="switch-inner">
+  <span class="on">
+    {{inline-svg 'images/stroke-icons/icon-passed' class="icon"}}
+  </span>
+  <span class="off">
+    {{inline-svg 'images/stroke-icons/icon-failed' class="icon"}}
+  </span>
+</div>
 {{/if}}
