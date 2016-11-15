@@ -16,7 +16,12 @@ test('render api build', function (assert) {
     eventType: 'api',
     status: 'passed',
     number: '1234',
-    commit: commit
+    commit: commit,
+    branch: {
+      name: 'feature-branch'
+    },
+    branchName: 'feature-branch',
+    repo: repo
   };
 
   this.set('build', build);
@@ -27,6 +32,8 @@ test('render api build', function (assert) {
 
   assert.equal(this.$().find('.commit-compare').length, 0, 'does not display compare link element for api builds');
   assert.equal(this.$().find('.build-status span').text().trim(), 'API event', 'displays right icon');
+  assert.equal(this.$().find('.commit-branch-url').attr('href'), 'https://github.com/travis-ci/travis-web/tree/feature-branch', 'displays branch url');
+  assert.equal(this.$().find('.commit-branch-url').text().trim(), 'Branch feature-branch', 'displays link to branch');
 });
 
 
@@ -38,7 +45,8 @@ test('render push build', function (assert) {
     eventType: 'push',
     status: 'passed',
     number: '1234',
-    commit: commit
+    commit: commit,
+    branchName: 'feature-2'
   };
 
   this.set('build', build);

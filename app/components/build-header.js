@@ -49,7 +49,7 @@ export default Ember.Component.extend({
     return durationFrom(this.get('item.startedAt'), this.get('item.finishedAt'));
   }),
 
-  urlGitHubBranch: Ember.computed('item.repo.slug', 'item.branchName', function () {
-    return githubBranch(this.get('item.repo.slug'), this.get('item.branchName'));
+  urlGitHubBranch: Ember.computed('item.repo.slug', 'item.branch.name', function () {
+    return githubBranch(this.get('item.repo.slug'), this.get('item.branch.name'));
   })
 });
