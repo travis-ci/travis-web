@@ -34,4 +34,3 @@ test('it allows to show a success', function (assert) {
 
   assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was a success!', type: 'success' }, 'there should be a notice message in flashes');
 });
-
