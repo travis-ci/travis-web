@@ -6,10 +6,10 @@ moduleForComponent('user-avatar', 'UserAvatarComponent | Unit', {
 });
 
 test('it renders', function (assert) {
-  var name = 'Hello Test';
-  var url = 'https://someurl.com/someimage.jpg';
+  const name = 'Hello Test';
+  const url = 'https://someurl.com/someimage.jpg';
 
-  var component = this.subject({ url: url, name: name });
+  const component = this.subject({ url: url, name: name });
   this.render();
 
   assert.ok(component.$().hasClass('avatar'), 'component should have right class');
