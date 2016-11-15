@@ -12,9 +12,9 @@
         {{dashboard-row repo=repo unstar=unstar}}
       {{else}}
         <div class="starred-empty">
-          <span>You can keep track of your favorite repositories here once you start starring!</span>
+          {{inline-svg 'images/stroke-icons/icon-star' class="icon--big"}} You can keep track of your favorite repositories here once you start starring!
         </div>
-        {{/each}}
+      {{/each}}
       </ul>
     </section>
 

@@ -3,31 +3,26 @@
     .dropup-list
       display: block
     .dropup-tofu
-      @extend %icon-line-tofu-teal
+      +colorSVGFill($oxide-blue)
       outline: none
 
 .dropup-tofu
-  @extend %icon-line-tofu
-  background:
-    color: transparent
-    size: 100%
-    repeat: no-repeat
-    position: 0 5px
-  width: 2em
-  height: 1.8em
+  width: 2.5em
+  height: 2em
   border: none
-  text-indent: 999%
-  overflow: hidden
-  white-space: nowrap
+  padding: 0
   cursor: pointer
   display: none
+  .icon-tofu
+    +colorSVGFill($cement-grey)
+    width: 1.9em
+    vertical-align: middle
   @media #{$medium-up}
     display: inline-block
   &:hover,
   &:active
-    @extend %icon-line-tofu-teal
+    +colorSVGFill($oxide-blue)
     outline: none
-
   &:focus
     outline: none
 
@@ -51,16 +46,10 @@
       margin-right: .3rem
     &:hover,
     &:active
+      +colorSVG(white)
       background: $oxide-blue
       color: white
-      .icon-trigger
-        @extend %icon-line-trigger-white
-      .icon-deactivate
-        @extend %icon-line-cross-white
-        border-color: white
-      .icon-settings
-        @extend %icon-line-cog-white
-
+      
   @media #{$medium-up}
     position: absolute
     right: 0

@@ -1,4 +1,5 @@
 .dash-star
+  width: 2.2em
   margin-top: .4em
   cursor: pointer
   &:hover,
@@ -6,9 +7,7 @@
     svg path
       stroke-width: 2px
   &.is-starred
-    svg path
-      stroke: $dozer-yellow
-      fill: $canary-yellow
+    +colorSVGFull($dozer-yellow, $canary-yellow)
 
 .dash-head
   flex: 0 0 2%
