@@ -25,7 +25,7 @@ test('it renders', function (assert) {
   this.render();
   assert.ok(component.$().hasClass('passed'), 'component should have a state class (passed)');
   assert.equal(component.$('.job-number').text().trim(), '2', 'job number should be displayed');
-  assert.equal(component.$('.job-lang').text().trim(), 'JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed');
+  assert.equal(component.$('.job-lang').text().trim(), 'JDK: openjdk6 Ruby: 2.1.2', 'languages list should be displayed');
   assert.equal(component.$('.job-env').text().trim(), 'TESTS=unit', 'env should be displayed');
   assert.ok(component.$('.job-os').hasClass('linux'), 'OS class should be added for OS icon');
   assert.equal(component.$('.job-duration').text().trim(), '1 min 40 sec', 'duration should be displayed');
@@ -57,7 +57,7 @@ test('when env is not set, gemfile is displayed in the env section', function (a
     job: job
   });
   this.render();
-  assert.equal(component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2', 'langauges list should be displayed');
+  assert.equal(component.$('.job-lang .label-align').text().trim(), 'Ruby: 2.1.2', 'languages list should be displayed');
   assert.equal(component.$('.job-env .label-align').text().trim(), 'Gemfile: foo/Gemfile', 'env should be displayed');
 });
 
