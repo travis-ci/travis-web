@@ -47,16 +47,11 @@
       flex: 0 0 50px
       padding-right: 1em
 
-.delete-cache-button
-  &:hover,
-  &:active
-    color: $brick-red
-    +colorSVG($brick-red)
-
 .delete-cache-icon
   position: relative
-  display: inline-block
+  display: block
   .tooltip
+    width: 4em
     pointer-events: none
   @media #{$medium-up}
     .tooltip
