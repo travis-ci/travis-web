@@ -7,14 +7,14 @@
 <div class="centered" style="background: white;">
   <div class="wrapper-main">
     <div id="main" class="mail" role="main">
-      <div class="features-hero">
-        <h1 class="profile-header">Beta Features</h1>
-        <p class="helptext">We'd love to get your feedback on some features
+      <header class="features-hero">
+        <h1 class="h1--grey">Beta Features</h1>
+        <p class="text-big">We'd love to get your feedback on some features
           we're working on to make Travis CI even better.
           To enable a feature, simply toggle the corresponding switch. You can
           return to our standard experience at any time by disabling a given
           flag.</p>
-      </div>
+      </header>
       <div class="profile-header">
         <h1>{{accountName}}</h1>
       </div>
@@ -22,20 +22,18 @@
       {{#if featuresLoading}}
         {{loading-indicator}}
       {{else}}
-      <div id="administerable-hooks">
         <ul class="profile-hooklist">
           {{#each model as |feature|}}
-            <article class="feature">
+            <li class="feature">
               <h2>{{feature.name}}</h2>
               {{feature-toggle feature=feature}}
               <p>{{feature.description}}</p>
-            </article>
+            </li>
           {{else}}
             Oops! It looks like we don't have any experimental features for you
             to try yet.
           {{/each}}
         </ul>
-      </div>
       {{/if}}
     </div>
   </div>
