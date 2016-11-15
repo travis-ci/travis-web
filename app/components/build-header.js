@@ -47,5 +47,13 @@ export default Ember.Component.extend({
 
   elapsedTime: Ember.computed('item.startedAt', 'item.finishedAt', 'item.duration', function () {
     return durationFrom(this.get('item.startedAt'), this.get('item.finishedAt'));
+  }),
+
+  displayBranch: Ember.computed('item', () => {
+    if (!Ember.isEmpty(this.get('item.build'))) {
+      Ember.computed.equal('item.build.branch.name', 'item.repo.defaultBranch.name');
+    } else {
+      Ember.computed.equal('item.branch.name', 'item.repo.defaultBranch.name');
+    }
   })
 });
