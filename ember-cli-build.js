@@ -41,6 +41,9 @@ module.exports = function () {
     'ember-prism': {
       'components': ['scss', 'javascript', 'json'], //needs to be an array, or undefined.
       'plugins': ['line-highlight']
+    },
+    svg: {
+      optimize: false
     }
   });
 

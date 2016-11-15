@@ -11,7 +11,7 @@
   {{#if repo.slug}}
     {{#if repo.currentBuild.id}}
       <p class="tile-title float-right {{repo.currentBuild.state}}">
-        <span class="icon-hash"></span>
+        {{inline-svg 'images/stroke-icons/icon-hash' class="icon"}}
         {{#link-to "build" repo repo.currentBuild.id}}
           <span class="label-align">{{repo.currentBuild.number}}</span>
         {{/link-to}}
@@ -20,7 +20,7 @@
   {{/if}}
 
   <p>
-    <span class="icon-clock"></span>
+    {{inline-svg 'images/stroke-icons/icon-clock' class="icon"}}
     <span class="label-align">Duration:
     <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title={{repo.currentBuild.startedAt}}>
       {{format-duration repo.currentBuild.duration}}
@@ -28,7 +28,7 @@
   </p>
 
   <p>
-    <span class="icon-calendar"></span>
+    {{inline-svg 'images/stroke-icons/icon-calendar' class="icon"}}
     <span class="label-align">Finished:
     <time class="finished_at timeago" datetime={{repo.currentBuild.finishedAt}} title={{repo.currentBuild.finishedAt}}>
       {{format-time repo.currentBuild.finishedAt}}

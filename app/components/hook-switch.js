@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   tagName: 'a',
-  classNames: ['switch--icon'],
+  classNames: ['switch'],
   classNameBindings: ['hook.active:active', 'disabled:disabled', 'disabled:inline-block'],
   click() {
     if (!this.get('disabled')) {

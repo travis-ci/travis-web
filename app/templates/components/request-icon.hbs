@@ -1,50 +1,19 @@
 {{#if isEmpty}}
-  <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" aria-labelledby="title">
-    <title id="title">No event</title>
-    <g><circle cx="7.5" cy="7.5" r="7"/></g>
-  </svg>
+  {{inline-svg 'images/stroke-icons/icon-nobuilds'}}
 {{else}}
   {{#if isPush}}
-    <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" aria-labelledby="title">
-      <title id="title">Push event</title>
-      <g>
-        <circle cx="7.505" cy="7.354" r="2.854"/>
-        <line x1="14.5" y1="7.354" x2="10.349" y2="7.354"/>
-        <line x1="4.651" y1="7.354" x2="0.5" y2="7.354"/>
-      </g>
-    </svg>
+    {{inline-svg 'images/stroke-icons/icon-push.svg'}}
   {{/if}}
 
   {{#if isPR}}
-    <svg version="1.1" x="0px" y="0px" viewBox="0 -1 16 17" aria-labelledby="title">
-      <title id="title">Pull request event</title>
-      <g>
-        <circle cx="3.299" cy="2.344" r="1.699"/>
-        <circle cx="3.299" cy="12.801" r="1.699"/>
-        <circle cx="11.697" cy="12.801" r="1.699"/>
-        <line x1="3.299" y1="4.044" x2="3.299" y2="11.102"/>
-        <path d="M8.752,0.5c0,0-1.946,1.946-1.946,1.975h2.396c0,0,2.483-0.152,2.483,2.462s0,6.143,0,6.143"/>
-        <path d="M8.752,4.436c0,0-1.946-1.946-1.946-1.975"/>
-      </g>
-    </svg>
+    {{inline-svg 'images/stroke-icons/icon-pullrequest'}}
   {{/if}}
 
   {{#if isCron}}
-    <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" aria-labelledby="title">
-      <title id="title">Cron job event</title>
-      <g>
-        <circle class="st0" cx="10.982" cy="5.518" r="3.518"/>
-        <polyline class="st0" points="10.869,3.361 10.869,5.518 12.228,6.399"/>
-        <path class="st0" d="M7.391,5.364H6.705c-0.295,0-0.591,0.295-0.591,0.65v1.558H4.755V6.014c0-0.355-0.236-0.65-0.591-0.65H2.391c-0.295,0-0.591,0.295-0.591,0.65v1.558H1.091c-0.295,0-0.591,0.295-0.591,0.65v3.642c0,0.355,0.236,0.65,0.591,0.65h8.865c0.295,0,0.591-0.295,0.591-0.65V9.016"/>
-      </g>
-    </svg>
+    {{inline-svg 'images/stroke-icons/icon-cronjobs'}}
   {{/if}}
 
   {{#if isAPI}}
-    <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" aria-labelledby="title">
-      <title id="title">API event</title>
-      <g><path d="M13.676,5.327h-1.153V3.156c0-0.494-0.329-0.906-0.824-0.906H9.147c-0.412,0-0.824,0.412-0.824,0.906 v2.171H6.429V3.156c0-0.494-0.329-0.906-0.824-0.906h-2.47c-0.412,0-0.824,0.412-0.824,0.906v2.171H1.324C0.912,5.327,0.5,5.739,0.5,6.233v5.076c0,0.494,0.329,0.906,0.824,0.906h12.353c0.412,0,0.824-0.412,0.824-0.906V6.233C14.5,5.739,14.171,5.327,13.676,5.327z"/>
-      </g>
-    </svg>
+    {{inline-svg 'images/stroke-icons/icon-api'}}
   {{/if}}
 {{/if}}
