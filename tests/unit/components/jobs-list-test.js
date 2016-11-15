@@ -6,8 +6,7 @@ moduleForComponent('jobs-list', 'JobsListComponent', {
 });
 
 test('it renders a list of jobs', function (assert) {
-  var component, jobs;
-  jobs = [
+  const jobs = [
     Ember.Object.create({
       id: 1,
       state: 'passed'
@@ -16,7 +15,7 @@ test('it renders a list of jobs', function (assert) {
       state: 'failed'
     })
   ];
-  component = this.subject({
+  const component = this.subject({
     jobs: jobs,
     required: true
   });
