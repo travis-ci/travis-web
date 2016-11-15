@@ -5,7 +5,7 @@
   </div>
   <div class="row-builds">
     <div class="row-item">
-    <span class="icon icon-line-build"></span>
+      {{inline-svg 'images/stroke-icons/icon-builds' class="icon"}}
     <span class="label-align">
     {{#if branch.last_build}}
       {{#if getLast5Builds.isLoading}}
@@ -34,7 +34,7 @@
   </div>
   <div class="row-calendar">
     <div class="row-item" title="{{pretty-date branch.last_build.finished_at}}">
-      <span class="icon-calendar"></span>
+      {{inline-svg 'images/stroke-icons/icon-calendar' class="icon"}}
       <span class="label-align">
       {{#if branch.last_build}}
         {{format-time branch.last_build.finished_at}}
@@ -47,7 +47,7 @@
 <div class="two-line">
   <div class="row-commit">
     <div class="row-item">
-      <span class="icon-github"></span>
+      {{inline-svg 'images/stroke-icons/icon-github' class="icon"}}
       <a href="{{urlGithubCommit}}" title="commit on GitHub">
       <span class="label-align">
       {{#if branch.last_build}}

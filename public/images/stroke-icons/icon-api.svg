@@ -1,12 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="icon-api" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:none;stroke:#9D9D9D;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-</style>
-<path id="api" class="st0" d="M13.676,5.327h-1.153V3.156c0-0.494-0.329-0.906-0.824-0.906H9.147c-0.412,0-0.824,0.412-0.824,0.906
-	v2.171H6.429V3.156c0-0.494-0.329-0.906-0.824-0.906h-2.47c-0.412,0-0.824,0.412-0.824,0.906v2.171H1.324
-	C0.912,5.327,0.5,5.739,0.5,6.233v5.076c0,0.494,0.329,0.906,0.824,0.906h12.353c0.412,0,0.824-0.412,0.824-0.906V6.233
-	C14.5,5.739,14.171,5.327,13.676,5.327z"/>
+<svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" aria-labelledby="title">
+  <title id="title">API event</title>
+  <g><path d="M13.676,5.327h-1.153V3.156c0-0.494-0.329-0.906-0.824-0.906H9.147c-0.412,0-0.824,0.412-0.824,0.906 v2.171H6.429V3.156c0-0.494-0.329-0.906-0.824-0.906h-2.47c-0.412,0-0.824,0.412-0.824,0.906v2.171H1.324C0.912,5.327,0.5,5.739,0.5,6.233v5.076c0,0.494,0.329,0.906,0.824,0.906h12.353c0.412,0,0.824-0.412,0.824-0.906V6.233C14.5,5.739,14.171,5.327,13.676,5.327z"/>
+  </g>
 </svg>

@@ -15,10 +15,13 @@ const jobComponent = {
     isPassed: hasClass('passed'),
     isFailed: hasClass('failed')
   },
-
   number: text('.job-number .label-align'),
   env: text('.job-env .label-align'),
-  os: text('.job-os span'),
+  os: {
+    scope: '.job-os',
+    isLinux: hasClass('linux'),
+    isMacOS: hasClass('osx')
+  },
   language: text('.job-lang .label-align')
 };
 

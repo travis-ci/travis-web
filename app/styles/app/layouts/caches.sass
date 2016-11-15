@@ -48,43 +48,20 @@
       padding-right: 1em
 
 .delete-cache-button
-  padding-right: 3.1em
-  font-size: 15px
-  background:
-    size: auto 17px
-    position: 90% 0
-    repeat: no-repeat
-  @extend %icon-line-trashcan
+  .icon-trash
+    margin-left: 4px
   &:hover,
   &:active
     color: $brick-red
-    @extend %icon-line-trashcan-red
+    +colorSVG($brick-red)
 
 .delete-cache-icon
   position: relative
-  display: inline-block
+  display: block
   .tooltip
+    width: 4em
+    text-align: center
     pointer-events: none
-  .icon-trash
-    display: inline-block
-    height: 17px
-    padding-left: 1.7em
-    background:
-      size: auto 100%
-      repeat: no-repeat
-    @extend %icon-line-trashcan
-  &:hover,
-  &:active
-    color: $brick-red
-    .icon-trash
-      @extend %icon-line-trashcan-red
   @media #{$medium-up}
     .tooltip
       pointer-events: inherit
-    .icon-trash
-      width: 50px
-      padding-left: 0
-      text-indent: 999%
-      white-space: nowrap
-      overflow: hidden
-      background-position: 50% 0
