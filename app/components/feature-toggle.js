@@ -5,7 +5,7 @@ const { service } = Ember.inject;
 
 export default Ember.Component.extend({
   tagName: 'a',
-  classNames: ['switch--icon'],
+  classNames: ['switch'],
   classNameBindings: ['feature.enabled:active', 'disabled:disabled', 'disabled:inline-block'],
 
   features: service(),
