@@ -4,14 +4,14 @@
   </div>
 </header>
 
-<div class="centered" style="background: white;">
+<div class="centered layout-features">
   <div class="wrapper-main">
     <div id="main" class="mail" role="main">
       <header class="features-hero">
         <h1 class="h1--grey">Beta Features</h1>
         <p class="text-big">We'd love to get your feedback on some features
-          we're working on to make Travis CI even better.
-          To enable a feature, simply toggle the corresponding switch. You can
+          we're working on to make Travis CI even better.</p>
+        <p class="text-big">To enable a feature, simply toggle the corresponding switch. You can
           return to our standard experience at any time by disabling a given
           flag.</p>
       </header>
@@ -22,11 +22,12 @@
       {{#if featuresLoading}}
         {{loading-indicator}}
       {{else}}
-        <ul class="profile-hooklist">
+        <ul class="features-list">
           {{#each model as |feature|}}
             <li class="feature">
-              <h2>{{feature.name}}</h2>
               {{feature-toggle feature=feature}}
+              <h2 class="feature-name">{{feature.name}}
+                <small>(<a href="mailto:support@travis-ci.com?subject=About your {{feature.name}} feature" title="">We'd love some feedback!</a>)</small></h2>
               <p>{{feature.description}}</p>
             </li>
           {{else}}
@@ -38,6 +39,4 @@
     </div>
   </div>
 </div>
-<footer class="{{if auth.signedIn 'hidden'}}">
-  {{render "footer"}}
-</footer>
+{{render "footer"}}
