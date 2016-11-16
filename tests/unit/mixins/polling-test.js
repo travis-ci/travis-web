@@ -7,8 +7,7 @@ var hookRuns = 0,
   pollingChangesHistory = [];
 
 define('travis/components/polling-test', [], function () {
-  var PollingService;
-  PollingService = Ember.Object.extend({
+  const PollingService = Ember.Object.extend({
     startPolling: function (model) {
       return pollingChangesHistory.push({
         type: 'start',
@@ -58,15 +57,14 @@ moduleForComponent('polling-test', 'PollingMixin', {
 });
 
 test('it properly stops polling hook without any models', function (assert) {
-  var component, expected;
-  component = this.subject({
+  const component = this.subject({
     pollModels: null
   });
   this.render();
   Ember.run(function () {
     return component.destroy();
   });
-  expected = [
+  const expected = [
     {
       type: 'start-hook',
       source: '<PollingTestingComponent>'
@@ -79,8 +77,7 @@ test('it properly stops polling hook without any models', function (assert) {
 });
 
 test('it works even if one of the model is null', function (assert) {
-  var component, expected;
-  component = this.subject({
+  const component = this.subject({
     model1: {
       name: 'model1'
     }
@@ -89,7 +86,7 @@ test('it works even if one of the model is null', function (assert) {
   Ember.run(function () {
     return component.destroy();
   });
-  expected = [
+  const expected = [
     {
       type: 'start',
       model: {
@@ -112,8 +109,7 @@ test('it works even if one of the model is null', function (assert) {
 });
 
 test('it polls for both models if they are present', function (assert) {
-  var component, expected;
-  component = this.subject({
+  const component = this.subject({
     model1: {
       name: 'model1'
     },
@@ -125,7 +121,7 @@ test('it polls for both models if they are present', function (assert) {
   Ember.run(function () {
     return component.destroy();
   });
-  expected = [
+  const expected = [
     {
       type: 'start',
       model: {
@@ -158,8 +154,7 @@ test('it polls for both models if they are present', function (assert) {
 });
 
 test('it detects model changes', function (assert) {
-  var component, expected;
-  component = this.subject({
+  const component = this.subject({
     model1: {
       name: 'foo'
     }
@@ -173,7 +168,7 @@ test('it detects model changes', function (assert) {
   Ember.run(function () {
     return component.destroy();
   });
-  expected = [
+  const expected = [
     {
       type: 'start',
       model: {

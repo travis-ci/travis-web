@@ -19,8 +19,7 @@ test('calculation of avatar urls via Gravatar', function (assert) {
 });
 
 test('calculation of avatar urls via overriding parameter', function (assert) {
-  var model;
-  model = this.subject();
+  const model = this.subject();
   Ember.run(function () {
     return model.setProperties({
       authorEmail: 'author@example.com',
