@@ -17,11 +17,11 @@ test('it renders feature state correctly', function (assert) {
 
   this.render(hbs`{{feature-toggle feature=feature}}`);
 
-  assert.ok(this.$().find('a.switch--icon').hasClass('active'));
+  assert.ok(this.$().find('a.switch').hasClass('active'));
 
   Ember.run(() => {
     feature.toggleProperty('enabled');
   });
 
-  assert.notOk(this.$().find('a.switch--icon').hasClass('active'));
+  assert.notOk(this.$().find('a.switch').hasClass('active'));
 });
