@@ -21,3 +21,35 @@
 
   .feature
     margin-bottom: 3em
+
+
+.travis-pride
+  .top
+    background: linear-gradient(to bottom, #e2453c 0%, #e07e39 16%, #e5d667 32%, #51b95b 48%, #1e72b7 66%, #6f5ba7 86%) no-repeat
+  .topbar a,
+  .navigation-anchor
+    color: white
+  .navigation-nested
+    background: linear-gradient(to top, #e2453c 0%, #e07e39 16%, #e5d667 32%, #51b95b 48%, #1e72b7 66%, #6f5ba7 86%) no-repeat
+    a:hover,
+    a:active
+      background-color: rgba(255, 255, 255, 0.3)
+  .icon-broadcast
+    +colorSVG(white)
+
+  .logo
+    width: 70px
+    a
+      background:
+        image: url(https://travis-ci.com/images/logos/TravisCI-Mascot-pride.svg)
+        repeat: no-repeat
+        size: 50px
+        position: center
+        color: transparent
+      transition: transform 200ms ease
+      &:hover,
+      &:active
+        transform: rotateY(180deg)
+        background:
+          image: url(https://travis-ci.com/images/logos/Tessa-pride.svg)
+ 
