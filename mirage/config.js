@@ -296,7 +296,7 @@ export default function () {
         },
         {
           name: 'Show your Pride',
-          description: 'Let 🌈in your heart (and travis)',
+          description: 'Let 🌈 in your heart (and Travis CI)',
           enabled: true
         },
         {
