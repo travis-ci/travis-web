@@ -39,8 +39,7 @@ before_script:
   - echo $PERCY_ENABLE
 
 script:
-  - phantomjs -v
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
