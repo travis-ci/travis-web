@@ -276,12 +276,12 @@ export default function () {
         {
           name: 'Show your Pride',
           description: 'Let 🌈 in your heart (and Travis CI)',
-          enabled: true
+          enabled: false
         },
         {
-          name: 'Do Nothing Feature',
-          description: 'This feature does absolutely nothing',
-          enabled: true
+          name: 'Comic Sans',
+          description: 'Don\'t you miss those days?',
+          enabled: false
         }
       ]);
       return this.serialize(schema.features.all());
