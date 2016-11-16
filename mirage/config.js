@@ -274,8 +274,8 @@ export default function () {
           enabled: true
         },
         {
-          name: 'Make header pink',
-          description: 'This feature changes the background color of the header',
+          name: 'Show your Pride',
+          description: 'Let 🌈in your heart (and travis)',
           enabled: true
         },
         {
