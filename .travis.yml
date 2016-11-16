@@ -1,6 +1,15 @@
----
 language: node_js
 node_js: 5
+
+dist: trusty
+sudo: required
+
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
 
 env:
   - EMBER_VERSION=default
@@ -14,25 +23,22 @@ matrix:
 
   fast_finish: true
 
-sudo: false
-dist: trusty
-
 cache:
   directories:
     - node_modules
     - bower_components
 
 before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - "npm config set spin false"
-  - "npm install -g npm@^2"
 
 install:
-  - npm install -g bower
   - npm install
   - bower install
 
 script:
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
+  - ember try:one $EMBER_VERSION --skip-cleanup --- ember test --reporter dot
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
