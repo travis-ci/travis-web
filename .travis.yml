@@ -39,6 +39,7 @@ before_script:
   - echo $PERCY_ENABLE
 
 script:
+  - phantomjs -v
   - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test
 
 before_deploy:
