@@ -1,5 +1,5 @@
 /* global signInUser */
-import { skip } from 'qunit';
+import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import authPage from 'travis/tests/pages/auth';
 
@@ -10,7 +10,7 @@ moduleForAcceptance('Acceptance | automatic sign out', {
   }
 });
 
-skip('when token is invalid user should be signed out', function (assert) {
+test('when token is invalid user should be signed out', function (assert) {
   window.sessionStorage.setItem('travis.token', 'wrong-token');
   window.localStorage.setItem('travis.token', 'wrong-token');
 
