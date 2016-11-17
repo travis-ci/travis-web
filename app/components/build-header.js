@@ -51,7 +51,7 @@ export default Ember.Component.extend({
     return durationFrom(this.get('item.startedAt'), this.get('item.finishedAt'));
   }),
 
-  @computed('item.repo.slug', 'item.branch.name')
+  @computed('item.repo.slug', 'commit.branch')
   urlGitHubBranch(slug, branchName) {
     return githubBranch(slug, branchName);
   }

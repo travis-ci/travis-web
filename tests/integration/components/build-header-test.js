@@ -10,17 +10,14 @@ test('render api build', function (assert) {
     slug: 'travis-ci/travis-web'
   };
   let commit = {
-    compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b'
+    compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
+    branch: 'feature-branch'
   };
   let build = {
     eventType: 'api',
     status: 'passed',
     number: '1234',
     commit: commit,
-    branch: {
-      name: 'feature-branch'
-    },
-    branchName: 'feature-branch',
     repo: repo
   };
 
