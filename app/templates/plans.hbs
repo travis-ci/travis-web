@@ -1,97 +1,103 @@
 {{#travis-layout layoutName="layouts/landing-page" class="landing-pro"}}
 <div id="landing" class="landing wrapper">
-  <section class="section--white">
-    <div class="inner">
+  <section class="inner">
       <header class="section--center">
-        <h1 class="h1--grey">Always free for <a href="https://travis-ci.org">open source projects</a>!</h1>
-        <p class="text-big">Set up your first project in <strong>just one minute</strong>.<br>
-          <strong>Your first 100 builds are free!</strong> No credit card required.
+        <h1 class="h1--green">Built for every team</h1>
+        <p class="text-big">Set up your first project in just one minute.<br>
+          Your first 100 builds are free! No credit card required.
         </p>
       </header>
-      <ul class="list--plans">
-        <li class="plan--red">
-          <h2 class="plan-title">Open Source</h2>
-          <div class="plan-pricing">
-            <div class="price">Free</div>
-            <div class="timemrane">always</div>
-          </div>
-          <ul class="list--check">
-            <li>Fair use</li>
-            <li>Unlimited build minutes</li>
-            <li>Unlimited repositories</li>
-            <li>Unlimited collaborators</li>
-          </ul>
-          <div class="plan-cta">
-            <a href="https://travis-ci.org" class="plan-cta-btn">Get Started</a>
-          </div>
-        </li>
-        <li class="plan--green">
-          <h2 class="plan-title">Startup</h2>
-          <div class="plan-pricing">
-            <div class="price">$129 <small>USD</small></div>
-            <div class="timeframe">per month</div>
-          </div>
-          <ul class="list--check">
-            <li data-jobs="2"><span aria-hidden="false" class="hidden">2</span>Concurrent jobs</li>
-            <li>Unlimited build minutes</li>
-            <li>Unlimited repositories</li>
-            <li>Unlimited collaborators</li>
-          </ul>
-          <div class="plan-cta">
-            <a href="https://travis-ci.com/signin" class="plan-cta-btn" {{action 'gaCta' 'plans-table'}}>Start Trial</a>
-          </div>
-        </li>
-        <li class="plan--teal">
-          <h2 class="plan-title">Small Business</h2>
-          <div class="plan-pricing">
-            <div class="price">$249 <small>USD</small></div>
-            <div class="timeframe">per month</div>
-          </div>
-          <ul class="list--check">
-            <li data-jobs="5"><span aria-hidden="false" class="hidden">5</span>Concurrent jobs</li>
-            <li>Unlimited build minutes</li>
-            <li>Unlimited repositories</li>
-            <li>Unlimited collaborators</li>
-          </ul>
-          <div class="plan-cta">
-            <a href="https://travis-ci.com/signin" class="plan-cta-btn" {{action 'gaCta' 'plans-table'}}>Start Trial</a>
-          </div>
-        </li>
-        <li class="plan--yellow">
-          <h2 class="plan-title">Premium</h2>
-          <div class="plan-pricing">
-            <div class="price">$489 <small>USD</small></div>
-            <div class="timeframe">per month</div>
-          </div>
-          <ul class="list--check">
-            <li data-jobs="10"><span aria-hidden="false" class="hidden">10</span>Concurrent jobs</li>
-            <li>Unlimited build minutes</li>
-            <li>Unlimited repositories</li>
-            <li>Unlimited collaborators</li>
-          </ul>
-          <div class="plan-cta">
-            <a href="https://travis-ci.com/signin" class="plan-cta-btn" {{action 'gaCta' 'plans-table'}}>Start Trial</a>
-          </div>
-        </li>
+
+      <ul class=list--plans"">
+          <li>
+              <p>$69</p>
+              <p>per month</p>
+              <h2>Bootstrap</h2>
+              <h3>Ideal for hobby projects</h3>
+              <ul class="list--check">
+                  <li data-jobs="1"><span aria-hidden="false" class="hidden">1</span>Concurrent job</li>
+                  <li>Unlimited build minutes</li>
+                  <li>Unlimited repositories</li>
+                  <li>Unlimited collaborators</li>
+              </ul>
+          </li>
+          <li>
+              <p>$69</p>
+              <p>per month</p>
+              <h2>Bootstrap</h2>
+              <h3>Ideal for hobby projects</h3>
+              <ul class="list--check">
+                  <li data-jobs="1"><span aria-hidden="false" class="hidden">1</span>Concurrent job</li>
+                  <li>Unlimited build minutes</li>
+                  <li>Unlimited repositories</li>
+                  <li>Unlimited collaborators</li>
+              </ul>
+          </li>
+          <li class="plan--important">
+              <p>$129</p>
+              <p>per month</p>
+              <h2>Startup</h2>
+              <h3>Best for small teams</h3>
+              <ul class="list--check">
+                  <li data-jobs="2"><span aria-hidden="false" class="hidden">2</span>Concurrent job</li>
+                  <li>Unlimited build minutes</li>
+                  <li>Unlimited repositories</li>
+                  <li>Unlimited collaborators</li>
+              </ul>
+              <a href="https://travis-ci.com/signin" class="" {{action 'gaCta' 'plans-table'}}>Start Trial</a>
+          </li>
+          <li>
+              <p>$249</p>
+              <p>per month</p>
+              <h2>Small Business</h2>
+              <h3>Great for growing teams</h3>
+              <ul class="list--check">
+                  <li data-jobs="5"><span aria-hidden="false" class="hidden">5</span>Concurrent job</li>
+                  <li>Unlimited build minutes</li>
+                  <li>Unlimited repositories</li>
+                  <li>Unlimited collaborators</li>
+              </ul>
+          </li>
+          <li>
+              <p>$489</p>
+              <p>per month</p>
+              <h2>Premium</h2>
+              <h3>Perfect for larger teams</h3>
+              <ul class="list--check">
+                  <li data-jobs="10"><span aria-hidden="false" class="hidden">10</span>Concurrent job</li>
+                  <li>Unlimited build minutes</li>
+                  <li>Unlimited repositories</li>
+                  <li>Unlimited collaborators</li>
+              </ul>
+          </li>
       </ul>
-      <div class="section--center">
-       <p class="text-big">In need of a bigger plan? <a href="mailto:contact@travis-ci.com">Get in touch</a><br> and we'll help get that started!</p>
-      </div>
-    </div>
+      <p>All prices shown in USD</p>
+
   </section>
-  <section class="section--grey section--enterprise">
-    <div class="inner">
-      <div class="section-text">
-        <h2 class="h2--teal">Interested in using <br>Travis CI on-site?</h2>
-        <p class="text-big">We offer an <strong>Enterprise plan</strong> for companies who<br> want to keep using the same features of<br> Travis CI with additional on-site security needs.<br><a href="https://enterprise.travis-ci.com">Learn more</a> about Travis CI Enterprise.</p>
+  <section class="inner">
+      <div>
+          <h2>Always <span>free</span> for open source projects</h2>
+          <a href="https://travis-ci.org/signin" class="" {{action 'gaCta' 'plans-table'}}>Set up your open source project now</a>
       </div>
-      <div class="section-image">
-        <img src="images/pro-landing/enterprise-servers.svg" alt="Travis CI Enterprise" aria-hidden="true">
+      <div>
+          <h2>In need of a bigger plan?</h2>
+          <p class="text-big">We can customize a plan based on the needs of your team. We'll work with you to get you started.</p>
+          <a href="mailto:contact@travis-ci.com">Contact Travis CI support</a>
       </div>
-    </div>
   </section>
-  <section class="section--white">
-    <div class="inner">
+  <section class="inner section--enterprise">
+      <div>
+          <h2>Travis CI Enterprise</h2>
+          <p class="text-big">
+              Our Enterprise plan is perfect for companies who want to keep using the same features of Travis CI with additional on-site security needs.
+          </p>
+      </div>
+      <div>
+          {{inline-svg 'images/pro-landing/enterprise-servers'}}
+      </div>
+  </section>
+
+  <section class="inner">
       <h3 class="h3--plans">Frequently asked questions about Travis CI plans</h3>
       <ul class="list--faq">
         <li>
@@ -127,7 +133,6 @@
           <p class="faq-text">We most certainly do! You can find all details on <a href="https://education.travis-ci.com">education.travis-ci.com</a></p>
         </li>
       </ul>
-    </div>
   </section>
 </div>
 {{/travis-layout}}
