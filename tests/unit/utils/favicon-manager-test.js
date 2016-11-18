@@ -35,15 +35,14 @@ test('set favicon if there is no link tag in head', function (assert) {
   }, 20);
 });
 
-test('replace exisiting link tag', function (assert) {
+test('replace existing link tag', function (assert) {
   let done = assert.async();
-  var link, links;
   fakeHead.append(Ember.$('<link id="foo" rel="icon"></link>'));
   assert.ok('foo', fakeHead.find('link').attr('id'), 'initially link should exist');
   manager.setFavicon('foobar');
-  links = fakeHead.find('link');
+  const links = fakeHead.find('link');
   assert.equal(links.length, 1, 'there should be only one link in head');
-  link = links[0];
+  const link = links[0];
   assert.ok(!link.getAttribute('id'), 'existing link should be replaced with a new one');
   return setTimeout(function () {
     assert.equal(link.getAttribute('href'), 'foobar', 'href attribute for the link should be properly set');
@@ -55,5 +54,5 @@ test('replace exisiting link tag', function (assert) {
 
 test('find link with rel=icon only', function (assert) {
   fakeHead.append(Ember.$('<link id="foo" rel="foo"></link>'));
-  assert.ok(!manager.getLinkTag());
+  assert.notOk(manager.getLinkTag());
 });
