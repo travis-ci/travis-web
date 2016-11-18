@@ -1,18 +1,96 @@
-.landing-pro
-  .list--plans
-    @extend %list
-    display: flex
-    flex-wrap: wrap
-    justify-content: space-between
-    margin: 5em 0
 
-  [class^="plan--"]
-    flex: 1 0 235px
+$light-blue: #FCFDFD
+  
+=planBtn($color)
+  display: inline-block
+  padding: .5em 1em
+  border: 1px solid $color
+  border-radius: 3px
+  font-size: 20px
+  color: $color
+  background: white
+  transition: background-color 200ms ease
+  &:hover,
+  &:active
+    background-color: $color
+    color: white
+
+$plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
+
+@each $ident, $color in $plan-buttons
+  .plans-button--#{$ident}
+    +planBtn($color)
+
+.h2--grey
+  font-size: 45px
+  color: $asphalt-grey
+.h2--teal
+  font-size: 45px
+  color: $oxide-blue
+.em--yellow
+  color: $dozer-yellow
+
+.section-headline
+  margin-bottom: 0
+
+.section--two
+  display: flex
+  flex-flow: column nowrap
+  [class^="plans-button"]
+    margin-top: 1em
+  > div
+    margin-bottom: 5em
+  @media #{$medium}
+    flex-flow: row nowrap
+    justify-content: space-around
+    > div
+      display: flex
+      flex-flow: column
+      justify-content: space-between
+      flex: 0 0 48%
+      align-items: flex-start
+      margin-bottom: 0
+
+  &.section--os
+    padding-top: 8em
+    padding-bottom: 8em
+
+  &.section--enterprise
+    margin: 3em 1em 9em
+    padding-top: 3em
+    padding-bottom: 4em
+    background-color: $light-blue
+    border: 1px solid $oxide-blue
+    @media #{$medium}
+      margin: 3em auto 9em
+      > div
+        justify-content: center
+        flex: 0 0 45%
+
+.inner.section--faq
+  margin-bottom: 6em
+
+.plans-hero
+  padding-top: 70px
+  padding-bottom: 115px
+
+.list--plans
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  margin: 0
+  padding: 0
+  list-style: none
+
+  .plan,
+  .plan--important
+    flex: 0 0 25%
     padding: .5em 1.5em 3em
     margin-bottom: 2em
+    background-color: $light-blue
     border:
-      width: 2px
-      color: rgba($cement-grey, .2)
+      width: 1px
+      color: $agate-blue
       style: solid
 
     @media #{$medium-up}
@@ -33,6 +111,9 @@
           text-align: center
           font-size: 18px
 
+  
+.landing-pro
+  
   =colorPlans($color, $hover-color, $bg: true)
     border-top-color: $color
     .plan-title
