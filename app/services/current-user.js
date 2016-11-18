@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const { service } = Ember.inject;
+
+export default Ember.Service.extend({
+  auth: service(),
+
   sync() {
     return this.get('model').sync();
   },

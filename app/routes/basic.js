@@ -4,6 +4,7 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend({
   auth: service(),
+  currentUser: service(),
 
   activate() {
     if (this.routeName !== 'error') {
@@ -28,7 +29,7 @@ export default Ember.Route.extend({
   },
 
   signedIn() {
-    return this.controllerFor('currentUser').get('model');
+    return this.get('currentUser.model');
   },
 
   // on pro, we need to auth on every route
