@@ -200,11 +200,7 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  isTrustySudoFalse: Ember.computed('queue', function () {
-    if (this.get('queue') === 'builds.ec2') {
-      return true;
-    }
-  }),
+  isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
 
   isRetiredMacImageXcode6: Ember.computed('queue', 'config.osx_image', function () {
     const isMacStadium6 = this.get('queue') === 'builds.macstadium6';
