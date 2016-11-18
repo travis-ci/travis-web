@@ -29,6 +29,34 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
   color: $oxide-blue
 .em--yellow
   color: $dozer-yellow
+.align-right
+  text-align: right
+.align-center
+  text-align: center
+  
+.plans-label
+  margin-top: 0
+  font-size: 13px
+  color: $cement-grey
+  font-weight: 600
+  text-transform: uppercase
+.plans-name
+  font-size: 30px
+  font-weight: 300
+  margin-bottom: 0
+.plans-timeframe
+  margin-bottom: 4em
+  text-align: center
+
+.plans-price
+  margin: 2rem 0 0
+  font-size: 50px
+  text-align: center
+
+.plans-prices
+  @media #{$medium}
+    margin-top: -4em
+    margin-bottom: 4em
 
 .section-headline
   margin-bottom: 0
@@ -85,17 +113,14 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
   .plan,
   .plan--important
     flex: 0 0 25%
-    padding: .5em 1.5em 3em
+    align-self: center
+    padding: .5em 1.5em 0
     margin-bottom: 2em
     background-color: $light-blue
     border:
       width: 1px
       color: $agate-blue
       style: solid
-
-    @media #{$medium-up}
-      flex: 0 0 235px
-      margin-bottom: 0
 
     .list--check
       margin: 3em 0
@@ -111,6 +136,16 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
           text-align: center
           font-size: 18px
 
+  .plan--important
+    padding: .5em 1.5em 3em
+    z-index: 1
+    box-shadow: $oxide-blue 0px 0px 9px 0px
+
+    .plans-price,
+    .plans-name,
+    .plans-name + .plans-label
+      color: $oxide-blue
+    
   
 .landing-pro
   
