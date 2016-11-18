@@ -1076,7 +1076,9 @@ Log.extend(Log.Renderer.prototype, {
       return other.parentNode.insertBefore(node, other);
     } else {
       log = document.getElementById('log');
-      return log.insertBefore(node, log.firstChild);
+      if (log) {
+        return log.insertBefore(node, log.firstChild);
+      }
     }
   },
   insertAfter: function (node, other) {
