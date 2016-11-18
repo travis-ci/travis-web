@@ -200,7 +200,27 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
+  isTrustySudoFalse: Ember.computed('queue', function () {
+    if (this.get('queue') === 'builds.ec2') {
+      return true;
+    }
+  }),
+
+  isRetiredMacImageXcode6: Ember.computed('queue', 'config.osx_image', function () {
+    const isMacStadium6 = this.get('queue') === 'builds.macstadium6');
+    const retiredImages = ['beta-xcode6.1', 'beta-xcode6.2', 'beta-xcode6.3'];
+
+    return isMacStadium6 && retiredImages.includes(this.get('config.osx_image'));
+    }
+  }),
+
+  isRetiredMacImageXcode7: Ember.computed('queue', 'config.osx_image', function () {
+    const isMacStadium6 = this.get('queue') === 'builds.macstadium6');
+    const retiredImages = ['xcode7', 'xcode7.1', 'xcode7.2'];
+
+    return isMacStadium6 && retiredImages.includes(this.get('config.osx_image'));
+    }
+  }),
 
   displayGceNotice: Ember.computed('queue', 'config.dist', function () {
     if (this.get('queue') === 'builds.gce' && this.get('config.dist') === 'precise') {
