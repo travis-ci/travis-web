@@ -45,7 +45,8 @@ module.exports = function () {
     svg: {
       optimize: false,
       paths: [
-        'public/images/stroke-icons'
+        'public/images/stroke-icons',
+        'public/images/svg'
       ]
     }
   });
