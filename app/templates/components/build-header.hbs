@@ -19,19 +19,19 @@
     <ul class="list-icon">
       <li>
         <a class="commit-commit" title="See the commit on GitHub" href={{urlGithubCommit}}>
-          {{inline-svg 'images/stroke-icons/icon-github' class="icon"}}
+          {{inline-svg 'icon-github' class="icon"}}
           <span class="label-align">Commit {{format-sha commit.sha}}</span></a>
       </li>
       {{#if displayCompare}}
         <li>
           {{#if item.pullRequest}}
             <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
-              {{inline-svg 'images/stroke-icons/icon-github' class="icon"}}
+              {{inline-svg 'icon-github' class="icon"}}
               <span class="label-align">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
           {{else}}
             {{#if item.commit.compareUrl}}
             <a class="commit-compare" title="See the diff on GitHub" href={{item.commit.compareUrl}}>
-              {{inline-svg 'images/stroke-icons/icon-github' class="icon"}}
+              {{inline-svg 'icon-github' class="icon"}}
               <span class="label-align">Compare {{short-compare-shas item.commit.compareUrl}}</span></a>
             {{/if}}
           {{/if}}
@@ -65,17 +65,17 @@
   </h3>
   <ul class="list-icon">
     <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
-      {{inline-svg 'images/stroke-icons/icon-stopwatch' class="icon-stopwatch"}}
+      {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
       <span class="label-align">Elapsed time <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time></span></li>
     {{#unless isJob}}
       {{#if item.isMatrix}}
         <li title="{{format-duration item.duration}}" class="commit-clock">
-          {{inline-svg 'images/stroke-icons/icon-clock' class="icon"}}
+          {{inline-svg 'icon-clock' class="icon"}}
           <span class="label-align">{{#if item.isFinished}}Total time{{else}}Running for{{/if}} <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time></span></li>
       {{/if}}
     {{/unless}}
     <li title="{{item.finishedAt}}" class="commit-calendar">
-      {{inline-svg 'images/stroke-icons/icon-calendar' class="icon"}}
+      {{inline-svg 'icon-calendar' class="icon"}}
       <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time></li>
   </ul>
 </div>

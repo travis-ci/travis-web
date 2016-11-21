@@ -10,13 +10,13 @@
         {{/if}}
 
         <p class="tile-title float-right">
-          {{inline-svg 'images/stroke-icons/icon-hash'}}
+          {{inline-svg 'icon-hash'}}
           {{#if job.repo.slug}}
             {{#link-to "job" job.repo job}}<span class="label-align">{{job.number}}</span>{{/link-to}}
           {{/if}}
         </p>
         <p>
-          {{inline-svg 'images/stroke-icons/icon-clock' class="icon"}}
+          {{inline-svg 'icon-clock' class="icon"}}
           <span class="label-align">
             Duration:
             <time class="duration" datetime={{job.startedAt}} title={{job.startedAt}}>
