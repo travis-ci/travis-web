@@ -2,7 +2,7 @@
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 var Funnel = require('broccoli-funnel');
 
-module.exports = function () {
+module.exports = function (defaults) {
   var fingerprint;
 
   if (process.env.DISABLE_FINGERPRINTS) {
@@ -29,7 +29,7 @@ module.exports = function () {
     }
   }
 
-  var app = new EmberApp({
+  var app = new EmberApp(defaults, {
     babel: {
       includePolyfill: true,
     },
