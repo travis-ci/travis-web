@@ -37,7 +37,7 @@ statusImage = function (slug, branch) {
 
   // the ruby app (waiter) does an indirect, internal redirect to api on build status images
   // but that does not work if you only run `ember serve`
-  // so in development we use the api endpoint deireclty
+  // so in development we use the api endpoint directly
   if (config.environment === 'development') {
     prefix = config.apiEndpoint;
   }
