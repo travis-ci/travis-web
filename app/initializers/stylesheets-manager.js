@@ -4,10 +4,10 @@ var StylesheetsManagerInitializer, initialize, stylesheetsManager;
 
 stylesheetsManager = Ember.Object.create({
   enable: function (id) {
-    return Ember.$('#' + id).removeAttr('disabled');
+    // return Ember.$('#' + id).removeAttr('disabled');
   },
   disable: function (id) {
-    return Ember.$('#' + id).attr('disabled', 'disabled');
+    // return Ember.$('#' + id).attr('disabled', 'disabled');
   }
 });
 
