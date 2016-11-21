@@ -11,7 +11,7 @@ export default Ember.Service.extend({
   sessionStorage: service(),
   ajax: service(),
   state: 'signed-out',
-  receivingEnd: location.protocol + '//' + location.host,
+  receivingEnd: 'https://api.travis-ci.org', // FIXME
 
   init: function () {
     return window.addEventListener('message', (e) => {
