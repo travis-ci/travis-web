@@ -5,7 +5,7 @@ initialize = function (/* application*/) {
 };
 
 PusherInitializer = {
-  name: 'pusher',
+  name: 'ex-pusher',
   after: 'ember-data',
   initialize: initialize
 };
