@@ -28,7 +28,7 @@ export default Ember.Route.extend({
   },
 
   signedIn() {
-    return this.controllerFor('currentUser').get('model');
+    return this.get('auth.currentUser');
   },
 
   // on pro, we need to auth on every route

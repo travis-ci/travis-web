@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
+const { service } = Ember.inject;
+
 export default TravisRoute.extend({
+  auth: service(),
+
   needsAuth: false,
 
   renderTemplate() {
@@ -10,7 +14,7 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
-    return this.controllerFor('auth').set('redirected', false);
+    return this.get('auth').set('redirected', false);
   },
 
   actions: {
