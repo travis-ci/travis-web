@@ -21,18 +21,72 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
   .plans-button--#{$ident}
     +planBtn($color)
 
-.h2--grey
-  font-size: 45px
-  color: $asphalt-grey
-.h2--teal
-  font-size: 45px
-  color: $oxide-blue
-.em--yellow
-  color: $dozer-yellow
-.align-right
-  text-align: right
-.align-center
-  text-align: center
+.plans-hero
+  padding-top: 70px
+  padding-bottom: 115px
+
+.list--plans
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  margin: 0
+  padding: 0
+  list-style: none
+  
+  .plan,
+  .plan--important
+    flex: 0 0 25%
+    align-self: center
+    padding: .5em 1.5em 0
+    margin-bottom: 2em
+    background-color: $light-blue
+    border:
+      width: 1px
+      color: $agate-blue
+      style: solid
+  
+  .plan--important
+    padding: .5em 2em 3em
+    z-index: 1
+    box-shadow: $oxide-blue 0px 0px 9px 0px
+
+    .plans-price,
+    .plans-name,
+    .plans-name + .plans-label
+      color: $oxide-blue
+    .plan-icon
+      +colorSVG($oxide-blue)
+      
+  @media screen and (max-width: 50em)
+    justify-content: space-around
+    .plan--important
+      order: 0
+    .plan
+      order: 1
+    .plan,
+    .plan--important
+      flex: 0 1 240px
+      
+  .list
+    padding: 0
+    list-style: none
+    margin: 3em 0
+    font-size: 16px
+    li
+      line-height: 2
+
+  .list-em
+    display: inline-block
+    width: 1.3em
+    font-weight: 600
+    font-size: 18px
+
+  .plan-icon
+    @extend %icon
+    +colorSVG($cement-grey)
+    width: 13px
+    height: 14px
+    margin-right: 8px
   
 .plans-label
   margin-top: 0
@@ -97,58 +151,8 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
 
 .inner.section--faq
   margin-bottom: 6em
-
-.plans-hero
-  padding-top: 70px
-  padding-bottom: 115px
-
-.list--plans
-  display: flex
-  flex-wrap: wrap
-  justify-content: space-between
-  margin: 0
-  padding: 0
-  list-style: none
-
-  .plan,
-  .plan--important
-    flex: 0 0 25%
-    align-self: center
-    padding: .5em 1.5em 0
-    margin-bottom: 2em
-    background-color: $light-blue
-    border:
-      width: 1px
-      color: $agate-blue
-      style: solid
-
-    .list--check
-      margin: 3em 0
-      font-size: 16px
-      li
-        line-height: 2
-        &[data-jobs]:before
-          content: attr(data-jobs)
-          width: 1.2em
-          background-image: none
-          line-height: 1
-          font-weight: 600
-          text-align: center
-          font-size: 18px
-
-  .plan--important
-    padding: .5em 1.5em 3em
-    z-index: 1
-    box-shadow: $oxide-blue 0px 0px 9px 0px
-
-    .plans-price,
-    .plans-name,
-    .plans-name + .plans-label
-      color: $oxide-blue
-    
   
 .landing-pro
-  
   .list--faq
     display: flex
     flex-flow: row wrap
