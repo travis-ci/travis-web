@@ -3,7 +3,8 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 var defaultOptions;
 
-jQuery.support.cors = true;
+// FIXME
+// jQuery.support.cors = true;
 
 defaultOptions = {
   accepts: {
