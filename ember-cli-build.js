@@ -43,7 +43,10 @@ module.exports = function () {
       'plugins': ['line-highlight']
     },
     svg: {
-      optimize: false
+      optimize: false,
+      paths: [
+        'public/images/stroke-icons'
+      ]
     }
   });
 
