@@ -6,7 +6,8 @@ var VALID_DEPLOY_TARGETS = [
   'org-beta',
   'com-beta',
   'org-canary',
-  'com-canary'
+  'com-canary',
+  'production'
 ];
 
 module.exports = function(deployTarget) {
@@ -31,7 +32,8 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'org-production-pull-request' ||
       deployTarget === 'org-canary' ||
-      deployTarget === 'org-beta') {
+      deployTarget === 'org-beta' ||
+      deployTarget === 'production') {
     ENV.s3.bucket = 'travis-web-production-next';
     ENV.redis.url = process.env.ORG_PRODUCTION_REDIS_URL;
   }
