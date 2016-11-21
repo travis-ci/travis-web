@@ -14,9 +14,10 @@ export default Ember.Service.extend({
   receivingEnd: 'https://api.travis-ci.org', // FIXME
 
   init: function () {
-    return window.addEventListener('message', (e) => {
-      return this.receiveMessage(e);
-    });
+    // FIXME
+    // return window.addEventListener('message', (e) => {
+    //   return this.receiveMessage(e);
+    // });
   },
 
   token() {
