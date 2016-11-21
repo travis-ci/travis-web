@@ -12,11 +12,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  isLegacyInfrastructure: Ember.computed('queue', function () {
-    if (this.get('queue') === 'builds.linux') {
-      return true;
-    }
-  }),
+  isLegacyInfrastructure: Ember.computed.equal('queue', 'builds.linux'),
 
   isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
   isMacStadium6: Ember.computed.equal('queue', 'builds.macstadium6'),
