@@ -1096,7 +1096,9 @@ Log.extend(Log.Renderer.prototype, {
     }
   },
   appendTo: function (node, other) {
-    return other.appendChild(node);
+    if (other) {
+      return other.appendChild(node);
+    }
   },
   addClass: function (classes, string) {
     if (classes != null ? classes.indexOf(string) : void 0) {
