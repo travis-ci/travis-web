@@ -107,8 +107,7 @@ Build.reopen({
     var headers, keys;
     keys = this.get('rawConfigKeys');
     headers = ['Job', 'Duration', 'Finished'];
-    // TODO: No need to use $.map over Ember's
-    return Ember.$.map(headers.concat(keys), function (key) {
+    return headers.concat(keys).map((key) => {
       if (configKeysMap.hasOwnProperty(key)) {
         return configKeysMap[key];
       } else {

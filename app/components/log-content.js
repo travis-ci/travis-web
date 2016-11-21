@@ -17,27 +17,27 @@ Log.Scroll = function (options = {}) {
   return this;
 };
 
-Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
-  insert() {
-    if (this.numbers) {
-      this.tryScroll();
-    }
-    return true;
-  },
-  tryScroll() {
-    let ref;
-    let element = Ember.$('#log p:visible.highlight:first');
-    if (element) {
-      if (this.beforeScroll) {
-        this.beforeScroll();
-      }
-      Ember.$('#main').scrollTop(0);
-      let offset = element.offset();
-      let scrollTop = ((ref = offset) != null ? ref.top : void 0) - (window.innerHeight / 3);
-      return Ember.$('html, body').scrollTop(scrollTop);
-    }
-  }
-});
+// Log.Scroll.prototype = Ember.$.extend(new Log.Listener(), {
+//   insert() {
+//     if (this.numbers) {
+//       this.tryScroll();
+//     }
+//     return true;
+//   },
+//   tryScroll() {
+//     let ref;
+//     let element = Ember.$('#log p:visible.highlight:first');
+//     if (element) {
+//       if (this.beforeScroll) {
+//         this.beforeScroll();
+//       }
+//       Ember.$('#main').scrollTop(0);
+//       let offset = element.offset();
+//       let scrollTop = ((ref = offset) != null ? ref.top : void 0) - (window.innerHeight / 3);
+//       return Ember.$('html, body').scrollTop(scrollTop);
+//     }
+//   }
+// });
 
 Log.Limit = function (maxLines, limitedLogCallback) {
   this.maxLines = maxLines || 1000;
@@ -230,7 +230,7 @@ export default Ember.Component.extend({
   actions: {
     toTop() {
       Travis.tailing.stop();
-      return Ember.$(window).scrollTop(0);
+      // return Ember.$(window).scrollTop(0);
     },
 
     toggleTailing() {

@@ -20,10 +20,8 @@ export default Ember.Component.extend(Polling, {
   }),
 
   scrollTop() {
-    if (window.scrollY > 0) {
-      return Ember.$('html, body').animate({
-        scrollTop: 0
-      }, 200);
+    if (window) {
+      window.alert('This is broken due to FastBoot!');
     }
   }
 });

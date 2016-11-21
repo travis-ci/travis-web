@@ -18,7 +18,7 @@ export default TravisRoute.extend(BuildFaviconMixin, {
 
   renderTemplate: function () {
     if (this.get('config').pro) {
-      Ember.$('body').addClass('pro');
+      // Ember.$('body').addClass('pro');
     }
     return this._super(...arguments);
   },

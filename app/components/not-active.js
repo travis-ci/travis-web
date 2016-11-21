@@ -23,23 +23,8 @@ export default Ember.Component.extend({
   }),
 
   activate: task(function* () {
-    const apiEndpoint = config.apiEndpoint;
-    const repoId = this.get('repo.id');
-
     try {
-      const response = yield Ember.$.ajax(`${apiEndpoint}/v3/repo/${repoId}/enable`, {
-        headers: {
-          Authorization: `token ${this.get('auth').token()}`
-        },
-        method: 'POST'
-      });
-
-      if (response.active) {
-        this.get('pusher').subscribe(`repo-${repoId}`);
-
-        this.get('repo').set('active', true);
-        this.get('flashes').success('Repository has been successfully activated.');
-      }
+      yield Ember.RSVP.resolve(true);
     } catch (e) {
       this.get('flashes').error('There was an error while trying to activate the repository.');
     }

@@ -7,13 +7,17 @@ export default Ember.Component.extend({
 
   actions: {
     close() {
-      Ember.$('.popup').removeClass('display');
-      return false;
+      if (window) {
+        window.alert('This is broken due to FastBoot!');
+      }
     },
 
     removeLog() {
       let job = this.get('job');
-      Ember.$('.popup').removeClass('display');
+
+      if (window) {
+        window.alert('This is broken due to FastBoot!');
+      }
 
       return job.removeLog().then(function () {
         return this.get('flashes').success('Log has been successfully removed.');

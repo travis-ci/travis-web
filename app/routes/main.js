@@ -3,7 +3,7 @@ import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   renderTemplate() {
-    Ember.$('body').attr('id', 'home');
+    // Ember.$('body').attr('id', 'home');
 
     this._super(...arguments);
 

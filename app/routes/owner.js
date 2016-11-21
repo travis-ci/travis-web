@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
+import fetch from "ember-network/fetch";
 
 export default TravisRoute.extend({
   deactivate() {
@@ -19,7 +20,7 @@ export default TravisRoute.extend({
     let { apiEndpoint } = config;
     let includes = '?include=organization.repositories,repository.default_branch,build.commit';
     let url = `${apiEndpoint}/v3/owner/${owner}${includes}`;
-    return Ember.$.ajax(url, options);
+    return fetch(url, options);
   },
 
   beforeModel() {

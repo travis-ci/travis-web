@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import fetch from "ember-network/fetch";
 
 var Request = Ember.Object.extend({
   HEADERS: {
@@ -23,7 +24,7 @@ var Request = Ember.Object.extend({
       this.log.set('token', xhr.getResponseHeader('X-Log-Access-Token'));
     }
     if (xhr.status === 204) {
-      return Ember.$.ajax({
+      return fetch({
         url: this.redirectTo(xhr),
         type: 'GET',
         success: (body) => {

@@ -16,12 +16,8 @@ export default Ember.Component.extend({
 
   currentUser: alias('auth.currentUser'),
 
-  click(event) {
-    let isLink = Ember.$(event.target).is('a');
-    let inSettingsDropdown = Ember.$(event.target).parents('.settings-dropdown').length;
-    if (isLink && inSettingsDropdown) {
-      return this.closeMenu();
-    }
+  click() {
+    return this.closeMenu();
   },
 
   closeMenu() {

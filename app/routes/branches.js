@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
+import fetch from "ember-network/fetch";
 
 const { service } = Ember.inject;
 
@@ -23,7 +24,7 @@ export default TravisRoute.extend({
     let includes = 'build.commit&limit=100';
     let url = `${path}?include=${includes}`;
 
-    return Ember.$.ajax(url, options).then(function (response) {
+    return fetch(url, options).then(function (response) {
       allTheBranches = response.branches;
       return allTheBranches;
     });

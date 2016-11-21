@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import fetch from "ember-network/fetch";
 
 export default Ember.Controller.extend({
   queryParams: ['org'],
@@ -67,7 +68,7 @@ export default Ember.Controller.extend({
       isLoading: true
     });
     apiEndpoint = config.apiEndpoint;
-    Ember.$.ajax(apiEndpoint + '/v3/orgs', {
+    fetch(apiEndpoint + '/v3/orgs', {
       headers: {
         Authorization: 'token ' + this.auth.token()
       }

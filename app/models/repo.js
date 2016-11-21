@@ -129,12 +129,7 @@ const Repo = Model.extend({
   }),
 
   stats: Ember.computed('slug', function () {
-    if (this.get('slug')) {
-      return this.get('_stats') || Ember.$.get('https://api.github.com/repos/' + this.get('slug'), (data) => {
-        this.set('_stats', data);
-        return this.notifyPropertyChange('stats');
-      }) && {};
-    }
+    // ???
   }),
 
   updateTimes() {

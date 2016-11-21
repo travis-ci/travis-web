@@ -6,7 +6,7 @@ export default TravisRoute.extend({
   needsAuth: true,
 
   renderTemplate() {
-    Ember.$('body').attr('id', 'profile');
+    // Ember.$('body').attr('id', 'profile');
     this._super(...arguments);
 
     return this.render('loading', {

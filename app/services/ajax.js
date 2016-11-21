@@ -89,7 +89,7 @@ export default Ember.Service.extend({
       return error.call(this, data, status, xhr);
     };
 
-    options = Ember.$.extend(options, defaultOptions);
+    options = Ember.merge(options, defaultOptions);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
       params = jQuery.param(options.data);

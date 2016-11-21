@@ -1,6 +1,7 @@
 /* globals HS */
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import fetch from "ember-network/fetch";
 
 const { alias } = Ember.computed;
 const { service } = Ember.inject;
@@ -51,7 +52,7 @@ export default Ember.Controller.extend({
       } else {
         seenBroadcasts = [];
       }
-      Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options).then((response) => {
+      fetch(apiEndpoint + '/v3/broadcasts', options).then((response) => {
         var receivedBroadcasts;
         if (response.broadcasts.length) {
           receivedBroadcasts = response.broadcasts.filter(function (broadcast) {

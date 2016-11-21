@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     }
   },
 
-  getStatus(url) {
-    return Ember.$.ajax(url);
+  getStatus() {
+    return 'FastBoot???';
   }
 });

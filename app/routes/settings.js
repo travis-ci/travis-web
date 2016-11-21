@@ -1,6 +1,7 @@
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import Ember from 'ember';
+import fetch from "ember-network/fetch";
 
 const { service } = Ember.inject;
 
@@ -25,7 +26,7 @@ export default TravisRoute.extend({
     var repo = this.modelFor('repo');
     var apiEndpoint = config.apiEndpoint;
 
-    return Ember.$.ajax(apiEndpoint + '/v3/repo/' + repo.get('id'), {
+    return fetch(apiEndpoint + '/v3/repo/' + repo.get('id'), {
       headers: {
         Authorization: 'token ' + this.auth.token()
       }
@@ -78,7 +79,7 @@ export default TravisRoute.extend({
     var apiEndpoint, repoId;
     repoId = this.modelFor('repo').get('id');
     apiEndpoint = config.apiEndpoint;
-    return Ember.$.ajax(apiEndpoint + '/v3/repo/' + repoId, {
+    return fetch(apiEndpoint + '/v3/repo/' + repoId, {
       headers: {
         Authorization: 'token ' + this.auth.token()
       }

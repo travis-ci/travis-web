@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
+import fetch from "ember-network/fetch";
 
 export default TravisRoute.extend({
   queryParams: {
@@ -14,7 +15,7 @@ export default TravisRoute.extend({
     apiEndpoint = config.apiEndpoint;
     let queryParams = '?repository.active=true&include=repository.default_branch,build.commit';
     let url = `${apiEndpoint}/v3/repos${queryParams}`;
-    return Ember.$.ajax(url, {
+    return fetch(url, {
       headers: {
         Authorization: 'token ' + this.auth.token()
       }

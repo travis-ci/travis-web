@@ -5,7 +5,7 @@ export default TravisRoute.extend({
   needsAuth: false,
 
   renderTemplate() {
-    Ember.$('body').attr('id', 'auth');
+    // Ember.$('body').attr('id', 'auth');
     return this.render('auth.signin');
   },
 
