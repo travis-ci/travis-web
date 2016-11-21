@@ -1082,21 +1082,23 @@ Log.extend(Log.Renderer.prototype, {
     }
   },
   insertAfter: function (node, other) {
-    if (other.nextSibling) {
+    if (other && other.nextSibling) {
       return this.insertBefore(node, other.nextSibling);
     } else {
       return this.appendTo(node, other.parentNode);
     }
   },
   prependTo: function (node, other) {
-    if (other.firstChild) {
+    if (other && other.firstChild) {
       return other.insertBefore(node, other.firstChild);
     } else {
       return other.appendTo(node, other);
     }
   },
   appendTo: function (node, other) {
-    return other.appendChild(node);
+    if (other) {
+      return other.appendChild(node);
+    }
   },
   addClass: function (classes, string) {
     if (classes != null ? classes.indexOf(string) : void 0) {
