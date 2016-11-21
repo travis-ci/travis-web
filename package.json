@@ -24,6 +24,7 @@
     "babel-eslint": "^6.1.2",
     "broccoli-asset-rev": "^2.4.5",
     "broccoli-funnel": "^1.0.7",
+    "broccoli-merge-trees": "^1.1.5",
     "ember-ajax": "^2.4.1",
     "ember-browserify": "^1.1.13",
     "ember-cli": "2.9.1",
