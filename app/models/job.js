@@ -214,13 +214,5 @@ export default Model.extend(DurationCalculations, {
     const retiredImages = ['xcode7', 'xcode7.1', 'xcode7.2'];
 
     return isMacStadium6 && retiredImages.includes(this.get('config.osx_image'));
-  }),
-
-  displayGceNotice: Ember.computed('queue', 'config.dist', function () {
-    if (this.get('queue') === 'builds.gce' && this.get('config.dist') === 'precise') {
-      return true;
-    } else {
-      return false;
-    }
   })
 });
