@@ -4,6 +4,14 @@ export default Ember.Component.extend({
   queue: Ember.computed.alias('job.queue'),
   config: Ember.computed.alias('job.config'),
 
+  conjugatedRun: Ember.computed('job.isFinished', function () {
+    if (this.get('job.isFinished')) {
+      return 'ran';
+    } else {
+      return 'is running';
+    }
+  }),
+
   isLegacyInfrastructure: Ember.computed('queue', function () {
     if (this.get('queue') === 'builds.linux') {
       return true;
