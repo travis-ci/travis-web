@@ -16,6 +16,7 @@ export default Ember.Controller.extend({
   reposController: controller('repos'),
   repos: alias('reposController.repos'),
   currentUser: alias('auth.currentUser'),
+  authToken: alias('currentUser.token'),
 
   classNames: ['repo'],
 
@@ -31,8 +32,11 @@ export default Ember.Controller.extend({
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
   }),
 
-  statusImageUrl: Ember.computed('repo.slug', function () {
-    return statusImage(this.get('repo.slug'), this.get('repo.defaultBranch.name'));
+  statusImageUrl: Ember.computed('repo.slug', 'repo.defaultBranch.name', 'authToken', function () {
+    return statusImage(
+      this.get('repo.slug'),
+      this.get('repo.defaultBranch.name'),
+      this.get('authToken'));
   }),
 
   showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {

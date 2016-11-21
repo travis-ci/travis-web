@@ -32,7 +32,7 @@ githubAdmin = function (slug) {
   return config.sourceEndpoint + '/' + slug + '/settings/hooks#travis_minibucket';
 };
 
-statusImage = function (slug, branch) {
+statusImage = function (slug, branch, authToken) {
   var prefix = location.protocol + '//' + location.host;
 
   // the ruby app (waiter) does an indirect, internal redirect to api on build status images
@@ -42,9 +42,8 @@ statusImage = function (slug, branch) {
     prefix = config.apiEndpoint;
   }
 
-  if (config.featureFlags['pro-version']) {
-    let token = Travis.__container__.lookup('controller:currentUser').get('model.token');
-    return `${prefix}/${slug}.svg?token=${token}${branch ? '&branch=' + branch : ''}`;
+  if (authToken) {
+    return `${prefix}/${slug}.svg?token=${authToken}${branch ? '&branch=' + branch : ''}`;
   } else {
     return `${prefix}/${slug}.svg${branch ? '?branch=' + (encodeURIComponent(branch)) : ''}`;
   }
