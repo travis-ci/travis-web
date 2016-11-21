@@ -47,7 +47,6 @@ module.exports = function (defaults) {
     }
   });
 
-  app.import('bower_components/pusher/dist/pusher.js');
   app.import('bower_components/jquery-timeago/jquery.timeago.js');
   app.import('bower_components/JavaScript-MD5/js/md5.js');
   app.import('bower_components/moment/moment.js');
