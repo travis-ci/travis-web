@@ -19,18 +19,17 @@ export default Ember.Component.extend({
   }),
 
   isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
+  isMacStadium6: Ember.computed.equal('queue', 'builds.macstadium6'),
 
-  isRetiredMacImageXcode6: Ember.computed('queue', 'jobConfig.osx_image', function () {
-    const isMacStadium6 = this.get('queue') === 'builds.macstadium6';
+  macOSImage: Ember.computed.alias('jobConfig.osx_image'),
+
+  isRetiredMacImageXcode6: Ember.computed('queue', 'macOSImage', function () {
     const retiredImages = ['beta-xcode6.1', 'beta-xcode6.2', 'beta-xcode6.3'];
-
-    return isMacStadium6 && retiredImages.includes(this.get('jobConfig.osx_image'));
+    return this.get('isMacStadium6') && retiredImages.includes(this.get('macOSImage'));
   }),
 
-  isRetiredMacImageXcode7: Ember.computed('queue', 'jobConfig.osx_image', function () {
-    const isMacStadium6 = this.get('queue') === 'builds.macstadium6';
+  isRetiredMacImageXcode7: Ember.computed('queue', 'macOSImage', function () {
     const retiredImages = ['xcode7', 'xcode7.1', 'xcode7.2'];
-
-    return isMacStadium6 && retiredImages.includes(this.get('jobConfig.osx_image'));
+    return this.get('isMacStadium6') && retiredImages.includes(this.get('macOSImage'));
   })
 });
