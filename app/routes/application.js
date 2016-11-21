@@ -4,11 +4,9 @@ import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import Ember from 'ember';
 
-import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
-
 let { service } = Ember.inject;
 
-export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
+export default TravisRoute.extend(BuildFaviconMixin, {
   flashes: service(),
   needsAuth: false,
 
