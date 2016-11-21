@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 
   init() {
     this._super(...arguments);
-    if (!Ember.testing) {
+    if (false) {
       return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
