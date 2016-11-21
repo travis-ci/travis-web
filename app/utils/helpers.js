@@ -15,8 +15,6 @@ var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   durationFrom, formatCommit, formatConfig, formatMessage, formatSha, githubify,
   intersect, mapObject, only, pathFrom, safe, timeAgoInWords, timeInWords;
 
-mapObject = Ember.$.map;
-
 colors = {
   'default': 'yellow',
   passed: 'green',
