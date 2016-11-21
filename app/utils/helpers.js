@@ -13,9 +13,7 @@ var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
   durationFrom, formatCommit, formatConfig, formatMessage, formatSha, githubify,
-  intersect, mapObject, only, pathFrom, safe, timeAgoInWords, timeInWords, timeago;
-
-timeago = Ember.$.timeago;
+  intersect, mapObject, only, pathFrom, safe, timeAgoInWords, timeInWords;
 
 mapObject = Ember.$.map;
 
@@ -122,9 +120,7 @@ formatMessage = function (message, options) {
 };
 
 timeAgoInWords = function (date) {
-  if (date) {
-    return timeago(date);
-  }
+  return `[FIXME time ago in words for ${date}]`;
 };
 
 durationFrom = function (started, finished) {
