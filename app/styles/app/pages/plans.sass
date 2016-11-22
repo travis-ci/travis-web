@@ -44,7 +44,7 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
       width: 1px
       color: $agate-blue
       style: solid
-  
+    
   .plan--important
     padding: .5em 2em 3em
     z-index: 1
@@ -56,6 +56,12 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
       color: $oxide-blue
     .plan-icon
       +colorSVG($oxide-blue)
+
+  @media screen and (min-width: 50em)
+    .plan:nth-of-type(1)
+      border-right: none
+    .plan:nth-of-type(3)
+      border-left: none
       
   @media screen and (max-width: 50em)
     justify-content: space-around
