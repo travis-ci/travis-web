@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import config from 'travis/config/environment';
-import Visibility from 'npm:visibilityjs';
+const Visibility = {};
 
 const { service } = Ember.inject;
 

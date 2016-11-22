@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { githubRepo, statusImage } from 'travis/utils/urls';
 import eventually from 'travis/utils/eventually';
-import Visibility from 'npm:visibilityjs';
+const Visibility = {};
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
