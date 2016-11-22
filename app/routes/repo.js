@@ -52,11 +52,14 @@ export default TravisRoute.extend(ScrollResetMixin, {
   headData: Ember.inject.service(),
 
   afterModel(model) {
-    const title = `Repository on Travis CI: ${model.get('slug') || '??'} — ${model.get('currentBuild.state')}`;
+    const title = `${model.get('slug') || '??'} — ${model.get('currentBuild.state')}`;
     this.set('headData.title', title);
 
     const image = statusImage(model.get('slug'), model.get('defaultBranch.name'), 'png');
     this.set('headData.image', image);
+
+    const description = `${model.get('slug')} is running on Travis CI. So should you! 😎`;
+    this.set('headData.description', description);
   },
 
   resetController() {
