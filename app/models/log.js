@@ -17,7 +17,7 @@ var Request = Ember.Object.extend({
       },
       error: (e => {
         // eslint-disable-next-line
-        console.log('Got this error fetching the logs:', e);
+        console.log('Got this error fetching the logs outside the model:', e);
         this.set('log.job.logCurrentlyMissing', true);
       })
     });
