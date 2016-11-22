@@ -1,7 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 moduleForModel('commit', 'Unit | Model | commit', {
-  needs: ['model:build']
+  needs: ['model:build', 'service:urls', 'service:auth']
 });
 
 test('calculation of avatar urls via Gravatar', function (assert) {

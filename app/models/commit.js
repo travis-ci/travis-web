@@ -1,10 +1,13 @@
 import Ember from 'ember';
 import Model from 'ember-data/model';
-import { gravatarImage } from 'travis/utils/urls';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
+const { service } = Ember.inject;
+
 export default Model.extend({
+  urls: service(),
+
   sha: attr(),
   branch: attr(),
   message: attr(),
@@ -50,7 +53,7 @@ export default Model.extend({
     var url = this.get('authorAvatarUrl');
 
     if (!url) {
-      url = gravatarImage(this.get('authorEmail'), 40);
+      url = this.get('urls').gravatarImage(this.get('authorEmail'), 40);
     }
 
     return url;
@@ -60,7 +63,7 @@ export default Model.extend({
     var url = this.get('committerAvatarUrl');
 
     if (!url) {
-      url = gravatarImage(this.get('committerEmail'), 40);
+      url = this.get('urls').gravatarImage(this.get('committerEmail'), 40);
     }
 
     return url;

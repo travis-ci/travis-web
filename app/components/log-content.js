@@ -3,7 +3,6 @@ import Ember from 'ember';
 import LinesSelector from 'travis/utils/lines-selector';
 import Log from 'travis/utils/log';
 import LogFolder from 'travis/utils/log-folder';
-import { plainTextLog as plainTextLogUrl } from 'travis/utils/urls';
 
 import config from 'travis/config/environment';
 
@@ -68,6 +67,8 @@ export default Ember.Component.extend({
   auth: service(),
   popup: service(),
   permissions: service(),
+  urls: service(),
+
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
 
@@ -202,7 +203,7 @@ export default Ember.Component.extend({
   plainTextLogUrl: Ember.computed('job.log.id', 'job.log.token', function () {
     let id = this.get('log.job.id');
     if (id) {
-      let url = plainTextLogUrl(id);
+      let url = this.get('urls').plainTextLog(id);
       if (this.get('features.proVersion')) {
         url += `&access_token=${this.get('job.log.token')}`;
       }

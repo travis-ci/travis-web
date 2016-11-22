@@ -1,11 +1,12 @@
 import Ember from 'ember';
-import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   permissions: service(),
+  urls: service(),
+
   tagName: 'li',
   classNameBindings: ['currentBuild.state', 'repo.active:is-active'],
   classNames: ['rows', 'rows--dashboard'],
@@ -17,7 +18,9 @@ export default Ember.Component.extend({
   currentBuild: alias('repo.currentBuild'),
 
   urlGithubCommit: Ember.computed('repo.slug', 'currentBuild.commit.sha', function () {
-    return githubCommitUrl(this.get('repo.slug'), this.get('currentBuild.commit.sha'));
+    const slug = this.get('repo.slug');
+    const sha = this.get('currentBuild.commit.sha');
+    return this.get('urls').githubCommit(slug, sha);
   }),
 
   displayMenuTofu: Ember.computed('permissions.all', 'repo', function () {

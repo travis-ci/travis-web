@@ -3,12 +3,12 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-import { gravatarImage } from '../utils/urls';
 
 const { service } = Ember.inject;
 
 export default Model.extend({
   ajax: service(),
+  urls: service(),
 
   // TODO: this totally not should be needed here
   sessionStorage: service(),
@@ -154,6 +154,6 @@ export default Model.extend({
   },
 
   avatarUrl: Ember.computed('email', function () {
-    return gravatarImage(this.get('email'), 36);
+    return this.get('urls').gravatarImage(this.get('email'), 36);
   })
 });

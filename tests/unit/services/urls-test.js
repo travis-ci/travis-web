@@ -40,47 +40,6 @@ test('githubRepo', function (assert) {
   assert.equal(service.githubRepo(this.slug), 'https://github.com/travis-ci/travis-web');
 });
 
-test('githubWatchers', function (assert) {
-  let service = this.subject();
-  assert.equal(service.githubWatchers(this.slug), 'https://github.com/travis-ci/travis-web/watchers');
-});
-
-test('githubNetwork', function (assert) {
-  let service = this.subject();
-  assert.equal(service.githubNetwork(this.slug), 'https://github.com/travis-ci/travis-web/network');
-});
-
-test('githubAdmin', function (assert) {
-  let service = this.subject();
-  assert.equal(service.githubAdmin(this.slug), 'https://github.com/travis-ci/travis-web/settings/hooks#travis_minibucket');
-});
-
-test('statusImage', function (assert) {
-  let service = this.subject();
-  assert.equal(service.statusImage(this.slug, this.branch), 'http://localhost:7357/travis-ci/travis-web.svg?branch=new-pr');
-});
-
-test('statusImage when pro feature flag enabled', function (assert) {
-  let service = this.subject();
-  service.set('features', Ember.Object.create());
-  service.set('features.proVersion', true);
-  assert.equal(service.statusImage(this.slug, this.branch), 'http://localhost:7357/travis-ci/travis-web.svg?token=token-abc-123&branch=new-pr');
-  service.set('features.proVersion', false);
-});
-
-test('ccXml', function (assert) {
-  let service = this.subject();
-  assert.equal(service.ccXml(this.slug, this.branch), '#/repos/travis-ci/travis-web/cc.xml?branch=new-pr');
-});
-
-test('ccXml when pro feature flag enabled', function (assert) {
-  let service = this.subject();
-  service.set('features', Ember.Object.create());
-  service.set('features.proVersion', true);
-  assert.equal(service.ccXml(this.slug, this.branch), '#/repos/travis-ci/travis-web/cc.xml?branch=new-pr&token=token-abc-123');
-  service.set('features.proVersion', false);
-});
-
 test('email', function (assert) {
   let service = this.subject();
   const email = 'builder@travis-ci.com';

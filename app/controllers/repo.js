@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { githubRepo, statusImage } from 'travis/utils/urls';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'npm:visibilityjs';
 
@@ -9,6 +8,8 @@ const { alias } = Ember.computed;
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
   popup: service(),
+  urls: service(),
+  statusImages: service(),
 
   jobController: controller('job'),
   buildController: controller('build'),
@@ -16,7 +17,6 @@ export default Ember.Controller.extend({
   reposController: controller('repos'),
   repos: alias('reposController.repos'),
   currentUser: alias('auth.currentUser'),
-  authToken: alias('currentUser.token'),
 
   classNames: ['repo'],
 
@@ -32,11 +32,11 @@ export default Ember.Controller.extend({
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
   }),
 
-  statusImageUrl: Ember.computed('repo.slug', 'repo.defaultBranch.name', 'authToken', function () {
-    return statusImage(
+  statusImageUrl: Ember.computed('repo.slug', 'repo.defaultBranch.name', function () {
+    return this.get('statusImages').imageUrl(
       this.get('repo.slug'),
-      this.get('repo.defaultBranch.name'),
-      this.get('authToken'));
+      this.get('repo.defaultBranch.name')
+    );
   }),
 
   showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
@@ -160,6 +160,6 @@ export default Ember.Controller.extend({
   },
 
   urlGithub: Ember.computed('repo.slug', function () {
-    return githubRepo(this.get('repo.slug'));
+    return this.get('urls').githubRepo(this.get('repo.slug'));
   })
 });
