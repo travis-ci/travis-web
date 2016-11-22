@@ -5,6 +5,7 @@ const { service } = Ember.inject;
 
 export default Ember.Service.extend({
   auth: service(),
+  features: service(),
 
   imageUrl(slug, branch) {
     var prefix = location.protocol + '//' + location.host;
