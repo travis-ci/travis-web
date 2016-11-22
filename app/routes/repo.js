@@ -47,6 +47,13 @@ export default TravisRoute.extend(ScrollResetMixin, {
     return Repo.fetchBySlug(this.get('store'), slug);
   },
 
+  headData: Ember.inject.service(),
+
+  afterModel(model) {
+    const title = `Repository on Travis CI: ${model.get('slug') || '??'} — ${model.get('currentBuild.state')}`;
+    this.set('headData.title', title);
+  },
+
   resetController() {
     return this.controllerFor('repo').deactivate();
   },
