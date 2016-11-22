@@ -18,7 +18,7 @@ export default Ember.Service.extend({
     }
 
     if (this.get('features.proVersion')) {
-      const token = this.get('auth').token();
+      const token = this.get('auth').assetToken();
       return `${prefix}/${slug}.svg?token=${token}${branch ? '&branch=' + branch : ''}`;
     } else {
       return `${prefix}/${slug}.svg${branch ? '?branch=' + (encodeURIComponent(branch)) : ''}`;
@@ -72,7 +72,7 @@ export default Ember.Service.extend({
       url = url + '?branch=' + branch;
     }
     if (this.get('features.proVersion')) {
-      const token = this.get('auth').token();
+      const token = this.get('auth').assetToken();
       delimiter = url.indexOf('?') === -1 ? '?' : '&';
       url = '' + url + delimiter + 'token=' + token;
     }

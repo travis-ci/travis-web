@@ -1,17 +1,7 @@
-import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
-
-const authServiceStub = Ember.Service.extend({
-  token() {
-    return 'token-abc-123';
-  }
-});
 
 moduleFor('service:external-links', 'Unit | Service | external-links', {
   beforeEach() {
-    this.register('service:auth', authServiceStub);
-    this.inject.service('auth');
-
     this.id = '1';
     this.slug = 'travis-ci/travis-web';
     this.sha = '123abc';

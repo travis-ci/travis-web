@@ -23,6 +23,10 @@ export default Ember.Service.extend({
     return this.get('sessionStorage').getItem('travis.token');
   },
 
+  assetToken() {
+    return JSON.parse(this.get('sessionStorage').getItem('travis.user'))['token'];
+  },
+
   endpoint: Ember.computed(function () {
     return config.authEndpoint || config.apiEndpoint;
   }),

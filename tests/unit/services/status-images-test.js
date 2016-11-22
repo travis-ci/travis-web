@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 
 const authServiceStub = Ember.Service.extend({
-  token() {
+  assetToken() {
     return 'token-abc-123';
   }
 });
