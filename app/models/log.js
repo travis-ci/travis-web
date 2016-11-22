@@ -33,7 +33,12 @@ var Request = Ember.Object.extend({
         type: 'GET',
         success: (body) => {
           Ember.run(this, function () { this.handlers.text(body); });
-        }
+        },
+        error: (e => {
+          // eslint-disable-next-line
+          console.log('Got yet another place for this error fetching the logs outside the model:', e);
+          this.set('log.job.logCurrentlyMissing', true);
+        })
       });
     } else if (this.isJson(xhr)) {
       return Ember.run(this, function () { this.handlers.json(body); });
