@@ -3,6 +3,8 @@ import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
 import Ember from 'ember';
 
+import { statusImage } from 'travis/utils/urls';
+
 const { service } = Ember.inject;
 
 export default TravisRoute.extend(ScrollResetMixin, {
@@ -52,6 +54,9 @@ export default TravisRoute.extend(ScrollResetMixin, {
   afterModel(model) {
     const title = `Repository on Travis CI: ${model.get('slug') || '??'} — ${model.get('currentBuild.state')}`;
     this.set('headData.title', title);
+
+    const image = statusImage(model.get('slug'), model.get('defaultBranch.name'));
+    this.set('headData.image', image);
   },
 
   resetController() {
