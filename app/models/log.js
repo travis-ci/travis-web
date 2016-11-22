@@ -18,7 +18,10 @@ var Request = Ember.Object.extend({
       error: (e => {
         // eslint-disable-next-line
         console.log('Got this error fetching the logs outside the model:', e);
+        // eslint-disable-next-line
+        console.log('Total hack: setting log.job.isLoaded to true');
         this.set('log.job.logCurrentlyMissing', true);
+        this.set('log.job.isLoaded', true);
       })
     });
   },
