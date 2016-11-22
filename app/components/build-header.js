@@ -53,6 +53,6 @@ export default Ember.Component.extend({
 
   @computed('item.repo.slug', 'commit.branch')
   urlGitHubBranch(slug, branchName) {
-    return githubBranch(slug, branchName);
+    return this.get('externalLinks').githubBranch(slug, branchName);
   }
 });
