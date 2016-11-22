@@ -80,22 +80,35 @@ TravisPusher.prototype.prefix = function (channel) {
 };
 
 TravisPusher.prototype.receive = function (event, data) {
+  // eslint-disable-next-line
+  console.log('Received a pusher event:', event, data);
   if (event.substr(0, 6) === 'pusher') {
+    // eslint-disable-next-line
+    console.log('Ignoring…');
     return;
   }
   if (data.id) {
     data = this.normalize(event, data);
   }
 
+  // eslint-disable-next-line
+  console.log('Normalised:', data);
+
   // TODO remove job:requeued, once sf-restart-event has been merged
   // TODO this also needs to clear logs on build:created if matrix jobs are already loaded
   if (event === 'job:created' || event === 'job:requeued') {
+    // eslint-disable-next-line
+    console.log('special handling re clear log');
     let job = this.store.peekRecord('job', data.job.id);
     if (job) {
+      // eslint-disable-next-line
+      console.log('actually clearing!')
       job.clearLog();
     }
   }
   return Ember.run.next((function (_this) {
+    // eslint-disable-next-line
+    console.log('sending to store???');
     return function () {
       return _this.store.receivePusherEvent(event, data);
     };
