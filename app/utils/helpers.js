@@ -1,5 +1,4 @@
 /* global Travis, EmojiConvertor */
-import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import configKeysMap from 'travis/utils/keys-map';
 import config from 'travis/config/environment';
 import Ember from 'ember';
@@ -215,7 +214,10 @@ _githubCommitReferenceLink = function (reference, current, matched) {
   var owner, repo, url;
   owner = matched.owner || current.owner;
   repo = matched.repo || current.repo;
-  url = '' + (githubCommitUrl(owner + '/' + repo, matched.sha));
+  let slug = `${owner}/${repo}`;
+  // TODO: this duplicated the implementation of the githubCommit method
+  // in the urls service, but I didn't want to try and rewrite this entire file
+  url = `${config.sourceEndpoint}/${slug}/commit/${matched.sha}`;
   return '<a href="' + url + '">' + reference + '</a>';
 };
 

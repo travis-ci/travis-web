@@ -1,8 +1,11 @@
 import Ember from 'ember';
 import { durationFrom } from 'travis/utils/helpers';
-import { githubCommit } from 'travis/utils/urls';
+
+const { service } = Ember.inject;
 
 export default Ember.Component.extend({
+  externalLinks: service(),
+
   tagName: 'section',
   classNames: ['build-header'],
   classNameBindings: ['item.state'],
@@ -36,8 +39,10 @@ export default Ember.Component.extend({
     }
   }),
 
-  urlGithubCommit: Ember.computed('item', function () {
-    return githubCommit(this.get('repo.slug'), this.get('commit.sha'));
+  urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
+    const slug = this.get('repo.slug');
+    const sha = this.get('commit.sha');
+    return this.get('externalLinks').githubCommit(slug, sha);
   }),
 
   elapsedTime: Ember.computed('item.startedAt', 'item.finishedAt', 'item.duration', function () {
