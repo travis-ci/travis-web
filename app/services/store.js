@@ -42,6 +42,9 @@ export default DS.Store.extend({
     name = ref[0];
     type = ref[1];
 
+    //eslint-disable-next-line
+    console.log('receiving pusher event', event, data);
+
     if (!this.canHandleEvent(event, data)) {
       return;
     }
@@ -71,6 +74,8 @@ export default DS.Store.extend({
     if (event === 'job:log') {
       data = data.job;
       job = this.recordForId('job', data.id);
+      // eslint-disable-next-line
+      console.log('job:log! appending to ' + data.id);
       return job.appendLog({
         number: parseInt(data.number),
         content: data._log,

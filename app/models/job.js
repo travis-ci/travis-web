@@ -137,6 +137,8 @@ export default Model.extend(DurationCalculations, {
   },
 
   appendLog(part) {
+    // eslint-disable-next-line
+    console.log('appending a log part!', part);
     this.set('logCurrentlyMissing', false);
     return this.get('log').append(part);
   },
