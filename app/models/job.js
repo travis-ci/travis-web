@@ -144,7 +144,11 @@ export default Model.extend(DurationCalculations, {
   },
 
   subscribe() {
+    // eslint-disable-next-line
+    console.log(`job.subscribe ${this.get('id')}`);
     if (this.get('subscribed')) {
+      // eslint-disable-next-line
+      console.log('already subscribed!');
       return;
     }
 
