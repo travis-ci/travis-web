@@ -67,7 +67,7 @@ export default Ember.Component.extend({
   auth: service(),
   popup: service(),
   permissions: service(),
-  urls: service(),
+  externalLinks: service(),
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
@@ -203,7 +203,7 @@ export default Ember.Component.extend({
   plainTextLogUrl: Ember.computed('job.log.id', 'job.log.token', function () {
     let id = this.get('log.job.id');
     if (id) {
-      let url = this.get('urls').plainTextLog(id);
+      let url = this.get('externalLinks').plainTextLog(id);
       if (this.get('features.proVersion')) {
         url += `&access_token=${this.get('job.log.token')}`;
       }

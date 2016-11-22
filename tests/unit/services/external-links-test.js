@@ -7,7 +7,7 @@ const authServiceStub = Ember.Service.extend({
   }
 });
 
-moduleFor('service:urls', 'Unit | Service | urls', {
+moduleFor('service:external-links', 'Unit | Service | external-links', {
   beforeEach() {
     this.register('service:auth', authServiceStub);
     this.inject.service('auth');

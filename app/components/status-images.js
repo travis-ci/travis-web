@@ -7,7 +7,7 @@ const { alias } = Ember.computed;
 export default Ember.Component.extend({
   popup: service(),
   auth: service(),
-  urls: service(),
+  externalLinks: service(),
   statusImages: service(),
 
   popupName: alias('popup.popupName'),

@@ -3,7 +3,7 @@ import Ember from 'ember';
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
-  urls: service(),
+  externalLinks: service(),
 
   tagName: 'li',
   classNameBindings: ['build.state'],
@@ -12,6 +12,6 @@ export default Ember.Component.extend({
   urlGithubCommit: Ember.computed('build.repo.slug', 'build.commit.sha', function () {
     const slug = this.get('build.repo.slug');
     const sha = this.get('build.commit.sha');
-    return this.get('urls').githubCommit(slug, sha);
+    return this.get('externalLinks').githubCommit(slug, sha);
   })
 });

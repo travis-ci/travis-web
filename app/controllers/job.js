@@ -5,7 +5,7 @@ const { alias } = Ember.computed;
 
 export default Ember.Controller.extend({
   auth: service(),
-  urls: service(),
+  externalLinks: service(),
 
   repoController: controller('repo'),
   repo: alias('repoController.repo'),
@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
   urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
     const slug = this.get('repo.slug');
     const sha = this.get('commit.sha');
-    return this.get('urls').githubCommit(slug, sha);
+    return this.get('externalLinks').githubCommit(slug, sha);
   }),
 
   jobStateDidChange: Ember.observer('job.state', function () {

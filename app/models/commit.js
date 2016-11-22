@@ -6,7 +6,7 @@ import { belongsTo } from 'ember-data/relationships';
 const { service } = Ember.inject;
 
 export default Model.extend({
-  urls: service(),
+  externalLinks: service(),
 
   sha: attr(),
   branch: attr(),
@@ -53,7 +53,7 @@ export default Model.extend({
     var url = this.get('authorAvatarUrl');
 
     if (!url) {
-      url = this.get('urls').gravatarImage(this.get('authorEmail'), 40);
+      url = this.get('externalLinks').gravatarImage(this.get('authorEmail'), 40);
     }
 
     return url;
@@ -63,7 +63,7 @@ export default Model.extend({
     var url = this.get('committerAvatarUrl');
 
     if (!url) {
-      url = this.get('urls').gravatarImage(this.get('committerEmail'), 40);
+      url = this.get('externalLinks').gravatarImage(this.get('committerEmail'), 40);
     }
 
     return url;

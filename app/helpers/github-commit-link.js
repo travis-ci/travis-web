@@ -4,7 +4,7 @@ import Ember from 'ember';
 const { service } = Ember.inject;
 
 export default Ember.Helper.extend({
-  urls: service(),
+  externalLinks: service(),
 
   compute([slug, commitSha]) {
     if (!commitSha) {
@@ -17,7 +17,8 @@ export default Ember.Helper.extend({
       return sha;
     }
 
-    const url = Ember.Handlebars.Utils.escapeExpression(this.get('urls').githubCommit(slug, sha));
+    const commitUrl = this.get('externalLinks').githubCommit(slug, sha);
+    const url = Ember.Handlebars.Utils.escapeExpression(commitUrl);
     return safe('<a class="github-link only-on-hover" href="' + url + '">' + sha + '</a>');
   }
 });

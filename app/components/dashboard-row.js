@@ -5,7 +5,7 @@ const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   permissions: service(),
-  urls: service(),
+  externalLinks: service(),
 
   tagName: 'li',
   classNameBindings: ['currentBuild.state', 'repo.active:is-active'],
@@ -20,7 +20,7 @@ export default Ember.Component.extend({
   urlGithubCommit: Ember.computed('repo.slug', 'currentBuild.commit.sha', function () {
     const slug = this.get('repo.slug');
     const sha = this.get('currentBuild.commit.sha');
-    return this.get('urls').githubCommit(slug, sha);
+    return this.get('externalLinks').githubCommit(slug, sha);
   }),
 
   displayMenuTofu: Ember.computed('permissions.all', 'repo', function () {

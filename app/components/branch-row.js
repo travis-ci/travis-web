@@ -6,7 +6,7 @@ const { service } = Ember.inject;
 export default Ember.Component.extend({
   routing: service('-routing'),
   permissions: service(),
-  urls: service(),
+  externalLinks: service(),
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   urlGithubCommit: Ember.computed('branch.last_build', function () {
     let slug = this.get('branch.repository.slug');
     let commitSha = this.get('branch.last_build.commit.sha');
-    return this.get('urls').githubCommit(slug, commitSha);
+    return this.get('externalLinks').githubCommit(slug, commitSha);
   }),
 
   getLast5Builds: Ember.computed(function () {

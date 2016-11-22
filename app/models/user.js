@@ -8,7 +8,7 @@ const { service } = Ember.inject;
 
 export default Model.extend({
   ajax: service(),
-  urls: service(),
+  externalLinks: service(),
 
   // TODO: this totally not should be needed here
   sessionStorage: service(),
@@ -154,6 +154,6 @@ export default Model.extend({
   },
 
   avatarUrl: Ember.computed('email', function () {
-    return this.get('urls').gravatarImage(this.get('email'), 36);
+    return this.get('externalLinks').gravatarImage(this.get('email'), 36);
   })
 });

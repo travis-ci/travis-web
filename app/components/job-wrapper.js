@@ -4,7 +4,7 @@ import { colorForState } from 'travis/utils/helpers';
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
-  urls: service(),
+  externalLinks: service(),
 
   pollModels: 'job.build',
 
@@ -15,6 +15,6 @@ export default Ember.Component.extend({
   urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
     const slug = this.get('repo.slug');
     const sha = this.get('commit.sha');
-    return this.get('urls').githubCommit(slug, sha);
+    return this.get('externalLinks').githubCommit(slug, sha);
   })
 });
