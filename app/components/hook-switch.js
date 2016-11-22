@@ -10,12 +10,8 @@ export default Ember.Component.extend({
 
       let hook = this.get('hook');
 
-      let pusher = this.get('pusher'),
-        repoId = hook.get('id');
 
-      return hook.toggle().then(() => {
-        pusher.subscribe(`repo-${repoId}`);
-      }, () => {
+      return hook.toggle().then(() => {}, () => {
         this.toggleProperty('hook.active');
         return this.sendAction('onToggleError', hook);
       });
