@@ -55,7 +55,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
     const title = `Repository on Travis CI: ${model.get('slug') || '??'} — ${model.get('currentBuild.state')}`;
     this.set('headData.title', title);
 
-    const image = statusImage(model.get('slug'), model.get('defaultBranch.name'));
+    const image = statusImage(model.get('slug'), model.get('defaultBranch.name'), 'png');
     this.set('headData.image', image);
   },
 

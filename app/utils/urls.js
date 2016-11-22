@@ -32,14 +32,14 @@ githubAdmin = function (slug) {
   return config.sourceEndpoint + '/' + slug + '/settings/hooks#travis_minibucket';
 };
 
-statusImage = function (slug, branch) {
+statusImage = function (slug, branch, format = 'svg') {
   const prefix = 'https://api.travis-ci.org';
 
   if (config.featureFlags['pro-version']) {
     let token = Travis.__container__.lookup('controller:currentUser').get('model.token');
-    return `${prefix}/${slug}.svg?token=${token}${branch ? '&branch=' + branch : ''}`;
+    return `${prefix}/${slug}.${format}?token=${token}${branch ? '&branch=' + branch : ''}`;
   } else {
-    return `${prefix}/${slug}.svg${branch ? '?branch=' + (encodeURIComponent(branch)) : ''}`;
+    return `${prefix}/${slug}.${format}${branch ? '?branch=' + (encodeURIComponent(branch)) : ''}`;
   }
 };
 
