@@ -5,8 +5,7 @@ const { alias } = Ember.computed;
 export default Ember.Component.extend({
   tagName: 'button',
   classNames: ['showmore-button'],
-  classNameBindings: ['isLoading', 'showMore'],
-  showMore: true,
+  classNameBindings: ['isLoading'],
   attributeBindings: ['disabled'],
   disabled: alias('isLoading'),
 

@@ -4,35 +4,36 @@
   </div>
 
   <div class="job-number {{job.state}}">
-    <span class="icon-hash" aria-hidden="trigger"></span>
+    {{inline-svg 'images/stroke-icons/icon-hash' class="icon"}}
     <span class="label-align" aria-label="Job number">{{job.number}}</span>
   </div>
 
   <div class="job-os {{job.config.os}} tooltip" data-tooltip="{{job.config.os}}">
     {{#if job.config.os}}
-      <span class="icon" aria-label="{{job.config.os}} operating system">{{job.config.os}}</span>
+    {{inline-svg 'images/stroke-icons/icon-linux' class="icon linux"}}
+    {{inline-svg 'images/stroke-icons/icon-mac' class="icon mac"}}
     {{/if}}
   </div>
 
   <div class="job-lang">
-    <span class="icon-lang" aria-hidden="true"></span>
+    {{inline-svg 'images/stroke-icons/icon-language' class="icon"}}
     <span class="label-align" aria-label="Language">{{#if languages}}{{languages}}{{else}}no language set{{/if}}</span>
   </div>
 
 {{#if environment}}
   <div class="job-env">
-    <span class="icon-env" aria-hidden="true"></span>
+    {{inline-svg 'images/stroke-icons/icon-environment' class="icon"}}
     <span class="label-align" aria-label="Environment variables">{{environment}}</span>
   </div>
 {{else}}
   <div class="job-env is-empty">
-    <span class="icon-env" aria-hidden="true"></span>
+    {{inline-svg 'images/stroke-icons/icon-environment' class="icon"}}
     <span class="label-align" aria-label="Environment variables">no environment variables set</span>
   </div>
 {{/if}}
 
   <div class="job-duration" title="Started {{pretty-date job.startedAt}}">
-    <span class="icon-clock" aria-hidden="true"></span>
+    {{inline-svg 'images/stroke-icons/icon-clock' class="icon"}}
     <time class="label-align" aria-label="Job duration" datetime="PT{{job.duration}}S">{{format-duration job.duration}}</time>
   </div>
 {{/link-to}}

@@ -1,4 +1,3 @@
-
 <div class="env-var-name">{{envVar.name}}</div>
 <div class="env-var-value">
   <input type="pw" value="{{value}}" readonly="readonly">
@@ -8,9 +7,9 @@
     {{#if isDeleting}}
       {{loading-indicator}}
     {{else}}
-      <a href="#" title="" {{action (perform delete) on="click"}}>
-        <span class="icon-delete"></span>
-      </a>
+      <button {{action (perform delete) on="click"}} type="button" class="no-button env-var-delete">
+        {{inline-svg 'images/stroke-icons/icon-trash' class="icon-trash"}}
+      </button>
       <div class="tooltip-bubble">Delete</div>
     {{/if}}
   </div>

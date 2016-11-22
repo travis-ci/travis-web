@@ -20,6 +20,11 @@
   color: white
   background-color: darken($pebble-grey, 10)
 
+.no-button
+  background: transparent
+  border: none
+  cursor: pointer
+
 .button:hover,
 .button:focus,
 .button:active,
@@ -154,11 +159,7 @@
 
 .showmore-button
   @extend .button
-  @extend %icon-line-eye-white
-  padding-left: 2.3em
   background:
     repeat: no-repeat
     size: auto 20px
     position: .5em center
-  cursor: pointer
-  

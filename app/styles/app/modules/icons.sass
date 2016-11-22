@@ -1,3 +1,13 @@
+=colorSVG($color)
+  path, polyline, circle, line, polygon, rect, ellipse
+    fill: none
+    stroke: $color
+
+=colorSVGFill($color)
+  path, polyline, circle, line, polygon, rect, ellipse
+    fill: $color
+    stroke: none
+
 %icon
   display: inline-block
   vertical-align: middle
@@ -6,9 +16,44 @@
     repeat: no-repeat
 
 .icon
-  width: 15px
-  height: 15px
   @extend %icon
+  width: 15px
+  height: 16px
+  margin-right: 4px
+
+.icon-stopwatch
+  +colorSVG($cement-grey)
+  width: 18px
+  height: 19px
+  vertical-align: middle
+  margin-right: 1px
+  
+.icon svg,
+svg.icon
+  +colorSVG($cement-grey)
+
+.icon.white
+  +colorSVG(white)
+
+.icon-help
+  @extend %icon
+  width: 18px
+  heigth: 18px
+  border-radius: 50%
+  border: 1px solid $pebble-grey
+  padding: 0.2em
+  &:hover,
+  &:active
+    border-color: $oxide-blue
+    +colorSVG($oxide-blue)
+
+.icon-trash
+  @extend %icon
+  width: 16px
+  height: 16px
+  &:hover,
+  &:active
+    +colorSVG($brick-red)
 
 %icon-download-log
   background-image: inline-image('stroke-icons/icon-downloadlogs.svg')
@@ -29,39 +74,10 @@
 .icon--search
   background-image: inline-image('stroke-icons/icon-search.svg')
 
-%icon-line-trashcan
-  background-image: inline-image('stroke-icons/icon-trash.svg')
-%icon-line-trashcan-red
-  background-image: inline-image('stroke-icons/icon-trash-red.svg')
-%icon-line-trashcan-disabled
-  background-image: inline-image('stroke-icons/icon-trash-disabled.svg')
-
-.icon-delete
-  @extend .icon
-  @extend %icon-line-trashcan
-.icon-delete-hover
-  @extend %icon-line-trashcan-red
-.icon-delete-disabled
-  @extend %icon-line-trashcan-disabled
-
 %icon-line-arrowtabs
   background-image: inline-image('stroke-icons/icon-arrowtabs.svg')
 %icon-line-arrowtabs-teal
   background-image: inline-image('stroke-icons/icon-arrowtabs-teal.svg')
-
-%icon-line-key
-  background-image: inline-image('stroke-icons/icon-key.svg')
-.icon-key
-  @extend .icon
-  @extend %icon-line-key
-  margin-right: .3rem
-
-%icon-line-fingerprint
-  background-image: inline-image('stroke-icons/icon-fingerprint.svg')
-.icon-fingerprint
-  @extend .icon
-  @extend %icon-line-fingerprint
-  margin-right: .3rem
 
 %icon-line-calendar
   background-image: inline-image('stroke-icons/icon-calendar.svg')
@@ -72,74 +88,10 @@
   @extend %icon-line-calendar
   margin-right: .3rem
 
-%icon-line-clock
-  background-image: inline-image('stroke-icons/icon-clock.svg')
-.icon-clock
-  @extend .icon
-  @extend %icon-line-clock
-  margin-right: .2rem
-
-%icon-line-stopwatch
-  background-image: inline-image('stroke-icons/icon-stopwatch.svg')
-.icon-stopwatch
-  @extend %icon
-  @extend %icon-line-stopwatch
-  width: 17px
-  height: 19px
-  margin-right: .2rem
-
-.icon-line-build
-  @extend %icon
-  background-image: inline-image('stroke-icons/icon-builds.svg')
-
 %icon-github
   background-image: inline-image('stroke-icons/icon-github.svg')
 %icon-github-white
   background-image: inline-image('stroke-icons/icon-github-white.svg')
-  
-.icon-line-commit
-  @extend %icon
-  @extend %icon-github
-
-%icon-line-eye
-  background-image: inline-image('stroke-icons/icon-seemore.svg')
-%icon-line-eye-white
-  background-image: inline-image('stroke-icons/icon-seemore-white.svg')
-
-%icon-line-question
-  background-image: inline-image('stroke-icons/icon-help.svg')
-%icon-line-question-teal
-  background-image: inline-image('stroke-icons/icon-help-teal.svg')
-
-.icon-question
-  width: 18px
-  height: 18px
-  background:
-    repeat: no-repeat
-    position: 3px 3px
-    size: auto 10px
-  display: inline-block
-  border: solid 1px $pebble-grey
-  border-radius: 50%
-  @extend %icon-line-question
-  &:hover
-    border-color: $oxide-blue
-    @extend %icon-line-question-teal
-
-%icon-line-hash
-  background-image: inline-image('stroke-icons/icon-hash.svg')
-.icon-hash
-  @extend .icon
-  @extend %icon-line-hash
-
-%icon-line-linux
-  background-image: inline-image('stroke-icons/icon-linux.svg')
-%icon-line-mac
-  background-image: inline-image('stroke-icons/icon-mac.svg')
-%icon-line-language
-  background-image: inline-image('stroke-icons/icon-language.svg')
-%icon-line-environment
-  background-image: inline-image('stroke-icons/icon-environment.svg')
 
 %icon-line-cog
   background-image: inline-image('stroke-icons/icon-settings.svg')
@@ -147,11 +99,6 @@
   background-image: inline-image('stroke-icons/icon-settings-teal.svg')
 %icon-line-cog-white
   background-image: inline-image('stroke-icons/icon-settings-white.svg')
-
-%icon-line-tofu
-  background-image: inline-image('stroke-icons/icon-tofuburger.svg')
-%icon-line-tofu-teal
-  background-image: inline-image('stroke-icons/icon-tofuburger-teal.svg')
 
 .icon-settings
   @extend %icon-line-cog
@@ -231,17 +178,6 @@
   vertical-align: middle
   @extend .icon
   @extend %icon-github
-
-%icon-github-circle
-  background-image: inline-image('stroke-icons/icon-repooctocat.svg')
-.icon-github-circle
-  display: inline-block
-  width: 1.2em
-  height: 1.2em
-  margin-right: 0.3em
-  vertical-align: middle
-  background-repeat: no-repeat
-  @extend %icon-github-circle
 
 %icon-line-flag-teal
   background-image: inline-image('stroke-icons/icon-flag.svg')

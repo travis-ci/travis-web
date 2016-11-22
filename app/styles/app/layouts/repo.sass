@@ -19,20 +19,11 @@
         border-color: $asphalt-grey
 
 .repo-gh
-  width: 28px
-  height: 28px
-  flex: 0 0 28px
+  width: 30px
+  height: 30px
+  flex: 0 0 30px
   margin: 0 1.2em
-  overflow: hidden
-  text-indent: 999%
-  white-space: nowrap
-  a
-    @extend %icon-github-circle
-    display: block
-    height: 100%
-    background:
-      size: 100%
-      repeat: no-repeat
+  +colorSVG($cement-grey)
 
 .repo-navigation
   margin: 1.9em 0 1.2em

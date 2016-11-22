@@ -29,13 +29,13 @@ test('visiting build matrix', function (assert) {
     assert.ok(firstJobRow.state.isPassed, 'expected the first job to have passed');
     assert.equal(firstJobRow.number, '1234.1');
     assert.equal(firstJobRow.env, 'JORTS');
-    assert.equal(firstJobRow.os, 'linux');
+    assert.ok(firstJobRow.os.isLinux, 'expect Linux');
     assert.equal(firstJobRow.language, 'Node.js: 5');
 
     const secondJobRow = buildPage.requiredJobs(1);
     assert.equal(secondJobRow.number, '1234.2');
     assert.equal(secondJobRow.env, 'JANTS');
-    assert.equal(secondJobRow.os, 'osx');
+    assert.ok(secondJobRow.os.isMacOS, 'expect MacOS');
     assert.equal(secondJobRow.language, 'Ruby: 2.2');
 
     assert.equal(buildPage.allowedFailureJobs().count, 1, 'expected one allowed failure job');

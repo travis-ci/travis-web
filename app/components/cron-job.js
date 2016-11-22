@@ -4,6 +4,7 @@ const { service } = Ember.inject;
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
+  tagName: 'li',
   classNames: ['settings-cron'],
   isDeleting: false,
   actionType: 'Save',
