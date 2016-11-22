@@ -140,7 +140,7 @@ export default Model.extend(DurationCalculations, {
     // eslint-disable-next-line
     console.log('appending a log part!', part);
     this.set('logCurrentlyMissing', false);
-    this.set('isLoaded', true);
+    this.set('log.isLoaded', true);
     return this.get('log').append(part);
   },
 
