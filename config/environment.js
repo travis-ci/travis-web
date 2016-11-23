@@ -101,6 +101,7 @@ module.exports = function (environment) {
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
+    ENV.apiEndpoint = 'https://api.travis-ci.org';
 
     ENV.APP.rootElement = '#ember-testing';
 

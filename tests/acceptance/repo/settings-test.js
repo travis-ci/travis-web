@@ -13,7 +13,7 @@ moduleForAcceptance('Acceptance | repo settings', {
 
     signInUser(currentUser);
 
-    // create organizatin
+    // create organization
     server.create('account', {
       name: 'Feminist Killjoys',
       type: 'organization',

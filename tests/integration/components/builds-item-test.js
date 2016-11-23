@@ -10,7 +10,7 @@ test('it renders', function (assert) {
     id: 10000,
     state: 'passed',
     number: 11,
-    branch: 'foobarbranch',
+    branchName: 'foobarbranch',
     message: void 0,
     pullRequest: false,
     eventType: 'push',

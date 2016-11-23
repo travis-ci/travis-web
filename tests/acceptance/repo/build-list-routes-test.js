@@ -4,8 +4,6 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 
-import Ember from 'ember';
-
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
     server.logging = true;
@@ -27,20 +25,23 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     this.repoId = parseInt(repository.id);
 
-    this.branch = server.create('branch');
+    this.branch = server.create('branch', { name: 'foobar' });
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
 
     const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 5);
 
-    const lastBuild = this.branch.createBuild({
+    const cronBranch = server.create('branch', { name: 'successful-cron-branch' });
+
+    const lastBuild = server.create('build', {
       state: 'passed',
       number: '1918',
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'cron',
       repository,
+      branch: cronBranch,
     });
 
     const commitAttributes = {
@@ -49,6 +50,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       author: gitUser,
       committer: gitUser
     };
+    this.commitAttributes = commitAttributes;
 
     lastBuild.createCommit(Ember.assign({
       branch: 'successful-cron-branch',
@@ -56,7 +58,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     }, commitAttributes));
     lastBuild.save();
 
-    const failedBuild = this.branch.createBuild({
+    const failedBuild = server.create('build', {
       state: 'failed',
       event_type: 'push',
       repository,
@@ -66,14 +68,14 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     failedBuild.createCommit(commitAttributes);
     failedBuild.save();
 
-    const erroredBuild = this.branch.createBuild({
+    const erroredBuild = server.create('build', {
       state: 'errored',
       event_type: 'push',
       repository,
       number: '1869'
+      branch: this.branch,
     });
 
-    erroredBuild.branch = this.branch;
     erroredBuild.createCommit(Object.assign({ branch: 'rarely-used' }, commitAttributes));
     erroredBuild.save();
 
@@ -127,7 +129,7 @@ test('build history shows, more can be loaded, and a created build gets added an
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 3, 'expected three builds');
+    assert.equal(page.builds().count, 3, 'expected three non-PR builds');
 
     const build = page.builds(0);
 
@@ -164,12 +166,61 @@ test('build history shows, more can be loaded, and a created build gets added an
 
   percySnapshot(assert);
 
+  server.get('/repo/:repo_id/builds', function (schema, request) {
+    const { offset } = request.queryParams;
+    if (offset) {
+      // Add another build so the API has more to return
+      const oldestBranch = server.create('branch', { name: 'oldest-build-branch' });
+      const oldestBuild = server.create('build', {
+        event_type: 'push',
+        repositoryId: '1',
+        number: '1816',
+        branch: oldestBranch,
+      });
+
+      oldestBuild.createCommit({
+        sha: 'acab',
+        author_name: 'us',
+        branch: 'oldest-build-branch'
+      });
+
+      oldestBuild.save();
+
+      const build = schema.builds.where({ repositoryId: request.params.repo_id }).models.slice(-1);
+      const builds = {
+        models: build
+      };
+
+      return this.serialize(builds, 'build');
+    } else {
+      let builds = schema.builds.where({ repositoryId: request.params.repo_id });
+
+      builds = builds.filter(build => build.attrs.number);
+
+      if (request.queryParams.event_type !== 'pull_request') {
+        builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
+      }
+
+      if (request.queryParams.sort_by === 'finished_at:desc') {
+        builds = builds.sort((a, b) => {
+          const aBuildNumber = a.attrs.number;
+          const bBuildNumber = b.attrs.number;
+
+          return aBuildNumber > bBuildNumber ? -1 : 1;
+        });
+      }
+
+      return this.serialize(builds);
+    }
+  });
+
   page.showMoreButton.click();
 
+  andThen(() => {});
+
   andThen(() => {
-    assert.equal(page.builds().count, 5, 'expected five builds');
-    assert.equal(page.builds(3).name, 'seven-oaks', 'expected the build before the last one to have been added');
-    assert.equal(page.builds(4).name, 'rarely-used', 'expected the old default branch build to have moved to the end');
+    assert.equal(page.builds().count, 4, 'expected four builds');
+    assert.equal(page.builds(3).name, 'oldest-build-branch', 'expected an earlier build to have been added');
   });
 
   const branch = server.create('branch', {
@@ -205,8 +256,9 @@ test('build history shows, more can be loaded, and a created build gets added an
     this.application.pusher.receive('build:created', createdData);
   });
 
+
   andThen(() => {
-    assert.equal(page.builds().count, 6, 'expected another build');
+    assert.equal(page.builds().count, 5, 'expected another build');
 
     const newBuild = page.builds(0);
 
