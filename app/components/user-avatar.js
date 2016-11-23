@@ -23,8 +23,15 @@ export default Ember.Component.extend({
   avatarUrl: Ember.computed('url', 'size', function () {
     const url = this.get('url');
     const size = this.get('size');
+
     if (size) {
-      return `${url}&s=${size}`;
+      const sizeParam = `&s=${size}`;
+      // ensure version and size set properly
+      if (url.includes('?v=3')) {
+        return `${url}${sizeParam}`;
+      } else {
+        return `${url}?v=3&s=${size}`;
+      }
     } else {
       return url;
     }
