@@ -37,6 +37,8 @@ var Request = Ember.Object.extend({
         },
         error: (e => {
           // eslint-disable-next-line
+          console.error('The above 404 has been noted; the log will be received over a web socket.');
+          // eslint-disable-next-line
           console.log('Got yet another place for this error fetching the logs outside the model:', e);
           this.set('log.job.logCurrentlyMissing', true);
         })
