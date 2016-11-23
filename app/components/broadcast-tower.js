@@ -10,8 +10,11 @@ export default Ember.Component.extend({
       this.sendAction('toggleBroadcasts');
       if (this.get('isOpen') === true) {
         return this.set('timeoutId', setTimeout(() => {
-          this.toggleProperty('isOpen');
-          return this.sendAction('toggleBroadcasts');
+          // FIXME temporary hack to fix tests
+          if (!this.isDestroyed) {
+            this.toggleProperty('isOpen');
+            return this.sendAction('toggleBroadcasts');
+          }
         }, 10000));
       } else {
         return clearTimeout(this.get('timeoutId'));
