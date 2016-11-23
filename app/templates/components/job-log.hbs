@@ -3,6 +3,9 @@
 {{else}}
   {{#if log.isLoaded}}
     {{log-content job=job log=log}}
+  {{! FIXME this indicates a need to rethink things}}
+  {{else if job.logNotReady}}
+    {{log-content job=job log=log}}
   {{else}}
     {{loading-indicator}}
   {{/if}}
