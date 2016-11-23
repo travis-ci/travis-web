@@ -38,19 +38,15 @@ export default Serializer.extend({
 
     const { builds } = branch;
 
-    const { include } = request.queryParams;
+    if (builds && builds.models.length) {
+      const lastBuild = builds.models[builds.models.length - 1];
 
-    if (include && !include.includes('build.branch')) {
-      if (builds && builds.models.length) {
-        const lastBuild = builds.models[builds.models.length - 1];
-
-        response.last_build = this.serializerFor('build').serialize(lastBuild, request);
-      }
+      response.last_build = this.serializerFor('build').serializeEmbedded(lastBuild, request);
     }
 
     if (branch.repository) {
       const repositorySerializer = this.serializerFor('repository');
-      response.repository = repositorySerializer.serialize(branch.repository, request);
+      response.repository = repositorySerializer.serializeEmbedded(branch.repository, request);
     }
 
     return response;

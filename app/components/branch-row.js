@@ -41,7 +41,8 @@ export default Ember.Component.extend({
         };
       }
       let path = `${apiEndpoint}/v3/repo/${repoId}/builds`;
-      let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
+      // eslint-disable-next-line
+      let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron&sort_by=finished_at:desc`;
       let url = `${path}${params}`;
 
       Ember.$.ajax(url, options).then(response => {
