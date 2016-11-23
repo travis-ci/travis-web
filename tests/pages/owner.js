@@ -14,7 +14,7 @@ export default PageObject.create({
     itemScope: '.owner-tile',
 
     item: {
-      name: text('.repo-title a .label-align'),
+      name: text('.repo-title .label-align'),
       buildNumber: text('.build-number .label-align'),
       defaultBranch: text('.default-branch .label-align'),
       commitSha: text('.commit-sha .label-align'),

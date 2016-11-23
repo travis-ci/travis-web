@@ -21,6 +21,12 @@
   height: 16px
   margin-right: 4px
 
+.icon--l
+  @extend %icon
+  width: 30px
+  height: 30px
+  margin-right: 7px
+
 .icon-stopwatch
   +colorSVG($cement-grey)
   width: 18px
@@ -29,7 +35,8 @@
   margin-right: 1px
   
 .icon svg,
-svg.icon
+svg.icon,
+svg.icon--l
   +colorSVG($cement-grey)
 
 .icon.white
@@ -54,19 +61,6 @@ svg.icon
   &:hover,
   &:active
     +colorSVG($brick-red)
-
-%icon-download-log
-  background-image: inline-image('stroke-icons/icon-downloadlogs.svg')
-.icon-download-log
-  @extend .icon
-  @extend %icon-download-log
-  background-position: 0 -1px
-%icon-remove-log
-  background-image: inline-image('stroke-icons/icon-deletelogs.svg')
-.icon-remove-log
-  @extend .icon
-  @extend %icon-remove-log
-  background-position: 0 -1px
 
 %icon-arrow-down
   background-image: inline-image('stroke-icons/icon-arrowdown.svg')
