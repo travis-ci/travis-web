@@ -18,5 +18,15 @@ export default Ember.Component.extend({
       }
       return initials;
     }
-  })
+  }),
+
+  avatarUrl: Ember.computed('url', 'size', function () {
+    const url = this.get('url');
+    const size = this.get('size');
+    if (size) {
+      return `${url}&s=${size}`;
+    } else {
+      return url;
+    }
+  }),
 });
