@@ -121,7 +121,7 @@ export default Ember.Controller.extend({
       classes.push('active');
     }
 
-    classes.push(this.get('controller.auth.state') || 'signed-out');
+    classes.push(this.get('auth.state') || 'signed-out');
 
     return classes.join(' ');
   })
