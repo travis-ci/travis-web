@@ -29,9 +29,7 @@ export default RESTAdapter.extend({
     return hash;
   },
 
-  // TODO: I shouldn't override this method as it's private, a better way would
-  // be to create my own URL generator
-  _buildURL: function (modelName, id) {
+  buildURL: function (modelName, id) {
     let url = [];
     const host = Ember.get(this, 'host');
     const prefix = this.urlPrefix();
@@ -56,10 +54,4 @@ export default RESTAdapter.extend({
     const underscored = Ember.String.underscore(modelName);
     return id ? underscored :  Ember.String.pluralize(underscored);
   },
-
-  // this can be removed once this PR is merged and live:
-  // https://github.com/emberjs/data/pull/4204
-  findRecord(store, type, id, snapshot) {
-    return this.ajax(this.buildURL(type.modelName, id, snapshot, 'findRecord'), 'GET');
-  }
 });
