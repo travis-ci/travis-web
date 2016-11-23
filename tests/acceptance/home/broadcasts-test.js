@@ -36,6 +36,7 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
   andThen(() => {
     assert.ok(topPage.broadcastTower.hasWarning, 'expected the broadcast tower to have a warning class');
     assert.ok(topPage.broadcasts().isClosed, 'expected the broadcast list to be closed');
+    assert.equal(topPage.broadcastBadge.text, 2, 'expected the badge to show two broadcasts');
   });
 
   topPage.broadcastTower.click();
@@ -57,6 +58,7 @@ test('the broadcast tower shows a warning even when an announcement exists, broa
 
   andThen(() => {
     assert.ok(topPage.broadcasts().count, 1, 'expected there to be one broadcast');
+    assert.equal(topPage.broadcastBadge.text, 1, 'expected the badge to show one broadcast');
     assert.ok(topPage.broadcasts(0).isWarning, 'expected the remaining broadcast to be a warning');
 
     assert.equal(localStorage.getItem('travis.seen_broadcasts'), JSON.stringify(['2016']));
@@ -89,5 +91,6 @@ test('a dismissed broadcast does not highlight the tower', assert => {
 
   andThen(() => {
     assert.ok(topPage.broadcastTower.hasNoAnnouncement, 'expected the broadcast tower to not have an announcement class');
+    assert.ok(topPage.broadcastBadge.isHidden, 'expected there to be no broadcast count');
   });
 });

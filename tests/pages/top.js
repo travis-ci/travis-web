@@ -4,6 +4,7 @@ let {
   clickable,
   collection,
   hasClass,
+  isHidden,
   notHasClass,
   text
 } = PageObject;
@@ -19,6 +20,12 @@ export default PageObject.create({
     hasAnnouncement: hasClass('announcement'),
     hasNoAnnouncement: notHasClass('announcement'),
     hasWarning: hasClass('warning')
+  },
+
+  broadcastBadge: {
+    scope: '.broadcast .count',
+    text: text(),
+    isHidden: isHidden()
   },
 
   broadcasts: collection({
