@@ -11,6 +11,7 @@ export default Ember.Component.extend({
     repositoryId = this.get('repo.id');
     store = this.get('store');
 
+    console.log('contentType in pollHook', contentType);
     if (contentType === 'builds') {
       return store.query('build', {
         event_type: ['push', 'cron'],

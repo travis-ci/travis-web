@@ -24,6 +24,7 @@ export default TravisRoute.extend({
   contentDidChange() {
     var path;
     path = this.get('path');
+    // console.log('setting model to', this.controllerFor('repo').get(path));
     return this.controllerFor('builds').set('model', this.controllerFor('repo').get(path));
   },
 

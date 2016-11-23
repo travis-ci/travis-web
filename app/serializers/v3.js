@@ -38,10 +38,16 @@ export default JSONSerializer.extend({
     } else if (relationshipHash && !relationshipHash.type) {
       relationshipHash.type = type;
     }
+
+    if (type === 'build') {
+      // console.log('extractRelationships build data', hash);
+      // console.log('returned relationships', relationshipHash);
+    }
+
     return relationshipHash;
   },
 
-  extractRelationships() {
+  extractRelationships(modelClass, resourceHash) {
     let relationships = this._super(...arguments);
     return relationships;
   },

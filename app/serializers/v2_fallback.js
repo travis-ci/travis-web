@@ -10,6 +10,7 @@ export default V3Serializer.extend({
       let relationships = {};
 
       modelClass.eachRelationship((key, relationshipMeta) => {
+        // console.log('build relationship key', key);
         // V2 API payload
         let relationship = null;
         let relationshipKey = this.keyForV2Relationship(key, relationshipMeta.kind, 'deserialize');
@@ -41,6 +42,9 @@ export default V3Serializer.extend({
   },
 
   normalize(modelClass, resourceHash) {
+    if (modelClass.toString() === 'travis@model:build:') {
+      // console.log('normalize build data', resourceHash);
+    }
     if (resourceHash['@type']) {
       return this._super(...arguments);
     } else {
