@@ -115,6 +115,21 @@ export default function () {
     return schema.branches.all();
   });
 
+  this.post('/settings/env_vars?repository_id=1', function (schema, request) {
+    const repositoryId = request.queryParams.repository_id;
+    const envVars = schema.envVars.where({ repositoryId: repositoryId });
+    const [envVar] = envVars;
+    return envVar.repository_id = repositoryId;
+  });
+
+  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
+    let sshKeys = schema.sshKeys.where({
+      repositoryId: request.params.repo_id,
+      type: 'custom'
+    }).models[0];
+    return this.serialize(sshKeys, 'v2');
+  });
+
   this.get('/owner/:login', function (schema, request) {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });
@@ -140,6 +155,10 @@ export default function () {
     };
   });
 
+  // this is a hack. our api doesn't even have this
+  // endpoint for either v2/v3. I haven't ever seen us request
+  // this in production, but this implies at the least that
+  // our testing infrastructure is incorrect.
   this.get('/commits/:id', function (schema, request) {
     let commit = schema.commits.find(request.params.id);
     return new Mirage.Response(200, {}, commit.attrs);
@@ -152,47 +171,46 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema, { queryParams:
-    { event_type: eventType, after_number: afterNumber, ids } }) {
-    const allBuilds = schema.builds.all();
-    let builds;
-
-    if (afterNumber) {
-      builds = allBuilds.models.filter(build => build.number < afterNumber);
-    } else if (ids) {
-      builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
-    } else if (eventType === 'pull_request') {
-      builds = allBuilds.models;
-    } else {
-      // This forces the Show more button to show in the build history test
-      builds = allBuilds.models.slice(0, 3);
-    }
-
-    return { builds: builds.map(build => {
-      if (build.commit) {
-        build.attrs.commit_id = build.commit.id;
-      }
-
-      if (build.jobs) {
-        build.attrs.job_ids = build.jobs.models.map(job => job.id);
-      }
-
-      return build;
-    }), commits: builds.map(build => build.commit) };
-  });
-
-  this.get('/builds/:id', function (schema, request) {
+  this.get('/build/:id', function (schema, request) {
     const build = schema.builds.find(request.params.id);
     const response = {
-      build: build.attrs,
-      jobs: build.jobs.models.map(job => job.attrs)
+      '@type': 'build',
+      '@href': `/build/${build.id}`,
+      '@representation': 'standard',
+      '@permissions': {
+        read: true,
+        cancel: true,
+        restart: true
+      },
+      id: build.id,
+      number: build.number,
+      state: build.state,
+      duration: build.duration,
+      event_type: build.event_type,
+      previous_state: build.previous_state,
+      pull_request_title: build.pull_request_title,
+      pull_request_number: build.pull_request_number,
+      started_at: build.started_at,
+      finished_at: build.finished_at
     };
+
+    if (build.jobs) {
+      response.jobs = build.jobs.models.map(job => job.attrs);
+    }
+
+    if (build.branch) {
+      response.branch = build.branch.attrs;
+    }
+
+    if (build.repository) {
+      response.repository = build.repository.attrs;
+    }
 
     if (build.commit) {
       response.commit = build.commit.attrs;
     }
 
-    return response;
+    return new Mirage.Response(200, {}, response);
   });
 
   this.post('/build/:id/restart', (schema, request) => {
@@ -238,17 +256,28 @@ export default function () {
   });
 
   this.get('/repo/:repo_id/builds', function (schema, request) {
-    const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];
-    const builds = schema.builds.where({ branchId: branch.id });
+    let builds = schema.builds.where({ repositoryId: request.params.repo_id });
+
+    builds = builds.filter(build => build.attrs.number);
+
+    if (request.queryParams.event_type !== 'pull_request') {
+      builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
+    }
+
+    if (request.queryParams.sort_by === 'finished_at:desc') {
+      builds = builds.sort((a, b) => {
+        const aBuildNumber = a.attrs.number;
+        const bBuildNumber = b.attrs.number;
+
+        return aBuildNumber > bBuildNumber ? -1 : 1;
+      });
+    }
 
     /**
-     * TODO remove this once the seializers/build is removed.
-     * The modelName causes Mirage to know how to serialise it.
-     */
-    return this.serialize({
-      models: builds.models.reverse(),
-      modelName: 'build'
-    }, 'v3');
+      * TODO remove this once the seializers/build is removed.
+      * The modelName causes Mirage to know how to serialise it.
+      */
+    return this.serialize(builds, 'build');
   });
 
   this.get('/jobs/:id/log', function (schema, request) {

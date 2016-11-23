@@ -74,5 +74,17 @@ export default JSONAPISerializer.extend({
       response = this._turnIntoV3Singular(type, payload);
     }
     return response;
-  }
+  },
+
+  serializeEmbedded(record, /* request */) {
+    const { id, name, slug } = record;
+    return {
+      '@type': 'repository',
+      '@href': `/repo/${record.id}`,
+      '@representation': 'minimal',
+      id,
+      name,
+      slug,
+    };
+  },
 });

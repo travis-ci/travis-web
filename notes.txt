@@ -1,0 +1,6 @@
+replace repo
+replace reposCount
+replace repoId
+replace repoCurrentBuild
+
+fix repoSlug in job model (should be alias)

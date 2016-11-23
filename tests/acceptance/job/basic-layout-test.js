@@ -7,16 +7,12 @@ import config from 'travis/config/environment';
 moduleForAcceptance('Acceptance | job/basic layout');
 
 test('visiting job-view', function (assert) {
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  server.create('branch', {});
+  const repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  const branch = server.create('branch', {});
 
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
-  let job = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit, build });
-  commit.job = job;
-
-  job.save();
-  commit.save();
+  const commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', message: 'This is a message', branch: 'acceptance-tests', branch_is_default: true });
+  const build = server.create('build', { repository, branch, state: 'passed', commit });
+  const job = server.create('job', { number: '1234.1', repository, state: 'passed', commit, build_id: build.id });
 
   server.create('log', { id: job.id });
 

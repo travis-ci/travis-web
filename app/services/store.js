@@ -37,10 +37,8 @@ export default DS.Store.extend({
   },
 
   receivePusherEvent(event, data) {
-    let build, commit, job, name, ref, ref1, ref2, type;
-    ref = event.split(':');
-    name = ref[0];
-    type = ref[1];
+    let job, ref1;
+    const [name, type] = event.split(':');
 
     if (!this.canHandleEvent(event, data)) {
       return;
@@ -48,24 +46,6 @@ export default DS.Store.extend({
 
     if (name === 'job' && ((ref1 = data.job) != null ? ref1.commit : void 0)) {
       this.push(this.normalize('commit', data.job.commit));
-    }
-
-    if (name === 'build' && ((ref2 = data.build) != null ? ref2.commit : void 0)) {
-      build = data.build;
-      commit = {
-        id: build.commit_id,
-        author_email: build.author_email,
-        author_name: build.author_name,
-        branch: build.branch,
-        committed_at: build.committed_at,
-        committer_email: build.committer_email,
-        committer_name: build.committer_name,
-        compare_url: build.compare_url,
-        message: build.message,
-        sha: build.commit
-      };
-      delete data.build.commit;
-      this.push(this.normalize('commit', commit));
     }
 
     if (event === 'job:log') {
@@ -88,7 +68,13 @@ export default DS.Store.extend({
   loadOne(type, json) {
     let data, default_branch, last_build_id;
 
-    this.push(this.normalize(type, json));
+    if (type === 'build') {
+      const v3CompatiblePayload = this.convertBuildToV3(json);
+      const normalized = this.normalize(type, v3CompatiblePayload);
+      this.push(normalized);
+    } else {
+      this.push(this.normalize(type, json));
+    }
 
     // we get other types of records only in a few situations and
     // it's not always needed to update data, so I'm specyfing which
@@ -116,5 +102,50 @@ export default DS.Store.extend({
         });
       }
     }
-  }
+  },
+
+  convertBuildToV3(json) {
+    const { build, commit } = json;
+    let response = {};
+    const {
+      id,
+      number,
+      state,
+      event_type,
+      branch,
+      repository_id,
+    } = build;
+
+    response = Object.assign(response, {
+      '@type': 'build',
+      '@representation': 'standard',
+      id,
+      number,
+      state,
+      event_type,
+    });
+
+    if (branch) {
+      response.branch = {
+        '@type': 'branch',
+        '@href': `/repo/${repository_id}/branch/${branch}`,
+        '@representation': 'standard',
+        name: branch
+      };
+    }
+
+    if (commit) {
+      response.commit = {
+        '@type': 'commit',
+        '@representation': 'standard',
+        id: commit.id,
+        sha: commit.sha,
+        message: commit.message,
+        compare_url: commit.compare_url,
+        committed_at: '2017-03-01T13:22:18Z',
+      };
+    }
+
+    return response;
+  },
 });

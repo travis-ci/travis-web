@@ -2,7 +2,6 @@ import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 import EmbeddedRecordsMixin from 'ember-data/serializers/embedded-records-mixin';
 
 var Serializer = V2FallbackSerializer.extend(EmbeddedRecordsMixin, {
-
   attrs: {
     permissions: { key: '@permissions' }
   },

@@ -5,7 +5,8 @@
       <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
       {{item.pullRequestTitle}}
     {{else}}
-      <small class="commit-branch" title={{item.branchName}}>{{item.branchName}}</small>
+      <small class="commit-branch"
+        title={{item.commit.branch}}>{{item.commit.branch}}</small>
       {{format-message commit.subject repo=item.repo}}
     {{/if}}
   </h2>
