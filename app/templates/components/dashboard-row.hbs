@@ -1,6 +1,6 @@
 <div class="dash-head">
   <button {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
-    {{inline-svg 'images/stroke-icons/icon-star' class="icon--big"}}
+    {{inline-svg 'icon-star' class="icon--big"}}
   </button>
   {{#if repo.private}}
     {{inline-svg 'images/sroke-icons/icon-lock' class="icon"}}
@@ -41,7 +41,7 @@
     <section class="dash-commit">
       <h3 class="label">Commit</h3>
       <p class="row-content">
-        {{inline-svg 'images/stroke-icons/icon-github' class="icon"}}
+        {{inline-svg 'icon-github' class="icon"}}
         <a href="{{urlGithubCommit}}" title="See the last commit on Github">
           <span class="label-align">
             {{format-sha repo.currentBuild.commit.sha}}
@@ -52,7 +52,7 @@
     <section class="dash-finished">
       <h3 class="label">Finished</h3>
       <p class="row-content" title="{{repo.currentBuild.finishedAt}}">
-        {{inline-svg 'images/stroke-icons/icon-calendar' class="icon"}}
+        {{inline-svg 'icon-calendar' class="icon"}}
         <span class="label-align">
           {{#if repo.currentBuild.finishedAt}}
           {{format-time repo.currentBuild.finishedAt}}
@@ -67,15 +67,15 @@
         {{else}}
         <div class="dropup {{if dropupIsOpen "is-open"}}">
           <button type="button" class="dropup-tofu" {{action "openDropup"}}>
-            {{inline-svg 'images/stroke-icons/icon-tofuburger' class="icon-tofu"}}
+            {{inline-svg 'icon-tofuburger' class="icon-tofu"}}
           </button>
           <ul class="dropup-list">
             <li><button title="Trigger a build on the default branch" {{action 'triggerBuild'}}>
-                {{inline-svg 'images/stroke-icons/icon-restart' class="icon"}}
+                {{inline-svg 'icon-restart' class="icon"}}
                 <span class="label-align">Trigger a build</span></button></li>
             <li>
               {{#link-to 'settings' repo title="Settings for this repository"}}
-              {{inline-svg 'images/stroke-icons/icon-settings' class="icon"}}
+              {{inline-svg 'icon-settings' class="icon"}}
               <span class="label-align">Settings</span>
               {{/link-to}}</li>
           </ul>

@@ -95,10 +95,11 @@ export default PageObject.create({
 
     item: {
       branchName: text('.branch-name'),
-      enqueuingInterval: text('.enqueuing-interval'),
-      disableByBuildText: text('.disable-by-build'),
-
-      delete: clickable('.cron-job-delete')
+      interval: text('.interval'),
+      nextRun: text('.next-run'),
+      lastRun: text('.last-run'),
+      dontRunIfRecentBuildExistsText: text('.dont-run-if-recent-build-exists'),
+      delete: clickable('.icon-trash')
     }
   }),
 
