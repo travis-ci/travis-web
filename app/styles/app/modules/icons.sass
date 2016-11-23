@@ -21,6 +21,12 @@
   height: 16px
   margin-right: 4px
 
+.icon--l
+  @extend %icon
+  width: 30px
+  height: 30px
+  margin-right: 7px
+
 .icon-stopwatch
   +colorSVG($cement-grey)
   width: 18px
@@ -29,7 +35,8 @@
   margin-right: 1px
   
 .icon svg,
-svg.icon
+svg.icon,
+svg.icon--l
   +colorSVG($cement-grey)
 
 .icon.white
