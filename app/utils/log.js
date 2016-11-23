@@ -729,6 +729,7 @@ Log.extend(Log.Folds.Fold.prototype, {
     if (Log.DEBUG) {
       console.log('F.n - activate ' + this.start);
     }
+    if (!this.fold) { return; }
     toRemove = this.fold.parentNode;
     parentNode = toRemove.parentNode;
     nextSibling = toRemove.nextSibling;
@@ -1076,25 +1077,29 @@ Log.extend(Log.Renderer.prototype, {
       return other.parentNode.insertBefore(node, other);
     } else {
       log = document.getElementById('log');
-      return log.insertBefore(node, log.firstChild);
+      if (log) {
+        return log.insertBefore(node, log.firstChild);
+      }
     }
   },
   insertAfter: function (node, other) {
-    if (other.nextSibling) {
+    if (other && other.nextSibling) {
       return this.insertBefore(node, other.nextSibling);
     } else {
       return this.appendTo(node, other.parentNode);
     }
   },
   prependTo: function (node, other) {
-    if (other.firstChild) {
+    if (other && other.firstChild) {
       return other.insertBefore(node, other.firstChild);
     } else {
       return other.appendTo(node, other);
     }
   },
   appendTo: function (node, other) {
-    return other.appendChild(node);
+    if (other) {
+      return other.appendChild(node);
+    }
   },
   addClass: function (classes, string) {
     if (classes != null ? classes.indexOf(string) : void 0) {

@@ -2,12 +2,6 @@ export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' |
 
 ./config/deployment/store-redis-urls.sh
 
-ember deploy org-production-pull-request --activate --verbose
-TLD=org ENVIRONMENT=production ./config/deployment/update-github-status.sh
-
-TRAVIS_PRO=true ember deploy com-production-pull-request --activate --verbose
-TLD=com ENVIRONMENT=production ./config/deployment/update-github-status.sh
-
 if [[ $TRAVIS_PULL_REQUEST_BRANCH = *staging* ]]
 then
   API_ENDPOINT=https://api-staging.travis-ci.org ember deploy org-staging-pull-request --activate --verbose
@@ -18,3 +12,9 @@ then
 else
   echo "Skipping com- and org-staging PR deployments: no 'staging' in branch name."
 fi
+
+ember deploy org-production-pull-request --activate --verbose
+TLD=org ENVIRONMENT=production ./config/deployment/update-github-status.sh
+
+TRAVIS_PRO=true ember deploy com-production-pull-request --activate --verbose
+TLD=com ENVIRONMENT=production ./config/deployment/update-github-status.sh

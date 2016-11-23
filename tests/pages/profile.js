@@ -15,8 +15,8 @@ function hooksCollection(scope) {
 
     item: {
       name: text('a.profile-repo'),
-      isActive: hasClass('active', '.switch--icon'),
-      toggle: clickable('.switch--icon')
+      isActive: hasClass('active', '.switch'),
+      toggle: clickable('.switch')
     }
   });
 }

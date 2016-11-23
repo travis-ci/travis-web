@@ -1,125 +1,166 @@
-.landing-pro
-  .list--plans
-    @extend %list
-    display: flex
-    flex-wrap: wrap
-    justify-content: space-between
-    margin: 5em 0
 
-  [class^="plan--"]
-    flex: 1 0 235px
-    padding: .5em 1.5em 3em
+$light-blue: #FCFDFD
+  
+=planBtn($color)
+  display: inline-block
+  padding: .5em 1em
+  border: 1px solid $color
+  border-radius: 3px
+  font-size: 20px
+  color: $color
+  background: white
+  transition: background-color 200ms ease
+  &:hover,
+  &:active
+    background-color: $color
+    color: white
+
+$plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
+
+@each $ident, $color in $plan-buttons
+  .plans-button--#{$ident}
+    +planBtn($color)
+
+.plans-hero
+  padding-top: 60px
+  padding-bottom: 55px
+
+.list--plans
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  margin: 0
+  padding: 0
+  list-style: none
+  
+  .plan,
+  .plan--important
+    flex: 0 0 25%
+    align-self: center
+    padding: .5em 1.5em 0
     margin-bottom: 2em
+    background-color: $light-blue
     border:
-      width: 2px
-      color: rgba($cement-grey, .2)
+      width: 1px
+      color: $agate-blue
       style: solid
+    
+  .plan--important
+    padding: .5em 2em 3em
+    z-index: 1
+    box-shadow: $oxide-blue 0px 0px 9px 0px
 
-    @media #{$medium-up}
-      flex: 0 0 235px
+    .plans-price,
+    .plans-name,
+    .plans-name + .plans-label
+      color: $oxide-blue
+    .plan-icon
+      +colorSVG($oxide-blue)
+
+  @media screen and (min-width: 50em)
+    .plan:nth-of-type(1)
+      border-right: none
+    .plan:nth-of-type(3)
+      border-left: none
+      
+  @media screen and (max-width: 50em)
+    justify-content: space-around
+    .plan--important
+      order: 0
+    .plan
+      order: 1
+    .plan,
+    .plan--important
+      flex: 0 1 240px
+      
+  .list
+    padding: 0
+    list-style: none
+    margin: 3em 0
+    font-size: 16px
+    li
+      line-height: 2
+
+  .list-em
+    display: inline-block
+    width: 1.3em
+    font-weight: 600
+    font-size: 18px
+
+  .plan-icon
+    @extend %icon
+    +colorSVG($cement-grey)
+    width: 13px
+    height: 14px
+    margin-right: 8px
+  
+.plans-label
+  margin-top: 0
+  font-size: 13px
+  color: $cement-grey
+  font-weight: 600
+  text-transform: uppercase
+.plans-name
+  font-size: 30px
+  font-weight: 300
+  margin-bottom: 0
+.plans-timeframe
+  margin-bottom: 4em
+  text-align: center
+
+.plans-price
+  margin: 2rem 0 0
+  font-size: 50px
+  text-align: center
+
+.plans-prices
+  @media #{$medium}
+    margin-top: -4em
+    margin-bottom: 4em
+
+.section-headline
+  margin-bottom: 0
+
+.section--two
+  display: flex
+  flex-flow: column nowrap
+  [class^="plans-button"]
+    margin-top: 1em
+  > div
+    margin-bottom: 5em
+  svg
+    width: 100% // safari width calc is off otherwise
+  @media #{$medium}
+    flex-flow: row nowrap
+    justify-content: space-around
+    > div
+      display: flex
+      flex-flow: column
+      justify-content: space-between
+      flex: 0 0 48%
+      align-items: flex-start
       margin-bottom: 0
 
-    .list--check
-      margin: 3em 0
-      font-size: 16px
-      li
-        line-height: 2
-        &[data-jobs]:before
-          content: attr(data-jobs)
-          width: 1.2em
-          background-image: none
-          line-height: 1
-          font-weight: 600
-          text-align: center
-          font-size: 18px
+  &.section--os
+    padding-top: 6em
+    padding-bottom: 6em
 
-  =colorPlans($color, $hover-color, $bg: true)
-    border-top-color: $color
-    .plan-title
-      color: $color
-    .plan-cta-btn
-      border: $color solid 1px
-      @if $bg
-        background-color: $color
-        color: white
-      @else
-        color: $color
-        background-color: white
-      &:hover
-        border-color: $hover-color
-        background-color: $hover-color
-    .list--check li:before
-      color: $color
+  &.section--enterprise
+    margin: 3em 1em 9em
+    padding-top: 3em
+    padding-bottom: 4em
+    background-color: $light-blue
+    border: 1px solid $oxide-blue
+    @media #{$medium}
+      margin: 3em auto 9em
+      > div
+        justify-content: center
+        flex: 0 0 45%
 
-  .plan--red
-    +colorPlans($brick-red, lighten($brick-red, 40), false)
-    .list--check li:before
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjREI0MjQyIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
-  .plan--green
-    +colorPlans($turf-green, lighten($turf-green, 10))
-    .list--check li:before
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjMzlBODVCIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
-  .plan--teal
-    +colorPlans($oxide-blue, lighten($oxide-blue, 10))
-    .list--check li:before
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjNDBBM0FEIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
-  .plan--yellow
-    +colorPlans($dozer-yellow, lighten($dozer-yellow, 10))
-    .list--check li:before
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjRTVDMDI1IiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
-
-
-  .plan-title,
-  .plan-pricing,
-  .plan-cta
-    text-align: center
-
-  .plan-title
-    font-size: 1.9em
-    font-weight: 300
-
-  .plan-pricing
-    .price
-      font-size: 20px
-    .timeframe
-      font-size: 16px
-    small
-      font-size: 14px
-
-  .plan-cta-btn
-    display: inline-block
-    padding: 0.4em 0.9em
-    border-radius: 2px
-    font-size: 22px
-    text-decoration: none
-    transition: background-color 200ms ease, border-color 200ms ease
-
-  .section--enterprise
-    .inner
-      @media #{$medium-up}
-        display: flex
-        justify-content: space-between
-        flex-flow: row wrap
-
-    .section-text
-      text-align: center
-      @media #{$medium-up}
-        text-align: right
-
-    .section-image
-      img
-        display: block
-        width: 320px
-        height: auto
-        margin: auto
-      @media #{$medium-up}
-        img
-          width: 100%
-
-    .section-text,
-    .section-image
-      flex: 0 0 47%
-
+.inner.section--faq
+  margin-bottom: 6em
+  
+.landing-pro
   .list--faq
     display: flex
     flex-flow: row wrap

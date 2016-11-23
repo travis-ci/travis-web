@@ -1,14 +1,16 @@
 <div class="cron-job-text branch-name">{{cron.branch.name}}</div>
-<div class="cron-job-text enqueuing-interval">{{intervalText}}</div>
-<div class="cron-job-text disable-by-build">{{disableByBuild}}</div>
+<div class="cron-job-text interval">{{cron.interval}}</div>
+<div class="cron-job-text last-run" last-run={{cron.last_run}}>Last: {{format-time cron.last_run}}</div>
+<div class="cron-job-text next-run" next-run={{cron.next_run}}>Next: {{format-time cron.next_run}}</div>
+<div class="cron-job-text dont-run-if-recent-build-exists">{{dontRunIfRecentBuildExists}}</div>
 <div class="cron-job-action">
   <div class="tooltip">
     {{#if delete.isRunning}}
       {{loading-indicator}}
     {{else}}
-      <a href="#" title="" {{action (perform delete) on="click"}}>
-        <span class="icon-delete"></span>
-      </a>
+      <button {{action (perform delete) on="click"}} type="button" class="cron-job-delete no-button">
+        {{inline-svg 'icon-trash' class="icon-trash"}}
+      </button>
       <div class="tooltip-bubble">Delete</div>
     {{/if}}
   </div>

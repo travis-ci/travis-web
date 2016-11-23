@@ -16,8 +16,6 @@ export default Ember.Controller.extend({
     return this.get('user.name') || this.get('user.login');
   }),
 
-  isDashboard: false,
-
   defineTowerColor(broadcastArray) {
     if (!broadcastArray) {
       return '';
@@ -123,7 +121,7 @@ export default Ember.Controller.extend({
       classes.push('active');
     }
 
-    classes.push(this.get('controller.auth.state') || 'signed-out');
+    classes.push(this.get('auth.state') || 'signed-out');
 
     return classes.join(' ');
   })

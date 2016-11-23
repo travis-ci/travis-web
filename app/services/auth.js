@@ -23,6 +23,10 @@ export default Ember.Service.extend({
     return this.get('sessionStorage').getItem('travis.token');
   },
 
+  assetToken() {
+    return JSON.parse(this.get('sessionStorage').getItem('travis.user'))['token'];
+  },
+
   endpoint: Ember.computed(function () {
     return config.authEndpoint || config.apiEndpoint;
   }),
@@ -238,6 +242,19 @@ export default Ember.Service.extend({
       }
     }
   },
+
+  sync() {
+    return this.get('currentUser').sync();
+  },
+
+  syncingDidChange: Ember.observer('isSyncing', 'currentUser', function () {
+    var user;
+    if ((user = this.get('currentUser')) && user.get('isSyncing') && !user.get('syncedAt')) {
+      return Ember.run.scheduleOnce('routerTransitions', this, function () {
+        return Ember.getOwner(this).lookup('router:main').send('renderFirstSync');
+      });
+    }
+  }),
 
   userName: Ember.computed('currentUser.login', 'currentUser.name', function () {
     return this.get('currentUser.name') || this.get('currentUser.login');

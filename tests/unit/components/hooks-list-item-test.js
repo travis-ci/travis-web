@@ -18,6 +18,6 @@ test('it renders', function (assert) {
   });
   this.render();
   assert.ok(component.$().hasClass('active'), 'component should have active class');
-  assert.ok(component.$('.switch--icon').hasClass('active'), 'switch should have active class');
+  assert.ok(component.$('.switch').hasClass('active'), 'switch should have active class');
   assert.equal(component.$('.profile-repo span').text().trim(), 'A foo repo', 'repo description should be displayed');
 });

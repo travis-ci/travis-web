@@ -36,7 +36,7 @@
   </h3>
   <div class="row-item row-commit">
     <a href="{{urlGithubCommit}}" title="See the commit on GitHub">
-      <span class="icon-github"></span>
+      {{inline-svg 'icon-github' class="icon"}}
       <span class="label-align">{{format-sha build.commit.sha}}</span>
     </a>
   </div>
@@ -45,13 +45,13 @@
 <div class="two-line">
   <div class="row-item row-duration">
     <div title="{{format-duration build.duration}}">
-      <span class="icon-clock"></span>
+      {{inline-svg 'icon-clock' class="icon"}}
       <time class="label-align" datetime="PT{{build.duration}}S">{{format-duration build.duration}}</time>
     </div>
   </div>
   <div class="row-item row-calendar">
     <div title="{{pretty-date build.formattedFinishedAt}}">
-      <span class="icon-calendar"></span>
+      {{inline-svg 'icon-calendar' class="icon"}}
       <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
     </div>
   </div>

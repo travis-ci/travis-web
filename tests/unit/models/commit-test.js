@@ -1,7 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 moduleForModel('commit', 'Unit | Model | commit', {
-  needs: ['model:build']
+  needs: ['model:build', 'service:external-links', 'service:auth']
 });
 
 test('calculation of avatar urls via Gravatar', function (assert) {
@@ -19,8 +19,7 @@ test('calculation of avatar urls via Gravatar', function (assert) {
 });
 
 test('calculation of avatar urls via overriding parameter', function (assert) {
-  var model;
-  model = this.subject();
+  const model = this.subject();
   Ember.run(function () {
     return model.setProperties({
       authorEmail: 'author@example.com',

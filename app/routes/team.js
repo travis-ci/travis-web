@@ -261,6 +261,13 @@ export default TravisRoute.extend({
         nationality: 'uk',
         country: 'germany',
         image: 'sam'
+      },
+      {
+        name: 'Lili Kui',
+        title: 'Hammer Jammer',
+        nationality: 'kenya',
+        country: 'germany',
+        image: 'lili'
       }
     ];
   }
