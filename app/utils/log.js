@@ -729,6 +729,7 @@ Log.extend(Log.Folds.Fold.prototype, {
     if (Log.DEBUG) {
       console.log('F.n - activate ' + this.start);
     }
+    if (!this.fold) { return; }
     toRemove = this.fold.parentNode;
     parentNode = toRemove.parentNode;
     nextSibling = toRemove.nextSibling;
