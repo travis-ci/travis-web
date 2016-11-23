@@ -13,7 +13,8 @@
 
     <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
       <div class="log-header">
-        <button type="button" class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>{{eye-icon}}Hide log</button>
+          <button type="button" class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
+              {{inline-svg 'icon-seemore' class="icon"}}<span class="label-align">Hide log</span></button>
         {{#if canRemoveLog}}
           <a class="remove-log-button open-popup" {{action "removeLogPopup"}} title="Remove the log">
             {{inline-svg 'icon-deletelogs' class="icon"}} Remove log</a>
