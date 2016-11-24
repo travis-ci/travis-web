@@ -1,6 +1,7 @@
 <div class="search search--sidebar">
   <div class="search-inner">
-    {{input value=search placeholder="Search all repositories" key-up=(perform showSearchResults)}}
+      {{input id="travis-search" value=search placeholder="Search all repositories" key-up=(perform showSearchResults)}}
+      <label for="travis-search">{{inline-svg 'icon-search' class="icon"}}</label>
   </div>
 </div>
 
