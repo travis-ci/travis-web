@@ -74,6 +74,22 @@ export default Ember.Controller.extend({
     }
   }),
 
+  deploymentVersion: Ember.computed(() => {
+    if (window && window.location) {
+      const hostname = window.location.hostname;
+
+      if (hostname.indexOf('ember-beta') === 0 || hostname.indexOf('ember-canary') === 0) {
+        return `Ember ${Ember.VERSION}`;
+      } else if (hostname.indexOf('test-deployments') > 0) {
+        return `Test deployment ${hostname.split('.')[0]}`;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }),
+
   actions: {
     toggleBurgerMenu() {
       this.toggleProperty('is-open');
