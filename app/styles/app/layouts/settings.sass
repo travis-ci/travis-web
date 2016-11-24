@@ -110,7 +110,7 @@
     word-break: normal
     white-space: nowrap
 
-.env-var-value, .cron-job-text
+.env-var-value
   @extend %settings-value-section
   white-space: nowrap
   width: 76%
@@ -137,17 +137,6 @@
   @media #{$medium-up}
     width: grid-calc(3, 12)
 
-.cron-job-text
-  @media #{$medium-up}
-    width: grid-calc(5, 30)
-    padding-right: 5px
-
-.dont-run-if-recent-build-exists
-  white-space: inherit
-
-.interval
-  text-transform: capitalize
-
 %settings-action-section
   display: inline-block
   position: relative
@@ -160,14 +149,10 @@
   @media #{$xlarge-up}
     width: grid-calc(4, 36)
 
-.env-var-action, .cron-job-action
+.env-var-action
   @extend %settings-action-section
   a
     padding: 1em
-
-.cron-job-action
-  @media #{$medium-up}
-    width: grid-calc(4, 36)
 
 .ssh-key-action
   @extend %settings-action-section
@@ -179,3 +164,28 @@
   .icon-delete-disabled
     display: block
     margin: .2em auto 0
+
+.settings-cron
+  display: flex
+  flex-flow: column nowrap
+  justify-content: space-between
+  @media #{$medium}
+    flex-flow: row nowrap
+
+.cron-job-text
+  white-space: nowrap
+
+.cron-job-text.branch-name
+  @media #{$medium}
+    flex: 0 0 10em
+    position: relative
+    overflow: hidden
+    &:after
+      +fadeOut(right, -90deg, $pebble-grey)
+    
+.cron-job-action
+  position: relative
+  text-align: center
+  @media #{$medium}
+    flex-basis: 4em
+  
