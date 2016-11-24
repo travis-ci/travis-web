@@ -21,9 +21,9 @@
 
 {{#unless config.enterprise}}
   {{#if features.proVersion}}
-    <p class="helptext">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
+    <p class="text-medium">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
   {{else}}
-    <p class="helptext">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+    <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
   {{/if}}
 {{/unless}}
 
@@ -66,7 +66,7 @@
 
 {{#if hooksWithoutAdmin.length}}
   <div id="unadministerable-hooks">
-    <p>You require admin rights to enable these repositories</p>
+    <p class="text-medium">You require admin rights to enable these repositories</p>
     <ul class="profile-hooklist">
       {{#each hooksWithoutAdmin as |hook| }}
         {{hooks-list-item hook=hook}}
