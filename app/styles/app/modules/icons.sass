@@ -43,12 +43,15 @@ svg.icon--l
   +colorSVG(white)
 
 .icon-help
-  @extend %icon
-  width: 18px
-  heigth: 18px
+  +colorSVG($cement-grey)
+  display: inline-block
+  width: 20px
+  height: 20px
+  padding: 0.2em
+  margin-left: .2em
+  vertical-align: middle
   border-radius: 50%
   border: 1px solid $pebble-grey
-  padding: 0.2em
   &:hover,
   &:active
     border-color: $oxide-blue
