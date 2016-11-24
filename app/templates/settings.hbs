@@ -48,9 +48,8 @@
         {{#each model.cronJobs.jobs as |cron|}}
           {{cron-job cron=cron}}
         {{/each}}
-
-        <li>{{add-cron-job branches=sortedBranchesWithoutCron}}</li>
       </ul>
+      {{add-cron-job branches=sortedBranchesWithoutCron}}
 
     </section>
   {{/if}}
