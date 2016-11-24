@@ -3,21 +3,24 @@
     <h2 class="row-branch {{build.state}}">
       {{status-icon status=build.state}}
       {{#if build.isPullRequest}}
-        {{#link-to "build" build.repo build}}
+        {{#link-to "build" build.repo build title=(concat "PR #" build.pullRequestNumber " " build.pullRequestTitle)}}
           <small>PR #{{build.pullRequestNumber}}</small>
-          {{{format-message build.pullRequestTitle short="true" repo=build.repo}}}
         {{/link-to}}
       {{else}}
-        {{#link-to "build" build.repo build}}
+        {{#link-to "build" build.repo build title=build.commit.branch}}
           {{build.commit.branch}}
         {{/link-to}}
       {{/if}}
     </h2>
-    {{#unless build.isPullRequest}}
+    {{#if build.isPullRequest}}
+      <div class="row-message">
+        {{{format-message build.pullRequestTitle short="true" repo=build.repo}}}
+      </div>
+    {{else}}
       <div class="row-message">
         {{{format-message build.commit.message short="true" repo=build.repo}}}
       </div>
-    {{/unless}}
+    {{/if}}
   </div>
   <div class="row-item row-committer">
     {{user-avatar url=build.commit.authorAvatarUrlOrGravatar name=build.commit.authorName small=true}}

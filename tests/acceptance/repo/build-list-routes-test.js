@@ -110,7 +110,8 @@ test('view pull requests', function (assert) {
     const pullRequest = page.builds(0);
 
     assert.ok(pullRequest.passed, 'expected the pull request to have passed');
-    assert.equal(pullRequest.name, 'PR #2010 A pull request');
+    assert.equal(pullRequest.name, 'PR #2010');
+    assert.equal(pullRequest.message, 'A pull request');
     assert.equal(pullRequest.committer, 'Sara Ahmed');
     assert.equal(pullRequest.commitSha, '1234567');
     assert.equal(pullRequest.commitDate, 'about a year ago');
