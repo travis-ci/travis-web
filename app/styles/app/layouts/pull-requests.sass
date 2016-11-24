@@ -13,6 +13,7 @@
     .two-line
       padding: 0
       margin: .4em 0
+      white0-space: nowrap
       .row-item:not(.build-info)
         display: block
 
@@ -27,7 +28,7 @@
       padding-left: 0.4em
 
     .row-branch
-      flex: 1 0 18%
+      flex: 0 0 30%
       position: relative
       overflow: hidden
       &:after
@@ -39,10 +40,13 @@
           content: none
         a
           background-color: white
-
     .row-message
       padding-left: 1.6em
-      flex: 1 1 50%
+      flex: 0 0 70%
+      overflow: hidden
+      position: relative
+      &:after
+        +fadeOut(right, -90deg, white)
 
     .two-line:first-of-type
       flex: 0 0 55%
