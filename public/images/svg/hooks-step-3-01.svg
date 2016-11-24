@@ -117,7 +117,7 @@
 	<circle fill="none" stroke="#E7E8E6" stroke-width="2.6961" stroke-miterlimit="10" cx="47.852" cy="48.044" r="45.986"/>
       </g>
     </g>
-    <g>
+    <g class="getting-started-hidden">
       <circle fill="#34A665" cx="16.017" cy="88.016" r="14.149"/>
       <g enable-background="new    ">
 	<path fill="#FFFFFF" d="M13.87,90.387c0.532,0.56,1.232,1.064,2.283,1.064c1.079,0,1.849-0.645,1.849-1.639
