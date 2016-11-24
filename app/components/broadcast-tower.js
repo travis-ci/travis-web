@@ -1,24 +1,21 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['broadcast'],
   isOpen: false,
   timeoutId: '',
-  actions: {
-    toggleBroadcasts() {
+
+  toggle: task(function* () {
+    this.toggleProperty('isOpen');
+    this.sendAction('toggleBroadcasts');
+
+    // Acceptance tests will wait for the promise to resolve, so skip in tests
+    if (this.get('isOpen') && !Ember.testing) {
+      yield new Ember.RSVP.Promise(resolve => Ember.run.later(resolve, 10000));
+
       this.toggleProperty('isOpen');
       this.sendAction('toggleBroadcasts');
-      if (this.get('isOpen') === true) {
-        return this.set('timeoutId', setTimeout(() => {
-          // FIXME temporary hack to fix tests
-          if (!this.isDestroyed) {
-            this.toggleProperty('isOpen');
-            return this.sendAction('toggleBroadcasts');
-          }
-        }, 10000));
-      } else {
-        return clearTimeout(this.get('timeoutId'));
-      }
     }
-  }
+  }).restartable()
 });
