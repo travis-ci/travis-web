@@ -1,36 +1,18 @@
 .profile-main
   padding: 0 $column-gutter/2
-
   @media #{$medium-up}
     width: grid-calc(8, 12)
     float: right
     padding: 0 0 0 $column-gutter/2
-
-  header
-    h1
-      margin: 0 1.7rem 0 0
-      color: $asphalt-grey
-      font-size: 36px
-      font-weight: 400
-
-    @media #{$medium-up}
-      .profile-header
-        display: inline-block
-        vertical-align: middle
-      .sync-button
-        float: right
-        margin-top: .4em
-    @media #{$large-up}
-      .profile-header
-        position: relative
-        white-space: nowrap;
-        max-width: 77%;
-        overflow: hidden;
-        &:after
-          @include fadeOut(right, -90deg, white)
-
   .cta-btn
     text-align: right
+
+.profile-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  .h2--grey
+    margin-bottom: 0
 
 .profile-getstarted
   display: flex
