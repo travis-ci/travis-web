@@ -30,28 +30,26 @@
     {{/unless}}
   </header>
 
-  <section class="profile-getstarted">
-    <ol class="row">
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/ui/hooks-step-1-01.svg" alt="Flick the repo switch">
-          <figcaption>Flick the repository switch on</figcaption>
-        </figure>
-      </li>
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/ui/hooks-step-2-01.svg" alt="Add .travis.yml file">
-          <figcaption>Add .travis.yml file to your repository</figcaption>
-        </figure>
-      </li>
-      <li class="columns medium-4">
-        <figure>
-          <img src="/images/ui/hooks-step-3-01.svg" alt="Do a git push">
-          <figcaption>Trigger your first build with a git push</figcaption>
-        </figure>
-      </li>
-    </ol>
-  </section>
+  <ol class="profile-getstarted">
+    <li>
+      <figure>
+        {{inline-svg 'hooks-step-1-01'}}
+        <figcaption>Flick the repository switch on</figcaption>
+      </figure>
+    </li>
+    <li>
+      <figure>
+        {{inline-svg 'hooks-step-2-01.svg'}}
+        <figcaption>Add .travis.yml file to your repository</figcaption>
+      </figure>
+    </li>
+    <li>
+      <figure>
+        {{inline-svg 'hooks-step-3-01'}}
+        <figcaption>Trigger your first build with a git push</figcaption>
+      </figure>
+    </li>
+  </ol>
 
   <div id="administerable-hooks">
     <ul class="profile-hooklist">
