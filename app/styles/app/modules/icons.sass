@@ -39,6 +39,17 @@ svg.icon,
 svg.icon--l
   +colorSVG($cement-grey)
 
+.icon-hover
+  &:hover,
+  &:active
+    +colorSVG($oxide-blue)
+
+.icon--red
+  @extend %icon
+  +colorSVG($brick-red)
+  width: 15px
+  height: 16px
+
 .icon.white
   +colorSVG(white)
 
