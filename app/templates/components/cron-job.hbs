@@ -1,8 +1,18 @@
-<div class="cron-job-text branch-name">{{cron.branch.name}}</div>
-<div class="cron-job-text interval">{{cron.interval}}</div>
-<div class="cron-job-text last-run" last-run={{cron.last_run}}>Last: {{format-time cron.last_run}}</div>
-<div class="cron-job-text next-run" next-run={{cron.next_run}}>Next: {{format-time cron.next_run}}</div>
-<div class="cron-job-text dont-run-if-recent-build-exists">{{dontRunIfRecentBuildExists}}</div>
+<div class="cron-job-text branch-name" title="{{cron.branch.name}}">
+    {{request-icon event='cron'}}
+    <span class="label-align">{{cron.branch.name}}</span></div>
+<div class="cron-job-text interval">
+    {{inline-svg 'icon-calendar' class="icon"}}
+    <span class="label-align">{{cron.interval}}</span></div>
+<div class="cron-job-text last-run" title="{{cron.last_run}}">
+    {{inline-svg 'icon-clock' class="icon"}}
+    <time class="label-align" datetime="{{cron.last_run}}">Ran {{format-time cron.last_run}}</time></div>
+<div class="cron-job-text next-run" title="{{cron.next_run}}">
+    {{inline-svg 'icon-nextcron' class="icon"}}
+    <time class="label-align" datetime="{{cron.next_run}}">Scheduled in {{format-time cron.next_run}}</time></div>
+<div class="cron-job-text dont-run-if-recent-build-exists">
+    {{inline-svg 'icon-settings' class="icon"}}
+    <span class="label-align">{{dontRunIfRecentBuildExists}}</span></div>
 <div class="cron-job-action">
   <div class="tooltip">
     {{#if delete.isRunning}}
