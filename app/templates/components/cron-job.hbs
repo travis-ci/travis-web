@@ -3,7 +3,7 @@
     <span class="label-align">{{cron.branch.name}}</span></div>
 <div class="cron-job-text interval">
     {{inline-svg 'icon-calendar' class="icon"}}
-    <span class="label-align">{{cron.interval}}</span></div>
+    <span class="label-align">Runs {{cron.interval}}</span></div>
 <div class="cron-job-text last-run" title="{{cron.last_run}}">
     {{inline-svg 'icon-clock' class="icon"}}
     <time class="label-align" datetime="{{cron.last_run}}">Ran {{format-time cron.last_run}}</time></div>
