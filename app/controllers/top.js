@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
   auth: service(),
   store: service(),
   storage: service(),
+  externalLinks: service(),
 
   user: alias('auth.currentUser'),
 
@@ -74,14 +75,18 @@ export default Ember.Controller.extend({
     }
   }),
 
-  deploymentVersion: Ember.computed(() => {
+  deploymentVersion: Ember.computed(function () {
     if (window && window.location) {
       const hostname = window.location.hostname;
 
       if (hostname.indexOf('ember-beta') === 0 || hostname.indexOf('ember-canary') === 0) {
         return `Ember ${Ember.VERSION}`;
       } else if (hostname.indexOf('test-deployments') > 0) {
-        return `Test deployment ${hostname.split('.')[0]}`;
+        const branchName = hostname.split('.')[0];
+        const branchURL = this.get('externalLinks').travisWebBranch(branchName);
+        const branchLink = `<a href='${branchURL}'><code>${branchName}</code></a>`;
+
+        return Ember.String.htmlSafe(`Test deployment ${branchLink}`);
       } else {
         return false;
       }
