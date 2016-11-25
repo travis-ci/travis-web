@@ -132,8 +132,8 @@ test('view settings', function (assert) {
     assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
 
     assert.notOk(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to not exist');
-    assert.notOk(settingsPage.autoCancelPushes.exists, 'expected no auto-cancel pushes switch when flag not present in API response');
-    assert.notOk(settingsPage.autoCancelPullRequests.exists, 'expected no auto-cancel pull requests switch when flag not present in API response');
+    assert.notOk(settingsPage.autoCancelWaitingPushes.exists, 'expected no auto-cancel pushes switch when flag not present in API response');
+    assert.notOk(settingsPage.autoCancelWaitingPullRequests.exists, 'expected no auto-cancel pull requests switch when flag not present in API response');
   });
 });
 
@@ -303,15 +303,15 @@ test('delete and set SSH keys', function (assert) {
 });
 
 test('on a repository with auto-cancellation', function (assert) {
-  this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
-  this.repository.createSetting({ name: 'auto_cancel_pull_requests', value: false });
+  this.repository.createSetting({ name: 'auto_cancel_waiting_pushes', value: true });
+  this.repository.createSetting({ name: 'auto_cancel_waiting_pull_requests', value: false });
 
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
     assert.ok(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to exist');
-    assert.ok(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be present and enabled');
-    assert.notOk(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be present but disabled');
+    assert.ok(settingsPage.autoCancelWaitingPushes.isActive, 'expected auto-cancel pushes to be present and enabled');
+    assert.notOk(settingsPage.autoCancelWaitingPullRequests.isActive, 'expected auto-cancel pull requests to be present but disabled');
   });
 
   const settingToRequestBody = {};
@@ -320,18 +320,18 @@ test('on a repository with auto-cancellation', function (assert) {
     settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
   });
 
-  settingsPage.autoCancelPullRequests.toggle();
+  settingsPage.autoCancelWaitingPullRequests.toggle();
 
   andThen(() => {
-    assert.ok(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be enabled');
-    assert.deepEqual(settingToRequestBody.auto_cancel_pull_requests, { 'user_setting.value': true });
+    assert.ok(settingsPage.autoCancelWaitingPullRequests.isActive, 'expected auto-cancel pull requests to be enabled');
+    assert.deepEqual(settingToRequestBody.auto_cancel_waiting_pull_requests, { 'user_setting.value': true });
   });
 
-  settingsPage.autoCancelPushes.toggle();
+  settingsPage.autoCancelWaitingPushes.toggle();
 
   andThen(() => {
-    assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
-    assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'user_setting.value': false });
+    assert.notOk(settingsPage.autoCancelWaitingPushes.isActive, 'expected auto-cancel pushes to be disabled');
+    assert.deepEqual(settingToRequestBody.auto_cancel_waiting_pushes, { 'user_setting.value': false });
   });
 
   percySnapshot(assert);
