@@ -9,11 +9,17 @@
 {{#unless config.enterprise}}
   {{#if auth.signedIn}}
 
-    {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus}}
+    {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus count=broadcasts.length}}
 
     <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
     {{#each broadcasts.content as |broadcast|}}
-      <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}} <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a></p></li>
+      <li>
+        <p>
+          <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
+          <span class='message'>{{{broadcast.message}}}</span>
+          <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a>
+        </p>
+      </li>
     {{else}}
       <li><p>There are no broadcasts</p></li>
     {{/each}}

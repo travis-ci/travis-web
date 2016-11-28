@@ -43,10 +43,9 @@
     position: relative
     margin: .5em 0
     padding: 0 1.5rem
-    font-size: .9em
     word-wrap: break-word
+
   a:not(.icon-close)
-   
     line-height: 1.45
     text-decoration: underline
 
@@ -117,6 +116,10 @@
       .path
         stroke: $brick-red
 
+    .count-wrapper
+      color: $brick-red
+      border-color: $brick-red
+
   &.announcement
     .path
       stroke: $turf-green
@@ -124,3 +127,30 @@
     &.is-open
       .path
         stroke: $turf-green
+
+    .count-wrapper
+      color: $turf-green
+      border-color: $turf-green
+
+  .count-wrapper
+    position: absolute
+
+    height: 15px
+    width: 15px
+
+    border-radius: 50%
+    border-width: 1px
+    border-style: solid
+
+    background: white
+
+    text-align: center
+    line-height: normal
+    font-size: 11px
+
+    top: 0
+    margin-top: 11px
+    margin-left: 7px
+
+    .count
+      margin-top: -1px
