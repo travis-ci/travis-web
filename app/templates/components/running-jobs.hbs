@@ -10,7 +10,7 @@
         {{/if}}
 
         <p class="tile-title float-right">
-          {{inline-svg 'icon-hash'}}
+          {{inline-svg 'icon-hash' class="icon"}}
           {{#if job.repo.slug}}
             {{#link-to "job" job.repo job}}<span class="label-align">{{job.number}}</span>{{/link-to}}
           {{/if}}

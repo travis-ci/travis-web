@@ -116,16 +116,16 @@ test('view settings', function (assert) {
     assert.notOk(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to not be public');
     assert.equal(settingsPage.environmentVariables(1).value, '••••••••••••••••');
 
-    assert.equal(settingsPage.crons(0).branchName, 'daily-branch');
-    assert.equal(settingsPage.crons(0).interval, 'daily');
-    assert.equal(settingsPage.crons(0).lastRun, 'Last: less than a minute ago');
-    assert.equal(settingsPage.crons(0).nextRun, 'Next: about 24 hours from now');
+    assert.equal(settingsPage.crons(0).branchName, 'Cron job event daily-branch');
+    assert.equal(settingsPage.crons(0).interval, 'Runs daily');
+    assert.equal(settingsPage.crons(0).lastRun, 'Ran less than a minute ago');
+    assert.equal(settingsPage.crons(0).nextRun, 'Scheduled in about 24 hours from now');
     assert.ok(settingsPage.crons(0).dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
 
-    assert.equal(settingsPage.crons(1).branchName, 'weekly-branch');
-    assert.equal(settingsPage.crons(1).interval, 'weekly');
-    assert.equal(settingsPage.crons(1).lastRun, 'Last: less than a minute ago');
-    assert.equal(settingsPage.crons(1).nextRun, 'Next: 7 days from now');
+    assert.equal(settingsPage.crons(1).branchName, 'Cron job event weekly-branch');
+    assert.equal(settingsPage.crons(1).interval, 'Runs weekly');
+    assert.equal(settingsPage.crons(1).lastRun, 'Ran less than a minute ago');
+    assert.equal(settingsPage.crons(1).nextRun, 'Scheduled in 7 days from now');
     assert.ok(settingsPage.crons(1).dontRunIfRecentBuildExistsText.indexOf('Do not run if there has been a build in the last 24h') === 0, 'expected Do not run if there has been a build in the last 24h');
 
     assert.equal(settingsPage.sshKey.name, 'testy');

@@ -26,4 +26,8 @@ export default Ember.Service.extend({
   gravatarImage(email, size) {
     return 'https://www.gravatar.com/avatar/' + (md5(email)) + '?s=' + size + '&d=blank';
   },
+
+  travisWebBranch(branchName) {
+    return `https://github.com/travis-ci/travis-web/tree/${branchName}`;
+  }
 });

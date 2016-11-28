@@ -5,7 +5,10 @@
   </div>
   <div class="owner-info">
     <h1 class="owner-title">{{owner.name}}</h1>
-    <p class="owner-handle"><a href={{githubProfile}} title="{{owner.name}} on GitHub"><span class="icon-github-circle"></span><span class="label-align">{{owner.login}}</span></a></p>
+    <p class="owner-handle">
+      {{inline-svg 'icon-repooctocat' class="icon--l"}}
+      <a href={{githubProfile}} title="{{owner.name}} on GitHub">  
+        <span class="label-align">{{owner.login}}</span></a></p>
     {{!-- {{owner-sync-button owner=owner}} --}}
   </div>
 </header>

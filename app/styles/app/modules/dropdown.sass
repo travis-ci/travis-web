@@ -51,22 +51,23 @@ $dropdown-button-margin: -9px
 
 .option-tofu,
 .option-arrow
-  +colorSVG($cement-grey)
   width: 2em
   height: 2em
   display: inline-block
   vertical-align: top
+.option-tofu
+  padding: 0  5px
+  border-left: 1px solid $pebble-grey
+  .icon-tofu
+    +colorSVGFill($cement-grey)
+    width: 1.4rem
+    height: 2rem
+.option-arrow
+  +colorSVG($cement-grey)
+  @extend %icon-line-arrowtabs
   background:
     repeat: no-repeat
     position: 50%
-
-.option-tofu
-  padding: 0 0.3em
-  @media #{$medium-up}
-    border-left: 1px solid $pebble-grey
-
-.option-arrow
-  @extend %icon-line-arrowtabs
   transform: rotate(90deg)
   background-size: 14px
   @media #{$medium-up}
@@ -164,13 +165,14 @@ $dropdown-button-margin: -9px
     &:active
       background: $oxide-blue
       color: white
+      // tbr when dashboard gets merged in
       .icon-trigger
-        @extend %icon-line-trigger-white
+        // @extend %icon-line-trigger-white
       .icon-deactivate
-        @extend %icon-line-cross-white
+        // @extend %icon-line-cross-white
         border-color: white
       .icon-settings
-        @extend %icon-line-cog-white
+        // @extend %icon-line-cog-white
 
   @media #{$medium-up}
     position: absolute
