@@ -23,35 +23,18 @@
   will-change: opacity
   transition: opacity 150ms ease
 
-  &::after, &::before
+  &:after
     content: ""
     position: absolute
-    width: 0
-    height: 0
-    margin-left: -0.5em
-    box-sizing: border-box
-
-    top: 0
-
-    border-width: 7px
-    border-style: solid
-
-
-  &::after
-    border-color: white
-    margin-left: -8px
-    border-width: 6px 12px
-
-
-  &::before
-    border-color: white
-    $shadow-offset: 1px
-
-    transform-origin: 0 0
-    transform: rotate(-45deg)
-
-    box-shadow: $shadow-offset $shadow-offset*-1 7px 0 $cement-grey
-
+    display: block
+    width: 14px
+    height: 14px
+    background: white
+    top: -0.5em
+    left: 136px
+    transform: rotate(45deg)
+    border-top: solid 2px $cream-dark
+    border-left: solid 2px $cream-dark
   li
     border-bottom: solid 2px $cream-dark
     &:last-of-type
@@ -68,10 +51,9 @@
 
   &.is-open
     z-index: 80
+    border: solid 2px $cream-dark
     opacity: 1
     height: auto
-
-    box-shadow: 0px 0px 7px $cement-grey
 
   .icon-close
     @extend %icon-line-cross
