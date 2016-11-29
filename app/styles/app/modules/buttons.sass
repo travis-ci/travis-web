@@ -70,43 +70,39 @@
 %action-button
   display: block
   width: 8em
-  padding: 0.1em 0.5em 0.1em 2em
+  padding: 0 0.5em
   border: 1px solid $pebble-grey
   border-radius: 14px
-  font-weight: 400
   cursor: pointer
   white-space: nowrap
-  background:
-    size: 16px 16px
-    repeat: no-repeat
-    position: 10px center
   &:hover,
   &:active
+    +colorSVG($oxide-blue)
     border-color: $oxide-blue
     color: $oxide-blue
     text-decoration: none !important
 
 .action-button--restart
   @extend %action-button
-  @extend %icon-line-trigger
+  
   &:hover,
   &:active
-    @extend %icon-line-trigger-teal
+  
 
 .action-button--debug
   @extend %action-button
-  @extend %icon-line-debug
+  
   &:hover,
   &:active
-    @extend %icon-line-debug-teal
+  
 
 .action-button--cancel
   @extend %action-button
-  @extend %icon-line-cross
+  
   background-size: 14px 14px
   &:hover,
   &:active
-    @extend %icon-line-cross-teal
+  
   
 %log-button
   display: inline-block

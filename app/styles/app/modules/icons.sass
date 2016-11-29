@@ -115,20 +115,6 @@ svg.icon--l
     @extend %icon-line-cross-white
     border-color: white
 
-%icon-line-trigger
-  background-image: inline-image('stroke-icons/icon-restart.svg')
-%icon-line-trigger-white
-  background-image: inline-image('stroke-icons/icon-restart-white.svg')
-%icon-line-trigger-teal
-  background-image: inline-image('stroke-icons/icon-restart-teal.svg')
-
-.icon-trigger
-  @extend .icon
-  @extend %icon-line-trigger
-  &:hover,
-  &:active
-    @extend %icon-line-trigger-white
-
 %icon-line-lock
   background-image: inline-image('stroke-icons/icon-private.svg')
 .icon-lock
@@ -158,18 +144,6 @@ svg.icon--l
   background-image: inline-image('stroke-icons/icon-flag.svg')
 %icon-line-flag-yellow
   background-image: inline-image('stroke-icons/icon-flag-yellow.svg')
-
-%icon-line-debug
-  background-image: inline-image('stroke-icons/icon-debug.svg');
-%icon-line-debug-teal
-  background-image: inline-image('stroke-icons/icon-debug-teal.svg')
-  
-.icon-debug
-  @extend .icon
-  @extend %icon-line-debug
-  &:hover,
-  &:active
-    @extend %icon-line-debug-teal
 
 .icon--plus
   width: 1.1rem
@@ -209,3 +183,4 @@ svg.icon--l
 
   40%
     transform: scale(1.0)
+
