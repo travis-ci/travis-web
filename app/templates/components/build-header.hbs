@@ -20,19 +20,19 @@
       <li>
         <a class="commit-commit" title="See the commit on GitHub" href={{urlGithubCommit}}>
           {{inline-svg 'icon-github' class="icon"}}
-          <span class="label-align">Commit {{format-sha commit.sha}}</span></a>
+          <span class="label-align inner-underline">Commit {{format-sha commit.sha}}</span></a>
       </li>
       {{#if displayCompare}}
         <li>
           {{#if item.pullRequest}}
             <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
               {{inline-svg 'icon-github' class="icon"}}
-              <span class="label-align">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
+              <span class="label-align inner-underline">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
           {{else}}
             {{#if item.commit.compareUrl}}
             <a class="commit-compare" title="See the diff on GitHub" href={{item.commit.compareUrl}}>
               {{inline-svg 'icon-github' class="icon"}}
-              <span class="label-align">Compare {{short-compare-shas item.commit.compareUrl}}</span></a>
+              <span class="label-align inner-underline">Compare {{short-compare-shas item.commit.compareUrl}}</span></a>
             {{/if}}
           {{/if}}
         </li>
@@ -41,7 +41,7 @@
       <li>
         <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
           {{inline-svg 'icon-github' class="icon"}}
-          <span class="label-align">Branch {{commit.branch}}</span>
+          <span class="label-align inner-underline">Branch {{commit.branch}}</span>
         </a>
       </li>
       {{else}}
@@ -67,10 +67,10 @@
   <h3 class="build-status {{item.state}}">
     {{#if isJob}}
       {{#link-to "job" repo item}}
-        {{request-icon event=item.build.eventType state=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
+        {{request-icon event=item.build.eventType state=item.state}} <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>{{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
-        {{request-icon event=item.eventType state=item.state}} #{{item.number}} {{humanize-state item.state}}{{/link-to}}
+        {{request-icon event=item.eventType state=item.state}} <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>{{/link-to}}
     {{/if}}
   </h3>
   <ul class="list-icon">
