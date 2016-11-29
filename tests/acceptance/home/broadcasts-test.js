@@ -20,8 +20,8 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
 });
 
 test('the broadcast tower shows a warning even when an announcement exists, broadcasts are listed in reverse order, and closing a broadcast records it', (assert) => {
+  // A broadcast with no category is interpreted as a warning
   server.create('broadcast', {
-    category: 'warning',
     message: 'Join the resistance!'
   });
 
