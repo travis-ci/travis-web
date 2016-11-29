@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import computed from 'ember-computed-decorators';
 import { durationFrom } from 'travis/utils/helpers';
 
 const { service } = Ember.inject;
@@ -11,16 +12,17 @@ export default Ember.Component.extend({
   classNameBindings: ['item.state'],
   attributeBindings: ['jobId:data-job-id'],
 
-  jobId: Ember.computed('item', function () {
-    if (this.get('item.build')) {
-      return this.get('item.id');
+  @computed('item.{build,id,jobs}')
+  jobId(build, id, jobs) {
+    if (build) {
+      return id;
     } else {
       let ids = [];
-      let jobs = this.get('item.jobs') || [];
+      jobs = jobs || [];
       jobs.forEach(item => { ids.push(item.id); });
       return ids.join(' ');
     }
-  }),
+  },
 
   isJob: Ember.computed('item', function () {
     if (this.get('item.build')) {
@@ -47,5 +49,10 @@ export default Ember.Component.extend({
 
   elapsedTime: Ember.computed('item.startedAt', 'item.finishedAt', 'item.duration', function () {
     return durationFrom(this.get('item.startedAt'), this.get('item.finishedAt'));
-  })
+  }),
+
+  @computed('item.repo.slug', 'commit.branch')
+  urlGitHubBranch(slug, branchName) {
+    return this.get('externalLinks').githubBranch(slug, branchName);
+  }
 });

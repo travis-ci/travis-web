@@ -37,6 +37,16 @@
           {{/if}}
         </li>
       {{/if}}
+      {{#if commit.branch}}
+      <li>
+        <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
+          {{inline-svg 'icon-github' class="icon"}}
+          <span class="label-align">Branch {{commit.branch}}</span>
+        </a>
+      </li>
+      {{else}}
+        {{loading-indicator}}
+      {{/if}}
     </ul>
     <p class="commit-author">
       {{#if commit.authorName}}

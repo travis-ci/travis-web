@@ -29,5 +29,9 @@ export default Ember.Service.extend({
 
   travisWebBranch(branchName) {
     return `https://github.com/travis-ci/travis-web/tree/${branchName}`;
+  },
+
+  githubBranch(slug, branch) {
+    return config.sourceEndpoint + '/' + slug + '/tree/' + branch;
   }
 });

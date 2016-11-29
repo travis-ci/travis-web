@@ -32,6 +32,7 @@ module.exports = function () {
   var app = new EmberApp({
     babel: {
       includePolyfill: true,
+      optional: ['es7.decorators']
     },
     fingerprint: fingerprint,
     sourcemaps: {

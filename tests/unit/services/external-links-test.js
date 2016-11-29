@@ -49,3 +49,8 @@ test('travisWebBranch', function (assert) {
 
   assert.equal(service.travisWebBranch(branchName), 'https://github.com/travis-ci/travis-web/tree/bd-no-justice-no-peace');
 });
+
+test('githubBranch', function (assert) {
+  let service = this.subject();
+  assert.equal(service.githubBranch(this.slug, this.branch), 'https://github.com/travis-ci/travis-web/tree/new-pr');
+});
