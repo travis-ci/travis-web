@@ -62,6 +62,10 @@ export default Ember.Controller.extend({
               }
             }
           }).map(function (broadcast) {
+            if (!broadcast.category) {
+              broadcast.category = 'warning';
+            }
+
             return Ember.Object.create(broadcast);
           }).reverse();
         }
