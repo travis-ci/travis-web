@@ -53,18 +53,13 @@ export default Ember.Controller.extend({
         seenBroadcasts = [];
       }
       Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options).then((response) => {
-        var receivedBroadcasts;
-        if (response.broadcasts.length) {
-          receivedBroadcasts = response.broadcasts.filter(function (broadcast) {
-            if (!broadcast.expired) {
-              if (seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
-                return broadcast;
-              }
-            }
-          }).map(function (broadcast) {
-            return Ember.Object.create(broadcast);
-          }).reverse();
-        }
+        const receivedBroadcasts = response.broadcasts.reduce((processed, broadcast) => {
+          if (!broadcast.expired && seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
+            processed.unshift(Ember.Object.create(broadcast));
+          }
+
+          return processed;
+        }, []);
         Ember.run(() => {
           broadcasts.set('lastBroadcastStatus', this.defineTowerColor(receivedBroadcasts));
           broadcasts.set('content', receivedBroadcasts);
