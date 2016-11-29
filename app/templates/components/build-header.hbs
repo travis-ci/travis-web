@@ -37,7 +37,7 @@
           {{/if}}
         </li>
       {{/if}}
-      {{#if commit.branch.isLoaded}}
+      {{#if commit.branch}}
       <li>
         <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
           {{inline-svg 'icon-github' class="icon"}}
