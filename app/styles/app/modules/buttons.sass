@@ -1,12 +1,12 @@
 %button
-  font-family: $font-family-sans-serif
+  font-family: inherit
   display: inline-block
   cursor: pointer
   white-space: nowrap
   border-radius: 2px
   border: none
   vertical-align: middle
-  padding: 0.8rem
+  padding: 0 0.8rem
   line-height: 1
   text-decoration: none
   font-size: 14px
@@ -32,8 +32,7 @@
   border-color: $pebble-grey
   background-color: $cement-grey
 
-.button-signin,
-.button-signingin
+.auth-button
   @extend %button
   height: 36px
   color: #fff
@@ -46,15 +45,13 @@
       width: 6px
       height: 6px
 
-.button-signin
-  @extend %icon-github-white
-  padding-right: 2.2em
-  background:
-    size: 16px
-    position: 95%
-    repeat: no-repeat
-  &:hover
-    background-color: rgba($turf-green, 0.8)
+.auth-button.signed-out
+  .icon
+    height: 15px // very icon specific
+    margin: 0 0 0 4px
+  &:hover,
+  &:active
+    background-color: darken($turf-green, 10)
 
 .button--blue
   border: none
@@ -63,11 +60,12 @@
   &:hover
     background-color: darken($oxide-blue, 10)
 
-#auth #navigation .button-signin,
-#auth #navigation .button-signingin
+#auth #navigation .auth-button
   display: none
 
-%action-button
+.action-button--restart,
+.action-button--debug,
+.action-button--cancel
   display: block
   width: 8em
   padding: 0 0.5em
@@ -81,28 +79,6 @@
     border-color: $oxide-blue
     color: $oxide-blue
     text-decoration: none !important
-
-.action-button--restart
-  @extend %action-button
-  
-  &:hover,
-  &:active
-  
-
-.action-button--debug
-  @extend %action-button
-  
-  &:hover,
-  &:active
-  
-
-.action-button--cancel
-  @extend %action-button
-  
-  background-size: 14px 14px
-  &:hover,
-  &:active
-  
   
 %log-button
   display: inline-block
