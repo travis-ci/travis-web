@@ -53,7 +53,7 @@ export default DS.Store.extend({
     if (name === 'build' && ((ref2 = data.build) != null ? ref2.commit : void 0)) {
       build = data.build;
       commit = {
-        id: build.commit_id,
+        id: build.commit_id || Ember.get(data, 'commit.id'),
         author_email: build.author_email,
         author_name: build.author_name,
         branch: build.branch,
