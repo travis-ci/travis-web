@@ -28,28 +28,6 @@
       margin-left: auto
     @media #{$large-up}
       width: 70%
-
-  .landing-button
-    display: inline-block
-    padding: 0.8em 0.9em
-    margin: 0 auto
-    color: white
-    border-radius: 2px
-    font-size: 27px
-    text-decoration: none
-    background-color: $turf-green
-    &:hover,
-    &:active
-      color: white
-      background-color: darken($turf-green, 8)
-
-  .hero-button
-    @extend .landing-button
-    svg
-      width: 45px
-      height: 45px
-      vertical-align: middle
-      margin-right: .4em
     
   .hero-computer
     width: 100%
@@ -168,6 +146,32 @@
     svg
       max-height: 28px
 
+
+.landing-button
+  display: inline-block
+  padding: 0.6em 0.9em
+  margin: 0 auto
+  color: white
+  border-radius: 2px
+  font-size: 27px
+  font-weight: inherit
+  text-decoration: none
+  background-color: $turf-green
+  cursor: pointer
+  &:hover,
+  &:active
+    color: white
+    background-color: darken($turf-green, 8)
+
+.hero-button
+  @extend .landing-button
+  svg
+    width: 45px
+    height: 45px
+    vertical-align: middle
+    margin-right: .4em
+  &.org
+    margin: 2em auto
 
 %h1
   margin: 0
