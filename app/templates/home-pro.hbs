@@ -5,10 +5,12 @@
       <div class="section-text">
         <h1 class="h1--teal">Build apps <br class="br-small"> with confidence</h1>
         <p class="text-big">Focus on writing code. Let Travis CI take care<br class="br-small"> of running your tests and deploying your apps.</p>
-        <a href="https://travis-ci.com/signin" class="hero-button cta-index-page" {{action 'gaCta' 'index'}} title="Start your free trial">Start your free trial</a>
+        <a href="https://travis-ci.com/signin" class="hero-button cta-index-page" {{action 'gaCta' 'index'}} title="Start your free trial">
+          {{inline-svg 'sign-in-mascot.svg'}}
+          <span class="label-align">Start your free trial</span></a>
       </div>
       <div class="section-image">
-        <img src="../images/pro-landing/hero-screen.svg" class="hero-computer" aria-hidden="true">
+        {{inline-svg 'hero-screen' class="hero-computer"}}
       </div>
     </div>
   </section>
@@ -16,11 +18,16 @@
     <div class="inner">
       <h3 class="h3">Some pretty awesome companies and projects are a few of our users</h3>
       <ul class="list--customers">
-        <li><a href="https://www.zendesk.com/" title="Zendesk" class="customer-zendesk"><img width="120" height="20" src="../images/pro-landing/customer-logos-zendesk.svg" alt="Zendesk logo"></a></li>
-        <li><a href="http://www.heroku.com/" title="Heroku" class="customer-heroku"><img width="100" height="20" src="../images/pro-landing/customer-logos-heroku.svg" alt="Heroku logo"></a></li>
-        <li><a href="https://www.engineyard.com/" title="Engine Yard" class="customer-engineyard"><img width="120" height="20" src="../images/pro-landing/customer-logos-engineyard.svg" alt="Engine Yard logo"></a></li>
-        <li><a href="http://www.bittorrent.com/" title="BitTorrent" class="customer-bittorrent"><img width="120" height="20" src="../images/pro-landing/customer-logos-bittorrent.svg" alt="BitTorrent logo"></a></li>
-        <li><a href="https://moz.com/" title="moz" class="customer-moz"><img width="90" height="20" src="../images/pro-landing/customer-logos-moz.svg" alt="Moz logo"></a></li>
+        <li><a href="https://www.zendesk.com/" title="Zendesk" class="customer-zendesk">
+          {{inline-svg 'customer-logos-zendesk'}}</a></li>
+        <li><a href="http://www.heroku.com/" title="Heroku" class="customer-heroku">
+          {{inline-svg 'customer-logos-heroku'}}</a></li>
+        <li><a href="https://www.engineyard.com/" title="Engine Yard" class="customer-engineyard">
+          {{inline-svg 'customer-logos-engineyard'}}</a></li>
+        <li><a href="http://www.bittorrent.com/" title="BitTorrent" class="customer-bittorrent">
+          {{inline-svg 'customer-logos-bittorrent'}}</a></li>
+        <li><a href="https://moz.com/" title="moz" class="customer-moz">
+          {{inline-svg 'customer-logos-moz'}}</a></li>
       </ul>
     </div>
   </section>
@@ -41,22 +48,22 @@
       <div class="section-list section--center">
         <ul class="list--features">
           <li>
-            <img src="../images/pro-landing/feature-icon-github.svg" class="feature-github" aria-hidden="true">
+            {{inline-svg 'feature-icon-github' class="feature-github"}}      
             <h3 class="h3">Get set up in seconds</h3>
             <p class="text-small">Login with GitHub, tell Travis CI to test a project, and then push to GitHub. Could it be any simpler!</p>
           </li>
           <li>
-            <img src="../images/pro-landing/feature-icon-platform.svg" class="feature-db" aria-hidden="true">
+            {{inline-svg 'feature-icon-platform' class="feature-db"}}
             <h3 class="h3">Supports your platform</h3>
             <p class="text-small">Many databases and services are pre-installed and can be enabled in your build configuration.</p>
           </li>
           <li>
-            <img src="../images/pro-landing/feature-icon-pullrequests.svg" class="feature-pr" aria-hidden="true">
+            {{inline-svg 'feature-icon-pullrequests' class="feature-pr"}}
             <h3 class="h3">Test your pull requests</h3>
             <p class="text-small">Make sure every Pull Request to your project is tested before it's merged.</p>
-          </li>
+          </li>          
           <li>
-            <img src="../images/pro-landing/feature-icon-heroku.svg" class="feature-heroku" aria-hidden="true">
+            {{inline-svg 'feature-icon-heroku' class="feature-heroku"}}
             <h3 class="h3">Deploy anywhere</h3>
             <p class="text-small">Updating staging or production as soon as your tests pass has never been easier!</p>
           </li>
