@@ -44,8 +44,7 @@
     margin: .5em 0
     padding: 0 1.5rem
     word-wrap: break-word
-
-  a:not(.icon-close)
+  a
     line-height: 1.45
     text-decoration: underline
 
@@ -54,17 +53,6 @@
     border: solid 2px $cream-dark
     opacity: 1
     height: auto
-
-  .icon-close
-    @extend %icon-line-cross
-    position: absolute
-    top: 5px
-    right: 0
-    display: inline-block
-    width: 1em
-    height: 1em
-    background-repeat: no-repeat
-    cursor: pointer
 
   @media #{$medium-up}
     position: absolute
@@ -92,6 +80,11 @@
 
   &.announcement
     background-color: $turf-green
+
+.broadcast-close
+  position: absolute
+  top: -2px
+  right: -0.5em
 
 .icon-broadcast
   display: inline-block

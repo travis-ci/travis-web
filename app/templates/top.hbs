@@ -17,7 +17,9 @@
         <p>
           <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
           <span class='message'>{{{broadcast.message}}}</span>
-          <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a>
+          <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
+            {{inline-svg 'icon-failed' class="icon"}}
+          </button>
         </p>
       </li>
     {{else}}
