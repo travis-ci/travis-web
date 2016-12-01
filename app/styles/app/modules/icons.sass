@@ -27,13 +27,6 @@
   height: 30px
   margin-right: 7px
 
-.icon-stopwatch
-  +colorSVG($cement-grey)
-  width: 18px
-  height: 19px
-  vertical-align: middle
-  margin-right: 1px
-  
 .icon svg,
 svg.icon,
 svg.icon--l
@@ -44,19 +37,20 @@ svg.icon--l
   &:active
     +colorSVG($oxide-blue)
 
-.icon--red
-  @extend %icon
-  +colorSVG($brick-red)
-  width: 15px
-  height: 16px
-
 .icon.white
   +colorSVG(white)
 .icon.green
   +colorSVG($turf-green)
 .icon.red
   +colorSVG($brick-red)
-    
+
+.icon-stopwatch
+  +colorSVG($cement-grey)
+  width: 18px
+  height: 19px
+  vertical-align: middle
+  margin-right: 1px
+  
 .icon-help
   +colorSVG($cement-grey)
   display: inline-block
@@ -72,14 +66,6 @@ svg.icon--l
     border-color: $oxide-blue
     +colorSVG($oxide-blue)
 
-.icon-trash
-  @extend %icon
-  width: 16px
-  height: 16px
-  &:hover,
-  &:active
-    +colorSVG($brick-red)
-
 %icon-arrow-down
   background-image: inline-image('stroke-icons/icon-arrowdown.svg')
 
@@ -92,18 +78,6 @@ svg.icon--l
   background-image: inline-image('stroke-icons/icon-arrow-dropdown.svg')
 %icon-line-dropdown-teal
   background-image: inline-image('stroke-icons/icon-arrow-dropdown-teal.svg')
-
-%icon-line-lock
-  background-image: inline-image('stroke-icons/icon-private.svg')
-.icon-lock
-  @extend %icon
-  @extend %icon-line-lock
-  width: 18px
-  height: 18px
-  margin-top: 1em
-  white-space: nowrap
-  text-indent: 999px
-  overflow: hidden
 
 .icon--plus
   width: 1.1rem
