@@ -158,19 +158,33 @@ export default function () {
     }), commits: schema.commits.all().models };
   });
 
-  this.get('/builds/:id', function (schema, request) {
-    const build = schema.builds.find(request.params.id);
-    const response = {
-      build: build.attrs,
-      jobs: build.jobs.models.map(job => job.attrs)
-    };
+    this.get('/builds/:id', function (schema, request) {
+      const build = schema.builds.find(request.params.id);
+      const response = {
+        build: build.attrs,
+        jobs: build.jobs.models.map(job => job.attrs)
+      };
 
-    if (build.commit) {
-      response.commit = build.commit.attrs;
-    }
+      if (build.commit) {
+        response.commit = build.commit.attrs;
+      }
 
-    return response;
-  });
+      return response;
+    });
+
+      this.get('/builds/:id.json', function (schema, request) {
+        const build = schema.builds.find(request.params.id);
+        const response = {
+          build: build.attrs,
+          jobs: build.jobs.models.map(job => job.attrs)
+        };
+
+        if (build.commit) {
+          response.commit = build.commit.attrs;
+        }
+
+        return response;
+      });
 
   this.post('/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
@@ -238,13 +252,13 @@ export default function () {
   });
 
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
-  // this.pretender.handledRequest = function (verb, path, request) {
-  //   console.log('Handled this request:', `${verb} ${path}`, request);
-  //   try {
-  //     const responseJson = JSON.parse(request.responseText);
-  //     console.log(responseJson);
-  //   } catch (e) {}
-  // };
+  this.pretender.handledRequest = function (verb, path, request) {
+    console.log('Handled this request:', `${verb} ${path}`, request);
+    try {
+      const responseJson = JSON.parse(request.responseText);
+      console.log(responseJson);
+    } catch (e) {}
+  };
 }
 
 /*
