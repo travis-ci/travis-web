@@ -55,32 +55,42 @@ export default Ember.Component.extend({
     return isMacStadium6 && this.get('deprecatedXcodeImages').includes(macOSImage);
   },
 
-  @computed('job.startedAt', 'macOSImage', 'conjugatedRun', 'isDeprecatedOrRetiredMacImage')
-  deprecatedOrRetiredMacImageMessage(startedAt, image, conjugatedRun) {
+  // eslint-disable-next-line
+  @computed('job.startedAt', 'macOSImage', 'job.isFinished', 'conjugatedRun', 'isDeprecatedOrRetiredMacImage')
+  deprecatedOrRetiredMacImageMessage(startedAt, image, isFinished, conjugatedRun) {
     const retirementDate = Date.parse(this.get('imageToRetirementDate')[image]);
 
     const newImage = this.get('imageToNewImage')[image];
     const newImageString = this.get('newImageStrings')[newImage];
     const newImageAnchor = newImageString.replace(' ', '-');
-    const newImageLink = `https://docs.travis-ci.com/user/osx-ci-environment/#${newImageAnchor}`;
+    const newImageURL = `https://docs.travis-ci.com/user/osx-ci-environment/#${newImageAnchor}`;
 
     const jobRanBeforeRetirementDate = Date.parse(startedAt) < retirementDate;
     const retirementDateIsInTheFuture = retirementDate > new Date();
 
-    const retirementSentence = `
-      This job ${conjugatedRun} on an OS X image that
-      <a href='${newImageLink}'>${retirementDateIsInTheFuture ? 'will be retired' : 'was retired'}
-      on ${moment(retirementDate).format('MMMM D, YYYY')}</a>.`;
+    const formattedRetirementDate = moment(retirementDate).format('MMMM D, YYYY');
 
-    let routingSentence;
+    const retirementLink =
+      `<a href='${newImageURL}'>${retirementDateIsInTheFuture ? 'will be retired' : 'was retired'}
+      on ${formattedRetirementDate}</a>`;
+
+    let retirementSentence, routingSentence;
+
+    if (retirementDateIsInTheFuture) {
+      retirementSentence = `This job ${conjugatedRun} on an OS X image that ${retirementLink}.`;
+    } else {
+      retirementSentence = `
+        This job ${isFinished ? 'was configured to run on' : 'is configured to run on'}
+        an OS X image that ${retirementLink}.`;
+    }
 
     if (retirementDateIsInTheFuture) {
       routingSentence =
-        `After that, this will route to our ${newImageString} infrastructure.`;
+        `After that, it will route to our ${newImageString} infrastructure.`;
     } else if (jobRanBeforeRetirementDate) {
       routingSentence = `New jobs will route to our ${newImageString} infrastructure.`;
     } else {
-      routingSentence = `This was routed to our ${newImageString} infrastructure.`;
+      routingSentence = `It was routed to our ${newImageString} infrastructure.`;
     }
 
     return `${retirementSentence} ${routingSentence}`;
