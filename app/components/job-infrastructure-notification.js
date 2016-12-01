@@ -24,21 +24,6 @@ export default Ember.Component.extend({
 
   macOSImage: Ember.computed.alias('jobConfig.osx_image'),
 
-  isDeprecatedMacImageXcode6: Ember.computed('queue', 'macOSImage', function () {
-    const retiredImages = ['beta-xcode6.1'];
-    return this.get('isMacStadium6') && retiredImages.includes(this.get('macOSImage'));
-  }),
-
-  isRetiredMacImageXcode6: Ember.computed('queue', 'macOSImage', function () {
-    const retiredImages = ['beta-xcode6.2', 'beta-xcode6.3'];
-    return this.get('isMacStadium6') && retiredImages.includes(this.get('macOSImage'));
-  }),
-
-  isRetiredMacImageXcode7: Ember.computed('queue', 'macOSImage', function () {
-    const retiredImages = ['xcode7', 'xcode7.1', 'xcode7.2'];
-    return this.get('isMacStadium6') && retiredImages.includes(this.get('macOSImage'));
-  }),
-
   deprecatedXcodeImages:
     ['beta-xcode6.1', 'beta-xcode6.2', 'beta-xcode6.3', 'xcode7', 'xcode7.1', 'xcode7.2'],
 
