@@ -7,13 +7,14 @@
   @media #{$medium-up}
     display: flex
     justify-content: space-between
-    flex-flow: row wrap
+    flex-flow: row nowrap
     align-items: center
 
     .two-line
       padding: 0
       margin: .4em 0
-      white0-space: nowrap
+      white-space: nowrap
+      overflow: hidden
       .row-item:not(.build-info)
         display: block
 

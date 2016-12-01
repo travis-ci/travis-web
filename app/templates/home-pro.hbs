@@ -5,10 +5,12 @@
       <div class="section-text">
         <h1 class="h1--teal">Build apps <br class="br-small"> with confidence</h1>
         <p class="text-big">Focus on writing code. Let Travis CI take care<br class="br-small"> of running your tests and deploying your apps.</p>
-        <a href="https://travis-ci.com/signin" class="hero-button cta-index-page" {{action 'gaCta' 'index'}} title="Start your free trial">Start your free trial</a>
+        <a href="https://travis-ci.com/signin" class="hero-button cta-index-page" {{action 'gaCta' 'index'}} title="Start your free trial">
+          {{inline-svg 'sign-in-mascot.svg'}}
+          <span class="label-align">Start your free trial</span></a>
       </div>
       <div class="section-image">
-        <img src="../images/pro-landing/hero-screen.svg" class="hero-computer" aria-hidden="true">
+        {{inline-svg 'hero-screen' class="hero-computer"}}
       </div>
     </div>
   </section>
@@ -16,11 +18,16 @@
     <div class="inner">
       <h3 class="h3">Some pretty awesome companies and projects are a few of our users</h3>
       <ul class="list--customers">
-        <li><a href="https://www.zendesk.com/" title="Zendesk" class="customer-zendesk"><img width="120" height="20" src="../images/pro-landing/customer-logos-zendesk.svg" alt="Zendesk logo"></a></li>
-        <li><a href="http://www.heroku.com/" title="Heroku" class="customer-heroku"><img width="100" height="20" src="../images/pro-landing/customer-logos-heroku.svg" alt="Heroku logo"></a></li>
-        <li><a href="https://www.engineyard.com/" title="Engine Yard" class="customer-engineyard"><img width="120" height="20" src="../images/pro-landing/customer-logos-engineyard.svg" alt="Engine Yard logo"></a></li>
-        <li><a href="http://www.bittorrent.com/" title="BitTorrent" class="customer-bittorrent"><img width="120" height="20" src="../images/pro-landing/customer-logos-bittorrent.svg" alt="BitTorrent logo"></a></li>
-        <li><a href="https://moz.com/" title="moz" class="customer-moz"><img width="90" height="20" src="../images/pro-landing/customer-logos-moz.svg" alt="Moz logo"></a></li>
+        <li><a href="https://www.zendesk.com/" title="Zendesk" class="customer">
+          {{inline-svg 'customer-logos-zendesk'}}</a></li>
+        <li><a href="http://www.heroku.com/" title="Heroku" class="customer">
+          {{inline-svg 'customer-logos-heroku'}}</a></li>
+        <li><a href="https://www.engineyard.com/" title="Engine Yard" class="customer">
+          {{inline-svg 'customer-logos-engineyard'}}</a></li>
+        <li><a href="http://www.bittorrent.com/" title="BitTorrent" class="customer">
+          {{inline-svg 'customer-logos-bittorrent'}}</a></li>
+        <li><a href="https://moz.com/" title="moz" class="customer">
+          {{inline-svg 'customer-logos-moz'}}</a></li>
       </ul>
     </div>
   </section>
@@ -29,34 +36,34 @@
       <div class="section-text">
         <h2 class="h2--green">Features created to help your projects and teams</h2>
         <ul class="list--check">
-          <li>Watch your tests as they run</li>
-          <li>Keep your config with your code</li>
-          <li>Slack, HipChat, Emails and more</li>
-          <li>A clean VM for every build</li>
-          <li>Run your tests in parallel</li>
-          <li>Linux and Mac (and iOS) supported</li>
-          <li>Great API and command line tool</li>
+          <li>{{inline-svg 'icon-passed' class="icon green"}} Watch your tests as they run</li>
+          <li>{{inline-svg 'icon-passed' class="icon green"}} Keep your config with your code</li>
+          <li>{{inline-svg 'icon-passed' class="icon green"}} Slack, HipChat, Emails and more</li>
+          <li>{{inline-svg 'icon-passed' class="icon green"}} A clean VM for every build</li>
+          <li>{{inline-svg 'icon-passed' class="icon green"}} Run your tests in parallel</li>
+          <li>{{inline-svg 'icon-passed' class="icon green"}} Linux and Mac (and iOS) supported</li>
+          <li>{{inline-svg 'icon-passed' class="icon green"}} Great API and command line tool</li>
         </ul>
       </div>
       <div class="section-list section--center">
         <ul class="list--features">
           <li>
-            <img src="../images/pro-landing/feature-icon-github.svg" class="feature-github" aria-hidden="true">
+            {{inline-svg 'feature-icon-github' class="feature-github"}}      
             <h3 class="h3">Get set up in seconds</h3>
             <p class="text-small">Login with GitHub, tell Travis CI to test a project, and then push to GitHub. Could it be any simpler!</p>
           </li>
           <li>
-            <img src="../images/pro-landing/feature-icon-platform.svg" class="feature-db" aria-hidden="true">
+            {{inline-svg 'feature-icon-platform' class="feature-db"}}
             <h3 class="h3">Supports your platform</h3>
             <p class="text-small">Many databases and services are pre-installed and can be enabled in your build configuration.</p>
           </li>
           <li>
-            <img src="../images/pro-landing/feature-icon-pullrequests.svg" class="feature-pr" aria-hidden="true">
+            {{inline-svg 'feature-icon-pullrequests' class="feature-pr"}}
             <h3 class="h3">Test your pull requests</h3>
             <p class="text-small">Make sure every Pull Request to your project is tested before it's merged.</p>
-          </li>
+          </li>          
           <li>
-            <img src="../images/pro-landing/feature-icon-heroku.svg" class="feature-heroku" aria-hidden="true">
+            {{inline-svg 'feature-icon-heroku' class="feature-heroku"}}
             <h3 class="h3">Deploy anywhere</h3>
             <p class="text-small">Updating staging or production as soon as your tests pass has never been easier!</p>
           </li>
@@ -69,17 +76,28 @@
       <h3 class="h3">Supported languages</h3>
       <p class="text-small">These are just a few of our most popular languages, check out the full list <a href="http://docs.travis-ci.com/user/languages/" title="Supported languages">in our docs</a>.</p>
       <ul class="list--languages">
-        <li><a href="http://docs.travis-ci.com/user/languages/clojure/"><img alt="Clojure logo" src="../images/pro-landing/lang-clojure.svg" class="language-clojure">Clojure</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/javascript-with-nodejs/"><img alt="NodeJS logo" src="../images/pro-landing/lang-nodejs.svg" class="language-node">Node</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/php/"><img alt="PHP logo" src="../images/pro-landing/lang-php.svg" class="language-php">PHP</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/objective-c/"><img alt="Xcode logo" src="../images/pro-landing/lang-xcode.svg" class="language-xcode">Xcode</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/ruby/"><img alt="Ruby logo" src="../images/pro-landing/lang-ruby.svg" class="language-ruby">Ruby</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/python/"><img alt="Python logo" src="../images/pro-landing/lang-python.svg" class="language-python">Python</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/java/"><img alt="Java logo" src="../images/pro-landing/lang-java.svg" class="language-java">Java</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/erlang/"><img alt="Erlang logo" src="../images/pro-landing/lang-erlang.svg" class="language-erlang">Erlang</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/go/"><img alt="Go logo" src="../images/pro-landing/lang-go.svg" class="language-go">Go</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/scala/"><img alt="Scala logo" src="../images/pro-landing/lang-scala.svg" class="language-scala">Scala</a></li>
-        <li><a href="http://docs.travis-ci.com/user/languages/perl/"><img alt="Perl logo" src="../images/pro-landing/lang-perl.svg" class="language-perl">Perl</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/clojure/" title="Read about Clojure at Travis CI">
+          {{inline-svg 'lang-clojure' class="language"}}Clojure</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/javascript-with-nodejs/" title="Read about NodeJS at Travis CI">
+          {{inline-svg 'lang-nodejs' class="language"}}Node</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/php/" title="Read about PHP at Travis CI">
+            {{inline-svg 'lang-php' class="language"}}PHP</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/objective-c/" title="Read about ObjectiveC at Travis CI">
+            {{inline-svg 'lang-xcode' class="language"}}Xcode</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/ruby/" title="Read about Ruby at Travis CI">
+            {{inline-svg 'lang-ruby' class="language"}}Ruby</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/python/" title="Read about Python at Travis CI">
+            {{inline-svg 'lang-python' class="language"}}Python</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/java/" title="Read about Java at Travis CI">
+            {{inline-svg 'lang-java' class="language"}}Java</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/erlang/" title="Read about Erlang at Travis CI">
+            {{inline-svg 'lang-erlang' class="language"}}Erlang</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/go/" title="Read about Go at Travis CI">
+            {{inline-svg 'lang-go' class="language"}}Go</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/scala/" title="Read about Scala at Travis CI">
+            {{inline-svg 'lang-scala' class="language"}}Scala</a></li>
+        <li><a href="http://docs.travis-ci.com/user/languages/perl/" title="Read about Perl at Travis CI">
+            {{inline-svg 'lang-perl' class="language"}}Perl</a></li>
       </ul>
     </div>
   </section>

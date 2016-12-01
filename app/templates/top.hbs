@@ -17,7 +17,9 @@
         <p>
           <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
           <span class='message'>{{{broadcast.message}}}</span>
-          <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a>
+          <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
+            {{inline-svg 'icon-failed' class="icon"}}
+          </button>
         </p>
       </li>
     {{else}}
@@ -77,7 +79,10 @@
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
-          <button class="signed-out button-signin" type="button" {{action "signIn" target=auth}}>Sign in with GitHub</button>
+            <button class="auth-button signed-out" type="button" {{action "signIn" target=auth}}>
+                <span class="label-align">Sign in with GitHub</span>
+                {{inline-svg 'icon-github-white' class="icon white"}}
+            </button>
         {{/if}}
         {{#if auth.signedIn}}
           {{#link-to "profile" class="navigation-anchor signed-in"}}
@@ -86,7 +91,7 @@
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
-          <button class="signing-in button-signingin" type="button">Signing In {{loading-indicator inline=true}}</button>
+          <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
         {{/if}}
         {{#if auth.signedIn}}
           <ul class="navigation-nested">

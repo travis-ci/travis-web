@@ -11,9 +11,6 @@
 %icon
   display: inline-block
   vertical-align: middle
-  background:
-    size: 100%
-    repeat: no-repeat
 
 .icon
   @extend %icon
@@ -27,13 +24,6 @@
   height: 30px
   margin-right: 7px
 
-.icon-stopwatch
-  +colorSVG($cement-grey)
-  width: 18px
-  height: 19px
-  vertical-align: middle
-  margin-right: 1px
-  
 .icon svg,
 svg.icon,
 svg.icon--l
@@ -44,15 +34,20 @@ svg.icon--l
   &:active
     +colorSVG($oxide-blue)
 
-.icon--red
-  @extend %icon
-  +colorSVG($brick-red)
-  width: 15px
-  height: 16px
-
 .icon.white
   +colorSVG(white)
+.icon.green
+  +colorSVG($turf-green)
+.icon.red
+  +colorSVG($brick-red)
 
+.icon-stopwatch
+  +colorSVG($cement-grey)
+  width: 18px
+  height: 19px
+  vertical-align: middle
+  margin-right: 1px
+  
 .icon-help
   +colorSVG($cement-grey)
   display: inline-block
@@ -68,109 +63,6 @@ svg.icon--l
     border-color: $oxide-blue
     +colorSVG($oxide-blue)
 
-.icon-trash
-  @extend %icon
-  width: 16px
-  height: 16px
-  &:hover,
-  &:active
-    +colorSVG($brick-red)
-
-%icon-arrow-down
-  background-image: inline-image('stroke-icons/icon-arrowdown.svg')
-
-%icon-line-arrowtabs
-  background-image: inline-image('stroke-icons/icon-arrowtabs.svg')
-%icon-line-arrowtabs-teal
-  background-image: inline-image('stroke-icons/icon-arrowtabs-teal.svg')
-
-%icon-github-white
-  background-image: inline-image('stroke-icons/icon-github-white.svg')
-
-%icon-line-dropdown
-  background-image: inline-image('stroke-icons/icon-arrow-dropdown.svg')
-%icon-line-dropdown-teal
-  background-image: inline-image('stroke-icons/icon-arrow-dropdown-teal.svg')
-
-%icon-line-cross
-  background-image: inline-image('stroke-icons/icon-failed.svg')
-%icon-line-cross-white
-  background-image: inline-image('stroke-icons/icon-failed-white.svg')
-%icon-line-cross-teal
-  background-image: inline-image('stroke-icons/icon-failed-teal.svg')
-%icon-line-cross-red
-  background-image: inline-image('stroke-icons/icon-failed-red.svg')
-%icon-line-cross-green
-  background-image: inline-image('stroke-icons/icon-failed-green.svg')
-%icon-line-cross-yellow
-  background-image: inline-image('stroke-icons/icon-failed-yellow.svg')
-
-.icon-deactivate
-  @extend .icon
-  @extend %icon-line-cross
-  border: 1px solid $cement-grey
-  border-radius: 50%
-  &:hover,
-  &:active
-    @extend %icon-line-cross-white
-    border-color: white
-
-%icon-line-trigger
-  background-image: inline-image('stroke-icons/icon-restart.svg')
-%icon-line-trigger-white
-  background-image: inline-image('stroke-icons/icon-restart-white.svg')
-%icon-line-trigger-teal
-  background-image: inline-image('stroke-icons/icon-restart-teal.svg')
-
-.icon-trigger
-  @extend .icon
-  @extend %icon-line-trigger
-  &:hover,
-  &:active
-    @extend %icon-line-trigger-white
-
-%icon-line-lock
-  background-image: inline-image('stroke-icons/icon-private.svg')
-.icon-lock
-  @extend %icon
-  @extend %icon-line-lock
-  width: 18px
-  height: 18px
-  margin-top: 1em
-  white-space: nowrap
-  text-indent: 999px
-  overflow: hidden
-
-%icon-star
-  background-image: inline-image('stroke-icons/icon-star.svg')
-  
-.icon-star
-  @extend %icon
-  width: 18px
-  height: 18px
-  fill: none
-  stroke: $cement-grey
-
-%icon-line-passed
-  background-image: inline-image('stroke-icons/icon-passed.svg')
-
-%icon-line-flag-teal
-  background-image: inline-image('stroke-icons/icon-flag.svg')
-%icon-line-flag-yellow
-  background-image: inline-image('stroke-icons/icon-flag-yellow.svg')
-
-%icon-line-debug
-  background-image: inline-image('stroke-icons/icon-debug.svg');
-%icon-line-debug-teal
-  background-image: inline-image('stroke-icons/icon-debug-teal.svg')
-  
-.icon-debug
-  @extend .icon
-  @extend %icon-line-debug
-  &:hover,
-  &:active
-    @extend %icon-line-debug-teal
-
 .icon--plus
   width: 1.1rem
   height: 1.4rem
@@ -178,34 +70,3 @@ svg.icon--l
     content: "+"
     font-size: 16px
     color: $asphalt-grey
-
-.icon-receiving
-  margin: 0.3rem 0.5rem;
-  display: inline-block;
-  i
-    width: 4px
-    height: 4px
-    border-radius: 50%
-    display: inline-block
-    background-color: $canary-yellow
-    transform-origin: center center
-    animation: bubbleScale 1.2s infinite linear
-  i:nth-of-type(2)
-    animation-delay: 0.35s
-  i:nth-of-type(3)
-    animation-delay: 0.7s
-
-.icon-owner-receiving
-  @extend .icon-receiving
-  margin-right: 0.5em !important
-  i
-    width: 5px
-    height: 5px
-    background-color: #ECCE4B
-
-@keyframes bubbleScale
-  0%, 80%, 100%
-    transform: scale(0)
-
-  40%
-    transform: scale(1.0)

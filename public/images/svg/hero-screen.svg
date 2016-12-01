@@ -1,0 +1,528 @@
+<svg x="0px" y="0px" viewBox="0 0 300 254.6" style="enable-background:new 0 0 300 254.6;" xml:space="preserve">
+  <style type="text/css">
+    .com-landing-screen-0{fill:#908D8D;}
+    .com-landing-screen-1{fill:#C8C5C5;}
+    .com-landing-screen-2{opacity:0.2;fill:#67696B;}
+    .com-landing-screen-3{clip-path:url(#SVGID_2_);fill:#3A3B3B;}
+    .com-landing-screen-4{fill:#3A3B3B;}
+    .com-landing-screen-5{fill:#FFFFFF;}
+    .com-landing-screen-6{fill:none;stroke:#3E3E3E;stroke-miterlimit:10;}
+    .com-landing-screen-7{fill:#F5F6F7;}
+    .com-landing-screen-8{fill:#38A569;}
+    .com-landing-screen-9{fill:#F1F1ED;}
+    .com-landing-screen-10{fill:#DB4443;}
+    .com-landing-screen-11{fill:#F9F9F8;}
+    .com-landing-screen-12{fill:#D2D6D8;}
+    .com-landing-screen-13{fill:#86BE98;}
+    .com-landing-screen-14{fill:#A1A1A0;}
+    .com-landing-screen-15{fill:#89BCBC;}
+    .com-landing-screen-16{fill:#F1EFEE;}
+    .com-landing-screen-17{fill:#E46769;}
+    .com-landing-screen-18{fill:#838283;}
+    .com-landing-screen-19{fill:#A7AEAE;}
+    .com-landing-screen-20{fill:#EFEEEE;}
+    .com-landing-screen-21{fill:#5E5F5F;}
+    .com-landing-screen-22{fill:#5CBA51;}
+    .com-landing-screen-23{fill:none;stroke:#3A3B3B;stroke-miterlimit:10;}
+  </style>
+  <g>
+    <g>
+      <g>
+	<path class="sr0" d="M94.4,250.7c0.5,4.7,4,3.8,8.2,3.8h46.8h1.1h46.8c4.2,0,7.8,0.8,8.2-3.8H94.4z"/>
+	<path class="com-landing-screen-1" d="M204.6,248.6L187,231c-4.3-5.2-3.7-23.3-3.6-25.7h-32.7h-1.2h-32.7c0.1,2.4,0.7,20.6-3.6,25.7l-17.7,17.6
+			     c-3.5,4,3,4,7.8,4h46.6h0.4h46.6C201.6,252.6,208.1,252.6,204.6,248.6z"/>
+      </g>
+      <path class="com-landing-screen-2" d="M183.3,205.3h-32.7h-1.2h-32.7c0,1.3,0.2,7.5-0.3,13.6h67.3C183.1,212.8,183.3,206.7,183.3,205.3z"/>
+      <path class="com-landing-screen-1" d="M300,197.1c0,5.2-4,9.3-8.9,9.3H8.9c-4.9,0-8.9-4.2-8.9-9.3V9.3C0,4.2,4,0,8.9,0h282.1c4.9,0,8.9,4.2,8.9,9.3
+			   V197.1z"/>
+      <g>
+	<g>
+	  <defs>
+	    <polyline id="SVGID_1_" points="141.7,179.4 141.7,199.6 158.2,199.6 158.2,179.4 					"/>
+	  </defs>
+	  <clipPath id="SVGID_2_">
+	    <use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	  </clipPath>
+	  <path class="com-landing-screen-3" d="M155.5,190.1c0-2.6,2.1-3.8,2.2-3.8c-1.2-1.7-3-2-3.7-2c-1.6-0.2-3.1,0.9-3.9,0.9c-0.8,0-2-0.9-3.3-0.9
+			       c-1.7,0-3.3,1-4.2,2.5c-1.8,3.1-0.5,7.7,1.3,10.2c0.8,1.2,1.9,2.6,3.2,2.6c1.3,0,1.8-0.8,3.3-0.8c1.5,0,2,0.8,3.3,0.8
+			       c1.4,0,2.3-1.3,3.1-2.5c1-1.4,1.4-2.8,1.4-2.9C158.1,194.2,155.5,193.2,155.5,190.1"/>
+	</g>
+	<path class="com-landing-screen-4" d="M152.9,182.6c0.7-0.9,1.2-2,1.1-3.2c-1,0-2.2,0.7-3,1.5c-0.7,0.8-1.2,2-1.1,3.1
+			     C151,184.1,152.2,183.5,152.9,182.6"/>
+      </g>
+      <path class="com-landing-screen-4" d="M300,173.1V9.7c0-5.4-4-9.7-8.9-9.7H8.9C4,0,0,4.3,0,9.7v163.4H300z"/>
+      <rect x="11.3" y="11.4" class="com-landing-screen-5" width="277.1" height="148.8"/>
+    </g>
+    <rect x="11.2" y="11.6" class="com-landing-screen-6" width="277.9" height="149.3"/>
+    <g>
+      <rect x="11.7" y="12.1" class="com-landing-screen-5" width="277" height="148.2"/>
+    </g>
+    <g>
+      <g>
+	<path class="com-landing-screen-7" d="M282,45.1H76.9v23.9H282c1,0,1.7-0.8,1.7-1.7V46.9C283.8,45.9,283,45.1,282,45.1z"/>
+      </g>
+    </g>
+    <g>
+      <path class="com-landing-screen-8" d="M72,45.1c-1,0-1.7,0.8-1.7,1.7v20.5c0,1,0.8,1.7,1.7,1.7h4.8V45L72,45.1L72,45.1z"/>
+    </g>
+    <g>
+      <rect x="11.7" y="45.3" class="com-landing-screen-8" width="1.2" height="15.5"/>
+    </g>
+    <g>
+      <rect x="11.7" y="12.1" class="com-landing-screen-9" width="276.6" height="9.1"/>
+    </g>
+    <g>
+      <rect x="11.7" y="61.9" class="com-landing-screen-10" width="1.2" height="15.5"/>
+    </g>
+    <g>
+      <rect x="11.7" y="111.9" class="com-landing-screen-10" width="1.2" height="15.5"/>
+    </g>
+    <g>
+      <rect x="11.7" y="78.5" class="com-landing-screen-8" width="1.2" height="15.5"/>
+    </g>
+    <g>
+      <rect x="11.7" y="95.3" class="com-landing-screen-8" width="1.2" height="15.5"/>
+    </g>
+    <g>
+      <rect x="11.7" y="128.4" class="com-landing-screen-8" width="1.2" height="15.5"/>
+    </g>
+    <g>
+      <path class="com-landing-screen-11" d="M283.9,83.9c0,1-0.8,1.7-1.7,1.7H72c-1,0-1.7-0.8-1.7-1.7v-2.4c0-1,0.8-1.7,1.7-1.7h210.3
+			    c1,0,1.7,0.8,1.7,1.7L283.9,83.9L283.9,83.9z"/>
+    </g>
+    <g>
+      <path class="com-landing-screen-11" d="M283.9,101c0,1-0.8,1.7-1.7,1.7H72c-1,0-1.7-0.8-1.7-1.7v-2.4c0-1,0.8-1.7,1.7-1.7h210.3
+			    c1,0,1.7,0.8,1.7,1.7L283.9,101L283.9,101z"/>
+    </g>
+    <g>
+      <path class="com-landing-screen-11" d="M283.9,107.9c0,1-0.8,1.7-1.7,1.7H72c-1,0-1.7-0.8-1.7-1.7v-2.4c0-1,0.8-1.7,1.7-1.7h210.3
+			    c1,0,1.7,0.8,1.7,1.7L283.9,107.9L283.9,107.9z"/>
+    </g>
+    <g>
+      <path class="com-landing-screen-11" d="M283.9,114.6c0,1-0.8,1.7-1.7,1.7H72c-1,0-1.7-0.8-1.7-1.7v-2.4c0-1,0.8-1.7,1.7-1.7h210.3
+			    c1,0,1.7,0.8,1.7,1.7L283.9,114.6L283.9,114.6z"/>
+    </g>
+    <g>
+      <rect x="11.7" y="145.2" class="com-landing-screen-8" width="1.2" height="15.5"/>
+    </g>
+    <g>
+      <rect x="17.7" y="53.2" class="com-landing-screen-12" width="15.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="15.6" y="28.9" class="com-landing-screen-12" width="23.8" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="47.9" class="com-landing-screen-13" width="20.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="14.4" y="15.3" class="com-landing-screen-14" width="16.6" height="3.1"/>
+    </g>
+    <g>
+      <rect x="57.6" y="47.9" class="com-landing-screen-13" width="4.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="56.6" class="com-landing-screen-12" width="22.4" height="1.7"/>
+    </g>
+    <g>
+      <rect x="78.8" y="47.4" class="com-landing-screen-12" width="45" height="1.7"/>
+    </g>
+    <g>
+      <rect x="238.3" y="51.9" class="com-landing-screen-12" width="18.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="238.3" y="48.1" class="com-landing-screen-13" width="13.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="238.3" y="59.7" class="com-landing-screen-12" width="21.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="238.3" y="64" class="com-landing-screen-12" width="9.5" height="1.7"/>
+    </g>
+    <g>
+      <rect x="238.3" y="55.7" class="com-landing-screen-12" width="29.4" height="1.7"/>
+    </g>
+    <g>
+      <rect x="70.3" y="38.9" class="com-landing-screen-15" width="7.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="82.3" y="38.9" class="com-landing-screen-12" width="9" height="1.7"/>
+    </g>
+    <g>
+      <rect x="95.9" y="38.9" class="com-landing-screen-12" width="12.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="113" y="38.9" class="com-landing-screen-12" width="12.7" height="1.7"/>
+    </g>
+    <g>
+      <rect x="70.3" y="42.2" class="com-landing-screen-15" width="7.3" height="0.4"/>
+    </g>
+    <g>
+      <rect x="77.4" y="42.2" class="com-landing-screen-16" width="211" height="0.4"/>
+    </g>
+    <g>
+      <rect x="14.4" y="38.7" class="com-landing-screen-15" width="16.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="14.4" y="42" class="com-landing-screen-15" width="7.3" height="0.4"/>
+    </g>
+    <g>
+      <rect x="21.5" y="42" class="com-landing-screen-16" width="40.5" height="0.4"/>
+    </g>
+    <g>
+      <rect x="83.5" y="64.4" class="com-landing-screen-12" width="45" height="1.7"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-13" cx="15.3" cy="48.6" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="53.9" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-13" cx="72.6" cy="99.9" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-17" cx="72.6" cy="106.7" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-17" cx="72.6" cy="113.3" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-13" cx="72.6" cy="82.6" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="55.9" cy="48.5" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="235.6" cy="48.5" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="235.6" cy="52.6" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="235.6" cy="56.7" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="235.6" cy="60.8" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="235.6" cy="64.9" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="59.5" cy="29.4" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="57.5" r="0.9"/>
+    </g>
+    <g>
+      <rect x="17.7" y="86.3" class="com-landing-screen-12" width="15.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="81.1" class="com-landing-screen-13" width="20.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="57.6" y="81.1" class="com-landing-screen-13" width="4.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="89.9" class="com-landing-screen-12" width="22.4" height="1.7"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-13" cx="15.3" cy="81.8" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="87" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="55.9" cy="81.7" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="78.8" cy="82.6" r="0.9"/>
+    </g>
+    <g>
+      <g>
+	<rect x="121.1" y="81.7" class="com-landing-screen-12" width="18.5" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="119.1" cy="82.6" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="177.5" y="81.7" class="com-landing-screen-12" width="24.9" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="175.4" cy="82.6" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="238.1" y="81.7" class="com-landing-screen-12" width="10.5" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="235.6" cy="82.6" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="121.1" y="98.9" class="com-landing-screen-12" width="18.5" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="119.1" cy="99.7" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="177.5" y="98.9" class="com-landing-screen-12" width="24.9" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="175.4" cy="99.7" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="238.1" y="98.9" class="com-landing-screen-12" width="10.5" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="235.6" cy="99.7" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="121.1" y="105.6" class="com-landing-screen-12" width="18.5" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="119.1" cy="106.5" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="177.5" y="105.6" class="com-landing-screen-12" width="24.9" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="175.4" cy="106.5" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="238.1" y="105.6" class="com-landing-screen-12" width="10.5" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="235.6" cy="106.5" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="121.1" y="112.6" class="com-landing-screen-12" width="18.5" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="119.1" cy="113.4" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="177.5" y="112.6" class="com-landing-screen-12" width="24.9" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="175.4" cy="113.4" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <g>
+	<rect x="238.1" y="112.6" class="com-landing-screen-12" width="10.5" height="1.7"/>
+      </g>
+      <g>
+	<circle class="com-landing-screen-12" cx="235.6" cy="113.4" r="0.9"/>
+      </g>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="80.4" cy="65.4" r="1.5"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-18" cx="120.9" cy="30" r="1.5"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-5" cx="73.5" cy="48.3" r="1.6"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-5" cx="73.5" cy="53.2" r="1.6"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="78.8" cy="99.7" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="78.8" cy="106.5" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="78.8" cy="113.2" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="90.7" r="0.9"/>
+    </g>
+    <g>
+      <rect x="17.7" y="103" class="com-landing-screen-12" width="15.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="97.8" class="com-landing-screen-13" width="20.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="57.6" y="97.8" class="com-landing-screen-13" width="4.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="106.6" class="com-landing-screen-12" width="22.4" height="1.7"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-13" cx="15.3" cy="98.5" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="103.7" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="55.9" cy="98.5" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="107.4" r="0.9"/>
+    </g>
+    <g>
+      <rect x="17.7" y="119.6" class="com-landing-screen-12" width="15.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="114.4" class="com-landing-screen-17" width="20.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="57.6" y="114.4" class="com-landing-screen-17" width="4.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="81.2" y="112.6" class="com-landing-screen-17" width="16.5" height="1.7"/>
+    </g>
+    <g>
+      <rect x="81.2" y="105.8" class="com-landing-screen-17" width="16.5" height="1.7"/>
+    </g>
+    <g>
+      <rect x="81.2" y="99.2" class="com-landing-screen-13" width="16.5" height="1.7"/>
+    </g>
+    <g>
+      <rect x="81.2" y="81.7" class="com-landing-screen-13" width="16.5" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="123.2" class="com-landing-screen-12" width="22.4" height="1.7"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-17" cx="15.3" cy="115.2" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="120.3" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="55.9" cy="115.1" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="124" r="0.9"/>
+    </g>
+    <g>
+      <rect x="17.7" y="69.9" class="com-landing-screen-12" width="15.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="64.6" class="com-landing-screen-17" width="20.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="57.6" y="64.6" class="com-landing-screen-17" width="4.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="73.4" class="com-landing-screen-12" width="22.4" height="1.7"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-17" cx="15.3" cy="65.3" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="70.6" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="55.9" cy="65.2" r="0.9"/>
+    </g>
+    <g>
+      <path class="com-landing-screen-19" d="M282.9,39.8c0,0.4-0.4,0.9-0.9,0.9h-14.9c-0.4,0-0.9-0.4-0.9-0.9v-3.1c0-0.4,0.4-0.9,0.9-0.9H282
+			    c0.4,0,0.9,0.4,0.9,0.9V39.8z"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="74.2" r="0.9"/>
+    </g>
+    <g>
+      <rect x="17.7" y="136.3" class="com-landing-screen-12" width="15.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="131.1" class="com-landing-screen-13" width="20.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="57.6" y="131.1" class="com-landing-screen-13" width="4.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="139.9" class="com-landing-screen-12" width="22.4" height="1.7"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-13" cx="15.3" cy="131.9" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="137" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="55.9" cy="131.8" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="140.7" r="0.9"/>
+    </g>
+    <g>
+      <rect x="17.7" y="153" class="com-landing-screen-12" width="15.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="147.8" class="com-landing-screen-13" width="20.3" height="1.7"/>
+    </g>
+    <g>
+      <rect x="57.6" y="147.8" class="com-landing-screen-13" width="4.6" height="1.7"/>
+    </g>
+    <g>
+      <rect x="17.7" y="156.5" class="com-landing-screen-12" width="22.4" height="1.7"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-13" cx="15.3" cy="148.5" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="153.7" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="55.9" cy="148.4" r="0.9"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="15.3" cy="157.4" r="0.9"/>
+    </g>
+    <g>
+      <g>
+	<path class="com-landing-screen-20" d="M60.4,32.9H15.8c-1.1,0-2-0.9-2-2v-2.5c0-1.1,0.9-2,2-2h44.6c1.1,0,2,0.9,2,2v2.5
+			      C62.3,32,61.4,32.9,60.4,32.9z M15.8,26.9c-0.8,0-1.5,0.7-1.5,1.5v2.5c0,0.8,0.7,1.5,1.5,1.5h44.6c0.8,0,1.5-0.7,1.5-1.5v-2.5
+			      c0-0.8-0.7-1.5-1.5-1.5H15.8z"/>
+      </g>
+    </g>
+    <g>
+      <rect x="64.2" y="21" class="com-landing-screen-12" width="0.9" height="139.1"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-12" cx="279.1" cy="49.1" r="2.1"/>
+    </g>
+    <g>
+      <rect x="270.6" y="37.4" class="com-landing-screen-20" width="10.1" height="1.7"/>
+    </g>
+    <g>
+      <circle class="com-landing-screen-20" cx="268.3" cy="38.2" r="0.9"/>
+    </g>
+    <g>
+      <path class="com-landing-screen-21" d="M126.1,28.9c-0.4,0-0.8,0.3-0.8,0.5v2c0,0.3,0.4,0.5,0.8,0.5h5.3v-3.1L126.1,28.9L126.1,28.9z"/>
+    </g>
+    <g>
+      <path class="com-landing-screen-22" d="M139.5,31.3v-2c0-0.3-0.4-0.5-0.8-0.5h-7.9v3.1h7.9C139.2,31.8,139.5,31.6,139.5,31.3z"/>
+    </g>
+    <g>
+      <rect x="70.8" y="28" class="com-landing-screen-12" width="45.1" height="3.8"/>
+    </g>
+    <g>
+      <rect x="11.7" y="12.1" class="com-landing-screen-23" width="277" height="148.2"/>
+    </g>
+  </g>
+</svg>

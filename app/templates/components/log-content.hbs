@@ -27,6 +27,7 @@
           <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
             <span class="tail-status"></span>
             <span class="tail-label">
+              {{inline-svg 'icon-arrowdown' class="icon-arrow"}}
               {{#if job.isFinished}}
                 Scroll to End of Log
               {{else}}
