@@ -112,25 +112,6 @@
   &:active
     background-color: #999a98
 
-// popup buttons
-@mixin buttons($bg-color)
-  display: inline-block
-  padding: .3em 1em
-  font-size: 20px
-  color: white
-  font-weight: $font-weight-light
-  border-radius: 2px
-  background-color: $bg-color
-  &:hover,
-  &:active
-    background-color: lighten($bg-color, 10)
-
-.button-delete
-  @include buttons($brick-red)
-
-.button-cancel
-  @include buttons(#A0A8A8)
-
 .showmore-button
   @extend .button
   background:

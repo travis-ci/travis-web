@@ -10,12 +10,13 @@ $light-blue: #FCFDFD
   color: $color
   background: white
   transition: background-color 200ms ease
+  cursor: pointer
   &:hover,
   &:active
     background-color: $color
     color: white
 
-$plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey)
+$plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: $brick-red)
 
 @each $ident, $color in $plan-buttons
   .plans-button--#{$ident}
