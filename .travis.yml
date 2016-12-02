@@ -35,7 +35,8 @@ install:
   - bower install
 
 before_script:
-  - if [ "$EMBER_VERSION" = 'default' ] && [ $TRAVIS_PULL_REQUEST ] && [ "$TRAVIS_PULL_REQUEST" != 'false' ]; then echo "Enabling Percy" && export PERCY_ENABLE=1; fi
+  - if [ "$EMBER_VERSION" = 'default' ] && [ $TRAVIS_PULL_REQUEST ] && [ "$TRAVIS_PULL_REQUEST" != 'false' ]; then echo "Enabling Percy on PR with default Ember" && export PERCY_ENABLE=1; fi
+  - if [ "$EMBER_VERSION" = 'default' ] && [ $TRAVIS_PULL_REQUEST = 'false' ] && [ "$TRAVIS_BRANCH" = 'master' ]; then echo "Enabling Percy on master with default Ember" && export PERCY_ENABLE=1; fi
   - echo $PERCY_ENABLE
 
 script:
