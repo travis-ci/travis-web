@@ -142,6 +142,8 @@ test('view build history and display a created build', function (assert) {
     this.application.pusher.receive('build:started', startedData);
   });
 
+  percySnapshot(assert);
+
   andThen(() => {
     assert.ok(page.builds(0).started, 'expected the new build to show as started');
 
@@ -153,8 +155,6 @@ test('view build history and display a created build', function (assert) {
   andThen(() => {
     assert.ok(page.builds(0).passed, 'expected the newly-finished build to have passed');
   });
-
-  percySnapshot(assert);
 });
 
 test('view pull requests', function (assert) {
