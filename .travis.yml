@@ -3,14 +3,17 @@ language: node_js
 node_js: 6
 
 env:
-  - EMBER_VERSION=default
-  - PERCY_ENABLE=0 EMBER_VERSION=beta
-  - PERCY_ENABLE=0 EMBER_VERSION=canary
+  global:
+    - PERCY_ENABLE=0
+  matrix:
+    - EMBER_VERSION=default
+    - EMBER_VERSION=beta
+    - EMBER_VERSION=canary
 
 matrix:
   allow_failures:
-    - env: PERCY_ENABLE=0 EMBER_VERSION=beta
-    - env: PERCY_ENABLE=0 EMBER_VERSION=canary
+    - env: EMBER_VERSION=beta
+    - env: EMBER_VERSION=canary
 
   fast_finish: true
 
@@ -30,6 +33,10 @@ install:
   - npm install -g bower
   - npm install
   - bower install
+
+before_script:
+  - if [ "$EMBER_VERSION" = 'default' ] && [ $TRAVIS_PULL_REQUEST ] && [ "$TRAVIS_PULL_REQUEST" != 'false' ]; then echo "Enabling Percy" && export PERCY_ENABLE=1; fi
+  - echo $PERCY_ENABLE
 
 script:
   - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
