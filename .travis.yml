@@ -35,7 +35,7 @@ install:
   - bower install
 
 before_script:
-  - (test $EMBER_VERSION=default && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && export PERCY_ENABLE=1 && echo "Enabled Percy") || true
+  - if [ $EMBER_VERSION='default' ] && [ $TRAVIS_PULL_REQUEST ] && [ $TRAVIS_PULL_REQUEST != 'false' ]; echo "Enabling Percy" && export PERCY_ENABLED=1; fi
   - echo $PERCY_ENABLE
 
 script:
