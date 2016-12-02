@@ -237,6 +237,10 @@ export default function () {
     }
   });
 
+  this.post('/pusher/auth', function () {
+    // FIXME remove this once Pusher is properly mocked!
+  });
+
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
   // this.pretender.handledRequest = function (verb, path, request) {
   //   console.log('Handled this request:', `${verb} ${path}`, request);
