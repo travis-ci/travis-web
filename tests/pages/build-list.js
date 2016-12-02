@@ -19,8 +19,6 @@ export default PageObject.create({
       name: text('.build-info a'),
 
       created: hasClass('created'),
-      started: hasClass('started'),
-  
       passed: hasClass('passed'),
       failed: hasClass('failed'),
       errored: hasClass('errored'),
