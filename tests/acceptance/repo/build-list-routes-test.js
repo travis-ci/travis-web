@@ -5,6 +5,10 @@ import page from 'travis/tests/pages/build-list';
 
 import Ember from 'ember';
 
+function fakeClone(o) {
+  return JSON.parse(JSON.stringify(o));
+}
+
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
     const currentUser = server.create('user', {
@@ -98,25 +102,30 @@ test('view build history and display a created build', function (assert) {
 
     assert.ok(page.builds(1).failed, 'expected the second build to have failed');
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
+  });
 
-    this.application.pusher.receive('build:created', {
-      build: {
-        id: '2016',
-        repository_id: this.repoId,
-        number: '2016',
-        pull_request: false,
-        state: 'created',
-        event_type: 'push',
-        branch: 'no-dapl',
-        commit_id: 2016,
-      },
-      commit: {
-        id: 2016,
-        branch: 'no-dapl',
-        sha: 'acab',
-        message: 'Standing with Standing Rock'
-      }
-    });
+  const buildEventDataTemplate = {
+    build: {
+      id: '2016',
+      repository_id: this.repoId,
+      number: '2016',
+      pull_request: false,
+      event_type: 'push',
+      branch: 'no-dapl',
+      commit_id: 2016,
+    },
+    commit: {
+      id: 2016,
+      branch: 'no-dapl',
+      sha: 'acab',
+      message: 'Standing with Standing Rock'
+    }
+  };
+
+  andThen(() => {
+    const createdData = fakeClone(buildEventDataTemplate);
+    createdData.build.state = 'created';
+    this.application.pusher.receive('build:created', createdData);
   });
 
   andThen(() => {
@@ -127,6 +136,22 @@ test('view build history and display a created build', function (assert) {
     assert.ok(newBuild.created, 'expected the new build to show as created');
     assert.equal(newBuild.name, 'no-dapl');
     assert.equal(newBuild.message, 'Standing with Standing Rock');
+
+    const startedData = fakeClone(buildEventDataTemplate);
+    startedData.build.state = 'started';
+    this.application.pusher.receive('build:started', startedData);
+  });
+
+  andThen(() => {
+    assert.ok(page.builds(0).started, 'expected the new build to show as started');
+
+    const finishedData = fakeClone(buildEventDataTemplate);
+    finishedData.build.state = 'passed';
+    this.application.pusher.receive('build:finished', finishedData);
+  });
+
+  andThen(() => {
+    assert.ok(page.builds(0).passed, 'expected the newly-finished build to have passed');
   });
 
   percySnapshot(assert);
