@@ -35,7 +35,7 @@ install:
   - bower install
 
 before_script:
-  - test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && export PERCY_ENABLE=1
+  - test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && export PERCY_ENABLE=1 && echo "Enabled Percy"
 
 script:
   - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
