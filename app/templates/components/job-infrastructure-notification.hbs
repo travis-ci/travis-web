@@ -12,16 +12,20 @@
         Please read <a href="http://blog.travis-ci.com/2016-11-08-trusty-container-public-beta/?utm_source=trusty-container-based-beta-notice&utm_medium=banner&utm_campaign=trusty-container-based-beta" title="Trusty container-based beta">our blog post about the public beta</a>.
       {{/notice-banner}}
     {{/if}}
+    {{#if isDeprecatedMacImageXcode6}}
+      {{#notice-banner}}
+      This job {{conjugatedRun}} on an OS X image that <a href="https://blog.travis-ci.com/2016-11-17-retiring-some-osx-images/">will be retired on Friday, January 20th at Noon PST</a>.
+      After that this build will be routed to our <strong><a href="https://docs.travis-ci.com/user/osx-ci-environment/#Xcode-6.4">Xcode 6.4 image</a></strong>.
+      {{/notice-banner}}
+    {{/if}}
     {{#if isRetiredMacImageXcode6}}
       {{#notice-banner}}
-        This job {{conjugatedRun}} on an OS X image that <a href="https://blog.travis-ci.com/2016-11-17-retiring-some-osx-images/">will be retired on Monday, Nov 28th at Noon PST</a>.
-        After that this build will be routed to our <strong><a href="https://docs.travis-ci.com/user/osx-ci-environment/#Xcode-6.4">Xcode 6.4 image</a></strong>.
+        This job {{conjugatedRun}} on our <strong><a href="https://docs.travis-ci.com/user/osx-ci-environment/#Xcode-6.4">Xcode 6.4 image</a></strong>. Please update your <i>.travis.yml</i> file accordingly.
       {{/notice-banner}}
     {{/if}}
     {{#if isRetiredMacImageXcode7}}
       {{#notice-banner}}
-        This job {{conjugatedRun}} on an OS X image that <a href="https://blog.travis-ci.com/2016-11-17-retiring-some-osx-images/">will be retired on Monday, Nov 28th at Noon PST</a>.
-        After that this build will be routed to our <strong><a href="https://docs.travis-ci.com/user/osx-ci-environment/#Xcode-7.3.1">Xcode 7.3 image</a></strong>.
+        This job {{conjugatedRun}} on our <strong><a href="https://docs.travis-ci.com/user/osx-ci-environment/#Xcode-7.3.1">Xcode 7.3 image</a></strong>. Please update your <i>.travis.yml</i> file accordingly.
       {{/notice-banner}}
     {{/if}}
   {{/if}}

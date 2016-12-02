@@ -42,7 +42,7 @@ export default PageObject.create({
 
       message: text('.message'),
 
-      dismiss: clickable('.icon-close')
+      dismiss: clickable('.broadcast-close')
     }
   })
 });

@@ -1,14 +1,14 @@
 %button
-  font-family: $font-family-sans-serif
   display: inline-block
+  padding: 0.7em 0.8rem 0.6em
   cursor: pointer
   white-space: nowrap
   border-radius: 2px
   border: none
   vertical-align: middle
-  padding: 0.8rem
   line-height: 1
   text-decoration: none
+  font-family: inherit
   font-size: 14px
 
 .button
@@ -32,8 +32,7 @@
   border-color: $pebble-grey
   background-color: $cement-grey
 
-.button-signin,
-.button-signingin
+.auth-button
   @extend %button
   height: 36px
   color: #fff
@@ -46,15 +45,13 @@
       width: 6px
       height: 6px
 
-.button-signin
-  @extend %icon-github-white
-  padding-right: 2.2em
-  background:
-    size: 16px
-    position: 95%
-    repeat: no-repeat
-  &:hover
-    background-color: rgba($turf-green, 0.8)
+.auth-button.signed-out
+  .icon
+    height: 15px // very icon specific
+    margin: 0 0 0 4px
+  &:hover,
+  &:active
+    background-color: darken($turf-green, 10)
 
 .button--blue
   border: none
@@ -63,50 +60,25 @@
   &:hover
     background-color: darken($oxide-blue, 10)
 
-#auth #navigation .button-signin,
-#auth #navigation .button-signingin
+#auth #navigation .auth-button
   display: none
 
-%action-button
+.action-button--restart,
+.action-button--debug,
+.action-button--cancel
   display: block
   width: 8em
-  padding: 0.1em 0.5em 0.1em 2em
+  padding: 0 0.5em
   border: 1px solid $pebble-grey
   border-radius: 14px
-  font-weight: 400
   cursor: pointer
   white-space: nowrap
-  background:
-    size: 16px 16px
-    repeat: no-repeat
-    position: 10px center
   &:hover,
   &:active
+    +colorSVG($oxide-blue)
     border-color: $oxide-blue
     color: $oxide-blue
     text-decoration: none !important
-
-.action-button--restart
-  @extend %action-button
-  @extend %icon-line-trigger
-  &:hover,
-  &:active
-    @extend %icon-line-trigger-teal
-
-.action-button--debug
-  @extend %action-button
-  @extend %icon-line-debug
-  &:hover,
-  &:active
-    @extend %icon-line-debug-teal
-
-.action-button--cancel
-  @extend %action-button
-  @extend %icon-line-cross
-  background-size: 14px 14px
-  &:hover,
-  &:active
-    @extend %icon-line-cross-teal
   
 %log-button
   display: inline-block
@@ -139,29 +111,3 @@
   &:hover,
   &:active
     background-color: #999a98
-
-// popup buttons
-@mixin buttons($bg-color)
-  display: inline-block
-  padding: .3em 1em
-  font-size: 20px
-  color: white
-  font-weight: $font-weight-light
-  border-radius: 2px
-  background-color: $bg-color
-  &:hover,
-  &:active
-    background-color: lighten($bg-color, 10)
-
-.button-delete
-  @include buttons($brick-red)
-
-.button-cancel
-  @include buttons(#A0A8A8)
-
-.showmore-button
-  @extend .button
-  background:
-    repeat: no-repeat
-    size: auto 20px
-    position: .5em center

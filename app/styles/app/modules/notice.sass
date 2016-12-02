@@ -1,18 +1,13 @@
-=notice($color: $haze-yellow, $bg: doyer-yellow, $icon: "%icon-line-flag-yellow")
+=notice($color: $haze-yellow, $bg: doyer-yellow)
+  +linkStyle($color)
   padding: 0.3em 0.5em 0.2em
   margin-bottom: .5em
   background-color: $bg
   color: $color
   border-radius: 2px
   font-size: $font-size-m
-  +linkStyle($color)
   .icon-flag
-    @extend #{$icon}
-    background:
-      color: $color
-      size: auto 13px
-      position: 6px 4px
-      repeat: no-repeat
+    +colorSVG($color)
     width: 1.3em
     height: 1.5em
     margin: 0 .6em 0 .2em
@@ -22,7 +17,7 @@
 .notice--yellow
   +notice
 .notice--blue
-  +notice($oxide-blue, $agate-blue, "%icon-line-flag-teal")
+  +notice($oxide-blue, $agate-blue)
 
 =notice-banner($bg, $color)
   +linkStyle($color)
@@ -36,15 +31,14 @@
   @media #{$medium}
     .right
       float: right
-
-.notice-banner--yellow
-  +notice-banner($haze-yellow, $dozer-yellow)
   .icon-flag
-    @extend %icon-line-flag-yellow
-    @extend %icon
+    +colorSVG($color)
     width: 18px
     height: 18px
     margin-right: .3em
+    vertical-align: middle
 
+.notice-banner--yellow
+  +notice-banner($haze-yellow, $dozer-yellow)
 .notice-banner--green
   +notice-banner($seed-green, $turf-green)
