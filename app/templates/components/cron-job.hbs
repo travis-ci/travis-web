@@ -10,7 +10,7 @@
 <div class="cron-job-text next-run" title="{{cron.next_run}}">
     {{inline-svg 'icon-nextcron' class="icon"}}
     <time class="label-align" datetime="{{cron.next_run}}">Scheduled in {{format-time cron.next_run}}</time></div>
-<div class="cron-job-text dont-run-if-recent-build-exists">
+<div class="cron-job-text dont-run-if-recent-build-exists" title="{{dontRunIfRecentBuildExists}}">
     {{inline-svg 'icon-settings' class="icon"}}
     <span class="label-align">{{dontRunIfRecentBuildExists}}</span></div>
 <div class="cron-job-action">

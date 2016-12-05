@@ -42,7 +42,9 @@
 
   {{#if model.cronJobs.enabled}}
     <section class="settings-section">
-      <h2 class="small-title">Cron Jobs</h2>
+        <h2 class="small-title display-inline">Cron Jobs</h2>
+        <div class="tooltip-beta-features" data-tooltip="We'd love your feedback">
+            <a href="https://github.com/travis-ci/beta-features/issues/1" title="Give your feedback on Crons" class="badge" target="_blank">Beta Feature</a></div>
 
       <ul class="settings-list--crons">
         {{#each model.cronJobs.jobs as |cron|}}
