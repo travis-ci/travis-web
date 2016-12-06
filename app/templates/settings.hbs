@@ -51,7 +51,12 @@
           {{cron-job cron=cron}}
         {{/each}}
       </ul>
-      {{add-cron-job branches=sortedBranchesWithoutCron}}
+
+      {{#if sortedBranchesWithoutCron.length}}
+          {{add-cron-job branches=sortedBranchesWithoutCron}}
+      {{else}}
+          <p class="note">There are no branches you can currently add Crons to.</p>
+      {{/if}}
 
     </section>
   {{/if}}
