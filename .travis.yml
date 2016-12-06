@@ -17,7 +17,7 @@ matrix:
 
   fast_finish: true
 
-sudo: true
+sudo: required
 dist: trusty
 
 cache:
