@@ -99,14 +99,14 @@ export default PageObject.create({
       nextRun: text('.next-run'),
       lastRun: text('.last-run'),
       dontRunIfRecentBuildExistsText: text('.dont-run-if-recent-build-exists'),
-      delete: clickable('.cron-job-delete')
+      delete: clickable('.icon-trash')
     }
   }),
 
   sshKey: {
     scope: '.settings-sshkey',
-    name: text('.ssh-key-name span'),
-    fingerprint: text('.ssh-key-value span'),
+    name: text('.ssh-key-name span:last-child'),
+    fingerprint: text('.ssh-key-value span:last-child'),
 
     delete: clickable('.ssh-delete'),
     cannotBeDeleted: isVisible('.ssh-no-delete')
