@@ -32,17 +32,23 @@ module.exports = function () {
   var app = new EmberApp({
     babel: {
       includePolyfill: true,
+      optional: ['es7.decorators']
     },
     fingerprint: fingerprint,
     sourcemaps: {
-      enabled: false
+      enabled: true,
+      extensions: ['js']
     },
     'ember-prism': {
       'components': ['scss', 'javascript', 'json'], //needs to be an array, or undefined.
       'plugins': ['line-highlight']
     },
     svg: {
-      optimize: false
+      optimize: false,
+      paths: [
+        'public/images/stroke-icons',
+        'public/images/svg'
+      ]
     }
   });
 
