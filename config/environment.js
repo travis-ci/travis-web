@@ -23,7 +23,7 @@ module.exports = function (environment) {
     },
 
     // defaults for running travis-web
-    apiEndpoint: 'https://api.travis-ci.org',
+    apiEndpoint: 'https://api-staging.travis-ci.org',
     sourceEndpoint: 'https://github.com',
     pusher: {
       key: '5df8ac576dcccf4fd076',
@@ -89,7 +89,7 @@ module.exports = function (environment) {
 
   if (environment === 'development') {
     ENV['ember-cli-mirage'] = {
-      enabled: true
+      enabled: false
     };
 
     ENV.sentry = {
@@ -138,10 +138,6 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     ENV.release = process.env.SOURCE_VERSION || '-';
-    ENV['ember-cli-mirage'] = {
-      enabled: true
-    };
-
     if (process.env.DISABLE_SENTRY) {
       ENV.sentry = {
         development: true
