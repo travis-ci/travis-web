@@ -15,7 +15,7 @@ export default Ember.Service.extend({
    * transition, this is a decent interim solution. */
 
   fetchTask: task(function* () {
-    yield this.get('store').findAll('feature').then((featureSet) => {
+    yield this.get('store').findAll('beta-feature').then((featureSet) => {
       let featuresService = this.get('features');
       featureSet.map((feature) => {
         let featureName = feature.get('dasherizedName');
