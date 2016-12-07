@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import computed from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -9,9 +10,8 @@ export default Ember.Component.extend({
   classNameBindings: ['build.state'],
   classNames: ['row-li', 'pr-row'],
 
-  urlGithubCommit: Ember.computed('build.repo.slug', 'build.commit.sha', function () {
-    const slug = this.get('build.repo.slug');
-    const sha = this.get('build.commit.sha');
+  @computed('build.repo.slug', 'build.commit.sha')
+  urlGithubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);
-  })
+  },
 });

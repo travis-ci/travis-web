@@ -1,7 +1,6 @@
 {{#builds-wrapper contentType=contentType repo=repo}}
 {{#if isLoaded}}
   <ul class="build-list">
-    {{log model}}
     {{#each builds as |build|}}
       {{builds-item build=build}}
     {{else}}

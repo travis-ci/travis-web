@@ -27,10 +27,9 @@ export default V3Adapter.extend({
   },
 
   query(store, type, query) {
-    console.log('build adapter: query called');
     let { repository_id } = query;
     // eslint-disable-next-line
-    let url = `${this.get('host')}/repo/${repository_id}/builds?event_type=push&include=build.commit`;
+    let url = `${this.get('host')}/repo/${repository_id}/builds?event_type=push&include=build.commit,build.branch`;
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.ajax(url, this.ajaxOptions()).then((data) => {
         Ember.run(null, resolve, data);

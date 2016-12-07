@@ -39,11 +39,6 @@ export default JSONSerializer.extend({
       relationshipHash.type = type;
     }
 
-    if (type === 'build') {
-      // console.log('extractRelationships build data', hash);
-      // console.log('returned relationships', relationshipHash);
-    }
-
     return relationshipHash;
   },
 
@@ -95,6 +90,7 @@ export default JSONSerializer.extend({
     let items;
     let type = payload['@type'];
     if (type) {
+      console.log('type specified as: ',type);
       items = payload[type];
     } else {
       items = payload[primaryModelClass.modelName.underscore() + 's'];
@@ -111,13 +107,17 @@ export default JSONSerializer.extend({
     return documentHash;
   },
 
-  normalize(/* modelClass, resourceHash*/) {
+  normalize(modelClass, resourceHash) {
     let { data, included } = this._super(...arguments);
     if (!included) {
       included = [];
     }
     let store = this.store;
 
+    // if we have relationship data, attempt to include those as sideloaded
+    // records by adding them to the included array.
+    // We must have both relationships *and* included specified for this to
+    // work.
     if (data.relationships) {
       Object.keys(data.relationships).forEach(function (key) {
         let relationship = data.relationships[key];
@@ -145,6 +145,9 @@ export default JSONSerializer.extend({
       });
     }
 
+    if (modelClass.toString() === 'travis@model:build:') {
+      console.log('included', included);
+    }
     return { data, included };
   },
 
