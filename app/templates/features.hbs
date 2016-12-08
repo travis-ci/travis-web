@@ -1,0 +1,44 @@
+<div class="{{if features.showYourPride 'travis-pride'}} {{if features.comicSans 'travis-comicsans'}}">
+<header id="top" class="top">
+  <div class="centered">
+    {{render "top"}}
+  </div>
+</header>
+
+<div class="centered layout-features">
+  <div class="wrapper-main">
+    <div id="main" class="mail" role="main">
+      <header class="features-hero">
+        <h1 class="h1--grey">Beta Features</h1>
+        <p class="text-big">We'd love to get your feedback on some features
+          we're working on to make Travis CI even better.</p>
+        <p class="text-big">To enable a feature, simply toggle the corresponding switch. You can
+          return to our standard experience at any time by disabling a given
+          flag.</p>
+      </header>
+      <div class="profile-header">
+        <h1>{{accountName}}</h1>
+      </div>
+
+      {{#if featuresLoading}}
+        {{loading-indicator}}
+      {{else}}
+        <ul class="features-list">
+          {{#each model as |feature|}}
+            <li class="feature">
+              {{feature-toggle feature=feature}}
+              <h2 class="feature-name">{{feature.name}}
+                <small>(<a href="mailto:support@travis-ci.com?subject=About your {{feature.name}} feature" title="">We'd love some feedback!</a>)</small></h2>
+              <p>{{feature.description}}</p>
+            </li>
+          {{else}}
+            Oops! It looks like we don't have any experimental features for you
+            to try yet.
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
+  </div>
+</div>
+{{render "footer"}}
+</div>

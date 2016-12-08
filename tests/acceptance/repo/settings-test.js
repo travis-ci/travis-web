@@ -240,6 +240,8 @@ test('delete and create environment variables', function (assert) {
 });
 
 test('delete and create crons', function (assert) {
+  const done = assert.async();
+
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
@@ -255,6 +257,7 @@ test('delete and create crons', function (assert) {
   andThen(() => {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
     assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
+    done();
   });
 });
 
