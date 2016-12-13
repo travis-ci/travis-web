@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
+import jobPage from 'travis/tests/pages/job';
 
 const repoId = 11120298;
 
@@ -73,12 +74,13 @@ test('Pusher events change the main display', function (assert) {
   delete build.last_build_id;
   delete build.current_build_id;
 
+  const job = JSON.parse(jobCreated.data);
+  delete job.commit;
+
   andThen(() => {
     console.log('about to save this build', build);
     this.branch.createBuild(build);
 
-    const job = JSON.parse(jobCreated.data);
-    delete job.commit;
     console.log('about to save this job', job);
     server.create('job', job);
   });
@@ -108,6 +110,10 @@ test('Pusher events change the main display', function (assert) {
   // BECAUSE the repository’s current_build_id changes at this point.
 
   andThen(() => {
+    server.create('log', { id: job.id });
+  });
+
+  andThen(() => {
     const newBuildStarted = JSON.parse(buildStarted.data);
     newBuildStarted.build = build;
     this.application.pusher.receive('build:started', newBuildStarted);
@@ -115,5 +121,16 @@ test('Pusher events change the main display', function (assert) {
 
   andThen(() => {
     assert.equal(dashboardPage.repoTitle, 'backspace / travixperiments-redux', 'the displayed repository should have changed');
+  });
+
+  andThen(() => {
+    this.application.pusher.receive('job:started', JSON.parse(jobStarted.data));
+    this.application.pusher.receive('job:log', JSON.parse(jobLog1.data));
+    this.application.pusher.receive('job:log', JSON.parse(jobLog2.data));
+  });
+
+  andThen(() => {
+    assert.equal(jobPage.logLines(0).text, 'Worker information');
+    assert.ok(jobPage.logLines(0).isYellow, 'expected the first line to be yello');
   });
 });
