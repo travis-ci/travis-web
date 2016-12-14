@@ -40,10 +40,16 @@ Object.assign(buildTemplate, idlessCommitTemplate);
 const buildCreatedNew = Object.assign({}, buildTemplate);
 buildCreatedNew.state = 'created';
 
+const buildStartedNew = Object.assign({}, buildTemplate);
+buildStartedNew.state = 'started';
+
 repositoryTemplate.default_branch = {
   name: 'primary',
   last_build_id: buildTemplate.id
 };
+
+const repositoryWithNewBuild = Object.assign({}, repositoryTemplate);
+repositoryWithNewBuild.current_build_id = buildTemplate.id;
 
 const jobTemplate = {
   id: 180840192,
@@ -171,9 +177,11 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    const newBuildStarted = JSON.parse(buildStarted.data);
-    newBuildStarted.build = build;
-    this.application.pusher.receive('build:started', newBuildStarted);
+    this.application.pusher.receive('build:started', {
+      build: buildStartedNew,
+      commit: commitTemplate,
+      repository: repositoryWithNewBuild
+    });
   });
 
   andThen(() => {
