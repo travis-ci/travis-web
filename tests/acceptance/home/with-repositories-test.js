@@ -7,7 +7,7 @@ const repoId = 11120298;
 
 const repositoryTemplate = {
   id: repoId,
-  slug: 'backspace/travixperiments-redux'
+  slug: 'killjoys/living-a-feminist-life'
 };
 
 const commitTemplate = {
@@ -100,7 +100,7 @@ moduleForAcceptance('Acceptance | home/with repositories', {
 
     // create active repo
     const repository = server.create('repository', {
-      slug: 'backspace/travixperiments-redux',
+      slug: 'killjoys/living-a-feminist-life',
       id: 11120298
     });
 
@@ -109,7 +109,7 @@ moduleForAcceptance('Acceptance | home/with repositories', {
     });
 
     server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life'
+      slug: 'killjoys/queer-phenomenology'
     });
 
     // create active repo
@@ -130,8 +130,8 @@ test('the home page shows the repositories', (assert) => {
   andThen(() => {
     assert.equal(dashboardPage.sidebarRepositories().count, 3, 'expected three repositories in the sidebar');
     assert.equal(dashboardPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
-    assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/living-a-feminist-life');
-    assert.equal(dashboardPage.sidebarRepositories(2).name, 'backspace/travixperiments-redux');
+    assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/queer-phenomenology');
+    assert.equal(dashboardPage.sidebarRepositories(2).name, 'killjoys/living-a-feminist-life');
   });
 });
 
@@ -179,7 +179,7 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(dashboardPage.repoTitle, 'backspace / travixperiments-redux', 'the displayed repository should have changed');
+    assert.equal(dashboardPage.repoTitle, 'killjoys / living-a-feminist-life', 'the displayed repository should have changed');
   });
 
   andThen(() => {
