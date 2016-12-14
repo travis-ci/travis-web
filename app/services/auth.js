@@ -1,6 +1,7 @@
 /* global Travis */
 import config from 'travis/config/environment';
 import Ember from 'ember';
+import computed, { alias } from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -160,17 +161,20 @@ export default Ember.Service.extend({
     }
   },
 
-  signedIn: Ember.computed('state', function () {
-    return this.get('state') === 'signed-in';
-  }),
+  @computed('state')
+  signedIn(state) {
+    return state === 'signed-in';
+  },
 
-  signedOut: Ember.computed('state', function () {
-    return this.get('state') === 'signed-out';
-  }),
+  @computed('state')
+  signedOut(state) {
+    return state === 'signed-out';
+  },
 
-  signingIn: Ember.computed('state', function () {
-    return this.get('state') === 'signing-in';
-  }),
+  @computed('state')
+  signingIn(state) {
+    return state === 'signing-in';
+  },
 
   storeData(data, storage) {
     if (data.token) {
@@ -216,8 +220,6 @@ export default Ember.Service.extend({
   },
 
   sendToApp(name) {
-    let error, router;
-
     // TODO: this is an ugly solution, we need to do one of 2 things:
     //       * find a way to check if we can already send an event to remove try/catch
     //       * remove afterSignIn and afterSignOut events by replacing them in a more
@@ -225,11 +227,11 @@ export default Ember.Service.extend({
     //         as a direct response to either manual sign in or autoSignIn (right now
     //         we treat both cases behave the same in terms of sent events which I think
     //         makes it more complicated than it should be).
-    router = Ember.getOwner(this).lookup('router:main');
+    const router = Ember.getOwner(this).lookup('router:main');
     try {
       return router.send(name);
     } catch (error1) {
-      error = error1;
+      const error = error1;
       if (!(error.message.match(/Can't trigger action/))) {
         throw error;
       }
@@ -241,22 +243,24 @@ export default Ember.Service.extend({
   },
 
   syncingDidChange: Ember.observer('isSyncing', 'currentUser', function () {
-    var user;
-    if ((user = this.get('currentUser')) && user.get('isSyncing') && !user.get('syncedAt')) {
+    const user = this.get('currentUser');
+    if (user && user.get('isSyncing') && !user.get('syncedAt')) {
       return Ember.run.scheduleOnce('routerTransitions', this, function () {
         return Ember.getOwner(this).lookup('router:main').send('renderFirstSync');
       });
     }
   }),
 
-  userName: Ember.computed('currentUser.login', 'currentUser.name', function () {
-    return this.get('currentUser.name') || this.get('currentUser.login');
-  }),
+  @computed('currentUser.{login,name}')
+  userName(login, name) {
+    return name || login;
+  },
 
-  gravatarUrl: Ember.computed('currentUser.gravatarId', function () {
-    let gravatarId = this.get('currentUser.gravatarId');
+  @computed('currentUser.gravatarId')
+  gravatarUrl(gravatarId) {
     return `${location.protocol}//www.gravatar.com/avatar/${gravatarId}?s=48&d=mm`;
-  }),
+  },
 
-  permissions: Ember.computed.alias('currentUser.permissions')
+  // eslint-ignore-next-line
+  @alias('currentUser.permissions') permissions: null,
 });
