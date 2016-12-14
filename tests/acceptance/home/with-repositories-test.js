@@ -71,6 +71,9 @@ jobQueuedNew.state = 'queued';
 const jobReceivedNew = Object.assign({}, jobTemplate);
 jobReceivedNew.state = 'received';
 
+const jobStartedNew = Object.assign({}, jobTemplate);
+jobStartedNew.state = 'started';
+
 buildTemplate.job_ids = [jobTemplate.id];
 
 const jobCreated = {"event":"job:created","data":"{\"id\":180840192,\"repository_id\":11120298,\"repository_slug\":\"backspace/travixperiments-redux\",\"repository_private\":false,\"build_id\":180840191,\"commit_id\":51613369,\"log_id\":132172587,\"number\":\"15.1\",\"state\":\"created\",\"started_at\":null,\"finished_at\":null,\"allow_failure\":false,\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"}}","channel":"repo-11120298"}
@@ -88,6 +91,20 @@ const jobStarted = {"event":"job:started","data":"{\"id\":180840192,\"repository
 const jobLog1 = {"event":"job:log","data":"{\"id\":180840192,\"_log\":\"another log line\",\"number\":1,\"final\":false}","channel":"job-180840192"}
 
 const jobLog2 = {"event":"job:log","data":"{\"id\":180840192,\"_log\":\"\\u001B[0K\\u001B[33;1mWorker information\",\"number\":0,\"final\":false}","channel":"job-180840192"}
+
+const jobLog1New = {
+  id: jobTemplate.id,
+  number: 1,
+  final: false,
+  _log: 'another log line'
+};
+
+const jobLog2New = {
+  id: jobTemplate.id,
+  number: 0,
+  final: false,
+  _log: '\u001B[0K\u001B[33;1mWorker information'
+};
 
 moduleForAcceptance('Acceptance | home/with repositories', {
   beforeEach() {
@@ -189,9 +206,9 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    this.application.pusher.receive('job:started', JSON.parse(jobStarted.data));
-    this.application.pusher.receive('job:log', JSON.parse(jobLog1.data));
-    this.application.pusher.receive('job:log', JSON.parse(jobLog2.data));
+    this.application.pusher.receive('job:started', jobStartedNew);
+    this.application.pusher.receive('job:log', jobLog1New);
+    this.application.pusher.receive('job:log', jobLog2New);
   });
 
   andThen(() => {
