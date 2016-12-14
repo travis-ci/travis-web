@@ -5,6 +5,62 @@ import jobPage from 'travis/tests/pages/job';
 
 const repoId = 11120298;
 
+const repositoryTemplate = {
+  id: repoId,
+  slug: 'backspace/travixperiments-redux'
+};
+
+const commitTemplate = {
+  id: 51613369,
+  sha: '06f7deb064239a8ede7ae9f50a787594c6406f72',
+  branch: 'primary',
+  message: 'Add empty commit',
+  committed_at: '2016-12-02T22:02:34Z',
+  author_name: 'Buck Doyle',
+  author_email: 'b@chromatin.ca'
+};
+
+// FIXME lodash? something? ugh?
+const idlessCommitTemplate = Object.assign({}, commitTemplate);
+delete idlessCommitTemplate.id;
+
+commitTemplate.committer_name = commitTemplate.author_name;
+commitTemplate.committer_email = commitTemplate.author_email;
+
+const buildTemplate = {
+  id: 180840191,
+  repository_id: repositoryTemplate.id,
+  number: 15,
+  pull_request: false,
+  event_type: 'push'
+};
+
+Object.assign(buildTemplate, idlessCommitTemplate);
+
+const buildCreatedNew = Object.assign({}, buildTemplate);
+buildCreatedNew.state = 'created';
+
+repositoryTemplate.default_branch = {
+  name: 'primary',
+  last_build_id: buildTemplate.id
+};
+
+const jobTemplate = {
+  id: 180840192,
+  repository_id: repoId,
+  repository_slug: repositoryTemplate.slug,
+  build_id: buildTemplate.id,
+  commit_id: commitTemplate.id,
+  // TODO what is this?
+  log_id: 132172587,
+  number: '15.1'
+};
+
+const jobCreatedNew = Object.assign({}, jobTemplate);
+jobCreatedNew.state = 'created';
+
+buildTemplate.job_ids = [jobTemplate.id];
+
 const jobCreated = {"event":"job:created","data":"{\"id\":180840192,\"repository_id\":11120298,\"repository_slug\":\"backspace/travixperiments-redux\",\"repository_private\":false,\"build_id\":180840191,\"commit_id\":51613369,\"log_id\":132172587,\"number\":\"15.1\",\"state\":\"created\",\"started_at\":null,\"finished_at\":null,\"allow_failure\":false,\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"}}","channel":"repo-11120298"}
 
 const buildCreated = {"event":"build:created","data":"{\"build\":{\"id\":180840191,\"repository_id\":11120298,\"number\":\"15\",\"pull_request\":false,\"pull_request_title\":null,\"pull_request_number\":null,\"state\":\"created\",\"started_at\":null,\"finished_at\":null,\"duration\":null,\"job_ids\":[180840192],\"event_type\":\"push\",\"commit\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"commit_id\":51613369,\"branch\":\"primary\",\"message\":\"Add empty commit\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\"},\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"},\"repository\":{\"id\":11120298,\"slug\":\"backspace/travixperiments-redux\",\"description\":\"Was it stolen by staging? IT SEEMS SO\",\"private\":false,\"last_build_id\":180838831,\"last_build_number\":\"14\",\"last_build_state\":\"passed\",\"last_build_duration\":53,\"last_build_language\":null,\"last_build_started_at\":\"2016-12-02T21:59:53Z\",\"last_build_finished_at\":\"2016-12-02T22:00:46Z\",\"github_language\":null,\"default_branch\":{\"name\":\"primary\",\"last_build_id\":180840191},\"active\":true,\"current_build_id\":180838831}}","channel":"repo-11120298"}
@@ -79,23 +135,22 @@ test('Pusher events change the main display', function (assert) {
 
   andThen(() => {
     console.log('about to save this build', build);
-    this.branch.createBuild(build);
+    this.branch.createBuild(buildCreatedNew);
 
     console.log('about to save this job', job);
-    server.create('job', job);
+    server.create('job', jobCreatedNew);
   });
 
   andThen(() => {
-    this.application.pusher.receive('job:created', JSON.parse(jobCreated.data));
+    this.application.pusher.receive('job:created', jobCreatedNew);
   });
 
   andThen(() => {
-    const newBuildCreated = JSON.parse(buildCreated.data);
-    newBuildCreated.build = build;
-    delete newBuildCreated.repository.last_build_id;
-    delete newBuildCreated.repository.current_build_id;
-    console.log('pushing this event', newBuildCreated, JSON.stringify(newBuildCreated));
-    this.application.pusher.receive('build:created', newBuildCreated);
+    this.application.pusher.receive('build:created', {
+      build: buildCreatedNew,
+      commit: commitTemplate,
+      repository: repositoryTemplate
+    });
   });
 
   andThen(() => {
