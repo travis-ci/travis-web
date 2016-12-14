@@ -76,22 +76,6 @@ jobStartedNew.state = 'started';
 
 buildTemplate.job_ids = [jobTemplate.id];
 
-const jobCreated = {"event":"job:created","data":"{\"id\":180840192,\"repository_id\":11120298,\"repository_slug\":\"backspace/travixperiments-redux\",\"repository_private\":false,\"build_id\":180840191,\"commit_id\":51613369,\"log_id\":132172587,\"number\":\"15.1\",\"state\":\"created\",\"started_at\":null,\"finished_at\":null,\"allow_failure\":false,\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"}}","channel":"repo-11120298"}
-
-const buildCreated = {"event":"build:created","data":"{\"build\":{\"id\":180840191,\"repository_id\":11120298,\"number\":\"15\",\"pull_request\":false,\"pull_request_title\":null,\"pull_request_number\":null,\"state\":\"created\",\"started_at\":null,\"finished_at\":null,\"duration\":null,\"job_ids\":[180840192],\"event_type\":\"push\",\"commit\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"commit_id\":51613369,\"branch\":\"primary\",\"message\":\"Add empty commit\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\"},\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"},\"repository\":{\"id\":11120298,\"slug\":\"backspace/travixperiments-redux\",\"description\":\"Was it stolen by staging? IT SEEMS SO\",\"private\":false,\"last_build_id\":180838831,\"last_build_number\":\"14\",\"last_build_state\":\"passed\",\"last_build_duration\":53,\"last_build_language\":null,\"last_build_started_at\":\"2016-12-02T21:59:53Z\",\"last_build_finished_at\":\"2016-12-02T22:00:46Z\",\"github_language\":null,\"default_branch\":{\"name\":\"primary\",\"last_build_id\":180840191},\"active\":true,\"current_build_id\":180838831}}","channel":"repo-11120298"}
-
-const jobQueued = {"event":"job:queued","data":"{\"id\":180840192,\"repository_id\":11120298,\"repository_slug\":\"backspace/travixperiments-redux\",\"repository_private\":false,\"build_id\":180840191,\"commit_id\":51613369,\"number\":\"15.1\",\"state\":\"queued\",\"queue\":\"builds.docker\",\"allow_failure\":false,\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"}}","channel":"repo-11120298"}
-
-const jobReceived = {"event":"job:received","data":"{\"id\":180840192,\"repository_id\":11120298,\"repository_slug\":\"backspace/travixperiments-redux\",\"repository_private\":false,\"build_id\":180840191,\"commit_id\":51613369,\"number\":\"15.1\",\"state\":\"received\",\"started_at\":null,\"finished_at\":null,\"queue\":\"builds.docker\",\"allow_failure\":false,\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"}}","channel":"repo-11120298"}
-
-const buildStarted = {"event":"build:started","data":"{\"build\":{\"id\":180840191,\"repository_id\":11120298,\"commit_id\":51613369,\"number\":\"15\",\"pull_request\":false,\"pull_request_title\":null,\"pull_request_number\":null,\"state\":\"started\",\"started_at\":\"2016-12-02T22:04:10Z\",\"finished_at\":null,\"duration\":null,\"job_ids\":[180840192],\"event_type\":\"push\",\"commit\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\"},\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"},\"repository\":{\"id\":11120298,\"slug\":\"backspace/travixperiments-redux\",\"description\":\"Was it stolen by staging? IT SEEMS SO\",\"private\":false,\"last_build_id\":180840191,\"last_build_number\":\"15\",\"last_build_state\":\"started\",\"last_build_duration\":null,\"last_build_language\":null,\"last_build_started_at\":\"2016-12-02T22:04:10Z\",\"last_build_finished_at\":null,\"github_language\":null,\"default_branch\":{\"name\":\"primary\",\"last_build_id\":180840191},\"active\":true,\"current_build_id\":180840191}}","channel":"repo-11120298"}
-
-const jobStarted = {"event":"job:started","data":"{\"id\":180840192,\"repository_id\":11120298,\"repository_slug\":\"backspace/travixperiments-redux\",\"repository_private\":false,\"build_id\":180840191,\"commit_id\":51613369,\"number\":\"15.1\",\"state\":\"started\",\"started_at\":\"2016-12-02T22:04:10Z\",\"finished_at\":null,\"queue\":\"builds.docker\",\"allow_failure\":false,\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"}}","channel":"repo-11120298"}
-
-const jobLog1 = {"event":"job:log","data":"{\"id\":180840192,\"_log\":\"another log line\",\"number\":1,\"final\":false}","channel":"job-180840192"}
-
-const jobLog2 = {"event":"job:log","data":"{\"id\":180840192,\"_log\":\"\\u001B[0K\\u001B[33;1mWorker information\",\"number\":0,\"final\":false}","channel":"job-180840192"}
-
 const jobLog1New = {
   id: jobTemplate.id,
   number: 1,
@@ -154,19 +138,8 @@ test('Pusher events change the main display', function (assert) {
     assert.equal(dashboardPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the newer one with no builds');
   });
 
-  const build = JSON.parse(buildCreated.data).build;
-  delete build.commit;
-  delete build.last_build_id;
-  delete build.current_build_id;
-
-  const job = JSON.parse(jobCreated.data);
-  delete job.commit;
-
   andThen(() => {
-    console.log('about to save this build', build);
     this.branch.createBuild(buildCreatedNew);
-
-    console.log('about to save this job', job);
     server.create('job', jobCreatedNew);
   });
 
@@ -190,7 +163,7 @@ test('Pusher events change the main display', function (assert) {
 
   andThen(() => {
     // This is necessary to have the log fetch not fail and put the log in an error state.
-    server.create('log', { id: job.id });
+    server.create('log', { id: jobTemplate.id });
   });
 
   andThen(() => {
