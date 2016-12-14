@@ -62,17 +62,16 @@ const jobTemplate = {
   number: '15.1'
 };
 
-const jobCreated = Object.assign({}, jobTemplate);
-jobCreated.state = 'created';
+function generateJobWithState(state) {
+  const job = Object.assign({}, jobTemplate);
+  job.state = state;
+  return job;
+}
 
-const jobQueued = Object.assign({}, jobTemplate);
-jobQueued.state = 'queued';
-
-const jobReceived = Object.assign({}, jobTemplate);
-jobReceived.state = 'received';
-
-const jobStarted = Object.assign({}, jobTemplate);
-jobStarted.state = 'started';
+const jobCreated = generateJobWithState('created');
+const jobQueued = generateJobWithState('queued');
+const jobReceived = generateJobWithState('received');
+const jobStarted = generateJobWithState('started');
 
 buildTemplate.job_ids = [jobTemplate.id];
 
