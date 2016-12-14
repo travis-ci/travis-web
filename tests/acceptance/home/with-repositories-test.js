@@ -57,8 +57,6 @@ const jobTemplate = {
   repository_slug: repositoryTemplate.slug,
   build_id: buildTemplate.id,
   commit_id: commitTemplate.id,
-  // TODO what is this?
-  log_id: 100,
   number: '15.1'
 };
 
