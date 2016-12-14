@@ -12,12 +12,12 @@ const repositoryTemplate = {
 
 const commitTemplate = {
   id: 100,
-  sha: '06f7deb064239a8ede7ae9f50a787594c6406f72',
+  sha: 'acab',
   branch: 'primary',
-  message: 'Add empty commit',
+  message: 'Add new chapter',
   committed_at: '2016-12-02T22:02:34Z',
-  author_name: 'Buck Doyle',
-  author_email: 'b@chromatin.ca'
+  author_name: 'Sara Ahmed',
+  author_email: 'sara@example.com'
 };
 
 // FIXME lodash? something? ugh?
@@ -77,7 +77,7 @@ const jobLog0 = {
   id: jobTemplate.id,
   number: 0,
   final: false,
-  _log: '\u001B[0K\u001B[33;1mWorker information'
+  _log: '\u001B[0K\u001B[33;1mThe first line'
 };
 
 const jobLog1 = {
@@ -187,7 +187,7 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(jobPage.logLines(0).text, 'Worker information');
+    assert.equal(jobPage.logLines(0).text, 'The first line');
     assert.ok(jobPage.logLines(0).isYellow, 'expected the first line to be yello');
   });
 });
