@@ -166,6 +166,7 @@ test('Pusher events change the main display', function (assert) {
   // BECAUSE the repository’s current_build_id changes at this point.
 
   andThen(() => {
+    // This is necessary to have the log fetch not fail and put the log in an error state.
     server.create('log', { id: job.id });
   });
 
