@@ -3,7 +3,7 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
 import jobPage from 'travis/tests/pages/job';
 
-const repoId = 11120298;
+const repoId = 100;
 
 const repositoryTemplate = {
   id: repoId,
@@ -11,7 +11,7 @@ const repositoryTemplate = {
 };
 
 const commitTemplate = {
-  id: 51613369,
+  id: 100,
   sha: '06f7deb064239a8ede7ae9f50a787594c6406f72',
   branch: 'primary',
   message: 'Add empty commit',
@@ -28,7 +28,7 @@ commitTemplate.committer_name = commitTemplate.author_name;
 commitTemplate.committer_email = commitTemplate.author_email;
 
 const buildTemplate = {
-  id: 180840191,
+  id: 100,
   repository_id: repositoryTemplate.id,
   number: 15,
   pull_request: false,
@@ -52,13 +52,13 @@ const repositoryWithNewBuild = Object.assign({}, repositoryTemplate);
 repositoryWithNewBuild.current_build_id = buildTemplate.id;
 
 const jobTemplate = {
-  id: 180840192,
+  id: 100,
   repository_id: repoId,
   repository_slug: repositoryTemplate.slug,
   build_id: buildTemplate.id,
   commit_id: commitTemplate.id,
   // TODO what is this?
-  log_id: 132172587,
+  log_id: 100,
   number: '15.1'
 };
 
@@ -101,7 +101,7 @@ moduleForAcceptance('Acceptance | home/with repositories', {
     // create active repo
     const repository = server.create('repository', {
       slug: 'killjoys/living-a-feminist-life',
-      id: 11120298
+      id: repoId
     });
 
     this.branch = repository.createBranch({
