@@ -37,11 +37,11 @@ const buildTemplate = {
 
 Object.assign(buildTemplate, idlessCommitTemplate);
 
-const buildCreatedNew = Object.assign({}, buildTemplate);
-buildCreatedNew.state = 'created';
+const buildCreated = Object.assign({}, buildTemplate);
+buildCreated.state = 'created';
 
-const buildStartedNew = Object.assign({}, buildTemplate);
-buildStartedNew.state = 'started';
+const buildStarted = Object.assign({}, buildTemplate);
+buildStarted.state = 'started';
 
 repositoryTemplate.default_branch = {
   name: 'primary',
@@ -62,32 +62,32 @@ const jobTemplate = {
   number: '15.1'
 };
 
-const jobCreatedNew = Object.assign({}, jobTemplate);
-jobCreatedNew.state = 'created';
+const jobCreated = Object.assign({}, jobTemplate);
+jobCreated.state = 'created';
 
-const jobQueuedNew = Object.assign({}, jobTemplate);
-jobQueuedNew.state = 'queued';
+const jobQueued = Object.assign({}, jobTemplate);
+jobQueued.state = 'queued';
 
-const jobReceivedNew = Object.assign({}, jobTemplate);
-jobReceivedNew.state = 'received';
+const jobReceived = Object.assign({}, jobTemplate);
+jobReceived.state = 'received';
 
-const jobStartedNew = Object.assign({}, jobTemplate);
-jobStartedNew.state = 'started';
+const jobStarted = Object.assign({}, jobTemplate);
+jobStarted.state = 'started';
 
 buildTemplate.job_ids = [jobTemplate.id];
 
-const jobLog1New = {
-  id: jobTemplate.id,
-  number: 1,
-  final: false,
-  _log: 'another log line'
-};
-
-const jobLog2New = {
+const jobLog0 = {
   id: jobTemplate.id,
   number: 0,
   final: false,
   _log: '\u001B[0K\u001B[33;1mWorker information'
+};
+
+const jobLog1 = {
+  id: jobTemplate.id,
+  number: 1,
+  final: false,
+  _log: 'another log line'
 };
 
 moduleForAcceptance('Acceptance | home/with repositories', {
@@ -139,23 +139,23 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    this.branch.createBuild(buildCreatedNew);
-    server.create('job', jobCreatedNew);
+    this.branch.createBuild(buildCreated);
+    server.create('job', jobCreated);
   });
 
   andThen(() => {
-    this.application.pusher.receive('job:created', jobCreatedNew);
+    this.application.pusher.receive('job:created', jobCreated);
   });
 
   andThen(() => {
     this.application.pusher.receive('build:created', {
-      build: buildCreatedNew,
+      build: buildCreated,
       commit: commitTemplate,
       repository: repositoryTemplate
     });
 
-    this.application.pusher.receive('job:queued', jobQueuedNew);
-    this.application.pusher.receive('job:received', jobReceivedNew);
+    this.application.pusher.receive('job:queued', jobQueued);
+    this.application.pusher.receive('job:received', jobReceived);
   });
 
   // ACCORDING TO PAINSTAKING RESEARCH the new build will not show yet, but will after this
@@ -168,7 +168,7 @@ test('Pusher events change the main display', function (assert) {
 
   andThen(() => {
     this.application.pusher.receive('build:started', {
-      build: buildStartedNew,
+      build: buildStarted,
       commit: commitTemplate,
       repository: repositoryWithNewBuild
     });
@@ -179,9 +179,9 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    this.application.pusher.receive('job:started', jobStartedNew);
-    this.application.pusher.receive('job:log', jobLog1New);
-    this.application.pusher.receive('job:log', jobLog2New);
+    this.application.pusher.receive('job:started', jobStarted);
+    this.application.pusher.receive('job:log', jobLog1);
+    this.application.pusher.receive('job:log', jobLog0);
   });
 
   andThen(() => {
