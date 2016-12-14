@@ -108,6 +108,10 @@ moduleForAcceptance('Acceptance | home/with repositories', {
       name: 'primary'
     });
 
+    server.create('repository', {
+      slug: 'killjoys/living-a-feminist-life'
+    });
+
     // create active repo
     server.create('repository', {
       slug: 'killjoys/willful-subjects'
@@ -124,9 +128,10 @@ test('the home page shows the repositories', (assert) => {
   dashboardPage.visit();
 
   andThen(() => {
-    assert.equal(dashboardPage.sidebarRepositories().count, 2, 'expected two repositories in the sidebar');
+    assert.equal(dashboardPage.sidebarRepositories().count, 3, 'expected three repositories in the sidebar');
     assert.equal(dashboardPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
     assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/living-a-feminist-life');
+    assert.equal(dashboardPage.sidebarRepositories(2).name, 'backspace/travixperiments-redux');
   });
 });
 
