@@ -59,6 +59,12 @@ const jobTemplate = {
 const jobCreatedNew = Object.assign({}, jobTemplate);
 jobCreatedNew.state = 'created';
 
+const jobQueuedNew = Object.assign({}, jobTemplate);
+jobQueuedNew.state = 'queued';
+
+const jobReceivedNew = Object.assign({}, jobTemplate);
+jobReceivedNew.state = 'received';
+
 buildTemplate.job_ids = [jobTemplate.id];
 
 const jobCreated = {"event":"job:created","data":"{\"id\":180840192,\"repository_id\":11120298,\"repository_slug\":\"backspace/travixperiments-redux\",\"repository_private\":false,\"build_id\":180840191,\"commit_id\":51613369,\"log_id\":132172587,\"number\":\"15.1\",\"state\":\"created\",\"started_at\":null,\"finished_at\":null,\"allow_failure\":false,\"commit\":{\"id\":51613369,\"sha\":\"06f7deb064239a8ede7ae9f50a787594c6406f72\",\"branch\":\"primary\",\"message\":\"Add empty commit\",\"committed_at\":\"2016-12-02T22:02:34Z\",\"author_name\":\"Buck Doyle\",\"author_email\":\"b@chromatin.ca\",\"committer_name\":\"Buck Doyle\",\"committer_email\":\"b@chromatin.ca\",\"compare_url\":\"https://github.com/backspace/travixperiments-redux/compare/844804c7d8a1...06f7deb06423\"}}","channel":"repo-11120298"}
@@ -151,14 +157,9 @@ test('Pusher events change the main display', function (assert) {
       commit: commitTemplate,
       repository: repositoryTemplate
     });
-  });
 
-  andThen(() => {
-    this.application.pusher.receive('job:queued', JSON.parse(jobQueued.data));
-  });
-
-  andThen(() => {
-    this.application.pusher.receive('job:received', JSON.parse(jobReceived.data));
+    this.application.pusher.receive('job:queued', jobQueuedNew);
+    this.application.pusher.receive('job:received', jobReceivedNew);
   });
 
   // ACCORDING TO PAINSTAKING RESEARCH the new build will not show yet, but will after this
