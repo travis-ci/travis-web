@@ -12,6 +12,7 @@ TravisPusher.prototype.active_channels = [];
 
 TravisPusher.prototype.init = function (config, ajaxService) {
   if (!config.key) {
+    // Set up a mock Pusher that ignores the expected methods.
     return this.pusher = {
       subscribe() {
         return {
