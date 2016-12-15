@@ -10,6 +10,51 @@ const repositoryTemplate = {
   slug: 'killjoys/living-a-feminist-life'
 };
 
+moduleForAcceptance('Acceptance | home/with repositories', {
+  beforeEach() {
+    const currentUser = server.create('user', {
+      name: 'Sara Ahmed',
+      login: 'feministkilljoy'
+    });
+
+    signInUser(currentUser);
+
+    // create active repo
+    const repository = server.create('repository', repositoryTemplate);
+
+    this.branch = repository.createBranch({
+      name: 'primary'
+    });
+
+    server.create('repository', {
+      slug: 'killjoys/queer-phenomenology'
+    });
+
+    // create active repo
+    server.create('repository', {
+      slug: 'killjoys/willful-subjects'
+    });
+
+    server.create('repository', {
+      slug: 'other/other',
+      skipPermissions: true
+    });
+  }
+});
+
+test('the home page shows the repositories', (assert) => {
+  dashboardPage.visit();
+
+  andThen(() => {
+    assert.equal(dashboardPage.sidebarRepositories().count, 3, 'expected three repositories in the sidebar');
+    assert.equal(dashboardPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
+    assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/queer-phenomenology');
+    assert.equal(dashboardPage.sidebarRepositories(2).name, 'killjoys/living-a-feminist-life');
+  });
+});
+
+// Create some mock data for both the API and Pusher
+
 const commitTemplate = {
   id: 100,
   sha: 'acab',
@@ -79,49 +124,6 @@ const jobLog1 = {
   final: false,
   _log: 'another log line'
 };
-
-moduleForAcceptance('Acceptance | home/with repositories', {
-  beforeEach() {
-    const currentUser = server.create('user', {
-      name: 'Sara Ahmed',
-      login: 'feministkilljoy'
-    });
-
-    signInUser(currentUser);
-
-    // create active repo
-    const repository = server.create('repository', repositoryTemplate);
-
-    this.branch = repository.createBranch({
-      name: 'primary'
-    });
-
-    server.create('repository', {
-      slug: 'killjoys/queer-phenomenology'
-    });
-
-    // create active repo
-    server.create('repository', {
-      slug: 'killjoys/willful-subjects'
-    });
-
-    server.create('repository', {
-      slug: 'other/other',
-      skipPermissions: true
-    });
-  }
-});
-
-test('the home page shows the repositories', (assert) => {
-  dashboardPage.visit();
-
-  andThen(() => {
-    assert.equal(dashboardPage.sidebarRepositories().count, 3, 'expected three repositories in the sidebar');
-    assert.equal(dashboardPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
-    assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/queer-phenomenology');
-    assert.equal(dashboardPage.sidebarRepositories(2).name, 'killjoys/living-a-feminist-life');
-  });
-});
 
 test('Pusher events change the main display', function (assert) {
   dashboardPage.visit();
