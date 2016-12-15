@@ -24,9 +24,6 @@ const commitTemplate = {
 const idlessCommitTemplate = Object.assign({}, commitTemplate);
 delete idlessCommitTemplate.id;
 
-commitTemplate.committer_name = commitTemplate.author_name;
-commitTemplate.committer_email = commitTemplate.author_email;
-
 const buildTemplate = {
   id: 100,
   repository_id: repositoryTemplate.id,
