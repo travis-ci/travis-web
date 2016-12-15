@@ -90,10 +90,7 @@ moduleForAcceptance('Acceptance | home/with repositories', {
     signInUser(currentUser);
 
     // create active repo
-    const repository = server.create('repository', {
-      slug: 'killjoys/living-a-feminist-life',
-      id: repoId
-    });
+    const repository = server.create('repository', repositoryTemplate);
 
     this.branch = repository.createBranch({
       name: 'primary'
