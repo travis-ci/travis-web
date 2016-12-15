@@ -11,6 +11,17 @@ var TravisPusher = function (config, ajaxService) {
 TravisPusher.prototype.active_channels = [];
 
 TravisPusher.prototype.init = function (config, ajaxService) {
+  if (!config.key) {
+    return this.pusher = {
+      subscribe() {
+        return {
+          bind_all() {}
+        };
+      },
+      channel() {}
+    };
+  }
+
   this.ajaxService = ajaxService;
   Pusher.warn = this.warn.bind(this);
   if (config.host) {
@@ -51,13 +62,7 @@ TravisPusher.prototype.subscribe = function (channel) {
   if (!((ref = this.pusher) != null ? ref.channel(channel) : void 0)) {
     return this.pusher.subscribe(channel).bind_all((function (_this) {
       return function (event, data) {
-        // FIXME restore this, of course!
-        if (Ember.testing) {
-          // eslint-disable-next-line
-          console.log('ignoring Pusher event', arguments);
-        } else {
-          return _this.receive(event, data);
-        }
+        return _this.receive(event, data);
       };
     })(this));
   }

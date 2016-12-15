@@ -116,8 +116,7 @@ module.exports = function (environment) {
       caches: true
     };
 
-    // FIXME true Pusher should not be present in tests! Awaiting mocking.
-    // ENV.pusher = {};
+    ENV.pusher = {};
 
     ENV.skipConfirmations = true;
 
