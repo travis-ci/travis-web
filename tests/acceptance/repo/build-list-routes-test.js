@@ -18,8 +18,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       slug: 'killjoys/living-a-feminist-life'
     });
 
-    const repoId = parseInt(repository.id);
-    this.repoId = repoId;
+    this.repoId = parseInt(repository.id);
 
     const branch = server.create('branch');
 
@@ -34,7 +33,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'cron',
-      repository_id: repoId
+      repository_id: this.repoId
     });
 
     const commitAttributes = {
@@ -50,7 +49,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const failedBuild = branch.createBuild({
       state: 'failed',
       event_type: 'push',
-      repository_id: repoId
+      repository_id: this.repoId
     });
 
     failedBuild.createCommit(commitAttributes);
@@ -59,7 +58,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const erroredBuild = branch.createBuild({
       state: 'errored',
       event_type: 'push',
-      repository_id: repoId
+      repository_id: this.repoId
     });
 
     erroredBuild.createCommit(commitAttributes);
@@ -72,7 +71,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       started_at: beforeOneYearAgo,
       event_type: 'pull_request',
       pull_request_number: 2010,
-      repository_id: repoId,
+      repository_id: this.repoId,
       pull_request_title: 'A pull request'
     });
 
