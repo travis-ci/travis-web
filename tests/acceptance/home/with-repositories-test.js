@@ -130,18 +130,11 @@ test('Pusher events change the main display', function (assert) {
 
   andThen(() => {
     assert.equal(dashboardPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the newer one with no builds');
-  });
 
-  andThen(() => {
     this.branch.createBuild(buildCreated);
     server.create('job', jobCreated);
-  });
 
-  andThen(() => {
     this.application.pusher.receive('job:created', jobCreated);
-  });
-
-  andThen(() => {
     this.application.pusher.receive('build:created', {
       build: buildCreated,
       commit: commitTemplate,
@@ -150,17 +143,12 @@ test('Pusher events change the main display', function (assert) {
 
     this.application.pusher.receive('job:queued', jobQueued);
     this.application.pusher.receive('job:received', jobReceived);
-  });
 
-  // ACCORDING TO PAINSTAKING RESEARCH the new build will not show yet, but will after this
-  // BECAUSE the repository’s current_build_id changes at this point.
-
-  andThen(() => {
     // This is necessary to have the log fetch not fail and put the log in an error state.
     server.create('log', { id: jobTemplate.id });
-  });
 
-  andThen(() => {
+    // After this line, the displayed repository should change, because it will
+    // now have a new current_build_id, and therefore be sorted first.
     this.application.pusher.receive('build:started', {
       build: buildStarted,
       commit: commitTemplate,
