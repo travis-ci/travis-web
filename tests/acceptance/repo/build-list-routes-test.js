@@ -5,10 +5,6 @@ import page from 'travis/tests/pages/build-list';
 
 import Ember from 'ember';
 
-function fakeClone(o) {
-  return JSON.parse(JSON.stringify(o));
-}
-
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
     const currentUser = server.create('user', {
@@ -123,7 +119,7 @@ test('view build history and display a created build', function (assert) {
   };
 
   andThen(() => {
-    const createdData = fakeClone(buildEventDataTemplate);
+    const createdData = Object.assign({}, buildEventDataTemplate);
     createdData.build.state = 'created';
     this.application.pusher.receive('build:created', createdData);
   });
@@ -137,7 +133,7 @@ test('view build history and display a created build', function (assert) {
     assert.equal(newBuild.name, 'no-dapl');
     assert.equal(newBuild.message, 'Standing with Standing Rock');
 
-    const startedData = fakeClone(buildEventDataTemplate);
+    const startedData = Object.assign({}, buildEventDataTemplate);
     startedData.build.state = 'started';
     this.application.pusher.receive('build:started', startedData);
   });
@@ -147,7 +143,7 @@ test('view build history and display a created build', function (assert) {
   andThen(() => {
     assert.ok(page.builds(0).started, 'expected the new build to show as started');
 
-    const finishedData = fakeClone(buildEventDataTemplate);
+    const finishedData = Object.assign({}, buildEventDataTemplate);
     finishedData.build.state = 'passed';
     this.application.pusher.receive('build:finished', finishedData);
   });
