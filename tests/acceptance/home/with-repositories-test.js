@@ -20,10 +20,6 @@ const commitTemplate = {
   author_email: 'sara@example.com'
 };
 
-// FIXME lodash? something? ugh?
-const idlessCommitTemplate = Object.assign({}, commitTemplate);
-delete idlessCommitTemplate.id;
-
 const buildTemplate = {
   id: 100,
   repository_id: repositoryTemplate.id,
@@ -32,7 +28,7 @@ const buildTemplate = {
   event_type: 'push'
 };
 
-Object.assign(buildTemplate, idlessCommitTemplate);
+Object.assign(buildTemplate, commitTemplate);
 
 const buildCreated = Object.assign({}, buildTemplate);
 buildCreated.state = 'created';
