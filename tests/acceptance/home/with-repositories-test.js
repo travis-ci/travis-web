@@ -168,6 +168,6 @@ test('Pusher events change the main display', function (assert) {
 
   andThen(() => {
     assert.equal(jobPage.logLines(0).text, 'The first line');
-    assert.ok(jobPage.logLines(0).isYellow, 'expected the first line to be yello');
+    assert.ok(jobPage.logLines(0).isYellow, 'expected the first line to be yellow');
   });
 });
