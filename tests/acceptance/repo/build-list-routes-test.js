@@ -49,7 +49,8 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const failedBuild = branch.createBuild({
       state: 'failed',
       event_type: 'push',
-      repository_id: repoId
+      repository_id: repoId,
+      number: '1885'
     });
 
     failedBuild.createCommit(commitAttributes);
@@ -58,7 +59,8 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const erroredBuild = branch.createBuild({
       state: 'errored',
       event_type: 'push',
-      repository_id: repoId
+      repository_id: repoId,
+      number: '1869'
     });
 
     erroredBuild.createCommit(commitAttributes);
@@ -80,7 +82,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
   }
 });
 
-test('view build history', function (assert) {
+test('build history shows and more can be loaded', function (assert) {
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
@@ -97,7 +99,10 @@ test('view build history', function (assert) {
 
     assert.ok(page.builds(1).failed, 'expected the second build to have failed');
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
+
+    assert.ok(page.showMoreButton.exists, 'expected the Show More button to exist');
   });
+
   percySnapshot(assert);
 });
 
