@@ -16,6 +16,15 @@ export default Ember.Controller.extend({
     var id, number, type;
     id = this.get('repo.id');
     number = this.get('builds.lastObject.number');
+
+    const defaultBranchLastBuildNumber = this.get('repo.defaultBranch.lastBuild.number');
+
+    // FIXME this is ridiculous
+    if (number === defaultBranchLastBuildNumber) {
+      const builds = this.get('builds');
+      number = builds[builds.length - 2].get('number');
+    }
+
     const tabName = this.get('tab');
     const singularTab = tabName.substr(0, tabName.length - 1);
     type = this.get('tab') === 'builds' ? 'push' : singularTab;

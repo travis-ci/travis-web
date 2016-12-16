@@ -138,8 +138,10 @@ test('build history shows and more can be loaded', function (assert) {
 
     olderBuild.createCommit({
       sha: 'acab',
-      author_name: 'us'
+      author_name: 'us',
+      branch: 'seven-oaks'
     });
+    olderBuild.save();
   });
 
   percySnapshot(assert);
@@ -147,7 +149,9 @@ test('build history shows and more can be loaded', function (assert) {
   page.showMoreButton.click();
 
   andThen(() => {
-    assert.equal(page.builds().count, 4, 'expected four builds');
+    assert.equal(page.builds().count, 5, 'expected five builds');
+    assert.equal(page.builds(3).name, 'seven-oaks', 'expected the build before the last one to have been added');
+    assert.equal(page.builds(4).name, 'rarely-used', 'expected the old default branch build to have moved to the end');
   });
 });
 
