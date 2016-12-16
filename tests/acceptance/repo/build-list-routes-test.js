@@ -2,6 +2,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
+import dashboardPage from 'travis/tests/pages/dashboard';
 
 import Ember from 'ember';
 
@@ -68,6 +69,20 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     erroredBuild.createCommit(commitAttributes);
     erroredBuild.save();
 
+    const defaultBranch = server.create('branch', {
+      name: 'rarely-used',
+      default_branch: true
+    });
+
+    const defaultBranchBuild = defaultBranch.createBuild({
+      number: '1491',
+      event_type: 'push',
+      repository_id: repoId
+    });
+
+    defaultBranchBuild.createCommit(commitAttributes);
+    defaultBranchBuild.save();
+
     const pullRequestBuild = branch.createBuild({
       state: 'passed',
       number: '1919',
@@ -85,6 +100,12 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 });
 
 test('build history shows and more can be loaded', function (assert) {
+  visit('/');
+
+  andThen(() => {
+    assert.equal(dashboardPage.sidebarRepositories().count, 1, 'expected one repository in the sidebar');
+  });
+
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {

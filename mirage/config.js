@@ -148,8 +148,17 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema/* , request*/) {
-    return { builds: schema.builds.all().models.map(build => {
+  this.get('/builds', function (schema, { queryParams: { after_number: afterNumber } }) {
+    const allBuilds = schema.builds.all();
+    let builds;
+
+    if (afterNumber) {
+      builds = allBuilds.models.filter(build => build.number < afterNumber);
+    } else {
+      builds = allBuilds.models.slice(0, 3);
+    }
+
+    return { builds: builds.map(build => {
       if (build.commit) {
         build.attrs.commit_id = build.commit.id;
       }
