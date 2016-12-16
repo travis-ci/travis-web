@@ -2,15 +2,15 @@ import Ember from 'ember';
 import { JSONAPISerializer } from 'ember-cli-mirage';
 
 export default JSONAPISerializer.extend({
-  serialize(repository, request) {
+  serialize(repository) {
     if (repository.models) {
-      return this.turnIntoV3('repo', repository.models, request);
+      return this.turnIntoV3('repo', repository.models);
     } else {
-      return this.turnIntoV3('repo', repository, request);
+      return this.turnIntoV3('repo', repository);
     }
   },
 
-  _turnIntoV3Singular(type, mirageRecord, request) {
+  _turnIntoV3Singular(type, mirageRecord) {
     let record;
     if (mirageRecord.attrs) {
       record = mirageRecord.attrs;
@@ -62,17 +62,17 @@ export default JSONAPISerializer.extend({
     return record;
   },
 
-  turnIntoV3(type, payload, request) {
+  turnIntoV3(type, payload) {
     let response;
     if (Ember.isArray(payload)) {
-      let records = payload.map(record => this._turnIntoV3Singular(type, record, request));
+      let records = payload.map(record => this._turnIntoV3Singular(type, record));
       let pluralized = Ember.String.pluralize(type);
       response = {};
       response['@type'] = pluralized;
       response['@href'] = `/${pluralized}`;
       response[pluralized] = records;
     } else {
-      response = this._turnIntoV3Singular(type, payload, request);
+      response = this._turnIntoV3Singular(type, payload);
     }
     return response;
   }
