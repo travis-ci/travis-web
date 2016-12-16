@@ -75,12 +75,6 @@ const buildTemplate = {
 
 Object.assign(buildTemplate, commitTemplate);
 
-const buildCreated = Object.assign({}, buildTemplate);
-buildCreated.state = 'created';
-
-const buildStarted = Object.assign({}, buildTemplate);
-buildStarted.state = 'started';
-
 repositoryTemplate.default_branch = {
   name: 'primary',
   last_build_id: buildTemplate.id
@@ -104,32 +98,18 @@ function generateJobWithState(state) {
   return job;
 }
 
-const jobCreated = generateJobWithState('created');
-const jobQueued = generateJobWithState('queued');
-const jobReceived = generateJobWithState('received');
-const jobStarted = generateJobWithState('started');
-
 buildTemplate.job_ids = [jobTemplate.id];
-
-const jobLog0 = {
-  id: jobTemplate.id,
-  number: 0,
-  final: false,
-  _log: '\u001B[0K\u001B[33;1mThe first line'
-};
-
-const jobLog1 = {
-  id: jobTemplate.id,
-  number: 1,
-  final: false,
-  _log: 'another log line'
-};
 
 test('Pusher events change the main display', function (assert) {
   dashboardPage.visit();
 
   andThen(() => {
     assert.equal(dashboardPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the newer one with no builds');
+
+    const buildCreated = Object.assign({}, buildTemplate);
+    buildCreated.state = 'created';
+
+    const jobCreated = generateJobWithState('created');
 
     this.branch.createBuild(buildCreated);
     server.create('job', jobCreated);
@@ -141,8 +121,8 @@ test('Pusher events change the main display', function (assert) {
       repository: repositoryTemplate
     });
 
-    this.application.pusher.receive('job:queued', jobQueued);
-    this.application.pusher.receive('job:received', jobReceived);
+    this.application.pusher.receive('job:queued', generateJobWithState('queued'));
+    this.application.pusher.receive('job:received', generateJobWithState('received'));
 
     // This is necessary to have the log fetch not fail and put the log in an error state.
     server.create('log', { id: jobTemplate.id });
@@ -150,7 +130,7 @@ test('Pusher events change the main display', function (assert) {
     // After this line, the displayed repository should change, because it will
     // now have a new current_build_id, and therefore be sorted first.
     this.application.pusher.receive('build:started', {
-      build: buildStarted,
+      build: Object.assign({}, buildTemplate, { state: 'started' }),
       commit: commitTemplate,
       repository: repositoryWithNewBuild
     });
@@ -161,9 +141,21 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    this.application.pusher.receive('job:started', jobStarted);
-    this.application.pusher.receive('job:log', jobLog1);
-    this.application.pusher.receive('job:log', jobLog0);
+    this.application.pusher.receive('job:started', generateJobWithState('started'));
+
+    this.application.pusher.receive('job:log', {
+      id: jobTemplate.id,
+      number: 1,
+      final: false,
+      _log: 'another log line'
+    });
+
+    this.application.pusher.receive('job:log', {
+      id: jobTemplate.id,
+      number: 0,
+      final: false,
+      _log: '\u001B[0K\u001B[33;1mThe first line'
+    });
   });
 
   andThen(() => {
