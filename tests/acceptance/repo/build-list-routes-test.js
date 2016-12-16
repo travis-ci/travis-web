@@ -19,8 +19,10 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     });
 
     const repoId = parseInt(repository.id);
+    this.repoId = repoId;
 
     const branch = server.create('branch');
+    this.branch = branch;
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
@@ -101,9 +103,27 @@ test('build history shows and more can be loaded', function (assert) {
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
 
     assert.ok(page.showMoreButton.exists, 'expected the Show More button to exist');
+
+    // Add another build so the API has more to return
+    const olderBuild = this.branch.createBuild({
+      event_type: 'push',
+      repository_id: this.repoId,
+      number: '1816'
+    });
+
+    olderBuild.createCommit({
+      sha: 'acab',
+      author_name: 'us'
+    });
   });
 
   percySnapshot(assert);
+
+  page.showMoreButton.click();
+
+  andThen(() => {
+    assert.equal(page.builds().count, 4, 'expected four builds');
+  });
 });
 
 test('view pull requests', function (assert) {

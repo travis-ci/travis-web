@@ -2,6 +2,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  clickable,
   collection,
   hasClass,
   isVisible,
@@ -34,6 +35,7 @@ export default PageObject.create({
   showMoreButton: {
     scope: 'button.showmore-button',
 
-    exists: isVisible()
+    exists: isVisible(),
+    click: clickable()
   }
 });
