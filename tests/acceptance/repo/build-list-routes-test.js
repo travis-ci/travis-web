@@ -69,7 +69,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     erroredBuild.createCommit(commitAttributes);
     erroredBuild.save();
 
-    const defaultBranch = server.create('branch', {
+    const defaultBranch = repository.createBranch({
       name: 'rarely-used',
       default_branch: true
     });
@@ -80,7 +80,9 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       repository_id: repoId
     });
 
-    defaultBranchBuild.createCommit(commitAttributes);
+    defaultBranchBuild.createCommit(Object.assign({}, commitAttributes, {
+      branch: 'rarely-used'
+    }));
     defaultBranchBuild.save();
 
     const pullRequestBuild = branch.createBuild({
@@ -109,7 +111,7 @@ test('build history shows and more can be loaded', function (assert) {
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 3, 'expected three builds');
+    assert.equal(page.builds().count, 4, 'expected four builds');
 
     const build = page.builds(0);
 
@@ -124,6 +126,8 @@ test('build history shows and more can be loaded', function (assert) {
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
 
     assert.ok(page.showMoreButton.exists, 'expected the Show More button to exist');
+
+    assert.equal(page.builds(3).name, 'rarely-used', 'expected the old default branch to show');
 
     // Add another build so the API has more to return
     const olderBuild = this.branch.createBuild({

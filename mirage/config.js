@@ -148,12 +148,14 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema, { queryParams: { after_number: afterNumber } }) {
+  this.get('/builds', function (schema, { queryParams: { after_number: afterNumber, ids } }) {
     const allBuilds = schema.builds.all();
     let builds;
 
     if (afterNumber) {
       builds = allBuilds.models.filter(build => build.number < afterNumber);
+    } else if (ids) {
+      builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
     } else {
       builds = allBuilds.models.slice(0, 3);
     }
@@ -164,7 +166,7 @@ export default function () {
       }
 
       return build;
-    }), commits: schema.commits.all().models };
+    }), commits: builds.map(build => build.commit) };
   });
 
   this.get('/builds/:id', function (schema, request) {

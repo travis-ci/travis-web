@@ -15,20 +15,47 @@ export default JSONAPISerializer.extend({
     if (mirageRecord.attrs) {
       record = mirageRecord.attrs;
     }
-    record['@type'] = type;
+    record['@type'] = 'repository';
     record['@href'] = `/${type}/${mirageRecord.id}`;
+    record['@representation'] = 'standard';
 
     let build = mirageRecord._schema.builds.first();
     if (build) {
       record['current_build'] = build.attrs;
     }
 
-    let defaultBranch = mirageRecord._schema.branches.models.find(branch => branch.default_branch);
+    let defaultBranch = mirageRecord.branches.models.find(branch => branch.default_branch);
+
     if (defaultBranch && defaultBranch.builds) {
       // FIXME this is copied from the branch serialiser
       const lastBuild = defaultBranch.builds.models[defaultBranch.builds.models.length - 1];
+
       record['default_branch'] = {
-        last_build: this.serializerFor('build').serialize(lastBuild, request)
+        '@type': 'branch',
+        '@href': `/repo/${mirageRecord.id}/branch/${defaultBranch.attrs.name}`,
+        '@representation': 'standard',
+        repository: {
+          '@href': `/repo/${mirageRecord.id}`
+        },
+        name: defaultBranch.attrs.name,
+        default_branch: true,
+        exists_on_github: true,
+        last_build: {
+          '@type': 'build',
+          '@href': `/build/${lastBuild.id}`,
+          '@representation': 'minimal',
+          id: parseInt(lastBuild.id),
+          number: lastBuild.number,
+          event_type: lastBuild.event_type,
+          state: 'passed',
+          duration: '394',
+          previous_state: 'canceled',
+          started_at: '2016-10-04T19:05:56Z',
+          finished_at: '2016-10-04T19:12:30Z',
+          branch: {
+            '@href': `/repo/${mirageRecord.id}/branch/${defaultBranch.attrs.name}`
+          }
+        }
       };
     }
 
