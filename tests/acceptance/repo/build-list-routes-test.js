@@ -1,5 +1,5 @@
 /* global signInUser */
-import { skip, test } from 'qunit';
+import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
 import dashboardPage from 'travis/tests/pages/dashboard';
@@ -155,7 +155,7 @@ test('build history shows and more can be loaded', function (assert) {
   });
 });
 
-skip('view pull requests', function (assert) {
+test('view pull requests', function (assert) {
   page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {

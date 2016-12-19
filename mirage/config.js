@@ -148,7 +148,8 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema, { queryParams: { after_number: afterNumber, ids } }) {
+  this.get('/builds', function (schema, { queryParams:
+    { event_type: eventType, after_number: afterNumber, ids } }) {
     const allBuilds = schema.builds.all();
     let builds;
 
@@ -156,7 +157,10 @@ export default function () {
       builds = allBuilds.models.filter(build => build.number < afterNumber);
     } else if (ids) {
       builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
+    } else if (eventType === 'pull_request') {
+      builds = allBuilds.models;
     } else {
+      // This forces the Show more button to show in the build history test
       builds = allBuilds.models.slice(0, 3);
     }
 
