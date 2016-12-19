@@ -27,7 +27,6 @@ export default JSONAPISerializer.extend({
     let defaultBranch = mirageRecord.branches.models.find(branch => branch.default_branch);
 
     if (defaultBranch && defaultBranch.builds) {
-      // FIXME this is copied from the branch serialiser
       const lastBuild = defaultBranch.builds.models[defaultBranch.builds.models.length - 1];
 
       record['default_branch'] = {
