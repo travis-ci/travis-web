@@ -15,7 +15,7 @@ export default JSONAPISerializer.extend({
     if (mirageRecord.attrs) {
       record = mirageRecord.attrs;
     }
-    record['@type'] = 'repository';
+    record['@type'] = type;
     record['@href'] = `/${type}/${mirageRecord.id}`;
     record['@representation'] = 'standard';
 
@@ -43,7 +43,7 @@ export default JSONAPISerializer.extend({
           '@type': 'build',
           '@href': `/build/${lastBuild.id}`,
           '@representation': 'minimal',
-          id: parseInt(lastBuild.id),
+          id: lastBuild.id,
           number: lastBuild.number,
           event_type: lastBuild.event_type,
           state: 'passed',
