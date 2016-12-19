@@ -19,10 +19,13 @@ export default Ember.Controller.extend({
 
     const defaultBranchLastBuildNumber = this.get('repo.defaultBranch.lastBuild.number');
 
-    // FIXME this is ridiculous
+    // FIXME this is ridiculous and surely buggy
     if (number === defaultBranchLastBuildNumber) {
       const builds = this.get('builds');
-      number = builds[builds.length - 2].get('number');
+
+      if (builds.length > 2) {
+        number = builds[builds.length - 2].get('number');
+      }
     }
 
     const tabName = this.get('tab');
