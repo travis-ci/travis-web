@@ -6,8 +6,11 @@ export DISABLE_SENTRY=true
 ember deploy org-$EMBER_VERSION --activate
 TRAVIS_PRO=true ember deploy com-$EMBER_VERSION --activate
 
+# This all seems very hackish but it’ll do for now.
+
 export CLEANED_BRANCH_SUBDOMAIN=ember-data-$EMBER_VERSION
 
+# Restore from the previous ember-try command
 git reset --hard HEAD
 npm install && bower install
 
