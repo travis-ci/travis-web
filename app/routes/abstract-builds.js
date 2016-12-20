@@ -2,12 +2,10 @@ import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
+  templateName: 'builds',
+  
   titleToken(/* model*/) {
     return this.get('contentType').replace('_', ' ').capitalize();
-  },
-
-  renderTemplate() {
-    return this.render('builds');
   },
 
   setupController() {
