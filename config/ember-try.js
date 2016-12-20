@@ -21,6 +21,18 @@ module.exports = {
       dependencies: {
         "ember": "canary"
       }
+    },
+    {
+      name: 'data-beta',
+      dependencies: {
+        'ember-data': 'beta'
+      }
+    },
+    {
+      name: 'data-canary',
+      dependencies: {
+        'ember-data': 'canary'
+      }
     }
   ],
   bowerOptions: ['--quiet'],

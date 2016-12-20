@@ -5,3 +5,10 @@ export DISABLE_SENTRY=true
 
 ember deploy org-$EMBER_VERSION --activate
 TRAVIS_PRO=true ember deploy com-$EMBER_VERSION --activate
+
+export CLEANED_BRANCH_SUBDOMAIN=ember-data-$EMBER_VERSION
+
+ember try:one data-$EMBER_VERSION --skip-cleanup=true --- ls
+
+ember deploy org-$EMBER_VERSION --activate
+TRAVIS_PRO=true ember deploy com-$EMBER_VERSION --activate
