@@ -18,7 +18,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       slug: 'killjoys/living-a-feminist-life'
     });
 
-    const repoId = parseInt(repository.id);
+    this.repoId = parseInt(repository.id);
 
     const branch = server.create('branch');
 
@@ -33,7 +33,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'cron',
-      repository_id: repoId
+      repository_id: this.repoId
     });
 
     const commitAttributes = {
@@ -49,7 +49,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const failedBuild = branch.createBuild({
       state: 'failed',
       event_type: 'push',
-      repository_id: repoId
+      repository_id: this.repoId
     });
 
     failedBuild.createCommit(commitAttributes);
@@ -58,7 +58,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const erroredBuild = branch.createBuild({
       state: 'errored',
       event_type: 'push',
-      repository_id: repoId
+      repository_id: this.repoId
     });
 
     erroredBuild.createCommit(commitAttributes);
@@ -71,7 +71,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       started_at: beforeOneYearAgo,
       event_type: 'pull_request',
       pull_request_number: 2010,
-      repository_id: repoId,
+      repository_id: this.repoId,
       pull_request_title: 'A pull request'
     });
 
@@ -80,7 +80,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
   }
 });
 
-test('view build history', function (assert) {
+test('view build history and display a created build', function (assert) {
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
@@ -98,7 +98,58 @@ test('view build history', function (assert) {
     assert.ok(page.builds(1).failed, 'expected the second build to have failed');
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
   });
+
+  const buildEventDataTemplate = {
+    build: {
+      id: '2016',
+      repository_id: this.repoId,
+      number: '2016',
+      pull_request: false,
+      event_type: 'push',
+      branch: 'no-dapl',
+      commit_id: 2016,
+    },
+    commit: {
+      id: 2016,
+      branch: 'no-dapl',
+      sha: 'acab',
+      message: 'Standing with Standing Rock'
+    }
+  };
+
+  andThen(() => {
+    const createdData = Object.assign({}, buildEventDataTemplate);
+    createdData.build.state = 'created';
+    this.application.pusher.receive('build:created', createdData);
+  });
+
+  andThen(() => {
+    assert.equal(page.builds().count, 4, 'expected another build');
+
+    const newBuild = page.builds(0);
+
+    assert.ok(newBuild.created, 'expected the new build to show as created');
+    assert.equal(newBuild.name, 'no-dapl');
+    assert.equal(newBuild.message, 'Standing with Standing Rock');
+
+    const startedData = Object.assign({}, buildEventDataTemplate);
+    startedData.build.state = 'started';
+    this.application.pusher.receive('build:started', startedData);
+  });
+
   percySnapshot(assert);
+
+  andThen(() => {
+    assert.ok(page.builds(0).started, 'expected the new build to show as started');
+
+    const finishedData = Object.assign({}, buildEventDataTemplate);
+    finishedData.build.state = 'passed';
+    this.application.pusher.receive('build:finished', finishedData);
+  });
+
+  andThen(() => {
+    assert.ok(page.builds(0).passed, 'expected the newly-finished build to have passed');
+  });
 });
 
 test('view pull requests', function (assert) {
