@@ -7,10 +7,6 @@ export default TravisRoute.extend({
   auth: service(),
   needsAuth: false,
 
-  renderTemplate() {
-    this.render('signin');
-  },
-
   activate() {
     if (this.auth.get('signedIn')) {
       this.transitionTo('main');
