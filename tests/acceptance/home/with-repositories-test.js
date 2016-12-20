@@ -93,9 +93,7 @@ const jobTemplate = {
 };
 
 function generateJobWithState(state) {
-  const job = Object.assign({}, jobTemplate);
-  job.state = state;
-  return job;
+  return Object.assign({}, jobTemplate, { state });
 }
 
 buildTemplate.job_ids = [jobTemplate.id];
