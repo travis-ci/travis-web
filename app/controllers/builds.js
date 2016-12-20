@@ -46,7 +46,6 @@ export default Ember.Controller.extend({
     return this.get('tab') === 'branches';
   }),
 
-  // FIXME what is this? delete?
   noticeData: Ember.computed('repo', function () {
     return {
       repo: this.get('repo'),

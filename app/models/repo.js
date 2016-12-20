@@ -24,7 +24,6 @@ const Repo = Model.extend({
   currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
   currentBuildId: Ember.computed.oneWay('currentBuild.id'),
 
-  // FIXME is this duplicated below?
   withLastBuild() {
     return this.filter(function (repo) {
       return repo.get('lastBuildId');
