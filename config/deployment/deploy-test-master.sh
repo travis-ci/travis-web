@@ -9,6 +9,7 @@ TRAVIS_PRO=true ember deploy com-$EMBER_VERSION --activate
 export CLEANED_BRANCH_SUBDOMAIN=ember-data-$EMBER_VERSION
 
 git reset --hard HEAD
+npm install && bower install
 
 ember try:one data-$EMBER_VERSION --skip-cleanup=true --- ls
 
