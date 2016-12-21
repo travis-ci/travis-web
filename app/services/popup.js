@@ -4,7 +4,7 @@ export default Ember.Service.extend({
   open(name) {
     this.close();
     this.set('popupName', name);
-    Ember.$('#' + name).toggleClass('display');
+    Ember.$(`#${name}`).toggleClass('display');
   },
 
   close() {

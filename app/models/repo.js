@@ -24,12 +24,6 @@ const Repo = Model.extend({
   currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
   currentBuildId: Ember.computed.oneWay('currentBuild.id'),
 
-  withLastBuild() {
-    return this.filter(function (repo) {
-      return repo.get('lastBuildId');
-    });
-  },
-
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
     return this.store.recordForId('ssh_key', this.get('id'));
@@ -226,17 +220,6 @@ Repo.reopenClass({
         return result;
       });
     });
-  },
-
-  withLastBuild(store) {
-    var repos;
-    repos = store.filter('repo', {}, function (build) {
-      return build.get('lastBuildId');
-    });
-    repos.then(function () {
-      return repos.set('isLoaded', true);
-    });
-    return repos;
   },
 
   fetchBySlug(store, slug) {

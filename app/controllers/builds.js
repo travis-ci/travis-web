@@ -46,13 +46,6 @@ export default Ember.Controller.extend({
     return this.get('tab') === 'branches';
   }),
 
-  noticeData: Ember.computed('repo', function () {
-    return {
-      repo: this.get('repo'),
-      auth: this.auth.token()
-    };
-  }),
-
   olderThanNumber(id, number, type) {
     var options;
     options = {
