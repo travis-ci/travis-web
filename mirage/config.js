@@ -148,14 +148,29 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema/* , request*/) {
-    return { builds: schema.builds.all().models.map(build => {
+  this.get('/builds', function (schema, { queryParams:
+    { event_type: eventType, after_number: afterNumber, ids } }) {
+    const allBuilds = schema.builds.all();
+    let builds;
+
+    if (afterNumber) {
+      builds = allBuilds.models.filter(build => build.number < afterNumber);
+    } else if (ids) {
+      builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
+    } else if (eventType === 'pull_request') {
+      builds = allBuilds.models;
+    } else {
+      // This forces the Show more button to show in the build history test
+      builds = allBuilds.models.slice(0, 3);
+    }
+
+    return { builds: builds.map(build => {
       if (build.commit) {
         build.attrs.commit_id = build.commit.id;
       }
 
       return build;
-    }), commits: schema.commits.all().models };
+    }), commits: builds.map(build => build.commit) };
   });
 
   this.get('/builds/:id', function (schema, request) {
