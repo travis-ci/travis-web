@@ -82,12 +82,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
       // do nothing, we handle it only in index path
     },
 
-    renderDefaultTemplate() {
-      if (this.renderDefaultTemplate) {
-        return this.renderDefaultTemplate();
-      }
-    },
-
     error(error) {
       if (error === 'needs-auth') {
         this.set('auth.redirected', true);

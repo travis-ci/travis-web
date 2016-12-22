@@ -6,8 +6,5 @@ export default TravisRoute.extend({
     Ember.$('body').attr('id', 'simple');
     this.controllerFor('repos').activate('owned');
     return this._super(...arguments);
-  },
-  renderTemplate: function () {
-    return this._super(...arguments);
   }
 });
