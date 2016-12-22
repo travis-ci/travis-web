@@ -39,7 +39,9 @@ before_script:
   - echo $PERCY_ENABLE
 
 script:
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot
+  - if [ "$EMBER_VERSION" != 'default' ]; then export $TEST_UNRELEASED_EMBER_DATA=true; fi
+  - if [ "$TEST_UNRELEASED_EMBER_DATA" ]; then ember try:each --config-path="config/ember-try-subset.js" --- ember test --reporter dot; fi
+  - if [ "$TEST_UNRELEASED_EMBER_DATA" = "" ]; then ember try:one $EMBER_VERSION --skip-cleanup=true --- ember test --reporter dot; fi
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
