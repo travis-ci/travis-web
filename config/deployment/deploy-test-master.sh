@@ -3,17 +3,17 @@ export DISABLE_SENTRY=true
 
 ./config/deployment/store-redis-urls.sh
 
+# This is a hack to get ember-try to set up a deployment of a prerelease Ember version.
+ember try:one data-$EMBER_VERSION --skip-cleanup=true --- ls
+
 ember deploy org-$EMBER_VERSION --activate
 TRAVIS_PRO=true ember deploy com-$EMBER_VERSION --activate
 
-# This all seems very hackish but it’ll do for now.
+# Now we deploy a prerelease Ember Data version.
 
 export CLEANED_BRANCH_SUBDOMAIN=ember-data-$EMBER_VERSION
 
-# Restore from the previous ember-try command
-git reset --hard HEAD
-npm install && bower install
-
+ember try:reset
 ember try:one data-$EMBER_VERSION --skip-cleanup=true --- ls
 
 ember deploy org-$EMBER_VERSION --activate
