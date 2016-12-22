@@ -24,14 +24,18 @@ module.exports = {
     },
     {
       name: 'data-beta',
-      dependencies: {
-        'ember-data': 'beta'
+      npm: {
+        devDependencies: {
+          'ember-data': 'emberjs/data#beta'
+        }
       }
     },
     {
       name: 'data-canary',
-      dependencies: {
-        'ember-data': 'canary'
+      npm: {
+        devDependencies: {
+          'ember-data': 'emberjs/data#canary'
+        }
       }
     }
   ],
