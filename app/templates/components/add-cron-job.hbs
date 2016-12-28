@@ -1,7 +1,7 @@
 <form {{action (perform save) on="submit"}}>
   <div class="form-elem select">
     <span class="label">Branch</span>
-    {{#x-select value=selectedBranch required="true" on-change=(action "setSelectedBranch") as |xs|}}
+    {{#x-select value=selectedBranch required="true" on-change=(action (mut selectedBranch)) as |xs|}}
       {{#each branches as |branch|}}
         {{#xs.option value=branch}}{{branch.name}}{{/xs.option}}
       {{/each}}
@@ -9,7 +9,7 @@
   </div>
   <div class="form-elem select">
     <span class="label">Interval</span>
-    {{#x-select value=selectedInterval required="true" on-change=(action "setSelectedInterval") as |xs|}}
+    {{#x-select value=selectedInterval required="true" on-change=(action (mut selectedInterval)) as |xs|}}
       {{#each intervals as |interval|}}
         {{#xs.option value=interval}}{{interval}}{{/xs.option}}
       {{/each}}
@@ -17,7 +17,7 @@
   </div>
   <div class="form-elem select">
     <span class="label">Options</span>
-    {{#x-select value=selectedOption required="false" on-change=(action "setSelectedOption") as |xs|}}
+    {{#x-select value=selectedOption required="false" on-change=(action (mut selectedOption)) as |xs|}}
       {{#xs.option value=false}}{{options.[0]}}{{/xs.option}}
       {{#xs.option value=true}}{{options.[1]}}{{/xs.option}}
     {{/x-select}}

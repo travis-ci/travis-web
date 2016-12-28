@@ -19,19 +19,5 @@ export default Ember.Component.extend({
 
   delete: task(function* () {
     yield this.get('cron').destroyRecord();
-  }).drop(),
-
-  actions: {
-    setSelectedBranch(value) {
-      this.set('selectedBranch', value);
-    },
-
-    setSelectedInterval(value) {
-      this.set('selectedInterval', value);
-    },
-
-    setSelectedOption(value) {
-      this.set('selectedOption', value);
-    }
-  }
+  }).drop()
 });

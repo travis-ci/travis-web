@@ -56,14 +56,6 @@ export default Ember.Component.extend({
   actions: {
     close() {
       return this.get('popup').close();
-    },
-
-    setFormat(value) {
-      this.set('format', value);
-    },
-
-    setBranch(value) {
-      this.set('branch', value);
     }
   },
 
