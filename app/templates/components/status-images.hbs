@@ -4,9 +4,9 @@
 <div class="form-pair">
   <label class="form-label">Branch</label>
   {{#if branches.isLoaded}}
-    {{#x-select value=branch}}
+    {{#x-select value=branch on-change=(action "setBranch") as |xs|}}
       {{#each branches as |branch|}}
-        {{#x-option value=branch}}{{branch}}{{/x-option}}
+        {{#xs.option value=branch}}{{branch}}{{/xs.option}}
       {{/each}}
     {{/x-select}}
   {{else}}
@@ -16,9 +16,9 @@
 
 <div class="form-pair">
   <label class="form-label">
-  {{#x-select value=format}}
+  {{#x-select value=format on-change=(action "setFormat") as |xs|}}
     {{#each formats as |format|}}
-      {{#x-option value=format}}{{format}}{{/x-option}}
+      {{#xs.option value=format}}{{format}}{{/xs.option}}
     {{/each}}
   {{/x-select}}
 

@@ -1,25 +1,25 @@
 <form {{action (perform save) on="submit"}}>
   <div class="form-elem select">
     <span class="label">Branch</span>
-    {{#x-select value=selectedBranch required="true"}}
+    {{#x-select value=selectedBranch required="true" on-change=(action "setSelectedBranch") as |xs|}}
       {{#each branches as |branch|}}
-        {{#x-option value=branch}}{{branch.name}}{{/x-option}}
+        {{#xs.option value=branch}}{{branch.name}}{{/xs.option}}
       {{/each}}
     {{/x-select}}
   </div>
   <div class="form-elem select">
     <span class="label">Interval</span>
-    {{#x-select value=selectedInterval required="true"}}
+    {{#x-select value=selectedInterval required="true" on-change=(action "setSelectedInterval") as |xs|}}
       {{#each intervals as |interval|}}
-        {{#x-option value=interval}}{{interval}}{{/x-option}}
+        {{#xs.option value=interval}}{{interval}}{{/xs.option}}
       {{/each}}
     {{/x-select}}
   </div>
   <div class="form-elem select">
     <span class="label">Options</span>
-    {{#x-select value=selectedOption required="false"}}
-      {{#x-option value=false}}{{options.[0]}}{{/x-option}}
-      {{#x-option value=true}}{{options.[1]}}{{/x-option}}
+    {{#x-select value=selectedOption required="false" on-change=(action "setSelectedOption") as |xs|}}
+      {{#xs.option value=false}}{{options.[0]}}{{/xs.option}}
+      {{#xs.option value=true}}{{options.[1]}}{{/xs.option}}
     {{/x-select}}
   </div>
   <div class="form-elem">
