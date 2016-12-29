@@ -1,13 +1,11 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
-export default TravisRoute.extend({
-  needsAuth: false,
+const { service } = Ember.inject;
 
-  renderTemplate() {
-    Ember.$('body').attr('id', 'auth');
-    return this.render('auth.signin');
-  },
+export default TravisRoute.extend({
+  auth: service(),
+  needsAuth: false,
 
   activate() {
     if (this.auth.get('signedIn')) {

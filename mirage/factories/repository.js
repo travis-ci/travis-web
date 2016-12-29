@@ -4,6 +4,16 @@ export default Mirage.Factory.extend({
   slug: 'travis-ci/travis-web',
   githubLanguage: 'ruby',
   active: true,
+  permissions: {
+    read: false,
+    enable: false,
+    disable: false,
+    star: false,
+    unstar: false,
+    create_request: false,
+    create_cron: false,
+    change_settings: false,
+  },
 
   afterCreate(repository, server) {
     if (!repository.attrs.skipPermissions) {

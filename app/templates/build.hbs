@@ -15,6 +15,7 @@
       {{/if}}
     {{else}}
 
+      {{job-infrastructure-notification job=build.jobs.firstObject}}
       {{job-tabs job=build.jobs.firstObject repo=repo}}
 
     {{/if}}

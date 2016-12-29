@@ -155,4 +155,6 @@ I am the final line.
   andThen(function () {
     assert.ok(jobPage.logFolds(0).isOpen);
   });
+
+  percySnapshot(assert);
 });

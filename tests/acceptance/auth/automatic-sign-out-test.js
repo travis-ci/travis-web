@@ -19,4 +19,5 @@ test('when token is invalid user should be signed out', function (assert) {
   andThen(function () {
     assert.equal(authPage.automaticSignOutNotification, "You've been signed out, because your access token has expired.");
   });
+  percySnapshot(assert);
 });

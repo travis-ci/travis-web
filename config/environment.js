@@ -10,6 +10,10 @@ module.exports = function (environment) {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // prevent Ember Data from overriding Date.parse
+        Date: false
       }
     },
 
@@ -117,6 +121,15 @@ module.exports = function (environment) {
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;
+
+    ENV.percy = {
+      breakpointsConfig: {
+        mobile: 375,
+        tablet: 768,
+        desktop: 1280
+      },
+      defaultBreakpoints: ['desktop']
+    };
   }
 
   if (environment === 'production') {
@@ -125,9 +138,15 @@ module.exports = function (environment) {
       enabled: false
     };
 
-    ENV.sentry = {
-      dsn: sentryDSN
-    };
+    if (process.env.DISABLE_SENTRY) {
+      ENV.sentry = {
+        development: true
+      }
+    } else {
+      ENV.sentry = {
+        dsn: sentryDSN
+      };
+    }
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }

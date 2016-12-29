@@ -4,7 +4,8 @@
     {{#if hook.isSaving}}
       {{loading-indicator inline=true}}
     {{else}}
-      {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repo settings"}}<span class="icon-settings"></span>{{/link-to}}
+        {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repository settings"}}
+          {{inline-svg 'icon-settings' class="icon icon-hover"}}{{/link-to}}
     {{/if}}
   {{else}}
     {{hook-switch hook=hook disabled=true}}
@@ -27,7 +28,9 @@
           review and add
         </a> your authorized Orgs.
       {{/if}}
-      <a class="close" {{action "close" target=view}}></a>
+      <button type="button" class="no-button close" {{action "close" target=view}}>
+        {{inline-svg 'icon-failed' class="icon red"}}
+      </button>
     </p>
   </div>
 {{/if}}

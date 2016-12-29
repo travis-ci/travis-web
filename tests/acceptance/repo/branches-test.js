@@ -166,4 +166,5 @@ test('view branches', function (assert) {
     assert.ok(branchesPage.inactiveBranches(0).errored, 'expected first inactive branch to have errored');
     assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
   });
+  percySnapshot(assert);
 });

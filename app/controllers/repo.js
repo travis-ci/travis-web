@@ -1,7 +1,6 @@
-/* global Visibility */
 import Ember from 'ember';
-import { githubRepo, statusImage } from 'travis/utils/urls';
 import eventually from 'travis/utils/eventually';
+import Visibility from 'npm:visibilityjs';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -9,6 +8,8 @@ const { alias } = Ember.computed;
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
   popup: service(),
+  externalLinks: service(),
+  statusImages: service(),
 
   jobController: controller('job'),
   buildController: controller('build'),
@@ -31,8 +32,11 @@ export default Ember.Controller.extend({
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
   }),
 
-  statusImageUrl: Ember.computed('repo.slug', function () {
-    return statusImage(this.get('repo.slug'), this.get('repo.defaultBranch.name'));
+  statusImageUrl: Ember.computed('repo.slug', 'repo.defaultBranch.name', function () {
+    return this.get('statusImages').imageUrl(
+      this.get('repo.slug'),
+      this.get('repo.defaultBranch.name')
+    );
   }),
 
   showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
@@ -156,6 +160,6 @@ export default Ember.Controller.extend({
   },
 
   urlGithub: Ember.computed('repo.slug', function () {
-    return githubRepo(this.get('repo.slug'));
+    return this.get('externalLinks').githubRepo(this.get('repo.slug'));
   })
 });

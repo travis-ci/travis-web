@@ -59,4 +59,6 @@ test('renders most recent repository and most recent build when builds present',
     assert.ok(jobTabs.configTab.isShowing, 'Displays the job config');
     assert.ok(jobTabs.logTab.isHidden, 'Job log is hidden');
   });
+
+  percySnapshot(assert);
 });

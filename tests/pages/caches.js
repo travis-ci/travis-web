@@ -13,7 +13,7 @@ const cacheComponent = {
   lastModified: text('.row-calendar .label-align'),
   size: text('.row-size .label-align'),
 
-  delete: clickable('.icon-trash')
+  delete: clickable('.delete-cache-icon')
 };
 
 export default PageObject.create({

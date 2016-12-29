@@ -30,27 +30,30 @@ module.exports = function () {
   }
 
   var app = new EmberApp({
+    babel: {
+      includePolyfill: true,
+      optional: ['es7.decorators']
+    },
     fingerprint: fingerprint,
     sourcemaps: {
       enabled: true,
       extensions: ['js']
     },
-    vendorFiles: {
-      // next line is needed to prevent ember-cli to load
-      // handlebars (it happens automatically in 0.1.x)
-      'handlebars.js': null
-    },
     'ember-prism': {
       'components': ['scss', 'javascript', 'json'], //needs to be an array, or undefined.
       'plugins': ['line-highlight']
+    },
+    svg: {
+      optimize: false,
+      paths: [
+        'public/images/stroke-icons',
+        'public/images/svg'
+      ]
     }
   });
 
-  app.import('vendor/babel-polyfill.js', { prepend: true });
   app.import('bower_components/pusher/dist/pusher.js');
   app.import('bower_components/jquery-timeago/jquery.timeago.js');
-  app.import('bower_components/visibilityjs/lib/visibility.core.js');
-  app.import('bower_components/visibilityjs/lib/visibility.timers.js');
   app.import('bower_components/JavaScript-MD5/js/md5.js');
   app.import('bower_components/moment/moment.js');
 

@@ -27,4 +27,5 @@ test('handling log error', function (assert) {
 
     assert.equal(jobPage.logError, 'There was an error while trying to fetch the log.');
   });
+  percySnapshot(assert);
 });

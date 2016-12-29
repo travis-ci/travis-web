@@ -1,19 +1,24 @@
 import { formatCommit, safe } from 'travis/utils/helpers';
-import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import Ember from 'ember';
 
-export default Ember.Helper.helper(function (params) {
-  var commitSha, sha, slug, url;
+const { service } = Ember.inject;
 
-  slug = params[0];
-  commitSha = params[1];
-  if (!commitSha) {
-    return '';
+export default Ember.Helper.extend({
+  externalLinks: service(),
+
+  compute([slug, commitSha]) {
+    if (!commitSha) {
+      return '';
+    }
+
+    const sha = Ember.Handlebars.Utils.escapeExpression(formatCommit(commitSha));
+
+    if (!slug) {
+      return sha;
+    }
+
+    const commitUrl = this.get('externalLinks').githubCommit(slug, sha);
+    const url = Ember.Handlebars.Utils.escapeExpression(commitUrl);
+    return safe('<a class="github-link only-on-hover" href="' + url + '">' + sha + '</a>');
   }
-  sha = Ember.Handlebars.Utils.escapeExpression(formatCommit(commitSha));
-  if (!slug) {
-    return sha;
-  }
-  url = Ember.Handlebars.Utils.escapeExpression(githubCommitUrl(slug, sha));
-  return safe('<a class="github-link only-on-hover" href="' + url + '">' + sha + '</a>');
 });

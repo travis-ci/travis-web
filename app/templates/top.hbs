@@ -1,23 +1,27 @@
 <div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
-  <h1 id="logo" class="logo" {{action "cheatcode" on="doubleClick"}}>
-    {{#if isDashboard}}
-      {{#link-to "dashboard"}}Travis CI{{/link-to}}
-    {{else}}
-      {{#link-to "main"}}Travis CI{{/link-to}}
-    {{/if}}
-    </h1>
+  <h1 id="logo" class="logo">{{#link-to "main"}}Travis CI{{/link-to}}</h1>
   <div class="navigation-toggle">
-    <button type="button" id="tofuburger" class="tofuburger" {{action 'toggleBurgerMenu'}}>Toggle Menu</button>
+    <button type="button" class="tofuburger no-button" {{action 'toggleBurgerMenu'}}>
+      {{inline-svg 'icon-tofuburger'}}
+    </button>
   </div>
 
 {{#unless config.enterprise}}
   {{#if auth.signedIn}}
 
-    {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus}}
+    {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus count=broadcasts.length}}
 
     <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
     {{#each broadcasts.content as |broadcast|}}
-      <li><p><span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span> {{{broadcast.message}}} <a {{action 'markBroadcastAsSeen' broadcast}} class="icon-close"></a></p></li>
+      <li>
+        <p>
+          <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
+          <span class='message'>{{{broadcast.message}}}</span>
+          <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
+            {{inline-svg 'icon-failed' class="icon"}}
+          </button>
+        </p>
+      </li>
     {{else}}
       <li><p>There are no broadcasts</p></li>
     {{/each}}
@@ -65,6 +69,8 @@
           </li>
         {{/unless}}
       {{/if}}
+
+      {{#if deploymentVersion}}<li><span class='deployment-version'>{{deploymentVersion}}</span></li>{{/if}}
     {{else}}
       {{#if auth.signedIn}}
         <li><a class="navigation-anchor" title="Documentation" href="https://docs.travis-ci.com">Docs</a></li>
@@ -73,7 +79,10 @@
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
-          <button class="signed-out button-signin" type="button" {{action "signIn" target="auth"}}>Sign in with GitHub</button>
+            <button class="auth-button signed-out" type="button" {{action "signIn" target=auth}}>
+                <span class="label-align">Sign in with GitHub</span>
+                {{inline-svg 'icon-github-white' class="icon white"}}
+            </button>
         {{/if}}
         {{#if auth.signedIn}}
           {{#link-to "profile" class="navigation-anchor signed-in"}}
@@ -82,7 +91,7 @@
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
-          <button class="signing-in button-signingin" type="button">Signing In {{loading-indicator inline=true}}</button>
+          <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
         {{/if}}
         {{#if auth.signedIn}}
           <ul class="navigation-nested">
@@ -97,7 +106,7 @@
               {{/unless}}
             {{/if}}
             <li>
-              <a href="/" {{action "signOut" target="auth"}} title="Sign out of Travis">Sign Out</a>
+              <a href="/" {{action "signOut" target=auth}} title="Sign out of Travis">Sign Out</a>
             </li>
           </ul>
         {{/if}}

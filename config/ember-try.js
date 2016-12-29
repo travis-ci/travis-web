@@ -22,5 +22,6 @@ module.exports = {
         "ember": "canary"
       }
     }
-  ]
+  ],
+  bowerOptions: ['--quiet'],
 }

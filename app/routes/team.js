@@ -103,13 +103,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'anja'
       }, {
-        name: 'Aly Fulton',
-        title: 'Resident Linguist',
-        handle: 'sinthetix',
-        nationality: 'usa',
-        country: 'usa',
-        image: 'aly'
-      }, {
         name: 'Amanda Quaranto',
         title: 'Crafting Extremist',
         handle: 'aquaranto',
@@ -261,6 +254,13 @@ export default TravisRoute.extend({
         nationality: 'uk',
         country: 'germany',
         image: 'sam'
+      },
+      {
+        name: 'Lili Kui',
+        title: 'Hammer Jammer',
+        nationality: 'kenya',
+        country: 'germany',
+        image: 'lili'
       }
     ];
   }

@@ -1,8 +1,11 @@
+
 import PageObject from 'travis/tests/page-object';
 
 let {
+  clickable,
   collection,
   hasClass,
+  isVisible,
   text,
   visitable
 } = PageObject;
@@ -17,6 +20,9 @@ export default PageObject.create({
     item: {
       name: text('.build-info a'),
 
+      created: hasClass('created'),
+      started: hasClass('started'),
+
       passed: hasClass('passed'),
       failed: hasClass('failed'),
       errored: hasClass('errored'),
@@ -24,7 +30,15 @@ export default PageObject.create({
       commitSha: text('.row-commit .label-align'),
       committer: text('.row-committer .label-align'),
       commitDate: text('.row-calendar .label-align'),
-      duration: text('.row-duration .label-align')
+      duration: text('.row-duration .label-align'),
+      message: text('.row-message')
     }
-  })
+  }),
+
+  showMoreButton: {
+    scope: 'button.showmore-button',
+
+    exists: isVisible(),
+    click: clickable()
+  }
 });

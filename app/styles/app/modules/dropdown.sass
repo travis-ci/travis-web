@@ -8,10 +8,9 @@
       color: $oxide-blue
       border-color: $oxide-blue
     .option-tofu
-      @extend %icon-line-tofu-teal
+      +colorSVGFill($oxide-blue)
       border-color: $oxide-blue
     .option-arrow
-      @extend %icon-line-arrowtabs-teal
       border-color: $oxide-blue
       transform: rotate(-90deg)
       border-bottom: none
@@ -55,18 +54,18 @@ $dropdown-button-margin: -9px
   height: 2em
   display: inline-block
   vertical-align: top
+.option-tofu
+  padding: 0  5px
+  border-left: 1px solid $pebble-grey
+  .icon-tofu
+    +colorSVGFill($cement-grey)
+    width: 1.4rem
+    height: 2rem
+.option-arrow
+  +colorSVG($cement-grey)
   background:
     repeat: no-repeat
     position: 50%
-
-.option-tofu
-  @extend %icon-line-tofu
-  background-size: 20px
-  @media #{$medium-up}
-    border-left: 1px solid $pebble-grey
-
-.option-arrow
-  @extend %icon-line-arrowtabs
   transform: rotate(90deg)
   background-size: 14px
   @media #{$medium-up}
@@ -119,11 +118,9 @@ $dropdown-button-margin: -9px
     .dropup-list
       display: block
     .dropup-tofu
-      @extend %icon-line-tofu-teal
       outline: none
 
 .dropup-tofu
-  @extend %icon-line-tofu
   background:
     color: transparent
     size: 100%
@@ -141,7 +138,6 @@ $dropdown-button-margin: -9px
     display: inline-block
   &:hover,
   &:active
-    @extend %icon-line-tofu-teal
     outline: none
 
   &:focus
@@ -167,13 +163,14 @@ $dropdown-button-margin: -9px
     &:active
       background: $oxide-blue
       color: white
+      // tbr when dashboard gets merged in
       .icon-trigger
-        @extend %icon-line-trigger-white
+        // @extend %icon-line-trigger-white
       .icon-deactivate
-        @extend %icon-line-cross-white
+        // @extend %icon-line-cross-white
         border-color: white
       .icon-settings
-        @extend %icon-line-cog-white
+        // @extend %icon-line-cog-white
 
   @media #{$medium-up}
     position: absolute

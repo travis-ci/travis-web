@@ -11,16 +11,17 @@
 
     .tail-label
       display: none
-      padding: 0.1em 0.5em 0.1em 1.5em
+      padding: 0.1em 0.5em 0.1em
       cursor: pointer
-      background:
-        color: $cement-grey
-        repeat: no-repeat
-        size: auto 12px
-        position: 6px 5px
       border-radius: 2px
       color: $pebble-grey
-      @extend %icon-arrow-down
+      background-color: $cement-grey
+      .icon-arrow
+        +colorSVG(white)
+        width: 14px
+        height: 12px
+        margin-right: 4px
+        vertical-align: baseline
 
     &:hover
       .tail-label
@@ -99,41 +100,25 @@
     display: none !important
 
 .toggle-log-button
-  border: 1px solid #f1f1f1
-  padding: .3em 1em
-  border-radius: 2px
   display: block
-  color: #8d8d8d
+  width: 100%
+  padding: .3em 1em
+  border: 1px solid $pebble-grey
+  border-radius: 2px
+  color: $asphalt-grey
   text-align: center
-  .icon-eye
-    height: 1.8em
-    path
-      fill: #949899
-    circle
-      stroke: #949899
-      fill: #fff
+  cursor: pointer
   &.hidden
     display: none
   &:hover,
   &:active
     border-color: $oxide-blue
     color: $oxide-blue
-    .icon-eye
-      path
-        fill: $oxide-blue
-      circle
-        stroke: $oxide-blue
-        fill: transparent
-
+    +colorSVG($oxide-blue)
 .toggle-log-button--dark
   @extend %log-button
-  .icon-eye
-    margin-right: .3em
-    path
-      fill: #f1f1f1
-    circle
-      stroke: #f1f1f1
-      fill: #f1f1f1
+  width: 50%
+  background-color: transparent
   &:hover,
   &:active
     background-color: #999a98

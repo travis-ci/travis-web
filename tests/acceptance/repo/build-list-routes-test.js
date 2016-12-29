@@ -18,22 +18,22 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       slug: 'killjoys/living-a-feminist-life'
     });
 
-    const repoId = parseInt(repository.id);
+    this.repoId = parseInt(repository.id);
 
-    const branch = server.create('branch');
+    this.branch = server.create('branch');
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
 
     const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 5);
 
-    const lastBuild = branch.createBuild({
+    const lastBuild = this.branch.createBuild({
       state: 'passed',
       number: '1919',
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'cron',
-      repository_id: repoId
+      repository_id: this.repoId
     });
 
     const commitAttributes = {
@@ -46,32 +46,50 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     }, commitAttributes));
     lastBuild.save();
 
-    const failedBuild = branch.createBuild({
+    const failedBuild = this.branch.createBuild({
       state: 'failed',
       event_type: 'push',
-      repository_id: repoId
+      repository_id: this.repoId,
+      number: '1885'
     });
 
     failedBuild.createCommit(commitAttributes);
     failedBuild.save();
 
-    const erroredBuild = branch.createBuild({
+    const erroredBuild = this.branch.createBuild({
       state: 'errored',
       event_type: 'push',
-      repository_id: repoId
+      repository_id: this.repoId,
+      number: '1869'
     });
 
     erroredBuild.createCommit(commitAttributes);
     erroredBuild.save();
 
-    const pullRequestBuild = branch.createBuild({
+    const defaultBranch = repository.createBranch({
+      name: 'rarely-used',
+      default_branch: true
+    });
+
+    const defaultBranchBuild = defaultBranch.createBuild({
+      number: '1491',
+      event_type: 'push',
+      repository_id: this.repoId
+    });
+
+    defaultBranchBuild.createCommit(Object.assign({}, commitAttributes, {
+      branch: 'rarely-used'
+    }));
+    defaultBranchBuild.save();
+
+    const pullRequestBuild = this.branch.createBuild({
       state: 'passed',
       number: '1919',
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'pull_request',
       pull_request_number: 2010,
-      repository_id: repoId,
+      repository_id: this.repoId,
       pull_request_title: 'A pull request'
     });
 
@@ -80,11 +98,11 @@ moduleForAcceptance('Acceptance | repo build list routes', {
   }
 });
 
-test('view build history', function (assert) {
+test('build history shows, more can be loaded, and a created build gets added', function (assert) {
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 3, 'expected three builds');
+    assert.equal(page.builds().count, 4, 'expected four builds');
 
     const build = page.builds(0);
 
@@ -97,6 +115,84 @@ test('view build history', function (assert) {
 
     assert.ok(page.builds(1).failed, 'expected the second build to have failed');
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
+
+    assert.ok(page.showMoreButton.exists, 'expected the Show More button to exist');
+
+    assert.equal(page.builds(3).name, 'rarely-used', 'expected the old default branch to show');
+
+    // Add another build so the API has more to return
+    const olderBuild = this.branch.createBuild({
+      event_type: 'push',
+      repository_id: this.repoId,
+      number: '1816'
+    });
+
+    olderBuild.createCommit({
+      sha: 'acab',
+      author_name: 'us',
+      branch: 'seven-oaks'
+    });
+    olderBuild.save();
+  });
+
+  percySnapshot(assert);
+
+  page.showMoreButton.click();
+
+  andThen(() => {
+    assert.equal(page.builds().count, 5, 'expected five builds');
+    assert.equal(page.builds(3).name, 'seven-oaks', 'expected the build before the last one to have been added');
+    assert.equal(page.builds(4).name, 'rarely-used', 'expected the old default branch build to have moved to the end');
+  });
+
+  const buildEventDataTemplate = {
+    build: {
+      id: '2016',
+      repository_id: this.repoId,
+      number: '2016',
+      pull_request: false,
+      event_type: 'push',
+      branch: 'no-dapl',
+      commit_id: 2016,
+    },
+    commit: {
+      id: 2016,
+      branch: 'no-dapl',
+      sha: 'acab',
+      message: 'Standing with Standing Rock'
+    }
+  };
+
+  andThen(() => {
+    const createdData = Object.assign({}, buildEventDataTemplate);
+    createdData.build.state = 'created';
+    this.application.pusher.receive('build:created', createdData);
+  });
+
+  andThen(() => {
+    assert.equal(page.builds().count, 6, 'expected another build');
+
+    const newBuild = page.builds(0);
+
+    assert.ok(newBuild.created, 'expected the new build to show as created');
+    assert.equal(newBuild.name, 'no-dapl');
+    assert.equal(newBuild.message, 'Standing with Standing Rock');
+
+    const startedData = Object.assign({}, buildEventDataTemplate);
+    startedData.build.state = 'started';
+    this.application.pusher.receive('build:started', startedData);
+  });
+
+  andThen(() => {
+    assert.ok(page.builds(0).started, 'expected the new build to show as started');
+
+    const finishedData = Object.assign({}, buildEventDataTemplate);
+    finishedData.build.state = 'passed';
+    this.application.pusher.receive('build:finished', finishedData);
+  });
+
+  andThen(() => {
+    assert.ok(page.builds(0).passed, 'expected the newly-finished build to have passed');
   });
 });
 
@@ -109,10 +205,12 @@ test('view pull requests', function (assert) {
     const pullRequest = page.builds(0);
 
     assert.ok(pullRequest.passed, 'expected the pull request to have passed');
-    assert.equal(pullRequest.name, 'PR #2010 A pull request');
+    assert.equal(pullRequest.name, 'PR #2010');
+    assert.equal(pullRequest.message, 'A pull request');
     assert.equal(pullRequest.committer, 'Sara Ahmed');
     assert.equal(pullRequest.commitSha, '1234567');
     assert.equal(pullRequest.commitDate, 'about a year ago');
     assert.equal(pullRequest.duration, '5 min');
   });
+  percySnapshot(assert);
 });

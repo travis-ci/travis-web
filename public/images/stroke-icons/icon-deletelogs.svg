@@ -1,22 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="icon-deletelogs" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:none;stroke:#f1f1f1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-</style>
-<g id="deletelogs">
-	<g>
-		<g>
-			<line class="st0" x1="0.5" y1="2.521" x2="9.944" y2="11.965"/>
-			<line class="st0" x1="9.944" y1="2.521" x2="0.5" y2="11.965"/>
-		</g>
-	</g>
-	<g>
-		<line class="st0" x1="12.391" y1="2.5" x2="14.5" y2="2.5"/>
-		<line class="st0" x1="10.125" y1="5.662" x2="14.5" y2="5.662"/>
-		<line class="st0" x1="10.092" y1="8.824" x2="14.5" y2="8.824"/>
-		<line class="st0" x1="12.76" y1="11.986" x2="14.5" y2="11.986"/>
-	</g>
-</g>
+<svg x="0px" y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+  <line class="st0" x1="0.5" y1="2.521" x2="9.944" y2="11.965"/>
+  <line class="st0" x1="9.944" y1="2.521" x2="0.5" y2="11.965"/>
+  <line class="st0" x1="12.391" y1="2.5" x2="14.5" y2="2.5"/>
+  <line class="st0" x1="10.125" y1="5.662" x2="14.5" y2="5.662"/>
+  <line class="st0" x1="10.092" y1="8.824" x2="14.5" y2="8.824"/>
+  <line class="st0" x1="12.76" y1="11.986" x2="14.5" y2="11.986"/>
 </svg>

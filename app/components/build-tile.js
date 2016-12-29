@@ -9,6 +9,10 @@ export default Ember.Component.extend({
     let num, state;
     num = this.get('build.number');
     state = this.get('build.state');
-    return `Build #${num} ${state}`;
+    if (num) {
+      return `Build #${num} ${state}`;
+    } else {
+      return '';
+    }
   })
 });

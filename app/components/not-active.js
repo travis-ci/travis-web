@@ -9,16 +9,14 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   auth: service(),
   flashes: service(),
+  permissions: service(),
 
   user: alias('auth.currentUser'),
 
-  canActivate: Ember.computed('user.pushPermissions.[]', 'repo', function () {
-    let user = this.get('user');
-    if (user) {
-      let permissions = user.get('pushPermissions'),
-        repoId = parseInt(this.get('repo.id'));
-
-      return permissions.includes(repoId);
+  canActivate: Ember.computed('repo.permissions.admin', function () {
+    let repo = this.get('repo');
+    if (repo) {
+      return repo.get('permissions.admin');
     } else {
       return false;
     }
