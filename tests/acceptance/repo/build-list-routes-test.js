@@ -83,7 +83,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     defaultBranchBuild.save();
 
     const pullRequestBuild = this.branch.createBuild({
-      state: 'passed',
+      state: 'started',
       number: '1919',
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
@@ -93,12 +93,22 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       pull_request_title: 'A pull request'
     });
 
-    pullRequestBuild.createCommit(commitAttributes);
+    const pullRequestCommit = pullRequestBuild.createCommit(commitAttributes);
+    pullRequestBuild.save();
+
+    pullRequestBuild.createJob({
+      number: '1919.1',
+      repository_id: this.repoId,
+      state: 'started',
+      build: pullRequestBuild,
+      commit_id: pullRequestCommit.id
+    });
+
     pullRequestBuild.save();
   }
 });
 
-test('build history shows, more can be loaded, and a created build gets added', function (assert) {
+test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
@@ -196,7 +206,8 @@ test('build history shows, more can be loaded, and a created build gets added', 
   });
 });
 
-test('view pull requests', function (assert) {
+test('view and cancel pull requests', function (assert) {
+  server.logging = true;
   page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
@@ -204,13 +215,21 @@ test('view pull requests', function (assert) {
 
     const pullRequest = page.builds(0);
 
-    assert.ok(pullRequest.passed, 'expected the pull request to have passed');
+    assert.ok(pullRequest.started, 'expected the pull request to have started');
     assert.equal(pullRequest.name, 'PR #2010');
     assert.equal(pullRequest.message, 'A pull request');
     assert.equal(pullRequest.committer, 'Sara Ahmed');
     assert.equal(pullRequest.commitSha, '1234567');
     assert.equal(pullRequest.commitDate, 'about a year ago');
     assert.equal(pullRequest.duration, '5 min');
+
+    assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
   });
   percySnapshot(assert);
+
+  page.builds(0).cancelButton.click();
+
+  andThen(() => {
+    assert.equal(page.notification, 'Build has been successfully cancelled.');
+  });
 });

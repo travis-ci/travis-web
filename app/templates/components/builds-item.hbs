@@ -36,6 +36,7 @@
         <span class="label-align">#{{build.number}} {{build.state}}</span>
       {{/link-to}}
     {{/if}}
+    {{build-repo-actions build=build repo=build.repo small=true}}
   </h3>
   <div class="row-item row-commit">
     <a href="{{urlGithubCommit}}" title="See the commit on GitHub">

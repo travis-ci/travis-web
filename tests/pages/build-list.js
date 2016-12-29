@@ -14,6 +14,8 @@ export default PageObject.create({
   visitBuildHistory: visitable(':organization/:repo/builds'),
   visitPullRequests: visitable(':organization/:repo/pull_requests'),
 
+  notification: text('p.flash-message'),
+
   builds: collection({
     itemScope: '.build-list .pr-row',
 
@@ -31,7 +33,13 @@ export default PageObject.create({
       committer: text('.row-committer .label-align'),
       commitDate: text('.row-calendar .label-align'),
       duration: text('.row-duration .label-align'),
-      message: text('.row-message')
+      message: text('.row-message'),
+
+      cancelButton: {
+        scope: '.action-button--cancel',
+        visible: isVisible(),
+        click: clickable()
+      }
     }
   }),
 
