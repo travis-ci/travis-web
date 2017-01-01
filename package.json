@@ -36,7 +36,7 @@
     "ember-cli-deploy-lightning-pack": "0.6.10",
     "ember-cli-deprecation-workflow": "0.2.3",
     "ember-cli-document-title": "0.3.3",
-    "ember-cli-eslint": "3.0.0",
+    "ember-cli-eslint": "3.0.1",
     "ember-cli-htmlbars": "^1.0.10",
     "ember-cli-htmlbars-inline-precompile": "^0.3.3",
     "ember-cli-inject-live-reload": "^1.4.1",
