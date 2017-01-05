@@ -73,6 +73,7 @@ test('visiting a job with a complex log', function (assert) {
   job.save();
   commit.save();
 
+  const ESCAPE = String.fromCharCode(27);
   const complexLog = `I am the first line.
 travis_fold:start:afold
 I am the first line of a fold.
@@ -91,7 +92,8 @@ travis_fold:end:afold
 [0K[36;41mI am a cyan line with red background.
 [0K[37;40mI am a white line with black background.
 [0K[90mI am a grey line.
-I am the final line.
+I used to be the final line.
+I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the final replacer.\nI do not replace because the previous line ended with a line feed.
 `;
   server.create('log', { id: job.id, content: complexLog });
 
@@ -147,7 +149,11 @@ I am the final line.
 
     assert.ok(jobPage.logLines(13).isGrey);
 
-    assert.equal(jobPage.logLines(14).text, 'I am the final line.');
+    assert.equal(jobPage.logLines(14).text, 'I used to be the final line.');
+
+    // FIXME why is this line in an adjacent span?
+    assert.equal(jobPage.logLines(15).nextText, 'I am the final replacer.');
+    assert.equal(jobPage.logLines(16).text, 'I do not replace because the previous line ended with a line feed.');
   });
 
   jobPage.logFolds(0).toggle();
