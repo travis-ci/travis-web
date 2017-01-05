@@ -156,7 +156,7 @@ Another line that should be replaced.\rAnd another.\rBut not this one!\r${ESCAPE
     assert.equal(jobPage.logLines(15).nextText, 'I am the final replacer.');
     assert.equal(jobPage.logLines(16).text, 'I do not replace because the previous line ended with a line feed.');
 
-    assert.equal(jobPage.logLines(17).text, 'But not this one!')
+    assert.equal(jobPage.logLines(17).text, 'But not this one!');
   });
 
   jobPage.logFolds(0).toggle();
