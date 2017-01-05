@@ -94,6 +94,7 @@ travis_fold:end:afold
 [0K[90mI am a grey line.
 I used to be the final line.
 I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the final replacer.\nI do not replace because the previous line ended with a line feed.
+Another line that should be replaced.\rAnd another.\rBut not this one!\r${ESCAPE}[Om
 `;
   server.create('log', { id: job.id, content: complexLog });
 
@@ -154,6 +155,8 @@ I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the 
     // FIXME why is this line in an adjacent span?
     assert.equal(jobPage.logLines(15).nextText, 'I am the final replacer.');
     assert.equal(jobPage.logLines(16).text, 'I do not replace because the previous line ended with a line feed.');
+
+    assert.equal(jobPage.logLines(17).text, 'But not this one!')
   });
 
   jobPage.logFolds(0).toggle();
