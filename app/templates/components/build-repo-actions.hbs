@@ -13,7 +13,7 @@
   {{#if restarters.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-      <button {{action (perform restart)}} class="action-button--restart" title="Restart build" type="button">
+      <button {{action (perform restart)}} class="action-button--restart tooltip" data-tooltip="Restart build" type="button">
         {{inline-svg 'icon-restart' class="icon"}}
         <span class="label-align">Restart build</span>
     </button>
