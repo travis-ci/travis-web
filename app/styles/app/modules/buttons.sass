@@ -81,22 +81,29 @@
     text-decoration: none !important
 
 .repo-main-tools.small
-  display: inline-block
+  display: inline-flex
   padding-top: 2px
   margin-left: 5px
-  transform: translate(0, 1px);
+  transform: translate(0, 1px) scale(0.85);
   .action-button--restart,
   .action-button--debug,
   .action-button--cancel
     display: inline-block
-    width: auto
+    width: 22px
     padding: 0
+    margin-right: 5px
     border-radius: 30px
     border-color: $cement-grey
+    &:hover, &:active
+      border-color: $oxide-blue
     .label-align
       display: none
-    .icon
-      transform: scale(0.75) translate(3px, -2px)
+  .action-button--restart .icon
+    transform: scale(0.75) translate(4px, -2.5px)
+  .action-button--cancel .icon
+    transform: scale(0.65) translate(2.5px, -2.5px)
+  .action-button--debug .icon
+    transform: scale(0.8) translate(3px, -2px)
 
 %log-button
   display: inline-block
