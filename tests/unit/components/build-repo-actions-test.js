@@ -28,7 +28,7 @@ test('it shows restart button if canRestart is true', function (assert) {
     canRestart: true
   });
   this.render();
-  assert.ok(component.$('button[title="Restart build"]').length, 'restart button should be visible');
+  assert.ok(component.$('button[data-tooltip="Restart build"]').length, 'restart button should be visible');
 });
 
 test('user can cancel if she has pull permissions to a repo and build is cancelable', function (assert) {
