@@ -1,0 +1,30 @@
+{{#if canCancel}}
+  {{#if cancel.isRunning}}
+    {{loading-indicator height=true}}
+  {{else}}
+    <button {{action (perform cancel)}} class="action-button--cancel" type="button" title="Cancel {{type}}">
+      {{inline-svg 'icon-failed' class="icon"}}
+      <span class="label-align">Cancel {{type}}</span>
+    </button>
+  {{/if}}
+{{/if}}
+
+{{#if canRestart}}
+  {{#if restarters.isRunning}}
+    {{loading-indicator height=true}}
+  {{else}}
+    <button {{action (perform restart)}} class="action-button--restart" title="Restart {{type}}" type="button">
+      {{inline-svg 'icon-restart' class="icon"}}
+      <span class="label-align">Restart {{type}}</span>
+    </button>
+
+    {{#if features.proVersion}}
+      {{#if canDebug}}
+        <button {{action (perform debug)}} class="action-button--debug" title="Restart as debug {{type}}" type="button">
+          {{inline-svg 'icon-debug' class="icon"}}
+          <span class="label-align">Debug {{type}}</span>
+        </button>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+{{/if}}

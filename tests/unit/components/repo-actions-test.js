@@ -6,7 +6,9 @@ const authStub = Ember.Service.extend({
   currentUser: Ember.Object.create()
 });
 
-moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
+const job = Ember.Object.create();
+
+moduleForComponent('repo-actions', 'RepoActionsComponent', {
   unit: true,
   needs: ['helper:perform', 'helper:inline-svg'],
   beforeEach() {
@@ -16,15 +18,26 @@ moduleForComponent('job-repo-actions', 'JobRepoActionsComponent', {
 
 test('it shows cancel button if canCancel is true', function (assert) {
   const component = this.subject({
-    canCancel: true
+    canCancel: true,
+    job: job
   });
   this.render();
   assert.ok(component.$('button[title="Cancel job"]').length, 'cancel button should be visible');
 });
 
+test('the cancel button is for a build if a build is passed in', function (assert) {
+  const component = this.subject({
+    canCancel: true,
+    build: Ember.Object.create()
+  });
+  this.render();
+  assert.ok(component.$('button[title="Cancel build"]').length, 'cancel build button should be visible');
+});
+
 test('it shows restart button if canRestart is true', function (assert) {
   const component = this.subject({
-    canRestart: true
+    canRestart: true,
+    job: job
   });
   this.render();
   assert.ok(component.$('button[title="Restart job"]').length, 'restart button should be visible');

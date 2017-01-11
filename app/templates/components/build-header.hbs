@@ -93,8 +93,8 @@
 
 <div class='build-tools'>
   {{#if isJob}}
-    {{job-repo-actions job=item repo=item.repo}}
+    {{repo-actions job=item repo=item.repo}}
   {{else}}
-    {{build-repo-actions build=item repo=item.repo}}
+    {{repo-actions build=item repo=item.repo}}
   {{/if}}
 </div>
