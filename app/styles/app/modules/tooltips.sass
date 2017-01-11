@@ -131,8 +131,17 @@ $tooltip-arrow-width: .8em
     bottom: $tooltip-spacing - $tooltip-arrow-width
 
 .repo-main-tools *[data-tooltip]
-  &::after
-    left: -4em
+  &:hover, &:active
+    &::before, &::after
+      // Hide tooltips unless in small display
+      display: none
+
+.repo-main-tools.small *[data-tooltip]
+  &:hover, &:active
+    &::before, &::after
+      display: block
+    &::after
+      left: -4em
 
 
 .request-item
