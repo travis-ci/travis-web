@@ -65,7 +65,9 @@
     "ember-qunit-nice-errors": "1.1.1",
     "ember-resolver": "^2.0.3",
     "emberx-select": "~3.0.0",
+    "glob": "^4.5.3",
     "loader.js": "^4.0.10",
+    "morgan": "^1.7.0",
     "visibilityjs": "^1.2.4"
   }
 }
