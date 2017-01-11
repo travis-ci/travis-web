@@ -6,5 +6,6 @@ const { alias } = Ember.computed;
 export default Ember.Component.extend(RepoActionsItemComponentMixin, {
   item: alias('job'),
   type: 'job',
-  classNames: ['repo-main-tools']
+  classNames: ['repo-main-tools'],
+  classNameBindings: ['small']
 });
