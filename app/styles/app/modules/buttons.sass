@@ -84,7 +84,6 @@
   display: inline-flex
   padding-top: 2px
   margin-left: 5px
-  transform: translate(0, 1px) scale(0.85);
   button
     display: inline-block
     width: 22px
@@ -93,6 +92,7 @@
     margin-right: 5px
     border-radius: 30px
     border-color: $cement-grey
+    transform: translate(0, 1px) scale(0.85)
     &:hover, &:active
       border-color: $oxide-blue
     .label-align
@@ -106,9 +106,11 @@
 
 .jobs-item
   .repo-main-tools
-    transform: translate(-5px, -2px) scale(0.85)
+    transform: translate(-5px, -2px)
     button
       background: transparent
+    *[data-tooltip]::before
+      margin-left: 5px
 
 %log-button
   display: inline-block
