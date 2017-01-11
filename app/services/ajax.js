@@ -53,6 +53,7 @@ export default Ember.Service.extend({
   },
 
   ajax(url, method, options) {
+    const self = this;
     let accepts, data, delimeter, endpoint, error, key, name, params,
       promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
     method = (method || 'GET').toUpperCase();
@@ -81,7 +82,7 @@ export default Ember.Service.extend({
     };
     error = options.error || (() => {});
     options.error = (data, status, xhr) => {
-      if (Ember.get(this, 'features').get('debugLogging')) {
+      if (self.get('features.debugLogging')) {
         //eslint-disable-next-line
         console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
       }
