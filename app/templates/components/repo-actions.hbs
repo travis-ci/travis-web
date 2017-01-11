@@ -3,7 +3,7 @@
     {{loading-indicator height=true}}
   {{else}}
     <div class='tooltip' data-tooltip='Cancel {{type}}'>
-      <button {{action (perform cancel)}} class="action-button--cancel" type="button" title="Cancel {{type}}">
+      <button {{action (perform cancel)}} class="action-button--cancel" type="button" aria-label="Cancel {{type}}">
         {{inline-svg 'icon-failed' class="icon"}}
         <span class="label-align">Cancel {{type}}</span>
       </button>
@@ -16,7 +16,7 @@
     {{loading-indicator height=true}}
   {{else}}
     <div class='tooltip' data-tooltip='Restart {{type}}'>
-      <button {{action (perform restart)}} class="action-button--restart" title="Restart {{type}}" type="button">
+      <button {{action (perform restart)}} class="action-button--restart" aria-label="Restart {{type}}" type="button">
         {{inline-svg 'icon-restart' class="icon"}}
         <span class="label-align">Restart {{type}}</span>
       </button>
@@ -24,7 +24,7 @@
 
     {{#if features.proVersion}}
       {{#if canDebug}}
-        <button {{action (perform debug)}} class="action-button--debug tooltip" title="Restart as debug {{type}}" data-tooltip='Restart as debug {{type}}' type="button">
+        <button {{action (perform debug)}} class="action-button--debug tooltip" aria-label="Restart as debug {{type}}" data-tooltip='Restart as debug {{type}}' type="button">
           {{inline-svg 'icon-debug' class="icon"}}
           <span class="label-align">Debug {{type}}</span>
         </button>
