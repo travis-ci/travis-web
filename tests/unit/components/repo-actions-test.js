@@ -22,7 +22,7 @@ test('it shows cancel button if canCancel is true', function (assert) {
     job: job
   });
   this.render();
-  assert.ok(component.$('button[title="Cancel job"]').length, 'cancel button should be visible');
+  assert.ok(component.$('button[aria-label="Cancel job"]').length, 'cancel button should be visible');
 });
 
 test('the cancel button is for a build if a build is passed in', function (assert) {
@@ -31,7 +31,7 @@ test('the cancel button is for a build if a build is passed in', function (asser
     build: Ember.Object.create()
   });
   this.render();
-  assert.ok(component.$('button[title="Cancel build"]').length, 'cancel build button should be visible');
+  assert.ok(component.$('button[aria-label="Cancel build"]').length, 'cancel build button should be visible');
 });
 
 test('it shows restart button if canRestart is true', function (assert) {
@@ -40,7 +40,7 @@ test('it shows restart button if canRestart is true', function (assert) {
     job: job
   });
   this.render();
-  assert.ok(component.$('button[title="Restart job"]').length, 'restart button should be visible');
+  assert.ok(component.$('button[aria-label="Restart job"]').length, 'restart button should be visible');
 });
 
 test('user can cancel if she has pull permissions to a repo and job is cancelable', function (assert) {
