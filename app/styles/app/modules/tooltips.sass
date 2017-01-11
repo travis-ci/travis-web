@@ -133,10 +133,10 @@ $tooltip-arrow-width: .8em
 .repo-main-tools *[data-tooltip]
   &:hover, &:active
     &::before, &::after
-      // Hide tooltips unless in small display
+      // Hide tooltips unless in labelless display
       display: none
 
-.repo-main-tools.small *[data-tooltip]
+.repo-main-tools.labelless *[data-tooltip]
   &:hover, &:active
     &::before, &::after
       display: block

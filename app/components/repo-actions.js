@@ -10,7 +10,7 @@ const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   classNames: ['repo-main-tools'],
-  classNameBindings: ['small'],
+  classNameBindings: ['labelless'],
 
   flashes: service(),
   auth: service(),
