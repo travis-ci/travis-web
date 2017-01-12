@@ -36,7 +36,6 @@
         <span class="label-align">#{{build.number}} {{build.state}}</span>
       {{/link-to}}
     {{/if}}
-    {{repo-actions build=build repo=build.repo labelless=true}}
   </h3>
   <div class="row-item row-commit">
     <a href="{{urlGithubCommit}}" title="See the commit on GitHub">
@@ -59,4 +58,11 @@
       <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
     </div>
   </div>
+</div>
+
+<div class="two-line">
+  <div class="row-item actions">
+    {{repo-actions build=build repo=build.repo labelless=true}}
+  </div>
+  <div class="row-item">&nbsp;</div>
 </div>
