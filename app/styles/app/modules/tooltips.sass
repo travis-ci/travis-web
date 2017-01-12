@@ -144,6 +144,12 @@ $tooltip-arrow-width: .8em
     &::after
       left: -3em
 
+.pr-row .two-line.actions
+  // Show tooltips outside container in build list
+  overflow: visible
+  *[data-tooltip]::after
+    left: -4em
+
 
 .request-item
   [data-tooltip]
