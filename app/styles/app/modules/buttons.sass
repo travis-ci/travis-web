@@ -104,6 +104,11 @@
   .action-button--debug
     display: none
 
+  // FIXME this compensates for a bug where job.canCancel briefly returns true but
+  // resolves to false.
+  *[data-tooltip] + *[data-tooltip]
+    display: none
+
 .jobs-item
   .repo-main-tools
     transform: translate(-5px, -2px)
