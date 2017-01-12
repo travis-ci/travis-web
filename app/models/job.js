@@ -103,7 +103,12 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  canCancel: Ember.computed.not('isFinished'),
+
+  canCancel: Ember.computed('isFinished', 'state', function () {
+    // not(isFinished) is insufficient since it will be true when state is undefined.
+    return !this.get('isFinished') && !!this.get('state');
+  }),
+
   canRestart: Ember.computed.alias('isFinished'),
   canDebug: Ember.computed.alias('isFinished'),
 
