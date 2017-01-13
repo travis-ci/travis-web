@@ -261,6 +261,14 @@ export default TravisRoute.extend({
         nationality: 'kenya',
         country: 'germany',
         image: 'lili'
+      },
+      {
+        name: 'Carla Iriberri',
+        title: 'Cacaolat Connoisseur',
+        handle: 'iriberri1',
+        nationality: 'spain',
+        country: 'spain',
+        image: 'iriberri'
       }
     ];
   }
