@@ -43,13 +43,12 @@ export default Ember.Service.extend({
   },
 
   signIn(data) {
-    let url;
     if (data) {
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      url = `${this.get('endpoint')}/auth/post_message?origin=${this.receivingEnd}`;
-      return Ember.$('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
+      const url = `${this.get('endpoint')}/auth/post_message?origin=${this.receivingEnd}`;
+      return this.get('ajax').get(url);
     }
   },
 
