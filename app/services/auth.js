@@ -47,7 +47,7 @@ export default Ember.Service.extend({
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      const url = `${this.get('endpoint')}/auth/post_message?origin=${this.receivingEnd}`;
+      const url = `/auth/post_message?origin=${this.receivingEnd}`;
       return this.get('ajax').get(url);
     }
   },
