@@ -14,10 +14,6 @@ export default Ember.Service.extend({
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
 
-  init() {
-    return window.addEventListener('message', e => this.receiveMessage(e));
-  },
-
   token() {
     return this.get('sessionStorage').getItem('travis.token');
   },
@@ -189,27 +185,6 @@ export default Ember.Service.extend({
 
     store.push(normalized);
     return store.recordForId('user', user.id);
-  },
-
-  receiveMessage(event) {
-    console.log('receiveMessage called');
-    console.log('event.origin', event.origin);
-    console.log('expectedOrigin', this.expectedOrigin());
-    if (event.origin === this.expectedOrigin()) {
-      console.log('expectedOrigin');
-      if (event.data === 'redirect') {
-        console.log('setting window.location manually');
-        let endpoint = this.get('endpoint');
-        window.location = `${endpoint}/auth/handshake?redirect_uri=${location}`;
-      } else if (event.data.user != null) {
-        if (event.data.travis_token) {
-          console.log('setting event.data.user.token to event.data.travis_token');
-          event.data.user.token = event.data.travis_token;
-        }
-        console.log('calling setData');
-        return this.setData(event.data);
-      }
-    }
   },
 
   expectedOrigin() {
