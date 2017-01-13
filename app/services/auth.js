@@ -193,6 +193,8 @@ export default Ember.Service.extend({
 
   receiveMessage(event) {
     console.log('receiveMessage called');
+    console.log('event.origin', event.origin);
+    console.log('expectedOrigin', this.expectedOrigin());
     if (event.origin === this.expectedOrigin()) {
       console.log('expectedOrigin');
       if (event.data === 'redirect') {
