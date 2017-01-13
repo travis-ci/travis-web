@@ -85,9 +85,9 @@
 
 // trying to rewrite
 
-$tooltip-spacing: 3em
+$tooltip-spacing: 2.7em
 $tooltip-arrow-width: .8em
-  
+
 [data-tooltip]
   position: relative
   display: inline-block
@@ -123,13 +123,6 @@ $tooltip-arrow-width: .8em
     &:before
       display: block
 
-.job-os[data-tooltip]
-  $tooltip-spacing: 3em
-  &:after
-    bottom: $tooltip-spacing
-  &:before
-    bottom: $tooltip-spacing - $tooltip-arrow-width
-
 .repo-main-tools *[data-tooltip]
   &:hover, &:active
     &::before, &::after
@@ -149,7 +142,6 @@ $tooltip-arrow-width: .8em
   overflow: visible
   *[data-tooltip]::after
     left: -4em
-
 
 .request-item
   [data-tooltip]
