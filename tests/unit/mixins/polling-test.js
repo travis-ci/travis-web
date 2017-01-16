@@ -49,7 +49,7 @@ define('travis/components/polling-test', [], function () {
 });
 
 moduleForComponent('polling-test', 'PollingMixin', {
-  needs: [],
+  unit: true,
   beforeEach() {
     hookRuns = 0;
     return pollingChangesHistory = [];
