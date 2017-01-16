@@ -79,7 +79,40 @@
     border-color: $oxide-blue
     color: $oxide-blue
     text-decoration: none !important
-  
+
+.repo-main-tools.labelless
+  display: inline-flex
+  padding-top: 2px
+  margin-left: 5px
+  button
+    display: inline-block
+    width: 22px
+    height: 22px
+    padding: 0
+    margin-right: 5px
+    border-radius: 30px
+    border-color: $cement-grey
+    transform: translate(0, 1px) scale(0.85)
+    &:hover, &:active
+      border-color: $oxide-blue
+    .label-align
+      display: none
+  .action-button--restart .icon
+    transform: scale(0.75) translate(4px, -2px)
+  .action-button--cancel .icon
+    transform: scale(0.65) translate(1px, -2px)
+    margin-right: 1px // pixel weirdness for better Safari rendering
+  .action-button--debug
+    display: none
+
+.jobs-item
+  .repo-main-tools
+    transform: translate(-5px, -2px)
+    button
+      background: transparent
+    *[data-tooltip]::before
+      margin-left: 5px
+
 %log-button
   display: inline-block
   height: 28px

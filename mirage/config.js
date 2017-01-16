@@ -169,6 +169,10 @@ export default function () {
         build.attrs.commit_id = build.commit.id;
       }
 
+      if (build.jobs) {
+        build.attrs.job_ids = build.jobs.models.map(job => job.id);
+      }
+
       return build;
     }), commits: builds.map(build => build.commit) };
   });

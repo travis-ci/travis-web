@@ -85,9 +85,9 @@
 
 // trying to rewrite
 
-$tooltip-spacing: 3em
+$tooltip-spacing: 2.7em
 $tooltip-arrow-width: .8em
-  
+
 [data-tooltip]
   position: relative
   display: inline-block
@@ -123,13 +123,25 @@ $tooltip-arrow-width: .8em
     &:before
       display: block
 
-.job-os[data-tooltip]
-  $tooltip-spacing: 3em
-  &:after
-    bottom: $tooltip-spacing
-  &:before
-    bottom: $tooltip-spacing - $tooltip-arrow-width 
+.repo-main-tools *[data-tooltip]
+  &:hover, &:active
+    &::before, &::after
+      // Hide tooltips unless in labelless display
+      display: none
 
+.repo-main-tools.labelless *[data-tooltip]
+  &:hover, &:active
+    &::before, &::after
+      display: block
+      text-align: center
+    &::after
+      left: -3em
+
+.pr-row .two-line.actions
+  // Show tooltips outside container in build list
+  overflow: visible
+  *[data-tooltip]::after
+    left: -4em
 
 .request-item
   [data-tooltip]
