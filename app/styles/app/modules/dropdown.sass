@@ -1,9 +1,8 @@
 .option-button
   position: relative
   width: 17em
+  &.is-open,
   &:hover
-    .option-dropdown
-      display: block
     .option-display
       color: $oxide-blue
       border-color: $oxide-blue
@@ -15,10 +14,9 @@
       transform: rotate(-90deg)
       border-bottom: none
       border-top: 1px solid $oxide-blue
-  @media #{$small-only}
-    &.display
-      .option-dropdown
-        display: block
+  &.is-open
+    .option-dropdown
+      display: block
 
 $dropdown-button-height: 30px
 $dropdown-button-margin: -9px
@@ -36,6 +34,8 @@ $dropdown-button-margin: -9px
   cursor: pointer
   text-align: left
   white-space: nowrap
+  &:focus
+    outline: none
   .label-align
     padding: 0 1em
     overflow: hidden

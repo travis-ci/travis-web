@@ -11,7 +11,7 @@ export default Ember.Component.extend({
 
   tagName: 'nav',
   classNames: ['option-button'],
-  classNameBindings: ['isOpen:display'],
+  classNameBindings: ['isOpen:is-open'],
   isOpen: false,
 
   currentUser: alias('auth.currentUser'),
