@@ -14,10 +14,6 @@ export default Ember.Service.extend({
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
 
-  init() {
-    return window.addEventListener('message', e => this.receiveMessage(e));
-  },
-
   token() {
     return this.get('sessionStorage').getItem('travis.token');
   },
@@ -43,13 +39,11 @@ export default Ember.Service.extend({
   },
 
   signIn(data) {
-    let url;
     if (data) {
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      url = `${this.get('endpoint')}/auth/post_message?origin=${this.receivingEnd}`;
-      return Ember.$('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
+      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${location}`;
     }
   },
 
@@ -191,20 +185,6 @@ export default Ember.Service.extend({
 
     store.push(normalized);
     return store.recordForId('user', user.id);
-  },
-
-  receiveMessage(event) {
-    if (event.origin === this.expectedOrigin()) {
-      if (event.data === 'redirect') {
-        let endpoint = this.get('endpoint');
-        window.location = `${endpoint}/auth/handshake?redirect_uri=${location}`;
-      } else if (event.data.user != null) {
-        if (event.data.travis_token) {
-          event.data.user.token = event.data.travis_token;
-        }
-        return this.setData(event.data);
-      }
-    }
   },
 
   expectedOrigin() {
