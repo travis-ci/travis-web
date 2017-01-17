@@ -44,8 +44,8 @@ export default Model.extend({
     'committerEmail',
     function () {
       if (this.get('committerEmail') !== 'noreply@github.com') {
-        let namesMatch = this. get ('authorName') === this. get ('committerName');
-        let emailsMatch = this. get ('authorEmail') === this. get ('committerEmail');
+        let namesMatch = this.get('authorName') === this.get('committerName');
+        let emailsMatch = this.get('authorEmail') === this.get('committerEmail');
         return namesMatch && emailsMatch;
       } else {
         return true;
