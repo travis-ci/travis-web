@@ -3,12 +3,10 @@
     <h2 class="row-branch {{build.state}}">
       {{status-icon status=build.state}}
       {{#if build.isPullRequest}}
-        {{log build.branchName}}
         {{#link-to "build" build.repo build title=(concat "PR #" build.pullRequestNumber " " build.pullRequestTitle)}}
           <small>PR #{{build.pullRequestNumber}}</small>
         {{/link-to}}
       {{else}}
-        {{log build.branchName}}
         {{#link-to "build" build.repo build title=build.commit.sha}}
           {{build.branchName}}
         {{/link-to}}

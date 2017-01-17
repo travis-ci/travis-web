@@ -21,13 +21,12 @@ export default Model.extend(DurationCalculations, {
   duration: attr('number'),
   startedAt: attr('string'),
   finishedAt: attr('string'),
-  pullRequest: attr('boolean'),
-  pullRequestTitle: attr(),
   pullRequestNumber: attr('number'),
+  pullRequestTitle: attr('string'),
   eventType: attr('string'),
   repo: belongsTo('repo', { async: true }),
   repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
-  commit: belongsTo('commit', { async: false }),
+  commit: belongsTo('commit', { async: true }),
   jobs: hasMany('job', { async: true }),
   _config: attr(),
 
@@ -45,7 +44,7 @@ export default Model.extend(DurationCalculations, {
   }),
 
   isPullRequest: Ember.computed('eventType', function () {
-    return this.get('eventType') === 'pull_request' || this.get('pullRequest');
+    return this.get('eventType') === 'pull_request';
   }),
 
   isMatrix: Ember.computed('jobs.length', function () {

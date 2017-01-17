@@ -90,7 +90,6 @@ export default JSONSerializer.extend({
     let items;
     let type = payload['@type'];
     if (type) {
-      console.log('type specified as: ',type);
       items = payload[type];
     } else {
       items = payload[primaryModelClass.modelName.underscore() + 's'];
@@ -107,7 +106,7 @@ export default JSONSerializer.extend({
     return documentHash;
   },
 
-  normalize(modelClass, resourceHash) {
+  normalize() {
     let { data, included } = this._super(...arguments);
     if (!included) {
       included = [];
@@ -145,9 +144,6 @@ export default JSONSerializer.extend({
       });
     }
 
-    if (modelClass.toString() === 'travis@model:build:') {
-      console.log('included', included);
-    }
     return { data, included };
   },
 

@@ -5,17 +5,17 @@ const { alias } = Ember.computed;
 
 export default Ember.Controller.extend({
   buildsSorting: ['number:desc'],
-  builds: Ember.computed.sort('model', 'buildsSorting'),
+  builds: Ember.computed.sort('unorderedBuilds', 'buildsSorting'),
   repoController: controller('repo'),
   repo: alias('repoController.repo'),
   tab: alias('repoController.tab'),
+
   isLoaded: alias('model.isLoaded'),
   isLoading: alias('model.isLoading'),
 
   showMore() {
-    var id, number, type;
-    id = this.get('repo.id');
-    number = this.get('builds.lastObject.number');
+    const id = this.get('repo.id');
+    let number = this.get('builds.lastObject.number');
 
     const defaultBranchLastBuildNumber = this.get('repo.defaultBranch.lastBuild.number');
 
@@ -37,7 +37,7 @@ export default Ember.Controller.extend({
 
     const tabName = this.get('tab');
     const singularTab = tabName.substr(0, tabName.length - 1);
-    type = this.get('tab') === 'builds' ? 'push' : singularTab;
+    const type = this.get('tab') === 'builds' ? 'push' : singularTab;
     this.olderThanNumber(id, number, type);
   },
 

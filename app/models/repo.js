@@ -3,6 +3,7 @@ import Model from 'ember-data/model';
 import Ember from 'ember';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
+import { filter } from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -26,6 +27,8 @@ const Repo = Model.extend({
 
   builds: hasMany('build', { async: false }),
 
+  @filter('builds', build => !build.eventType === 'pull_request') nonPullRequestBuilds: null,
+
   withLastBuild() {
     return this.filter(function (repo) {
       return repo.get('lastBuildId');
@@ -45,25 +48,6 @@ const Repo = Model.extend({
     }, function (v) {
       return v.get('repo.id') === id;
     });
-  }),
-
-  pullRequests: Ember.computed(function () {
-    var array, builds, id;
-    id = this.get('id');
-    builds = this.store.filter('build', {
-      event_type: 'pull_request',
-      repository_id: id
-    }, function (b) {
-      return b.get('repo.id') + '' === id + '' && b.get('eventType') === 'pull_request';
-    });
-    array = ExpandableRecordArray.create({
-      type: 'build',
-      content: Ember.A([])
-    });
-    array.load(builds);
-    id = this.get('id');
-    array.observe(builds);
-    return array;
   }),
 
   crons: Ember.computed(function () {

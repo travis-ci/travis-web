@@ -8,6 +8,15 @@ export default AbstractBuildsRoute.extend({
     return this.store.query('build', {
       event_type: ['push', 'cron'],
       repository_id: repositoryId
+    }).then((builds) => {
+      // additional filtering shouldn't be necessary, but we get PR's back for
+      // some reason
+      return builds.filterBy('isPullRequest', false);
     });
   },
+
+  setupController(controller, model) {
+    this._super(...arguments);
+    controller.set('unorderedBuilds', model);
+  }
 });
