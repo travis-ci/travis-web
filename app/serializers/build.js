@@ -11,11 +11,6 @@ var Serializer = V3Serializer.extend({
     if (relationshipModelName === 'repo') {
       relationshipHash['@type'] = 'repo';
     }
-    // if (relationshipModelName === 'branch') {
-    //   console.log({relationshipHash});
-    // }
-    // console.log({relationshipModelName, relationshipHash});
-    // console.log(this._super(...arguments));
     return this._super(...arguments);
   },
 

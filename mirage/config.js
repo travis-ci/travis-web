@@ -105,6 +105,17 @@ export default function () {
     };
   });
 
+  this.post('/settings/env_vars?repository_id=1', function () {
+  });
+
+  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
+    let sshKeys = schema.sshKeys.where({
+      repositoryId: request.params.repo_id,
+      type: 'custom'
+    }).models[0];
+    return this.serialize(sshKeys, 'v2');
+  });
+
   this.get('/v3/repo/:id', function (schema, request) {
     return schema.repositories.find(request.params.id);
   });
@@ -150,7 +161,7 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema, { queryParams:
+  this.get('/repo/:repository_id/builds', function (schema, { queryParams:
     { event_type: eventType, after_number: afterNumber, ids } }) {
     const allBuilds = schema.builds.all();
     let builds;
@@ -179,7 +190,7 @@ export default function () {
     }), commits: builds.map(build => build.commit) };
   });
 
-  this.get('/builds/:id', function (schema, request) {
+  this.get('/build/:id', function (schema, request) {
     const build = schema.builds.find(request.params.id);
     const response = {
       build: build.attrs,
