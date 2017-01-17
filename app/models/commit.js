@@ -43,29 +43,14 @@ export default Model.extend({
     'committerName',
     'committerEmail',
     function () {
-      let namesMatch = this.get('authorName') === this.get('committerName');
-      let emailsMatch = this.get('authorEmail') === this.get('committerEmail');
-      return namesMatch && emailsMatch;
+      if (this.get('committerEmail') !== 'noreply@github.com') {
+        let namesMatch = this. get ('authorName') === this. get ('committerName');
+        let emailsMatch = this. get ('authorEmail') === this. get ('committerEmail');
+        return namesMatch && emailsMatch;
+      } else {
+        return true;
+      }
     }
-  ),
+  )
 
-  authorAvatarUrlOrGravatar: Ember.computed('authorEmail', 'authorAvatarUrl', function () {
-    var url = this.get('authorAvatarUrl');
-
-    if (!url) {
-      url = this.get('externalLinks').gravatarImage(this.get('authorEmail'), 40);
-    }
-
-    return url;
-  }),
-
-  committerAvatarUrlOrGravatar: Ember.computed('committerEmail', 'committerAvatarUrl', function () {
-    var url = this.get('committerAvatarUrl');
-
-    if (!url) {
-      url = this.get('externalLinks').gravatarImage(this.get('committerEmail'), 40);
-    }
-
-    return url;
-  })
 });
