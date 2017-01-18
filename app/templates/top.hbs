@@ -87,7 +87,7 @@
         {{#if auth.signedIn}}
           {{#link-to "profile" class="navigation-anchor signed-in"}}
             {{userName}}
-            {{user-avatar url=user.avatarUrl name=user.fullName}}
+            {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
