@@ -1,11 +1,10 @@
-/* globals HS */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
 const { alias } = Ember.computed;
 const { service } = Ember.inject;
 
-export default Ember.Controller.extend({
+export default Ember.Component.extend({
   auth: service(),
   store: service(),
   storage: service(),
