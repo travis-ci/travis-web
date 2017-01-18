@@ -60,7 +60,7 @@
   <div class="row-commiter">
     <div class="row-item">
       {{#if branch.last_build}}
-          {{user-avatar url=branch.last_build.commit.committer.avatar_url name=branch.last_build.commit.committer.name small=true}}
+          {{user-avatar url=branch.last_build.commit.committer.avatar_url name=branch.last_build.commit.committer.name small=true size=18}}
           <span class="label-align">{{branch.last_build.commit.committer.name}}</span>
       {{else}}
         <div class="avatar--small"></div><span class="label-align">no commits yet</span>
