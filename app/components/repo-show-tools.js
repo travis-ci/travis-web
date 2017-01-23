@@ -16,23 +16,14 @@ export default Ember.Component.extend({
 
   currentUser: alias('auth.currentUser'),
 
-  click(event) {
-    let isLink = Ember.$(event.target).is('a');
-    let inSettingsDropdown = Ember.$(event.target).parents('.settings-dropdown').length;
-    if (isLink && inSettingsDropdown) {
-      return this.closeMenu();
-    }
-  },
-
-  closeMenu() {
+  click() {
     return this.toggleProperty('isOpen');
   },
 
-  actions: {
-    menu() {
-      return this.toggleProperty('isOpen');
-    }
+  mouseLeave() {
+    this.set('isOpen', false);
   },
+
   displaySettingsLink: Ember.computed('permissions.all', 'repo', function () {
     return this.get('permissions').hasPushPermission(this.get('repo'));
   }),
