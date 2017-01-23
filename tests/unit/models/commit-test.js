@@ -26,14 +26,3 @@ test('finds out if author is also committer', function (assert) {
   });
   assert.equal(model.get('authorIsCommitter'), true, 'should detect same author and committer');
 });
-
-test('decide that author is also committer if committer is GitHub', function (assert) {
-  const model = this.subject();
-  Ember.run(function () {
-    return model.setProperties({
-      authorEmail: 'author@example.com',
-      committerEmail: 'noreply@github.com'
-    });
-  });
-  assert.equal(model.get('authorIsCommitter'), true);
-});

@@ -8,7 +8,6 @@ const { service } = Ember.inject;
 
 export default Model.extend({
   ajax: service(),
-  externalLinks: service(),
 
   // TODO: this totally not should be needed here
   sessionStorage: service(),
