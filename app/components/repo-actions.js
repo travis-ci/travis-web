@@ -111,7 +111,7 @@ export default Ember.Component.extend({
       this.get('flashes').error(`You don't have sufficient access to ${actionTerm} this ${type}`);
     } else {
       let actionTerm = action === 'restart' ? 'restarting' : 'canceling';
-      this.get('flashes').error(`An error occured when ${actionTerm} the ${type}`);
+      this.get('flashes').error(`An error occurred when ${actionTerm} the ${type}`);
     }
   }
 });

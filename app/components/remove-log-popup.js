@@ -23,7 +23,7 @@ export default Ember.Component.extend({
         } else if (xhr.status === 401) {
           return this.get('flashes').error('You don\'t have sufficient access to remove the log');
         } else {
-          return this.get('flashes').error('An error occured when removing the log');
+          return this.get('flashes').error('An error occurred when removing the log');
         }
       });
     }
