@@ -7,6 +7,7 @@ import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
+import computed from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -72,11 +73,23 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  isFinished: Ember.computed('state', function () {
-    let state = this.get('state');
+  @computed('state')
+  isFinished(state) {
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
-  }),
+  },
+
+  @computed('state')
+  toBeQueued(state) {
+    let queuedState = 'created';
+    return Ember.isEqual(state, queuedState);
+  },
+
+  @computed('state')
+  toBeStarted(state) {
+    let waitingStates = ['queued', 'received'];
+    return waitingStates.includes(state);
+  },
 
   notStarted: Ember.computed('state', function () {
     let state = this.get('state');

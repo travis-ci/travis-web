@@ -22,16 +22,23 @@
   <p>
     {{inline-svg 'icon-clock' class="icon"}}
     <span class="label-align">Duration:
-    <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title={{repo.currentBuild.startedAt}}>
-      {{format-duration repo.currentBuild.duration}}
-    </time></span>
+      {{#if repo.currentBuild.toBeQueued}}
+       <span class="duration">Waiting to be queued</span>
+      {{else if repo.currentBuild.toBeStarted}}
+       <span class="duration">Waiting to start</span>
+      {{else}}
+       <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title={{repo.currentBuild.startedAt}}>{{format-duration repo.currentBuild.duration}}</time>
+      {{/if}}
+    </span>
   </p>
 
-  <p>
-    {{inline-svg 'icon-calendar' class="icon"}}
-    <span class="label-align">Finished:
-    <time class="finished_at timeago" datetime={{repo.currentBuild.finishedAt}} title={{repo.currentBuild.finishedAt}}>
-      {{format-time repo.currentBuild.finishedAt}}
-    </time></span>
-  </p>
+  {{#if repo.currentBuild.isFinished}}
+    <p>
+      {{inline-svg 'icon-calendar' class="icon"}}
+      <span class="label-align">Finished:
+        <time class="finished_at timeago" datetime={{repo.currentBuild.finishedAt}} title={{repo.currentBuild.finishedAt}}>
+          {{format-time repo.currentBuild.finishedAt}}
+        </time></span>
+    </p>
+  {{/if}}
 </div>
