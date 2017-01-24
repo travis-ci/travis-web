@@ -106,6 +106,10 @@ export default function () {
   });
 
   this.post('/settings/env_vars?repository_id=1', function () {
+    const repositoryId = request.queryParams.repository_id;
+    const envVars = schema.envVars.where({ repositoryId: repositoryId });
+    const [envVar] = envVars;
+    return envVar.repository_id = repositoryId;
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
