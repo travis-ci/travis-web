@@ -22,15 +22,16 @@ dist: trusty
 
 cache:
   directories:
-    - node_modules
-    - bower_components
+    - $HOME/.npm
+    - $HOME/.cache # includes bower cache
 
 before_install:
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
+  - npm config set spin false
+  - npm install -g bower phantomjs-prebuilt
+  - bower --version
+  - phanthomjs --version
 
 install:
-  - npm install -g bower
   - npm install
   - bower install
 
