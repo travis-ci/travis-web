@@ -171,6 +171,7 @@ module.exports = function (environment) {
     'media-src': "'self'",
     'frame-src': "'self' " + ENV.apiEndpoint
   };
+  ENV.contentSecurityPolicyMeta = true;
 
   return ENV;
 };
