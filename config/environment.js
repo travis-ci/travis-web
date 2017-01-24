@@ -165,9 +165,9 @@ module.exports = function (environment) {
     'default-src': "'none'",
     'script-src': "'self'",
     'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
-    'connect-src': "'self' " + ENV.apiEndpoint + " ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com",
-    'style-src': "'self' https://fonts.googleapis.com",
+    'connect-src': "'self' " + ENV.apiEndpoint + " ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/",
+    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://avatars.githubusercontent.com https://0.gravatar.com " + ENV.apiEndpoint,
+    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline'",
     'media-src': "'self'",
     'frame-src': "'self' " + ENV.apiEndpoint
   };
