@@ -156,22 +156,33 @@ module.exports = function (environment) {
     ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
   }
 
-  // TODO: I insert values from ENV here, but in production
-  // this file is compiled and is not executed on runtime.
-  // We don't use CSP at the moment outside of development (ie. we don't
-  // set CSP headers), but it would be nice to do it and then we need to
-  // think about a better way to override it
-  ENV.contentSecurityPolicy = {
+  // We want CSP settings to be available during development (via ember addon)
+  // and in production (by returning the actual header with a Ruby server)
+  // The problem is that we host travis-web on multiple hosts. Because of that
+  // if we add an api host to CSP rules here, we won't be able to set it up
+  // properly in a Ruby server (because this file will be compiled on deploy,
+  // where host info is not available).
+  // That's why I create a contentSecurityPolicyRaw hash first and then I add
+  // API host to any sections listed in cspSectionsWithApiHost. That way I can
+  // do it in the same way on the Ruby server.
+  ENV.contentSecurityPolicyRaw = {
     'default-src': "'none'",
     'script-src': "'self'",
     'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
-    'connect-src': "'self' " + ENV.apiEndpoint + " ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://avatars.githubusercontent.com https://0.gravatar.com " + ENV.apiEndpoint,
+    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/",
+    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://avatars.githubusercontent.com https://0.gravatar.com",
     'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline'",
     'media-src': "'self'",
-    'frame-src': "'self' " + ENV.apiEndpoint
+    'frame-src': "'self'",
+    'report-uri': "https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly"
   };
-  ENV.contentSecurityPolicyMeta = true;
+  ENV.cspSectionsWithApiHost = ['connect-src', 'img-src']
+  ENV.contentSecurityPolicy = JSON.parse(JSON.stringify(ENV.contentSecurityPolicyRaw));
+  ENV.contentSecurityPolicyMeta = false;
+
+  ENV.cspSectionsWithApiHost.forEach( (section) => {
+    ENV.contentSecurityPolicy[section] += " " + ENV.apiEndpoint;
+  });
 
   return ENV;
 };
