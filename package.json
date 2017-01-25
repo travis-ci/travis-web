@@ -59,7 +59,7 @@
     "ember-feature-flags": "3.0.0",
     "ember-inline-svg": "0.1.7",
     "ember-keyboard-shortcuts": "0.3.0",
-    "ember-load-initializers": "^0.5.1",
+    "ember-load-initializers": "^0.6.3",
     "ember-percy": "^1.2.5",
     "ember-prism": "0.0.8",
     "ember-qunit-nice-errors": "1.1.1",
