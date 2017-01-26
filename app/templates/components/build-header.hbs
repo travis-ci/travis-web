@@ -85,9 +85,12 @@
           <span class="label-align">{{#if item.isFinished}}Total time{{else}}Running for{{/if}} <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time></span></li>
       {{/if}}
     {{/unless}}
-    <li title="{{item.finishedAt}}" class="commit-calendar">
-      {{inline-svg 'icon-calendar' class="icon"}}
-      <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time></li>
+    {{#if item.isFinished}}
+      <li title="{{item.finishedAt}}" class="commit-calendar">
+        {{inline-svg 'icon-calendar' class="icon"}}
+        <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time>
+      </li>
+    {{/if}}
   </ul>
 </div>
 
