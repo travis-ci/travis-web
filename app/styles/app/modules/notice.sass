@@ -15,9 +15,11 @@
 
 .notice,
 .notice--yellow
-  +notice
+  +notice($dozer-yellow, $haze-yellow)
 .notice--blue
   +notice($oxide-blue, $agate-blue)
+.notice--red
+  +notice($brick-red, $quartz-red)
 
 =notice-banner($bg, $color)
   +linkStyle($color)
@@ -42,3 +44,5 @@
   +notice-banner($haze-yellow, $dozer-yellow)
 .notice-banner--green
   +notice-banner($seed-green, $turf-green)
+.notice-banner--red
+  +notice-banner($quartz-red, $brick-red)

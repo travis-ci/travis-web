@@ -17,7 +17,7 @@ export default PageObject.create({
   state: text('.build-status'),
   author: text('.commit-author'),
   log: text('#log'),
-  logError: text('.job-log .notice'),
+  logError: text('.job-log .notice-banner--red'),
 
   hasTruncatedLog: isVisible('.log-container p.warning'),
 
