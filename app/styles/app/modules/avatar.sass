@@ -40,7 +40,7 @@
     line-height: 0.9
     overflow: hidden
 
-.account.organization
+.account
   .pseudo-avatar ~ .real-avatar
     background-color: white
 
@@ -48,6 +48,8 @@
   .avatar
     margin-left: 1em
     top: -3px
+  .pseudo-avatar ~ .real-avatar
+    background-color: $pebble-grey
 
 .avatar--small
   @extend .avatar
