@@ -174,7 +174,11 @@ module.exports = function (environment) {
     'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline'",
     'media-src': "'self'",
     'frame-src': "'self'",
-    'report-uri': "https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly"
+    'report-uri': "https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly",
+    'block-all-mixed-content': '',
+    'form-action': "'self'", // probably doesn't matter, but let's have it anyways
+    'frame-ancestors': "'none'",
+    'object-src': "'none'"
   };
   ENV.cspSectionsWithApiHost = ['connect-src', 'img-src']
   ENV.contentSecurityPolicy = JSON.parse(JSON.stringify(ENV.contentSecurityPolicyRaw));
