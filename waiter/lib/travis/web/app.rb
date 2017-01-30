@@ -106,6 +106,9 @@ class Travis::Web::App
           'Vary'             => vary_for(file),
           'ETag'             => Digest::MD5.hexdigest(content)
         }
+        if csp_needed?(file)
+          headers['Content-Security-Policy-Report-Only'] = csp_header(content, options)
+        end
       end
 
       [ 200, headers, [content] ]
@@ -118,6 +121,7 @@ class Travis::Web::App
     def config_needed?(file)
       index?(file) || file.end_with?('spec.html')
     end
+    alias csp_needed? config_needed?
 
     def index?(file)
       file == File.join(root, 'index.html') || file == 'index.html'
@@ -222,5 +226,23 @@ class Travis::Web::App
 
         %(<meta name="travis/config/environment" content="#{config}")
       end
+    end
+
+    def csp_header(content, options)
+      regexp = %r(<meta name="travis/config/environment"\s+content="(?<config>[^"]+)")
+      raw_config = content.match(regexp)['config']
+      ember_config = JSON.parse(URI.unescape(raw_config))
+
+      api_endpoint = options[:api_endpoint] || ember_config['apiEndpoint']
+      csp = ember_config['contentSecurityPolicyRaw']
+      ember_config['cspSectionsWithApiHost'].each do |section_name|
+        csp[section_name] += " " + api_endpoint
+      end
+      if assets_host = ENV['ASSETS_HOST']
+        ['script-src', 'style-src', 'img-src'].each do |section_name|
+          csp[section_name] += " " + assets_host
+        end
+      end
+      csp.map { |k, v| [k, v].join(" ") }.join("; ") + ';'
     end
 end
