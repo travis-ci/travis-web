@@ -28,6 +28,6 @@ test('restarting job', function (assert) {
     .restartJob();
 
   andThen(function () {
-    assert.equal(jobPage.restartedNotification, 'The job was successfully restarted.', 'restarted notification should display proper job restarted text');
+    assert.equal(jobPage.notification, 'The job was successfully restarted.', 'restarted notification should display proper job restarted text');
   });
 });

@@ -3,7 +3,6 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-import { gravatarImage } from '../utils/urls';
 
 const { service } = Ember.inject;
 
@@ -21,6 +20,7 @@ export default Model.extend({
   isSyncing: attr('boolean'),
   syncedAt: attr(),
   repoCount: attr('number'),
+  avatarUrl: attr(),
 
   fullName: Ember.computed('name', 'login', function () {
     return this.get('name') || this.get('login');
@@ -96,7 +96,23 @@ export default Model.extend({
     let id = repo.get ? repo.get('id') : repo;
     let permissions = this.get('permissions');
     if (permissions) {
-      return permissions.contains(parseInt(id));
+      return permissions.includes(parseInt(id));
+    }
+  },
+
+  hasPullAccessToRepo(repo) {
+    const id = repo.get ? repo.get('id') : repo;
+    const permissions = this.get('pullPermissions');
+    if (permissions) {
+      return permissions.includes(parseInt(id));
+    }
+  },
+
+  hasPushAccessToRepo(repo) {
+    const id = repo.get ? repo.get('id') : repo;
+    const permissions = this.get('pushPermissions');
+    if (permissions) {
+      return permissions.includes(parseInt(id));
     }
   },
 
@@ -135,9 +151,5 @@ export default Model.extend({
     user = JSON.parse(this.get('sessionStorage').getItem('travis.user'));
     user[name.underscore()] = this.get(name);
     return this.get('sessionStorage').setItem('travis.user', JSON.stringify(user));
-  },
-
-  avatarUrl: Ember.computed('email', function () {
-    return gravatarImage(this.get('email'), 36);
-  })
+  }
 });

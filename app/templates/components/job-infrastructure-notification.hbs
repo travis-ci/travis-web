@@ -1,0 +1,21 @@
+{{#unless config.enterprise}}
+  {{#if auth.signedIn}}
+    {{#if isLegacyInfrastructure}}
+      {{#notice-banner}}
+        This job {{conjugatedRun}} on our legacy infrastructure.
+        Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a>.
+      {{/notice-banner}}
+    {{/if}}
+    {{#if isTrustySudoFalse}}
+      {{#notice-banner}}
+        This job {{conjugatedRun}} on our container-based trusty beta.
+        Please read <a href="http://blog.travis-ci.com/2016-11-08-trusty-container-public-beta/?utm_source=trusty-container-based-beta-notice&utm_medium=banner&utm_campaign=trusty-container-based-beta" title="Trusty container-based beta">our blog post about the public beta</a>.
+      {{/notice-banner}}
+    {{/if}}
+    {{#if isDeprecatedOrRetiredMacImage}}
+      {{#notice-banner}}
+        {{{deprecatedOrRetiredMacImageMessage}}}
+      {{/notice-banner}}
+    {{/if}}
+  {{/if}}
+{{/unless}}

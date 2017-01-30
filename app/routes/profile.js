@@ -5,10 +5,6 @@ export default TravisRoute.extend({
   titleToken: 'Profile',
   needsAuth: true,
 
-  setupController(controller, model) {
-    return this.controllerFor('accounts').set('model', model);
-  },
-
   renderTemplate() {
     Ember.$('body').attr('id', 'profile');
     this._super(...arguments);

@@ -7,7 +7,8 @@ module.exports = {
   globals: {
     server: true,
     signInUser: true,
-    withFeature: true
+    withFeature: true,
+    percySnapshot: true
   },
   rules: {
     'max-len': 0

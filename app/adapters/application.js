@@ -27,7 +27,7 @@ export default ActiveModelAdapter.extend({
     let token = this.get('auth').token();
     if (token) {
       if (!hash.headers['Authorization']) {
-        hash.headers['Authorization'] = 'token ' + token;
+        hash.headers['Authorization'] = `token ${token}`;
       }
     }
 
@@ -52,11 +52,4 @@ export default ActiveModelAdapter.extend({
 
     return this._super(...arguments);
   },
-
-  // TODO: remove this now that this has been merged!
-  // this can be removed once this PR is merged and live:
-  // https://github.com/emberjs/data/pull/4204
-  findRecord(store, type, id, snapshot) {
-    return this.ajax(this.buildURL(type.modelName, id, snapshot, 'findRecord'), 'GET');
-  }
 });

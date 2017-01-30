@@ -12,6 +12,19 @@
 
   </section>
 
+  {{#if showAutoCancellationSwitches}}
+    <section class="settings-section auto-cancellation">
+      <h2 class="small-title">Auto Cancellation Settings</h2>
+
+      <p>Auto Cancellation allows you to only run builds for the latest commits in the queue. This setting can be applied to builds for Branch builds and Pull Request builds separately. Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.</p>
+
+      <ul class="settings-list--columns">
+        <li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel pushes" key="auto_cancel_pushes"}}</li>
+        <li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull requests" key="auto_cancel_pull_requests"}}</li>
+      </ul>
+    </section>
+  {{/if}}
+
   <section class="settings-section">
     <h2 class="small-title">Environment Variables</h2>
 
@@ -19,7 +32,7 @@
 
     <ul class="settings-list--envvars">
       {{#each envVars as |envVar|}}
-        <li>{{env-var envVar=envVar}}</li>
+        {{env-var envVar=envVar}}
       {{/each}}
     </ul>
 
@@ -27,20 +40,24 @@
 
   </section>
 
-  {{#if model.cronJobs.enabled}}
-    <section class="settings-section">
-      <h2 class="small-title">Cron Jobs</h2>
+  <section class="settings-section">
+      <h2 class="small-title display-inline">Cron Jobs</h2>
+      <div class="badge">Beta Feature</div>
+      <p class="text-medium display-inline"><a href="https://github.com/travis-ci/beta-features/issues/1" title="Give your feedback on Crons"  target="_blank">We'd love your feedback</a></p>
 
-      <ul class="settings-list--crons">
-        {{#each model.cronJobs.jobs as |cron|}}
-          <li>{{cron-job cron=cron}}</li>
-        {{/each}}
+    <ul class="settings-list--crons">
+      {{#each model.cronJobs.jobs as |cron|}}
+        {{cron-job cron=cron}}
+      {{/each}}
+    </ul>
 
-        <li>{{add-cron-job branches=sortedBranchesWithoutCron}}</li>
-      </ul>
+    {{#if sortedBranchesWithoutCron.length}}
+        {{add-cron-job branches=sortedBranchesWithoutCron}}
+    {{else}}
+        <p class="text-medium">There are no branches you can currently add crons to.</p>
+    {{/if}}
 
-    </section>
-  {{/if}}
+  </section>
 
 {{#if config.endpoints.sshKey}}
   <section class="settings-section">
@@ -65,7 +82,7 @@
  {{!--  <section class="settings-section">
     <h2 class="small-title">Deactivate Repository</h2>
     <p>If you'd no longer like to run this project on Travis CI you can deactivate it now.<br>You will be able to reactivate it in the future if you'd like to.</p>
-    <a href="#" class="button-delete" {{action "deactivate"}}>Deactivate Repository</a>
+    <button class="button-delete" {{action "deactivate"}} type="button">Deactivate Repository</button>
   </section> --}}
 
 </div>

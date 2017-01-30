@@ -1,5 +1,6 @@
 import { safeFormatConfig } from 'travis/helpers/format-config';
-import { module, test } from 'qunit';
+
+const { module, test } = QUnit;
 
 module('Unit | Helper | format config');
 
@@ -30,4 +31,11 @@ test('it only deletes certain keys if they are empty', (assert) => {
   let result2 = safeFormatConfig(config2);
 
   assert.equal(result2, '{\n  \"addons\": {\n    \"foo\": \"bar\"\n  },\n  \"language\": \"clojure\"\n}');
+});
+
+test('it handles an empty config array', assert => {
+  const config = [];
+  const result = safeFormatConfig(config);
+
+  assert.equal(result, '{}');
 });

@@ -1,17 +1,21 @@
-/* global Travis */
-import emojiDictionary from 'travis/utils/emoji-dictionary';
-import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
+/* global Travis, EmojiConvertor */
 import configKeysMap from 'travis/utils/keys-map';
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
-var _emojize, _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
+const emojiConvertor = new EmojiConvertor();
+
+emojiConvertor.img_sets.apple.path = `${config.emojiPrepend}/images/emoji/`;
+emojiConvertor.include_title = true;
+
+var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
   durationFrom, formatCommit, formatConfig, formatMessage, formatSha, githubify,
   intersect, mapObject, only, pathFrom, safe, timeAgoInWords, timeInWords, timeago;
 
 timeago = Ember.$.timeago;
+timeago.settings.allowFuture = true;
 
 mapObject = Ember.$.map;
 
@@ -70,7 +74,7 @@ compact = function (object) {
 };
 
 safe = function (string) {
-  return new Ember.Handlebars.SafeString(string);
+  return new Ember.String.htmlSafe(string);
 };
 
 colorForState = function (state) {
@@ -107,7 +111,7 @@ formatMessage = function (message, options) {
   if (options.short) {
     message = message.split(/\n/)[0];
   }
-  message = _emojize(_escape(message));
+  message = emojiConvertor.replace_colons(_escape(message));
   if (options.repo) {
     message = githubify(message, Ember.get(options.repo, 'owner'), Ember.get(options.repo, 'name'));
   }
@@ -211,7 +215,10 @@ _githubCommitReferenceLink = function (reference, current, matched) {
   var owner, repo, url;
   owner = matched.owner || current.owner;
   repo = matched.repo || current.repo;
-  url = '' + (githubCommitUrl(owner + '/' + repo, matched.sha));
+  let slug = `${owner}/${repo}`;
+  // TODO: this duplicated the implementation of the githubCommit method
+  // in the urls service, but I didn't want to try and rewrite this entire file
+  url = `${config.sourceEndpoint}/${slug}/commit/${matched.sha}`;
   return '<a href="' + url + '">' + reference + '</a>';
 };
 
@@ -231,22 +238,6 @@ _nowUtc = function () {
 
 _toUtc = function (date) {
   return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds());
-};
-
-_emojize = function (text) {
-  var emojis;
-  emojis = text.match(/:\S+?:/g);
-  if (emojis !== null) {
-    emojis.uniq().forEach(function (emoji) {
-      var image, strippedEmoji;
-      strippedEmoji = emoji.substring(1, emoji.length - 1);
-      if (emojiDictionary.indexOf(strippedEmoji) !== -1) {
-        image = '<img class=\'emoji\' title=\'' + emoji + '\' alt=\'' + emoji + '\' src=\'' + '/images/emoji/' + strippedEmoji + '.png\'/>';
-        return text = text.replace(new RegExp(emoji, 'g'), image);
-      }
-    });
-  }
-  return text;
 };
 
 _escape = function (text) {

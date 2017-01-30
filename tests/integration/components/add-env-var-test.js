@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
+import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
   integration: true
@@ -54,6 +55,8 @@ test('it shows an error if no name is present', function (assert) {
   this.$('.form-submit').click();
 
   assert.ok(this.$('.form-error-message').length, 'the error message should be displayed');
+
+  percySnapshot(assert);
 
   fillIn(this.$('.env-name'), 'FOO');
   fillIn(this.$('.env-value'), 'bar');

@@ -1,5 +1,7 @@
 import jobConfigLanguage from 'travis/utils/job-config-language';
 
+const { module, test } = QUnit;
+
 module('jobConfigLanguage');
 
 test('an empty config returns an empty string', (assert) => {

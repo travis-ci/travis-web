@@ -4,6 +4,7 @@ let {
   clickable,
   collection,
   hasClass,
+  isHidden,
   visitable,
   text
 } = PageObject;
@@ -14,20 +15,25 @@ const jobComponent = {
     isPassed: hasClass('passed'),
     isFailed: hasClass('failed')
   },
-
   number: text('.job-number .label-align'),
   env: text('.job-env .label-align'),
-  os: text('.job-os span'),
+  os: {
+    scope: '.job-os',
+    isLinux: hasClass('linux'),
+    isMacOS: hasClass('osx')
+  },
   language: text('.job-lang .label-align')
 };
 
 export default PageObject.create({
   visit: visitable('travis-ci/travis-web/builds/1'),
-  restartBuild: clickable('.button-circle-trigger'),
-  cancelBuild: clickable('.button-circle-cancel'),
-  restartedNotification: text('p.flash-message'),
-  cancelledNotification: text('p.flash-message'),
+  restartBuild: clickable('.action-button--restart'),
+  cancelBuild: clickable('.action-button--cancel'),
+  debugBuild: clickable('.action-button--debug'),
+  notification: text('p.flash-message'),
   singleJobLogText: text('.log-body pre'),
+
+  hasNoDebugButton: isHidden('.action-button--debug'),
 
   requiredJobs: collection({
     scope: '.jobs-list:eq(0)',

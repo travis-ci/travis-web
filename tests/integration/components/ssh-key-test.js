@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { percySnapshot } from 'ember-percy';
 
 moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
   integration: true
@@ -13,8 +14,9 @@ test('it renders the default ssh key if no custom key is set', function (assert)
   this.set('key', key);
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-  assert.equal(this.$('.ssh-key-name').text().trim(), 'no custom key set', 'should display that no custom key is set');
-  assert.equal(this.$('.ssh-key-value').text().trim(), 'fingerprint', 'should display default key fingerprint');
+  assert.equal(this.$('.ssh-key-name span').text().trim(), 'Default', 'should display that no custom key is set');
+  assert.equal(this.$('.ssh-key-value span').text().trim(), 'fingerprint', 'should display default key fingerprint');
+  percySnapshot(assert);
 });
 
 test('it renders the custom ssh key if custom key is set', function (assert) {
@@ -30,10 +32,9 @@ test('it renders the custom ssh key if custom key is set', function (assert) {
   this.set('key', key);
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-  assert.equal(this.$('.ssh-key-name').text().trim(), 'fookey', 'should display key description');
-  assert.equal(this.$('.ssh-key-value').text().trim(), 'somethingthing', 'should display custom key fingerprint');
+  assert.equal(this.$('.ssh-key-name span').text().trim(), 'fookey', 'should display key description');
+  assert.equal(this.$('.ssh-key-value span').text().trim(), 'somethingthing', 'should display custom key fingerprint');
 });
-
 
 test('it deletes a custom key if permissions are right', function (assert) {
   assert.expect(1);
@@ -49,9 +50,10 @@ test('it deletes a custom key if permissions are right', function (assert) {
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted" pushAccess=true}}`);
   this.on('sshKeyDeleted', function () {});
 
-  this.$('.ssh-key-action a').click();
+  this.$('.ssh-key-action button').click();
 
   assert.ok(key.get('isDeleted'), 'key should be deleted');
+  percySnapshot(assert);
 
   // we don't deal with saving records for now, so at least wait till it's done
   var done = assert.async();

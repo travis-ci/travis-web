@@ -1,3 +1,4 @@
+/* global moment */
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
@@ -30,12 +31,10 @@ moduleForAcceptance('Acceptance | repo settings', {
       }
     });
 
-    repository.createSetting({
-      builds_only_with_travis_yml: true,
-      build_pushes: true,
-      maximum_number_of_builds: 1919,
-      build_pull_requests: true
-    });
+    repository.createSetting({ name: 'builds_only_with_travis_yml', value: true });
+    repository.createSetting({ name: 'build_pushes', value: true });
+    repository.createSetting({ name: 'maximum_number_of_builds', value: 1919 });
+    repository.createSetting({ name: 'build_pull_requests', value: true });
 
     repository.createEnvVar({
       id: 'a',
@@ -49,18 +48,6 @@ moduleForAcceptance('Acceptance | repo settings', {
       name: 'published',
       public: null,
       value: null
-    });
-
-    repository.createCustomSshKey({
-      description: 'testy',
-      fingerprint: 'dd:cc:bb:aa',
-      type: 'custom'
-    });
-
-    repository.createDefaultSshKey({
-      type: 'default',
-      fingerprint: 'aa:bb:cc:dd',
-      key: 'A PUBLIC KEY!'
     });
 
     this.repository = repository;
@@ -79,16 +66,18 @@ moduleForAcceptance('Acceptance | repo settings', {
 
     this.dailyCron = server.create('cron', {
       interval: 'daily',
-      disable_by_build: false,
-      next_enqueuing: '2016-05-20T13:19:19Z',
+      dont_run_if_recent_build_exists: false,
+      last_run: moment(),
+      next_run: moment().add(1, 'days'),
       repository_id: repoId,
       branchId: dailyBranch.id
     });
 
     server.create('cron', {
       interval: 'weekly',
-      disable_by_build: true,
-      next_enqueuing: '2016-05-20T14:20:10Z',
+      dont_run_if_recent_build_exists: true,
+      last_run: moment(),
+      next_run: moment().add(1, 'weeks'),
       repository_id: repoId,
       branchId: weeklyBranch.id
     });
@@ -115,61 +104,69 @@ test('view settings', function (assert) {
     assert.notOk(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to not be public');
     assert.equal(settingsPage.environmentVariables(1).value, '••••••••••••••••');
 
-    assert.equal(settingsPage.crons(0).branchName, 'daily-branch');
-    assert.ok(settingsPage.crons(0).enqueuingInterval.indexOf('Enqueues each day after') === 0, 'Shows daily enqueuing text');
-    assert.ok(settingsPage.crons(0).disableByBuildText.indexOf('Always run') === 0, 'expected cron to run even if no new commit after last build');
+    assert.equal(settingsPage.crons(0).branchName, 'Cron job event daily-branch');
+    assert.equal(settingsPage.crons(0).interval, 'Runs daily');
+    assert.equal(settingsPage.crons(0).lastRun, 'Ran less than a minute ago');
+    assert.equal(settingsPage.crons(0).nextRun, 'Scheduled in about 24 hours from now');
+    assert.ok(settingsPage.crons(0).dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
 
-    assert.equal(settingsPage.crons(1).branchName, 'weekly-branch');
-    assert.ok(settingsPage.crons(1).enqueuingInterval.indexOf('Enqueues each') === 0, 'Shows weekly enqueuing text');
-    assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only if no new commit') === 0, 'expected cron to run only if no new commit after last build');
+    assert.equal(settingsPage.crons(1).branchName, 'Cron job event weekly-branch');
+    assert.equal(settingsPage.crons(1).interval, 'Runs weekly');
+    assert.equal(settingsPage.crons(1).lastRun, 'Ran less than a minute ago');
+    assert.equal(settingsPage.crons(1).nextRun, 'Scheduled in 7 days from now');
+    assert.ok(settingsPage.crons(1).dontRunIfRecentBuildExistsText.indexOf('Do not run if there has been a build in the last 24h') === 0, 'expected Do not run if there has been a build in the last 24h');
 
-    assert.equal(settingsPage.sshKey.name, 'testy');
+    assert.equal(settingsPage.sshKey.name, 'Custom');
     assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
+
+    assert.notOk(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to not exist');
+    assert.notOk(settingsPage.autoCancelPushes.exists, 'expected no auto-cancel pushes switch when flag not present in API response');
+    assert.notOk(settingsPage.autoCancelPullRequests.exists, 'expected no auto-cancel pull requests switch when flag not present in API response');
   });
 });
 
 test('change general settings', function (assert) {
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
-  const requestBodies = [];
+  const settingToRequestBody = {};
 
-  server.patch(`/repos/${this.repository.id}/settings`, function (schema, request) {
-    requestBodies.push(JSON.parse(request.requestBody));
+  server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
+    settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
   });
 
   settingsPage.buildPushes.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
-    assert.deepEqual(requestBodies.pop(), { settings: { build_pushes: false } });
+    assert.deepEqual(settingToRequestBody.build_pushes, { 'user_setting.value': false });
   });
 
   settingsPage.buildOnlyWithTravisYml.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
-    assert.deepEqual(requestBodies.pop(), { settings: { builds_only_with_travis_yml: false } });
+    assert.deepEqual(settingToRequestBody.builds_only_with_travis_yml, { 'user_setting.value': false });
   });
 
   settingsPage.buildPullRequests.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
-    assert.deepEqual(requestBodies.pop(), { settings: { build_pull_requests: false } });
+    assert.deepEqual(settingToRequestBody.build_pull_requests, { 'user_setting.value': false });
   });
 
   settingsPage.limitConcurrentBuilds.fill('2010');
 
   andThen(() => {
     assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
-    assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 2010 } });
+    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 2010 });
   });
 
   settingsPage.limitConcurrentBuilds.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
-    assert.deepEqual(requestBodies.pop(), { settings: { maximum_number_of_builds: 0 } });
+    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 0 });
   });
 });
 
@@ -194,6 +191,7 @@ test('delete and create environment variables', function (assert) {
 
   server.post('/settings/env_vars', function (schema, request) {
     const parsedRequestBody = JSON.parse(request.requestBody);
+    parsedRequestBody.env_var.id = '1919';
     requestBodies.push(parsedRequestBody);
     return parsedRequestBody;
   });
@@ -208,7 +206,24 @@ test('delete and create environment variables', function (assert) {
     assert.ok(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
     assert.equal(settingsPage.environmentVariables(1).value, 'true');
 
-    assert.deepEqual(requestBodies.pop(), { env_var: { name: 'drafted', value: 'true', public: true, repository_id: this.repository.id } });
+    assert.deepEqual(requestBodies.pop(), { env_var: {
+      id: '1919',
+      name: 'drafted',
+      value: 'true',
+      public: true,
+      repository_id: this.repository.id
+    } });
+
+    // This will trigger a client-side error
+    server.post('/settings/env_vars', undefined, 403);
+  });
+
+  settingsPage.environmentVariableForm.fillName('willFail');
+  settingsPage.environmentVariableForm.fillValue('true');
+  settingsPage.environmentVariableForm.add();
+
+  andThen(() => {
+    assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
   });
 });
 
@@ -245,7 +260,7 @@ test('delete and set SSH keys', function (assert) {
   andThen(() => {
     assert.equal(deletedIds.pop(), this.repository.id, 'expected the server to have received a deletion request for the SSH key');
 
-    assert.equal(settingsPage.sshKey.name, 'no custom key set');
+    assert.equal(settingsPage.sshKey.name, 'Default');
     assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
     assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
   });
@@ -273,4 +288,39 @@ test('delete and set SSH keys', function (assert) {
       value: 'hello'
     });
   });
+});
+
+test('on a repository with auto-cancellation', function (assert) {
+  this.repository.createSetting({ name: 'auto_cancel_pushes', value: true });
+  this.repository.createSetting({ name: 'auto_cancel_pull_requests', value: false });
+
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+
+  andThen(() => {
+    assert.ok(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to exist');
+    assert.ok(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be present and enabled');
+    assert.notOk(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be present but disabled');
+  });
+
+  const settingToRequestBody = {};
+
+  server.patch(`/repo/${this.repository.id}/setting/:setting`, function (schema, request) {
+    settingToRequestBody[request.params.setting] = JSON.parse(request.requestBody);
+  });
+
+  settingsPage.autoCancelPullRequests.toggle();
+
+  andThen(() => {
+    assert.ok(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be enabled');
+    assert.deepEqual(settingToRequestBody.auto_cancel_pull_requests, { 'user_setting.value': true });
+  });
+
+  settingsPage.autoCancelPushes.toggle();
+
+  andThen(() => {
+    assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
+    assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'user_setting.value': false });
+  });
+
+  percySnapshot(assert);
 });

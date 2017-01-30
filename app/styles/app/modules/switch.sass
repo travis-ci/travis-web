@@ -1,4 +1,4 @@
-%switch
+.switch
   $switch-height: 32px
   $switch-width: 80px
 
@@ -62,21 +62,7 @@
     pointer-events: none
     opacity: .5
 
-.switch
-  @extend %switch
-
-.switch--icon
-  @extend %switch
-
-  .on,
-  .off
-    text-indent: 99%;
-    overflow: hidden;
-    white-space: nowrap;
-    background-size: 1.1em
-    background-position: 50%
-    background-repeat: no-repeat
-  .off
-    @extend %icon-line-cross-white
-  .on
-    @extend %icon-line-passed
+  [class^="icon-"]
+    +colorSVG(white)
+    width: 15px
+    height: 100%

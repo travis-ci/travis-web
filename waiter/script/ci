@@ -6,12 +6,6 @@ elif [ "$TEST_SUITE" == "phantomjs" ]; then
   bundle exec rackup -s puma -p 5000 -D
   sleep 3
   phantomjs run_qunit.js http://localhost:5000/spec.html
-elif [ "$TRAVIS_SECURE_ENV_VARS" == "true" -a "$TEST_SUITE" == "saucelabs" ]; then
-  bundle exec rackup -s puma -p 5000 -D
-  sleep 3
-  curl https://gist.githubusercontent.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
-  gem install selenium-webdriver
-  ruby script/saucelabs.rb
 else
   echo "Not running any tests"
 fi

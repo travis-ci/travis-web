@@ -103,13 +103,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'anja'
       }, {
-        name: 'Aly Fulton',
-        title: 'Resident Linguist',
-        handle: 'sinthetix',
-        nationality: 'usa',
-        country: 'usa',
-        image: 'aly'
-      }, {
         name: 'Amanda Quaranto',
         title: 'Crafting Extremist',
         handle: 'aquaranto',
@@ -159,8 +152,8 @@ export default TravisRoute.extend({
         country: 'canada',
         image: 'dominic'
       }, {
-        name: 'Liza Brisker',
-        title: 'Brainy Trainee',
+        name: 'Liz Brisker',
+        title: 'Mermaid On Board',
         nationality: 'russia',
         country: 'germany',
         image: 'liz'
@@ -249,11 +242,33 @@ export default TravisRoute.extend({
         image: 'anna'
       }, {
         name: 'Lena Reinhard',
-        title: 'Team Lead',
+        title: 'Somehow I manage',
         handle: 'lrnrd',
         nationality: 'germany',
         country: 'germany',
         image: 'lena'
+      }, {
+        name: 'Sam Wright',
+        title: 'Documentarian',
+        handle: 'plaindocs',
+        nationality: 'uk',
+        country: 'germany',
+        image: 'sam'
+      },
+      {
+        name: 'Lili Kui',
+        title: 'Hammer Jammer',
+        nationality: 'kenya',
+        country: 'germany',
+        image: 'lili'
+      },
+      {
+        name: 'Carla Iriberri',
+        title: 'Cacaolat Connoisseur',
+        handle: 'iriberri1',
+        nationality: 'spain',
+        country: 'spain',
+        image: 'iriberri'
       }
     ];
   }

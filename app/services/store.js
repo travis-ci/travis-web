@@ -23,7 +23,7 @@ export default DS.Store.extend({
   },
 
   canHandleEvent(event, data) {
-    var callback, name, ref, ref1;
+    let callback, name, ref, ref1;
     ref = event.split(':');
     name = ref[0];
     ref1 = this.get('pusherEventHandlerGuards');
@@ -37,7 +37,7 @@ export default DS.Store.extend({
   },
 
   receivePusherEvent(event, data) {
-    var build, commit, job, name, ref, ref1, ref2, type;
+    let build, commit, job, name, ref, ref1, ref2, type;
     ref = event.split(':');
     name = ref[0];
     type = ref[1];
@@ -80,13 +80,13 @@ export default DS.Store.extend({
       return this.loadOne(name, data);
     } else {
       if (!type) {
-        throw "can't load data for " + name;
+        throw `can't load data for ${name}`;
       }
     }
   },
 
   loadOne(type, json) {
-    var data, default_branch, last_build_id;
+    let data, default_branch, last_build_id;
 
     this.push(this.normalize(type, json));
 
@@ -111,11 +111,9 @@ export default DS.Store.extend({
       if (!last_build_id || lastBuild) {
         return this.push(this.normalize('repo', data));
       } else {
-        return this.findRecord('build', last_build_id).then((function (_this) {
-          return function () {
-            return _this.push(_this.normalize('repo', data));
-          };
-        })(this));
+        return this.findRecord('build', last_build_id).then(() => {
+          this.push(this.normalize('repo', data));
+        });
       }
     }
   }

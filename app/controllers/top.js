@@ -1,3 +1,4 @@
+/* globals HS */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
@@ -8,14 +9,13 @@ export default Ember.Controller.extend({
   auth: service(),
   store: service(),
   storage: service(),
+  externalLinks: service(),
 
   user: alias('auth.currentUser'),
 
   userName: Ember.computed('user.login', 'user.name', function () {
     return this.get('user.name') || this.get('user.login');
   }),
-
-  isDashboard: false,
 
   defineTowerColor(broadcastArray) {
     if (!broadcastArray) {
@@ -53,18 +53,13 @@ export default Ember.Controller.extend({
         seenBroadcasts = [];
       }
       Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options).then((response) => {
-        var receivedBroadcasts;
-        if (response.broadcasts.length) {
-          receivedBroadcasts = response.broadcasts.filter(function (broadcast) {
-            if (!broadcast.expired) {
-              if (seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
-                return broadcast;
-              }
-            }
-          }).map(function (broadcast) {
-            return Ember.Object.create(broadcast);
-          }).reverse();
-        }
+        const receivedBroadcasts = response.broadcasts.reduce((processed, broadcast) => {
+          if (!broadcast.expired && seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
+            processed.unshift(Ember.Object.create(broadcast));
+          }
+
+          return processed;
+        }, []);
         Ember.run(() => {
           broadcasts.set('lastBroadcastStatus', this.defineTowerColor(receivedBroadcasts));
           broadcasts.set('content', receivedBroadcasts);
@@ -72,6 +67,26 @@ export default Ember.Controller.extend({
         });
       });
       return broadcasts;
+    }
+  }),
+
+  deploymentVersion: Ember.computed(function () {
+    if (window && window.location) {
+      const hostname = window.location.hostname;
+
+      if (hostname.indexOf('ember-beta') === 0 || hostname.indexOf('ember-canary') === 0) {
+        return `Ember ${Ember.VERSION}`;
+      } else if (hostname.indexOf('test-deployments') > 0) {
+        const branchName = hostname.split('.')[0];
+        const branchURL = this.get('externalLinks').travisWebBranch(branchName);
+        const branchLink = `<a href='${branchURL}'><code>${branchName}</code></a>`;
+
+        return Ember.String.htmlSafe(`Test deployment ${branchLink}`);
+      } else {
+        return false;
+      }
+    } else {
+      return false;
     }
   }),
 
@@ -101,6 +116,11 @@ export default Ember.Controller.extend({
       let status = this.defineTowerColor(this.get('broadcasts.content'));
       this.set('broadcasts.lastBroadcastStatus', status);
       return false;
+    },
+
+    helpscoutTrigger() {
+      HS.beacon.open();
+      return false;
     }
   },
 
@@ -117,7 +137,7 @@ export default Ember.Controller.extend({
       classes.push('active');
     }
 
-    classes.push(this.get('controller.auth.state') || 'signed-out');
+    classes.push(this.get('auth.state') || 'signed-out');
 
     return classes.join(' ');
   })

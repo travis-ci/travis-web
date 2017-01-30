@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import config from 'travis/config/environment';
 
 const { service } = Ember.inject;
@@ -7,6 +6,7 @@ const { service } = Ember.inject;
 export default Ember.Component.extend({
   routing: service('-routing'),
   permissions: service(),
+  externalLinks: service(),
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   urlGithubCommit: Ember.computed('branch.last_build', function () {
     let slug = this.get('branch.repository.slug');
     let commitSha = this.get('branch.last_build.commit.sha');
-    return githubCommitUrl(slug, commitSha);
+    return this.get('externalLinks').githubCommit(slug, commitSha);
   }),
 
   getLast5Builds: Ember.computed(function () {

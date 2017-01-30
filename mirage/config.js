@@ -54,8 +54,8 @@ export default function () {
     }
   });
 
-  this.get('/v3/broadcasts', (/* schema, request*/) => {
-    return { broadcasts: [] };
+  this.get('/v3/broadcasts', schema => {
+    return schema.broadcasts.all();
   });
 
   this.get('/repos', function (schema/* , request*/) {
@@ -76,9 +76,17 @@ export default function () {
 
   this.get('/cron/:id');
 
-  this.get('/repos/:id/settings', function (schema, request) {
-    let settings = schema.settings.where({ repositoryId: request.params.id }).models[0];
-    return this.serialize(settings, 'v2');
+  this.get('/repo/:id/settings', function (schema, request) {
+    let settings = schema.settings.where({ repositoryId: request.params.id });
+
+    return {
+      user_settings: settings.models.map(setting => {
+        return {
+          name: setting.attrs.name,
+          value: setting.attrs.value
+        };
+      })
+    };
   });
 
   this.get('/repos/:id/caches', function (schema, request) {
@@ -97,14 +105,6 @@ export default function () {
     };
   });
 
-  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
-    let sshKeys = schema.sshKeys.where({
-      repositoryId: request.params.repo_id,
-      type: 'custom'
-    }).models[0];
-    return this.serialize(sshKeys, 'v2');
-  });
-
   this.get('/v3/repo/:id', function (schema, request) {
     return schema.repositories.find(request.params.id);
   });
@@ -113,14 +113,28 @@ export default function () {
     return schema.branches.all();
   });
 
-  this.get('/repos/:id/key', function (schema, request) {
-    const key = schema.sshKeys.where({
-      repositoryId: request.params.id,
-      type: 'default'
-    }).models[0];
+  this.get('/v3/owner/:login', function (schema, request) {
+    return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
+  });
+
+  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
+    const repo = schema.repositories.find(request.params.repo_id);
+    const { customSshKey } = repo;
     return {
-      key: key.attrs.key,
-      fingerprint: key.attrs.fingerprint
+      ssh_key: {
+        id: 1,
+        description: customSshKey.description,
+        fingerprint: customSshKey.fingerprint,
+      }
+    };
+  });
+
+  this.get('/repos/:id/key', function (schema, request) {
+    const repo = schema.repositories.find(request.params.id);
+    const { defaultSshKey } = repo;
+    return {
+      fingerprint: defaultSshKey.fingerprint,
+      key: '-----BEGIN PUBLIC KEY-----',
     };
   });
 
@@ -136,14 +150,33 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema/* , request*/) {
-    return { builds: schema.builds.all().models.map(build => {
+  this.get('/builds', function (schema, { queryParams:
+    { event_type: eventType, after_number: afterNumber, ids } }) {
+    const allBuilds = schema.builds.all();
+    let builds;
+
+    if (afterNumber) {
+      builds = allBuilds.models.filter(build => build.number < afterNumber);
+    } else if (ids) {
+      builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
+    } else if (eventType === 'pull_request') {
+      builds = allBuilds.models;
+    } else {
+      // This forces the Show more button to show in the build history test
+      builds = allBuilds.models.slice(0, 3);
+    }
+
+    return { builds: builds.map(build => {
       if (build.commit) {
         build.attrs.commit_id = build.commit.id;
       }
 
+      if (build.jobs) {
+        build.attrs.job_ids = build.jobs.models.map(job => job.id);
+      }
+
       return build;
-    }), commits: schema.commits.all().models };
+    }), commits: builds.map(build => build.commit) };
   });
 
   this.get('/builds/:id', function (schema, request) {
@@ -160,7 +193,7 @@ export default function () {
     return response;
   });
 
-  this.post('/builds/:id/restart', (schema, request) => {
+  this.post('/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
       return {
@@ -172,7 +205,7 @@ export default function () {
     }
   });
 
-  this.post('/builds/:id/cancel', (schema, request) => {
+  this.post('/build/:id/cancel', (schema, request) => {
     let build = schema.builds.find(request.params.id);
     if (build) {
       return new Mirage.Response(204, {}, {});
@@ -181,7 +214,7 @@ export default function () {
     }
   });
 
-  this.post('/jobs/:id/restart', (schema, request) => {
+  this.post('/job/:id/restart', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
       return {
@@ -193,7 +226,7 @@ export default function () {
     }
   });
 
-  this.post('/jobs/:id/cancel', (schema, request) => {
+  this.post('/job/:id/cancel', (schema, request) => {
     let job = schema.jobs.find(request.params.id);
     if (job) {
       return new Mirage.Response(204, {}, {});
@@ -201,7 +234,6 @@ export default function () {
       return new Mirage.Response(404, {}, {});
     }
   });
-
 
   this.get('/v3/repo/:repo_id/builds', function (schema, request) {
     const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];

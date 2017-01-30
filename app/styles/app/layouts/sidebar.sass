@@ -17,21 +17,16 @@
   @include colorRows($canary-yellow, 'received', 8px, true)
   @include colorRows($canary-yellow, 'created', 8px, true)
 
-  .status-icon .is-rotating
-    width: 17px
-    height: 17px
-    line-height: 1
-
   h2, p
     margin: 0
-    font-size: 14px
-    font-weight: 400
+    font-size: inherit
   h2
     position: relative
     display: inline-block
     margin-bottom: .7em
+    padding-left: 1px
     @media #{$medium-up}
-      width: 75%
+      width: 72%
       white-space: nowrap
       overflow: hidden
       &:after
@@ -39,23 +34,11 @@
   p.tile-title
     width: 10%
     @media #{$medium-up}
-      width: 25%
+      width: 27%
       white-space: nowrap
       overflow: hidden
-    @media #{$xlarge-up}
-      width: 22%
   a:hover
     text-decoration: underline
-
-  .icon-clock,
-  .icon-calendar,
-  .icon-hash
-    width: 14px
-    height: 14px
-  .status-icon
-    width: 12px
-    height: 16px
-
 
 #tab_new
   a:hover
@@ -66,14 +49,14 @@
   margin-top: 1.4rem
   ul
     @include resetul
-    border-bottom: .46rem solid $cream-light
-    background-color: $cream-light
+    border-bottom: .46rem solid $pebble-grey
+    background-color: $pebble-grey
+
+.travistab-nav--sidebar
+  padding: 0 1em
 
 .sidebar-seperator
   width: 90%
   margin: 1rem auto
   border: none
-  border-bottom: solid 2px #f2f2f2
-  
-.travistab-nav--sidebar
-  padding: 0 1em
+  border-bottom: solid 2px $pebble-grey

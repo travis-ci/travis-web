@@ -10,6 +10,10 @@ module.exports = function (environment) {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // prevent Ember Data from overriding Date.parse
+        Date: false
       }
     },
 
@@ -31,10 +35,9 @@ module.exports = function (environment) {
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
 
-    heap: {
-      projectId: '1049054202'
-    },
-    logLimit: 10000
+    logLimit: 10000,
+
+    emojiPrepend: ''
   };
 
   ENV.featureFlags = {
@@ -44,13 +47,6 @@ module.exports = function (environment) {
 
   var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
   var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
-
-  // Do not collect metrics if in non-production env or enterprise
-  if (process.env.TRAVIS_ENTERPRISE || environment !== 'production') {
-    ENV.heap = {
-      development: true
-    };
-  }
 
   if (typeof process !== 'undefined') {
     if (ENV.featureFlags['pro-version'] && !process.env.TRAVIS_ENTERPRISE) {
@@ -80,9 +76,6 @@ module.exports = function (environment) {
         security: ENV.billingEndpoint + "/pages/security",
         terms: ENV.billingEndpoint + "/pages/terms"
       };
-      ENV.heap = {
-        projectId: '1556722898'
-      }
     }
 
     if (process.env.API_ENDPOINT) {
@@ -108,7 +101,6 @@ module.exports = function (environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     ENV.APP.rootElement = '#ember-testing';
@@ -124,9 +116,20 @@ module.exports = function (environment) {
       caches: true
     };
 
+    ENV.pusher = {};
+
     ENV.skipConfirmations = true;
 
     ENV.logLimit = 100;
+
+    ENV.percy = {
+      breakpointsConfig: {
+        mobile: 375,
+        tablet: 768,
+        desktop: 1280
+      },
+      defaultBreakpoints: ['desktop']
+    };
   }
 
   if (environment === 'production') {
@@ -135,28 +138,55 @@ module.exports = function (environment) {
       enabled: false
     };
 
-    ENV.sentry = {
-      dsn: sentryDSN
-    };
+    if (process.env.DISABLE_SENTRY) {
+      ENV.sentry = {
+        development: true
+      }
+    } else {
+      ENV.sentry = {
+        dsn: sentryDSN
+      };
+    }
 
     ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
-  // TODO: I insert values from ENV here, but in production
-  // this file is compiled and is not executed on runtime.
-  // We don't use CSP at the moment outside of development (ie. we don't
-  // set CSP headers), but it would be nice to do it and then we need to
-  // think about a better way to override it
-  ENV.contentSecurityPolicy = {
+  if (process.env.DEPLOY_TARGET) {
+    var s3Bucket = require('./deploy')(process.env.DEPLOY_TARGET).s3.bucket;
+    ENV.emojiPrepend = '//' + s3Bucket + '.s3.amazonaws.com';
+  }
+
+  // We want CSP settings to be available during development (via ember addon)
+  // and in production (by returning the actual header with a Ruby server)
+  // The problem is that we host travis-web on multiple hosts. Because of that
+  // if we add an api host to CSP rules here, we won't be able to set it up
+  // properly in a Ruby server (because this file will be compiled on deploy,
+  // where host info is not available).
+  // That's why I create a contentSecurityPolicyRaw hash first and then I add
+  // API host to any sections listed in cspSectionsWithApiHost. That way I can
+  // do it in the same way on the Ruby server.
+  ENV.contentSecurityPolicyRaw = {
     'default-src': "'none'",
-    'script-src': "'self'",
+    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/",
     'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
-    'connect-src': "'self' " + ENV.apiEndpoint + " ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com",
-    'style-src': "'self' https://fonts.googleapis.com",
+    'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com",
+    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://avatars.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
+    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net",
     'media-src': "'self'",
-    'frame-src': "'self' " + ENV.apiEndpoint
+    'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",
+    'report-uri': "https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly",
+    'block-all-mixed-content': '',
+    'form-action': "'self'", // probably doesn't matter, but let's have it anyways
+    'frame-ancestors': "'none'",
+    'object-src': "https://djtflbt20bdde.cloudfront.net"
   };
+  ENV.cspSectionsWithApiHost = ['connect-src', 'img-src']
+  ENV.contentSecurityPolicy = JSON.parse(JSON.stringify(ENV.contentSecurityPolicyRaw));
+  ENV.contentSecurityPolicyMeta = false;
+
+  ENV.cspSectionsWithApiHost.forEach( (section) => {
+    ENV.contentSecurityPolicy[section] += " " + ENV.apiEndpoint;
+  });
 
   return ENV;
 };

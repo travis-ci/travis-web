@@ -6,7 +6,7 @@ moduleForComponent('branch-row', 'Integration | Component | branch row', {
   integration: true
 });
 
-test('it renders data correctly', function () {
+test('it renders data correctly', function (assert) {
   const branch = Ember.Object.create({
     name: 'master',
     repository: {
@@ -48,9 +48,9 @@ test('it renders data correctly', function () {
 
   this.render(hbs`{{branch-row branch=branch}}`);
 
-  ok(this.$().find('.branch-row').hasClass('passed'), 'component should have state class (passed)');
-  equal(this.$('.row-name .label-align').text().trim(), 'master', 'should display correct branch name');
-  equal(this.$('.row-request .label-align').text().trim(), '#1 passed', 'should display build number and state');
-  equal(this.$('.row-commiter .label-align').text().trim(), 'Dan Buch', 'should display correct commiter name');
-  equal(this.$('.row-commit .label-align').text().trim(), 'a82f6ba', 'should display correct commit sha');
+  assert.ok(this.$().find('.branch-row').hasClass('passed'), 'component should have state class (passed)');
+  assert.equal(this.$('.row-name .label-align').text().trim(), 'master', 'should display correct branch name');
+  assert.equal(this.$('.row-request .label-align').text().trim(), '#1 passed', 'should display build number and state');
+  assert.equal(this.$('.row-commiter .label-align').text().trim(), 'Dan Buch', 'should display correct commiter name');
+  assert.equal(this.$('.row-commit .label-align').text().trim(), 'a82f6ba', 'should display correct commit sha');
 });

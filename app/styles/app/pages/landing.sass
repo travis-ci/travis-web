@@ -80,19 +80,6 @@
     br.mobile-break
       display: none
 
-    .button
-      background-color: $turf-green
-      color: #fff
-      font-size: 2em
-      font-weight: 300
-      margin: 1.3em 0 1.3em 0
-      border-radius: 2px
-
-      &:hover
-        background-color: rgba($turf-green, .8)
-
-    .sign-in-mascot
-      padding-right: 10px
     .loading-indicator--white
       height: 1.4em;
       line-height: 1;
@@ -124,41 +111,6 @@
     .left
       text-align: left
       padding: 0 0 0 12%
-
-  .recent-builds
-    min-height: 44rem
-
-  .recent-builds-text
-    text-align: center
-    h2
-      color: $brick-red
-      text-align: right
-      margin: 0
-
-    p
-      text-align: right
-      margin-top: 0.5em
-      margin-bottom: 2em
-
-    img
-      margin-bottom: 20px
-
-    ul
-      padding-left: 0
-
-    li
-      background-color: #fff
-      border-radius: 4px
-      color: #828282
-      font-weight: 400
-      margin-bottom: 20px
-      list-style-type: none
-      position: relative
-      height: 120px
-      width: 100%
-      padding: 10px 0 0 60px
-      text-align: left
-
   .free-for-oss
     text-align: center
 
@@ -271,6 +223,8 @@
         @extend %icon
         content: ""
         background-image: url('../images/landing-page/features-check.svg')
+        background-size: 100%
+        background-repeat: no-repeat
         width: 0.7em
         height: 0.7em
         margin-right: .3em

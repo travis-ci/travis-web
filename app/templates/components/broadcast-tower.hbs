@@ -1,19 +1,4 @@
-<span class="icon-broadcast {{status}} {{if isOpen 'is-open'}}" title="broadcasts" {{action 'toggleBroadcasts'}}>
-  <svg version="1.1" id="icon-broadcast" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 15 21.625" xml:space="preserve" alt="Broadcast tower">
-  <g class="tower-path">
-    <circle class="path" cx="7.503" cy="6.733" r="1.775"/>
-    <polyline class="path" points="8.303,8.508 13.627,21.206 4.728,14.441 	"/>
-    <polyline class="path" points="6.828,8.508 1.528,21.206 10.427,14.441 	"/>
-    <line class="path" x1="7.5" y1="8.508" x2="7.5" y2="20.673"/>
-  </g>
-  <g class="radio-wave--outer">
-    <path class="path" d="M2.454,11.81C1.247,10.557,0.5,8.859,0.5,6.981c0-2.936,1.812-5.441,4.375-6.481"/>
-    <path class="path" d="M12.668,11.668C13.8,10.43,14.5,8.792,14.5,6.981c0-2.936-1.812-5.441-4.375-6.481"/>
-  </g>
-  <g class="radio-wave--inner">
-    <path class="path" d="M3.751,9.161C3.356,8.506,3.123,7.743,3.123,6.922c0-1.836,1.133-3.402,2.735-4.052"/>
-    <path class="path" d="M11.339,8.986c0.336-0.615,0.537-1.313,0.537-2.064c0-1.836-1.133-3.402-2.735-4.052"/>
-  </g>
-  </svg>
-
+<span class="icon-broadcast {{status}} {{if isOpen 'is-open'}}" title="broadcasts" {{action (perform toggle)}}>
+  {{inline-svg 'icon-broadcast'}}
+  {{#if count}}<div class='count-wrapper'><div class='count'>{{count}}</div></div>{{/if}}
 </span>
