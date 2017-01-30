@@ -15,6 +15,18 @@ export default Mirage.Factory.extend({
     change_settings: false,
   },
 
+  customSshKey: {
+    description: 'Custom',
+    fingerprint: 'dd:cc:bb:aa',
+    type: 'custom'
+  },
+
+  defaultSshKey: {
+    type: 'default',
+    fingerprint: 'aa:bb:cc:dd',
+    description: 'Default',
+  },
+
   afterCreate(repository, server) {
     if (!repository.attrs.skipPermissions) {
       // Creates permissions for first user in the database

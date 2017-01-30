@@ -50,18 +50,6 @@ moduleForAcceptance('Acceptance | repo settings', {
       value: null
     });
 
-    repository.createCustomSshKey({
-      description: 'testy',
-      fingerprint: 'dd:cc:bb:aa',
-      type: 'custom'
-    });
-
-    repository.createDefaultSshKey({
-      type: 'default',
-      fingerprint: 'aa:bb:cc:dd',
-      key: 'A PUBLIC KEY!'
-    });
-
     this.repository = repository;
 
     const repoId = parseInt(repository.id);
@@ -128,7 +116,7 @@ test('view settings', function (assert) {
     assert.equal(settingsPage.crons(1).nextRun, 'Scheduled in 7 days from now');
     assert.ok(settingsPage.crons(1).dontRunIfRecentBuildExistsText.indexOf('Do not run if there has been a build in the last 24h') === 0, 'expected Do not run if there has been a build in the last 24h');
 
-    assert.equal(settingsPage.sshKey.name, 'testy');
+    assert.equal(settingsPage.sshKey.name, 'Custom');
     assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
 
     assert.notOk(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to not exist');
