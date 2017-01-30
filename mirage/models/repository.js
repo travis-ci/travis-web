@@ -6,7 +6,4 @@ export default Model.extend({
   envVars: hasMany(),
   settings: hasMany(),
   caches: hasMany(),
-
-  customSshKey: hasMany('ssh-key'),
-  defaultSshKey: hasMany('ssh-key')
 });

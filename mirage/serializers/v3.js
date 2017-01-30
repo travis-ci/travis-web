@@ -3,19 +3,21 @@ import { ActiveModelSerializer } from 'ember-cli-mirage';
 export default ActiveModelSerializer.extend({
   embed: true,
 
-  serialize(object/* , request */) {
+  serialize(object) {
     let json = ActiveModelSerializer.prototype.serialize.apply(this, arguments);
 
+    let type = Object.keys(json)[0];
+
     if (this.isModel(object)) {
-      json = json[this._keyForModelOrCollection(object)];
+      json[type]['@type'] = type;
+      json = json[type];
     } else {
+      json['@type'] = type;
       json['@pagination'] = {
         count: object.models.length
       };
     }
 
-    json['@type'] = this._keyForModelOrCollection(object);
-
     return json;
-  }
+  },
 });
