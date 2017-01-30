@@ -167,18 +167,18 @@ module.exports = function (environment) {
   // do it in the same way on the Ruby server.
   ENV.contentSecurityPolicyRaw = {
     'default-src': "'none'",
-    'script-src': "'self' https://ssl.google-analytics.com",
+    'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/",
     'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
     'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com http://sockjs.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com",
     'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://avatars.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
-    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline'",
+    'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net",
     'media-src': "'self'",
-    'frame-src': "'self'",
+    'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",
     'report-uri': "https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly",
     'block-all-mixed-content': '',
     'form-action': "'self'", // probably doesn't matter, but let's have it anyways
     'frame-ancestors': "'none'",
-    'object-src': "'none'"
+    'object-src': "https://djtflbt20bdde.cloudfront.net"
   };
   ENV.cspSectionsWithApiHost = ['connect-src', 'img-src']
   ENV.contentSecurityPolicy = JSON.parse(JSON.stringify(ENV.contentSecurityPolicyRaw));
