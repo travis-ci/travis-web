@@ -8,7 +8,8 @@ export default RavenLogger.extend({
     'not found',
     'returned a 403',
     'returned a 404',
-    'Adapter operation failed'
+    'operation failed',
+    'operation was aborted'
   ],
 
   unhandledPromiseErrorMessage: '',
