@@ -17,7 +17,7 @@ export default Ember.Component.extend({
 
       return job.removeLog().then(() => {
         this.get('flashes').success('Log has been successfully removed.');
-      }).fail((xhr) => {
+      }, (xhr) => {
         if (xhr.status === 409) {
           return this.get('flashes').error('Log can\'t be removed');
         } else if (xhr.status === 401) {
