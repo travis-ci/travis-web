@@ -1,5 +1,6 @@
 /* globals HS */
 import Ember from 'ember';
+import DS from 'ember-data';
 import config from 'travis/config/environment';
 
 const { alias } = Ember.computed;
@@ -76,6 +77,9 @@ export default Ember.Controller.extend({
 
       if (hostname.indexOf('ember-beta') === 0 || hostname.indexOf('ember-canary') === 0) {
         return `Ember ${Ember.VERSION}`;
+      } else if (hostname.indexOf('ember-data-beta') === 0 ||
+                 hostname.indexOf('ember-data-canary') === 0) {
+        return `Ember Data ${DS.VERSION}`;
       } else if (hostname.indexOf('test-deployments') > 0) {
         const branchName = hostname.split('.')[0];
         const branchURL = this.get('externalLinks').travisWebBranch(branchName);
