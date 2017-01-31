@@ -94,3 +94,23 @@ test('a dismissed broadcast does not highlight the tower', assert => {
     assert.ok(topPage.broadcastBadge.isHidden, 'expected there to be no broadcast count');
   });
 });
+
+test('an unresolved StatusPage incident results in a broadcast', assert => {
+  server.create('incident', {
+    name: 'Delays around LAX'
+  });
+
+  dashboardPage.visit();
+
+  andThen(() => {
+    assert.ok(topPage.broadcastTower.hasWarning, 'expected the broadcast tower to have a warning class');
+    assert.equal(topPage.broadcastBadge.text, 1, 'expected the badge to show two broadcasts');
+  });
+
+  topPage.broadcastTower.click();
+
+  andThen(() => {
+    assert.ok(topPage.broadcasts(0).isWarning, 'expected the first broadcast to be a warning');
+    assert.equal(topPage.broadcasts(0).message, 'Delays around LAX');
+  });
+});

@@ -258,6 +258,17 @@ export default function () {
     }
   });
 
+  this.get('https://api.statuspage.io/v1/pages/:page/incidents/unresolved.json', function (schema) {
+    const incidents = schema.incidents.all();
+
+    return incidents.models.map(incident => {
+      return {
+        id: incident.id,
+        name: incident.name
+      };
+    });
+  });
+
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
   // this.pretender.handledRequest = function (verb, path, request) {
   //   console.log('Handled this request:', `${verb} ${path}`, request);

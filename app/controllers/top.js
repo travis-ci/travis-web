@@ -52,20 +52,35 @@ export default Ember.Controller.extend({
       } else {
         seenBroadcasts = [];
       }
-      Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options).then((response) => {
-        const receivedBroadcasts = response.broadcasts.reduce((processed, broadcast) => {
+
+      Ember.RSVP.hash({
+        broadcastsResponse: Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options),
+        incidentsResponse: Ember.$.ajax('https://api.statuspage.io/v1/pages/pnpcptp8xh9k/incidents/unresolved.json?api_key=STATUSPAGE_API_KEY')
+      }).then(({ broadcastsResponse, incidentsResponse }) => {
+        const receivedBroadcasts = broadcastsResponse.broadcasts.reduce((processed, broadcast) => {
           if (!broadcast.expired && seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
             processed.unshift(Ember.Object.create(broadcast));
           }
 
           return processed;
         }, []);
+
+        incidentsResponse.reduce((processed, incident) => {
+          processed.unshift(Ember.Object.create({
+            id: incident.id,
+            message: incident.name,
+            category: 'warning'
+          }));
+          return processed;
+        }, receivedBroadcasts);
+
         Ember.run(() => {
           broadcasts.set('lastBroadcastStatus', this.defineTowerColor(receivedBroadcasts));
           broadcasts.set('content', receivedBroadcasts);
           broadcasts.set('isLoading', false);
         });
       });
+
       return broadcasts;
     }
   }),
