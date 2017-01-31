@@ -105,7 +105,9 @@ export default (function () {
   };
 
   LinesSelector.prototype.getLineNumberFromElement = function (element) {
-    return this.element.find('p:visible').index(element) + 1;
+    if (this && this.element) {
+      return this.element.find('p:visible').index(element) + 1;
+    }
   };
 
   LinesSelector.prototype.removeAllHighlights = function () {
