@@ -109,7 +109,9 @@ export default (function () {
   };
 
   LinesSelector.prototype.removeAllHighlights = function () {
-    return this.element.find('p.highlight').removeClass('highlight');
+    if (this && this.element) {
+      return this.element.find('p.highlight').removeClass('highlight');
+    }
   };
 
   LinesSelector.prototype.getSelectedLines = function () {
