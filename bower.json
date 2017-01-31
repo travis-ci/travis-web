@@ -17,7 +17,7 @@
     "lodash": "~4.11.2",
     "Faker": "~3.1.0",
     "ceibo": "2.0.0",
-    "raven-js": "3.8.1",
+    "raven-js": "3.10.0",
     "mousetrap": "~1.5.2",
     "prism": "^1.5.1",
     "js-emoji": "~3.0.2",
