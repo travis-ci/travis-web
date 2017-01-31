@@ -107,7 +107,7 @@
 .job-lang
   overflow: hidden
   @media #{$medium-up}
-    flex: 1 1 20%
+    flex: 0 0 8em
     position: relative
     white-space: nowrap
     &:after
@@ -116,15 +116,18 @@
 
 .job-env
   @media #{$medium-up}
-    flex: 1 1 30%
+    flex: 1 0 22em
     position: relative
     white-space: nowrap
     overflow: hidden
+    max-width: 40em
     &:after
       @include fadeOut(right, -90deg, white)
+  @media #{$xlarge-up}
+    max-width: none
   &.is-empty
     opacity: .5
 
 .job-duration
-  flex: 1 0 14%
+  flex: 0 0 10em
   padding-right: 1em
