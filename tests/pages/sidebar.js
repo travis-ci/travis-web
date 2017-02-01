@@ -9,6 +9,7 @@ import {
 
 export default create({
   visit: visitable('/'),
+  repoTitle: text('.repo-header h1.repo-title'),
   clickSidebarMyReposTab: clickable('#tab_owned a'),
   clickSidebarRunningTab: clickable('#tab_running a'),
   runningTabIsActive: hasClass('active', '#tab_running'),

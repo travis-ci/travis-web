@@ -267,7 +267,7 @@ export default function () {
         {
           name: 'Dashboard',
           description: 'UX improvements over the current implementation',
-          enabled: true
+          enabled: false
         },
         {
           name: 'Show your Pride',
