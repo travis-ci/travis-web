@@ -1,5 +1,5 @@
+/* global HS */
 import Ember from 'ember';
-import config from 'travis/config/environment';
 
 const { alias } = Ember.computed;
 const { service } = Ember.inject;
@@ -7,8 +7,9 @@ const { service } = Ember.inject;
 export default Ember.Component.extend({
   auth: service(),
   store: service(),
-  storage: service(),
   externalLinks: service(),
+  features: service(),
+  broadcastsService: service('broadcasts'),
 
   user: alias('auth.currentUser'),
 
@@ -16,58 +17,7 @@ export default Ember.Component.extend({
     return this.get('user.name') || this.get('user.login');
   }),
 
-  defineTowerColor(broadcastArray) {
-    if (!broadcastArray) {
-      return '';
-    }
-    if (broadcastArray.length) {
-      if (broadcastArray.findBy('category', 'warning')) {
-        return 'warning';
-      } else if (broadcastArray.findBy('category', 'announcement')) {
-        return 'announcement';
-      } else {
-        return '';
-      }
-    }
-  },
-
-  broadcasts: Ember.computed('broadcasts', function () {
-    var apiEndpoint, broadcasts, options, seenBroadcasts;
-    if (this.get('auth.signedIn')) {
-      broadcasts = Ember.ArrayProxy.create({
-        content: [],
-        lastBroadcastStatus: '',
-        isLoading: true
-      });
-      apiEndpoint = config.apiEndpoint;
-      options = {};
-      options.type = 'GET';
-      options.headers = {
-        Authorization: 'token ' + (this.auth.token())
-      };
-      seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
-      if (seenBroadcasts) {
-        seenBroadcasts = JSON.parse(seenBroadcasts);
-      } else {
-        seenBroadcasts = [];
-      }
-      Ember.$.ajax(apiEndpoint + '/v3/broadcasts', options).then((response) => {
-        const receivedBroadcasts = response.broadcasts.reduce((processed, broadcast) => {
-          if (!broadcast.expired && seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
-            processed.unshift(Ember.Object.create(broadcast));
-          }
-
-          return processed;
-        }, []);
-        Ember.run(() => {
-          broadcasts.set('lastBroadcastStatus', this.defineTowerColor(receivedBroadcasts));
-          broadcasts.set('content', receivedBroadcasts);
-          broadcasts.set('isLoading', false);
-        });
-      });
-      return broadcasts;
-    }
-  }),
+  broadcasts: Ember.computed.alias('broadcastsService.broadcasts'),
 
   deploymentVersion: Ember.computed(function () {
     if (window && window.location) {
@@ -101,19 +51,7 @@ export default Ember.Component.extend({
     },
 
     markBroadcastAsSeen(broadcast) {
-      var id, seenBroadcasts;
-      id = broadcast.get('id').toString();
-      seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
-      if (seenBroadcasts) {
-        seenBroadcasts = JSON.parse(seenBroadcasts);
-      } else {
-        seenBroadcasts = [];
-      }
-      seenBroadcasts.push(id);
-      this.get('storage').setItem('travis.seen_broadcasts', JSON.stringify(seenBroadcasts));
-      this.get('broadcasts.content').removeObject(broadcast);
-      let status = this.defineTowerColor(this.get('broadcasts.content'));
-      this.set('broadcasts.lastBroadcastStatus', status);
+      this.get('broadcastsService').markAsSeen(broadcast);
       return false;
     },
 
@@ -130,7 +68,7 @@ export default Ember.Component.extend({
   }),
 
   classProfile: Ember.computed('tab', 'auth.state', function () {
-    var classes = ['profile menu'];
+    let classes = ['profile menu'];
 
     if (this.get('tab') === 'profile') {
       classes.push('active');
