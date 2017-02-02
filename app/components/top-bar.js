@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   features: service(),
   broadcastsService: service('broadcasts'),
 
-  user: alias('auth.currentUser'),
+  @alias('auth.currentUser') user: null,
 
   @computed('user.{login,name}')
   userName(login, name) {
