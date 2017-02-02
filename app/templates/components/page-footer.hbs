@@ -5,7 +5,7 @@
         {{inline-svg 'travisci-logo' class="travis-logo"}}</div>
     </div>
 
-    {{#unless config.enterprise}}
+    {{#unless features.enterpriseVersion}}
       <div class="footer-elem">
         <h3 class="footer-title">&copy;Travis CI, GmbH</h3>
         <p>Rigaer Straße 8<br>10247 Berlin, Germany <br>
@@ -16,14 +16,14 @@
       <h3 class="footer-title">Help</h3>
       <ul>
         <li><a href="https://docs.travis-ci.com">Documentation</a></li>
-        {{#unless config.enterprise}}
+        {{#unless features.enterpriseVersion}}
           <li><a href="https://blog.travis-ci.com/">Blog</a></li>
           <li><a href="mailto:support@travis-ci.com">Email</a></li>
           <li><a href="https://twitter.com/travisci">Twitter</a></li>
         {{/unless}}
       </ul>
     </div>
-    {{#unless config.enterprise}}
+    {{#unless features.enterpriseVersion}}
       {{#if features.proVersion}}
         <div class="footer-elem">
           <h3 class="footer-title">Legal</h3>

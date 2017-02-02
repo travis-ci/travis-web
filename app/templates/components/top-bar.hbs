@@ -6,7 +6,7 @@
     </button>
   </div>
 
-{{#unless config.enterprise}}
+{{#unless features.enterpriseVersion}}
   {{#if auth.signedIn}}
 
     {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus count=broadcasts.length}}
@@ -31,7 +31,7 @@
 
   <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
-    {{#unless config.enterprise}}
+    {{#unless features.enterpriseVersion}}
       {{#unless features.proVersion}}
         <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
         <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
@@ -99,7 +99,7 @@
               {{#link-to "profile" class="signed-in" title="See the Travis accounts you belong to"}}Accounts{{/link-to}}
             </li>
             {{#if config.billingEndpoint}}
-              {{#unless config.enterprise}}
+              {{#unless features.enterpriseVersion}}
                 <li>
                   <a href={{config.billingEndpoint}} title="Take a look at your subscriptions">Billing</a>
                 </li>
