@@ -43,17 +43,17 @@ test('it shows restart button if canRestart is true', function (assert) {
   assert.ok(component.$('button[aria-label="Restart job"]').length, 'restart button should be visible');
 });
 
-test('user can cancel if she has pull permissions to a repo and job is cancelable', function (assert) {
+test('user can cancel if she has push permissions to a repo and job is cancelable', function (assert) {
   const job = Ember.Object.create({
     canCancel: false,
-    userHasPullPermissionForRepo: true
+    userHasPushPermissionForRepo: true
   });
   const component = this.subject({
     job: job,
-    userHasPullPermissionForRepo: false
+    userHasPushPermissionForRepo: false
   });
   assert.ok(!component.get('canCancel'));
-  component.set('userHasPullPermissionForRepo', true);
+  component.set('userHasPushPermissionForRepo', true);
   assert.ok(!component.get('canCancel'));
   job.set('canCancel', true);
   assert.ok(component.get('canCancel'));
@@ -62,14 +62,14 @@ test('user can cancel if she has pull permissions to a repo and job is cancelabl
 test('user can restart if she has pull permissions to a repo and job is restartable', function (assert) {
   const job = Ember.Object.create({
     canRestart: false,
-    userHasPullPermissionForRepo: true
+    userHasPushPermissionForRepo: true
   });
   const component = this.subject({
     job: job,
-    userHasPullPermissionForRepo: false
+    userHasPushPermissionForRepo: false
   });
   assert.ok(!component.get('canRestart'));
-  component.set('userHasPullPermissionForRepo', true);
+  component.set('userHasPushPermissionForRepo', true);
   assert.ok(!component.get('canRestart'));
   job.set('canRestart', true);
   assert.ok(component.get('canRestart'));
