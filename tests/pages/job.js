@@ -30,6 +30,7 @@ export default PageObject.create({
 
     item: {
       text: text(),
+      nextText: text('+ span'),
 
       isBlack: hasClass('black'),
       isRed: hasClass('red'),
