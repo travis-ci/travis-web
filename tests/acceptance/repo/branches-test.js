@@ -129,7 +129,9 @@ test('view branches', function (assert) {
   andThen(() => {
     assert.equal(document.title, 'killjoys/living-a-feminist-life - Travis CI');
     assert.ok(branchesPage.branchesTabActive, 'Branches tab is active when visiting /org/repo/branches');
+  });
 
+  andThen(() => {
     assert.equal(branchesPage.defaultBranch.name, 'primary');
     assert.ok(branchesPage.defaultBranch.passed, 'expected default branch last build to have passed');
     assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
