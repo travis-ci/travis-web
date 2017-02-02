@@ -1,6 +1,6 @@
 /* global HS */
 import Ember from 'ember';
-import computed, { alias } from 'ember-computed-decorators';
+import computed, { alias, none } from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -63,10 +63,7 @@ export default Ember.Component.extend({
     }
   },
 
-  @computed('auth.signedIn', 'landingPage', 'features.proVersion')
-  showCta(signedIn, landingPage, proVersion) {
-    return !signedIn && !proVersion && !landingPage;
-  },
+  @none('auth.signedIn', 'landingPage', 'features.proVersion') showCta: null,
 
   @computed('tab', 'auth.state')
   classProfile(tab, authState) {
