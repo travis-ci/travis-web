@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import computed from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -7,9 +8,10 @@ export default Ember.Service.extend({
   auth: service(),
   storage: service(),
 
-  broadcasts: Ember.computed('auth.signedIn', function () {
+  @computed('auth.signedIn')
+  broadcasts(signedIn) {
     let apiEndpoint, broadcasts, options, seenBroadcasts;
-    if (this.get('auth.signedIn')) {
+    if (signedIn) {
       broadcasts = Ember.ArrayProxy.create({
         content: [],
         lastBroadcastStatus: '',
@@ -44,9 +46,9 @@ export default Ember.Service.extend({
       });
       return broadcasts;
     }
-  }),
+  },
 
-  markAsSeen: (broadcast) => {
+  markAsSeen(broadcast) {
     let id, seenBroadcasts;
     id = broadcast.get('id').toString();
     seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');

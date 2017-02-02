@@ -1,7 +1,7 @@
 /* global HS */
 import Ember from 'ember';
+import computed, { alias } from 'ember-computed-decorators';
 
-const { alias } = Ember.computed;
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
@@ -13,13 +13,15 @@ export default Ember.Component.extend({
 
   user: alias('auth.currentUser'),
 
-  userName: Ember.computed('user.login', 'user.name', function () {
-    return this.get('user.name') || this.get('user.login');
-  }),
+  @computed('user.{login,name}')
+  userName(login, name) {
+    return name || login;
+  },
 
-  broadcasts: Ember.computed.alias('broadcastsService.broadcasts'),
+  @alias('broadcastsService.broadcasts') broadcasts: null,
 
-  deploymentVersion: Ember.computed(function () {
+  @computed()
+  deploymentVersion() {
     if (window && window.location) {
       const hostname = window.location.hostname;
 
@@ -37,7 +39,7 @@ export default Ember.Component.extend({
     } else {
       return false;
     }
-  }),
+  },
 
   actions: {
     toggleBurgerMenu() {
@@ -61,21 +63,21 @@ export default Ember.Component.extend({
     }
   },
 
-  showCta: Ember.computed('auth.signedIn', 'landingPage', 'features.proVersion', function () {
-    return !this.get('auth.signedIn') &&
-      !this.get('features.proVersion') &&
-      !this.get('landingPage');
-  }),
+  @computed('auth.signedIn', 'landingPage', 'features.proVersion')
+  showCta(signedIn, landingPage, proVersion) {
+    return !signedIn && !proVersion && !landingPage;
+  },
 
-  classProfile: Ember.computed('tab', 'auth.state', function () {
+  @computed('tab', 'auth.state')
+  classProfile(tab, authState) {
     let classes = ['profile menu'];
 
     if (this.get('tab') === 'profile') {
       classes.push('active');
     }
 
-    classes.push(this.get('auth.state') || 'signed-out');
+    classes.push(authState || 'signed-out');
 
     return classes.join(' ');
-  })
+  }
 });
