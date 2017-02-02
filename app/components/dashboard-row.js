@@ -30,7 +30,11 @@ export default Ember.Component.extend({
 
   openDropup() {
     this.toggleProperty('dropupIsOpen');
-    Ember.run.later((() => { this.set('dropupIsOpen', false); }), 2000);
+    Ember.run.later((() => { this.set('dropupIsOpen', false); }), 4000);
+  },
+
+  mouseLeave() {
+    this.set('dropupIsOpen', false);
   },
 
   triggerBuild() {
