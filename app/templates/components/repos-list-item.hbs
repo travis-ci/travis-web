@@ -22,13 +22,7 @@
   <p>
     {{inline-svg 'icon-clock' class="icon"}}
     <span class="label-align">Duration:
-      {{#if repo.currentBuild.toBeQueued}}
-       <span class="duration">Waiting to be queued</span>
-      {{else if repo.currentBuild.toBeStarted}}
-       <span class="duration">Waiting to start</span>
-      {{else}}
        <time class="duration" datetime="PT{{repo.currentBuild.duration}}S" title={{repo.currentBuild.startedAt}}>{{format-duration repo.currentBuild.duration}}</time>
-      {{/if}}
     </span>
   </p>
 

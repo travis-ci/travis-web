@@ -68,21 +68,38 @@
   <h3 class="build-status {{item.state}}">
     {{#if isJob}}
       {{#link-to "job" repo item}}
-        {{request-icon event=item.build.eventType state=item.state}} <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>{{/link-to}}
+        {{request-icon event=item.build.eventType state=item.state}}
+        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
+      {{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
-        {{request-icon event=item.eventType state=item.state}} <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>{{/link-to}}
+        {{request-icon event=item.eventType state=item.state}}
+        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
+      {{/link-to}}
     {{/if}}
   </h3>
   <ul class="list-icon">
     <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
       {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
-      <span class="label-align">Elapsed time <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time></span></li>
+      <span class="label-align">
+        {{#if item.toBeQueued}}
+          Waiting to be queued
+        {{else if item.toBeStarted}}
+          Waiting to start
+        {{else}}
+          Elapsed time <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+        {{/if}}
+      </span>
+    </li>
     {{#unless isJob}}
       {{#if item.isMatrix}}
         <li title="{{format-duration item.duration}}" class="commit-clock">
           {{inline-svg 'icon-clock' class="icon"}}
-          <span class="label-align">{{#if item.isFinished}}Total time{{else}}Running for{{/if}} <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time></span></li>
+          <span class="label-align">
+            {{#if item.isFinished}}Total time{{else}}Running for{{/if}}
+            <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time>
+          </span>
+        </li>
       {{/if}}
     {{/unless}}
     {{#if item.isFinished}}
