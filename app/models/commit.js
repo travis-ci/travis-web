@@ -47,25 +47,6 @@ export default Model.extend({
       let emailsMatch = this.get('authorEmail') === this.get('committerEmail');
       return namesMatch && emailsMatch;
     }
-  ),
+  )
 
-  authorAvatarUrlOrGravatar: Ember.computed('authorEmail', 'authorAvatarUrl', function () {
-    var url = this.get('authorAvatarUrl');
-
-    if (!url) {
-      url = this.get('externalLinks').gravatarImage(this.get('authorEmail'), 40);
-    }
-
-    return url;
-  }),
-
-  committerAvatarUrlOrGravatar: Ember.computed('committerEmail', 'committerAvatarUrl', function () {
-    var url = this.get('committerAvatarUrl');
-
-    if (!url) {
-      url = this.get('externalLinks').gravatarImage(this.get('committerEmail'), 40);
-    }
-
-    return url;
-  })
 });

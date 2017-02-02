@@ -126,7 +126,7 @@ export default Ember.Service.extend({
       let contentType, data;
       if (xhr.readyState === 4) {
         contentType = xhr.getResponseHeader('Content-Type');
-        data = (function () {
+        data = (() => {
           if (contentType && contentType.match(/application\/json/)) {
             try {
               return jQuery.parseJSON(xhr.responseText);

@@ -1,0 +1,36 @@
+{{#if canCancel}}
+  {{#if cancel.isRunning}}
+    {{loading-indicator height=true}}
+  {{else}}
+    <div class='tooltip action-button-container' data-tooltip='Cancel {{type}}'>
+      <button {{action (perform cancel)}} class="action-button--cancel" type="button" aria-label="Cancel {{type}}">
+        {{inline-svg 'icon-failed' class="icon"}}
+        <span class="label-align">Cancel {{type}}</span>
+      </button>
+    </div>
+  {{/if}}
+{{/if}}
+
+{{#if canRestart}}
+  {{#if restarters.isRunning}}
+    {{loading-indicator height=true}}
+  {{else}}
+    <div class='tooltip action-button-container' data-tooltip='Restart {{type}}'>
+      <button {{action (perform restart)}} class="action-button--restart" aria-label="Restart {{type}}" type="button">
+        {{inline-svg 'icon-restart' class="icon"}}
+        <span class="label-align">Restart {{type}}</span>
+      </button>
+    </div>
+
+    {{#if features.proVersion}}
+      {{#if canDebug}}
+        <div class='action-button-container'>
+          <button {{action (perform debug)}} class="action-button--debug tooltip" aria-label="Restart as debug {{type}}" data-tooltip='Restart as debug {{type}}' type="button">
+            {{inline-svg 'icon-debug' class="icon"}}
+            <span class="label-align">Debug {{type}}</span>
+          </button>
+        </div>
+      {{/if}}
+    {{/if}}
+  {{/if}}
+{{/if}}

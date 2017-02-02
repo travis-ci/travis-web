@@ -48,14 +48,15 @@
         {{loading-indicator}}
       {{/if}}
     </ul>
+
     <p class="commit-author">
       {{#if commit.authorName}}
-        {{user-avatar url=commit.authorAvatarUrlOrGravatar name=commit.authorName small=true}}
+        {{user-avatar url=commit.authorAvatarUrl name=commit.authorName small=true size=18}}
         <span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
       {{/if}}
       {{#unless commit.authorIsCommitter}}
         {{#if commit.committerName}}
-          {{user-avatar url=commit.committerAvatarUrlOrGravatar name=commit.committerName small=true}}
+          {{user-avatar url=commit.committerAvatarUrl name=commit.committerName small=true size=18}}
           <span class="label-align">{{commit.committerName}} committed</span>
         {{/if}}
       {{/unless}}
@@ -93,8 +94,8 @@
 
 <div class='build-tools'>
   {{#if isJob}}
-    {{job-repo-actions job=item repo=item.repo}}
+    {{repo-actions job=item repo=item.repo}}
   {{else}}
-    {{build-repo-actions build=item repo=item.repo}}
+    {{repo-actions build=item repo=item.repo}}
   {{/if}}
 </div>

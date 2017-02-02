@@ -28,7 +28,7 @@
       margin-left: auto
     @media #{$large-up}
       width: 70%
-    
+
   .hero-computer
     width: 100%
     height: 35em
@@ -101,6 +101,7 @@
       flex-wrap: wrap
       align-items: center
     li
+      width: 9em // because Safari can't handle flex-basis
       flex: 0 0 9em
       margin-bottom: 3em
       @media #{$medium-up}

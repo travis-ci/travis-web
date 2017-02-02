@@ -1,6 +1,6 @@
 <div class="ssh-key-name">
   {{inline-svg 'icon-key' class="icon"}}
-  <span>{{if key.isCustom key.description 'no custom key set'}}</span>
+  <span>{{if key.isCustom key.description 'Default'}}</span>
 </div>
 <div class="ssh-key-value">
   {{inline-svg 'icon-fingerprint' class="icon"}}
@@ -31,7 +31,7 @@
   <div class="ssh-key-action">
     <div class="tooltip--height">
       {{inline-svg 'icon-trash-disabled' class="icon ssh-no-delete"}}
-      <div class="tooltip-bubble">Default keys <br>cannot be deleted</div>
+      <div class="tooltip-bubble">Default key <br>cannot be deleted</div>
     </div>
   </div>
 {{/if}}

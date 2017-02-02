@@ -8,7 +8,6 @@ const { service } = Ember.inject;
 
 export default Model.extend({
   ajax: service(),
-  externalLinks: service(),
 
   // TODO: this totally not should be needed here
   sessionStorage: service(),
@@ -21,6 +20,7 @@ export default Model.extend({
   isSyncing: attr('boolean'),
   syncedAt: attr(),
   repoCount: attr('number'),
+  avatarUrl: attr(),
 
   fullName: Ember.computed('name', 'login', function () {
     return this.get('name') || this.get('login');
@@ -151,9 +151,5 @@ export default Model.extend({
     user = JSON.parse(this.get('sessionStorage').getItem('travis.user'));
     user[name.underscore()] = this.get(name);
     return this.get('sessionStorage').setItem('travis.user', JSON.stringify(user));
-  },
-
-  avatarUrl: Ember.computed('email', function () {
-    return this.get('externalLinks').gravatarImage(this.get('email'), 36);
-  })
+  }
 });

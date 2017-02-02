@@ -36,4 +36,7 @@
     {{inline-svg 'icon-clock' class="icon"}}
     <time class="label-align" aria-label="Job duration" datetime="PT{{job.duration}}S">{{format-duration job.duration}}</time>
   </div>
+
 {{/link-to}}
+
+{{repo-actions job=job repo=job.repo labelless=true}}

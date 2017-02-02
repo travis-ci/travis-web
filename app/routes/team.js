@@ -242,7 +242,7 @@ export default TravisRoute.extend({
         image: 'anna'
       }, {
         name: 'Lena Reinhard',
-        title: 'Team Lead',
+        title: 'Somehow I manage',
         handle: 'lrnrd',
         nationality: 'germany',
         country: 'germany',
@@ -261,6 +261,14 @@ export default TravisRoute.extend({
         nationality: 'kenya',
         country: 'germany',
         image: 'lili'
+      },
+      {
+        name: 'Carla Iriberri',
+        title: 'Cacaolat Connoisseur',
+        handle: 'iriberri1',
+        nationality: 'spain',
+        country: 'spain',
+        image: 'iriberri'
       }
     ];
   }

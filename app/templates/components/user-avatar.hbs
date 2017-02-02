@@ -1,4 +1,4 @@
 <span class="pseudo-avatar" aria-hidden="true" data-initials="{{userInitials}}"></span>
 {{#if url}}
-<img class="real-avatar" src="{{avatarUrl}}" alt="avatar">
+  <img class="real-avatar" src="{{avatarUrl}}" srcset="{{avatarUrl}} 1x, {{highResAvatarUrl}} 2x" alt="{{name}} avatar">
 {{/if}}

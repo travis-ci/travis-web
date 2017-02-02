@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import computed from 'ember-computed-decorators';
+
 import eventually from 'travis/utils/eventually';
 
 import { task, taskGroup } from 'ember-concurrency';
@@ -6,46 +8,59 @@ import { task, taskGroup } from 'ember-concurrency';
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
 
-export default Ember.Mixin.create({
+export default Ember.Component.extend({
+  classNames: ['repo-main-tools'],
+  classNameBindings: ['labelless'],
+
   flashes: service(),
   auth: service(),
 
   user: alias('auth.currentUser'),
 
-  userHasPermissionForRepo: Ember.computed('user.permissions.[]', 'repo', 'user', function () {
-    var repo, user;
-    repo = this.get('repo');
-    user = this.get('user');
+  @computed('type', 'job', 'build')
+  item(type, job, build) {
+    if (type === 'job') {
+      return job;
+    } else {
+      return build;
+    }
+  },
+
+  @computed('job', 'build')
+  type(job) {
+    if (job) {
+      return 'job';
+    } else {
+      return 'build';
+    }
+  },
+
+  @computed('repo', 'user', 'user.permissions.[]')
+  userHasPermissionForRepo(repo, user) {
     if (user && repo) {
       return user.hasAccessToRepo(repo);
     }
-  }),
+  },
 
-  // eslint-disable-next-line
-  userHasPullPermissionForRepo: Ember.computed('user.pullPermissions.[]', 'repo', 'user', function () {
-    const repo = this.get('repo');
-    const user = this.get('user');
-
+  @computed('repo', 'user', 'user.pullPermissions.[]')
+  userHasPullPermissionForRepo(repo, user) {
     if (user && repo) {
       return user.hasPullAccessToRepo(repo);
     }
-  }),
+  },
 
-  // eslint-disable-next-line
-  userHasPushPermissionForRepo: Ember.computed('user.pushPermissions.[]', 'repo', 'user', function () {
-    const repo = this.get('repo');
-    const user = this.get('user');
-
+  @computed('repo', 'user', 'user.pushPermissions.[]')
+  userHasPushPermissionForRepo(repo, user) {
     if (user && repo) {
       return user.hasPushAccessToRepo(repo);
     }
-  }),
+  },
 
   canCancel: Ember.computed.and('userHasPullPermissionForRepo', 'item.canCancel'),
   canRestart: Ember.computed.and('userHasPullPermissionForRepo', 'item.canRestart'),
   canDebug: Ember.computed.and('userHasPushPermissionForRepo', 'item.canDebug'),
 
-  cancel: task(function * () {
+  cancel: task(function* () {
     let type = this.get('type');
 
     yield eventually(this.get('item'), (record) => {
@@ -59,7 +74,7 @@ export default Ember.Mixin.create({
 
   restarters: taskGroup().drop(),
 
-  restart: task(function * () {
+  restart: task(function* () {
     let type = this.get('type');
 
     yield eventually(this.get('item'), (record) => {
@@ -71,7 +86,7 @@ export default Ember.Mixin.create({
     });
   }).group('restarters'),
 
-  debug: task(function * () {
+  debug: task(function* () {
     let type = this.get('type');
 
     yield eventually(this.get('item'), (record) => {
@@ -96,7 +111,7 @@ export default Ember.Mixin.create({
       this.get('flashes').error(`You don't have sufficient access to ${actionTerm} this ${type}`);
     } else {
       let actionTerm = action === 'restart' ? 'restarting' : 'canceling';
-      this.get('flashes').error(`An error occured when ${actionTerm} the ${type}`);
+      this.get('flashes').error(`An error occurred when ${actionTerm} the ${type}`);
     }
   }
 });

@@ -6,7 +6,7 @@
     </button>
   </div>
 
-{{#unless config.enterprise}}
+{{#unless features.enterpriseVersion}}
   {{#if auth.signedIn}}
 
     {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus count=broadcasts.length}}
@@ -31,7 +31,7 @@
 
   <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
-    {{#unless config.enterprise}}
+    {{#unless features.enterpriseVersion}}
       {{#unless features.proVersion}}
         <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
         <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
@@ -48,7 +48,7 @@
         {{#unless auth.signedIn}}
           <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
           <li><a href="/plans" title="Plans and Prices for Travis CI" class="navigation-anchor">Plans & Pricing</a></li>
-          <li><a href="https://enterprise.travis-ci.com" title="Travis CI for Enterprise">Enterprise</a></li>
+          <li><a href="https://enterprise.travis-ci.com" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
         {{else}}
           <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
           <li>
@@ -87,7 +87,7 @@
         {{#if auth.signedIn}}
           {{#link-to "profile" class="navigation-anchor signed-in"}}
             {{userName}}
-            {{user-avatar url=user.avatarUrl name=user.fullName}}
+            {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
           {{/link-to}}
         {{/if}}
         {{#if auth.signingIn}}
@@ -99,7 +99,7 @@
               {{#link-to "profile" class="signed-in" title="See the Travis accounts you belong to"}}Accounts{{/link-to}}
             </li>
             {{#if config.billingEndpoint}}
-              {{#unless config.enterprise}}
+              {{#unless features.enterpriseVersion}}
                 <li>
                   <a href={{config.billingEndpoint}} title="Take a look at your subscriptions">Billing</a>
                 </li>

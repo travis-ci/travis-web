@@ -105,14 +105,6 @@ export default function () {
     };
   });
 
-  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
-    let sshKeys = schema.sshKeys.where({
-      repositoryId: request.params.repo_id,
-      type: 'custom'
-    }).models[0];
-    return this.serialize(sshKeys, 'v2');
-  });
-
   this.get('/v3/repo/:id', function (schema, request) {
     return schema.repositories.find(request.params.id);
   });
@@ -125,14 +117,24 @@ export default function () {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });
 
-  this.get('/repos/:id/key', function (schema, request) {
-    const key = schema.sshKeys.where({
-      repositoryId: request.params.id,
-      type: 'default'
-    }).models[0];
+  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
+    const repo = schema.repositories.find(request.params.repo_id);
+    const { customSshKey } = repo;
     return {
-      key: key.attrs.key,
-      fingerprint: key.attrs.fingerprint
+      ssh_key: {
+        id: 1,
+        description: customSshKey.description,
+        fingerprint: customSshKey.fingerprint,
+      }
+    };
+  });
+
+  this.get('/repos/:id/key', function (schema, request) {
+    const repo = schema.repositories.find(request.params.id);
+    const { defaultSshKey } = repo;
+    return {
+      fingerprint: defaultSshKey.fingerprint,
+      key: '-----BEGIN PUBLIC KEY-----',
     };
   });
 
@@ -167,6 +169,10 @@ export default function () {
     return { builds: builds.map(build => {
       if (build.commit) {
         build.attrs.commit_id = build.commit.id;
+      }
+
+      if (build.jobs) {
+        build.attrs.job_ids = build.jobs.models.map(job => job.id);
       }
 
       return build;
