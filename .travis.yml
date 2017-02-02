@@ -7,12 +7,12 @@ env:
     - PERCY_ENABLE=0
   matrix:
     - EMBER_VERSION=default
-    - EMBER_VERSION=beta
+    - EMBER_VERSION=😳
     - EMBER_VERSION=canary
 
 matrix:
   allow_failures:
-    - env: EMBER_VERSION=beta
+    - env: EMBER_VERSION=😳
     - env: EMBER_VERSION=canary
 
   fast_finish: true
@@ -28,6 +28,8 @@ cache:
 before_install:
   - "npm config set spin false"
   - "npm install -g npm@^2"
+  - "echo '😆😭🐛🙃🤔🤗 :bug: :tada:'"
+  - "./echo-emoji.sh"
 
 install:
   - npm install -g bower
