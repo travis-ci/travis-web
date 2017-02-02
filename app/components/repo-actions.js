@@ -56,8 +56,8 @@ export default Ember.Component.extend({
     }
   },
 
-  canCancel: Ember.computed.and('userHasPullPermissionForRepo', 'item.canCancel'),
-  canRestart: Ember.computed.and('userHasPullPermissionForRepo', 'item.canRestart'),
+  canCancel: Ember.computed.and('userHasPushPermissionForRepo', 'item.canCancel'),
+  canRestart: Ember.computed.and('userHasPushPermissionForRepo', 'item.canRestart'),
   canDebug: Ember.computed.and('userHasPushPermissionForRepo', 'item.canDebug'),
 
   cancel: task(function* () {
