@@ -40,6 +40,7 @@ test('view and delete caches', function (assert) {
 
   andThen(() => {
     assert.equal(page.pushCaches().count, 1, 'expected one push cache');
+    assert.ok(page.tabIsActive, 'expected the caches tab to be active');
 
     const pushCache = page.pushCaches(0);
 
