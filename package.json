@@ -14,7 +14,7 @@
   },
   "repository": "https://github.com/travis-ci/travis-web",
   "engines": {
-    "node": "6.9.4"
+    "node": "6.9.5"
   },
   "author": "Travis CI Web Team and Contributors",
   "license": "MIT",
