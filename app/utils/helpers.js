@@ -115,5 +115,5 @@ _escape = function (text) {
 };
 
 export {
-  configKeys, githubify, durationFrom, formatMessage
+  configKeys, durationFrom, formatMessage
 };
