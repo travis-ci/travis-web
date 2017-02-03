@@ -1,4 +1,4 @@
-import { formatCommit, safe } from 'travis/utils/helpers';
+import { formatCommit } from 'travis/utils/helpers';
 import Ember from 'ember';
 
 const { service } = Ember.inject;
@@ -19,6 +19,7 @@ export default Ember.Helper.extend({
 
     const commitUrl = this.get('externalLinks').githubCommit(slug, sha);
     const url = Ember.Handlebars.Utils.escapeExpression(commitUrl);
-    return safe('<a class="github-link only-on-hover" href="' + url + '">' + sha + '</a>');
+    const string = `<a class="github-link only-on-hover" href="${url}">${sha}</a>`;
+    return new Ember.String.htmlSafe(string);
   }
 });

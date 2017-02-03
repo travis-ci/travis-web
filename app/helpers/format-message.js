@@ -1,6 +1,6 @@
-import { formatMessage as _formatMessage, safe } from 'travis/utils/helpers';
+import { formatMessage as _formatMessage } from 'travis/utils/helpers';
 import Ember from 'ember';
 
 export default Ember.Helper.helper(function (params, hash) {
-  return safe(_formatMessage(params[0], hash));
+  return new Ember.String.htmlSafe(_formatMessage(params[0], hash));
 });

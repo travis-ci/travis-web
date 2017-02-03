@@ -12,7 +12,7 @@ var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
   durationFrom, formatCommit, formatMessage, formatSha, githubify,
-  intersect, pathFrom, safe, timeAgoInWords, timeago;
+  intersect, pathFrom, timeAgoInWords, timeago;
 
 timeago = Ember.$.timeago;
 timeago.settings.allowFuture = true;
@@ -42,10 +42,6 @@ compact = function (object) {
     }
   }
   return result;
-};
-
-safe = function (string) {
-  return new Ember.String.htmlSafe(string);
 };
 
 colorForState = function (state) {
@@ -181,5 +177,5 @@ pathFrom = function (url) {
 
 export {
   configKeys, githubify, durationFrom, timeAgoInWords, formatMessage,
-  formatSha, formatCommit, colorForState, safe, compact, pathFrom
+  formatSha, formatCommit, colorForState, compact, pathFrom
 };
