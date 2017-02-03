@@ -3,6 +3,7 @@ import PageObject from 'travis/tests/page-object';
 let {
   clickable,
   collection,
+  hasClass,
   isVisible,
   text,
   visitable
@@ -18,6 +19,8 @@ const cacheComponent = {
 
 export default PageObject.create({
   visit: visitable(':organization/:repo/caches'),
+
+  tabIsActive: hasClass('active', '#tab_caches'),
 
   deleteAllCaches: clickable('.delete-cache-button'),
   noCachesExist: isVisible('p.helptext.no-caches'),
