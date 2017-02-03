@@ -11,13 +11,11 @@ emojiConvertor.include_title = true;
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
-  durationFrom, formatCommit, formatConfig, formatMessage, formatSha, githubify,
-  intersect, mapObject, only, pathFrom, safe, timeAgoInWords, timeago;
+  durationFrom, formatCommit, formatMessage, formatSha, githubify,
+  intersect, pathFrom, safe, timeAgoInWords, timeago;
 
 timeago = Ember.$.timeago;
 timeago.settings.allowFuture = true;
-
-mapObject = Ember.$.map;
 
 colors = {
   'default': 'yellow',
@@ -25,33 +23,6 @@ colors = {
   failed: 'red',
   errored: 'red',
   canceled: 'gray'
-};
-
-mapObject = function (elems, callback, arg) {
-  var key, ret, value;
-  value = void 0;
-  key = void 0;
-  ret = [];
-  for (key in elems) {
-    value = callback(elems[key], key, arg);
-    if (value != null) {
-      ret[ret.length] = value;
-    }
-  }
-  return ret.concat.apply([], ret);
-};
-
-only = function (object) {
-  var key, keys, result;
-  keys = Array.prototype.slice.apply(arguments);
-  object = (typeof keys[0] === 'object' ? keys.shift() : this);
-  result = {};
-  for (key in object) {
-    if (keys.indexOf(key) !== -1) {
-      result[key] = object[key];
-    }
-  }
-  return result;
 };
 
 intersect = function (array, other) {
@@ -87,23 +58,6 @@ formatCommit = function (sha, branch) {
 
 formatSha = function (sha) {
   return (sha || '').substr(0, 7);
-};
-
-formatConfig = function (config) {
-  var values;
-  config = only(config, Object.keys(configKeysMap));
-  values = mapObject(config, function (value, key) {
-    value = (value && value.join ? value.join(', ') : value) || '';
-    if (key === 'rvm' && ('' + value).match(/^\d+$/)) {
-      value = value + '.0';
-    }
-    return '%@: %@'.fmt(configKeysMap[key], value);
-  });
-  if (values.length === 0) {
-    return '-';
-  } else {
-    return values.join(', ');
-  }
 };
 
 formatMessage = function (message, options) {
@@ -226,6 +180,6 @@ pathFrom = function (url) {
 };
 
 export {
-  configKeys, githubify, durationFrom, timeAgoInWords, formatMessage, formatConfig,
+  configKeys, githubify, durationFrom, timeAgoInWords, formatMessage,
   formatSha, formatCommit, colorForState, safe, compact, pathFrom
 };
