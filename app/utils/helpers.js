@@ -12,10 +12,7 @@ var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, configKeys,
   durationFrom, formatMessage, githubify,
-  intersect, timeAgoInWords, timeago;
-
-timeago = Ember.$.timeago;
-timeago.settings.allowFuture = true;
+  intersect;
 
 intersect = function (array, other) {
   return array.filter(function (element) {
@@ -36,12 +33,6 @@ formatMessage = function (message, options) {
     message = message.replace(/\n/g, '<br/>');
   }
   return message;
-};
-
-timeAgoInWords = function (date) {
-  if (date) {
-    return timeago(date);
-  }
 };
 
 durationFrom = function (started, finished) {
@@ -139,5 +130,5 @@ configKeys = function (config) {
 };
 
 export {
-  configKeys, githubify, durationFrom, timeAgoInWords, formatMessage
+  configKeys, githubify, durationFrom, formatMessage
 };
