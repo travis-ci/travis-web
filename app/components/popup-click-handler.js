@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   classNames: ['application'],
 
   click(event) {
-    let targetAndParents = Ember.$(event.target).parents().andSelf();
+    let targetAndParents = Ember.$(event.target).parents().addBack();
 
     if (!(targetAndParents.hasClass('open-popup') || targetAndParents.hasClass('popup'))) {
       this.get('popup').close();

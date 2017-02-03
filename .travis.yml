@@ -26,11 +26,11 @@ cache:
     - bower_components
 
 before_install:
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
+  - npm config set spin false
+  - npm install -g bower
+  - bower --version
 
 install:
-  - npm install -g bower
   - npm install
   - bower install
 
