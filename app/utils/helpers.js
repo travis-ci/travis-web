@@ -1,5 +1,4 @@
 /* global Travis, EmojiConvertor */
-import configKeysMap from 'travis/utils/keys-map';
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
@@ -11,14 +10,7 @@ emojiConvertor.include_title = true;
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, configKeys,
-  durationFrom, formatMessage, githubify,
-  intersect;
-
-intersect = function (array, other) {
-  return array.filter(function (element) {
-    return other.indexOf(element) !== -1;
-  });
-};
+  durationFrom, formatMessage, githubify;
 
 formatMessage = function (message, options) {
   message = message || '';
@@ -120,13 +112,6 @@ _toUtc = function (date) {
 
 _escape = function (text) {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-};
-
-configKeys = function (config) {
-  if (!config) {
-    return [];
-  }
-  return intersect(Object.keys(config), Object.keys(configKeysMap));
 };
 
 export {
