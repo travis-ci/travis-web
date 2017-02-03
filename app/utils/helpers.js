@@ -10,20 +10,12 @@ emojiConvertor.include_title = true;
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
-  _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
+  _normalizeDateString, _nowUtc, _toUtc, compact, configKeys,
   durationFrom, formatMessage, githubify,
   intersect, timeAgoInWords, timeago;
 
 timeago = Ember.$.timeago;
 timeago.settings.allowFuture = true;
-
-colors = {
-  'default': 'yellow',
-  passed: 'green',
-  failed: 'red',
-  errored: 'red',
-  canceled: 'gray'
-};
 
 intersect = function (array, other) {
   return array.filter(function (element) {
@@ -42,10 +34,6 @@ compact = function (object) {
     }
   }
   return result;
-};
-
-colorForState = function (state) {
-  return colors[state] || colors['default'];
 };
 
 formatMessage = function (message, options) {
@@ -165,5 +153,5 @@ configKeys = function (config) {
 
 export {
   configKeys, githubify, durationFrom, timeAgoInWords, formatMessage,
-  colorForState, compact
+  compact
 };

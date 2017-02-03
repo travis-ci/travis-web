@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { colorForState } from 'travis/utils/helpers';
+import colorForState from 'travis/utils/color-for-state';
 import FaviconManager from 'travis/utils/favicon-manager';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
 

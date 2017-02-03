@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
-import { colorForState } from 'travis/utils/helpers';
+import colorForState from 'travis/utils/color-for-state';
 
 const { service } = Ember.inject;
 
