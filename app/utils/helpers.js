@@ -9,7 +9,7 @@ emojiConvertor.include_title = true;
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
-  _normalizeDateString, _nowUtc, _toUtc, configKeys,
+  _normalizeDateString, _nowUtc, _toUtc,
   durationFrom, formatMessage, githubify;
 
 formatMessage = function (message, options) {
@@ -115,5 +115,5 @@ _escape = function (text) {
 };
 
 export {
-  configKeys, durationFrom, formatMessage
+  durationFrom, formatMessage
 };
