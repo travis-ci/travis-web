@@ -1,4 +1,4 @@
-import { formatCommit } from 'travis/utils/helpers';
+import formatCommit from 'travis/utils/format-commit';
 import Ember from 'ember';
 
 const { service } = Ember.inject;

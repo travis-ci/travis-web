@@ -11,7 +11,7 @@ emojiConvertor.include_title = true;
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
-  durationFrom, formatCommit, formatMessage, formatSha, githubify,
+  durationFrom, formatMessage, githubify,
   intersect, pathFrom, timeAgoInWords, timeago;
 
 timeago = Ember.$.timeago;
@@ -46,14 +46,6 @@ compact = function (object) {
 
 colorForState = function (state) {
   return colors[state] || colors['default'];
-};
-
-formatCommit = function (sha, branch) {
-  return formatSha(sha) + (branch ? ' (' + branch + ')' : '');
-};
-
-formatSha = function (sha) {
-  return (sha || '').substr(0, 7);
 };
 
 formatMessage = function (message, options) {
@@ -177,5 +169,5 @@ pathFrom = function (url) {
 
 export {
   configKeys, githubify, durationFrom, timeAgoInWords, formatMessage,
-  formatSha, formatCommit, colorForState, compact, pathFrom
+  colorForState, compact, pathFrom
 };
