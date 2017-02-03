@@ -61,6 +61,7 @@
     "ember-inline-svg": "0.1.7",
     "ember-keyboard-shortcuts": "0.3.0",
     "ember-load-initializers": "^0.6.3",
+    "ember-lodash": "4.17.0",
     "ember-percy": "^1.2.5",
     "ember-prism": "0.0.8",
     "ember-qunit-nice-errors": "1.1.1",

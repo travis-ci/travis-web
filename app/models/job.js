@@ -1,6 +1,6 @@
 /* global moment, Travis, Pusher */
 
-import { compact } from 'travis/utils/helpers';
+import _object from 'lodash/object';
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import Log from 'travis/models/log';
@@ -62,7 +62,7 @@ export default Model.extend(DurationCalculations, {
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
-      return compact(config);
+      return _object.pickBy(config);
     } else if (this.get('currentState.stateName') !== 'root.loading') {
       if (this.get('isFetchingConfig')) {
         return;

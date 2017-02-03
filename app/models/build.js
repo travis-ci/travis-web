@@ -1,5 +1,6 @@
 /* global moment */
-import { configKeys, compact } from 'travis/utils/helpers';
+import { configKeys } from 'travis/utils/helpers';
+import _object from 'lodash/object';
 import configKeysMap from 'travis/utils/keys-map';
 import Ember from 'ember';
 import Model from 'ember-data/model';
@@ -36,7 +37,7 @@ Build.reopen({
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
-      return compact(config);
+      return _object.pickBy(config);
     } else if (this.get('currentState.stateName') !== 'root.loading') {
       if (this.get('isFetchingConfig')) {
         return;

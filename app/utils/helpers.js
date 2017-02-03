@@ -10,7 +10,7 @@ emojiConvertor.include_title = true;
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
-  _normalizeDateString, _nowUtc, _toUtc, compact, configKeys,
+  _normalizeDateString, _nowUtc, _toUtc, configKeys,
   durationFrom, formatMessage, githubify,
   intersect, timeAgoInWords, timeago;
 
@@ -21,19 +21,6 @@ intersect = function (array, other) {
   return array.filter(function (element) {
     return other.indexOf(element) !== -1;
   });
-};
-
-compact = function (object) {
-  var key, ref, result, value;
-  result = {};
-  ref = object || {};
-  for (key in ref) {
-    value = ref[key];
-    if (!Ember.isEmpty(value)) {
-      result[key] = value;
-    }
-  }
-  return result;
 };
 
 formatMessage = function (message, options) {
@@ -152,6 +139,5 @@ configKeys = function (config) {
 };
 
 export {
-  configKeys, githubify, durationFrom, timeAgoInWords, formatMessage,
-  compact
+  configKeys, githubify, durationFrom, timeAgoInWords, formatMessage
 };
