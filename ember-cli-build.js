@@ -30,8 +30,10 @@ module.exports = function () {
   }
 
   var app = new EmberApp({
-    babel: {
+    'ember-cli-babel': {
       includePolyfill: true,
+    },
+    babel: {
       optional: ['es7.decorators']
     },
     fingerprint: fingerprint,
