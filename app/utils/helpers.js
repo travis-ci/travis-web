@@ -12,7 +12,7 @@ var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
   _normalizeDateString, _nowUtc, _toUtc, colorForState, colors, compact, configKeys,
   durationFrom, formatMessage, githubify,
-  intersect, pathFrom, timeAgoInWords, timeago;
+  intersect, timeAgoInWords, timeago;
 
 timeago = Ember.$.timeago;
 timeago.settings.allowFuture = true;
@@ -163,11 +163,7 @@ configKeys = function (config) {
   return intersect(Object.keys(config), Object.keys(configKeysMap));
 };
 
-pathFrom = function (url) {
-  return (url || '').split('/').pop();
-};
-
 export {
   configKeys, githubify, durationFrom, timeAgoInWords, formatMessage,
-  colorForState, compact, pathFrom
+  colorForState, compact
 };
