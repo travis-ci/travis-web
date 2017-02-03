@@ -69,14 +69,4 @@
       {{/if}}
     </li>
   {{/if}}
-
-  <li id="tab_request" class={{classRequest}}>
-    {{#if request.id}}
-      {{#if repo.slug}}
-        {{#link-to "request" repo request}}
-          Request #{{request.id}}
-        {{/link-to}}
-      {{/if}}
-    {{/if}}
-  </li>
 </ul>

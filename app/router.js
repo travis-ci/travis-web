@@ -56,7 +56,6 @@ Router.map(function () {
       if (config.endpoints.caches) {
         this.route('caches', { path: '/caches', resetNamespace: true });
       }
-      this.route('request', { path: '/requests/:request_id', resetNamespace: true });
       this.route('settings', { resetNamespace: true }, function () {
         this.route('index', { path: '/' });
         this.route('env_vars', { resetNamespace: true }, function () {
