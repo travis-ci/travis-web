@@ -10,3 +10,17 @@ test('it formats a Git commit message', function (assert) {
 
   assert.equal(formatted, 'a string');
 });
+
+test('it formats a multi-line message', function (assert) {
+  const formatted = formatMessage(['a multi-line\nmessage'], {});
+
+  assert.equal(formatted, 'a multi-line\nmessage');
+});
+
+test('it accepts a shortening flag', assert => {
+  const formattedSingle = formatMessage(['a string'], { short: true });
+  assert.equal(formattedSingle, 'a string');
+
+  const formattedMulti = formatMessage(['a multi-line\nmessage'], { short: true });
+  assert.equal(formattedMulti, 'a multi-line');
+});
