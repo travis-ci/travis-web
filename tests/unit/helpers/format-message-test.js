@@ -24,3 +24,8 @@ test('it accepts a shortening flag', assert => {
   const formattedMulti = formatMessage(['a multi-line\nmessage'], { short: true });
   assert.equal(formattedMulti, 'a multi-line');
 });
+
+test('it replaces colon-surrounded emoji names', assert => {
+  const formattedWithEmoji = formatMessage(['a string with :joy: emoji'], {});
+  assert.equal(formattedWithEmoji, 'a string with <span class=\"emoji emoji-sizer\" style=\"background-image:url(/images/emoji/1f602.png)\" title=\"joy\"></span> emoji');
+});
