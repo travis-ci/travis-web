@@ -15,4 +15,6 @@ test('calculates durations in seconds', function (assert) {
 
   const aSecondAndAHalfAfterNow = new Date(now.getTime() + 1500);
   assert.equal(durationFrom(now, aSecondAndAHalfAfterNow), 2, 'expected times to be rounded up');
+
+  assert.equal(durationFrom(null, null), 0, 'expected a missing start time to return zero');
 });
