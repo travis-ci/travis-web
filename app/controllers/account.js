@@ -35,8 +35,11 @@ export default Ember.Controller.extend({
         owner_name: login,
         order: 'none'
       });
+      this.set('loadingError', false);
       hooks.then(function () {
         return hooks.set('isLoaded', true);
+      }).catch(() => {
+        this.set('loadingError', true);
       });
       return this.set('allHooks', hooks);
     }
