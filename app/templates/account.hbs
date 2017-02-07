@@ -1,80 +1,85 @@
-{{#if allHooks.isLoaded}}
+{{#if loadingError}}
+  There was a problem while loading the repositories list, please try again. In case
+  the problem persists, please contact support.
+{{else}}
+  {{#if allHooks.isLoaded}}
 
-  {{#unless config.enterprise}}
-    {{#if config.billingEndpoint}}
-      {{#if subscribeButtonInfo.subscribed}}
-        {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
-      {{else}}
-        {{#if subscribeButtonInfo.education}}
-          {{subscription-status-banner color="green" message="This account's subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
+    {{#unless config.enterprise}}
+      {{#if config.billingEndpoint}}
+        {{#if subscribeButtonInfo.subscribed}}
+          {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
         {{else}}
-          {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign up this account!" billingUrl=billingUrl}}
+          {{#if subscribeButtonInfo.education}}
+            {{subscription-status-banner color="green" message="This account's subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
+          {{else}}
+            {{subscription-status-banner color="yellow" message="This account does not have an active subscription." billingLinkText="Sign up this account!" billingUrl=billingUrl}}
+          {{/if}}
         {{/if}}
       {{/if}}
-    {{/if}}
-   {{/unless}}
+     {{/unless}}
 
-<header class="profile-header">
-  <h1 class="h2--grey">{{accountName}}</h1>
-  {{sync-button}}
-</header>
+  <header class="profile-header">
+    <h1 class="h2--grey">{{accountName}}</h1>
+    {{sync-button}}
+  </header>
 
-{{#unless config.enterprise}}
-  {{#if features.proVersion}}
-    <p class="text-medium">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
-  {{else}}
-    <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
-  {{/if}}
-{{/unless}}
-
-<ol class="profile-getstarted">
-  <li>
-    <figure>
-      {{inline-svg 'hooks-step-1-01'}}
-      <figcaption>Flick the repository switch on</figcaption>
-    </figure>
-  </li>
-  <li>
-    <figure>
-      {{inline-svg 'hooks-step-2-01.svg'}}
-      <figcaption>Add .travis.yml file to your repository</figcaption>
-    </figure>
-  </li>
-  <li>
-    <figure>
-      {{inline-svg 'hooks-step-3-01'}}
-      <figcaption>Trigger your first build with a git push</figcaption>
-    </figure>
-  </li>
-</ol>
-
-<div id="administerable-hooks">
-  <ul class="profile-hooklist">
-    {{#each hooks as |hook|}}
-    {{hooks-list-item hook=hook admin=true}}
+  {{#unless config.enterprise}}
+    {{#if features.proVersion}}
+      <p class="text-medium">We're only showing your private repositories. You can find your public projects on <a href="https://travis-ci.org" title="travis-ci.org">travis-ci.org</a>.</p>
     {{else}}
-    <li>
-      {{#if hooksWithoutAdmin.length}}
-      Sorry, but we can't find any repositories you have admin access to.
-      {{else}}
-      Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
-      {{/if}}
-    </li>
-    {{/each}}
-  </ul>
-</div>
+      <p class="text-medium">We're only showing your public repositories. You can find your private projects on <a href="https://travis-ci.com" title="travis-ci.com">travis-ci.com</a>.</p>
+    {{/if}}
+  {{/unless}}
 
-{{#if hooksWithoutAdmin.length}}
-  <div id="unadministerable-hooks">
-    <p class="text-medium">You require admin rights to enable these repositories</p>
+  <ol class="profile-getstarted">
+    <li>
+      <figure>
+        {{inline-svg 'hooks-step-1-01'}}
+        <figcaption>Flick the repository switch on</figcaption>
+      </figure>
+    </li>
+    <li>
+      <figure>
+        {{inline-svg 'hooks-step-2-01.svg'}}
+        <figcaption>Add .travis.yml file to your repository</figcaption>
+      </figure>
+    </li>
+    <li>
+      <figure>
+        {{inline-svg 'hooks-step-3-01'}}
+        <figcaption>Trigger your first build with a git push</figcaption>
+      </figure>
+    </li>
+  </ol>
+
+  <div id="administerable-hooks">
     <ul class="profile-hooklist">
-      {{#each hooksWithoutAdmin as |hook| }}
-        {{hooks-list-item hook=hook}}
+      {{#each hooks as |hook|}}
+      {{hooks-list-item hook=hook admin=true}}
+      {{else}}
+      <li>
+        {{#if hooksWithoutAdmin.length}}
+        Sorry, but we can't find any repositories you have admin access to.
+        {{else}}
+        Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
+        {{/if}}
+      </li>
       {{/each}}
     </ul>
   </div>
-{{/if}}
 
-{{else}}
-  {{loading-indicator}}
+  {{#if hooksWithoutAdmin.length}}
+    <div id="unadministerable-hooks">
+      <p class="text-medium">You require admin rights to enable these repositories</p>
+      <ul class="profile-hooklist">
+        {{#each hooksWithoutAdmin as |hook| }}
+          {{hooks-list-item hook=hook}}
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+
+  {{else}}
+    {{loading-indicator}}
+  {{/if}}
 {{/if}}
