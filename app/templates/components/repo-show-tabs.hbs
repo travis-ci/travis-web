@@ -60,7 +60,7 @@
       {{/link-to}}
     {{/if}}
   </li>
-  {{#if config.caches_enabled}}
+  {{#if config.endpoints.caches}}
     <li id="tab_caches" class={{classCaches}}>
       {{#if repo.slug}}
         {{#link-to "caches" repo}}

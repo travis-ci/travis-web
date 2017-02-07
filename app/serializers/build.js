@@ -58,6 +58,12 @@ var Serializer = V2FallbackSerializer.extend({
     // TODO: remove this after switching to V3 entirely
     let type = resourceHash['@type'];
     let commit = resourceHash.commit;
+    if (resourceHash['event_type'] == 'pull_request' &&
+          !resourceHash.hasOwnProperty('pull_request')) {
+      // in V3 we don't return "pull_request" property as we rely on event_type
+      // value. This line makes V3 payloads also populate pull_request property
+      resourceHash['pull_request'] = true;
+    }
     if (!type && commit && commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
         commit = resourceHash.commit;
