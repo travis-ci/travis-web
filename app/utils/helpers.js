@@ -1,4 +1,4 @@
-/* global Travis, EmojiConvertor */
+/* global EmojiConvertor */
 import config from 'travis/config/environment';
 import Ember from 'ember';
 
@@ -9,8 +9,7 @@ emojiConvertor.include_title = true;
 
 var _escape, _githubCommitReferenceLink, _githubCommitReferenceRegexp,
   _githubReferenceLink, _githubReferenceRegexp, _githubUserLink, _githubUserRegexp,
-  _normalizeDateString, _nowUtc, _toUtc,
-  durationFrom, formatMessage, githubify;
+  formatMessage, githubify;
 
 formatMessage = function (message, options) {
   message = message || '';
@@ -25,16 +24,6 @@ formatMessage = function (message, options) {
     message = message.replace(/\n/g, '<br/>');
   }
   return message;
-};
-
-durationFrom = function (started, finished) {
-  started = started && _toUtc(new Date(_normalizeDateString(started)));
-  finished = finished ? _toUtc(new Date(_normalizeDateString(finished))) : _nowUtc();
-  if (started && finished) {
-    return Math.round((finished - started) / 1000);
-  } else {
-    return 0;
-  }
 };
 
 githubify = function (text, owner, repo) {
@@ -92,28 +81,10 @@ _githubCommitReferenceLink = function (reference, current, matched) {
   return '<a href="' + url + '">' + reference + '</a>';
 };
 
-_normalizeDateString = function (string) {
-  if (window.JHW) {
-    string = string.replace('T', ' ').replace(/-/g, '/');
-    string = string.replace('Z', '').replace(/\..*$/, '');
-  }
-  return string;
-};
-
-_nowUtc = function () {
-  // TODO: we overwrite Travis.currentDate in tests, so we need to leave this
-  // global usage as it is for now, but it should be removed at some point
-  return _toUtc(Travis.currentDate());
-};
-
-_toUtc = function (date) {
-  return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds());
-};
-
 _escape = function (text) {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 };
 
 export {
-  durationFrom, formatMessage
+  formatMessage
 };

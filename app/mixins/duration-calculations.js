@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { durationFrom } from 'travis/utils/helpers';
+import durationFrom from 'travis/utils/duration-from';
 
 export default Ember.Mixin.create({
   duration: Ember.computed(
