@@ -22,9 +22,13 @@ function formatMessage(message, options) {
   return message;
 }
 
+const refRegexp = new RegExp('([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)', 'g');
+const userRegexp = new RegExp('\\B@([\\w-]+)', 'g');
+const commitRegexp = new RegExp('([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)', 'g');
+
 function githubify(text, owner, repo) {
-  text = text.replace(_githubReferenceRegexp, function (reference, matchedOwner, matchedRepo, matchedNumber) {
-    return _githubReferenceLink(reference, {
+  text = text.replace(refRegexp, function (ref, matchedOwner, matchedRepo, matchedNumber) {
+    return _githubReferenceLink(ref, {
       owner: owner,
       repo: repo
     }, {
@@ -33,10 +37,10 @@ function githubify(text, owner, repo) {
       number: matchedNumber
     });
   });
-  text = text.replace(_githubUserRegexp, function (reference, username) {
+  text = text.replace(userRegexp, function (reference, username) {
     return _githubUserLink(reference, username);
   });
-  text = text.replace(_githubCommitReferenceRegexp, function (reference, matchedOwner, matchedRepo, matchedSHA) {
+  text = text.replace(commitRegexp, function (reference, matchedOwner, matchedRepo, matchedSHA) {
     return _githubCommitReferenceLink(reference, {
       owner: owner,
       repo: repo
@@ -49,8 +53,6 @@ function githubify(text, owner, repo) {
   return text;
 }
 
-const _githubReferenceRegexp = new RegExp('([\\w-]+)?\\/?([\\w-]+)?(?:#|gh-)(\\d+)', 'g');
-
 function _githubReferenceLink(reference, current, matched) {
   var owner, repo;
   owner = matched.owner || current.owner;
@@ -60,13 +62,9 @@ function _githubReferenceLink(reference, current, matched) {
   return `<a href="${href}">${reference}</a>`;
 }
 
-const _githubUserRegexp = new RegExp('\\B@([\\w-]+)', 'g');
-
 function _githubUserLink(reference, username) {
   return '<a href="' + config.sourceEndpoint + '/' + username + '">' + reference + '</a>';
 }
-
-const _githubCommitReferenceRegexp = new RegExp('([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)', 'g');
 
 function _githubCommitReferenceLink(reference, current, matched) {
   var owner, repo, url;
