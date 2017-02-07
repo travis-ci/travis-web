@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="row-calendar">
-    <div class="row-item" title="{{pretty-date branch.last_build.finished_at}}">
+    <div class="row-item" title="{{#if branch.last_build}}{{pretty-date branch.last_build.finished_at}}{{/if}}">
       {{inline-svg 'icon-calendar' class="icon"}}
       <span class="label-align">
       {{#if branch.last_build}}
