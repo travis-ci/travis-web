@@ -55,7 +55,9 @@ function _githubReferenceLink(reference, current, matched) {
   var owner, repo;
   owner = matched.owner || current.owner;
   repo = matched.repo || current.repo;
-  return '<a href="' + config.sourceEndpoint + '/' + owner + '/' + repo + '/issues/' + matched.number + '">' + reference + '</a>';
+
+  const href = `${config.sourceEndpoint}/${owner}/${repo}/issues/${matched.number}`;
+  return `<a href="${href}">${reference}</a>`;
 }
 
 const _githubUserRegexp = new RegExp('\\B@([\\w-]+)', 'g');
