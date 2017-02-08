@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { colorForState } from 'travis/utils/helpers';
+import colorForState from 'travis/utils/color-for-state';
 
 export default Ember.Component.extend({
   classNameBindings: ['color'],
