@@ -35,3 +35,19 @@ test('it replaces colon-surrounded emoji names', assert => {
   const formattedWithEmoji = formatMessage(['a string with :joy: emoji'], {});
   assert.equal(formattedWithEmoji, 'a string with <span class=\"emoji emoji-sizer\" style=\"background-image:url(/images/emoji/1f602.png)\" title=\"joy\"></span> emoji');
 });
+
+test('it adds GitHub links', assert => {
+  const fakeRepo = { owner: 'owner', name: 'name' };
+
+  const formattedWithGitHubUsernameLink = formatMessage(['a string by @backspace'], { repo: fakeRepo });
+  assert.equal(formattedWithGitHubUsernameLink, 'a string by <a href="https://github.com/backspace">@backspace</a>');
+
+  const formattedWithGitHubIssueLink = formatMessage(['a string with #1919'], { repo: fakeRepo });
+  assert.equal(formattedWithGitHubIssueLink, 'a string with <a href="https://github.com/owner/name/issues/1919">#1919</a>');
+
+  const formattedWithGitHubOtherRepoIssueLink = formatMessage(['a string with travis-ci/travis-web#1919'], { repo: fakeRepo });
+  assert.equal(formattedWithGitHubOtherRepoIssueLink, 'a string with <a href="https://github.com/travis-ci/travis-web/issues/1919">travis-ci/travis-web#1919</a>');
+
+  const formattedWithGitHubCommitLink = formatMessage(['a string with travis-ci/travis-web@acab'], { repo: fakeRepo });
+  assert.equal(formattedWithGitHubCommitLink, 'a string with <a href="https://github.com/travis-ci/travis-web/commit/acab">travis-ci/travis-web@acab</a>');
+});
