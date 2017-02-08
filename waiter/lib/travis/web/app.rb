@@ -185,7 +185,17 @@ class Travis::Web::App
       # TODO: clean up
       config = {}
 
-      config['enterprise'] = options[:enterprise] if options[:enterprise]
+      config['featureFlags'] ||= {}
+
+      if options[:pro]
+        config['pro'] = true
+        config['featureFlags']['pro-version'] = true
+      end
+      if options[:enterprise]
+        config['enterprise'] = true
+        config['featureFlags']['enterprise-version'] = true
+      end
+
       if config['enterprise']
         config['pagesEndpoint'] = false
         config['billingEndpoint'] = false
@@ -206,7 +216,6 @@ class Travis::Web::App
       config['pusher'] = pusher
 
       config['gaCode'] = options[:ga_code] if options[:ga_code]
-      config['pro'] = options[:pro] if options[:pro]
 
       config['githubOrgsOauthAccessSettingsUrl'] = options[:github_orgs_oauth_access_settings_url]
       config['ajaxPolling'] = true if options[:ajax_polling]
