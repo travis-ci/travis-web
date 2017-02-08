@@ -177,7 +177,7 @@ Pusher.SockJSTransport.isSupported = function () {
   }
 };
 
-if (ENV.featureFlags['pro-version']) {
+if (ENV.featureFlags['pro-version'] || ENV.featureFlags['enterprise-version']) {
   Pusher.channel_auth_transport = 'bulk_ajax';
   Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
     var channels, name, names;
