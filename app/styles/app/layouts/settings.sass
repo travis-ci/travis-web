@@ -110,9 +110,11 @@
     word-break: normal
     white-space: nowrap
 
+$env-var-value-background: lighten($cement-grey, 20)
+
 .env-var-value
   @extend %settings-value-section
-  background-color: lighten($cement-grey, 20)
+  background-color: $env-var-value-background
   border-radius: 2px
   white-space: nowrap
   width: 76%
@@ -128,6 +130,29 @@
 .env-var-value
   @media #{$medium-up}
     width: grid-calc(3, 12)
+
+.newly-created
+  animation: haze-fade 1s 5s both
+
+  .env-var-name::after
+    display: none
+
+  .env-var-value
+    animation: canary-fade 1s 5s both
+
+@keyframes canary-fade
+  0%
+    background: $canary-yellow
+
+  100%
+    background: $env-var-value-background
+
+@keyframes haze-fade
+  0%
+    background: $haze-yellow
+
+  100%
+    background: $pebble-grey
 
 %settings-action-section
   display: inline-block

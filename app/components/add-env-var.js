@@ -37,7 +37,7 @@ export default Ember.Component.extend({
       });
 
       try {
-        yield envVar.save();
+        yield envVar.save().then(saved => saved.set('newlyCreated', true));
         this.reset();
       } catch (e) {
         // eslint-disable-next-line

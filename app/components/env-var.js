@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   tagName: 'li',
   classNames: ['settings-envvar'],
-  classNameBindings: ['envVar.public:is-public'],
+  classNameBindings: ['envVar.public:is-public', 'envVar.newlyCreated:newly-created'],
   isDeleting: false,
   validates: { name: ['presence'] },
   actionType: 'Save',
