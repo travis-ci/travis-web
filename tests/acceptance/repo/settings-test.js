@@ -37,17 +37,17 @@ moduleForAcceptance('Acceptance | repo settings', {
     repository.createSetting({ name: 'build_pull_requests', value: true });
 
     repository.createEnvVar({
-      id: 'a',
-      name: 'intersectionality',
-      public: true,
-      value: 'Kimberlé Crenshaw'
-    });
-
-    repository.createEnvVar({
       id: 'b',
       name: 'published',
       public: null,
       value: null
+    });
+
+    repository.createEnvVar({
+      id: 'a',
+      name: 'intersectionality',
+      public: true,
+      value: 'Kimberlé Crenshaw'
     });
 
     this.repository = repository;
@@ -98,6 +98,7 @@ test('view settings', function (assert) {
 
     assert.equal(settingsPage.environmentVariables(0).name, 'intersectionality');
     assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
+    assert.notOk(settingsPage.environmentVariables(0).isNewlyCreated, 'expected existing variable to not be newly created');
     assert.equal(settingsPage.environmentVariables(0).value, 'Kimberlé Crenshaw');
 
     assert.equal(settingsPage.environmentVariables(1).name, 'published');
@@ -202,9 +203,10 @@ test('delete and create environment variables', function (assert) {
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables(1).name, 'drafted');
-    assert.ok(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
-    assert.equal(settingsPage.environmentVariables(1).value, 'true');
+    assert.equal(settingsPage.environmentVariables(0).name, 'drafted');
+    assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
+    assert.ok(settingsPage.environmentVariables(0).isNewlyCreated, 'expected environment variable to be newly created');
+    assert.equal(settingsPage.environmentVariables(0).value, 'true');
 
     assert.deepEqual(requestBodies.pop(), { env_var: {
       id: '1919',

@@ -74,6 +74,7 @@ export default PageObject.create({
     item: {
       name: text('.env-var-name'),
       isPublic: hasClass('is-public'),
+      isNewlyCreated: hasClass('newly-created'),
       value: value('input'),
 
       delete: clickable('.env-var-delete')
