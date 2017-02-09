@@ -79,18 +79,27 @@
     {{/if}}
   </h3>
   <ul class="list-icon">
-    <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
-      {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
-      <span class="label-align">
-        {{#if item.toBeQueued}}
-          Waiting to be queued
-        {{else if item.toBeStarted}}
-          Waiting to start
-        {{else}}
+    {{#if item.isFinished}}
+      <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
+        {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
+        <span class="label-align">
           Elapsed time <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
-        {{/if}}
-      </span>
-    </li>
+        </span>
+      </li>
+    {{else if isJob}}
+      <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
+        {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
+        <span class="label-align">
+      {{#if item.toBeQueued}}
+          Waiting to be queued
+      {{else if item.toBeStarted}}
+        Waiting to start
+      {{else}}
+        Elapsed time <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+      {{/if}}
+        </span>
+      </li>
+    {{/if}}
     {{#unless isJob}}
       {{#if item.isMatrix}}
         <li title="{{format-duration item.duration}}" class="commit-clock">

@@ -52,3 +52,33 @@ test('render push build', function (assert) {
   assert.equal(this.$().find('.commit-compare').length, 1, 'does display compare link element');
   assert.equal(this.$().find('.commit-compare').text().trim(), 'Compare 3d86ee9..a82f6ba', 'does display compare link for push builds');
 });
+
+
+test('if a build is shown, do not show elapsed time before it is finished', function (assert) {
+  let build = {
+    eventType: 'push',
+    status: 'running',
+    number: '1234',
+    branchName: 'feature-2'
+  };
+
+  this.set('build', build);
+  this.render(hbs`{{build-header item=build}}`);
+  assert.equal(this.$().find('.commit-stopwatch').length, 0, 'does not display elapsed time');
+});
+
+test('if a job is shown, show elapsed time even if it is still running', function (assert) {
+  let build = {
+    eventType: 'push',
+    status: 'running',
+    number: '1234.1',
+    branchName: 'feature-2',
+    build: {
+      id: 123
+    }
+  };
+
+  this.set('build', build);
+  this.render(hbs`{{build-header item=build}}`);
+  assert.equal(this.$().find('.commit-stopwatch').length, 1, 'does display elapsed time');
+});
