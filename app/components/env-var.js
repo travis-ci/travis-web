@@ -1,4 +1,5 @@
 import Ember from 'ember';
+const { service } = Ember.inject;
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
@@ -10,6 +11,8 @@ export default Ember.Component.extend({
   actionType: 'Save',
   showValueField: Ember.computed.alias('public'),
 
+  flashes: service(),
+
   value: Ember.computed('envVar.value', 'envVar.public', function () {
     if (this.get('envVar.public')) {
       return this.get('envVar.value');
@@ -19,6 +22,8 @@ export default Ember.Component.extend({
   }),
 
   delete: task(function* () {
-    yield this.get('envVar').destroyRecord();
+    yield this.get('envVar').destroyRecord().catch(() => {
+      this.get('flashes').error('There was an error deleting this environment variable.');
+    });
   }).drop()
 });
