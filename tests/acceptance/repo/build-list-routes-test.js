@@ -175,7 +175,12 @@ test('build history shows, more can be loaded, and a created build gets added an
 
   andThen(() => {
     const createdData = Object.assign({}, buildEventDataTemplate);
-    createdData.build.state = 'created';
+    this.buildWithEvents = server.create('build', buildEventDataTemplate.build);
+    this.buildWithEvents.createCommit(buildEventDataTemplate.commit);
+
+    // update the db state, as we now request this from API instead of injecting
+    // directly into the store via Pusher.
+    this.buildWithEvents.update('state', 'created');
     this.application.pusher.receive('build:created', createdData);
   });
 
@@ -189,7 +194,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     assert.equal(newBuild.message, 'Standing with Standing Rock');
 
     const startedData = Object.assign({}, buildEventDataTemplate);
-    startedData.build.state = 'started';
+    this.buildWithEvents.update('state', 'started');
     this.application.pusher.receive('build:started', startedData);
   });
 
@@ -197,7 +202,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     assert.ok(page.builds(0).started, 'expected the new build to show as started');
 
     const finishedData = Object.assign({}, buildEventDataTemplate);
-    finishedData.build.state = 'passed';
+    this.buildWithEvents.update('state', 'passed');
     this.application.pusher.receive('build:finished', finishedData);
   });
 

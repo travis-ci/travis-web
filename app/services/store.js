@@ -37,10 +37,8 @@ export default DS.Store.extend({
   },
 
   receivePusherEvent(event, data) {
-    let build, commit, job, name, ref, ref1, ref2, type;
-    ref = event.split(':');
-    name = ref[0];
-    type = ref[1];
+    let build, commit, job, ref1, ref2;
+    let [name, type] = event.split(':');
 
     if (!this.canHandleEvent(event, data)) {
       return;
@@ -77,7 +75,15 @@ export default DS.Store.extend({
         final: data.final
       });
     } else if (data[name]) {
-      return this.loadOne(name, data);
+      // eslint-disable-next-line
+      console.log({event})
+      data = data[name];
+      // request the updated record to get state update from API.
+      this.reloadRecord(name, data.id);
+      // when build starts, the repository must also be refreshed
+      if (event === 'build:created') {
+        this.reloadRecord('repo', data.repository_id);
+      }
     } else {
       if (!type) {
         throw `can't load data for ${name}`;
@@ -85,36 +91,12 @@ export default DS.Store.extend({
     }
   },
 
-  loadOne(type, json) {
-    let data, default_branch, last_build_id;
-
-    this.push(this.normalize(type, json));
-
-    // we get other types of records only in a few situations and
-    // it's not always needed to update data, so I'm specyfing which
-    // things I want to update here:
-    if (type === 'build' && (json.repository || json.repo)) {
-      data = json.repository || json.repo;
-      default_branch = data.default_branch;
-      if (default_branch) {
-        default_branch.default_branch = true;
-      }
-      last_build_id = default_branch.last_build_id;
-
-      // a build is a synchronous relationship on a branch model, so we need to
-      // have a build record present when we put default_branch from a repository
-      // model into the store. We don't send last_build's payload in pusher, so
-      // we need to get it here, if it's not already in the store. In the future
-      // we may decide to make this relationship async, but I don't want to
-      // change the code at the moment
-      let lastBuild = this.peekRecord('build', last_build_id);
-      if (!last_build_id || lastBuild) {
-        return this.push(this.normalize('repo', data));
-      } else {
-        return this.findRecord('build', last_build_id).then(() => {
-          this.push(this.normalize('repo', data));
-        });
-      }
+  reloadRecord(type, id) {
+    let record = this.peekRecord(type, id);
+    if (record) {
+      record.reload();
+    } else {
+      return this.findRecord(type, id);
     }
-  }
+  },
 });

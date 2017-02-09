@@ -180,7 +180,9 @@ export default function () {
   });
 
   this.get('/builds/:id', function (schema, request) {
+    console.log('build id requested', request.params.id);
     const build = schema.builds.find(request.params.id);
+    console.log('build state', build.attrs.state);
     const response = {
       build: build.attrs,
       jobs: build.jobs.models.map(job => job.attrs)
