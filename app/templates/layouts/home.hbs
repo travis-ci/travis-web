@@ -17,4 +17,8 @@
   </aside>
 </div>
 
-{{page-footer}}
+{{#if auth.signedOut}}
+  {{page-footer}}
+{{else if features.dashboard}}
+  {{page-footer}} 
+{{/if}}
