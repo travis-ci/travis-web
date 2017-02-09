@@ -105,7 +105,7 @@ export default function () {
     };
   });
 
-  this.post('/settings/env_vars?repository_id=1', function () {
+  this.post('/settings/env_vars?repository_id=1', function (schema, request) {
     const repositoryId = request.queryParams.repository_id;
     const envVars = schema.envVars.where({ repositoryId: repositoryId });
     const [envVar] = envVars;
@@ -197,15 +197,43 @@ export default function () {
   this.get('/build/:id', function (schema, request) {
     const build = schema.builds.find(request.params.id);
     const response = {
-      build: build.attrs,
-      jobs: build.jobs.models.map(job => job.attrs)
+      '@type': 'build',
+      '@href': `/build/${build.id}`,
+      '@representation': 'standard',
+      '@permissions': {
+        read: true,
+        cancel: true,
+        restart: true
+      },
+      id: build.id,
+      number: build.number,
+      state: build.state,
+      duration: build.duration,
+      event_type: build.event_type,
+      previous_state: build.previous_state,
+      pull_request_title: build.pull_request_title,
+      pull_request_number: build.pull_request_number,
+      started_at: build.started_at,
+      finished_at: build.finished_at
     };
+
+    if (build.jobs) {
+      response.jobs = build.jobs.models.map(job => job.attrs);
+    }
+
+    if (build.branch) {
+      response.branch = build.branch.attrs;
+    }
+
+    if (build.repository) {
+      response.repository = build.repository.attrs;
+    }
 
     if (build.commit) {
       response.commit = build.commit.attrs;
     }
 
-    return response;
+    return new Mirage.Response(200, {}, response);
   });
 
   this.post('/build/:id/restart', (schema, request) => {

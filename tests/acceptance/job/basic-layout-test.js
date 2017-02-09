@@ -13,10 +13,7 @@ test('visiting job-view', function (assert) {
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
   let job = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit, build });
-  commit.job = job;
-
-  job.save();
-  commit.save();
+  commit.update('job', job);
 
   server.create('log', { id: job.id });
 
