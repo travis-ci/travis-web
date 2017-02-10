@@ -99,7 +99,7 @@ export default PageObject.create({
       nextRun: text('.next-run'),
       lastRun: text('.last-run'),
       dontRunIfRecentBuildExistsText: text('.dont-run-if-recent-build-exists'),
-      delete: clickable('.icon-trash')
+      delete: clickable('.cron-job-delete')
     }
   }),
 
