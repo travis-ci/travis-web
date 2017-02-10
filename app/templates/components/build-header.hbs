@@ -78,40 +78,40 @@
       {{/link-to}}
     {{/if}}
   </h3>
+
   <ul class="list-icon">
-    {{#if item.isFinished}}
-      <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
+    {{#if isJob}}
+      <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
         {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
         <span class="label-align">
-          Elapsed time <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+          {{#if item.toBeQueued}}
+            Waiting to be queued
+          {{else if item.toBeStarted}}
+            Waiting to start
+          {{else}}
+            {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+          {{/if}}
         </span>
       </li>
-    {{else if isJob}}
-      <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
+    {{else}}
+      <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
         {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
         <span class="label-align">
-      {{#if item.toBeQueued}}
-          Waiting to be queued
-      {{else if item.toBeStarted}}
-        Waiting to start
-      {{else}}
-        Elapsed time <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
-      {{/if}}
+          {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
         </span>
       </li>
     {{/if}}
-    {{#unless isJob}}
+
+    {{#if item.isFinished}}
       {{#if item.isMatrix}}
         <li title="{{format-duration item.duration}}" class="commit-clock">
           {{inline-svg 'icon-clock' class="icon"}}
           <span class="label-align">
-            {{#if item.isFinished}}Total time{{else}}Running for{{/if}}
-            <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time>
+            Total time <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time>
           </span>
         </li>
       {{/if}}
-    {{/unless}}
-    {{#if item.isFinished}}
+
       <li title="{{item.finishedAt}}" class="commit-calendar">
         {{inline-svg 'icon-calendar' class="icon"}}
         <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time>
@@ -119,7 +119,6 @@
     {{/if}}
   </ul>
 </div>
-
 
 <div class='build-tools'>
   {{#if isJob}}
