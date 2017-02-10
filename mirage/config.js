@@ -165,8 +165,8 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/repo/:repository_id/builds', function (schema, { queryParams:
-    { event_type: eventType, after_number: afterNumber, ids } }) {
+  this.get('/repo/:repository_id/builds', function (schema, { params, queryParams: { event_type: eventType, after_number: afterNumber, ids } }) {
+
     const allBuilds = schema.builds.all();
     let builds;
 
