@@ -74,6 +74,7 @@ export default PageObject.create({
     item: {
       name: text('.env-var-name'),
       isPublic: hasClass('is-public'),
+      isNewlyCreated: hasClass('newly-created'),
       value: value('input'),
 
       delete: clickable('.env-var-delete')
@@ -105,8 +106,8 @@ export default PageObject.create({
 
   sshKey: {
     scope: '.settings-sshkey',
-    name: text('.ssh-key-name span:last-child'),
-    fingerprint: text('.ssh-key-value span:last-child'),
+    name: text('.ssh-key-name span'),
+    fingerprint: text('.ssh-key-value span'),
 
     delete: clickable('.ssh-delete'),
     cannotBeDeleted: isVisible('.ssh-no-delete')
