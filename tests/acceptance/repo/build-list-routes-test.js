@@ -19,6 +19,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     });
 
     this.repoId = parseInt(repository.id);
+    this.repository = repository;
 
     this.branch = server.create('branch');
 
@@ -33,7 +34,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'cron',
-      repository_id: this.repoId
+      repository,
     });
 
     const commitAttributes = {
@@ -49,7 +50,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const failedBuild = this.branch.createBuild({
       state: 'failed',
       event_type: 'push',
-      repository_id: this.repoId,
+      repository,
       number: '1885'
     });
 
@@ -59,7 +60,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const erroredBuild = this.branch.createBuild({
       state: 'errored',
       event_type: 'push',
-      repository_id: this.repoId,
+      repository,
       number: '1869'
     });
 
@@ -74,7 +75,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const defaultBranchBuild = defaultBranch.createBuild({
       number: '1491',
       event_type: 'push',
-      repository_id: this.repoId
+      repository,
     });
 
     defaultBranchBuild.createCommit(Object.assign({}, commitAttributes, {
@@ -82,29 +83,27 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     }));
     defaultBranchBuild.save();
 
-    const pullRequestBuild = this.branch.createBuild({
+    const pullRequestCommit = server.create('commit', commitAttributes);
+
+    const pullRequestBuild = server.create('build', {
       state: 'started',
       number: '1919',
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'pull_request',
       pull_request_number: 2010,
-      repository_id: this.repoId,
-      pull_request_title: 'A pull request'
+      repository,
+      commit: pullRequestCommit,
+      pull_request_title: 'A pull request',
     });
 
-    const pullRequestCommit = pullRequestBuild.createCommit(commitAttributes);
-    pullRequestBuild.save();
-
-    pullRequestBuild.createJob({
+    server.create('job', {
       number: '1919.1',
-      repository_id: this.repoId,
+      repository,
       state: 'started',
       build: pullRequestBuild,
-      commit_id: pullRequestCommit.id
+      commit: pullRequestCommit,
     });
-
-    pullRequestBuild.save();
   }
 });
 
@@ -133,7 +132,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     // Add another build so the API has more to return
     const olderBuild = this.branch.createBuild({
       event_type: 'push',
-      repository_id: this.repoId,
+      repositoryId: this.repoId,
       number: '1816'
     });
 

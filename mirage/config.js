@@ -165,6 +165,7 @@ export default function () {
 
   this.get('/jobs');
 
+  // eslint-disable-next-line
   this.get('/repo/:repository_id/builds', function (schema, { params, queryParams: { event_type: eventType, after_number: afterNumber, ids } }) {
 
     const allBuilds = schema.builds.all();
@@ -181,17 +182,23 @@ export default function () {
       builds = allBuilds.models.slice(0, 3);
     }
 
-    return { builds: builds.map(build => {
-      if (build.commit) {
-        build.attrs.commit_id = build.commit.id;
-      }
-
-      if (build.jobs) {
-        build.attrs.job_ids = build.jobs.models.map(job => job.id);
-      }
-
-      return build;
-    }), commits: builds.map(build => build.commit) };
+    // return this.serialize(builds);
+    return {
+      builds: builds.map(build => {
+        build['@type'] = 'build';
+        build['@href'] = `/build/${build.id}`;
+        build['@representation'] = 'standard';
+        build['@permissions'] = {
+          read: true,
+          cancel: true,
+          restart: true
+        };
+        if (build.commit) {
+          build.commit = build.commit.attrs;
+        }
+        return build;
+      })
+    };
   });
 
   this.get('/build/:id', function (schema, request) {
