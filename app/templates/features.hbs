@@ -17,12 +17,7 @@
     {{else}}
       <ul class="features-list">
         {{#each model as |feature|}}
-          <li class="feature">
-            {{feature-toggle feature=feature}}
-            <h2 class="feature-name">{{feature.name}}
-              <small>(<a href="{{feature.feedbackUrl}}" title="See the feedback ticket on GitHub">We'd love some feedback!</a>)</small></h2>
-            <p>{{feature.description}}</p>
-          </li>
+          {{beta-feature feature=feature}}
         {{else}}
           Oops! It looks like we don't have any experimental features for you
           to try yet.
