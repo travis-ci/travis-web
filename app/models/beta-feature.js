@@ -8,6 +8,7 @@ export default DS.Model.extend({
   name: attr('string'),
   description: attr('string'),
   enabled: attr('boolean'),
+  feedbackUrl: attr('string'),
 
   dasherizedName: computed('name', function () {
     return Ember.String.dasherize(this.get('name'));
