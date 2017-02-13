@@ -9,7 +9,8 @@ test('it renders', function (assert) {
   let feature = {
     name: 'dasboard',
     feedbackUrl: 'https://github.com/travis-ci/give-feedback',
-    description: 'super awesome new Dashboard'
+    description: 'super awesome new Dashboard',
+    enabled: true
   };
   this.set('feature', feature);
   this.render(hbs`{{beta-feature feature=feature}}`);
@@ -17,4 +18,5 @@ test('it renders', function (assert) {
   assert.equal(this.$().find('.feature-name span').text().trim(), 'Dasboard');
   assert.equal(this.$().find('.feature-name a').attr('href'), 'https://github.com/travis-ci/give-feedback');
   assert.equal(this.$().find('p').text().trim(), 'super awesome new Dashboard');
+  assert.equal(this.$().find('.switch').hasClass('active'), true);
 });
