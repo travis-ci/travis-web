@@ -88,7 +88,14 @@ export default DS.Store.extend({
   loadOne(type, json) {
     let data, default_branch, last_build_id;
 
-    this.push(this.normalize(type, json));
+    if (type === 'build') {
+      const normalized = this.normalize(type, json);
+      normalized.data.id = json[type].id;
+      this.push(normalized);
+    } else {
+      this.push(this.normalize(type, json));
+    }
+
 
     // we get other types of records only in a few situations and
     // it's not always needed to update data, so I'm specyfing which
@@ -100,6 +107,7 @@ export default DS.Store.extend({
         default_branch.default_branch = true;
       }
       last_build_id = default_branch.last_build_id;
+      console.log({last_build_id});
 
       // a build is a synchronous relationship on a branch model, so we need to
       // have a build record present when we put default_branch from a repository
@@ -109,9 +117,11 @@ export default DS.Store.extend({
       // change the code at the moment
       let lastBuild = this.peekRecord('build', last_build_id);
       if (!last_build_id || lastBuild) {
+        console.log({data});
         return this.push(this.normalize('repo', data));
       } else {
         return this.findRecord('build', last_build_id).then(() => {
+          console.log({data});
           this.push(this.normalize('repo', data));
         });
       }
