@@ -47,9 +47,10 @@ export default Ember.Component.extend({
     return this.get('externalLinks').githubCommit(slug, sha);
   }),
 
-  elapsedTime: Ember.computed('item.startedAt', 'item.finishedAt', 'item.duration', function () {
-    return durationFrom(this.get('item.startedAt'), this.get('item.finishedAt'));
-  }),
+  @computed('item.startedAt', 'item.finishedAt')
+  elapsedTime(startedAt, finishedAt) {
+    return durationFrom(startedAt, finishedAt);
+  },
 
   @computed('item.repo.slug', 'commit.branch')
   urlGitHubBranch(slug, branchName) {
