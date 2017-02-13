@@ -20,7 +20,7 @@
           <li class="feature">
             {{feature-toggle feature=feature}}
             <h2 class="feature-name">{{feature.name}}
-              <small>(<a href="mailto:support@travis-ci.com?subject=About your {{feature.name}} feature" title="">We'd love some feedback!</a>)</small></h2>
+              <small>(<a href="{{feature.feedbackUrl}}" title="See the feedback ticket on GitHub">We'd love some feedback!</a>)</small></h2>
             <p>{{feature.description}}</p>
           </li>
         {{else}}
