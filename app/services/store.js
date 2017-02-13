@@ -118,6 +118,7 @@ export default DS.Store.extend({
       let lastBuild = this.peekRecord('build', last_build_id);
       if (!last_build_id || lastBuild) {
         console.log({data});
+        console.log('normalized repo', this.normalize('repo', data));
         return this.push(this.normalize('repo', data));
       } else {
         return this.findRecord('build', last_build_id).then(() => {
