@@ -255,8 +255,9 @@ removeCarriageReturns = function (string) {
     return string;
   }
   // FIXME the previous code is below. It surely was this way for a reason!
-  // return string.substr(index + 1);
-  return string.replace('\r', '');
+  return string.substr(index + 1);
+  // FIXME indeed it was, reverting for now…
+  // return string.replace('\r', '');
 };
 
 var foldNameCount = {};
