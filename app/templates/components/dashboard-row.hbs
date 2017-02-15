@@ -3,7 +3,8 @@
     {{inline-svg 'icon-star' class="icon--big"}}
   </button>
   {{#if repo.private}}
-    {{inline-svg 'images/sroke-icons/icon-lock' class="icon"}}
+    <span class="dash-private" title="private repository">
+    {{inline-svg 'icon-private' class="icon"}}</span>
   {{/if}}
 </div>
 <div class="dash-body">
