@@ -101,6 +101,8 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
   withFeature('dashboard');
   visit('/dashboard/');
 
+  percySnapshot(assert);
+
   andThen(() => {
     assert.equal(currentURL(), '/dashboard/');
     assert.equal(dashboardPage.activeRepos().count, 4, 'lists all repos of the user');
