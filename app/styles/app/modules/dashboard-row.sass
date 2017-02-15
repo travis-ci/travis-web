@@ -9,6 +9,12 @@
   &.is-starred
     +colorSVGFull($dozer-yellow, $canary-yellow)
 
+.dash-private
+  display: block
+  text-align: center
+  .icon
+    margin-right: 0
+
 .dash-head
   flex: 0 0 2%
   display: flex
@@ -48,7 +54,7 @@
     bottom: 0
     overflow: hidden
     z-index: 0
-    
+
 section[class^="dash-"]
   @media #{$small-only}
     margin-top: 1em
