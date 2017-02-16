@@ -94,7 +94,6 @@ travis_fold:end:afold
 [0K[90mI am a grey line.
 I used to be the final line.
 I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the final replacer.\nI do not replace because the previous line ended with a line feed.
-Another line that should be replaced.\rAnd another.\rBut not this one!\r${ESCAPE}[Om
 This should also be gone.\r This should have replaced it.
 `;
   server.create('log', { id: job.id, content: complexLog });
@@ -157,11 +156,7 @@ This should also be gone.\r This should have replaced it.
     assert.equal(jobPage.logLines(15).nextText, 'I am the final replacer.');
     assert.equal(jobPage.logLines(16).text, 'I do not replace because the previous line ended with a line feed.');
 
-    // FIXME this is off pending a bug fix that doesn’t break other things.
-    // See https://github.com/travis-ci/travis-ci/issues/7106
-    // assert.equal(jobPage.logLines(17).text, 'But not this one!');
-
-    assert.equal(jobPage.logLines(18).nextText, 'This should have replaced it.');
+    assert.equal(jobPage.logLines(17).nextText, 'This should have replaced it.');
   });
 
   jobPage.logFolds(0).toggle();
