@@ -96,6 +96,7 @@ I used to be the final line.
 I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the final replacer.\nI do not replace because the previous line ended with a line feed.
 This should also be gone.\r This should have replaced it.
 A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
+But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
 `;
   server.create('log', { id: job.id, content: complexLog });
 
@@ -161,6 +162,8 @@ A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\
 
     assert.equal(jobPage.logLines(18).text, 'A particular log formation is addressed here, this should remain.');
     assert.equal(jobPage.logLines(19).text, 'This should be on a separate line.');
+    assert.equal(jobPage.logLines(20).text, 'But it must be addressed repeatedly!');
+    assert.equal(jobPage.logLines(21).text, 'Again.');
   });
 
   jobPage.logFolds(0).toggle();
