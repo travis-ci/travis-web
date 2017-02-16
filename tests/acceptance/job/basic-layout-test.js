@@ -95,6 +95,7 @@ travis_fold:end:afold
 I used to be the final line.
 I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the final replacer.\nI do not replace because the previous line ended with a line feed.
 This should also be gone.\r This should have replaced it.
+A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
 `;
   server.create('log', { id: job.id, content: complexLog });
 
@@ -157,6 +158,9 @@ This should also be gone.\r This should have replaced it.
     assert.equal(jobPage.logLines(16).text, 'I do not replace because the previous line ended with a line feed.');
 
     assert.equal(jobPage.logLines(17).nextText, 'This should have replaced it.');
+
+    assert.equal(jobPage.logLines(18).text, 'A particular log formation is addressed here, this should remain.');
+    assert.equal(jobPage.logLines(19).text, 'This should be on a separate line.');
   });
 
   jobPage.logFolds(0).toggle();
