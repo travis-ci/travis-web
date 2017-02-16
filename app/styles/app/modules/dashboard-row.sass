@@ -1,7 +1,6 @@
 .dash-star
-  width: 2.2em
-  margin-top: .4em
   cursor: pointer
+  padding: 0 0.3em
   &:hover,
   &:active
     svg path
@@ -20,11 +19,12 @@
   display: flex
   padding: 0 1em
   margin-bottom: 1em
-  justify-content: space-between
-  align-items: flex-end
+  justify-content: space-around
+  align-items: center
   @media #{$medium-up}
     flex: 0 0 3em
-    display: block
+    display: flex
+    flex-direction: column
     margin-bottom: 0
     height: 55px
     border-right: 1px solid rgba($asphalt-grey, .2)
