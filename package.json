@@ -74,5 +74,10 @@
     "loader.js": "^4.0.10",
     "morgan": "^1.7.0",
     "visibilityjs": "^1.2.4"
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/about"
+    ]
   }
 }
