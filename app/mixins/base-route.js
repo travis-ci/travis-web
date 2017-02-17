@@ -6,9 +6,9 @@ export default Ember.Mixin.create({
   auth: service(),
 
   activate() {
-    if (this.routeName !== 'error') {
-      this.controllerFor('error').set('layoutName', null);
-    }
+    // if (this.routeName !== 'error') {
+    //   this.controllerFor('error').set('layoutName', null);
+    // }
     return this._super(...arguments);
   },
 
