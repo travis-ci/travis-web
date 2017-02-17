@@ -1,11 +1,16 @@
-import TravisRoute from 'travis/routes/basic';
-import Repo from 'travis/models/repo';
-import ScrollResetMixin from 'travis/mixins/scroll-reset';
 import Ember from 'ember';
+import BaseRouteMixin from 'travis/mixins/base-route';
+import ScrollResetMixin from 'travis/mixins/scroll-reset';
+import Repo from 'travis/models/repo';
 
 const { service } = Ember.inject;
 
-export default TravisRoute.extend(ScrollResetMixin, {
+const mixins = [
+  BaseRouteMixin,
+  ScrollResetMixin,
+];
+
+export default Ember.Route.extend(...mixins, {
   store: service(),
   tabStates: service(),
 

@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import TravisRoute from 'travis/routes/basic';
+import BaseRouteMixin from 'travis/mixins/base-route';
 import config from 'travis/config/environment';
 
-export default TravisRoute.extend({
+export default Ember.Route.extend(BaseRouteMixin, {
   deactivate() {
     return this.controllerFor('loading').set('layoutName', null);
   },

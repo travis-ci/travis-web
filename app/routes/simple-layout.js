@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import TravisRoute from 'travis/routes/basic';
+import BaseRouteMixin from 'travis/mixins/base-route';
 
-export default TravisRoute.extend({
+export default Ember.Route.extend(BaseRouteMixin, {
   setupController: function () {
     Ember.$('body').attr('id', 'simple');
     this.controllerFor('repos').activate('owned');

@@ -1,10 +1,10 @@
-import TravisRoute from 'travis/routes/basic';
-import config from 'travis/config/environment';
 import Ember from 'ember';
+import BaseRouteMixin from 'travis/mixins/base-route';
+import config from 'travis/config/environment';
 
 const { service } = Ember.inject;
 
-export default TravisRoute.extend({
+export default Ember.Route.extend(BaseRouteMixin, {
   ajax: service(),
   needsAuth: true,
 

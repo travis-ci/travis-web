@@ -1,14 +1,19 @@
 /* global Travis */
-import TravisRoute from 'travis/routes/basic';
+import Ember from 'ember';
+import BaseRouteMixin from 'travis/mixins/base-route';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
-import Ember from 'ember';
-
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
 
 let { service } = Ember.inject;
 
-export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
+const mixins = [
+  BaseRouteMixin,
+  BuildFaviconMixin,
+  KeyboardShortcuts,
+];
+
+export default Ember.Route.extend(...mixins, {
   flashes: service(),
   auth: service(),
 

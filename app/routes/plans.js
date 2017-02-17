@@ -1,6 +1,7 @@
-import BasicRoute from 'travis/routes/basic';
+import Ember from 'ember';
+import BaseRouteMixin from 'travis/mixins/base';
 
-export default BasicRoute.extend({
+export default Ember.Route.extend(BaseRouteMixin, {
   needsAuth: false,
 
   redirect() {
