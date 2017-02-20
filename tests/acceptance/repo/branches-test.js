@@ -179,3 +179,12 @@ test('view branches', function (assert) {
   });
   percySnapshot(assert);
 });
+
+
+test('get deleted branches', function (assert) {
+
+  branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+
+
+
+});

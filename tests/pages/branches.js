@@ -5,7 +5,9 @@ let {
   hasClass,
   is,
   text,
-  visitable
+  visitable,
+  clickable,
+  isVisible
 } = PageObject;
 
 const branchRowComponent = {
@@ -53,8 +55,12 @@ export default PageObject.create({
   }),
 
   inactiveBranches: collection({
-    scope: '.inactive-branches',
+    scope: '.deleted-branches',
+    isVisible: isVisible('.deleted-branches'),
     itemScope: '.branch-row',
+
+    info: text('.deleted-branches .note'),
+    cta: clickable('.deleted-branches .branches-cta'),
 
     item: branchRowComponent
   })
