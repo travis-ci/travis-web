@@ -3,9 +3,7 @@ import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('job', 'Unit | Model | job', {
-  needs: ['model:repo', 'model:build', 'model:commit', 'model:stage', 'service:ajax',
-    'service:jobConfigFetcher', 'service:auth', 'service:features', 'service:flashes',
-    'service:storage', 'service:sessionStorage']
+  needs: ['model:repo', 'model:build', 'model:commit', 'model:stage', 'model:branch', 'service:ajax', 'service:jobConfigFetcher', 'service:auth', 'service:features', 'service:flashes']
 });
 
 test('config is fetched if it\'s not available', function (assert) {

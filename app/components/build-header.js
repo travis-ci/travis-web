@@ -55,7 +55,7 @@ export default Component.extend({
     return durationFrom(startedAt, finishedAt);
   },
 
-  @computed('item.repo.slug', 'build.branchName')
+  @computed('item.repo.slug', 'commit.branch.name')
   urlGitHubBranch(slug, branchName) {
     return this.get('externalLinks').githubBranch(slug, branchName);
   },

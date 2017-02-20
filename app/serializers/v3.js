@@ -24,7 +24,7 @@ import traverse from 'travis/utils/traverse-payload';
 //             data: { id: 1, type: 'build' }
 //           },
 //           jobs: {
-//             data: [
+// re            data: [
 //               { id: 1, type: 'job' },
 //               { id: 2, type: 'job' }
 //             ]

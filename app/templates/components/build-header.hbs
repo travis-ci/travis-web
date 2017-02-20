@@ -10,18 +10,18 @@
                title={{item.tag.name}}>{{item.tag.name}}</small>
       {{else}}
         <small class="commit-branch"
-               title={{item.branch.name}}>{{item.branch.name}}</small>
+             title={{build.branchName}}>{{build.branchName}}</small>
       {{/if}}
       {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
   </h2>
   <div class="commit-info">
 
-  {{#if commit.body }}
-    <p class="commit-description">
-      <span class="monospace">{{format-message commit.body repo=item.repo pre=true}}</span>
-    </p>
-  {{/if}}
+    {{#if commit.body }}
+      <p class="commit-description">
+        <span class="monospace">{{format-message commit.body repo=item.repo pre=true}}</span>
+      </p>
+    {{/if}}
     <ul class="list-icon">
       <li>
         {{#external-link-to href=urlGithubCommit}}
@@ -150,7 +150,7 @@
   </ul>
 </div>
 
-<div class='build-tools'>
+<div class="build-tools">
   {{#if isJob}}
     {{repo-actions job=item repo=item.repo}}
   {{else}}

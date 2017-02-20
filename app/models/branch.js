@@ -7,7 +7,8 @@ export default Model.extend({
   name: attr('string'),
   defaultBranch: attr('boolean'),
   lastBuild: belongsTo('build'),
-  exists_on_github: attr('boolean'),
+  recentBuilds: attr(),
+  existsOnGithub: attr('boolean'),
 
   builds: hasMany('builds', { inverse: 'branch' }),
   repo: belongsTo('repo', { inverse: 'defaultBranch' }),

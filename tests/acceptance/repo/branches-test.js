@@ -197,11 +197,6 @@ test('view branches', function (assert) {
     assert.ok(branchesPage.activeBranches(1).failed, 'expected edits branch to have failed');
 
     assert.equal(branchesPage.activeBranches(2).name, 'old-old-edits', 'expected older completed branch to be sorted last');
-
-    assert.equal(branchesPage.inactiveBranches().count, 2, 'expected two inactive branches');
-    assert.equal(branchesPage.inactiveBranches(0).name, 'old-edits');
-    assert.ok(branchesPage.inactiveBranches(0).errored, 'expected first inactive branch to have errored');
-    assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
   });
   percySnapshot(assert);
 });
@@ -219,4 +214,25 @@ test('view branches tab when no branches present', function (assert) {
   andThen(() => {
     assert.equal(branchesPage.showsNoBranchesMessaging, 'No other branches for this repository', 'Branches tab shows no branches message');
   });
+});
+
+test('view deleted branches', function (assert) {
+  branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+
+  assert.ok(!branchesPage.deletedBranchesVisible.isVisible, 'expect to initially not list inactive branches');
+  assert.ok(branchesPage.deletedBranchesNotVisible.isVisible, 'expect to initially display inactive branch info');
+  assert.equal(branchesPage.inactiveInfo, '1 branches have been hidden as they were removed from GitHub.', 'expect to display total number of inactive branches');
+
+  branchesPage.getMoreInactive.click();
+
+  andThen(() => {
+    assert.ok(branchesPage.inactiveBranches.inactiveBranchesVisible.isVisible, 'expect to list inactive branches on request');
+    assert.ok(!branchesPage.inactiveBranches.inactiveBranchesNotVisible.isVisible, 'expect to hide inital inactive branch info after request');
+
+    assert.equal(branchesPage.inactiveBranches().count, 2, 'expected two inactive branches');
+    assert.equal(branchesPage.inactiveBranches(0).name, 'old-edits');
+    assert.ok(branchesPage.inactiveBranches(0).errored, 'expected first inactive branch to have errored');
+    assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
+  });
+  percySnapshot(assert);
 });

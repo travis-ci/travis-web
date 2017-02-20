@@ -14,9 +14,9 @@ test('it renders data correctly', function (assert) {
       name: 'php-test-staging',
       slug: 'travis-repos/php-test-staging'
     },
-    default_branch: true,
-    exists_on_github: true,
-    last_build: {
+    defaultBranch: true,
+    existsOnGithub: true,
+    lastBuild: {
       id: 393177,
       number: '1',
       state: 'passed',
@@ -30,16 +30,9 @@ test('it renders data correctly', function (assert) {
         sha: 'a82f6ba76c7b729375ed6a1d7a26b765f694df12',
         ref: 'refs/heads/master',
         message: 'Add money example as hello world',
-        compare_url: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
-        committed_at: '2014-11-20T18:34:04Z',
-        committer: {
-          name: 'Dan Buch',
-          avatar_url: 'https://0.gravatar.com/avatar/563fd372b4d51781853bc85147f06a36'
-        },
-        author: {
-          name: 'Dan Buch',
-          avatar_url: 'https://0.gravatar.com/avatar/563fd372b4d51781853bc85147f06a36'
-        }
+        compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
+        committedAt: '2014-11-20T18:34:04Z',
+        committerName: 'Dan Buch'
       }
     }
   });

@@ -1,36 +1,60 @@
-{{#if branchesExist}}
-  <div class="branches">
-    {{#if defaultBranch}}
-      <section class='default-branch'>
-        <h2 class="small-title">Default Branch</h2>
-        <ul class="blank-list">
-          {{branch-row branch=defaultBranch}}
-        </ul>
-      </section>
-    {{/if}}
+<div class="branches">
+  <section class="default-branch">
+    {{branch-list branchList=defaultBranch listTitle="Default Branch" class="default-branch"}}
+  </section>
 
-    {{#if activeBranches.length}}
-      <section class='active-branches'>
-        <h2 class="small-title">Active Branches</h2>
-        <ul class="blank-list">
-          {{#each activeBranches as |branch|}}
-            {{branch-row branch=branch}}
-          {{/each}}
-        </ul>
-      </section>
-    {{/if}}
+  {{#if activeBranches.length}}
+    <section class="active-branches">
+      {{#branch-list branchList=activeBranches listTitle="Active Branches"}}
+        <p class="helptext m-t-0">Displaying
+          <span>{{activeBranches.length}}</span> of {{totalActive}} active branches.</p>
+      {{/branch-list}}
 
-    {{#if inactiveBranches.length}}
-      <section class='inactive-branches'>
-        <h2 class="small-title">Inactive Branches</h2>
-        <ul class="blank-list">
-          {{#each inactiveBranches as |branch|}}
-            {{branch-row branch=branch inactive=true}}
-          {{/each}}
-        </ul>
-      </section>
-    {{/if}}
-  </div>
-{{else}}
-  {{missing-notice title="No other branches for this repository"}}
-{{/if}}
+      {{#if fetchActiveTask.isRunning}}
+        {{loading-indicator}}
+      {{else}}
+        {{#if canLoadActive}}
+          <button type="button" class="button" onclick={{perform fetchActiveTask  activeBranches.length}}>
+            {{svg-jar 'icon-seemore' class="icon white"}}
+            <span class="label-align">Load more branches</span>
+          </button>
+        {{/if}}
+      {{/if}}
+    </section>
+
+
+    <section class="deleted-branches">
+      {{#if isShowingDeleted}}
+        {{#branch-list branchList=deletedBranches listTitle="Deleted Branches" class="deleted-branch-list"}}
+          <p class="helptext">Displaying
+            <span>{{deletedBranches.length}}</span> of {{pluralize totalDeleted 'deleted branch'}}.</p>
+          <button type="button" class="button m-b-m" {{action 'toggleDeletedBranchVisibility'}}>
+            {{svg-jar 'icon-seemore' class="icon white"}}
+            <span class="label-align">Hide deleted branches</span></button>
+        {{/branch-list}}
+
+        {{#if fetchDeletedTask.isRunning}}
+          {{loading-indicator}}
+        {{else}}
+          {{#if canLoadDeleted}}
+            <button type="button" class="button" onclick={{perform fetchDeletedTask deletedBranches.length}}>
+              {{svg-jar 'icon-seemore' class="icon white"}}
+              <span class="label-align">Get more deleted branches</span></button>
+          {{/if}}
+        {{/if}}
+      {{else}}
+        <h2 class="small-title m-t-m">Deleted Branches</h2>
+        <aside class="inactive-branches-hidden">
+          <p class="helptext">
+            {{pluralize totalDeleted 'branch'}} have been hidden as they were removed from GitHub.</p>
+          <button type="button" class="button" {{action 'toggleDeletedBranchVisibility'}}>
+            {{svg-jar 'icon-seemore' class="icon white"}}
+            <span class="label-align">Show deleted branches</span></button>
+        </aside>
+      {{/if}}
+    </section>
+
+  {{else}}
+    {{missing-notice title="No other branches for this repository"}}
+  {{/if}}
+</div>

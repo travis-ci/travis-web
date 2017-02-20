@@ -1,0 +1,13 @@
+{{#if listTitle}}
+<h2 class="small-title m-b-s m-t-m">{{listTitle}}</h2>
+{{/if}}
+
+{{yield}}
+
+<ul class="blank-list m-b-m">
+  {{#each branchList as |branch| }}
+    {{branch-row branch=branch}}
+  {{else}}
+    <li>No branches found.</li>
+  {{/each}}
+</ul>

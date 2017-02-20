@@ -4,5 +4,6 @@ export default Model.extend({
   commit: belongsTo(),
   build: belongsTo(),
   repository: belongsTo('repository'),
-  stage: belongsTo()
+  stage: belongsTo(),
+  branch: belongsTo()
 });

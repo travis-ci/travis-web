@@ -1,6 +1,6 @@
-import V2FallbackSerializer from 'travis/serializers/v2_fallback';
+import V3Serializer from 'travis/serializers/v3';
 
-export default V2FallbackSerializer.extend({
+const Serializer = V3Serializer.extend({
   extractAttributes(klass, payload) {
     payload.id = payload['@href'];
     return this._super(...arguments);
@@ -10,3 +10,5 @@ export default V2FallbackSerializer.extend({
     return resourceHash.id || resourceHash['@href'];
   }
 });
+
+export default Serializer;
