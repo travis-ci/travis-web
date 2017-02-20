@@ -99,7 +99,7 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
 
 test('visiting /dashboard/ with feature flag enabled', function (assert) {
   withFeature('dashboard');
-  visit('/dashboard/');
+  visit('/');
 
   percySnapshot(assert);
 
