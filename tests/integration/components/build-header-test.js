@@ -9,6 +9,7 @@ test('render api build', function (assert) {
   let repo = { slug: 'travis-ci/travis-web' };
   let commit = {
     compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
+    branch: { name: 'feature-branch' },
     subject: 'Endless joy'
   };
   let branch = {

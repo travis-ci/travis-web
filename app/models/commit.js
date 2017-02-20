@@ -8,7 +8,6 @@ export default Model.extend({
   @service externalLinks: null,
 
   sha: attr(),
-  branch: attr(),
   message: attr(),
   compareUrl: attr(),
   authorName: attr(),
@@ -19,6 +18,7 @@ export default Model.extend({
   committerAvatarUrl: attr(),
   authorAvatarUrl: attr(),
 
+  branch: belongsTo('branch'),
   build: belongsTo('build'),
 
   @computed('message')

@@ -41,7 +41,10 @@ export default TravisRoute.extend({
 
   fetchBranches() {
     const repo = this.modelFor('repo');
-    return repo.get('branches.promise');
+    return this.store.query('branch', {
+      repoId: repo.id,
+      existsOnGithub: true
+    });
   },
 
   fetchCustomSshKey() {

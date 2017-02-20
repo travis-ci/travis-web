@@ -26,6 +26,7 @@
 @import "app/modules/forms";
 @import "app/modules/notice";
 @import "app/modules/build-header";
+@import "app/modules/branch-row";
 @import "app/modules/avatar";
 @import "app/modules/popup";
 @import "app/modules/lastbuild";
@@ -51,7 +52,6 @@
 @import "app/layouts/profile";
 @import "app/layouts/top";
 @import "app/layouts/owner";
-@import "app/layouts/branches";
 @import "app/layouts/broadcasts";
 @import "app/layouts/repo";
 @import "app/layouts/jobs";

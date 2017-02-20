@@ -5,11 +5,13 @@ let {
   hasClass,
   is,
   text,
-  visitable
+  visitable,
+  isVisible,
+  isHidden
 } = PageObject;
 
 const branchRowComponent = {
-  scope: '.default-branch .branch-row',
+  scope: '.branch-row',
 
   name: text('.row-name .label-align'),
   buildCount: text('.row-builds .label-align'),
@@ -18,6 +20,9 @@ const branchRowComponent = {
   failed: hasClass('failed'),
   errored: hasClass('errored'),
   created: hasClass('created'),
+
+  helptext: text('.helptext'),
+  title: text('h2.small-title'),
 
   request: text('.row-request .label-align'),
   commitSha: text('.row-commit span.inner-underline'),
@@ -45,19 +50,24 @@ export default PageObject.create({
 
   showsNoBranchesMessaging: text('.missing-notice h2.page-title'),
 
-  defaultBranch: branchRowComponent,
+  defaultBranch: collection({
+    scope: '.default-branch',
+    itemScope: '.branch-row',
+    item: branchRowComponent
+  }),
+
+  deletedBranchesVisible: isVisible('.deleted-branches .blank-list'),
+  deletedBranchesNotVisible: isHidden('.deleted-branches .blank-list'),
 
   activeBranches: collection({
     scope: '.active-branches',
     itemScope: '.branch-row',
-
     item: branchRowComponent
   }),
 
   inactiveBranches: collection({
-    scope: '.inactive-branches',
+    scope: '.deleted-branches',
     itemScope: '.branch-row',
-
     item: branchRowComponent
   })
 });

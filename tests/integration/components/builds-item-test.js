@@ -10,16 +10,15 @@ test('it renders', function (assert) {
     id: 10000,
     state: 'passed',
     number: 11,
-    branchName: 'foobarbranch',
     message: void 0,
     pullRequest: false,
     eventType: 'push',
     commit: {
       sha: 'a5e8093098f9c0fb46856b753fb8943c7fbf26f3',
-      branch: 'foobarbranch',
       authorName: 'Test Author',
       authorEmail: 'author@example.com',
-      message: 'Generic test author commit message'
+      message: 'Generic test author commit message',
+      branch: { name: 'foobarbranch' },
     },
     repo: {
       slug: 'foo/bar'
