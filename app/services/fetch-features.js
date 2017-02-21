@@ -18,6 +18,10 @@ export default Ember.Service.extend({
     yield this.get('store').findAll('beta-feature').then((featureSet) => {
       let featuresService = this.get('features');
       featureSet.map((feature) => {
+        // this means that non-single-word feature names will turn
+        // 'comic sans' into 'comic-sans'. This may/may not work as expected.
+        // TODO: Confirm that this won't break if we add a feature name with
+        // spaces.
         let featureName = feature.get('dasherizedName');
         if (feature.get('enabled')) {
           featuresService.enable(featureName);

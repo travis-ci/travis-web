@@ -16,7 +16,6 @@ export default Ember.Route.extend({
   beforeModel(transition) {
     if (!this.signedIn()) {
       this.auth.autoSignIn();
-      this.get('fetchFeatures.fetchTask').perform();
     }
     if (!this.signedIn() && this.get('needsAuth')) {
       this.auth.set('afterSignInTransition', transition);
@@ -24,7 +23,6 @@ export default Ember.Route.extend({
     } else if (this.redirectToProfile(transition)) {
       return this.transitionTo('profile', this.get('auth.currentUser.login'));
     } else {
-      this.get('fetchFeatures.fetchTask').perform();
       return this._super(...arguments);
     }
   },

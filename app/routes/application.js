@@ -21,6 +21,10 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     return this._super(...arguments);
   },
 
+  model() {
+    return this.get('fetchFeatures.fetchTask').perform();
+  },
+
   activate() {
     var repos;
     if (!this.get('features.proVersion')) {
