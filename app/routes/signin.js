@@ -11,7 +11,7 @@ export default TravisRoute.extend({
     if (this.auth.get('signedIn')) {
       this.transitionTo('main');
     } else {
-      this.auth.signIn();
+      this.transitionTo('auth');
     }
   }
 });
