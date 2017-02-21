@@ -104,7 +104,7 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
   percySnapshot(assert);
 
   andThen(() => {
-    assert.equal(currentURL(), '/dashboard');
+    assert.equal(currentURL(), '/dashboard', 'we go to dashboard');
     assert.equal(dashboardPage.activeRepos().count, 4, 'lists all repos of the user');
     assert.equal(dashboardPage.activeRepos(0).owner, 'travis-ci', 'displays owner of repo');
     assert.equal(dashboardPage.activeRepos(0).repoName, 'travis-web', 'displays name of repo');

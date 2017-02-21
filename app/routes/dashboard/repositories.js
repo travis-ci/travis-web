@@ -8,9 +8,9 @@ export default TravisRoute.extend({
     }
   },
 
-  beforeModel() {
+  redirect() {
     if (!this.get('features.dashboard')) {
-      this.transitionTo('main');
+      return this.transitionTo('main');
     }
   },
 
