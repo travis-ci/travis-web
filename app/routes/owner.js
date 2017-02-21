@@ -22,9 +22,9 @@ export default TravisRoute.extend({
     return Ember.$.ajax(url, options);
   },
 
-  beforeModel() {
-    this.controllerFor('loading').set('layoutName', 'simple');
-    return this._super(...arguments);
+  renderTemplate() {
+    Ember.$('body').attr('id', 'owner');
+    this._super(...arguments);
   },
 
   actions: {

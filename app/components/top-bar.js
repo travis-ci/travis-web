@@ -5,6 +5,8 @@ import computed, { alias, none } from 'ember-computed-decorators';
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
+  tagName: 'header',
+  classNames: ['top'],
   auth: service(),
   store: service(),
   externalLinks: service(),

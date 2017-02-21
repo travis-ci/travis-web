@@ -18,8 +18,7 @@
       margin: auto
       padding: 0
 
-.main,
-.profile-view
+.main
   position: relative
   width: 100%
   min-height: calc(100vh - 174px - 55px)
@@ -32,6 +31,13 @@
   #top
     top: 0
 
+.loading-page
+  background-color: white
+  @extend .centered
+  .main
+    padding-bottom: 5rem
+    margin-bottom: -5rem
+
 #left
   padding: 0 0 110px 0
   background-color: white
@@ -43,14 +49,18 @@
 
 .wrapper
   overflow: hidden
-  & > .centered
-    background-color: white
+  background-color: white
 
 .wrapper.non-centered
   #main,
   #left
     margin-bottom: -99999px
     padding-bottom: 100034px
+
+  .centered
+    #main
+      padding-bottom: 5rem
+      margin-bottom: -5rem
 
 @media #{$large-up}
 
@@ -95,9 +105,7 @@
     width: grid-calc(31, 36)
     margin-left: grid-calc(5, 36)
 
-
 .cheatcode
-  padding-bottom: 3em
   aside#left
     display: none
 
@@ -113,7 +121,7 @@
     margin: auto !important
     padding-bottom: 0 !important
     padding-left: 0 !important
-    padding-rigth: 0 !important
+    padding-right: 0 !important
 
   footer.hidden
     display: block

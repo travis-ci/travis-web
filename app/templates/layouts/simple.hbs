@@ -1,16 +1,11 @@
-<div class="wrapper {{if features.pride 'travis-pride'}} {{if features.comicsans 'travis-comicsans'}}">
-  <header id="top" class="top">
-    <div class="centered">
-      {{top-bar}}
-    </div>
-  </header>
-
-  <div class="centered">
-    {{flash-display}}
-    <div id="main" class="main" role="main">
-      {{yield}}
-    </div>
+<div class="centered">
+  {{flash-display}}
+  <div id="main" class="main" role="main">
+    {{yield}}
   </div>
 </div>
 
-{{page-footer}}
+
+{{#unless features.dashboard}}
+  {{page-footer}}
+{{/unless}}
