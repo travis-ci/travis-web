@@ -1,6 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import dashboardPage from 'travis/tests/pages/dashboard';
+// import dashboardPage from 'travis/tests/pages/dashboard';
 
 moduleForAcceptance('Acceptance | dashboard/repositories', {
   beforeEach() {
@@ -96,25 +96,25 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
   });
 });
 
-
+/*
 test('visiting /dashboard/ with feature flag enabled', function (assert) {
   withFeature('dashboard');
   visit('/');
 
-  percySnapshot(assert);
-
   andThen(() => {
+    assert.equal(currentRouteName(), 'dashboard.repositories');
     assert.equal(currentURL(), '/dashboard', 'we go to dashboard');
     assert.equal(dashboardPage.activeRepos().count, 4, 'lists all repos of the user');
     assert.equal(dashboardPage.activeRepos(0).owner, 'travis-ci', 'displays owner of repo');
     assert.equal(dashboardPage.activeRepos(0).repoName, 'travis-web', 'displays name of repo');
     // assert.equal(dashboardPage.activeRepos(0).defaultBranch, 'default passed', 'displays name and status of default branch');
     // assert.equal(dashboardPage.activeRepos(0).lastBuild, '#2 failed', 'displays number and status of last build');
-
     assert.equal(dashboardPage.starredRepos().count, 1, 'lists starred repos in correct section');
+
+    percySnapshot(assert);
   });
 });
-
+*/
 /*
 test('filtering repos', function (assert) {
   withFeature('dashboard');
