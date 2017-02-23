@@ -21,8 +21,11 @@
     {{/if}}
 
     {{#if inactiveBranches.length}}
-      <section class='inactive-branches'>
-        <h2 class="small-title">Inactive Branches</h2>
+      <section class='deleted-branches'>
+        <h2 class="small-title">Deleted Branches</h2>
+        <aside class="deleted-branches-notice">
+          <p class="helptext">`x` branches have been hidden as they were removed from GitHub. <button type="button">Show deleted branches</button></p>
+        </aside>
         <ul class="blank-list">
           {{#each inactiveBranches as |branch|}}
             {{branch-row branch=branch inactive=true}}
