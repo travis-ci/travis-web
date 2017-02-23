@@ -21,9 +21,9 @@ export default TravisRoute.extend({
       options.headers.Authorization = 'token ' + (this.auth.token());
     }
 
-    let path = `${apiEndpoint}/repo/${repoId}/branches`;
-    let includes = 'build.commit&limit=100';
-    let url = `${path}?include=${includes}`;
+    let path = `${apiEndpoint}/v3/repo/${repoId}/branches`;
+    let includes = 'build.commit';
+    let url = `${path}?include=${includes}&exists_on_github=true`;
 
     return Ember.$.ajax(url, options).then(function (response) {
       allTheBranches = response.branches;
