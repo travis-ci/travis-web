@@ -5,7 +5,7 @@ export default TravisRoute.extend({
   titleToken: 'Beta Features',
 
   model() {
-    return this.store.peekAll('beta-feature');
+    return this.store.peekAll('beta-feature').sortBy('name');
   },
 
   renderTemplate() {
