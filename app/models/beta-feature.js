@@ -12,5 +12,11 @@ export default DS.Model.extend({
 
   dasherizedName: computed('name', function () {
     return Ember.String.dasherize(this.get('name'));
+  }),
+
+  displayName: computed('dasherizedName', function () {
+    return this.get('name').split('-')
+          .map(function (x) { return x.capitalize(); })
+          .join(' ');
   })
 });

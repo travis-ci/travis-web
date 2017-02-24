@@ -7,7 +7,8 @@ moduleForComponent('beta-feature', 'Integration | Component | beta feature', {
 
 test('it renders', function (assert) {
   let feature = {
-    name: 'dasboard',
+    name: 'dashboard',
+    displayName: 'Dashboard',
     feedbackUrl: 'https://github.com/travis-ci/give-feedback',
     description: 'super awesome new Dashboard',
     enabled: true
@@ -15,7 +16,7 @@ test('it renders', function (assert) {
   this.set('feature', feature);
   this.render(hbs`{{beta-feature feature=feature}}`);
 
-  assert.equal(this.$().find('.feature-name span').text().trim(), 'Dasboard');
+  assert.equal(this.$().find('.feature-name span').text().trim(), 'Dashboard');
   assert.equal(this.$().find('.feature-name a').attr('href'), 'https://github.com/travis-ci/give-feedback');
   assert.equal(this.$().find('p').text().trim(), 'super awesome new Dashboard');
   assert.equal(this.$().find('.switch').hasClass('active'), true);
