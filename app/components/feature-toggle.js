@@ -17,8 +17,8 @@ export default Ember.Component.extend({
 
   toggleFeatureTask: task(function* (feature) {
     try {
+      feature.toggleProperty('enabled');
       yield feature.save().then((feature) => {
-        feature.toggleProperty('enabled');
         this.applyFeatureState(feature);
       });
     } catch (e) {
