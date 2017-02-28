@@ -1,8 +1,6 @@
-<div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
+<div class="wrapper {{if features.dashboard 'cheatcode'}} {{if auth.signedIn 'non-centered' 'centered'}}  {{if features.pride 'travis-pride'}} {{if features.comicsans 'travis-comicsans'}}">
 
-  <header id="top" class="top">
-    {{top-bar}}
-  </header>
+  {{top-bar}}
 
   {{flash-display}}
 
@@ -15,8 +13,10 @@
   <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
     {{outlet "left"}}
   </aside>
-</div>
 
-<footer class="{{if auth.signedIn 'hidden'}}">
-  {{page-footer}}
-</footer>
+  {{#if auth.signedOut}}
+    {{page-footer}}
+  {{else if features.dashboard}}
+    {{page-footer}}
+  {{/if}}
+</div>

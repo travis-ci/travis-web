@@ -2,24 +2,40 @@
   .row
     max-width: 1024px
 
-  .footer
-    margin-top: 5rem
-
   .main
     margin: auto
     max-width: 1024px
-    padding-left: 0 !important
-    padding-right: 0 !important
-    padding-top: 30px !important
-    // overflow-y: auto
+    padding-left: $column-gutter/2
+    padding-right: $column-gutter/2
+    padding-top: 30px
   @media #{$medium-up}
+    padding-left: 0
+    padding-right: 0
     .topbar
       max-width: 1024px
       margin: auto
-      padding: 0
 
-.main,
-.profile-view
+.feature-wrapper.dashboard
+  #left
+    display: none
+  .wrapper-main
+    margin: auto
+    max-width: 1024px
+    padding-left: $column-gutter/2
+    padding-right: $column-gutter/2
+    padding-top: 30px
+    float: none
+  .footer
+    display: block
+
+  @media #{$medium-up}
+    padding-left: 0
+    padding-right: 0
+    .topbar
+      max-width: 1024px
+      margin: auto
+
+.main
   position: relative
   width: 100%
   min-height: calc(100vh - 174px - 55px)
@@ -28,29 +44,38 @@
   max-width: 1024px
   margin: auto
 
-#auth, #not-found, #simple
-  #top
-    top: 0
+.loading-page
+  background-color: white
+  @extend .centered
+  .main
+    padding-bottom: 5rem
+    margin-bottom: -5rem
+
+.wrapper-main // full-width
+  padding: 1.8em $column-gutter/2 5em
 
 #left
   padding: 0 0 110px 0
   background-color: white
   border-right: 2px solid #f2f2f2
 
-#main
-  position: relative
-  padding: 1.8em $column-gutter/2 5em
-
 .wrapper
   overflow: hidden
-  & > .centered
-    background-color: white
+  background-color: white
 
 .wrapper.non-centered
   #main,
   #left
     margin-bottom: -99999px
     padding-bottom: 100034px
+
+  .footer
+    display: none
+
+  .centered
+    #main
+      padding-bottom: 5rem
+      margin-bottom: -5rem
 
 @media #{$large-up}
 
@@ -94,29 +119,6 @@
   .non-centered .wrapper-main
     width: grid-calc(31, 36)
     margin-left: grid-calc(5, 36)
-
-
-.cheatcode
-  aside#left
-    display: none
-
-  .wrapper-main
-    width: auto !important
-    min-height: 83vh
-    float: none !important
-    margin: auto !important
-
-  #main,
-  .topbar
-    width: 1024px !important
-    margin: auto !important
-    padding-bottom: 0 !important
-    padding-left: 0 !important
-    padding-rigth: 0 !important
-
-  footer.hidden
-    display: block
-    margin-top: 5rem
 
 body.testing
   svg

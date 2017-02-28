@@ -240,9 +240,9 @@ export default function () {
     const builds = schema.builds.where({ branchId: branch.id });
 
     /**
-      * TODO remove this once the seializers/build is removed.
-      * The modelName causes Mirage to know how to serialise it.
-      */
+     * TODO remove this once the seializers/build is removed.
+     * The modelName causes Mirage to know how to serialise it.
+     */
     return this.serialize({
       models: builds.models.reverse(),
       modelName: 'build'
@@ -258,6 +258,39 @@ export default function () {
     }
   });
 
+  this.get('/user/:user_id/beta_features', function (schema) {
+    let features = schema.features.all();
+    if (features.models.length) {
+      return this.serialize(features);
+    } else {
+      schema.db.features.insert([
+        {
+          name: 'Dashboard',
+          description: 'UX improvements over the current implementation',
+          enabled: false
+        },
+        {
+          name: 'Show your Pride',
+          description: 'Let 🌈 in your heart (and Travis CI)',
+          enabled: false
+        },
+        {
+          name: 'Comic Sans',
+          description: 'Don\'t you miss those days?',
+          enabled: false
+        }
+      ]);
+      return this.serialize(schema.features.all());
+    }
+  });
+
+  this.put('/user/:user_id/beta_feature/:feature_id', function (schema, request) {
+    let feature = schema.features.find(request.params.feature_id);
+    let requestBody = JSON.parse(request.requestBody);
+    feature.update('enabled', requestBody.enabled);
+    return this.serialize(feature);
+  });
+
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
   // this.pretender.handledRequest = function (verb, path, request) {
   //   console.log('Handled this request:', `${verb} ${path}`, request);
@@ -269,8 +302,8 @@ export default function () {
 }
 
 /*
-You can optionally export a config that is only loaded during tests
-export function testConfig() {
+   You can optionally export a config that is only loaded during tests
+   export function testConfig() {
 
-}
-*/
+   }
+   */

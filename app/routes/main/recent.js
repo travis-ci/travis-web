@@ -2,6 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   redirect() {
-    return this.transitionTo('main');
+    if (this.get('features.dashboard')) {
+      return this.transitionTo('dashboard');
+    } else {
+      return this.transitionTo('main');
+    }
   }
 });
