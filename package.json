@@ -72,6 +72,7 @@
     "glob": "^4.5.3",
     "loader.js": "^4.0.10",
     "morgan": "^1.7.0",
+    "testem": "1.15.0",
     "visibilityjs": "^1.2.4"
   }
 }
