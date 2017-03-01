@@ -1,13 +1,17 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import dashboardPage from 'travis/tests/pages/dashboard';
+import sidebarPage from 'travis/tests/pages/sidebar';
 import jobPage from 'travis/tests/pages/job';
 
 const repoId = 100;
 
 const repositoryTemplate = {
   id: repoId,
-  slug: 'killjoys/living-a-feminist-life'
+  slug: 'killjoys/living-a-feminist-life',
+  owner: {
+    login: 'killjoys'
+  },
+  name: 'living-a-feminist-life'
 };
 
 moduleForAcceptance('Acceptance | home/with repositories', {
@@ -32,7 +36,11 @@ moduleForAcceptance('Acceptance | home/with repositories', {
 
     // create active repo
     server.create('repository', {
-      slug: 'killjoys/willful-subjects'
+      slug: 'killjoys/willful-subjects',
+      owner: {
+        login: 'killjoys'
+      },
+      name: 'willful-subjects'
     });
 
     server.create('repository', {
@@ -43,13 +51,13 @@ moduleForAcceptance('Acceptance | home/with repositories', {
 });
 
 test('the home page shows the repositories', (assert) => {
-  dashboardPage.visit();
+  sidebarPage.visit();
 
   andThen(() => {
-    assert.equal(dashboardPage.sidebarRepositories().count, 3, 'expected three repositories in the sidebar');
-    assert.equal(dashboardPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
-    assert.equal(dashboardPage.sidebarRepositories(1).name, 'killjoys/queer-phenomenology');
-    assert.equal(dashboardPage.sidebarRepositories(2).name, 'killjoys/living-a-feminist-life');
+    assert.equal(sidebarPage.sidebarRepositories().count, 3, 'expected three repositories in the sidebar');
+    assert.equal(sidebarPage.sidebarRepositories(0).name, 'killjoys/willful-subjects');
+    assert.equal(sidebarPage.sidebarRepositories(1).name, 'killjoys/queer-phenomenology');
+    assert.equal(sidebarPage.sidebarRepositories(2).name, 'killjoys/living-a-feminist-life');
   });
 });
 
@@ -99,10 +107,10 @@ function generateJobWithState(state) {
 buildTemplate.job_ids = [jobTemplate.id];
 
 test('Pusher events change the main display', function (assert) {
-  dashboardPage.visit();
+  sidebarPage.visit();
 
   andThen(() => {
-    assert.equal(dashboardPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the newer one with no builds');
+    assert.equal(sidebarPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the newer one with no builds');
 
     const buildCreated = Object.assign({}, buildTemplate);
     buildCreated.state = 'created';
@@ -135,7 +143,7 @@ test('Pusher events change the main display', function (assert) {
   });
 
   andThen(() => {
-    assert.equal(dashboardPage.repoTitle, 'killjoys / living-a-feminist-life', 'the displayed repository should have changed');
+    assert.equal(sidebarPage.repoTitle, 'killjoys / living-a-feminist-life', 'the displayed repository should have changed');
   });
 
   andThen(() => {

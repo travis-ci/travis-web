@@ -6,13 +6,14 @@ const { alias } = Ember.computed;
 export default Ember.Component.extend({
   permissions: service(),
   externalLinks: service(),
+  ajax: service(),
+  flashes: service(),
 
   tagName: 'li',
-  classNameBindings: ['currentBuild.state', 'repo.active:is-active'],
+  classNameBindings: ['repo.active:is-active'],
   classNames: ['rows', 'rows--dashboard'],
   isLoading: false,
   isTriggering: false,
-  hasTriggered: false,
   dropupIsOpen: false,
 
   currentBuild: alias('repo.currentBuild'),
@@ -27,19 +28,44 @@ export default Ember.Component.extend({
     return this.get('permissions').hasPushPermission(this.get('repo'));
   }),
 
-  displayActivateLink: Ember.computed('permissions.all', 'repo', function () {
-    return this.get('permissions').hasAdminPermission(this.get('repo'));
-  }),
-
   openDropup() {
-    let self = this;
     this.toggleProperty('dropupIsOpen');
-    Ember.run.later((() => { self.toggleProperty('dropupIsOpen'); }), 2000);
+    Ember.run.later((() => { this.set('dropupIsOpen', false); }), 4000);
+  },
+
+  mouseLeave() {
+    this.set('dropupIsOpen', false);
+  },
+
+  triggerBuild() {
+    const self = this;
+    let data = {};
+    data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
+
+    this.get('ajax').ajax(`/v3/repo/${this.get('repo.id')}/requests`, 'POST', { data })
+      .then(() => {
+        self.set('isTriggering', false);
+        self.get('flashes')
+          .success(`You successfully triggered a build for ${self.get('repo.slug')}.
+                   It might take a moment to show up though.`);
+      });
+    this.set('dropupIsOpen', false);
+    this.set('isTriggering', true);
   },
 
   actions: {
     openDropup() {
       this.openDropup();
+    },
+    triggerBuild() {
+      this.triggerBuild();
+    },
+    starRepo() {
+      if (this.get('repo.starred')) {
+        this.get('unstar').perform(this.get('repo'));
+      } else {
+        this.get('star').perform(this.get('repo'));
+      }
     }
   }
 });

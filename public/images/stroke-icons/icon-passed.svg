@@ -1,4 +1,3 @@
-<svg version="1.1" id="icon-passed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-<polyline id="passed" class="st0" points="14.5,1.5 6.499,13.716 0.5,8.78 "/>
+<svg version="1.1" id="icon-passed" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+<polyline points="14.5,1.5 6.499,13.716 0.5,8.78 "/>
 </svg>

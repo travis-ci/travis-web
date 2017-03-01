@@ -33,9 +33,7 @@ module.exports = function (environment) {
     intervals: { updateTimes: 1000 },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
-
     logLimit: 10000,
-
     emojiPrepend: ''
   };
 
@@ -131,14 +129,14 @@ module.exports = function (environment) {
       },
       defaultBreakpoints: ['desktop']
     };
+    ENV.featureFlags = {
+      'debug-logging': false,
+      'dashboard': false
+    }
   }
 
   if (environment === 'production') {
     ENV.release = process.env.SOURCE_VERSION || '-';
-    ENV['ember-cli-mirage'] = {
-      enabled: false
-    };
-
     if (process.env.DISABLE_SENTRY) {
       ENV.sentry = {
         development: true
