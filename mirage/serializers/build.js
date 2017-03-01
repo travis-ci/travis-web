@@ -32,12 +32,16 @@ export default Serializer.extend({
       id,
     };
 
-    if (!embedded) {
+    const { include } = request.queryParams;
+
+    if (include && include.includes('build.commit')) {
       if (object.commit) {
         const serializer = this.serializerFor('commit-v3');
         response.commit = serializer.serializeSingle(object.commit);
       }
+    }
 
+    if (!embedded) {
       if (object.repository) {
         const serializer = this.serializerFor('repository');
         response.repository = serializer.serialize(object.repository, request);

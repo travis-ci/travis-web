@@ -56,7 +56,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       branch: primaryBranch,
       repository,
     }).createCommit({
-      committer: currentUser,
+      committer_name: currentUser.name,
       sha: 'abc125'
     });
 
