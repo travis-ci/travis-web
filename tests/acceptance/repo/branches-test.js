@@ -40,7 +40,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       branch: primaryBranch,
       repository,
     }).createCommit({
-      committer: currentUser,
+      committer_name: currentUser.name,
       sha: 'abc124'
     });
 
@@ -50,7 +50,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       branch: primaryBranch,
       repository,
     }).createCommit({
-      committer: currentUser,
+      committer_name: currentUser.name,
       sha: 'abc125'
     });
 
@@ -70,7 +70,7 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     lastBuild.createCommit({
       sha: '1234567890',
-      committer: currentUser
+      committer_name: currentUser.name,
     });
     lastBuild.save();
 
@@ -145,7 +145,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       repository,
     }).createCommit({
       sha: 'abc134',
-      committer: currentUser
+      committer_name: currentUser.name,
     });
   }
 });
