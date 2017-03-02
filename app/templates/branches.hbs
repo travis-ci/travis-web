@@ -1,7 +1,7 @@
 {{#if branchesExist}}
   <div class="branches">
     {{#if defaultBranch}}
-      <section class='default-branch'>
+      <section class="default-branch">
         <h2 class="small-title">Default Branch</h2>
         <ul class="blank-list">
           {{branch-row branch=defaultBranch}}
@@ -9,7 +9,7 @@
       </section>
     {{/if}}
 
-    <section class='active-branches'>
+    <section class="active-branches">
       <h2 class="small-title">Active Branches</h2>
       <p class="helptext">Displaying {{model.activeBranches.limit}} of {{model.activeBranches.count}} active branches.</p>
       {{#if activeBranches.length}}
@@ -23,7 +23,7 @@
       {{/if}}
     </section>
 
-    <section class='deleted-branches'>
+    <section class="deleted-branches">
       <h2 class="small-title">Deleted Branches</h2>
       <aside class="deleted-branches-notice">
         <p class="helptext">{{model.deletedBranchesCount}} branches have been hidden as they were removed from GitHub. <button type="button">Show deleted branches</button></p>
