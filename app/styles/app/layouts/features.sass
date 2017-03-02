@@ -37,7 +37,7 @@
       &:hover,
       &:active
         background-color: rgba(255, 255, 255, 0.3)
-  .icon-broadcast
+  .icon-broadcast:not(.warning):not(.announcement),
     +colorSVG(white)
   .broadcasts
     @media #{$small-only}
