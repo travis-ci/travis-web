@@ -1,3 +1,4 @@
+/* global moment */
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
@@ -36,29 +37,17 @@ moduleForAcceptance('Acceptance | repo settings', {
     repository.createSetting({ name: 'build_pull_requests', value: true });
 
     repository.createEnvVar({
-      id: 'a',
-      name: 'intersectionality',
-      public: true,
-      value: 'Kimberlé Crenshaw'
-    });
-
-    repository.createEnvVar({
       id: 'b',
       name: 'published',
       public: null,
       value: null
     });
 
-    repository.createCustomSshKey({
-      description: 'testy',
-      fingerprint: 'dd:cc:bb:aa',
-      type: 'custom'
-    });
-
-    repository.createDefaultSshKey({
-      type: 'default',
-      fingerprint: 'aa:bb:cc:dd',
-      key: 'A PUBLIC KEY!'
+    repository.createEnvVar({
+      id: 'a',
+      name: 'intersectionality',
+      public: true,
+      value: 'Kimberlé Crenshaw'
     });
 
     this.repository = repository;
@@ -77,16 +66,18 @@ moduleForAcceptance('Acceptance | repo settings', {
 
     this.dailyCron = server.create('cron', {
       interval: 'daily',
-      disable_by_build: false,
-      next_enqueuing: '2016-05-20T13:19:19Z',
+      dont_run_if_recent_build_exists: false,
+      last_run: moment(),
+      next_run: moment().add(1, 'days'),
       repository_id: repoId,
       branchId: dailyBranch.id
     });
 
     server.create('cron', {
       interval: 'weekly',
-      disable_by_build: true,
-      next_enqueuing: '2016-05-20T14:20:10Z',
+      dont_run_if_recent_build_exists: true,
+      last_run: moment(),
+      next_run: moment().add(1, 'weeks'),
       repository_id: repoId,
       branchId: weeklyBranch.id
     });
@@ -107,21 +98,26 @@ test('view settings', function (assert) {
 
     assert.equal(settingsPage.environmentVariables(0).name, 'intersectionality');
     assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
+    assert.notOk(settingsPage.environmentVariables(0).isNewlyCreated, 'expected existing variable to not be newly created');
     assert.equal(settingsPage.environmentVariables(0).value, 'Kimberlé Crenshaw');
 
     assert.equal(settingsPage.environmentVariables(1).name, 'published');
     assert.notOk(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to not be public');
     assert.equal(settingsPage.environmentVariables(1).value, '••••••••••••••••');
 
-    assert.equal(settingsPage.crons(0).branchName, 'daily-branch');
-    assert.ok(settingsPage.crons(0).enqueuingInterval.indexOf('Enqueues each day after') === 0, 'Shows daily enqueuing text');
-    assert.ok(settingsPage.crons(0).disableByBuildText.indexOf('Always run') === 0, 'expected cron to run even if no new commit after last build');
+    assert.equal(settingsPage.crons(0).branchName, 'Cron job event daily-branch');
+    assert.equal(settingsPage.crons(0).interval, 'Runs daily');
+    assert.equal(settingsPage.crons(0).lastRun, 'Ran less than a minute ago');
+    assert.equal(settingsPage.crons(0).nextRun, 'Scheduled in about 24 hours from now');
+    assert.ok(settingsPage.crons(0).dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
 
-    assert.equal(settingsPage.crons(1).branchName, 'weekly-branch');
-    assert.ok(settingsPage.crons(1).enqueuingInterval.indexOf('Enqueues each') === 0, 'Shows weekly enqueuing text');
-    assert.ok(settingsPage.crons(1).disableByBuildText.indexOf('Only if no new commit') === 0, 'expected cron to run only if no new commit after last build');
+    assert.equal(settingsPage.crons(1).branchName, 'Cron job event weekly-branch');
+    assert.equal(settingsPage.crons(1).interval, 'Runs weekly');
+    assert.equal(settingsPage.crons(1).lastRun, 'Ran less than a minute ago');
+    assert.equal(settingsPage.crons(1).nextRun, 'Scheduled in 7 days from now');
+    assert.ok(settingsPage.crons(1).dontRunIfRecentBuildExistsText.indexOf('Do not run if there has been a build in the last 24h') === 0, 'expected Do not run if there has been a build in the last 24h');
 
-    assert.equal(settingsPage.sshKey.name, 'testy');
+    assert.equal(settingsPage.sshKey.name, 'Custom');
     assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
 
     assert.notOk(settingsPage.autoCancellationSection.exists, 'expected auto-cancellation section to not exist');
@@ -207,9 +203,10 @@ test('delete and create environment variables', function (assert) {
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables(1).name, 'drafted');
-    assert.ok(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to be public');
-    assert.equal(settingsPage.environmentVariables(1).value, 'true');
+    assert.equal(settingsPage.environmentVariables(0).name, 'drafted');
+    assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
+    assert.ok(settingsPage.environmentVariables(0).isNewlyCreated, 'expected environment variable to be newly created');
+    assert.equal(settingsPage.environmentVariables(0).value, 'true');
 
     assert.deepEqual(requestBodies.pop(), { env_var: {
       id: '1919',
@@ -229,10 +226,22 @@ test('delete and create environment variables', function (assert) {
 
   andThen(() => {
     assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
+
+    // This will cause deletions to fail
+    server.delete('/settings/env_vars/:id', () => {}, 404);
+  });
+
+  settingsPage.environmentVariables(1).delete();
+
+  andThen(() => {
+    assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.notification, 'There was an error deleting this environment variable.');
   });
 });
 
 test('delete and create crons', function (assert) {
+  const done = assert.async();
+
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   const deletedIds = [];
@@ -248,6 +257,7 @@ test('delete and create crons', function (assert) {
   andThen(() => {
     assert.equal(deletedIds.pop(), this.dailyCron.id, 'expected the server to have received a deletion request for the first cron');
     assert.equal(settingsPage.crons().count, 1, 'expected only one cron to remain');
+    done();
   });
 });
 
@@ -265,7 +275,7 @@ test('delete and set SSH keys', function (assert) {
   andThen(() => {
     assert.equal(deletedIds.pop(), this.repository.id, 'expected the server to have received a deletion request for the SSH key');
 
-    assert.equal(settingsPage.sshKey.name, 'no custom key set');
+    assert.equal(settingsPage.sshKey.name, 'Default');
     assert.equal(settingsPage.sshKey.fingerprint, 'aa:bb:cc:dd');
     assert.ok(settingsPage.sshKey.cannotBeDeleted, 'expected default SSH key not to be deletable');
   });

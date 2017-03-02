@@ -30,7 +30,7 @@
   <li id="tab_build" class={{classBuild}}>
     {{#if build.id}}
       {{#if repo.slug}}
-        <span class="tab-arrow"></span>
+        {{inline-svg 'icon-arrowtabs' class="tab-arrow"}}
         {{#link-to "build" repo build}}
           Build #{{build.number}}
         {{/link-to}}
@@ -60,7 +60,7 @@
       {{/link-to}}
     {{/if}}
   </li>
-  {{#if config.caches_enabled}}
+  {{#if config.endpoints.caches}}
     <li id="tab_caches" class={{classCaches}}>
       {{#if repo.slug}}
         {{#link-to "caches" repo}}
@@ -69,14 +69,4 @@
       {{/if}}
     </li>
   {{/if}}
-
-  <li id="tab_request" class={{classRequest}}>
-    {{#if request.id}}
-      {{#if repo.slug}}
-        {{#link-to "request" repo request}}
-          Request #{{request.id}}
-        {{/link-to}}
-      {{/if}}
-    {{/if}}
-  </li>
 </ul>

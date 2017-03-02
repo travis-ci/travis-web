@@ -4,11 +4,7 @@ var PusherInitializer, initialize;
 
 initialize = function (applicationInstance) {
   const app = applicationInstance.application;
-  if (config.pusher.key) {
-    app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:ajax'));
-  } else {
-    app.pusher = { subscribe: function () {} };
-  }
+  app.pusher = new TravisPusher(config.pusher, applicationInstance.lookup('service:ajax'));
 
   app.register('pusher:main', app.pusher, {
     instantiate: false

@@ -1,9 +1,9 @@
 <div id="top" class="top landing-page">
-  {{render "top"}}
+  {{top-bar landingPage=model.landingPage}}
 </div>
 
 {{flash-display}}
 
 {{yield}}
 
-{{render "footer"}}
+{{page-footer}}

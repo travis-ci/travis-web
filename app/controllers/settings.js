@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  envVars: Ember.computed.filterBy('model.envVars', 'isNew', false),
+  unsortedEnvVars: Ember.computed.filterBy('model.envVars', 'isNew', false),
+  envVarSorting: ['name'],
+  envVars: Ember.computed.sort('unsortedEnvVars', 'envVarSorting'),
 
   branchesWithoutCron: Ember.computed('model.cronJobs.jobs.@each', function () {
     var cronJobs = this.get('model.cronJobs.jobs');

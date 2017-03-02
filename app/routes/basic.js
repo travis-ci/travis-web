@@ -4,6 +4,7 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend({
   auth: service(),
+  fetchFeatures: service(),
 
   activate() {
     if (this.routeName !== 'error') {
@@ -19,16 +20,15 @@ export default Ember.Route.extend({
     if (!this.signedIn() && this.get('needsAuth')) {
       this.auth.set('afterSignInTransition', transition);
       return Ember.RSVP.reject('needs-auth');
+    } else if (this.redirectToProfile(transition)) {
+      return this.transitionTo('profile', this.get('auth.currentUser.login'));
     } else {
-      if (this.redirectToProfile(transition)) {
-        return this.transitionTo('profile', this.get('auth.currentUser.login'));
-      }
       return this._super(...arguments);
     }
   },
 
   signedIn() {
-    return this.controllerFor('currentUser').get('model');
+    return this.get('auth.currentUser');
   },
 
   // on pro, we need to auth on every route
@@ -44,5 +44,6 @@ export default Ember.Route.extend({
        params.owner.owner === 'profile') {
       this.transitionTo('account', this.get('auth.currentUser.login'));
     }
-  }
+  },
+
 });

@@ -5,6 +5,20 @@ moduleForModel('build', 'Unit | Serializer | build', {
   needs: ['serializer:build', 'model:commit', 'model:job', 'model:branch']
 });
 
+test('it sets "pullRequest" if it is not set', function (assert) {
+  let payload = {
+    '@type': 'build',
+    '@href': '...',
+    event_type: 'pull_request',
+    id: 1
+  };
+
+  let store = this.store();
+  let serializer = store.serializerFor('build');
+  let result = serializer.normalizeResponse(store, store.modelFor('build'), payload, 1, 'findRecord');
+  assert.ok(result.data.attributes.pullRequest);
+});
+
 test('it normalizes the singular response', function (assert) {
   QUnit.dump.maxDepth = 10;
   let payload = {

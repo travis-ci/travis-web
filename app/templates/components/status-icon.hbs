@@ -1,20 +1,20 @@
 {{#if isEmpty}}
-  {{inline-svg 'images/stroke-icons/icon-nobuilds'}}
+  {{inline-svg 'icon-nobuilds'}}
 {{else}}
   {{#if hasPassed}}
-    {{inline-svg 'images/stroke-icons/icon-passed'}}
+    {{inline-svg 'icon-passed'}}
   {{/if}}
 
   {{#if hasFailed}}
-    {{inline-svg 'images/stroke-icons/icon-failed'}}
+    {{inline-svg 'icon-failed'}}
   {{/if}}
 
   {{#if wasCanceled}}
-    {{inline-svg 'images/stroke-icons/icon-canceled'}}
+    {{inline-svg 'icon-canceled'}}
   {{/if}}
 
   {{#if hasErrored}}
-    {{inline-svg 'images/stroke-icons/icon-errored'}}
+    {{inline-svg 'icon-errored'}}
   {{/if}}
 
   {{#if isRunning}}

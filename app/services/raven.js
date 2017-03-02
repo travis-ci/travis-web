@@ -2,14 +2,14 @@ import RavenLogger from 'ember-cli-sentry/services/raven';
 import config from 'travis/config/environment';
 
 export default RavenLogger.extend({
-  // whitelist benign "errors"
-  whitelistMessages: [
+  benignErrors: [
     'TransitionAborted',
     'UnrecognizedURLError',
     'not found',
     'returned a 403',
     'returned a 404',
-    'Adapter operation failed'
+    'operation failed',
+    'operation was aborted'
   ],
 
   unhandledPromiseErrorMessage: '',
@@ -40,9 +40,7 @@ export default RavenLogger.extend({
       return true;
     } else {
       let { message } = error;
-      return this.get('whitelistMessages').any((whitelistedMessage) => {
-        return message.includes(whitelistedMessage);
-      });
+      return this.get('benignErrors').any(error => message.includes(error));
     }
   },
 
@@ -56,7 +54,7 @@ export default RavenLogger.extend({
     if (config.enterprise || config.sentry.development) {
       return false;
     } else {
-      var sampleRate = 10;
+      let sampleRate = 10;
       return (Math.random() * 100 <= sampleRate);
     }
   }

@@ -1,6 +1,4 @@
-
 .landing-pro
-
   br
     display: none
     @media #{$medium-up}
@@ -30,28 +28,6 @@
       margin-left: auto
     @media #{$large-up}
       width: 70%
-
-  .landing-button
-    display: inline-block
-    padding: 0.9em 1em
-    margin: 0 auto
-    color: white
-    border-radius: 2px
-    font-size: 27px
-    text-decoration: none
-    background-color: $turf-green
-    &:hover
-      color: white
-      background-color: lighten($turf-green, .2)
-
-  .hero-button
-    @extend .landing-button
-    padding: 0.9em 1em 0.9em 3em
-    background:
-      image: inline-image('landing-page/sign-in-mascot.svg')
-      size: 1.7em
-      position: 0.8em center
-      repeat: no-repeat
 
   .hero-computer
     width: 100%
@@ -125,6 +101,7 @@
       flex-wrap: wrap
       align-items: center
     li
+      width: 9em // because Safari can't handle flex-basis
       flex: 0 0 9em
       margin-bottom: 3em
       @media #{$medium-up}
@@ -142,24 +119,6 @@
   .list--check,
   .list--cross
     @extend %list
-    padding: 0 0 0 2em
-    li
-      &:before
-        content: ""
-        display: inline-block
-        height: 1.2em
-        width: 1.2em
-        margin-right: .3em
-        margin-left: -1.5em
-        vertical-align: middle
-
-  .list--check
-    li:before
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGcgaWQ9IlBhc3NlZCI+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjMzlBODVCIiBkPSJNOS42LDE0LjRjLTAuMSwwLTAuMy0wLjEtMC40LTAuMWwtNC0zLjNjLTAuMy0wLjItMC4zLTAuNi0wLjEtMC45UzUuOCw5LjgsNi4xLDEwbDMuNCwyLjhsNC45LTcuNQoJCQlDMTQuNiw1LDE1LDQuOSwxNS4zLDUuMWMwLjMsMC4yLDAuNCwwLjYsMC4yLDAuOWwtNS4zLDguMUMxMC4xLDE0LjMsOS45LDE0LjQsOS42LDE0LjRDOS43LDE0LjQsOS43LDE0LjQsOS42LDE0LjR6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+")
-
-  .list--cross
-    li:before
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4KICA8ZyBpZD0iRmFpbGVkIj4KICAJPHBhdGggZmlsbD0iI0RCNDI0MiIgZD0iTTEwLjksMTBsMy45LTMuOWMwLjItMC4yLDAuMi0wLjYsMC0wLjljLTAuMi0wLjItMC42LTAuMi0wLjksMEwxMCw5LjFMNi4xLDUuMmMtMC4yLTAuMi0wLjYtMC4yLTAuOSwwCiAgCQljLTAuMiwwLjItMC4yLDAuNiwwLDAuOUw5LjEsMTBsLTMuOSwzLjljLTAuMiwwLjItMC4yLDAuNiwwLDAuOUM1LjMsMTQuOSw1LjUsMTUsNS42LDE1czAuMy0wLjEsMC40LTAuMmwzLjktMy45bDMuOSwzLjkKICAJCWMwLjEsMC4xLDAuMywwLjIsMC40LDAuMmMwLjIsMCwwLjMtMC4xLDAuNC0wLjJjMC4yLTAuMiwwLjItMC42LDAtMC45TDEwLjksMTB6Ii8+CiAgPC9nPgo8L3N2Zz4=")
 
   .list--features
     @extend %list
@@ -178,12 +137,42 @@
     width: 2em
     margin: auto
 
-  [class^="language-"]
+  .language
     display: block
     height: 3.5em
     width: 3.5em
     margin: 0 auto .5em
 
+  .customer
+    svg
+      max-height: 28px
+
+
+.landing-button
+  display: inline-block
+  padding: 0.6em 0.9em
+  margin: 0 auto
+  color: white
+  border-radius: 2px
+  font-size: 27px
+  font-weight: inherit
+  text-decoration: none
+  background-color: $turf-green
+  cursor: pointer
+  &:hover,
+  &:active
+    color: white
+    background-color: darken($turf-green, 8)
+
+.hero-button
+  @extend .landing-button
+  svg
+    width: 45px
+    height: 45px
+    vertical-align: middle
+    margin-right: .4em
+  &.org
+    margin: 2em auto
 
 %h1
   margin: 0
@@ -273,3 +262,21 @@
   @include linkStyle
   margin: 0 0 2.5em
   font-size: 16px
+
+.text-medium
+  @include linkStyle
+  margin: 1.5em 0
+  font-size: 16px
+
+.h2--grey
+  font-size: 45px
+  color: $asphalt-grey
+.h2--teal
+  font-size: 45px
+  color: $oxide-blue
+.em--yellow
+  color: $dozer-yellow
+.align-right
+  text-align: right
+.align-center
+  text-align: center

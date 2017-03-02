@@ -8,25 +8,32 @@ import {
 } from 'ember-cli-page-object';
 
 export default create({
-  visit: visitable('/'),
-  clickSidebarMyReposTab: clickable('#tab_owned a'),
-  clickSidebarRunningTab: clickable('#tab_running a'),
-  runningTabIsActive: hasClass('active', '#tab_running'),
-  myReposTabIsActive: hasClass('active', '#tab_owned'),
-  navigateToProfilePage: clickable('#profile-page-link'),
-  sidebarRepositories: collection({
-    scope: 'ul.repos-list',
-    itemScope: 'li.repo',
+  visit: visitable('/dashboard'),
+  repoTitle: text('.repo-title'),
+  accountFilter: clickable('.dashboard-header .organisation-filter .option-list a:first-of-type'),
+  syncButton: clickable('.dashboard-header .sync-button button'),
+  syncButtonIsSyncing: hasClass('is-syncing', '.dashboard-header .sync-button button'),
+  activeRepos: collection({
+    scope: '.dashboard-active .repo-list',
+    itemScope: 'li.rows--dashboard',
     item: {
-      name: text('.tile h2.tile-title span.label-align')
+      owner: text('.dash-header .row-label a'),
+      repoName: text('.dash-header .row-content a'),
+      defaultBranch: text('.dash-default .row-content a'),
+      lastBuild: text('.dash-last a .label-align'),
+      triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a')
     }
   }),
-  sidebarRunningRepositories: collection({
-    scope: '.sidebar-list',
-    itemScope: '.tile--sidebar',
+  starredRepos: collection({
+    scope: '.dashboard-starred .repo-list',
+    itemScope: 'li.rows--dashboard',
     item: {
-      name: text('.tile h2.tile-title span.label-align')
+      owner: text('.dash-header .row-label a'),
+      repoName: text('.dash-header .row-content a'),
+      defaultBranch: text('.dash-default .row-content a'),
+      lastBuild: text('.dash-last a .label-align'),
+      triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a')
     }
   }),
-  viewRunningJob: clickable('p.tile-title a')
+  flashMessage: text('.flash li.success')
 });

@@ -10,13 +10,9 @@ let { service } = Ember.inject;
 
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
-  needsAuth: false,
+  auth: service(),
 
-  beforeModel() {
-    this._super(...arguments);
-    // TODO Remove this entire method if we only call super
-    // this.get('auth').refreshUserData()
-  },
+  needsAuth: false,
 
   renderTemplate: function () {
     if (this.get('config').pro) {
@@ -25,9 +21,14 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     return this._super(...arguments);
   },
 
+  model() {
+    if (this.get('auth.signedIn')) {
+      return this.get('fetchFeatures.fetchTask').perform();
+    }
+  },
+
   activate() {
     var repos;
-    this.get('stylesheetsManager').disable('dashboard');
     if (!this.get('features.proVersion')) {
       repos = this.get('store').peekAll('repo');
       repos.forEach((repo) => {
@@ -86,17 +87,9 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
       // do nothing, we handle it only in index path
     },
 
-    renderDefaultTemplate() {
-      if (this.renderDefaultTemplate) {
-        return this.renderDefaultTemplate();
-      }
-    },
-
     error(error) {
-      var authController;
       if (error === 'needs-auth') {
-        authController = Ember.getOwner(this).lookup('controller:auth');
-        authController.set('redirected', true);
+        this.set('auth.redirected', true);
         return this.transitionTo('auth');
       } else {
         return true;

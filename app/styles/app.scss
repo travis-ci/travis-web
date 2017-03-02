@@ -12,10 +12,11 @@
 @import "app/modules/navigation";
 @import "app/modules/row";
 @import "app/modules/loader";
-@import "app/modules/buttons";
 @import "app/modules/icons";
+@import "app/modules/buttons";
 @import "app/modules/search";
 @import "app/modules/dropdown";
+@import "app/modules/dropup";
 @import "app/modules/tabs";
 @import "app/modules/tooltips";
 @import "app/modules/flash";
@@ -28,10 +29,13 @@
 @import "app/modules/popup";
 @import "app/modules/lastbuild";
 @import "app/modules/sync-button";
+@import "app/modules/beta-features-button";
 @import "app/modules/loading-indicator";
 @import "app/modules/build-tile";
 @import "app/modules/status-icon";
 @import "app/modules/codedisplay";
+@import "app/modules/badge";
+@import "app/modules/dashboard-row";
 
 @import "app/animation/tractor";
 
@@ -55,6 +59,7 @@
 @import "app/layouts/missing-notice";
 @import "app/layouts/settings";
 @import "app/layouts/dashboard";
+@import "app/layouts/features";
 
 @import "app/pages/landing";
 @import "app/pages/home-pro";

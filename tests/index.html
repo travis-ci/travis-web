@@ -10,6 +10,7 @@
     {{content-for "head"}}
     {{content-for "test-head"}}
 
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/travis.css">
     <link rel="stylesheet" href="{{rootURL}}assets/test-support.css">
@@ -17,8 +18,7 @@
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
   </head>
-  <body>
-
+  <body class='testing'>
     {{content-for "body"}}
     {{content-for "test-body"}}
 

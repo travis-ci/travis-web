@@ -3,7 +3,6 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-import { gravatarImage } from '../utils/urls';
 
 const { service } = Ember.inject;
 
@@ -21,6 +20,7 @@ export default Model.extend({
   isSyncing: attr('boolean'),
   syncedAt: attr(),
   repoCount: attr('number'),
+  avatarUrl: attr(),
 
   fullName: Ember.computed('name', 'login', function () {
     return this.get('name') || this.get('login');
@@ -151,9 +151,5 @@ export default Model.extend({
     user = JSON.parse(this.get('sessionStorage').getItem('travis.user'));
     user[name.underscore()] = this.get(name);
     return this.get('sessionStorage').setItem('travis.user', JSON.stringify(user));
-  },
-
-  avatarUrl: Ember.computed('email', function () {
-    return gravatarImage(this.get('email'), 36);
-  })
+  }
 });

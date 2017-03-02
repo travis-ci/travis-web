@@ -10,22 +10,14 @@
   background-color: white
   border-radius: 2px
   display: none
-  background-color: #fff
   border: solid 10px $pebble-grey
-
-  &:before
-    content: ""
   .close
+    +colorSVG($cement-grey)
     position: absolute
-    display: block
     right: 5px
     top: 8px
-    width: 20px
-    height: 20px
-    text-indent: 999%
-    overflow: hidden
-    white-space: nowrap
-    @extend %icon-line-cross
+    width: 2rem
+    height: 2rem
 
   .popup-title
     margin-bottom: 0

@@ -40,20 +40,24 @@
 
   </section>
 
-  {{#if model.cronJobs.enabled}}
-    <section class="settings-section">
-      <h2 class="small-title">Cron Jobs</h2>
+  <section class="settings-section">
+      <h2 class="small-title display-inline">Cron Jobs</h2>
+      <div class="badge">Beta Feature</div>
+      <p class="text-medium display-inline"><a href="https://github.com/travis-ci/beta-features/issues/1" title="Give your feedback on Crons"  target="_blank">We'd love your feedback</a></p>
 
-      <ul class="settings-list--crons">
-        {{#each model.cronJobs.jobs as |cron|}}
-          {{cron-job cron=cron}}
-        {{/each}}
+    <ul class="settings-list--crons">
+      {{#each model.cronJobs.jobs as |cron|}}
+        {{cron-job cron=cron}}
+      {{/each}}
+    </ul>
 
-        <li>{{add-cron-job branches=sortedBranchesWithoutCron}}</li>
-      </ul>
+    {{#if sortedBranchesWithoutCron.length}}
+        {{add-cron-job branches=sortedBranchesWithoutCron}}
+    {{else}}
+        <p class="text-medium">There are no branches you can currently add crons to.</p>
+    {{/if}}
 
-    </section>
-  {{/if}}
+  </section>
 
 {{#if config.endpoints.sshKey}}
   <section class="settings-section">

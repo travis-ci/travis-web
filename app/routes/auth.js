@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
+const { service } = Ember.inject;
+
 export default TravisRoute.extend({
+  auth: service(),
+
   needsAuth: false,
 
   renderTemplate() {
@@ -10,19 +14,27 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
-    return this.controllerFor('auth').set('redirected', false);
+    return this.get('auth').set('redirected', false);
   },
 
   actions: {
     afterSignIn() {
-      this.transitionTo('main');
+      if (this.get('features.dashboard')) {
+        this.transitionTo('dashboard');
+      } else {
+        this.transitionTo('main');
+      }
       return true;
     }
   },
 
   redirect() {
     if (this.signedIn()) {
-      return this.transitionTo('main');
+      if (this.get('features.dashboard')) {
+        return this.transitionTo('dashboard');
+      } else {
+        return this.transitionTo('main');
+      }
     }
   }
 });

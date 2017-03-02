@@ -35,6 +35,7 @@ Router.map(function () {
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
+  this.route('features', { resetNamespace: true });
   this.route('main', { path: '/', resetNamespace: true }, function () {
     this.route('getting_started', { resetNamespace: true });
     this.route('recent');
@@ -56,7 +57,6 @@ Router.map(function () {
       if (config.endpoints.caches) {
         this.route('caches', { path: '/caches', resetNamespace: true });
       }
-      this.route('request', { path: '/requests/:request_id', resetNamespace: true });
       this.route('settings', { resetNamespace: true }, function () {
         this.route('index', { path: '/' });
         this.route('env_vars', { resetNamespace: true }, function () {
@@ -87,6 +87,7 @@ Router.map(function () {
     this.route('repositories', { path: '/' });
   });
   this.route('error404', { path: '/404' });
+  this.route('page-not-found', { path: '/*wildcard' });
 });
 
 export default Router;

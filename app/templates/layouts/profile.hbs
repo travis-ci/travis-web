@@ -1,18 +1,14 @@
-<div class="wrapper">
-  <header id="top" class="top">
-    <div class="centered">
-      {{render "top"}}
-    </div>
-  </header>
+<div class="wrapper centered">
+  {{top-bar}}
 
-  <div class="centered">
-    {{flash-display}}
-    <div id="main" class="main" role="main">
+  {{flash-display}}
+  <div id="main" class="main" role="main">
+    <div class="profile-page">
       {{yield}}
 
       {{outlet "left"}}
     </div>
   </div>
-</div>
 
-{{render "footer"}}
+  {{page-footer}}
+</div>

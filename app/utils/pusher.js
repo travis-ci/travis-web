@@ -11,6 +11,18 @@ var TravisPusher = function (config, ajaxService) {
 TravisPusher.prototype.active_channels = [];
 
 TravisPusher.prototype.init = function (config, ajaxService) {
+  if (!config.key) {
+    // Set up a mock Pusher that ignores the expected methods.
+    return this.pusher = {
+      subscribe() {
+        return {
+          bind_all() {}
+        };
+      },
+      channel() {}
+    };
+  }
+
   this.ajaxService = ajaxService;
   Pusher.warn = this.warn.bind(this);
   if (config.host) {
@@ -178,7 +190,7 @@ Pusher.SockJSTransport.isSupported = function () {
   }
 };
 
-if (ENV.featureFlags['pro-version']) {
+if (ENV.featureFlags['pro-version'] || ENV.featureFlags['enterprise-version']) {
   Pusher.channel_auth_transport = 'bulk_ajax';
   Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
     var channels, name, names;

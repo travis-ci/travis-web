@@ -17,7 +17,7 @@ export default PageObject.create({
   state: text('.build-status'),
   author: text('.commit-author'),
   log: text('#log'),
-  logError: text('.job-log .notice'),
+  logError: text('.job-log .notice-banner--red'),
 
   hasTruncatedLog: isVisible('.log-container p.warning'),
 
@@ -30,6 +30,7 @@ export default PageObject.create({
 
     item: {
       text: text(),
+      nextText: text('+ span'),
 
       isBlack: hasClass('black'),
       isRed: hasClass('red'),

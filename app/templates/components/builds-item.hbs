@@ -3,24 +3,27 @@
     <h2 class="row-branch {{build.state}}">
       {{status-icon status=build.state}}
       {{#if build.isPullRequest}}
-        {{#link-to "build" build.repo build}}
+        {{#link-to "build" build.repo build title=(concat "PR #" build.pullRequestNumber " " build.pullRequestTitle)}}
           <small>PR #{{build.pullRequestNumber}}</small>
-          {{{format-message build.pullRequestTitle short="true" repo=build.repo}}}
         {{/link-to}}
       {{else}}
-        {{#link-to "build" build.repo build}}
+        {{#link-to "build" build.repo build title=build.commit.branch}}
           {{build.commit.branch}}
         {{/link-to}}
       {{/if}}
     </h2>
-    {{#unless build.isPullRequest}}
+    {{#if build.isPullRequest}}
+      <div class="row-message">
+        {{{format-message build.pullRequestTitle short="true" repo=build.repo}}}
+      </div>
+    {{else}}
       <div class="row-message">
         {{{format-message build.commit.message short="true" repo=build.repo}}}
       </div>
-    {{/unless}}
+    {{/if}}
   </div>
   <div class="row-item row-committer">
-    {{user-avatar url=build.commit.authorAvatarUrlOrGravatar name=build.commit.authorName small=true}}
+    {{user-avatar url=build.commit.authorAvatarUrl name=build.commit.authorName small=true size=18}}
     <span class="label-align">{{build.commit.authorName}}</span>
   </div>
 </div>
@@ -36,7 +39,7 @@
   </h3>
   <div class="row-item row-commit">
     <a href="{{urlGithubCommit}}" title="See the commit on GitHub">
-      {{inline-svg 'images/stroke-icons/icon-github' class="icon"}}
+      {{inline-svg 'icon-github' class="icon"}}
       <span class="label-align">{{format-sha build.commit.sha}}</span>
     </a>
   </div>
@@ -45,14 +48,21 @@
 <div class="two-line">
   <div class="row-item row-duration">
     <div title="{{format-duration build.duration}}">
-      {{inline-svg 'images/stroke-icons/icon-clock' class="icon"}}
+      {{inline-svg 'icon-clock' class="icon"}}
       <time class="label-align" datetime="PT{{build.duration}}S">{{format-duration build.duration}}</time>
     </div>
   </div>
   <div class="row-item row-calendar">
     <div title="{{pretty-date build.formattedFinishedAt}}">
-      {{inline-svg 'images/stroke-icons/icon-calendar' class="icon"}}
+      {{inline-svg 'icon-calendar' class="icon"}}
       <time class="label-align" datetime={{build.finishedAt}}>{{format-time build.finishedAt}}</time>
     </div>
   </div>
+</div>
+
+<div class="two-line actions">
+  <div class="row-item actions">
+    {{repo-actions build=build repo=build.repo labelless=true}}
+  </div>
+  <div class="row-item">&nbsp;</div>
 </div>

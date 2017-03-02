@@ -1,9 +1,10 @@
 <div id="remove-log-popup" class="popup">
-  <a class="close" {{action "close"}} title="close popup">close</a>
+    <button class="close no-button" type="button" {{action "close"}} title="Close popup">
+        {{inline-svg 'icon-failed'}}</button>
   <h3 class="popup-title h2--red">This action will remove the log permanently!</h3>
   <p class="popup-text text-big">Do you want to continue?</p>
   <div class="buttons">
-    <a class="button-delete" {{action "removeLog"}}>Yes, remove log</a>
-    <a class="button-cancel" {{action "close"}}>Oops, cancel</a>
+    <button type="button" class="button-delete plans-button--red" {{action "removeLog"}} title="Permanently remove this log">Yes, remove log</button>
+    <button type="button" class="button-cancel plans-button--grey" {{action "close"}} title="Close this popup">Oops, cancel</button>
   </div>
 </div>

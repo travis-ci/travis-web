@@ -51,27 +51,31 @@ export default TravisRoute.extend({
   },
 
   fetchCustomSshKey() {
-    var repo;
-    repo = this.modelFor('repo');
-    return this.store.find('ssh_key', repo.get('id')).then((function (result) {
-      if (!result.get('isNew')) {
-        return result;
-      }
-    }), function (xhr) {
-      if (xhr.status === 404) {
-        return false;
-      }
-    });
+    if (config.endpoints.sshKey) {
+      var repo;
+      repo = this.modelFor('repo');
+      return this.store.find('ssh_key', repo.get('id')).then((function (result) {
+        if (!result.get('isNew')) {
+          return result;
+        }
+      }), function (xhr) {
+        if (xhr.status === 404) {
+          return false;
+        }
+      });
+    }
   },
 
   fetchSshKey() {
-    var repo;
-    repo = this.modelFor('repo');
-    return this.get('ajax').get('/repos/' + (repo.get('id')) + '/key', (data) => {
-      return Ember.Object.create({
-        fingerprint: data.fingerprint
+    if (config.endpoints.sshKey) {
+      var repo;
+      repo = this.modelFor('repo');
+      return this.get('ajax').get('/repos/' + (repo.get('id')) + '/key', (data) => {
+        return Ember.Object.create({
+          fingerprint: data.fingerprint
+        });
       });
-    });
+    }
   },
 
   fetchRepositoryActiveFlag() {

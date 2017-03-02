@@ -1,5 +1,8 @@
 <div class="env-var-name">{{envVar.name}}</div>
 <div class="env-var-value">
+  {{#unless envVar.public}}
+    {{inline-svg 'icon-private' class="icon"}}
+  {{/unless}}
   <input type="pw" value="{{value}}" readonly="readonly">
 </div>
 <div class="env-var-action">
@@ -8,7 +11,7 @@
       {{loading-indicator}}
     {{else}}
       <button {{action (perform delete) on="click"}} type="button" class="no-button env-var-delete">
-        {{inline-svg 'images/stroke-icons/icon-trash' class="icon-trash"}}
+        {{inline-svg 'icon-trash' class="icon"}}
       </button>
       <div class="tooltip-bubble">Delete</div>
     {{/if}}

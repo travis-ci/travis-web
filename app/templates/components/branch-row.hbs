@@ -5,7 +5,7 @@
   </div>
   <div class="row-builds">
     <div class="row-item">
-      {{inline-svg 'images/stroke-icons/icon-builds' class="icon"}}
+      {{inline-svg 'icon-builds' class="icon"}}
     <span class="label-align">
     {{#if branch.last_build}}
       {{#if getLast5Builds.isLoading}}
@@ -34,7 +34,7 @@
   </div>
   <div class="row-calendar">
     <div class="row-item" title="{{pretty-date branch.last_build.finished_at}}">
-      {{inline-svg 'images/stroke-icons/icon-calendar' class="icon"}}
+      {{inline-svg 'icon-calendar' class="icon"}}
       <span class="label-align">
       {{#if branch.last_build}}
         {{format-time branch.last_build.finished_at}}
@@ -47,7 +47,7 @@
 <div class="two-line">
   <div class="row-commit">
     <div class="row-item">
-      {{inline-svg 'images/stroke-icons/icon-github' class="icon"}}
+      {{inline-svg 'icon-github' class="icon"}}
       <a href="{{urlGithubCommit}}" title="commit on GitHub">
       <span class="label-align">
       {{#if branch.last_build}}
@@ -60,7 +60,8 @@
   <div class="row-commiter">
     <div class="row-item">
       {{#if branch.last_build}}
-        <img src="{{branch.last_build.commit.committer.avatar_url}}" alt="avatar" class="avatar--small"><span class="label-align">{{branch.last_build.commit.committer.name}}</span>
+          {{user-avatar url=branch.last_build.commit.committer.avatar_url name=branch.last_build.commit.committer.name small=true size=18}}
+          <span class="label-align">{{branch.last_build.commit.committer.name}}</span>
       {{else}}
         <div class="avatar--small"></div><span class="label-align">no commits yet</span>
       {{/if}}

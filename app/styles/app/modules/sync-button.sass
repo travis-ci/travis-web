@@ -11,7 +11,6 @@
     background-color: $oxide-blue
     border: none
     border-radius: 2px
-    font-size: 14px
     &:hover
       background-color: #229191
   .sync-last
@@ -32,13 +31,8 @@
   .is-syncing
     background-color: $oxide-blue
 
-  .icon-trigger
-    @extend %icon-line-trigger-white
-    @extend .icon
-    margin-right: 0.3rem
-
   .loading-indicator--white
-    vertical-align: top
+    vertical-align: middle
     margin-right: .5em
 
 .sync-last
@@ -46,4 +40,5 @@
   margin: 0 1em 0
   color: $asphalt-grey
   text-align: right
-  line-height: 2.6
+  line-height: 3
+  font-size: 0.9rem

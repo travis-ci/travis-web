@@ -1,5 +1,5 @@
 <div class="media-elem">
-  {{user-avatar url=account.avatarUrl name=name}}
+  {{user-avatar url=account.avatarUrl name=name size=36}}
 </div>
 <div class="media-body">
   {{#link-to "account" account.login}}
@@ -16,7 +16,7 @@
       <span class="tooltip-bubble">
         {{#if tokenIsVisible}}hide token{{else}}show token{{/if}}
       </span>
-      {{inline-svg 'images/stroke-icons/icon-seemore' class="icon icon-seemore"}}
+      {{inline-svg 'icon-seemore' class="icon icon-seemore"}}
       </a>
     </p>
   {{/if}}

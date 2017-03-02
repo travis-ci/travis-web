@@ -1,9 +1,9 @@
 .option-button
   position: relative
   width: 17em
+  &.is-open,
+  .is-open &
   &:hover
-    .option-dropdown
-      display: block
     .option-display
       color: $oxide-blue
       border-color: $oxide-blue
@@ -11,15 +11,13 @@
       +colorSVGFill($oxide-blue)
       border-color: $oxide-blue
     .option-arrow
-      @extend %icon-line-arrowtabs-teal
       border-color: $oxide-blue
       transform: rotate(-90deg)
       border-bottom: none
       border-top: 1px solid $oxide-blue
-  @media #{$small-only}
-    &.display
-      .option-dropdown
-        display: block
+  &.is-open
+    .option-dropdown
+      display: block
 
 $dropdown-button-height: 30px
 $dropdown-button-margin: -9px
@@ -28,7 +26,7 @@ $dropdown-button-margin: -9px
   height: $dropdown-button-height
   width: 100%
   padding: 0
-  border: 1px solid $pebble-grey
+  border: 1px solid $dry-cement
   color: $asphalt-grey
   border-radius: 2px
   text-align: center
@@ -37,11 +35,14 @@ $dropdown-button-margin: -9px
   cursor: pointer
   text-align: left
   white-space: nowrap
+  &:focus
+    outline: none
   .label-align
     padding: 0 1em
     overflow: hidden
-    vertical-align: baseline
-  img
+    float: left
+    line-height: 2
+  .avatar
     max-width: 20px
     max-height: 20px
     margin-right: .5em
@@ -51,26 +52,27 @@ $dropdown-button-margin: -9px
 
 .option-tofu,
 .option-arrow
-  +colorSVG($cement-grey)
   width: 2em
   height: 2em
   display: inline-block
   vertical-align: top
+.option-tofu
+  padding: 0  5px
+  border-left: 1px solid $pebble-grey
+  .icon-tofu
+    +colorSVGFill($cement-grey)
+    width: 1.4rem
+    height: 2rem
+.option-arrow
+  +colorSVG($cement-grey)
   background:
     repeat: no-repeat
     position: 50%
-
-.option-tofu
-  padding: 0 0.3em
-  @media #{$medium-up}
-    border-left: 1px solid $pebble-grey
-
-.option-arrow
-  @extend %icon-line-arrowtabs
   transform: rotate(90deg)
   background-size: 14px
+  float: right
   @media #{$medium-up}
-    border-bottom: 1px solid $pebble-grey
+    border-bottom: 1px solid $dry-cement
 
 .option-dropdown
   display: none
@@ -114,87 +116,3 @@ $dropdown-button-margin: -9px
     margin-right: .3em
     border-radius: 50%
 
-.dropup
-  &.is-open
-    .dropup-list
-      display: block
-    .dropup-tofu
-      outline: none
-
-.dropup-tofu
-  background:
-    color: transparent
-    size: 100%
-    repeat: no-repeat
-    position: 0 5px
-  width: 2.5em
-  height: 2.5em
-  border: none
-  text-indent: 999%
-  overflow: hidden
-  white-space: nowrap
-  cursor: pointer
-  display: none
-  @media #{$medium-up}
-    display: inline-block
-  &:hover,
-  &:active
-    outline: none
-
-  &:focus
-    outline: none
-
-.dropup-list
-  list-style: none
-  padding: 0
-  margin: 2em 0 0
-  background-color: white
-  text-align: center
-
-  li
-    display: inline-block
-  a
-    display: inline-block
-    width: 100%
-    padding: 0.5em 1em
-    background-color: white
-    [class^="icon-"]
-      margin-right: .3rem
-    &:hover,
-    &:active
-      background: $oxide-blue
-      color: white
-      .icon-trigger
-        @extend %icon-line-trigger-white
-      .icon-deactivate
-        @extend %icon-line-cross-white
-        border-color: white
-      .icon-settings
-        @extend %icon-line-cog-white
-
-  @media #{$medium-up}
-    position: absolute
-    right: 0
-    bottom: 5em
-    margin: 0
-    background-color: white
-    border: 1px solid $oxide-blue
-    border-radius: 2px
-    display: none
-    z-index: 2
-    text-align: left
-    li
-      display: block
-      &:last-of-type
-        &:after
-          content: ""
-          display: block
-          width: 1.6em
-          height: 1.6em
-          border: 1px solid $oxide-blue
-          background: white
-          transform: rotate(45deg)
-          position: absolute
-          bottom: -0.7em
-          right: 1.7em
-          z-index: -1

@@ -1,0 +1,124 @@
+<div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
+  <h1 id="logo" class="logo">{{#link-to "main"}}Travis CI{{/link-to}}</h1>
+  <div class="navigation-toggle">
+    <button type="button" class="tofuburger no-button" {{action 'toggleBurgerMenu'}}>
+      {{inline-svg 'icon-tofuburger'}}
+    </button>
+  </div>
+
+{{#unless features.enterpriseVersion}}
+  {{#if auth.signedIn}}
+
+    {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus count=broadcasts.length}}
+
+    <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
+    {{#each broadcasts.content as |broadcast|}}
+      <li>
+        <p>
+          <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
+          <span class='message'>{{{broadcast.message}}}</span>
+          <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
+            {{inline-svg 'icon-failed' class="icon"}}
+          </button>
+        </p>
+      </li>
+    {{else}}
+      <li><p>There are no broadcasts</p></li>
+    {{/each}}
+    </ul>
+  {{/if}}
+{{/unless}}
+
+<nav id="navigation" class="navigation {{if is-open 'is-open'}}">
+    <ul>
+    {{#unless features.enterpriseVersion}}
+      {{#unless features.proVersion}}
+        <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
+        <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+        <li>
+          <span class="navigation-anchor">Help</span>
+          <ul class="navigation-nested">
+            <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
+            <li><a href="https://docs.travis-ci.com/imprint.html" title="Go to the imprint">Imprint</a></li>
+          </ul>
+        </li>
+      {{/unless}}
+
+      {{#if features.proVersion}}
+        {{#unless auth.signedIn}}
+          <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
+          <li><a href="/plans" title="Plans and Prices for Travis CI" class="navigation-anchor">Plans & Pricing</a></li>
+          <li><a href="https://enterprise.travis-ci.com" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
+        {{else}}
+          <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+          <li>
+            <span class="navigation-anchor">Help</span>
+            <ul class="navigation-nested">
+              <li><a href="mailto:support@travis-ci.com" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
+              <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
+              <li><a href="https://twitter.com/travisci" title="Travis in the Twitter-sphere">Twitter</a></li>
+            </ul>
+          </li>
+          <li>
+            <span class="navigation-anchor">Legal</span>
+            <ul class="navigation-nested">
+              <li><a href={{config.urls.imprint}} title="Go to the imprint">Imprint</a></li>
+              <li><a href={{config.urls.security}} title="Go to our security statement">Security</a></li>
+              <li><a href={{config.urls.terms}} title="Go to our terms of service">Terms</a></li>
+            </ul>
+          </li>
+        {{/unless}}
+      {{/if}}
+
+      {{#if deploymentVersion}}<li><span class='deployment-version'>{{deploymentVersion}}</span></li>{{/if}}
+    {{else}}
+      {{#if auth.signedIn}}
+        <li><a class="navigation-anchor" title="Documentation" href="https://docs.travis-ci.com">Docs</a></li>
+      {{/if}}
+    {{/unless}}
+
+      <li class="{{classProfile}}">
+        {{#if auth.signedOut}}
+            <button class="auth-button signed-out" type="button" {{action "signIn" target=auth}}>
+                <span class="label-align">Sign in with GitHub</span>
+                {{inline-svg 'icon-github-white' class="icon white"}}
+            </button>
+        {{/if}}
+        {{#if auth.signedIn}}
+          {{#link-to "profile" class="navigation-anchor signed-in"}}
+            {{userName}}
+            {{user-avatar url=user.avatarUrl name=user.fullName size=40}}
+          {{/link-to}}
+        {{/if}}
+        {{#if auth.signingIn}}
+          <button class="auth-button signing-in" type="button">Signing In {{loading-indicator inline=true}}</button>
+        {{/if}}
+        {{#if auth.signedIn}}
+          <ul class="navigation-nested">
+            <li>
+              {{#link-to "profile" class="signed-in" title="See the Travis accounts you belong to"}}Accounts{{/link-to}}
+            </li>
+            {{#if config.billingEndpoint}}
+              {{#unless features.enterpriseVersion}}
+                <li>
+                  <a href={{config.billingEndpoint}} title="Take a look at your subscriptions">Billing</a>
+                </li>
+              {{/unless}}
+            {{/if}}
+            <li>
+              <a href="/" {{action "signOut" target=auth}} title="Sign out of Travis">Sign Out</a>
+            </li>
+          </ul>
+        {{/if}}
+      </li>
+    </ul>
+  </nav>
+</div>
+
+{{#if showCta}}
+  <div class="cta">
+    <p class="row">
+      Help make Open Source a better place and start building better software today!
+    </p>
+  </div>
+{{/if}}

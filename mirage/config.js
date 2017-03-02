@@ -54,8 +54,8 @@ export default function () {
     }
   });
 
-  this.get('/v3/broadcasts', (/* schema, request*/) => {
-    return { broadcasts: [] };
+  this.get('/v3/broadcasts', schema => {
+    return schema.broadcasts.all();
   });
 
   this.get('/repos', function (schema/* , request*/) {
@@ -105,14 +105,6 @@ export default function () {
     };
   });
 
-  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
-    let sshKeys = schema.sshKeys.where({
-      repositoryId: request.params.repo_id,
-      type: 'custom'
-    }).models[0];
-    return this.serialize(sshKeys, 'v2');
-  });
-
   this.get('/v3/repo/:id', function (schema, request) {
     return schema.repositories.find(request.params.id);
   });
@@ -125,14 +117,24 @@ export default function () {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });
 
-  this.get('/repos/:id/key', function (schema, request) {
-    const key = schema.sshKeys.where({
-      repositoryId: request.params.id,
-      type: 'default'
-    }).models[0];
+  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
+    const repo = schema.repositories.find(request.params.repo_id);
+    const { customSshKey } = repo;
     return {
-      key: key.attrs.key,
-      fingerprint: key.attrs.fingerprint
+      ssh_key: {
+        id: 1,
+        description: customSshKey.description,
+        fingerprint: customSshKey.fingerprint,
+      }
+    };
+  });
+
+  this.get('/repos/:id/key', function (schema, request) {
+    const repo = schema.repositories.find(request.params.id);
+    const { defaultSshKey } = repo;
+    return {
+      fingerprint: defaultSshKey.fingerprint,
+      key: '-----BEGIN PUBLIC KEY-----',
     };
   });
 
@@ -148,14 +150,33 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema/* , request*/) {
-    return { builds: schema.builds.all().models.map(build => {
+  this.get('/builds', function (schema, { queryParams:
+    { event_type: eventType, after_number: afterNumber, ids } }) {
+    const allBuilds = schema.builds.all();
+    let builds;
+
+    if (afterNumber) {
+      builds = allBuilds.models.filter(build => build.number < afterNumber);
+    } else if (ids) {
+      builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
+    } else if (eventType === 'pull_request') {
+      builds = allBuilds.models;
+    } else {
+      // This forces the Show more button to show in the build history test
+      builds = allBuilds.models.slice(0, 3);
+    }
+
+    return { builds: builds.map(build => {
       if (build.commit) {
         build.attrs.commit_id = build.commit.id;
       }
 
+      if (build.jobs) {
+        build.attrs.job_ids = build.jobs.models.map(job => job.id);
+      }
+
       return build;
-    }), commits: schema.commits.all().models };
+    }), commits: builds.map(build => build.commit) };
   });
 
   this.get('/builds/:id', function (schema, request) {
@@ -219,9 +240,9 @@ export default function () {
     const builds = schema.builds.where({ branchId: branch.id });
 
     /**
-      * TODO remove this once the seializers/build is removed.
-      * The modelName causes Mirage to know how to serialise it.
-      */
+     * TODO remove this once the seializers/build is removed.
+     * The modelName causes Mirage to know how to serialise it.
+     */
     return this.serialize({
       models: builds.models.reverse(),
       modelName: 'build'
@@ -237,6 +258,39 @@ export default function () {
     }
   });
 
+  this.get('/user/:user_id/beta_features', function (schema) {
+    let features = schema.features.all();
+    if (features.models.length) {
+      return this.serialize(features);
+    } else {
+      schema.db.features.insert([
+        {
+          name: 'Dashboard',
+          description: 'UX improvements over the current implementation',
+          enabled: false
+        },
+        {
+          name: 'Show your Pride',
+          description: 'Let 🌈 in your heart (and Travis CI)',
+          enabled: false
+        },
+        {
+          name: 'Comic Sans',
+          description: 'Don\'t you miss those days?',
+          enabled: false
+        }
+      ]);
+      return this.serialize(schema.features.all());
+    }
+  });
+
+  this.put('/user/:user_id/beta_feature/:feature_id', function (schema, request) {
+    let feature = schema.features.find(request.params.feature_id);
+    let requestBody = JSON.parse(request.requestBody);
+    feature.update('enabled', requestBody.enabled);
+    return this.serialize(feature);
+  });
+
   // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
   // this.pretender.handledRequest = function (verb, path, request) {
   //   console.log('Handled this request:', `${verb} ${path}`, request);
@@ -248,8 +302,8 @@ export default function () {
 }
 
 /*
-You can optionally export a config that is only loaded during tests
-export function testConfig() {
+   You can optionally export a config that is only loaded during tests
+   export function testConfig() {
 
-}
-*/
+   }
+   */

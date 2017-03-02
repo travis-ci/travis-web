@@ -30,8 +30,11 @@ module.exports = function () {
   }
 
   var app = new EmberApp({
-    babel: {
+    'ember-cli-babel': {
       includePolyfill: true,
+    },
+    babel: {
+      optional: ['es7.decorators']
     },
     fingerprint: fingerprint,
     sourcemaps: {
@@ -43,7 +46,11 @@ module.exports = function () {
       'plugins': ['line-highlight']
     },
     svg: {
-      optimize: false
+      optimize: false,
+      paths: [
+        'public/images/stroke-icons',
+        'public/images/svg'
+      ]
     }
   });
 

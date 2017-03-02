@@ -14,7 +14,10 @@ const Repo = Model.extend({
   'private': attr('boolean'),
   githubLanguage: attr(),
   active: attr(),
-
+  owner: attr(),
+  ownerType: Ember.computed.oneWay('owner.@type'),
+  name: attr(),
+  starred: attr('boolean'),
   defaultBranch: belongsTo('branch', {
     async: false
   }),
@@ -23,12 +26,6 @@ const Repo = Model.extend({
   }),
   currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
   currentBuildId: Ember.computed.oneWay('currentBuild.id'),
-
-  withLastBuild() {
-    return this.filter(function (repo) {
-      return repo.get('lastBuildId');
-    });
-  },
 
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
@@ -118,14 +115,6 @@ const Repo = Model.extend({
     }, function (cron) {
       return cron.get('branch.repoId') === id;
     });
-  }),
-
-  owner: Ember.computed('slug', function () {
-    return (this.get('slug') || '').split('/')[0];
-  }),
-
-  name: Ember.computed('slug', function () {
-    return (this.get('slug') || '').split('/')[1];
   }),
 
   stats: Ember.computed('slug', function () {
@@ -226,17 +215,6 @@ Repo.reopenClass({
         return result;
       });
     });
-  },
-
-  withLastBuild(store) {
-    var repos;
-    repos = store.filter('repo', {}, function (build) {
-      return build.get('lastBuildId');
-    });
-    repos.then(function () {
-      return repos.set('isLoaded', true);
-    });
-    return repos;
   },
 
   fetchBySlug(store, slug) {

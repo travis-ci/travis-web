@@ -46,7 +46,6 @@ export default (function () {
   }
 
   LinesSelector.prototype.willDestroy = function () {
-    this.location.setHash('');
     return this.destroyed = true;
   };
 
@@ -106,11 +105,15 @@ export default (function () {
   };
 
   LinesSelector.prototype.getLineNumberFromElement = function (element) {
-    return this.element.find('p:visible').index(element) + 1;
+    if (this && this.element) {
+      return this.element.find('p:visible').index(element) + 1;
+    }
   };
 
   LinesSelector.prototype.removeAllHighlights = function () {
-    return this.element.find('p.highlight').removeClass('highlight');
+    if (this && this.element) {
+      return this.element.find('p.highlight').removeClass('highlight');
+    }
   };
 
   LinesSelector.prototype.getSelectedLines = function () {
