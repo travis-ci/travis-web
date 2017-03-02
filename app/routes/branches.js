@@ -23,6 +23,7 @@ export default TravisRoute.extend({
     let path = `${config.apiEndpoint}/v3/repo/${repoId}/branches`;
     let includes = 'build.commit';
     let url = `${path}?include=${includes}&exists_on_github=true`;
+    let url2 = `${path}?exists_on_gitub=false&limit=1`;
 
     return Ember.RSVP.hash({
       activeBranches: Ember.$.ajax(url, options).then(function (response) {
@@ -33,7 +34,7 @@ export default TravisRoute.extend({
           limit: response['@pagination'].limit
         };
       }),
-      deletedBranchesCount: Ember.$.ajax(`${config.apiEndpoint}/v3/repo/${repoId}/branches?exists_on_gitub=false&limit=1`, options).then(function (response) {
+      deletedBranchesCount: Ember.$.ajax(url2, options).then(function (response) {
         return response['@pagination'].count;
       })
     });

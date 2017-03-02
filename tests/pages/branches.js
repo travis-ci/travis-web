@@ -49,6 +49,8 @@ export default PageObject.create({
 
   activeBranches: collection({
     scope: '.active-branches',
+    currentViewNumber: text('.branch-current-active'),
+    totalNumber: text('.branch-count-active'),
     itemScope: '.branch-row',
 
     item: branchRowComponent
@@ -57,6 +59,7 @@ export default PageObject.create({
   inactiveBranches: collection({
     scope: '.deleted-branches',
     isVisible: isVisible('.deleted-branches'),
+    countNumber: text('.deleted-branch-count'),
     itemScope: '.branch-row',
 
     info: text('.deleted-branches .note'),

@@ -162,6 +162,9 @@ test('view branches', function (assert) {
 
     assert.ok(buildTiles(3).empty, 'expected fourth tile to be empty');
 
+    assert.equal(branchesPage.activeBranches.currentViewNumber, '3');
+    assert.equal(branchesPage.activeBranches.totalNumber, '4');
+
     assert.equal(branchesPage.activeBranches().count, 3, 'expected three active branches');
 
     assert.equal(branchesPage.activeBranches(0).name, 'created', 'expected created branch to be sorted first');
@@ -185,7 +188,7 @@ test('get deleted branches', function (assert) {
   branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   assert.ok(!branchesPage.inactiveBranches.isVisible);
-
+  assert.equal(branchesPage.inactiveBranches.countNumber, '2');
   // click on show deleted branches
   // assert that inactiveBranches is visible
   // assert that there are inactive branches listed
