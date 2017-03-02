@@ -11,7 +11,7 @@
 
     <section class='active-branches'>
       <h2 class="small-title">Active Branches</h2>
-      <p class="helptext">Displaying first `x` of `y` active branches.</p>
+      <p class="helptext">Displaying {{model.activeBranches.limit}} of {{model.activeBranches.count}} active branches.</p>
       {{#if activeBranches.length}}
         <ul class="blank-list">
           {{#each activeBranches as |branch|}}
@@ -26,7 +26,7 @@
     <section class='deleted-branches'>
       <h2 class="small-title">Deleted Branches</h2>
       <aside class="deleted-branches-notice">
-        <p class="helptext">`x` branches have been hidden as they were removed from GitHub. <button type="button">Show deleted branches</button></p>
+        <p class="helptext">{{model.deletedBranchesCount}} branches have been hidden as they were removed from GitHub. <button type="button">Show deleted branches</button></p>
       </aside>
       {{#if inactiveBranches.length}}
         <ul class="blank-list">

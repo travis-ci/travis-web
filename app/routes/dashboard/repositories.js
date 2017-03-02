@@ -19,7 +19,7 @@ export default TravisRoute.extend({
       repos: this.store.query('repo', {
         active: true,
         withLastBuild: true,
-        sort_by: 'last_build.finished_at:desc'
+        sort_by: 'last_build.finished_at'
       }),
       accounts: this.store.query('account', {
         all: true

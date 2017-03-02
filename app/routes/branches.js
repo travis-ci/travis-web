@@ -8,8 +8,7 @@ export default TravisRoute.extend({
   tabStates: service(),
 
   model(/* params*/) {
-    var allTheBranches, apiEndpoint, options, repoId;
-    apiEndpoint = config.apiEndpoint;
+    var allTheBranches,  options, repoId;
     repoId = this.modelFor('repo').get('id');
     allTheBranches = Ember.ArrayProxy.create();
     options = {
@@ -21,13 +20,22 @@ export default TravisRoute.extend({
       options.headers.Authorization = 'token ' + (this.auth.token());
     }
 
-    let path = `${apiEndpoint}/v3/repo/${repoId}/branches`;
+    let path = `${config.apiEndpoint}/v3/repo/${repoId}/branches`;
     let includes = 'build.commit';
     let url = `${path}?include=${includes}&exists_on_github=true`;
 
-    return Ember.$.ajax(url, options).then(function (response) {
-      allTheBranches = response.branches;
-      return allTheBranches;
+    return Ember.RSVP.hash({
+      activeBranches: Ember.$.ajax(url, options).then(function (response) {
+        allTheBranches = response.branches;
+        return {
+          branches: allTheBranches,
+          count: response['@pagination'].count,
+          limit: response['@pagination'].limit
+        };
+      }),
+      deletedBranchesCount: Ember.$.ajax(`${config.apiEndpoint}/v3/repo/${repoId}/branches?exists_on_gitub=false&limit=1`, options).then(function (response) {
+        return response['@pagination'].count;
+      })
     });
   },
 
