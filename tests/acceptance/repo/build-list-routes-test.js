@@ -197,10 +197,6 @@ test('build history shows, more can be loaded, and a created build gets added an
 
       builds = builds.filter(build => build.attrs.number);
 
-      if (request.queryParams.event_type !== 'pull_request') {
-        builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
-      }
-
       if (request.queryParams.sort_by === 'finished_at:desc') {
         builds = builds.sort((a, b) => {
           const aBuildNumber = a.attrs.number;
@@ -215,8 +211,6 @@ test('build history shows, more can be loaded, and a created build gets added an
   });
 
   page.showMoreButton.click();
-
-  andThen(() => {});
 
   andThen(() => {
     assert.equal(page.builds().count, 4, 'expected four builds');

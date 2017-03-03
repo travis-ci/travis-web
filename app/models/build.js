@@ -101,7 +101,7 @@ export default Model.extend(DurationCalculations, {
     });
   }),
 
-  canCancel: Ember.computed('jobs.@each.canCancel', 'jobs', 'jobs.[]', function () {
+  canCancel: Ember.computed('jobs.@each.canCancel', 'jobs.[]', function () {
     return this.get('jobs').filterBy('canCancel', true).length;
   }),
 
