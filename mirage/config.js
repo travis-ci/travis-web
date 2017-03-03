@@ -282,6 +282,8 @@ export default function () {
 
     if (request.queryParams.event_type !== 'pull_request') {
       builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
+    } else {
+      builds = builds.filter(build => build.attrs.event_type === 'pull_request');
     }
 
     if (request.queryParams.sort_by === 'finished_at:desc') {

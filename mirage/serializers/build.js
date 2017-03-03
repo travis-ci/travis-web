@@ -50,6 +50,10 @@ export default Serializer.extend({
       if (object.branch) {
         response.branch = this.serializerFor('branch').serialize(object.branch, request);
       }
+
+      if (object.jobs.models.length) {
+        response.jobs = this.serializerFor('job').serializeMinimal(object.jobs, request);
+      }
     }
 
     let nonMirageAttributes = this.stripForeignKeys(object.attrs);
