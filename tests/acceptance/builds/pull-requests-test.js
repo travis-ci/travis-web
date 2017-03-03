@@ -51,6 +51,10 @@ moduleForAcceptance('Acceptance | builds/pull requests', {
 test('view and cancel pull requests', function (assert) {
   page.visitPullRequests({ organization: 'travis-ci', repo: 'travis-web' });
 
+  // no idea why this hackery is necessary. Probably somehow related to runloop
+  // issues.
+  andThen(() => {});
+
   andThen(() => {
     assert.equal(page.builds().count, 1, 'expected one pull request build');
 
@@ -66,6 +70,7 @@ test('view and cancel pull requests', function (assert) {
 
     assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
   });
+
   percySnapshot(assert);
 
   page.builds(0).cancelButton.click();

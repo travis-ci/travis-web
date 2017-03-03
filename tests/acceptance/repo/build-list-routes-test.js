@@ -127,10 +127,6 @@ test('build history shows, more can be loaded, and a created build gets added an
 
       builds = builds.filter(build => build.attrs.number);
 
-      if (request.queryParams.event_type !== 'pull_request') {
-        builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
-      }
-
       if (request.queryParams.sort_by === 'finished_at:desc') {
         builds = builds.sort((a, b) => {
           const aBuildNumber = a.attrs.number;
@@ -145,8 +141,6 @@ test('build history shows, more can be loaded, and a created build gets added an
   });
 
   page.showMoreButton.click();
-
-  andThen(() => {});
 
   andThen(() => {
     assert.equal(page.builds().count, 4, 'expected four builds');
@@ -164,6 +158,7 @@ test('build history shows, more can be loaded, and a created build gets added an
       message: 'Standing with Standing Rock',
       commit_id: 2016,
     },
+
     commit: {
       id: 2016,
       branch: 'no-dapl',
@@ -204,33 +199,5 @@ test('build history shows, more can be loaded, and a created build gets added an
 
   andThen(() => {
     assert.ok(page.builds(0).passed, 'expected the newly-finished build to have passed');
-  });
-});
-
-test('view and cancel pull requests', function (assert) {
-  server.logging = true;
-  page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
-
-  andThen(() => {
-    assert.equal(page.builds().count, 1, 'expected one pull request build');
-
-    const pullRequest = page.builds(0);
-
-    assert.ok(pullRequest.started, 'expected the pull request to have started');
-    assert.equal(pullRequest.name, 'PR #2010');
-    assert.equal(pullRequest.message, 'A pull request');
-    assert.equal(pullRequest.committer, 'Sara Ahmed');
-    assert.equal(pullRequest.commitSha, '1234567');
-    assert.equal(pullRequest.commitDate, 'about a year ago');
-    assert.equal(pullRequest.duration, '5 min');
-
-    assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
-  });
-  percySnapshot(assert);
-
-  page.builds(0).cancelButton.click();
-
-  andThen(() => {
-    assert.equal(page.notification, 'Build has been successfully cancelled.');
   });
 });
