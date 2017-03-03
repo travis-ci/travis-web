@@ -52,7 +52,7 @@ export default Serializer.extend({
       }
 
       if (object.jobs.models.length) {
-        response.jobs = this.serializerFor('job').serializeMinimal(object.jobs, request);
+        response.jobs = this.serializerFor('job-v3').serializeMinimal(object.jobs, request);
       }
     }
 

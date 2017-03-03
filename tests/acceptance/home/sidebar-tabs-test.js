@@ -65,7 +65,7 @@ test('the home page shows running tab in pro version', (assert) => {
     .clickSidebarRunningTab();
 
   andThen(() => {
-    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected no running repositories');
+    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running repositories');
   });
   percySnapshot(assert);
 });
