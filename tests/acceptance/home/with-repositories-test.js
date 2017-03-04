@@ -78,7 +78,10 @@ const buildTemplate = {
   repository_id: repositoryTemplate.id,
   number: 15,
   pull_request: false,
-  event_type: 'push'
+  event_type: 'push',
+  branch: 'some-branch',
+  message: 'A commit message',
+  commit_id: 2016,
 };
 
 Object.assign(buildTemplate, commitTemplate);
@@ -117,14 +120,14 @@ test('Pusher events change the main display', function (assert) {
 
     const jobCreated = generateJobWithState('created');
 
-    this.branch.createBuild(buildCreated);
+    server.create('build', Object.assign(buildCreated, { branch: this.branch }));
     server.create('job', jobCreated);
 
     this.application.pusher.receive('job:created', jobCreated);
     this.application.pusher.receive('build:created', {
       build: buildCreated,
       commit: commitTemplate,
-      repository: repositoryTemplate
+      repository: repositoryTemplate,
     });
 
     this.application.pusher.receive('job:queued', generateJobWithState('queued'));
