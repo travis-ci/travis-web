@@ -127,11 +127,12 @@ export default DS.Store.extend({
     });
 
     if (branch) {
+      let branchName = typeof branch === 'object' ? branch.name : branch;
       response.branch = {
         '@type': 'branch',
-        '@href': `/repo/${repository_id}/branch/${branch.name}`,
+        '@href': `/repo/${repository_id}/branch/${branchName}`,
         '@representation': 'standard',
-        name: branch.name,
+        name: branchName,
       };
     }
 

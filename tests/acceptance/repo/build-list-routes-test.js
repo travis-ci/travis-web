@@ -25,7 +25,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 5);
 
-    const cronBranch = server.create('branch', { name: 'successful-cron-branch' });
+    const cronBranch = server.create('branch', { repository, name: 'successful-cron-branch' });
 
     const lastBuild = server.create('build', {
       state: 'passed',
