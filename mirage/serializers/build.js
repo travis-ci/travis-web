@@ -21,7 +21,6 @@ export default Serializer.extend({
 
   serializeSingle(object, request, { embedded = false } = {}) {
     let { id } = object.attrs;
-    delete object.attrs.id;
 
     let representation = embedded ? 'minimal' : 'standard';
 
@@ -32,14 +31,12 @@ export default Serializer.extend({
       id,
     };
 
-    const { include } = request.queryParams;
-
-    if (include && include.includes('build.commit') && object.commit) {
+    if (this.shouldIncludeRelationship(object, request, 'commit')) {
       const serializer = this.serializerFor('commit-v3');
       response.commit = serializer.serializeSingle(object.commit);
     }
 
-    if (include && include.includes('build.branch') && object.branch) {
+    if (this.shouldIncludeRelationship(object, request, 'branch')) {
       response.branch = this.serializerFor('branch').serialize(object.branch, request);
     }
 
@@ -71,5 +68,16 @@ export default Serializer.extend({
       }
     });
     return obj;
+  },
+
+  shouldIncludeRelationship(object, request, type) {
+    const { include } = request.queryParams;
+    return (this.requestingBuildDirectly(request) ||
+      (include && include.includes(`build.${type}`)))
+      && object[type];
+  },
+
+  requestingBuildDirectly(request) {
+    return request.url.includes('/build');
   },
 });
