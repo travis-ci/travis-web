@@ -171,45 +171,7 @@ export default function () {
 
   this.get('/build/:id', function (schema, request) {
     const build = schema.builds.find(request.params.id);
-    const response = {
-      '@type': 'build',
-      '@href': `/build/${build.id}`,
-      '@representation': 'standard',
-      '@permissions': {
-        read: true,
-        cancel: true,
-        restart: true
-      },
-      id: build.id,
-      number: build.number,
-      state: build.state,
-      duration: build.duration,
-      event_type: build.event_type,
-      previous_state: build.previous_state,
-      pull_request_title: build.pull_request_title,
-      pull_request_number: build.pull_request_number,
-      started_at: build.started_at,
-      finished_at: build.finished_at
-    };
-
-    if (build.jobs) {
-      response.jobs = build.jobs.models.map(job => job.attrs);
-    }
-
-    if (build.branch) {
-      response.branch = build.branch.attrs;
-    }
-
-    if (build.repository) {
-      response.repository = build.repository.attrs;
-    }
-
-    if (build.commit) {
-      response.commit = build.commit.attrs;
-      response.build.commit_id = build.commit.id;
-    }
-
-    return new Mirage.Response(200, {}, response);
+    return this.serialize(build);
   });
 
   this.post('/build/:id/restart', (schema, request) => {
