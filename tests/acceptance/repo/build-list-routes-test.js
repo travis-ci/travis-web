@@ -142,6 +142,7 @@ test('build history shows, more can be loaded, and a created build gets added an
 
   page.showMoreButton.click();
 
+  andThen(() => {});
   andThen(() => {
     assert.equal(page.builds().count, 4, 'expected four builds');
     assert.equal(page.builds(3).name, 'oldest-build-branch', 'expected an earlier build to have been added');
