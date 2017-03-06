@@ -136,7 +136,7 @@ test('build history shows, more can be loaded, and a created build gets added an
         });
       }
 
-      return this.serialize(builds);
+      return this.serialize(builds, 'build');
     }
   });
 
