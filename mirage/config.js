@@ -170,10 +170,7 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/build/:id', function (schema, request) {
-    const build = schema.builds.find(request.params.id);
-    return this.serialize(build);
-  });
+  this.get('/build/:id');
 
   this.post('/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
