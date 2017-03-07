@@ -14,13 +14,12 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    var repo;
     if (model && !model.get) {
       model = this.store.recordForId('build', model);
       this.store.find('build', model);
     }
-    repo = this.controllerFor('repo');
-    this.controllerFor('build').set('build', model);
+    const repo = this.controllerFor('repo');
+    controller.set('build', model);
     return repo.activate('build');
   },
 
