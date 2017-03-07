@@ -6,8 +6,8 @@ export default Mirage.Factory.extend({
   active: true,
   permissions: {
     read: false,
-    enable: false,
-    disable: false,
+    activate: false,
+    deactivate: false,
     star: false,
     unstar: false,
     create_request: false,
