@@ -27,7 +27,7 @@ export default Ember.Component.extend({
     const repoId = this.get('repo.id');
 
     try {
-      const response = yield Ember.$.ajax(`${apiEndpoint}/v3/repo/${repoId}/enable`, {
+      const response = yield Ember.$.ajax(`${apiEndpoint}/v3/repo/${repoId}/activate`, {
         headers: {
           Authorization: `token ${this.get('auth').token()}`
         },
