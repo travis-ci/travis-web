@@ -12,7 +12,6 @@ moduleFor('adapter:v3', 'Unit | Adapter | V3', {
   }
 });
 
-// Replace this with your real tests.
 test('it joins array that are passed as data', function (assert) {
   const adapter = this.subject(),
     type = 'GET',
