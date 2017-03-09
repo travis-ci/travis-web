@@ -12,6 +12,7 @@ export default ApplicationAdapter.extend({
 
     // FIXME this is a temporary solution for https://github.com/travis-pro/team-teal/issues/1762
     query.data.limit = 100;
+    query.data.sort_by = 'exists_on_github';
 
     return this.ajax(url, 'GET', query);
   },
