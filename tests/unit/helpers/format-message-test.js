@@ -25,6 +25,14 @@ test('it accepts a shortening flag', assert => {
   assert.equal(formattedMulti, 'a multi-line');
 });
 
+test('it accepts an eventType and prefixes the message if it’s a cron', assert => {
+  const formattedCron = formatMessage(['a string'], { eventType: 'cron' });
+  assert.equal(formattedCron, '[cron] a string');
+
+  const formattedNonCron = formatMessage(['a string'], { eventType: 'jorts' });
+  assert.equal(formattedNonCron, 'a string');
+});
+
 test('it accepts a pre-formatting flag', assert => {
   const formattedMulti = formatMessage(['a multi-line\nmessage'], { pre: true });
 
