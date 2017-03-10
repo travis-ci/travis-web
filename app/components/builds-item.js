@@ -10,6 +10,11 @@ export default Ember.Component.extend({
   classNameBindings: ['build.state'],
   classNames: ['row-li', 'pr-row'],
 
+  @computed('build.eventType')
+  isCron(eventType) {
+    return eventType == 'cron';
+  },
+
   @computed('build.repo.slug', 'build.commit.sha')
   urlGithubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);

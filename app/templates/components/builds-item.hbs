@@ -18,7 +18,7 @@
       </div>
     {{else}}
       <div class="row-message">
-        {{{format-message build.commit.message short="true" repo=build.repo}}}
+        {{if isCron '[cron] '}}{{{format-message build.commit.message short="true" repo=build.repo}}}
       </div>
     {{/if}}
   </div>
