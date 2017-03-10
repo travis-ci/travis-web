@@ -32,6 +32,11 @@ export default Ember.Component.extend({
     }
   }),
 
+  @computed('item.eventType')
+  isCron(eventType) {
+    return eventType == 'cron';
+  },
+
   displayCompare: Ember.computed('item.eventType', function () {
     let eventType = this.get('item.eventType');
     if (eventType === 'api' || eventType === 'cron') {
