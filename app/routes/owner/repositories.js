@@ -16,14 +16,15 @@ export default TravisRoute.extend({
 
     if (this.get('auth.signedIn')) {
       options.headers = {
-        Authorization: 'token ' + (this.auth.token())
+        Authorization: 'token ' + (this.auth.token()),
+        'Travis-API-Version': '3'
       };
     }
 
     // eslint-disable-next-line
     let includes = `?include=owner.repositories,repository.default_branch,build.commit,repository.current_build`;
     let { owner } = transition.params.owner;
-    let url = `${config.apiEndpoint}/v3/owner/${owner}${includes}`;
+    let url = `${config.apiEndpoint}/owner/${owner}${includes}`;
     return Ember.$.ajax(url, options);
   }
 });

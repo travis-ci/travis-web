@@ -15,11 +15,12 @@ export default TravisRoute.extend({
     options = {};
     if (this.get('auth.signedIn')) {
       options.headers = {
-        Authorization: 'token ' + (this.auth.token())
+        Authorization: 'token ' + (this.auth.token()),
+        'Travis-API-Version': '3'
       };
     }
 
-    let path = `${apiEndpoint}/v3/repo/${repoId}/branches`;
+    let path = `${apiEndpoint}/repo/${repoId}/branches`;
     let includes = 'build.commit&limit=100';
     let url = `${path}?include=${includes}`;
 

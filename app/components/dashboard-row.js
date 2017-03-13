@@ -42,7 +42,7 @@ export default Ember.Component.extend({
     let data = {};
     data.request = `{ 'branch': '${this.get('repo.defaultBranch.name')}' }`;
 
-    this.get('ajax').ajax(`/v3/repo/${this.get('repo.id')}/requests`, 'POST', { data })
+    this.get('ajax').postV3(`/repo/${this.get('repo.id')}/requests`, data)
       .then(() => {
         self.set('isTriggering', false);
         self.get('flashes')
