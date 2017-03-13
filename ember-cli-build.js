@@ -33,8 +33,10 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
-    babel: {
-      optional: ['es7.decorators']
+    // need to use babel6 key here until
+    // we can upgrade to ember-cli@2.13
+    babel6: {
+      plugins: ['transform-decorators-legacy']
     },
     fingerprint: fingerprint,
     sourcemaps: {
