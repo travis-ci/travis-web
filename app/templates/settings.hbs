@@ -14,7 +14,12 @@
 
   {{#if showAutoCancellationSwitches}}
     <section class="settings-section auto-cancellation">
-      <h2 class="small-title">Auto Cancellation Settings</h2>
+      <h2 class="small-title feature-name">
+        Auto Cancellation Settings
+        <small>
+          (<a href="https://github.com/travis-ci/beta-features/issues/8" title="See the feedback ticket on GitHub">We'd love some feedback!</a>)
+        </small>
+      </h2>
 
       <p>Auto Cancellation allows you to only run builds for the latest commits in the queue. This setting can be applied to builds for Branch builds and Pull Request builds separately. Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.</p>
 
