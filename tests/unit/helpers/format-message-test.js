@@ -27,7 +27,7 @@ test('it accepts a shortening flag', assert => {
 
 test('it accepts an eventType and prefixes the message if it’s a cron', assert => {
   const formattedCron = formatMessage(['a string'], { eventType: 'cron' });
-  assert.equal(formattedCron, '[cron] a string');
+  assert.equal(formattedCron.toHTML(), "<span class='message-label badge'>cron</span> a string");
 
   const formattedNonCron = formatMessage(['a string'], { eventType: 'jorts' });
   assert.equal(formattedNonCron, 'a string');

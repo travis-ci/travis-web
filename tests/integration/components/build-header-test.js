@@ -68,7 +68,7 @@ test('render cron build', function (assert) {
   this.set('build', build);
   this.render(hbs`{{build-header item=build commit=build.commit}}`);
 
-  assert.equal(this.$().find('.build-title .title').text().trim(), '[cron] Just complete and utter joy', 'displays cron before commit message');
+  assert.equal(this.$().find('.build-title .title').text().trim(), 'cron Just complete and utter joy', 'displays cron before commit message');
 });
 
 test('if a build is shown, only show elapsed time while running', function (assert) {

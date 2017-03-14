@@ -44,5 +44,5 @@ test('it renders a cron build with a prefix', function (assert) {
   this.build = build;
   this.render(hbs`{{builds-item build=build}}`);
 
-  assert.equal(this.$().find('.row-message').text().trim(), '[cron] A cron message');
+  assert.equal(this.$().find('.row-message').text().trim(), 'cron A cron message');
 });

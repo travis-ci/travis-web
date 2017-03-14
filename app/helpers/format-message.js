@@ -20,7 +20,7 @@ function formatMessage(message, options) {
     message = message.replace(/\n/g, '<br/>');
   }
   if (options.eventType && options.eventType == 'cron') {
-    message = `[cron] ${message}`;
+    message = Ember.String.htmlSafe(`<span class='message-label badge'>cron</span> ${message}`);
   }
   return message;
 }
