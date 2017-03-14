@@ -12,13 +12,14 @@ export default TravisRoute.extend({
     options = {};
     if (this.get('auth.signedIn')) {
       options.headers = {
-        Authorization: 'token ' + (this.auth.token())
+        Authorization: 'token ' + (this.auth.token()),
+        'Travis-API-Version': '3'
       };
     }
     let { owner } = params;
     let { apiEndpoint } = config;
     let includes = '?include=organization.repositories,repository.default_branch,build.commit';
-    let url = `${apiEndpoint}/v3/owner/${owner}${includes}`;
+    let url = `${apiEndpoint}/owner/${owner}${includes}`;
     return Ember.$.ajax(url, options);
   },
 

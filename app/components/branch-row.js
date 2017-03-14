@@ -37,10 +37,11 @@ export default Ember.Component.extend({
       options = {};
       if (this.get('auth.signedIn')) {
         options.headers = {
-          Authorization: `token ${this.auth.token()}`
+          Authorization: `token ${this.auth.token()}`,
+          'Travis-API-Version': '3'
         };
       }
-      let path = `${apiEndpoint}/v3/repo/${repoId}/builds`;
+      let path = `${apiEndpoint}/repo/${repoId}/builds`;
       let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
       let url = `${path}${params}`;
 

@@ -30,11 +30,12 @@ export default Ember.Component.extend({
 
       if (this.get('auth.signedIn')) {
         options.headers = {
-          Authorization: `token ${this.auth.token()}`
+          Authorization: `token ${this.auth.token()}`,
+          'Travis-API-Version': '3'
         };
       }
 
-      let url = `${apiEndpoint}/v3/repo/${repoId}/branches?limit=100`;
+      let url = `${apiEndpoint}/repo/${repoId}/branches?limit=100`;
       Ember.$.ajax(url, options).then(response => {
         if (response.branches.length) {
           let branchNames = response.branches.map(branch => branch.name);
