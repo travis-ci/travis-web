@@ -8,13 +8,13 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    var options;
-    options = {};
-    if (this.get('auth.signedIn')) {
-      options.headers = {
-        Authorization: 'token ' + (this.auth.token()),
+    var options = {
+      headers: {
         'Travis-API-Version': '3'
-      };
+      }
+    };
+    if (this.get('auth.signedIn')) {
+      options.headers.Authorization = 'token ' + (this.auth.token());
     }
     let { owner } = params;
     let { apiEndpoint } = config;
