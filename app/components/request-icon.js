@@ -4,7 +4,8 @@ const eventToIcon = {
   push: 'push',
   pull_request: 'pullrequest',
   cron: 'cronjobs',
-  api: 'api'
+  api: 'api',
+  default: 'nobuilds'
 };
 
 const eventToTitle = {
@@ -23,8 +24,7 @@ export default Ember.Component.extend({
 
   icon: Ember.computed('event', function () {
     const event = this.get('event');
-    const defaultIcon = 'nobuilds';
-    const iconName = eventToIcon[event] || defaultIcon;
+    const iconName = eventToIcon[event] || eventToIcon.default;
 
     return `icon-${iconName}`;
   }),
