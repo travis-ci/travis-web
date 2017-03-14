@@ -25,7 +25,6 @@ var traverse = function (object, callback) {
 };
 
 export default JSONSerializer.extend({
-  isNewSerializerAPI: true,
 
   extractRelationship(type, hash) {
     if (hash && !hash.id && hash['@href']) {
