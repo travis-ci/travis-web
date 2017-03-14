@@ -1,7 +1,6 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
 var Serializer = V2FallbackSerializer.extend({
-  isNewSerializerAPI: true,
   attrs: {
     _config: { key: 'config' },
     _finishedAt: { key: 'finished_at' },
