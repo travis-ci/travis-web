@@ -34,12 +34,13 @@ export default Ember.Component.extend({
       apiEndpoint = config.apiEndpoint;
       repoId = this.get('branch.repository.id');
       branchName = this.get('branch.name');
-      options = {};
-      if (this.get('auth.signedIn')) {
-        options.headers = {
-          Authorization: `token ${this.auth.token()}`,
+      options = {
+        headers: {
           'Travis-API-Version': '3'
-        };
+        }
+      };
+      if (this.get('auth.signedIn')) {
+        options.headers.Authorization = `token ${this.auth.token()}`;
       }
       let path = `${apiEndpoint}/repo/${repoId}/builds`;
       let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;

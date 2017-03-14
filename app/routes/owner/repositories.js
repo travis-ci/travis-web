@@ -11,14 +11,14 @@ export default TravisRoute.extend({
   },
 
   model(params, transition) {
-    var options;
-    options = {};
+    var options = {
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    };
 
     if (this.get('auth.signedIn')) {
-      options.headers = {
-        Authorization: 'token ' + (this.auth.token()),
-        'Travis-API-Version': '3'
-      };
+      options.headers.Authorization = 'token ' + (this.auth.token());
     }
 
     // eslint-disable-next-line

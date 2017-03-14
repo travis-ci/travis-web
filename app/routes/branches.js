@@ -12,12 +12,13 @@ export default TravisRoute.extend({
     apiEndpoint = config.apiEndpoint;
     repoId = this.modelFor('repo').get('id');
     allTheBranches = Ember.ArrayProxy.create();
-    options = {};
-    if (this.get('auth.signedIn')) {
-      options.headers = {
-        Authorization: 'token ' + (this.auth.token()),
+    options = {
+      headers: {
         'Travis-API-Version': '3'
-      };
+      }
+    };
+    if (this.get('auth.signedIn')) {
+      options.headers.Authorization = 'token ' + (this.auth.token());
     }
 
     let path = `${apiEndpoint}/repo/${repoId}/branches`;
