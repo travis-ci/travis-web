@@ -81,6 +81,11 @@
       text-decoration: none
       &:hover
         text-decoration: underline
+      &.inner-underline
+        &:hover
+          text-decoration: none
+          .inner-underline
+            text-decoration: underline
 
     @media #{$medium-up}
       display: inline-block
