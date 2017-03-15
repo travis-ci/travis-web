@@ -8,8 +8,14 @@
 
     {{#if build.isMatrix}}
       {{#if jobsLoaded}}
-        {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
-        {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
+        {{#if build.stages}}
+          {{#each build.stages as |stage|}}
+            {{jobs-list stage=stage build=build repo=repo}}
+          {{/each}}
+        {{else}}
+          {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
+          {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
+        {{/if}}
       {{else}}
         {{loading-indicator center=true}}
       {{/if}}

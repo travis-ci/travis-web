@@ -47,5 +47,19 @@ export default PageObject.create({
     itemScope: '.jobs-item',
 
     item: jobComponent
+  }),
+
+  stages: collection({
+    itemScope: '.jobs.stage',
+
+    item: {
+      name: 'h2',
+
+      jobs: collection({
+        itemScope: '.jobs-item',
+
+        item: jobComponent
+      })
+    }
   })
 });
