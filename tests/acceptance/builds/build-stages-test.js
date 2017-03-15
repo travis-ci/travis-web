@@ -27,6 +27,9 @@ test('visiting build with stages', function (assert) {
 
   andThen(function () {
     assert.equal(buildPage.stages().count, 2, 'expected two build stages');
+
+    assert.equal(buildPage.stages(0).name, 'first');
+    assert.equal(buildPage.stages(1).name, 'second');
   });
   percySnapshot(assert);
 });

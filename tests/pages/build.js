@@ -53,7 +53,7 @@ export default PageObject.create({
     itemScope: '.jobs.stage',
 
     item: {
-      name: 'h2',
+      name: text('h2'),
 
       jobs: collection({
         itemScope: '.jobs-item',

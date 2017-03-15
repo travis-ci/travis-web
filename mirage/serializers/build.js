@@ -40,6 +40,19 @@ export default Serializer.extend({
       response.branch = this.serializerFor('branch').serialize(object.branch, request);
     }
 
+    // FIXME this should be serialised in the standard fashion
+    if (object.stages) {
+      response.stages = object.stages.models.map(stage => {
+        return {
+          '@type': 'stage',
+          '@representation': 'minimal',
+          id: stage.id,
+          number: stage.number,
+          name: stage.name
+        };
+      });
+    }
+
     if (!embedded) {
       if (object.repository) {
         const serializer = this.serializerFor('repository');
@@ -71,8 +84,10 @@ export default Serializer.extend({
   },
 
   shouldIncludeRelationship(object, request, type) {
+    console.log("SIR?", arguments);
     const { include } = request.queryParams;
     return (this.requestingBuildDirectly(request) ||
+      type === 'stage' ||
       (include && include.includes(`build.${type}`)))
       && object[type];
   },
