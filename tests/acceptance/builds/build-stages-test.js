@@ -29,7 +29,11 @@ test('visiting build with stages', function (assert) {
     assert.equal(buildPage.stages().count, 2, 'expected two build stages');
 
     assert.equal(buildPage.stages(0).name, 'first');
+    assert.equal(buildPage.stages(0).jobs(0).number, '1234.1');
+    assert.equal(buildPage.stages(0).jobs(1).number, '1234.2');
+
     assert.equal(buildPage.stages(1).name, 'second');
+    assert.equal(buildPage.stages(1).jobs(0).number, '1234.999');
   });
   percySnapshot(assert);
 });

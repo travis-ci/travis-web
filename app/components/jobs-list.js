@@ -17,9 +17,7 @@ export default Ember.Component.extend({
     const stage = this.get('stage');
 
     if (stage) {
-      // FIXME this or something like it will actually filter
-      // return this.get('build.jobs').filterBy('stage.number', stage.get('number'));
-      return this.get('build.jobs');
+      return this.get('build.jobs').filterBy('stage.id', stage.get('id'));
     } else {
       return this.get('jobs');
     }
