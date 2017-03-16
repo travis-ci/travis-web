@@ -21,5 +21,8 @@ export default Ember.Component.extend({
     } else {
       return this.get('jobs');
     }
-  })
+  }),
+
+  jobDurations: Ember.computed.mapBy('jobsProxyLol', 'duration'),
+  duration: Ember.computed.sum('jobDurations')
 });

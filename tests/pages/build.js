@@ -54,6 +54,7 @@ export default PageObject.create({
 
     item: {
       name: text('h2'),
+      duration: text('.stage-duration'),
 
       jobs: collection({
         itemScope: '.jobs-item',

@@ -4,7 +4,14 @@
     <h2 class="section-title">Build Jobs</h2>
   {{else}}
     {{#if stage}}
-      <h2 class="section-title">{{stage.name}}</h2>
+      <header class="stage-header">
+        <h2 class="section-title">{{stage.name}}</h2>
+
+        <div class="stage-duration">
+          {{inline-svg 'icon-clock' class="icon"}}
+          <time class="label-align" aria-label="Job duration" datetime="PT{{job.duration}}S">{{format-duration duration}}</time>
+        </div>
+      </header>
     {{else}}
       <h2 class="section-title"><span class="label-align">Allowed Failures</span>
         <span class="tooltip-jobs" data-tooltip="These are jobs you can allow to fail without failing your entire build">

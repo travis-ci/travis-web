@@ -72,6 +72,18 @@
 .stage .section-title
   @extend .small-title
 
+.stage .stage-header
+  display: flex
+  justify-content: space-between
+
+  .stage-duration
+    @extend .section-title
+    width: 10em
+    padding-left: 0.3rem
+
+    svg
+      font-size: 15px
+
 .job-state
   display: inline-block
   @media #{$medium-up}
