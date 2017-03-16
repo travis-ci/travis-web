@@ -84,7 +84,6 @@ export default Serializer.extend({
   },
 
   shouldIncludeRelationship(object, request, type) {
-    console.log("SIR?", arguments);
     const { include } = request.queryParams;
     return (this.requestingBuildDirectly(request) ||
       type === 'stage' ||
