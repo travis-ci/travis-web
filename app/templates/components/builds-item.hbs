@@ -18,7 +18,7 @@
       </div>
     {{else}}
       <div class="row-message">
-        {{{format-message build.commit.message short="true" repo=build.repo}}}
+        {{{format-message build.commit.message short="true" repo=build.repo eventType=build.eventType}}}
       </div>
     {{/if}}
   </div>
@@ -31,9 +31,9 @@
 <div class="two-line">
   <h3 class="row-item {{build.state}}">
     {{#if build.id}}
-      {{#link-to "build" build.repo build}}
+      {{#link-to "build" build.repo build class="inner-underline"}}
         {{request-icon event=build.eventType state=build.state}}
-        <span class="label-align">#{{build.number}} {{build.state}}</span>
+        <span class="label-align inner-underline">#{{build.number}} {{build.state}}</span>
       {{/link-to}}
     {{/if}}
   </h3>

@@ -25,7 +25,6 @@ var traverse = function (object, callback) {
 };
 
 export default JSONSerializer.extend({
-  isNewSerializerAPI: true,
 
   extractRelationship(type, hash) {
     if (hash && !hash.id && hash['@href']) {
@@ -39,11 +38,6 @@ export default JSONSerializer.extend({
       relationshipHash.type = type;
     }
     return relationshipHash;
-  },
-
-  extractRelationships() {
-    let relationships = this._super(...arguments);
-    return relationships;
   },
 
   keyForRelationship(key/* , typeClass, method*/) {

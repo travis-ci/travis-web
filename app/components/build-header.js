@@ -32,6 +32,15 @@ export default Ember.Component.extend({
     }
   }),
 
+  @computed('isJob')
+  build(isJob) {
+    if (isJob) {
+      return this.get('item.build');
+    } else {
+      return this.get('item');
+    }
+  },
+
   displayCompare: Ember.computed('item.eventType', function () {
     let eventType = this.get('item.eventType');
     if (eventType === 'api' || eventType === 'cron') {

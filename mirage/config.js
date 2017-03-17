@@ -54,7 +54,7 @@ export default function () {
     }
   });
 
-  this.get('/v3/broadcasts', schema => {
+  this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });
 
@@ -62,16 +62,22 @@ export default function () {
     return schema.repositories.all();
   });
 
-  this.get('/repo/:slug', function (schema, request) {
-    let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
+  this.get('/repo/:slug_or_id', function (schema, request) {
+    if (request.params.slug_or_id.match(/^\d+$/)) {
+      return schema.repositories.find(request.params.slug_or_id);
+    } else {
+      let slug = request.params.slug_or_id;
+      let repos = schema.repositories.where({ slug: decodeURIComponent(slug) });
 
-    return {
-      repo: repos.models[0].attrs
-    };
+      return {
+        repo: repos.models[0].attrs
+      };
+    }
   });
 
-  this.get('/v3/repo/:id/crons', function (schema/* , request*/) {
-    return schema.crons.all();
+  this.get('/repo/:repositoryId/crons', function (schema, request) {
+    const { repositoryId } = request.params;
+    return this.serialize(schema.crons.where({ repositoryId }), 'cron');
   });
 
   this.get('/cron/:id');
@@ -105,15 +111,11 @@ export default function () {
     };
   });
 
-  this.get('/v3/repo/:id', function (schema, request) {
-    return schema.repositories.find(request.params.id);
-  });
-
-  this.get('/v3/repo/:id/branches', function (schema) {
+  this.get('/repo/:repository_id/branches', function (schema) {
     return schema.branches.all();
   });
 
-  this.get('/v3/owner/:login', function (schema, request) {
+  this.get('/owner/:login', function (schema, request) {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });
 
@@ -235,7 +237,7 @@ export default function () {
     }
   });
 
-  this.get('/v3/repo/:repo_id/builds', function (schema, request) {
+  this.get('/repo/:repo_id/builds', function (schema, request) {
     const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];
     const builds = schema.builds.where({ branchId: branch.id });
 
@@ -290,15 +292,6 @@ export default function () {
     feature.update('enabled', requestBody.enabled);
     return this.serialize(feature);
   });
-
-  // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
-  // this.pretender.handledRequest = function (verb, path, request) {
-  //   console.log('Handled this request:', `${verb} ${path}`, request);
-  //   try {
-  //     const responseJson = JSON.parse(request.responseText);
-  //     console.log(responseJson);
-  //   } catch (e) {}
-  // };
 }
 
 /*
