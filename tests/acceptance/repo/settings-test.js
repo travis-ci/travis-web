@@ -201,16 +201,16 @@ test('delete and create environment variables', function (assert) {
     return parsedRequestBody;
   });
 
-  settingsPage.environmentVariableForm.fillName('drafted');
-  settingsPage.environmentVariableForm.fillValue('true');
+  settingsPage.environmentVariableForm.fillName('  drafted');
+  settingsPage.environmentVariableForm.fillValue('  true');
   settingsPage.environmentVariableForm.makePublic();
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables(0).name, 'drafted');
+    assert.equal(settingsPage.environmentVariables(0).name, 'drafted', 'expected leading whitespace to be trimmed');
     assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
     assert.ok(settingsPage.environmentVariables(0).isNewlyCreated, 'expected environment variable to be newly created');
-    assert.equal(settingsPage.environmentVariables(0).value, 'true');
+    assert.equal(settingsPage.environmentVariables(0).value, 'true', 'expected leading whitespace to be trimmed');
 
     assert.deepEqual(requestBodies.pop(), { env_var: {
       id: '1919',
