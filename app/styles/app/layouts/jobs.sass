@@ -77,6 +77,12 @@
   display: flex
   justify-content: space-between
 
+  &.passed h2
+    color: $turf-green
+
+  &.failed h2
+    color: $brick-red
+
   .stage-duration
     @extend .section-title
     width: 11.7em

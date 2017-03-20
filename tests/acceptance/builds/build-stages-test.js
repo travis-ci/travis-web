@@ -35,11 +35,13 @@ test('visiting build with stages', function (assert) {
     assert.equal(buildPage.stages().count, 2, 'expected two build stages');
 
     assert.equal(buildPage.stages(0).name, 'first');
+    assert.ok(buildPage.stages(0).isPassed);
     assert.equal(buildPage.stages(0).duration, '1 min 10 sec');
     assert.equal(buildPage.stages(0).jobs(0).number, '1234.1');
     assert.equal(buildPage.stages(0).jobs(1).number, '1234.2');
 
     assert.equal(buildPage.stages(1).name, 'second');
+    assert.ok(buildPage.stages(1).isFailed);
     assert.equal(buildPage.stages(1).duration, '10 sec');
     assert.equal(buildPage.stages(1).jobs(0).number, '1234.999');
   });

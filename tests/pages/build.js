@@ -56,6 +56,9 @@ export default PageObject.create({
       name: text('h2'),
       duration: text('.stage-duration'),
 
+      isPassed: hasClass('passed', '.stage-header'),
+      isFailed: hasClass('failed', '.stage-header'),
+
       jobs: collection({
         itemScope: '.jobs-item',
 

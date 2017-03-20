@@ -24,5 +24,14 @@ export default Ember.Component.extend({
   }),
 
   jobDurations: Ember.computed.mapBy('jobsProxyLol', 'duration'),
-  duration: Ember.computed.sum('jobDurations')
+  duration: Ember.computed.sum('jobDurations'),
+
+  stageState: Ember.computed('jobsProxyLol.@each.state', function () {
+    // FIXME this needs to handle more states
+    if (this.get('jobsProxyLol').every(job => job.get('state') == 'passed')) {
+      return 'passed';
+    } else {
+      return 'failed';
+    }
+  })
 });

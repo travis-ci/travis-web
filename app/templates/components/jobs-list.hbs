@@ -4,7 +4,7 @@
     <h2 class="section-title">Build Jobs</h2>
   {{else}}
     {{#if stage}}
-      <header class="stage-header">
+      <header class="stage-header {{stageState}}">
         <h2 class="section-title">{{stage.name}}</h2>
 
         <div class="stage-duration">
