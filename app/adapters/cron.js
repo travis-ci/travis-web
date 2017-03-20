@@ -19,7 +19,7 @@ export default V3Adapter.extend({
   query(store, type, query) {
     const repoId = query['repository_id'];
     delete query['repository_id'];
-    const url = `${this.urlPrefix()}/v3/repo/${repoId}/crons`;
+    const url = `${this.urlPrefix()}/repo/${repoId}/crons`;
     return this.ajax(url, 'GET', query);
   }
 

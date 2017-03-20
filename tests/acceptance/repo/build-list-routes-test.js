@@ -42,7 +42,8 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     };
 
     lastBuild.createCommit(Ember.assign({
-      branch: 'successful-cron-branch'
+      branch: 'successful-cron-branch',
+      message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();
 
@@ -121,7 +122,9 @@ test('build history shows, more can be loaded, and a created build gets added an
     assert.equal(build.committer, 'Sara Ahmed');
     assert.equal(build.commitSha, '1234567');
     assert.equal(build.commitDate, 'about a year ago');
+    assert.equal(build.requestIconTitle, 'Triggered by a cron job');
     assert.equal(build.duration, '5 min');
+    assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
 
     assert.ok(page.builds(1).failed, 'expected the second build to have failed');
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
@@ -187,6 +190,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     assert.ok(newBuild.created, 'expected the new build to show as created');
     assert.equal(newBuild.name, 'no-dapl');
     assert.equal(newBuild.message, 'Standing with Standing Rock');
+    assert.equal(newBuild.requestIconTitle, 'Triggered by a push');
 
     const startedData = Object.assign({}, buildEventDataTemplate);
     startedData.build.state = 'started';

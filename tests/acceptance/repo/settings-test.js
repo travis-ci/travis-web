@@ -56,12 +56,16 @@ moduleForAcceptance('Acceptance | repo settings', {
 
     const dailyBranch = server.create('branch', {
       name: 'daily-branch',
-      id: `/v3/repos/${repoId}/branches/daily-branch`
+      id: `/v3/repos/${repoId}/branches/daily-branch`,
+      exists_on_github: true,
+      repository
     });
 
     const weeklyBranch = server.create('branch', {
       name: 'weekly-branch',
-      id: `/v3/repos/${repoId}/branches/weekly-branch`
+      id: `/v3/repos/${repoId}/branches/weekly-branch`,
+      exists_on_github: true,
+      repository
     });
 
     this.dailyCron = server.create('cron', {
@@ -69,8 +73,8 @@ moduleForAcceptance('Acceptance | repo settings', {
       dont_run_if_recent_build_exists: false,
       last_run: moment(),
       next_run: moment().add(1, 'days'),
-      repository_id: repoId,
-      branchId: dailyBranch.id
+      branchId: dailyBranch.id,
+      repository
     });
 
     server.create('cron', {
@@ -78,8 +82,8 @@ moduleForAcceptance('Acceptance | repo settings', {
       dont_run_if_recent_build_exists: true,
       last_run: moment(),
       next_run: moment().add(1, 'weeks'),
-      repository_id: repoId,
-      branchId: weeklyBranch.id
+      branchId: weeklyBranch.id,
+      repository
     });
   }
 });
@@ -197,16 +201,16 @@ test('delete and create environment variables', function (assert) {
     return parsedRequestBody;
   });
 
-  settingsPage.environmentVariableForm.fillName('drafted');
-  settingsPage.environmentVariableForm.fillValue('true');
+  settingsPage.environmentVariableForm.fillName('  drafted');
+  settingsPage.environmentVariableForm.fillValue('  true');
   settingsPage.environmentVariableForm.makePublic();
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables(0).name, 'drafted');
+    assert.equal(settingsPage.environmentVariables(0).name, 'drafted', 'expected leading whitespace to be trimmed');
     assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
     assert.ok(settingsPage.environmentVariables(0).isNewlyCreated, 'expected environment variable to be newly created');
-    assert.equal(settingsPage.environmentVariables(0).value, 'true');
+    assert.equal(settingsPage.environmentVariables(0).value, 'true', 'expected leading whitespace to be trimmed');
 
     assert.deepEqual(requestBodies.pop(), { env_var: {
       id: '1919',
