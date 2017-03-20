@@ -11,6 +11,14 @@ export default function startApp(attrs) {
   // use defaults, but you can override;
   let attributes = Ember.assign({}, config.APP, attrs);
 
+  let clearStorage = (storage) => {
+    storage.removeItem('travis.token');
+    storage.removeItem('trvais.user');
+  };
+
+  clearStorage(localStorage);
+  clearStorage(sessionStorage);
+
   Ember.run(() => {
     application = Application.create(attributes);
     application.setupForTesting();
