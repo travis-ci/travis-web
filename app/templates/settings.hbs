@@ -21,8 +21,8 @@
       <p>Auto Cancellation allows you to only run builds for the latest commits in the queue. This setting can be applied to builds for Branch builds and Pull Request builds separately. Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.</p>
 
       <ul class="settings-list--columns">
-        <li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel pushes" key="auto_cancel_pushes"}}</li>
-        <li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull requests" key="auto_cancel_pull_requests"}}</li>
+        <li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel branch builds" key="auto_cancel_pushes"}}</li>
+        <li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull request builds" key="auto_cancel_pull_requests"}}</li>
       </ul>
     </section>
   {{/if}}
