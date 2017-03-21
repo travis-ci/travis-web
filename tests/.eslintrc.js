@@ -8,7 +8,8 @@ module.exports = {
     server: true,
     signInUser: true,
     withFeature: true,
-    percySnapshot: true
+    percySnapshot: true,
+    waitForElement: true
   },
   rules: {
     'max-len': 0
