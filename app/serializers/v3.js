@@ -33,7 +33,7 @@ export default JSONSerializer.extend({
 
     let relationshipHash = this._super(...arguments);
     if (relationshipHash && relationshipHash['@type']) {
-      relationshipHash.type = relationshipHash['@type'];
+      relationshipHash.type = this.getType(relationshipHash['@type']);
     } else if (relationshipHash && !relationshipHash.type) {
       relationshipHash.type = type;
     }
@@ -41,7 +41,9 @@ export default JSONSerializer.extend({
   },
 
   keyForRelationship(key/* , typeClass, method*/) {
-    if (key && key.underscore) {
+    if (key === 'repo') {
+      return 'repository';
+    } else if (key && key.underscore) {
       return key.underscore();
     } else {
       return key;
@@ -107,13 +109,13 @@ export default JSONSerializer.extend({
     let store = this.store;
 
     if (data.relationships) {
-      Object.keys(data.relationships).forEach(function (key) {
+      Object.keys(data.relationships).forEach((key) => {
         let relationship = data.relationships[key];
-        let process = function (data) {
+        let process = (data) => {
           if (data['@representation'] !== 'standard') {
             return;
           }
-          let type = data['@type'];
+          let type = this.getType(data['@type']);
           let serializer = store.serializerFor(type);
           let modelClass = store.modelFor(type);
           let normalized = serializer.normalize(modelClass, data);
@@ -138,6 +140,10 @@ export default JSONSerializer.extend({
 
   keyForAttribute(key) {
     return Ember.String.underscore(key);
+  },
+
+  getType(type) {
+    return type === 'repository' ? 'repo' : type;
   },
 
   _fixReferences(payload) {
