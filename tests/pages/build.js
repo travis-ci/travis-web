@@ -1,6 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  attribute,
   clickable,
   collection,
   hasClass,
@@ -54,6 +55,7 @@ export default PageObject.create({
 
     item: {
       name: text('h2'),
+      nameEmojiTitle: attribute('title', 'h2 .emoji'),
       duration: text('.stage-duration'),
 
       isPassed: hasClass('passed', '.stage-header'),
