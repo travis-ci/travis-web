@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import jobsListState from 'travis/utils/jobs-list-state';
 
 export default Ember.Component.extend({
   tagName: 'section',
@@ -26,12 +27,8 @@ export default Ember.Component.extend({
   jobDurations: Ember.computed.mapBy('jobsProxyLol', 'duration'),
   duration: Ember.computed.sum('jobDurations'),
 
-  stageState: Ember.computed('jobsProxyLol.@each.state', function () {
-    // FIXME this needs to handle more states
-    if (this.get('jobsProxyLol').every(job => job.get('state') == 'passed')) {
-      return 'passed';
-    } else {
-      return 'failed';
-    }
+  // FIXME it seems unfortunate to have to know the dependent keys here… 🤔
+  stageState: Ember.computed('jobsProxyLol.@each.state', 'jobsProxyLol.@each.isRunning', function () {
+    return jobsListState(this.get('jobsProxyLol'));
   })
 });
