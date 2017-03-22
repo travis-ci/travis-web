@@ -1,8 +1,6 @@
 import get from 'ember-metal/get';
 
 export default function jobsListState(jobs) {
-  // FIXME these states are not all handled
-
   // If all jobs passed, the list passed
   if (jobs.every(job => get(job, 'state') == 'passed')) {
     return 'passed';

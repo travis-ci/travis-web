@@ -83,6 +83,14 @@
   &.failed h2
     color: $brick-red
 
+  &.running, &.not-started
+    h2
+      color: $canary-yellow
+
+  &.errored, &.canceled
+    h2
+      color: $cement-grey
+
   .stage-duration
     @extend .section-title
     width: 11.7em
