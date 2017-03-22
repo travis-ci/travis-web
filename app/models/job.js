@@ -64,14 +64,26 @@ export default Model.extend(DurationCalculations, {
     let config = this.get('_config');
     if (config) {
       return _object.pickBy(config);
-    } else if (this.get('currentState.stateName') !== 'root.loading') {
-      if (this.get('isFetchingConfig')) {
-        return;
-      }
-      this.set('isFetchingConfig', true);
-      return this.reload();
+    } else {
+      let fetchConfig = () => {
+        if (this.getCurrentState() !== 'root.loading') {
+          if (this.get('isFetchingConfig')) {
+            return;
+          }
+          this.set('isFetchingConfig', true);
+          this.reload();
+        } else {
+          Ember.run.later(fetchConfig, 20);
+        }
+      };
+
+      fetchConfig();
     }
   }),
+
+  getCurrentState() {
+    return this.get('currentState.stateName');
+  },
 
   @computed('state')
   isFinished(state) {
