@@ -9,7 +9,7 @@
     {{#if build.isMatrix}}
       {{#if jobsLoaded}}
         {{#if build.stages}}
-          {{#each build.stages as |stage|}}
+          {{#each sortedBuildStages as |stage|}}
             {{jobs-list stage=stage build=build repo=repo}}
           {{/each}}
         {{else}}

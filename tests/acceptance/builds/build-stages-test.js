@@ -17,8 +17,8 @@ test('visiting build with stages', function (assert) {
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
 
-  let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:' });
   let secondStage = build.createStage({ number: 2, name: 'second' });
+  let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:' });
 
   let firstJob = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build, stage: firstStage, startedAt: jobTime, finishedAt: futureTime(30) });
   commit.job = firstJob;
@@ -34,7 +34,7 @@ test('visiting build with stages', function (assert) {
   andThen(function () {
     assert.equal(buildPage.stages().count, 2, 'expected two build stages');
 
-    assert.equal(buildPage.stages(0).name, 'first');
+    assert.equal(buildPage.stages(0).name, 'first', 'expected the stages to be numerically sorted');
     assert.equal(buildPage.stages(0).nameEmojiTitle, 'two_men_holding_hands');
     assert.ok(buildPage.stages(0).isPassed);
     assert.equal(buildPage.stages(0).duration, '1 min 10 sec');
