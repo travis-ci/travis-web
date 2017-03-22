@@ -42,14 +42,11 @@ export default Ember.Component.extend({
     }
   },
 
-  @computed('repo', 'user', 'job.number', 'user.pullPermissions.[]')
+  @computed('repo', 'user', 'user.pullPermissions.[]')
   userHasPullPermissionForRepo(repo, user) {
-    const jobNumber = this.get('job.number');
-
-    if (!jobNumber || jobNumber.indexOf('.') == -1) return false;
-    const [, piece] = jobNumber.split('.');
-
-    return parseInt(piece) % 2 == 0;
+    if (user && repo) {
+      return user.hasPullAccessToRepo(repo);
+    }
   },
 
   @computed('repo', 'user', 'user.pushPermissions.[]')
