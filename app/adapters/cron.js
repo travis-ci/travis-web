@@ -7,7 +7,7 @@ export default V3Adapter.extend({
     const serializer = store.serializerFor(type.modelName);
     serializer.serializeIntoHash(data, type, record, {});
 
-    const url = `${this.urlPrefix()}${data.branch}/cron`;
+    const url = `${this.getHost()}${data.branch}/cron`;
     return this.ajax(url, 'POST', {
       data: {
         dont_run_if_recent_build_exists: data.dont_run_if_recent_build_exists,
