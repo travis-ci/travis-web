@@ -54,4 +54,15 @@ export default RESTAdapter.extend({
     const underscored = Ember.String.underscore(modelName);
     return id ? underscored :  Ember.String.pluralize(underscored);
   },
+
+  // Get the host alone, without a path
+  getHost() {
+    let match = this.host.match(/(https?:\/\/)?([^\/]+)/);
+
+    if (match) {
+      return match[0];
+    } else {
+      return config.apiEndpoint;
+    }
+  }
 });
