@@ -19,7 +19,7 @@ export default TravisRoute.extend({
       this.store.find('job', model);
     }
     repo = this.controllerFor('repo');
-    this.controllerFor('job').set('job', model);
+    controller.set('job', model);
     repo.activate('job');
     buildController = this.controllerFor('build');
     model.get('repo');

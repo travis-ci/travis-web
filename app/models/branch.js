@@ -13,6 +13,9 @@ export default Model.extend({
   repo: belongsTo('repo', { inverse: 'defaultBranch' }),
 
   repoId: Ember.computed('id', function () {
-    return this.get('id').split('/')[3];
+    const match = this.get('id').match(/\/repo\/(\d+)\//);
+    if (match) {
+      return match[1];
+    }
   })
 });

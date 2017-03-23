@@ -70,8 +70,9 @@ export default function () {
     };
   });
 
-  this.get('/v3/repo/:id/crons', function (schema/* , request*/) {
-    return schema.crons.all();
+  this.get('/v3/repo/:repositoryId/crons', function (schema, request) {
+    const { repositoryId } = request.params;
+    return this.serialize(schema.crons.where({ repositoryId }), 'cron');
   });
 
   this.get('/cron/:id');
@@ -109,7 +110,7 @@ export default function () {
     return schema.repositories.find(request.params.id);
   });
 
-  this.get('/v3/repo/:id/branches', function (schema) {
+  this.get('/v3/repo/:repository_id/branches', function (schema) {
     return schema.branches.all();
   });
 

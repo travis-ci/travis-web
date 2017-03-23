@@ -41,11 +41,6 @@ export default JSONSerializer.extend({
     return relationshipHash;
   },
 
-  extractRelationships() {
-    let relationships = this._super(...arguments);
-    return relationships;
-  },
-
   keyForRelationship(key/* , typeClass, method*/) {
     if (key && key.underscore) {
       return key.underscore();

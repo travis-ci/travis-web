@@ -46,7 +46,7 @@
       <p class="text-medium display-inline"><a href="https://github.com/travis-ci/beta-features/issues/1" title="Give your feedback on Crons"  target="_blank">We'd love your feedback</a></p>
 
     <ul class="settings-list--crons">
-      {{#each model.cronJobs.jobs as |cron|}}
+      {{#each cronJobs as |cron|}}
         {{cron-job cron=cron}}
       {{/each}}
     </ul>
@@ -79,10 +79,4 @@
 
   </section>
 {{/if}}
- {{!--  <section class="settings-section">
-    <h2 class="small-title">Deactivate Repository</h2>
-    <p>If you'd no longer like to run this project on Travis CI you can deactivate it now.<br>You will be able to reactivate it in the future if you'd like to.</p>
-    <button class="button-delete" {{action "deactivate"}} type="button">Deactivate Repository</button>
-  </section> --}}
-
 </div>
