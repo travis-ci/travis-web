@@ -115,7 +115,8 @@ export default JSONSerializer.extend({
       Object.keys(data.relationships).forEach(function (key) {
         let relationship = data.relationships[key];
         let process = function (data) {
-          if (data['@representation'] !== 'standard') {
+          // FIXME this is a temporary override to import stages despite being minimal
+          if (key !== 'stages' && data['@representation'] !== 'standard') {
             return;
           }
           let type = data['@type'];

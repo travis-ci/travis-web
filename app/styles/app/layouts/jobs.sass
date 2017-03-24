@@ -62,12 +62,42 @@
   .repo-main-tools
     flex-shrink: 1
     align-items: center
+    width: 27px
 
 .section-title
   font-size: 16px
   color: $cement-grey
   font-weight: 400
   margin: 3rem 0 1rem
+
+.stage .section-title
+  @extend .small-title
+
+.stage .stage-header
+  display: flex
+  justify-content: space-between
+
+  &.passed h2
+    color: $turf-green
+
+  &.failed h2
+    color: $brick-red
+
+  &.running, &.not-started
+    h2
+      color: $canary-yellow
+
+  &.errored, &.canceled
+    h2
+      color: $cement-grey
+
+  .stage-duration
+    @extend .section-title
+    width: 11.7em
+    padding-left: 0.3rem
+
+    svg
+      font-size: 15px
 
 .job-state
   display: inline-block

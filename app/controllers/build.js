@@ -28,5 +28,8 @@ export default Ember.Controller.extend(GithubUrlProperties, {
     if (this.get('sendFaviconStateChanges')) {
       return this.send('faviconStateDidChange', this.get('build.state'));
     }
-  })
+  }),
+
+  buildStagesSort: ['number'],
+  sortedBuildStages: Ember.computed.sort('build.stages', 'buildStagesSort')
 });

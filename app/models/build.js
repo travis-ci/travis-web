@@ -28,6 +28,7 @@ export default Model.extend(DurationCalculations, {
   repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
   commit: belongsTo('commit', { async: true }),
   jobs: hasMany('job', { async: true }),
+  stages: hasMany('stage', { async: false }),
   _config: attr(),
 
   config: Ember.computed('_config', function () {
