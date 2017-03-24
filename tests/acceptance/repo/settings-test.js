@@ -232,7 +232,7 @@ test('delete and create environment variables', function (assert) {
     assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
-    server.delete('/settings/env_vars/:id', () => {}, 404);
+    server.delete('/settings/env_vars/:id', () => {}, 500);
   });
 
   settingsPage.environmentVariables(1).delete();
@@ -240,6 +240,15 @@ test('delete and create environment variables', function (assert) {
   andThen(() => {
     assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
     assert.equal(settingsPage.notification, 'There was an error deleting this environment variable.');
+
+    server.delete('/settings/env_vars/:id', () => {}, 404);
+  });
+
+  settingsPage.environmentVariables(1).delete();
+
+  andThen(() => {
+    assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.notification, 'There was an error deleting this environment variable because it had already been deleted. Try refreshing?');
   });
 });
 
