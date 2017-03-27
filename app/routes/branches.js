@@ -8,6 +8,8 @@ export default TravisRoute.extend({
   tabStates: service(),
 
   model(/* params*/) {
+
+    /*
     var allTheBranches,  options, repoId;
     repoId = this.modelFor('repo').get('id');
     allTheBranches = Ember.ArrayProxy.create();
@@ -38,9 +40,27 @@ export default TravisRoute.extend({
         return response['@pagination'].count;
       })
     });
+
+     */
+    return Ember.RSVP.hash({
+      activeBranches: this.get('store').query('branch', {
+        repository_id: this.modelFor('repo').get('id'),
+        exists_on_github: true
+      }),
+      deletedBranches: this.get('store').query('branch', {
+        repository_id: this.modelFor('repo').get('id'),
+        exists_on_github: false
+      })
+    });
   },
 
   activate() {
     this.controllerFor('repo').activate('branches');
+  },
+
+  actions: {
+    fetchInactive() {
+      console.log('FETCHING, SIR');
+    }
   }
 });

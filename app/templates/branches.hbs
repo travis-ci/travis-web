@@ -1,47 +1,45 @@
-{{#if branchesExist}}
-  <div class="branches">
-    {{#if defaultBranch}}
-      <section class="default-branch">
-        <h2 class="small-title">Default Branch</h2>
-        <ul class="blank-list">
-          {{branch-row branch=defaultBranch}}
-        </ul>
-      </section>
+<div class="branches">
+  {{#if defaultBranch}}
+    <section class="default-branch">
+      <h2 class="small-title">Default Branch</h2>
+      <ul class="blank-list">
+        {{branch-row branch=defaultBranch}}
+      </ul>
+    </section>
+  {{/if}}
+
+  <section class="active-branches">
+    <h2 class="small-title">Active Branches</h2>
+    <p class="helptext">
+      Displaying <span class="branch-current-active">{{activeBranches.length}}</span>
+      of <span class="branch-count-active">{{model.activeBranches.count}}</span>
+      active branches.</p>
+    {{#if model.activeBranches.length}}
+      <ul class="blank-list">
+        {{#each model.activeBranches as |branch|}}
+          {{branch-row branch=branch}}
+        {{/each}}
+      </ul>
+        {{else}}
+      <p>There are no active branches.</p>
     {{/if}}
 
-    <section class="active-branches">
-      <h2 class="small-title">Active Branches</h2>
-      <p class="helptext">
-        Displaying <span class="branch-current-active">{{activeBranches.length}}</span>
-        of <span class="branch-count-active">{{model.activeBranches.count}}</span>
-        active branches.</p>
-      {{#if activeBranches.length}}
-        <ul class="blank-list">
-          {{#each activeBranches as |branch|}}
-            {{branch-row branch=branch}}
-          {{/each}}
-        </ul>
-        {{else}}
-        <p>There are no active branches.</p>
-      {{/if}}
-    </section>
+    <div>Pagination or load more?</div>
+  </section>
 
-    <section class="deleted-branches">
-      <h2 class="small-title">Deleted Branches</h2>
-      <aside class="deleted-branches-notice">
-        <p class="helptext">
-          <span class="deleted-branch-count">{{model.deletedBranchesCount}}</span> branches have been hidden as they were removed from GitHub.
-          <button type="button">Show deleted branches</button></p>
-      </aside>
-      {{#if inactiveBranches.length}}
-        <ul class="blank-list">
-          {{#each inactiveBranches as |branch|}}
-            {{branch-row branch=branch inactive=true}}
-          {{/each}}
-        </ul>
-      {{/if}}
-    </section>
-  </div>
-{{else}}
-  {{no-builds}}
-{{/if}}
+  <section class="deleted-branches">
+    <h2 class="small-title">Deleted Branches</h2>
+    <aside class="deleted-branches-notice">
+      <p class="helptext">
+        <span class="deleted-branch-count">{{model.deletedBranches.length}}</span> branches have been hidden as they were removed from GitHub.
+        <button type="button" class="button" {{action 'fetchInactive'}}>Show deleted branches</button></p>
+    </aside>
+    {{#if inactiveBranches.length}}
+      <ul class="blank-list">
+        {{#each inactiveBranches as |branch|}}
+          {{branch-row branch=branch inactive=true}}
+        {{/each}}
+      </ul>
+    {{/if}}
+  </section>
+</div>

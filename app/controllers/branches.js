@@ -2,16 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   defaultBranch: Ember.computed('model.activeBranches', function () {
-    return this.get('model.activeBranches.branches').filterBy('default_branch')[0];
+    return this.get('model.activeBranches').filterBy('defaultBranch')[0];
   }),
 
   branchesExist: Ember.computed.notEmpty('model.activeBranches'),
-  nonDefaultBranches: Ember.computed.filter('model.activeBranches.branches', function (branch) {
+  nonDefaultBranches: Ember.computed.filter('model.activeBranches', function (branch) {
     return !branch.default_branch;
   }),
 
   activeBranches: Ember.computed('model.activeBranches', function () {
-    const activeBranches = this.get('nonDefaultBranches').filterBy('exists_on_github');
+    const activeBranches = this.get('nonDefaultBranches').filterBy('existsOnGithub');
     return this._sortBranchesByFinished(activeBranches);
   }),
 
