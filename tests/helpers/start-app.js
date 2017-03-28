@@ -6,16 +6,13 @@ import './sign-in-user';
 import './wait-for-element';
 
 export default function startApp(attrs) {
-  let application;
+  let attributes = Ember.merge({}, config.APP);
+  attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
 
-  // use defaults, but you can override;
-  let attributes = Ember.assign({}, config.APP, attrs);
-
-  Ember.run(() => {
-    application = Application.create(attributes);
+  return Ember.run(() => {
+    let application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
+    return application;
   });
-
-  return application;
 }

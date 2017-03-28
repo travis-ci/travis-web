@@ -5,16 +5,18 @@ import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 import initHsBeacon from 'travis/utils/init-hs-beacon';
 
+let App;
+
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
 // This can be set per environment in config/environment.js
 var debuggingEnabled = config.featureFlags['debug-logging'];
 var proVersion = config.featureFlags['pro-version'];
 
-var App = Ember.Application.extend(Ember.Evented, {
+App = Ember.Application.extend(Ember.Evented, {
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
-  Resolver: Resolver,
+  Resolver,
 
   // Configure global logging based on debug feature flag
   LOG_TRANSITIONS: debuggingEnabled,
