@@ -32,7 +32,7 @@ export default Ember.Component.extend({
       lastBuilds.set('isLoading', false);
     } else {
       apiEndpoint = config.apiEndpoint;
-      repoId = this.get('branch.repo.id');
+      repoId = this.get('branch.repoId');
       branchName = this.get('branch.name');
       options = {
         headers: {

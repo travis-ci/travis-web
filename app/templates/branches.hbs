@@ -12,7 +12,7 @@
     <h2 class="small-title">Active Branches</h2>
     <p class="helptext">
       Displaying <span class="branch-current-active">{{activeBranches.length}}</span>
-      of <span class="branch-count-active">{{model.activeBranches.count}}</span>
+      <!-- of <span class="branch-count-active">{{model.activeBranches.count}}</span> -->
       active branches.</p>
     {{#if model.activeBranches.length}}
       <ul class="blank-list">
@@ -23,8 +23,6 @@
         {{else}}
       <p>There are no active branches.</p>
     {{/if}}
-
-    <div>Pagination or load more?</div>
   </section>
 
   <section class="deleted-branches">
