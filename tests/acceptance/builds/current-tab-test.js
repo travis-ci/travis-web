@@ -62,3 +62,19 @@ test('renders most recent repository and most recent build when builds present',
 
   percySnapshot(assert);
 });
+
+test('error message when build jobs array is empty', function (assert) {
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  server.create('branch', {});
+  let build = server.create('build', { number: '5', repository: repo, state: 'passed' });
+  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  build.update('commit', commit);
+
+  currentRepoTab.visit();
+
+  andThen(function () {
+    assert.ok(currentRepoTab.noJobsErrorMessage);
+  });
+
+  percySnapshot(assert);
+});

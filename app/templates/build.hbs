@@ -6,19 +6,22 @@
   {{#if build}}
     {{build-header item=build commit=build.commit repo=repo}}
 
-    {{#if build.isMatrix}}
-      {{#if jobsLoaded}}
-        {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
-        {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
-      {{else}}
-        {{loading-indicator center=true}}
-      {{/if}}
+    {{#if noJobsError}}
+      <p class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
     {{else}}
-
-      {{job-infrastructure-notification job=build.jobs.firstObject}}
-      {{job-tabs job=build.jobs.firstObject repo=repo}}
-
+      {{#if build.isMatrix}}
+        {{#if jobsLoaded}}
+          {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
+          {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
+        {{else}}
+          {{loading-indicator center=true}}
+        {{/if}}
+      {{else}}
+        {{job-infrastructure-notification job=build.jobs.firstObject}}
+        {{job-tabs job=build.jobs.firstObject repo=repo}}
+      {{/if}}
     {{/if}}
+
   {{else}}
     {{no-builds}}
   {{/if}}
