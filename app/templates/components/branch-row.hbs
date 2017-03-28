@@ -24,7 +24,7 @@
     <div class="row-item">
       {{#if branch.lastBuild}}
         {{request-icon event=branch.lastBuild.eventType state=branch.lastBuild.state}}
-        {{#link-to "build" branch.last_build.id}}
+        {{#link-to "build" branch.lastBuild.id}}
           <span class="label-align">#{{branch.lastBuild.number}} {{branch.lastBuild.state}}</span>
         {{/link-to}}
       {{else}}
@@ -60,7 +60,7 @@
   <div class="row-commiter">
     <div class="row-item">
       {{#if branch.lastBuild}}
-        {{user-avatar url=branch.lastBuild.commit.committer.avatarUrl name=branch.lastBuild.commit.committer.name small=true size=18}}
+        {{user-avatar url=branch.lastBuild.commit.committerAvatarUrl name=branch.lastBuild.commit.committerName small=true size=18}}
           <span class="label-align">{{branch.lastBuild.commit.committerName}}</span>
       {{else}}
         <div class="avatar--small"></div><span class="label-align">no commits yet</span>

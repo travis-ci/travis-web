@@ -9,7 +9,6 @@ export default Model.extend({
   externalLinks: service(),
 
   sha: attr(),
-  branch: attr(),
   message: attr(),
   compareUrl: attr(),
   authorName: attr(),
@@ -20,6 +19,7 @@ export default Model.extend({
   committerAvatarUrl: attr(),
   authorAvatarUrl: attr(),
 
+  branch: belongsTo('branch'),
   build: belongsTo('build'),
 
   subject: Ember.computed('message', function () {

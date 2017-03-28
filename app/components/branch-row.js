@@ -9,15 +9,15 @@ export default Ember.Component.extend({
   externalLinks: service(),
 
   tagName: 'li',
-  classNameBindings: ['branch.last_build.state'],
+  classNameBindings: ['branch.lastBuild.state'],
   classNames: ['branch-row', 'row-li'],
   isLoading: false,
   isTriggering: false,
   hasTriggered: false,
 
-  urlGithubCommit: Ember.computed('branch.last_build', function () {
-    let slug = this.get('branch.repository.slug');
-    let commitSha = this.get('branch.last_build.commit.sha');
+  urlGithubCommit: Ember.computed('branch.lastBuild', function () {
+    let slug = this.get('branch.repo.slug');
+    let commitSha = this.get('branch.lastBuild.commit.sha');
     return this.get('externalLinks').githubCommit(slug, commitSha);
   }),
 
@@ -28,11 +28,11 @@ export default Ember.Component.extend({
       isLoading: true,
       count: 0
     });
-    if (!this.get('branch.last_build')) {
+    if (!this.get('branch.lastBuild')) {
       lastBuilds.set('isLoading', false);
     } else {
       apiEndpoint = config.apiEndpoint;
-      repoId = this.get('branch.repository.id');
+      repoId = this.get('branch.repo.id');
       branchName = this.get('branch.name');
       options = {
         headers: {
