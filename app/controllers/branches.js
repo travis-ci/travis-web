@@ -5,23 +5,21 @@ export default Ember.Controller.extend({
     return this.get('model.activeBranches').filterBy('defaultBranch')[0];
   }),
 
-  branchesExist: Ember.computed.notEmpty('model.activeBranches'),
   nonDefaultBranches: Ember.computed.filter('model.activeBranches', function (branch) {
-    return !branch.default_branch;
+    return !branch.get('defaultBranch');
   }),
 
-  activeBranches: Ember.computed('model.activeBranches', function () {
-    const activeBranches = this.get('nonDefaultBranches').filterBy('existsOnGithub');
-    return this._sortBranchesByFinished(activeBranches);
-  }),
+  deletedBranches: {},
 
-  _sortBranchesByFinished(branches) {
-    const unfinished = branches.filter(branch => {
-      return Ember.isNone(Ember.get(branch, 'last_build.finished_at'));
-    });
-    const sortedFinished = branches.filterBy('last_build.finished_at')
-      .sortBy('last_build.finished_at').reverse();
-
-    return unfinished.concat(sortedFinished);
+  actions: {
+    fetchInactive() {
+      this.get('store').query('branch', {
+        repository_id: this.get('defaultBranch.repoId'),
+        exists_on_github: false
+      }).then(function (response) {
+        // debugger
+        this.set('deletedBranches', response.content);
+      });
+    }
   }
 });

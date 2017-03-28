@@ -6,7 +6,8 @@ export default V3Adapter.extend({
     const active = query.exists_on_github;
     delete query.exists_on_github;
     delete query.repository_id;
-    const url = `${this.urlPrefix()}/repo/${repoId}/branches?exists_on_github=${active}&include=build.commit`;
+    const url = `${this.urlPrefix()}/repo/${repoId}/branches
+?exists_on_github=${active}&include=build.commit`;
     return this.ajax(url, 'GET', query);
   },
 
