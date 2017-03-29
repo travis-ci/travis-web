@@ -16,9 +16,11 @@
       active branches.</p>
     {{#if model.activeBranches.length}}
       <ul class="blank-list">
-        {{#each nonDefaultBranches as |branch|}}
+        {{#each model.activeBranches as |branch|}}
           {{branch-row branch=branch}}
         {{/each}}
+
+        <button type="button" {{action 'fetchActive' model.activeBranches.length}}>Load more branches</button>
       </ul>
         {{else}}
       <p>There are no active branches.</p>

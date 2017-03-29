@@ -7,15 +7,24 @@ export default Ember.Controller.extend({
 
   nonDefaultBranches: Ember.computed.filter('model.activeBranches', function (branch) {
     return !branch.get('defaultBranch');
-  }),
+  }).property('model.activeBranches'),
 
   actions: {
     fetchInactive() {
-      let model = this.get('model');
       return this.set('model.deletedBranches', this.get('store').query('branch', {
         repository_id: this.get('defaultBranch.repoId'),
         exists_on_github: false
       }));
+    },
+    fetchActive(offset) {
+      return this.set('model.activeBranches', Ember.merge(
+        this.get('model.activeBranches'),
+        this.get('store').query('branch', {
+          repository_id: this.get('defaultBranch.repoId'),
+          exists_on_github: false,
+          offset: offset
+        }))
+      );
     }
   }
 });
