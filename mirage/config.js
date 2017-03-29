@@ -86,7 +86,7 @@ export default function () {
     let settings = schema.settings.where({ repositoryId: request.params.id });
 
     return {
-      user_settings: settings.models.map(setting => {
+      settings: settings.models.map(setting => {
         return {
           name: setting.attrs.name,
           value: setting.attrs.value
