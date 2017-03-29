@@ -9,17 +9,13 @@ export default Ember.Controller.extend({
     return !branch.get('defaultBranch');
   }),
 
-  deletedBranches: {},
-
   actions: {
     fetchInactive() {
-      this.get('store').query('branch', {
+      let model = this.get('model');
+      return this.set('model.deletedBranches', this.get('store').query('branch', {
         repository_id: this.get('defaultBranch.repoId'),
         exists_on_github: false
-      }).then(function (response) {
-        // debugger
-        this.set('deletedBranches', response.content);
-      });
+      }));
     }
   }
 });

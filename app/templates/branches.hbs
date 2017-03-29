@@ -27,17 +27,20 @@
 
   <section class="deleted-branches">
     <h2 class="small-title">Deleted Branches</h2>
-    <aside class="deleted-branches-notice">
-      <p class="helptext">
-        <span class="deleted-branch-count">{{model.deletedBranchesCount}}</span> branches have been hidden as they were removed from GitHub.</p>
-      <button type="button" class="button" {{action 'fetchInactive'}}>Show deleted branches</button>
-    </aside>
-    {{#if deletedBranches.length}}
+    {{#if model.deletedBranches.length}}
+      <p class="helptext">Displaying <span>{{model.deletedBranches.length}}</span> of <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
       <ul class="blank-list">
-        {{#each deletedBranches as |branch|}}
+        {{#each model.deletedBranches as |branch|}}
           {{branch-row branch=branch inactive=true}}
         {{/each}}
       </ul>
+    {{else}}
+      <aside class="deleted-branches-notice">
+      <p class="helptext">
+        <span class="deleted-branch-count">{{model.deletedBranchesCount}}</span>
+        branches have been hidden as they were removed from GitHub.</p>
+      <button type="button" class="button" {{action 'fetchInactive'}}>Show deleted branches</button>
+    </aside>
     {{/if}}
   </section>
 </div>
