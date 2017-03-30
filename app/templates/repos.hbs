@@ -22,7 +22,7 @@
     {{#if isLoaded}}
       {{repos-list repos=repos selectedRepo=selectedRepo}}
     {{else}}
-      {{loading-indicator center=true}}
+      {{repos-list repos=placeholderRepos}}
     {{/if}}
   </div>
 {{/if}}
