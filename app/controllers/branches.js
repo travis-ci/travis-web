@@ -1,27 +1,28 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  defaultBranch: Ember.computed('model.activeBranches', function () {
-    return this.get('model.activeBranches').filterBy('defaultBranch')[0];
-  }),
+  defaultBranch: Ember.computed.filterBy('model.activeBranches', 'defaultBranch'),
 
+  // I'd like to use rejectBy but it throws an error??
   nonDefaultBranches: Ember.computed.filter('model.activeBranches', function (branch) {
     return !branch.get('defaultBranch');
-  }).property('model.activeBranches'),
+  }),
 
   actions: {
     fetchInactive() {
+      let repoId = this.get('defaultBranch.firstObject.repoId');
       return this.set('model.deletedBranches', this.get('store').query('branch', {
-        repository_id: this.get('defaultBranch.repoId'),
+        repository_id: repoId,
         exists_on_github: false
       }));
     },
     fetchActive(offset) {
+      let repoId = this.get('defaultBranch.firstObject.repoId');
       return this.set('model.activeBranches', Ember.merge(
         this.get('model.activeBranches'),
         this.get('store').query('branch', {
-          repository_id: this.get('defaultBranch.repoId'),
-          exists_on_github: false,
+          repository_id: repoId,
+          exists_on_github: true,
           offset: offset
         }))
       );
