@@ -57,7 +57,7 @@
     "ember-data": "2.11.3",
     "ember-data-filter": "1.13.0",
     "ember-disable-proxy-controllers": "^1.0.1",
-    "ember-export-application-global": "^1.0.5",
+    "ember-export-application-global": "^2.0.0",
     "ember-feature-flags": "3.0.0",
     "ember-inline-svg": "0.1.8",
     "ember-keyboard-shortcuts": "0.3.0",
