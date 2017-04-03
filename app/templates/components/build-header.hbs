@@ -6,7 +6,7 @@
       {{item.pullRequestTitle}}
     {{else}}
       <small class="commit-branch"
-        title={{item.commit.branch}}>{{build.branch.name}}</small>
+        title={{item.commit.branch}}>{{build.branchName}}</small>
       {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
   </h2>
@@ -38,16 +38,12 @@
           {{/if}}
         </li>
       {{/if}}
-      {{#if commit.branch}}
       <li>
         <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
           {{inline-svg 'icon-github' class="icon"}}
-          <span class="label-align inner-underline">Branch {{commit.branch}}</span>
+          <span class="label-align inner-underline">Branch {{build.branchName}}</span>
         </a>
       </li>
-      {{else}}
-        {{loading-indicator}}
-      {{/if}}
     </ul>
 
     <p class="commit-author">

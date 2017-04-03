@@ -2,8 +2,7 @@ import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'ember-data/model';
 import Ember from 'ember';
 import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
-import { filter } from 'ember-computed-decorators';
+import { belongsTo } from 'ember-data/relationships';
 
 const { service } = Ember.inject;
 

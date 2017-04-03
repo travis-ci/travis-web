@@ -13,7 +13,7 @@ var Serializer = V2FallbackSerializer.extend({
   },
 
   normalizeSingleResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
-    if (payload.commit) {
+    if (!payload['@type'] && payload.commit) {
       payload.build.commit = payload.commit;
       delete payload.build.commit_id;
     }

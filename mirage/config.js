@@ -153,15 +153,6 @@ export default function () {
     };
   });
 
-  // this is a hack. our api doesn't even have this
-  // endpoint for either v2/v3. I haven't ever seen us request
-  // this in production, but this implies at the least that
-  // our testing infrastructure is incorrect.
-  this.get('/commits/:id', function (schema, request) {
-    let commit = schema.commits.find(request.params.id);
-    return new Mirage.Response(200, {}, commit.attrs);
-  });
-
   this.get('/jobs/:id', function (schema, request) {
     let job = schema.jobs.find(request.params.id);
     return this.serialize(job, 'v2-job');
