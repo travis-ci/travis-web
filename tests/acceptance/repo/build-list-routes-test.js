@@ -72,7 +72,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       state: 'errored',
       event_type: 'push',
       repository,
-      number: '1869'
+      number: '1869',
       branch: this.branch,
     });
 

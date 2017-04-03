@@ -34,7 +34,7 @@ export default Ember.Controller.extend({
   @computed('model.settings')
   showAutoCancellationSwitches(settings) {
     return settings.hasOwnProperty('auto_cancel_pushes')
-      || settings.hasOwnProperty('auto_cancel_pull_requests');
+           || settings.hasOwnProperty('auto_cancel_pull_requests');
   },
 
   actions: {

@@ -113,7 +113,7 @@ export default function () {
     return schema.branches.all();
   });
 
-  this.post('/settings/env_vars?repository_id=1', function (schema, request) {
+  this.post('/settings/env_vars', function (schema, request) {
     const repositoryId = request.queryParams.repository_id;
     const envVars = schema.envVars.where({ repositoryId: repositoryId });
     const [envVar] = envVars;

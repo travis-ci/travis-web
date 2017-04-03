@@ -19,32 +19,6 @@ test('cancelling build', function (assert) {
   let build = server.create('build', { number: '5', repository: repository, state: 'running', commit: commit });
   let job = server.create('job', { number: '1234.1', repository: repository, state: 'running', build, commit: commit });
 
-  let commit = server.create('commit', {
-    author_email: 'mrt@travis-ci.org',
-    author_name: 'Mr T',
-    committer_email: 'mrt@travis-ci.org',
-    committer_name: 'Mr T',
-    branch: 'acceptance-tests',
-    message: 'This is a message',
-    branch_is_default: true,
-  });
-
-  let build = server.create('build', {
-    number: '5',
-    repository,
-    branch,
-    state: 'running',
-    commit,
-  });
-
-  let job = server.create('job', {
-    number: '1234.1',
-    repository,
-    state: 'running',
-    build,
-    commit,
-  });
-
   server.create('log', {
     id: job.id
   });

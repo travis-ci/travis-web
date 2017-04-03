@@ -28,16 +28,6 @@ const Repo = Model.extend({
   currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
   currentBuildId: Ember.computed.oneWay('currentBuild.id'),
 
-  builds: hasMany('build', { async: false }),
-
-  @filter('builds', build => !build.eventType === 'pull_request') nonPullRequestBuilds: null,
-
-  withLastBuild() {
-    return this.filter(function (repo) {
-      return repo.get('lastBuildId');
-    });
-  },
-
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
     return this.store.recordForId('ssh_key', this.get('id'));
@@ -51,6 +41,44 @@ const Repo = Model.extend({
     }, function (v) {
       return v.get('repo.id') === id;
     });
+  }),
+
+  builds: Ember.computed(function () {
+    var array, builds, id;
+    id = this.get('id');
+    builds = this.store.filter('build', {
+      event_type: ['push', 'api', 'cron'],
+      repository_id: id
+    }, function (b) {
+      let eventTypes = ['push', 'api', 'cron'];
+      return b.get('repo.id') + '' === id + '' && eventTypes.includes(b.get('eventType'));
+    });
+    array = ExpandableRecordArray.create({
+      type: 'build',
+      content: Ember.A([])
+    });
+    array.load(builds);
+    array.observe(builds);
+    return array;
+  }),
+
+  pullRequests: Ember.computed(function () {
+    var array, builds, id;
+    id = this.get('id');
+    builds = this.store.filter('build', {
+      event_type: 'pull_request',
+      repository_id: id
+    }, function (b) {
+      return b.get('repo.id') + '' === id + '' && b.get('eventType') === 'pull_request';
+    });
+    array = ExpandableRecordArray.create({
+      type: 'build',
+      content: Ember.A([])
+    });
+    array.load(builds);
+    id = this.get('id');
+    array.observe(builds);
+    return array;
   }),
 
   crons: Ember.computed(function () {
@@ -74,15 +102,19 @@ const Repo = Model.extend({
 
   branches: Ember.computed(function () {
     var id = this.get('id');
-    return this.store.query('branch', {
+    return this.store.filter('branch', {
       repository_id: id
+    }, function (b) {
+      return b.get('repoId') === id;
     });
   }),
 
   cronJobs: Ember.computed(function () {
-    const id = this.get('id');
-    return this.store.query('cron', {
+    var id = this.get('id');
+    return this.store.filter('cron', {
       repository_id: id
+    }, function (cron) {
+      return cron.get('branch.repoId') === id;
     });
   }),
 
