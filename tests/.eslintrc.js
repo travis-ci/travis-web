@@ -1,8 +1,8 @@
 module.exports = {
   env: {
-    'browser': true,
-    'embertest': true,
-    'qunit': true
+    browser: true,
+    embertest: true,
+    qunit: true
   },
   globals: {
     server: true,
@@ -12,7 +12,6 @@ module.exports = {
     waitForElement: true
   },
   rules: {
-    'max-len': 0,
-    embertest: true
+    'max-len': 0
   }
 };
