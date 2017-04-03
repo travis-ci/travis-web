@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
         repoId: repoId,
         existsOnGithub: false,
         offset: offset
-      }).then( (branches) => {
+      }).then((branches) => {
         this.set('model.deletedBranches', branches);
       });
     },
@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
         repoId: repoId,
         existsOnGithub: true,
         offset: offset
-      }).then( (branches) => {
+      }).then((branches) => {
         this.set('model.activeBranches', Ember.merge(
           alreadyActive,
           branches));
