@@ -33,7 +33,7 @@ export default PageObject.create({
   notification: text('p.flash-message'),
   singleJobLogText: text('.log-body pre'),
 
-  hasNoDebugButton: isHidden('.action-button--debug'),
+  hasNoDebugButton: isHidden('.action-button--debug', { multiple: true }),
 
   requiredJobs: collection({
     scope: '.jobs-list:eq(0)',

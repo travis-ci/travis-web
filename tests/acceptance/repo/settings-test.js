@@ -24,12 +24,8 @@ moduleForAcceptance('Acceptance | repo settings', {
     const repository = server.create('repository', {
       name: 'living-a-feminist-life',
       slug: 'killjoys/living-a-feminist-life',
-
-      // FIXME figure out how to define this more cleanly
-      '@permissions': {
-        'create_cron': true
-      }
     });
+    repository.attrs.permissions.create_cron = true;
 
     repository.createSetting({ name: 'builds_only_with_travis_yml', value: true });
     repository.createSetting({ name: 'build_pushes', value: true });
@@ -221,7 +217,7 @@ test('delete and create environment variables', function (assert) {
     } });
 
     // This will trigger a client-side error
-    server.post('/settings/env_vars', undefined, 403);
+    server.post('/settings/env_vars', {}, 403);
   });
 
   settingsPage.environmentVariableForm.fillName('willFail');
