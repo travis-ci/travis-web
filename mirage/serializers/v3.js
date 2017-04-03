@@ -133,9 +133,8 @@ export default JSONAPISerializer.extend({
 
   serializerFor(type) {
     const serializersMap = {
-      'build': 'build-v3',
       'commit': 'commit-v3',
-      'user': 'user-v3'
+      'user': 'user-v3',
     };
     type = serializersMap[type] || type;
 
