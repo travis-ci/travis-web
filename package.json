@@ -2,7 +2,6 @@
   "name": "travis",
   "version": "0.0.0",
   "description": "Small description for travis goes here",
-  "private": true,
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -13,11 +12,8 @@
     "test": "ember test --reporter dot"
   },
   "repository": "https://github.com/travis-ci/travis-web",
-  "engines": {
-    "node": "6.9.5"
-  },
-  "author": "Travis CI Web Team and Contributors",
   "license": "MIT",
+  "author": "Travis CI Web Team and Contributors",
   "devDependencies": {
     "active-model-adapter": "2.1.1",
     "ansiparse": "0.1.0",
@@ -45,7 +41,7 @@
     "ember-cli-mirage": "0.2.7",
     "ember-cli-page-object": "1.8.0",
     "ember-cli-pretender": "1.0.1",
-    "ember-cli-qunit": "^3.0.1",
+    "ember-cli-qunit": "3.1.0",
     "ember-cli-sass": "6.1.2",
     "ember-cli-sentry": "2.4.3",
     "ember-cli-shims": "^1.0.2",
@@ -54,7 +50,7 @@
     "ember-cli-uglify": "^1.2.0",
     "ember-computed-decorators": "0.3.0",
     "ember-concurrency": "0.8.1",
-    "ember-data": "2.11.3",
+    "ember-data": "2.12.0",
     "ember-data-filter": "1.13.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-exam": "0.6.0",
@@ -69,11 +65,15 @@
     "ember-prism": "0.0.8",
     "ember-qunit-nice-errors": "1.1.1",
     "ember-resolver": "^2.0.3",
-    "ember-source": "2.11.3",
+    "ember-source": "2.12.0",
     "emberx-select": "~3.0.0",
     "glob": "^4.5.3",
-    "loader.js": "^4.0.10",
+    "loader.js": "^4.2.3",
     "morgan": "^1.7.0",
     "visibilityjs": "^1.2.4"
-  }
+  },
+  "engines": {
+    "node": "6.9.5"
+  },
+  "private": true
 }
