@@ -2,7 +2,126 @@ import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('build', 'Unit | Serializer | build', {
   // Specify the other units that are required for this test.
-  needs: ['serializer:build', 'model:commit', 'model:job', 'model:branch']
+  needs: ['serializer:build', 'model:commit', 'model:job', 'model:branch', 'model:repo']
+});
+
+test('it normalizes a V3 singular response with nested jobs and repos', function (assert) {
+  let payload = {
+    '@type': 'build',
+    '@href': '/v3/build/1',
+    '@representation': 'standard',
+    'id': 1,
+    'number': '1',
+    'state': 'passed',
+    'repository': {
+      '@type': 'repository',
+      '@href': '/v3/repo/1',
+      '@representation': 'standard',
+      'id': 1,
+      'name': 'travis-web',
+      'slug': 'travis-ci/travis-web'
+    },
+    'jobs': [
+      {
+        '@type': 'job',
+        '@href': '/v3/job/1',
+        '@representation': 'standard',
+        'id': 1,
+        'number': '1.1',
+        'state': 'passed',
+        'repository': {
+          '@href': '/v3/repo/1'
+        }
+      },
+      {
+        '@type': 'job',
+        '@href': '/v3/job/2',
+        '@representation': 'standard',
+        'id': 2,
+        'number': '1.2',
+        'state': 'passed',
+        'repository': {
+          '@href': '/v3/repo/1'
+        }
+      }
+    ]
+  };
+
+  let store = this.store();
+  let serializer = store.serializerFor('build');
+  let result = serializer.normalizeResponse(store, store.modelFor('build'), payload, 1, 'findRecord');
+  let expectedResult = {
+    'data': {
+      'attributes': {
+        'number': 1,
+        'state': 'passed'
+      },
+      'id': '1',
+      'relationships': {
+        'jobs': {
+          'data': [{
+            '@type': 'job',
+            '@href': '/v3/job/1',
+            '@representation': 'standard',
+            'id': '1',
+            'number': '1.1',
+            'state': 'passed',
+            'repository': {
+              '@href': '/v3/repo/1',
+              'id': 1
+            },
+            'type': 'job'
+          }, {
+            '@type': 'job',
+            '@href': '/v3/job/2',
+            '@representation': 'standard',
+            'id': '2',
+            'number': '1.2',
+            'state': 'passed',
+            'repository': {
+              '@href': '/v3/repo/1',
+              'id': 1
+            },
+            'type': 'job'
+          }]
+        },
+        'repo': {
+          'data': {
+            '@href': '/v3/repo/1',
+            '@representation': 'standard',
+            '@type': 'repository',
+            'id': '1',
+            'name': 'travis-web',
+            'slug': 'travis-ci/travis-web',
+            'type': 'repo'
+          }
+        }
+      },
+      'type': 'build'
+    },
+    'included': [
+      {
+        'attributes': {},
+        'id': '1',
+        'relationships': {},
+        'type': 'repo'
+      },
+      {
+        'attributes': {},
+        'id': '1',
+        'relationships': {},
+        'type': 'job'
+      },
+      {
+        'attributes': {},
+        'id': '2',
+        'relationships': {},
+        'type': 'job'
+      }
+    ]
+  };
+
+  assert.deepEqual(result, expectedResult);
 });
 
 test('it sets "pullRequest" if it is not set', function (assert) {
@@ -19,7 +138,7 @@ test('it sets "pullRequest" if it is not set', function (assert) {
   assert.ok(result.data.attributes.pullRequest);
 });
 
-test('it normalizes the singular response', function (assert) {
+test('it normalizes a V2 singular response', function (assert) {
   QUnit.dump.maxDepth = 10;
   let payload = {
     build: {

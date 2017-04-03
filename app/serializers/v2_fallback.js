@@ -94,6 +94,10 @@ export default V3Serializer.extend({
   },
 
   keyForV2Relationship(key/* , typeClass, method*/) {
-    return key.underscore() + '_id';
+    if (key === 'repo') {
+      return 'repository';
+    } else {
+      return key.underscore() + '_id';
+    }
   }
 });
