@@ -9,23 +9,30 @@ export default Ember.Controller.extend({
   }),
 
   actions: {
-    fetchInactive() {
+    fetchInactive(offset) {
       let repoId = this.get('defaultBranch.firstObject.repoId');
-      return this.set('model.deletedBranches', this.get('store').query('branch', {
-        repository_id: repoId,
-        exists_on_github: false
-      }));
+
+      return this.get('store').query('branch', {
+        repoId: repoId,
+        existsOnGithub: false,
+        offset: offset
+      }).then( (branches) => {
+        this.set('model.deletedBranches', branches);
+      });
     },
     fetchActive(offset) {
       let repoId = this.get('defaultBranch.firstObject.repoId');
-      return this.set('model.activeBranches', Ember.merge(
-        this.get('model.activeBranches'),
-        this.get('store').query('branch', {
-          repository_id: repoId,
-          exists_on_github: true,
-          offset: offset
-        }))
-      );
+      let alreadyActive = this.get('model.activeBranches');
+
+      return this.get('store').query('branch', {
+        repoId: repoId,
+        existsOnGithub: true,
+        offset: offset
+      }).then( (branches) => {
+        this.set('model.activeBranches', Ember.merge(
+          alreadyActive,
+          branches));
+      });
     }
   }
 });

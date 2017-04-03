@@ -2,10 +2,10 @@ import V3Adapter from 'travis/adapters/v3';
 
 export default V3Adapter.extend({
   query(store, type, query) {
-    const repoId = query.repository_id;
-    const active = query.exists_on_github;
+    const repoId = query.repoId;
+    const active = query.existsOnGithub;
     const offset = query.offset || 0;
-    delete query.exists_on_github;
+    delete query.existsOnGithub;
     delete query.repository_id;
 
     const url = `${this.urlPrefix()}/repo/${repoId}/branches

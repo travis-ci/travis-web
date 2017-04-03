@@ -21,10 +21,12 @@
         {{#each nonDefaultBranches as |branch|}}
           {{branch-row branch=branch}}
         {{/each}}
-
-        <button type="button" class="button" {{action 'fetchActive' nonDefaultBranches.length}}>Load more branches</button>
       </ul>
-        {{else}}
+
+      {{#unless pagination.isLast}}
+        <button type="button" class="button" {{action 'fetchActive' nonDefaultBranches.length}}>Load more branches</button>
+      {{/unless}}
+    {{else}}
       <p>There are no active branches.</p>
     {{/if}}
   </section>
@@ -38,12 +40,16 @@
           {{branch-row branch=branch inactive=true}}
         {{/each}}
       </ul>
+
+      {{#unless pagination.isLast}}
+        <button type="button" class="button" {{action 'fetchInactive' model.deletedBranches.length}}>Get more deleted branches</button>
+      {{/unless}}
     {{else}}
       <aside class="deleted-branches-notice">
       <p class="helptext">
         <span class="deleted-branch-count">{{model.deletedBranchesCount}}</span>
         branches have been hidden as they were removed from GitHub.</p>
-      <button type="button" class="button" {{action 'fetchInactive'}}>Show deleted branches</button>
+      <button type="button" class="button" {{action 'fetchInactive' 0}}>Show deleted branches</button>
     </aside>
     {{/if}}
   </section>

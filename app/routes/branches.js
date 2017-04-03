@@ -12,12 +12,12 @@ export default TravisRoute.extend({
     let options = {};
     return Ember.RSVP.hash({
       activeBranches: this.get('store').query('branch', {
-        repository_id: repoId,
-        exists_on_github: true
+        repoId: repoId,
+        existsOnGithub: true
       }),
       deletedBranchesCount:
       Ember.$.ajax(`${config.apiEndpoint}/v3/repo/${repoId}/branches
-?exists_on_gitub=false&limit=1`, options)
+?exists_on_gitub=false&limit=0`, options)
         .then(function (response) {
           return response['@pagination'].count;
         })
