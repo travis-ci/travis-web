@@ -187,9 +187,13 @@ test('view branches', function (assert) {
 test('get deleted branches', function (assert) {
   branchesPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
-  assert.ok(!branchesPage.inactiveBranches.isVisible);
-  assert.equal(branchesPage.inactiveBranches.countNumber, '2');
-  // click on show deleted branches
-  // assert that inactiveBranches is visible
-  // assert that there are inactive branches listed
+  assert.ok(branchesPage.inactiveBranches.countNumber.isVisible);
+  assert.notOk(branchesPage.inactiveBranches.displayCountNuber.isVisible);
+
+  branchesPage.inactiveBranches.cta.click();
+
+  andThen(() => {
+    assert.notOk(branchesPage.inactiveBranches.countNumber.isVisible);
+    assert.ok(branchesPage.inactiveBranches.displayCountNuber.isVisible);
+  });
 });

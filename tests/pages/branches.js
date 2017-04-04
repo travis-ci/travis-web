@@ -59,7 +59,7 @@ export default PageObject.create({
   inactiveBranches: collection({
     scope: '.deleted-branches',
     isVisible: isVisible('.deleted-branches'),
-    countNumber: text('.deleted-branch-count'),
+    countNumber: isVisible('.deleted-branch-count'),
     displayCountNuber: isVisible('.deleted-branches-display-count'),
     itemScope: '.branch-row',
 
