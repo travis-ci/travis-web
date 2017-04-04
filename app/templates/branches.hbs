@@ -34,7 +34,7 @@
   <section class="deleted-branches">
     <h2 class="small-title">Deleted Branches</h2>
     {{#if model.deletedBranches.length}}
-      <p class="helptext">Displaying <span>{{model.deletedBranches.length}}</span> of <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
+      <p class="helptext">Displaying <span class="deleted-branch-display-count">{{model.deletedBranches.length}}</span> of <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
       <ul class="blank-list">
         {{#each model.deletedBranches as |branch|}}
           {{branch-row branch=branch inactive=true}}

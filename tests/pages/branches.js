@@ -52,7 +52,7 @@ export default PageObject.create({
     currentViewNumber: text('.branch-current-active'),
     totalNumber: text('.branch-count-active'),
     itemScope: '.branch-row',
-
+    loadMore: clickable('.active-branches .button'),
     item: branchRowComponent
   }),
 
@@ -60,10 +60,11 @@ export default PageObject.create({
     scope: '.deleted-branches',
     isVisible: isVisible('.deleted-branches'),
     countNumber: text('.deleted-branch-count'),
+    displayCountNuber: isVisible('.deleted-branches-display-count'),
     itemScope: '.branch-row',
 
-    info: text('.deleted-branches .note'),
-    cta: clickable('.deleted-branches .branches-cta'),
+    info: text('.deleted-branches .helptext'),
+    cta: clickable('.deleted-branches .button'),
 
     item: branchRowComponent
   })

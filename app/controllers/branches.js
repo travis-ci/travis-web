@@ -22,16 +22,14 @@ export default Ember.Controller.extend({
     },
     fetchActive(offset) {
       let repoId = this.get('defaultBranch.firstObject.repoId');
-      let alreadyActive = this.get('model.activeBranches');
+      let alreadyActive = this.get('nonDefaultBranches');
 
       return this.get('store').query('branch', {
         repoId: repoId,
         existsOnGithub: true,
         offset: offset
       }).then((branches) => {
-        this.set('model.activeBranches', Ember.merge(
-          alreadyActive,
-          branches));
+        this.set('nonDefaultBranches', alreadyActive.pushObjects(branches.toArray()));
       });
     }
   }
