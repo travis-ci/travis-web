@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import JSONSerializer from 'ember-data/serializers/json';
+import wrapWithArray from 'travis/utils/wrap-with-array';
 
 var traverse = function (object, callback) {
   if (!object) {
@@ -26,6 +27,53 @@ var traverse = function (object, callback) {
 
 export default JSONSerializer.extend({
 
+  extractRelationships(modelClass, resourceHash) {
+    var relationships = {};
+
+    modelClass.eachRelationship((key, relationshipMeta) => {
+      var relationship = null;
+      var relationshipKey = this.keyForRelationship(key, relationshipMeta.kind, 'deserialize');
+
+      if (resourceHash[relationshipKey] !== undefined) {
+        var data = null;
+        var relationshipHash = resourceHash[relationshipKey];
+        if (relationshipMeta.kind === 'belongsTo') {
+          if (relationshipMeta.options.polymorphic) {
+            // extracting a polymorphic belongsTo may need more information
+            // than the type and the hash (which might only be an id) for the
+            // relationship, hence we pass the key, resource and
+            // relationshipMeta too
+            data = this.extractPolymorphicRelationship(relationshipMeta.type, relationshipHash, { key: key, resourceHash: resourceHash, relationshipMeta: relationshipMeta });
+          } else {
+            data = this.extractRelationship(relationshipMeta.type, relationshipHash);
+          }
+        } else if (relationshipMeta.kind === 'hasMany') {
+          if (!Ember.isNone(relationshipHash)) {
+            data = new Array(relationshipHash.length);
+            for (var i = 0, l = relationshipHash.length; i < l; i++) {
+              var item = relationshipHash[i];
+              data[i] = this.extractRelationship(relationshipMeta.type, item);
+            }
+          }
+        }
+        relationship = data;
+      }
+
+      //var linkKey = _this3.keyForLink(key, relationshipMeta.kind);
+      //if (resourceHash.links && resourceHash.links[linkKey] !== undefined) {
+      //  var related = resourceHash.links[linkKey];
+      //  relationship = relationship || {};
+      //  relationship.links = { related: related };
+      //}
+
+      if (relationship) {
+        relationships[key] = relationship;
+      }
+    });
+
+    return relationships;
+  },
+
   extractRelationship(type, hash) {
     if (hash && !hash.id && hash['@href']) {
       hash.id = hash['@href'];
@@ -38,7 +86,9 @@ export default JSONSerializer.extend({
       relationshipHash.type = type;
     }
 
-    return relationshipHash;
+    let modelClass = this.store.modelFor(relationshipHash.type);
+    let serializer = this.store.serializerFor(relationshipHash.type);
+    return serializer.normalize(modelClass, relationshipHash);
   },
 
   keyForRelationship(key/* , typeClass, method*/) {
@@ -102,12 +152,16 @@ export default JSONSerializer.extend({
     return documentHash;
   },
 
-  normalize() {
-    let { data, included } = this._super(...arguments);
-    if (!included) {
-      included = [];
+  normalize(modelClass, resourceHash) {
+    let {data, meta, included} = this._super(...arguments),
+      store = this.store;
+
+    meta     = meta || {};
+    included = included || []
+
+    if (!meta['representation']) {
+      meta.representation = resourceHash['@representation'];
     }
-    let store = this.store;
 
     // if we have relationship data, attempt to include those as sideloaded
     // records by adding them to the included array.
@@ -115,32 +169,24 @@ export default JSONSerializer.extend({
     // work.
     if (data.relationships) {
       Object.keys(data.relationships).forEach((key) => {
-        let relationship = data.relationships[key];
-        let process = (data) => {
-          if (data['@representation'] !== 'standard') {
+        let relationshipHashes = wrapWithArray(data.relationships[key]);
+        relationshipHashes.forEach((relationshipHash) => {
+          let meta = relationshipHash.meta || {};
+          let relationshipIncluded = relationshipHash.included || [];
+
+          if (meta.representation !== 'standard') {
             return;
           }
-          let type = this.getType(data['@type']);
-          let serializer = store.serializerFor(type);
-          let modelClass = store.modelFor(type);
-          let normalized = serializer.normalize(modelClass, data);
-          included.push(normalized.data);
-          if (normalized.included) {
-            normalized.included.forEach(function (item) {
-              included.push(item);
-            });
-          }
-        };
 
-        if (Array.isArray(relationship.data)) {
-          relationship.data.forEach(process);
-        } else if (relationship && relationship.data) {
-          process(relationship.data);
-        }
+          included.push(relationshipHash.data);
+          relationshipIncluded.forEach(function (item) {
+            included.push(item);
+          });
+        });
       });
     }
 
-    return { data, included };
+    return { data, included, meta };
   },
 
   keyForAttribute(key) {
