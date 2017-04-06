@@ -11,16 +11,9 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     let id = this.get('repo.id');
-    let model = this.get('store').recordForId('ssh_key', id);
-
-    if (model) {
-      this.get('store').unloadRecord(model);
-      let typeMap = this.get('store').typeMapFor(model.constructor);
-      let idToRecord = typeMap.idToRecord;
-      delete idToRecord[id];
-    }
-
-    model = this.get('store').createRecord('ssh_key', { id });
+    let store = this.get('store');
+    const model = store.peekRecord('ssh_key', id)
+      || store.createRecord('ssh_key', { id });
 
     return this.set('model', model);
   },
