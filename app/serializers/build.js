@@ -63,6 +63,20 @@ var Serializer = V2FallbackSerializer.extend({
       // value. This line makes V3 payloads also populate pull_request property
       resourceHash['pull_request'] = true;
     }
+    // when we get the commit from V3 we need to put a branch on a commit as the
+    // current commit model expects it
+    if (type && commit && resourceHash.branch && !commit.branch) {
+      let name = resourceHash.branch.name;
+      if (!name) {
+        let match = resourceHash.branch['@href'].match(/\/repo\/.*?\/branch\/(.*)/);
+        if (match) {
+          name = match[1];
+        }
+      }
+      if (name) {
+        commit.branch = name;
+      }
+    }
     if (!type && commit && commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
         commit = resourceHash.commit;

@@ -156,7 +156,7 @@ export default function () {
     let builds;
 
     if (afterNumber) {
-      builds = allBuilds.models.filter(build => build.number < afterNumber);
+      builds = allBuilds.models.filter(build => parseInt(build.number) < parseInt(afterNumber));
     } else if (ids) {
       builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
     } else if (eventType === 'pull_request') {

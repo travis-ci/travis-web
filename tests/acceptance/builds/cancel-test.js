@@ -10,6 +10,7 @@ moduleForAcceptance('Acceptance | builds/cancel', {
 });
 
 test('cancelling build', function (assert) {
+  server.logging = true;
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
   server.create('branch', {});
