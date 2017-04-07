@@ -1,29 +1,7 @@
 import Ember from 'ember';
 import JSONSerializer from 'ember-data/serializers/json';
 import wrapWithArray from 'travis/utils/wrap-with-array';
-
-var traverse = function (object, callback) {
-  if (!object) {
-    return;
-  }
-
-  if (typeof(object) === 'object' && !Ember.isArray(object)) {
-    callback(object);
-  }
-
-  if (Ember.isArray(object)) {
-    for (let item of object) {
-      traverse(item, callback);
-    }
-  } else if (typeof object === 'object') {
-    for (let key in object) {
-      if (object.hasOwnProperty(key)) {
-        let item = object[key];
-        traverse(item, callback);
-      }
-    }
-  }
-};
+import traverse from 'travis/utils/traverse-payload';
 
 // Currently the way we normalize payload is as follows:
 //
