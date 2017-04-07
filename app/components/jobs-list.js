@@ -30,5 +30,22 @@ export default Ember.Component.extend({
   // FIXME it seems unfortunate to have to know the dependent keys here… 🤔
   stageState: Ember.computed('jobsProxyLol.@each.state', 'jobsProxyLol.@each.isRunning', function () {
     return jobsListState(this.get('jobsProxyLol'));
+  }),
+
+  stageStateIcon: Ember.computed('stageState', function () {
+    const stageState = this.get('stageState');
+
+    const icon = {
+      'passed': 'passed',
+      'failed': 'failed',
+      'errored': 'errored',
+      'canceled': 'canceled'
+    }[stageState];
+
+    if (icon) {
+      return `stage-${icon}`;
+    } else {
+      return undefined;
+    }
   })
 });

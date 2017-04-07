@@ -5,7 +5,10 @@
   {{else}}
     {{#if stage}}
       <header class="stage-header {{stageState}}">
-        <h2 class="section-title">{{format-message stage.name}}</h2>
+        <h2 class="section-title">
+          {{#if stageStateIcon}}{{inline-svg stageStateIcon class='icon'}}{{/if}}
+          <span class='name'>{{format-message stage.name}}</span>
+        </h2>
 
         <div class="stage-duration">
           {{inline-svg 'icon-clock' class="icon"}}
