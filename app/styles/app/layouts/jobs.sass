@@ -80,14 +80,11 @@
   &.passed h2
     color: $turf-green
 
-  &.failed h2
-    color: $brick-red
-
-  &.running, &.not-started
+  &.failed, &.errored
     h2
-      color: $canary-yellow
+      color: $brick-red
 
-  &.errored, &.canceled
+  &.canceled
     h2
       color: $cement-grey
 
