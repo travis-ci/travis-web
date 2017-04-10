@@ -82,14 +82,17 @@
 
   &.passed h2
     color: $turf-green
+    +colorSVG($turf-green)
 
   &.failed, &.errored
     h2
       color: $brick-red
+      +colorSVG($brick-red)
 
   &.canceled
     h2
       color: $cement-grey
+      +colorSVG($cement-grey)
 
   .stage-duration
     @extend .section-title
