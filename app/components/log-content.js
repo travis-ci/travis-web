@@ -145,17 +145,16 @@ export default Ember.Component.extend({
     }
   },
 
-  didUpdateAttrs(changes) {
-    this._super(...arguments);
-    if (!changes.oldAttrs) {
-      return;
+  didUpdateAttrs() {
+    let oldJob = this.get('_oldJob');
+    let newJob = this.get('job');
+
+    if (oldJob && (oldJob.get('id') != newJob.get('id'))) {
+      this.teardownLog(oldJob.get('log'));
+      return this.createEngine(newJob.get('log'));
     }
-    let newJobValue = changes.newAttrs.job.value;
-    let oldJobValue = changes.oldAttrs.job.value;
-    if (oldJobValue && newJobValue && newJobValue !== oldJobValue) {
-      this.teardownLog(oldJobValue.get('log'));
-      return this.createEngine(newJobValue.get('log'));
-    }
+
+    this.set('_oldJob', this.get('job'));
   },
 
   unfoldHighlight() {

@@ -11,9 +11,7 @@ moduleForAcceptance('Acceptance | builds/cancel', {
 
 test('cancelling build', function (assert) {
   server.logging = true;
-  let repository =  server.create('repository', {
-    slug: 'travis-ci/travis-web'
-  });
+  let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
   let branch = server.create('branch', { repository, name: 'acceptance-tests', default_branch: true });
   let commit = server.create('commit', { sha: 'abc1111', author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', message: 'This is a message' });

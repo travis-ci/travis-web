@@ -3,8 +3,8 @@ import { moduleForModel, test } from 'ember-qunit';
 moduleForModel('repo', 'Unit | Serializer | repo', {
   // Specify the other units that are required for this test.
   needs: ['serializer:repo', 'serializer:branch', 'serializer:build',
-          'serializer:commit', 'model:commit', 'model:job', 'model:branch',
-          'model:repo', 'model:build']
+    'serializer:commit', 'model:commit', 'model:job', 'model:branch',
+    'model:repo', 'model:build']
 });
 
 test('it includes deep nested relationships in include array', function (assert) {
@@ -54,9 +54,9 @@ test('it includes deep nested relationships in include array', function (assert)
   assert.equal(type, 'repo');
   assert.equal(id, '1');
   assert.equal(attributes.name, 'travis-web');
-  assert.equal(relationships.keys, ['currentBuild', 'defaultBranch']);
+  assert.deepEqual(Object.keys(relationships).sort(), ['currentBuild', 'defaultBranch']);
 
-  let includedRecords = result.included.map(({id, type}) => { return {id, type} });
+  let includedRecords = result.included.map(({ id, type }) => { return { id, type }; });
   let expectedIncludedRecords = [
     { id: '/repo/1/branch/master', type: 'branch' },
     { id: '1', type: 'build' },
