@@ -55,7 +55,7 @@
     "ember-exam": "0.6.2",
     "ember-export-application-global": "^1.0.5",
     "ember-feature-flags": "3.0.0",
-    "ember-inline-svg": "0.1.10",
+    "ember-inline-svg": "0.1.11",
     "ember-inflector": "^1.11.0",
     "ember-keyboard-shortcuts": "0.3.0",
     "ember-load-initializers": "^0.6.3",
