@@ -27,7 +27,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     this.repoId = parseInt(repository.id);
 
-    this.branch = server.create('branch');
+    this.branch = server.create('branch', { name: 'successful-cron-branch' });
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
