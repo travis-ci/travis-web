@@ -125,12 +125,13 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 });
 
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
+  server.logging = true;
   assert.expect(23);
 
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 3, 'expected three non-PR builds');
+    assert.equal(page.builds().count, 5, 'expected five non-PR builds');
 
     const build = page.builds(0);
 
@@ -154,7 +155,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     const olderBuild = this.branch.createBuild({
       event_type: 'push',
       repository: this.repository,
-      number: '1816'
+      number: '1000'
     });
 
     olderBuild.createCommit({
@@ -166,50 +167,6 @@ test('build history shows, more can be loaded, and a created build gets added an
   });
 
   percySnapshot(assert);
-
-  server.get('/repo/:repo_id/builds', function (schema, request) {
-    const { offset } = request.queryParams;
-    if (offset) {
-      // Add another build so the API has more to return
-      const oldestBranch = server.create('branch', { name: 'oldest-build-branch' });
-      const oldestBuild = server.create('build', {
-        event_type: 'push',
-        repositoryId: '1',
-        number: '1816',
-        branch: oldestBranch,
-      });
-
-      oldestBuild.createCommit({
-        sha: 'acab',
-        author_name: 'us',
-        branch: 'oldest-build-branch'
-      });
-
-      oldestBuild.save();
-
-      const build = schema.builds.where({ repositoryId: request.params.repo_id }).models.slice(-1);
-      const builds = {
-        models: build
-      };
-
-      return this.serialize(builds, 'build');
-    } else {
-      let builds = schema.builds.where({ repositoryId: request.params.repo_id });
-
-      builds = builds.filter(build => build.attrs.number);
-
-      if (request.queryParams.sort_by === 'finished_at:desc') {
-        builds = builds.sort((a, b) => {
-          const aBuildNumber = a.attrs.number;
-          const bBuildNumber = b.attrs.number;
-
-          return aBuildNumber > bBuildNumber ? -1 : 1;
-        });
-      }
-
-      return this.serialize(builds, 'build');
-    }
-  });
 
   page.showMoreButton.click();
 
@@ -227,16 +184,16 @@ test('build history shows, more can be loaded, and a created build gets added an
   this.repository.save();
 
   const build = server.create('build', {
-    id: '2016',
+    id: '1915',
     repository: this.repository,
-    number: '2016',
+    number: '1915',
     pull_request: false,
     event_type: 'push',
     branch: branch
   });
 
   const commit = build.createCommit({
-    id: 2016,
+    id: 1915,
     branch: 'no-dapl',
     sha: 'acab',
     message: 'Standing with Standing Rock'

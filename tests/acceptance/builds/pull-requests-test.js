@@ -23,7 +23,7 @@ moduleForAcceptance('Acceptance | builds/pull requests', {
       event_type: 'pull_request',
       pull_request_number: 2010,
       pull_request_title: 'A pull request',
-      repositoryId: repository.id,
+      repository: repository,
       branch: this.branch,
     });
 
@@ -40,8 +40,8 @@ moduleForAcceptance('Acceptance | builds/pull requests', {
       number: '1000.1',
       repositoryId: this.repoId,
       state: 'started',
-      commit_id: pullRequestCommit.id,
-      buildId: pullRequestBuild.id,
+      commit: pullRequestCommit,
+      build: pullRequestBuild,
     });
 
     pullRequestBuild.save();

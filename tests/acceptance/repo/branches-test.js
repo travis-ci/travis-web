@@ -40,7 +40,8 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     let currentBuild = primaryBranch.createBuild({
       state: 'failed',
-      number: '1917'
+      number: '1917',
+      repository
     });
 
     currentBuild.createCommit({
@@ -66,7 +67,7 @@ moduleForAcceptance('Acceptance | repo branches', {
     const twoYearsAgo = new Date();
     twoYearsAgo.setYear(twoYearsAgo.getFullYear() - 2);
 
-    const lastBuild = server.create('build', {
+    const lastBuild = primaryBranch.createBuild({
       state: 'passed',
       number: '1919',
       finished_at: oneYearAgo,

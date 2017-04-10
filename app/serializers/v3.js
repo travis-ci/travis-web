@@ -140,46 +140,6 @@ export default JSONSerializer.extend({
     return relationships;
   },
 
-  extractRelationships(modelClass, resourceHash) {
-    var relationships = {};
-
-    modelClass.eachRelationship((key, relationshipMeta) => {
-      var relationship = null;
-      var relationshipKey = this.keyForRelationship(key, relationshipMeta.kind, 'deserialize');
-
-      if (resourceHash[relationshipKey] !== undefined) {
-        var data = null;
-        var relationshipHash = resourceHash[relationshipKey];
-        if (relationshipMeta.kind === 'belongsTo') {
-          if (relationshipMeta.options.polymorphic) {
-            // extracting a polymorphic belongsTo may need more information
-            // than the type and the hash (which might only be an id) for the
-            // relationship, hence we pass the key, resource and
-            // relationshipMeta too
-            data = this.extractPolymorphicRelationship(relationshipMeta.type, relationshipHash, { key: key, resourceHash: resourceHash, relationshipMeta: relationshipMeta });
-          } else {
-            data = this.extractRelationship(relationshipMeta.type, relationshipHash);
-          }
-        } else if (relationshipMeta.kind === 'hasMany') {
-          if (!Ember.isNone(relationshipHash)) {
-            data = new Array(relationshipHash.length);
-            for (var i = 0, l = relationshipHash.length; i < l; i++) {
-              var item = relationshipHash[i];
-              data[i] = this.extractRelationship(relationshipMeta.type, item);
-            }
-          }
-        }
-        relationship = data;
-      }
-
-      if (relationship) {
-        relationships[key] = relationship;
-      }
-    });
-
-    return relationships;
-  },
-
   extractRelationship(type, hash) {
     if (hash && !hash.id && hash['@href']) {
       hash.id = hash['@href'];
@@ -285,11 +245,10 @@ export default JSONSerializer.extend({
           let meta = relationshipHash.meta || {};
           let relationshipIncluded = relationshipHash.included || [];
 
-          if (meta.representation !== 'standard') {
-            return;
+          if (meta.representation === 'standard') {
+            included.push(relationshipHash.data);
           }
 
-          included.push(relationshipHash.data);
           relationshipIncluded.forEach(function (item) {
             included.push(item);
           });

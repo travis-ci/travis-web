@@ -215,10 +215,14 @@ export default function () {
       builds = builds.filter(build => build.attrs.event_type === 'pull_request');
     }
 
-    if (request.queryParams.sort_by === 'finished_at:desc') {
+    if (!request.queryParams.sort_by) {
       builds = builds.sort((a, b) => {
-        const aBuildNumber = a.attrs.number;
-        const bBuildNumber = b.attrs.number;
+        return parseInt(a.id) > parseInt(b.id) ? -1 : 1;
+      });
+    } else if (request.queryParams.sort_by === 'finished_at:desc') {
+      builds = builds.sort((a, b) => {
+        const aBuildNumber = parseInt(a.attrs.number);
+        const bBuildNumber = parseInt(b.attrs.number);
 
         return aBuildNumber > bBuildNumber ? -1 : 1;
       });
