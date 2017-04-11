@@ -20,7 +20,9 @@
           {{branch-row branch=branch}}
         {{/each}}
       </ul>
-      <button type="button" class="button" onclick={{perform fetchActiveTask  nonDefaultBranches.length}}>Load more branches</button>
+      <button type="button" class="button" onclick={{perform fetchActiveTask  nonDefaultBranches.length}}>
+        {{inline-svg 'icon-seemore' class="icon white"}}
+        <span class="label-align">Load more branches</span></button>
 
       {{#if fetchActiveTask.isRunning}}
         {{loading-indicator}}
@@ -39,14 +41,18 @@
           {{branch-row branch=branch inactive=true}}
         {{/each}}
       </ul>
-      <button type="button" class="button" onclick={{perform fetchInactiveTask model.deletedBranches.length}}>Get more deleted branches</button>
+      <button type="button" class="button" onclick={{perform fetchInactiveTask model.deletedBranches.length}}>
+        {{inline-svg 'icon-seemore' class="icon white"}}
+        <span class="label-align">Get more deleted branches</span></button>
 
     {{else}}
       <aside class="deleted-branches-notice">
       <p class="helptext">
         <span class="deleted-branch-count">{{model.deletedBranchesCount}}</span>
         branches have been hidden as they were removed from GitHub.</p>
-      <button type="button" class="button" onclick={{perform fetchInactiveTask 0}}>Show deleted branches</button>
+      <button type="button" class="button" onclick={{perform fetchInactiveTask 0}}>
+        {{inline-svg 'icon-seemore' class="icon white"}}
+        <span class="label-align">Show deleted branches</span></button>
     </aside>
     {{/if}}
 
