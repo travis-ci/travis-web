@@ -7,19 +7,25 @@
     {{build-header item=build commit=build.commit repo=repo}}
 
     {{#if build.isMatrix}}
+    isMatrix
       {{#if jobsLoaded}}
+      jobsLoaded
         {{#if build.stages}}
+        build.stages
           {{#each sortedBuildStages as |stage|}}
             {{jobs-list stage=stage build=build repo=repo}}
           {{/each}}
         {{else}}
+        no stages
           {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
           {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
         {{/if}}
       {{else}}
+        loading
         {{loading-indicator center=true}}
       {{/if}}
     {{else}}
+    not matrix
 
       {{job-infrastructure-notification job=build.jobs.firstObject}}
       {{job-tabs job=build.jobs.firstObject repo=repo}}
