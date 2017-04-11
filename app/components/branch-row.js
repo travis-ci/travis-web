@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   routing: service('-routing'),
   permissions: service(),
   externalLinks: service(),
+  flashes: service(),
 
   tagName: 'li',
   classNameBindings: ['branch.lastBuild.state'],
@@ -20,10 +21,10 @@ export default Ember.Component.extend({
   }),
 
   getLast5BuildsTask: task(function* (lastBuilds) {
+    let apiEndpoint = config.apiEndpoint;
+    let repoId = this.get('branch.repoId');
+    let branchName = this.get('branch.name');
     try {
-      let apiEndpoint = config.apiEndpoint;
-      let repoId = this.get('branch.repoId');
-      let branchName = this.get('branch.name');
       let options = {
         headers: {
           'Travis-API-Version': '3'
@@ -54,7 +55,8 @@ export default Ember.Component.extend({
         });
       });
     } catch (e) {
-      console.log(e, "ERROR ERROR");
+      this.get('flashes')
+        .error(`There was an error fetching the last five builds of ${branchName}`);
     }
   }),
 
