@@ -11,7 +11,7 @@
   {{/if}}
 
   <section class="active-branches">
-    <h2 class="small-title">Active Branches</h2>
+    <h2 class="small-title" id="active-branches">Active Branches</h2>
     <p class="helptext">
       Displaying <span class="branch-current-active">{{nonDefaultBranches.length}}</span>
       <!-- of <span class="branch-count-active">{{model.activeBranches.count}}</span> -->
@@ -22,17 +22,18 @@
           {{branch-row branch=branch}}
         {{/each}}
       </ul>
+      <button type="button" class="button" {{action 'fetchActive' nonDefaultBranches.length}}>Load more branches</button>
 
-      {{#unless pagination.isLast}}
-        <button type="button" class="button" {{action 'fetchActive' nonDefaultBranches.length}}>Load more branches</button>
-      {{/unless}}
+      {{#if fetchActiveTask.isRunning}}
+        {{loading-indicator}}
+      {{/if}}
     {{else}}
       <p>There are no active branches.</p>
     {{/if}}
   </section>
 
   <section class="deleted-branches">
-    <h2 class="small-title">Deleted Branches</h2>
+    <h2 class="small-title" id="deleted-branches">Deleted Branches</h2>
     {{#if model.deletedBranches.length}}
       <p class="helptext">Displaying <span class="deleted-branch-display-count">{{model.deletedBranches.length}}</span> of <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
       <ul class="blank-list">
@@ -40,10 +41,8 @@
           {{branch-row branch=branch inactive=true}}
         {{/each}}
       </ul>
+      <button type="button" class="button" {{action 'fetchInactive' model.deletedBranches.length}}>Get more deleted branches</button>
 
-      {{#unless pagination.isLast}}
-        <button type="button" class="button" {{action 'fetchInactive' model.deletedBranches.length}}>Get more deleted branches</button>
-      {{/unless}}
     {{else}}
       <aside class="deleted-branches-notice">
       <p class="helptext">
@@ -51,6 +50,10 @@
         branches have been hidden as they were removed from GitHub.</p>
       <button type="button" class="button" {{action 'fetchInactive' 0}}>Show deleted branches</button>
     </aside>
+    {{/if}}
+
+    {{#if fetchInactiveTask.isRunning}}
+      {{loading-indicator}}
     {{/if}}
   </section>
 </div>
