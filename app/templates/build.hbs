@@ -13,6 +13,7 @@
         {{#if build.stages}}
         build.stages
           {{#each sortedBuildStages as |stage|}}
+          a stage!
             {{jobs-list stage=stage build=build repo=repo}}
           {{/each}}
         {{else}}
