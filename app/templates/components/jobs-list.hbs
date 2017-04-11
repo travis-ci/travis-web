@@ -1,11 +1,9 @@
-jobsProxyLolLength: {{jobsProxyLol.length}}
 {{#if jobsProxyLol.length}}
-well I should exist then amirite
+
   {{#if required}}
     <h2 class="section-title">Build Jobs</h2>
   {{else}}
     {{#if stage}}
-    i have a stage! State? {{stageState}}
       <header class="stage-header {{stageState}}">
         <h2 class="section-title">
           {{#if stageStateIconREMOVEME}}{{inline-svg stageStateIcon class='icon'}}{{/if}}
