@@ -98,6 +98,29 @@ export default function () {
     return this.serialize(caches, 'v2');
   });
 
+  this.patch('/settings/ssh_key/:repository_id', function (schema, request) {
+    const sshKeys = schema.sshKeys.where({ repositoryId: request.queryParams.repository_id });
+    const [sshKey] = sshKeys.models;
+    if (sshKey) {
+      return {
+        ssh_key: {
+          id: sshKey.id,
+          description: sshKey.description,
+          value: sshKey.value,
+        },
+      };
+    } else {
+      const created = server.create('ssh_key', request.params);
+      return {
+        ssh_key: {
+          id: created.id,
+          description: created.description,
+          value: created.value,
+        }
+      };
+    }
+  });
+
   this.post('/settings/env_vars', function (schema, request) {
     const envVar = server.create('env_var', request.params);
     return {
