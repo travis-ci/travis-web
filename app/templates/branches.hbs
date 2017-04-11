@@ -13,9 +13,7 @@
   <section class="active-branches">
     <h2 class="small-title" id="active-branches">Active Branches</h2>
     <p class="helptext">
-      Displaying <span class="branch-current-active">{{nonDefaultBranches.length}}</span>
-      <!-- of <span class="branch-count-active">{{model.activeBranches.count}}</span> -->
-      active branches.</p>
+      Displaying <span class="active-branch-display-count">{{nonDefaultBranches.length}}</span> of <span>`the total number we get from pagination`</span> active branches.</p>
     {{#if nonDefaultBranches.length}}
       <ul class="blank-list">
         {{#each nonDefaultBranches as |branch|}}
