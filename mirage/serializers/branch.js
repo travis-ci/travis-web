@@ -1,58 +1,35 @@
-import { Serializer } from 'ember-cli-mirage';
+import V3Serializer from './v3';
 
-export default Serializer.extend({
-  serialize(object, request) {
-    if (object.attrs) {
-      return this.serializeSingle(object, request);
+export default V3Serializer.extend({
+  serializeSingle(branch) {
+    const builds = branch.builds;
+
+    if (!branch.lastBuild && builds && builds.models.length) {
+      branch.lastBuild = builds.models[builds.models.length - 1];
     }
-    return {
-      '@type': 'branches',
-      '@href': `/repo/${request.params.repository_id}/branches`,
-      '@representation': 'standard',
-      '@pagination': {
-        count: object.length
-      },
-      branches: object.models.map(branch => this.serializeSingle(branch, request)),
-    };
+
+    return V3Serializer.prototype.serializeSingle.apply(this, arguments);
   },
 
-  serializeSingle(branch, request) {
+  hrefForSingle(type, model, request) {
+    // TODO: do we need to try request? it seems like branch should always
+    // belong to a repository
     let repositoryId = request.params.repository_id ||
       request.params.repo_id ||
-      (branch.repository && branch.repository.id);
+      (model.repository && model.repository.id);
 
-    let {
-      name,
-      default_branch,
-      exists_on_github
-    } = branch.attrs;
-
-    let response = {
-      '@type': 'branch',
-      '@href': `/repo/${repositoryId}/branch/${name}`,
-      '@representation': 'standard',
-      name,
-      default_branch,
-      exists_on_github,
-    };
-
-    const { builds } = branch;
-
-    const { include } = request.queryParams;
-
-    if (include && !include.includes('build.branch')) {
-      if (builds && builds.models.length) {
-        const lastBuild = builds.models[builds.models.length - 1];
-
-        response.last_build = this.serializerFor('build').serialize(lastBuild, request);
-      }
-    }
-
-    if (branch.repository) {
-      const repositorySerializer = this.serializerFor('repository');
-      response.repository = repositorySerializer.serialize(branch.repository, request);
-    }
-
-    return response;
+    return `/repo/${repositoryId}/branch/${model.attrs.name}`;
   },
+
+  hrefForCollection(type, collection, request) {
+    let repositoryId = request.params.repository_id ||
+                       (collection.models.length && collection.models[0].repository.id);
+
+    return `/repo/${repositoryId}/branches`;
+  },
+
+  normalizeId() {
+    // branches don't have id in our API
+    return null;
+  }
 });

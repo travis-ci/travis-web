@@ -1,4 +1,6 @@
+import Ember from 'ember';
 import V3Serializer from 'travis/serializers/v3';
+import wrapWithArray from 'travis/utils/wrap-with-array';
 
 export default V3Serializer.extend({
 
@@ -13,8 +15,8 @@ export default V3Serializer.extend({
         let relationship = null;
         let relationshipKey = this.keyForV2Relationship(key, relationshipMeta.kind, 'deserialize');
         let alternativeRelationshipKey = key.underscore();
-        let hashWithAltRelKey = resourceHash.hasOwnProperty(alternativeRelationshipKey);
-        let hashWithRelKey = resourceHash.hasOwnProperty(relationshipKey);
+        let hashWithAltRelKey = resourceHash[alternativeRelationshipKey];
+        let hashWithRelKey = resourceHash[relationshipKey];
 
         if (hashWithAltRelKey || hashWithRelKey) {
           let data = null;
@@ -27,7 +29,7 @@ export default V3Serializer.extend({
               return this.extractRelationship(relationshipMeta.type, item);
             });
           }
-          relationship = { data };
+          relationship = data;
         }
 
         if (relationship) {
@@ -58,33 +60,37 @@ export default V3Serializer.extend({
       if (!included) {
         included = [];
       }
-      let store = this.store;
 
       if (data.relationships) {
-        Object.keys(data.relationships).forEach(function (key) {
+        Object.keys(data.relationships).forEach((key) => {
           let relationship = data.relationships[key];
-          let process = function (data) {
-            let withOnlyIdAndType = Object.keys(data).sort() + '' !== 'id,type';
-            let branchWithHref = data['@href'] && data.type === 'branch';
-            if (withOnlyIdAndType || branchWithHref) {
-              // no need to add records if they have only id and type
-              let type = key === 'defaultBranch' ? 'branch' : key.singularize();
-              let serializer = store.serializerFor(type);
-              let modelClass = store.modelFor(type);
-              let normalized = serializer.normalize(modelClass, data);
-              included.push(normalized.data);
-              if (normalized.included) {
-                normalized.included.forEach(function (item) {
-                  included.push(item);
-                });
-              }
-            }
-          };
+          let relationshipHashes = wrapWithArray(relationship);
 
-          if (Array.isArray(relationship.data)) {
-            relationship.data.forEach(process);
-          } else if (relationship && relationship.data) {
-            process(relationship.data);
+          relationshipHashes.forEach((relationshipHash) => {
+            let relationshipIncluded = relationshipHash.included || [];
+
+            if (Object.keys(relationshipHash.data.attributes || {}).length === 0) {
+              return;
+            }
+
+            included.push(relationshipHash.data);
+            relationshipIncluded.forEach(function (item) {
+              included.push(item);
+            });
+          });
+
+          if (Ember.isArray(relationship)) {
+            data.relationships[key] = {
+              data: relationship.map(({ data }) => {
+                return { id: data.id, type: data.type };
+              })
+            };
+          } else {
+            data.relationships[key] = {
+              data: {
+                id: relationship.data.id, type: relationship.data.type
+              }
+            };
           }
         });
       }
@@ -94,6 +100,10 @@ export default V3Serializer.extend({
   },
 
   keyForV2Relationship(key/* , typeClass, method*/) {
-    return key.underscore() + '_id';
+    if (key === 'repo') {
+      return 'repository';
+    } else {
+      return key.underscore() + '_id';
+    }
   }
 });

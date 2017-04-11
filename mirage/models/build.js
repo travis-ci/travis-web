@@ -2,7 +2,7 @@ import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
   repository: belongsTo('repository'),
-  commit: belongsTo('commit'),
+  commit: belongsTo('commit', { inverseOf: 'build' }),
   jobs: hasMany('job'),
-  branches: hasMany('branch', { inverseOf: 'branch' })
+  branch: belongsTo('branch', { inverseOf: 'lastBuild' }),
 });

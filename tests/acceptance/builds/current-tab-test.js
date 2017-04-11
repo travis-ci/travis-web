@@ -23,14 +23,13 @@ test('renders most recent repository without builds', function (assert) {
 });
 
 test('renders most recent repository and most recent build when builds present', function (assert) {
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
-  server.create('branch', {});
-  let build = server.create('build', { number: '5', repository: repo, state: 'passed' });
+  const branch = server.create('branch', { name: 'acceptance-tests' });
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build_id: build.id, buildId: build.id, commit_id: commit.id, config: { language: 'Hello' } });
+  let build = server.create('build', { number: '5', state: 'passed', repository, branch, commit });
+  let job = server.create('job', { number: '1234.1', state: 'passed', build, commit, repository, config: { language: 'Hello' } });
 
-  build.update('commit', commit);
   commit.update('build', build);
   commit.update('job', job);
 
@@ -64,11 +63,10 @@ test('renders most recent repository and most recent build when builds present',
 });
 
 test('error message when build jobs array is empty', function (assert) {
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  server.create('branch', {});
-  let build = server.create('build', { number: '5', repository: repo, state: 'passed' });
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  build.update('commit', commit);
+  let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  const branch = server.create('branch', { name: 'accenptance-tests' });
+  let build = server.create('build', { number: '5', state: 'passed', repository, branch });
+  build.createCommit({ author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
 
   currentRepoTab.visit();
 

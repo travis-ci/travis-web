@@ -4,11 +4,9 @@ export default Ember.Component.extend({
   log: Ember.computed.alias('job.log'),
   classNames: ['job-log'],
 
-  didReceiveAttrs(options) {
-    this._super(...arguments);
-
-    let oldJob = options.oldAttrs && options.oldAttrs.job && options.oldAttrs.job.value,
-      newJob = options.newAttrs && options.newAttrs.job && options.newAttrs.job.value;
+  didReceiveAttrs() {
+    let oldJob = this.get('_oldJob');
+    let newJob = this.get('job');
 
     if (newJob !== oldJob) {
       if (newJob) {
@@ -19,6 +17,8 @@ export default Ember.Component.extend({
         this.teardownLog(oldJob);
       }
     }
+
+    this.set('_oldJob', this.get('job'));
   },
 
   teardownLog(job) {

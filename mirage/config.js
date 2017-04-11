@@ -11,7 +11,7 @@ export default function () {
   });
 
   this.get('/hooks', function ({ hooks }, { queryParams: { owner_name } }) {
-    return this.serialize(hooks.where({ owner_name }), 'v2');
+    return this.serialize(hooks.where({ owner_name }), 'hook');
   });
 
   this.put('/hooks/:id', (schema, request) => {
@@ -69,9 +69,7 @@ export default function () {
       let slug = request.params.slug_or_id;
       let repos = schema.repositories.where({ slug: decodeURIComponent(slug) });
 
-      return {
-        repo: repos.models[0].attrs
-      };
+      return repos.models[0];
     }
   });
 
@@ -158,19 +156,27 @@ export default function () {
     let builds;
 
     if (afterNumber) {
-      builds = allBuilds.models.filter(build => build.number < afterNumber);
+      builds = allBuilds.models.filter(build => parseInt(build.number) < parseInt(afterNumber));
     } else if (ids) {
       builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
     } else if (eventType === 'pull_request') {
       builds = allBuilds.models;
     } else {
       // This forces the Show more button to show in the build history test
-      builds = allBuilds.models.slice(0, 3);
+      builds = allBuilds.models.slice(0, 3).sort((a, b) => {
+        const aBuildNumber = a.attrs.number;
+        const bBuildNumber = b.attrs.number;
+
+        return aBuildNumber > bBuildNumber ? -1 : 1;
+      });
     }
 
     return { builds: builds.map(build => {
       if (build.commit) {
         build.attrs.commit_id = build.commit.id;
+      }
+      if (!build.attrs.repository_id) {
+        build.attrs.repository_id = build.repository.id;
       }
 
       if (build.jobs) {
@@ -190,6 +196,7 @@ export default function () {
 
     if (build.commit) {
       response.commit = build.commit.attrs;
+      response.build.commit_id = build.commit.id;
     }
 
     return response;

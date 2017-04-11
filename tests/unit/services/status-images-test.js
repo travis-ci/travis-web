@@ -8,6 +8,7 @@ const authServiceStub = Ember.Service.extend({
 });
 
 moduleFor('service:status-images', 'Unit | Service | status images', {
+  needs: ['service:features'],
   beforeEach() {
     this.register('service:auth', authServiceStub);
     this.inject.service('auth');
