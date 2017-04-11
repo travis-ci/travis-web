@@ -35,7 +35,7 @@ export default Ember.Component.extend({
         const branchLink = `<a href='${branchURL}'><code>${branchName}</code></a>`;
 
         return Ember.String.htmlSafe(`Test deployment ${branchLink}`);
-      } else if (hostname.indexOf('build-stages-beta') > 0) {
+      } else if (hostname.indexOf('build-stages-beta') >= 0) {
         // FIXME remove this?
         return 'Build Stages beta';
       } else {
