@@ -15,6 +15,10 @@ export default Ember.Component.extend({
   }),
 
   jobsProxyLol: Ember.computed('build.jobs', 'jobs', function () {
+    if (!window.lists) {
+      window.lists = [];
+    }
+    window.lists.push(this);
     const stage = this.get('stage');
 
     if (stage) {
