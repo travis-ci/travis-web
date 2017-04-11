@@ -22,11 +22,20 @@
       padding-left: 1.6em
       margin-bottom: 0
 
+      @at-root .pr-row.placeholder .row-committer .label-align
+        color: $pebble-grey
+        background-color: $pebble-grey
+
     .build-info
       display: flex
       flex-flow: row wrap
       align-items: baseline
       padding-left: 0.4em
+
+      // FIXME 🤔
+      @at-root .pr-row.placeholder .build-info a
+        color: $pebble-grey
+        background-color: $pebble-grey
 
     .row-branch
       flex: 0 0 30%
@@ -60,3 +69,8 @@
     .row-item.actions
       overflow: visible
       transform: translate(0, -3px)
+
+  &.placeholder
+    span.inner-underline, .row-commit .label-align
+      color: $pebble-grey
+      background-color: $pebble-grey

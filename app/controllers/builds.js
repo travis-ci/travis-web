@@ -12,6 +12,26 @@ export default Ember.Controller.extend({
   isLoaded: alias('model.isLoaded'),
   isLoading: alias('model.isLoading'),
 
+  placeholderBuilds: Ember.computed(() => {
+    const builds = [];
+
+    for (let i = 0; i < 15; i++) {
+      builds.push({
+        id: '1919',
+        number: 'XXXXXX',
+        state: 'xxx',
+        placeholder: true,
+        commit: {
+          branch: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+          authorName: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+          sha: 'aaaaaaaaaaaaaaaaaa'
+        }
+      });
+    }
+
+    return builds;
+  }),
+
   showMore() {
     var id, number, type;
     id = this.get('repo.id');

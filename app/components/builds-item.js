@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   externalLinks: service(),
 
   tagName: 'li',
-  classNameBindings: ['build.state'],
+  classNameBindings: ['build.state', 'build.placeholder:placeholder'],
   classNames: ['row-li', 'pr-row'],
 
   @computed('build.repo.slug', 'build.commit.sha')
