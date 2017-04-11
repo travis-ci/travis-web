@@ -98,6 +98,18 @@ export default function () {
     return this.serialize(caches, 'v2');
   });
 
+  this.post('/settings/env_vars', function (schema, request) {
+    const envVar = server.create('env_var', request.params);
+    return {
+      env_var: {
+        id: envVar.id,
+        name: envVar.name,
+        public: envVar.public,
+        repository_id: request.params.repository_id,
+      },
+    };
+  });
+
   this.get('/settings/env_vars', function (schema, request) {
     const envVars = schema.envVars.where({ repositoryId: request.queryParams.repository_id });
 
