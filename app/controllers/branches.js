@@ -38,14 +38,5 @@ export default Ember.Controller.extend({
     }).then((branches) => {
       this.set('nonDefaultBranches', alreadyActive.pushObjects(branches.toArray()));
     });
-  }),
-
-  actions: {
-    fetchInactive(offset) {
-      this.get('fetchInactiveTask').perform(offset);
-    },
-    fetchActive(offset) {
-      this.get('fetchActiveTask').perform(offset);
-    }
-  }
+  })
 });

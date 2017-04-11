@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import { task } from 'ember-concurrency';
 
 const { service } = Ember.inject;
 
@@ -11,9 +12,6 @@ export default Ember.Component.extend({
   tagName: 'li',
   classNameBindings: ['branch.lastBuild.state'],
   classNames: ['branch-row', 'row-li'],
-  isLoading: false,
-  isTriggering: false,
-  hasTriggered: false,
 
   urlGithubCommit: Ember.computed('branch.lastBuild', function () {
     let slug = this.get('branch.repo.slug');
@@ -21,20 +19,12 @@ export default Ember.Component.extend({
     return this.get('externalLinks').githubCommit(slug, commitSha);
   }),
 
-  getLast5Builds: Ember.computed(function () {
-    let apiEndpoint, branchName, lastBuilds, options, repoId;
-    lastBuilds = Ember.ArrayProxy.create({
-      content: [{}, {}, {}, {}, {}],
-      isLoading: true,
-      count: 0
-    });
-    if (!this.get('branch.lastBuild')) {
-      lastBuilds.set('isLoading', false);
-    } else {
-      apiEndpoint = config.apiEndpoint;
-      repoId = this.get('branch.repoId');
-      branchName = this.get('branch.name');
-      options = {
+  getLast5BuildsTask: task(function* (lastBuilds) {
+    try {
+      let apiEndpoint = config.apiEndpoint;
+      let repoId = this.get('branch.repoId');
+      let branchName = this.get('branch.name');
+      let options = {
         headers: {
           'Travis-API-Version': '3'
         }
@@ -46,7 +36,7 @@ export default Ember.Component.extend({
       let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
       let url = `${path}${params}`;
 
-      Ember.$.ajax(url, options).then(response => {
+      yield Ember.$.ajax(url, options).then(response => {
         let array, i, ref;
         array = response.builds.map(build => Ember.Object.create(build));
         // TODO: Clean this up, all we want to do is have 5 elements no matter
@@ -63,7 +53,18 @@ export default Ember.Component.extend({
           lastBuilds.set('isLoading', false);
         });
       });
+    } catch (e) {
+      console.log(e, "ERROR ERROR");
     }
+  }),
+
+  last5Builds: Ember.computed(function () {
+    let lastBuilds = Ember.ArrayProxy.create({
+      content: [{}, {}, {}, {}, {}],
+      count: 0,
+      isLoading: true
+    });
+    this.get('getLast5BuildsTask').perform(lastBuilds);
     return lastBuilds;
   }),
 

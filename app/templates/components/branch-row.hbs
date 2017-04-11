@@ -8,10 +8,10 @@
       {{inline-svg 'icon-builds' class="icon"}}
     <span class="label-align">
     {{#if branch.lastBuild}}
-      {{#if getLast5Builds.isLoading}}
+      {{#if last5Builds.isLoading}}
         {{loading-indicator inline=true}}
       {{else}}
-        {{getLast5Builds.count}} builds
+        {{last5Builds.count}} builds
       {{/if}}
     {{else}}
       0 builds
@@ -70,10 +70,10 @@
 </div>
 <div class="one-line is-relative">
   <ul class="build-tiles">
-  {{#if getLast5Builds.isLoading}}
+  {{#if last5Builds.isLoading}}
     {{loading-indicator center=true}}
   {{else}}
-    {{#each getLast5Builds.content as |buildTile|}}
+    {{#each last5Builds.content as |buildTile|}}
       {{build-tile build=buildTile}}
     {{/each}}
   {{/if}}
