@@ -1,6 +1,4 @@
-<button type="button" class="no-button close" {{action "close"}} title="Close popup">
-    {{svg-jar 'icon-failed'}}</button>
-<h3 class="small-title popup-title">Status Image</h3>
+<h3 class="h3--teal">Status Image</h3>
 <div class="form-pair">
   <label class="form-label">Branch</label>
   {{#if branches.isLoaded}}
@@ -25,3 +23,5 @@
   </label>
   {{status-image-input value=statusString class="url" rows=3}}
 </div>
+
+<button trype="button" title="Close modal" class="modal-close pointer" {{action 'toggleStatusImageModal'}}>{{svg-jar 'icon-failed' class="icon"}}</button>

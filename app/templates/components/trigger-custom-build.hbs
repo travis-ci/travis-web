@@ -1,0 +1,32 @@
+<h2 class="h3--teal">Trigger a custom build
+<a href="https://github.com/travis-ci/beta-features/issues/12" title="Give your feedback on custom build trigger"  target="_blank" class="badge">Beta Feature</a></h2>
+<p>Custom builds exist only on Travis CI and will not appear in your Git history.</p>
+
+<div class="form-elem">
+  <label for="trigger-build-branches" class="form-label">Select a branch</label>
+  {{#x-select id="trigger-build-branches" value=triggerBuildBranch on-change=(action (mut triggerBuildBranch)) as |xs|}}
+    {{#each repo.branches as |branch|}}
+      {{#xs.option value=branch.name}}{{branch.name}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+</div>
+
+<div class="form-elem">
+  <label for="trigger-build-message" class="form-label">Custom commit message</label>
+  {{input value=triggerBuildMessage on-change=(action (mut triggerBuildMessage)) placeholder="Commit message" id="trigger-build-message"}}
+</div>
+
+<div class="form-elem {{if jsonError 'form-error'}}">
+  <label for="trigger-build-config" class="form-label display-inline">Custom config</label><p class="form-helptext display-inline m-l-s">Enter config as YAML</p>
+  {{textarea value=triggerBuildConfig on-change=(action (mut triggerBuildConfig)) placeholder="script: echo 'Hello, World'" id="trigger-build-config"}}
+</div>
+
+<div class="form-elem">
+  {{#if isTriggering}}
+    {{loading-indicator}}
+  {{else}}
+    <button onclick={{perform sendTriggerRequest}} type="button" class="trigger-build-submit {{if jsonError 'button inactive' 'button--blue'}}" title="Trigger custom build with your settings">Trigger custom build</button>
+  {{/if}}
+</div>
+
+<button trype="button" title="Close modal" class="modal-close pointer" {{action 'toggleTriggerBuildModal'}}>{{svg-jar 'icon-failed' class="icon"}}</button>

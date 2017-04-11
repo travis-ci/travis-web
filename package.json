@@ -60,6 +60,7 @@
     "ember-inflector": "^2.0.0",
     "ember-keyboard-shortcuts": "0.3.0",
     "ember-load-initializers": "1.0.0",
+    "ember-modal-dialog": "^2.2.0",
     "ember-percy": "1.2.13",
     "ember-prism": "0.1.0",
     "ember-qunit-nice-errors": "1.1.2",
@@ -75,7 +76,8 @@
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
     "morgan": "1.8.2",
-    "visibilityjs": "^1.2.4"
+    "visibilityjs": "^1.2.4",
+    "yamljs": "^0.3.0"
   },
   "engines": {
     "node": "6.9.5"

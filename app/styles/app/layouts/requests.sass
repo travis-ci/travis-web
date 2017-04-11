@@ -1,4 +1,6 @@
 =requestFadeOut($status, $color)
+  &.highlighted.#{$status}
+    box-shadow: 0px 0px 3px 3px $color
   &:hover
     padding-left: .87em
   @media #{$medium-up}
@@ -17,10 +19,12 @@
   list-style: none
 
 .request-item
-  @include colorJobs($turf-green, 'accepted', 3px, rgba($turf-green, .1))
+  @include colorJobs($turf-green, 'approved', 3px, rgba($turf-green, .1))
   @include colorJobs($brick-red, 'rejected', 3px, rgba($brick-red, .1))
-  @include requestFadeOut('accepted',#ECF6EF)
+  @include colorJobs($dozer-yellow, 'pending', 3px, rgba($haze-yellow, .5))
+  @include requestFadeOut('approved',#ECF6EF)
   @include requestFadeOut('rejected', #FBECEB)
+  @include requestFadeOut('pending', #fcfaed)
   position: relative
   margin-bottom: 5px
   padding-left: 1em
@@ -30,8 +34,15 @@
     margin-right: .5em
     font-weight: $font-weight-bold
   a:hover,
-  a:active
+  a:active,
+  a:focus
     text-decoration: underline
+
+  &:hover
+    padding-left: .87em
+
+  &.highlighted
+    box-shadow: 0px 0px 3px 3px $haze-yellow
 
   @media #{$medium-up}
     display: flex
@@ -40,6 +51,8 @@
     align-items: center
     padding: .3em 0 .3em 2px
     white-space: nowrap
+    &:hover
+      padding-left: 0.1em
     .row-item.fade-out
       position: relative
     .row-item:first-of-type
