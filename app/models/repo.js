@@ -144,14 +144,14 @@ const Repo = Model.extend({
       },
       forceAuth: true
     }).then(data => {
-      return this._convertV3SettingsToV2(data['user_settings']);
+      return this._convertV3SettingsToV2(data['settings']);
     });
   },
 
   saveSetting(name, value) {
     return this.get('ajax').ajax(`/repo/${this.get('id')}/setting/${name}`, 'patch', {
       data: {
-        'user_setting.value': value
+        'setting.value': value
       }, headers: {
         'Travis-API-Version': '3'
       }

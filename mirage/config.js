@@ -1,8 +1,14 @@
 /* global server */
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
+import config from 'travis/config/environment';
+
+const { apiEndpoint } = config;
 
 export default function () {
+  this.namespace = apiEndpoint;
+
+  this.get('/users/:id');
   this.get('/accounts', (schema/* , request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
@@ -11,7 +17,7 @@ export default function () {
   });
 
   this.get('/hooks', function ({ hooks }, { queryParams: { owner_name } }) {
-    return this.serialize(hooks.where({ owner_name }), 'v2');
+    return this.serialize(hooks.where({ owner_name }), 'hook');
   });
 
   this.put('/hooks/:id', (schema, request) => {
@@ -54,7 +60,7 @@ export default function () {
     }
   });
 
-  this.get('/v3/broadcasts', schema => {
+  this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });
 
@@ -62,15 +68,18 @@ export default function () {
     return schema.repositories.all();
   });
 
-  this.get('/repo/:slug', function (schema, request) {
-    let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
+  this.get('/repo/:slug_or_id', function (schema, request) {
+    if (request.params.slug_or_id.match(/^\d+$/)) {
+      return schema.repositories.find(request.params.slug_or_id);
+    } else {
+      let slug = request.params.slug_or_id;
+      let repos = schema.repositories.where({ slug: decodeURIComponent(slug) });
 
-    return {
-      repo: repos.models[0].attrs
-    };
+      return repos.models[0];
+    }
   });
 
-  this.get('/v3/repo/:repositoryId/crons', function (schema, request) {
+  this.get('/repo/:repositoryId/crons', function (schema, request) {
     const { repositoryId } = request.params;
     return this.serialize(schema.crons.where({ repositoryId }), 'cron');
   });
@@ -81,7 +90,7 @@ export default function () {
     let settings = schema.settings.where({ repositoryId: request.params.id });
 
     return {
-      user_settings: settings.models.map(setting => {
+      settings: settings.models.map(setting => {
         return {
           name: setting.attrs.name,
           value: setting.attrs.value
@@ -95,6 +104,41 @@ export default function () {
     return this.serialize(caches, 'v2');
   });
 
+  this.patch('/settings/ssh_key/:repository_id', function (schema, request) {
+    const sshKeys = schema.sshKeys.where({ repositoryId: request.queryParams.repository_id });
+    const [sshKey] = sshKeys.models;
+    if (sshKey) {
+      return {
+        ssh_key: {
+          id: sshKey.id,
+          description: sshKey.description,
+          value: sshKey.value,
+        },
+      };
+    } else {
+      const created = server.create('ssh_key', request.params);
+      return {
+        ssh_key: {
+          id: created.id,
+          description: created.description,
+          value: created.value,
+        }
+      };
+    }
+  });
+
+  this.post('/settings/env_vars', function (schema, request) {
+    const envVar = server.create('env_var', request.params);
+    return {
+      env_var: {
+        id: envVar.id,
+        name: envVar.name,
+        public: envVar.public,
+        repository_id: request.params.repository_id,
+      },
+    };
+  });
+
   this.get('/settings/env_vars', function (schema, request) {
     const envVars = schema.envVars.where({ repositoryId: request.queryParams.repository_id });
 
@@ -106,16 +150,21 @@ export default function () {
     };
   });
 
-  this.get('/v3/repo/:id', function (schema, request) {
-    return schema.repositories.find(request.params.id);
-  });
-
-  this.get('/v3/repo/:repository_id/branches', function (schema) {
+  this.get('/repo/:repository_id/branches', function (schema) {
     return schema.branches.all();
   });
 
-  this.get('/v3/owner/:login', function (schema, request) {
+  this.get('/owner/:login', function (schema, request) {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
+  });
+
+  this.delete('/settings/ssh_key/:repo_id', function (schema, request) {
+    schema.sshKeys
+      .where({ repositoryId: request.queryParams.repository_id })
+      .models
+      .map(sshKey => sshKey.destroyRecord());
+
+    return new Mirage.Response(204, {}, {});
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
@@ -157,19 +206,27 @@ export default function () {
     let builds;
 
     if (afterNumber) {
-      builds = allBuilds.models.filter(build => build.number < afterNumber);
+      builds = allBuilds.models.filter(build => parseInt(build.number) < parseInt(afterNumber));
     } else if (ids) {
       builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
     } else if (eventType === 'pull_request') {
       builds = allBuilds.models;
     } else {
       // This forces the Show more button to show in the build history test
-      builds = allBuilds.models.slice(0, 3);
+      builds = allBuilds.models.slice(0, 3).sort((a, b) => {
+        const aBuildNumber = a.attrs.number;
+        const bBuildNumber = b.attrs.number;
+
+        return aBuildNumber > bBuildNumber ? -1 : 1;
+      });
     }
 
     return { builds: builds.map(build => {
       if (build.commit) {
         build.attrs.commit_id = build.commit.id;
+      }
+      if (!build.attrs.repository_id) {
+        build.attrs.repository_id = build.repository.id;
       }
 
       if (build.jobs) {
@@ -189,6 +246,7 @@ export default function () {
 
     if (build.commit) {
       response.commit = build.commit.attrs;
+      response.build.commit_id = build.commit.id;
     }
 
     return response;
@@ -236,7 +294,7 @@ export default function () {
     }
   });
 
-  this.get('/v3/repo/:repo_id/builds', function (schema, request) {
+  this.get('/repo/:repo_id/builds', function (schema, request) {
     const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];
     const builds = schema.builds.where({ branchId: branch.id });
 
@@ -291,15 +349,6 @@ export default function () {
     feature.update('enabled', requestBody.enabled);
     return this.serialize(feature);
   });
-
-  // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
-  // this.pretender.handledRequest = function (verb, path, request) {
-  //   console.log('Handled this request:', `${verb} ${path}`, request);
-  //   try {
-  //     const responseJson = JSON.parse(request.responseText);
-  //     console.log(responseJson);
-  //   } catch (e) {}
-  // };
 }
 
 /*

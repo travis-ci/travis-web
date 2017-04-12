@@ -2,6 +2,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
+import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 
 import Ember from 'ember';
 
@@ -14,13 +15,18 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     signInUser(currentUser);
 
+    const gitUser = server.create('git-user', {
+      name: 'Sara Ahmed'
+    });
+
     const repository = server.create('repository', {
       slug: 'killjoys/living-a-feminist-life'
     });
+    this.repository = repository;
 
     this.repoId = parseInt(repository.id);
 
-    this.branch = server.create('branch');
+    this.branch = server.create('branch', { name: 'successful-cron-branch' });
 
     const oneYearAgo = new Date();
     oneYearAgo.setYear(oneYearAgo.getFullYear() - 1);
@@ -29,27 +35,30 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     const lastBuild = this.branch.createBuild({
       state: 'passed',
-      number: '1919',
+      number: '1918',
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'cron',
-      repository_id: this.repoId
+      repository,
     });
 
     const commitAttributes = {
       sha: '1234567890',
-      author_name: currentUser.name
+      author_name: currentUser.name,
+      author: gitUser,
+      committer: gitUser
     };
 
     lastBuild.createCommit(Ember.assign({
-      branch: 'successful-cron-branch'
+      branch: 'successful-cron-branch',
+      message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();
 
     const failedBuild = this.branch.createBuild({
       state: 'failed',
       event_type: 'push',
-      repository_id: this.repoId,
+      repository,
       number: '1885'
     });
 
@@ -59,11 +68,12 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const erroredBuild = this.branch.createBuild({
       state: 'errored',
       event_type: 'push',
-      repository_id: this.repoId,
+      repository,
       number: '1869'
     });
 
-    erroredBuild.createCommit(commitAttributes);
+    erroredBuild.branch = this.branch;
+    erroredBuild.createCommit(Object.assign({ branch: 'rarely-used' }, commitAttributes));
     erroredBuild.save();
 
     const defaultBranch = repository.createBranch({
@@ -74,7 +84,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     const defaultBranchBuild = defaultBranch.createBuild({
       number: '1491',
       event_type: 'push',
-      repository_id: this.repoId
+      repository,
     });
 
     defaultBranchBuild.createCommit(Object.assign({}, commitAttributes, {
@@ -82,6 +92,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     }));
     defaultBranchBuild.save();
 
+    const pullRequestCommit = server.create('commit', commitAttributes);
     const pullRequestBuild = this.branch.createBuild({
       state: 'started',
       number: '1919',
@@ -89,19 +100,20 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       started_at: beforeOneYearAgo,
       event_type: 'pull_request',
       pull_request_number: 2010,
-      repository_id: this.repoId,
-      pull_request_title: 'A pull request'
+      repository,
+      pull_request_title: 'A pull request',
+      commit: pullRequestCommit
     });
-
-    const pullRequestCommit = pullRequestBuild.createCommit(commitAttributes);
-    pullRequestBuild.save();
+    // TODO: inverse relationship settings should take care of this (probably?)
+    pullRequestCommit.build = pullRequestBuild;
+    pullRequestCommit.save();
 
     pullRequestBuild.createJob({
       number: '1919.1',
-      repository_id: this.repoId,
+      repository,
       state: 'started',
       build: pullRequestBuild,
-      commit_id: pullRequestCommit.id
+      commit: pullRequestCommit
     });
 
     pullRequestBuild.save();
@@ -109,10 +121,12 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 });
 
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
+  assert.expect(23);
+
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 4, 'expected four builds');
+    assert.equal(page.builds().count, 3, 'expected three builds');
 
     const build = page.builds(0);
 
@@ -121,19 +135,21 @@ test('build history shows, more can be loaded, and a created build gets added an
     assert.equal(build.committer, 'Sara Ahmed');
     assert.equal(build.commitSha, '1234567');
     assert.equal(build.commitDate, 'about a year ago');
+    assert.equal(build.requestIconTitle, 'Triggered by a cron job');
     assert.equal(build.duration, '5 min');
+    assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
 
     assert.ok(page.builds(1).failed, 'expected the second build to have failed');
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
 
     assert.ok(page.showMoreButton.exists, 'expected the Show More button to exist');
 
-    assert.equal(page.builds(3).name, 'rarely-used', 'expected the old default branch to show');
+    assert.equal(page.builds(2).name, 'rarely-used', 'expected the old default branch to show');
 
     // Add another build so the API has more to return
     const olderBuild = this.branch.createBuild({
       event_type: 'push',
-      repository_id: this.repoId,
+      repository: this.repository,
       number: '1816'
     });
 
@@ -155,26 +171,35 @@ test('build history shows, more can be loaded, and a created build gets added an
     assert.equal(page.builds(4).name, 'rarely-used', 'expected the old default branch build to have moved to the end');
   });
 
-  const buildEventDataTemplate = {
-    build: {
-      id: '2016',
-      repository_id: this.repoId,
-      number: '2016',
-      pull_request: false,
-      event_type: 'push',
-      branch: 'no-dapl',
-      commit_id: 2016,
-    },
-    commit: {
-      id: 2016,
-      branch: 'no-dapl',
-      sha: 'acab',
-      message: 'Standing with Standing Rock'
-    }
-  };
+  const branch = server.create('branch', {
+    name: 'no-dapl'
+  });
+
+  this.repository.defaultBranch = branch;
+  this.repository.save();
+
+  const build = server.create('build', {
+    id: '2016',
+    repository: this.repository,
+    number: '2016',
+    pull_request: false,
+    event_type: 'push',
+    branch: branch
+  });
+
+  const commit = build.createCommit({
+    id: 2016,
+    branch: 'no-dapl',
+    sha: 'acab',
+    message: 'Standing with Standing Rock'
+  });
 
   andThen(() => {
-    const createdData = Object.assign({}, buildEventDataTemplate);
+    const createdData = {
+      build: generatePusherPayload(build),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(this.repository)
+    };
     createdData.build.state = 'created';
     this.application.pusher.receive('build:created', createdData);
   });
@@ -187,17 +212,24 @@ test('build history shows, more can be loaded, and a created build gets added an
     assert.ok(newBuild.created, 'expected the new build to show as created');
     assert.equal(newBuild.name, 'no-dapl');
     assert.equal(newBuild.message, 'Standing with Standing Rock');
+    assert.equal(newBuild.requestIconTitle, 'Triggered by a push');
 
-    const startedData = Object.assign({}, buildEventDataTemplate);
-    startedData.build.state = 'started';
+    const startedData = {
+      build: generatePusherPayload(build, { state: 'started' }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(this.repository)
+    };
     this.application.pusher.receive('build:started', startedData);
   });
 
   andThen(() => {
     assert.ok(page.builds(0).started, 'expected the new build to show as started');
 
-    const finishedData = Object.assign({}, buildEventDataTemplate);
-    finishedData.build.state = 'passed';
+    const finishedData = {
+      build: generatePusherPayload(build, { state: 'passed' }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(this.repository)
+    };
     this.application.pusher.receive('build:finished', finishedData);
   });
 
@@ -207,7 +239,7 @@ test('build history shows, more can be loaded, and a created build gets added an
 });
 
 test('view and cancel pull requests', function (assert) {
-  server.logging = true;
+  assert.expect(10);
   page.visitPullRequests({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {

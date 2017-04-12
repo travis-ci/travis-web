@@ -11,16 +11,9 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     let id = this.get('repo.id');
-    let model = this.get('store').recordForId('ssh_key', id);
-
-    if (model) {
-      this.get('store').unloadRecord(model);
-      let typeMap = this.get('store').typeMapFor(model.constructor);
-      let idToRecord = typeMap.idToRecord;
-      delete idToRecord[id];
-    }
-
-    model = this.get('store').createRecord('ssh_key', { id });
+    let store = this.get('store');
+    const model = store.peekRecord('ssh_key', id)
+      || store.createRecord('ssh_key', { id });
 
     return this.set('model', model);
   },
@@ -46,12 +39,14 @@ export default Ember.Component.extend({
   }),
 
   addErrorsFromResponse(errArr) {
-    let error = errArr[0].detail;
+    if (errArr !== undefined && errArr.length) {
+      let error = errArr[0].detail;
 
-    if (error.code === 'not_a_private_key') {
-      return this.set('valueError', 'This key is not a private key.');
-    } else if (error.code === 'key_with_a_passphrase') {
-      return this.set('valueError', 'The key can\'t have a passphrase.');
+      if (error.code === 'not_a_private_key') {
+        return this.set('valueError', 'This key is not a private key.');
+      } else if (error.code === 'key_with_a_passphrase') {
+        return this.set('valueError', 'The key can\'t have a passphrase.');
+      }
     }
   },
 

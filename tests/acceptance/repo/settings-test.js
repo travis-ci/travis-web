@@ -24,12 +24,8 @@ moduleForAcceptance('Acceptance | repo settings', {
     const repository = server.create('repository', {
       name: 'living-a-feminist-life',
       slug: 'killjoys/living-a-feminist-life',
-
-      // FIXME figure out how to define this more cleanly
-      '@permissions': {
-        'create_cron': true
-      }
     });
+    repository.attrs.permissions.create_cron = true;
 
     repository.createSetting({ name: 'builds_only_with_travis_yml', value: true });
     repository.createSetting({ name: 'build_pushes', value: true });
@@ -143,35 +139,35 @@ test('change general settings', function (assert) {
 
   andThen(() => {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
-    assert.deepEqual(settingToRequestBody.build_pushes, { 'user_setting.value': false });
+    assert.deepEqual(settingToRequestBody.build_pushes, { 'setting.value': false });
   });
 
   settingsPage.buildOnlyWithTravisYml.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds without .travis.yml');
-    assert.deepEqual(settingToRequestBody.builds_only_with_travis_yml, { 'user_setting.value': false });
+    assert.deepEqual(settingToRequestBody.builds_only_with_travis_yml, { 'setting.value': false });
   });
 
   settingsPage.buildPullRequests.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.buildPullRequests.isActive, 'expected no builds for pull requests');
-    assert.deepEqual(settingToRequestBody.build_pull_requests, { 'user_setting.value': false });
+    assert.deepEqual(settingToRequestBody.build_pull_requests, { 'setting.value': false });
   });
 
   settingsPage.limitConcurrentBuilds.fill('2010');
 
   andThen(() => {
     assert.equal(settingsPage.limitConcurrentBuilds.value, '2010');
-    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 2010 });
+    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 2010 });
   });
 
   settingsPage.limitConcurrentBuilds.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
-    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'user_setting.value': 0 });
+    assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 0 });
   });
 });
 
@@ -201,16 +197,16 @@ test('delete and create environment variables', function (assert) {
     return parsedRequestBody;
   });
 
-  settingsPage.environmentVariableForm.fillName('drafted');
-  settingsPage.environmentVariableForm.fillValue('true');
+  settingsPage.environmentVariableForm.fillName('  drafted');
+  settingsPage.environmentVariableForm.fillValue('  true');
   settingsPage.environmentVariableForm.makePublic();
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables(0).name, 'drafted');
+    assert.equal(settingsPage.environmentVariables(0).name, 'drafted', 'expected leading whitespace to be trimmed');
     assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
     assert.ok(settingsPage.environmentVariables(0).isNewlyCreated, 'expected environment variable to be newly created');
-    assert.equal(settingsPage.environmentVariables(0).value, 'true');
+    assert.equal(settingsPage.environmentVariables(0).value, 'true', 'expected leading whitespace to be trimmed');
 
     assert.deepEqual(requestBodies.pop(), { env_var: {
       id: '1919',
@@ -221,7 +217,7 @@ test('delete and create environment variables', function (assert) {
     } });
 
     // This will trigger a client-side error
-    server.post('/settings/env_vars', undefined, 403);
+    server.post('/settings/env_vars', {}, 403);
   });
 
   settingsPage.environmentVariableForm.fillName('willFail');
@@ -232,7 +228,7 @@ test('delete and create environment variables', function (assert) {
     assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
-    server.delete('/settings/env_vars/:id', () => {}, 404);
+    server.delete('/settings/env_vars/:id', () => {}, 500);
   });
 
   settingsPage.environmentVariables(1).delete();
@@ -240,6 +236,15 @@ test('delete and create environment variables', function (assert) {
   andThen(() => {
     assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
     assert.equal(settingsPage.notification, 'There was an error deleting this environment variable.');
+
+    server.delete('/settings/env_vars/:id', () => {}, 404);
+  });
+
+  settingsPage.environmentVariables(1).delete();
+
+  andThen(() => {
+    assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
+    assert.equal(settingsPage.notification, 'There was an error deleting this environment variable because it had already been deleted. Try refreshing?');
   });
 });
 
@@ -331,14 +336,14 @@ test('on a repository with auto-cancellation', function (assert) {
 
   andThen(() => {
     assert.ok(settingsPage.autoCancelPullRequests.isActive, 'expected auto-cancel pull requests to be enabled');
-    assert.deepEqual(settingToRequestBody.auto_cancel_pull_requests, { 'user_setting.value': true });
+    assert.deepEqual(settingToRequestBody.auto_cancel_pull_requests, { 'setting.value': true });
   });
 
   settingsPage.autoCancelPushes.toggle();
 
   andThen(() => {
     assert.notOk(settingsPage.autoCancelPushes.isActive, 'expected auto-cancel pushes to be disabled');
-    assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'user_setting.value': false });
+    assert.deepEqual(settingToRequestBody.auto_cancel_pushes, { 'setting.value': false });
   });
 
   percySnapshot(assert);

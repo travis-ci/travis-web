@@ -2,7 +2,38 @@ import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 
 moduleForModel('job', 'Unit | Model | job', {
-  needs: ['model:repo', 'model:build', 'model:commit']
+  needs: ['model:repo', 'model:build', 'model:commit', 'service:ajax']
+});
+
+test('config is fetched if it\'s not available', function (assert) {
+  assert.expect(1);
+  let done = assert.async();
+
+  const model = this.subject();
+  Ember.run(function () {
+    return model.setProperties({
+      _config: null
+    });
+  });
+
+  let oldGetCurrentState = model.getCurrentState;
+  model.getCurrentState = function () {
+    return 'root.loading';
+  };
+
+  model.reload = function () {
+    assert.ok(true);
+  };
+
+  model.get('config');
+
+  setTimeout(function () {
+    model.getCurrentState = oldGetCurrentState;
+  }, 30);
+
+  setTimeout(function () {
+    done();
+  }, 60);
 });
 
 test('created state', function (assert) {

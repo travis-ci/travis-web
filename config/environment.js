@@ -12,7 +12,7 @@ module.exports = function (environment) {
         // e.g. 'with-controller': true
       },
       EXTEND_PROTOTYPES: {
-        // prevent Ember Data from overriding Date.parse
+        // Prevent Ember Data from overriding `Date.parse`.
         Date: false
       }
     },
@@ -70,10 +70,10 @@ module.exports = function (environment) {
       ENV.userlike = true;
       ENV.beacon = true;
       ENV.urls = {
-        legal: ENV.billingEndpoint + "/pages/legal",
-        imprint: ENV.billingEndpoint + "/pages/imprint",
-        security: ENV.billingEndpoint + "/pages/security",
-        terms: ENV.billingEndpoint + "/pages/terms"
+        legal: ENV.billingEndpoint + '/pages/legal',
+        imprint: ENV.billingEndpoint + '/pages/imprint',
+        security: ENV.billingEndpoint + '/pages/security',
+        terms: ENV.billingEndpoint + '/pages/terms'
       };
     }
 
@@ -104,12 +104,12 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
 
-    ENV.apiEndpoint = '';
     ENV.statusPageStatusUrl =  null;
 
     ENV.sentry = {
       development: true
     };
+
     ENV.endpoints = {
       sshKey: true,
       caches: true
@@ -129,10 +129,11 @@ module.exports = function (environment) {
       },
       defaultBreakpoints: ['desktop']
     };
+
     ENV.featureFlags = {
       'debug-logging': false,
       'dashboard': false
-    }
+    };
   }
 
   if (environment === 'production') {
@@ -140,7 +141,7 @@ module.exports = function (environment) {
     if (process.env.DISABLE_SENTRY) {
       ENV.sentry = {
         development: true
-      }
+      };
     } else {
       ENV.sentry = {
         dsn: sentryDSN
@@ -169,21 +170,21 @@ module.exports = function (environment) {
     'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com",
     'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
     'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://avatars.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
+    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
     'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net",
     'media-src': "'self'",
     'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",
-    'report-uri': "https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly",
+    'report-uri': 'https://65f53bfdfd3d7855b8bb3bf31c0d1b7c.report-uri.io/r/default/csp/reportOnly',
     'block-all-mixed-content': '',
     'form-action': "'self'", // probably doesn't matter, but let's have it anyways
     'frame-ancestors': "'none'",
-    'object-src': "https://djtflbt20bdde.cloudfront.net"
+    'object-src': 'https://djtflbt20bdde.cloudfront.net'
   };
-  ENV.cspSectionsWithApiHost = ['connect-src', 'img-src']
+  ENV.cspSectionsWithApiHost = ['connect-src', 'img-src'];
   ENV.contentSecurityPolicy = JSON.parse(JSON.stringify(ENV.contentSecurityPolicyRaw));
   ENV.contentSecurityPolicyMeta = false;
 
-  ENV.cspSectionsWithApiHost.forEach( (section) => {
+  ENV.cspSectionsWithApiHost.forEach((section) => {
     ENV.contentSecurityPolicy[section] += " " + ENV.apiEndpoint;
   });
 

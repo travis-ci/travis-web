@@ -2,7 +2,7 @@
 import Ember from 'ember';
 import config from './config/environment';
 
-var Router = Ember.Router.extend({
+const Router = Ember.Router.extend({
   // this is needed, because in the location
   // we need to decide if repositories or home needs
   // to be displayed, based on the current login status
@@ -13,8 +13,7 @@ var Router = Ember.Router.extend({
   rootURL: config.rootURL,
 
   generate() {
-    var url;
-    url = this.router.generate.apply(this.router, arguments);
+    const url = this.router.generate.apply(this.router, arguments);
     return this.get('location').formatURL(url);
   },
 

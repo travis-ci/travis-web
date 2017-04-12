@@ -1,29 +1,36 @@
 import Ember from 'ember';
 
+const eventToIcon = {
+  push: 'push',
+  pull_request: 'pullrequest',
+  cron: 'cronjobs',
+  api: 'api',
+  default: 'nobuilds'
+};
+
+const eventToTitle = {
+  push: 'Triggered by a push',
+  pull_request: 'Triggered from a pull request',
+  cron: 'Triggered by a cron job',
+  api: 'Triggered via the API',
+  default: 'Triggered via unknown means'
+};
+
 export default Ember.Component.extend({
   tagName: 'span',
   classNames: ['request-icon', 'icon'],
-  classNameBindings: ['event', 'state'],
+  classNameBindings: ['event', 'state', 'title'],
+  attributeBindings: ['title'],
 
-  isPush: Ember.computed('event', function () {
-    return this.get('event') === 'push';
+  icon: Ember.computed('event', function () {
+    const event = this.get('event');
+    const iconName = eventToIcon[event] || eventToIcon.default;
+
+    return `icon-${iconName}`;
   }),
 
-  isPR: Ember.computed('event', function () {
-    return this.get('event') === 'pull_request';
-  }),
-
-  isCron: Ember.computed('event', function () {
-    return this.get('event') === 'cron';
-  }),
-
-  isAPI: Ember.computed('event', function () {
-    return this.get('event') === 'api';
-  }),
-
-  isEmpty: Ember.computed('event', function () {
-    if (this.get('event') === null || this.get('event') === null) {
-      return true;
-    }
+  title: Ember.computed('event', function () {
+    const event = this.get('event');
+    return eventToTitle[event] || eventToTitle.default;
   })
 });

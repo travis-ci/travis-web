@@ -72,9 +72,10 @@ export default TravisRoute.extend({
     const repoId = this.modelFor('repo').get('id');
     const apiEndpoint = config.apiEndpoint;
 
-    return Ember.$.ajax(apiEndpoint + '/v3/repo/' + repoId, {
+    return Ember.$.ajax(apiEndpoint + '/repo/' + repoId, {
       headers: {
-        Authorization: 'token ' + this.auth.token()
+        Authorization: 'token ' + this.auth.token(),
+        'Travis-API-Version': '3'
       }
     }).then(function (response) {
       return response.active;
