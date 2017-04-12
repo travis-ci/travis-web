@@ -38,20 +38,6 @@ var Serializer = V2FallbackSerializer.extend({
     // TODO: remove this after switching to V3 entirely
     let type = resourceHash['@type'];
     let commit = resourceHash.commit;
-    // when we get the commit from V3 we need to put a branch on a commit as the
-    // current commit model expects it
-    if (type && commit && resourceHash.branch && !commit.branch) {
-      let name = resourceHash.branch.name;
-      if (!name) {
-        let match = resourceHash.branch['@href'].match(/\/repo\/.*?\/branch\/(.*)/);
-        if (match) {
-          name = match[1];
-        }
-      }
-      if (name) {
-        commit.branch = name;
-      }
-    }
     if (!type && commit && commit.hasOwnProperty('branch_is_default')) {
       let build = resourceHash.build,
         commit = resourceHash.commit;
@@ -64,9 +50,9 @@ var Serializer = V2FallbackSerializer.extend({
     }
 
     // fix pusher payload, it doesn't include a branch record:
-    if (!resourceHash['@type'] && resourceHash.build &&
+    if (!type && resourceHash.build &&
        resourceHash.repository && resourceHash.repository.default_branch) {
-      let branchName = resourceHash.build.branch,
+      let branchName = resourceHash.commit.branch,
         repository = resourceHash.repository,
         defaultBranchName = repository.default_branch.name;
 

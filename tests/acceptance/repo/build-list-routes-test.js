@@ -54,7 +54,6 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     this.commitAttributes = commitAttributes;
 
     lastBuild.createCommit(Ember.assign({
-      branch: 'successful-cron-branch',
       message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();
@@ -69,21 +68,21 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     failedBuild.createCommit(commitAttributes);
     failedBuild.save();
 
+    const defaultBranch = repository.createBranch({
+      name: 'rarely-used',
+      default_branch: true
+    });
+
     const erroredBuild = server.create('build', {
       state: 'errored',
       event_type: 'push',
       repository,
       number: '1869',
-      branch: this.branch,
+      branch: defaultBranch
     });
 
-    erroredBuild.createCommit(Object.assign({ branch: 'rarely-used' }, commitAttributes));
+    erroredBuild.createCommit(commitAttributes);
     erroredBuild.save();
-
-    const defaultBranch = repository.createBranch({
-      name: 'rarely-used',
-      default_branch: true
-    });
 
     const defaultBranchBuild = defaultBranch.createBuild({
       number: '1491',
@@ -126,12 +125,12 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
   server.logging = true;
-  assert.expect(23);
+  assert.expect(22);
 
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 5, 'expected five non-PR builds');
+    assert.equal(page.builds().count, 4, 'expected four non-PR builds');
 
     const build = page.builds(0);
 
@@ -151,17 +150,21 @@ test('build history shows, more can be loaded, and a created build gets added an
 
     assert.equal(page.builds(2).name, 'rarely-used', 'expected the old default branch to show');
 
+    const sevenOaksBranch = server.create('branch', {
+      name: 'oldest-build-branch'
+    });
+
     // Add another build so the API has more to return
-    const olderBuild = this.branch.createBuild({
+    const olderBuild = sevenOaksBranch.createBuild({
       event_type: 'push',
       repository: this.repository,
-      number: '1000'
+      number: '1000',
+      state: 'passed'
     });
 
     olderBuild.createCommit({
       sha: 'acab',
-      author_name: 'us',
-      branch: 'seven-oaks'
+      author_name: 'us'
     });
     olderBuild.save();
   });
@@ -172,34 +175,35 @@ test('build history shows, more can be loaded, and a created build gets added an
 
   andThen(() => {});
   andThen(() => {
-    assert.equal(page.builds().count, 4, 'expected four builds');
-    assert.equal(page.builds(3).name, 'oldest-build-branch', 'expected an earlier build to have been added');
+    assert.equal(page.builds().count, 5, 'expected five builds');
+    assert.equal(page.builds(4).name, 'oldest-build-branch', 'expected an earlier build to have been added');
   });
 
-  const branch = server.create('branch', {
-    name: 'no-dapl'
-  });
-
-  this.repository.defaultBranch = branch;
-  this.repository.save();
-
-  const build = server.create('build', {
-    id: '1915',
-    repository: this.repository,
-    number: '1915',
-    pull_request: false,
-    event_type: 'push',
-    branch: branch
-  });
-
-  const commit = build.createCommit({
-    id: 1915,
-    branch: 'no-dapl',
-    sha: 'acab',
-    message: 'Standing with Standing Rock'
-  });
+  let build, commit;
 
   andThen(() => {
+    const branch = server.create('branch', {
+      name: 'no-dapl'
+    });
+
+    this.repository.defaultBranch = branch;
+    this.repository.save();
+
+    build = branch.createBuild({
+      id: '1920',
+      repository: this.repository,
+      number: '1920',
+      pull_request: false,
+      event_type: 'push',
+    });
+
+    commit = build.createCommit({
+      id: 1920,
+      sha: 'acab',
+      message: 'Standing with Standing Rock',
+      branch: 'no-dapl'
+    });
+
     const createdData = {
       build: generatePusherPayload(build),
       commit: generatePusherPayload(commit),
@@ -211,7 +215,7 @@ test('build history shows, more can be loaded, and a created build gets added an
 
 
   andThen(() => {
-    assert.equal(page.builds().count, 5, 'expected another build');
+    assert.equal(page.builds().count, 6, 'expected another build');
 
     const newBuild = page.builds(0);
 

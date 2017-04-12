@@ -41,11 +41,6 @@ test('renders most recent repository and most recent build when builds present',
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
   });
 
-  // TODO: This shouldn't be necessary. The cause for this test's
-  // unreliability is that we assert before the build information has been
-  // resolved. I'm actually not sure how this ever worked before.
-  andThen(() => {});
-
   andThen(() => {
     assert.ok(currentRepoTab.showsCurrentBuild, 'Shows current build');
     assert.ok(jobTabs.logTab.isShowing, 'Displays the log');

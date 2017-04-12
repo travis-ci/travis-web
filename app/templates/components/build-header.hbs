@@ -6,7 +6,7 @@
       {{item.pullRequestTitle}}
     {{else}}
       <small class="commit-branch"
-        title={{item.commit.branch}}>{{build.branchName}}</small>
+        title={{build.branchName}}>{{build.branchName}}</small>
       {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
   </h2>

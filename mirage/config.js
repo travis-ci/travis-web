@@ -209,6 +209,11 @@ export default function () {
 
     builds = builds.filter(build => build.attrs.number);
 
+    let offset = request.queryParams.offset;
+    if (offset) {
+      builds = builds.slice(offset);
+    }
+
     if (request.queryParams.event_type !== 'pull_request') {
       builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
     } else {

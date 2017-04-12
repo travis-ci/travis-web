@@ -127,20 +127,6 @@ test('it normalizes a V3 singular response with nested jobs and repos', function
   assert.deepEqual(result, expectedResult);
 });
 
-test('it sets "pullRequest" if it is not set', function (assert) {
-  let payload = {
-    '@type': 'build',
-    '@href': '...',
-    event_type: 'pull_request',
-    id: 1
-  };
-
-  let store = this.store();
-  let serializer = store.serializerFor('build');
-  let result = serializer.normalizeResponse(store, store.modelFor('build'), payload, 1, 'findRecord');
-  assert.ok(result.data.attributes.pullRequest);
-});
-
 test('it normalizes a V2 singular response', function (assert) {
   QUnit.dump.maxDepth = 10;
   let payload = {
@@ -215,11 +201,10 @@ test('it normalizes a V2 singular response', function (assert) {
           'language': 'ruby'
         },
         '_duration': 72,
-        '_finishedAt': '2016-02-24T16:40:10Z',
-        '_startedAt': '2016-02-24T16:37:54Z',
+        'finishedAt': '2016-02-24T16:40:10Z',
+        'startedAt': '2016-02-24T16:37:54Z',
         'eventType': 'push',
         'number': 10,
-        'pullRequest': false,
         'pullRequestNumber': null,
         'pullRequestTitle': null,
         'state': 'passed'
