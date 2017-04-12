@@ -31,16 +31,6 @@ export default function () {
     return { accounts: users.concat(accounts) };
   });
 
-  this.get('/hooks', function ({ hooks }, { queryParams: { owner_name } }) {
-    return this.serialize(hooks.where({ owner_name }), 'hook');
-  });
-
-  this.put('/hooks/:id', (schema, request) => {
-    const user = schema.hooks.find(request.params.id);
-    server.create('repository', { id: request.params.id });
-    return user.update(JSON.parse(request.requestBody).hook);
-  });
-
   this.get('/users/:id', function ({ users }, request) {
     if (request.requestHeaders.Authorization === 'token testUserToken') {
       return this.serialize(users.find(request.params.id), 'v2');
@@ -115,6 +105,28 @@ export default function () {
   this.get('/repo/:repositoryId/crons', function (schema, request) {
     const { repositoryId } = request.params;
     return this.serialize(schema.crons.where({ repositoryId }), 'cron');
+  });
+
+  this.post('/repo/:repositoryId/activate', function (schema, request) {
+    const { repositoryId } = request.params;
+    const repository = schema.repositories.find(repositoryId);
+
+    if (repository) {
+      repository.update('active', true);
+    }
+
+    return this.serialize(repository);
+  });
+
+  this.post('/repo/:repositoryId/deactivate', function (schema, request) {
+    const { repositoryId } = request.params;
+    const repository = schema.repositories.find(repositoryId);
+
+    if (repository) {
+      repository.update('active', false);
+    }
+
+    return this.serialize(repository);
   });
 
   this.get('/cron/:id');
@@ -209,6 +221,12 @@ export default function () {
     } else {
       return new Mirage.Response(404, {}, {});
     }
+  });
+
+  this.get('/owner/:login/repos', function (schema, request) {
+    const { login } = request.params;
+    const repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
+    return this.serialize(repositories);
   });
 
   this.delete('/settings/ssh_key/:repo_id', function (schema, request) {

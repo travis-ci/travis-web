@@ -19,37 +19,6 @@ moduleForAcceptance('Acceptance | profile/view token', {
       login: 'killjoys',
       repos_count: 30
     });
-
-    // create active hook
-    server.create('hook', {
-      name: 'living-a-feminist-life',
-      owner_name: 'feministkilljoy',
-      active: true,
-      admin: true
-    });
-
-    // create inactive hook
-    server.create('hook', {
-      name: 'willful-subjects',
-      owner_name: 'feministkilljoy',
-      active: false,
-      admin: true
-    });
-
-    // create hook without admin permissions
-    server.create('hook', {
-      name: 'affect-theory-reader',
-      owner_name: 'feministkilljoy',
-      active: true,
-      admin: false
-    });
-
-    // create other random hook to ensure correct filtering
-    server.create('hook', {
-      name: 'feminism-is-for-everybody',
-      owner_name: 'bellhooks',
-      active: false
-    });
   }
 });
 

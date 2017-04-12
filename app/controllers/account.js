@@ -3,12 +3,13 @@ import Ember from 'ember';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
+import Repository from 'travis/models/repo';
 
 export default Ember.Controller.extend({
   @service auth: null,
   @service externalLinks: null,
 
-  allHooks: [],
+  ownedRepositories: [],
 
   @alias('auth.currentUser') user: null,
 
@@ -29,21 +30,19 @@ export default Ember.Controller.extend({
     return hook.toggle();
   },
 
-  reloadHooks() {
-    let login = this.get('model.login');
+  reloadOwnerRepositories() {
+    const login = this.get('model.login');
     if (login) {
-      let hooks = this.store.query('hook', {
-        all: true,
-        owner_name: login,
-        order: 'none'
-      });
+      this.set('ownedRepositories', []);
       this.set('loadingError', false);
-      hooks.then(() => {
-        hooks.set('isLoaded', true);
+      const repositories = Repository.fetchByOwner(this.store, login);
+      return repositories.then(() => {
+        const ownedRepositories = this.store.peekAll('repo').filterBy('owner.login', login);
+        this.set('ownedRepositories', ownedRepositories);
+        this.set('ownedRepositories.isLoaded', true);
       }).catch(() => {
         this.set('loadingError', true);
       });
-      return this.set('allHooks', hooks);
     }
   },
 
@@ -52,29 +51,44 @@ export default Ember.Controller.extend({
     return name || login;
   },
 
-  @computed('allHooks.[]')
-  hooks(hooks) {
-    if (!hooks) {
-      this.reloadHooks();
+  @computed('ownedRepositories.[]')
+  administerableRepositories(repositories) {
+    if (!repositories) {
+      this.reloadOwnerRepositories();
     }
-    return hooks.filter(hook => hook.get('admin')).sortBy('name');
+    return repositories
+      .filter(repo => repo.get('permissions.admin'))
+      .sortBy('name');
   },
 
-  @computed('allHooks.[]')
-  hooksWithoutAdmin(hooks) {
-    if (!hooks) {
-      this.reloadHooks();
+  @computed('ownedRepositories.[]')
+  unadministerableRepositories(repositories) {
+    if (!repositories) {
+      this.reloadOwnerRepositories();
     }
-    return hooks.filter(hook => !hook.get('admin')).sortBy('name');
+    return repositories
+      .filter(repo => !repo.get('permissions.admin'))
+      .sortBy('name');
+  },
+
+  @computed()
+  showPrivateReposHint() {
+    return this.config.show_repos_hint === 'private';
+  },
+
+  @computed()
+  showPublicReposHint() {
+    return this.config.show_repos_hint === 'public';
   },
 
   @computed('model.{type,login}')
   billingUrl(type, login) {
-    return this.get('externalLinks').billingUrl(type, login);
+    const id = type === 'user' ? 'user' : login;
+    return `${this.config.billingEndpoint}/subscriptions/${id}`;
   },
 
-  @computed('billingUrl', 'model.{subscribed,education}')
-  subscribeButtonInfo(billingUrl, subscribed, education) {
+  @computed('model.{subscribed,education}', 'billingUrl')
+  subscribeButtonInfo(subscribed, education, billingUrl) {
     return {
       billingUrl,
       subscribed,

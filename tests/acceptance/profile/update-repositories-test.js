@@ -2,12 +2,12 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 
-moduleForAcceptance('Acceptance | profile/basic layout', {
+moduleForAcceptance('Acceptance | profile/update-repositories', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
       login: 'feministkilljoy',
-      repos_count: 3
+      repos_count: 3,
     });
 
     signInUser(currentUser);
@@ -17,7 +17,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       name: 'Feminist Killjoys',
       type: 'organization',
       login: 'killjoys',
-      repos_count: 30
+      repos_count: 30,
     });
 
     // create active repository
@@ -28,7 +28,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: true,
       permissions: {
-        admin: true
+        admin: true,
       },
     });
 
@@ -40,7 +40,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: false,
       permissions: {
-        admin: true
+        admin: true,
       },
     });
 
@@ -52,7 +52,7 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       },
       active: true,
       permissions: {
-        admin: false
+        admin: false,
       },
     });
 
@@ -62,35 +62,24 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       owner: {
         login: 'bellhooks',
       },
-      active: false
+      active: false,
+      permissions: {
+        admin: false,
+      },
     });
   }
 });
 
-test('view profile', function (assert) {
+test('updating repository', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
-  andThen(function () {
-    assert.equal(document.title, 'Sara Ahmed - Profile - Travis CI');
+  profilePage.administerableRepositories(0).toggle();
+  profilePage.administerableRepositories(1).toggle();
+  profilePage.unadministerableRepositories(0).toggle();
 
-    assert.equal(profilePage.name, 'Sara Ahmed');
-
-    assert.equal(profilePage.accounts().count, 2, 'expected two accounts');
-
-    assert.equal(profilePage.accounts(0).name, 'Sara Ahmed');
-    assert.equal(profilePage.accounts(0).repositoryCount, '3 repositories');
-
-    assert.equal(profilePage.accounts(1).name, 'Feminist Killjoys');
-    assert.equal(profilePage.accounts(1).repositoryCount, '30 repositories');
-
-    assert.equal(profilePage.administerableRepositories().count, 2, 'expected two administerable repositories');
-
-    assert.equal(profilePage.administerableRepositories(0).name, 'feministkilljoy/living-a-feminist-life');
-    assert.ok(profilePage.administerableRepositories(0).isActive, 'expected active repository to appear active');
-
-    assert.equal(profilePage.administerableRepositories(1).name, 'feministkilljoy/willful-subjects');
-    assert.notOk(profilePage.administerableRepositories(1).isActive, 'expected inactive repository to appear inactive');
-
-    assert.equal(profilePage.unadministerableRepositories().count, 1, 'expected one unadministerable repository');
+  andThen(() => {
+    assert.notOk(server.db.repositories[0].active, 'expected formerly active repository to be inactive');
+    assert.ok(server.db.repositories[1].active, 'expected formerly inactive repository to be active');
+    assert.ok(server.db.repositories[2].active, 'expected unadministerable repository to be unchanged');
   });
 });

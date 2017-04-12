@@ -41,7 +41,7 @@ export default RESTAdapter.extend({
       delete options.data.page_size;
     }
 
-    let hash = this._super(...arguments);
+    let hash = this._super(url, type, options);
 
     hash.headers = hash.headers || {};
 
