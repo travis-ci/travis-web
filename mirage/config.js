@@ -158,6 +158,15 @@ export default function () {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });
 
+  this.delete('/settings/ssh_key/:repo_id', function (schema, request) {
+    schema.sshKeys
+      .where({ repositoryId: request.queryParams.repository_id })
+      .models
+      .map(sshKey => sshKey.destroyRecord());
+
+    return new Mirage.Response(204, {}, {});
+  });
+
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
     const repo = schema.repositories.find(request.params.repo_id);
     const { customSshKey } = repo;

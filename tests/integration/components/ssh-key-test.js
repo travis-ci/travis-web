@@ -2,9 +2,17 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { percySnapshot } from 'ember-percy';
+import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
 moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.server = startMirage();
+  },
+
+  afterEach() {
+    this.server.shutdown();
+  }
 });
 
 test('it renders the default ssh key if no custom key is set', function (assert) {
