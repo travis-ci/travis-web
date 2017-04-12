@@ -23,10 +23,6 @@ export default Ember.Controller.extend({
     sync() {
       return this.get('user').sync();
     },
-
-    toggle(hook) {
-      return hook.toggle();
-    }
   },
 
   reloadOwnerRepositories() {
