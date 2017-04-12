@@ -5,6 +5,14 @@ export default V3Adapter.extend({
     const repoId = query.repository_id;
     delete query.repository_id;
     const url = `${this.urlPrefix()}/repo/${repoId}/branches`;
+
+    if (!query.data) {
+      query.data = {};
+    }
+
+    // FIXME this is a temporary solution for https://github.com/travis-pro/team-teal/issues/1762
+    query.data.limit = 100;
+
     return this.ajax(url, 'GET', query);
   },
 
