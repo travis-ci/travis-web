@@ -2,7 +2,7 @@
   There was a problem while loading the repositories list, please try again. In case
   the problem persists, please contact support.
 {{else}}
-  {{#if allHooks.isLoaded}}
+  {{#if ownedRepositories.isLoaded}}
     {{#unless config.enterprise}}
       {{#if config.billingEndpoint}}
         {{#if subscribeButtonInfo.subscribed}}

@@ -7,7 +7,7 @@ const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
   auth: service(),
-  allHooks: [],
+  ownedRepositories: [],
 
   @alias('auth.currentUser') user: null,
 
@@ -32,8 +32,8 @@ export default Ember.Controller.extend({
       const repositories = Repository.fetchByOwner(this.store, login);
       return repositories.then(() => {
         const ownedRepositories = this.store.peekAll('repo', repo => repo.owner.login === login);
-        this.set('allHooks', ownedRepositories);
-        this.set('allHooks.isLoaded', true);
+        this.set('ownedRepositories', ownedRepositories);
+        this.set('ownedRepositories.isLoaded', true);
       }).catch(() => {
         this.set('loadingError', true);
       });
@@ -45,7 +45,7 @@ export default Ember.Controller.extend({
     return name || login;
   },
 
-  @computed('allHooks.[]')
+  @computed('ownedRepositories.[]')
   hooks(hooks) {
     if (!hooks) {
       this.reloadOwnerRepositories();
@@ -55,12 +55,12 @@ export default Ember.Controller.extend({
     }).sortBy('name');
   },
 
-  @computed('allHooks.[]')
+  @computed('ownedRepositories.[]')
   hooksWithoutAdmin(hooks) {
     if (!hooks) {
       this.reloadOwnerRepositories();
     }
-    return this.get('allHooks').filter(function (hook) {
+    return this.get('ownedRepositories').filter(function (hook) {
       return !hook.get('permissions.admin');
     }).sortBy('name');
   },
