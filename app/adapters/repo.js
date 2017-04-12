@@ -12,4 +12,14 @@ export default V3Adapter.extend({
     const url = `${apiEndpoint}/owner/${owner}/repos`;
     return this.ajax(url, 'GET');
   },
+
+  activate(id) {
+    const url = `${apiEndpoint}/repo/${id}/activate`;
+    return this.ajax(url, 'POST');
+  },
+
+  deactivate(id) {
+    const url = `${apiEndpoint}/repo/${id}/deactivate`;
+    return this.ajax(url, 'POST');
+  },
 });

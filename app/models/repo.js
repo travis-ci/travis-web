@@ -163,7 +163,20 @@ const Repo = Model.extend({
       v2Settings[v3Setting.name] = v3Setting.value;
       return v2Settings;
     }, {});
-  }
+  },
+
+  toggle() {
+    const adapter = this.store.adapterFor('repo');
+    const id = this.get('id');
+    let promise;
+    if (this.get('active')) {
+      promise = adapter.deactivate(id);
+    } else {
+      promise = adapter.activate(id);
+    }
+
+    return promise;
+  },
 });
 
 Repo.reopenClass({

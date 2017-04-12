@@ -6,10 +6,10 @@ export default Ember.Component.extend({
   classNames: ['switch'],
   classNameBindings: ['hook.active:active', 'disabled:disabled', 'disabled:inline-block'],
   click() {
-    this.get('toggleHook').perform();
+    this.get('toggleRepository').perform();
   },
 
-  toggleHook: task(function* () {
+  toggleRepository: task(function* () {
     if (!this.get('disabled')) {
       this.sendAction('onToggle');
 
@@ -20,10 +20,8 @@ export default Ember.Component.extend({
 
       yield hook.toggle().then(() => {
         pusher.subscribe(`repo-${repoId}`);
-      }, () => {
         this.toggleProperty('hook.active');
-        return this.sendAction('onToggleError', hook);
-      });
+      }, () => { this.sendAction('onToggleError', hook); });
     }
   }),
 });
