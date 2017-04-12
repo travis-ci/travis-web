@@ -249,7 +249,6 @@ test('delete and create environment variables', function (assert) {
 });
 
 test('delete and create crons', function (assert) {
-  server.logging = true;
   const done = assert.async();
 
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
