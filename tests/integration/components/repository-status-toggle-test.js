@@ -1,11 +1,11 @@
 import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('hooks-list-item', 'HooksListItemComponent', {
+moduleForComponent('repository-status-toggle', 'RepositoryStatusToggleComponent', {
   integration: true,
 });
 
-test('it renders', function (assert) {
+test('it switches state when clicked', function (assert) {
   this.set('hook', {
     id: 10000,
     name: 'foo-bar',
@@ -16,7 +16,7 @@ test('it renders', function (assert) {
     slug: 'foo/foo-bar'
   });
 
-  this.render(hbs`{{hooks-list-item hook=hook}}`);
+  this.render(hbs`{{repository-status-toggle hook=hook}}`);
 
   assert.ok(this.$('.switch').hasClass('active'), 'switch should have active class');
   assert.equal(this.$('.profile-repo span').text().trim(), 'A foo repo', 'repo description should be displayed');

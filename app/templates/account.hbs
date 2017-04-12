@@ -55,7 +55,7 @@
   <div id="administerable-hooks">
     <ul class="profile-hooklist">
       {{#each hooks as |hook|}}
-      {{hooks-list-item hook=hook admin=true}}
+      {{repository-status-toggle hook=hook admin=true}}
       {{else}}
       <li>
         {{#if hooksWithoutAdmin.length}}
@@ -73,7 +73,7 @@
       <p class="text-medium">You require admin rights to enable these repositories</p>
       <ul class="profile-hooklist">
         {{#each hooksWithoutAdmin as |hook| }}
-          {{hooks-list-item hook=hook}}
+          {{repository-status-toggle hook=hook}}
         {{/each}}
       </ul>
     </div>
