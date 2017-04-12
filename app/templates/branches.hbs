@@ -1,25 +1,14 @@
 <div class="branches">
-  {{#if defaultBranch}}
     <section class="default-branch">
-      <h2 class="small-title">Default Branch</h2>
-      <ul class="blank-list">
-        {{#each defaultBranch as |branch| }}
-          {{branch-row branch=branch}}
-        {{/each}}
-      </ul>
+      {{branch-list branchList=defaultBranch listTitle="Default Branch" class="default-branch"}}
     </section>
-  {{/if}}
 
-  <section class="active-branches">
-    <h2 class="small-title" id="active-branches">Active Branches</h2>
-    <p class="helptext">
+    <section class="active-branches">
+      {{#branch-list branchList=nonDefaultBranches listTitle="Active Branches" class="default-branch"}}
+        <p class="helptext">
       Displaying <span class="active-branch-display-count">{{nonDefaultBranches.length}}</span> of <span>`the total number we get from pagination`</span> active branches.</p>
-    {{#if nonDefaultBranches.length}}
-      <ul class="blank-list">
-        {{#each nonDefaultBranches as |branch|}}
-          {{branch-row branch=branch}}
-        {{/each}}
-      </ul>
+      {{/branch-list}}
+
       <button type="button" class="button" onclick={{perform fetchActiveTask  nonDefaultBranches.length}}>
         {{inline-svg 'icon-seemore' class="icon white"}}
         <span class="label-align">Load more branches</span></button>
@@ -27,33 +16,28 @@
       {{#if fetchActiveTask.isRunning}}
         {{loading-indicator}}
       {{/if}}
-    {{else}}
-      <p>There are no active branches.</p>
-    {{/if}}
   </section>
 
   <section class="deleted-branches">
-    <h2 class="small-title" id="deleted-branches">Deleted Branches</h2>
     {{#if model.deletedBranches.length}}
-      <p class="helptext">Displaying <span class="deleted-branch-display-count">{{model.deletedBranches.length}}</span> of <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
-      <ul class="blank-list">
-        {{#each model.deletedBranches as |branch|}}
-          {{branch-row branch=branch inactive=true}}
-        {{/each}}
-      </ul>
+      {{#branch-list branchList=model.deletedBranches listTitle="Inactive Branches" class="default-branch"}}
+        <p class="helptext">Displaying <span class="deleted-branch-display-count">{{model.deletedBranches.length}}</span> of <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
+      {{/branch-list}}
+
       <button type="button" class="button" onclick={{perform fetchInactiveTask model.deletedBranches.length}}>
         {{inline-svg 'icon-seemore' class="icon white"}}
         <span class="label-align">Get more deleted branches</span></button>
 
     {{else}}
-      <aside class="deleted-branches-notice">
-      <p class="helptext">
-        <span class="deleted-branch-count">{{model.deletedBranchesCount}}</span>
-        branches have been hidden as they were removed from GitHub.</p>
-      <button type="button" class="button" onclick={{perform fetchInactiveTask 0}}>
-        {{inline-svg 'icon-seemore' class="icon white"}}
-        <span class="label-align">Show deleted branches</span></button>
-    </aside>
+        <h2 class="small-title" id="deleted-branches">Inactive Branches</h2>
+        <aside class="deleted-branches-notice">
+          <p class="helptext">
+            <span class="deleted-branch-count">{{model.deletedBranchesCount}}</span>
+            branches have been hidden as they were removed from GitHub.</p>
+          <button type="button" class="button" onclick={{perform fetchInactiveTask 0}}>
+            {{inline-svg 'icon-seemore' class="icon white"}}
+            <span class="label-align">Show deleted branches</span></button>
+        </aside>
     {{/if}}
 
     {{#if fetchInactiveTask.isRunning}}

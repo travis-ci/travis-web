@@ -1,0 +1,11 @@
+<h2 class="small-title">{{listTitle}}</h2>
+
+{{yield}}
+
+<ul class="blank-list">
+  {{#each branchList as |branch| }}
+    {{branch-row branch=branch}}
+  {{else}}
+    <li>No branches found.</li>
+  {{/each}}
+</ul>
