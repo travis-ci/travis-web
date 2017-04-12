@@ -1,20 +1,20 @@
 <div class="profile-hooks profile-switch">
   {{#if admin}}
-    {{repository-switch hook=hook onToggleError="handleToggleError" onToggle="resetErrors"}}
-    {{#if hook.isSaving}}
+    {{repository-switch hook=repository onToggleError="handleToggleError" onToggle="resetErrors"}}
+    {{#if repository.isSaving}}
       {{loading-indicator inline=true}}
     {{else}}
-        {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repository settings"}}
+        {{#link-to "settings" repository.ownerName repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
           {{inline-svg 'icon-settings' class="icon icon-hover"}}{{/link-to}}
     {{/if}}
   {{else}}
-    {{repository-switch hook=hook disabled=true}}
+    {{repository-switch hook=repository disabled=true}}
   {{/if}}
 </div>
 
-{{#link-to "repo" hook.ownerName hook.name class="profile-repo"}}
-  {{hook.slug}}
-  <span>{{hook.description}}</span>
+{{#link-to "repo" repository.ownerName repository.name class="profile-repo"}}
+  {{repository.slug}}
+  <span>{{repository.description}}</span>
 {{/link-to}}
 
 {{#if showError}}
