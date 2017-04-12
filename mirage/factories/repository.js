@@ -4,6 +4,9 @@ export default Mirage.Factory.extend({
   slug: 'travis-ci/travis-web',
   githubLanguage: 'ruby',
   active: true,
+  owner: {
+    login: 'travis-ci',
+  },
   permissions: {
     read: false,
     activate: false,
@@ -13,6 +16,7 @@ export default Mirage.Factory.extend({
     create_request: false,
     create_cron: false,
     change_settings: false,
+    admin: false,
   },
 
   customSshKey: {

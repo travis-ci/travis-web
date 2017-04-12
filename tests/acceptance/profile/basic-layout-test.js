@@ -16,38 +16,54 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
     server.create('account', {
       name: 'Feminist Killjoys',
       type: 'organization',
-      login: 'killjoys',
+      owner: {
+        login: 'killjoys',
+      },
       repos_count: 30
     });
 
-    // create active hook
-    server.create('hook', {
+    // create active repository
+    server.create('repository', {
       name: 'living-a-feminist-life',
-      owner_name: 'feministkilljoy',
+      owner: {
+        login: 'feministkilljoy',
+      },
       active: true,
-      admin: true
+      permissions: {
+        admin: true
+      },
     });
 
-    // create inactive hook
-    server.create('hook', {
+    // create inactive repository
+    server.create('repository', {
       name: 'willful-subjects',
-      owner_name: 'feministkilljoy',
+      owner: {
+        login: 'feministkilljoy',
+      },
       active: false,
-      admin: true
+      permissions: {
+        admin: true
+      },
     });
 
     // create hook without admin permissions
     server.create('hook', {
       name: 'affect-theory-reader',
-      owner_name: 'feministkilljoy',
+      owner: {
+        login: 'feministkilljoy',
+      },
       active: true,
-      admin: false
+      permissions: {
+        admin: false
+      },
     });
 
-    // create other random hook to ensure correct filtering
-    server.create('hook', {
+    // create other random repository to ensure correct filtering
+    server.create('repository', {
       name: 'feminism-is-for-everybody',
-      owner_name: 'bellhooks',
+      owner: {
+        login: 'bellhooks',
+      },
       active: false
     });
   }

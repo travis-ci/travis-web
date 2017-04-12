@@ -158,6 +158,12 @@ export default function () {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });
 
+  this.get('/owner/:login/repos', function (schema, request) {
+    const { login } = request.params;
+    const repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
+    return this.serialize(repositories);
+  });
+
   this.delete('/settings/ssh_key/:repo_id', function (schema, request) {
     schema.sshKeys
       .where({ repositoryId: request.queryParams.repository_id })
