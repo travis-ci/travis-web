@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     this._super(...arguments);
 
     return Travis.on('user:synced', (() => {
-      return this.reloadHooks();
+      return this.reloadOwnerRepositories();
     }));
   },
 
@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
     }
   },
 
-  reloadHooks() {
+  reloadOwnerRepositories() {
     let login = this.get('model.login');
     if (login) {
       let hooks = this.store.query('hook', {
@@ -54,7 +54,7 @@ export default Ember.Controller.extend({
   @computed('allHooks.[]')
   hooks(hooks) {
     if (!hooks) {
-      this.reloadHooks();
+      this.reloadOwnerRepositories();
     }
     return hooks.filter(function (hook) {
       return hook.get('admin');
@@ -64,7 +64,7 @@ export default Ember.Controller.extend({
   @computed('allHooks.[]')
   hooksWithoutAdmin(hooks) {
     if (!hooks) {
-      this.reloadHooks();
+      this.reloadOwnerRepositories();
     }
     return this.get('allHooks').filter(function (hook) {
       return !hook.get('admin');
