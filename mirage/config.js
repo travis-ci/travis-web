@@ -1,8 +1,14 @@
 /* global server */
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
+import config from 'travis/config/environment';
+
+const { apiEndpoint } = config;
 
 export default function () {
+  this.namespace = apiEndpoint;
+
+  this.get('/users/:id');
   this.get('/accounts', (schema/* , request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
@@ -98,6 +104,41 @@ export default function () {
     return this.serialize(caches, 'v2');
   });
 
+  this.patch('/settings/ssh_key/:repository_id', function (schema, request) {
+    const sshKeys = schema.sshKeys.where({ repositoryId: request.queryParams.repository_id });
+    const [sshKey] = sshKeys.models;
+    if (sshKey) {
+      return {
+        ssh_key: {
+          id: sshKey.id,
+          description: sshKey.description,
+          value: sshKey.value,
+        },
+      };
+    } else {
+      const created = server.create('ssh_key', request.params);
+      return {
+        ssh_key: {
+          id: created.id,
+          description: created.description,
+          value: created.value,
+        }
+      };
+    }
+  });
+
+  this.post('/settings/env_vars', function (schema, request) {
+    const envVar = server.create('env_var', request.params);
+    return {
+      env_var: {
+        id: envVar.id,
+        name: envVar.name,
+        public: envVar.public,
+        repository_id: request.params.repository_id,
+      },
+    };
+  });
+
   this.get('/settings/env_vars', function (schema, request) {
     const envVars = schema.envVars.where({ repositoryId: request.queryParams.repository_id });
 
@@ -115,6 +156,15 @@ export default function () {
 
   this.get('/owner/:login', function (schema, request) {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
+  });
+
+  this.delete('/settings/ssh_key/:repo_id', function (schema, request) {
+    schema.sshKeys
+      .where({ repositoryId: request.queryParams.repository_id })
+      .models
+      .map(sshKey => sshKey.destroyRecord());
+
+    return new Mirage.Response(204, {}, {});
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {

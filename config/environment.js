@@ -104,7 +104,6 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
 
-    ENV.apiEndpoint = '';
     ENV.statusPageStatusUrl =  null;
 
     ENV.sentry = {
