@@ -96,10 +96,16 @@ export default DS.Store.extend({
       // change the code at the moment
       let lastBuild = this.peekRecord('build', last_build_id);
       if (!last_build_id || lastBuild) {
-        return this.push(this.normalize('repo', data));
+        const build = this.push(this.normalize('repo', data));
+
+        console.log('FIXME: reloading from here');
+
+        return build.reload();
       } else {
-        return this.findRecord('build', last_build_id).then(() => {
+        return this.findRecord('build', last_build_id).then(loaded => {
           this.push(this.normalize('repo', data));
+          console.log('FIXME reloading already-present');
+          return loaded.reload();
         });
       }
     }
