@@ -1,6 +1,6 @@
 <div class="profile-hooks profile-switch">
   {{#if admin}}
-    {{repository-switch hook=repository onToggleError="handleToggleError" onToggle="resetErrors"}}
+    {{repository-switch repository=repository onToggleError="handleToggleError" onToggle="resetErrors"}}
     {{#if repository.isSaving}}
       {{loading-indicator inline=true}}
     {{else}}
@@ -8,7 +8,7 @@
           {{inline-svg 'icon-settings' class="icon icon-hover"}}{{/link-to}}
     {{/if}}
   {{else}}
-    {{repository-switch hook=repository disabled=true}}
+    {{repository-switch repository=repository disabled=true}}
   {{/if}}
 </div>
 

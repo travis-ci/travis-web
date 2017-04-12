@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   tagName: 'a',
   classNames: ['switch'],
-  classNameBindings: ['hook.active:active', 'disabled:disabled', 'disabled:inline-block'],
+  classNameBindings: ['repository.active:active', 'disabled:disabled', 'disabled:inline-block'],
   click() {
     this.get('toggleRepository').perform();
   },
@@ -13,15 +13,15 @@ export default Ember.Component.extend({
     if (!this.get('disabled')) {
       this.sendAction('onToggle');
 
-      let hook = this.get('hook');
+      let repository = this.get('repository');
 
       let pusher = this.get('pusher'),
-        repoId = hook.get('id');
+        repoId = repository.get('id');
 
-      yield hook.toggle().then(() => {
+      yield repository.toggle().then(() => {
         pusher.subscribe(`repo-${repoId}`);
-        this.toggleProperty('hook.active');
-      }, () => { this.sendAction('onToggleError', hook); });
+        this.toggleProperty('repository.active');
+      }, () => { this.sendAction('onToggleError', repository); });
     }
   }),
 });
