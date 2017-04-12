@@ -1,6 +1,7 @@
 /* global Travis */
 import Ember from 'ember';
 import computed, { alias } from 'ember-computed-decorators';
+import Repository from 'travis/models/repo';
 
 const { service } = Ember.inject;
 
@@ -29,20 +30,17 @@ export default Ember.Controller.extend({
   },
 
   reloadOwnerRepositories() {
-    let login = this.get('model.login');
+    const login = this.get('model.login');
     if (login) {
-      let hooks = this.store.query('hook', {
-        all: true,
-        owner_name: login,
-        order: 'none'
-      });
       this.set('loadingError', false);
-      hooks.then(function () {
-        return hooks.set('isLoaded', true);
+      const repositories = Repository.fetchByOwner(this.store, login);
+      return repositories.then(() => {
+        const ownedRepositories = this.store.peekAll('repo', repo => repo.owner.login === login);
+        this.set('allHooks', ownedRepositories);
+        this.set('allHooks.isLoaded', true);
       }).catch(() => {
         this.set('loadingError', true);
       });
-      return this.set('allHooks', hooks);
     }
   },
 
@@ -57,7 +55,7 @@ export default Ember.Controller.extend({
       this.reloadOwnerRepositories();
     }
     return hooks.filter(function (hook) {
-      return hook.get('admin');
+      return hook.get('permissions.admin');
     }).sortBy('name');
   },
 
@@ -67,7 +65,7 @@ export default Ember.Controller.extend({
       this.reloadOwnerRepositories();
     }
     return this.get('allHooks').filter(function (hook) {
-      return !hook.get('admin');
+      return !hook.get('permissions.admin');
     }).sortBy('name');
   },
 

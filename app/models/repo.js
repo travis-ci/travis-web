@@ -250,7 +250,23 @@ Repo.reopenClass({
         throw error;
       });
     }
-  }
+  },
+
+  fetchByOwner(store, owner) {
+    const adapter = store.adapterFor('repo');
+    const promise = adapter.byOwner(owner).then((payload) => {
+      const serializer = store.serializerFor('repo');
+      const modelClass = store.modelFor('repo');
+      const serialized = serializer.normalizeResponse(store, modelClass, payload, null, 'query');
+      return store.push({
+        data: serialized.data,
+      });
+    });
+
+    return promise['catch'](function () {
+      throw new Error('Repositories not found for owner');
+    });
+  },
 });
 
 export default Repo;

@@ -11,7 +11,7 @@ export default TravisRoute.extend({
 
   setupController(controller) {
     this._super(...arguments);
-    controller.reloadHooks();
+    controller.reloadOwnerRepositories();
   },
 
   model(params) {
