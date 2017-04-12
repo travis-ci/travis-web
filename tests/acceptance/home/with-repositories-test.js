@@ -17,7 +17,6 @@ const repositoryTemplate = {
 
 moduleForAcceptance('Acceptance | home/with repositories', {
   beforeEach() {
-    server.logging = true;
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
       login: 'feministkilljoy'

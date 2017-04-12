@@ -8,7 +8,6 @@ import Ember from 'ember';
 
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
-    server.logging = true;
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
       login: 'feministkilljoy'
