@@ -29,7 +29,7 @@ class Travis::Web::App
 
   class << self
     def new(options = {})
-      return super unless options[:environment] == 'development'
+      return super # unless options[:environment] == 'development'
       proc { |e| super.call(e) } # poor man's reloader
     end
 
