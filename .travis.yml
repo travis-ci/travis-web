@@ -1,6 +1,18 @@
----
 language: node_js
+
 node_js: 6
+
+stages:
+  - "test"
+  - ":ship: it to Quay.io"
+
+jobs:
+  include:
+    - stage: ":ship: it to Quay.io"
+      sudo: required
+      dist: trusty
+      env:
+      script: ./script/docker-build-and-push
 
 env:
   global:
