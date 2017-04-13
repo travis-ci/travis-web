@@ -47,23 +47,22 @@ export default PageObject.create({
 
   defaultBranch: branchRowComponent,
 
+  getMoreActive: clickable('.active-branches .button'),
+
+  inactiveBranchesVisible: isVisible('.inactive-branch-list'),
+  inactiveBranchesNotVisible: isVisible('.inactive-branches-hidden'),
+  inactiveInfo: text('.inactive-branches-hidden .helptext'),
+  getMoreInactive: clickable('.inactive-branches .button'),
+
   activeBranches: collection({
     scope: '.active-branches',
     itemScope: '.branch-row',
-    loadMore: clickable('.active-branches .button'),
     item: branchRowComponent
   }),
 
   inactiveBranches: collection({
     scope: '.inactive-branches',
-    inactiveBranchesVisible: isVisible('.inactive-branch-list'),
-    inactiveBranchesNotVisible: isVisible('.inactive-branches-hidden'),
-    countNumber: isVisible('.inactive-branch-count'),
     itemScope: '.branch-row',
-
-    info: text('.inactive-branches-hidden .helptext'),
-    getMoreBtn: clickable('.inactive-branches .button'),
-
     item: branchRowComponent
   })
 });
