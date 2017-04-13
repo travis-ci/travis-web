@@ -14,16 +14,18 @@ export default Ember.Controller.extend({
 
   fetchInactiveTask: task(function* (offset) {
     let repoId = this.get('defaultBranch.firstObject.repoId');
+    let alreadyInactive = this.get('model.deletedBranches') || [];
+
     try {
       yield this.get('store').query('branch', {
         repoId: repoId,
         existsOnGithub: false,
         offset: offset
       }).then((branches) => {
-        this.set('model.deletedBranches', branches);
+        this.set('model.deletedBranches', alreadyInactive.pushObjects(branches.toArray()));
       });
     } catch (e) {
-      this.get('flashes').error('Could not fetch inactive repos');
+      this.get('flashes').error('There was an error fetching inactive branches.');
     }
   }),
 
@@ -31,12 +33,31 @@ export default Ember.Controller.extend({
     let repoId = this.get('defaultBranch.firstObject.repoId');
     let alreadyActive = this.get('nonDefaultBranches');
 
-    yield this.get('store').query('branch', {
-      repoId: repoId,
-      existsOnGithub: true,
-      offset: offset
-    }).then((branches) => {
-      this.set('nonDefaultBranches', alreadyActive.pushObjects(branches.toArray()));
-    });
+    try {
+      yield this.get('store').query('branch', {
+        repoId: repoId,
+        existsOnGithub: true,
+        offset: offset
+      }).then((branches) => {
+        this.set('model.activeBranches', alreadyActive.pushObjects(branches.toArray()));
+      });
+    } catch (e) {
+      this.get('flashes').error('There was an error fetching active branches.');
+    }
+  }),
+
+  canLoadMoreActive: Ember.computed(
+    'model.activeBranches.[]',
+    'model.activeBranchesCount',
+    function () {
+      return this.get('model.activeBranchesCount') === this.get('nonDefaultBranches.length');
+  }),
+
+  canLoadMoreInactive: Ember.computed(
+    'model.deletedBranches.[]',
+    'model.deletedbranchesCount',
+    function () {
+      debugger
+      return this.get('model.deletedBranchesCount') === this.get('model.deletedBranches.length');
   })
 });

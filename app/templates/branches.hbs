@@ -5,12 +5,16 @@
 
     <section class="active-branches">
       {{#branch-list branchList=nonDefaultBranches listTitle="Active Branches" class="default-branch"}}
-        <p class="helptext">Displaying <span>{{nonDefaultBranches.length}}</span> of <span>{{model.activeBranchesCount}}</span> active branches.</p>
+        <p class="helptext">Displaying
+          <span>{{nonDefaultBranches.length}}</span> of
+          <span>{{model.activeBranchesCount}}</span> active branches.</p>
       {{/branch-list}}
 
-      <button type="button" class="button" onclick={{perform fetchActiveTask  nonDefaultBranches.length}}>
+      {{#unless canLoadMoreActive}}
+        <button type="button" class="button" onclick={{perform fetchActiveTask  nonDefaultBranches.length}}>
         {{inline-svg 'icon-seemore' class="icon white"}}
         <span class="label-align">Load more branches</span></button>
+      {{/unless}}
 
       {{#if fetchActiveTask.isRunning}}
         {{loading-indicator}}
@@ -20,12 +24,16 @@
   <section class="deleted-branches">
     {{#if model.deletedBranches.length}}
       {{#branch-list branchList=model.deletedBranches listTitle="Inactive Branches" class="default-branch"}}
-        <p class="helptext">Displaying <span>{{model.deletedBranches.length}}</span> of <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
+        <p class="helptext">Displaying
+          <span>{{model.deletedBranches.length}}</span> of
+          <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
       {{/branch-list}}
 
-      <button type="button" class="button" onclick={{perform fetchInactiveTask model.deletedBranches.length}}>
-        {{inline-svg 'icon-seemore' class="icon white"}}
-        <span class="label-align">Get more deleted branches</span></button>
+      {{#unless canLoadMoreInactive}}
+        <button type="button" class="button" onclick={{perform fetchInactiveTask model.deletedBranches.length}}>
+          {{inline-svg 'icon-seemore' class="icon white"}}
+          <span class="label-align">Get more deleted branches</span></button>
+      {{/unless}}
 
     {{else}}
         <h2 class="small-title" id="deleted-branches">Inactive Branches</h2>
