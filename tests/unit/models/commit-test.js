@@ -1,7 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 moduleForModel('commit', 'Unit | Model | commit', {
-  needs: ['model:build', 'service:external-links', 'service:auth']
+  needs: ['model:build', 'model:branch', 'service:external-links', 'service:auth']
 });
 
 test('finds out if author is also committer', function (assert) {

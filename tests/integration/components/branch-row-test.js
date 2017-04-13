@@ -48,7 +48,7 @@ test('it renders data correctly', function (assert) {
 
   this.render(hbs`{{branch-row branch=branch}}`);
 
-  assert.ok(this.$().find('.branch-row').hasClass('passed'), 'component should have state class (passed)');
+  assert.ok(this.$().hasClass('passed'), 'component should have state class (passed)');
   assert.equal(this.$('.row-name .label-align').text().trim(), 'master', 'should display correct branch name');
   assert.equal(this.$('.row-request .label-align').text().trim(), '#1 passed', 'should display build number and state');
   assert.equal(this.$('.row-commiter .label-align').text().trim(), 'Dan Buch', 'should display correct commiter name');
