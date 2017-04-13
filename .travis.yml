@@ -12,6 +12,9 @@ jobs:
       sudo: required
       dist: trusty
       env:
+      before_install: skip
+      install: skip
+      before_script: skip
       script: ./script/docker-build-and-push
 
 env:
