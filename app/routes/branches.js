@@ -21,7 +21,7 @@ export default TravisRoute.extend({
         .then(function (response) {
           return response['@pagination'].count;
         }),
-      deletedBranchesCount:
+      inactiveBranchesCount:
       Ember.$.ajax(`${config.apiEndpoint}/v3/repo/${repoId}/branches
 ?exists_on_github=false&limit=0`, options)
         .then(function (response) {

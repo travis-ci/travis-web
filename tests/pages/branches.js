@@ -49,22 +49,20 @@ export default PageObject.create({
 
   activeBranches: collection({
     scope: '.active-branches',
-    currentViewNumber: text('.branch-current-active'),
-    totalNumber: text('.branch-count-active'),
     itemScope: '.branch-row',
     loadMore: clickable('.active-branches .button'),
     item: branchRowComponent
   }),
 
   inactiveBranches: collection({
-    scope: '.deleted-branches',
-    isVisible: isVisible('.deleted-branches'),
-    countNumber: isVisible('.deleted-branch-count'),
-    displayCountNuber: isVisible('.deleted-branches-display-count'),
+    scope: '.inactive-branches',
+    inactiveBranchesVisible: isVisible('.inactive-branch-list'),
+    inactiveBranchesNotVisible: isVisible('.inactive-branches-hidden'),
+    countNumber: isVisible('.inactive-branch-count'),
     itemScope: '.branch-row',
 
-    info: text('.deleted-branches .helptext'),
-    cta: clickable('.deleted-branches .button'),
+    info: text('.inactive-branches-hidden .helptext'),
+    getMoreBtn: clickable('.inactive-branches .button'),
 
     item: branchRowComponent
   })

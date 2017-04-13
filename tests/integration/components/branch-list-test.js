@@ -5,21 +5,13 @@ moduleForComponent('branch-list', 'Integration | Component | branch list', {
   integration: true
 });
 
-test('it renders', function(assert) {
-
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
-
-  this.render(hbs`{{branch-list}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
+test('it renders', function (assert) {
   this.render(hbs`
     {{#branch-list}}
-      template block text
+      <p class="helptext">This is a branch list</p>
     {{/branch-list}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().find('.helptext').text().trim(), 'This is a branch list');
+  assert.equal(this.$().find('ul').text().trim(), 'No branches found');
 });

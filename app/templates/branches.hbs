@@ -4,7 +4,7 @@
   </section>
 
   <section class="active-branches">
-    {{#branch-list branchList=nonDefaultBranches listTitle="Active Branches" class="default-branch"}}
+    {{#branch-list branchList=nonDefaultBranches listTitle="Active Branches"}}
       <p class="helptext">Displaying
         <span>{{nonDefaultBranches.length}}</span> of
         <span>{{model.activeBranchesCount}}</span> active branches.</p>
@@ -21,29 +21,29 @@
     {{/if}}
   </section>
 
-  <section class="deleted-branches">
-    {{#if model.deletedBranches.length}}
-      {{#branch-list branchList=model.deletedBranches listTitle="Inactive Branches" class="default-branch"}}
+  <section class="inactive-branches">
+    {{#if model.inactiveBranches.length}}
+      {{#branch-list branchList=model.inactiveBranches listTitle="Inactive Branches" class="inactive-branch-list"}}
         <p class="helptext">Displaying
-          <span>{{model.deletedBranches.length}}</span> of
-          <span>{{model.deletedBranchesCount}}</span> deleted branches.</p>
+          <span>{{model.inactiveBranches.length}}</span> of
+          <span>{{model.inactiveBranchesCount}}</span> inactive branches.</p>
       {{/branch-list}}
 
       {{#unless canLoadMoreInactive}}
-        <button type="button" class="button" onclick={{perform fetchInactiveTask model.deletedBranches.length}}>
+        <button type="button" class="button" onclick={{perform fetchInactiveTask model.inactiveBranches.length}}>
           {{inline-svg 'icon-seemore' class="icon white"}}
-          <span class="label-align">Get more deleted branches</span></button>
+          <span class="label-align">Get more inactive branches</span></button>
       {{/unless}}
 
     {{else}}
-      <h2 class="small-title" id="deleted-branches">Inactive Branches</h2>
-      <aside class="deleted-branches-notice">
+      <h2 class="small-title">Inactive Branches</h2>
+      <aside class="inactive-branches-hidden">
         <p class="helptext">
-          <span class="deleted-branch-count">{{model.deletedBranchesCount}}</span>
+          <span class="inactive-branch-count">{{model.inactiveBranchesCount}}</span>
           branches have been hidden as they were removed from GitHub.</p>
         <button type="button" class="button" onclick={{perform fetchInactiveTask 0}}>
           {{inline-svg 'icon-seemore' class="icon white"}}
-          <span class="label-align">Show deleted branches</span></button>
+          <span class="label-align">Show inactive branches</span></button>
       </aside>
     {{/if}}
 

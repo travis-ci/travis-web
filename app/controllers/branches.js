@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
 
   fetchInactiveTask: task(function* (offset) {
     let repoId = this.get('defaultBranch.firstObject.repoId');
-    let alreadyInactive = this.get('model.deletedBranches') || [];
+    let alreadyInactive = this.get('model.inactiveBranches') || [];
 
     try {
       yield this.get('store').query('branch', {
@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
         existsOnGithub: false,
         offset: offset
       }).then((branches) => {
-        this.set('model.deletedBranches', alreadyInactive.pushObjects(branches.toArray()));
+        this.set('model.inactiveBranches', alreadyInactive.pushObjects(branches.toArray()));
       });
     } catch (e) {
       this.get('flashes').error('There was an error fetching inactive branches.');
@@ -51,13 +51,12 @@ export default Ember.Controller.extend({
     'model.activeBranchesCount',
     function () {
       return this.get('model.activeBranchesCount') === this.get('nonDefaultBranches.length');
-  }),
+    }),
 
   canLoadMoreInactive: Ember.computed(
-    'model.deletedBranches.[]',
-    'model.deletedbranchesCount',
+    'model.inactiveBranches.[]',
+    'model.inactiveBranchesCount',
     function () {
-      debugger
-      return this.get('model.deletedBranchesCount') === this.get('model.deletedBranches.length');
-  })
+      return this.get('model.inactiveBranchesCount') === this.get('model.inactiveBranches.length');
+    })
 });
