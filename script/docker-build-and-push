@@ -2,9 +2,9 @@
 
 set -ev
 
-docker-compose build web;
-
 docker login -u=$QUAY_ROBOT_HANDLE -p=$QUAY_ROBOT_TOKEN quay.io;
+
+docker-compose build web;
 
 docker images;
 
