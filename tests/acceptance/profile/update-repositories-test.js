@@ -2,7 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import profilePage from 'travis/tests/pages/profile';
 
-moduleForAcceptance('Acceptance | profile/update hooks', {
+moduleForAcceptance('Acceptance | profile/update-repositories', {
   beforeEach() {
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
@@ -16,36 +16,38 @@ moduleForAcceptance('Acceptance | profile/update hooks', {
     server.create('account', {
       name: 'Feminist Killjoys',
       type: 'organization',
-      login: 'killjoys',
+      owner: {
+        login: 'killjoys',
+      },
       repos_count: 30
     });
 
-    // create active hook
-    server.create('hook', {
+    // create active repository
+    server.create('repository', {
       name: 'living-a-feminist-life',
       owner_name: 'feministkilljoy',
       active: true,
       admin: true
     });
 
-    // create inactive hook
-    server.create('hook', {
+    // create inactive repository
+    server.create('repository', {
       name: 'willful-subjects',
       owner_name: 'feministkilljoy',
       active: false,
       admin: true
     });
 
-    // create hook without admin permissions
-    server.create('hook', {
+    // create repository without admin permissions
+    server.create('repository', {
       name: 'affect-theory-reader',
       owner_name: 'feministkilljoy',
       active: true,
       admin: false
     });
 
-    // create other random hook to ensure correct filtering
-    server.create('hook', {
+    // create other random repository to ensure correct filtering
+    server.create('repository', {
       name: 'feminism-is-for-everybody',
       owner_name: 'bellhooks',
       active: false
@@ -53,7 +55,7 @@ moduleForAcceptance('Acceptance | profile/update hooks', {
   }
 });
 
-test('updating hooks', function (assert) {
+test('updating repository', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
   profilePage.administerableHooks(0).toggle();
