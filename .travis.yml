@@ -17,6 +17,7 @@ jobs:
 env:
   global:
     - PERCY_ENABLE=0
+    - EMBER_VERSION=default
 
 sudo: false
 dist: trusty
