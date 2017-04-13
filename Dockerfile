@@ -17,6 +17,8 @@ RUN bundle install
 COPY package.json /usr/src/app
 COPY bower.json   /usr/src/app
 
+RUN npm install -g bower
+
 RUN npm install --quiet
 RUN bower install
 
