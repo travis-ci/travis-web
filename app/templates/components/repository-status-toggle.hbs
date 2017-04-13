@@ -4,7 +4,7 @@
     {{#if repository.isSaving}}
       {{loading-indicator inline=true}}
     {{else}}
-        {{#link-to "settings" repository.ownerName repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
+        {{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
           {{inline-svg 'icon-settings' class="icon icon-hover"}}{{/link-to}}
     {{/if}}
   {{else}}
@@ -12,7 +12,7 @@
   {{/if}}
 </div>
 
-{{#link-to "repo" repository.ownerName repository.name class="profile-repo"}}
+{{#link-to "repo" repository.owner.login repository.name class="profile-repo"}}
   {{repository.slug}}
   <span>{{repository.description}}</span>
 {{/link-to}}
