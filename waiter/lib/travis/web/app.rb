@@ -8,7 +8,6 @@ require 'travis/utils/deep_merge'
 
 class Travis::Web::App
   autoload :AltVersions,    'travis/web/app/alt_versions'
-  autoload :MobileRedirect, 'travis/web/app/mobile_redirect'
   include Travis::DeepMerge
 
   S3_URL = 'https://s3.amazonaws.com/travis-web-production/assets'

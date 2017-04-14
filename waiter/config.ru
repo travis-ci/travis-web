@@ -20,8 +20,6 @@ unless ENV['TRAVIS_PRO']
   use RedirectSubdomain, 'secure.travis-ci.org'
 end
 
-use Rack::MobileDetect, :redirect_to => ENV['MOBILE_ENDPOINT'] if ENV['MOBILE_ENDPOINT']
-
 use Travis::Web::SentryDeployHook
 
 use Travis::Web::SetToken

@@ -6,7 +6,6 @@ gem 'travis-web', path: 'waiter'
 gem 'puma'
 gem 'rack-ssl', '~> 1.3'
 gem 'rack-protection', '~> 1.3'
-gem 'rack-mobile-detect'
 gem 'sinatra'
 gem 'hashr'
 
