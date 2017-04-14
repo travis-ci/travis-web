@@ -21,9 +21,11 @@ RUN npm install -g bower
 
 RUN npm install --quiet
 RUN bower install --allow-root
+# Why is this needed?
+RUN npm install -g ember-cli
 
 COPY . /usr/src/app
 
-RUN ./node_modules/bin/ember build --environment=production
+RUN ember build --environment=production
 
 CMD bundle exec puma -I lib -p ${PORT:-4000} -t ${PUMA_MIN_THREADS:-8}:${PUMA_MAX_THREADS:-12} -w ${PUMA_WORKERS:-2} --preload waiter/config.ru
