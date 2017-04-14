@@ -12,7 +12,7 @@ COPY Gemfile      /usr/src/app
 COPY Gemfile.lock /usr/src/app
 COPY waiter       /usr/src/app/waiter
 
-RUN bundle install
+RUN bundle install --without assets development test
 
 COPY package.json /usr/src/app
 COPY bower.json   /usr/src/app
