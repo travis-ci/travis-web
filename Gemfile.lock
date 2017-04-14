@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/joshk/jemalloc-rb
+  revision: 9ffefeb626efb892884faa3ecc01d12e15482680
+  ref: 9ffefeb
+  specs:
+    jemalloc (1.0.1)
+
 PATH
   remote: waiter
   specs:
@@ -49,6 +56,7 @@ PLATFORMS
 DEPENDENCIES
   foreman
   hashr
+  jemalloc!
   puma
   rack-protection (~> 1.3)
   rack-ssl (~> 1.3)

@@ -8,11 +8,11 @@ gem 'rack-ssl', '~> 1.3'
 gem 'rack-protection', '~> 1.3'
 gem 'sinatra'
 gem 'hashr'
+gem 'jemalloc', git: 'https://github.com/joshk/jemalloc-rb', ref: '9ffefeb'
 
 group :development, :test do
   gem 'rake'
 end
-
 
 group :development do
   # gem 'debugger'
