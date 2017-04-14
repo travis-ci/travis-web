@@ -1,6 +1,6 @@
 FROM quay.io/travisci/travis-web-base
 
-LABEL maintainer Travis CI GmbH <support+travis-build-docker-image@travis-ci.com>
+LABEL maintainer Travis CI GmbH <support+travis-app-docker-images@travis-ci.com>
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
@@ -21,11 +21,9 @@ RUN npm install -g bower
 
 RUN npm install --quiet
 RUN bower install --allow-root
-# Why is this needed?
-RUN npm install -g ember-cli
 
 COPY . /usr/src/app
 
-RUN ember build --environment=production
+RUN ./node_modules/.bin/ember build --environment=production
 
 CMD bundle exec puma -I lib -p ${PORT:-4000} -t ${PUMA_MIN_THREADS:-8}:${PUMA_MAX_THREADS:-12} -w ${PUMA_WORKERS:-2} --preload waiter/config.ru
