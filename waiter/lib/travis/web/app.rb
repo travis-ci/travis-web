@@ -28,16 +28,13 @@ class Travis::Web::App
 
   class << self
     def new(options = {})
-      return super # unless options[:environment] == 'development'
+      return super unless options[:environment] == 'development'
       proc { |e| super.call(e) } # poor man's reloader
     end
 
     def build(options = {})
       builder = Rack::Builder.new
-      # if options[:environment] == 'production' ||
-      #     options[:environment] == 'staging'
-      #   builder.use Rack::SSL, hsts: Travis.config.ssl.hsts
-      # end
+      builder.use(Rack::SSL, hsts: Travis.config.ssl.hsts) if enable_ssl?(options)
       builder.use Rack::Deflater
       builder.use Rack::Head
       builder.use Rack::Protection::XSSHeader
@@ -46,6 +43,11 @@ class Travis::Web::App
       builder.use Rack::ConditionalGet
       builder.run new(options)
       builder.to_app
+    end
+
+    def enable_ssl?(options)
+      (options[:environment] == 'production' || options[:environment] == 'staging') &&
+        options[:disable_ssl] != 'false'
     end
   end
 

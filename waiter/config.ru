@@ -49,6 +49,7 @@ end
 run Travis::Web::App.build(
   userlike:        ENV['USERLIKE'],
   environment:     ENV['RACK_ENV'] || 'development',
+  disable_ssl:     ENV['DISABLE_SSL'],
   api_endpoint:    ENV['API_ENDPOINT'],
   pages_endpoint:   ENV['PAGES_ENDPOINT'],
   billing_endpoint: ENV['BILLING_ENDPOINT'],
