@@ -105,10 +105,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
         return true;
       }
     },
-
-    renderFirstSync() {
-      return this.transitionTo('first_sync');
-    },
   },
 
   afterSignIn() {
