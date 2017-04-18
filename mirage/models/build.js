@@ -5,4 +5,5 @@ export default Model.extend({
   commit: belongsTo('commit', { inverseOf: 'build' }),
   branch: belongsTo('branch', { inverseOf: 'builds' }),
   jobs: hasMany('job'),
+  stages: hasMany('stage'),
 });
