@@ -14,6 +14,8 @@ export default V3Adapter.extend({
   },
 
   findRecord(store, type, id) {
-    return this.ajax(this.urlPrefix() + id, 'GET');
+    // todo find repoID
+    let repoId = 269284;
+    return this.ajax(`${this.urlPrefix()}/repo/${repoId}/branch/${id}`, 'GET');
   },
 });
