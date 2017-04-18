@@ -51,5 +51,23 @@ export default Ember.Component.extend({
     } else {
       return undefined;
     }
+  }),
+
+  // FIXME lol almost the same as above
+  stageStateTitle: Ember.computed('stageState', function () {
+    const stageState = this.get('stageState');
+
+    const title = {
+      'passed': 'passed',
+      'failed': 'failed',
+      'errored': 'errored',
+      'canceled': 'canceled'
+    }[stageState];
+
+    if (title) {
+      return `Stage ${title}`;
+    } else {
+      return undefined;
+    }
   })
 });

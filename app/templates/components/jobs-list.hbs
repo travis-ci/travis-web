@@ -6,7 +6,7 @@
     {{#if stage}}
       <header class="stage-header {{stageState}}">
         <h2 class="section-title">
-          {{#if stageStateIcon}}{{inline-svg stageStateIcon class='icon'}}{{/if}}
+          {{#if stageStateIcon}}<span class='state-icon-container' title='{{stageStateTitle}}'>{{inline-svg stageStateIcon class='icon'}}</span>{{/if}}
           <span class='name'>{{format-message stage.name}}</span>
         </h2>
         <!-- FIXME restore duration

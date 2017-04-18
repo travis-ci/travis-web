@@ -61,6 +61,8 @@ export default PageObject.create({
       isPassed: hasClass('passed', '.stage-header'),
       isFailed: hasClass('failed', '.stage-header'),
 
+      stateTitle: attribute('title', 'h2 .state-icon-container'),
+
       jobs: collection({
         itemScope: '.jobs-item',
 
