@@ -12,6 +12,12 @@
       {{#if build.isMatrix}}
         {{#if jobsLoaded}}
           {{#if build.stages}}
+            <p class="notice-banner--yellow spaced">
+              <span class="label-align">
+                <strong>Beta Feature</strong> Thank you for trying Build Stages!
+              </span>
+              <a href="https://github.com/travis-ci/beta-features/issues/11" title="Build stages feedback thread">We’d love your feedback</a>
+            </p>
             {{#each sortedBuildStages as |stage|}}
               {{jobs-list stage=stage build=build repo=repo}}
             {{/each}}
