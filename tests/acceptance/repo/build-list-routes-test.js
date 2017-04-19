@@ -128,16 +128,16 @@ test('build history shows, more can be loaded, and a created build gets added an
   andThen(() => {
     assert.equal(page.builds().count, 3, 'expected three builds');
 
-    const build = page.builds(0);
-
-    assert.ok(build.passed, 'expected the first build to have passed');
-    assert.equal(build.name, 'successful-cron-branch');
-    assert.equal(build.committer, 'Sara Ahmed');
-    assert.equal(build.commitSha, '1234567');
-    assert.equal(build.commitDate, 'about a year ago');
-    assert.equal(build.requestIconTitle, 'Triggered by a cron job');
-    assert.equal(build.duration, '5 min');
-    assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
+    page.builds(0).as(build => {
+      assert.ok(build.passed, 'expected the first build to have passed');
+      assert.equal(build.name, 'successful-cron-branch');
+      assert.equal(build.committer, 'Sara Ahmed');
+      assert.equal(build.commitSha, '1234567');
+      assert.equal(build.commitDate, 'about a year ago');
+      assert.equal(build.requestIconTitle, 'Triggered by a cron job');
+      assert.equal(build.duration, '5 min');
+      assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
+    });
 
     assert.ok(page.builds(1).failed, 'expected the second build to have failed');
     assert.ok(page.builds(2).errored, 'expected the third build to have errored');
@@ -207,12 +207,12 @@ test('build history shows, more can be loaded, and a created build gets added an
   andThen(() => {
     assert.equal(page.builds().count, 6, 'expected another build');
 
-    const newBuild = page.builds(0);
-
-    assert.ok(newBuild.created, 'expected the new build to show as created');
-    assert.equal(newBuild.name, 'no-dapl');
-    assert.equal(newBuild.message, 'Standing with Standing Rock');
-    assert.equal(newBuild.requestIconTitle, 'Triggered by a push');
+    page.builds(0).as(newBuild => {
+      assert.ok(newBuild.created, 'expected the new build to show as created');
+      assert.equal(newBuild.name, 'no-dapl');
+      assert.equal(newBuild.message, 'Standing with Standing Rock');
+      assert.equal(newBuild.requestIconTitle, 'Triggered by a push');
+    });
 
     const startedData = {
       build: generatePusherPayload(build, { state: 'started' }),
@@ -245,17 +245,17 @@ test('view and cancel pull requests', function (assert) {
   andThen(() => {
     assert.equal(page.builds().count, 1, 'expected one pull request build');
 
-    const pullRequest = page.builds(0);
+    page.builds(0).as(pullRequest => {
+      assert.ok(pullRequest.started, 'expected the pull request to have started');
+      assert.equal(pullRequest.name, 'PR #2010');
+      assert.equal(pullRequest.message, 'A pull request');
+      assert.equal(pullRequest.committer, 'Sara Ahmed');
+      assert.equal(pullRequest.commitSha, '1234567');
+      assert.equal(pullRequest.commitDate, 'about a year ago');
+      assert.equal(pullRequest.duration, '5 min');
 
-    assert.ok(pullRequest.started, 'expected the pull request to have started');
-    assert.equal(pullRequest.name, 'PR #2010');
-    assert.equal(pullRequest.message, 'A pull request');
-    assert.equal(pullRequest.committer, 'Sara Ahmed');
-    assert.equal(pullRequest.commitSha, '1234567');
-    assert.equal(pullRequest.commitDate, 'about a year ago');
-    assert.equal(pullRequest.duration, '5 min');
-
-    assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
+      assert.ok(pullRequest.cancelButton.visible, 'expected the cancel button to be visible');
+    });
   });
   percySnapshot(assert);
 
