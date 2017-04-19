@@ -28,9 +28,6 @@ export default Ember.Component.extend({
     }
   }),
 
-  jobDurations: Ember.computed.mapBy('jobsProxyLol', 'duration'),
-  duration: Ember.computed.sum('jobDurations'),
-
   // FIXME it seems unfortunate to have to know the dependent keys here… 🤔
   stageState: Ember.computed(
     'jobsProxyLol.@each.state', 'jobsProxyLol.@each.isRunning', function () {

@@ -1414,14 +1414,16 @@ export default {
         "id",
         "name",
         "number",
-        "state"
+        "state",
+        "started_at",
+        "finished_at"
       ],
       "representations": {
         "minimal": [
-          "id", "name", "number", "state"
+          "id", "name", "number", "state", "started_at", "finished_at"
         ],
         "standard": [
-          "id", "name", "number", "state"
+          "id", "name", "number", "state", "started_at", "finished_at"
         ]
       }
     },

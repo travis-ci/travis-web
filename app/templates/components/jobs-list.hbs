@@ -9,12 +9,12 @@
           {{#if stageStateIcon}}<span class='state-icon-container' title='{{stageStateTitle}}'>{{inline-svg stageStateIcon class='icon'}}</span>{{/if}}
           <span class='name'>{{format-message stage.name}}</span>
         </h2>
-        <!-- FIXME restore duration
-        <div class="stage-duration">
-          {{inline-svg 'icon-clock' class="icon"}}
-          <time class="label-align" aria-label="Job duration" datetime="PT{{job.duration}}S">{{format-duration duration}}</time>
-        </div>
-        -->
+        {{#if stage.duration}}
+          <div class="stage-duration" title="Started {{pretty-date stage.startedAt}}">
+            {{inline-svg 'icon-clock' class="icon"}}
+            <time class="label-align" aria-label="Stage duration" datetime="PT{{stage.duration}}S">{{format-duration stage.duration}}</time>
+          </div>
+        {{/if}}
       </header>
     {{else}}
       <h2 class="section-title"><span class="label-align">Allowed Failures</span>
