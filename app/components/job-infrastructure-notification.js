@@ -24,9 +24,11 @@ export default Ember.Component.extend({
 
   @computed('queue', 'job.config')
   isPreciseEOL(queue, config) {
-    if (queue === 'builds.gce') {
-      // needs more logic
-      return true;
+    console.log(config);
+    if (queue === 'builds.gce' && config.dist === 'precise') {
+      if (config.language !== 'android') {
+        return true;
+      }
     }
   },
 
