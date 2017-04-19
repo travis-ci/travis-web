@@ -42,19 +42,19 @@ test('view and delete caches', function (assert) {
     assert.equal(page.pushCaches().count, 1, 'expected one push cache');
     assert.ok(page.tabIsActive, 'expected the caches tab to be active');
 
-    const pushCache = page.pushCaches(0);
-
-    assert.equal(pushCache.name, 'a-branch-name');
-    assert.equal(pushCache.lastModified, 'a day ago');
-    assert.equal(pushCache.size, '85.27MB');
-
-    const pullRequestCache = page.pullRequestCaches(0);
+    page.pushCaches(0).as(pushCache => {
+      assert.equal(pushCache.name, 'a-branch-name');
+      assert.equal(pushCache.lastModified, 'a day ago');
+      assert.equal(pushCache.size, '85.27MB');
+    });
 
     assert.equal(page.pullRequestCaches().count, 1, 'expected one pull request cache');
 
-    assert.equal(pullRequestCache.name, 'PR.1919');
-    assert.equal(pullRequestCache.lastModified, '2 days ago');
-    assert.equal(pullRequestCache.size, '19.19MB');
+    page.pullRequestCaches(0).as(pullRequestCache => {
+      assert.equal(pullRequestCache.name, 'PR.1919');
+      assert.equal(pullRequestCache.lastModified, '2 days ago');
+      assert.equal(pullRequestCache.size, '19.19MB');
+    });
 
     assert.notOk(page.noCachesExist, 'expected the message that no caches exist to not be present');
   });
