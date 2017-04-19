@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import jobsListState from 'travis/utils/jobs-list-state';
 
 export default Ember.Component.extend({
   tagName: 'section',
@@ -28,12 +27,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  // FIXME it seems unfortunate to have to know the dependent keys here… 🤔
-  stageState: Ember.computed(
-    'jobsProxyLol.@each.state', 'jobsProxyLol.@each.isRunning', function () {
-      return jobsListState(this.get('jobsProxyLol'));
-    }),
-
+  stageState: Ember.computed.alias('stage.state'),
   stageStateIcon: Ember.computed('stageState', function () {
     const stageState = this.get('stageState');
 
