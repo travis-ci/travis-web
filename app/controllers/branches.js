@@ -31,7 +31,9 @@ export default Ember.Controller.extend({
 
   fetchActiveTask: task(function* (offset) {
     let repoId = this.get('defaultBranch.firstObject.repoId');
+    // I'd like to just grab model.activeBranches but that results in an error
     let alreadyActive = this.get('nonDefaultBranches');
+
 
     try {
       yield this.get('store').query('branch', {
@@ -39,6 +41,7 @@ export default Ember.Controller.extend({
         existsOnGithub: true,
         offset: offset
       }).then((branches) => {
+        alreadyActive.pushObjects(this.get('defaultBranch'));
         this.set('model.activeBranches', alreadyActive.pushObjects(branches.toArray()));
       });
     } catch (e) {
