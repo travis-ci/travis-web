@@ -13,7 +13,8 @@ export default TravisRoute.extend({
     return Ember.RSVP.hash({
       activeBranches: this.get('store').query('branch', {
         repoId: repoId,
-        existsOnGithub: true
+        existsOnGithub: true,
+        includeCommit: true
       }),
       activeBranchesCount:
       Ember.$.ajax(`${config.apiEndpoint}/v3/repo/${repoId}/branches
