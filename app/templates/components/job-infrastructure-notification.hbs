@@ -17,5 +17,11 @@
         {{{deprecatedOrRetiredMacImageMessage}}}
       {{/notice-banner}}
     {{/if}}
+    {{#if isPreciseEOL}}
+      {{#notice-banner}}
+        This job {{conjugatedRun}} on our Precise, <code>sudo: required</code> environment which will be updated on May 3rd. You can check <a href="https://blog.travis-ci.com/2017-04-17-precise-EOL" href="Read about Precise EOL">more details about this in our blog</a>.
+
+      {{/notice-banner}}
+    {{/if}}
   {{/if}}
 {{/unless}}
