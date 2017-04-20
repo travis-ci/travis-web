@@ -1,6 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  attribute,
   clickable,
   collection,
   hasClass,
@@ -47,5 +48,26 @@ export default PageObject.create({
     itemScope: '.jobs-item',
 
     item: jobComponent
+  }),
+
+  stages: collection({
+    itemScope: '.jobs.stage',
+
+    item: {
+      name: text('h2 .name'),
+      nameEmojiTitle: attribute('title', 'h2 .emoji'),
+      duration: text('.stage-duration'),
+
+      isPassed: hasClass('passed', '.stage-header'),
+      isFailed: hasClass('failed', '.stage-header'),
+
+      stateTitle: attribute('title', 'h2 .state-icon-container'),
+
+      jobs: collection({
+        itemScope: '.jobs-item',
+
+        item: jobComponent
+      })
+    }
   })
 });

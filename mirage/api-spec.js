@@ -1406,6 +1406,27 @@ export default {
         "access_rights"
       ]
     },
+    "stage": {
+      "@type": "resource",
+      "actions": {
+      },
+      "attributes": [
+        "id",
+        "name",
+        "number",
+        "state",
+        "started_at",
+        "finished_at"
+      ],
+      "representations": {
+        "minimal": [
+          "id", "name", "number", "state", "started_at", "finished_at"
+        ],
+        "standard": [
+          "id", "name", "number", "state", "started_at", "finished_at"
+        ]
+      }
+    },
     "template": {
       "@type": "resource",
       "actions": {
