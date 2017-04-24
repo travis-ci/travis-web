@@ -1,7 +1,7 @@
 <div class="build-commit">
   <h2 class="build-title {{item.state}}">
     {{status-icon status=item.state}}
-    {{#if item.pullRequest}}
+    {{#if item.isPullRequest}}
       <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
       {{item.pullRequestTitle}}
     {{else}}
@@ -25,7 +25,7 @@
       </li>
       {{#if displayCompare}}
         <li>
-          {{#if item.pullRequest}}
+          {{#if item.isPullRequest}}
             <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
               {{inline-svg 'icon-github' class="icon"}}
               <span class="label-align inner-underline">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>

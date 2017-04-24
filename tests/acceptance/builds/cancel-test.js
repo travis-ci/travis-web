@@ -22,7 +22,7 @@ test('cancelling build', function (assert) {
   });
 
   buildPage
-    .visit()
+    .visit({ slug: 'travis-ci/travis-web', build_id: build.id })
     .cancelBuild();
 
   andThen(function () {
