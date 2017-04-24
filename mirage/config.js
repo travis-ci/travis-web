@@ -257,7 +257,10 @@ export default function () {
   this.get('/repo/:repo_id/builds', function (schema, request) {
     let builds = schema.builds.where({ repositoryId: request.params.repo_id });
 
-    builds = builds.filter(build => build.attrs.number);
+    let branchName = request.queryParams['branch.name'];
+    if (branchName) {
+      builds = builds.filter(build => (build.branch && build.branch.attrs.name) === branchName);
+    }
 
     let offset = request.queryParams.offset;
     if (offset) {

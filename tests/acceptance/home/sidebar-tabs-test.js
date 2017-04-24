@@ -39,7 +39,10 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
     let build = server.create('build', {
       repository: testRepo,
       state: 'queued',
-      commit
+      commit,
+      branch: server.create('branch', {
+        name: 'acceptance-tests'
+      })
     });
 
     let job = server.create('job', {
