@@ -1,36 +1,54 @@
-{{#if branchesExist}}
-  <div class="branches">
-    {{#if defaultBranch}}
-      <section class='default-branch'>
-        <h2 class="small-title">Default Branch</h2>
-        <ul class="blank-list">
-          {{branch-row branch=defaultBranch}}
-        </ul>
-      </section>
+<div class="branches">
+  <section class="default-branch">
+    {{branch-list branchList=defaultBranch listTitle="Default Branch" class="default-branch"}}
+  </section>
+
+  <section class="active-branches">
+    {{#branch-list branchList=nonDefaultBranches listTitle="Active Branches"}}
+      <p class="helptext">Displaying
+        <span>{{nonDefaultBranches.length}}</span> of
+        <span>{{model.activeBranchesCount}}</span> active branches.</p>
+    {{/branch-list}}
+
+    {{#unless canLoadMoreActive}}
+      <button type="button" class="button" onclick={{perform fetchActiveTask  nonDefaultBranches.length}}>
+        {{inline-svg 'icon-seemore' class="icon white"}}
+        <span class="label-align">Load more branches</span></button>
+    {{/unless}}
+
+    {{#if fetchActiveTask.isRunning}}
+      {{loading-indicator}}
+    {{/if}}
+  </section>
+
+  <section class="inactive-branches">
+    {{#if model.inactiveBranches.length}}
+      {{#branch-list branchList=model.inactiveBranches listTitle="Inactive Branches" class="inactive-branch-list"}}
+        <p class="helptext">Displaying
+          <span>{{model.inactiveBranches.length}}</span> of
+          <span>{{model.inactiveBranchesCount}}</span> inactive branches.</p>
+      {{/branch-list}}
+
+      {{#unless canLoadMoreInactive}}
+        <button type="button" class="button" onclick={{perform fetchInactiveTask model.inactiveBranches.length}}>
+          {{inline-svg 'icon-seemore' class="icon white"}}
+          <span class="label-align">Get more inactive branches</span></button>
+      {{/unless}}
+
+    {{else}}
+      <h2 class="small-title">Inactive Branches</h2>
+      <aside class="inactive-branches-hidden">
+        <p class="helptext">
+          <span class="inactive-branch-count">{{model.inactiveBranchesCount}}</span>
+          branches have been hidden as they were removed from GitHub.</p>
+        <button type="button" class="button" onclick={{perform fetchInactiveTask 0}}>
+          {{inline-svg 'icon-seemore' class="icon white"}}
+          <span class="label-align">Show inactive branches</span></button>
+      </aside>
     {{/if}}
 
-    {{#if activeBranches.length}}
-      <section class='active-branches'>
-        <h2 class="small-title">Active Branches</h2>
-        <ul class="blank-list">
-          {{#each activeBranches as |branch|}}
-            {{branch-row branch=branch}}
-          {{/each}}
-        </ul>
-      </section>
+    {{#if fetchInactiveTask.isRunning}}
+      {{loading-indicator}}
     {{/if}}
-
-    {{#if inactiveBranches.length}}
-      <section class='inactive-branches'>
-        <h2 class="small-title">Inactive Branches</h2>
-        <ul class="blank-list">
-          {{#each inactiveBranches as |branch|}}
-            {{branch-row branch=branch inactive=true}}
-          {{/each}}
-        </ul>
-      </section>
-    {{/if}}
-  </div>
-{{else}}
-  {{no-builds}}
-{{/if}}
+  </section>
+</div>

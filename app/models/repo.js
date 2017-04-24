@@ -2,7 +2,7 @@ import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'ember-data/model';
 import Ember from 'ember';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 const { service } = Ember.inject;
 
@@ -26,6 +26,7 @@ const Repo = Model.extend({
   }),
   currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
   currentBuildId: Ember.computed.oneWay('currentBuild.id'),
+  branches: hasMany('branch'),
 
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
@@ -97,15 +98,6 @@ const Repo = Model.extend({
     id = this.get('id');
     array.observe(builds);
     return array;
-  }),
-
-  branches: Ember.computed(function () {
-    var id = this.get('id');
-    return this.store.filter('branch', {
-      repository_id: id
-    }, function (b) {
-      return b.get('repoId') === id;
-    });
   }),
 
   cronJobs: Ember.computed(function () {

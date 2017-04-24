@@ -5,7 +5,9 @@ let {
   hasClass,
   is,
   text,
-  visitable
+  visitable,
+  clickable,
+  isVisible
 } = PageObject;
 
 const branchRowComponent = {
@@ -45,17 +47,22 @@ export default PageObject.create({
 
   defaultBranch: branchRowComponent,
 
+  getMoreActive: clickable('.active-branches .button'),
+
+  inactiveBranchesVisible: isVisible('.inactive-branch-list'),
+  inactiveBranchesNotVisible: isVisible('.inactive-branches-hidden'),
+  inactiveInfo: text('.inactive-branches-hidden .helptext'),
+  getMoreInactive: clickable('.inactive-branches .button'),
+
   activeBranches: collection({
     scope: '.active-branches',
     itemScope: '.branch-row',
-
     item: branchRowComponent
   }),
 
   inactiveBranches: collection({
     scope: '.inactive-branches',
     itemScope: '.branch-row',
-
     item: branchRowComponent
   })
 });

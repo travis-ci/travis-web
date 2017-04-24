@@ -37,11 +37,11 @@
           {{/if}}
         </li>
       {{/if}}
-      {{#if commit.branch}}
+      {{#if commit.branch.name}}
       <li>
         <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
           {{inline-svg 'icon-github' class="icon"}}
-          <span class="label-align inner-underline">Branch {{commit.branch}}</span>
+          <span class="label-align inner-underline">Branch {{commit.branch.name}}</span>
         </a>
       </li>
       {{else}}

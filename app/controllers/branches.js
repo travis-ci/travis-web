@@ -1,32 +1,65 @@
 import Ember from 'ember';
+import { task } from 'ember-concurrency';
+
+const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
-  defaultBranch: Ember.computed('model', function () {
-    return this.get('model').filterBy('default_branch')[0];
+  flashes: service(),
+
+  defaultBranch: Ember.computed.filterBy('model.activeBranches', 'defaultBranch'),
+  // I'd like to use rejectBy but it throws an error??
+  nonDefaultBranches: Ember.computed.filter('model.activeBranches', function (branch) {
+    return !branch.get('defaultBranch');
   }),
 
-  branchesExist: Ember.computed.notEmpty('model'),
-  nonDefaultBranches: Ember.computed.filter('model', function (branch) {
-    return !branch.default_branch;
+  fetchInactiveTask: task(function* (offset) {
+    let repoId = this.get('defaultBranch.firstObject.repoId');
+    let alreadyInactive = this.get('model.inactiveBranches') || [];
+
+    try {
+      yield this.get('store').query('branch', {
+        repoId: repoId,
+        existsOnGithub: false,
+        offset: offset
+      }).then((branches) => {
+        this.set('model.inactiveBranches', alreadyInactive.pushObjects(branches.toArray()));
+      });
+    } catch (e) {
+      this.get('flashes').error('There was an error fetching inactive branches.');
+    }
   }),
 
-  activeBranches: Ember.computed('model', function () {
-    const activeBranches = this.get('nonDefaultBranches').filterBy('exists_on_github');
-    return this._sortBranchesByFinished(activeBranches);
+  fetchActiveTask: task(function* (offset) {
+    let repoId = this.get('defaultBranch.firstObject.repoId');
+    // I'd like to just grab model.activeBranches but that results in an error
+    let alreadyActive = this.get('nonDefaultBranches');
+
+
+    try {
+      yield this.get('store').query('branch', {
+        repoId: repoId,
+        existsOnGithub: true,
+        offset: offset
+      }).then((branches) => {
+        alreadyActive.pushObjects(this.get('defaultBranch'));
+        this.set('model.activeBranches', alreadyActive.pushObjects(branches.toArray()));
+      });
+    } catch (e) {
+      this.get('flashes').error('There was an error fetching active branches.');
+    }
   }),
 
-  inactiveBranches: Ember.computed('model', function () {
-    const inactiveBranches = this.get('nonDefaultBranches').filterBy('exists_on_github', false);
-    return this._sortBranchesByFinished(inactiveBranches);
-  }),
+  canLoadMoreActive: Ember.computed(
+    'model.activeBranches.[]',
+    'model.activeBranchesCount',
+    function () {
+      return this.get('model.activeBranchesCount') === this.get('nonDefaultBranches.length');
+    }),
 
-  _sortBranchesByFinished(branches) {
-    const unfinished = branches.filter(branch => {
-      return Ember.isNone(Ember.get(branch, 'last_build.finished_at'));
-    });
-    const sortedFinished = branches.filterBy('last_build.finished_at')
-      .sortBy('last_build.finished_at').reverse();
-
-    return unfinished.concat(sortedFinished);
-  }
+  canLoadMoreInactive: Ember.computed(
+    'model.inactiveBranches.[]',
+    'model.inactiveBranchesCount',
+    function () {
+      return this.get('model.inactiveBranchesCount') === this.get('model.inactiveBranches.length');
+    })
 });

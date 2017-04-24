@@ -154,6 +154,10 @@ export default function () {
     return schema.branches.all();
   });
 
+  this.get('/repo/:repository_id/branches/:branch_name', function (schema) {
+    return schema.branches.all();
+  });
+
   this.get('/owner/:login', function (schema, request) {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });

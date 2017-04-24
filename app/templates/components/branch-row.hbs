@@ -1,17 +1,17 @@
 <div class="two-line fade-out">
   <div class="row-name">
-    <h2 class="row-item">{{status-icon status=branch.last_build.state}}
+    <h2 class="row-item">{{status-icon status=branch.lastBuild.state}}
     <span class="label-align">{{branch.name}}</span></h2>
   </div>
   <div class="row-builds">
     <div class="row-item">
       {{inline-svg 'icon-builds' class="icon"}}
     <span class="label-align">
-    {{#if branch.last_build}}
-      {{#if getLast5Builds.isLoading}}
+    {{#if branch.lastBuild}}
+      {{#if last5Builds.isLoading}}
         {{loading-indicator inline=true}}
       {{else}}
-        {{getLast5Builds.count}} builds
+        {{last5Builds.count}} builds
       {{/if}}
     {{else}}
       0 builds
@@ -22,22 +22,22 @@
 <div class="two-line row-last-build fade-out">
   <div class="row-request">
     <div class="row-item">
-      {{#if branch.last_build}}
-        {{request-icon event=branch.last_build.event_type state=branch.last_build.state}}
-        {{#link-to "build" branch.last_build.id}}
-          <span class="label-align">#{{branch.last_build.number}} {{branch.last_build.state}}</span>
+      {{#if branch.lastBuild}}
+        {{request-icon event=branch.lastBuild.eventType state=branch.lastBuild.state}}
+        {{#link-to "build" branch.lastBuild.id}}
+          <span class="label-align">#{{branch.lastBuild.number}} {{branch.lastBuild.state}}</span>
         {{/link-to}}
       {{else}}
-        {{request-icon event=branch.last_build.eventType state=branch.last_build.state}} -
+        {{request-icon event=branch.lastBuild.eventType state=branch.lastBuild.state}} -
       {{/if}}
     </div>
   </div>
   <div class="row-calendar">
-    <div class="row-item" title="{{pretty-date branch.last_build.finished_at}}">
+    <div class="row-item" title="{{pretty-date branch.lastBuild.finishedAt}}">
       {{inline-svg 'icon-calendar' class="icon"}}
       <span class="label-align">
-      {{#if branch.last_build}}
-        {{format-time branch.last_build.finished_at}}
+      {{#if branch.lastBuild}}
+        {{format-time branch.lastBuild.finishedAt}}
       {{else}}
         -
       {{/if}}</span>
@@ -50,8 +50,8 @@
       {{inline-svg 'icon-github' class="icon"}}
       <a href="{{urlGithubCommit}}" title="commit on GitHub">
       <span class="label-align">
-      {{#if branch.last_build}}
-        {{format-sha branch.last_build.commit.sha}}
+      {{#if branch.lastBuild}}
+        {{format-sha branch.lastBuild.commit.sha}}
       {{else}}
         -
       {{/if}}</span>
@@ -59,9 +59,9 @@
   </div>
   <div class="row-commiter">
     <div class="row-item">
-      {{#if branch.last_build}}
-          {{user-avatar url=branch.last_build.commit.committer.avatar_url name=branch.last_build.commit.committer.name small=true size=18}}
-          <span class="label-align">{{branch.last_build.commit.committer.name}}</span>
+      {{#if branch.lastBuild}}
+        {{user-avatar url=branch.lastBuild.commit.committerAvatarUrl name=branch.lastBuild.commit.committerName small=true size=18}}
+          <span class="label-align">{{branch.lastBuild.commit.committerName}}</span>
       {{else}}
         <div class="avatar--small"></div><span class="label-align">no commits yet</span>
       {{/if}}
@@ -70,10 +70,10 @@
 </div>
 <div class="one-line is-relative">
   <ul class="build-tiles">
-  {{#if getLast5Builds.isLoading}}
+  {{#if last5Builds.isLoading}}
     {{loading-indicator center=true}}
   {{else}}
-    {{#each getLast5Builds.content as |buildTile|}}
+    {{#each last5Builds.content as |buildTile|}}
       {{build-tile build=buildTile}}
     {{/each}}
   {{/if}}

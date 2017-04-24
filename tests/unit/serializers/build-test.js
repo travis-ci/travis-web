@@ -352,5 +352,6 @@ test('it normalizes a V2 singular response', function (assert) {
       }
     ]
   };
+
   assert.deepEqual(expectedResult, result);
 });

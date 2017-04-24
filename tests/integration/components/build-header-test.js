@@ -11,7 +11,7 @@ test('render api build', function (assert) {
   };
   let commit = {
     compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
-    branch: 'feature-branch',
+    branch: { name: 'feature-branch' },
     subject: 'Endless joy'
   };
   let build = {
