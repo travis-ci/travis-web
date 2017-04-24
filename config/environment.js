@@ -104,7 +104,6 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
 
-    ENV.apiEndpoint = '';
     ENV.statusPageStatusUrl =  null;
 
     ENV.sentry = {
@@ -171,7 +170,7 @@ module.exports = function (environment) {
     'script-src': "'self' https://ssl.google-analytics.com https://djtflbt20bdde.cloudfront.net/ https://js.pusher.com",
     'font-src': "'self' https://fonts.googleapis.com/css https://fonts.gstatic.com",
     'connect-src': "'self' ws://ws.pusherapp.com wss://ws.pusherapp.com https://*.pusher.com https://s3.amazonaws.com/archive.travis-ci.com/ https://s3.amazonaws.com/archive.travis-ci.org/ app.getsentry.com https://pnpcptp8xh9k.statuspage.io/ https://ssl.google-analytics.com",
-    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://avatars.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
+    'img-src': "'self' data: https://www.gravatar.com http://www.gravatar.com app.getsentry.com https://*.githubusercontent.com https://0.gravatar.com https://ssl.google-analytics.com",
     'style-src': "'self' https://fonts.googleapis.com 'unsafe-inline' https://djtflbt20bdde.cloudfront.net",
     'media-src': "'self'",
     'frame-src': "'self' https://djtflbt20bdde.cloudfront.net",

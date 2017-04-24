@@ -96,26 +96,34 @@ test('view settings', function (assert) {
 
     assert.ok(settingsPage.buildPullRequests.isActive, 'expected builds for pull requests');
 
-    assert.equal(settingsPage.environmentVariables(0).name, 'intersectionality');
-    assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
-    assert.notOk(settingsPage.environmentVariables(0).isNewlyCreated, 'expected existing variable to not be newly created');
-    assert.equal(settingsPage.environmentVariables(0).value, 'Kimberlé Crenshaw');
+    settingsPage.environmentVariables(0).as(environmentVariable => {
+      assert.equal(environmentVariable.name, 'intersectionality');
+      assert.ok(environmentVariable.isPublic, 'expected environment variable to be public');
+      assert.notOk(environmentVariable.isNewlyCreated, 'expected existing variable to not be newly created');
+      assert.equal(environmentVariable.value, 'Kimberlé Crenshaw');
+    });
 
-    assert.equal(settingsPage.environmentVariables(1).name, 'published');
-    assert.notOk(settingsPage.environmentVariables(1).isPublic, 'expected environment variable to not be public');
-    assert.equal(settingsPage.environmentVariables(1).value, '••••••••••••••••');
+    settingsPage.environmentVariables(1).as(environmentVariable => {
+      assert.equal(environmentVariable.name, 'published');
+      assert.notOk(environmentVariable.isPublic, 'expected environment variable to not be public');
+      assert.equal(environmentVariable.value, '••••••••••••••••');
+    });
 
-    assert.equal(settingsPage.crons(0).branchName, 'Cron job event daily-branch');
-    assert.equal(settingsPage.crons(0).interval, 'Runs daily');
-    assert.equal(settingsPage.crons(0).lastRun, 'Ran less than a minute ago');
-    assert.equal(settingsPage.crons(0).nextRun, 'Scheduled in about 24 hours from now');
-    assert.ok(settingsPage.crons(0).dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
+    settingsPage.crons(0).as(cron => {
+      assert.equal(cron.branchName, 'Cron job event daily-branch');
+      assert.equal(cron.interval, 'Runs daily');
+      assert.equal(cron.lastRun, 'Ran less than a minute ago');
+      assert.equal(cron.nextRun, 'Scheduled in about 24 hours from now');
+      assert.ok(cron.dontRunIfRecentBuildExistsText.indexOf('Always run') === 0, 'expected cron to run even if there is a build in the last 24h');
+    });
 
-    assert.equal(settingsPage.crons(1).branchName, 'Cron job event weekly-branch');
-    assert.equal(settingsPage.crons(1).interval, 'Runs weekly');
-    assert.equal(settingsPage.crons(1).lastRun, 'Ran less than a minute ago');
-    assert.equal(settingsPage.crons(1).nextRun, 'Scheduled in 7 days from now');
-    assert.ok(settingsPage.crons(1).dontRunIfRecentBuildExistsText.indexOf('Do not run if there has been a build in the last 24h') === 0, 'expected Do not run if there has been a build in the last 24h');
+    settingsPage.crons(1).as(cron => {
+      assert.equal(cron.branchName, 'Cron job event weekly-branch');
+      assert.equal(cron.interval, 'Runs weekly');
+      assert.equal(cron.lastRun, 'Ran less than a minute ago');
+      assert.equal(cron.nextRun, 'Scheduled in 7 days from now');
+      assert.ok(cron.dontRunIfRecentBuildExistsText.indexOf('Do not run if there has been a build in the last 24h') === 0, 'expected Do not run if there has been a build in the last 24h');
+    });
 
     assert.equal(settingsPage.sshKey.name, 'Custom');
     assert.equal(settingsPage.sshKey.fingerprint, 'dd:cc:bb:aa');
@@ -203,10 +211,12 @@ test('delete and create environment variables', function (assert) {
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.environmentVariables(0).name, 'drafted', 'expected leading whitespace to be trimmed');
-    assert.ok(settingsPage.environmentVariables(0).isPublic, 'expected environment variable to be public');
-    assert.ok(settingsPage.environmentVariables(0).isNewlyCreated, 'expected environment variable to be newly created');
-    assert.equal(settingsPage.environmentVariables(0).value, 'true', 'expected leading whitespace to be trimmed');
+    settingsPage.environmentVariables(0).as(environmentVariable => {
+      assert.equal(environmentVariable.name, 'drafted', 'expected leading whitespace to be trimmed');
+      assert.ok(environmentVariable.isPublic, 'expected environment variable to be public');
+      assert.ok(environmentVariable.isNewlyCreated, 'expected environment variable to be newly created');
+      assert.equal(environmentVariable.value, 'true', 'expected leading whitespace to be trimmed');
+    });
 
     assert.deepEqual(requestBodies.pop(), { env_var: {
       id: '1919',

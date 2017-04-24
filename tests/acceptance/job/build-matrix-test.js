@@ -25,24 +25,27 @@ test('visiting build matrix', function (assert) {
   andThen(function () {
     assert.equal(buildPage.requiredJobs().count, 2, 'expected two required jobs in the matrix');
 
-    const firstJobRow = buildPage.requiredJobs(0);
-    assert.ok(firstJobRow.state.isPassed, 'expected the first job to have passed');
-    assert.equal(firstJobRow.number, '1234.1');
-    assert.equal(firstJobRow.env, 'JORTS');
-    assert.ok(firstJobRow.os.isLinux, 'expect Linux');
-    assert.equal(firstJobRow.language, 'Node.js: 5');
+    buildPage.requiredJobs(0).as(firstJobRow => {
+      assert.ok(firstJobRow.state.isPassed, 'expected the first job to have passed');
+      assert.equal(firstJobRow.number, '1234.1');
+      assert.equal(firstJobRow.env, 'JORTS');
+      assert.ok(firstJobRow.os.isLinux, 'expect Linux');
+      assert.equal(firstJobRow.language, 'Node.js: 5');
+    });
 
-    const secondJobRow = buildPage.requiredJobs(1);
-    assert.equal(secondJobRow.number, '1234.2');
-    assert.equal(secondJobRow.env, 'JANTS');
-    assert.ok(secondJobRow.os.isMacOS, 'expect MacOS');
-    assert.equal(secondJobRow.language, 'Ruby: 2.2');
+    buildPage.requiredJobs(1).as(secondJobRow => {
+      assert.equal(secondJobRow.number, '1234.2');
+      assert.equal(secondJobRow.env, 'JANTS');
+      assert.ok(secondJobRow.os.isMacOS, 'expect MacOS');
+      assert.equal(secondJobRow.language, 'Ruby: 2.2');
+    });
 
     assert.equal(buildPage.allowedFailureJobs().count, 1, 'expected one allowed failure job');
 
-    const failedJobRow = buildPage.allowedFailureJobs(0);
-    assert.ok(failedJobRow.state.isFailed, 'expected the allowed failure job to have failed');
-    assert.equal(failedJobRow.language, 'Ruby');
+    buildPage.allowedFailureJobs(0).as(failedJobRow => {
+      assert.ok(failedJobRow.state.isFailed, 'expected the allowed failure job to have failed');
+      assert.equal(failedJobRow.language, 'Ruby');
+    });
   });
   percySnapshot(assert);
 });
