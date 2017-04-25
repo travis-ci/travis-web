@@ -3,8 +3,6 @@ import BuildV2FallbackSerializer from 'travis/serializers/build_v2_fallback';
 var Serializer = BuildV2FallbackSerializer.extend({
   attrs: {
     _config: { key: 'config' },
-    _finishedAt: { key: 'finished_at' },
-    _startedAt: { key: 'started_at' },
     _duration: { key: 'duration' }
   },
 

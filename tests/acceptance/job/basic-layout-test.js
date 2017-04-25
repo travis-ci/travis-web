@@ -40,10 +40,10 @@ test('visiting job-view', function (assert) {
 
 test('visiting a job with a truncated log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  server.create('branch', {});
+  let branch = server.create('branch', { name: 'acceptance-tests' });
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository: repo, state: 'passed', commit });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
   let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
 
@@ -66,7 +66,7 @@ test('visiting a job with a truncated log', function (assert) {
 
 test('visiting a job with a complex log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
-    branch = server.create('branch', {});
+    branch = server.create('branch', { name: 'acceptance-tests' });
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
   let build = server.create('build', { repository: repo, state: 'passed', commit, branch });

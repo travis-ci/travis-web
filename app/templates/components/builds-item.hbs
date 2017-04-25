@@ -7,8 +7,8 @@
           <small>PR #{{build.pullRequestNumber}}</small>
         {{/link-to}}
       {{else}}
-        {{#link-to "build" build.repo build title=build.commit.branch}}
-          {{build.commit.branch}}
+        {{#link-to "build" build.repo build title=build.branchName}}
+          {{build.branchName}}
         {{/link-to}}
       {{/if}}
     </h2>

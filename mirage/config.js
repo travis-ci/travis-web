@@ -154,6 +154,14 @@ export default function () {
     return schema.branches.all();
   });
 
+  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
+    let sshKeys = schema.sshKeys.where({
+      repositoryId: request.params.repo_id,
+      type: 'custom'
+    }).models[0];
+    return this.serialize(sshKeys, 'v2');
+  });
+
   this.get('/owner/:login', function (schema, request) {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
   });
@@ -188,11 +196,6 @@ export default function () {
     };
   });
 
-  this.get('/commits/:id', function (schema, request) {
-    let commit = schema.commits.find(request.params.id);
-    return new Mirage.Response(200, {}, commit.attrs);
-  });
-
   this.get('/jobs/:id', function (schema, request) {
     let job = schema.jobs.find(request.params.id);
     return this.serialize(job, 'v2-job');
@@ -200,57 +203,7 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema, { queryParams:
-    { event_type: eventType, after_number: afterNumber, ids } }) {
-    const allBuilds = schema.builds.all();
-    let builds;
-
-    if (afterNumber) {
-      builds = allBuilds.models.filter(build => parseInt(build.number) < parseInt(afterNumber));
-    } else if (ids) {
-      builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
-    } else if (eventType === 'pull_request') {
-      builds = allBuilds.models;
-    } else {
-      // This forces the Show more button to show in the build history test
-      builds = allBuilds.models.slice(0, 3).sort((a, b) => {
-        const aBuildNumber = a.attrs.number;
-        const bBuildNumber = b.attrs.number;
-
-        return aBuildNumber > bBuildNumber ? -1 : 1;
-      });
-    }
-
-    return { builds: builds.map(build => {
-      if (build.commit) {
-        build.attrs.commit_id = build.commit.id;
-      }
-      if (!build.attrs.repository_id) {
-        build.attrs.repository_id = build.repository.id;
-      }
-
-      if (build.jobs) {
-        build.attrs.job_ids = build.jobs.models.map(job => job.id);
-      }
-
-      return build;
-    }), commits: builds.map(build => build.commit) };
-  });
-
-  this.get('/builds/:id', function (schema, request) {
-    const build = schema.builds.find(request.params.id);
-    const response = {
-      build: build.attrs,
-      jobs: build.jobs.models.map(job => job.attrs)
-    };
-
-    if (build.commit) {
-      response.commit = build.commit.attrs;
-      response.build.commit_id = build.commit.id;
-    }
-
-    return response;
-  });
+  this.get('/build/:id');
 
   this.post('/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
@@ -295,17 +248,42 @@ export default function () {
   });
 
   this.get('/repo/:repo_id/builds', function (schema, request) {
-    const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];
-    const builds = schema.builds.where({ branchId: branch.id });
+    let builds = schema.builds.where({ repositoryId: request.params.repo_id });
+
+    let branchName = request.queryParams['branch.name'];
+    if (branchName) {
+      builds = builds.filter(build => (build.branch && build.branch.attrs.name) === branchName);
+    }
+
+    let offset = request.queryParams.offset;
+    if (offset) {
+      builds = builds.slice(offset);
+    }
+
+    if (request.queryParams.event_type !== 'pull_request') {
+      builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
+    } else {
+      builds = builds.filter(build => build.attrs.event_type === 'pull_request');
+    }
+
+    if (!request.queryParams.sort_by) {
+      builds = builds.sort((a, b) => {
+        return parseInt(a.id) > parseInt(b.id) ? -1 : 1;
+      });
+    } else if (request.queryParams.sort_by === 'finished_at:desc') {
+      builds = builds.sort((a, b) => {
+        const aBuildNumber = parseInt(a.attrs.number);
+        const bBuildNumber = parseInt(b.attrs.number);
+
+        return aBuildNumber > bBuildNumber ? -1 : 1;
+      });
+    }
 
     /**
-     * TODO remove this once the seializers/build is removed.
-     * The modelName causes Mirage to know how to serialise it.
-     */
-    return this.serialize({
-      models: builds.models.reverse(),
-      modelName: 'build'
-    }, 'v3');
+      * TODO remove this once the seializers/build is removed.
+      * The modelName causes Mirage to know how to serialise it.
+      */
+    return this.serialize(builds, 'build');
   });
 
   this.get('/jobs/:id/log', function (schema, request) {

@@ -232,6 +232,10 @@ export default JSONSerializer.extend({
       meta.representation = resourceHash['@representation'];
     }
 
+    // if we have relationship data, attempt to include those as sideloaded
+    // records by adding them to the included array.
+    // We must have both relationships *and* included specified for this to
+    // work.
     if (data.relationships) {
       Object.keys(data.relationships).forEach((key) => {
         let relationship = data.relationships[key];
@@ -241,11 +245,10 @@ export default JSONSerializer.extend({
           let meta = relationshipHash.meta || {};
           let relationshipIncluded = relationshipHash.included || [];
 
-          if (meta.representation !== 'standard') {
-            return;
+          if (meta.representation === 'standard') {
+            included.push(relationshipHash.data);
           }
 
-          included.push(relationshipHash.data);
           relationshipIncluded.forEach(function (item) {
             included.push(item);
           });

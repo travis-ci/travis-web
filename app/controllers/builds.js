@@ -13,9 +13,9 @@ export default Ember.Controller.extend({
   isLoading: alias('model.isLoading'),
 
   showMore() {
-    var id, number, type;
-    id = this.get('repo.id');
-    number = this.get('builds.lastObject.number');
+    const id = this.get('repo.id'),
+      buildsLength = this.get('builds.length');
+    let number = this.get('builds.lastObject.number');
 
     const defaultBranchLastBuildNumber = this.get('repo.defaultBranch.lastBuild.number');
 
@@ -37,8 +37,8 @@ export default Ember.Controller.extend({
 
     const tabName = this.get('tab');
     const singularTab = tabName.substr(0, tabName.length - 1);
-    type = this.get('tab') === 'builds' ? 'push' : singularTab;
-    this.olderThanNumber(id, number, type);
+    const type = this.get('tab') === 'builds' ? 'push' : singularTab;
+    this.loadMoreBuilds(id, buildsLength, type);
   },
 
   displayShowMoreButton: Ember.computed('tab', 'builds.lastObject.number', function () {
@@ -53,11 +53,11 @@ export default Ember.Controller.extend({
     return this.get('tab') === 'branches';
   }),
 
-  olderThanNumber(id, number, type) {
+  loadMoreBuilds(id, buildsLength, type) {
     var options;
     options = {
       repository_id: id,
-      after_number: number
+      offset: buildsLength
     };
     if (type != null) {
       options.event_type = type.replace(/s$/, '');

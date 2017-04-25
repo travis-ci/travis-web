@@ -1,12 +1,13 @@
 <div class="build-commit">
   <h2 class="build-title {{item.state}}">
     {{status-icon status=item.state}}
-    {{#if item.pullRequest}}
+    {{#if item.isPullRequest}}
       <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
       {{item.pullRequestTitle}}
     {{else}}
-      <small class="commit-branch" title={{item.branchName}}>{{item.branchName}}</small>
-      <span class="title">{{format-message commit.subject repo=item.repo eventType=build.eventType}}</span>
+      <small class="commit-branch"
+        title={{build.branchName}}>{{build.branchName}}</small>
+      {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
   </h2>
   <div class="commit-info">
@@ -24,7 +25,7 @@
       </li>
       {{#if displayCompare}}
         <li>
-          {{#if item.pullRequest}}
+          {{#if item.isPullRequest}}
             <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
               {{inline-svg 'icon-github' class="icon"}}
               <span class="label-align inner-underline">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
@@ -37,16 +38,12 @@
           {{/if}}
         </li>
       {{/if}}
-      {{#if commit.branch}}
       <li>
         <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
           {{inline-svg 'icon-github' class="icon"}}
-          <span class="label-align inner-underline">Branch {{commit.branch}}</span>
+          <span class="label-align inner-underline">Branch {{build.branchName}}</span>
         </a>
       </li>
-      {{else}}
-        {{loading-indicator}}
-      {{/if}}
     </ul>
 
     <p class="commit-author">

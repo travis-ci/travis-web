@@ -34,12 +34,14 @@ moduleForAcceptance('Acceptance | repo branches', {
     const primaryBranch = server.create('branch', {
       name: 'primary',
       id: `/v3/repos/${repoId}/branches/primary`,
-      default_branch: true
+      default_branch: true,
+      repository,
     });
 
     let currentBuild = primaryBranch.createBuild({
       state: 'failed',
-      number: '1917'
+      number: '1917',
+      repository
     });
 
     currentBuild.createCommit({
@@ -51,8 +53,11 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     primaryBranch.createBuild({
       state: 'errored',
-      number: '1918'
+      number: '1918',
+      branch: primaryBranch,
+      repository,
     }).createCommit({
+      committer_name: currentUser.name,
       sha: 'abc125'
     });
 
@@ -65,7 +70,9 @@ moduleForAcceptance('Acceptance | repo branches', {
     const lastBuild = primaryBranch.createBuild({
       state: 'passed',
       number: '1919',
-      finished_at: oneYearAgo
+      finished_at: oneYearAgo,
+      branch: primaryBranch,
+      repository,
     });
 
     lastBuild.createCommit({
@@ -77,39 +84,53 @@ moduleForAcceptance('Acceptance | repo branches', {
     const activeCreatedBranch = server.create('branch', {
       name: 'created',
       id: `/v3/repos/${repoId}/branches/created`,
-      exists_on_github: true
+      exists_on_github: true,
+      default_branch: false,
+      repository,
     });
 
-    activeCreatedBranch.createBuild({
-      state: 'created'
+    server.create('build', {
+      state: 'created',
+      branch: activeCreatedBranch,
+      repository,
     });
 
     const activeFailedBranch = server.create('branch', {
       name: 'edits',
       id: `/v3/repos/${repoId}/branches/edits`,
-      exists_on_github: true
+      exists_on_github: true,
+      default_branch: false,
+      repository,
     });
 
-    activeFailedBranch.createBuild({
+    server.create('build', {
       state: 'failed',
-      finished_at: oneYearAgo
+      finished_at: oneYearAgo,
+      branch: activeFailedBranch,
+      repository,
     });
 
     const activeOlderFailedBranch = server.create('branch', {
       name: 'old-old-edits',
       id: `/v3/repos/${repoId}/branches/old-old-edits`,
-      exists_on_github: true
+      exists_on_github: true,
+      default_branch: false,
+      repository,
     });
 
-    activeOlderFailedBranch.createBuild({
+    server.create('build', {
       state: 'failed',
-      finished_at: twoYearsAgo
+      finished_at: twoYearsAgo,
+      branch: activeOlderFailedBranch,
+      repository,
     });
 
     const olderInactiveBranch = server.create('branch', {
       name: 'older-edits',
       id: `/v3/repos/${repoId}/branches/older-edits`,
-      exists_on_github: false
+      exists_on_github: false,
+      default_branch: false,
+      repository,
     });
 
     olderInactiveBranch.createBuild({
@@ -119,12 +140,16 @@ moduleForAcceptance('Acceptance | repo branches', {
     const newerInactiveBranch = server.create('branch', {
       name: 'old-edits',
       id: `/v3/repos/${repoId}/branches/old-edits`,
-      exists_on_github: false
+      exists_on_github: false,
+      default_branch: false,
+      repository,
     });
 
-    newerInactiveBranch.createBuild({
+    server.create('build', {
       state: 'errored',
-      finished_at: oneYearAgo
+      finished_at: oneYearAgo,
+      branch: newerInactiveBranch,
+      repository,
     }).createCommit({
       sha: 'abc134',
       committer: gitUser

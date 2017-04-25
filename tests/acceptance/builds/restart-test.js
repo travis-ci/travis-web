@@ -19,7 +19,7 @@ test('restarting build', function (assert) {
   server.create('log', { id: job.id });
 
   buildPage
-    .visit()
+    .visit({ slug: 'travis-ci/travis-web', build_id: build.id })
     .restartBuild();
 
   andThen(function () {

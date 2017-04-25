@@ -28,7 +28,7 @@ test('debugging single-job build', function (assert) {
   });
 
   buildPage
-    .visit()
+    .visit({ slug: 'travis-ci/travis-web', build_id: build.id })
     .debugBuild();
 
   andThen(function () {
@@ -48,7 +48,8 @@ test('multi-job builds cannot be debugged', function (assert) {
   server.create('job', { number: '1234.1', repository, state: 'passed', build, commit });
   server.create('job', { number: '1234.2', repository, state: 'passed', build, commit });
 
-  buildPage.visit();
+  buildPage
+    .visit({ slug: 'travis-ci/travis-web', build_id: build.id });
 
   andThen(() => {
     assert.ok(buildPage.hasNoDebugButton);

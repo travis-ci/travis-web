@@ -6,10 +6,10 @@ moduleForAcceptance('Acceptance | job/build matrix');
 
 test('visiting build matrix', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  server.create('branch', {});
+  let branch = server.create('branch', { name: 'acceptance-tests' });
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
+  let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit, branch });
 
   let firstJob = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build });
   commit.job = firstJob;

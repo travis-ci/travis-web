@@ -12,15 +12,17 @@ moduleForAcceptance('Acceptance | builds/cancel', {
 test('cancelling build', function (assert) {
   let repository =  server.create('repository', { slug: 'travis-ci/travis-web' });
 
-  server.create('branch', {});
-  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { number: '5', repository: repository, state: 'running', commit: commit });
-  let job = server.create('job', { number: '1234.1', repository: repository, state: 'running', build, commit: commit });
+  let branch = server.create('branch', { repository, name: 'acceptance-tests', default_branch: true });
+  let commit = server.create('commit', { sha: 'abc1111', author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', message: 'This is a message' });
+  let build = server.create('build', { number: '5', state: 'started', repository, commit, branch });
+  let job = server.create('job', { number: '1234.1', state: 'started', repository, commit, build });
 
-  server.create('log', { id: job.id });
+  server.create('log', {
+    id: job.id
+  });
 
   buildPage
-    .visit()
+    .visit({ slug: 'travis-ci/travis-web', build_id: build.id })
     .cancelBuild();
 
   andThen(function () {

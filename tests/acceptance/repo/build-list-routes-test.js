@@ -3,7 +3,6 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
-
 import Ember from 'ember';
 
 moduleForAcceptance('Acceptance | repo build list routes', {
@@ -33,13 +32,16 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     const beforeOneYearAgo = new Date(oneYearAgo.getTime() - 1000 * 60 * 5);
 
-    const lastBuild = this.branch.createBuild({
+    const cronBranch = server.create('branch', { repository, name: 'successful-cron-branch' });
+
+    const lastBuild = server.create('build', {
       state: 'passed',
       number: '1918',
       finished_at: oneYearAgo,
       started_at: beforeOneYearAgo,
       event_type: 'cron',
       repository,
+      branch: cronBranch,
     });
 
     const commitAttributes = {
@@ -48,14 +50,14 @@ moduleForAcceptance('Acceptance | repo build list routes', {
       author: gitUser,
       committer: gitUser
     };
+    this.commitAttributes = commitAttributes;
 
     lastBuild.createCommit(Ember.assign({
-      branch: 'successful-cron-branch',
       message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();
 
-    const failedBuild = this.branch.createBuild({
+    const failedBuild = server.create('build', {
       state: 'failed',
       event_type: 'push',
       repository,
@@ -65,21 +67,21 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     failedBuild.createCommit(commitAttributes);
     failedBuild.save();
 
-    const erroredBuild = this.branch.createBuild({
-      state: 'errored',
-      event_type: 'push',
-      repository,
-      number: '1869'
-    });
-
-    erroredBuild.branch = this.branch;
-    erroredBuild.createCommit(Object.assign({ branch: 'rarely-used' }, commitAttributes));
-    erroredBuild.save();
-
     const defaultBranch = repository.createBranch({
       name: 'rarely-used',
       default_branch: true
     });
+
+    const erroredBuild = server.create('build', {
+      state: 'errored',
+      event_type: 'push',
+      repository,
+      number: '1869',
+      branch: defaultBranch
+    });
+
+    erroredBuild.createCommit(commitAttributes);
+    erroredBuild.save();
 
     const defaultBranchBuild = defaultBranch.createBuild({
       number: '1491',
@@ -121,12 +123,12 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 });
 
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
-  assert.expect(23);
+  assert.expect(22);
 
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
   andThen(() => {
-    assert.equal(page.builds().count, 3, 'expected three builds');
+    assert.equal(page.builds().count, 4, 'expected four non-PR builds');
 
     page.builds(0).as(build => {
       assert.ok(build.passed, 'expected the first build to have passed');
@@ -146,17 +148,21 @@ test('build history shows, more can be loaded, and a created build gets added an
 
     assert.equal(page.builds(2).name, 'rarely-used', 'expected the old default branch to show');
 
+    const sevenOaksBranch = server.create('branch', {
+      name: 'oldest-build-branch'
+    });
+
     // Add another build so the API has more to return
-    const olderBuild = this.branch.createBuild({
+    const olderBuild = sevenOaksBranch.createBuild({
       event_type: 'push',
       repository: this.repository,
-      number: '1816'
+      number: '1000',
+      state: 'passed'
     });
 
     olderBuild.createCommit({
       sha: 'acab',
-      author_name: 'us',
-      branch: 'seven-oaks'
+      author_name: 'us'
     });
     olderBuild.save();
   });
@@ -165,36 +171,37 @@ test('build history shows, more can be loaded, and a created build gets added an
 
   page.showMoreButton.click();
 
+  andThen(() => {});
   andThen(() => {
     assert.equal(page.builds().count, 5, 'expected five builds');
-    assert.equal(page.builds(3).name, 'seven-oaks', 'expected the build before the last one to have been added');
-    assert.equal(page.builds(4).name, 'rarely-used', 'expected the old default branch build to have moved to the end');
+    assert.equal(page.builds(4).name, 'oldest-build-branch', 'expected an earlier build to have been added');
   });
 
-  const branch = server.create('branch', {
-    name: 'no-dapl'
-  });
-
-  this.repository.defaultBranch = branch;
-  this.repository.save();
-
-  const build = server.create('build', {
-    id: '2016',
-    repository: this.repository,
-    number: '2016',
-    pull_request: false,
-    event_type: 'push',
-    branch: branch
-  });
-
-  const commit = build.createCommit({
-    id: 2016,
-    branch: 'no-dapl',
-    sha: 'acab',
-    message: 'Standing with Standing Rock'
-  });
+  let build, commit;
 
   andThen(() => {
+    const branch = server.create('branch', {
+      name: 'no-dapl'
+    });
+
+    this.repository.defaultBranch = branch;
+    this.repository.save();
+
+    build = branch.createBuild({
+      id: '1920',
+      repository: this.repository,
+      number: '1920',
+      pull_request: false,
+      event_type: 'push',
+    });
+
+    commit = build.createCommit({
+      id: 1920,
+      sha: 'acab',
+      message: 'Standing with Standing Rock',
+      branch: 'no-dapl'
+    });
+
     const createdData = {
       build: generatePusherPayload(build),
       commit: generatePusherPayload(commit),
@@ -203,6 +210,7 @@ test('build history shows, more can be loaded, and a created build gets added an
     createdData.build.state = 'created';
     this.application.pusher.receive('build:created', createdData);
   });
+
 
   andThen(() => {
     assert.equal(page.builds().count, 6, 'expected another build');
