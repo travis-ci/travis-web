@@ -237,7 +237,6 @@ export default Ember.Controller.extend({
   }),
 
   repos: Ember.computed(
-    '_repos.[]',
     '_repos.@each.currentBuildFinishedAt',
     '_repos.@each.currentBuildId',
     function () {
