@@ -1,4 +1,4 @@
-{{#if jobsProxyLol.length}}
+{{#if filteredJobs.length}}
 
   {{#if required}}
     <h2 class="section-title">Build Jobs</h2>
@@ -26,7 +26,7 @@
   {{/if}}
 
     <ul class="jobs-list">
-    {{#each jobsProxyLol as |job|}}
+    {{#each filteredJobs as |job|}}
       {{jobs-item job=job repo=repo}}
     {{/each}}
     </ul>

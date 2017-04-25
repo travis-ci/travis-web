@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  jobsProxyLol: Ember.computed('build.jobs', 'jobs', function () {
+  filteredJobs: Ember.computed('build.jobs', 'jobs', function () {
     const stage = this.get('stage');
 
     if (stage) {
