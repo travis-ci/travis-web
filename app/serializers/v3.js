@@ -249,6 +249,11 @@ export default JSONSerializer.extend({
             included.push(relationshipHash.data);
           }
 
+          // FIXME this is a temporary override to import stages despite being minimal
+          if (key == 'stages' && meta.representation == 'minimal') {
+            included.push(relationshipHash.data);
+          }
+
           relationshipIncluded.forEach(function (item) {
             included.push(item);
           });

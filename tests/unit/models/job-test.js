@@ -2,7 +2,7 @@ import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
 
 moduleForModel('job', 'Unit | Model | job', {
-  needs: ['model:repo', 'model:build', 'model:commit', 'service:ajax']
+  needs: ['model:repo', 'model:build', 'model:commit', 'model:stage', 'service:ajax']
 });
 
 test('config is fetched if it\'s not available', function (assert) {
