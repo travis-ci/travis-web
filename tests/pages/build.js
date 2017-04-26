@@ -70,7 +70,7 @@ export default PageObject.create({
 
       stateTitle: attribute('title', 'h2 .state-icon-container'),
 
-      allowFailuresText: text('aside'),
+      allowFailures: { scope: 'aside' },
 
       jobs: collection({
         itemScope: '.jobs-item',

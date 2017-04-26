@@ -44,5 +44,12 @@ export default Ember.Component.extend({
   stageStateTitle: Ember.computed('stageState', function () {
     const stageState = this.get('stageState');
     return `Stage ${stageState}`;
+  }),
+
+  stageIsLast: Ember.computed('stages', 'stage', function () {
+    const stages = this.get('stages');
+    const stage = this.get('stage');
+
+    return stages.indexOf(stage) == stages.length - 1;
   })
 });

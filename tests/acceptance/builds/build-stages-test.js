@@ -42,7 +42,7 @@ test('visiting build with stages', function (assert) {
       assert.equal(stage.duration, '1 min 11 sec');
       assert.equal(stage.jobs(0).number, '1234.1');
       assert.equal(stage.jobs(1).number, '1234.2');
-      assert.equal(stage.allowFailuresText, 'jorts');
+      assert.equal(stage.allowFailures.text, 'jorts');
     });
 
     buildPage.stages(1).as(stage => {
@@ -51,6 +51,7 @@ test('visiting build with stages', function (assert) {
       assert.equal(stage.stateTitle, 'Stage failed');
       assert.equal(stage.duration, '11 sec');
       assert.equal(stage.jobs(0).number, '1234.999');
+      assert.ok(stage.allowFailures.isHidden, 'expected no allowed failures text');
     });
   });
   percySnapshot(assert);
