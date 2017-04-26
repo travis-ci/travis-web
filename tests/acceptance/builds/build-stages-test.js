@@ -18,7 +18,7 @@ test('visiting build with stages', function (assert) {
   let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
 
   let secondStage = build.createStage({ number: 2, name: 'second', state: 'failed', started_at: jobTime, finished_at: futureTime(11) });
-  let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71) });
+  let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
 
   let firstJob = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build, stage: firstStage, startedAt: jobTime, finishedAt: futureTime(30) });
   commit.job = firstJob;
@@ -41,6 +41,7 @@ test('visiting build with stages', function (assert) {
     assert.equal(buildPage.stages(0).duration, '1 min 11 sec');
     assert.equal(buildPage.stages(0).jobs(0).number, '1234.1');
     assert.equal(buildPage.stages(0).jobs(1).number, '1234.2');
+    assert.equal(buildPage.stages(0).allowFailuresText, 'jorts');
 
     assert.equal(buildPage.stages(1).name, 'second');
     assert.ok(buildPage.stages(1).isFailed);
