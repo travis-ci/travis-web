@@ -34,20 +34,24 @@ test('visiting build with stages', function (assert) {
   andThen(function () {
     assert.equal(buildPage.stages().count, 2, 'expected two build stages');
 
-    assert.equal(buildPage.stages(0).name, 'first', 'expected the stages to be numerically sorted');
-    assert.equal(buildPage.stages(0).nameEmojiTitle, 'two_men_holding_hands');
-    assert.ok(buildPage.stages(0).isPassed);
-    assert.equal(buildPage.stages(0).stateTitle, 'Stage passed');
-    assert.equal(buildPage.stages(0).duration, '1 min 11 sec');
-    assert.equal(buildPage.stages(0).jobs(0).number, '1234.1');
-    assert.equal(buildPage.stages(0).jobs(1).number, '1234.2');
-    assert.equal(buildPage.stages(0).allowFailuresText, 'jorts');
+    buildPage.stages(0).as(stage => {
+      assert.equal(stage.name, 'first', 'expected the stages to be numerically sorted');
+      assert.equal(stage.nameEmojiTitle, 'two_men_holding_hands');
+      assert.ok(stage.isPassed);
+      assert.equal(stage.stateTitle, 'Stage passed');
+      assert.equal(stage.duration, '1 min 11 sec');
+      assert.equal(stage.jobs(0).number, '1234.1');
+      assert.equal(stage.jobs(1).number, '1234.2');
+      assert.equal(stage.allowFailuresText, 'jorts');
+    });
 
-    assert.equal(buildPage.stages(1).name, 'second');
-    assert.ok(buildPage.stages(1).isFailed);
-    assert.equal(buildPage.stages(1).stateTitle, 'Stage failed');
-    assert.equal(buildPage.stages(1).duration, '11 sec');
-    assert.equal(buildPage.stages(1).jobs(0).number, '1234.999');
+    buildPage.stages(1).as(stage => {
+      assert.equal(stage.name, 'second');
+      assert.ok(stage.isFailed);
+      assert.equal(stage.stateTitle, 'Stage failed');
+      assert.equal(stage.duration, '11 sec');
+      assert.equal(stage.jobs(0).number, '1234.999');
+    });
   });
   percySnapshot(assert);
 });
