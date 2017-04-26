@@ -1,5 +1,6 @@
 {{#builds-wrapper contentType=contentType repo=repo}}
 {{#if isLoaded}}
+  {{build-type-selector repo=repo}}
   <ul class="build-list">
     {{#each builds as |build|}}
       {{builds-item build=build}}

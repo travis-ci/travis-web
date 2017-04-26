@@ -1,0 +1,9 @@
+<button class="option-display-narrow" type="button" title="Show more options">
+  <span class="label-align">Select Build Type</span>
+  <span class="option-tofu">{{inline-svg 'icon-tofuburger' class="icon-tofu"}}</span>
+</button>
+<ul class="option-dropdown">
+  <li>{{#link-to "builds.push" repo}}Push Builds{{/link-to}}</li>
+  <li>{{#link-to "builds.pull_request" repo}}Pull Request Builds{{/link-to}}</li>
+  <li>{{#link-to "builds.cron" repo}}Cron Builds{{/link-to}}</li>
+</ul>

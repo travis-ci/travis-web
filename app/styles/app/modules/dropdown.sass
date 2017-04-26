@@ -7,6 +7,9 @@
     .option-display
       color: $oxide-blue
       border-color: $oxide-blue
+    .option-display-narrow
+      color: $oxide-blue
+      border-color: $oxide-blue
     .option-tofu
       +colorSVGFill($oxide-blue)
       border-color: $oxide-blue
@@ -49,6 +52,35 @@ $dropdown-button-margin: -9px
     margin-top: -0.1em
     border-radius: 50%
     overflow: hidden
+
+.option-display-narrow
+  height: $dropdown-button-height
+  margin-bottom: 20px;
+  padding: 0
+  border: 1px solid $dry-cement
+  color: $asphalt-grey
+  border-radius: 2px
+  text-align: center
+  line-height: 2
+  font-size: 14px
+  cursor: pointer
+  text-align: left
+  white-space: nowrap
+  &:focus
+    outline: none
+  .label-align
+    padding: 0 1em
+    overflow: hidden
+    float: left
+    line-height: 2
+  .avatar
+    max-width: 20px
+    max-height: 20px
+    margin-right: .5em
+    margin-top: -0.1em
+    border-radius: 50%
+    overflow: hidden
+
 
 .option-tofu,
 .option-arrow
