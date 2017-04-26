@@ -57,3 +57,57 @@ test('it renders allowed failures text for a non-final stage with a failed job',
 
   assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of job 19.19 so we continued this build to the next stage.');
 });
+
+test('it renders allowed failures text for a non-final stage with two failed jobs', function (assert) {
+  this.jobs = Ember.A([{
+    allowFailure: true,
+    state: 'failed',
+    isFinished: true,
+    number: '19.19',
+    stage: { id: '1' }
+  }, {
+    allowFailure: true,
+    state: 'errored',
+    isFinished: true,
+    number: '19.20',
+    stage: { id: '1' }
+  }]);
+
+  this.stages = [Ember.Object.create({ id: '1', number: '1' }), Ember.Object.create({ id: '2', number: '2' })];
+  this.stage = this.stages[0];
+  this.build = { jobs: this.jobs };
+
+  this.render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
+
+  assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of jobs 19.19 and 19.20 so we continued this build to the next stage.');
+});
+
+test('it renders allowed failures text for a non-final stage with three failed jobs', function (assert) {
+  this.jobs = Ember.A([{
+    allowFailure: true,
+    state: 'failed',
+    isFinished: true,
+    number: '19.19',
+    stage: { id: '1' }
+  }, {
+    allowFailure: true,
+    state: 'errored',
+    isFinished: true,
+    number: '19.20',
+    stage: { id: '1' }
+  }, {
+    allowFailure: true,
+    state: 'errored',
+    isFinished: true,
+    number: '19.21',
+    stage: { id: '1' }
+  }]);
+
+  this.stages = [Ember.Object.create({ id: '1', number: '1' }), Ember.Object.create({ id: '2', number: '2' })];
+  this.stage = this.stages[0];
+  this.build = { jobs: this.jobs };
+
+  this.render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
+
+  assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of jobs 19.19, 19.20, and 19.21 so we continued this build to the next stage.');
+});

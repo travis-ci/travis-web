@@ -54,7 +54,19 @@ export default Ember.Component.extend({
       const allowedToFailAndFinishedAndNotPassed = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
 
       if (allowedToFailAndFinishedAndNotPassed.length > 0) {
-        return `Your build matrix was set to allow the failure of job ${allowedToFailAndFinishedAndNotPassed.mapBy('number').join(', ')} so we continued this build to the next stage.`;
+        let jobList;
+
+        if (allowedToFailAndFinishedAndNotPassed.length == 1) {
+          jobList = `job ${allowedToFailAndFinishedAndNotPassed.mapBy('number')[0]}`;
+        } else if (allowedToFailAndFinishedAndNotPassed.length == 2) {
+          jobList = `jobs ${allowedToFailAndFinishedAndNotPassed.mapBy('number').join(' and ')}`;
+        } else {
+          const firstJobs = allowedToFailAndFinishedAndNotPassed.slice(0, allowedToFailAndFinishedAndNotPassed.length - 1);
+          const lastJob = allowedToFailAndFinishedAndNotPassed[allowedToFailAndFinishedAndNotPassed.length - 1];
+          jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, and ${Ember.get(lastJob, ('number'))}`;
+        }
+        return 'Your build matrix was set to allow the failure of ' +
+               `${jobList} so we continued this build to the next stage.`;
       } else {
         return false;
       }
