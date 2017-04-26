@@ -31,7 +31,7 @@
     {{/each}}
     </ul>
 
-    {{#unless stageIsLast}}
-      <aside>jorts</aside>
-    {{/unless}}
+  {{#if stageAllowFailuresText}}
+    <aside>{{stageAllowFailuresText}}</aside>
+  {{/if}}
 {{/if}}

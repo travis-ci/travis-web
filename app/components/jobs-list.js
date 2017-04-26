@@ -46,10 +46,25 @@ export default Ember.Component.extend({
     return `Stage ${stageState}`;
   }),
 
+  stageAllowFailuresText: Ember.computed('filteredJobs.@each.state', 'filteredJobs.@each.allowFailure', 'stageIsLast', function () {
+    if (this.get('stageIsLast')) {
+      return false;
+    } else {
+      const jobsAllowedToFail = this.get('filteredJobs').filterBy('allowFailure');
+      const allowedToFailAndFinishedAndNotPassed = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
+
+      if (allowedToFailAndFinishedAndNotPassed.length > 0) {
+        return `Your build matrix was set to allow the failure of job ${allowedToFailAndFinishedAndNotPassed.mapBy('number').join(', ')} so we continued this build to the next stage.`;
+      } else {
+        return false;
+      }
+    }
+  }),
+
   stageIsLast: Ember.computed('stages', 'stage', function () {
     const stages = this.get('stages');
     const stage = this.get('stage');
 
-    return stages.indexOf(stage) == stages.length - 1;
+    return stage && stages && stages.indexOf(stage) == stages.length - 1;
   })
 });
