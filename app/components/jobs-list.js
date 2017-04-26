@@ -51,18 +51,18 @@ export default Ember.Component.extend({
       return false;
     } else {
       const jobsAllowedToFail = this.get('filteredJobs').filterBy('allowFailure');
-      const allowedToFailAndFinishedAndNotPassed = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
+      const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
 
-      if (allowedToFailAndFinishedAndNotPassed.length > 0) {
+      if (relevantJobs.length > 0) {
         let jobList;
 
-        if (allowedToFailAndFinishedAndNotPassed.length == 1) {
-          jobList = `job ${allowedToFailAndFinishedAndNotPassed.mapBy('number')[0]}`;
-        } else if (allowedToFailAndFinishedAndNotPassed.length == 2) {
-          jobList = `jobs ${allowedToFailAndFinishedAndNotPassed.mapBy('number').join(' and ')}`;
+        if (relevantJobs.length == 1) {
+          jobList = `job ${relevantJobs.mapBy('number')[0]}`;
+        } else if (relevantJobs.length == 2) {
+          jobList = `jobs ${relevantJobs.mapBy('number').join(' and ')}`;
         } else {
-          const firstJobs = allowedToFailAndFinishedAndNotPassed.slice(0, allowedToFailAndFinishedAndNotPassed.length - 1);
-          const lastJob = allowedToFailAndFinishedAndNotPassed[allowedToFailAndFinishedAndNotPassed.length - 1];
+          const firstJobs = relevantJobs.slice(0, relevantJobs.length - 1);
+          const lastJob = relevantJobs[relevantJobs.length - 1];
           jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, and ${Ember.get(lastJob, ('number'))}`;
         }
         return 'Your build matrix was set to allow the failure of ' +
