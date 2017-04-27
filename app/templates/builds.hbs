@@ -17,6 +17,10 @@
   {{/if}}
 
 {{else}}
-  {{loading-indicator}}
+  <ul class="build-list">
+    {{#each placeholderBuilds as |build|}}
+      {{builds-item build=build}}
+    {{/each}}
+  </ul>
 {{/if}}
 {{/builds-wrapper}}

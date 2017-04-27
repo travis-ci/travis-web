@@ -95,6 +95,24 @@ export default Ember.Controller.extend({
     }));
   }),
 
+  placeholderRepos: Ember.computed(function () {
+    const repos = [];
+
+    for (let i = 0; i < 15; i++) {
+      repos.push({
+        placeholder: true,
+        slug: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        currentBuild: {
+          id: 'x',
+          status: '',
+          number: 'xxxx'
+        }
+      });
+    }
+
+    return repos;
+  }),
+
   tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
     return this.possiblyRedirectToGettingStartedPage();
   }),

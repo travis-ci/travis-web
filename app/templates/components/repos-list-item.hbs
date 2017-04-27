@@ -1,4 +1,4 @@
-<div class="tile {{repo.currentBuild.state}}">
+<div class="tile {{repo.currentBuild.state}} {{if repo.placeholder 'placeholder'}}">
   <h2 class="tile-title {{repo.currentBuild.state}}">
     {{#if repo.slug}}
       {{status-icon status=repo.currentBuild.state}}
