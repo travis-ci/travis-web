@@ -1,5 +1,11 @@
 import AbstractBuildsRoute from 'travis/routes/abstract-builds';
 
-export default AbstractBuildsRoute.extend({
+import RenderConfig from 'travis/mixins/builds/rendering';
+
+const mixins = [
+  RenderConfig,
+];
+
+export default AbstractBuildsRoute.extend(...mixins, {
   contentType: 'pull_requests'
 });
