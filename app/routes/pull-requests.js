@@ -10,5 +10,9 @@ const mixins = [
 
 export default TravisRoute.extend(...mixins, {
   contentType: 'pull_requests',
-  controllerName: 'builds',
+
+  contentDidChange() {
+    const path = this.get('path');
+    this.controllerFor('pull-requests').set('model', this.controllerFor('repo').get(path));
+  },
 });
