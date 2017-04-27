@@ -62,6 +62,8 @@ export default Ember.Component.extend({
           jobList = `job ${relevantJobs.mapBy('number')[0]}`;
         } else if (relevantJobs.length == 2) {
           jobList = `jobs ${relevantJobs.mapBy('number').join(' and ')}`;
+        } else if (relevantJobs.length > 5) {
+          jobList = 'multiple jobs';
         } else {
           const firstJobs = relevantJobs.slice(0, relevantJobs.length - 1);
           const lastJob = relevantJobs[relevantJobs.length - 1];
