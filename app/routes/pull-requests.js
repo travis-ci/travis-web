@@ -17,7 +17,5 @@ export default TravisRoute.extend(...mixins, {
     return 'Pull Requests';
   },
 
-  path: 'repo.pullRequests',
-
   contentType: 'pull_requests',
 });

@@ -17,7 +17,5 @@ export default TravisRoute.extend(...mixins, {
     return this.modelFor('repo').get('builds');
   },
 
-  path: 'repo.builds',
-
   contentType: 'builds',
 });
