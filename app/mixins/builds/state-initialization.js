@@ -15,6 +15,9 @@ export default Ember.Mixin.create({
 
   contentDidChange() {
     const path = this.get('path');
+    // set the controller's model to be a relationship of the currently
+    // rendered repository
+    // `path` will be something like `repo.pullRequests`
     this.controller.set('model', this.controllerFor('repo').get(path));
   },
 
