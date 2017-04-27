@@ -3,7 +3,7 @@
     {{#each builds as |build|}}
       {{builds-item build=build}}
     {{else}}
-      {{no-builds repo=repo isPR=displayPullRequests isBranch=displayBranches}}
+      {{no-builds repo=repo tab=tab}}
     {{/each}}
   </ul>
   {{#if displayShowMoreButton}}

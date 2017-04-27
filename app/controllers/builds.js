@@ -18,12 +18,4 @@ export default Ember.Controller.extend(...mixins, {
   displayShowMoreButton: Ember.computed('tab', 'builds.lastObject.number', function () {
     return this.get('tab') !== 'branches' && parseInt(this.get('builds.lastObject.number')) > 1;
   }),
-
-  displayPullRequests: Ember.computed('tab', function () {
-    return this.get('tab') === 'pull_requests';
-  }),
-
-  displayBranches: Ember.computed('tab', function () {
-    return this.get('tab') === 'branches';
-  }),
 });
