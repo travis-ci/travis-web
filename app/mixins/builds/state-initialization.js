@@ -1,0 +1,25 @@
+import Ember from 'ember';
+
+export default Ember.Mixin.create({
+  setupController() {
+    this.controllerFor('repo').activate(this.get('contentType'));
+    this.contentDidChange();
+    this.controllerFor('repo').addObserver(this.get('path'), this, 'contentDidChange');
+    this.controllerFor('build').set('contentType', this.get('contentType'));
+  },
+
+  deactivate() {
+    this.controllerFor('repo').removeObserver(this.get('path'), this, 'contentDidChange');
+    this._super(...arguments);
+  },
+
+  contentDidChange() {
+    const path = this.get('path');
+    this.controllerFor('builds').set('model', this.controllerFor('repo').get(path));
+  },
+
+  path: Ember.computed('contentType', function () {
+    const type = this.get('contentType');
+    return 'repo.' + (type.camelize());
+  })
+});
