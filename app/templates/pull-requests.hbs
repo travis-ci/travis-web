@@ -1,0 +1,22 @@
+{{#builds-wrapper contentType=contentType repo=repo}}
+{{#if isLoaded}}
+  <ul class="build-list">
+    {{#each builds as |build|}}
+      {{builds-item build=build}}
+    {{else}}
+      {{no-builds repo=repo isPR=displayPullRequests isBranch=displayBranches}}
+    {{/each}}
+  </ul>
+  {{#if displayShowMoreButton}}
+    <p>
+      {{show-more-button isLoading=isLoading showMore=(action 'showMoreBuilds')}}
+      {{#if isLoading}}
+        {{loading-indicator}}
+      {{/if}}
+    </p>
+  {{/if}}
+
+{{else}}
+  {{loading-indicator}}
+{{/if}}
+{{/builds-wrapper}}
