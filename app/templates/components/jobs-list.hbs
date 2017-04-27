@@ -30,4 +30,8 @@
       {{jobs-item job=job repo=repo}}
     {{/each}}
     </ul>
+
+  {{#if stageAllowFailuresText}}
+    <aside>{{stageAllowFailuresText}}</aside>
+  {{/if}}
 {{/if}}

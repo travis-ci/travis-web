@@ -70,6 +70,8 @@ export default PageObject.create({
 
       stateTitle: attribute('title', 'h2 .state-icon-container'),
 
+      allowFailures: { scope: 'aside' },
+
       jobs: collection({
         itemScope: '.jobs-item',
 
