@@ -1,6 +1,7 @@
-export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' | tr '[:upper:]' '[:lower:]'`
+# export CLEANED_BRANCH_SUBDOMAIN=`echo $TRAVIS_PULL_REQUEST_BRANCH | tr '.' '-' | tr '[:upper:]' '[:lower:]'`
 
 # FIXME remove this obvsy
+export CLEANED_BRANCH_SUBDOMAIN=build-stages-beta
 export TRAVIS_PULL_REQUEST_BRANCH=staging
 
 ./config/deployment/store-redis-urls.sh
