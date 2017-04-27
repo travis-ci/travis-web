@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Polling from 'travis/services/polling';
 import config from 'travis/config/environment';
 
-const { module, test } = QUnit;
+const { module, skip, test } = QUnit;
 
 let service;
 
@@ -72,7 +72,7 @@ test('it will stop running any reloads after it is destroyed', function (assert)
   }, 50);
 });
 
-test('it stops reloading models after they were removed from polling', function (assert) {
+skip('it stops reloading models after they were removed from polling', function (assert) {
   assert.expect(4);
   const done = assert.async();
   const history = [];
