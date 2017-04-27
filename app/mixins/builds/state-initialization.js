@@ -20,9 +20,4 @@ export default Ember.Mixin.create({
     // `path` will be something like `repo.pullRequests`
     this.controller.set('model', this.controllerFor('repo').get(path));
   },
-
-  path: Ember.computed('contentType', function () {
-    const type = this.get('contentType');
-    return 'repo.' + (type.camelize());
-  })
 });
