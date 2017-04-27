@@ -15,7 +15,7 @@ export default Ember.Mixin.create({
 
   contentDidChange() {
     const path = this.get('path');
-    this.controllerFor('builds').set('model', this.controllerFor('repo').get(path));
+    this.controller.set('model', this.controllerFor('repo').get(path));
   },
 
   path: Ember.computed('contentType', function () {
