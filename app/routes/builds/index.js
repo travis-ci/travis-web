@@ -1,5 +1,4 @@
-import AbstractBuildsRoute from 'travis/routes/abstract-builds';
+import Ember from 'ember';
 
-export default AbstractBuildsRoute.extend({
-  contentType: 'builds'
+export default Ember.Route.extend({
 });

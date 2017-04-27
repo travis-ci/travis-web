@@ -97,7 +97,15 @@ export default Ember.Controller.extend({
   },
 
   viewPullRequests() {
-    return this.connectTab('pull_requests');
+    return this.connectTab('build');
+  },
+
+  viewCrons() {
+    return this.connectTab('build');
+  },
+
+  viewPush() {
+    return this.connectTab('build');
   },
 
   viewBranches() {
