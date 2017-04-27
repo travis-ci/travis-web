@@ -6,6 +6,7 @@ export default Ember.Mixin.create({
     this.contentDidChange();
     this.controllerFor('repo').addObserver(this.get('path'), this, 'contentDidChange');
     this.controllerFor('build').set('contentType', this.get('contentType'));
+    return this._super(...arguments);
   },
 
   deactivate() {
