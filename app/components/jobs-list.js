@@ -65,8 +65,8 @@ export default Ember.Component.extend({
         } else {
           const firstJobs = relevantJobs.slice(0, relevantJobs.length - 1);
           const lastJob = relevantJobs[relevantJobs.length - 1];
-          jobList = `jobs ${firstJobs.mapBy('number').join(', ')},
-            and ${Ember.get(lastJob, ('number'))}`;
+          jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, ` +
+            `and ${Ember.get(lastJob, ('number'))}`;
         }
         return 'Your build matrix was set to allow the failure of ' +
                `${jobList} so we continued this build to the next stage.`;
