@@ -2,10 +2,6 @@ import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
-  titleToken(/* model*/) {
-    return this.get('contentType').replace('_', ' ').capitalize();
-  },
-
   setupController() {
     this.controllerFor('repo').activate(this.get('contentType'));
     this.contentDidChange();

@@ -1,9 +1,11 @@
 import AbstractBuildsRoute from 'travis/routes/abstract-builds';
 
-import RenderConfig from 'travis/mixins/builds/rendering';
+import RenderConfigMixin from 'travis/mixins/builds/rendering';
+import WindowTitleMixin from 'travis/mixins/builds/window-title';
 
 const mixins = [
-  RenderConfig,
+  RenderConfigMixin,
+  WindowTitleMixin,
 ];
 
 export default AbstractBuildsRoute.extend(...mixins, {
