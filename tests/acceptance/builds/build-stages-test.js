@@ -26,8 +26,8 @@ test('visiting build with stages', function (assert) {
   firstJob.save();
   commit.save();
 
-  server.create('job', { number: '1234.2', repository_id: repo.id, state: 'passed', build_id: build.id, config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build, stage: firstStage, startedAt: jobTime, finishedAt: futureTime(40) });
-  server.create('job', { allow_failure: true, number: '1234.999', repository_id: repo.id, state: 'failed', build_id: build.id, config: { language: 'ruby' }, commit, build, stage: secondStage, startedAt: jobTime, finishedAt: futureTime(10) });
+  server.create('job', { number: '1234.2', repository_id: repo.id, state: 'failed', allow_failure: true, build_id: build.id, config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build, stage: firstStage, startedAt: jobTime, finishedAt: futureTime(40) });
+  server.create('job', { number: '1234.999', repository_id: repo.id, state: 'failed', build_id: build.id, config: { language: 'ruby' }, commit, build, stage: secondStage, startedAt: jobTime, finishedAt: futureTime(10) });
 
   visit(`/travis-ci/travis-web/builds/${build.id}`);
 
@@ -42,7 +42,7 @@ test('visiting build with stages', function (assert) {
       assert.equal(stage.duration, '1 min 11 sec');
       assert.equal(stage.jobs(0).number, '1234.1');
       assert.equal(stage.jobs(1).number, '1234.2');
-      assert.equal(stage.allowFailures.text, 'jorts');
+      assert.equal(stage.allowFailures.text, 'Your build matrix was set to allow the failure of job 1234.2 so we continued this build to the next stage.');
     });
 
     buildPage.stages(1).as(stage => {
