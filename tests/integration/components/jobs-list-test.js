@@ -40,6 +40,8 @@ test('it renders "Allowed Failures" version without a `required` property', func
   assert.equal(this.$().find('.jobs-list li').length, 1, 'there should be 1 job item');
 });
 
+// FIXME these tests are obvs ridic
+
 test('it renders allowed failures text for a non-final stage with a failed job', function (assert) {
   this.jobs = Ember.A([{
     allowFailure: true,
