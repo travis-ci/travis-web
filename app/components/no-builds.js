@@ -3,6 +3,14 @@ import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
+  isPR: Ember.computed('tab', function () {
+    return this.get('tab') === 'pull_requests';
+  }),
+
+  isBranch: Ember.computed('tab', function () {
+    return this.get('tab') === 'branches';
+  }),
+
   triggerBuild: task(function* () {
     const apiEndpoint = config.apiEndpoint;
 
