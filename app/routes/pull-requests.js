@@ -9,12 +9,10 @@ export default TravisRoute.extend(...mixins, {
 
   setupController(controller, model) {
     this._super(...arguments);
-    this.controllerFor('repo').activate(this.get('contentType'));
+    this.controllerFor('repo').activate('pull_requests');
   },
 
   titleToken() {
     return 'Pull Requests';
   },
-
-  contentType: 'pull_requests',
 });
