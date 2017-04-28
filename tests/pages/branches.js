@@ -43,6 +43,8 @@ export default PageObject.create({
 
   branchesTabActive: hasClass('active', '#tab_branches'),
 
+  showsNoBranchesMessaging: text('.missing-notice h2.page-title'),
+
   defaultBranch: branchRowComponent,
 
   activeBranches: collection({
