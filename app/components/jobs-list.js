@@ -48,8 +48,8 @@ export default Ember.Component.extend({
 
   // FIXME lol
   // eslint-disable-next-line max-len
-  stageAllowFailuresText: Ember.computed('filteredJobs.@each.state', 'filteredJobs.@each.allowFailure', 'stageIsLast', function () {
-    if (this.get('stageIsLast')) {
+  stageAllowFailuresText: Ember.computed('stage', 'filteredJobs.@each.state', 'filteredJobs.@each.allowFailure', 'stageIsLast', function () {
+    if (this.get('stageIsLast') || !this.get('stage')) {
       return false;
     } else {
       const jobsAllowedToFail = this.get('filteredJobs').filterBy('allowFailure');
