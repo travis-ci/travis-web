@@ -91,7 +91,6 @@ export default TravisRoute.extend({
       }, {
         name: 'Carla Drago',
         title: 'inchworm',
-        handle: 'carlad',
         nationality: 'italy',
         country: 'germany',
         image: 'carla'
@@ -248,6 +247,12 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'lena'
       }, {
+        name: 'Joep',
+        title: 'Lead Second-Guess Engineer',
+        nationality: 'europe',
+        country: 'europe',
+        image: 'joep'
+      },{
         name: 'Sam Wright',
         title: 'Documentarian',
         handle: 'plaindocs',
