@@ -252,30 +252,27 @@ export default TravisRoute.extend({
         nationality: 'europe',
         country: 'europe',
         image: 'joep'
-      },{
+      }, {
         name: 'Sam Wright',
         title: 'Documentarian',
         handle: 'plaindocs',
         nationality: 'uk',
         country: 'germany',
         image: 'sam'
-      },
-      {
+      }, {
         name: 'Lili Kui',
         title: 'Hammer Jammer',
         nationality: 'kenya',
         country: 'germany',
         image: 'lili'
-      },
-      {
+      }, {
         name: 'Carla Iriberri',
         title: 'Cacaolat Connoisseur',
         handle: 'iriberri1',
         nationality: 'spain',
         country: 'spain',
         image: 'iriberri'
-      },
-      {
+      }, {
         name: 'Jan Schulte',
         title: 'Consulting Detective',
         handle: 'ganzefolge',
