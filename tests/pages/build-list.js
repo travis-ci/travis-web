@@ -1,4 +1,3 @@
-
 import PageObject from 'travis/tests/page-object';
 
 let {
