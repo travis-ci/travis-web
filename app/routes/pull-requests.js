@@ -1,8 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 
-const mixins = [];
-
-export default TravisRoute.extend(...mixins, {
+export default TravisRoute.extend({
   model() {
     return this.modelFor('repo').get('pullRequests');
   },

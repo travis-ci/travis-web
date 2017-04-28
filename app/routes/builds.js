@@ -1,8 +1,6 @@
 import TravisRoute from 'travis/routes/basic';
 
-const mixins = [];
-
-export default TravisRoute.extend(...mixins, {
+export default TravisRoute.extend({
   setupController(controller, model) {
     this._super(...arguments);
     this.controllerFor('repo').activate('builds');
