@@ -4,51 +4,59 @@ import page from 'travis/tests/pages/build-list';
 
 moduleForAcceptance('Acceptance | builds/pull requests', {
   beforeEach() {
-    const currentUser = server.create('user', {
+    this.currentUser = server.create('user', {
       name: 'Travis CI',
       login: 'travisci',
     });
 
-    signInUser(currentUser);
-
-    const repository = server.create('repository', {
-      slug: 'travis-ci/travis-web'
-    });
-
-    const pullRequestBuild = server.create('build', {
-      state: 'started',
-      number: '1000',
-      finished_at: new Date(),
-      started_at: new Date() - 1,
-      event_type: 'pull_request',
-      pull_request_number: 2010,
-      pull_request_title: 'A pull request',
-      repository: repository,
-      branch: this.branch,
-    });
-
-    const pullRequestCommit = pullRequestBuild.createCommit({
-      sha: '1234567890',
-      author_name: currentUser.name,
-      author_email: currentUser.email,
-      committer_name: currentUser.name,
-      committer_email: currentUser.email,
-    });
-    pullRequestBuild.save();
-
-    server.create('job', {
-      number: '1000.1',
-      repositoryId: this.repoId,
-      state: 'started',
-      commit: pullRequestCommit,
-      build: pullRequestBuild,
-    });
-
-    pullRequestBuild.save();
+    signInUser(this.currentUser);
   },
 });
 
+test('renders no pull requests messaging when none present', function (assert) {
+  server.create('repository');
+
+  page.visitPullRequests({ organization: 'travis-ci', repo: 'travis-web' });
+
+  andThen(() => {
+    assert.equal(page.showsNoBuildsMessaging, 'No pull request builds for this repository', 'Pull Requests tab shows no builds message');
+  });
+});
+
 test('view and cancel pull requests', function (assert) {
+  const repository = server.create('repository');
+
+  const pullRequestBuild = server.create('build', {
+    state: 'started',
+    number: '1000',
+    finished_at: new Date(),
+    started_at: new Date() - 1,
+    event_type: 'pull_request',
+    pull_request_number: 2010,
+    pull_request_title: 'A pull request',
+    repository: repository,
+    branch: this.branch,
+  });
+
+  const pullRequestCommit = pullRequestBuild.createCommit({
+    sha: '1234567890',
+    author_name: this.currentUser.name,
+    author_email: this.currentUser.email,
+    committer_name: this.currentUser.name,
+    committer_email: this.currentUser.email,
+  });
+  pullRequestBuild.save();
+
+  server.create('job', {
+    number: '1000.1',
+    repositoryId: this.repoId,
+    state: 'started',
+    commit: pullRequestCommit,
+    build: pullRequestBuild,
+  });
+
+  pullRequestBuild.save();
+
   page.visitPullRequests({ organization: 'travis-ci', repo: 'travis-web' });
 
   // no idea why this hackery is necessary. Probably somehow related to runloop

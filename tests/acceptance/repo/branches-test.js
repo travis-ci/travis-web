@@ -4,13 +4,13 @@ import branchesPage from 'travis/tests/pages/branches';
 
 moduleForAcceptance('Acceptance | repo branches', {
   beforeEach() {
-    const currentUser = server.create('user', {
+    this.currentUser = server.create('user', {
       name: 'Sara Ahmed',
       login: 'feministkilljoy',
       repos_count: 3
     });
 
-    signInUser(currentUser);
+    signInUser(this.currentUser);
 
     const gitUser = server.create('git-user', {
       name: 'Sara Ahmed'
@@ -57,7 +57,7 @@ moduleForAcceptance('Acceptance | repo branches', {
       branch: primaryBranch,
       repository,
     }).createCommit({
-      committer_name: currentUser.name,
+      committer_name: this.currentUser.name,
       sha: 'abc125'
     });
 
@@ -203,4 +203,19 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
   });
   percySnapshot(assert);
+});
+
+test('view branches tab when no branches present', function (assert) {
+  // destroy state from previous tests
+  server.db.branches.remove();
+  server.db.repositories.remove();
+  server.db.builds.remove();
+
+  server.create('repository');
+
+  branchesPage.visit({ organization: 'travis-ci', repo: 'travis-web' });
+
+  andThen(() => {
+    assert.equal(branchesPage.showsNoBranchesMessaging, 'No other branches for this repository', 'Branches tab shows no branches message');
+  });
 });

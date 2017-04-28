@@ -273,3 +273,13 @@ test('view and cancel pull requests', function (assert) {
     assert.equal(page.notification, 'Build has been successfully cancelled.');
   });
 });
+
+test('renders no builds messaging when none present', function (assert) {
+  server.create('repository');
+
+  page.visitBuildHistory({ organization: 'travis-ci', repo: 'travis-web' });
+
+  andThen(() => {
+    assert.equal(page.showsNoBuildsMessaging, 'No builds for this repository', 'Build History tab shows no builds message');
+  });
+});
