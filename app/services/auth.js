@@ -1,6 +1,7 @@
 /* global Travis */
 import config from 'travis/config/environment';
 import Ember from 'ember';
+import computed, { alias } from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -11,13 +12,7 @@ export default Ember.Service.extend({
   sessionStorage: service(),
   ajax: service(),
   state: 'signed-out',
-  receivingEnd: location.protocol + '//' + location.host,
-
-  init: function () {
-    return window.addEventListener('message', (e) => {
-      return this.receiveMessage(e);
-    });
-  },
+  receivingEnd: `${location.protocol}//${location.host}`,
 
   token() {
     return this.get('sessionStorage').getItem('travis.token');
@@ -27,11 +22,9 @@ export default Ember.Service.extend({
     return JSON.parse(this.get('sessionStorage').getItem('travis.user'))['token'];
   },
 
-  endpoint: Ember.computed(function () {
-    return config.authEndpoint || config.apiEndpoint;
-  }),
+  endpoint: config.authEndpoint || config.apiEndpoint,
 
-  signOut: function () {
+  signOut() {
     this.get('sessionStorage').clear();
     this.get('storage').clear();
     this.set('state', 'signed-out');
@@ -46,13 +39,11 @@ export default Ember.Service.extend({
   },
 
   signIn(data) {
-    var url;
     if (data) {
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      url = (this.get('endpoint')) + '/auth/post_message?origin=' + this.receivingEnd;
-      return Ember.$('<iframe id="auth-frame" />').hide().appendTo('body').attr('src', url);
+      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${location}`;
     }
   },
 
@@ -79,7 +70,7 @@ export default Ember.Service.extend({
   },
 
   userDataFrom(storage) {
-    var token, user, userJSON;
+    let token, user, userJSON;
     userJSON = storage.getItem('travis.user');
     if (userJSON != null) {
       user = JSON.parse(userJSON);
@@ -90,8 +81,8 @@ export default Ember.Service.extend({
     token = storage.getItem('travis.token');
     if (user && token && this.validateUser(user)) {
       return {
-        user: user,
-        token: token
+        user,
+        token
       };
     } else {
       storage.removeItem('travis.user');
@@ -101,7 +92,7 @@ export default Ember.Service.extend({
   },
 
   validateUser(user) {
-    var fieldsToValidate, isTravisBecome;
+    let fieldsToValidate, isTravisBecome;
     fieldsToValidate = ['id', 'login', 'token'];
     isTravisBecome = this.get('sessionStorage').getItem('travis.become');
     if (!isTravisBecome) {
@@ -110,11 +101,8 @@ export default Ember.Service.extend({
     if (this.get('features.proVersion')) {
       fieldsToValidate.push('channels');
     }
-    return fieldsToValidate.every((function (_this) {
-      return function (field) {
-        return _this.validateHas(field, user);
-      };
-    })(this)) && (isTravisBecome || user.correct_scopes);
+    return fieldsToValidate.every(field => this.validateHas(field, user)) &&
+      (isTravisBecome || user.correct_scopes);
   },
 
   validateHas(field, user) {
@@ -126,7 +114,7 @@ export default Ember.Service.extend({
   },
 
   setData(data) {
-    var user;
+    let user;
     this.storeData(data, this.get('sessionStorage'));
     if (!this.userDataFrom(this.get('storage'))) {
       this.storeData(data, this.get('storage'));
@@ -147,8 +135,8 @@ export default Ember.Service.extend({
       }
     }
     if (user) {
-      return this.get('ajax').get('/users/' + user.id).then((data) => {
-        var userRecord;
+      return this.get('ajax').get(`/users/${user.id}`).then((data) => {
+        let userRecord;
         if (data.user.correct_scopes) {
           userRecord = this.loadUser(data.user);
           userRecord.get('permissions');
@@ -167,17 +155,20 @@ export default Ember.Service.extend({
     }
   },
 
-  signedIn: Ember.computed('state', function () {
-    return this.get('state') === 'signed-in';
-  }),
+  @computed('state')
+  signedIn(state) {
+    return state === 'signed-in';
+  },
 
-  signedOut: Ember.computed('state', function () {
-    return this.get('state') === 'signed-out';
-  }),
+  @computed('state')
+  signedOut(state) {
+    return state === 'signed-out';
+  },
 
-  signingIn: Ember.computed('state', function () {
-    return this.get('state') === 'signing-in';
-  }),
+  @computed('state')
+  signingIn(state) {
+    return state === 'signing-in';
+  },
 
   storeData(data, storage) {
     if (data.token) {
@@ -187,27 +178,13 @@ export default Ember.Service.extend({
   },
 
   loadUser(user) {
-    var store = this.get('store'),
+    let store = this.get('store'),
       userClass = store.modelFor('user'),
       serializer = store.serializerFor('user'),
       normalized = serializer.normalizeResponse(store, userClass, user, null, 'findRecord');
 
     store.push(normalized);
     return store.recordForId('user', user.id);
-  },
-
-  receiveMessage(event) {
-    if (event.origin === this.expectedOrigin()) {
-      if (event.data === 'redirect') {
-        let endpoint = this.get('endpoint');
-        window.location = `${endpoint}/auth/handshake?redirect_uri=${location}`;
-      } else if (event.data.user != null) {
-        if (event.data.travis_token) {
-          event.data.user.token = event.data.travis_token;
-        }
-        return this.setData(event.data);
-      }
-    }
   },
 
   expectedOrigin() {
@@ -223,8 +200,6 @@ export default Ember.Service.extend({
   },
 
   sendToApp(name) {
-    var error, router;
-
     // TODO: this is an ugly solution, we need to do one of 2 things:
     //       * find a way to check if we can already send an event to remove try/catch
     //       * remove afterSignIn and afterSignOut events by replacing them in a more
@@ -232,11 +207,11 @@ export default Ember.Service.extend({
     //         as a direct response to either manual sign in or autoSignIn (right now
     //         we treat both cases behave the same in terms of sent events which I think
     //         makes it more complicated than it should be).
-    router = Ember.getOwner(this).lookup('router:main');
+    const router = Ember.getOwner(this).lookup('router:main');
     try {
       return router.send(name);
     } catch (error1) {
-      error = error1;
+      const error = error1;
       if (!(error.message.match(/Can't trigger action/))) {
         throw error;
       }
@@ -248,22 +223,24 @@ export default Ember.Service.extend({
   },
 
   syncingDidChange: Ember.observer('isSyncing', 'currentUser', function () {
-    var user;
-    if ((user = this.get('currentUser')) && user.get('isSyncing') && !user.get('syncedAt')) {
+    const user = this.get('currentUser');
+    if (user && user.get('isSyncing') && !user.get('syncedAt')) {
       return Ember.run.scheduleOnce('routerTransitions', this, function () {
         return Ember.getOwner(this).lookup('router:main').send('renderFirstSync');
       });
     }
   }),
 
-  userName: Ember.computed('currentUser.login', 'currentUser.name', function () {
-    return this.get('currentUser.name') || this.get('currentUser.login');
-  }),
+  @computed('currentUser.{login,name}')
+  userName(login, name) {
+    return name || login;
+  },
 
-  gravatarUrl: Ember.computed('currentUser.gravatarId', function () {
-    let gravatarId = this.get('currentUser.gravatarId');
+  @computed('currentUser.gravatarId')
+  gravatarUrl(gravatarId) {
     return `${location.protocol}//www.gravatar.com/avatar/${gravatarId}?s=48&d=mm`;
-  }),
+  },
 
-  permissions: Ember.computed.alias('currentUser.permissions')
+  // eslint-ignore-next-line
+  @alias('currentUser.permissions') permissions: null,
 });

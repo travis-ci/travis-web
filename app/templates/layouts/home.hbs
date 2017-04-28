@@ -1,8 +1,6 @@
 <div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
 
-  <header id="top" class="top">
-    {{render "top"}}
-  </header>
+  {{top-bar}}
 
   {{flash-display}}
 
@@ -15,8 +13,10 @@
   <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
     {{outlet "left"}}
   </aside>
-</div>
 
-<footer class="{{if auth.signedIn 'hidden'}}">
-  {{render "footer"}}
-</footer>
+  {{#if auth.signedOut}}
+    {{page-footer}}
+  {{else if features.dashboard}}
+    {{page-footer}}
+  {{/if}}
+</div>

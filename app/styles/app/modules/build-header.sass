@@ -1,6 +1,6 @@
 .build-header
   font-size: 16px
-  border: 1px solid $cream-dark
+  border: 1px solid $dry-cement
   clear: both
 
   @include colorRows($turf-green, 'passed', 10px)
@@ -45,7 +45,7 @@
     flex: 0 0 10rem
     padding: 1rem 0
 
-  [class^='action-button'] + [class^='action-button']
+  .action-button-container + .action-button-container
     margin-top: .7rem
     
 
@@ -83,6 +83,12 @@
 
 .commit-author
   margin: 1rem 0 .7rem
+
+  .avatar--small:first-of-type
+    margin-left: -2px
+
+  .avatar--small:not(:first-of-type)
+    margin-left: 20px
 
 .commit-description
   margin: 1rem 0

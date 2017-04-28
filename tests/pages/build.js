@@ -26,14 +26,21 @@ const jobComponent = {
 };
 
 export default PageObject.create({
-  visit: visitable('travis-ci/travis-web/builds/1'),
+  visit: visitable(':slug/builds/:build_id'),
   restartBuild: clickable('.action-button--restart'),
   cancelBuild: clickable('.action-button--cancel'),
   debugBuild: clickable('.action-button--debug'),
   notification: text('p.flash-message'),
   singleJobLogText: text('.log-body pre'),
 
-  hasNoDebugButton: isHidden('.action-button--debug'),
+  branchName: text('.build-header .commit-branch'),
+  commitSha: text('.build-header .commit-commit'),
+  compare: text('.build-header .commit-compare'),
+  commitBranch: text('.build-header .commit-branch-url'),
+  buildTabLinkIsActive: hasClass('active', '#tab_build'),
+  buildTabLinkText: text('#tab_build'),
+
+  hasNoDebugButton: isHidden('.action-button--debug', { multiple: true }),
 
   requiredJobs: collection({
     scope: '.jobs-list:eq(0)',

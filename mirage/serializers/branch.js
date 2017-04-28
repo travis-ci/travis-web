@@ -1,23 +1,35 @@
-import { Serializer } from 'ember-cli-mirage';
+import V3Serializer from './v3';
 
-export default Serializer.extend({
-  serialize(object, request) {
-    return {
-      '@type': 'branches',
-      branches: object.models.map(branch => {
-        const builds = branch.builds;
+export default V3Serializer.extend({
+  serializeSingle(branch) {
+    const builds = branch.builds;
 
-        if (branch.builds && branch.builds.models.length) {
-          const lastBuild = branch.builds.models[builds.models.length - 1];
+    if (!branch.lastBuild && builds && builds.models.length) {
+      branch.lastBuild = builds.models[builds.models.length - 1];
+    }
 
-          branch.attrs.last_build = this.serializerFor('build').serialize(lastBuild, request);
-        }
+    return V3Serializer.prototype.serializeSingle.apply(this, arguments);
+  },
 
-        return branch.attrs;
-      }),
-      pagination: {
-        count: object.length
-      }
-    };
+  hrefForSingle(type, model, request) {
+    // TODO: do we need to try request? it seems like branch should always
+    // belong to a repository
+    let repositoryId = request.params.repository_id ||
+      request.params.repo_id ||
+      (model.repository && model.repository.id);
+
+    return `/repo/${repositoryId}/branch/${model.attrs.name}`;
+  },
+
+  hrefForCollection(type, collection, request) {
+    let repositoryId = request.params.repository_id ||
+                       (collection.models.length && collection.models[0].repository.id);
+
+    return `/repo/${repositoryId}/branches`;
+  },
+
+  normalizeId() {
+    // branches don't have id in our API
+    return null;
   }
 });

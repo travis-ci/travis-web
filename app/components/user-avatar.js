@@ -1,12 +1,12 @@
 import Ember from 'ember';
+import computed from 'ember-computed-decorators';
 
 export default Ember.Component.extend({
-
   tagName: 'span',
   classNameBindings: ['small:avatar--small:avatar'],
 
-  userInitials: Ember.computed('name', function () {
-    let name = this.get('name');
+  @computed('name')
+  userInitials(name) {
     if (name) {
       let arr = name.split(' ');
       let initials = '';
@@ -18,22 +18,32 @@ export default Ember.Component.extend({
       }
       return initials;
     }
-  }),
+  },
 
-  avatarUrl: Ember.computed('url', 'size', function () {
-    const url = this.get('url');
-    const size = this.get('size');
-
-    if (size) {
-      const sizeParam = `&s=${size}`;
-      // ensure version and size set properly
-      if (url.includes('?v=3')) {
-        return `${url}${sizeParam}`;
-      } else {
-        return `${url}?v=3&s=${size}`;
-      }
-    } else {
-      return url;
+  @computed('url', 'size')
+  avatarUrl(url, size) {
+    if (!size) {
+      size = 32;
     }
-  }),
+    const sizeParam = `&s=${size}`;
+    if (url.includes('?v=3')) {
+      return `${url}${sizeParam}`;
+    } else {
+      return `${url}?v=3&s=${size}`;
+    }
+  },
+
+  @computed('url', 'size')
+  highResAvatarUrl(url, size) {
+    if (!size) {
+      size = 32;
+    }
+    size = size * 2; // high-dpi
+    const sizeParam = `&s=${size}`;
+    if (url.includes('?v=3')) {
+      return `${url}${sizeParam}`;
+    } else {
+      return `${url}?v=3&s=${size}`;
+    }
+  }
 });

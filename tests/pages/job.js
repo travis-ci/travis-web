@@ -14,10 +14,10 @@ export default PageObject.create({
 
   branch: text('.commit-branch'),
   message: text('.build-title'),
-  state: text('.build-status'),
+  state: text('.build-status .inner-underline'),
   author: text('.commit-author'),
   log: text('#log'),
-  logError: text('.job-log .notice'),
+  logError: text('.job-log .notice-banner--red'),
 
   hasTruncatedLog: isVisible('.log-container p.warning'),
 
@@ -30,6 +30,7 @@ export default PageObject.create({
 
     item: {
       text: text(),
+      nextText: text('+ span'),
 
       isBlack: hasClass('black'),
       isRed: hasClass('red'),

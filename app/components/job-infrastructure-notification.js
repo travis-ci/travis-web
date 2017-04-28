@@ -22,6 +22,15 @@ export default Ember.Component.extend({
   isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
   isMacStadium6: Ember.computed.equal('queue', 'builds.macstadium6'),
 
+  @computed('queue', 'job.config')
+  isPreciseEOL(queue, config) {
+    if (queue === 'builds.gce' && config.dist === 'precise') {
+      if (config.language !== 'android') {
+        return true;
+      }
+    }
+  },
+
   macOSImage: Ember.computed.alias('jobConfig.osx_image'),
 
   deprecatedXcodeImages:

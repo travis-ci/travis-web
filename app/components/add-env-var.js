@@ -30,14 +30,14 @@ export default Ember.Component.extend({
   save: task(function* () {
     if (this.isValid()) {
       const envVar = this.get('store').createRecord('env_var', {
-        name: this.get('name'),
-        value: this.get('value'),
+        name: this.get('name').trim(),
+        value: this.get('value').trim(),
         'public': this.get('public'),
         repo: this.get('repo')
       });
 
       try {
-        yield envVar.save();
+        yield envVar.save().then(saved => saved.set('newlyCreated', true));
         this.reset();
       } catch (e) {
         // eslint-disable-next-line

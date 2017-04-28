@@ -1,4 +1,4 @@
-{{#travis-layout layoutName="layouts/simple"}}
+{{#travis-layout layoutName="layouts/center"}}
 <div class="content-page">
 
   <img src="/images/travis-crying.png" alt="Sad Travis" class="sad-travis" width="200">
@@ -14,13 +14,8 @@
     <p>Luckily, the issue can be easily corrected by going through the login flow
       once again. Make sure the permissions we ask for are all available.</p>
 
-    <p> For more information about the OAuth scopes and what we need them for,
+    <p>For more information about the OAuth scopes and what we need them for,
       <a href="http://docs.travis-ci.com/user/github-oauth-scopes/">check our documentation on this topic</a>.</p>
-  </div>
-
-  <div>
-    {{#if existingUser}}
-    {{/if}}
   </div>
 </div>
 {{/travis-layout}}

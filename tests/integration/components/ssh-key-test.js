@@ -2,9 +2,17 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { percySnapshot } from 'ember-percy';
+import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
 moduleForComponent('ssh-key', 'Integration | Component | ssh-key', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.server = startMirage();
+  },
+
+  afterEach() {
+    this.server.shutdown();
+  }
 });
 
 test('it renders the default ssh key if no custom key is set', function (assert) {
@@ -14,7 +22,7 @@ test('it renders the default ssh key if no custom key is set', function (assert)
   this.set('key', key);
   this.render(hbs`{{ssh-key key=key sshKeyDeleted="sshKeyDeleted"}}`);
 
-  assert.equal(this.$('.ssh-key-name span').text().trim(), 'no custom key set', 'should display that no custom key is set');
+  assert.equal(this.$('.ssh-key-name span').text().trim(), 'Default', 'should display that no custom key is set');
   assert.equal(this.$('.ssh-key-value span').text().trim(), 'fingerprint', 'should display default key fingerprint');
   percySnapshot(assert);
 });
@@ -35,7 +43,6 @@ test('it renders the custom ssh key if custom key is set', function (assert) {
   assert.equal(this.$('.ssh-key-name span').text().trim(), 'fookey', 'should display key description');
   assert.equal(this.$('.ssh-key-value span').text().trim(), 'somethingthing', 'should display custom key fingerprint');
 });
-
 
 test('it deletes a custom key if permissions are right', function (assert) {
   assert.expect(1);

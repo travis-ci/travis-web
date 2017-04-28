@@ -5,6 +5,7 @@ export default V2FallbackSerializer.extend({
     payload.id = payload['@href'];
     return this._super(...arguments);
   },
+
   extractId(modelClass, resourceHash) {
     return resourceHash.id || resourceHash['@href'];
   }

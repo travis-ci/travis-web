@@ -1,12 +1,13 @@
 /* global moment, Travis, Pusher */
 
-import { compact } from 'travis/utils/helpers';
+import _object from 'lodash/object';
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
+import computed from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -30,7 +31,7 @@ export default Model.extend(DurationCalculations, {
   branch: Ember.computed.alias('build.branch'),
   branchName: Ember.computed.alias('build.branchName'),
 
-  pullRequest: Ember.computed.alias('build.pullRequest'),
+  isPullRequest: Ember.computed.alias('build.isPullRequest'),
   pullRequestNumber: Ember.computed.alias('build.pullRequestNumber'),
   pullRequestTitle: Ember.computed.alias('build.pullRequestTitle'),
 
@@ -62,21 +63,45 @@ export default Model.extend(DurationCalculations, {
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
-      return compact(config);
-    } else if (this.get('currentState.stateName') !== 'root.loading') {
-      if (this.get('isFetchingConfig')) {
-        return;
-      }
-      this.set('isFetchingConfig', true);
-      return this.reload();
+      return _object.pickBy(config);
+    } else {
+      let fetchConfig = () => {
+        if (this.getCurrentState() !== 'root.loading') {
+          if (this.get('isFetchingConfig')) {
+            return;
+          }
+          this.set('isFetchingConfig', true);
+          this.reload();
+        } else {
+          Ember.run.later(fetchConfig, 20);
+        }
+      };
+
+      fetchConfig();
     }
   }),
 
-  isFinished: Ember.computed('state', function () {
-    let state = this.get('state');
+  getCurrentState() {
+    return this.get('currentState.stateName');
+  },
+
+  @computed('state')
+  isFinished(state) {
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
-  }),
+  },
+
+  @computed('state')
+  toBeQueued(state) {
+    let queuedState = 'created';
+    return Ember.isEqual(state, queuedState);
+  },
+
+  @computed('state')
+  toBeStarted(state) {
+    let waitingStates = ['queued', 'received'];
+    return waitingStates.includes(state);
+  },
 
   notStarted: Ember.computed('state', function () {
     let state = this.get('state');
@@ -103,7 +128,12 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  canCancel: Ember.computed.not('isFinished'),
+
+  canCancel: Ember.computed('isFinished', 'state', function () {
+    // not(isFinished) is insufficient since it will be true when state is undefined.
+    return !this.get('isFinished') && !!this.get('state');
+  }),
+
   canRestart: Ember.computed.alias('isFinished'),
   canDebug: Ember.computed.alias('isFinished'),
 

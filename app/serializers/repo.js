@@ -1,9 +1,7 @@
-import V2FallbackSerializer from 'travis/serializers/v2_fallback';
+import RepoV2FallbackSerializer from 'travis/serializers/repo_v2_fallback';
 import EmbeddedRecordsMixin from 'ember-data/serializers/embedded-records-mixin';
 
-var Serializer = V2FallbackSerializer.extend(EmbeddedRecordsMixin, {
-  isNewSerializerAPI: true,
-
+var Serializer = RepoV2FallbackSerializer.extend(EmbeddedRecordsMixin, {
   attrs: {
     permissions: { key: '@permissions' }
   },

@@ -2,7 +2,7 @@
 import Ember from 'ember';
 import config from './config/environment';
 
-var Router = Ember.Router.extend({
+const Router = Ember.Router.extend({
   // this is needed, because in the location
   // we need to decide if repositories or home needs
   // to be displayed, based on the current login status
@@ -13,8 +13,7 @@ var Router = Ember.Router.extend({
   rootURL: config.rootURL,
 
   generate() {
-    var url;
-    url = this.router.generate.apply(this.router, arguments);
+    const url = this.router.generate.apply(this.router, arguments);
     return this.get('location').formatURL(url);
   },
 
@@ -35,6 +34,7 @@ Router.map(function () {
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
   });
+  this.route('features', { resetNamespace: true });
   this.route('main', { path: '/', resetNamespace: true }, function () {
     this.route('getting_started', { resetNamespace: true });
     this.route('recent');
@@ -56,7 +56,6 @@ Router.map(function () {
       if (config.endpoints.caches) {
         this.route('caches', { path: '/caches', resetNamespace: true });
       }
-      this.route('request', { path: '/requests/:request_id', resetNamespace: true });
       this.route('settings', { resetNamespace: true }, function () {
         this.route('index', { path: '/' });
         this.route('env_vars', { resetNamespace: true }, function () {
@@ -87,6 +86,7 @@ Router.map(function () {
     this.route('repositories', { path: '/' });
   });
   this.route('error404', { path: '/404' });
+  this.route('page-not-found', { path: '/*wildcard' });
 });
 
 export default Router;

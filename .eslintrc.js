@@ -7,9 +7,12 @@ module.exports = {
   parser: 'babel-eslint',
   extends: 'eslint:recommended',
   env: {
-    'browser': true
+    browser: true
   },
   rules: {
+    // Don't allow unused vars, but allow unused arguments
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+
     // TODO: Remove this to ensure we handle errors properly in UI
     "no-empty": ["error", { "allowEmptyCatch": true }],
 

@@ -7,7 +7,7 @@ export default V3Adapter.extend({
     const serializer = store.serializerFor(type.modelName);
     serializer.serializeIntoHash(data, type, record, {});
 
-    const url = `${this.urlPrefix()}${data.branch}/cron`;
+    const url = `${this.getHost()}${data.branch}/cron`;
     return this.ajax(url, 'POST', {
       data: {
         dont_run_if_recent_build_exists: data.dont_run_if_recent_build_exists,
@@ -19,7 +19,7 @@ export default V3Adapter.extend({
   query(store, type, query) {
     const repoId = query['repository_id'];
     delete query['repository_id'];
-    const url = `${this.urlPrefix()}/v3/repo/${repoId}/crons`;
+    const url = `${this.urlPrefix()}/repo/${repoId}/crons`;
     return this.ajax(url, 'GET', query);
   }
 

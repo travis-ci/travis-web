@@ -7,12 +7,14 @@ import config from 'travis/config/environment';
 moduleForAcceptance('Acceptance | job/basic layout');
 
 test('visiting job-view', function (assert) {
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  server.create('branch', {});
+  assert.expect(7);
+
+  let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
+    branch = server.create('branch', { name: 'acceptance-tests' });
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
-  let job = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit, build });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', build, commit });
   commit.job = job;
 
   job.save();
@@ -21,6 +23,7 @@ test('visiting job-view', function (assert) {
   server.create('log', { id: job.id });
 
   visit('/travis-ci/travis-web/jobs/' + job.id);
+  waitForElement('#log > p');
 
   andThen(() => {
     assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
@@ -37,11 +40,11 @@ test('visiting job-view', function (assert) {
 
 test('visiting a job with a truncated log', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  server.create('branch', {});
+  let branch = server.create('branch', { name: 'acceptance-tests' });
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
-  let job = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit, build });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
 
   job.save();
@@ -62,17 +65,18 @@ test('visiting a job with a truncated log', function (assert) {
 });
 
 test('visiting a job with a complex log', function (assert) {
-  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
-  server.create('branch', {});
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' }),
+    branch = server.create('branch', { name: 'acceptance-tests' });
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
-  let job = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'passed', build_id: build.id, commit, build });
+  let build = server.create('build', { repository: repo, state: 'passed', commit, branch });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'passed', commit, build });
   commit.job = job;
 
   job.save();
   commit.save();
 
+  const ESCAPE = String.fromCharCode(27);
   const complexLog = `I am the first line.
 travis_fold:start:afold
 I am the first line of a fold.
@@ -91,7 +95,11 @@ travis_fold:end:afold
 [0K[36;41mI am a cyan line with red background.
 [0K[37;40mI am a white line with black background.
 [0K[90mI am a grey line.
-I am the final line.
+I used to be the final line.
+I am another line finished by a CR.\rI replace that line?\r${ESCAPE}[0mI am the final replacer.\nI do not replace because the previous line ended with a line feed.
+This should also be gone.\r This should have replaced it.
+A particular log formation is addressed here, this should remain.\r${ESCAPE}[0m\nThis should be on a separate line.
+But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
 `;
   server.create('log', { id: job.id, content: complexLog });
 
@@ -147,7 +155,18 @@ I am the final line.
 
     assert.ok(jobPage.logLines(13).isGrey);
 
-    assert.equal(jobPage.logLines(14).text, 'I am the final line.');
+    assert.equal(jobPage.logLines(14).text, 'I used to be the final line.');
+
+    // FIXME why is this line in an adjacent span?
+    assert.equal(jobPage.logLines(15).nextText, 'I am the final replacer.');
+    assert.equal(jobPage.logLines(16).text, 'I do not replace because the previous line ended with a line feed.');
+
+    assert.equal(jobPage.logLines(17).nextText, 'This should have replaced it.');
+
+    assert.equal(jobPage.logLines(18).text, 'A particular log formation is addressed here, this should remain.');
+    assert.equal(jobPage.logLines(19).text, 'This should be on a separate line.');
+    assert.equal(jobPage.logLines(20).text, 'But it must be addressed repeatedly!');
+    assert.equal(jobPage.logLines(21).text, 'Again.');
   });
 
   jobPage.logFolds(0).toggle();

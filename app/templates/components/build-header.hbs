@@ -1,12 +1,13 @@
 <div class="build-commit">
   <h2 class="build-title {{item.state}}">
     {{status-icon status=item.state}}
-    {{#if item.pullRequest}}
+    {{#if item.isPullRequest}}
       <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
       {{item.pullRequestTitle}}
     {{else}}
-      <small class="commit-branch" title={{item.branchName}}>{{item.branchName}}</small>
-      {{format-message commit.subject repo=item.repo}}
+      <small class="commit-branch"
+        title={{build.branchName}}>{{build.branchName}}</small>
+      {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
   </h2>
   <div class="commit-info">
@@ -24,7 +25,7 @@
       </li>
       {{#if displayCompare}}
         <li>
-          {{#if item.pullRequest}}
+          {{#if item.isPullRequest}}
             <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
               {{inline-svg 'icon-github' class="icon"}}
               <span class="label-align inner-underline">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
@@ -37,25 +38,22 @@
           {{/if}}
         </li>
       {{/if}}
-      {{#if commit.branch}}
       <li>
         <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
           {{inline-svg 'icon-github' class="icon"}}
-          <span class="label-align inner-underline">Branch {{commit.branch}}</span>
+          <span class="label-align inner-underline">Branch {{build.branchName}}</span>
         </a>
       </li>
-      {{else}}
-        {{loading-indicator}}
-      {{/if}}
     </ul>
+
     <p class="commit-author">
       {{#if commit.authorName}}
-        {{user-avatar url=commit.authorAvatarUrlOrGravatar name=commit.authorName small=true}}
+        {{user-avatar url=commit.authorAvatarUrl name=commit.authorName small=true size=18}}
         <span class="label-align">{{commit.authorName}} authored{{#if commit.authorIsCommitter}} and committed{{/if}}</span>
       {{/if}}
       {{#unless commit.authorIsCommitter}}
         {{#if commit.committerName}}
-          {{user-avatar url=commit.committerAvatarUrlOrGravatar name=commit.committerName small=true}}
+          {{user-avatar url=commit.committerAvatarUrl name=commit.committerName small=true size=18}}
           <span class="label-align">{{commit.committerName}} committed</span>
         {{/if}}
       {{/unless}}
@@ -67,34 +65,62 @@
   <h3 class="build-status {{item.state}}">
     {{#if isJob}}
       {{#link-to "job" repo item}}
-        {{request-icon event=item.build.eventType state=item.state}} <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>{{/link-to}}
+        {{request-icon event=item.build.eventType state=item.state}}
+        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
+      {{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
-        {{request-icon event=item.eventType state=item.state}} <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>{{/link-to}}
+        {{request-icon event=item.eventType state=item.state}}
+        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
+      {{/link-to}}
     {{/if}}
   </h3>
+
   <ul class="list-icon">
-    <li title="{{format-duration elapsedTime}}" class="commit-stopwatch">
-      {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
-      <span class="label-align">Elapsed time <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time></span></li>
-    {{#unless isJob}}
+    {{#if isJob}}
+      <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
+        {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
+        <span class="label-align">
+          {{#if item.toBeQueued}}
+            Waiting to be queued
+          {{else if item.toBeStarted}}
+            Waiting to start
+          {{else}}
+            {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+          {{/if}}
+        </span>
+      </li>
+    {{else}}
+      <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
+        {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
+        <span class="label-align">
+          {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
+        </span>
+      </li>
+    {{/if}}
+
+    {{#if item.isFinished}}
       {{#if item.isMatrix}}
         <li title="{{format-duration item.duration}}" class="commit-clock">
           {{inline-svg 'icon-clock' class="icon"}}
-          <span class="label-align">{{#if item.isFinished}}Total time{{else}}Running for{{/if}} <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time></span></li>
+          <span class="label-align">
+            Total time <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time>
+          </span>
+        </li>
       {{/if}}
-    {{/unless}}
-    <li title="{{item.finishedAt}}" class="commit-calendar">
-      {{inline-svg 'icon-calendar' class="icon"}}
-      <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time></li>
+
+      <li title="{{item.finishedAt}}" class="commit-calendar">
+        {{inline-svg 'icon-calendar' class="icon"}}
+        <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time>
+      </li>
+    {{/if}}
   </ul>
 </div>
 
-
 <div class='build-tools'>
   {{#if isJob}}
-    {{job-repo-actions job=item repo=item.repo}}
+    {{repo-actions job=item repo=item.repo}}
   {{else}}
-    {{build-repo-actions build=item repo=item.repo}}
+    {{repo-actions build=item repo=item.repo}}
   {{/if}}
 </div>

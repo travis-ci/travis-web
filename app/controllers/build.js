@@ -13,6 +13,12 @@ export default Ember.Controller.extend(GithubUrlProperties, {
   tab: alias('repoController.tab'),
   sendFaviconStateChanges: true,
 
+  noJobsError: Ember.computed('build.jobs', function () {
+    if (this.get('build.jobs.length') === 0) {
+      return true;
+    }
+  }),
+
   jobsLoaded: Ember.computed('build.jobs.@each.config', function () {
     let jobs = this.get('build.jobs');
     if (jobs) {

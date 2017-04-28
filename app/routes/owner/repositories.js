@@ -11,19 +11,20 @@ export default TravisRoute.extend({
   },
 
   model(params, transition) {
-    var options;
-    options = {};
+    var options = {
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    };
 
     if (this.get('auth.signedIn')) {
-      options.headers = {
-        Authorization: 'token ' + (this.auth.token())
-      };
+      options.headers.Authorization = 'token ' + (this.auth.token());
     }
 
     // eslint-disable-next-line
     let includes = `?include=owner.repositories,repository.default_branch,build.commit,repository.current_build`;
     let { owner } = transition.params.owner;
-    let url = `${config.apiEndpoint}/v3/owner/${owner}${includes}`;
+    let url = `${config.apiEndpoint}/owner/${owner}${includes}`;
     return Ember.$.ajax(url, options);
   }
 });

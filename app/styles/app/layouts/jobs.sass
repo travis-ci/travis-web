@@ -23,6 +23,7 @@
 .jobs-item
   border: 1px solid $cream-dark
   margin-bottom: 5px
+  display: flex
   @include colorJobs($turf-green, 'passed', 3px, $seed-green)
   @include colorJobs($brick-red, 'failed', 3px, $quartz-red)
   @include colorJobs($brick-red, 'errored', 3px, $quartz-red)
@@ -49,6 +50,7 @@
     @media #{$medium-up}
       display: flex
       flex-flow: row nowrap
+      flex-grow: 1
       justify-content: space-between
       align-items: center
       height: 34px
@@ -56,6 +58,10 @@
   &:hover
     a
       margin-left: -2px // related to the width given in color jobs
+
+  .repo-main-tools
+    flex-shrink: 1
+    align-items: center
 
 .section-title
   font-size: 16px
@@ -96,12 +102,12 @@
   &.osx
     .icon.linux
       display: none
-      
+
 
 .job-lang
   overflow: hidden
   @media #{$medium-up}
-    flex: 1 1 20%
+    flex: 1 0 12em
     position: relative
     white-space: nowrap
     &:after
@@ -110,15 +116,23 @@
 
 .job-env
   @media #{$medium-up}
-    flex: 1 1 30%
+    flex: 1 0 22em
     position: relative
     white-space: nowrap
     overflow: hidden
+    max-width: 40em
     &:after
       @include fadeOut(right, -90deg, white)
   &.is-empty
     opacity: .5
 
+.wrapper:not(.centered)
+  .job-env
+    @media #{$xlarge-up}
+      max-width: 50em
+    @media #{$xxlarge-up}
+      max-width: 70em
+
 .job-duration
-  flex: 1 0 14%
+  flex: 0 0 10em
   padding-right: 1em

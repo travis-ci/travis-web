@@ -1,5 +1,16 @@
-import AbstractBuildsRoute from 'travis/routes/abstract-builds';
+import TravisRoute from 'travis/routes/basic';
 
-export default AbstractBuildsRoute.extend({
-  contentType: 'pull_requests'
+export default TravisRoute.extend({
+  model() {
+    return this.modelFor('repo').get('pullRequests');
+  },
+
+  setupController(controller, model) {
+    this._super(...arguments);
+    this.controllerFor('repo').activate('pull_requests');
+  },
+
+  titleToken() {
+    return 'Pull Requests';
+  },
 });

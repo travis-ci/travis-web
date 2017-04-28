@@ -110,9 +110,11 @@
     word-break: normal
     white-space: nowrap
 
+$env-var-value-background: lighten($cement-grey, 20)
+
 .env-var-value
   @extend %settings-value-section
-  background-color: lighten($cement-grey, 20)
+  background-color: $env-var-value-background
   border-radius: 2px
   white-space: nowrap
   width: 76%
@@ -124,10 +126,33 @@
     background: transparent
     color: $asphalt-grey
     font-size: inherit
-      
+
 .env-var-value
   @media #{$medium-up}
     width: grid-calc(3, 12)
+
+.newly-created
+  animation: haze-fade 2s 3s both
+
+  .env-var-name::after
+    display: none
+
+  .env-var-value
+    animation: canary-fade 2s 3s both
+
+@keyframes canary-fade
+  0%
+    background: $canary-yellow
+
+  100%
+    background: $env-var-value-background
+
+@keyframes haze-fade
+  0%
+    background: $haze-yellow
+
+  100%
+    background: $pebble-grey
 
 %settings-action-section
   display: inline-block
@@ -171,17 +196,17 @@
 .cron-job-text
   white-space: nowrap
   @media #{$medium}
-    flex: 0 1 24em
+    flex: 0 1 14em
     position: relative
     overflow: hidden
     &:after
       +fadeOut(right, -90deg, $pebble-grey)
-    
+
 .cron-job-action
   position: relative
   text-align: center
   @media #{$medium}
-    flex-basis: 4em
+    flex-basis: 7em
   button
     &:hover,
     &:active

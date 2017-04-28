@@ -23,7 +23,7 @@ export default Ember.Service.extend({
   },
 
   messages: Ember.computed('flashes.[]', 'flashes.length', function () {
-    var flashes, model;
+    let flashes, model;
 
     flashes = this.get('flashes');
     model = [];
@@ -40,14 +40,14 @@ export default Ember.Service.extend({
   // messages from API responses in V2 that way, so I think that cleaning this
   // up once we're using V3 would be a good point.
   loadFlashes(msgs) {
-    var i, len, msg, results, type;
+    let i, len, msg, results, type;
 
     results = [];
     for (i = 0, len = msgs.length; i < len; i++) {
       msg = msgs[i];
       type = Object.keys(msg)[0];
       msg = {
-        type: type,
+        type,
         message: msg[type]
       };
       this.get('flashes').unshiftObject(msg);

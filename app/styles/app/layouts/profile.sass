@@ -1,3 +1,8 @@
+.profile-page
+  clear: both
+  overflow-y: auto
+  overflow-x: hidden
+
 .profile-main
   padding: 0 $column-gutter/2
   @media #{$medium-up}
@@ -86,13 +91,8 @@ p.profile-user-last
     clear: both
     margin-bottom: .8em
   .profile-hooks
-    width: grid-calc(10, 24)
     display: inline-block
     vertical-align: middle
-    @media #{$medium-up}
-      width: grid-calc(5, 24) - 1%
-    @media #{$large-up}
-      width: grid-calc(5, 24) - 1%
   .switch
     display: inline-block
     vertical-align: middle

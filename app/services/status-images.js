@@ -8,7 +8,7 @@ export default Ember.Service.extend({
   features: service(),
 
   imageUrl(slug, branch) {
-    var prefix = location.protocol + '//' + location.host;
+    let prefix = `${location.protocol}//${location.host}`;
 
     // the ruby app (waiter) does an indirect, internal redirect to api on build status images
     // but that does not work if you only run `ember serve`
@@ -19,9 +19,9 @@ export default Ember.Service.extend({
 
     if (this.get('features.proVersion')) {
       const token = this.get('auth').assetToken();
-      return `${prefix}/${slug}.svg?token=${token}${branch ? '&branch=' + branch : ''}`;
+      return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {
-      return `${prefix}/${slug}.svg${branch ? '?branch=' + (encodeURIComponent(branch)) : ''}`;
+      return `${prefix}/${slug}.svg${branch ? `?branch=${encodeURIComponent(branch)}` : ''}`;
     }
   },
 
@@ -66,15 +66,14 @@ export default Ember.Service.extend({
   },
 
   ccXml(slug, branch) {
-    var delimiter, url;
-    url = '#' + config.apiEndpoint + '/repos/' + slug + '/cc.xml';
+    let url = `#${config.apiEndpoint}/repos/${slug}/cc.xml`;
     if (branch) {
-      url = url + '?branch=' + branch;
+      url = `${url}?branch=${branch}`;
     }
     if (this.get('features.proVersion')) {
       const token = this.get('auth').assetToken();
-      delimiter = url.indexOf('?') === -1 ? '?' : '&';
-      url = '' + url + delimiter + 'token=' + token;
+      const delimiter = url.indexOf('?') === -1 ? '?' : '&';
+      url = `${url}${delimiter}token=${token}`;
     }
     return url;
   },

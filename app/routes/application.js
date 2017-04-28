@@ -21,9 +21,14 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     return this._super(...arguments);
   },
 
+  model() {
+    if (this.get('auth.signedIn')) {
+      return this.get('fetchFeatures.fetchTask').perform();
+    }
+  },
+
   activate() {
     var repos;
-    this.get('stylesheetsManager').disable('dashboard');
     if (!this.get('features.proVersion')) {
       repos = this.get('store').peekAll('repo');
       repos.forEach((repo) => {
@@ -80,12 +85,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
     redirectToGettingStarted() {
       // do nothing, we handle it only in index path
-    },
-
-    renderDefaultTemplate() {
-      if (this.renderDefaultTemplate) {
-        return this.renderDefaultTemplate();
-      }
     },
 
     error(error) {

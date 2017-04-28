@@ -189,6 +189,11 @@ Log.Part = function (id, num, string) {
   Log.Node.apply(this, arguments);
   this.string = string || '';
   this.string = this.string.replace(/\033\[1000D/gm, '\r');
+
+  // This is an ultra-specific fix for this issue:
+  // https://github.com/travis-ci/travis-ci/issues/7106
+  this.string = this.string.replace(/\r\u001B\[0m\n/g, '\n');
+
   this.string = this.string.replace(/\r+\n/gm, '\n');
   this.strings = this.string.split(/^/gm) || [];
   this.slices = ((function () {
@@ -254,7 +259,10 @@ removeCarriageReturns = function (string) {
   if (index === -1) {
     return string;
   }
+  // FIXME the previous code is below. It surely was this way for a reason!
   return string.substr(index + 1);
+  // FIXME indeed it was, reverting for now…
+  // return string.replace('\r', '');
 };
 
 var foldNameCount = {};

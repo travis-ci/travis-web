@@ -19,14 +19,22 @@ export default TravisRoute.extend({
 
   actions: {
     afterSignIn() {
-      this.transitionTo('main');
+      if (this.get('features.dashboard')) {
+        this.transitionTo('dashboard');
+      } else {
+        this.transitionTo('main');
+      }
       return true;
     }
   },
 
   redirect() {
     if (this.signedIn()) {
-      return this.transitionTo('main');
+      if (this.get('features.dashboard')) {
+        return this.transitionTo('dashboard');
+      } else {
+        return this.transitionTo('main');
+      }
     }
   }
 });

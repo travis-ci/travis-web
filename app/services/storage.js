@@ -2,27 +2,27 @@ import Ember from 'ember';
 import Storage from 'travis/utils/hash-storage';
 
 export default Ember.Service.extend({
-  init: function () {
+  init() {
     let storage;
     try {
-      storage = window.localStorage || (function () {
+      storage = window.localStorage || ((() => {
         throw 'no storage';
-      })();
+      }))();
     } catch (error) {
       storage = Storage.create();
     }
     return this.set('storage', storage);
   },
-  getItem: function (key) {
+  getItem(key) {
     return this.get('storage').getItem(key);
   },
-  setItem: function (key, value) {
+  setItem(key, value) {
     return this.get('storage').setItem(key, value);
   },
-  removeItem: function (key) {
+  removeItem(key) {
     return this.get('storage').removeItem(key);
   },
-  clear: function () {
+  clear() {
     return this.get('storage').clear();
   }
 });

@@ -49,10 +49,14 @@
         +fadeOut(right, -90deg, white)
 
     .two-line:first-of-type
-      flex: 0 0 55%
+      flex: 0 0 50%
       padding-left: .5em
       border-right: 1px solid $cream-dark
     .two-line:nth-of-type(2)
       flex: 0 0 20%
-    .two-line:last-of-type
+    .two-line:nth-last-of-type(2)
       flex: 0 0 20%
+
+    .row-item.actions
+      overflow: visible
+      transform: translate(0, -3px)
