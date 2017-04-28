@@ -15,6 +15,8 @@ export default PageObject.create({
   visitBuildHistory: visitable(':organization/:repo/builds'),
   visitPullRequests: visitable(':organization/:repo/pull_requests'),
 
+  showsNoBuildsMessaging: text('.missing-notice h2.page-title'),
+
   notification: text('p.flash-message'),
 
   builds: collection({
