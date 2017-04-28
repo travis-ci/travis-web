@@ -247,7 +247,7 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'lena'
       }, {
-        name: 'Joep',
+        name: 'Joep van Delft',
         title: 'Lead Second-Guess Engineer',
         nationality: 'europe',
         country: 'europe',
