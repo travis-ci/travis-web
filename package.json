@@ -41,7 +41,7 @@
     "ember-cli-mirage": "0.2.7",
     "ember-cli-page-object": "1.9.0",
     "ember-cli-qunit": "4.0.0",
-    "ember-cli-sass": "6.1.2",
+    "ember-cli-sass": "6.1.3",
     "ember-cli-sentry": "2.4.3",
     "ember-cli-shims": "^1.0.2",
     "ember-cli-sri": "^2.1.0",
