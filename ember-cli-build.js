@@ -9,7 +9,7 @@ module.exports = function () {
     fingerprint = false;
   } else {
     fingerprint = {
-      exclude: ['images/emoji'],
+      exclude: ['images/emoji', 'images/pro-landing/flag*', 'images/team'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
     };
 
