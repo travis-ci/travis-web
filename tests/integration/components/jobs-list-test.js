@@ -40,124 +40,68 @@ test('it renders "Allowed Failures" version without a `required` property', func
   assert.equal(this.$().find('.jobs-list li').length, 1, 'there should be 1 job item');
 });
 
-// FIXME these tests are obvs ridic
+const [job0, job1, job2, job3, job4, job5] = [{
+  allowFailure: true,
+  state: 'failed',
+  isFinished: true,
+  number: '19.19',
+  stage: { id: '1' }
+}, {
+  allowFailure: true,
+  state: 'errored',
+  isFinished: true,
+  number: '19.20',
+  stage: { id: '1' }
+}, {
+  allowFailure: true,
+  state: 'errored',
+  isFinished: true,
+  number: '19.21',
+  stage: { id: '1' }
+}, {
+  allowFailure: true,
+  state: 'errored',
+  isFinished: true,
+  number: '19.22',
+  stage: { id: '1' }
+}, {
+  allowFailure: true,
+  state: 'errored',
+  isFinished: true,
+  number: '19.23',
+  stage: { id: '1' }
+}, {
+  allowFailure: true,
+  state: 'errored',
+  isFinished: true,
+  number: '19.24',
+  stage: { id: '1' }
+}];
+
+const render = function (context, jobs) {
+  context.stages = [Ember.Object.create({ id: '1', number: '1' }), Ember.Object.create({ id: '2', number: '2' })];
+  context.stage = context.stages[0];
+  context.jobs = Ember.A(jobs);
+  context.build = { jobs: context.jobs };
+  context.render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
+};
 
 test('it renders allowed failures text for a non-final stage with a failed job', function (assert) {
-  this.jobs = Ember.A([{
-    allowFailure: true,
-    state: 'failed',
-    isFinished: true,
-    number: '19.19',
-    stage: { id: '1' }
-  }]);
-
-  this.stages = [Ember.Object.create({ id: '1', number: '1' }), Ember.Object.create({ id: '2', number: '2' })];
-  this.stage = this.stages[0];
-  this.build = { jobs: this.jobs };
-
-  this.render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
-
+  render(this, [job0]);
   assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of job 19.19 so we continued this build to the next stage.');
 });
 
 test('it renders allowed failures text for a non-final stage with two failed jobs', function (assert) {
-  this.jobs = Ember.A([{
-    allowFailure: true,
-    state: 'failed',
-    isFinished: true,
-    number: '19.19',
-    stage: { id: '1' }
-  }, {
-    allowFailure: true,
-    state: 'errored',
-    isFinished: true,
-    number: '19.20',
-    stage: { id: '1' }
-  }]);
-
-  this.stages = [Ember.Object.create({ id: '1', number: '1' }), Ember.Object.create({ id: '2', number: '2' })];
-  this.stage = this.stages[0];
-  this.build = { jobs: this.jobs };
-
-  this.render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
-
+  render(this, [job0, job1]);
   assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of jobs 19.19 and 19.20 so we continued this build to the next stage.');
 });
 
 test('it renders allowed failures text for a non-final stage with three failed jobs', function (assert) {
-  this.jobs = Ember.A([{
-    allowFailure: true,
-    state: 'failed',
-    isFinished: true,
-    number: '19.19',
-    stage: { id: '1' }
-  }, {
-    allowFailure: true,
-    state: 'errored',
-    isFinished: true,
-    number: '19.20',
-    stage: { id: '1' }
-  }, {
-    allowFailure: true,
-    state: 'errored',
-    isFinished: true,
-    number: '19.21',
-    stage: { id: '1' }
-  }]);
-
-  this.stages = [Ember.Object.create({ id: '1', number: '1' }), Ember.Object.create({ id: '2', number: '2' })];
-  this.stage = this.stages[0];
-  this.build = { jobs: this.jobs };
-
-  this.render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
-
+  render(this, [job0, job1, job2]);
   assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of jobs 19.19, 19.20, and 19.21 so we continued this build to the next stage.');
 });
 
 test('it renders allowed failures text for a non-final stage with six failed jobs', function (assert) {
-  this.jobs = Ember.A([{
-    allowFailure: true,
-    state: 'failed',
-    isFinished: true,
-    number: '19.19',
-    stage: { id: '1' }
-  }, {
-    allowFailure: true,
-    state: 'errored',
-    isFinished: true,
-    number: '19.20',
-    stage: { id: '1' }
-  }, {
-    allowFailure: true,
-    state: 'errored',
-    isFinished: true,
-    number: '19.21',
-    stage: { id: '1' }
-  }, {
-    allowFailure: true,
-    state: 'errored',
-    isFinished: true,
-    number: '19.22',
-    stage: { id: '1' }
-  }, {
-    allowFailure: true,
-    state: 'errored',
-    isFinished: true,
-    number: '19.23',
-    stage: { id: '1' }
-  }, {
-    allowFailure: true,
-    state: 'errored',
-    isFinished: true,
-    number: '19.24',
-    stage: { id: '1' }
-  }]);
-
-  this.stages = [Ember.Object.create({ id: '1', number: '1' }), Ember.Object.create({ id: '2', number: '2' })];
-  this.stage = this.stages[0];
-  this.build = { jobs: this.jobs };
-
-  this.render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
-
+  render(this, [job0, job1, job2, job3, job4, job5]);
   assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of multiple jobs so we continued this build to the next stage.');
 });
