@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'travis/config/environment';
 
 export default Ember.HistoryLocation.extend({
   init: function () {
@@ -23,32 +22,33 @@ export default Ember.HistoryLocation.extend({
   getURL: function () {
     var url;
     url = this._super(...arguments);
-    if (location.pathname === '/' && !config.enterprise) {
-      if (this.get('auth.signedIn')) {
-        return '/repositories';
-      } else {
-        if (config.featureFlags['pro-version']) {
-          return '/home-pro';
-        } else {
-          return '/home';
-        }
-      }
-    } else if (location.pathname === '/' && config.enterprise) {
-      if (this.get('auth.signedIn')) {
-        return '/repositories';
-      } else {
-        return '/auth';
-      }
-    }
+    // if (location.pathname === '/' && !config.enterprise) {
+    //   if (this.get('auth.signedIn')) {
+    //     return '/repositories';
+    //   } else {
+    //     if (config.featureFlags['pro-version']) {
+    //       return '/home-pro';
+    //     } else {
+    //       return '/home';
+    //     }
+    //   }
+    // } else if (location.pathname === '/' && config.enterprise) {
+    //   if (this.get('auth.signedIn')) {
+    //     return '/repositories';
+    //   } else {
+    //     return '/auth';
+    //   }
+    // }
     return url;
   },
 
   formatURL: function (logicalPath) {
-    let rootRedirects = ['/repositories', '/home', '/home-pro'];
-    if (!config.enterprise && rootRedirects.includes(logicalPath)) {
-      return '/';
-    } else {
-      return this._super(...arguments);
-    }
+    return this._super(...arguments);
+    // let rootRedirects = ['/repositories', '/home', '/home-pro'];
+    // if (!config.enterprise && rootRedirects.includes(logicalPath)) {
+    //   return '/';
+    // } else {
+    //   return this._super(...arguments);
+    // }
   }
 });
