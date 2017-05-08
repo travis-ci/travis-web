@@ -13,6 +13,7 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
+    console.log('reach setupController');
     var buildController, repo;
     if (model && !model.get) {
       model = this.store.recordForId('job', model);
@@ -38,6 +39,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
+    console.log('reach model');
     return this.store.find('job', params.job_id);
   },
 

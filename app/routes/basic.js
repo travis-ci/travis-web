@@ -42,5 +42,4 @@ export default Ember.Route.extend({
       this.transitionTo('account', this.get('auth.currentUser.login'));
     }
   },
-
 });

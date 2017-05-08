@@ -4,7 +4,12 @@ import jobPage from 'travis/tests/pages/job';
 
 import config from 'travis/config/environment';
 
-moduleForAcceptance('Acceptance | job/basic layout');
+moduleForAcceptance('Acceptance | job/basic layout', {
+  beforeEach() {
+    const currentUser = server.create('user');
+    signInUser(currentUser);
+  },
+});
 
 test('visiting job-view', function (assert) {
   assert.expect(7);
