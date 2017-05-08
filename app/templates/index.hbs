@@ -1,0 +1,29 @@
+{{#if auth.signedIn}}
+  <div class="main">
+    <div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
+
+      {{top-bar}}
+
+      {{flash-display}}
+
+      <div class="wrapper-main">
+        <div id="main" role="main">
+          {{outlet}}
+        </div>
+      </div>
+
+      <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
+        {{outlet "left"}}
+      </aside>
+
+      {{#if auth.signedOut}}
+        {{page-footer}}
+      {{else if features.dashboard}}
+        {{page-footer}}
+      {{/if}}
+    </div>
+  </div>
+{{else}}
+  {{log 'Not signed in!'}}
+  {{component landingPage}}
+{{/if}}

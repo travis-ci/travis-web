@@ -86,10 +86,12 @@ export default Ember.Controller.extend({
   }).restartable(),
 
   performSearchRequest: task(function * (query) {
+    console.log('performSearchRequest called!');
     if (!query) { return; }
     this.set('search', query);
     this.set('isLoaded', false);
     yield(Repo.search(this.store, this.get('ajax'), query).then((reposRecordArray) => {
+      console.log('promise returns');
       this.set('isLoaded', true);
       this.set('_repos', reposRecordArray);
     }));
@@ -174,6 +176,7 @@ export default Ember.Controller.extend({
   },
 
   activate(tab, params) {
+    console.log('activate called');
     this.set('sortProperties', ['sortOrder']);
     let tabState = this.get('tabStates.sidebarTab');
     this.set('tab', tabState);
