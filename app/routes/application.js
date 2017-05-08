@@ -117,10 +117,8 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
       this.setDefault();
       if (this.get('config.enterprise')) {
         return this.transitionTo('auth');
-      } else if (this.get('features.proVersion')) {
-        return this.transitionTo('home-pro');
       } else {
-        return this.transitionTo('home');
+        return this.transitionTo('main.index');
       }
     }
   }
