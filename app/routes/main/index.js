@@ -8,8 +8,6 @@ export default TravisRoute.extend({
       } else {
         return this.transitionTo('main.repositories');
       }
-    } else {
-      return this.transitionTo('home');
     }
   }
 });
