@@ -31,6 +31,8 @@ export default Model.extend(DurationCalculations, {
   branch: Ember.computed.alias('build.branch'),
   branchName: Ember.computed.alias('build.branchName'),
 
+  stage: belongsTo('stage', { async: false }),
+
   isPullRequest: Ember.computed.alias('build.isPullRequest'),
   pullRequestNumber: Ember.computed.alias('build.pullRequestNumber'),
   pullRequestTitle: Ember.computed.alias('build.pullRequestTitle'),
