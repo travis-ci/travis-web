@@ -51,6 +51,11 @@ module.exports = function () {
         'public/images/stroke-icons',
         'public/images/svg'
       ]
+    },
+    minifyJS: {
+      options: {
+        exclude: ['**/svgs.js']
+      }
     }
   });
 
