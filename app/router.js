@@ -35,8 +35,10 @@ Router.map(function () {
     this.route('repositories', { path: '/' });
   });
   this.route('features', { resetNamespace: true });
+
+  this.route('getting_started');
+
   this.route('main', { resetNamespace: true }, function () {
-    this.route('getting_started', { resetNamespace: true });
     this.route('recent');
     this.route('my_repositories');
     this.route('search', { path: '/search/:phrase' });
