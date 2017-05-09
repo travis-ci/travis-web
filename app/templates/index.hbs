@@ -48,8 +48,9 @@
                             {{loading-indicator center=true}}
                           {{/if}}
                         {{else}}
-                          {{job-infrastructure-notification job=build.jobs.firstObject}}
-                          {{job-tabs job=build.jobs.firstObject repo=repo}}
+                          {{job-infrastructure-notification job=job}}
+                          {{job-tabs job=job repo=repo}}
+                          {{job-log job=job}}
                         {{/if}}
                       {{/if}}
 
@@ -59,8 +60,6 @@
 
                   {{/if}}
                   {{/build-wrapper}}
-
-                  {{job-log job=job}}
                 </div>
                 </main>
               </article>
