@@ -13,9 +13,11 @@ export default TravisRoute.extend(ScrollResetMixin, {
     return model.get('slug');
   },
 
-  renderTemplate() {
-    return this.render('repo', {
-      into: 'main'
+  renderTemplate(...args) {
+    this._super(args);
+    return this.render('repos', {
+      outlet: 'left',
+      into: 'repo'
     });
   },
 

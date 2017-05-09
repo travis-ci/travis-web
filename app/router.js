@@ -38,36 +38,35 @@ Router.map(function () {
 
   this.route('getting_started');
 
-  this.route('main', { resetNamespace: true }, function () {
-    this.route('recent');
-    this.route('my_repositories');
-    this.route('search', { path: '/search/:phrase' });
-    this.route('repo', { path: '/:owner/:name', resetNamespace: true }, function () {
+  this.route('repo', { path: '/:owner/:name' }, function () {
+    this.route('index', { path: '/' });
+    this.route('branches', { path: '/branches', resetNamespace: true });
+    this.route('build', { path: '/builds/:build_id', resetNamespace: true }, function () {
+      this.route('config');
+    });
+    this.route('job', { path: '/jobs/:job_id', resetNamespace: true }, function () {
+      this.route('config');
+    });
+    this.route('builds', { path: '/builds', resetNamespace: true });
+    this.route('pullRequests', { path: '/pull_requests', resetNamespace: true });
+    this.route('requests', { path: '/requests', resetNamespace: true });
+    if (config.endpoints.caches) {
+      this.route('caches', { path: '/caches', resetNamespace: true });
+    }
+    this.route('settings', { resetNamespace: true }, function () {
       this.route('index', { path: '/' });
-      this.route('branches', { path: '/branches', resetNamespace: true });
-      this.route('build', { path: '/builds/:build_id', resetNamespace: true }, function () {
-        this.route('config');
+      this.route('env_vars', { resetNamespace: true }, function () {
+        this.route('new');
       });
-      this.route('job', { path: '/jobs/:job_id', resetNamespace: true }, function () {
-        this.route('config');
-      });
-      this.route('builds', { path: '/builds', resetNamespace: true });
-      this.route('pullRequests', { path: '/pull_requests', resetNamespace: true });
-      this.route('requests', { path: '/requests', resetNamespace: true });
-      if (config.endpoints.caches) {
-        this.route('caches', { path: '/caches', resetNamespace: true });
+      if (config.endpoints.sshKey) {
+        this.route('ssh_key');
       }
-      this.route('settings', { resetNamespace: true }, function () {
-        this.route('index', { path: '/' });
-        this.route('env_vars', { resetNamespace: true }, function () {
-          this.route('new');
-        });
-        if (config.endpoints.sshKey) {
-          this.route('ssh_key');
-        }
-      });
     });
   });
+
+  this.route('recent');
+  this.route('my_repositories');
+  this.route('search', { path: '/search/:phrase' });
 
   this.route('first_sync');
   this.route('insufficient_oauth_permissions');
