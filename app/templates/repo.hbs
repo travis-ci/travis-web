@@ -1,8 +1,6 @@
-{{#repo-wrapper repo=repo isLoading=isLoading}}
 {{#if isEmpty}}
   {{repos-empty}}
 {{else}}
-
   {{#if repo.isLoaded}}
     <article class="repo-header">
       <header>
@@ -31,6 +29,5 @@
     {{loading-indicator}}
   {{/if}}
 {{/if}}
-{{/repo-wrapper}}
 
 {{status-images repo=repo}}

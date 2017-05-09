@@ -4,6 +4,8 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend({
   auth: service(),
+  tabStates: service(),
+  repositories: service(),
 
   renderTemplate(...args) {
     if (this.get('auth.signedIn')) {
@@ -11,12 +13,33 @@ export default Ember.Route.extend({
 
       this._super(args);
 
-      return this.render('repos', {
+      this.render('repos', {
         outlet: 'left',
         into: 'index'
       });
     } else {
       return this._super(args);
     }
-  }
+  },
+
+  activate(...args) {
+    this._super(args);
+    if (this.get('auth.signedIn')) {
+      this.controllerFor('repos').activate('owned');
+      this.set('tabStates.mainTab', 'current');
+    }
+  },
+
+  deactivate() {
+    this.controllerFor('build').set('build', null);
+    this.controllerFor('job').set('job', null);
+    this.stopObservingRepoStatus();
+    return this._super(...arguments);
+  },
+
+  stopObservingRepoStatus() {
+    let controller = this.controllerFor('repo');
+    controller.removeObserver('repo.active', this, 'renderTemplate');
+    controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
+  },
 });
