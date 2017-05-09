@@ -7,6 +7,7 @@ export default Ember.Controller.extend({
   auth: service(),
   tabStates: service(),
   repositories: service(),
+  statusImages: service(),
 
   @computed('features.proVersion', 'features.enterpriseVersion')
   landingPage(pro, enterprise) {
@@ -20,6 +21,12 @@ export default Ember.Controller.extend({
 
     return `landing/${version}-page`;
   },
+
+  @computed('repo.slug', 'repo.defaultBranch.name')
+  statusImageUrl(slug, branchName) {
+    return this.get('statusImages').imageUrl(slug, branchName);
+  },
+
 
   @alias('repositories.currentRepository') repo: null,
 
