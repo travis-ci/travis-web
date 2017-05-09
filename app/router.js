@@ -38,7 +38,6 @@ Router.map(function () {
   this.route('main', { resetNamespace: true }, function () {
     this.route('getting_started', { resetNamespace: true });
     this.route('recent');
-    this.route('repositories');
     this.route('my_repositories');
     this.route('search', { path: '/search/:phrase' });
     this.route('repo', { path: '/:owner/:name', resetNamespace: true }, function () {

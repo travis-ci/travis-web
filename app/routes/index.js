@@ -25,8 +25,14 @@ export default Ember.Route.extend({
   activate(...args) {
     this._super(args);
     if (this.get('auth.signedIn')) {
-      this.controllerFor('repos').activate('owned');
+      const repositoryData = this.get('repositories.ownedRecords');
+      if (Ember.isEmpty(repositoryData)) {
+        this.controllerFor('repos').activate('owned');
+      } else {
+        this.controllerFor('repos').set('repos', repositoryData);
+      }
       this.set('tabStates.mainTab', 'current');
+      this.set('tabStates.sidebarTab', 'owned');
     }
   },
 
