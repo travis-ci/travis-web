@@ -5,7 +5,7 @@ export default TravisRoute.extend({
     if (this.get('features.dashboard')) {
       return this.transitionTo('dashboard');
     } else {
-      return this.transitionTo('main.repositories');
+      return this.transitionTo('index');
     }
   }
 });

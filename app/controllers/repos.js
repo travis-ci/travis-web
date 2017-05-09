@@ -70,7 +70,7 @@ export default Ember.Controller.extend({
       if (this.get('tab') === 'running') {
         return this.activate('owned');
       } else {
-        return this.transitionToRoute('main.repositories');
+        return this.transitionToRoute('index');
       }
     }
   },
