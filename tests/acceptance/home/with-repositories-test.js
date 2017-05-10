@@ -71,86 +71,84 @@ test('Pusher events change the main display', function (assert) {
   assert.expect(4);
   sidebarPage.visit();
 
-  pauseTest();
+  andThen(() => {
+    assert.equal(sidebarPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the one with a running build');
+  });
+
+  const commit = server.create('commit', {
+    id: 100,
+    sha: 'acab',
+    branch: 'primary',
+    message: 'Add new chapter',
+    committed_at: '2016-12-02T22:02:34Z',
+    author_name: 'Sara Ahmed',
+    author_email: 'sara@example.com'
+  });
+
+  const build = this.branch.createBuild({
+    id: 100,
+    number: 15,
+    repository: this.repository,
+    pull_request: false,
+    event_type: 'push',
+    state: 'passed',
+    finished_at: '2017-03-27T12:00:00Z'
+  });
+  this.branch.lastBuild = build;
+  this.branch.save();
+
+  const job = build.createJob({
+    id: 100,
+    repository: this.repository,
+    build,
+    commit,
+    number: '15.1',
+    state: 'passed',
+    finished_at: '2017-03-27T12:00:00Z'
+  });
+
+  this.repository.defaultBranch = this.branch;
+  this.repository.save();
 
   andThen(() => {
-    pauseTest();
-    assert.equal(sidebarPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be without running build');
-
-    this.commit = server.create('commit', {
-      id: 100,
-      sha: 'acab',
-      branch: 'primary',
-      message: 'Add new chapter',
-      committed_at: '2016-12-02T22:02:34Z',
-      author_name: 'Sara Ahmed',
-      author_email: 'sara@example.com'
-    });
-
-    this.build = this.branch.createBuild({
-      id: 100,
-      number: 15,
-      repository: this.repository,
-      pull_request: false,
-      event_type: 'push',
-      state: 'passed',
-      finished_at: '2017-03-27T12:00:00Z'
-    });
-    this.branch.lastBuild = this.build;
-    this.branch.save();
-
-    this.job = this.build.createJob({
-      id: 100,
-      repository: this.repository,
-      build: this.build,
-      commit: this.commit,
-      number: '15.1',
-      state: 'passed',
-      finished_at: '2017-03-27T12:00:00Z'
-    });
-
-    this.repository.defaultBranch = this.branch;
-    this.repository.save();
-
-    this.application.pusher.receive('job:created', generatePusherPayload(this.job));
+    this.application.pusher.receive('job:created', generatePusherPayload(job));
     this.application.pusher.receive('build:created', {
-      build: generatePusherPayload(this.build),
-      commit: generatePusherPayload(this.commit),
-      repository: generatePusherPayload(this.repository, { current_build_id: this.build.id })
+      build: generatePusherPayload(build),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
 
-    this.application.pusher.receive('job:queued', generatePusherPayload(this.job, { state: 'queued' }));
-    this.application.pusher.receive('job:received', generatePusherPayload(this.job, { state: 'received' }));
+    this.application.pusher.receive('job:queued', generatePusherPayload(job, { state: 'queued' }));
+    this.application.pusher.receive('job:received', generatePusherPayload(job, { state: 'received' }));
 
     // This is necessary to have the log fetch not fail and put the log in an error state.
-    server.create('log', { id: this.job.id });
+    server.create('log', { id: job.id });
 
     // After this line, the displayed repository should change, because it will
     // now have a running build
     this.application.pusher.receive('build:started', {
-      build: generatePusherPayload(this.build, { state: 'started', finished_at: null }),
-      commit: generatePusherPayload(this.commit),
-      repository: generatePusherPayload(this.repository, { current_build_id: this.build.id })
+      build: generatePusherPayload(build, { state: 'started', finished_at: null }),
+      commit: generatePusherPayload(commit),
+      repository: generatePusherPayload(this.repository, { current_build_id: build.id })
     });
   });
 
   andThen(() => {
-    console.log(sidebarPage.repoTitle);
     assert.equal(sidebarPage.repoTitle, 'killjoys / living-a-feminist-life', 'the displayed repository should have changed');
   });
 
   andThen(() => {
-    this.application.pusher.receive('job:started', generatePusherPayload(this.job, { state: 'started' }));
+    this.application.pusher.receive('job:started', generatePusherPayload(job, { state: 'started' }));
 
     this.application.pusher.receive('job:log', {
-      id: this.job.id,
+      id: job.id,
       number: 1,
       final: false,
       _log: 'another log line'
     });
 
     this.application.pusher.receive('job:log', {
-      id: this.job.id,
+      id: job.id,
       number: 0,
       final: false,
       _log: '\u001B[0K\u001B[33;1mThe first line'
