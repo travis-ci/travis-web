@@ -1,9 +1,7 @@
 {{#if auth.signedIn}}
   <div class="main">
     <div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
-
       {{top-bar}}
-
       {{flash-display}}
 
       <div class="wrapper-main">
@@ -30,35 +28,35 @@
                 </div>
                 <div class="travistab-body repo-body">
                   {{#build-wrapper build=build}}
-                  {{#if loading}}
-                    {{loading-indicator}}
-                  {{else}}
+                    {{#if loading}}
+                      {{loading-indicator}}
+                    {{else}}
 
-                    {{#if build}}
-                      {{build-header item=build commit=build.commit repo=repo}}
+                      {{#if build}}
+                        {{build-header item=build commit=build.commit repo=repo}}
 
-                      {{#if noJobsError}}
-                        <p class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
-                      {{else}}
-                        {{#if build.isMatrix}}
-                          {{#if jobsLoaded}}
-                            {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
-                            {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
-                          {{else}}
-                            {{loading-indicator center=true}}
-                          {{/if}}
+                        {{#if noJobsError}}
+                          <p class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
                         {{else}}
-                          {{job-infrastructure-notification job=job}}
-                          {{job-tabs job=job repo=repo}}
-                          {{job-log job=job}}
+                          {{#if build.isMatrix}}
+                            {{#if jobsLoaded}}
+                              {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
+                              {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
+                            {{else}}
+                              {{loading-indicator center=true}}
+                            {{/if}}
+                          {{else}}
+                            {{job-infrastructure-notification job=job}}
+                            {{job-tabs job=job repo=repo}}
+                            {{job-log job=job}}
+                          {{/if}}
                         {{/if}}
+
+                      {{else}}
+                        {{no-builds}}
                       {{/if}}
 
-                    {{else}}
-                      {{no-builds}}
                     {{/if}}
-
-                  {{/if}}
                   {{/build-wrapper}}
                 </div>
                 </main>
