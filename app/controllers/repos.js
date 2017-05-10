@@ -104,7 +104,6 @@ export default Ember.Controller.extend({
     return Ember.run.scheduleOnce('routerTransitions', this, function () {
       if (this.get('tab') === 'owned' && this.get('isLoaded') && this.get('repos.length') === 0) {
         this.send('redirectToGettingStarted');
-        // return Ember.getOwner(this).lookup('router:main').send('redirectToGettingStarted');
       }
     });
   },
