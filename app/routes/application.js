@@ -84,7 +84,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     },
 
     redirectToGettingStarted() {
-      // do nothing, we handle it only in index path
+      this.transitionTo('getting_started');
     },
 
     error(error) {
