@@ -1,13 +1,14 @@
 import Ember from 'ember';
 import computed, { alias } from 'ember-computed-decorators';
 
-const { service } = Ember.inject;
+const { service, controller } = Ember.inject;
 
 export default Ember.Controller.extend({
   auth: service(),
   tabStates: service(),
-  repositories: service(),
   statusImages: service(),
+
+  repos: controller(),
 
   @computed('features.proVersion', 'features.enterpriseVersion')
   landingPage(pro, enterprise) {
@@ -28,7 +29,7 @@ export default Ember.Controller.extend({
   },
 
 
-  @alias('repositories.currentRepository') repo: null,
+  @alias('repos.repos.firstObject') repo: null,
 
   @alias('tabStates.mainTab') tab: null,
 
