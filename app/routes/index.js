@@ -48,4 +48,10 @@ export default Ember.Route.extend({
     controller.removeObserver('repo.active', this, 'renderTemplate');
     controller.removeObserver('repo.currentBuildId', this, 'renderTemplate');
   },
+
+  actions: {
+    redirectToGettingStarted() {
+      return this.transitionTo('getting_started');
+    },
+  },
 });
