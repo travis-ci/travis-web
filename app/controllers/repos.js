@@ -82,7 +82,7 @@ export default Ember.Controller.extend({
 
     yield timeout(500);
 
-    this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
+    this.transitionToRoute('search', query.replace(/\//g, '%2F'));
     this.get('tabStates').set('sidebarTab', 'search');
   }).restartable(),
 
