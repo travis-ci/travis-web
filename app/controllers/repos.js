@@ -200,9 +200,9 @@ export default Ember.Controller.extend({
 
         let callback = (reposRecordArray) => {
           this.set('isLoaded', true);
-          this.get('repositories').set('ownedRecords', reposRecordArray);
           this.set('_repos', reposRecordArray);
           this.set('ownedRepos', reposRecordArray);
+          this.get('repositories').set('ownedRecords', this.get('repos'));
           this.set('fetchingOwnedRepos', false);
           return reposRecordArray;
         };
