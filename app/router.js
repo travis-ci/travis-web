@@ -3,12 +3,6 @@ import Ember from 'ember';
 import config from './config/environment';
 
 const Router = Ember.Router.extend({
-  // this is needed, because in the location
-  // we need to decide if repositories or home needs
-  // to be displayed, based on the current login status
-  //
-  // we should probably think about a more general way to
-  // do this, location should not know about auth status
   location: config.locationType,
   rootURL: config.rootURL,
 
