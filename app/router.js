@@ -6,16 +6,6 @@ const Router = Ember.Router.extend({
   location: config.locationType,
   rootURL: config.rootURL,
 
-  generate() {
-    const url = this.router.generate.apply(this.router, arguments);
-    return this.get('location').formatURL(url);
-  },
-
-  handleURL(url) {
-    url = url.replace(/#.*?$/, '');
-    return this._super(url);
-  },
-
   didTransition() {
     this._super(...arguments);
     if (config.gaCode) {
