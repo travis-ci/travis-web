@@ -7,6 +7,12 @@ export default Ember.Route.extend({
   tabStates: service(),
   repositories: service(),
 
+  redirect() {
+    if (this.get('auth.signedIn') && this.get('features.dashboard')) {
+      this.transitionTo('dashboard');
+    }
+  },
+
   renderTemplate(...args) {
     if (this.get('auth.signedIn')) {
       Ember.$('body').attr('id', 'home');
