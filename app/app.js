@@ -5,8 +5,6 @@ import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 import initHsBeacon from 'travis/utils/init-hs-beacon';
 
-Ember.MODEL_FACTORY_INJECTIONS = true;
-
 // This can be set per environment in config/environment.js
 const debuggingEnabled = config.featureFlags['debug-logging'];
 const proVersion = config.featureFlags['pro-version'];
