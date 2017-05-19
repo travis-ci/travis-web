@@ -22,10 +22,6 @@ const App = Ember.Application.extend(Ember.Evented, {
   LOG_VIEW_LOOKUPS: debuggingEnabled,
 
   ready() {
-    if (location.hash.slice(0, 2) === '#!') {
-      location.href = location.href.replace('#!/', '');
-    }
-
     this.on('user:signed_in', function (user) {
       return Travis.onUserUpdate(user);
     });
