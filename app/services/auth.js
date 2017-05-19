@@ -29,9 +29,7 @@ export default Ember.Service.extend({
     this.get('storage').clear();
     this.set('state', 'signed-out');
     this.set('user', null);
-
     this.get('store').unloadAll();
-
     this.set('currentUser', null);
   },
 
