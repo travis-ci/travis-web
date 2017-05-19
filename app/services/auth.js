@@ -33,7 +33,6 @@ export default Ember.Service.extend({
     this.get('store').unloadAll();
 
     this.set('currentUser', null);
-    Travis.trigger('user:signed_out');
   },
 
   signIn(data) {
