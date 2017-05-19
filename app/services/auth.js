@@ -200,25 +200,8 @@ export default Ember.Service.extend({
   },
 
   sendToApp(name) {
-    // TODO: this is an ugly solution, we need to do one of 2 things:
-    //       * find a way to check if we can already send an event to remove try/catch
-    //       * remove afterSignIn and afterSignOut events by replacing them in a more
-    //         straightforward code - we can do what's needed on a routes/controller level
-    //         as a direct response to either manual sign in or autoSignIn (right now
-    //         we treat both cases behave the same in terms of sent events which I think
-    //         makes it more complicated than it should be).
-
     // eslint-disable-next-line
     console.log(`would send '${name}' event to router, but no longer possible`);
-    // const router = Ember.getOwner(this).lookup('router:main');
-    // try {
-    //   return router.send(name);
-    // } catch (error1) {
-    //   const error = error1;
-    //   if (!(error.message.match(/Can't trigger action/))) {
-    //     throw error;
-    //   }
-    // }
   },
 
   sync() {
