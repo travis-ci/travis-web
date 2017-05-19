@@ -44,6 +44,14 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    signIn() {
+      return this.get('signIn')();
+    },
+
+    signOut() {
+      return this.get('signOut')();
+    },
+
     toggleBurgerMenu() {
       this.toggleProperty('is-open');
       return false;

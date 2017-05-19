@@ -9,6 +9,14 @@ export default Ember.Component.extend({
         _gaq.push(['_trackPageview', `/virtual/signup?${location}`]);
       }
       this.auth.signIn();
-    }
-  }
+    },
+
+    signIn() {
+      return this.get('signIn')();
+    },
+
+    signOut() {
+      return this.get('signOut')();
+    },
+  },
 });

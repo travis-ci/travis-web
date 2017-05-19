@@ -1,7 +1,8 @@
 <div class="main">
   <div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
-
-    {{top-bar}}
+    {{top-bar
+      signIn=(route-action 'signIn')
+      signOut=(route-action 'signOut')}}
 
     {{flash-display}}
 
