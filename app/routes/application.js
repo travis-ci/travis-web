@@ -79,6 +79,16 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   actions: {
+    signIn() {
+      this.get('auth').signIn();
+      this.afterSignIn();
+    },
+
+    signOut() {
+      this.get('auth').signOut();
+      this.afterSignOut();
+    },
+
     disableTailing() {
       Travis.tailing.stop();
     },
@@ -99,16 +109,26 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     renderFirstSync() {
       return this.transitionTo('first_sync');
     },
+  },
 
-    afterSignIn() {
-      this.get('flashes').clear();
-      let transition = this.auth.get('afterSignInTransition');
-      if (transition) {
-        this.auth.set('afterSignInTransition', null);
-        return transition.retry();
-      } else {
-        return this.transitionTo('index');
-      }
-    },
-  }
+  afterSignIn() {
+    this.get('flashes').clear();
+    let transition = this.auth.get('afterSignInTransition');
+    if (transition) {
+      this.auth.set('afterSignInTransition', null);
+      return transition.retry();
+    } else {
+      return this.transitionTo('index');
+    }
+  },
+
+  afterSignOut() {
+    this.controllerFor('repos').reset();
+    this.controllerFor('repo').reset();
+    this.setDefault();
+    if (this.get('config.enterprise')) {
+      return this.transitionTo('auth');
+    }
+    return this.transitionTo('index');
+  },
 });

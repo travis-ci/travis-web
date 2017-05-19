@@ -7,7 +7,7 @@
   <h1 class="content-title">Hey, we're so glad <br> you're here!</h1>
   <h2 class="content-subtitle">In order to view your repositories, <br> please sign in.</h2>
   <p>
-    <button type="button" {{action "signIn" target=auth}} title="Sign into Travis CI" class="content-button">Sign in with GitHub</button>
+    <button type="button" {{action (route-action 'signIn')}} title="Sign into Travis CI" class="content-button">Sign in with GitHub</button>
   </p>
 {{/if}}
 

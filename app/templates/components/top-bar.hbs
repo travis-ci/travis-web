@@ -79,7 +79,7 @@
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
-            <button class="auth-button signed-out" type="button" {{action "signIn" target=auth}}>
+            <button class="auth-button signed-out" type="button" {{action (route-action 'signIn')}}>
                 <span class="label-align">Sign in with GitHub</span>
                 {{inline-svg 'icon-github-white' class="icon white"}}
             </button>
@@ -106,7 +106,7 @@
               {{/unless}}
             {{/if}}
             <li>
-              <a href="/" {{action "signOut" target=auth}} title="Sign out of Travis">Sign Out</a>
+              <a href="/" {{action (route-action 'signOut')}} title="Sign out of Travis">Sign Out</a>
             </li>
           </ul>
         {{/if}}
