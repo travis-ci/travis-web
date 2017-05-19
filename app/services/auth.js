@@ -33,8 +33,6 @@ export default Ember.Service.extend({
     this.get('store').unloadAll();
 
     this.set('currentUser', null);
-    this.sendToApp('afterSignOut');
-
     Travis.trigger('user:signed_out');
   },
 
@@ -123,7 +121,6 @@ export default Ember.Service.extend({
     this.set('currentUser', user);
     this.set('state', 'signed-in');
     Travis.trigger('user:signed_in', data.user);
-    this.sendToApp('afterSignIn');
   },
 
   refreshUserData(user) {
@@ -197,11 +194,6 @@ export default Ember.Service.extend({
         return matches[0];
       }
     }
-  },
-
-  sendToApp(name) {
-    // eslint-disable-next-line
-    console.log(`would send '${name}' event to router, but no longer possible`);
   },
 
   sync() {
