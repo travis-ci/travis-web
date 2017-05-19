@@ -8,8 +8,12 @@ export default Ember.Route.extend({
   repositories: service(),
 
   redirect() {
-    if (this.get('auth.signedIn') && this.get('features.dashboard')) {
-      this.transitionTo('dashboard');
+    if (this.get('auth.signedIn')) {
+      if (this.get('features.dashboard')) {
+        this.transitionTo('dashboard');
+      }
+    } else if (this.get('features.enterprise')) {
+      this.transitionTo('auth');
     }
   },
 
