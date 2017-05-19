@@ -28,7 +28,6 @@ export default Ember.Controller.extend({
     return this.get('statusImages').imageUrl(slug, branchName);
   },
 
-
   @alias('repos.repos.firstObject') repo: null,
 
   @alias('tabStates.mainTab') tab: null,
