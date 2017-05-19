@@ -107,19 +107,8 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
         this.auth.set('afterSignInTransition', null);
         return transition.retry();
       } else {
-        return this.transitionTo('main');
+        return this.transitionTo('index');
       }
     },
-
-    afterSignOut() {
-      this.controllerFor('repos').reset();
-      this.controllerFor('repo').reset();
-      this.setDefault();
-      if (this.get('config.enterprise')) {
-        return this.transitionTo('auth');
-      } else {
-        return this.transitionTo('main.index');
-      }
-    }
   }
 });
