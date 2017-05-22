@@ -10,15 +10,9 @@ export default Ember.Controller.extend({
 
   repos: controller(),
 
-  @computed('features.proVersion', 'features.enterpriseVersion')
-  landingPage(pro, enterprise) {
-    let version = 'default';
-
-    if (pro) {
-      version = 'pro';
-    } else if (enterprise) {
-      version = 'enterprise';
-    }
+  @computed('features.proVersion')
+  landingPage(pro) {
+    let version = pro ? 'pro' : 'default';
 
     return `landing/${version}-page`;
   },
