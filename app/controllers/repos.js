@@ -53,7 +53,6 @@ export default Ember.Controller.extend({
   auth: service(),
   tabStates: service(),
   ajax: service(),
-  repositories: service(),
   updateTimesService: service('updateTimes'),
 
   actions: {
@@ -204,7 +203,6 @@ export default Ember.Controller.extend({
           this.set('isLoaded', true);
           this.set('_repos', reposRecordArray);
           this.set('ownedRepos', reposRecordArray);
-          this.get('repositories').set('ownedRecords', this.get('repos'));
           this.set('fetchingOwnedRepos', false);
           return reposRecordArray;
         };

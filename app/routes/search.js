@@ -32,5 +32,5 @@ export default Ember.Route.extend({
   deactivate() {
     this._super(...arguments);
     return this.controllerFor('repos').set('search', void 0);
-  }
+  },
 });
