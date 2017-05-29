@@ -1,14 +1,29 @@
 import Ember from 'ember';
 import computed, { alias } from 'ember-computed-decorators';
+import Visibility from 'npm:visibilityjs';
+import config from 'travis/config/environment';
 
 const { service, controller } = Ember.inject;
 
 export default Ember.Controller.extend({
   auth: service(),
   tabStates: service(),
+  updateTimesService: service('updateTimes'),
   statusImages: service(),
 
   repos: controller(),
+
+  init() {
+    this._super(...arguments);
+    if (!Ember.testing) {
+      return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
+    }
+  },
+
+  updateTimes() {
+    this.get('updateTimesService').push(this.get('build.stages'));
+    this.get('updateTimesService').push(this.get('build.jobs'));
+  },
 
   @computed('features.proVersion')
   landingPage(pro) {
