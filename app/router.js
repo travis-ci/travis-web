@@ -48,8 +48,6 @@ Router.map(function () {
     });
   });
 
-  this.route('recent');
-  this.route('my_repositories');
   this.route('search', { path: '/search/:phrase' });
 
   this.route('first_sync');
