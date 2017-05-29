@@ -52,7 +52,6 @@ Router.map(function () {
 
   this.route('first_sync');
   this.route('insufficient_oauth_permissions');
-  this.route('signin');
   this.route('auth');
   this.route('plans', { path: '/plans' });
   this.route('team', { path: '/about' });
