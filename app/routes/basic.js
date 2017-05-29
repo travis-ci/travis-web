@@ -42,4 +42,7 @@ export default Ember.Route.extend({
       this.transitionTo('account', this.get('auth.currentUser.login'));
     }
   },
+
+  // on pro, we need to auth on every route
+  needsAuth: Ember.computed.alias('features.proVersion'),
 });
