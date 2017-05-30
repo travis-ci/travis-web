@@ -9,11 +9,13 @@ docker-compose build web;
 docker images;
 
 docker tag travisweb_web quay.io/travisci/travis-web:$TRAVIS_BRANCH;
+docker tag travisweb_web quay.io/travisci/travis-web:$TRAVIS_COMMIT;
 docker push quay.io/travisci/travis-web:$TRAVIS_BRANCH;
+docker push quay.io/travisci/travis-web:$TRAVIS_COMMIT;
 
 if [ ${TRAVIS_BRANCH} = "master" ]; then
   docker tag travisweb_web quay.io/travisci/travis-web:latest";
-  docker push travisweb_web quay.io/travisci/travis-web:$TRAVIS_BRANCH";
+  docker push travisweb_web quay.io/travisci/travis-web:latest";
 fi
 
 exit 0;
