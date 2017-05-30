@@ -30,11 +30,6 @@ jobs:
       before_script: skip
       script: ./script/docker-build-and-push
 
-env:
-  global:
-    - PERCY_ENABLE=0
-    - EMBER_VERSION=default
-
 sudo: false
 dist: trusty
 
