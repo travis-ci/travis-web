@@ -6,6 +6,19 @@ stages:
   - "test"
   - ":ship: it to Quay.io"
 
+env:
+  global:
+    - PERCY_ENABLE=0
+  matrix:
+    - EMBER_VERSION=default
+    - EMBER_VERSION=beta
+    - EMBER_VERSION=canary
+
+matrix:
+  allow_failures:
+    - env: EMBER_VERSION=beta
+    - env: EMBER_VERSION=canary
+
 jobs:
   include:
     - stage: ":ship: it to Quay.io"
