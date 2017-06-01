@@ -31,9 +31,6 @@ export default Ember.Route.extend({
     return this.get('auth.currentUser');
   },
 
-  // on pro, we need to auth on every route
-  needsAuth: Ember.computed.alias('features.proVersion'),
-
   redirectToProfile(transition) {
     // make this hack the least invasive it can be
     let { targetName } = transition;
@@ -46,4 +43,6 @@ export default Ember.Route.extend({
     }
   },
 
+  // on pro, we need to auth on every route
+  needsAuth: Ember.computed.alias('features.proVersion'),
 });

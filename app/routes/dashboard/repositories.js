@@ -10,7 +10,7 @@ export default TravisRoute.extend({
 
   redirect() {
     if (!this.get('features.dashboard')) {
-      return this.transitionTo('main');
+      return this.transitionTo('index');
     }
   },
 

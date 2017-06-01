@@ -1,5 +1,5 @@
 <div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
-  <h1 id="logo" class="logo">{{#link-to "main"}}Travis CI{{/link-to}}</h1>
+  <h1 id="logo" class="logo">{{#link-to "index"}}Travis CI{{/link-to}}</h1>
   <div class="navigation-toggle">
     <button type="button" class="tofuburger no-button" {{action 'toggleBurgerMenu'}}>
       {{inline-svg 'icon-tofuburger'}}
@@ -79,7 +79,7 @@
 
       <li class="{{classProfile}}">
         {{#if auth.signedOut}}
-            <button class="auth-button signed-out" type="button" {{action "signIn" target=auth}}>
+            <button class="auth-button signed-out" type="button" {{action 'signIn'}}>
                 <span class="label-align">Sign in with GitHub</span>
                 {{inline-svg 'icon-github-white' class="icon white"}}
             </button>
@@ -106,7 +106,7 @@
               {{/unless}}
             {{/if}}
             <li>
-              <a href="/" {{action "signOut" target=auth}} title="Sign out of Travis">Sign Out</a>
+              <a href="/" {{action 'signOut'}} title="Sign out of Travis">Sign Out</a>
             </li>
           </ul>
         {{/if}}

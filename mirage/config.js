@@ -64,7 +64,18 @@ export default function () {
     return schema.broadcasts.all();
   });
 
-  this.get('/repos', function (schema/* , request*/) {
+  this.get('/repos', function (schema, request) {
+    // search apparently still uses v2, so different response necessary
+    const query = request.queryParams.search;
+    if (query) {
+      const allRepositories = schema.repositories.all();
+      const filtered = allRepositories.models.filter(repo => repo.attrs.slug.includes(query));
+      return {
+        repos: filtered
+      };
+    }
+
+    // standard v3 response returning all repositories
     return schema.repositories.all();
   });
 

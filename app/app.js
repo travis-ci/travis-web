@@ -5,8 +5,6 @@ import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 import initHsBeacon from 'travis/utils/init-hs-beacon';
 
-Ember.MODEL_FACTORY_INJECTIONS = true;
-
 // This can be set per environment in config/environment.js
 const debuggingEnabled = config.featureFlags['debug-logging'];
 const proVersion = config.featureFlags['pro-version'];
@@ -24,10 +22,6 @@ const App = Ember.Application.extend(Ember.Evented, {
   LOG_VIEW_LOOKUPS: debuggingEnabled,
 
   ready() {
-    if (location.hash.slice(0, 2) === '#!') {
-      location.href = location.href.replace('#!/', '');
-    }
-
     this.on('user:signed_in', function (user) {
       return Travis.onUserUpdate(user);
     });

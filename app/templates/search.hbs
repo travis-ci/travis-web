@@ -26,11 +26,40 @@
               <main class="repo-main">
               <div class="repo-navigation">
                 {{repo-show-tools repo=repo build=build job=job tab=tab}}
-
                 {{repo-show-tabs repo=repo tab=tab build=build job=job}}
               </div>
               <div class="travistab-body repo-body">
-                {{outlet}}
+                {{#build-wrapper build=build}}
+                  {{#if loading}}
+                    {{loading-indicator}}
+                  {{else}}
+
+                    {{#if build}}
+                      {{build-header item=build commit=build.commit repo=repo}}
+
+                      {{#if noJobsError}}
+                        <p class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
+                      {{else}}
+                        {{#if build.isMatrix}}
+                          {{#if jobsLoaded}}
+                            {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
+                            {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
+                          {{else}}
+                            {{loading-indicator center=true}}
+                          {{/if}}
+                        {{else}}
+                          {{job-infrastructure-notification job=job}}
+                          {{job-tabs job=job repo=repo}}
+                          {{job-log job=job}}
+                        {{/if}}
+                      {{/if}}
+
+                    {{else}}
+                      {{no-builds}}
+                    {{/if}}
+
+                  {{/if}}
+                {{/build-wrapper}}
               </div>
               </main>
             </article>
