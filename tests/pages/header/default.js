@@ -29,4 +29,5 @@ export default create({
   loginLinkPresent: contains('.auth-button.signed-out', { scope: '.topbar nav#navigation ul li.menu.profile' }),
   broadcastsPresent: contains('.topbar .broadcast span.icon-broadcast.announcement'),
   profileLinkPresent: contains('.navigation-anchor.signed-in', { scope: '.topbar nav#navigation ul li.menu.profile.signed-in' }),
+  ctaText: text('.cta p.row'),
 });
