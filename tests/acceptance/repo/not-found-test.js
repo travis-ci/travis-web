@@ -4,17 +4,21 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import nonExistentRepoPage from 'travis/tests/pages/repo/non-existent';
 
 let adapterException;
+let loggerError;
 
 moduleForAcceptance('Acceptance | repo/not found', {
   beforeEach() {
     // Ignore promise rejection.
     // Original exception will fail test on promise rejection.
     adapterException = Ember.Test.adapter.exception;
+    loggerError = Ember.Logger.error;
     Ember.Test.adapter.exception = () => null;
+    Ember.Logger.error = () => null;
   },
 
   afterEach() {
     Ember.Test.adapter.exception = adapterException;
+    Ember.Logger.error = loggerError;
   }
 });
 
