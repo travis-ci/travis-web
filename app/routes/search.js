@@ -16,7 +16,7 @@ export default Ember.Route.extend({
   },
 
   redirect() {
-    if(!this.get('auth.signedIn')) {
+    if (!this.get('auth.signedIn')) {
       this.transitionTo('index');
     }
   },
