@@ -10,6 +10,7 @@ export default Ember.Controller.extend({
   tabStates: service(),
   updateTimesService: service('updateTimes'),
   statusImages: service(),
+  popup: service(),
 
   repos: controller(),
 
@@ -56,4 +57,12 @@ export default Ember.Controller.extend({
   noJobsError(jobs) {
     return jobs.length < 1;
   },
+
+  actions: {
+    statusImages() {
+      this.get('popup').open('status-images');
+      return false;
+    }
+  },
+
 });
