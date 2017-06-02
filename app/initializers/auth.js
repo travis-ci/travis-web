@@ -5,7 +5,7 @@ initialize = function (app) {
   app.inject('controller', 'auth', 'service:auth');
   app.inject('application', 'auth', 'service:auth');
   app.inject('component', 'auth', 'service:auth');
-  return app.inject('service:flashes', 'auth', 'service:auth');
+  app.inject('service:flashes', 'auth', 'service:auth');
 };
 
 AuthInitializer = {

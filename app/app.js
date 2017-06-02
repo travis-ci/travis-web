@@ -21,6 +21,18 @@ const App = Ember.Application.extend(Ember.Evented, {
   LOG_MODULE_RESOLVER: debuggingEnabled,
   LOG_VIEW_LOOKUPS: debuggingEnabled,
 
+  engines: {
+    about: {
+      dependencies: {
+        services: [
+          'features',
+          'fetchFeatures',
+          'auth',
+        ],
+      },
+    },
+  },
+
   ready() {
     this.on('user:signed_in', function (user) {
       return Travis.onUserUpdate(user);
