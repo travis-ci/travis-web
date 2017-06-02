@@ -6,6 +6,7 @@
   ],
   "dependencies": {
     "ember-cli-htmlbars": "*",
-    "ember-cli-babel": "*"
+    "ember-cli-babel": "*",
+    "ember-inline-svg": "0.1.11"
   }
 }
