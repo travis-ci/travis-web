@@ -76,5 +76,10 @@
   "engines": {
     "node": "6.9.5"
   },
-  "private": true
+  "private": true,
+  "ember-addon": {
+    "paths": [
+      "lib/about"
+    ]
+  }
 }

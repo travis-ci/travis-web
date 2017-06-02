@@ -54,7 +54,6 @@ Router.map(function () {
   this.route('insufficient_oauth_permissions');
   this.route('auth');
   this.route('plans', { path: '/plans' });
-  this.route('team', { path: '/about' });
   this.route('logo', { path: '/logo' });
   this.route('profile', { path: '/profile', resetNamespace: true }, function () {
     this.route('accounts', { path: '/', resetNamespace: true }, function () {
@@ -66,6 +65,7 @@ Router.map(function () {
   });
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
+  this.mount('about');
 });
 
 export default Router;
