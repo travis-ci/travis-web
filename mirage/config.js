@@ -6,6 +6,21 @@ import config from 'travis/config/environment';
 const { apiEndpoint } = config;
 
 export default function () {
+  this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
+    return {
+      'page': {
+        'id': 'pnpcptp8xh9k',
+        'name': 'Travis CI',
+        'url': 'https://www.traviscistatus.com',
+        'updated_at': '2017-06-06T09:49:24.032Z'
+      },
+      'status': {
+        'indicator': 'none',
+        'description': 'AllSystems Operational'
+      }
+    };
+  });
+
   this.namespace = apiEndpoint;
 
   this.get('/users/:id');
@@ -290,10 +305,10 @@ export default function () {
       });
     }
 
-    /**
-      * TODO remove this once the seializers/build is removed.
-      * The modelName causes Mirage to know how to serialise it.
-      */
+    /*
+     * TODO remove this once the seializers/build is removed.
+     * The modelName causes Mirage to know how to serialise it.
+     */
     return this.serialize(builds, 'build');
   });
 

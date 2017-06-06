@@ -37,7 +37,8 @@ module.exports = function (environment) {
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
     logLimit: 10000,
-    emojiPrepend: ''
+    emojiPrepend: '',
+    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
   };
 
   ENV.featureFlags = {
@@ -46,7 +47,6 @@ module.exports = function (environment) {
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
   };
 
-  var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
   var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
   ENV.enterprise = ENV.featureFlags['enterprise-version'];
 
@@ -62,7 +62,6 @@ module.exports = function (environment) {
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
-      ENV.statusPageStatusUrl = statusPageStatusUrl;
       ENV.sentry = {
         dsn: sentryDSN
       };
@@ -97,8 +96,6 @@ module.exports = function (environment) {
     ENV.sentry = {
       development: true
     };
-
-    ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
   if (environment === 'test') {
@@ -108,8 +105,6 @@ module.exports = function (environment) {
     ENV.intervals.searchDebounceRate = 0;
 
     ENV.APP.rootElement = '#ember-testing';
-
-    ENV.statusPageStatusUrl =  null;
 
     ENV.sentry = {
       development: true
@@ -152,8 +147,6 @@ module.exports = function (environment) {
         dsn: sentryDSN
       };
     }
-
-    ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
   if (process.env.DEPLOY_TARGET) {
