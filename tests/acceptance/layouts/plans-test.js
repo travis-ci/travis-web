@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import proHeader from 'travis/tests/pages/header/pro';
+import footer from 'travis/tests/pages/footer';
 
 moduleForAcceptance('Acceptance | layouts/plans page');
 
@@ -19,6 +20,10 @@ test('plans page renders correct header/footer', function (assert) {
     assert.equal(proHeader.navigationLinks(2).title, 'Enterprise', 'Shows link to Enterprise offering');
 
     assert.ok(proHeader.loginLinkPresent, 'Pro header has login button');
+    assert.equal(footer.sections(1).title, '©Travis CI, GmbH', 'Shows company info section');
+    assert.equal(footer.sections(2).title, 'Help', 'Shows help info section');
+    assert.equal(footer.sections(3).title, 'Legal', 'Shows legal info section');
+    assert.equal(footer.sections(4).title, 'Travis CI Status', 'Shows status info section');
   });
 });
 
