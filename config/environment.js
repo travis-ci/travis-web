@@ -47,7 +47,13 @@ module.exports = function (environment) {
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
   };
 
-  var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
+  ENV.sentry = {
+    dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
+    whitelistUrls: [
+      /https:\/\/cdn\.travis-ci\.(org|com)\/assets\/(vendor|travis)-.+.js/
+    ]
+  };
+
   ENV.enterprise = ENV.featureFlags['enterprise-version'];
 
   if (typeof process !== 'undefined') {
@@ -62,9 +68,6 @@ module.exports = function (environment) {
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
-      ENV.sentry = {
-        dsn: sentryDSN
-      };
       ENV.endpoints = {
         sshKey: true,
         caches: true
@@ -141,10 +144,6 @@ module.exports = function (environment) {
     if (process.env.DISABLE_SENTRY) {
       ENV.sentry = {
         development: true
-      };
-    } else {
-      ENV.sentry = {
-        dsn: sentryDSN
       };
     }
   }
