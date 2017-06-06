@@ -1,10 +1,14 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
+import PaginatedCollection from 'travis/utils/paginated-collection';
 
 export default TravisRoute.extend({
   queryParams: {
     filter: {
       replace: true
+    },
+    offset: {
+      refreshModel: true
     }
   },
 
@@ -14,12 +18,16 @@ export default TravisRoute.extend({
     }
   },
 
-  model() {
-    return Ember.RSVP.hash({
-      repos: this.store.query('repo', {
+  model(params) {
+    let collection = PaginatedCollection.create({
+      content: this.store.query('repo', {
         active: true,
-        sort_by: 'current_build:desc'
+        sort_by: 'current_build:desc',
+        offset: params.offset
       }),
+    });
+    return Ember.RSVP.hash({
+      repos: collection,
       accounts: this.store.query('account', {
         all: true
       })

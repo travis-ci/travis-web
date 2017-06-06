@@ -3,7 +3,7 @@ import { task, taskGroup } from 'ember-concurrency';
 const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
-  queryParams: ['account'],
+  queryParams: ['account', 'offset'],
   flashes: service(),
   ajax: service(),
 
