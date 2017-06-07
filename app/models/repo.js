@@ -160,7 +160,9 @@ const Repo = Model.extend({
 
   _convertV3SettingsToV2(v3Settings) {
     return v3Settings.reduce((v2Settings, v3Setting) => {
-      v2Settings[v3Setting.name] = v3Setting.value;
+      if (v3Setting) {
+        v2Settings[v3Setting.name] = v3Setting.value;
+      }
       return v2Settings;
     }, {});
   }

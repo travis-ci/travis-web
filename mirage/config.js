@@ -114,14 +114,16 @@ export default function () {
 
   this.get('/repo/:id/settings', function (schema, request) {
     let settings = schema.settings.where({ repositoryId: request.params.id });
+    let formattedSettings = settings.models.map(setting => {
+      return {
+        name: setting.attrs.name,
+        value: setting.attrs.value
+      };
+    });
 
     return {
-      settings: settings.models.map(setting => {
-        return {
-          name: setting.attrs.name,
-          value: setting.attrs.value
-        };
-      })
+      // This simulates a possible API bug: https://github.com/travis-pro/team-teal/issues/2023
+      settings: formattedSettings.concat(null)
     };
   });
 
