@@ -6,6 +6,7 @@ const { service } = Ember.inject;
 
 export default ActiveModelAdapter.extend({
   auth: service(),
+  features: service(),
   host: config.apiEndpoint,
   coalesceFindRequests: true,
 

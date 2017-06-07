@@ -68,6 +68,7 @@ export default Ember.Component.extend({
   popup: service(),
   permissions: service(),
   externalLinks: service(),
+  features: service(),
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,

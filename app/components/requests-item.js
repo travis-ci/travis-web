@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
+  features: service(),
+
   classNames: ['request-item'],
   classNameBindings: ['requestClass'],
   tagName: 'li',

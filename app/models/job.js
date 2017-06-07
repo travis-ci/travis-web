@@ -15,6 +15,7 @@ const { service } = Ember.inject;
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   ajax: service(),
+  features: service(),
   logId: attr(),
   queue: attr(),
   state: attr(),
