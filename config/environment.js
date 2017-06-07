@@ -39,6 +39,7 @@ module.exports = function (environment) {
       markBroadcastAsReadDelay: 10000,
       dashboardDropupOpenDelay: 4000,
       scrollTopAnimationDuration: 200,
+      showFlashDuration: 15000,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
@@ -120,6 +121,7 @@ module.exports = function (environment) {
       markBroadcastAsReadDelay: 0,
       dashboardDropupOpenDelay: 0,
       scrollTopAnimationDuration: 0,
+      showFlashDuration: 500,
     };
 
     ENV.APP.rootElement = '#ember-testing';

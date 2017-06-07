@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import LimitedArray from 'travis/utils/limited-array';
+import ENV from 'travis/config/environment';
 
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
@@ -63,7 +64,7 @@ export default Ember.Service.extend({
           return this.get('flashes.content').removeObject(msg);
         }
       });
-    }, 15000);
+    }, ENV.intervals.showFlashDuration);
   },
 
   close(msg) {
