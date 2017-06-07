@@ -33,6 +33,11 @@ module.exports = function (environment) {
     intervals: {
       updateTimes: 1000,
       searchDebounceRate: 500,
+      logHighlightDebounceRate: 500,
+      jobPollingRate: 20,
+      logTailingDebounceRate: 200,
+      markBroadcastAsReadDelay: 10000,
+      dashboardDropupOpenDelay: 4000,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
@@ -105,7 +110,15 @@ module.exports = function (environment) {
     // Testem prefers this...
     ENV.locationType = 'none';
 
-    ENV.intervals.searchDebounceRate = 0;
+    ENV.intervals = {
+      updateTimes: 0,
+      searchDebounceRate: 0,
+      jobPollingRate: 0,
+      logHighlightDebounceRate: 0,
+      logTailingDebounceRate: 0,
+      markBroadcastAsReadDelay: 0,
+      dashboardDropupOpenDelay: 0,
+    };
 
     ENV.APP.rootElement = '#ember-testing';
 

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'travis/config/environment';
 
 export default (function () {
   LinesSelector.prototype.Location = {
@@ -67,7 +68,7 @@ export default (function () {
           if (!this.destroyed) {
             return this.highlightLines(tries + 1);
           }
-        }), 500);
+        }), ENV.intervals.logHighlightDebounceRate);
         return;
       }
     }

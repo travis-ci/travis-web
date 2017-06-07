@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'travis/config/environment';
 
 export default (function () {
   function Tailing(window1, tailSelector, logSelector) {
@@ -13,7 +14,7 @@ export default (function () {
   }
 
   Tailing.prototype.options = {
-    timeout: 200
+    timeout: ENV.intervals.logTailingDebounceRate
   };
 
   Tailing.prototype.tail = function () {

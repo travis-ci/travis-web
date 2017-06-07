@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'travis/config/environment';
 
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
@@ -30,7 +31,10 @@ export default Ember.Component.extend({
 
   openDropup() {
     this.toggleProperty('dropupIsOpen');
-    Ember.run.later((() => { this.set('dropupIsOpen', false); }), 4000);
+    Ember.run.later((
+      () => { this.set('dropupIsOpen', false); }),
+      ENV.intervals.dashboardDropupOpenDelay
+    );
   },
 
   mouseLeave() {

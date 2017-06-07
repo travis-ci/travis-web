@@ -9,6 +9,7 @@ import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import computed from 'ember-computed-decorators';
+import ENV from 'travis/config/environment';
 
 const { service } = Ember.inject;
 
@@ -62,7 +63,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
           this.set('isFetchingConfig', true);
           this.reload();
         } else {
-          Ember.run.later(fetchConfig, 20);
+          Ember.run.later(fetchConfig, ENV.intervals.jobPollingRate);
         }
       };
 
