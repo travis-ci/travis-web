@@ -1,10 +1,11 @@
 /* global _gaq */
+import Ember from 'ember';
 import config from 'travis/config/environment';
 var GAInitializer, initialize;
 
 initialize = function (/* application*/) {
   var ga, s;
-  if (config.gaCode) {
+  if (config.gaCode && !Ember.testing) {
     window._gaq = [];
     _gaq.push(['_setAccount', config.gaCode]);
     ga = document.createElement('script');
