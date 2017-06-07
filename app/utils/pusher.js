@@ -29,7 +29,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
     Pusher.host = config.host;
   }
 
-  if (ENV.pusher.debug) {
+  if (config.debug) {
     Pusher.log = function (message) {
       if (window.console && window.console.log) {
         window.console.log(message);
