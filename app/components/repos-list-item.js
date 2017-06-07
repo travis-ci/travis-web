@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import colorForState from 'travis/utils/color-for-state';
+import ENV from 'travis/config/environment';
 
 const { service } = Ember.inject;
 
@@ -23,7 +24,7 @@ export default Ember.Component.extend(Polling, {
     if (window.scrollY > 0) {
       return Ember.$('html, body').animate({
         scrollTop: 0
-      }, 200);
+      }, ENV.intervals.scrollTopAnimationDuration);
     }
   }
 });
