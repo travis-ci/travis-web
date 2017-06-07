@@ -4,6 +4,7 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend({
   tabStates: service(),
+  auth: service(),
 
   renderTemplate() {
     this._super(...arguments);
@@ -12,6 +13,12 @@ export default Ember.Route.extend({
       into: 'search',
       outlet: 'left',
     });
+  },
+
+  redirect() {
+    if (!this.get('auth.signedIn')) {
+      this.transitionTo('index');
+    }
   },
 
   activate() {
