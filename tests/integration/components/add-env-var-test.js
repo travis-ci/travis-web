@@ -47,7 +47,7 @@ test('it adds an env var on submit', function (assert) {
   assert.ok(!envVar.get('public'), 'env var should be private');
 
   var done = assert.async();
-  setTimeout(function () { done(); }, 500);
+  setTimeout(function () { done(); }, 50);
 });
 
 test('it shows an error if no name is present', function (assert) {
@@ -103,5 +103,5 @@ test('it adds a public env var on submit', function (assert) {
   assert.ok(envVar.get('public'), 'env var should be public');
 
   var done = assert.async();
-  setTimeout(function () { done(); }, 500);
+  setTimeout(function () { done(); }, 50);
 });
