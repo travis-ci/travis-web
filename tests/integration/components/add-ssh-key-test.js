@@ -50,7 +50,7 @@ test('it adds an ssh key on submit', function (assert) {
   percySnapshot(assert);
 
   var done = assert.async();
-  setTimeout(function () { done(); }, 500);
+  setTimeout(function () { done(); }, 50);
 });
 
 
