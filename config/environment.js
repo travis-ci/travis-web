@@ -27,7 +27,8 @@ module.exports = function (environment) {
     sourceEndpoint: 'https://github.com',
     pusher: {
       key: '5df8ac576dcccf4fd076',
-      host: 'ws.pusherapp.com'
+      host: 'ws.pusherapp.com',
+      debug: false
     },
     endpoints: {},
     intervals: {
