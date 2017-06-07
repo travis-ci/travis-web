@@ -27,14 +27,19 @@ module.exports = function (environment) {
     sourceEndpoint: 'https://github.com',
     pusher: {
       key: '5df8ac576dcccf4fd076',
-      host: 'ws.pusherapp.com'
+      host: 'ws.pusherapp.com',
+      debug: false
     },
     endpoints: {},
-    intervals: { updateTimes: 1000 },
+    intervals: {
+      updateTimes: 1000,
+      searchDebounceRate: 500,
+    },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,
     logLimit: 10000,
-    emojiPrepend: ''
+    emojiPrepend: '',
+    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
   };
 
   ENV.featureFlags = {
@@ -43,8 +48,13 @@ module.exports = function (environment) {
     'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
   };
 
-  var statusPageStatusUrl = 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json';
-  var sentryDSN = 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334';
+  ENV.sentry = {
+    dsn: 'https://e775f26d043843bdb7ae391dc0f2487a@app.getsentry.com/75334',
+    whitelistUrls: [
+      /https:\/\/cdn\.travis-ci\.(org|com)\/assets\/(vendor|travis)-.+.js/
+    ]
+  };
+
   ENV.enterprise = ENV.featureFlags['enterprise-version'];
 
   if (typeof process !== 'undefined') {
@@ -59,10 +69,6 @@ module.exports = function (environment) {
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
-      ENV.statusPageStatusUrl = statusPageStatusUrl;
-      ENV.sentry = {
-        dsn: sentryDSN
-      };
       ENV.endpoints = {
         sshKey: true,
         caches: true
@@ -94,17 +100,15 @@ module.exports = function (environment) {
     ENV.sentry = {
       development: true
     };
-
-    ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
 
-    ENV.APP.rootElement = '#ember-testing';
+    ENV.intervals.searchDebounceRate = 0;
 
-    ENV.statusPageStatusUrl =  null;
+    ENV.APP.rootElement = '#ember-testing';
 
     ENV.sentry = {
       development: true
@@ -142,13 +146,7 @@ module.exports = function (environment) {
       ENV.sentry = {
         development: true
       };
-    } else {
-      ENV.sentry = {
-        dsn: sentryDSN
-      };
     }
-
-    ENV.statusPageStatusUrl = statusPageStatusUrl;
   }
 
   if (process.env.DEPLOY_TARGET) {

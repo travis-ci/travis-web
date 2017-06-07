@@ -1,16 +1,24 @@
 import Ember from 'ember';
-import MainTabRoute from 'travis/routes/main-tab';
 
 const { service } = Ember.inject;
 
-export default MainTabRoute.extend({
+export default Ember.Route.extend({
   tabStates: service(),
+  auth: service(),
 
   renderTemplate() {
-    this.render('repo');
-    return this.render('build', {
-      into: 'repo'
+    this._super(...arguments);
+
+    this.render('repos', {
+      into: 'search',
+      outlet: 'left',
     });
+  },
+
+  redirect() {
+    if (!this.get('auth.signedIn')) {
+      this.transitionTo('index');
+    }
   },
 
   activate() {
@@ -19,9 +27,8 @@ export default MainTabRoute.extend({
   },
 
   setupController(controller, searchPhrase) {
-    this.controllerFor('repo').activate('index');
+    this._super(...arguments);
     this.controllerFor('repos').activate('search', searchPhrase);
-    return this.setCurrentRepoObservers();
   },
 
   model(params) {
@@ -31,5 +38,5 @@ export default MainTabRoute.extend({
   deactivate() {
     this._super(...arguments);
     return this.controllerFor('repos').set('search', void 0);
-  }
+  },
 });

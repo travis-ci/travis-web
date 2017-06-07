@@ -18,3 +18,7 @@
 {{else}}
   {{loading-indicator}}
 {{/if}}
+
+<aside id="left" class="{{unless auth.signedIn 'hidden'}}">
+  {{outlet "left"}}
+</aside>

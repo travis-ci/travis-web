@@ -1,43 +1,62 @@
-<div id="getting-started" class="getting-started">
+<div class="main">
+  <div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
 
-  <h1 class="h2--grey">First time here? Let's get you started!</h1>
+    {{top-bar
+      signIn=(route-action 'signIn')
+      signOut=(route-action 'signOut')}}
 
-  <ol class="getting-started-steps">
-    <li>
-      {{inline-svg 'hooks-step-1-01.svg' class="getting-started-image"}}
-      <div>
-        <h2 class="h3--green">Activate GitHub Repositories</h2>
-        <p>Once you're signed in, and we've initially synchronized your repositories from GitHub, go to your {{#link-to "profile" id="profile-page-link"}}profile{{/link-to}} page for open source or for your private projects.</p>
-        <p>You'll see all the organizations you're a member of and all the repositories you have access to. The ones you have administrative access to are the ones you can enable the service hook for.</p>
-        <p>Flip the switch to on for all repositories you'd like to enable.</p>
-      </div>
-    </li>
-    <li>
-      {{inline-svg 'hooks-step-2-01.svg' class="getting-started-image"}}
-      <div>
-        <h2 class="h3--green">Add .travis.yml file to your repository</h2>
-        <p>In order for Travis CI to build your project, you need to tell the systems a little bit about it. You'll need to add a file named .travis.yml to the root of your repository.</p>
-        <p>If .travis.yml is not in the repository, is misspelled or is not valid YAML, Travis CI will ignore it.</p>
-        <p>Here you can find some of our basic <a href="http://docs.travis-ci.com/user/language-specific/" title="Progamming languages that Travis CI supports">language examples</a>.</p>
-      </div>
-    </li>
-    <li>
-      {{inline-svg 'hooks-step-3-01.svg' class="getting-started-image"}}
-      <div>
-        <h2 class="h3--green">Trigger your first build with a git push</h2>
-        <p>Once the GitHub hook is set up, push your commit that adds .travis.yml to your repository. That should add a build into one of the queues on Travis CI and your build will start as soon as one worker for your language is available.</p>
-        <p>To start a build, perform one of the following:</p>
-        <ul>
-          <li>Commit and push something to your repository</li>
-          <li>Go to your repository's settings page, click on "Webhooks & Services" on the left menu, choose "Travis CI" in the "Services", and use the "Test service" button.</li>
-        </ul>
-        <p class="note">
-          <strong>Note:</strong> You cannot trigger your first build using Test Hook button. It has to be triggered by a push to your repository.
-        </p>
-      </div>
-    </li>
-  </ol>
-  <h2 class="h3--green">That's pretty much it!</h2>
-  <p>Want to read more? Head to our <a href="http://docs.travis-ci.com" title="Browse our docs">docs</a>.</p>
+    {{flash-display}}
 
+    <div class="wrapper-main">
+      <div id="main" role="main">
+        <div id="getting-started" class="getting-started">
+
+          <h1 class="h2--grey">First time here? Let's get you started!</h1>
+
+          <ol class="getting-started-steps">
+            <li>
+              {{inline-svg 'hooks-step-1-01.svg' class="getting-started-image"}}
+              <div>
+                <h2 class="h3--green">Activate GitHub Repositories</h2>
+                <p>Once you're signed in, and we've initially synchronized your repositories from GitHub, go to your {{#link-to "profile" id="profile-page-link"}}profile{{/link-to}} page for open source or for your private projects.</p>
+                  <p>You'll see all the organizations you're a member of and all the repositories you have access to. The ones you have administrative access to are the ones you can enable the service hook for.</p>
+                  <p>Flip the switch to on for all repositories you'd like to enable.</p>
+              </div>
+            </li>
+            <li>
+              {{inline-svg 'hooks-step-2-01.svg' class="getting-started-image"}}
+              <div>
+                <h2 class="h3--green">Add .travis.yml file to your repository</h2>
+                <p>In order for Travis CI to build your project, you need to tell the systems a little bit about it. You'll need to add a file named .travis.yml to the root of your repository.</p>
+                <p>If .travis.yml is not in the repository, is misspelled or is not valid YAML, Travis CI will ignore it.</p>
+                <p>Here you can find some of our basic <a href="http://docs.travis-ci.com/user/language-specific/" title="Progamming languages that Travis CI supports">language examples</a>.</p>
+              </div>
+            </li>
+            <li>
+              {{inline-svg 'hooks-step-3-01.svg' class="getting-started-image"}}
+              <div>
+                <h2 class="h3--green">Trigger your first build with a git push</h2>
+                <p>Once the GitHub hook is set up, push your commit that adds .travis.yml to your repository. That should add a build into one of the queues on Travis CI and your build will start as soon as one worker for your language is available.</p>
+                <p>To start a build, perform one of the following:</p>
+                <ul>
+                  <li>Commit and push something to your repository</li>
+                  <li>Go to your repository's settings page, click on "Webhooks & Services" on the left menu, choose "Travis CI" in the "Services", and use the "Test service" button.</li>
+                </ul>
+                <p class="note">
+                  <strong>Note:</strong> You cannot trigger your first build using Test Hook button. It has to be triggered by a push to your repository.
+                </p>
+              </div>
+            </li>
+          </ol>
+          <h2 class="h3--green">That's pretty much it!</h2>
+          <p>Want to read more? Head to our <a href="http://docs.travis-ci.com" title="Browse our docs">docs</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
+      {{outlet "left"}}
+    </aside>
+
+  </div>
 </div>

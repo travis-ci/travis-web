@@ -1,0 +1,244 @@
+<div id="top" class="top landing-page">
+  {{top-bar
+    landingPage=true
+    signIn=(action 'signIn')
+    signOut=(action 'signOut')}}
+</div>
+
+{{flash-display}}
+
+<div id="landing" class="landing">
+  <div class="row hero z-1">
+    <section class="landing-centered-wrapper">
+      <div class="large-12 columns" id="hero-copy">
+        <h1>Test and Deploy with Confidence</h1>
+        <p>Easily sync your GitHub projects with Travis CI<br class="mobile-break"> and you’ll be testing your code in minutes!</p>
+
+        {{#if auth.signedOut}}
+          <button {{action 'signIn'}} class="hero-button org">
+            {{inline-svg 'sign-in-mascot' class=""}} <span class="label-align">Sign Up</span></button>
+        {{/if}}
+        {{#if auth.signingIn}}
+          <button class="hero-button org">
+            <span class="loading-indicator--white"><i></i><i></i><i></i></span>
+            <span class="label-align">Signing In</span></button>
+        {{/if}}
+
+      </div>
+      <div class="large-12 columns laptop-wrapper">
+        <div id="laptop">
+          <img src="../images/landing-page/laptop.png" alt="Travis CI screenshot">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="row oss-testing">
+    <section class="landing-centered-wrapper">
+      <div class="large-12 columns">
+        <h2>The home of<br class="mobile-break"> open source testing</h2>
+        <p>Over 300k open source projects<br class="mobile-break"> and 235k users are testing on Travis CI.</p>
+        {{inline-svg 'customer-numbers' class="os-numbers"}}
+      </div>
+    </section>
+  </div>
+
+  <div class="row customers">
+    <div class="landing-centered-wrapper">
+      <div class="medium-6 columns">
+        <img src="../images/landing-page/customers-temp-together.svg" alt="customer logos">
+      </div>
+      <div class="medium-6 columns">
+        <p class="left">Some pretty awesome companies<br> and projects are using us.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row free-for-oss">
+    <section class="landing-centered-wrapper">
+      <div class="large-12 columns">
+        <h1>Testing your open source<br class="mobile-no-break"> project is 10000% free</h1>
+        <p><span class="bold-italic">Seriously. Always.</span> We like to think of it as our way of giving<br>back to a community that gives us so much as well.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="row private-repos">
+    <section class="landing-centered-wrapper">
+      <div class="medium-6 columns mobile-envelope">
+        <img src="../images/landing-page/envelope.svg">
+      </div>
+
+      <div class="medium-6 columns">
+        <div class="landing-vert-center-s">
+          <h2>Have a private project<br>you’d like to test?</h2>
+          <p>Travis CI for private repositories has<br><a href="http://travis-ci.com/plans" target="_blank">plans</a> for every size project.</p>
+        </div>
+      </div>
+      <div class="medium-6 columns desktop-envelope">
+        {{inline-svg 'envelope'}}
+      </div>
+    </section>
+  </div>
+
+  <div class="row landing-features-list">
+    <section class="landing-centered-wrapper">
+      <div class="large-6 columns features-callouts">
+        <div class="landing-vert-center-s">
+          <div class="medium-6 columns">
+            <h3 id="f-co-1">Get set up in seconds</h3>
+            <p>Login with GitHub, tell Travis CI to test a project, and then push to GitHub. Could it be any simpler!</p>
+          </div>
+          <div class="medium-6 columns">
+            <h3 id="f-co-2">Multi-language support</h3>
+            <p>Make sure your code runs against all versions of your favorite language without breaking a sweat.</p>
+          </div>
+          <div class="medium-6 columns">
+            <h3 id="f-co-3">Test your pull requests</h3>
+            <p>Make sure every pull request to your project is tested before merging.</p>
+          </div>
+          <div class="medium-6 columns">
+            <h3 id="f-co-4">Deploy to S3 and Heroku</h3>
+            <p>Updating staging or production as soon as your tests pass has never been easier!</p>
+          </div>
+        </div>
+      </div>
+      <div class="large-6 columns features-checked">
+        <h2>Features created to<br class="mobile-break"> help your projects and teams</h2>
+        <ul>
+          <li>Watch your tests as they run</li>
+          <li>Keep your config with your code</li>
+          <li>Slack, HipChat, Emails and more</li>
+          <li>A clean VM for every build</li>
+          <li>Run your tests in parallel</li>
+          <li>Linux and Mac (and iOS) supported</li>
+          <li>Great API and command line tool</li>
+          <li>Did we say free for Open Source already?</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="row build-flows">
+    <section class="landing-centered-wrapper">
+      <div class="large-12 columns">
+        <h2>Branch build flow</h2>
+        <div class="branch-bf">
+          <div class="bf">
+            <img src="../images/landing-page/push-icon-1.svg" alt="GitHub logo">
+            <p>You push your<br>code to GitHub</p>
+          </div>
+          <div class="divider-line-horizontal">
+          </div>
+          <div class="divider-line-vertical">
+          </div>
+          <div class="bf">
+            <img src="../images/landing-page/push-icon-2.svg" alt="Trigger build">
+            <p>GitHub triggers<br>Travis CI to build</p>
+          </div>
+          <div class="divider-line-horizontal">
+          </div>
+          <div class="divider-line-vertical">
+          </div>
+          <div class="bf">
+            <img src="../images/landing-page/push-icon-3.svg" alt="Travis logo">
+            <p>Hooray!<br>Your build passes!</p>
+          </div>
+          <div class="divider-line-horizontal">
+          </div>
+          <div class="divider-line-vertical">
+          </div>
+          <div class="bf">
+            <img src="../images/landing-page/push-icon-4.svg" alt="Heroku logo">
+            <p>Travis CI deploys<br>to Heroku</p>
+          </div>
+          <div class="divider-line-horizontal">
+          </div>
+          <div class="divider-line-vertical">
+          </div>
+          <div class="bf">
+            <img src="../images/landing-page/push-icon-5.svg" alt="Slack logo">
+            <p>Travis CI tells the<br>team all is well</p>
+          </div>
+        </div>
+        <h2 id="pr-bf-margin">Pull request build flow</h2>
+        <div class="branch-bf">
+          <div class="bf">
+            <img src="../images/landing-page/pull-icon-1.svg" alt="PR icon">
+            <p>A pull request<br>is created</p>
+          </div>
+          <div class="divider-line-horizontal">
+          </div>
+          <div class="divider-line-vertical">
+          </div>
+          <div class="bf">
+            <img src="../images/landing-page/pull-icon-2.svg" alt="Check test">
+            <p>GitHub tells Travis CI the build is mergeable</p>
+          </div>
+          <div class="divider-line-horizontal">
+          </div>
+          <div class="divider-line-vertical">
+          </div>
+          <div class="bf">
+            <img src="../images/landing-page/push-icon-3.svg" alt="Tavis logo">
+            <p>Hooray!<br>Your build passes!</p>
+          </div>
+          <div class="divider-line-horizontal">
+          </div>
+          <div class="divider-line-vertical">
+          </div>
+          <div class="bf">
+            <img src="../images/landing-page/pull-icon-4.svg" alt="Build status">
+            <p>Travis CI updates the PR that it passed</p>
+          </div>
+          <div class="divider-line-horizontal">
+          </div>
+          <div class="divider-line-vertical">
+          </div>
+          <div class="bf">
+            <img src="../images/landing-page/pull-icon-5.svg" alt="Merge icon">
+            <p>You merge in<br>the PR goodness</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="row user-testimonials">
+    <section class="landing-centered-wrapper">
+      <div class="medium-6 columns">
+        <h2>Some people have said some pretty nice things about us</h2>
+      </div>
+      <div class="medium-6 columns">
+        <div class="small-3 columns">
+          <img src="../images/landing-page/dhh.png" class="home-avatar" alt="image DHH">
+        </div>
+        <div class="small-9 columns">
+          <p>Travis CI makes it so much easier for us to coordinate the thousands of commits and contributors that flow through the Rails code base. The test suite for such a large project is vast, and we wouldn’t be catching issues as quickly or smoothly without the help of Travis.</p>
+          <p class="author">David Heinemeier Hansson</p> <img src="../images/landing-page/twitter.svg" class="social"><a href="https://twitter.com/dhh" alt="DHH Twitter" target="_blank">dhh</a>
+          <p class="title">Creator of Ruby on Rails</p>
+        </div>
+
+        <div class="small-3 columns">
+          <img src="../images/landing-page/chris.png" class="home-avatar" alt="image Chris Aniszczyk">
+        </div>
+        <div class="small-9 columns">
+          <p>We love Travis CI at @TwitterOSS and use it for the majority of our open source projects on GitHub. Travis CI is simple to use, we love their API to build  tooling and adore the new container infrastructure for speedier builds.</p>
+          <p class="author">Chris Aniszczyk</p> <img src="../images/landing-page/twitter.svg" class="social"><a href="https://twitter.com/cra" alt="Chris Twitter" target="_blank">cra</a>
+          <p class="title">Former Head of Open Source at Twitter</p>
+        </div>
+
+        <div class="small-3 columns">
+          <img src="../images/landing-page/alex.png" class="home-avatar" alt="Alex Gaynor">
+        </div>
+        <div class="small-9 columns">
+          <p>Not only is Travis CI the best way to test your software, it is the right way. rm -rf jenkins &amp;&amp; touch .travis.yml</p>
+          <p class="author">Alex Gaynor</p> <img src="../images/landing-page/github.svg" class="social"><a href="https://github.com/alex" alt="Alex github" target="_blank">alex</a>
+          <p class="title">PyPy and Python Core Team Member</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+{{page-footer}}

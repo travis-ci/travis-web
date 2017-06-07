@@ -1,0 +1,90 @@
+{{#if auth.signedIn}}
+  <div class="main">
+    <div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
+      {{top-bar
+        signIn=(route-action 'signIn')
+        signOut=(route-action 'signOut')}}
+      {{flash-display}}
+
+      <div class="wrapper-main">
+        <div id="main" role="main">
+          {{#if isEmpty}}
+            {{repos-empty}}
+          {{else}}
+            {{#if repo.isLoaded}}
+              <article class="repo-header">
+                <header>
+                  <h1 class="repo-title">{{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
+                    <a href="{{urlGithub}}" title="{{repo.name}} on GitHub" class="repo-gh">
+                      {{inline-svg 'icon-repooctocat'}}</a>
+                    <div class="repo-badge">
+                      <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "statusImages"}}>
+                        <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
+                      </a>
+                    </div>
+                </header>
+                <main class="repo-main">
+                <div class="repo-navigation">
+                  {{repo-show-tools repo=repo build=build job=job tab=tab}}
+                  {{repo-show-tabs repo=repo tab=tab build=build job=job}}
+                </div>
+                <div class="travistab-body repo-body">
+                  {{#build-wrapper build=build}}
+                    {{#if loading}}
+                      {{loading-indicator}}
+                    {{else}}
+
+                      {{#if build}}
+                        {{build-header item=build commit=build.commit repo=repo}}
+
+                        {{#if noJobsError}}
+                          <p class="notice-banner--red">Sorry, we're having troubles fetching jobs. Please try again later.</p>
+                        {{else}}
+                          {{#if build.isMatrix}}
+                            {{#if jobsLoaded}}
+                              {{jobs-list jobs=build.requiredJobs repo=repo required="true"}}
+                              {{jobs-list jobs=build.allowedFailureJobs repo=repo}}
+                            {{else}}
+                              {{loading-indicator center=true}}
+                            {{/if}}
+                          {{else}}
+                            {{job-infrastructure-notification job=job}}
+                            {{job-tabs job=job repo=repo}}
+                            {{job-log job=job}}
+                          {{/if}}
+                        {{/if}}
+
+                      {{else}}
+                        {{no-builds}}
+                      {{/if}}
+
+                    {{/if}}
+                  {{/build-wrapper}}
+                </div>
+                </main>
+              </article>
+            {{else}}
+              {{loading-indicator}}
+            {{/if}}
+          {{/if}}
+
+          {{status-images repo=repo}}
+        </div>
+      </div>
+
+      <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
+        {{outlet "left"}}
+      </aside>
+
+      {{#if auth.signedOut}}
+        {{page-footer}}
+      {{else if features.dashboard}}
+        {{page-footer}}
+      {{/if}}
+    </div>
+  </div>
+{{else}}
+  {{component landingPage
+    signIn=(route-action 'signIn')
+    signOut=(route-action 'signOut')}}
+{{/if}}

@@ -79,12 +79,22 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   actions: {
+    signIn() {
+      this.get('auth').signIn();
+      this.afterSignIn();
+    },
+
+    signOut() {
+      this.get('auth').signOut();
+      this.afterSignOut();
+    },
+
     disableTailing() {
       Travis.tailing.stop();
     },
 
     redirectToGettingStarted() {
-      // do nothing, we handle it only in index path
+      // keep as a no-op as this bubbles from other routes
     },
 
     error(error) {
@@ -95,33 +105,26 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
         return true;
       }
     },
+  },
 
-    renderFirstSync() {
-      return this.transitionTo('first_sync');
-    },
-
-    afterSignIn() {
-      this.get('flashes').clear();
-      let transition = this.auth.get('afterSignInTransition');
-      if (transition) {
-        this.auth.set('afterSignInTransition', null);
-        return transition.retry();
-      } else {
-        return this.transitionTo('main');
-      }
-    },
-
-    afterSignOut() {
-      this.controllerFor('repos').reset();
-      this.controllerFor('repo').reset();
-      this.setDefault();
-      if (this.get('config.enterprise')) {
-        return this.transitionTo('auth');
-      } else if (this.get('features.proVersion')) {
-        return this.transitionTo('home-pro');
-      } else {
-        return this.transitionTo('home');
-      }
+  afterSignIn() {
+    this.get('flashes').clear();
+    let transition = this.auth.get('afterSignInTransition');
+    if (transition) {
+      this.auth.set('afterSignInTransition', null);
+      return transition.retry();
+    } else {
+      return this.transitionTo('index');
     }
-  }
+  },
+
+  afterSignOut() {
+    this.controllerFor('repos').reset();
+    this.controllerFor('repo').reset();
+    this.setDefault();
+    if (this.get('config.enterprise')) {
+      return this.transitionTo('auth');
+    }
+    return this.transitionTo('index');
+  },
 });

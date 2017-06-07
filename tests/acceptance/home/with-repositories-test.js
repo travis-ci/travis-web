@@ -68,6 +68,13 @@ test('the home page shows the repositories', (assert) => {
 });
 
 test('Pusher events change the main display', function (assert) {
+  assert.expect(4);
+  sidebarPage.visit();
+
+  andThen(() => {
+    assert.equal(sidebarPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the one with a running build');
+  });
+
   const commit = server.create('commit', {
     id: 100,
     sha: 'acab',
@@ -103,12 +110,7 @@ test('Pusher events change the main display', function (assert) {
   this.repository.defaultBranch = this.branch;
   this.repository.save();
 
-  assert.expect(4);
-  sidebarPage.visit();
-
   andThen(() => {
-    assert.equal(sidebarPage.repoTitle, 'killjoys / willful-subjects', 'expected the displayed repository to be the one with a running build');
-
     this.application.pusher.receive('job:created', generatePusherPayload(job));
     this.application.pusher.receive('build:created', {
       build: generatePusherPayload(build),
