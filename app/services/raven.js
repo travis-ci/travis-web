@@ -39,8 +39,12 @@ export default RavenLogger.extend({
     if (!this.shouldReportError()) {
       return true;
     } else {
-      let { message } = error;
-      return this.get('benignErrors').any(error => message.includes(error));
+      const message = error.message;
+      if (message) {
+        return this.get('benignErrors').any(error => message.includes(error));
+      } else {
+        return false;
+      }
     }
   },
 
