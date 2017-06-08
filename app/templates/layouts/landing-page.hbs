@@ -1,5 +1,8 @@
 <div id="top" class="top landing-page">
-  {{top-bar landingPage=model.landingPage}}
+  {{top-bar
+    landingPage=model.landingPage
+    signIn=(route-action 'signIn')
+    signOut=(route-action 'signOut')}}
 </div>
 
 {{flash-display}}
