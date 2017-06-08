@@ -10,7 +10,8 @@ export default RavenLogger.extend({
     'returned a 403',
     'returned a 404',
     'operation failed',
-    'operation was aborted'
+    'operation was aborted',
+    'needs-auth'
   ],
 
   unhandledPromiseErrorMessage: '',
