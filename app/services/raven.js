@@ -4,6 +4,7 @@ import config from 'travis/config/environment';
 export default RavenLogger.extend({
   benignErrors: [
     'TransitionAborted',
+    'TaskInstance',
     'UnrecognizedURLError',
     'not found',
     'returned a 403',
