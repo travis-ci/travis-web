@@ -2,20 +2,24 @@
 
 set -ev
 
-docker login -u=$QUAY_ROBOT_HANDLE -p=$QUAY_ROBOT_TOKEN quay.io;
-
 docker-compose build web;
+
+docker login -u=$QUAY_ROBOT_HANDLE -p=$QUAY_ROBOT_TOKEN quay.io;
 
 docker images;
 
-docker tag travisweb_web quay.io/travisci/travis-web:$TRAVIS_BRANCH;
-docker tag travisweb_web quay.io/travisci/travis-web:$TRAVIS_COMMIT;
-docker push quay.io/travisci/travis-web:$TRAVIS_BRANCH;
-docker push quay.io/travisci/travis-web:$TRAVIS_COMMIT;
+local_image=travisweb_web;
+quay_image=quay.io/travisci/travis-web;
+
+docker tag $local_image $quay_image:$TRAVIS_BRANCH;
+docker push $quay_image:$TRAVIS_BRANCH;
+
+docker tag $local_image $quay_image:${TRAVIS_COMMIT:0:7};
+docker push $quay_image:${TRAVIS_COMMIT:0:7};
 
 if [ ${TRAVIS_BRANCH} = "master" ]; then
-  docker tag travisweb_web quay.io/travisci/travis-web:latest";
-  docker push travisweb_web quay.io/travisci/travis-web:latest";
+  docker tag $local_image $quay_image:latest;
+  docker push $quay_image:$TRAVIS_BRANCH;
 fi
 
 exit 0;
