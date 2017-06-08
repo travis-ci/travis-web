@@ -52,6 +52,7 @@
     "ember-data": "2.12.2",
     "ember-data-filter": "1.13.0",
     "ember-disable-proxy-controllers": "^1.0.1",
+    "ember-engines": "^0.5.4",
     "ember-exam": "0.6.2",
     "ember-export-application-global": "2.0.0",
     "ember-feature-flags": "3.0.0",
@@ -75,5 +76,10 @@
   "engines": {
     "node": "6.9.5"
   },
-  "private": true
+  "private": true,
+  "ember-addon": {
+    "paths": [
+      "lib/about"
+    ]
+  }
 }
