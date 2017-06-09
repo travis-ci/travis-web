@@ -72,7 +72,7 @@ export default DS.Store.extend({
       // force reload of repo branches
       // delay to resolve race between github-sync and live
       Ember.run.later(() => {
-        var repo = this.recordForId('repo', data.repository_id);
+        const repo = this.recordForId('repo', data.repository_id);
         repo.notifyPropertyChange('branches');
         repo.get('branches');
       }, 2000);
