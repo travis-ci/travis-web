@@ -280,6 +280,40 @@ test('delete and create crons', function (assert) {
   });
 });
 
+test('reload cron branches on branch:created', function (assert) {
+  const done = assert.async();
+
+  server.create('branch', {
+    name: 'food',
+    id: `/v3/repos/${this.repository.id}/branches/food`,
+    exists_on_github: true,
+    repository: this.repository,
+  });
+
+  settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
+
+  andThen(() => {
+    assert.equal(settingsPage.cronBranches().count, 1, 'expected only one branch');
+
+    server.create('branch', {
+      name: 'bar',
+      id: `/v3/repos/${this.repository.id}/branches/bar`,
+      exists_on_github: true,
+      repository: this.repository,
+    });
+
+    this.application.pusher.receive('branch:created', {
+      repository_id: this.repository.id,
+      event: "branch_created",
+    });
+  });
+
+  andThen(() => {
+    assert.equal(settingsPage.cronBranches().count, 2, 'expected two branches after event');
+    done();
+  });
+});
+
 test('delete and set SSH keys', function (assert) {
   settingsPage.visit({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
