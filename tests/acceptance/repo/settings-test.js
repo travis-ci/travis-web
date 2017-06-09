@@ -304,7 +304,7 @@ test('reload cron branches on branch:created', function (assert) {
 
     this.application.pusher.receive('branch:created', {
       repository_id: this.repository.id,
-      event: "branch_created",
+      event: 'branch_created',
     });
   });
 
