@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import computed, { alias, sort, filterBy } from 'ember-computed-decorators';
 
+const { service } = Ember.inject;
+
 export default Ember.Controller.extend({
+  branchesService: service('branches'),
+
   envVarSorting: ['name'],
   envVars: Ember.computed.sort('unsortedEnvVars', 'envVarSorting'),
 
@@ -11,8 +15,8 @@ export default Ember.Controller.extend({
   @alias('model.cronJobs.jobs.[]')
   cronJobs: null,
 
-  @computed('cronJobs', 'model.branches')
-  branchesWithoutCron(cronJobs, branches) {
+  @computed('cronJobs', 'model.branches', 'branchesService.amount')
+  branchesWithoutCron(cronJobs, branches, _) {
     return branches
              .filter(branch => branch.get('exists_on_github'))
              .filter(branch => {

@@ -6,6 +6,7 @@ const { service } = Ember.inject;
 
 export default DS.Store.extend({
   auth: service(),
+  branches: service(),
   defaultAdapter: 'application',
   adapter: 'application',
 
@@ -74,7 +75,9 @@ export default DS.Store.extend({
       Ember.run.later(() => {
         const repo = this.recordForId('repo', data.repository_id);
         repo.notifyPropertyChange('branches');
-        repo.get('branches');
+        repo.get('branches').then(branches => {
+          this.set('branches.amount', branches.content.length);
+        });
       }, 2000);
 
       delete data.branch;
