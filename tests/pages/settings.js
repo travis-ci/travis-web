@@ -106,11 +106,7 @@ export default PageObject.create({
 
   cronBranches: collection({
     scope: '.form--cron form select:nth(0)',
-    itemScope: 'option',
-
-    item: {
-      // name: text()
-    }
+    itemScope: 'option'
   }),
 
   sshKey: {
