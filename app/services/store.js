@@ -68,6 +68,18 @@ export default DS.Store.extend({
       this.push(this.normalize('commit', commit));
     }
 
+    if (name === 'branch') {
+      // force reload of repo branches
+      // delay to resolve race between github-sync and live
+      Ember.run.later(() => {
+        var repo = this.recordForId('repo', data.repository_id);
+        repo.notifyPropertyChange('branches');
+        repo.get('branches');
+      }, 2000);
+
+      delete data.branch;
+    }
+
     if (event === 'job:log') {
       data = data.job;
       job = this.recordForId('job', data.id);
