@@ -1,3 +1,144 @@
-{{#travis-layout layoutName=layoutName}}
-  {{loading-indicator}}
-{{/travis-layout}}
+<div class="loading-page">
+  <header class="top">
+    <div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
+      <h1 id="logo" class="logo">{{#link-to "index"}}Travis CI{{/link-to}}</h1>
+      <div class="navigation-toggle">
+        <button type="button" class="tofuburger no-button" {{action 'toggleBurgerMenu'}}>
+          {{inline-svg 'icon-tofuburger'}}
+        </button>
+      </div>
+
+      {{#unless features.enterpriseVersion}}
+        {{#if auth.signedIn}}
+
+          {{broadcast-tower toggleBroadcasts="toggleBroadcasts" status=broadcasts.lastBroadcastStatus count=broadcasts.length}}
+
+          <ul class="broadcasts {{if showBroadcasts 'is-open'}}">
+            {{#each broadcasts.content as |broadcast|}}
+              <li>
+                <p>
+                  <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
+                  <span class='message'>{{{broadcast.message}}}</span>
+                  <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
+                    {{inline-svg 'icon-failed' class="icon"}}
+                  </button>
+                </p>
+              </li>
+            {{else}}
+              <li><p>There are no broadcasts</p></li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      {{/unless}}
+
+      <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
+        <ul>
+          {{#unless features.enterpriseVersion}}
+            {{#unless features.proVersion}}
+              <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
+              <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+              <li>
+                <span class="navigation-anchor">Help</span>
+                <ul class="navigation-nested">
+                  <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
+                  <li><a href="https://docs.travis-ci.com/imprint.html" title="Go to the imprint">Imprint</a></li>
+                </ul>
+              </li>
+            {{/unless}}
+
+            {{#if features.proVersion}}
+              {{#unless auth.signedIn}}
+                <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
+                <li><a href="/plans" title="Plans and Prices for Travis CI" class="navigation-anchor">Plans & Pricing</a></li>
+                <li><a href="https://enterprise.travis-ci.com" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
+            {{else}}
+                <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+                <li>
+                  <span class="navigation-anchor">Help</span>
+                  <ul class="navigation-nested">
+                    <li><a href="mailto:support@travis-ci.com" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
+                    <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
+                    <li><a href="https://twitter.com/travisci" title="Travis in the Twitter-sphere">Twitter</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="navigation-anchor">Legal</span>
+                  <ul class="navigation-nested">
+                    <li><a href={{config.urls.imprint}} title="Go to the imprint">Imprint</a></li>
+                    <li><a href={{config.urls.security}} title="Go to our security statement">Security</a></li>
+                    <li><a href={{config.urls.terms}} title="Go to our terms of service">Terms</a></li>
+                  </ul>
+                </li>
+              {{/unless}}
+            {{/if}}
+
+            {{#if deploymentVersion}}<li><span class='deployment-version'>{{deploymentVersion}}</span></li>{{/if}}
+    {{else}}
+            {{#if auth.signedIn}}
+              <li><a class="navigation-anchor" title="Documentation" href="https://docs.travis-ci.com">Docs</a></li>
+            {{/if}}
+          {{/unless}}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  {{#if showCta}}
+    <div class="cta">
+      <p class="row">
+        Help make Open Source a better place and start building better software today!
+      </p>
+    </div>
+  {{/if}}
+
+  <div class="main">
+    <div class="content-page">
+      <img src="/images/logos/TravisCI-Mascot-1.svg"  alt="Travis CI mascot" width="200" height="200">
+      {{loading-indicator center=true}}
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="inner">
+      <div class="footer-elem">
+        <div class="travis-footer">
+          {{inline-svg 'travisci-logo' class="travis-logo"}}</div>
+      </div>
+
+      {{#unless features.enterpriseVersion}}
+        <div class="footer-elem">
+          <h3 class="footer-title">&copy;Travis CI, GmbH</h3>
+          <p>Rigaer Straße 8<br>10247 Berlin, Germany <br>
+            <a href="https://docs.travis-ci.com/imprint.html">Imprint</a></p>
+        </div>
+      {{/unless}}
+      <div class="footer-elem">
+        <h3 class="footer-title">Help</h3>
+        <ul>
+          <li><a href="https://docs.travis-ci.com">Documentation</a></li>
+          {{#unless features.enterpriseVersion}}
+            <li><a href="https://blog.travis-ci.com/">Blog</a></li>
+            <li><a href="mailto:support@travis-ci.com">Email</a></li>
+            <li><a href="https://twitter.com/travisci">Twitter</a></li>
+          {{/unless}}
+        </ul>
+      </div>
+      {{#unless features.enterpriseVersion}}
+        {{#if features.proVersion}}
+          <div class="footer-elem">
+            <h3 class="footer-title">Legal</h3>
+            <ul>
+              <li><a href="https://docs.travis-ci.com/imprint.html">Imprint</a></li>
+              <li><a href="https://billing.travis-ci.com/pages/terms">Terms of Service</a></li>
+              <li><a href="https://billing.travis-ci.com/pages/security">Security Statement</a></li>
+            </ul>
+          </div>
+        {{/if}}
+
+        <div class="footer-elem">
+          {{travis-status}}
+        </div>
+      {{/unless}}
+    </div>
+  </footer>
+</div>

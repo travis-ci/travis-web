@@ -22,7 +22,7 @@ export default TravisRoute.extend({
       if (this.get('features.dashboard')) {
         this.transitionTo('dashboard');
       } else {
-        this.transitionTo('main');
+        this.transitionTo('index');
       }
       return true;
     }
@@ -33,7 +33,7 @@ export default TravisRoute.extend({
       if (this.get('features.dashboard')) {
         return this.transitionTo('dashboard');
       } else {
-        return this.transitionTo('main');
+        return this.transitionTo('index');
       }
     }
   }

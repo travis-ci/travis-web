@@ -5,20 +5,19 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
+import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import computed from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
-export default Model.extend(DurationCalculations, {
+export default Model.extend(DurationCalculations, DurationAttributes, {
   ajax: service(),
   logId: attr(),
   queue: attr(),
   state: attr(),
   number: attr(),
-  _startedAt: attr(),
-  _finishedAt: attr(),
   allowFailure: attr('boolean'),
   tags: attr(),
   repositoryPrivate: attr(),
@@ -31,7 +30,9 @@ export default Model.extend(DurationCalculations, {
   branch: Ember.computed.alias('build.branch'),
   branchName: Ember.computed.alias('build.branchName'),
 
-  pullRequest: Ember.computed.alias('build.pullRequest'),
+  stage: belongsTo('stage', { async: false }),
+
+  isPullRequest: Ember.computed.alias('build.isPullRequest'),
   pullRequestNumber: Ember.computed.alias('build.pullRequestNumber'),
   pullRequestTitle: Ember.computed.alias('build.pullRequestTitle'),
 
@@ -44,18 +45,6 @@ export default Model.extend(DurationCalculations, {
     });
   }),
 
-  startedAt: Ember.computed('_startedAt', 'notStarted', function () {
-    if (!this.get('notStarted')) {
-      return this.get('_startedAt');
-    }
-  }),
-
-  finishedAt: Ember.computed('_finishedAt', 'notStarted', function () {
-    if (!this.get('notStarted')) {
-      return this.get('_finishedAt');
-    }
-  }),
-
   repoSlug: Ember.computed('repositorySlug', function () {
     return this.get('repositorySlug');
   }),
@@ -64,14 +53,26 @@ export default Model.extend(DurationCalculations, {
     let config = this.get('_config');
     if (config) {
       return _object.pickBy(config);
-    } else if (this.get('currentState.stateName') !== 'root.loading') {
-      if (this.get('isFetchingConfig')) {
-        return;
-      }
-      this.set('isFetchingConfig', true);
-      return this.reload();
+    } else {
+      let fetchConfig = () => {
+        if (this.getCurrentState() !== 'root.loading') {
+          if (this.get('isFetchingConfig')) {
+            return;
+          }
+          this.set('isFetchingConfig', true);
+          this.reload();
+        } else {
+          Ember.run.later(fetchConfig, 20);
+        }
+      };
+
+      fetchConfig();
     }
   }),
+
+  getCurrentState() {
+    return this.get('currentState.stateName');
+  },
 
   @computed('state')
   isFinished(state) {

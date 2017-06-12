@@ -1,8 +1,29 @@
 /* global server */
 import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
+import config from 'travis/config/environment';
+
+const { apiEndpoint } = config;
 
 export default function () {
+  this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
+    return {
+      'page': {
+        'id': 'pnpcptp8xh9k',
+        'name': 'Travis CI',
+        'url': 'https://www.traviscistatus.com',
+        'updated_at': '2017-06-06T09:49:24.032Z'
+      },
+      'status': {
+        'indicator': 'none',
+        'description': 'AllSystems Operational'
+      }
+    };
+  });
+
+  this.namespace = apiEndpoint;
+
+  this.get('/users/:id');
   this.get('/accounts', (schema/* , request*/) => {
     const users = schema.users.all().models.map(user => Ember.merge(user.attrs, { type: 'user' }));
     const accounts = schema.accounts.all().models.map(account => account.attrs);
@@ -11,7 +32,7 @@ export default function () {
   });
 
   this.get('/hooks', function ({ hooks }, { queryParams: { owner_name } }) {
-    return this.serialize(hooks.where({ owner_name }), 'v2');
+    return this.serialize(hooks.where({ owner_name }), 'hook');
   });
 
   this.put('/hooks/:id', (schema, request) => {
@@ -54,23 +75,37 @@ export default function () {
     }
   });
 
-  this.get('/v3/broadcasts', schema => {
+  this.get('/broadcasts', schema => {
     return schema.broadcasts.all();
   });
 
-  this.get('/repos', function (schema/* , request*/) {
+  this.get('/repos', function (schema, request) {
+    // search apparently still uses v2, so different response necessary
+    const query = request.queryParams.search;
+    if (query) {
+      const allRepositories = schema.repositories.all();
+      const filtered = allRepositories.models.filter(repo => repo.attrs.slug.includes(query));
+      return {
+        repos: filtered
+      };
+    }
+
+    // standard v3 response returning all repositories
     return schema.repositories.all();
   });
 
-  this.get('/repo/:slug', function (schema, request) {
-    let repos = schema.repositories.where({ slug: decodeURIComponent(request.params.slug) });
+  this.get('/repo/:slug_or_id', function (schema, request) {
+    if (request.params.slug_or_id.match(/^\d+$/)) {
+      return schema.repositories.find(request.params.slug_or_id);
+    } else {
+      let slug = request.params.slug_or_id;
+      let repos = schema.repositories.where({ slug: decodeURIComponent(slug) });
 
-    return {
-      repo: repos.models[0].attrs
-    };
+      return repos.models[0];
+    }
   });
 
-  this.get('/v3/repo/:repositoryId/crons', function (schema, request) {
+  this.get('/repo/:repositoryId/crons', function (schema, request) {
     const { repositoryId } = request.params;
     return this.serialize(schema.crons.where({ repositoryId }), 'cron');
   });
@@ -79,20 +114,57 @@ export default function () {
 
   this.get('/repo/:id/settings', function (schema, request) {
     let settings = schema.settings.where({ repositoryId: request.params.id });
+    let formattedSettings = settings.models.map(setting => {
+      return {
+        name: setting.attrs.name,
+        value: setting.attrs.value
+      };
+    });
 
     return {
-      user_settings: settings.models.map(setting => {
-        return {
-          name: setting.attrs.name,
-          value: setting.attrs.value
-        };
-      })
+      // This simulates a possible API bug: https://github.com/travis-pro/team-teal/issues/2023
+      settings: formattedSettings.concat(null)
     };
   });
 
   this.get('/repos/:id/caches', function (schema, request) {
     const caches = schema.caches.where({ repositoryId: request.params.id });
     return this.serialize(caches, 'v2');
+  });
+
+  this.patch('/settings/ssh_key/:repository_id', function (schema, request) {
+    const sshKeys = schema.sshKeys.where({ repositoryId: request.queryParams.repository_id });
+    const [sshKey] = sshKeys.models;
+    if (sshKey) {
+      return {
+        ssh_key: {
+          id: sshKey.id,
+          description: sshKey.description,
+          value: sshKey.value,
+        },
+      };
+    } else {
+      const created = server.create('ssh_key', request.params);
+      return {
+        ssh_key: {
+          id: created.id,
+          description: created.description,
+          value: created.value,
+        }
+      };
+    }
+  });
+
+  this.post('/settings/env_vars', function (schema, request) {
+    const envVar = server.create('env_var', request.params);
+    return {
+      env_var: {
+        id: envVar.id,
+        name: envVar.name,
+        public: envVar.public,
+        repository_id: request.params.repository_id,
+      },
+    };
   });
 
   this.get('/settings/env_vars', function (schema, request) {
@@ -106,16 +178,29 @@ export default function () {
     };
   });
 
-  this.get('/v3/repo/:id', function (schema, request) {
-    return schema.repositories.find(request.params.id);
-  });
-
-  this.get('/v3/repo/:repository_id/branches', function (schema) {
+  this.get('/repo/:repository_id/branches', function (schema) {
     return schema.branches.all();
   });
 
-  this.get('/v3/owner/:login', function (schema, request) {
+  this.get('/settings/ssh_key/:repo_id', function (schema, request) {
+    let sshKeys = schema.sshKeys.where({
+      repositoryId: request.params.repo_id,
+      type: 'custom'
+    }).models[0];
+    return this.serialize(sshKeys, 'v2');
+  });
+
+  this.get('/owner/:login', function (schema, request) {
     return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
+  });
+
+  this.delete('/settings/ssh_key/:repo_id', function (schema, request) {
+    schema.sshKeys
+      .where({ repositoryId: request.queryParams.repository_id })
+      .models
+      .map(sshKey => sshKey.destroyRecord());
+
+    return new Mirage.Response(204, {}, {});
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
@@ -139,11 +224,6 @@ export default function () {
     };
   });
 
-  this.get('/commits/:id', function (schema, request) {
-    let commit = schema.commits.find(request.params.id);
-    return new Mirage.Response(200, {}, commit.attrs);
-  });
-
   this.get('/jobs/:id', function (schema, request) {
     let job = schema.jobs.find(request.params.id);
     return this.serialize(job, 'v2-job');
@@ -151,48 +231,7 @@ export default function () {
 
   this.get('/jobs');
 
-  this.get('/builds', function (schema, { queryParams:
-    { event_type: eventType, after_number: afterNumber, ids } }) {
-    const allBuilds = schema.builds.all();
-    let builds;
-
-    if (afterNumber) {
-      builds = allBuilds.models.filter(build => build.number < afterNumber);
-    } else if (ids) {
-      builds = allBuilds.models.filter(build => ids.indexOf(build.id) > -1);
-    } else if (eventType === 'pull_request') {
-      builds = allBuilds.models;
-    } else {
-      // This forces the Show more button to show in the build history test
-      builds = allBuilds.models.slice(0, 3);
-    }
-
-    return { builds: builds.map(build => {
-      if (build.commit) {
-        build.attrs.commit_id = build.commit.id;
-      }
-
-      if (build.jobs) {
-        build.attrs.job_ids = build.jobs.models.map(job => job.id);
-      }
-
-      return build;
-    }), commits: builds.map(build => build.commit) };
-  });
-
-  this.get('/builds/:id', function (schema, request) {
-    const build = schema.builds.find(request.params.id);
-    const response = {
-      build: build.attrs,
-      jobs: build.jobs.models.map(job => job.attrs)
-    };
-
-    if (build.commit) {
-      response.commit = build.commit.attrs;
-    }
-
-    return response;
-  });
+  this.get('/build/:id');
 
   this.post('/build/:id/restart', (schema, request) => {
     let build = schema.builds.find(request.params.id);
@@ -236,18 +275,43 @@ export default function () {
     }
   });
 
-  this.get('/v3/repo/:repo_id/builds', function (schema, request) {
-    const branch = schema.branches.where({ name: request.queryParams['branch.name'] }).models[0];
-    const builds = schema.builds.where({ branchId: branch.id });
+  this.get('/repo/:repo_id/builds', function (schema, request) {
+    let builds = schema.builds.where({ repositoryId: request.params.repo_id });
 
-    /**
+    let branchName = request.queryParams['branch.name'];
+    if (branchName) {
+      builds = builds.filter(build => (build.branch && build.branch.attrs.name) === branchName);
+    }
+
+    let offset = request.queryParams.offset;
+    if (offset) {
+      builds = builds.slice(offset);
+    }
+
+    if (request.queryParams.event_type !== 'pull_request') {
+      builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
+    } else {
+      builds = builds.filter(build => build.attrs.event_type === 'pull_request');
+    }
+
+    if (!request.queryParams.sort_by) {
+      builds = builds.sort((a, b) => {
+        return parseInt(a.id) > parseInt(b.id) ? -1 : 1;
+      });
+    } else if (request.queryParams.sort_by === 'finished_at:desc') {
+      builds = builds.sort((a, b) => {
+        const aBuildNumber = parseInt(a.attrs.number);
+        const bBuildNumber = parseInt(b.attrs.number);
+
+        return aBuildNumber > bBuildNumber ? -1 : 1;
+      });
+    }
+
+    /*
      * TODO remove this once the seializers/build is removed.
      * The modelName causes Mirage to know how to serialise it.
      */
-    return this.serialize({
-      models: builds.models.reverse(),
-      modelName: 'build'
-    }, 'v3');
+    return this.serialize(builds, 'build');
   });
 
   this.get('/jobs/:id/log', function (schema, request) {
@@ -291,15 +355,6 @@ export default function () {
     feature.update('enabled', requestBody.enabled);
     return this.serialize(feature);
   });
-
-  // UNCOMMENT THIS FOR LOGGING OF HANDLED REQUESTS
-  // this.pretender.handledRequest = function (verb, path, request) {
-  //   console.log('Handled this request:', `${verb} ${path}`, request);
-  //   try {
-  //     const responseJson = JSON.parse(request.responseText);
-  //     console.log(responseJson);
-  //   } catch (e) {}
-  // };
 }
 
 /*

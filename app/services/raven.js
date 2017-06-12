@@ -4,12 +4,14 @@ import config from 'travis/config/environment';
 export default RavenLogger.extend({
   benignErrors: [
     'TransitionAborted',
+    'TaskInstance',
     'UnrecognizedURLError',
     'not found',
     'returned a 403',
     'returned a 404',
     'operation failed',
-    'operation was aborted'
+    'operation was aborted',
+    'needs-auth'
   ],
 
   unhandledPromiseErrorMessage: '',
@@ -39,8 +41,12 @@ export default RavenLogger.extend({
     if (!this.shouldReportError()) {
       return true;
     } else {
-      let { message } = error;
-      return this.get('benignErrors').any(error => message.includes(error));
+      const message = error.message;
+      if (message) {
+        return this.get('benignErrors').any(error => message.includes(error));
+      } else {
+        return false;
+      }
     }
   },
 

@@ -1,6 +1,8 @@
 <header id="top" class="top">
   <div class="centered">
-    {{top-bar}}
+  {{top-bar
+    signIn=(route-action 'signIn')
+    signOut=(route-action 'signOut')}}
   </div>
 </header>
 

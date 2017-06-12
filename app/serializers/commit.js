@@ -7,8 +7,8 @@ export default V2FallbackSerializer.extend({
       resourceHash.author_avatar_url = resourceHash.author.avatar_url;
     }
     if (resourceHash.committer && resourceHash.committer.name) {
-      resourceHash.committer_name = resourceHash.author.name;
-      resourceHash.committer_avatar_url  = resourceHash.author.avatar_url;
+      resourceHash.committer_name = resourceHash.committer.name;
+      resourceHash.committer_avatar_url  = resourceHash.committer.avatar_url;
     }
     return this._super(...arguments);
   }

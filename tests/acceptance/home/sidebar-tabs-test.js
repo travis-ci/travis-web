@@ -39,7 +39,10 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
     let build = server.create('build', {
       repository: testRepo,
       state: 'queued',
-      commit
+      commit,
+      branch: server.create('branch', {
+        name: 'acceptance-tests'
+      })
     });
 
     let job = server.create('job', {
@@ -65,7 +68,7 @@ test('the home page shows running tab in pro version', (assert) => {
     .clickSidebarRunningTab();
 
   andThen(() => {
-    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected no running repositories');
+    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running repositories');
   });
   percySnapshot(assert);
 });

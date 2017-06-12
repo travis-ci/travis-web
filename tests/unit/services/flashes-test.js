@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:flashes', 'Unit | Service | flashes', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: ['service:auth']
 });
 
 test('it allows to show an error', function (assert) {

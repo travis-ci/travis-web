@@ -13,11 +13,20 @@ function formatMessage(message, options) {
     message = message.split(/\n/)[0];
   }
   message = emojiConvertor.replace_colons(_escape(message));
+
+  // TODO: Figure out more permanent fix for teal #1885
   if (options.repo) {
-    message = githubify(message, Ember.get(options.repo, 'owner'), Ember.get(options.repo, 'name'));
+    let owner = Ember.get(options.repo, 'owner');
+    if (typeof owner === 'object') {
+      owner = owner.login;
+    }
+    message = githubify(message, owner, Ember.get(options.repo, 'name'));
   }
   if (options.pre) {
     message = message.replace(/\n/g, '<br/>');
+  }
+  if (options.eventType && options.eventType == 'cron') {
+    message = Ember.String.htmlSafe(`<span class='message-label badge'>cron</span> ${message}`);
   }
   return message;
 }

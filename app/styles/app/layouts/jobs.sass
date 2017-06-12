@@ -62,12 +62,55 @@
   .repo-main-tools
     flex-shrink: 1
     align-items: center
+    width: 27px
 
 .section-title
   font-size: 16px
   color: $cement-grey
   font-weight: 400
   margin: 3rem 0 1rem
+
+.stage .section-title
+  @extend .small-title
+
+.stage .stage-header
+  display: flex
+  justify-content: space-between
+
+  h2 .icon
+    margin-bottom: 3px
+
+  &.passed h2
+    color: $turf-green
+    +colorSVG($turf-green)
+
+  &.failed, &.errored
+    h2
+      color: $brick-red
+      +colorSVG($brick-red)
+
+  &.canceled
+    h2
+      color: $cement-grey
+      +colorSVG($cement-grey)
+
+  .stage-duration
+    @extend .section-title
+    width: 11.7em
+    padding-left: 0.3rem
+
+    svg
+      font-size: 15px
+
+.stage
+  aside
+    color: $asphalt-grey
+    margin-top: 1rem
+    opacity: 0.5
+
+.spaced + .stage
+  .stage-header h2, .stage-duration
+    margin-top: 1.5rem
 
 .job-state
   display: inline-block
@@ -107,7 +150,7 @@
 .job-lang
   overflow: hidden
   @media #{$medium-up}
-    flex: 0 0 8em
+    flex: 1 0 12em
     position: relative
     white-space: nowrap
     &:after

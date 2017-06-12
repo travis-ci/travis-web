@@ -4,6 +4,8 @@ import {
   clickable,
   collection,
   text,
+  fillable,
+  triggerable,
   hasClass
 } from 'ember-cli-page-object';
 
@@ -29,5 +31,7 @@ export default create({
       name: text('.tile h2.tile-title span.label-align')
     }
   }),
-  viewRunningJob: clickable('p.tile-title a')
+  viewRunningJob: clickable('p.tile-title a'),
+  enterSearchQuery: fillable('#travis-search'),
+  pressEnter: triggerable('keyup', '#travis-search', { eventProperties: { keyCode: 13 } }),
 });

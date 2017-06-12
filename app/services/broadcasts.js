@@ -22,7 +22,8 @@ export default Ember.Service.extend({
       options = {};
       options.type = 'GET';
       options.headers = {
-        Authorization: `token ${this.get('auth').token()}`
+        Authorization: `token ${this.get('auth').token()}`,
+        'Travis-API-Version': '3'
       };
       seenBroadcasts = this.get('storage').getItem('travis.seen_broadcasts');
       if (seenBroadcasts) {
@@ -30,7 +31,7 @@ export default Ember.Service.extend({
       } else {
         seenBroadcasts = [];
       }
-      Ember.$.ajax(`${apiEndpoint}/v3/broadcasts`, options).then((response) => {
+      Ember.$.ajax(`${apiEndpoint}/broadcasts`, options).then((response) => {
         const receivedBroadcasts = response.broadcasts.reduce((processed, broadcast) => {
           if (!broadcast.expired && seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
             processed.unshift(Ember.Object.create(broadcast));

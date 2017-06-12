@@ -4,13 +4,17 @@ import branchesPage from 'travis/tests/pages/branches';
 
 moduleForAcceptance('Acceptance | repo branches', {
   beforeEach() {
-    const currentUser = server.create('user', {
+    this.currentUser = server.create('user', {
       name: 'Sara Ahmed',
       login: 'feministkilljoy',
       repos_count: 3
     });
 
-    signInUser(currentUser);
+    signInUser(this.currentUser);
+
+    const gitUser = server.create('git-user', {
+      name: 'Sara Ahmed'
+    });
 
     // create organization
     server.create('account', {
@@ -30,20 +34,30 @@ moduleForAcceptance('Acceptance | repo branches', {
     const primaryBranch = server.create('branch', {
       name: 'primary',
       id: `/v3/repos/${repoId}/branches/primary`,
-      default_branch: true
+      default_branch: true,
+      repository,
     });
 
-    primaryBranch.createBuild({
+    let currentBuild = primaryBranch.createBuild({
       state: 'failed',
-      number: '1917'
-    }).createCommit({
+      number: '1917',
+      repository
+    });
+
+    currentBuild.createCommit({
       sha: 'abc124'
     });
 
+    repository.currentBuild = currentBuild;
+    repository.save();
+
     primaryBranch.createBuild({
       state: 'errored',
-      number: '1918'
+      number: '1918',
+      branch: primaryBranch,
+      repository,
     }).createCommit({
+      committer_name: this.currentUser.name,
       sha: 'abc125'
     });
 
@@ -56,51 +70,67 @@ moduleForAcceptance('Acceptance | repo branches', {
     const lastBuild = primaryBranch.createBuild({
       state: 'passed',
       number: '1919',
-      finished_at: oneYearAgo
+      finished_at: oneYearAgo,
+      branch: primaryBranch,
+      repository,
     });
 
     lastBuild.createCommit({
       sha: '1234567890',
-      committer: currentUser
+      committer: gitUser
     });
     lastBuild.save();
 
     const activeCreatedBranch = server.create('branch', {
       name: 'created',
       id: `/v3/repos/${repoId}/branches/created`,
-      exists_on_github: true
+      exists_on_github: true,
+      default_branch: false,
+      repository,
     });
 
-    activeCreatedBranch.createBuild({
-      state: 'created'
+    server.create('build', {
+      state: 'created',
+      branch: activeCreatedBranch,
+      repository,
     });
 
     const activeFailedBranch = server.create('branch', {
       name: 'edits',
       id: `/v3/repos/${repoId}/branches/edits`,
-      exists_on_github: true
+      exists_on_github: true,
+      default_branch: false,
+      repository,
     });
 
-    activeFailedBranch.createBuild({
+    server.create('build', {
       state: 'failed',
-      finished_at: oneYearAgo
+      finished_at: oneYearAgo,
+      branch: activeFailedBranch,
+      repository,
     });
 
     const activeOlderFailedBranch = server.create('branch', {
       name: 'old-old-edits',
       id: `/v3/repos/${repoId}/branches/old-old-edits`,
-      exists_on_github: true
+      exists_on_github: true,
+      default_branch: false,
+      repository,
     });
 
-    activeOlderFailedBranch.createBuild({
+    server.create('build', {
       state: 'failed',
-      finished_at: twoYearsAgo
+      finished_at: twoYearsAgo,
+      branch: activeOlderFailedBranch,
+      repository,
     });
 
     const olderInactiveBranch = server.create('branch', {
       name: 'older-edits',
       id: `/v3/repos/${repoId}/branches/older-edits`,
-      exists_on_github: false
+      exists_on_github: false,
+      default_branch: false,
+      repository,
     });
 
     olderInactiveBranch.createBuild({
@@ -110,15 +140,19 @@ moduleForAcceptance('Acceptance | repo branches', {
     const newerInactiveBranch = server.create('branch', {
       name: 'old-edits',
       id: `/v3/repos/${repoId}/branches/old-edits`,
-      exists_on_github: false
+      exists_on_github: false,
+      default_branch: false,
+      repository,
     });
 
-    newerInactiveBranch.createBuild({
+    server.create('build', {
       state: 'errored',
-      finished_at: oneYearAgo
+      finished_at: oneYearAgo,
+      branch: newerInactiveBranch,
+      repository,
     }).createCommit({
       sha: 'abc134',
-      committer: currentUser
+      committer: gitUser
     });
   }
 });
@@ -169,4 +203,19 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.inactiveBranches(1).name, 'older-edits');
   });
   percySnapshot(assert);
+});
+
+test('view branches tab when no branches present', function (assert) {
+  // destroy state from previous tests
+  server.db.branches.remove();
+  server.db.repositories.remove();
+  server.db.builds.remove();
+
+  server.create('repository');
+
+  branchesPage.visit({ organization: 'travis-ci', repo: 'travis-web' });
+
+  andThen(() => {
+    assert.equal(branchesPage.showsNoBranchesMessaging, 'No other branches for this repository', 'Branches tab shows no branches message');
+  });
 });

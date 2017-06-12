@@ -53,10 +53,15 @@ export default RESTAdapter.extend({
     return hash;
   },
 
-  buildURL: function (modelName, id) {
+  buildURL: function (modelName, id, snapshot, type, query) {
     let url = [];
     const host = Ember.get(this, 'host');
     const prefix = this.urlPrefix();
+    const pathPrefix = this.pathPrefix(...arguments);
+
+    if (pathPrefix) {
+      url.push(pathPrefix);
+    }
 
     if (modelName) {
       const path = this.pathForType(modelName, id);
@@ -74,8 +79,21 @@ export default RESTAdapter.extend({
     return url;
   },
 
+  pathPrefix() {},
+
   pathForType: function (modelName, id) {
     const underscored = Ember.String.underscore(modelName);
     return id ? underscored :  Ember.String.pluralize(underscored);
   },
+
+  // Get the host alone, without a path
+  getHost() {
+    let match = this.host.match(/(https?:\/\/)?([^\/]+)/);
+
+    if (match) {
+      return match[0];
+    } else {
+      return config.apiEndpoint;
+    }
+  }
 });

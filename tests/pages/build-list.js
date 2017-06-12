@@ -1,7 +1,7 @@
-
 import PageObject from 'travis/tests/page-object';
 
 let {
+  attribute,
   clickable,
   collection,
   hasClass,
@@ -13,6 +13,8 @@ let {
 export default PageObject.create({
   visitBuildHistory: visitable(':organization/:repo/builds'),
   visitPullRequests: visitable(':organization/:repo/pull_requests'),
+
+  showsNoBuildsMessaging: text('.missing-notice h2.page-title'),
 
   notification: text('p.flash-message'),
 
@@ -32,6 +34,7 @@ export default PageObject.create({
       commitSha: text('.row-commit .label-align'),
       committer: text('.row-committer .label-align'),
       commitDate: text('.row-calendar .label-align'),
+      requestIconTitle: attribute('title', '.request-icon'),
       duration: text('.row-duration .label-align'),
       message: text('.row-message'),
 

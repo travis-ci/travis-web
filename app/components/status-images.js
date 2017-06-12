@@ -24,17 +24,19 @@ export default Ember.Component.extend({
     if (popupName === 'status-images') {
       let array = Ember.ArrayProxy.create({ content: [] }),
         apiEndpoint = Config.apiEndpoint,
-        options = {};
+        options = {
+          headers: {
+            'Travis-API-Version': '3'
+          }
+        };
 
       array.set('isLoaded', false);
 
       if (this.get('auth.signedIn')) {
-        options.headers = {
-          Authorization: `token ${this.auth.token()}`
-        };
+        options.headers.Authorization = `token ${this.auth.token()}`;
       }
 
-      let url = `${apiEndpoint}/v3/repo/${repoId}/branches?limit=100`;
+      let url = `${apiEndpoint}/repo/${repoId}/branches?limit=100`;
       Ember.$.ajax(url, options).then(response => {
         if (response.branches.length) {
           let branchNames = response.branches.map(branch => branch.name);

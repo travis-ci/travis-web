@@ -5,16 +5,14 @@ import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 import initHsBeacon from 'travis/utils/init-hs-beacon';
 
-Ember.MODEL_FACTORY_INJECTIONS = true;
-
 // This can be set per environment in config/environment.js
-var debuggingEnabled = config.featureFlags['debug-logging'];
-var proVersion = config.featureFlags['pro-version'];
+const debuggingEnabled = config.featureFlags['debug-logging'];
+const proVersion = config.featureFlags['pro-version'];
 
-var App = Ember.Application.extend(Ember.Evented, {
+const App = Ember.Application.extend(Ember.Evented, {
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
-  Resolver: Resolver,
+  Resolver,
 
   // Configure global logging based on debug feature flag
   LOG_TRANSITIONS: debuggingEnabled,
@@ -24,10 +22,6 @@ var App = Ember.Application.extend(Ember.Evented, {
   LOG_VIEW_LOOKUPS: debuggingEnabled,
 
   ready() {
-    if (location.hash.slice(0, 2) === '#!') {
-      location.href = location.href.replace('#!/', '');
-    }
-
     this.on('user:signed_in', function (user) {
       return Travis.onUserUpdate(user);
     });
@@ -58,7 +52,7 @@ var App = Ember.Application.extend(Ember.Evented, {
   },
 
   subscribePusher(user) {
-    var channels;
+    let channels;
     if (!user.channels) {
       return;
     }

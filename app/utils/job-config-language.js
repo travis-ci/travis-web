@@ -10,6 +10,10 @@ export default function jobConfigLanguage(config) {
       languageName = languageConfigKeys[key];
       let version = config[key];
       if (version) {
+        // special case for Dart lang's Task key
+        if (typeof version === 'object' && version.test) {
+          version = version.test;
+        }
         output.push(languageName + ': ' + version);
         completedLanguageNames.push(languageName);
       }

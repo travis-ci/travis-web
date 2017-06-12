@@ -1,6 +1,6 @@
 /* global HS */
 import Ember from 'ember';
-import computed, { alias, none } from 'ember-computed-decorators';
+import computed, { alias } from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
@@ -12,6 +12,8 @@ export default Ember.Component.extend({
   externalLinks: service(),
   features: service(),
   broadcastsService: service('broadcasts'),
+
+  landingPage: false,
 
   @alias('auth.currentUser') user: null,
 
@@ -44,6 +46,14 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    signIn() {
+      return this.get('signIn')();
+    },
+
+    signOut() {
+      return this.get('signOut')();
+    },
+
     toggleBurgerMenu() {
       this.toggleProperty('is-open');
       return false;
@@ -65,7 +75,10 @@ export default Ember.Component.extend({
     }
   },
 
-  @none('auth.signedIn', 'landingPage', 'features.proVersion') showCta: null,
+  @computed('auth.signedIn', 'landingPage', 'features.proVersion')
+  showCta(signedIn, landingPage, pro) {
+    return !signedIn && !landingPage && !pro;
+  },
 
   @computed('tab', 'auth.state')
   classProfile(tab, authState) {

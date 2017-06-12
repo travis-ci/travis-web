@@ -24,7 +24,7 @@ export default SimpleLayoutRoute.extend({
           member: this.get('controller.user.login')
         }).then(function (repos) {
           if (repos.get('length')) {
-            return self.transitionTo('main');
+            return self.transitionTo('index');
           } else {
             return self.transitionTo('profile');
           }

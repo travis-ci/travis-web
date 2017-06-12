@@ -32,6 +32,15 @@ export default Ember.Component.extend({
     }
   }),
 
+  @computed('isJob')
+  build(isJob) {
+    if (isJob) {
+      return this.get('item.build');
+    } else {
+      return this.get('item');
+    }
+  },
+
   displayCompare: Ember.computed('item.eventType', function () {
     let eventType = this.get('item.eventType');
     if (eventType === 'api' || eventType === 'cron') {
@@ -52,7 +61,7 @@ export default Ember.Component.extend({
     return durationFrom(startedAt, finishedAt);
   },
 
-  @computed('item.repo.slug', 'commit.branch')
+  @computed('item.repo.slug', 'build.branchName')
   urlGitHubBranch(slug, branchName) {
     return this.get('externalLinks').githubBranch(slug, branchName);
   }
