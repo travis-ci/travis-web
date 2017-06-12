@@ -6,6 +6,7 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   classNames: ['form--cron'],
   store: service(),
+  branches: service(),
 
   reset() {
     this.setProperties({
@@ -13,6 +14,13 @@ export default Ember.Component.extend({
       selectedInterval: null,
       disable: null
     });
+  },
+
+  willDestroy() {
+    this._super(...arguments);
+    // reset branches state to ensure this value does not persist across
+    // component instances
+    this.set('branches.amount', 0);
   },
 
   save: task(function* () {
