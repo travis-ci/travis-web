@@ -46,7 +46,7 @@ before_script:
   - echo $PERCY_ENABLE
 
 script:
-  - repeat 10 ember exam --reporter dot --random -f poll
+  - for n in {1..10}; do ember exam --reporter dot --random -f poll; done
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
