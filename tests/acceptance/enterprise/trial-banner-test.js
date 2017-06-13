@@ -9,7 +9,6 @@ moduleForAcceptance('Acceptance | enterprise/trial-banner', {
     const currentUser = server.create('user');
     signInUser(currentUser);
 
-    server.logging = true;
     server.get(`${config.replicatedApiEndpoint}/license/v1/license`, (schema, request) => {
       return {
         'expiration_time': this.expirationTime
