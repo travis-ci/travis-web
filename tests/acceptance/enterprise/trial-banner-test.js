@@ -90,10 +90,11 @@ test('when it’s not a trial as indicated by presence of a billing_frequency at
 test('when it’s not a trial and the expiration date is more than 21 days away', function (assert) {
   withFeature('enterpriseVersion');
   this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 22);
+  this.licenseType = 'a non-trial license type';
   visit('/');
 
   andThen(function () {
-    assert.ok(topPage.enterpriseTrialBanner.isVisible);
+    assert.ok(topPage.enterpriseTrialBanner.isHidden);
   });
 });
 
