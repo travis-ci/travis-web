@@ -14,6 +14,6 @@ export default Ember.ArrayProxy.extend({
       isLast: paginationData.is_last,
       prev: paginationData.prev,
       next: paginationData.next
-    }
+    };
   }
 });
