@@ -2,6 +2,8 @@ import Ember from 'ember';
 import computed from 'ember-computed-decorators';
 import config from 'travis/config/environment';
 
+import timeAgoInWords from 'travis/utils/time-ago-in-words';
+
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
@@ -33,5 +35,10 @@ export default Ember.Component.extend({
   @computed('trialExpirationTime')
   isExpired(trialExpirationTime) {
     return new Date() > trialExpirationTime;
+  },
+
+  @computed('trialExpirationTime')
+  expirationTimeFromNow(trialExpirationTime) {
+    return new Ember.String.htmlSafe(timeAgoInWords(trialExpirationTime) || '-');
   }
 });

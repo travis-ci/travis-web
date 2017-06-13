@@ -29,14 +29,25 @@ test('when the trial has expired', function (assert) {
   });
 });
 
-test('when the trial has not expired', function (assert) {
+test('when the trial expires in two days', function (assert) {
   withFeature('enterpriseVersion');
-  this.expirationTime = new Date(new Date().getTime() + 10000000);
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 2);
   visit('/');
 
   andThen(function () {
     assert.ok(topPage.enterpriseTrialBanner.isVisible);
-    assert.equal(topPage.enterpriseTrialBanner.text, 'Your trial has not expired.');
+    assert.equal(topPage.enterpriseTrialBanner.text, 'Your trial license expires 2 days from now.');
+  });
+});
+
+test('when the trial expires tomorrow', function (assert) {
+  withFeature('enterpriseVersion');
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
+  visit('/');
+
+  andThen(function () {
+    assert.ok(topPage.enterpriseTrialBanner.isVisible);
+    assert.equal(topPage.enterpriseTrialBanner.text, 'Your trial license expires about 24 hours from now.');
   });
 });
 
