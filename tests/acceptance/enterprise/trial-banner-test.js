@@ -11,7 +11,7 @@ moduleForAcceptance('Acceptance | enterprise/trial-banner', {
 
     server.get(`${config.replicatedApiEndpoint}/license/v1/license`, (schema, request) => {
       return {
-        'license_type': 'trial',
+        'license_type': this.licenseType || 'trial',
         'expiration_time': this.expirationTime
       };
     });
@@ -62,7 +62,7 @@ test('when it’s not a trial as indicated by the license_type attribute', funct
     };
   });
 
-  this.expirationTime = new Date(new Date().getTime() + 10000000);
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 22);
   visit('/');
 
   andThen(function () {
@@ -79,11 +79,34 @@ test('when it’s not a trial as indicated by presence of a billing_frequency at
     };
   });
 
-  this.expirationTime = new Date(new Date().getTime() + 10000000);
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 22);
   visit('/');
 
   andThen(function () {
     assert.ok(topPage.enterpriseTrialBanner.isHidden);
+  });
+});
+
+test('when it’s not a trial and the expiration date is more than 21 days away', function (assert) {
+  withFeature('enterpriseVersion');
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 22);
+  visit('/');
+
+  andThen(function () {
+    assert.ok(topPage.enterpriseTrialBanner.isVisible);
+  });
+});
+
+test('when it’s not a trial but the expiration date is less than 21 days away', function (assert) {
+  withFeature('enterpriseVersion');
+  this.expirationTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 19);
+  this.licenseType = 'a non-trial license type';
+  visit('/');
+
+  andThen(function () {
+    assert.ok(topPage.enterpriseTrialBanner.isVisible);
+    assert.equal(topPage.enterpriseTrialBanner.text, 'Your license expires 19 days from now, please contact enterprise@travis-ci.com');
+    percySnapshot(assert);
   });
 });
 

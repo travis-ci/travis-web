@@ -6,6 +6,8 @@ import timeAgoInWords from 'travis/utils/time-ago-in-words';
 
 const { service } = Ember.inject;
 
+const DAYS_FROM_NOW_THAT_EXPIRATION_TIME_IS_IMMINENT = 21;
+
 export default Ember.Component.extend({
   ajax: service(),
 
@@ -26,9 +28,10 @@ export default Ember.Component.extend({
           const isTrial = ((licenseType && licenseType == 'trial') || !licenseType) &&
             !billingFrequency;
 
+          this.set('trialExpirationTime', new Date(Date.parse(expirationTime)));
+
           if (isTrial) {
             this.set('isTrial', true);
-            this.set('trialExpirationTime', new Date(Date.parse(expirationTime)));
           }
         });
       });
@@ -45,5 +48,19 @@ export default Ember.Component.extend({
   @computed('trialExpirationTime')
   expirationTimeFromNow(trialExpirationTime) {
     return new Ember.String.htmlSafe(timeAgoInWords(trialExpirationTime) || '-');
-  }
+  },
+
+  @computed('trialExpirationTime')
+  licenseExpirationIsImminent(trialExpirationTime) {
+    if (!trialExpirationTime) {
+      return false;
+    }
+
+    const daysFromNowThatLicenseExpires =
+      (trialExpirationTime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
+
+    return daysFromNowThatLicenseExpires < DAYS_FROM_NOW_THAT_EXPIRATION_TIME_IS_IMMINENT;
+  },
+
+  showBanner: Ember.computed.or('isTrial', 'licenseExpirationIsImminent')
 });
