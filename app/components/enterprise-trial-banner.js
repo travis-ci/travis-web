@@ -23,8 +23,8 @@ export default Ember.Component.extend({
           const licenseType = response.license_type;
           const billingFrequency = response.billing_frequency;
 
-          const isTrial = !billingFrequency &&
-            ((licenseType && licenseType == 'trial') || !licenseType);
+          const isTrial = ((licenseType && licenseType == 'trial') || !licenseType) &&
+            !billingFrequency;
 
           if (isTrial) {
             this.set('isTrial', true);
