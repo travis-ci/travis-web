@@ -28,7 +28,7 @@ export default Ember.Component.extend({
           const isTrial = ((licenseType && licenseType == 'trial') || !licenseType) &&
             !billingFrequency;
 
-          this.set('trialExpirationTime', new Date(Date.parse(expirationTime)));
+          this.set('licenseExpirationTime', new Date(Date.parse(expirationTime)));
 
           if (isTrial) {
             this.set('isTrial', true);
@@ -40,24 +40,24 @@ export default Ember.Component.extend({
 
   isTrial: false,
 
-  @computed('trialExpirationTime')
-  isExpired(trialExpirationTime) {
-    return new Date() > trialExpirationTime;
+  @computed('licenseExpirationTime')
+  isExpired(licenseExpirationTime) {
+    return new Date() > licenseExpirationTime;
   },
 
-  @computed('trialExpirationTime')
-  expirationTimeFromNow(trialExpirationTime) {
-    return new Ember.String.htmlSafe(timeAgoInWords(trialExpirationTime) || '-');
+  @computed('licenseExpirationTime')
+  expirationTimeFromNow(licenseExpirationTime) {
+    return new Ember.String.htmlSafe(timeAgoInWords(licenseExpirationTime) || '-');
   },
 
-  @computed('trialExpirationTime')
-  licenseExpirationIsImminent(trialExpirationTime) {
-    if (!trialExpirationTime) {
+  @computed('licenseExpirationTime')
+  licenseExpirationIsImminent(licenseExpirationTime) {
+    if (!licenseExpirationTime) {
       return false;
     }
 
     const daysFromNowThatLicenseExpires =
-      (trialExpirationTime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
+      (licenseExpirationTime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
 
     return daysFromNowThatLicenseExpires < DAYS_FROM_NOW_THAT_EXPIRATION_TIME_IS_IMMINENT;
   },
