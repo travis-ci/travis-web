@@ -21,24 +21,18 @@ export default Ember.Component.extend({
 
       Ember.$.ajax(url).then(response => {
         Ember.run(() => {
-          const expirationTime = response.expiration_time;
-          const licenseType = response.license_type;
-          const billingFrequency = response.billing_frequency;
-
-          const isTrial = ((licenseType && licenseType == 'trial') || !licenseType) &&
-            !billingFrequency;
-
-          this.set('licenseExpirationTime', new Date(Date.parse(expirationTime)));
-
-          if (isTrial) {
-            this.set('isTrial', true);
-          }
+          this.set('licenseExpirationTime', new Date(Date.parse(response.expiration_time)));
+          this.set('licenseType', response.license_type);
+          this.set('billingFrequency', response.billing_frequency);
         });
       });
     }
   },
 
-  isTrial: false,
+  @computed('licenseType', 'billingFrequency')
+  isTrial(licenseType, billingFrequency) {
+    return ((licenseType && licenseType == 'trial') || !licenseType) && !billingFrequency;
+  },
 
   @computed('licenseExpirationTime')
   isExpired(licenseExpirationTime) {
