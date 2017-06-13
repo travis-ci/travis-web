@@ -1,5 +1,5 @@
 {{#popup-click-handler}}
-  {{enterprise-trial-banner}}
+  {{#if features.enterpriseVersion}}{{enterprise-trial-banner}}{{/if}}
   <div class="feature-wrapper {{if features.dashboard 'dashboard'}} {{if features.pride 'travis-pride'}} {{if features.comicSans 'travis-comicsans'}}">
     {{outlet}}
   </div>
