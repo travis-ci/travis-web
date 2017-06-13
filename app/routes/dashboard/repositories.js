@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
-import PaginatedCollection from 'travis/utils/paginated-collection';
+import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 
 export default TravisRoute.extend({
   queryParams: {
@@ -19,7 +19,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    let collection = PaginatedCollection.create({
+    let collection = PaginatedCollectionPromise.create({
       content: this.store.query('repo', {
         active: true,
         sort_by: 'current_build:desc',

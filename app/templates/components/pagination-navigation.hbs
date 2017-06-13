@@ -1,5 +1,5 @@
 <ul role="navigation">
-  {{#unless pagination.is_first}}
+  {{#unless pagination.isFirst}}
     <li>{{#link-to route (query-params offset=pagination.prev.offset) rel="prev" class="pagination-button" title="Go to previous page"}}prev{{/link-to}}</li>
   {{/unless}}
 
@@ -7,7 +7,7 @@
     <li>{{#link-to route (query-params offset=page.offset) class="pagination-link" title=(concat "Go to page number " page.num)}}{{page.num}}{{/link-to}}</li>
   {{/each}}
 
-  {{#unless pagination.is_last}}
+  {{#unless pagination.isLast}}
     <li>{{#link-to route (query-params offset=pagination.next.offset) rel="next" class="pagination-button" title="Go to next page"}}next{{/link-to}}</li>
   {{/unless}}
 </ul>

@@ -28,9 +28,7 @@
         {{/each}}
       </ul>
 
-      {{model.repos.pagination.total}}
-
-      {{pagination-navigation pagination=model.repos route="dashboard.repositories"}}
+      {{pagination-navigation collection=model.repos route="dashboard.repositories"}}
     </section>
 
     <!-- <section class="dashboard-section dashboard-inactive">

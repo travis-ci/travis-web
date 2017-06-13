@@ -1,24 +1,19 @@
 import Ember from 'ember';
+import computed, { alias } from 'ember-computed-decorators';
 
-const { alias } = Ember.computed;
+export default Ember.ArrayProxy.extend({
 
-export default Ember.ArrayProxy.extend(Ember.PromiseProxyMixin, {
+  @alias('content') arrangedContent: null,
 
-  promise: Ember.computed('content', function () {
-    let _self = this;
-    let content = this.get('content');
-    let promise = new Ember.RSVP.Promise(function(resolve, reject) {
-      content.then(function() {
-        resolve(_self);
-      }, function(error) {
-        reject(error);
-      });
-    });
-    return promise;
-  }),
-
-  arrangedContent: alias('content.content'),
-
-  'pagination.total': alias('content.content.meta.pagination.count')
-
+  @computed('content.meta.pagination')
+  pagination(paginationData) {
+    return {
+      total: paginationData.count,
+      perPage: paginationData.limit,
+      isFirst: paginationData.is_first,
+      isLast: paginationData.is_last,
+      prev: paginationData.prev,
+      next: paginationData.next
+    }
+  }
 });
