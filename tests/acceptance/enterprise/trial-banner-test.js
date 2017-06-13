@@ -11,6 +11,7 @@ moduleForAcceptance('Acceptance | enterprise/trial-banner', {
 
     server.get(`${config.replicatedApiEndpoint}/license/v1/license`, (schema, request) => {
       return {
+        'license_type': 'trial',
         'expiration_time': this.expirationTime
       };
     });
@@ -47,6 +48,40 @@ test('when the trial expires tomorrow', function (assert) {
   andThen(function () {
     assert.ok(topPage.enterpriseTrialBanner.isVisible);
     assert.equal(topPage.enterpriseTrialBanner.text, 'Your trial license expires about 24 hours from now.');
+  });
+});
+
+test('when it’s not a trial as indicated by the license_type attribute', function (assert) {
+  withFeature('enterpriseVersion');
+  server.get(`${config.replicatedApiEndpoint}/license/v1/license`, (schema, request) => {
+    return {
+      'license_type': 'something',
+      'expiration_time': this.expirationTime
+    };
+  });
+
+  this.expirationTime = new Date(new Date().getTime() + 10000000);
+  visit('/');
+
+  andThen(function () {
+    assert.ok(topPage.enterpriseTrialBanner.isHidden);
+  });
+});
+
+test('when it’s not a trial as indicated by presence of a billing_frequency attribute', function (assert) {
+  withFeature('enterpriseVersion');
+  server.get(`${config.replicatedApiEndpoint}/license/v1/license`, (schema, request) => {
+    return {
+      'billing_frequency': 'something',
+      'expiration_time': this.expirationTime
+    };
+  });
+
+  this.expirationTime = new Date(new Date().getTime() + 10000000);
+  visit('/');
+
+  andThen(function () {
+    assert.ok(topPage.enterpriseTrialBanner.isHidden);
   });
 });
 

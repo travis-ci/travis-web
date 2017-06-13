@@ -20,10 +20,15 @@ export default Ember.Component.extend({
       Ember.$.ajax(url).then(response => {
         Ember.run(() => {
           const expirationTime = response.expiration_time;
+          const licenseType = response.license_type;
+          const billingFrequency = response.billing_frequency;
 
-          if (expirationTime) {
+          const isTrial = !billingFrequency &&
+            ((licenseType && licenseType == 'trial') || !licenseType);
+
+          if (isTrial) {
             this.set('isTrial', true);
-            this.set('trialExpirationTime', new Date(Date.parse(response.expiration_time)));
+            this.set('trialExpirationTime', new Date(Date.parse(expirationTime)));
           }
         });
       });
