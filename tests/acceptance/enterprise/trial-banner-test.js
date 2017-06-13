@@ -25,7 +25,7 @@ test('when the trial has expired', function (assert) {
 
   andThen(function () {
     assert.ok(topPage.enterpriseTrialBanner.isVisible);
-    assert.equal(topPage.enterpriseTrialBanner.text, 'Your trial has expired!');
+    assert.equal(topPage.enterpriseTrialBanner.text, 'Your trial license has expired, please contact enterprise@travis-ci.com');
   });
 });
 
