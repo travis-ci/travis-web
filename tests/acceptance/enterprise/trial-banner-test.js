@@ -26,6 +26,7 @@ test('when the trial has expired', function (assert) {
   andThen(function () {
     assert.ok(topPage.enterpriseTrialBanner.isVisible);
     assert.equal(topPage.enterpriseTrialBanner.text, 'Your trial license has expired, please contact enterprise@travis-ci.com');
+    percySnapshot(assert);
   });
 });
 
@@ -38,6 +39,7 @@ test('when the trial expires in two days', function (assert) {
     assert.ok(topPage.enterpriseTrialBanner.isVisible);
     assert.equal(topPage.enterpriseTrialBanner.text, 'Your trial license expires 2 days from now.');
   });
+  percySnapshot(assert);
 });
 
 test('when the trial expires tomorrow', function (assert) {
