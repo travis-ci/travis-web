@@ -44,5 +44,10 @@ export default PageObject.create({
 
       dismiss: clickable('.broadcast-close')
     }
-  })
+  }),
+
+  enterpriseTrialBanner: {
+    scope: '.enterprise-trial-banner',
+    resetScope: true
+  }
 });
