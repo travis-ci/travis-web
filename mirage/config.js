@@ -21,6 +21,10 @@ export default function () {
     };
   });
 
+  this.get(`${config.replicatedApiEndpoint}/license/v1/license`, function (schema, request) {
+    return new Mirage.Response(404, {}, {});
+  });
+
   this.namespace = apiEndpoint;
 
   this.get('/users/:id');
