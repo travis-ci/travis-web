@@ -69,10 +69,17 @@
         <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
       {{/link-to}}
     {{else}}
-      {{#link-to "build" repo item}}
-        {{request-icon event=item.eventType state=item.state}}
-        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
-      {{/link-to}}
+      {{#if item.isMatrix}}
+        {{#link-to "build" repo item}}
+          {{request-icon event=item.eventType state=item.state}}
+          <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
+        {{/link-to}}
+      {{else}}
+        {{#link-to "build" repo item}}
+          {{request-icon event=item.eventType state=item.jobs.firstObject.state}}
+          <span class='inner-underline'>#{{item.number}} {{humanize-state item.jobs.firstObject.state}}</span>
+        {{/link-to}}
+      {{/if}}
     {{/if}}
   </h3>
 
