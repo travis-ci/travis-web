@@ -66,8 +66,12 @@ export default Ember.Component.extend({
     return this.get('externalLinks').githubBranch(slug, branchName);
   },
 
-  @computed('item.jobs.firstObject.state', 'item.state')
-  singleJobStateWithFallback(jobState, buildState) {
-    return jobState || buildState;
+  @computed('item.jobs.firstObject.state', 'item.state', 'isMatrix')
+  singleJobStateWithFallback(jobState, buildState, isMatrix) {
+    if (isMatrix) {
+      return buildState;
+    } else {
+      return jobState || buildState;
+    }
   }
 });
