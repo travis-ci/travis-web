@@ -76,7 +76,7 @@ export default DS.Store.extend({
 
       Ember.run.later(() => {
         this.findRecord('branch', `/repo/${data.repository_id}/branch/${branchName}`)
-          .then(_ => {
+          .then(() => {
             this.set('branches.amount', this.get('branches.amount') + 1);
           });
       }, 2000);
