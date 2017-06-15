@@ -10,10 +10,13 @@ export default Ember.ArrayProxy.extend({
     return {
       total: paginationData.count,
       perPage: paginationData.limit,
+      offset: paginationData.offset,
       isFirst: paginationData.is_first,
       isLast: paginationData.is_last,
       prev: paginationData.prev,
-      next: paginationData.next
+      next: paginationData.next,
+      first: paginationData.first,
+      last: paginationData.last
     };
   }
 });
