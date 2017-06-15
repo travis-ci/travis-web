@@ -61,10 +61,10 @@
       </p>
     </section>
 
+    <div class="dash-menu">
       {{#if displayMenuTofu}}
-      <div class="dash-menu">
         {{#if isTriggering}}
-        {{loading-indicator}}
+          {{loading-indicator}}
         {{else}}
         <div class="dropup {{if dropupIsOpen "is-open"}}">
           <button type="button" class="dropup-tofu" {{action "openDropup"}}>
@@ -82,11 +82,11 @@
           </ul>
         </div>
         {{/if}}
-      </div>
       {{/if}}
+    </div>
 
     {{else}}
-      <div class="dash-bo-build">
+      <div class="dash-no-build">
         <p class="dash-helptext helptext">There are no builds for this repo yet</p>
         {{#if isTriggering}}
           {{loading-indicator}}
