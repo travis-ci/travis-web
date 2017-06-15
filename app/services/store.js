@@ -72,12 +72,13 @@ export default DS.Store.extend({
     if (name === 'branch') {
       // force reload of repo branches
       // delay to resolve race between github-sync and live
+      const branchName = data.branch;
+
       Ember.run.later(() => {
-        const repo = this.recordForId('repo', data.repository_id);
-        repo.notifyPropertyChange('branches');
-        repo.get('branches').then(branches => {
-          this.set('branches.amount', branches.content.length);
-        });
+        store.findRecord('branch', `/repo/${data.repository_id}/branch/${branchName}`)
+          .then(branch => {
+            this.set('branches.amount', this.get('branches.amount') + 1);
+          });
       }, 2000);
 
       delete data.branch;
