@@ -76,8 +76,8 @@
         {{/link-to}}
       {{else}}
         {{#link-to "build" repo item}}
-          {{request-icon event=item.eventType state=item.jobs.firstObject.state}}
-          <span class='inner-underline'>#{{item.number}} {{humanize-state item.jobs.firstObject.state}}</span>
+          {{request-icon event=item.eventType state=singleJobStateWithFallback}}
+          <span class='inner-underline'>#{{item.number}} {{humanize-state singleJobStateWithFallback}}</span>
         {{/link-to}}
       {{/if}}
     {{/if}}

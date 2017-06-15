@@ -64,5 +64,10 @@ export default Ember.Component.extend({
   @computed('item.repo.slug', 'build.branchName')
   urlGitHubBranch(slug, branchName) {
     return this.get('externalLinks').githubBranch(slug, branchName);
+  },
+
+  @computed('item.jobs.firstObject.state', 'item.state')
+  singleJobStateWithFallback(jobState, buildState) {
+    return jobState || buildState;
   }
 });
