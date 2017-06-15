@@ -4,6 +4,7 @@ const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
   queryParams: ['account', 'offset'],
+  offset: 0,
   flashes: service(),
   ajax: service(),
 
@@ -103,8 +104,6 @@ export default Ember.Controller.extend({
       });
       return repos;
     }),
-
-  starredRepos: Ember.computed.filterBy('filteredRepos', 'starred'),
 
   selectedOrg: Ember.computed('account', function () {
     let accounts = this.get('model.accounts');

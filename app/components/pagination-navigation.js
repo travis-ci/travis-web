@@ -13,16 +13,8 @@ export default Ember.Component.extend({
     return this.get('inner') || 2;
   }),
 
-  currentPage: Ember.computed('pagination.offset', 'pagination.perPage', function () {
-    return (this.get('pagination.offset') / this.get('pagination.perPage') + 1);
-  }),
-
-  numberOfPages: Ember.computed('pagination.total', 'pagination.perPage', function () {
-    return Math.ceil(this.get('pagination.total') / this.get('pagination.perPage'));
-  }),
-
-  pages: Ember.computed('numberOfPages', function () {
-    let numberOfPages = this.get('numberOfPages');
+  pages: Ember.computed('pagination.numberOfPages', function () {
+    let numberOfPages = this.get('pagination.numberOfPages');
     let thresholdDisplayAll = ((this.get('outerWindow') + 1) * 2) + (this.get('innerWindow') + 1);
     let pageArray = [];
 
@@ -36,7 +28,7 @@ export default Ember.Component.extend({
       }
     // else stack together pagination
     } else {
-      let currentPage = this.get('currentPage');
+      let currentPage = this.get('pagination.currentPage');
       let currentOffset = this.get('pagination.offset');
       let innerWindow = this.get('innerWindow');
       let outerWindow = this.get('outerWindow');
@@ -47,7 +39,7 @@ export default Ember.Component.extend({
       }
       let upperInnerBoundary = currentPage + innerHalf;
       let lowerOuterBoundary = 1 + outerWindow;
-      let upperOuterBoundary = numberOfPages - outerWindow ;
+      let upperOuterBoundary = numberOfPages - outerWindow;
 
       pageArray.push({
         num: 1,

@@ -19,6 +19,11 @@ export default TravisRoute.extend({
 
   model(params) {
     return Ember.RSVP.hash({
+      starredRepos: this.store.query('repo', {
+        active: true,
+        starred: true,
+        withLastBuild: true
+      }),
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',

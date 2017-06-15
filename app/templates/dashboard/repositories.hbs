@@ -8,7 +8,7 @@
     <section class="dashboard-section dashboard-starred">
       <h2 class="small-title">Starred repositories</h2>
       <ul class="repo-list">
-      {{#each starredRepos as |repo|}}
+      {{#each model.starredRepos as |repo|}}
         {{dashboard-row repo=repo unstar=unstar}}
       {{else}}
         <div class="starred-empty">
