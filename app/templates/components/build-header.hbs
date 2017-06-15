@@ -70,8 +70,8 @@
       {{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
-        {{request-icon event=item.eventType state=singleJobStateWithFallback}}
-        <span class='inner-underline'>#{{item.number}} {{humanize-state singleJobStateWithFallback}}</span>
+        {{request-icon event=item.eventType state=buildState}}
+        <span class='inner-underline'>#{{item.number}} {{humanize-state buildState}}</span>
       {{/link-to}}
     {{/if}}
   </h3>

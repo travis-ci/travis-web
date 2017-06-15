@@ -67,7 +67,7 @@ export default Ember.Component.extend({
   },
 
   @computed('item.jobs.firstObject.state', 'item.state', 'isMatrix')
-  singleJobStateWithFallback(jobState, buildState, isMatrix) {
+  buildState(jobState, buildState, isMatrix) {
     if (isMatrix) {
       return buildState;
     } else {
