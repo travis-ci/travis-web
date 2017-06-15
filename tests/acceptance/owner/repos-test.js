@@ -16,7 +16,7 @@ moduleForAcceptance('Acceptance | owner repositories', {
 
     const primaryBranch = firstRepository.createBranch({
       name: 'primary',
-      id: `/v3/repos/${firstRepository.id}/branches/primary`,
+      id: `/v3/repo/${firstRepository.id}/branch/primary`,
       default_branch: true
     });
 

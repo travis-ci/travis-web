@@ -52,14 +52,14 @@ moduleForAcceptance('Acceptance | repo settings', {
 
     const dailyBranch = server.create('branch', {
       name: 'daily-branch',
-      id: `/v3/repos/${repoId}/branches/daily-branch`,
+      id: `/v3/repo/${repoId}/branch/daily-branch`,
       exists_on_github: true,
       repository
     });
 
     const weeklyBranch = server.create('branch', {
       name: 'weekly-branch',
-      id: `/v3/repos/${repoId}/branches/weekly-branch`,
+      id: `/v3/repo/${repoId}/branch/weekly-branch`,
       exists_on_github: true,
       repository
     });
@@ -285,7 +285,7 @@ test('reload cron branches on branch:created', function (assert) {
 
   server.create('branch', {
     name: 'food',
-    id: `/v3/repos/${this.repository.id}/branches/food`,
+    id: `/v3/repo/${this.repository.id}/branch/food`,
     exists_on_github: true,
     repository: this.repository,
   });
@@ -297,7 +297,7 @@ test('reload cron branches on branch:created', function (assert) {
 
     server.create('branch', {
       name: 'bar',
-      id: `/v3/repos/${this.repository.id}/branches/bar`,
+      id: `/v3/repo/${this.repository.id}/branch/bar`,
       exists_on_github: true,
       repository: this.repository,
     });
