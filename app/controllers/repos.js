@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
 import Visibility from 'npm:visibilityjs';
+import config from 'travis/config/environment';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -69,7 +70,7 @@ export default Ember.Controller.extend({
       if (this.get('tab') === 'running') {
         return this.activate('owned');
       } else {
-        return this.transitionToRoute('main.repositories');
+        return this.transitionToRoute('index');
       }
     }
   },
@@ -79,9 +80,10 @@ export default Ember.Controller.extend({
 
     if (query === '') { return; }
 
-    yield timeout(500);
+    const { searchDebounceRate } = config.intervals;
+    yield timeout(searchDebounceRate);
 
-    this.transitionToRoute('main.search', query.replace(/\//g, '%2F'));
+    this.transitionToRoute('search', query.replace(/\//g, '%2F'));
     this.get('tabStates').set('sidebarTab', 'search');
   }).restartable(),
 
@@ -102,7 +104,7 @@ export default Ember.Controller.extend({
   possiblyRedirectToGettingStartedPage() {
     return Ember.run.scheduleOnce('routerTransitions', this, function () {
       if (this.get('tab') === 'owned' && this.get('isLoaded') && this.get('repos.length') === 0) {
-        return Ember.getOwner(this).lookup('router:main').send('redirectToGettingStarted');
+        this.send('redirectToGettingStarted');
       }
     });
   },

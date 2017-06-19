@@ -14,8 +14,8 @@ test('restarting job', function (assert) {
   server.create('branch', {});
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository_id: repo.id, state: 'running', commit_id: commit.id, commit });
-  let job = server.create('job', { number: '1234.1', repository_id: repo.id, state: 'running', build_id: build.id, commit, build });
+  let build = server.create('build', { repository: repo, state: 'running', commit });
+  let job = server.create('job', { number: '1234.1', repository: repo, state: 'running', commit, build });
   commit.job = job;
 
   job.save();

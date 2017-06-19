@@ -24,7 +24,7 @@ export default Ember.Service.extend({
   },
 
   gravatarImage(email, size) {
-    return `https://www.gravatar.com/avatar/${(md5(email))}?s=${size}&d=blank`;
+    return `https://www.gravatar.com/avatar/${(md5(email.toLowerCase()))}?s=${size}&d=blank`;
   },
 
   travisWebBranch(branchName) {

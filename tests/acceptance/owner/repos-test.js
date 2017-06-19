@@ -56,14 +56,19 @@ test('the owner page shows their repositories', (assert) => {
     assert.equal(document.title, 'Sara Ahmed - Travis CI');
 
     assert.equal(ownerPage.repos().count, 2);
-    assert.equal(ownerPage.repos(0).name, 'living-a-feminist-life');
 
-    assert.equal(ownerPage.repos(0).buildNumber, '1917');
-    assert.equal(ownerPage.repos(0).defaultBranch, 'primary');
-    assert.equal(ownerPage.repos(0).commitSha, 'abc124');
-    assert.equal(ownerPage.repos(0).commitDate, 'about a year ago');
+    ownerPage.repos(0).as(repo => {
+      assert.equal(repo.name, 'living-a-feminist-life');
 
-    assert.equal(ownerPage.repos(1).name, 'willful-subjects');
-    assert.equal(ownerPage.repos(1).noBuildMessage, 'There is no build on the default branch yet.');
+      assert.equal(repo.buildNumber, '1917');
+      assert.equal(repo.defaultBranch, 'primary');
+      assert.equal(repo.commitSha, 'abc124');
+      assert.equal(repo.commitDate, 'about a year ago');
+    });
+
+    ownerPage.repos(1).as(repo => {
+      assert.equal(repo.name, 'willful-subjects');
+      assert.equal(repo.noBuildMessage, 'There is no build on the default branch yet.');
+    });
   });
 });

@@ -6,6 +6,7 @@ import computed, { alias } from 'ember-computed-decorators';
 const { service } = Ember.inject;
 
 export default Ember.Service.extend({
+  routing: service('-routing'),
   flashes: service(),
   store: service(),
   storage: service(),
@@ -29,13 +30,8 @@ export default Ember.Service.extend({
     this.get('storage').clear();
     this.set('state', 'signed-out');
     this.set('user', null);
-
     this.get('store').unloadAll();
-
     this.set('currentUser', null);
-    this.sendToApp('afterSignOut');
-
-    Travis.trigger('user:signed_out');
   },
 
   signIn(data) {
@@ -123,7 +119,6 @@ export default Ember.Service.extend({
     this.set('currentUser', user);
     this.set('state', 'signed-in');
     Travis.trigger('user:signed_in', data.user);
-    this.sendToApp('afterSignIn');
   },
 
   refreshUserData(user) {
@@ -199,25 +194,6 @@ export default Ember.Service.extend({
     }
   },
 
-  sendToApp(name) {
-    // TODO: this is an ugly solution, we need to do one of 2 things:
-    //       * find a way to check if we can already send an event to remove try/catch
-    //       * remove afterSignIn and afterSignOut events by replacing them in a more
-    //         straightforward code - we can do what's needed on a routes/controller level
-    //         as a direct response to either manual sign in or autoSignIn (right now
-    //         we treat both cases behave the same in terms of sent events which I think
-    //         makes it more complicated than it should be).
-    const router = Ember.getOwner(this).lookup('router:main');
-    try {
-      return router.send(name);
-    } catch (error1) {
-      const error = error1;
-      if (!(error.message.match(/Can't trigger action/))) {
-        throw error;
-      }
-    }
-  },
-
   sync() {
     return this.get('currentUser').sync();
   },
@@ -225,9 +201,7 @@ export default Ember.Service.extend({
   syncingDidChange: Ember.observer('isSyncing', 'currentUser', function () {
     const user = this.get('currentUser');
     if (user && user.get('isSyncing') && !user.get('syncedAt')) {
-      return Ember.run.scheduleOnce('routerTransitions', this, function () {
-        return Ember.getOwner(this).lookup('router:main').send('renderFirstSync');
-      });
+      return this.get('routing').transitionTo('first_sync');
     }
   }),
 

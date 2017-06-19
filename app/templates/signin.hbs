@@ -4,15 +4,15 @@
   <img src="/images/logos/TravisCI-Mascot-1.svg" alt="Travis CI mascot" width="200" height="200">
 
 {{#if auth.signedOut}}
-  <h1 class="content-title">Hey, we're so glad <br> you're here!</h1>
-  <h2 class="content-subtitle">In order to view your repositories, <br> please sign in.</h2>
+  <h1 class="content-title auth">We're so glad you're here!</h1>
+  <h2 class="content-subtitle">Please sign in to view your repositories.</h2>
   <p>
-    <button type="button" {{action "signIn" target=auth}} title="Sign into Travis CI" class="content-button">Sign in with GitHub</button>
+    <button type="button" {{action (route-action 'signIn')}} title="Sign into Travis CI" class="content-button">Sign in with GitHub</button>
   </p>
 {{/if}}
 
 {{#if auth.signingIn}}
-  <h1 class="content-title">Hey, we're so glad <br> you're here!</h1>
+  <h1 class="content-title auth">We're so glad you're here!</h1>
   <h2 class="content-subtitle">We're signing you in, <br> that might take a moment.</h2>
   <p class="content-button"><span class="label-align">Signing in</span>{{loading-indicator inline=true white=true}}</p>
 {{/if}}

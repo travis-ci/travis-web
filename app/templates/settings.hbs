@@ -1,26 +1,26 @@
 <div class="settings">
 
   <section class="settings-section">
-    <h2 class="small-title">General Settings</h2>
+    <h2 class="small-title">General</h2>
 
     <ul class="settings-list--columns">
       <li>{{settings-switch active=model.settings.builds_only_with_travis_yml repo=repo description="Build only if .travis.yml is present" key="builds_only_with_travis_yml"}}</li>
-      <li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build pushes" key="build_pushes"}}</li>
+      <li>{{settings-switch active=model.settings.build_pushes repo=repo description="Build branch updates" key="build_pushes"}}</li>
       <li>{{limit-concurrent-builds value=model.settings.maximum_number_of_builds enabled=concurrentBuildsLimit repo=repo}}</li>
-      <li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pull requests" key="build_pull_requests"}}</li>
+      <li>{{settings-switch active=model.settings.build_pull_requests repo=repo description="Build pull request updates" key="build_pull_requests"}}</li>
     </ul>
 
   </section>
 
   {{#if showAutoCancellationSwitches}}
     <section class="settings-section auto-cancellation">
-      <h2 class="small-title">Auto Cancellation Settings</h2>
+      <h2 class="small-title display-inline">Auto Cancellation</h2>
 
       <p>Auto Cancellation allows you to only run builds for the latest commits in the queue. This setting can be applied to builds for Branch builds and Pull Request builds separately. Builds will only be canceled if they are waiting to run, allowing for any running jobs to finish.</p>
 
       <ul class="settings-list--columns">
-        <li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel pushes" key="auto_cancel_pushes"}}</li>
-        <li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull requests" key="auto_cancel_pull_requests"}}</li>
+        <li>{{settings-switch active=model.settings.auto_cancel_pushes repo=repo description="Auto cancel branch builds" key="auto_cancel_pushes"}}</li>
+        <li>{{settings-switch active=model.settings.auto_cancel_pull_requests repo=repo description="Auto cancel pull request builds" key="auto_cancel_pull_requests"}}</li>
       </ul>
     </section>
   {{/if}}
@@ -43,7 +43,7 @@
   <section class="settings-section">
       <h2 class="small-title display-inline">Cron Jobs</h2>
       <div class="badge">Beta Feature</div>
-      <p class="text-medium display-inline"><a href="https://github.com/travis-ci/beta-features/issues/1" title="Give your feedback on Crons"  target="_blank">We'd love your feedback</a></p>
+      <p class="text-medium display-inline"><a href="https://github.com/travis-ci/beta-features/issues/1" title="Give your feedback on Crons"  target="_blank">We’d love your feedback</a></p>
 
     <ul class="settings-list--crons">
       {{#each cronJobs as |cron|}}

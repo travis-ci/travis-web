@@ -1,6 +1,12 @@
 import Ember from 'ember';
 
+const { controller } = Ember.inject;
+
 export default Ember.Controller.extend({
+  repoController: controller('repo'),
+
+  tab: Ember.computed.alias('repoController.tab'),
+
   defaultBranch: Ember.computed('model', function () {
     return this.get('model').filterBy('default_branch')[0];
   }),

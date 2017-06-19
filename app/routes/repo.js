@@ -13,9 +13,11 @@ export default TravisRoute.extend(ScrollResetMixin, {
     return model.get('slug');
   },
 
-  renderTemplate() {
-    return this.render('repo', {
-      into: 'main'
+  renderTemplate(...args) {
+    this._super(args);
+    return this.render('repos', {
+      outlet: 'left',
+      into: 'repo'
     });
   },
 
@@ -50,16 +52,4 @@ export default TravisRoute.extend(ScrollResetMixin, {
   resetController() {
     return this.controllerFor('repo').deactivate();
   },
-
-  actions: {
-    error(error) {
-      if (error.slug) {
-        // if error thrown has a slug (ie. it was probably repo not found)
-        // set the slug on main.error controller to allow to properly
-        // display the repo information
-        this.controllerFor('main.error').set('slug', error.slug);
-      }
-      return true;
-    }
-  }
 });

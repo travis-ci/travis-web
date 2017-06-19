@@ -28,6 +28,15 @@ TravisPusher.prototype.init = function (config, ajaxService) {
   if (config.host) {
     Pusher.host = config.host;
   }
+
+  if (config.debug) {
+    Pusher.log = function (message) {
+      if (window.console && window.console.log) {
+        window.console.log(message);
+      }
+    };
+  }
+
   return this.pusher = new Pusher(config.key, {
     encrypted: config.encrypted,
     disableStats: true

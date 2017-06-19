@@ -1,0 +1,24 @@
+{{#if isLoaded}}
+  <ul class="build-list">
+    {{#each builds as |build|}}
+      {{builds-item build=build}}
+    {{else}}
+      {{no-builds repo=repo tab=tab}}
+    {{/each}}
+  </ul>
+  {{#if displayShowMoreButton}}
+    <p>
+      {{show-more-button isLoading=isLoading showMore=(action 'showMoreBuilds')}}
+      {{#if isLoading}}
+        {{loading-indicator}}
+      {{/if}}
+    </p>
+  {{/if}}
+
+{{else}}
+  {{loading-indicator}}
+{{/if}}
+
+<aside id="left" class="{{unless auth.signedIn 'hidden'}}">
+  {{outlet "left"}}
+</aside>

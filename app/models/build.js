@@ -9,30 +9,27 @@ import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
 
 const { service } = Ember.inject;
-var Build;
 
-Build = Model.extend(DurationCalculations, {
-  branch: belongsTo('branch', { async: false, inverse: 'builds' }),
-  branchName: Ember.computed.alias('branch.name')
-});
-
-Build.reopen({
+export default Model.extend(DurationCalculations, {
   ajax: service(),
+
+  branch: belongsTo('branch', { async: false, inverse: 'builds' }),
+  branchName: Ember.computed.alias('branch.name'),
   state: attr(),
   number: attr('number'),
   message: attr('string'),
   _duration: attr('number'),
-  _config: attr(),
-  _startedAt: attr(),
-  _finishedAt: attr('string'),
-  pullRequest: attr('boolean'),
-  pullRequestTitle: attr(),
+  startedAt: attr('string'),
+  finishedAt: attr('string'),
   pullRequestNumber: attr('number'),
+  pullRequestTitle: attr('string'),
   eventType: attr('string'),
   repo: belongsTo('repo', { async: true }),
   repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
   commit: belongsTo('commit', { async: false }),
   jobs: hasMany('job', { async: true }),
+  stages: hasMany('stage', { async: false }),
+  _config: attr(),
 
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
@@ -48,7 +45,7 @@ Build.reopen({
   }),
 
   isPullRequest: Ember.computed('eventType', function () {
-    return this.get('eventType') === 'pull_request' || this.get('pullRequest');
+    return this.get('eventType') === 'pull_request';
   }),
 
   isMatrix: Ember.computed('jobs.length', function () {
@@ -65,18 +62,6 @@ Build.reopen({
     let state = this.get('state');
     let waitingStates = ['queued', 'created', 'received'];
     return waitingStates.includes(state);
-  }),
-
-  startedAt: Ember.computed('_startedAt', 'notStarted', function () {
-    if (!this.get('notStarted')) {
-      return this.get('_startedAt');
-    }
-  }),
-
-  finishedAt: Ember.computed('_finishedAt', 'notStarted', function () {
-    if (!this.get('notStarted')) {
-      return this.get('_finishedAt');
-    }
   }),
 
   requiredJobs: Ember.computed('jobs.@each.allowFailure', function () {
@@ -117,7 +102,7 @@ Build.reopen({
     });
   }),
 
-  canCancel: Ember.computed('jobs.@each.canCancel', 'jobs', 'jobs.[]', function () {
+  canCancel: Ember.computed('jobs.@each.canCancel', 'jobs.[]', function () {
     return this.get('jobs').filterBy('canCancel', true).length;
   }),
 
@@ -146,7 +131,4 @@ Build.reopen({
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   })
-
 });
-
-export default Build;

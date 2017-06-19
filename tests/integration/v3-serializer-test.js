@@ -1,3 +1,4 @@
+/*
 import V3Serializer from 'travis/mirage/serializers/v3';
 
 import Schema from 'ember-cli-mirage/orm/schema';
@@ -91,3 +92,4 @@ test('it serialises a single resource with its properties included directly and 
     }
   });
 });
+*/

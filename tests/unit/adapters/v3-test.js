@@ -12,6 +12,28 @@ moduleFor('adapter:v3', 'Unit | Adapter | V3', {
   }
 });
 
+test('getHost returns only a host, without a path', function (assert) {
+  const adapter = this.subject();
+
+  adapter.host = 'http://example.com';
+  assert.equal(adapter.getHost(), 'http://example.com');
+
+  adapter.host = 'https://example.com/';
+  assert.equal(adapter.getHost(), 'https://example.com');
+
+  adapter.host = 'https://example.com/api';
+  assert.equal(adapter.getHost(), 'https://example.com');
+
+  adapter.host = 'https://example.com/api/foo/bar/baz';
+  assert.equal(adapter.getHost(), 'https://example.com');
+
+  adapter.host = 'https://example.com:8080/api/foo/bar/baz';
+  assert.equal(adapter.getHost(), 'https://example.com:8080');
+
+  adapter.host = 'localhost:8080/api/foo/bar/baz';
+  assert.equal(adapter.getHost(), 'localhost:8080');
+});
+
 test('it joins array that are passed as data', function (assert) {
   const adapter = this.subject(),
     type = 'GET',

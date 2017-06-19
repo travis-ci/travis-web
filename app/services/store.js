@@ -98,6 +98,7 @@ export default DS.Store.extend({
       default_branch = data.default_branch;
       if (default_branch) {
         default_branch.default_branch = true;
+        default_branch['@href'] = `/repo/${data.id}/branch/${default_branch.name}`;
       }
       last_build_id = default_branch.last_build_id;
 

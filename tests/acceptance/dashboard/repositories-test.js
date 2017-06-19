@@ -1,6 +1,6 @@
-import { test } from 'qunit';
+import { skip, test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-// import dashboardPage from 'travis/tests/pages/dashboard';
+import dashboardPage from 'travis/tests/pages/dashboard';
 
 moduleForAcceptance('Acceptance | dashboard/repositories', {
   beforeEach() {
@@ -12,27 +12,29 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
 
     signInUser(currentUser);
 
+    let build = server.create('build', {
+      branch: server.create('branch', { name: 'some-branch' }),
+      eventType: 'cron',
+      number: 2,
+      state: 'failed',
+      finishedAt: '2016-11-10T14:37:44Z'
+    });
+    let branch = server.create('branch', {
+      name: 'master',
+      lastBuild: server.create('build', {
+        number: 1,
+        eventType: 'api',
+        state: 'passed',
+      })
+    });
     server.create('repository', {
       owner: {
         login: 'travis-ci',
         type: 'organization'
       },
       name: 'travis-web',
-      currentBuild: {
-        branch: { name: 'some-branch' },
-        eventType: 'cron',
-        number: 2,
-        state: 'failed',
-        finishedAt: '2016-11-10T14:37:44Z'
-      },
-      defaultBranch: {
-        name: 'master',
-        lastBuild: {
-          number: 1,
-          eventType: 'api',
-          state: 'passed',
-        }
-      }
+      currentBuild: build,
+      defaultBranch: branch
     });
     server.create('repository', {
       owner: {
@@ -40,13 +42,7 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
         type: 'organization'
       },
       name: 'repo-python',
-      currentBuild: {
-        branch: { name: 'some-branch' },
-        eventType: 'cron',
-        number: 2,
-        state: 'failed',
-        finishedAt: '2016-11-09T14:37:44Z'
-      },
+      currentBuild: build,
     });
     server.create('repository', {
       owner: {
@@ -54,13 +50,7 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
         type: 'organization'
       },
       name: 'repo-clojure',
-      currentBuild: {
-        branch: { name: 'some-branch' },
-        eventType: 'cron',
-        number: 2,
-        state: 'failed',
-        finishedAt: '2016-11-8T14:37:44Z'
-      },
+      currentBuild: build,
     });
     server.create('repository', {
       owner: {
@@ -69,21 +59,8 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
       },
       name: 'travis-lol',
       starred: true,
-      currentBuild: {
-        branch: { name: 'some-branch' },
-        eventType: 'cron',
-        number: 2,
-        state: 'failed',
-        finishedAt: '2016-11-07T14:37:44Z'
-      },
-      defaultBranch: {
-        name: 'default',
-        lastBuild: {
-          number: 1,
-          eventType: 'cron',
-          state: 'passed',
-        }
-      }
+      currentBuild: build,
+      defaultBranch: branch
     });
   }
 });
@@ -96,8 +73,7 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
   });
 });
 
-/*
-test('visiting /dashboard/ with feature flag enabled', function (assert) {
+skip('visiting /dashboard/ with feature flag enabled', function (assert) {
   withFeature('dashboard');
   visit('/');
 
@@ -114,9 +90,8 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
     percySnapshot(assert);
   });
 });
-*/
-/*
-test('filtering repos', function (assert) {
+
+skip('filtering repos', function (assert) {
   withFeature('dashboard');
   visit('/dashboard/');
   click(dashboardPage.accountFilter);
@@ -125,10 +100,7 @@ test('filtering repos', function (assert) {
     assert.equal(dashboardPage.activeRepos().count, 2, 'filters repos for accounts');
   });
 });
-*/
 
-/*
-test('triggering a build', function (assert) {
+skip('triggering a build', function () {
 
 });
-*/

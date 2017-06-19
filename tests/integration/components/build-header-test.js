@@ -6,19 +6,22 @@ moduleForComponent('build-header', 'Integration | Component | build header', {
 });
 
 test('render api build', function (assert) {
-  let repo = {
-    slug: 'travis-ci/travis-web'
-  };
+  let repo = { slug: 'travis-ci/travis-web' };
   let commit = {
     compareUrl: 'https://github.com/travis-repos/php-test-staging/compare/3d86ee98be2b...a82f6ba76c7b',
-    branch: 'feature-branch'
+    subject: 'Endless joy'
+  };
+  let branch = {
+    name: 'feature-branch',
   };
   let build = {
     eventType: 'api',
     status: 'passed',
     number: '1234',
     commit: commit,
-    repo: repo
+    repo: repo,
+    branch: branch,
+    branchName: 'feature-branch'
   };
 
   this.set('build', build);
@@ -31,6 +34,7 @@ test('render api build', function (assert) {
   assert.equal(this.$().find('.build-status span.icon').text().trim(), 'API event', 'displays right icon');
   assert.equal(this.$().find('.commit-branch-url').attr('href'), 'https://github.com/travis-ci/travis-web/tree/feature-branch', 'displays branch url');
   assert.equal(this.$().find('.commit-branch-url').text().trim(), 'Branch feature-branch', 'displays link to branch');
+  assert.ok(this.$().find('.build-title').text().match(/Endless joy/), 'displays commit message');
 });
 
 test('render push build', function (assert) {
@@ -50,6 +54,23 @@ test('render push build', function (assert) {
 
   assert.equal(this.$().find('.commit-compare').length, 1, 'does display compare link element');
   assert.equal(this.$().find('.commit-compare').text().trim(), 'Compare 3d86ee9..a82f6ba', 'does display compare link for push builds');
+});
+
+test('render cron build', function (assert) {
+  let commit = {
+    subject: 'Just complete and utter joy',
+    branch: 'a-cron-branch-of-utter-joy'
+  };
+  let build = {
+    eventType: 'cron',
+    commit,
+    branchName: 'a-cron-branch-of-utter-joy'
+  };
+
+  this.set('build', build);
+  this.render(hbs`{{build-header item=build commit=build.commit}}`);
+
+  assert.ok(this.$().find('.build-title').text().match(/cron Just complete and utter joy/), 'displays cron before commit message');
 });
 
 test('if a build is shown, only show elapsed time while running', function (assert) {

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
+import config from 'travis/config/environment';
 
 const authServiceStub = Ember.Service.extend({
   assetToken() {
@@ -8,6 +9,7 @@ const authServiceStub = Ember.Service.extend({
 });
 
 moduleFor('service:status-images', 'Unit | Service | status images', {
+  needs: ['service:features'],
   beforeEach() {
     this.register('service:auth', authServiceStub);
     this.inject.service('auth');
@@ -19,6 +21,8 @@ const secureRoot = `https://${location.host}`;
 
 const slug = 'travis-ci/travis-web';
 const branch = 'primary';
+
+const { apiEndpoint } = config;
 
 test('it generates an image url with a slug', function (assert) {
   const service = this.subject();
@@ -116,13 +120,13 @@ test('it generates a Pod image string with a slug and a branch', function (asser
 test('it generates CCTray url with a slug', function (assert) {
   const service = this.subject();
   let url = service.ccXml(slug);
-  assert.equal(url, '#/repos/travis-ci/travis-web/cc.xml');
+  assert.equal(url, `#${apiEndpoint}/repos/travis-ci/travis-web/cc.xml`);
 });
 
 test('it generates CCTray url with a slug and a branch', function (assert) {
   const service = this.subject();
   let url = service.ccXml(slug, branch);
-  assert.equal(url, '#/repos/travis-ci/travis-web/cc.xml?branch=primary');
+  assert.equal(url, `#${apiEndpoint}/repos/travis-ci/travis-web/cc.xml?branch=primary`);
 });
 
 test('it generaes CCTray url with a slug and a branch and when pro feature flag enabled', function (assert) {
@@ -130,6 +134,6 @@ test('it generaes CCTray url with a slug and a branch and when pro feature flag 
   service.set('features', Ember.Object.create());
   service.set('features.proVersion', true);
   let url = service.ccXml(slug, branch);
-  assert.equal(url, '#/repos/travis-ci/travis-web/cc.xml?branch=primary&token=token-abc-123');
+  assert.equal(url, `#${apiEndpoint}/repos/travis-ci/travis-web/cc.xml?branch=primary&token=token-abc-123`);
   service.set('features.proVersion', false);
 });

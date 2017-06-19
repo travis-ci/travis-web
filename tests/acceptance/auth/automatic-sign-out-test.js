@@ -1,7 +1,7 @@
 /* global signInUser */
-// import { test } from 'qunit';
+import { skip } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-// import authPage from 'travis/tests/pages/auth';
+import authPage from 'travis/tests/pages/auth';
 
 moduleForAcceptance('Acceptance | automatic sign out', {
   beforeEach() {
@@ -9,8 +9,8 @@ moduleForAcceptance('Acceptance | automatic sign out', {
     signInUser(currentUser);
   }
 });
-/*
-test('when token is invalid user should be signed out', function (assert) {
+
+skip('when token is invalid user should be signed out', function (assert) {
   window.sessionStorage.setItem('travis.token', 'wrong-token');
   window.localStorage.setItem('travis.token', 'wrong-token');
 
@@ -21,4 +21,3 @@ test('when token is invalid user should be signed out', function (assert) {
   });
   percySnapshot(assert);
 });
-*/
