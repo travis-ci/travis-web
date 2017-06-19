@@ -20,6 +20,14 @@ export default Ember.Component.extend({
   isLegacyInfrastructure: Ember.computed.equal('queue', 'builds.linux'),
 
   isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
+
+  @computed('queue', 'job.config')
+  isTrustySudoRequired(queue, config) {
+    if (queue === 'builds.gce' && config.dist === 'trusty') {
+      return true;
+    }
+  },
+
   isMacStadium6: Ember.computed.equal('queue', 'builds.macstadium6'),
 
   @computed('queue', 'job.config')
