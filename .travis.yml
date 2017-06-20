@@ -34,6 +34,7 @@ cache:
 
 before_install:
   - npm config set spin false
+  - npm install -g npm@5
   - npm install -g bower
   - bower --version
 
