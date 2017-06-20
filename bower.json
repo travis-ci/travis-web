@@ -1,7 +1,6 @@
 {
   "name": "travis",
   "dependencies": {
-    "JavaScript-MD5": "~2.3.0",
     "moment": "~2.13.0",
     "jquery-timeago": "~1.5.2",
     "pusher": "~2.2.3",

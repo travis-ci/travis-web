@@ -39,13 +39,6 @@ test('email', function (assert) {
   assert.equal(service.email(email), 'mailto:builder@travis-ci.com');
 });
 
-test('gravatarImage', function (assert) {
-  let service = this.subject();
-  const email = 'builder@travis-ci.com';
-  const size = 'large';
-  assert.equal(service.gravatarImage(email, size), 'https://www.gravatar.com/avatar/7e04deb54e09fefd971875250cf6b415?s=large&d=blank');
-});
-
 test('travisWebBranch', function (assert) {
   const service = this.subject();
   const branchName = 'bd-no-justice-no-peace';
