@@ -1,11 +1,7 @@
 import Ember from 'ember';
 import computed, { alias, sort, filterBy } from 'ember-computed-decorators';
 
-const { service } = Ember.inject;
-
 export default Ember.Controller.extend({
-  branchesService: service('branches'),
-
   envVarSorting: ['name'],
   envVars: Ember.computed.sort('unsortedEnvVars', 'envVarSorting'),
 
@@ -15,7 +11,10 @@ export default Ember.Controller.extend({
   @alias('model.cronJobs.jobs.[]')
   cronJobs: null,
 
-  @computed('cronJobs', 'model.branches', 'branchesService.amount')
+  // TODO: the last dependency is needed here, because otherwise refreshing this
+  // property will fail in tests (because for some reason newly added branch is
+  // in root.loading state). We should look into it at some point
+  @computed('cronJobs', 'model.branches.[]', 'model.branches.@each.exists_on_github')
   branchesWithoutCron(cronJobs, branches, _) {
     return branches
              .filter(branch => branch.get('exists_on_github'))
