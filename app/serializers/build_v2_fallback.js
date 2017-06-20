@@ -44,13 +44,7 @@ var Serializer = V2FallbackSerializer.extend({
       let branch = {
         name: commit.branch,
         default_branch: commit.branch_is_default,
-        '@href': `/repo/${build.repository_id}/branch/${commit.branch}`,
-        // TODO: this is a temporary workaround. Since we don't get this
-        // information in pusher, I'm setting it to true, because in vast
-        // majority of cases the branch will exist (unless someone pushes and
-        // deletes the branch immediately, but even then we don't risk anything
-        // in the UI, we don't live update branch data in some places anyway)
-        exists_on_github: true
+        '@href': `/repo/${build.repository_id}/branch/${commit.branch}`
       };
       resourceHash.build.branch = branch;
     }
@@ -65,8 +59,7 @@ var Serializer = V2FallbackSerializer.extend({
       resourceHash.build.branch = {
         name: branchName,
         default_branch: branchName === defaultBranchName,
-        '@href': `/repo/${repository.id}/branch/${branchName}`,
-        exists_on_github: true
+        '@href': `/repo/${repository.id}/branch/${branchName}`
       };
 
       repository.default_branch['@href'] = `/repo/${repository.id}/branch/${defaultBranchName}`;

@@ -11,11 +11,8 @@ export default Ember.Controller.extend({
   @alias('model.cronJobs.jobs.[]')
   cronJobs: null,
 
-  // TODO: the last dependency is needed here, because otherwise refreshing this
-  // property will fail in tests (because for some reason newly added branch is
-  // in root.loading state). We should look into it at some point
-  @computed('cronJobs', 'model.branches.[]', 'model.branches.@each.exists_on_github')
-  branchesWithoutCron(cronJobs, branches, _) {
+  @computed('cronJobs', 'model.branches.@each.exists_on_github')
+  branchesWithoutCron(cronJobs, branches) {
     return branches
              .filter(branch => branch.get('exists_on_github'))
              .filter(branch => {
