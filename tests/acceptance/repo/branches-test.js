@@ -33,7 +33,7 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     const primaryBranch = server.create('branch', {
       name: 'primary',
-      id: `/v3/repos/${repoId}/branches/primary`,
+      id: `/v3/repo/${repoId}/branch/primary`,
       default_branch: true,
       repository,
     });
@@ -83,7 +83,7 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     const activeCreatedBranch = server.create('branch', {
       name: 'created',
-      id: `/v3/repos/${repoId}/branches/created`,
+      id: `/v3/repo/${repoId}/branch/created`,
       exists_on_github: true,
       default_branch: false,
       repository,
@@ -97,7 +97,7 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     const activeFailedBranch = server.create('branch', {
       name: 'edits',
-      id: `/v3/repos/${repoId}/branches/edits`,
+      id: `/v3/repo/${repoId}/branch/edits`,
       exists_on_github: true,
       default_branch: false,
       repository,
@@ -112,7 +112,7 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     const activeOlderFailedBranch = server.create('branch', {
       name: 'old-old-edits',
-      id: `/v3/repos/${repoId}/branches/old-old-edits`,
+      id: `/v3/repo/${repoId}/branch/old-old-edits`,
       exists_on_github: true,
       default_branch: false,
       repository,
@@ -127,7 +127,7 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     const olderInactiveBranch = server.create('branch', {
       name: 'older-edits',
-      id: `/v3/repos/${repoId}/branches/older-edits`,
+      id: `/v3/repo/${repoId}/branch/older-edits`,
       exists_on_github: false,
       default_branch: false,
       repository,
@@ -139,7 +139,7 @@ moduleForAcceptance('Acceptance | repo branches', {
 
     const newerInactiveBranch = server.create('branch', {
       name: 'old-edits',
-      id: `/v3/repos/${repoId}/branches/old-edits`,
+      id: `/v3/repo/${repoId}/branch/old-edits`,
       exists_on_github: false,
       default_branch: false,
       repository,

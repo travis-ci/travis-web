@@ -182,6 +182,11 @@ export default function () {
     return schema.branches.all();
   });
 
+  this.get('/repo/:repository_id/branch/:branch', function (schema, request) {
+    const id = `/v3/repo/${request.params.repository_id}/branch/${request.params.branch}`;
+    return this.serialize(schema.branches.find(id));
+  });
+
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
     let sshKeys = schema.sshKeys.where({
       repositoryId: request.params.repo_id,
