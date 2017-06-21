@@ -46,7 +46,7 @@ before_script:
   - echo $PERCY_ENABLE
 
 script:
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --random=a0zxdct04izxgf4ykzftuik9
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --random
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
