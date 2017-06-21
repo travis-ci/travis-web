@@ -134,11 +134,9 @@ module.exports = function (environment) {
       defaultBreakpoints: ['desktop']
     };
 
-    ENV.featureFlags = {
-      'debug-logging': false,
-      'dashboard': false,
-      'pro-version': false
-    };
+    ENV.featureFlags['debug-logging'] = false;
+    ENV.featureFlags['dashboard'] = false;
+    ENV.featureFlags['pro-version'] = false;
   }
 
   if (environment === 'production') {
