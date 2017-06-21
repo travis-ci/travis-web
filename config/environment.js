@@ -136,7 +136,8 @@ module.exports = function (environment) {
 
     ENV.featureFlags = {
       'debug-logging': false,
-      'dashboard': false
+      'dashboard': false,
+      'pro-version': false
     };
   }
 
