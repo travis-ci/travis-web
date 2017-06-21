@@ -23,7 +23,7 @@ export default Ember.Component.extend({
 
   @computed('queue', 'job.config')
   isTrustySudoRequired(queue, config) {
-    if (queue === 'builds.gce' && config.dist === 'trusty') {
+    if (queue === 'builds.gce' && config.dist === 'trusty' && config.group === 'stable') {
       return true;
     }
   },
