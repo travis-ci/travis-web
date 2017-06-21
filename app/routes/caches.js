@@ -44,6 +44,7 @@ export default TravisRoute.extend({
         }
       }
       return {
+        repo,
         pushes: pushes,
         pullRequests: pullRequests
       };
