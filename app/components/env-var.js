@@ -6,7 +6,6 @@ export default Ember.Component.extend({
   tagName: 'li',
   classNames: ['settings-envvar'],
   classNameBindings: ['envVar.public:is-public', 'envVar.newlyCreated:newly-created'],
-  isDeleting: false,
   validates: { name: ['presence'] },
   actionType: 'Save',
   showValueField: Ember.computed.alias('public'),
