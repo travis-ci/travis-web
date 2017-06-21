@@ -9,6 +9,9 @@ const { RSVP: { Promise } } = Ember;
 export default function (name, options = {}) {
   module(name, {
     beforeEach() {
+      window.localStorage.clear();
+      window.sessionStorage.clear();
+
       this.application = startApp();
 
       if (options.beforeEach) {
