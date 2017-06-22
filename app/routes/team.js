@@ -267,14 +267,19 @@ export default TravisRoute.extend({
         nationality: 'spain',
         country: 'spain',
         image: 'iriberri'
-      },
-      {
+      }, {
         name: 'Jan Schulte',
         title: 'Consulting Detective',
         handle: 'ganzefolge',
         nationality: 'germany',
         country: 'germany',
         image: 'jan'
+      }, {
+        name: 'Natalia Saavedra',
+        title: 'Design Wizard',
+        nationality: 'columbia',
+        country: 'occupiedcanada',
+        image: 'natalia'
       }
     ];
   }
