@@ -241,14 +241,19 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'lena'
       }, {
+        name: 'Joep van Delft',
+        title: 'Lead Second-Guess Engineer',
+        nationality: 'europe',
+        country: 'europe',
+        image: 'joep'
+      }, {
         name: 'Sam Wright',
         title: 'Documentarian',
         handle: 'plaindocs',
         nationality: 'uk',
         country: 'germany',
         image: 'sam'
-      },
-      {
+      }, {
         name: 'Lili Kui',
         title: 'Hammer Jammer',
         nationality: 'kenya',
