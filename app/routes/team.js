@@ -277,7 +277,7 @@ export default TravisRoute.extend({
       }, {
         name: 'Natalia Saavedra',
         title: 'Design Wizard',
-        nationality: 'columbia',
+        nationality: 'colombia',
         country: 'occupiedcanada',
         image: 'natalia'
       }
