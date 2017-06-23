@@ -55,13 +55,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'anika'
       }, {
-        name: 'Henrik Hodne',
-        title: 'DevOops Engineer',
-        handle: 'henrikhodne',
-        nationality: 'norway',
-        country: 'norway',
-        image: 'henrik'
-      }, {
         name: 'Justine Arreche',
         title: 'Lead Clipart Strategist',
         handle: 'saltinejustine',
@@ -91,6 +84,7 @@ export default TravisRoute.extend({
       }, {
         name: 'Carla Drago',
         title: 'inchworm',
+        handle: 'carlad',
         nationality: 'italy',
         country: 'germany',
         image: 'carla'
@@ -265,7 +259,8 @@ export default TravisRoute.extend({
         nationality: 'kenya',
         country: 'germany',
         image: 'lili'
-      }, {
+      },
+      {
         name: 'Carla Iriberri',
         title: 'Cacaolat Connoisseur',
         handle: 'iriberri1',
@@ -279,6 +274,12 @@ export default TravisRoute.extend({
         nationality: 'germany',
         country: 'germany',
         image: 'jan'
+      }, {
+        name: 'Natalia Saavedra',
+        title: 'Design Wizard',
+        nationality: 'columbia',
+        country: 'occupiedcanada',
+        image: 'natalia'
       }
     ];
   }
