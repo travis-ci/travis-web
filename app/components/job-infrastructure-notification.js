@@ -25,11 +25,13 @@ export default Ember.Component.extend({
   @computed('job.startedAt', 'queue', 'job.config')
   isTrustySudoRequired(startedAt, queue, config) {
     if (queue === 'builds.gce' && config.dist === 'trusty' && config.group === 'stable') {
-      const jobRanAfterReleaseDate = Date.parse(startedAt) > Q2_2017_TRUSTY_RELEASE;
+      const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(Q2_2017_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
         return true;
       }
     }
+
+    return false;
   },
 
   isMacStadium6: Ember.computed.equal('queue', 'builds.macstadium6'),
