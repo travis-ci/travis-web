@@ -4,7 +4,8 @@ import {
   clickable,
   collection,
   text,
-  hasClass
+  hasClass,
+  isVisible
 } from 'ember-cli-page-object';
 
 export default create({
@@ -35,5 +36,6 @@ export default create({
       triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a')
     }
   }),
+  pagination: isVisible('.pagination-navigation'),
   flashMessage: text('.flash li.success')
 });

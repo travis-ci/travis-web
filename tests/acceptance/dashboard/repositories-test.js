@@ -91,6 +91,8 @@ skip('visiting /dashboard/ with feature flag enabled', function (assert) {
   });
 });
 
+skip('starring a repo');
+
 skip('filtering repos', function (assert) {
   withFeature('dashboard');
   visit('/dashboard/');
@@ -101,11 +103,13 @@ skip('filtering repos', function (assert) {
   });
 });
 
-skip('triggering a build', function () {
+skip('triggering a build');
 
-});
+test('Dashboard pagination works', function (assert) {
+  withFeature('dashboard');
+  dashboardPage.visit();
 
-skip('Dashboard pagination works', function () {
-
-
+  andThen(() => {
+    assert.ok(dashboardPage.pagination.isVisible, 'pagination component renders');
+  });
 });
