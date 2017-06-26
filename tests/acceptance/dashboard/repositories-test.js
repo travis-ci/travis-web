@@ -105,7 +105,7 @@ skip('filtering repos', function (assert) {
 
 skip('triggering a build');
 
-test('Dashboard pagination works', function (assert) {
+skip('Dashboard pagination works', function (assert) {
   withFeature('dashboard');
   dashboardPage.visit();
 
