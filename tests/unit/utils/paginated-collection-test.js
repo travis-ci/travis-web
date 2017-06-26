@@ -32,5 +32,4 @@ test('takes content and populates the pagination property accordingly', function
 
   assert.equal(collection.get('pagination.currentPage'), 1, 'calculates correct current page');
   assert.equal(collection.get('pagination.numberOfPages'), 5, 'calculates correct total number of pages');
-
 });

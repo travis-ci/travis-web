@@ -104,3 +104,8 @@ skip('filtering repos', function (assert) {
 skip('triggering a build', function () {
 
 });
+
+skip('Dashboard pagination works', function () {
+
+
+});
