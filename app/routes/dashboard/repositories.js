@@ -17,7 +17,8 @@ export default TravisRoute.extend({
   model() {
     return Ember.RSVP.hash({
       repos: this.store.query('repo', {
-        active: true
+        active: true,
+        sort_by: 'current_build:desc'
       }),
       accounts: this.store.query('account', {
         all: true
