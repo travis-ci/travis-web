@@ -90,8 +90,15 @@ export default function () {
       };
     }
 
+    let repos = schema.repositories.all();
+
+    let starred = request.queryParams['starred'];
+    if (starred) {
+      repos = repos.filter(repo => repo.starred);
+    }
+
     // standard v3 response returning all repositories
-    return schema.repositories.all();
+    return repos;
   });
 
   this.get('/repo/:slug_or_id', function (schema, request) {
@@ -329,29 +336,7 @@ export default function () {
   });
 
   this.get('/user/:user_id/beta_features', function (schema) {
-    let features = schema.features.all();
-    if (features.models.length) {
-      return this.serialize(features);
-    } else {
-      schema.db.features.insert([
-        {
-          name: 'Dashboard',
-          description: 'UX improvements over the current implementation',
-          enabled: false
-        },
-        {
-          name: 'Show your Pride',
-          description: 'Let 🌈 in your heart (and Travis CI)',
-          enabled: false
-        },
-        {
-          name: 'Comic Sans',
-          description: 'Don\'t you miss those days?',
-          enabled: false
-        }
-      ]);
-      return this.serialize(schema.features.all());
-    }
+    return this.serialize(schema.features.all());
   });
 
   this.put('/user/:user_id/beta_feature/:feature_id', function (schema, request) {
@@ -359,6 +344,16 @@ export default function () {
     let requestBody = JSON.parse(request.requestBody);
     feature.update('enabled', requestBody.enabled);
     return this.serialize(feature);
+  });
+
+  this.post('/repo/:repo_id/star', function (schema, request) {
+    let repo = schema.repositories.find(request.params.repo_id);
+    repo.update('starred', true);
+  });
+
+  this.post('/repo/:repo_id/unstar', function (schema, request) {
+    let repo = schema.repositories.find(request.params.repo_id);
+    repo.update('starred', false);
   });
 }
 

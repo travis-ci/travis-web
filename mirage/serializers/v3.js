@@ -21,10 +21,32 @@ export default JSONAPISerializer.extend({
   },
 
   serializeCollection(data, request, options) {
-    const type = pluralize(data.modelName),
-      pagination = {
-        count: data.models.length
-      };
+    let type = pluralize(data.modelName),
+      count = data.models.length,
+      offset = request.queryParams.offset || 0,
+      limit = request.queryParams.limit || 10,
+      isFirst = false,
+      isLast = false;
+
+    if (offset == 0) {
+      isFirst = true;
+    }
+
+    const pagination = {
+      count: count,
+      offset: offset,
+      limit: limit,
+      is_first: isFirst,
+      is_last: isLast
+    };
+
+    if (offset) {
+      data = data.slice(offset);
+    }
+
+    if (limit) {
+      data = data.slice(0, limit);
+    }
 
     return {
       '@href': this.hrefForCollection(type, data, request),
@@ -67,8 +89,8 @@ export default JSONAPISerializer.extend({
         result['id'] = this.normalizeId(model, model.attrs.id);
       } else if (relationship && relationship.modelName) {
         // we're dealing with relationship
-        let relationType = singularize(relationship.modelName),
-          serializer = this.serializerFor(relationType);
+        let relationType = singularize(relationship.modelName);
+        let serializer = this.serializerFor(relationType);
 
         let serializeOptions = {};
 
