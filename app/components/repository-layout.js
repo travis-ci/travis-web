@@ -5,6 +5,7 @@ const { service } = Ember.inject;
 
 export default Ember.Component.extend({
   statusImages: service(),
+  popup: service(),
 
   @computed('repo.slug', 'repo.defaultBranch.name')
   statusImageUrl(slug, branchName) {
