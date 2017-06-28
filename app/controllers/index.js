@@ -38,4 +38,6 @@ export default Ember.Controller.extend({
   @alias('tabStates.mainTab') tab: null,
 
   @alias('repo.currentBuild') build: null,
+
+  @alias('build.jobs.firstObject') job: null,
 });
