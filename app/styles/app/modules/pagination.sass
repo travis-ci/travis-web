@@ -1,0 +1,40 @@
+.pagination-navigation
+  display: flex
+  justify-content: center
+
+  ul
+    display: flex
+    align-items: baseline
+    padding: 0
+    list-style: none
+
+  li
+    margin: 0 .5em
+
+.pagination-button
+  padding: .4em .5em
+  border: solid 1px $pebble-grey
+  border-radius: 2px
+  text-transform: uppercase
+  &:hover,
+  &:active
+    color: $oxide-blue
+    border-color: $oxide-blue
+
+
+.pagination-link
+  display: inline-block
+  width: 2.5em
+  height: 2.5em
+  line-height: 2.5
+  border-radius: 50%
+  text-align: center
+  border: solid 1px transparent
+  &:hover,
+  &:active
+    color: $oxide-blue
+    border-color: $oxide-blue
+  &.active
+    color: $oxide-blue
+    font-weight: 600
+    background-color: rgba($agate-blue, .3)
