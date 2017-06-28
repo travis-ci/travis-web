@@ -73,34 +73,56 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
   });
 });
 
-skip('visiting /dashboard/ with feature flag enabled', function (assert) {
-  withFeature('dashboard');
+test('visiting /dashboard/ with feature flag enabled', function (assert) {
+  server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   visit('/');
 
   andThen(() => {
     assert.equal(currentRouteName(), 'dashboard.repositories');
     assert.equal(currentURL(), '/dashboard', 'we go to dashboard');
-    assert.equal(dashboardPage.activeRepos().count, 4, 'lists all repos of the user');
-    assert.equal(dashboardPage.activeRepos(0).owner, 'travis-ci', 'displays owner of repo');
-    assert.equal(dashboardPage.activeRepos(0).repoName, 'travis-web', 'displays name of repo');
-    // assert.equal(dashboardPage.activeRepos(0).defaultBranch, 'default passed', 'displays name and status of default branch');
-    // assert.equal(dashboardPage.activeRepos(0).lastBuild, '#2 failed', 'displays number and status of last build');
-    assert.equal(dashboardPage.starredRepos().count, 1, 'lists starred repos in correct section');
-
-    percySnapshot(assert);
   });
 });
 
-skip('filtering repos', function (assert) {
-  withFeature('dashboard');
-  visit('/dashboard/');
-  click(dashboardPage.accountFilter);
+skip('starring a repo', function (assert) {
+  server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
+  dashboardPage.visit();
 
   andThen(() => {
-    assert.equal(dashboardPage.activeRepos().count, 2, 'filters repos for accounts');
+    assert.equal(dashboardPage.starredRepos().count, 1, 'there is one starred repo');
+
+    dashboardPage.activeRepos(3).clickStarButton();
+
+    andThen(() => {
+      assert.equal(dashboardPage.starredRepos().count, 2, 'there are two starred repos');
+      pauseTest();
+    });
   });
 });
 
-skip('triggering a build', function () {
+skip('filtering repos');
 
+skip('triggering a build');
+
+test('Dashboard pagination works', function (assert) {
+  server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
+  server.createList('repository', 12);
+
+  dashboardPage.visit();
+
+  andThen(() => {
+    assert.equal(dashboardPage.starredRepos().count, 1, 'filters starred repos');
+    assert.equal(dashboardPage.activeRepos().count, 10, 'lists all active repos');
+    assert.ok(dashboardPage.paginationIsVisible, 'pagination component renders');
+    assert.equal(dashboardPage.paginationLinks().count, 3, 'calcs and displays pagination links');
+    assert.equal(dashboardPage.paginationLinks(2).label, 'next', 'also displays next link');
+
+    percySnapshot(assert);
+
+    dashboardPage.paginationLinks(1).page();
+
+    andThen(() => {
+      assert.equal(dashboardPage.starredRepos().count, 1, 'still lists starred repos on top');
+      assert.equal(dashboardPage.activeRepos().count, 6, 'lists other repos on the 2nd page');
+    });
+  });
 });
