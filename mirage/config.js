@@ -295,11 +295,6 @@ export default function () {
       builds = builds.filter(build => (build.branch && build.branch.attrs.name) === branchName);
     }
 
-    let offset = request.queryParams.offset;
-    if (offset) {
-      builds = builds.slice(offset);
-    }
-
     if (request.queryParams.event_type !== 'pull_request') {
       builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
     } else {
@@ -308,7 +303,7 @@ export default function () {
 
     if (!request.queryParams.sort_by) {
       builds = builds.sort((a, b) => {
-        return parseInt(a.id) > parseInt(b.id) ? -1 : 1;
+        return parseInt(a.number) > parseInt(b.number) ? -1 : 1;
       });
     } else if (request.queryParams.sort_by === 'finished_at:desc') {
       builds = builds.sort((a, b) => {
