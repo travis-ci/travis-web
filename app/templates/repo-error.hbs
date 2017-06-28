@@ -6,12 +6,9 @@
   {{flash-display}}
 
   <div class="main">
-    <div class="content-page">
-      <img src="/images/logos/TravisCI-Mascot-1.svg"  alt="Travis CI mascot" width="200" height="200">
-      <div class="not-found" style="margin-top:20px;">
-        The repository at {{model.slug}} was not found.
-      </div>
-    </div>
+    {{error-messages/missing-notice
+      title="We couldn't find that repository"
+      subtitle="Perhaps something was misspelled or mislinked?"}}
   </div>
 
   <footer class="footer">

@@ -32,5 +32,6 @@
     {{/if}}
   </div>
 {{else}}
-  {{no-builds tab=tab}}
+  {{error-messages/missing-notice
+    title="No other branches for this repository"}}
 {{/if}}

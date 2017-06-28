@@ -3,7 +3,11 @@
     {{#each builds as |build|}}
       {{builds-item build=build}}
     {{else}}
-      {{no-builds repo=repo tab=tab}}
+      {{#error-messages/missing-notice
+        title="No builds for this repository"
+        subtitle="Want to start testing this project on Travis CI?"}}
+        <a href="http://docs.travis-ci.com/user/getting-started/" class="button" title="Travis documentation on getting set up">Read the Docs on Getting Started</a>
+      {{/error-messages/missing-notice}}
     {{/each}}
   </ul>
   {{#if displayShowMoreButton}}
