@@ -12,10 +12,19 @@ export default Ember.Component.extend({
   didInsertElement() {
     let id = this.get('repo.id');
     let store = this.get('store');
-    const model = store.peekRecord('ssh_key', id)
-      || store.createRecord('ssh_key', { id });
+    const currentKey = store.peekRecord('ssh_key', id);
+    if (currentKey) {
+      store.unloadRecord(currentKey);
+      // It seems there's a bug in unloadRecord that prevents it from fully
+      // clearing the store, so we need to do more cleanup
+      let recordMap = store._internalModelsFor('ssh-key');
+      let internalModel = recordMap.get(currentKey.get('id'));
+      if (internalModel) {
+        recordMap.remove(internalModel, currentKey.get('id'));
+      }
+    }
 
-    return this.set('model', model);
+    return this.set('model', store.createRecord('ssh_key', { id }));
   },
 
   isValid() {
