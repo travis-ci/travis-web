@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import computed, { alias } from 'ember-computed-decorators';
+import { alias } from 'ember-computed-decorators';
 
 const { service, controller } = Ember.inject;
 
@@ -9,12 +9,6 @@ export default Ember.Controller.extend({
   statusImages: service(),
 
   repos: controller(),
-
-  @computed('repo.slug', 'repo.defaultBranch.name')
-  statusImageUrl(slug, branchName) {
-    return this.get('statusImages').imageUrl(slug, branchName);
-  },
-
 
   @alias('repos.repos.firstObject') repo: null,
 

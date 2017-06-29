@@ -32,13 +32,6 @@ export default Ember.Controller.extend({
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
   }),
 
-  statusImageUrl: Ember.computed('repo.slug', 'repo.defaultBranch.name', function () {
-    return this.get('statusImages').imageUrl(
-      this.get('repo.slug'),
-      this.get('repo.defaultBranch.name')
-    );
-  }),
-
   showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
     return this.get('repo.currentBuild.id') && this.get('repo.active');
   }),
