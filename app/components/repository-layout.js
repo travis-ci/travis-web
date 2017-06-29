@@ -12,18 +12,6 @@ export default Ember.Component.extend({
     return this.get('statusImages').imageUrl(slug, branchName);
   },
 
-  @computed('build.jobs.@each.{config}')
-  jobsLoaded(jobs) {
-    if (jobs) {
-      return jobs.isEvery('config');
-    }
-  },
-
-  @computed('build.jobs.[]')
-  noJobsError(jobs) {
-    return jobs.length < 1;
-  },
-
   actions: {
     statusImages() {
       this.get('popup').open('status-images');
