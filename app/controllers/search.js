@@ -17,16 +17,4 @@ export default Ember.Controller.extend({
   @alias('repo.currentBuild') build: null,
 
   @alias('repo.currentBuild.jobs.firstObject') job: null,
-
-  @computed('build.jobs.@each.{config}')
-  jobsLoaded(jobs) {
-    if (jobs) {
-      return jobs.isEvery('config');
-    }
-  },
-
-  @computed('build.jobs.[]')
-  noJobsError(jobs) {
-    return jobs.length < 1;
-  },
 });
