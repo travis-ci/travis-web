@@ -8,7 +8,6 @@ const { alias } = Ember.computed;
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
   popup: service(),
-  statusImages: service(),
 
   jobController: controller('job'),
   buildController: controller('build'),
@@ -34,13 +33,6 @@ export default Ember.Controller.extend({
   showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
     return this.get('repo.currentBuild.id') && this.get('repo.active');
   }),
-
-  actions: {
-    statusImages() {
-      this.get('popup').open('status-images');
-      return false;
-    }
-  },
 
   slug: Ember.computed('repo.slug', function () {
     return this.get('repo.slug');
