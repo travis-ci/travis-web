@@ -8,7 +8,6 @@ const { alias } = Ember.computed;
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
   popup: service(),
-  externalLinks: service(),
   statusImages: service(),
 
   jobController: controller('job'),
@@ -151,8 +150,4 @@ export default Ember.Controller.extend({
     tab === 'current' ? 'build' : tab;
     return this.set('tab', tab);
   },
-
-  urlGithub: Ember.computed('repo.slug', function () {
-    return this.get('externalLinks').githubRepo(this.get('repo.slug'));
-  })
 });
