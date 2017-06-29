@@ -28,30 +28,4 @@ export default Ember.Controller.extend(GithubUrlProperties, Polling, {
       return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
-
-  noJobsError: Ember.computed('build.jobs', function () {
-    if (this.get('build.jobs.length') === 0) {
-      return true;
-    }
-  }),
-
-  jobsLoaded: Ember.computed('build.jobs.@each.config', function () {
-    let jobs = this.get('build.jobs');
-    if (jobs) {
-      return jobs.isEvery('config');
-    }
-  }),
-
-  loading: Ember.computed('build.isLoading', function () {
-    return this.get('build.isLoading');
-  }),
-
-  buildStateDidChange: Ember.observer('build.state', function () {
-    if (this.get('sendFaviconStateChanges')) {
-      return this.send('faviconStateDidChange', this.get('build.state'));
-    }
-  }),
-
-  buildStagesSort: ['number'],
-  sortedBuildStages: Ember.computed.sort('build.stages', 'buildStagesSort')
 });

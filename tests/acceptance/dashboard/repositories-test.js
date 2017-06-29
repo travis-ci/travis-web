@@ -94,7 +94,6 @@ skip('starring a repo', function (assert) {
 
     andThen(() => {
       assert.equal(dashboardPage.starredRepos().count, 2, 'there are two starred repos');
-      pauseTest();
     });
   });
 });
