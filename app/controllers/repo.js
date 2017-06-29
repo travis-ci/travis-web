@@ -30,10 +30,6 @@ export default Ember.Controller.extend({
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
   }),
 
-  showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
-    return this.get('repo.currentBuild.id') && this.get('repo.active');
-  }),
-
   slug: Ember.computed('repo.slug', function () {
     return this.get('repo.slug');
   }),
