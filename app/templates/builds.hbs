@@ -1,4 +1,4 @@
-{{#if isLoaded}}
+{{#if model.isLoaded}}
   <ul class="build-list">
     {{#each builds as |build|}}
       {{builds-item build=build}}
@@ -9,7 +9,7 @@
   {{#if displayShowMoreButton}}
     <p>
       {{show-more-button isLoading=isLoading showMore=(action 'showMoreBuilds')}}
-      {{#if isLoading}}
+      {{#if model.isLoading}}
         {{loading-indicator}}
       {{/if}}
     </p>
