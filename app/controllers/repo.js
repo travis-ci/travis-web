@@ -30,14 +30,6 @@ export default Ember.Controller.extend({
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
   }),
 
-  slug: Ember.computed('repo.slug', function () {
-    return this.get('repo.slug');
-  }),
-
-  isLoading: Ember.computed('repo.isLoading', function () {
-    return this.get('repo.isLoading');
-  }),
-
   init() {
     this._super(...arguments);
     if (!Ember.testing) {
