@@ -8,6 +8,16 @@ const { service } = Ember.inject;
 export default TravisRoute.extend(ScrollResetMixin, {
   store: service(),
   tabStates: service(),
+  repositories: service(),
+
+  activate(...args) {
+    this._super(args);
+
+    if (this.get('auth.signedIn')) {
+      this.get('tabStates').set('sidebarTab', 'owned');
+      this.get('repositories.requestOwnedRepositories').perform();
+    }
+  },
 
   titleToken(model) {
     return model.get('slug');
