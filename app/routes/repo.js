@@ -13,14 +13,6 @@ export default TravisRoute.extend(ScrollResetMixin, {
     return model.get('slug');
   },
 
-  renderTemplate(...args) {
-    this._super(args);
-    return this.render('repos', {
-      outlet: 'left',
-      into: 'repo'
-    });
-  },
-
   setupController(controller, model) {
     this.controllerFor('repos').activate(this.get('tabStates.sidebarTab'));
     if (model && !model.get) {
