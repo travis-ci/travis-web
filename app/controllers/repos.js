@@ -7,48 +7,6 @@ import config from 'travis/config/environment';
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
 
-var sortCallback = function (repo1, repo2) {
-  // this function could be made simpler, but I think it's clearer this way
-  // what're we really trying to achieve
-
-  var buildId1 = repo1.get('currentBuild.id');
-  var buildId2 = repo2.get('currentBuild.id');
-  var finishedAt1 = repo1.get('currentBuild.finishedAt');
-  var finishedAt2 = repo2.get('currentBuild.finishedAt');
-
-  if (!buildId1 && !buildId2) {
-    // if both repos lack builds, put newer repo first
-    return repo1.get('id') > repo2.get('id') ? -1 : 1;
-  } else if (buildId1 && !buildId2) {
-    // if only repo1 has a build, it goes first
-    return -1;
-  } else if (buildId2 && !buildId1) {
-    // if only repo2 has a build, it goes first
-    return 1;
-  }
-
-  if (finishedAt1) {
-    finishedAt1 = new Date(finishedAt1);
-  }
-  if (finishedAt2) {
-    finishedAt2 = new Date(finishedAt2);
-  }
-
-  if (finishedAt1 && finishedAt2) {
-    // if both builds finished, put newer first
-    return finishedAt1.getTime() > finishedAt2.getTime() ? -1 : 1;
-  } else if (finishedAt1 && !finishedAt2) {
-    // if repo1 finished, but repo2 didn't, put repo2 first
-    return 1;
-  } else if (finishedAt2 && !finishedAt1) {
-    // if repo2 finisher, but repo1 didn't, put repo1 first
-    return -1;
-  } else {
-    // none of the builds finished, put newer build first
-    return buildId1 > buildId2 ? -1 : 1;
-  }
-};
-
 export default Ember.Controller.extend({
   auth: service(),
   tabStates: service(),
@@ -75,28 +33,6 @@ export default Ember.Controller.extend({
       }
     }
   },
-
-  showSearchResults: task(function * () {
-    let query = this.get('search');
-
-    if (query === '') { return; }
-
-    const { searchDebounceRate } = config.intervals;
-    yield timeout(searchDebounceRate);
-
-    this.transitionToRoute('search', query.replace(/\//g, '%2F'));
-    this.get('tabStates').set('sidebarTab', 'search');
-  }).restartable(),
-
-  performSearchRequest: task(function * (query) {
-    if (!query) { return; }
-    this.set('search', query);
-    this.set('isLoaded', false);
-    yield(Repo.search(this.store, this.get('ajax'), query).then((reposRecordArray) => {
-      this.set('isLoaded', true);
-      this.set('_repos', reposRecordArray);
-    }));
-  }),
 
   tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
     return this.possiblyRedirectToGettingStartedPage();
@@ -238,28 +174,4 @@ export default Ember.Controller.extend({
   showRunningJobs: Ember.computed('tab', function () {
     return this.get('tab') === 'running';
   }),
-
-  repos: Ember.computed(
-    '_repos.[]',
-    '_repos.@each.currentBuildFinishedAt',
-    '_repos.@each.currentBuildId',
-    function () {
-      var repos = this.get('_repos');
-
-      if (repos && repos.toArray) {
-        repos = repos.toArray();
-      }
-
-      if (repos && repos.sort) {
-        let sorted = repos.sort(sortCallback);
-        return sorted;
-      } else {
-        if (Ember.isArray(repos)) {
-          return repos;
-        } else {
-          return [];
-        }
-      }
-    }
-  )
 });
