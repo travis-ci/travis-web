@@ -50,57 +50,17 @@ export default Ember.Controller.extend({
   },
 
   activate(action) {
-    console.log({action});
     this.stopObservingLastBuild();
-    return this[('view_' + action).camelize()]();
-  },
 
-  viewIndex() {
-    this.observeLastBuild();
-    return this.setMainTabTo('current');
-  },
+    const observesLastBuild = ['index', 'current'];
 
-  viewCurrent() {
-    this.observeLastBuild();
-    return this.setMainTabTo('current');
+    if (observesLastBuild.includes(action)) {
+      this.observeLastBuild();
+      this.set('tabStates.mainTab', 'current');
+    } else {
+      this.set('tabStates.mainTab', action);
+    }
   },
-
-  viewBuilds() {
-    return this.setMainTabTo('builds');
-  },
-
-  viewPullRequests() {
-    return this.setMainTabTo('pull_requests');
-  },
-
-  viewBranches() {
-    return this.setMainTabTo('branches');
-  },
-
-  viewBuild() {
-    return this.setMainTabTo('build');
-  },
-
-  viewJob() {
-    return this.setMainTabTo('job');
-  },
-
-  viewRequests() {
-    return this.setMainTabTo('requests');
-  },
-
-  viewCaches() {
-    return this.setMainTabTo('caches');
-  },
-
-  viewRequest() {
-    return this.setMainTabTo('request');
-  },
-
-  viewSettings() {
-    return this.setMainTabTo('settings');
-  },
-
   currentBuildDidChange() {
     return Ember.run.scheduleOnce('actions', this, this._currentBuildDidChange);
   },
@@ -125,10 +85,5 @@ export default Ember.Controller.extend({
   observeLastBuild() {
     this.currentBuildDidChange();
     return this.addObserver('repo.currentBuild', this, 'currentBuildDidChange');
-  },
-
-  setMainTabTo(tab) {
-    tab === 'current' ? 'build' : tab;
-    this.set('tabStates.mainTab', tab);
   },
 });
