@@ -53,6 +53,7 @@ export default Ember.Controller.extend({
   auth: service(),
   tabStates: service(),
   ajax: service(),
+  repositories: service(),
   updateTimesService: service('updateTimes'),
 
   actions: {
@@ -167,7 +168,7 @@ export default Ember.Controller.extend({
   }),
 
   updateTimes() {
-    let records = this.get('repos');
+    let records = this.get('repositories.repos');
 
     let callback = (record) => { return record.get('currentBuild'); };
     records = records.filter(callback).map(callback);

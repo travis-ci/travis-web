@@ -5,6 +5,7 @@ const { service } = Ember.inject;
 export default Ember.Route.extend({
   auth: service(),
   tabStates: service(),
+  repositories: service(),
 
   redirect() {
     if (this.get('auth.signedIn')) {
@@ -28,7 +29,7 @@ export default Ember.Route.extend({
     if (this.get('auth.signedIn')) {
       this.get('tabStates').set('sidebarTab', 'owned');
       this.set('tabStates.mainTab', 'current');
-      this.controllerFor('repos').activate('owned');
+      this.get('repositories.requestOwnedRepositories').perform();
     }
   },
 

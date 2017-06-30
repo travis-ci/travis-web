@@ -98,15 +98,16 @@ export default Ember.Service.extend({
     } else {
       let user = this.get('currentUser');
       if (user) {
-        yield user.get('_rawPermissions').then((data) => {
-          Repo.accessibleBy(this.get('store'), data.pull)
-            .then((reposRecordArray) => {
-              this.set('_repos', reposRecordArray);
-              this.set('ownedRepos', reposRecordArray);
-            });
-        });
+        const permissions = yield user.get('_rawPermissions');
+        const repositories = yield Repo.accessibleBy(this.get('store'), permissions.pull);
+        this.set('_repos', repositories);
+        this.set('ownedRepos', repositories);
       }
     }
+  }).drop(),
+
+  noResults: Ember.computed('loadingData', 'repos', function () {
+    return !this.get('loadingData') && Ember.isEmpty(this.get('repos'));
   }),
 
   repos: Ember.computed(

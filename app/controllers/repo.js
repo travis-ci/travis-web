@@ -7,13 +7,14 @@ const { alias } = Ember.computed;
 
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
+  repositories: service(),
   popup: service(),
 
   jobController: controller('job'),
   buildController: controller('build'),
   buildsController: controller('builds'),
   reposController: controller('repos'),
-  repos: alias('reposController.repos'),
+  repos: alias('repositories.repos'),
   currentUser: alias('auth.currentUser'),
 
   classNames: ['repo'],
@@ -26,9 +27,7 @@ export default Ember.Controller.extend({
     this.set('repo', null);
   },
 
-  isEmpty: Ember.computed('repos.isLoaded', 'repos.length', function () {
-    return this.get('repos.isLoaded') && this.get('repos.length') === 0;
-  }),
+  isEmpty: Ember.computed.alias('repositories.noResults'),
 
   init() {
     this._super(...arguments);
