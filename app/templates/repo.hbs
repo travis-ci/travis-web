@@ -8,7 +8,7 @@
 
     <div class="wrapper-main">
       <div id="main" role="main">
-        {{#if isEmpty}}
+        {{#if repositories.noResults}}
           {{repos-empty}}
         {{else}}
           {{#if repo.isLoaded}}

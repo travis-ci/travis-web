@@ -28,8 +28,6 @@ export default Ember.Controller.extend({
     this.set('repo', null);
   },
 
-  isEmpty: Ember.computed.alias('repositories.noResults'),
-
   init() {
     this._super(...arguments);
     if (!Ember.testing) {
