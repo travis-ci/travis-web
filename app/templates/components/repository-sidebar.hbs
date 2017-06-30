@@ -22,7 +22,7 @@
   </div>
 {{else}}
   <div class="travistab-body sidebar-list">
-    {{#if isLoading}}
+    {{#if repositories.loadingData}}
       {{loading-indicator center=true}}
     {{else}}
       {{repos-list repos=repositories.repos selectedRepo=selectedRepo}}

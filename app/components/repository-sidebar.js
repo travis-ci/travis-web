@@ -110,8 +110,6 @@ export default Ember.Component.extend({
     this.set('ownedRepos', null);
   },
 
-  isLoading: Ember.computed.alias('repositories.loadingData'),
-
   viewOwned() {
     const taskInstance = this.get('repositories.requestOwnedRepositories').perform();
     this.set('currentTaskInstance', taskInstance);
