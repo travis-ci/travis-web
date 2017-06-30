@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
   repositories: service(),
   popup: service(),
+  tabStates: service(),
 
   jobController: controller('job'),
   buildController: controller('build'),
@@ -49,54 +50,55 @@ export default Ember.Controller.extend({
   },
 
   activate(action) {
+    console.log({action});
     this.stopObservingLastBuild();
     return this[('view_' + action).camelize()]();
   },
 
   viewIndex() {
     this.observeLastBuild();
-    return this.connectTab('current');
+    return this.setMainTabTo('current');
   },
 
   viewCurrent() {
     this.observeLastBuild();
-    return this.connectTab('current');
+    return this.setMainTabTo('current');
   },
 
   viewBuilds() {
-    return this.connectTab('builds');
+    return this.setMainTabTo('builds');
   },
 
   viewPullRequests() {
-    return this.connectTab('pull_requests');
+    return this.setMainTabTo('pull_requests');
   },
 
   viewBranches() {
-    return this.connectTab('branches');
+    return this.setMainTabTo('branches');
   },
 
   viewBuild() {
-    return this.connectTab('build');
+    return this.setMainTabTo('build');
   },
 
   viewJob() {
-    return this.connectTab('job');
+    return this.setMainTabTo('job');
   },
 
   viewRequests() {
-    return this.connectTab('requests');
+    return this.setMainTabTo('requests');
   },
 
   viewCaches() {
-    return this.connectTab('caches');
+    return this.setMainTabTo('caches');
   },
 
   viewRequest() {
-    return this.connectTab('request');
+    return this.setMainTabTo('request');
   },
 
   viewSettings() {
-    return this.connectTab('settings');
+    return this.setMainTabTo('settings');
   },
 
   currentBuildDidChange() {
@@ -125,8 +127,8 @@ export default Ember.Controller.extend({
     return this.addObserver('repo.currentBuild', this, 'currentBuildDidChange');
   },
 
-  connectTab(tab) {
+  setMainTabTo(tab) {
     tab === 'current' ? 'build' : tab;
-    return this.set('tab', tab);
+    this.set('tabStates.mainTab', tab);
   },
 });
