@@ -1,0 +1,31 @@
+<div class="search search--sidebar">
+  <div class="search-inner">
+    {{input
+      value=(readonly repositories.searchQuery)
+      placeholder="Search all repositories"
+      key-up="onQueryChange"
+    }}
+  </div>
+</div>
+
+{{repos-list-tabs startedJobsCount=startedJobsCount allJobsCount=allJobsCount showMyRepositories=(action "showMyRepositories") showRunningJobs=(action "showRunningJobs")}}
+
+{{#if showRunningJobs}}
+  <div class="travistab-body sidebar-list">
+    <div>
+      {{running-jobs jobs=runningJobs}}
+    </div>
+    <hr class="sidebar-seperator">
+    <div>
+      {{queued-jobs jobs=queuedJobs}}
+    </div>
+  </div>
+{{else}}
+  <div class="travistab-body sidebar-list">
+    {{#if isLoading}}
+      {{loading-indicator center=true}}
+    {{else}}
+      {{repos-list repos=repositories.repos selectedRepo=selectedRepo}}
+    {{/if}}
+  </div>
+{{/if}}
