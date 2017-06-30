@@ -21,11 +21,6 @@ export default Ember.Route.extend({
       Ember.$('body').attr('id', 'home');
 
       this._super(args);
-
-      this.render('repos', {
-        outlet: 'left',
-        into: 'index'
-      });
     } else {
       return this._super(args);
     }
