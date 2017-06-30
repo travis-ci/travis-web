@@ -8,10 +8,6 @@ export default TravisRoute.extend({
 
   renderTemplate(...args) {
     this._super(args);
-    return this.render('repos', {
-      outlet: 'left',
-      into: 'getting_started'
-    });
   },
 
   beforeModel() {
