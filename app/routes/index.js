@@ -19,11 +19,8 @@ export default Ember.Route.extend({
   renderTemplate(...args) {
     if (this.get('auth.signedIn')) {
       Ember.$('body').attr('id', 'home');
-
-      this._super(args);
-    } else {
-      return this._super(args);
     }
+    return this._super(args);
   },
 
   activate(...args) {
