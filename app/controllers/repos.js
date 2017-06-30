@@ -18,20 +18,6 @@ export default Ember.Controller.extend({
     activate: function (name) {
       return this.activate(name);
     },
-
-    showRunningJobs: function () {
-      this.get('tabStates').set('sidebarTab', 'running');
-      return this.activate('running');
-    },
-
-    showMyRepositories: function () {
-      this.get('tabStates').set('sidebarTab', 'owned');
-      if (this.get('tab') === 'running') {
-        return this.activate('owned');
-      } else {
-        return this.transitionToRoute('index');
-      }
-    }
   },
 
   tabOrIsLoadedDidChange: Ember.observer('isLoaded', 'tab', 'repos.length', function () {
