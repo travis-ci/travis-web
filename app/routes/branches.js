@@ -5,6 +5,7 @@ import config from 'travis/config/environment';
 const { service } = Ember.inject;
 
 export default TravisRoute.extend({
+  repositories: service(),
   tabStates: service(),
 
   model(/* params*/) {
@@ -32,6 +33,10 @@ export default TravisRoute.extend({
   },
 
   activate() {
-    this.controllerFor('repo').activate('branches');
+    if (this.get('auth.signedIn')) {
+      this.set('tabStates.sidebarTab', 'owned');
+      this.set('tabStates.mainTab', 'branches');
+      this.get('repositories.requestOwnedRepositories').perform();
+    }
   }
 });
