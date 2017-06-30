@@ -56,7 +56,7 @@ const App = Ember.Application.extend(Ember.Evented, {
     if (!user.channels) {
       return;
     }
-    channels = user.channels.splice(0, 100);
+    channels = user.channels.splice(0, 1000);
     if (proVersion) {
       channels = channels.map(function (channel) {
         if (channel.match(/^private-/)) {
