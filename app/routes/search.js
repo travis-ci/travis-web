@@ -6,15 +6,6 @@ export default Ember.Route.extend({
   tabStates: service(),
   auth: service(),
 
-  renderTemplate() {
-    this._super(...arguments);
-
-    this.render('repos', {
-      into: 'search',
-      outlet: 'left',
-    });
-  },
-
   redirect() {
     if (!this.get('auth.signedIn')) {
       this.transitionTo('index');
