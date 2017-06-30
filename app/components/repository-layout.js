@@ -5,6 +5,7 @@ const { service } = Ember.inject;
 
 export default Ember.Component.extend({
   statusImages: service(),
+  externalLinks: service(),
   popup: service(),
 
   @computed('repo.slug', 'repo.defaultBranch.name')
@@ -12,16 +13,9 @@ export default Ember.Component.extend({
     return this.get('statusImages').imageUrl(slug, branchName);
   },
 
-  @computed('build.jobs.@each.{config}')
-  jobsLoaded(jobs) {
-    if (jobs) {
-      return jobs.isEvery('config');
-    }
-  },
-
-  @computed('build.jobs.[]')
-  noJobsError(jobs) {
-    return jobs.length < 1;
+  @computed('repo.slug')
+  urlGithub(slug) {
+    return this.get('externalLinks').githubRepo(slug);
   },
 
   actions: {
