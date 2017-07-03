@@ -59,6 +59,7 @@ export default Ember.Controller.extend({
       this.set('tabStates.mainTab', action);
     }
   },
+
   currentBuildDidChange() {
     return Ember.run.scheduleOnce('actions', this, this._currentBuildDidChange);
   },
