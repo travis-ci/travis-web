@@ -5,7 +5,7 @@ import colorForState from 'travis/utils/color-for-state';
 const { service } = Ember.inject;
 
 export default Ember.Component.extend(Polling, {
-  routing: service('-routing'),
+  router: service(),
   tagName: 'li',
   pollModels: 'repo',
   classNames: ['repo'],

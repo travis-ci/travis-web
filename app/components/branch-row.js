@@ -4,7 +4,7 @@ import config from 'travis/config/environment';
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
-  routing: service('-routing'),
+  router: service(),
   permissions: service(),
   externalLinks: service(),
 
@@ -69,7 +69,7 @@ export default Ember.Component.extend({
 
   actions: {
     viewAllBuilds() {
-      return this.get('routing').transitionTo('builds');
+      return this.get('router').transitionTo('builds');
     }
   }
 });
