@@ -1,6 +1,4 @@
 import Ember from 'ember';
-import config from 'travis/config/environment';
-import { task } from 'ember-concurrency';
 
 const { service } = Ember.inject;
 
