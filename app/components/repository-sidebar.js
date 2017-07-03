@@ -111,14 +111,13 @@ export default Ember.Component.extend({
   },
 
   viewOwned() {
-    const taskInstance = this.get('repositories.requestOwnedRepositories').perform();
-    this.set('currentTaskInstance', taskInstance);
+    return this.get('repositories.requestOwnedRepositories').perform();
   },
 
   viewRunning() {},
 
   viewSearch() {
-    this.get('repositories.performSearchRequest').perform();
+    return this.get('repositories.performSearchRequest').perform();
   },
 
   noReposMessage: Ember.computed('tab', function () {

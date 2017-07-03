@@ -29,7 +29,6 @@ export default Ember.Route.extend({
     if (this.get('auth.signedIn')) {
       this.get('tabStates').set('sidebarTab', 'owned');
       this.set('tabStates.mainTab', 'current');
-      this.get('repositories.requestOwnedRepositories').perform();
     }
   },
 
