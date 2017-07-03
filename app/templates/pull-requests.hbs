@@ -3,7 +3,7 @@
     {{#each builds as |build|}}
       {{builds-item build=build}}
     {{else}}
-      {{no-builds}}
+      {{no-builds title="No pull request builds for this repository"}}
     {{/each}}
   </ul>
   {{#if displayShowMoreButton}}

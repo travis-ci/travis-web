@@ -62,15 +62,11 @@
     </svg>
   </figure>
 
-  {{#if isPR}}
-    <h2 class="page-title">No pull request builds for this repository</h2>
+  {{#if title}}
+    <h2 class="page-title">{{title}}</h2>
   {{else}}
-    {{#if isBranch}}
-      <h2 class="page-title">No other branches for this repository</h2>
-    {{else}}
-        <h2 class="page-title">No builds for this repository</h2>
-        <p class="page-notice">Want to start testing this project on Travis CI?</p>
-        <a href="http://docs.travis-ci.com/user/getting-started/" class="button" title="Travis documentation on getting set up">Read the Docs on Getting Started</a>
-    {{/if}}
+    <h2 class="page-title">No builds for this repository</h2>
+    <p class="page-notice">Want to start testing this project on Travis CI?</p>
+    <a href="http://docs.travis-ci.com/user/getting-started/" class="button" title="Travis documentation on getting set up">Read the Docs on Getting Started</a>
   {{/if}}
 </div>
