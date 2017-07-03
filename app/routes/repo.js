@@ -14,6 +14,9 @@ export default TravisRoute.extend(ScrollResetMixin, {
     this._super(args);
 
     if (this.get('auth.signedIn')) {
+      if (this.get('features.proVersion') && this.get('tabStates.sidebarTab') === 'running') {
+        return;
+      }
       this.get('tabStates').set('sidebarTab', 'owned');
       this.get('repositories.requestOwnedRepositories').perform();
     }
