@@ -8,14 +8,10 @@
 
       <div class="wrapper-main">
         <div id="main" role="main">
-          {{#if isEmpty}}
-            {{repos-empty}}
+          {{#if repo.isLoaded}}
+            {{repository-layout repo=repo build=build job=job tab=tab}}
           {{else}}
-            {{#if repo.isLoaded}}
-              {{repository-layout repo=repo build=build job=job tab=tab}}
-            {{else}}
-              {{loading-indicator}}
-            {{/if}}
+            {{loading-indicator}}
           {{/if}}
 
           {{status-images repo=repo}}
