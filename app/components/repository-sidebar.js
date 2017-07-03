@@ -67,7 +67,7 @@ export default Ember.Component.extend({
     let result;
 
     let runningStates = ['queued', 'started', 'received'];
-    result = this.get('store').filter('job', {}, job => runningStates.contains(job.get('state')));
+    result = this.get('store').filter('job', {}, job => runningStates.includes(job.get('state')));
 
     result.set('isLoaded', false);
 
@@ -80,7 +80,7 @@ export default Ember.Component.extend({
     if (!this.get('features.proVersion')) { return []; }
 
     const queuedStates = ['created'];
-    let result = this.get('store').filter('job', job => queuedStates.contains(job.get('state')));
+    let result = this.get('store').filter('job', job => queuedStates.includes(job.get('state')));
     result.set('isLoaded', false);
     result.then(() => result.set('isLoaded', true));
 
