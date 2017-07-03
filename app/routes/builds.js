@@ -1,9 +1,20 @@
+import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
+const { service } = Ember.inject;
+
 export default TravisRoute.extend({
-  setupController(controller, model) {
-    this._super(...arguments);
-    this.controllerFor('repo').activate('builds');
+  repositories: service(),
+  tabStates: service(),
+
+  activate(...args) {
+    this._super(args);
+
+    if (this.get('auth.signedIn')) {
+      this.set('tabStates.sidebarTab', 'owned');
+      this.set('tabStates.mainTab', 'branches');
+      this.get('repositories.requestOwnedRepositories').perform();
+    }
   },
 
   titleToken() {
