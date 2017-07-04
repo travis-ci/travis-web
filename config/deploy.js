@@ -21,7 +21,11 @@ module.exports = function(deployTarget) {
     s3: {
       region: 'eu-west-1',
       accessKeyId: process.env.AWS_KEY,
-      secretAccessKey: process.env.AWS_SECRET
+      secretAccessKey: process.env.AWS_SECRET,
+      filePattern: '**/*.{js,css,png,gif,ico,jpg,map,xml,txt,svg,swf,eot,ttf,woff,woff2,otf,json}'
+    },
+    manifest: {
+      filePattern: '**/*.{js,css,png,gif,ico,jpg,map,xml,txt,svg,swf,eot,ttf,woff,woff2,json}'
     }
   };
 
