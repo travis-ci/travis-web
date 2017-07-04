@@ -60,7 +60,6 @@
     "ember-inline-svg": "0.1.11",
     "ember-keyboard-shortcuts": "0.3.0",
     "ember-load-initializers": "1.0.0",
-    "ember-lodash": "4.17.4",
     "ember-percy": "1.2.12",
     "ember-prism": "0.1.0",
     "ember-qunit-nice-errors": "1.1.2",
@@ -70,6 +69,8 @@
     "emberx-select": "~3.0.0",
     "glob": "^7.1.2",
     "loader.js": "^4.2.3",
+    "lodash.intersection": "4.4.0",
+    "lodash.pickby": "4.6.0",
     "morgan": "1.8.2",
     "visibilityjs": "^1.2.4"
   },

@@ -1,6 +1,6 @@
 /* global moment, Travis, Pusher */
 
-import _object from 'lodash/object';
+import pickBy from 'npm:lodash.pickby';
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import Log from 'travis/models/log';
@@ -52,7 +52,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
-      return _object.pickBy(config);
+      return pickBy(config);
     } else {
       let fetchConfig = () => {
         if (this.getCurrentState() !== 'root.loading') {
