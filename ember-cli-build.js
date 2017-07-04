@@ -10,7 +10,9 @@ module.exports = function () {
   } else {
     fingerprint = {
       exclude: ['images/emoji'],
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg'],
+      generateAssetMap: true,
+      fingerprintAssetMap: true
     };
 
     if (process.env.TRAVIS_ENTERPRISE) {
