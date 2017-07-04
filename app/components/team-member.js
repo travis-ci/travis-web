@@ -4,7 +4,8 @@ const countrySentenceOverrides = {
   newzealand: 'New Zealand',
   occupiedcanada: 'occupied Canada',
   uk: 'United Kingdom',
-  ukswitzerland: 'UK/Switzerland'
+  ukswitzerland: 'UK/Switzerland',
+  usa: 'United States of America'
 };
 
 function countryToSentence(country) {
