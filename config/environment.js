@@ -39,7 +39,11 @@ module.exports = function (environment) {
     ajaxPolling: false,
     logLimit: 10000,
     emojiPrepend: '',
-    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
+    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
+    ifa: {
+      enabled: true,
+      inline: false
+    }
   };
 
   ENV.featureFlags = {
