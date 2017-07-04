@@ -3,6 +3,7 @@ import Ember from 'ember';
 const countrySentenceOverrides = {
   newzealand: 'New Zealand',
   occupiedcanada: 'occupied Canada',
+  uk: 'United Kingdom',
   ukswitzerland: 'UK/Switzerland'
 };
 
