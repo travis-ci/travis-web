@@ -1,10 +1,12 @@
 <div class="search search--sidebar">
   <div class="search-inner">
     {{input
+      id="travis-search"
       value=(readonly repositories.searchQuery)
       placeholder="Search all repositories"
       key-up="onQueryChange"
     }}
+    <label for="travis-search">{{inline-svg 'icon-search' class="icon"}}</label>
   </div>
 </div>
 

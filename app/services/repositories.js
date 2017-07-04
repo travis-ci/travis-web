@@ -73,6 +73,7 @@ export default Ember.Service.extend({
   }),
 
   performSearchRequest: task(function* () {
+    console.log('performSearchRequest in repositories service');
     const searchRequest = Repo.search(this.get('store'), this.get('ajax'), this.get('searchQuery'));
     yield searchRequest.then((reposRecordArray) => {
       this.set('_repos', reposRecordArray);
@@ -80,6 +81,7 @@ export default Ember.Service.extend({
   }),
 
   showSearchResults: task(function* () {
+    console.log('showSearchResults called');
     let query = this.get('searchQuery');
 
     yield timeout(config.repositorySearchDebounceRate);
@@ -89,6 +91,7 @@ export default Ember.Service.extend({
     this.get('tabStates').set('sidebarTab', 'search');
 
     query = query.replace(/\//g, '%2F');
+    console.log('about to transition');
     this.get('routing.router').transitionTo('search', query);
   }).restartable(),
 
