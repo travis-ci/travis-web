@@ -53,9 +53,7 @@ export default Ember.Service.extend({
   store: service(),
   tabStates: service(),
   ajax: service(),
-  // TODO: Figure out a better way to support this
-  // -routing is private API for now
-  routing: service('-routing'),
+  router: service(),
 
   currentUser: alias('auth.currentUser'),
 
@@ -78,7 +76,7 @@ export default Ember.Service.extend({
     yield searchRequest.then((reposRecordArray) => {
       this.set('_repos', reposRecordArray);
     });
-  }),
+  }).drop(),
 
   showSearchResults: task(function* () {
     console.log('showSearchResults called');
@@ -92,7 +90,7 @@ export default Ember.Service.extend({
 
     query = query.replace(/\//g, '%2F');
     console.log('about to transition');
-    this.get('routing.router').transitionTo('search', query);
+    this.get('router').transitionTo('search', query);
   }).restartable(),
 
   requestOwnedRepositories: task(function* () {

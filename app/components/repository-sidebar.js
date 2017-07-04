@@ -42,14 +42,6 @@ export default Ember.Component.extend({
     }
   },
 
-  // repoController: controller('repo'),
-
-  // selectedRepo:
-  // Ember.computed('repoController.repo',
-  // 'repoController.repo.content', function () {
-  //   return this.get('repoController.repo.content') || this.get('repoController.repo');
-  // }),
-
   startedJobsCount: Ember.computed.alias('runningJobs.length'),
 
   allJobsCount: Ember.computed('startedJobsCount', 'queuedJobs.length', function () {
