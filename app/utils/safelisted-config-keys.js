@@ -1,9 +1,9 @@
-import _array from 'lodash/array';
+import intersection from 'npm:lodash.intersection';
 import configKeysMap from 'travis/utils/keys-map';
 
 export default function safelistedConfigKeys(config) {
   if (!config) {
     return [];
   }
-  return _array.intersection([Object.keys(config), Object.keys(configKeysMap)]);
+  return intersection([Object.keys(config), Object.keys(configKeysMap)]);
 }
