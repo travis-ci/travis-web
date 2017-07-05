@@ -24,10 +24,6 @@ export default Ember.Controller.extend({
   builds: Ember.computed.alias('buildsController.content'),
   job: Ember.computed.alias('jobController.job'),
 
-  reset() {
-    this.set('repo', null);
-  },
-
   init() {
     this._super(...arguments);
     if (!Ember.testing) {

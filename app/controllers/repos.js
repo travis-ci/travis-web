@@ -105,11 +105,6 @@ export default Ember.Controller.extend({
     return this[('view_' + tabState).camelize()](params);
   },
 
-  reset() {
-    this.set('_repos', null);
-    this.set('ownedRepos', null);
-  },
-
   viewOwned() {
     if (!Ember.isEmpty(this.get('ownedRepos'))) {
       return this.set('_repos', this.get('ownedRepos'));
