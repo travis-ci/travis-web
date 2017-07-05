@@ -44,14 +44,37 @@ TravisPusher.prototype.init = function (config, ajaxService) {
 };
 
 TravisPusher.prototype.subscribeAll = function (channels) {
-  var channel, i, len, results;
-  results = [];
-  for (i = 0, len = channels.length; i < len; i++) {
-    channel = channels[i];
-    results.push(this.subscribe(channel));
-  }
+  const results = [];
+  subscribeToChannelChunk(channels, 0, 1000, results, this);
+  // var channel, i, j, len, results;
+  // results = [];
+  // const chunkSize = 1000;
+  // for (i = 0, len = channels.length; i < len; i += chunkSize) {
+  //   const channelChunk = results.slice(i, i + chunkSize);
+  //
+  //   for (j = 0; j < chunkSize; j++) {
+  //     channel = channelChunk[j];
+  //     results.push(this.subscribe(channel));
+  //   }
+  // }
   return results;
 };
+
+function subscribeToChannelChunk(channels, chunk, chunkSize, results, target) {
+  const index = chunk * chunkSize;
+  const channelChunk = results.slice(index, index + chunkSize);
+
+  for (let i = 0; i < channelChunk; i++) {
+    const channel = channelChunk[i];
+    results.push(target.subscribe(channel));
+  }
+
+  if (chunk < channels.length / chunkSize) {
+    Ember.run.later(function () {
+      subscribeToChannelChunk(channels, chunk + 1, chunkSize, results, target);
+    }, 1000);
+  }
+}
 
 TravisPusher.prototype.unsubscribeAll = function (channels) {
   var channel, i, len, results;
