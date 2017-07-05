@@ -22,10 +22,6 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    activate: function (name) {
-      return this.activate(name);
-    },
-
     showRunningJobs: function () {
       this.get('tabStates').set('sidebarTab', 'running');
       return this.activate('running');
@@ -88,15 +84,6 @@ export default Ember.Component.extend({
     records = records.filter(callback).map(callback);
 
     this.get('updateTimesService').push(records);
-  },
-
-  activate(tab, params) {
-    this.set('sortProperties', ['sortOrder']);
-    let tabState = this.get('tabStates.sidebarTab');
-    this.set('tab', tabState);
-    // find the data based on tab
-    // tab == 'owned' => viewOwned invoked
-    return this[(`view_${tabState}`).camelize()](params);
   },
 
   viewOwned() {
