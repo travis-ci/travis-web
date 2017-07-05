@@ -88,7 +88,7 @@ export default Ember.Component.extend({
 
   viewOwned() {
     return this.get('repositories.requestOwnedRepositories').perform().then(() => {
-      if (this.get('auth.signedIn') && Ember.isEmpty(this.get('repositories.repos'))) {
+      if (this.get('auth.signedIn') && Ember.isEmpty(this.get('repositories.accessible'))) {
         this.get('router').transitionTo('getting_started');
       }
     });
@@ -115,5 +115,5 @@ export default Ember.Component.extend({
     return this.get('tab') === 'running';
   }),
 
-  repos: alias('repositories.repos')
+  repos: alias('repositories.accessible')
 });

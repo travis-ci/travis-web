@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   statusImages: service(),
   repositories: service(),
 
-  @alias('repositories.repos.firstObject') repo: null,
+  @alias('repositories.accessible.firstObject') repo: null,
 
   @alias('tabStates.mainTab') tab: null,
 

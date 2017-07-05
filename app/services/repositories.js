@@ -111,7 +111,7 @@ export default Ember.Service.extend({
     return !this.get('loadingData') && Ember.isEmpty(this.get('repos'));
   }),
 
-  repos: Ember.computed(
+  accessible: Ember.computed(
     '_repos.[]',
     '_repos.@each.currentBuildFinishedAt',
     '_repos.@each.currentBuildId',

@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
     return `landing-${version}-page`;
   },
 
-  @alias('repositories.repos.firstObject') repo: null,
+  @alias('repositories.accessible.firstObject') repo: null,
 
   @alias('tabStates.mainTab') tab: null,
 

@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
   jobController: controller('job'),
   buildController: controller('build'),
   buildsController: controller('builds'),
-  repos: alias('repositories.repos'),
+  repos: alias('repositories.accessible'),
   currentUser: alias('auth.currentUser'),
 
   classNames: ['repo'],

@@ -84,7 +84,7 @@ export default Ember.Controller.extend({
   }),
 
   updateTimes() {
-    let records = this.get('repositories.repos');
+    let records = this.get('repositories.accessible');
 
     let callback = (record) => { return record.get('currentBuild'); };
     records = records.filter(callback).map(callback);
