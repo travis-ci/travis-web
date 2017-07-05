@@ -100,11 +100,6 @@ export default Ember.Component.extend({
     return this[(`view_${tabState}`).camelize()](params);
   },
 
-  reset() {
-    this.set('_repos', null);
-    this.set('ownedRepos', null);
-  },
-
   viewOwned() {
     return this.get('repositories.requestOwnedRepositories').perform().then(() => {
       if (this.get('auth.signedIn') && Ember.isEmpty(this.get('repositories.repos'))) {
