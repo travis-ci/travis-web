@@ -10,6 +10,8 @@ export default Ember.Component.extend({
   updateTimesService: service('updateTimes'),
   repositories: service(),
   store: service(),
+  auth: service(),
+  router: service(),
 
   didReceiveAttrs() {
     if (this.get('repositories.searchQuery')) {
@@ -104,7 +106,11 @@ export default Ember.Component.extend({
   },
 
   viewOwned() {
-    return this.get('repositories.requestOwnedRepositories').perform();
+    return this.get('repositories.requestOwnedRepositories').perform().then(() => {
+      if (this.get('auth.signedIn') && Ember.isEmpty(this.get('repositories.repos'))) {
+        this.get('router').transitionTo('getting_started');
+      }
+    });
   },
 
   viewRunning() {},
