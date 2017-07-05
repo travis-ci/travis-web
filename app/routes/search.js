@@ -14,7 +14,6 @@ export default Ember.Route.extend({
   },
 
   activate() {
-    console.log('activate search route');
     this.get('tabStates').set('sidebarTab', 'search');
     this._super(...arguments);
   },
@@ -26,12 +25,10 @@ export default Ember.Route.extend({
   },
 
   model(params) {
-    console.log('in model');
     return params.phrase.replace(/%2F/g, '/');
   },
 
   deactivate() {
-    console.log('deactivating');
     this._super(...arguments);
     this.set('repositories.searchQuery', undefined);
   },
