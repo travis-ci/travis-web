@@ -34,10 +34,6 @@ export default Ember.Controller.extend({
   repoController: controller('repo'),
   currentUser: alias('auth.currentUser'),
 
-  selectedRepo: Ember.computed('repoController.repo', 'repoController.repo.content', function () {
-    return this.get('repoController.repo.content') || this.get('repoController.repo');
-  }),
-
   startedJobsCount: Ember.computed.alias('runningJobs.length'),
 
   allJobsCount: Ember.computed('startedJobsCount', 'queuedJobs.length', function () {
