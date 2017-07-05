@@ -37,7 +37,6 @@ export default Ember.Component.extend({
     },
 
     onQueryChange(query) {
-      console.log('hit onQueryChange');
       if (query === '' || query === this.get('repositories.searchQuery')) { return; }
       this.set('repositories.searchQuery', query);
       this.get('repositories.showSearchResults').perform();
@@ -111,7 +110,6 @@ export default Ember.Component.extend({
   viewRunning() {},
 
   viewSearch() {
-    console.log('viewSearch');
     return this.get('repositories.performSearchRequest').perform();
   },
 
