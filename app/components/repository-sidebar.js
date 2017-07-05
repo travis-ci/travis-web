@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Visibility from 'npm:visibilityjs';
+import { task } from 'ember-concurrency';
 
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
@@ -17,7 +18,7 @@ export default Ember.Component.extend({
     if (this.get('repositories.searchQuery')) {
       this.viewSearch();
     } else {
-      this.viewOwned();
+      this.get('viewOwned').perform();
     }
   },
 
@@ -86,13 +87,13 @@ export default Ember.Component.extend({
     this.get('updateTimesService').push(records);
   },
 
-  viewOwned() {
-    return this.get('repositories.requestOwnedRepositories').perform().then(() => {
-      if (this.get('auth.signedIn') && Ember.isEmpty(this.get('repositories.accessible'))) {
-        this.get('router').transitionTo('getting_started');
-      }
-    });
-  },
+  viewOwned: task(function* () {
+    const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
+
+    if (this.get('auth.signedIn') && Ember.isEmpty(ownedRepositories)) {
+      this.get('router').transitionTo('getting_started');
+    }
+  }),
 
   viewRunning() {},
 
