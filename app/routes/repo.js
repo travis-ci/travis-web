@@ -27,7 +27,6 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   setupController(controller, model) {
-    this.controllerFor('repos').activate(this.get('tabStates.sidebarTab'));
     if (model && !model.get) {
       model = this.get('store').find('repo', model.id);
     }

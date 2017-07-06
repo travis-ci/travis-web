@@ -11,9 +11,4 @@ export default TravisRoute.extend({
       this.transitionTo('/');
     }
   },
-
-  setupController() {
-    this._super(...arguments);
-    this.controllerFor('repos').activate('owned');
-  }
 });
