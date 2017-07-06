@@ -25,7 +25,6 @@ export default Ember.Component.extend({
   actions: {
     showRunningJobs: function () {
       this.get('tabStates').set('sidebarTab', 'running');
-      return this.activate('running');
     },
 
     showMyRepositories: function () {
@@ -65,6 +64,10 @@ export default Ember.Component.extend({
     result.then(() => result.set('isLoaded', true));
 
     return result;
+  }),
+
+  isViewingRunningJobs: Ember.computed('tabStates.sidebarTab', function () {
+    return this.get('tabStates.sidebarTab') === 'running';
   }),
 
   queuedJobs: Ember.computed('features.proVersion', function () {

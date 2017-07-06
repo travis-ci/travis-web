@@ -27,7 +27,11 @@
     {{#if repositories.loadingData}}
       {{loading-indicator center=true}}
     {{else}}
-      {{repos-list repos=repositories.accessible selectedRepo=selectedRepo}}
+      {{#if isViewingRunningJobs}}
+        {{repos-list repos=runningJobs selectedRepo=selectedRepo}}
+      {{else}}
+        {{repos-list repos=repositories.accessible selectedRepo=selectedRepo}}
+      {{/if}}
     {{/if}}
   </div>
 {{/if}}
