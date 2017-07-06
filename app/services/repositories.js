@@ -103,11 +103,6 @@ export default Ember.Service.extend({
     }
   }).drop(),
 
-  @computed('loadingData', 'repos')
-  noResults(loading, repos) {
-    return !loading && Ember.isEmpty(repos);
-  },
-
   @computed('_repos.[]', '_repos.@each.{currentBuildFinishedAt,currentBuildId}')
   accessible(repos) {
     if (repos && repos.toArray) {
