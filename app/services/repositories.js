@@ -75,7 +75,7 @@ export default Ember.Service.extend({
     const query = this.get('searchQuery');
 
     const searchResults = yield Repo.search(store, ajax, query);
-    this.set('_repos', searchResults);
+    this.set('_searchResults', searchResults);
   }).drop(),
 
   showSearchResults: task(function* () {
@@ -110,6 +110,23 @@ export default Ember.Service.extend({
 
   @computed('_repos.[]', '_repos.@each.{currentBuildFinishedAt,currentBuildId}')
   accessible(repos) {
+    if (repos && repos.toArray) {
+      repos = repos.toArray();
+    }
+
+    if (repos && repos.sort) {
+      return repos.sort(sortCallback);
+    } else {
+      if (Ember.isArray(repos)) {
+        return repos;
+      } else {
+        return [];
+      }
+    }
+  },
+
+  @computed('_searchResults.[]', '_searchResults.@each.{currentBuildFinishedAt,currentBuildId}')
+  searchResults(repos) {
     if (repos && repos.toArray) {
       repos = repos.toArray();
     }

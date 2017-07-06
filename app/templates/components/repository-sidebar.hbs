@@ -31,7 +31,7 @@
     {{#if repositories.loadingData}}
       {{loading-indicator center=true}}
     {{else}}
-      {{repos-list repos=repositories.accessible selectedRepo=selectedRepo}}
+      {{repos-list repos=repositoryResults}}
     {{/if}}
   </div>
 {{/if}}

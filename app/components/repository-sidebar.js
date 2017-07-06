@@ -112,6 +112,14 @@ export default Ember.Component.extend({
   },
 
   @computed('tab')
+  repositoryResults(tab) {
+    if (tab === 'search') {
+      return this.get('repositories.searchResults');
+    }
+    return this.get('repositories.accessible');
+  },
+
+  @computed('tab')
   showRunningJobs(tab) {
     return tab === 'running';
   },
