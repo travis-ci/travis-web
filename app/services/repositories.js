@@ -70,10 +70,12 @@ export default Ember.Service.extend({
   },
 
   performSearchRequest: task(function* () {
-    const searchRequest = Repo.search(this.get('store'), this.get('ajax'), this.get('searchQuery'));
-    yield searchRequest.then((reposRecordArray) => {
-      this.set('_repos', reposRecordArray);
-    });
+    const store = this.get('store');
+    const ajax = this.get('ajax');
+    const query = this.get('searchQuery');
+
+    const searchResults = yield Repo.search(store, ajax, query);
+    this.set('_repos', searchResults);
   }).drop(),
 
   showSearchResults: task(function* () {
