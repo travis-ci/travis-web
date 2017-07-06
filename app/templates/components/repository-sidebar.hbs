@@ -10,7 +10,11 @@
   </div>
 </div>
 
-{{repos-list-tabs startedJobsCount=startedJobsCount allJobsCount=allJobsCount showMyRepositories=(action "showMyRepositories") showRunningJobs=(action "showRunningJobs")}}
+{{repos-list-tabs
+  startedJobsCount=startedJobsCount
+  allJobsCount=allJobsCount
+  showMyRepositories=(action "showMyRepositories")
+  showRunningJobs=(action "showRunningJobs")}}
 
 {{#if showRunningJobs}}
   <div class="travistab-body sidebar-list">
@@ -27,11 +31,7 @@
     {{#if repositories.loadingData}}
       {{loading-indicator center=true}}
     {{else}}
-      {{#if isViewingRunningJobs}}
-        {{repos-list repos=runningJobs selectedRepo=selectedRepo}}
-      {{else}}
-        {{repos-list repos=repositories.accessible selectedRepo=selectedRepo}}
-      {{/if}}
+      {{repos-list repos=repositories.accessible selectedRepo=selectedRepo}}
     {{/if}}
   </div>
 {{/if}}

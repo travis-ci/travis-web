@@ -59,15 +59,9 @@ export default Ember.Component.extend({
     let runningStates = ['queued', 'started', 'received'];
     result = this.get('store').filter('job', {}, job => runningStates.includes(job.get('state')));
 
-    result.set('isLoaded', false);
-
     result.then(() => result.set('isLoaded', true));
 
     return result;
-  }),
-
-  isViewingRunningJobs: Ember.computed('tabStates.sidebarTab', function () {
-    return this.get('tabStates.sidebarTab') === 'running';
   }),
 
   queuedJobs: Ember.computed('features.proVersion', function () {
@@ -98,8 +92,6 @@ export default Ember.Component.extend({
     }
   }),
 
-  viewRunning() {},
-
   viewSearch() {
     return this.get('repositories.performSearchRequest').perform();
   },
@@ -115,8 +107,8 @@ export default Ember.Component.extend({
     }
   }),
 
-  showRunningJobs: Ember.computed('tab', function () {
-    return this.get('tab') === 'running';
+  showRunningJobs: Ember.computed('tabStates.sidebarTab', function () {
+    return this.get('tabStates.sidebarTab') === 'running';
   }),
 
   repos: alias('repositories.accessible')
