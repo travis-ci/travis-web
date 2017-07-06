@@ -39,10 +39,8 @@ export default Ember.Component.extend({
     }
   },
 
-  startedJobsCount: Ember.computed.alias('runningJobs.length'),
-
-  allJobsCount: Ember.computed('startedJobsCount', 'queuedJobs.length', function () {
-    return this.get('startedJobsCount') + this.get('queuedJobs.length');
+  allJobsCount: Ember.computed('runningJobs.length', 'queuedJobs.length', function () {
+    return this.get('runningJobs.length') + this.get('queuedJobs.length');
   }),
 
   init() {
