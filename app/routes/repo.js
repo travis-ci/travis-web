@@ -48,8 +48,4 @@ export default TravisRoute.extend(ScrollResetMixin, {
     const slug = params.owner + '/' + params.name;
     return Repo.fetchBySlug(this.get('store'), slug);
   },
-
-  resetController() {
-    return this.controllerFor('repo').deactivate();
-  },
 });
