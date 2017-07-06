@@ -85,8 +85,6 @@ export default Ember.Service.extend({
 
     yield this.get('performSearchRequest').perform(query);
 
-    this.get('tabStates').set('sidebarTab', 'search');
-
     query = query.replace(/\//g, '%2F');
     this.get('router').transitionTo('search', query);
   }).restartable(),
