@@ -34,12 +34,9 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   serialize(repo) {
-    var name, owner, ref, slug;
     // slugs are sometimes unknown ???
-    slug = Ember.getWithDefault(repo, 'slug', 'unknown/unknown');
-    ref = slug.split('/');
-    owner = ref[0];
-    name = ref[1];
+    const slug = Ember.getWithDefault(repo, 'slug', 'unknown/unknown');
+    const [owner, name] = slug.split('/');
 
     return {
       owner: owner,
@@ -48,8 +45,7 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   model(params) {
-    var slug;
-    slug = params.owner + '/' + params.name;
+    const slug = params.owner + '/' + params.name;
     return Repo.fetchBySlug(this.get('store'), slug);
   },
 
