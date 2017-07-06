@@ -104,8 +104,6 @@ export default Ember.Component.extend({
   noReposMessage(tab) {
     if (tab === 'owned') {
       return 'You don\'t have any repos set up on Travis CI';
-    } else if (tab === 'recent') {
-      return 'Repositories could not be loaded';
     } else {
       return 'Could not find any repos';
     }
