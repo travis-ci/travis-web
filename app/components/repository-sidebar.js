@@ -16,7 +16,7 @@ export default Ember.Component.extend({
 
   didReceiveAttrs() {
     if (this.get('repositories.searchQuery')) {
-      this.viewSearch();
+      this.get('repositories.performSearchRequest').perform();
     } else {
       this.get('viewOwned').perform();
     }
@@ -98,10 +98,6 @@ export default Ember.Component.extend({
     }
   }),
 
-  viewSearch() {
-    return this.get('repositories.performSearchRequest').perform();
-  },
-
   @alias('tabStates.sidebarTab') tab: null,
 
   @computed('tab')
@@ -119,6 +115,4 @@ export default Ember.Component.extend({
   showRunningJobs(tab) {
     return tab === 'running';
   },
-
-  @alias('repositories.accessible') repos: null,
 });
