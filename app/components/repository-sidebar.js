@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import Visibility from 'npm:visibilityjs';
 import { task } from 'ember-concurrency';
+import computed, { alias } from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
-const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   tabStates: service(),
@@ -39,9 +39,10 @@ export default Ember.Component.extend({
     }
   },
 
-  allJobsCount: Ember.computed('runningJobs.length', 'queuedJobs.length', function () {
-    return this.get('runningJobs.length') + this.get('queuedJobs.length');
-  }),
+  @computed('runningJobs.length', 'queuedJobs.length')
+  allJobsCount(runningAmount, queuedAmount) {
+    return runningAmount + queuedAmount;
+  },
 
   init() {
     this._super(...arguments);
@@ -50,28 +51,35 @@ export default Ember.Component.extend({
     }
   },
 
-  runningJobs: Ember.computed('features.proVersion', function () {
-    if (!this.get('features.proVersion')) { return []; }
-    let result;
-
-    let runningStates = ['queued', 'started', 'received'];
-    result = this.get('store').filter('job', {}, job => runningStates.includes(job.get('state')));
+  @computed('features.proVersion')
+  runningJobs(proVersion) {
+    if (!proVersion) { return []; }
+    const runningStates = ['queued', 'started', 'received'];
+    const result = this.get('store').filter(
+      'job',
+      {},
+      job => runningStates.includes(job.get('state'))
+    );
 
     result.then(() => result.set('isLoaded', true));
 
     return result;
-  }),
+  },
 
-  queuedJobs: Ember.computed('features.proVersion', function () {
-    if (!this.get('features.proVersion')) { return []; }
+  @computed('features.proVersion')
+  queuedJobs(proVersion) {
+    if (!proVersion) { return []; }
 
     const queuedStates = ['created'];
-    let result = this.get('store').filter('job', job => queuedStates.includes(job.get('state')));
+    const result = this.get('store').filter(
+      'job',
+      job => queuedStates.includes(job.get('state'))
+    );
     result.set('isLoaded', false);
     result.then(() => result.set('isLoaded', true));
 
     return result;
-  }),
+  },
 
   updateTimes() {
     let records = this.get('repos');
@@ -94,8 +102,10 @@ export default Ember.Component.extend({
     return this.get('repositories.performSearchRequest').perform();
   },
 
-  noReposMessage: Ember.computed('tab', function () {
-    const tab = this.get('tab');
+  @alias('tabStates.sidebarTab') tab: null,
+
+  @computed('tab')
+  noReposMessage(tab) {
     if (tab === 'owned') {
       return 'You don\'t have any repos set up on Travis CI';
     } else if (tab === 'recent') {
@@ -103,11 +113,12 @@ export default Ember.Component.extend({
     } else {
       return 'Could not find any repos';
     }
-  }),
+  },
 
-  showRunningJobs: Ember.computed('tabStates.sidebarTab', function () {
-    return this.get('tabStates.sidebarTab') === 'running';
-  }),
+  @computed('tab')
+  showRunningJobs(tab) {
+    return tab === 'running';
+  },
 
-  repos: alias('repositories.accessible')
+  @alias('repositories.accessible') repos: null,
 });
