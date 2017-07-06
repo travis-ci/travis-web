@@ -14,6 +14,13 @@ export default Ember.Component.extend({
   auth: service(),
   router: service(),
 
+  init() {
+    this._super(...arguments);
+    if (!Ember.testing) {
+      Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
+    }
+  },
+
   didReceiveAttrs() {
     if (this.get('repositories.searchQuery')) {
       this.get('repositories.performSearchRequest').perform();
@@ -42,13 +49,6 @@ export default Ember.Component.extend({
   @computed('runningJobs.length', 'queuedJobs.length')
   allJobsCount(runningAmount, queuedAmount) {
     return runningAmount + queuedAmount;
-  },
-
-  init() {
-    this._super(...arguments);
-    if (!Ember.testing) {
-      Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
   },
 
   @computed('features.proVersion')
