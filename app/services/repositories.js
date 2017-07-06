@@ -2,9 +2,9 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
+import computed from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
-const { alias } = Ember.computed;
 
 const sortCallback = function (repo1, repo2) {
   // this function could be made simpler, but I think it's clearer this way
@@ -55,20 +55,19 @@ export default Ember.Service.extend({
   ajax: service(),
   router: service(),
 
-  currentUser: alias('auth.currentUser'),
-
-  tasks: Ember.computed(function () {
+  @computed('requestOwnedRepositories', 'performSearchRequest', 'showSearchResults')
+  tasks(accessible, performSearch, showSearch) {
     return [
-      this.get('requestOwnedRepositories'),
-      this.get('performSearchRequest'),
-      this.get('showSearchResults'),
+      accessible,
+      performSearch,
+      showSearch,
     ];
-  }),
+  },
 
-  loadingData: Ember.computed('tasks.@each.isRunning', function () {
-    let tasks = this.get('tasks');
+  @computed('tasks.@each.isRunning')
+  loadingData(tasks) {
     return tasks.any(task => task.get('isRunning'));
-  }),
+  },
 
   performSearchRequest: task(function* () {
     const searchRequest = Repo.search(this.get('store'), this.get('ajax'), this.get('searchQuery'));
@@ -94,7 +93,7 @@ export default Ember.Service.extend({
     if (!Ember.isEmpty(this.get('ownedRepos'))) {
       return this.set('_repos', this.get('ownedRepos'));
     } else {
-      let user = this.get('currentUser');
+      let user = this.get('auth.currentUser');
       if (user) {
         const permissions = yield user.get('_rawPermissions');
         const repositories = yield Repo.accessibleBy(this.get('store'), permissions.pull);
@@ -104,33 +103,27 @@ export default Ember.Service.extend({
     }
   }).drop(),
 
-  noResults: Ember.computed('loadingData', 'repos', function () {
-    return !this.get('loadingData') && Ember.isEmpty(this.get('repos'));
-  }),
+  @computed('loadingData', 'repos')
+  noResults(loading, repos) {
+    return !loading && Ember.isEmpty(repos);
+  },
 
-  accessible: Ember.computed(
-    '_repos.[]',
-    '_repos.@each.currentBuildFinishedAt',
-    '_repos.@each.currentBuildId',
-    function () {
-      let repos = this.get('_repos');
+  @computed('_repos.[]', '_repos.@each.{currentBuildFinishedAt,currentBuildId}')
+  accessible(repos) {
+    if (repos && repos.toArray) {
+      repos = repos.toArray();
+    }
 
-      if (repos && repos.toArray) {
-        repos = repos.toArray();
-      }
-
-      if (repos && repos.sort) {
-        let sorted = repos.sort(sortCallback);
-        return sorted;
+    if (repos && repos.sort) {
+      return repos.sort(sortCallback);
+    } else {
+      if (Ember.isArray(repos)) {
+        return repos;
       } else {
-        if (Ember.isArray(repos)) {
-          return repos;
-        } else {
-          return [];
-        }
+        return [];
       }
     }
-  ),
+  },
 
   reset() {
     this.set('_repos', null);
