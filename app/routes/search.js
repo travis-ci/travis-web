@@ -21,7 +21,6 @@ export default Ember.Route.extend({
   setupController(controller, searchPhrase) {
     this._super(...arguments);
     this.set('repositories.searchQuery', searchPhrase);
-    this.get('repositories.performSearchRequest').perform(searchPhrase);
   },
 
   model(params) {
