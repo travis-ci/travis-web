@@ -1,17 +1,19 @@
 import Ember from 'ember';
 import LoadMoreBuildsMixin from 'travis/mixins/builds/load-more';
 
-const { controller } = Ember.inject;
+const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
 
 const mixins = [LoadMoreBuildsMixin];
 
 export default Ember.Controller.extend(...mixins, {
+  tabStates: service(),
+
   buildsSorting: ['number:desc'],
   builds: Ember.computed.sort('model', 'buildsSorting'),
   repoController: controller('repo'),
   repo: alias('repoController.repo'),
-  tab: alias('repoController.tab'),
+  tab: alias('tabStates.mainTab'),
   isLoaded: alias('model.isLoaded'),
   isLoading: alias('model.isLoading'),
 

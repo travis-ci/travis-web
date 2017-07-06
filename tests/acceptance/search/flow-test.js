@@ -15,7 +15,6 @@ test('searching from index page transitions to search page', function (assert) {
     .enterSearchQuery('foo')
     .pressEnter();
 
-  pauseTest();
   andThen(function () {
     assert.equal(currentURL(), '/search/foo');
   });
