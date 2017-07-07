@@ -9,7 +9,9 @@ var Router = Ember.Router.extend({
   //
   // we should probably think about a more general way to
   // do this, location should not know about auth status
-  location: Ember.testing ? 'none' : 'auth-dependent',
+
+  // TODO fix auth-dependent location
+  location: 'none', // Ember.testing ? 'none' : 'auth-dependent',
   rootURL: config.rootURL,
 
   generate() {
