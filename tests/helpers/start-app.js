@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import Application from '../../app';
-import config from '../../config/environment';
+import Application from '../../src/main';
+import config from 'travis/config/environment';
 
 import './sign-in-user';
 import './wait-for-element';

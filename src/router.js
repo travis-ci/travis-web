@@ -1,6 +1,6 @@
 /* global _gaq */
 import Ember from 'ember';
-import config from './config/environment';
+import config from 'travis/config/environment';
 
 var Router = Ember.Router.extend({
   // this is needed, because in the location

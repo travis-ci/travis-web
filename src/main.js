@@ -2,7 +2,7 @@
 import Ember from 'ember';
 import Resolver from "./resolver";
 import loadInitializers from 'ember-load-initializers';
-import config from './config/environment';
+import config from 'travis/config/environment';
 import initHsBeacon from "travis/src/utils/init-hs-beacon";
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
