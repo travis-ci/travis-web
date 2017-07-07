@@ -76,7 +76,7 @@
     "visibilityjs": "^1.2.4"
   },
   "engines": {
-    "node": "6.9.1"
+    "node": "6.9.5"
   },
   "private": true
 }
