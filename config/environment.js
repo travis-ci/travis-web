@@ -6,10 +6,14 @@ module.exports = function (environment) {
     rootURL: '/',
     locationType: 'auto',
     defaultTitle: 'Travis CI',
+    'ember-resolver': {
+      features: {
+        // EMBER_RESOLVER_MODULE_UNIFICATION: true
+      }
+    },
     EmberENV: {
       FEATURES: {
-        // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
+        // 'ember-module-unification': true
       },
       EXTEND_PROTOTYPES: {
         // prevent Ember Data from overriding Date.parse

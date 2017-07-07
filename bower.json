@@ -1,6 +1,7 @@
 {
   "name": "travis",
   "dependencies": {
+    "ember": "components/ember#canary",
     "JavaScript-MD5": "~2.3.0",
     "moment": "~2.13.0",
     "jquery-timeago": "~1.5.2",
