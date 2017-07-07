@@ -1,0 +1,23 @@
+import Ember from 'ember';
+import TravisRoute from "travis/src/ui/routes/basic";
+import config from 'travis/config/environment';
+
+export default TravisRoute.extend({
+  needsAuth: false,
+
+  titleToken(model) {
+    return '' + model.name;
+  },
+
+  model(params, transition) {
+    let includes =
+      '?include=user.repositories,organization.repositories,build.commit,repository.active';
+    let { owner } = transition.params.owner;
+    return Ember.$.ajax({
+      url: `${config.apiEndpoint}/owner/${owner}${includes}`,
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    });
+  }
+});
