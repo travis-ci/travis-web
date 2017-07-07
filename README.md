@@ -112,7 +112,7 @@ To add another member just add the info in the same style as the previous ones. 
 The order of value pairs does not matter, the quotation marks do. Name and title will be displayed as they are. The handle will be used to generate a link to Twitter and displayed with a '@' in front of it. Nationality and country determine the flags. Please use the name of the country and not the adjective (like 'germany' and NOT 'german'). Image is the identifier to find the right image and animated gif. 'mrt' in the example will result in `team-mrt.png` and `mrt-animated.gif`.
 Add the images themselves to `public/images/team/` and additional flags to `public/images/pro-landing/`. Mind the naming conventions already in place.
 
-For special cases where the “is from” or “lives in” sentence forms don’t make sense, such as “ukswitzerland”, you can override the output in `app/components/team-member.js`.
+For special cases where the “is from” or “lives in” sentence forms don’t make sense, such as “ukswitzerland”, you can override the output in `app/components/team-member.js`. If you need to style a flag, it has an attached class; look in `app/pages/team.sass` for examples. You can use `countryAlias` to override the displayed flag with another, such as with `occupiedcanada` becoming `canada` with a CSS transform applied to invert it.
 
 ### Deploying
 
