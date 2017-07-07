@@ -280,6 +280,13 @@ export default TravisRoute.extend({
         nationality: 'colombia',
         country: 'occupiedcanada',
         image: 'natalia'
+      },
+      {
+        name: 'Olamide Ojo',
+        title: 'Mr Bean Counter',
+        nationality: 'nigeria',
+        country: 'germany',
+        image: 'ola'
       }
     ];
   }
