@@ -279,6 +279,7 @@ export default TravisRoute.extend({
         title: 'Design Wizard',
         nationality: 'colombia',
         country: 'occupiedcanada',
+        countryAlias: 'canada',
         image: 'natalia'
       },
       {

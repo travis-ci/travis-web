@@ -28,5 +28,7 @@ export default Ember.Component.extend({
 
   nationalitySentence: Ember.computed('member.nationality', function () {
     return countryToSentence(this.get('member.nationality'));
-  })
+  }),
+
+  countryOrAlias: Ember.computed.or('member.countryAlias', 'member.country')
 });
