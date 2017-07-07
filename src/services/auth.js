@@ -9,7 +9,7 @@ export default Ember.Service.extend({
   flashes: service(),
   store: service(),
   storage: service(),
-  sessionStorage: service(),
+  sessionStorage: service('session-storage'),
   ajax: service(),
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,

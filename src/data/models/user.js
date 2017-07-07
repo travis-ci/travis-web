@@ -10,7 +10,7 @@ export default Model.extend({
   ajax: service(),
 
   // TODO: this totally not should be needed here
-  sessionStorage: service(),
+  sessionStorage: service('session-storage'),
 
   name: attr(),
   email: attr(),

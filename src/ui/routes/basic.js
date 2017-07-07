@@ -4,7 +4,7 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend({
   auth: service(),
-  fetchFeatures: service(),
+  fetchFeatures: service('fetch-features'),
 
   activate() {
     if (this.routeName !== 'error') {
