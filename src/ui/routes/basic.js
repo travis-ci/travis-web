@@ -15,10 +15,10 @@ export default Ember.Route.extend({
 
   beforeModel(transition) {
     if (!this.signedIn()) {
-      this.auth.autoSignIn();
+      this.get('auth').autoSignIn();
     }
     if (!this.signedIn() && this.get('needsAuth')) {
-      this.auth.set('afterSignInTransition', transition);
+      this.get('auth').set('afterSignInTransition', transition);
       return Ember.RSVP.reject('needs-auth');
     } else if (this.redirectToProfile(transition)) {
       return this.transitionTo('profile', this.get('auth.currentUser.login'));

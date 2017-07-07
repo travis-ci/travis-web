@@ -8,10 +8,10 @@ export default TravisRoute.extend({
   needsAuth: false,
 
   activate() {
-    if (this.auth.get('signedIn')) {
+    if (this.get('auth').get('signedIn')) {
       this.transitionTo('main');
     } else {
-      this.auth.signIn();
+      this.get('auth').signIn();
     }
   }
 });

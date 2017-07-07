@@ -40,7 +40,7 @@ export default Ember.Component.extend({
         }
       };
       if (this.get('auth.signedIn')) {
-        options.headers.Authorization = `token ${this.auth.token()}`;
+        options.headers.Authorization = `token ${this.get('auth').token()}`;
       }
       let path = `${apiEndpoint}/repo/${repoId}/builds`;
       let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;

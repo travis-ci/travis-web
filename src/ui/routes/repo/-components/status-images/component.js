@@ -33,7 +33,7 @@ export default Ember.Component.extend({
       array.set('isLoaded', false);
 
       if (this.get('auth.signedIn')) {
-        options.headers.Authorization = `token ${this.auth.token()}`;
+        options.headers.Authorization = `token ${this.get('auth').token()}`;
       }
 
       let url = `${apiEndpoint}/repo/${repoId}/branches?limit=100`;

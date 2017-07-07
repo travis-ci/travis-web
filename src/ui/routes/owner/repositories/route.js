@@ -18,7 +18,7 @@ export default TravisRoute.extend({
     };
 
     if (this.get('auth.signedIn')) {
-      options.headers.Authorization = 'token ' + (this.auth.token());
+      options.headers.Authorization = 'token ' + (this.get('auth').token());
     }
 
     // eslint-disable-next-line

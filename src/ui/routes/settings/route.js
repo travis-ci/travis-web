@@ -74,7 +74,7 @@ export default TravisRoute.extend({
 
     return Ember.$.ajax(apiEndpoint + '/repo/' + repoId, {
       headers: {
-        Authorization: 'token ' + this.auth.token(),
+        Authorization: 'token ' + this.get('auth').token(),
         'Travis-API-Version': '3'
       }
     }).then(function (response) {
@@ -84,7 +84,7 @@ export default TravisRoute.extend({
 
   hasPushAccess() {
     const repoId = parseInt(this.modelFor('repo').get('id'));
-    return this.auth.get('currentUser').get('pushPermissionsPromise').then(function (permissions) {
+    return this.get('auth').get('currentUser').get('pushPermissionsPromise').then(function (permissions) {
       return permissions.filter(function (item) {
         return item === repoId;
       });
