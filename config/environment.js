@@ -8,12 +8,12 @@ module.exports = function (environment) {
     defaultTitle: 'Travis CI',
     'ember-resolver': {
       features: {
-        // EMBER_RESOLVER_MODULE_UNIFICATION: true
+        EMBER_RESOLVER_MODULE_UNIFICATION: true
       }
     },
     EmberENV: {
       FEATURES: {
-        // 'ember-module-unification': true
+        'ember-module-unification': true
       },
       EXTEND_PROTOTYPES: {
         // prevent Ember Data from overriding Date.parse
