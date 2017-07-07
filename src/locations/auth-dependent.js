@@ -2,6 +2,7 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 
 export default Ember.HistoryLocation.extend({
+  auth: Ember.inject.service(),
   init: function () {
     this._super(...arguments);
 
