@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="netherlands" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" viewBox="0 0 21 14" style="enable-background:new 0 0 21 14;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#FEFEFE;}
-	.st1{fill:#AD1C28;}
-	.st2{fill:#21468A;}
-</style>
+	 y="0px" width="306px" height="203.793px" viewBox="0 96 306 203.793" enable-background="new 0 96 306 203.793"
+	 xml:space="preserve">
 <g id="netherlands_1_">
 	<g>
-		<path class="st0" d="M21,4.7c0,1.6,0,3.1,0,4.7c0,0,0,0-0.1,0c-7,0-13.9,0-20.9,0c0,0,0,0-0.1,0c0-1.6,0-3.1,0-4.7c0,0,0,0,0.1,0
-			C7,4.7,14,4.7,21,4.7C21,4.7,21,4.7,21,4.7z"/>
-		<path class="st1" d="M21,4.7C21,4.7,21,4.7,21,4.7c-7,0-14,0-20.9,0c0,0,0,0-0.1,0C0,3.1,0,1.6,0,0c0,0,0,0,0,0C7,0,14,0,21,0
-			c0,0,0,0,0,0C21,1.6,21,3.1,21,4.7z"/>
-		<path class="st2" d="M0,9.3C0,9.3,0,9.3,0,9.3c7,0,14,0,20.9,0c0,0,0,0,0.1,0c0,1.5,0,3.1,0,4.6c0,0,0,0,0,0C14,14,7,14,0,14
-			c0,0,0,0,0,0C0,12.4,0,10.9,0,9.3z"/>
+		<path fill="#FEFEFE" d="M306,164.486c0,23.314,0,45.171,0,68.486c0,0,0,0-1.457,0c-102,0-202.543,0-304.543,0c0,0,0,0-1.457,0
+			c0-23.314,0-45.172,0-68.486c0,0,0,0,1.457,0C102,164.486,204,164.486,306,164.486L306,164.486z"/>
+		<path fill="#AD1C28" d="M306,164.486L306,164.486c-102,0-204,0-304.543,0c0,0,0,0-1.457,0C0,141.171,0,119.314,0,96l0,0
+			c102,0,204,0,306,0l0,0C306,119.314,306,141.171,306,164.486z"/>
+		<path fill="#21468A" d="M0,231.514L0,231.514c102,0,204,0,304.543,0c0,0,0,0,1.457,0c0,21.857,0,45.172,0,67.029l0,0
+			C204,300,102,300,0,300l0,0C0,276.686,0,254.828,0,231.514z"/>
 	</g>
 </g>
 </svg>

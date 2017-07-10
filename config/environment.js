@@ -1,8 +1,10 @@
 /* eslint-env node */
+'use strict';
+
 module.exports = function (environment) {
-  var ENV = {
+  let ENV = {
     modulePrefix: 'travis',
-    environment: environment,
+    environment,
     rootURL: '/',
     locationType: 'auto',
     defaultTitle: 'Travis CI',
@@ -134,10 +136,9 @@ module.exports = function (environment) {
       defaultBreakpoints: ['desktop']
     };
 
-    ENV.featureFlags = {
-      'debug-logging': false,
-      'dashboard': false
-    };
+    ENV.featureFlags['debug-logging'] = false;
+    ENV.featureFlags['dashboard'] = false;
+    ENV.featureFlags['pro-version'] = false;
   }
 
   if (environment === 'production') {

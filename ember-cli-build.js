@@ -1,4 +1,6 @@
 /* eslint-env node */
+'use strict';
+
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 
@@ -9,7 +11,8 @@ module.exports = function () {
     fingerprint = false;
   } else {
     fingerprint = {
-      exclude: ['images/emoji'],
+      // FIXME this is probably not desired
+      exclude: ['images/emoji', 'images/pro-landing/flag*', 'images/team'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
     };
 
@@ -58,7 +61,6 @@ module.exports = function () {
 
   app.import('bower_components/pusher/dist/pusher.js');
   app.import('bower_components/jquery-timeago/jquery.timeago.js');
-  app.import('bower_components/JavaScript-MD5/js/md5.js');
   app.import('bower_components/moment/moment.js');
 
   app.import('bower_components/js-emoji/demo/emoji.css');

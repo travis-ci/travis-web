@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import DS from 'ember-data';
 import Ember from 'ember';
+import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 
 const { service } = Ember.inject;
 
@@ -12,6 +13,12 @@ export default DS.Store.extend({
   init() {
     this._super(...arguments);
     return this.set('pusherEventHandlerGuards', {});
+  },
+
+  paginated() {
+    return PaginatedCollectionPromise.create({
+      content: this.query(...arguments)
+    });
   },
 
   addPusherEventHandlerGuard(name, callback) {

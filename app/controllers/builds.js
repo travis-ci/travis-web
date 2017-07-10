@@ -12,8 +12,6 @@ export default Ember.Controller.extend(...mixins, {
   repoController: controller('repo'),
   repo: alias('repoController.repo'),
   tab: alias('repoController.tab'),
-  isLoaded: alias('model.isLoaded'),
-  isLoading: alias('model.isLoading'),
 
   displayShowMoreButton: Ember.computed('tab', 'builds.lastObject.number', function () {
     return this.get('tab') !== 'branches' && parseInt(this.get('builds.lastObject.number')) > 1;

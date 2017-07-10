@@ -1,6 +1,6 @@
 /* global moment */
 import safelistedConfigKeys from 'travis/utils/safelisted-config-keys';
-import _object from 'lodash/object';
+import pickBy from 'npm:lodash.pickby';
 import configKeysMap from 'travis/utils/keys-map';
 import Ember from 'ember';
 import Model from 'ember-data/model';
@@ -34,7 +34,7 @@ export default Model.extend(DurationCalculations, {
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
-      return _object.pickBy(config);
+      return pickBy(config);
     } else if (this.get('currentState.stateName') !== 'root.loading') {
       if (this.get('isFetchingConfig')) {
         return;

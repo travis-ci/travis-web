@@ -1,4 +1,3 @@
-/* global md5 */
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
@@ -21,10 +20,6 @@ export default Ember.Service.extend({
 
   email(email) {
     return `mailto:${email}`;
-  },
-
-  gravatarImage(email, size) {
-    return `https://www.gravatar.com/avatar/${(md5(email.toLowerCase()))}?s=${size}&d=blank`;
   },
 
   travisWebBranch(branchName) {

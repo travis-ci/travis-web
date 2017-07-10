@@ -13,13 +13,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'sven'
       }, {
-        name: 'Josh Kalderimis',
-        title: 'Chief Post-It Officer',
-        handle: 'j2h',
-        nationality: 'newzealand',
-        country: 'germany',
-        image: 'josh'
-      }, {
         name: 'Fritz Thielemann',
         title: 'Admin Adventures',
         handle: 'fritzek',
@@ -55,13 +48,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'anika'
       }, {
-        name: 'Henrik Hodne',
-        title: 'DevOops Engineer',
-        handle: 'henrikhodne',
-        nationality: 'norway',
-        country: 'norway',
-        image: 'henrik'
-      }, {
         name: 'Justine Arreche',
         title: 'Lead Clipart Strategist',
         handle: 'saltinejustine',
@@ -91,6 +77,7 @@ export default TravisRoute.extend({
       }, {
         name: 'Carla Drago',
         title: 'inchworm',
+        handle: 'carlad',
         nationality: 'italy',
         country: 'germany',
         image: 'carla'
@@ -265,7 +252,8 @@ export default TravisRoute.extend({
         nationality: 'kenya',
         country: 'germany',
         image: 'lili'
-      }, {
+      },
+      {
         name: 'Carla Iriberri',
         title: 'Cacaolat Connoisseur',
         handle: 'iriberri1',
@@ -279,6 +267,20 @@ export default TravisRoute.extend({
         nationality: 'germany',
         country: 'germany',
         image: 'jan'
+      }, {
+        name: 'Natalia Saavedra',
+        title: 'Design Wizard',
+        nationality: 'colombia',
+        country: 'occupiedcanada',
+        countryAlias: 'canada',
+        image: 'natalia'
+      },
+      {
+        name: 'Olamide Ojo',
+        title: 'Mr Bean Counter',
+        nationality: 'nigeria',
+        country: 'germany',
+        image: 'ola'
       }
     ];
   }

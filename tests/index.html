@@ -17,8 +17,11 @@
 
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
+
+    <!-- Testing-only style that reduces false positives on SVG visual diffs in Percy. -->
+    <style>svg { shape-rendering: geometricPrecision; }</style>
   </head>
-  <body class='testing'>
+  <body>
     {{content-for "body"}}
     {{content-for "test-body"}}
 

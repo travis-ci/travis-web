@@ -5,6 +5,9 @@ export default TravisRoute.extend({
   queryParams: {
     filter: {
       replace: true
+    },
+    offset: {
+      refreshModel: true
     }
   },
 
@@ -14,12 +17,17 @@ export default TravisRoute.extend({
     }
   },
 
-  model() {
+  model(params) {
     return Ember.RSVP.hash({
-      repos: this.store.query('repo', {
+      starredRepos: this.store.query('repo', {
         active: true,
-        withLastBuild: true,
-        sort_by: 'last_build.finished_at:desc'
+        sort_by: 'current_build:desc',
+        starred: true
+      }),
+      repos: this.store.paginated('repo', {
+        active: true,
+        sort_by: 'current_build:desc',
+        offset: params.offset
       }),
       accounts: this.store.query('account', {
         all: true
