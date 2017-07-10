@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="columbia" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 30 20" style="enable-background:new 0 0 30 20;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#FBD016;}
-	.st1{fill:#003892;}
-	.st2{fill:#CD1126;}
-</style>
+	 width="261.12px" height="172.38px" viewBox="23.46 112.32 261.12 172.38" enable-background="new 23.46 112.32 261.12 172.38"
+	 xml:space="preserve">
 <g id="xNqFre_1_">
 	<g>
-		<path class="st0" d="M2.3,10.1c0-2.8,0-5.5,0-8.3c0-0.2,0-0.2,0.2-0.2c8.4,0,16.8,0,25.2,0c0.2,0,0.2,0.1,0.2,0.2
-			c0,2.8,0,5.5,0,8.3C19.3,10.1,10.8,10.1,2.3,10.1z"/>
-		<path class="st1" d="M2.3,10.1c8.5,0,17.1,0,25.6,0c0,1.4,0,2.8,0,4.3c-8.5,0-17.1,0-25.6,0C2.3,12.9,2.3,11.5,2.3,10.1z"/>
-		<path class="st2" d="M2.3,14.4c8.5,0,17.1,0,25.6,0c0,1.4,0,2.7,0,4.1c0,0.1,0,0.2-0.2,0.2c-8.4,0-16.8,0-25.2,0
-			c-0.1,0-0.2,0-0.2-0.2C2.3,17.1,2.3,15.7,2.3,14.4z"/>
+		<path fill="#FBD016" d="M23.46,199.02c0-28.56,0-56.1,0-84.66c0-2.04,0-2.04,2.04-2.04c85.68,0,171.359,0,257.04,0
+			c2.04,0,2.04,1.02,2.04,2.04c0,28.56,0,56.1,0,84.66C196.859,199.02,110.16,199.02,23.46,199.02z"/>
+		<path fill="#003892" d="M23.46,199.02c86.7,0,174.42,0,261.12,0c0,14.28,0,28.561,0,43.86c-86.7,0-174.42,0-261.12,0
+			C23.46,227.58,23.46,213.3,23.46,199.02z"/>
+		<path fill="#CD1126" d="M23.46,242.88c86.7,0,174.42,0,261.12,0c0,14.28,0,27.54,0,41.82c0,1.021,0,2.04-2.04,2.04
+			c-85.681,0-171.36,0-257.04,0c-1.02,0-2.04,0-2.04-2.04C23.46,270.42,23.46,256.141,23.46,242.88z"/>
 	</g>
 </g>
 </svg>

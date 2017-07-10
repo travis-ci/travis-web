@@ -11,7 +11,8 @@ module.exports = function () {
     fingerprint = false;
   } else {
     fingerprint = {
-      exclude: ['images/emoji'],
+      // FIXME this is probably not desired
+      exclude: ['images/emoji', 'images/pro-landing/flag*', 'images/team'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
     };
 
