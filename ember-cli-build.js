@@ -1,4 +1,6 @@
 /* eslint-env node */
+'use strict';
+
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 
@@ -33,8 +35,10 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
-    babel: {
-      optional: ['es7.decorators']
+    // need to use babel6 key here until
+    // we can upgrade to ember-cli@2.13
+    babel6: {
+      plugins: ['transform-decorators-legacy']
     },
     fingerprint: fingerprint,
     sourcemaps: {
@@ -56,7 +60,6 @@ module.exports = function () {
 
   app.import('bower_components/pusher/dist/pusher.js');
   app.import('bower_components/jquery-timeago/jquery.timeago.js');
-  app.import('bower_components/JavaScript-MD5/js/md5.js');
   app.import('bower_components/moment/moment.js');
 
   app.import('bower_components/js-emoji/demo/emoji.css');

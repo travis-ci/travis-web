@@ -94,8 +94,15 @@ export default function () {
       };
     }
 
+    let repos = schema.repositories.all();
+
+    let starred = request.queryParams['starred'];
+    if (starred) {
+      repos = repos.filter(repo => repo.starred);
+    }
+
     // standard v3 response returning all repositories
-    return schema.repositories.all();
+    return repos;
   });
 
   this.get('/repo/:slug_or_id', function (schema, request) {
@@ -184,6 +191,11 @@ export default function () {
 
   this.get('/repo/:repository_id/branches', function (schema) {
     return schema.branches.all();
+  });
+
+  this.get('/repo/:repository_id/branch/:branch', function (schema, request) {
+    const id = `/v3/repo/${request.params.repository_id}/branch/${request.params.branch}`;
+    return this.serialize(schema.branches.find(id));
   });
 
   this.get('/settings/ssh_key/:repo_id', function (schema, request) {
@@ -287,11 +299,6 @@ export default function () {
       builds = builds.filter(build => (build.branch && build.branch.attrs.name) === branchName);
     }
 
-    let offset = request.queryParams.offset;
-    if (offset) {
-      builds = builds.slice(offset);
-    }
-
     if (request.queryParams.event_type !== 'pull_request') {
       builds = builds.filter(build => build.attrs.event_type !== 'pull_request');
     } else {
@@ -300,7 +307,7 @@ export default function () {
 
     if (!request.queryParams.sort_by) {
       builds = builds.sort((a, b) => {
-        return parseInt(a.id) > parseInt(b.id) ? -1 : 1;
+        return parseInt(a.number) > parseInt(b.number) ? -1 : 1;
       });
     } else if (request.queryParams.sort_by === 'finished_at:desc') {
       builds = builds.sort((a, b) => {
@@ -328,29 +335,7 @@ export default function () {
   });
 
   this.get('/user/:user_id/beta_features', function (schema) {
-    let features = schema.features.all();
-    if (features.models.length) {
-      return this.serialize(features);
-    } else {
-      schema.db.features.insert([
-        {
-          name: 'Dashboard',
-          description: 'UX improvements over the current implementation',
-          enabled: false
-        },
-        {
-          name: 'Show your Pride',
-          description: 'Let 🌈 in your heart (and Travis CI)',
-          enabled: false
-        },
-        {
-          name: 'Comic Sans',
-          description: 'Don\'t you miss those days?',
-          enabled: false
-        }
-      ]);
-      return this.serialize(schema.features.all());
-    }
+    return this.serialize(schema.features.all());
   });
 
   this.put('/user/:user_id/beta_feature/:feature_id', function (schema, request) {
@@ -358,6 +343,16 @@ export default function () {
     let requestBody = JSON.parse(request.requestBody);
     feature.update('enabled', requestBody.enabled);
     return this.serialize(feature);
+  });
+
+  this.post('/repo/:repo_id/star', function (schema, request) {
+    let repo = schema.repositories.find(request.params.repo_id);
+    repo.update('starred', true);
+  });
+
+  this.post('/repo/:repo_id/unstar', function (schema, request) {
+    let repo = schema.repositories.find(request.params.repo_id);
+    repo.update('starred', false);
   });
 }
 

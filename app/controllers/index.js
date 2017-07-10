@@ -30,12 +30,7 @@ export default Ember.Controller.extend({
   landingPage(pro) {
     let version = pro ? 'pro' : 'default';
 
-    return `landing/${version}-page`;
-  },
-
-  @computed('repo.slug', 'repo.defaultBranch.name')
-  statusImageUrl(slug, branchName) {
-    return this.get('statusImages').imageUrl(slug, branchName);
+    return `landing-${version}-page`;
   },
 
   @alias('repos.repos.firstObject') repo: null,
@@ -44,25 +39,5 @@ export default Ember.Controller.extend({
 
   @alias('repo.currentBuild') build: null,
 
-  @alias('repo.currentBuild.jobs.firstObject') job: null,
-
-  @computed('build.jobs.@each.{config}')
-  jobsLoaded(jobs) {
-    if (jobs) {
-      return jobs.isEvery('config');
-    }
-  },
-
-  @computed('build.jobs.[]')
-  noJobsError(jobs) {
-    return jobs.length < 1;
-  },
-
-  actions: {
-    statusImages() {
-      this.get('popup').open('status-images');
-      return false;
-    }
-  },
-
+  @alias('build.jobs.firstObject') job: null,
 });

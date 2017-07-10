@@ -1,13 +1,11 @@
 {
   "name": "travis",
   "dependencies": {
-    "JavaScript-MD5": "~2.3.0",
     "moment": "~2.13.0",
     "jquery-timeago": "~1.5.2",
     "pusher": "~2.2.3",
     "raven-js": "3.10.0",
     "mousetrap": "~1.5.2",
-    "prism": "^1.5.1",
     "js-emoji": "~3.0.2",
     "emoji-data": "~2.4.4"
   }

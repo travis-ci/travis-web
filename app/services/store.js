@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import DS from 'ember-data';
 import Ember from 'ember';
+import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 
 const { service } = Ember.inject;
 
@@ -12,6 +13,12 @@ export default DS.Store.extend({
   init() {
     this._super(...arguments);
     return this.set('pusherEventHandlerGuards', {});
+  },
+
+  paginated() {
+    return PaginatedCollectionPromise.create({
+      content: this.query(...arguments)
+    });
   },
 
   addPusherEventHandlerGuard(name, callback) {
@@ -66,6 +73,18 @@ export default DS.Store.extend({
       };
       delete data.build.commit;
       this.push(this.normalize('commit', commit));
+    }
+
+    if (name === 'branch') {
+      // force reload of repo branches
+      // delay to resolve race between github-sync and live
+      const branchName = data.branch;
+
+      Ember.run.later(() => {
+        this.findRecord('branch', `/repo/${data.repository_id}/branch/${branchName}`);
+      }, 2000);
+
+      delete data.branch;
     }
 
     if (event === 'job:log') {

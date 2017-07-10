@@ -39,12 +39,6 @@ Router.map(function () {
     }
     this.route('settings', { resetNamespace: true }, function () {
       this.route('index', { path: '/' });
-      this.route('env_vars', { resetNamespace: true }, function () {
-        this.route('new');
-      });
-      if (config.endpoints.sshKey) {
-        this.route('ssh_key');
-      }
     });
   });
 

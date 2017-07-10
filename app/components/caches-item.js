@@ -9,7 +9,6 @@ export default Ember.Component.extend({
   tagName: 'li',
   classNames: ['cache-item'],
   classNameBindings: ['cache.type'],
-  isDeleting: false,
 
   delete: task(function* () {
     if (config.skipConfirmations || confirm('Are you sure?')) {

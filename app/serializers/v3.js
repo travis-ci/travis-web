@@ -189,15 +189,19 @@ export default JSONSerializer.extend({
       included: []
     };
 
-    let meta = this.extractMeta(store, primaryModelClass, payload);
-    if (meta) {
-      let metaType = Ember.typeOf(meta);
-      let metaIsObject = metaType == 'object';
-      let errorMessage =
-        `The 'meta' returned from 'extractMeta' has to be an object, not ${metaType}.`;
-      Ember.assert(errorMessage, metaIsObject);
-      documentHash.meta = meta;
+    let meta = this.extractMeta(store, primaryModelClass, payload) || {},
+      pagination = payload['@pagination'];
+
+    if (pagination) {
+      meta.pagination = pagination;
     }
+
+    let metaType = Ember.typeOf(meta);
+    let metaIsObject = metaType == 'object';
+    let errorMessage =
+      `The 'meta' returned from 'extractMeta' has to be an object, not ${metaType}.`;
+    Ember.assert(errorMessage, metaIsObject);
+    documentHash.meta = meta;
 
     let items;
     let type = payload['@type'];

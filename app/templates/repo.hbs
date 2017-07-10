@@ -12,31 +12,9 @@
           {{repos-empty}}
         {{else}}
           {{#if repo.isLoaded}}
-            <article class="repo-header">
-              <header>
-                <h1 class="repo-title">{{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
-                  <a href="{{urlGithub}}" title="{{repo.name}} on GitHub" class="repo-gh">
-                    {{inline-svg 'icon-repooctocat'}}</a>
-                  <div class="repo-badge">
-                    <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "statusImages"}}>
-                      <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
-                    </a>
-                  </div>
-              </header>
-              <main class="repo-main">
-              <div class="repo-navigation">
-                {{repo-show-tools repo=repo build=build job=job tab=tab}}
-
-                {{repo-show-tabs repo=repo tab=tab build=build job=job}}
-              </div>
-              <div class="travistab-body repo-body">
-                {{outlet}}
-              </div>
-              </main>
-            </article>
-
-          {{else}}
-            {{loading-indicator}}
+            {{#repository-layout repo=repo build=build job=job tab=tab}}
+              {{outlet}}
+            {{/repository-layout}}
           {{/if}}
         {{/if}}
 

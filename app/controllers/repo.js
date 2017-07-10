@@ -8,8 +8,6 @@ const { alias } = Ember.computed;
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
   popup: service(),
-  externalLinks: service(),
-  statusImages: service(),
 
   jobController: controller('job'),
   buildController: controller('build'),
@@ -30,32 +28,6 @@ export default Ember.Controller.extend({
 
   isEmpty: Ember.computed('repos.isLoaded', 'repos.length', function () {
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
-  }),
-
-  statusImageUrl: Ember.computed('repo.slug', 'repo.defaultBranch.name', function () {
-    return this.get('statusImages').imageUrl(
-      this.get('repo.slug'),
-      this.get('repo.defaultBranch.name')
-    );
-  }),
-
-  showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
-    return this.get('repo.currentBuild.id') && this.get('repo.active');
-  }),
-
-  actions: {
-    statusImages() {
-      this.get('popup').open('status-images');
-      return false;
-    }
-  },
-
-  slug: Ember.computed('repo.slug', function () {
-    return this.get('repo.slug');
-  }),
-
-  isLoading: Ember.computed('repo.isLoading', function () {
-    return this.get('repo.isLoading');
   }),
 
   init() {
@@ -158,8 +130,4 @@ export default Ember.Controller.extend({
     tab === 'current' ? 'build' : tab;
     return this.set('tab', tab);
   },
-
-  urlGithub: Ember.computed('repo.slug', function () {
-    return this.get('externalLinks').githubRepo(this.get('repo.slug'));
-  })
 });
