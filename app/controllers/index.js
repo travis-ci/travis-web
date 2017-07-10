@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
   landingPage(pro) {
     let version = pro ? 'pro' : 'default';
 
-    return `landing/${version}-page`;
+    return `landing-${version}-page`;
   },
 
   @alias('repos.repos.firstObject') repo: null,
