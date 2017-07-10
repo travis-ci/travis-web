@@ -23,7 +23,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   model() {
     if (this.get('auth.signedIn')) {
-      return this.get('fetchFeatures.fetchTask').perform();
+      return this.get('featureFlags.fetchTask').perform();
     }
   },
 
