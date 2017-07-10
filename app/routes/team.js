@@ -13,13 +13,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'sven'
       }, {
-        name: 'Josh Kalderimis',
-        title: 'Chief Post-It Officer',
-        handle: 'j2h',
-        nationality: 'newzealand',
-        country: 'germany',
-        image: 'josh'
-      }, {
         name: 'Fritz Thielemann',
         title: 'Admin Adventures',
         handle: 'fritzek',
