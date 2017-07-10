@@ -6,12 +6,12 @@
     {{#if stage}}
       <header class="stage-header {{stageState}}">
         <h2 class="section-title">
-          {{#if stageStateIcon}}<span class='state-icon-container' title='{{stageStateTitle}}'>{{inline-svg stageStateIcon class='icon'}}</span>{{/if}}
+          {{#if stageStateIcon}}<span class='state-icon-container' title='{{stageStateTitle}}'>{{svg-jar stageStateIcon class='icon'}}</span>{{/if}}
           <span class='name'>{{format-message stage.name}}</span>
         </h2>
         {{#if stage.duration}}
           <div class="stage-duration" title="Started {{pretty-date stage.startedAt}}">
-            {{inline-svg 'icon-clock' class="icon"}}
+            {{svg-jar 'icon-clock' class="icon"}}
             <time class="label-align" aria-label="Stage duration" datetime="PT{{stage.duration}}S">{{format-duration stage.duration}}</time>
           </div>
         {{/if}}
@@ -19,7 +19,7 @@
     {{else}}
       <h2 class="section-title"><span class="label-align">Allowed Failures</span>
         <span class="tooltip-jobs" data-tooltip="These are jobs you can allow to fail without failing your entire build">
-          <span class="tooltip-trigger">{{inline-svg 'icon-help' class='icon-help'}}</span>
+          <span class="tooltip-trigger">{{svg-jar 'icon-help' class='icon-help'}}</span>
         </span>
       </h2>
     {{/if}}

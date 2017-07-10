@@ -30,7 +30,7 @@
   <li id="tab_build" class={{classBuild}}>
     {{#if build.id}}
       {{#if repo.slug}}
-        {{inline-svg 'icon-arrowtabs' class="tab-arrow"}}
+        {{svg-jar 'icon-arrowtabs' class="tab-arrow"}}
         {{#link-to "build" repo build}}
           Build #{{build.number}}
         {{/link-to}}

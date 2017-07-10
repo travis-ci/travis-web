@@ -20,19 +20,19 @@
     <ul class="list-icon">
       <li>
         <a class="commit-commit" title="See the commit on GitHub" href={{urlGithubCommit}}>
-          {{inline-svg 'icon-github' class="icon"}}
+          {{svg-jar 'icon-github' class="icon"}}
           <span class="label-align inner-underline">Commit {{format-sha commit.sha}}</span></a>
       </li>
       {{#if displayCompare}}
         <li>
           {{#if item.isPullRequest}}
             <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
-              {{inline-svg 'icon-github' class="icon"}}
+              {{svg-jar 'icon-github' class="icon"}}
               <span class="label-align inner-underline">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
           {{else}}
             {{#if item.commit.compareUrl}}
             <a class="commit-compare" title="See the diff on GitHub" href={{item.commit.compareUrl}}>
-              {{inline-svg 'icon-github' class="icon"}}
+              {{svg-jar 'icon-github' class="icon"}}
               <span class="label-align inner-underline">Compare {{short-compare-shas item.commit.compareUrl}}</span></a>
             {{/if}}
           {{/if}}
@@ -40,7 +40,7 @@
       {{/if}}
       <li>
         <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
-          {{inline-svg 'icon-github' class="icon"}}
+          {{svg-jar 'icon-github' class="icon"}}
           <span class="label-align inner-underline">Branch {{build.branchName}}</span>
         </a>
       </li>
@@ -79,7 +79,7 @@
   <ul class="list-icon">
     {{#if isJob}}
       <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
-        {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
+        {{svg-jar 'icon-stopwatch' class="icon-stopwatch"}}
         <span class="label-align">
           {{#if item.toBeQueued}}
             Waiting to be queued
@@ -92,7 +92,7 @@
       </li>
     {{else}}
       <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
-        {{inline-svg 'icon-stopwatch' class="icon-stopwatch"}}
+        {{svg-jar 'icon-stopwatch' class="icon-stopwatch"}}
         <span class="label-align">
           {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
         </span>
@@ -102,7 +102,7 @@
     {{#if item.isFinished}}
       {{#if item.isMatrix}}
         <li title="{{format-duration item.duration}}" class="commit-clock">
-          {{inline-svg 'icon-clock' class="icon"}}
+          {{svg-jar 'icon-clock' class="icon"}}
           <span class="label-align">
             Total time <time datetime="PT{{item.duration}}S">{{format-duration item.duration}}</time>
           </span>
@@ -110,7 +110,7 @@
       {{/if}}
 
       <li title="{{item.finishedAt}}" class="commit-calendar">
-        {{inline-svg 'icon-calendar' class="icon"}}
+        {{svg-jar 'icon-calendar' class="icon"}}
         <time class="label-align" datetime={{item.finishedAt}}>{{format-time item.finishedAt}}</time>
       </li>
     {{/if}}

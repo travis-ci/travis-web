@@ -10,7 +10,7 @@ const job = Ember.Object.create();
 
 moduleForComponent('repo-actions', 'RepoActionsComponent', {
   unit: true,
-  needs: ['helper:perform', 'helper:inline-svg', 'service:flashes'],
+  needs: ['helper:perform', 'helper:svg-jar', 'service:flashes'],
   beforeEach() {
     this.register('service:auth', authStub);
   }
