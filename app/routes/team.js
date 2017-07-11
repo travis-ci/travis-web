@@ -50,7 +50,7 @@ export default TravisRoute.extend({
       }, {
         name: 'Justine Arreche',
         title: 'Lead Clipart Strategist',
-        handle: 'saltinejustine',
+        handle: 'ctrlaltjustine',
         nationality: 'usa',
         country: 'usa',
         image: 'justine'
