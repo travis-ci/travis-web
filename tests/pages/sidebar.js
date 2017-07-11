@@ -24,6 +24,7 @@ export default create({
       name: text('.tile h2.tile-title span.label-align')
     }
   }),
+  sidebarRunningTabText: text('#tab_running a'),
   sidebarRunningRepositories: collection({
     scope: '.sidebar-list',
     itemScope: '.tile--sidebar',

@@ -53,6 +53,8 @@ export default Ember.Component.extend({
     }
   },
 
+  @alias('runningJobs.length') startedJobsCount: null,
+
   @computed('runningJobs.length', 'queuedJobs.length')
   allJobsCount(runningAmount, queuedAmount) {
     return runningAmount + queuedAmount;
