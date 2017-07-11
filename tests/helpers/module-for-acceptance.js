@@ -4,7 +4,7 @@ import startApp from '../helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
 import '../helpers/percy/register-helpers';
 
-const { RSVP: { resolve } } = Ember;
+const { RSVP: { Promise } } = Ember;
 
 export default function (name, options = {}) {
   module(name, {
@@ -21,7 +21,7 @@ export default function (name, options = {}) {
       window.sessionStorage.clear();
 
       let afterEach = options.afterEach && options.afterEach.apply(this, arguments);
-      return resolve(afterEach).then(() => destroyApp(this.application));
+      return Promise.resolve(afterEach).then(() => destroyApp(this.application));
     }
   });
 }
