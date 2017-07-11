@@ -206,6 +206,7 @@ class Travis::Web::App
 
       config['defaultTitle'] = title
       config['apiEndpoint'] = options[:api_endpoint] if options[:api_endpoint]
+      config['replicatedApiEndpoint'] = options[:replicated_api_endpoint] if options[:replicated_api_endpoint]
       config['sourceEndpoint'] = options[:source_endpoint] if options[:source_endpoint]
       pusher = {}
       pusher['key'] = options[:pusher_key] if options[:pusher_key]

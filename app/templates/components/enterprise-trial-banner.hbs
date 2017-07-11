@@ -1,0 +1,15 @@
+{{#if showBanner}}
+<div class='enterprise-trial-banner {{if isExpired 'expired'}}'>
+  {{#if isTrial}}
+    {{#if isExpired}}
+      Your trial license has expired, please contact enterprise@travis-ci.com
+    {{else}}
+      Your trial license expires {{expirationTimeFromNow}}.
+    {{/if}}
+  {{else}}
+    {{#if licenseExpirationIsImminent}}
+      Your license expires {{expirationTimeFromNow}}, please contact enterprise@travis-ci.com
+    {{/if}}
+  {{/if}}
+</div>
+{{/if}}

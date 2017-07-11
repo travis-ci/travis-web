@@ -25,6 +25,7 @@ module.exports = function (environment) {
     // defaults for running travis-web
     apiEndpoint: 'https://api.travis-ci.org',
     sourceEndpoint: 'https://github.com',
+    replicatedApiEndpoint: process.env.REPLICATED_INTEGRATIONAPI,
     pusher: {
       key: '5df8ac576dcccf4fd076',
       host: 'ws.pusherapp.com',
@@ -45,7 +46,8 @@ module.exports = function (environment) {
   ENV.featureFlags = {
     'debug-logging': false,
     'pro-version': !!process.env.TRAVIS_PRO || false,
-    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false
+    'enterprise-version': !!process.env.TRAVIS_ENTERPRISE || false,
+    'replicated-api': !!process.env.REPLICATED_INTEGRATIONAPI || false
   };
 
   ENV.sentry = {
@@ -133,6 +135,8 @@ module.exports = function (environment) {
       },
       defaultBreakpoints: ['desktop']
     };
+
+    ENV.replicatedApiEndpoint = 'http://example.com';
 
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;
