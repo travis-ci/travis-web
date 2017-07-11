@@ -4,7 +4,6 @@ import computed from 'ember-computed-decorators';
 
 const NOVEMBER_2016_RETIREMENT = '2016-11-28T12:00:00-08:00';
 const JANUARY_2017_RETIREMENT = '2017-01-20T12:00:00-08:00';
-const Q2_2017_TRUSTY_RELEASE = '2017-06-21T13:00:00-04:00';
 
 export default Ember.Component.extend({
   queue: Ember.computed.alias('job.queue'),
@@ -18,31 +17,16 @@ export default Ember.Component.extend({
     }
   }),
 
-  isLegacyInfrastructure: Ember.computed.equal('queue', 'builds.linux'),
-
-  isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
-
-  @computed('job.startedAt', 'queue', 'job.config')
-  isTrustySudoRequired(startedAt, queue, config) {
-    if (queue === 'builds.gce' && config.dist === 'trusty' && config.group === 'stable') {
-      const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(Q2_2017_TRUSTY_RELEASE);
-      if (jobRanAfterReleaseDate) {
-        return true;
-      }
-    }
-
-    return false;
+  @computed('job.config')
+  isTrustyStable(config) {
+    return config.dist === 'trusty' && config.group === 'stable';
   },
 
   isMacStadium6: Ember.computed.equal('queue', 'builds.macstadium6'),
 
-  @computed('queue', 'job.config')
-  isPreciseEOL(queue, config) {
-    if (queue === 'builds.gce' && config.dist === 'precise') {
-      if (config.language !== 'android') {
-        return true;
-      }
-    }
+  @computed('job.config')
+  isPreciseStable(config) {
+    return config.dist === 'precise' && config.group === 'stable';
   },
 
   macOSImage: Ember.computed.alias('jobConfig.osx_image'),
