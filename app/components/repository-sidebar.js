@@ -14,20 +14,27 @@ export default Ember.Component.extend({
   auth: service(),
   router: service(),
 
-  init() {
-    this._super(...arguments);
-    if (!Ember.testing) {
-      Visibility.every(this.config.intervals.updateTimes, this.updateTimes.bind(this));
-    }
+  didReceiveAttrs() {
+    return this.get('fetchRepositoryData').perform();
   },
 
-  didReceiveAttrs() {
+  fetchRepositoryData: task(function* () {
     if (this.get('repositories.searchQuery')) {
-      this.get('repositories.performSearchRequest').perform();
+      yield this.get('repositories.performSearchRequest').perform();
+      this.set('_data', this.get('repositories.searchResults'));
     } else {
-      this.get('viewOwned').perform();
+      yield this.get('viewOwned').perform();
+      this.set('_data', this.get('repositories.accessible'));
     }
-  },
+
+    if (!Ember.testing) {
+      Visibility.every(this.config.intervals.updateTimes, () => {
+        const callback = (record) => record.get('currentBuild');
+        const withCurrentBuild = this.get('_data').filter(callback).map(callback);
+        this.get('updateTimesService').push(withCurrentBuild);
+      });
+    }
+  }),
 
   actions: {
     showRunningJobs: function () {
@@ -79,15 +86,6 @@ export default Ember.Component.extend({
     result.then(() => result.set('isLoaded', true));
 
     return result;
-  },
-
-  updateTimes() {
-    let records = this.get('repos');
-
-    let callback = (record) => record.get('currentBuild');
-    records = records.filter(callback).map(callback);
-
-    this.get('updateTimesService').push(records);
   },
 
   viewOwned: task(function* () {
