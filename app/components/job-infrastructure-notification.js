@@ -4,7 +4,7 @@ import computed from 'ember-computed-decorators';
 
 const NOVEMBER_2016_RETIREMENT = '2016-11-28T12:00:00-08:00';
 const JANUARY_2017_RETIREMENT = '2017-01-20T12:00:00-08:00';
-const Q2_2017_TRUSTY_RELEASE = '2017-06-21T13:00:00-04:00';
+const LATEST_TRUSTY_RELEASE = '2017-07-12T18:00:00-00:00';
 
 export default Ember.Component.extend({
   queue: Ember.computed.alias('job.queue'),
@@ -23,9 +23,9 @@ export default Ember.Component.extend({
   isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
 
   @computed('job.startedAt', 'queue', 'job.config')
-  isTrustySudoRequired(startedAt, queue, config) {
+  isTrustyStable(startedAt, queue, config) {
     if (queue === 'builds.gce' && config.dist === 'trusty' && config.group === 'stable') {
-      const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(Q2_2017_TRUSTY_RELEASE);
+      const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
         return true;
       }
