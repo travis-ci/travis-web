@@ -59,6 +59,8 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   title(titleParts) {
+    this.get('flashes').success('jorts!!!');
+
     if (titleParts.length) {
       titleParts = titleParts.reverse();
       titleParts.push('Travis CI');

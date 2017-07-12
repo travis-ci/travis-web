@@ -63,7 +63,7 @@ export default Ember.Service.extend({
           return this.get('flashes.content').removeObject(msg);
         }
       });
-    }, 15000);
+    }, 15000000);
   },
 
   close(msg) {
