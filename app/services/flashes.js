@@ -83,14 +83,14 @@ export default Ember.Service.extend({
   },
 
   success(message) {
-    this.display('success', message);
+    this.display('success', `Hooray! ${message}`);
   },
 
   error(message) {
-    this.display('error', message);
+    this.display('error', `Oh no! ${message}`);
   },
 
   notice(message) {
-    this.display('notice', message);
+    this.display('notice', `Heads up! ${message}`);
   }
 });
