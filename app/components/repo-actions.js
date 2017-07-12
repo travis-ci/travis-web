@@ -65,7 +65,7 @@ export default Ember.Component.extend({
 
     yield eventually(this.get('item'), (record) => {
       record.cancel().then(() => {
-        this.get('flashes').notice(`${type.capitalize()} has been successfully cancelled.`);
+        this.get('flashes').success(`${type.capitalize()} has been successfully cancelled.`);
       }, (xhr) => {
         this.displayFlashError(xhr.status, 'cancel');
       });
@@ -79,7 +79,7 @@ export default Ember.Component.extend({
 
     yield eventually(this.get('item'), (record) => {
       record.restart().then(() => {
-        this.get('flashes').notice(`The ${type} was successfully restarted.`);
+        this.get('flashes').success(`The ${type} was successfully restarted.`);
       }, () => {
         this.get('flashes').error(`An error occurred. The ${type} could not be restarted.`);
       });
