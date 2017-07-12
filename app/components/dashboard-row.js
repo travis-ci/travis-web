@@ -46,8 +46,8 @@ export default Ember.Component.extend({
       .then(() => {
         self.set('isTriggering', false);
         self.get('flashes')
-          .success(`You successfully triggered a build for ${self.get('repo.slug')}.
-                   It might take a moment to show up though.`);
+          .success(`You’ve successfully triggered a build for ${self.get('repo.slug')}.
+                   Hold tight, it might take a moment to show up.`);
       });
     this.set('dropupIsOpen', false);
     this.set('isTriggering', true);

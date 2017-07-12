@@ -92,8 +92,8 @@ export default Ember.Component.extend({
     yield eventually(this.get('item'), (record) => {
       record.debug().then(() => {
         this.get('flashes')
-          .notice(`The ${type} was successfully restarted in debug mode.
-            Watch the log for a host to connect to.`);
+          .notice(`The ${type} was successfully restarted in debug mode
+            but make sure to watch the log for a host to connect to.`);
       }, () => {
         this.get('flashes')
           .error(`An error occurred. The ${type} could not be restarted in debug mode.`);
