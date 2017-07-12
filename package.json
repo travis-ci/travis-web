@@ -33,11 +33,8 @@
     "ember-cli-deploy": "1.0.0",
     "ember-cli-deploy-lightning-pack": "1.1.1",
     "ember-cli-deprecation-workflow": "0.2.3",
-    "ember-cli-document-title": "0.3.3",
-    "ember-cli-eslint": "3.1.0",
-    "ember-cli-htmlbars": "^2.0.1",
-    "ember-cli-htmlbars-inline-precompile": "^0.4.3",
-    "ember-cli-inject-live-reload": "^1.4.1",
+
+    
     "ember-cli-inline-images": "^0.0.4",
     "ember-cli-mirage": "0.2.8",
     "ember-cli-page-object": "1.10.0",
@@ -53,30 +50,5 @@
     "ember-data": "2.12.2",
     "ember-data-filter": "1.13.0",
     "ember-disable-proxy-controllers": "^1.0.1",
-    "ember-exam": "0.7.0",
-    "ember-export-application-global": "2.0.0",
-    "ember-feature-flags": "3.0.0",
-    "ember-inflector": "^2.0.0",
-    "ember-inline-svg": "0.1.11",
-    "ember-keyboard-shortcuts": "0.3.0",
-    "ember-load-initializers": "1.0.0",
-    "ember-percy": "1.2.12",
-    "ember-prism": "0.1.0",
-    "ember-qunit-nice-errors": "1.1.2",
-    "ember-resolver": "4.1.0",
-    "ember-route-action-helper": "^2.0.3",
-    "ember-router-service-polyfill": "^1.0.1",
-    "ember-source": "2.13.4",
-    "emberx-select": "~3.0.0",
-    "glob": "^7.1.2",
-    "loader.js": "^4.2.3",
-    "lodash.intersection": "4.4.0",
-    "lodash.pickby": "4.6.0",
-    "morgan": "1.8.2",
-    "visibilityjs": "^1.2.4"
-  },
-  "engines": {
-    "node": "6.9.5"
-  },
-  "private": true
+
 }
