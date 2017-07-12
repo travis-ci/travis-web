@@ -105,10 +105,10 @@ export default Ember.Component.extend({
     let type = this.get('type');
     if (status === 422 || status === 400) {
       let actionTerm = action === 'restart' ? 'restarted' : 'canceled';
-      this.get('flashes').error(`This ${type} can't be ${actionTerm}`);
+      this.get('flashes').error(`This ${type} can’t be ${actionTerm}`);
     } else if (status === 403) {
       let actionTerm = action === 'restart' ? 'restart' : 'cancel';
-      this.get('flashes').error(`You don't have sufficient access to ${actionTerm} this ${type}`);
+      this.get('flashes').error(`You don’t have sufficient access to ${actionTerm} this ${type}`);
     } else {
       let actionTerm = action === 'restart' ? 'restarting' : 'canceling';
       this.get('flashes').error(`An error occurred when ${actionTerm} the ${type}`);
