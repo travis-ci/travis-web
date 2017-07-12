@@ -1,17 +1,5 @@
 {{#unless config.enterprise}}
   {{#if auth.signedIn}}
-    {{#if isLegacyInfrastructure}}
-      {{#notice-banner}}
-        This job {{conjugatedRun}} on our legacy infrastructure.
-        Please read <a href="http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade" title="Migrating from legacy">our docs on how to upgrade</a>.
-      {{/notice-banner}}
-    {{/if}}
-    {{#if isTrustySudoFalse}}
-      {{#notice-banner}}
-        This job {{conjugatedRun}} on our container-based trusty beta.
-        Please read <a href="http://blog.travis-ci.com/2016-11-08-trusty-container-public-beta/?utm_source=trusty-container-based-beta-notice&utm_medium=banner&utm_campaign=trusty-container-based-beta" title="Trusty container-based beta">our blog post about the public beta</a>.
-      {{/notice-banner}}
-    {{/if}}
     {{#if isDeprecatedOrRetiredMacImage}}
       {{#notice-banner}}
         {{{deprecatedOrRetiredMacImageMessage}}}
@@ -19,12 +7,12 @@
     {{/if}}
     {{#if isPreciseEOL}}
       {{#notice-banner}}
-        This job {{conjugatedRun}} on our Precise, <code>sudo: required</code> environment which was updated on May 4th. Please check <a href="https://blog.travis-ci.com/2017-05-04-precise-image-updates" title="Read about the Precise Update">our blog for more details about this update</a>.
+        This job {{conjugatedRun}} on our Precise environment, which is in the process of being decommissioned.  Please read about the rollout of Trusty as default <a href="https://blog.travis-ci.com/2017-07-11-trusty-as-default-linux-is-coming">on the blog</a>, and take note that you can explicitly stay on Precise by specifying <code>dist: precise</code> in your .travis.yml.
       {{/notice-banner}}
     {{/if}}
     {{#if isTrustySudoRequired}}
       {{#notice-banner}}
-        This job {{conjugatedRun}} on our Trusty, <code>sudo: required</code> environment which was updated on Wednesday, June 21st. Read all about it on our <a href="https://blog.travis-ci.com/2017-06-21-trusty-updates-2017-Q2-launch">blog</a> and take note that you can add <code>group: deprecated-2017Q2</code> in your .travis.yml file to use the previous version.
+       This job {{conjugatedRun}} on our Trusty environment, which was updated on Wednesday, July 12th. Read all about it in the <a href="https://docs.travis-ci.com/user/build-environment-updates/2017-07-12">docs</a> and take note that you can add <code>group: deprecated-2017Q3</code> in your .travis.yml file to use the previous version.
       {{/notice-banner}}
     {{/if}}
   {{/if}}
