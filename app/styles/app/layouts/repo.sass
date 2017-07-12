@@ -19,20 +19,10 @@
         border-color: $asphalt-grey
 
 .repo-gh
-  width: 28px
-  height: 28px
-  flex: 0 0 28px
+  @extend .icon--l
+  flex: 0 0 30px
   margin: 0 1.2em
-  overflow: hidden
-  text-indent: 999%
-  white-space: nowrap
-  a
-    @extend %icon-github-circle
-    display: block
-    height: 100%
-    background:
-      size: 100%
-      repeat: no-repeat
+  +colorSVG($cement-grey)
 
 .repo-navigation
   margin: 1.9em 0 1.2em
@@ -40,10 +30,9 @@
     display: flex
     flex-flow: row-reverse wrap
     justify-content: space-between
-    border-bottom: 2px #f1f1f1 solid
+    border-bottom: 2px $pebble-grey solid
 
   .option-button
     width: 10em
-    margin-top: -9px
     .option-dropdown a
        padding-left: 2.4em

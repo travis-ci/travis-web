@@ -1,0 +1,19 @@
+{{#unless config.enterprise}}
+  {{#if auth.signedIn}}
+    {{#if isDeprecatedOrRetiredMacImage}}
+      {{#notice-banner}}
+        {{{deprecatedOrRetiredMacImageMessage}}}
+      {{/notice-banner}}
+    {{/if}}
+    {{#if isPreciseEOL}}
+      {{#notice-banner}}
+        This job {{conjugatedRun}} on our Precise environment, which is in the process of being decommissioned.  Please read about the rollout of Trusty as default <a href="https://blog.travis-ci.com/2017-07-11-trusty-as-default-linux-is-coming">on the blog</a>, and take note that you can explicitly stay on Precise by specifying <code>dist: precise</code> in your .travis.yml.
+      {{/notice-banner}}
+    {{/if}}
+    {{#if isTrustySudoRequired}}
+      {{#notice-banner}}
+       This job {{conjugatedRun}} on our Trusty environment, which was updated on Wednesday, July 12th. Read all about it in the <a href="https://docs.travis-ci.com/user/build-environment-updates/2017-07-12">docs</a> and take note that you can add <code>group: deprecated-2017Q3</code> in your .travis.yml file to use the previous version.
+      {{/notice-banner}}
+    {{/if}}
+  {{/if}}
+{{/unless}}

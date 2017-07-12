@@ -3,16 +3,23 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
 import DS from 'ember-data';
+import { percySnapshot } from 'ember-percy';
+import { startMirage } from 'travis/initializers/ember-cli-mirage';
 
 moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.server = startMirage();
+  },
+
+  afterEach() {
+    this.server.shutdown();
+  }
 });
 
 test('it adds an env var on submit', function (assert) {
   assert.expect(6);
 
-  // this shouldn't be needed, probably some bug in tests setup with new ember-data
-  this.registry.register('transform:boolean', DS.BooleanTransform);
   var store = Ember.getOwner(this).lookup('service:store');
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
@@ -54,6 +61,8 @@ test('it shows an error if no name is present', function (assert) {
   this.$('.form-submit').click();
 
   assert.ok(this.$('.form-error-message').length, 'the error message should be displayed');
+
+  percySnapshot(assert);
 
   fillIn(this.$('.env-name'), 'FOO');
   fillIn(this.$('.env-value'), 'bar');

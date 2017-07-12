@@ -1,14 +1,21 @@
 <div class="profile-hooks profile-switch">
-  {{hook-switch hook=hook onToggleError="handleToggleError" onToggle="resetErrors"}}
-  {{#if hook.isSaving}}
-    {{loading-indicator inline=true}}
+  {{#if admin}}
+    {{hook-switch hook=hook onToggleError="handleToggleError" onToggle="resetErrors"}}
+    {{#if hook.isSaving}}
+      {{loading-indicator inline=true}}
+    {{else}}
+        {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repository settings"}}
+          {{inline-svg 'icon-settings' class="icon icon-hover"}}{{/link-to}}
+    {{/if}}
   {{else}}
-    {{#link-to "settings" hook.ownerName hook.name class="profile-settings" title="Go to Travis CI repo settings"}}<span class="icon-settings"></span>{{/link-to}}
+    {{hook-switch hook=hook disabled=true}}
   {{/if}}
 </div>
-<a href={{hook.urlGithub}} rel="nofollow" class="profile-repo">
+
+{{#link-to "repo" hook.ownerName hook.name class="profile-repo"}}
   {{hook.slug}}
-  <span>{{hook.description}}</span></a>
+  <span>{{hook.description}}</span>
+{{/link-to}}
 
 {{#if showError}}
   <div class="hooks-error">
@@ -21,7 +28,9 @@
           review and add
         </a> your authorized Orgs.
       {{/if}}
-      <a class="close" {{action "close" target=view}}></a>
+      <button type="button" class="no-button close" {{action "close" target=view}}>
+        {{inline-svg 'icon-failed' class="icon red"}}
+      </button>
     </p>
   </div>
 {{/if}}

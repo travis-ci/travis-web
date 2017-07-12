@@ -10,29 +10,26 @@
     {{content-for "head"}}
     {{content-for "test-head"}}
 
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/travis.css">
-    <link rel="stylesheet" href="assets/test-support.css">
-    <style>
-      #ember-testing-container {
-        top: 100px;
-        right: -620px;
-      }
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/travis.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/test-support.css">
 
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
+
+    <!-- Testing-only style that reduces false positives on SVG visual diffs in Percy. -->
+    <style>svg { shape-rendering: geometricPrecision; }</style>
   </head>
   <body>
-
     {{content-for "body"}}
     {{content-for "test-body"}}
-    <script src="testem.js" integrity=""></script>
-    <script src="assets/vendor.js"></script>
-    <script src="assets/test-support.js"></script>
-    <script src="assets/travis.js"></script>
-    <script src="assets/tests.js"></script>
-    <script src="assets/test-loader.js"></script>
+
+    <script src="/testem.js" integrity=""></script>
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/test-support.js"></script>
+    <script src="{{rootURL}}assets/travis.js"></script>
+    <script src="{{rootURL}}assets/tests.js"></script>
 
     {{content-for "body-footer"}}
     {{content-for "test-body-footer"}}

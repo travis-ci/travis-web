@@ -1,12 +1,12 @@
 import Ember from 'ember';
-import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
 import config from 'travis/config/environment';
 
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
-  routing: service('-routing'),
+  router: service(),
   permissions: service(),
+  externalLinks: service(),
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
@@ -18,11 +18,11 @@ export default Ember.Component.extend({
   urlGithubCommit: Ember.computed('branch.last_build', function () {
     let slug = this.get('branch.repository.slug');
     let commitSha = this.get('branch.last_build.commit.sha');
-    return githubCommitUrl(slug, commitSha);
+    return this.get('externalLinks').githubCommit(slug, commitSha);
   }),
 
   getLast5Builds: Ember.computed(function () {
-    var apiEndpoint, branchName, lastBuilds, options, repoId;
+    let apiEndpoint, branchName, lastBuilds, options, repoId;
     lastBuilds = Ember.ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
       isLoading: true,
@@ -34,21 +34,21 @@ export default Ember.Component.extend({
       apiEndpoint = config.apiEndpoint;
       repoId = this.get('branch.repository.id');
       branchName = this.get('branch.name');
-      options = {};
+      options = {
+        headers: {
+          'Travis-API-Version': '3'
+        }
+      };
       if (this.get('auth.signedIn')) {
-        options.headers = {
-          Authorization: 'token ' + (this.auth.token())
-        };
+        options.headers.Authorization = `token ${this.auth.token()}`;
       }
-      let path = `${apiEndpoint}/v3/repo/${repoId}/builds`;
+      let path = `${apiEndpoint}/repo/${repoId}/builds`;
       let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
       let url = `${path}${params}`;
 
-      Ember.$.ajax(url, options).then(function (response) {
-        var array, i, ref;
-        array = response.builds.map(function (build) {
-          return Ember.Object.create(build);
-        });
+      Ember.$.ajax(url, options).then(response => {
+        let array, i, ref;
+        array = response.builds.map(build => Ember.Object.create(build));
         // TODO: Clean this up, all we want to do is have 5 elements no matter
         // what. This code doesn't express that very well.
         if (array.length < 5) {
@@ -69,7 +69,7 @@ export default Ember.Component.extend({
 
   actions: {
     viewAllBuilds() {
-      return this.get('routing').transitionTo('builds');
+      return this.get('router').transitionTo('builds');
     }
   }
 });

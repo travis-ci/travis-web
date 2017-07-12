@@ -1,25 +1,29 @@
 import Ember from 'ember';
-
-const { alias } = Ember.computed;
+import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   tagName: 'a',
-  classNames: ['switch--icon'],
-  classNameBindings: ['active'],
-  active: alias('hook.active'),
+  classNames: ['switch'],
+  classNameBindings: ['hook.active:active', 'disabled:disabled', 'disabled:inline-block'],
   click() {
-    this.sendAction('onToggle');
+    this.get('toggleHook').perform();
+  },
 
-    let hook = this.get('hook');
+  toggleHook: task(function* () {
+    if (!this.get('disabled')) {
+      this.sendAction('onToggle');
 
-    let pusher = this.get('pusher'),
-      repoId = hook.get('id');
+      let hook = this.get('hook');
 
-    return hook.toggle().then(() => {
-      pusher.subscribe(`repo-${repoId}`);
-    }, () => {
-      this.toggleProperty('hook.active');
-      return this.sendAction('onToggleError', hook);
-    });
-  }
+      let pusher = this.get('pusher'),
+        repoId = hook.get('id');
+
+      yield hook.toggle().then(() => {
+        pusher.subscribe(`repo-${repoId}`);
+      }, () => {
+        this.toggleProperty('hook.active');
+        return this.sendAction('onToggleError', hook);
+      });
+    }
+  }),
 });

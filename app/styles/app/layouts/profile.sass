@@ -1,73 +1,45 @@
-.profile
-  font-size: $font-size-sm
-  font-weight: 400
+.profile-page
+  clear: both
+  overflow-y: auto
+  overflow-x: hidden
 
 .profile-main
   padding: 0 $column-gutter/2
-
   @media #{$medium-up}
     width: grid-calc(8, 12)
     float: right
     padding: 0 0 0 $column-gutter/2
-
-  header
-    h1
-      margin: 0 1.7rem 0 0
-      color: $asphalt-grey
-      font-size: 36px
-      font-weight: 400
-
-    @media #{$medium-up}
-      .profile-header
-        display: inline-block
-        vertical-align: middle
-      .sync-button
-        float: right
-        margin-top: .4em
-    @media #{$large-up}
-      .profile-header
-        position: relative
-        white-space: nowrap;
-        max-width: 77%;
-        overflow: hidden;
-        &:after
-          @include fadeOut(right, -90deg, white)
-
   .cta-btn
     text-align: right
 
+.profile-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  .h2--grey
+    margin-bottom: 0
+
 .profile-getstarted
-  position: relative
-  margin-bottom: 3rem
-  background-color: $cream-light
+  display: flex
+  flex-flow: column wrap
+  margin: 0 0 3rem
+  padding: 1em
+  list-style: none
+  background-color: $pebble-grey
   border-radius: 4px
-  ol
-    @include resetul
-    padding: 1em 0
+  @media #{$medium}
+    flex-flow: row nowrap
+    justtify-content: space-around
+  li
+    text-align: center
   figure
     margin: 0
   figcaption
     width: 90%
     margin: auto
     padding: 0 1em 0 2.8em
-    text-align: center
     @media #{$medium-up}
       text-align: left
-  img
-    display: block
-    margin: 0 auto 1em
-
-  .dismiss
-    position: absolute
-    top: 0
-    right: 0
-    padding: .5em
-    z-index: 99
-  @media #{$medium-up}
-    li:not(:last-child)
-      img
-        padding: 0 3.2em
-        border-right: solid 2px #f3f2f2
 
 .profile-orgs,
 .profile-user
@@ -119,13 +91,8 @@ p.profile-user-last
     clear: both
     margin-bottom: .8em
   .profile-hooks
-    width: grid-calc(10, 24)
     display: inline-block
     vertical-align: middle
-    @media #{$medium-up}
-      width: grid-calc(5, 24) - 1%
-    @media #{$large-up}
-      width: grid-calc(5, 24) - 1%
   .switch
     display: inline-block
     vertical-align: middle
@@ -205,34 +172,18 @@ p.profile-user-last
       background: $quartz-red
       transform: rotate(45deg)
   .close
-    @extend .icon
-    @extend %icon-line-cross-red
-    position: absolute
-    top: 1em
-    right: 1em
-
+    float: right
+    line-height: 1
 .profile-token-toggle
-  .icon-eye
+  .icon-seemore
     vertical-align: middle
-    path
-      fill: $cement-grey
-    circle
-      stroke: $cement-grey
-      fill: #fff
     &:hover
-      path
-        fill: $asphalt-grey
-      circle
+      path, ellipse
         stroke: $asphalt-grey
-        fill: #fff
   &.is-visible
-    .icon-eye
-      circle
+    .icon-seemore
+      ellipse
         fill: $cement-grey
       &:hover
-        circle
+        ellipse
           fill: $asphalt-grey
-
-#unadministerable-hooks
-  p
-    margin-top: 2em

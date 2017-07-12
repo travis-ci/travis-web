@@ -9,29 +9,28 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   auth: service(),
   flashes: service(),
+  permissions: service(),
 
   user: alias('auth.currentUser'),
 
-  canActivate: Ember.computed('user.pushPermissions.[]', 'repo', function () {
-    let user = this.get('user');
-    if (user) {
-      let permissions = user.get('pushPermissions'),
-        repoId = parseInt(this.get('repo.id'));
-
-      return permissions.contains(repoId);
+  canActivate: Ember.computed('repo.permissions.admin', function () {
+    let repo = this.get('repo');
+    if (repo) {
+      return repo.get('permissions.admin');
     } else {
       return false;
     }
   }),
 
-  activate: task(function * () {
+  activate: task(function* () {
     const apiEndpoint = config.apiEndpoint;
     const repoId = this.get('repo.id');
 
     try {
-      const response = yield Ember.$.ajax(`${apiEndpoint}/v3/repo/${repoId}/enable`, {
+      const response = yield Ember.$.ajax(`${apiEndpoint}/repo/${repoId}/activate`, {
         headers: {
-          Authorization: `token ${this.get('auth').token()}`
+          Authorization: `token ${this.get('auth').token()}`,
+          'Travis-API-Version': '3'
         },
         method: 'POST'
       });
@@ -43,7 +42,7 @@ export default Ember.Component.extend({
         this.get('flashes').success('Repository has been successfully activated.');
       }
     } catch (e) {
-      this.get('flashes').error('There was an error while trying to active the repository.');
+      this.get('flashes').error('There was an error while trying to activate the repository.');
     }
-  })
+  }).drop()
 });

@@ -23,13 +23,12 @@
 
 .status-icon
   .is-rotating
-    width: 17px
-    height: 18px
-    line-height: 0.9
+    width: 14px
+    height: 14px
+    line-height: .9
     text-align: center
     transform-origin: center center
     will-change: transform
-    animation: rotation 3s infinite ease
     .circle
       display: inline-block
       vertical-align: middle
@@ -40,9 +39,15 @@
       transform-origin: center center
 
   &.started,
+  &.received
+    animation: rotation 3s infinite ease
+
+  &.started,
   &.received,
-  &.created
-    height: 19px
+  &.created,
+  &.queued
+    height: 18px
+    width: 14px
 
 @keyframes rotation
   0%

@@ -3,8 +3,7 @@
   margin: 0 auto
   max-width: 1024px
 
-.top.landing-page,
-.top.landing-page .topbar
+.top.landing-page
   background-color: #fff
 
 .landing-centered-wrapper
@@ -26,10 +25,10 @@
     color: rgba($asphalt-grey, .8)
     margin-bottom: 0
 
-  .hero, .oss-testing, .customers, .recent-builds, .free-for-oss, .private-repos, .features-list, .build-flows, .user-testimonials
+  .hero, .oss-testing, .customers, .recent-builds, .free-for-oss, .private-repos, .landing-features-list, .build-flows, .user-testimonials
     padding: 70px 0 70px 0
 
-  .hero, .oss-testing, .customers, .recent-builds-text, .free-for-oss, .private-repos, .features-list, .build-flows, .user-testimonials
+  .hero, .oss-testing, .customers, .recent-builds-text, .free-for-oss, .private-repos, .landing-features-list, .build-flows, .user-testimonials
 
     h1, h2
       margin-top: 0
@@ -80,19 +79,6 @@
     br.mobile-break
       display: none
 
-    .button
-      background-color: $turf-green
-      color: #fff
-      font-size: 2em
-      font-weight: 300
-      margin: 1.3em 0 1.3em 0
-      border-radius: 2px
-
-      &:hover
-        background-color: rgba($turf-green, .8)
-
-    .sign-in-mascot
-      padding-right: 10px
     .loading-indicator--white
       height: 1.4em;
       line-height: 1;
@@ -117,48 +103,13 @@
     width: 80%
     @media #{$medium-up}
       width: 60%
-      
+
   .customers
     text-align: center
 
     .left
       text-align: left
       padding: 0 0 0 12%
-
-  .recent-builds
-    min-height: 44rem
-
-  .recent-builds-text
-    text-align: center
-    h2
-      color: $brick-red
-      text-align: right
-      margin: 0
-
-    p
-      text-align: right
-      margin-top: 0.5em
-      margin-bottom: 2em
-
-    img
-      margin-bottom: 20px
-
-    ul
-      padding-left: 0
-
-    li
-      background-color: #fff
-      border-radius: 4px
-      color: #828282
-      font-weight: 400
-      margin-bottom: 20px
-      list-style-type: none
-      position: relative
-      height: 120px
-      width: 100%
-      padding: 10px 0 0 60px
-      text-align: left
-
   .free-for-oss
     text-align: center
 
@@ -207,7 +158,7 @@
     .desktop-envelope
       display: inline-block
 
-  .features-list
+  .landing-features-list
     h2
       margin: 0
 
@@ -271,6 +222,8 @@
         @extend %icon
         content: ""
         background-image: url('../images/landing-page/features-check.svg')
+        background-size: 100%
+        background-repeat: no-repeat
         width: 0.7em
         height: 0.7em
         margin-right: .3em
@@ -343,10 +296,10 @@
       width: 100%
 
   @media (max-width: 1024px)
-    .features-list .features-checked
+    .landing-features-list .features-checked
       margin-top: 40px
 
-    .features-list .features-checked h2
+    .landing-features-list .features-checked h2
       text-align: center
 
   @media (max-width: 886px)
@@ -365,10 +318,10 @@
     .hero br.mobile-break
       display: inline-block
 
-    .features-list .features-callouts
+    .landing-features-list .features-callouts
       padding: 0 60px 0 60px
 
-    .features-list .features-checked
+    .landing-features-list .features-checked
       padding: 0 60px 0 60px
 
   @media (max-width: 846px)

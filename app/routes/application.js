@@ -1,19 +1,19 @@
+/* global Travis */
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
 import Ember from 'ember';
 
+import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
+
 let { service } = Ember.inject;
 
-export default TravisRoute.extend(BuildFaviconMixin, {
+export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
-  needsAuth: false,
+  auth: service(),
+  featureFlags: service(),
 
-  beforeModel() {
-    this._super(...arguments);
-    // TODO Remove this entire method if we only call super
-    // this.get('auth').refreshUserData()
-  },
+  needsAuth: false,
 
   renderTemplate: function () {
     if (this.get('config').pro) {
@@ -22,10 +22,15 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     return this._super(...arguments);
   },
 
+  model() {
+    if (this.get('auth.signedIn')) {
+      return this.get('featureFlags.fetchTask').perform();
+    }
+  },
+
   activate() {
     var repos;
-    this.get('stylesheetsManager').disable('dashboard');
-    if (!config.pro) {
+    if (!this.get('features.proVersion')) {
       repos = this.get('store').peekAll('repo');
       repos.forEach((repo) => {
         return this.subscribeToRepo(repo);
@@ -63,54 +68,65 @@ export default TravisRoute.extend(BuildFaviconMixin, {
     }
   },
 
+  keyboardShortcuts: {
+    'up': {
+      action: 'disableTailing',
+      preventDefault: false
+    },
+    'down': {
+      action: 'disableTailing',
+      preventDefault: false
+    }
+  },
+
   actions: {
-    redirectToGettingStarted() {
-      // do nothing, we handle it only in index path
+    signIn() {
+      this.get('auth').signIn();
+      this.afterSignIn();
     },
 
-    renderDefaultTemplate() {
-      if (this.renderDefaultTemplate) {
-        return this.renderDefaultTemplate();
-      }
+    signOut() {
+      this.get('auth').signOut();
+      this.afterSignOut();
+    },
+
+    disableTailing() {
+      Travis.tailing.stop();
+    },
+
+    redirectToGettingStarted() {
+      // keep as a no-op as this bubbles from other routes
     },
 
     error(error) {
-      var authController;
       if (error === 'needs-auth') {
-        authController = Ember.getOwner(this).lookup('controller:auth');
-        authController.set('redirected', true);
+        this.set('auth.redirected', true);
         return this.transitionTo('auth');
       } else {
         return true;
       }
     },
+  },
 
-    renderFirstSync() {
-      return this.transitionTo('first_sync');
-    },
-
-    afterSignIn() {
-      this.get('flashes').clear();
-      let transition = this.auth.get('afterSignInTransition');
-      if (transition) {
-        this.auth.set('afterSignInTransition', null);
-        return transition.retry();
-      } else {
-        return this.transitionTo('main');
-      }
-    },
-
-    afterSignOut() {
-      this.controllerFor('repos').reset();
-      this.controllerFor('repo').reset();
-      this.setDefault();
-      if (this.get('config.enterprise')) {
-        return this.transitionTo('auth');
-      } else if (this.get('config').pro) {
-        return this.transitionTo('home-pro');
-      } else {
-        return this.transitionTo('home');
-      }
+  afterSignIn() {
+    this.get('flashes').clear();
+    let transition = this.auth.get('afterSignInTransition');
+    if (transition) {
+      this.auth.set('afterSignInTransition', null);
+      return transition.retry();
+    } else {
+      return this.transitionTo('index');
     }
-  }
+  },
+
+  afterSignOut() {
+    this.controllerFor('repos').reset();
+    this.controllerFor('repo').reset();
+    this.setDefault();
+    this.get('featureFlags').reset();
+    if (this.get('config.enterprise')) {
+      return this.transitionTo('auth');
+    }
+    return this.transitionTo('index');
+  },
 });

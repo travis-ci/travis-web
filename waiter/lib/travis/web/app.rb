@@ -106,6 +106,9 @@ class Travis::Web::App
           'Vary'             => vary_for(file),
           'ETag'             => Digest::MD5.hexdigest(content)
         }
+        if csp_needed?(file)
+          headers['Content-Security-Policy-Report-Only'] = csp_header(content, options)
+        end
       end
 
       [ 200, headers, [content] ]
@@ -118,6 +121,7 @@ class Travis::Web::App
     def config_needed?(file)
       index?(file) || file.end_with?('spec.html')
     end
+    alias csp_needed? config_needed?
 
     def index?(file)
       file == File.join(root, 'index.html') || file == 'index.html'
@@ -165,7 +169,7 @@ class Travis::Web::App
     end
 
     def set_title(content)
-      content.gsub!(/\{\{title\}\}/, title)
+      content.gsub!(/(<title>).*(<\/title>)/, "\\1#{title}\\2")
     end
 
     def title
@@ -181,7 +185,17 @@ class Travis::Web::App
       # TODO: clean up
       config = {}
 
-      config['enterprise'] = options[:enterprise] if options[:enterprise]
+      config['featureFlags'] ||= {}
+
+      if options[:pro]
+        config['pro'] = true
+        config['featureFlags']['pro-version'] = true
+      end
+      if options[:enterprise]
+        config['enterprise'] = true
+        config['featureFlags']['enterprise-version'] = true
+      end
+
       if config['enterprise']
         config['pagesEndpoint'] = false
         config['billingEndpoint'] = false
@@ -198,10 +212,10 @@ class Travis::Web::App
       pusher['host'] = options[:pusher_host] if options[:pusher_host]
       pusher['path'] = options[:pusher_path] if options[:pusher_path]
       pusher['channelPrefix'] = options[:pusher_channel_prefix] if options[:pusher_channel_prefix]
+      pusher['encrypted'] = true
       config['pusher'] = pusher
 
       config['gaCode'] = options[:ga_code] if options[:ga_code]
-      config['pro'] = options[:pro] if options[:pro]
 
       config['githubOrgsOauthAccessSettingsUrl'] = options[:github_orgs_oauth_access_settings_url]
       config['ajaxPolling'] = true if options[:ajax_polling]
@@ -221,5 +235,23 @@ class Travis::Web::App
 
         %(<meta name="travis/config/environment" content="#{config}")
       end
+    end
+
+    def csp_header(content, options)
+      regexp = %r(<meta name="travis/config/environment"\s+content="(?<config>[^"]+)")
+      raw_config = content.match(regexp)['config']
+      ember_config = JSON.parse(URI.unescape(raw_config))
+
+      api_endpoint = options[:api_endpoint] || ember_config['apiEndpoint']
+      csp = ember_config['contentSecurityPolicyRaw']
+      ember_config['cspSectionsWithApiHost'].each do |section_name|
+        csp[section_name] += " " + api_endpoint
+      end
+      if assets_host = ENV['ASSETS_HOST']
+        ['script-src', 'style-src', 'img-src'].each do |section_name|
+          csp[section_name] += " " + assets_host
+        end
+      end
+      csp.map { |k, v| [k, v].join(" ") }.join("; ") + ';'
     end
 end

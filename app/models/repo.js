@@ -7,13 +7,17 @@ import { belongsTo } from 'ember-data/relationships';
 const { service } = Ember.inject;
 
 const Repo = Model.extend({
+  permissions: attr(),
   ajax: service(),
   slug: attr(),
   description: attr(),
   'private': attr('boolean'),
   githubLanguage: attr(),
   active: attr(),
-
+  owner: attr(),
+  ownerType: Ember.computed.oneWay('owner.@type'),
+  name: attr(),
+  starred: attr('boolean'),
   defaultBranch: belongsTo('branch', {
     async: false
   }),
@@ -22,12 +26,6 @@ const Repo = Model.extend({
   }),
   currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
   currentBuildId: Ember.computed.oneWay('currentBuild.id'),
-
-  withLastBuild() {
-    return this.filter(function (repo) {
-      return repo.get('lastBuildId');
-    });
-  },
 
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
@@ -52,7 +50,7 @@ const Repo = Model.extend({
       repository_id: id
     }, function (b) {
       let eventTypes = ['push', 'api', 'cron'];
-      return b.get('repo.id') + '' === id + '' && eventTypes.contains(b.get('eventType'));
+      return b.get('repo.id') + '' === id + '' && eventTypes.includes(b.get('eventType'));
     });
     array = ExpandableRecordArray.create({
       type: 'build',
@@ -119,14 +117,6 @@ const Repo = Model.extend({
     });
   }),
 
-  owner: Ember.computed('slug', function () {
-    return (this.get('slug') || '').split('/')[0];
-  }),
-
-  name: Ember.computed('slug', function () {
-    return (this.get('slug') || '').split('/')[1];
-  }),
-
   stats: Ember.computed('slug', function () {
     if (this.get('slug')) {
       return this.get('_stats') || Ember.$.get('https://api.github.com/repos/' + this.get('slug'), (data) => {
@@ -148,19 +138,33 @@ const Repo = Model.extend({
   },
 
   fetchSettings() {
-    return this.get('ajax').ajax('/repos/' + this.get('id') + '/settings', 'get', {
+    return this.get('ajax').ajax('/repo/' + this.get('id') + '/settings', 'get', {
+      headers: {
+        'Travis-API-Version': '3'
+      },
       forceAuth: true
-    }).then(function (data) {
-      return data['settings'];
+    }).then(data => {
+      return this._convertV3SettingsToV2(data['settings']);
     });
   },
 
-  saveSettings(settings) {
-    return this.get('ajax').ajax('/repos/' + this.get('id') + '/settings', 'patch', {
+  saveSetting(name, value) {
+    return this.get('ajax').ajax(`/repo/${this.get('id')}/setting/${name}`, 'patch', {
       data: {
-        settings: settings
+        'setting.value': value
+      }, headers: {
+        'Travis-API-Version': '3'
       }
     });
+  },
+
+  _convertV3SettingsToV2(v3Settings) {
+    return v3Settings.reduce((v2Settings, v3Setting) => {
+      if (v3Setting) {
+        v2Settings[v3Setting.name] = v3Setting.value;
+      }
+      return v2Settings;
+    }, {});
   }
 });
 
@@ -174,7 +178,7 @@ Repo.reopenClass({
     reposIds = reposIdsOrlogin;
     repos = store.filter('repo', function (repo) {
       let repoId = parseInt(repo.get('id'));
-      return reposIds.contains(repoId);
+      return reposIds.includes(repoId);
     });
     promise = new Ember.RSVP.Promise(function (resolve, reject) {
       return store.query('repo', {
@@ -213,17 +217,6 @@ Repo.reopenClass({
         return result;
       });
     });
-  },
-
-  withLastBuild(store) {
-    var repos;
-    repos = store.filter('repo', {}, function (build) {
-      return build.get('lastBuildId');
-    });
-    repos.then(function () {
-      return repos.set('isLoaded', true);
-    });
-    return repos;
   },
 
   fetchBySlug(store, slug) {

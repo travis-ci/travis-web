@@ -9,18 +9,15 @@ export default Ember.Component.extend({
   classNames: ['switch'],
   classNameBindings: ['active', 'key'],
 
-  save: task(function * () {
+  save: task(function* () {
     this.toggleProperty('active');
 
-    const setting = {};
-    setting[this.get('key')] = this.get('active');
-
     try {
-      yield this.get('repo').saveSettings(setting);
+      yield this.get('repo').saveSetting(this.get('key'), this.get('active'));
     } catch (e) {
       this.get('flashes').error('There was an error while saving settings. Please try again.');
     }
-  }),
+  }).drop(),
 
   click() {
     this.get('save').perform();

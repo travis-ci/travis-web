@@ -5,28 +5,20 @@ const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   auth: service(),
+  tagName: 'nav',
+  classNames: ['travistab-nav', 'travistab-nav--underline', 'travistab-nav--sidebar'],
+  tabStates: service(),
+
+  tab: alias('tabStates.sidebarTab'),
 
   currentUser: alias('auth.currentUser'),
 
-  classRecent: Ember.computed('tab', function () {
-    if (this.get('tab') === 'recent') {
-      return 'active';
-    } else if (this.get('tab') === 'search' && this.get('auth.signedIn')) {
-      return 'hidden';
-    }
-  }),
-
   classRunning: Ember.computed('tab', function () {
-    var classes;
-    classes = [];
-    if (this.get('tab') === 'running') {
-      classes.push('active');
-    }
-    return classes.join(' ');
+    return this.get('tab') === 'running' ? 'active' : '';
   }),
 
   classOwned: Ember.computed('tab', 'currentUser', function () {
-    var classes;
+    let classes;
     classes = [];
     if (this.get('tab') === 'owned') {
       classes.push('active');
@@ -35,12 +27,6 @@ export default Ember.Component.extend({
       classes.push('display-inline');
     }
     return classes.join(' ');
-  }),
-
-  classSearch: Ember.computed('tab', function () {
-    if (this.get('tab') === 'search') {
-      return 'active';
-    }
   }),
 
   classNew: Ember.computed('currentUser', function () {

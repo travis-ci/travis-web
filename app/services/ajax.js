@@ -1,7 +1,7 @@
 /* global jQuery */
 import Ember from 'ember';
 import config from 'travis/config/environment';
-var defaultOptions;
+let defaultOptions;
 
 jQuery.support.cors = true;
 
@@ -15,6 +15,7 @@ const { service } = Ember.inject;
 
 export default Ember.Service.extend({
   auth: service(),
+  features: service(),
 
   get(url, callback, errorCallback) {
     return this.ajax(url, 'get', {
@@ -25,14 +26,24 @@ export default Ember.Service.extend({
 
   post(url, data, callback) {
     return this.ajax(url, 'post', {
-      data: data,
+      data,
       success: callback
+    });
+  },
+
+  postV3(url, data, callback) {
+    return this.ajax(url, 'post', {
+      data: data,
+      success: callback,
+      headers: {
+        'Travis-API-Version': '3'
+      }
     });
   },
 
   patch(url, data, callback) {
     return this.ajax(url, 'patch', {
-      data: data,
+      data,
       success: callback
     });
   },
@@ -42,7 +53,7 @@ export default Ember.Service.extend({
   },
 
   ajax(url, method, options) {
-    var accepts, data, delimeter, endpoint, error, key, name, params,
+    let accepts, data, delimeter, endpoint, error, key, name, params,
       promise, ref, ref1, ref2, reject, resolve, success, token, value, xhr;
     method = (method || 'GET').toUpperCase();
     endpoint = config.apiEndpoint || '';
@@ -51,10 +62,10 @@ export default Ember.Service.extend({
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
       options.headers = options.headers || {};
       if (!options.headers['Authorization']) {
-        options.headers['Authorization'] = 'token ' + token;
+        options.headers['Authorization'] = `token ${token}`;
       }
     }
-    options.url = url = '' + endpoint + url;
+    options.url = url = `${endpoint}${url}`;
     options.type = method;
     options.dataType = options.dataType || 'json';
     options.context = this;
@@ -64,14 +75,16 @@ export default Ember.Service.extend({
     if (method !== 'GET' && method !== 'HEAD') {
       options.contentType = options.contentType || 'application/json; charset=utf-8';
     }
-    success = options.success || (function () {});
+    success = options.success || ((() => {}));
     options.success = function (data, status, xhr) {
       return success.call(this, data, status, xhr);
     };
-    error = options.error || function () {};
+    error = options.error || (() => {});
     options.error = (data, status, xhr) => {
-      //eslint-disable-next-line
-      console.log("[ERROR] API responded with an error (" + status + "): " + (JSON.stringify(data)));
+      if (Ember.get(this, 'features').get('debugLogging')) {
+        //eslint-disable-next-line
+        console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
+      }
       return error.call(this, data, status, xhr);
     };
 
@@ -105,21 +118,23 @@ export default Ember.Service.extend({
     }
     resolve = null;
     reject = null;
-    promise = new Ember.RSVP.Promise(function (_resolve, _reject) {
+    promise = new Ember.RSVP.Promise((_resolve, _reject) => {
       resolve = _resolve;
       return reject = _reject;
     });
-    xhr.onreadystatechange = function () {
-      var contentType, data;
+    xhr.onreadystatechange = () => {
+      let contentType, data;
       if (xhr.readyState === 4) {
         contentType = xhr.getResponseHeader('Content-Type');
-        data = (function () {
+        data = (() => {
           if (contentType && contentType.match(/application\/json/)) {
             try {
               return jQuery.parseJSON(xhr.responseText);
             } catch (error1) {
-              // eslint-disable-next-line
-              return console.log('error while parsing a response', method, options.url, xhr.responseText);
+              if (Ember.get(this, 'features').get('debugLogging')) {
+                // eslint-disable-next-line
+                console.log('error while parsing a response', method, options.url, xhr.responseText);
+              }
             }
           } else {
             return xhr.responseText;

@@ -18,6 +18,7 @@ languageConfigKeys = {
   csharp: 'C#',
   mono: 'Mono',
   dart: 'Dart',
+  dart_task: 'Task',
   elixir: 'Elixir',
   ghc: 'GHC',
   haxe: 'Haxe',

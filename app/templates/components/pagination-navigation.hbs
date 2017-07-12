@@ -1,0 +1,19 @@
+<ul role="navigation">
+  {{#unless pagination.isFirst}}
+    <li>{{#link-to route (query-params offset=pagination.prev.offset) rel="prev" class="pagination-button" title="Go to previous page"}}prev{{/link-to}}</li>
+  {{/unless}}
+
+  {{#each pages as |page|}}
+    <li>
+      {{#if page.num}}
+        {{#link-to route (query-params offset=page.offset) class="pagination-link" title=(concat "Go to page number " page.num)}}{{page.num}}{{/link-to}}
+      {{else}}
+        ...
+      {{/if}}
+    </li>
+  {{/each}}
+
+  {{#unless pagination.isLast}}
+    <li>{{#link-to route (query-params offset=pagination.next.offset) rel="next" class="pagination-button" title="Go to next page"}}next{{/link-to}}</li>
+  {{/unless}}
+</ul>

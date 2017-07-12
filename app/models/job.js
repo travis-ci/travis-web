@@ -1,22 +1,23 @@
-/* global moment, Travis */
-import { compact } from 'travis/utils/helpers';
+/* global moment, Travis, Pusher */
+
+import pickBy from 'npm:lodash.pickby';
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
+import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
+import computed from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
-export default Model.extend(DurationCalculations, {
+export default Model.extend(DurationCalculations, DurationAttributes, {
   ajax: service(),
   logId: attr(),
   queue: attr(),
   state: attr(),
   number: attr(),
-  _startedAt: attr(),
-  _finishedAt: attr(),
   allowFailure: attr('boolean'),
   tags: attr(),
   repositoryPrivate: attr(),
@@ -29,7 +30,9 @@ export default Model.extend(DurationCalculations, {
   branch: Ember.computed.alias('build.branch'),
   branchName: Ember.computed.alias('build.branchName'),
 
-  pullRequest: Ember.computed.alias('build.pullRequest'),
+  stage: belongsTo('stage', { async: false }),
+
+  isPullRequest: Ember.computed.alias('build.isPullRequest'),
   pullRequestNumber: Ember.computed.alias('build.pullRequestNumber'),
   pullRequestTitle: Ember.computed.alias('build.pullRequestTitle'),
 
@@ -37,20 +40,9 @@ export default Model.extend(DurationCalculations, {
     this.set('isLogAccessed', true);
     return Log.create({
       job: this,
-      ajax: this.get('ajax')
+      ajax: this.get('ajax'),
+      container: Ember.getOwner(this)
     });
-  }),
-
-  startedAt: Ember.computed('_startedAt', 'notStarted', function () {
-    if (!this.get('notStarted')) {
-      return this.get('_startedAt');
-    }
-  }),
-
-  finishedAt: Ember.computed('_finishedAt', 'notStarted', function () {
-    if (!this.get('notStarted')) {
-      return this.get('_finishedAt');
-    }
   }),
 
   repoSlug: Ember.computed('repositorySlug', function () {
@@ -60,26 +52,50 @@ export default Model.extend(DurationCalculations, {
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {
-      return compact(config);
-    } else if (this.get('currentState.stateName') !== 'root.loading') {
-      if (this.get('isFetchingConfig')) {
-        return;
-      }
-      this.set('isFetchingConfig', true);
-      return this.reload();
+      return pickBy(config);
+    } else {
+      let fetchConfig = () => {
+        if (this.getCurrentState() !== 'root.loading') {
+          if (this.get('isFetchingConfig')) {
+            return;
+          }
+          this.set('isFetchingConfig', true);
+          this.reload();
+        } else {
+          Ember.run.later(fetchConfig, 20);
+        }
+      };
+
+      fetchConfig();
     }
   }),
 
-  isFinished: Ember.computed('state', function () {
-    let state = this.get('state');
+  getCurrentState() {
+    return this.get('currentState.stateName');
+  },
+
+  @computed('state')
+  isFinished(state) {
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
-    return finishedStates.contains(state);
-  }),
+    return finishedStates.includes(state);
+  },
+
+  @computed('state')
+  toBeQueued(state) {
+    let queuedState = 'created';
+    return Ember.isEqual(state, queuedState);
+  },
+
+  @computed('state')
+  toBeStarted(state) {
+    let waitingStates = ['queued', 'received'];
+    return waitingStates.includes(state);
+  },
 
   notStarted: Ember.computed('state', function () {
     let state = this.get('state');
     let waitingStates = ['queued', 'created', 'received'];
-    return waitingStates.contains(state);
+    return waitingStates.includes(state);
   }),
 
   clearLog() {
@@ -101,14 +117,17 @@ export default Model.extend(DurationCalculations, {
     }
   }),
 
-  canCancel: Ember.computed('isFinished', function () {
-    return !this.get('isFinished');
+
+  canCancel: Ember.computed('isFinished', 'state', function () {
+    // not(isFinished) is insufficient since it will be true when state is undefined.
+    return !this.get('isFinished') && !!this.get('state');
   }),
 
   canRestart: Ember.computed.alias('isFinished'),
+  canDebug: Ember.computed.alias('isFinished'),
 
   cancel() {
-    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/cancel');
+    return this.get('ajax').postV3('/job/' + (this.get('id')) + '/cancel');
   },
 
   removeLog() {
@@ -123,7 +142,13 @@ export default Model.extend(DurationCalculations, {
   },
 
   restart() {
-    return this.get('ajax').post('/jobs/' + (this.get('id')) + '/restart');
+    return this.get('ajax').postV3('/job/' + (this.get('id')) + '/restart');
+  },
+
+  debug() {
+    return this.get('ajax').postV3(`/job/${this.get('id')}/debug`, {
+      quiet: true
+    });
   },
 
   appendLog(part) {
@@ -134,11 +159,27 @@ export default Model.extend(DurationCalculations, {
     if (this.get('subscribed')) {
       return;
     }
+
     this.set('subscribed', true);
-    if (Travis.pusher) {
-      return Travis.pusher.subscribe('job-' + (this.get('id')));
+
+    if (this.get('features.proVersion')) {
+      if (Travis.pusher && Travis.pusher.ajaxService) {
+        return Travis.pusher.ajaxService.post(Pusher.channel_auth_endpoint, {
+          socket_id: Travis.pusher.pusherSocketId,
+          channels: ['private-job-' + this.get('id')]
+        }).then(() => {
+          return Travis.pusher.subscribe(this.get('channelName'));
+        });
+      }
+    } else {
+      return Travis.pusher.subscribe(this.get('channelName'));
     }
   },
+
+  channelName: Ember.computed('features.proVersion', 'id', function () {
+    const prefix = this.get('features.proVersion') ? 'private-job' : 'job';
+    return `${prefix}-${this.get('id')}`;
+  }),
 
   unsubscribe() {
     if (!this.get('subscribed')) {
@@ -159,7 +200,8 @@ export default Model.extend(DurationCalculations, {
   formattedFinishedAt: Ember.computed('finishedAt', function () {
     let finishedAt = this.get('finishedAt');
     if (finishedAt) {
-      return moment(finishedAt).format('lll');
+      var m = moment(finishedAt);
+      return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   }),
 
@@ -169,19 +211,5 @@ export default Model.extend(DurationCalculations, {
 
   slug: Ember.computed(function () {
     return (this.get('repo.slug')) + ' #' + (this.get('number'));
-  }),
-
-  isLegacyInfrastructure: Ember.computed('queue', function () {
-    if (this.get('queue') === 'builds.linux') {
-      return true;
-    }
-  }),
-
-  displayGceNotice: Ember.computed('queue', 'config.dist', function () {
-    if (this.get('queue') === 'builds.gce' && this.get('config.dist') === 'precise') {
-      return true;
-    } else {
-      return false;
-    }
   })
 });

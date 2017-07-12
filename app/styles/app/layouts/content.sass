@@ -1,5 +1,5 @@
 // used in first_sync, auth and insufficient_oauth_permissions
-  
+
 .content-page
   padding: 70px 0
   text-align: center
@@ -9,10 +9,13 @@
   font-size: 36px
   @media #{$medium-up}
     font-size: 50px
+  &.auth
+    margin-bottom: 0
+    line-height: 1.2
 
 .content-subtitle
   font-size: 22px
-      
+
 .content-text
   +linkStyle
   margin: 0 1em
@@ -26,14 +29,16 @@
 .content-button
   @extend %button
   font-size: 24px
-  padding: 0.8em
+  padding: 0.6em 0.8em
   font-weight: 300
-  background-color: $agate-blue
+  background-color: $oxide-blue
   color: white
   &:hover,
   &:active
-    background-color: $oxide-blue
-  
+    background-color: darken($oxide-blue, 10)
+  .loading-indicator
+    margin-left: 0.5em
+
 .mascot-spin
   animation: mrT 2.5s infinite ease
   animation-direction: alternate

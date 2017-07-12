@@ -1,9 +1,11 @@
 import Ember from 'ember';
+import config from 'travis/config/environment';
 
 export default Ember.Component.extend({
   tagName: 'nav',
-  classNames: ['tabnav'],
-  ariaRole: 'tablist',
+  classNames: ['travistab-nav'],
+
+  config,
 
   classCurrent: Ember.computed('tab', function () {
     if (this.get('tab') === 'current') {
@@ -30,7 +32,7 @@ export default Ember.Component.extend({
   }),
 
   classBuild: Ember.computed('tab', function () {
-    var classes, tab;
+    let classes, tab;
     tab = this.get('tab');
     classes = [];
     if (tab === 'build') {

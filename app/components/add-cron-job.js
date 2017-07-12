@@ -15,13 +15,13 @@ export default Ember.Component.extend({
     });
   },
 
-  save: task(function * () {
+  save: task(function* () {
     const store = this.get('store');
     const repoId = this.get('branches.firstObject.repoId');
     const branch = this.get('selectedBranch') || this.get('branches.firstObject');
 
     const existingCrons = yield store.filter('cron', { repository_id: repoId }, (c) => {
-      return c.get('branch.repoId') === repoId && c.get('branch.name') === branch.get('name');
+      c.get('branch.repoId') === repoId && c.get('branch.name') === branch.get('name');
     });
 
     if (existingCrons.get('firstObject')) {
@@ -29,17 +29,17 @@ export default Ember.Component.extend({
     }
 
     const cron = store.createRecord('cron', {
-      branch: branch,
+      branch,
       interval: this.get('selectedInterval') || 'monthly',
-      disable_by_build: this.get('selectedOption') || false
+      dont_run_if_recent_build_exists: this.get('selectedOption') || false
     });
 
     this.reset();
 
     yield cron.save();
-  }),
+  }).drop(),
 
   intervals: ['monthly', 'weekly', 'daily'],
 
-  options: ['Always run', 'Only run if no new commits']
+  options: ['Always run', 'Do not run if there has been a build in the last 24h']
 });

@@ -1,31 +1,37 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
-import config from 'travis/config/environment';
 
 export default TravisRoute.extend({
   queryParams: {
     filter: {
       replace: true
+    },
+    offset: {
+      refreshModel: true
     }
   },
 
-  model() {
-    var apiEndpoint;
-    apiEndpoint = config.apiEndpoint;
-    let queryParams = '?repository.active=true&include=repository.default_branch,build.commit';
-    let url = `${apiEndpoint}/v3/repos${queryParams}`;
-    return Ember.$.ajax(url, {
-      headers: {
-        Authorization: 'token ' + this.auth.token()
-      }
-    }).then(function (response) {
-      return response.repositories.filter(function (repo) {
-        if (repo) {
-          return repo.current_build;
-        }
-      }).map(function (repo) {
-        return Ember.Object.create(repo);
-      });
+  redirect() {
+    if (!this.get('features.dashboard')) {
+      return this.transitionTo('index');
+    }
+  },
+
+  model(params) {
+    return Ember.RSVP.hash({
+      starredRepos: this.store.query('repo', {
+        active: true,
+        sort_by: 'current_build:desc',
+        starred: true
+      }),
+      repos: this.store.paginated('repo', {
+        active: true,
+        sort_by: 'current_build:desc',
+        offset: params.offset
+      }),
+      accounts: this.store.query('account', {
+        all: true
+      })
     });
   }
 });

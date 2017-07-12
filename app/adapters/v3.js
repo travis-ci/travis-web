@@ -16,29 +16,55 @@ export default RESTAdapter.extend({
     'Content-Type': 'application/json'
   },
 
-  ajaxOptions: function () {
-    var hash = this._super(...arguments);
+  ajaxOptions: function (url, type, options) {
+    options = options || {};
+    options.data = options.data || {};
+
+    for (let key in options.data) {
+      let value = options.data[key];
+      if (Array.isArray(value)) {
+        options.data[key] = value.join(',');
+      }
+    }
+
+    const includes = this.get('includes');
+    if (includes) {
+      if (options.data.include) {
+        options.data.include += `,${includes}`;
+      } else {
+        options.data.include = includes;
+      }
+    }
+
+    if (options.data.page_size) {
+      options.data.limit = options.data.page_size;
+      delete options.data.page_size;
+    }
+
+    let hash = this._super(...arguments);
 
     hash.headers = hash.headers || {};
 
     let token = this.get('auth').token();
     if (token) {
-      hash.headers['Authorization'] = 'token ' + token;
+      hash.headers['Authorization'] = `token ${token}`;
     }
 
     return hash;
   },
 
-  // TODO: I shouldn't override this method as it's private, a better way would
-  // be to create my own URL generator
-  _buildURL: function (modelName, id) {
-    var url = [];
-    var host = Ember.get(this, 'host');
-    var prefix = this.urlPrefix();
-    var path;
+  buildURL: function (modelName, id, snapshot, type, query) {
+    let url = [];
+    const host = Ember.get(this, 'host');
+    const prefix = this.urlPrefix();
+    const pathPrefix = this.pathPrefix(...arguments);
+
+    if (pathPrefix) {
+      url.push(pathPrefix);
+    }
 
     if (modelName) {
-      path = this.pathForType(modelName, id);
+      const path = this.pathForType(modelName, id);
       if (path) { url.push(path); }
     }
 
@@ -47,20 +73,27 @@ export default RESTAdapter.extend({
 
     url = url.join('/');
     if (!host && url && url.charAt(0) !== '/') {
-      url = '/' + url;
+      url = `/${url}`;
     }
 
     return url;
   },
 
+  pathPrefix() {},
+
   pathForType: function (modelName, id) {
-    var underscored = Ember.String.underscore(modelName);
+    const underscored = Ember.String.underscore(modelName);
     return id ? underscored :  Ember.String.pluralize(underscored);
   },
 
-  // this can be removed once this PR is merged and live:
-  // https://github.com/emberjs/data/pull/4204
-  findRecord(store, type, id, snapshot) {
-    return this.ajax(this.buildURL(type.modelName, id, snapshot, 'findRecord'), 'GET');
+  // Get the host alone, without a path
+  getHost() {
+    let match = this.host.match(/(https?:\/\/)?([^\/]+)/);
+
+    if (match) {
+      return match[0];
+    } else {
+      return config.apiEndpoint;
+    }
   }
 });

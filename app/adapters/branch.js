@@ -1,14 +1,14 @@
-import ApplicationAdapter from 'travis/adapters/application';
+import V3Adapter from 'travis/adapters/v3';
 
-export default ApplicationAdapter.extend({
+export default V3Adapter.extend({
   query(store, type, query) {
-    var repo_id = query.repository_id;
+    const repoId = query.repository_id;
     delete query.repository_id;
-    return this.ajax(this.urlPrefix() + '/v3/repo/' + repo_id + '/branches', 'GET', query);
+    const url = `${this.urlPrefix()}/repo/${repoId}/branches`;
+    return this.ajax(url, 'GET', query);
   },
 
   findRecord(store, type, id) {
     return this.ajax(this.urlPrefix() + id, 'GET');
-  }
-
+  },
 });

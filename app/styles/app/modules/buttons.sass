@@ -1,14 +1,14 @@
 %button
-  font-family: $font-family-sans-serif
   display: inline-block
+  padding: 0.7em 0.8rem 0.6em
   cursor: pointer
   white-space: nowrap
   border-radius: 2px
   border: none
   vertical-align: middle
-  padding: 0.8rem
   line-height: 1
   text-decoration: none
+  font-family: inherit
   font-size: 14px
 
 .button
@@ -20,6 +20,11 @@
   color: white
   background-color: darken($pebble-grey, 10)
 
+.no-button
+  background: transparent
+  border: none
+  cursor: pointer
+
 .button:hover,
 .button:focus,
 .button:active,
@@ -27,12 +32,14 @@
   border-color: $pebble-grey
   background-color: $cement-grey
 
-.button-signin,
-.button-signingin
+.auth-button
   @extend %button
   height: 36px
   color: #fff
+  line-height: 0.5
   background-color: $turf-green
+  .label-align
+    line-height: 1.4
   .loading-indicator
     vertical-align: top
     margin-left: .3em
@@ -41,64 +48,74 @@
       width: 6px
       height: 6px
 
-.button-signin
-  @extend %icon-github-white
-  padding-right: 2.2em
-  background:
-    size: 16px
-    position: 95%
-    repeat: no-repeat
-  &:hover
-    background-color: rgba($turf-green, 0.8)
+.auth-button.signed-out
+  .icon
+    margin: 0 0 0 4px
+    vertical-align: top
+  &:hover,
+  &:active
+    background-color: darken($turf-green, 10)
 
-.button--green
+.button--blue
+  @extend %button
   border: none
   color: white
-  background-color: $turf-green
+  background-color: $oxide-blue
   &:hover
-    background-color: #73c78d
+    background-color: darken($oxide-blue, 10)
 
-#auth #navigation .button-signin,
-#auth #navigation .button-signingin
+#auth #navigation .auth-button
   display: none
 
-%circle-button
+.action-button--restart,
+.action-button--debug,
+.action-button--cancel
   display: block
-  text-indent: 999%
-  overflow: hidden
-  width: 28px
-  height: 28px
-  border: solid 1px rgba($cement-grey, 0.2)
-  border-radius: 50%
+  width: 8em
+  padding: 0 0.5em
+  border: 1px solid $pebble-grey
+  border-radius: 14px
   cursor: pointer
-  float: left
-  margin-right: 1rem
-  &:hover
+  white-space: nowrap
+  &:hover,
+  &:active
+    +colorSVG($oxide-blue)
     border-color: $oxide-blue
-  @media #{$medium-up}
-    float: none
-    margin-right: 0
-    margin-bottom: .5em
+    color: $oxide-blue
+    text-decoration: none !important
 
-.button-circle-cancel
-  @extend %circle-button
-  @extend %icon-line-cross
-  background:
-    position: 6px 6px
-    repeat: no-repeat
-    size: 14px 14px
-  &:hover
-    @extend %icon-line-cross-teal
+.repo-main-tools.labelless
+  display: inline-flex
+  padding-top: 2px
+  margin-left: 5px
+  button
+    display: inline-block
+    width: 22px
+    height: 22px
+    padding: 0
+    margin-right: 5px
+    border-radius: 30px
+    border-color: $cement-grey
+    transform: translate(0, 1px) scale(0.85)
+    &:hover, &:active
+      border-color: $oxide-blue
+    .label-align
+      display: none
+  .action-button--restart .icon
+    transform: scale(0.75) translate(4px, -2px)
+  .action-button--cancel .icon
+    transform: scale(0.65) translate(1px, -2px)
+    margin-right: 1px // pixel weirdness for better Safari rendering
+  .action-button--debug
+    display: none
 
-.button-circle-trigger
-  @extend %circle-button
-  @extend %icon-line-trigger
-  background:
-    position: 6px 5px
-    repeat: no-repeat
-    size: 16px 16px
-  &:hover
-    @extend %icon-line-trigger-teal
+.jobs-item
+  .repo-main-tools
+    transform: translate(-5px, -2px)
+    button
+      background: transparent
+    *[data-tooltip]::before
+      margin-left: 5px
 
 %log-button
   display: inline-block
@@ -114,6 +131,8 @@
   cursor: pointer
   [class^="icon"]
     margin-right: .3em
+  .icon
+    +colorSVG(white)
 
 .remove-log-button
   @extend %log-button
@@ -129,33 +148,3 @@
   &:hover,
   &:active
     background-color: #999a98
-
-// popup buttons
-@mixin buttons($bg-color)
-  display: inline-block
-  padding: .3em 1em
-  font-size: 20px
-  color: white
-  font-weight: $font-weight-light
-  border-radius: 2px
-  background-color: $bg-color
-  &:hover,
-  &:active
-    background-color: lighten($bg-color, 10)
-
-.button-delete
-  @include buttons($brick-red)
-
-.button-cancel
-  @include buttons(#A0A8A8)
-
-.showmore-button
-  @extend .button
-  @extend %icon-line-eye-white
-  padding-left: 2.3em
-  background:
-    repeat: no-repeat
-    size: auto 20px
-    position: .5em center
-  cursor: pointer
-  

@@ -71,6 +71,29 @@ You can also start an interactive test runner for easier development:
 
     ember test --serve
 
+### Feature Flags
+
+`travis-web` is beginning the transition to use feature flags wherever it makes
+sense. To enable/disable/add/remove a feature flag for the application, you can
+edit the `config/environment.js` file. For instance, to enable `some-feature`, you would
+simply add/update the file like so:
+
+```js
+  {
+    featureFlags: {
+      'some-feature': true
+    }
+  }
+```
+
+This uses the awesome [ember-feature-flags](https://github.com/kategengler/ember-feature-flags) addon under the hood, so be sure to read its own
+documentation for more information.
+
+### Debugging
+
+Ember's default logging has been disabled in all environments by default and
+moved to a feature flag. To enable it, simply edit the `debug-logging` feature
+flag as mentioned previously in the `Feature Flags` section.
 
 ### Updating the team page
 
@@ -86,8 +109,10 @@ To add another member just add the info in the same style as the previous ones. 
       image: 'mrt'
     }
 
-The order of value pairs does not matter, the quotationmarks do. Name and title will be displayed as they are. The handle will be used to generate a link to Twitter and displayed with a '@' in front of it. Nationality and country determine the flags. Please use the name of the country and not the adjective (like 'germany' and NOT 'german'). Image is the identifier to find the right image and animated gif. 'mrt' in the example will result in `team-mrt.png` and `mrt-animated.gif`.
+The order of value pairs does not matter, the quotation marks do. Name and title will be displayed as they are. The handle will be used to generate a link to Twitter and displayed with a '@' in front of it. Nationality and country determine the flags. Please use the name of the country and not the adjective (like 'germany' and NOT 'german'). Image is the identifier to find the right image and animated gif. 'mrt' in the example will result in `team-mrt.png` and `mrt-animated.gif`.
 Add the images themselves to `public/images/team/` and additional flags to `public/images/pro-landing/`. Mind the naming conventions already in place.
+
+For special cases where the “is from” or “lives in” sentence forms don’t make sense, such as “ukswitzerland”, you can override the output in `app/components/team-member.js`. If you need to style a flag, it has an attached class; look in `app/pages/team.sass` for examples. You can use `countryAlias` to override the displayed flag with another, such as with `occupiedcanada` becoming `canada` with a CSS transform applied to invert it.
 
 ### Deploying
 
@@ -97,11 +122,27 @@ strategy” of deploying assets to S3 and `index.html` to a Redis server. You ca
 deploy from your own machine too:
 
 ```
-AWS_KEY=key AWS_SECRET=secret REDIS_URL=redis TRAVIS_PULL_REQUEST_BRANCH=branch \
-ember deploy pull-request --activate
+AWS_KEY=key AWS_SECRET=secret ORG_PRODUCTION_REDIS_URL=redis TRAVIS_PULL_REQUEST_BRANCH=branch \
+ember deploy org-production-pull-request --activate
 ```
 
 After success, your deployment will be available at branch.test-deployments.travis-ci.org.
 
-The Redis server is at [`travis-web-index`](https://github.com/travis-ci/travis-web-index).
-Eventually we can move to using `ember-cli-deploy` for all deployments.
+See [the documentation](https://github.com/travis-pro/manual/pull/13) for the full list of
+deployment environments and more details.
+
+The Redis server is a modified version of `waiter/lib/travis/web/app.rb`. We will eventually replace
+that with [`travis-web-index`](https://github.com/travis-ci/travis-web-index) and move to using
+`ember-cli-deploy` for all deployments.
+
+### Ember beta and canary deployments
+
+Upon a merge to `master`, the application is built with the latest beta and canary versions
+of Ember, running against the production API. This uses the same infrastructure as the
+pull request deployments. You can visit these deployments at:
+* https://ember-beta.travis-ci.org
+* https://ember-beta.travis-ci.com
+* https://ember-canary.travis-ci.org
+* https://ember-canary.travis-ci.com
+
+These deployments are also performed with the weekly cron build.

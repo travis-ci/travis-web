@@ -1,0 +1,12 @@
+<div class="wrapper centered">
+  {{top-bar
+    signIn=(route-action 'signIn')
+    signOut=(route-action 'signOut')}}
+
+  {{flash-display}}
+  <div id="main" class="main" role="main">
+    {{yield}}
+  </div>
+
+  {{page-footer}}
+</div>

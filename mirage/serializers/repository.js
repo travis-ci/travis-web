@@ -1,43 +1,47 @@
-import Ember from 'ember';
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import V3Serializer from './v3';
 
-export default JSONAPISerializer.extend({
-  serialize(repository/* , request */) {
-    if (repository.models) {
-      return this.turnIntoV3('repo', repository.models);
-    } else {
-      return this.turnIntoV3('repo', repository);
+export default V3Serializer.extend({
+  serializeSingle(repository) {
+    this.fixOwnerAndName(repository);
+
+    if (!repository.defaultBranch && repository.branches) {
+      let defaultBranch = repository.branches.models.find(branch => branch.default_branch);
+      repository.defaultBranch = defaultBranch;
     }
+
+    if (!repository.currentBuild) {
+      let builds = repository._schema.builds.where((build) => {
+        let repoId = repository.id;
+        return build.repository_id === repoId || build.repositoryId == repoId;
+      });
+
+      if (builds.length) {
+        repository.currentBuild = builds.models[0];
+      }
+    }
+
+    return V3Serializer.prototype.serializeSingle.apply(this, arguments);
   },
 
-  _turnIntoV3Singular(type, mirageRecord) {
-    let record;
-    if (mirageRecord.attrs) {
-      record = mirageRecord.attrs;
-    }
-    record['@type'] = type;
-    record['@href'] = `/${type}/${mirageRecord.id}`;
+  // In most tests we just set slug for the repo. This ensures that we return
+  // also name and owner data to make the payload more similar to what we get in
+  // production.
+  fixOwnerAndName(repository) {
+    let owner, name,
+      attrs = repository.attrs;
 
-    let build = mirageRecord._schema.builds.first();
-    if (build) {
-      record['current_build'] = build.attrs;
+    if (attrs.slug) {
+      [owner, name] = attrs.slug.split('/');
     }
 
-    return record;
-  },
+    attrs.owner = attrs.owner || {};
 
-  turnIntoV3(type, payload) {
-    let response;
-    if (Ember.isArray(payload)) {
-      let records = payload.map((record) => { return this._turnIntoV3Singular(type, record); });
-      let pluralized = Ember.String.pluralize(type);
-      response = {};
-      response['@type'] = pluralized;
-      response['@href'] = `/${pluralized}`;
-      response[pluralized] = records;
-    } else {
-      response = this._turnIntoV3Singular(type, payload);
+    if (owner && !attrs.owner.login) {
+      attrs.owner.login = owner;
     }
-    return response;
+
+    if (name && !attrs.name) {
+      attrs.name = name;
+    }
   }
 });

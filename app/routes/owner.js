@@ -8,26 +8,27 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    var options;
-    options = {};
+    var options = {
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    };
     if (this.get('auth.signedIn')) {
-      options.headers = {
-        Authorization: 'token ' + (this.auth.token())
-      };
+      options.headers.Authorization = 'token ' + (this.auth.token());
     }
     let { owner } = params;
     let { apiEndpoint } = config;
     let includes = '?include=organization.repositories,repository.default_branch,build.commit';
-    let url = `${apiEndpoint}/v3/owner/${owner}${includes}`;
+    let url = `${apiEndpoint}/owner/${owner}${includes}`;
     return Ember.$.ajax(url, options);
   },
 
-  beforeModel() {
-    this.controllerFor('loading').set('layoutName', 'simple');
-    return this._super(...arguments);
+  renderTemplate() {
+    Ember.$('body').attr('id', 'owner');
+    this._super(...arguments);
   },
-  actions: {
 
+  actions: {
     error(error, /* transition, originRoute*/) {
       let is404 = error.status === 404;
       let errorText = 'There was an error while loading data, please try again.';

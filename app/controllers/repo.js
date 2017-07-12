@@ -1,7 +1,6 @@
-/* global Visibility */
 import Ember from 'ember';
-import { githubRepo, statusImage } from 'travis/utils/urls';
 import eventually from 'travis/utils/eventually';
+import Visibility from 'npm:visibilityjs';
 
 const { service, controller } = Ember.inject;
 const { alias } = Ember.computed;
@@ -29,29 +28,6 @@ export default Ember.Controller.extend({
 
   isEmpty: Ember.computed('repos.isLoaded', 'repos.length', function () {
     return this.get('repos.isLoaded') && this.get('repos.length') === 0;
-  }),
-
-  statusImageUrl: Ember.computed('repo.slug', function () {
-    return statusImage(this.get('repo.slug'));
-  }),
-
-  showCurrentBuild: Ember.computed('repo.currentBuild.id', 'repo.active', function () {
-    return this.get('repo.currentBuild.id') && this.get('repo.active');
-  }),
-
-  actions: {
-    statusImages() {
-      this.get('popup').open('status-images');
-      return false;
-    }
-  },
-
-  slug: Ember.computed('repo.slug', function () {
-    return this.get('repo.slug');
-  }),
-
-  isLoading: Ember.computed('repo.isLoading', function () {
-    return this.get('repo.isLoading');
   }),
 
   init() {
@@ -96,10 +72,6 @@ export default Ember.Controller.extend({
     return this.connectTab('pull_requests');
   },
 
-  viewCrons() {
-    return this.connectTab('crons');
-  },
-
   viewBranches() {
     return this.connectTab('branches');
   },
@@ -134,9 +106,13 @@ export default Ember.Controller.extend({
 
   _currentBuildDidChange() {
     let currentBuild = this.get('repo.currentBuild');
-    if (currentBuild) {
+    if (currentBuild && currentBuild.get('id')) {
       eventually(currentBuild, (build) => {
         this.set('build', build);
+
+        if (build.get('jobs.length') === 1) {
+          this.set('job', build.get('jobs.firstObject'));
+        }
       });
     }
   },
@@ -154,8 +130,4 @@ export default Ember.Controller.extend({
     tab === 'current' ? 'build' : tab;
     return this.set('tab', tab);
   },
-
-  urlGithub: Ember.computed('repo.slug', function () {
-    return githubRepo(this.get('repo.slug'));
-  })
 });

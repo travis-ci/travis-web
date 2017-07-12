@@ -20,7 +20,7 @@
 </div>
 
 <div class="row-item fade-out">
-  <span class="icon-calendar"></span>
+  {{inline-svg 'icon-calendar' class="icon"}}
   <span class="label-align">{{format-time request.created_at}}</span></div>
 
 <div class="row-item fade-out">
@@ -30,7 +30,7 @@
 <div class="row-item">
   {{#if request.build}}
     {{#link-to "build" request.build}}
-      <span class="icon-hash"></span>
+      {{inline-svg 'icon-hash' class="icon"}}
       <span class="label-align">{{request.build.number}}</span>{{/link-to}}
   {{else}}
     -
@@ -38,11 +38,11 @@
 </div>
 
 <div class="row-item fade-out">
-  <span class="label-align" title="{{message}}">{{message}} </span>
+  <span class="label-align" title="{{message}}">{{message}}</span>
 </div>
 
 {{#if isGHPages}}
   <a class="tooltip" href="https://docs.travis-ci.com/user/customizing-the-build/#Whitelisting-or-blacklisting-branches" title="Branch whitelisting - Travis CI Docs" data-tooltip="Read about branch whitelisting">
-    <span class="icon-question" aria-label="Help"></span>
+    {{inline-svg 'icon-help' class="icon-help"}}
   </a>
 {{/if}}

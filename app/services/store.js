@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import DS from 'ember-data';
 import Ember from 'ember';
+import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 
 const { service } = Ember.inject;
 
@@ -14,6 +15,12 @@ export default DS.Store.extend({
     return this.set('pusherEventHandlerGuards', {});
   },
 
+  paginated() {
+    return PaginatedCollectionPromise.create({
+      content: this.query(...arguments)
+    });
+  },
+
   addPusherEventHandlerGuard(name, callback) {
     return this.get('pusherEventHandlerGuards')[name] = callback;
   },
@@ -23,7 +30,7 @@ export default DS.Store.extend({
   },
 
   canHandleEvent(event, data) {
-    var callback, name, ref, ref1;
+    let callback, name, ref, ref1;
     ref = event.split(':');
     name = ref[0];
     ref1 = this.get('pusherEventHandlerGuards');
@@ -37,7 +44,7 @@ export default DS.Store.extend({
   },
 
   receivePusherEvent(event, data) {
-    var build, commit, job, name, ref, ref1, ref2, type;
+    let build, commit, job, name, ref, ref1, ref2, type;
     ref = event.split(':');
     name = ref[0];
     type = ref[1];
@@ -68,6 +75,18 @@ export default DS.Store.extend({
       this.push(this.normalize('commit', commit));
     }
 
+    if (name === 'branch') {
+      // force reload of repo branches
+      // delay to resolve race between github-sync and live
+      const branchName = data.branch;
+
+      Ember.run.later(() => {
+        this.findRecord('branch', `/repo/${data.repository_id}/branch/${branchName}`);
+      }, 2000);
+
+      delete data.branch;
+    }
+
     if (event === 'job:log') {
       data = data.job;
       job = this.recordForId('job', data.id);
@@ -80,13 +99,13 @@ export default DS.Store.extend({
       return this.loadOne(name, data);
     } else {
       if (!type) {
-        throw "can't load data for " + name;
+        throw `can't load data for ${name}`;
       }
     }
   },
 
   loadOne(type, json) {
-    var data, default_branch, last_build_id;
+    let data, default_branch, last_build_id;
 
     this.push(this.normalize(type, json));
 
@@ -98,6 +117,7 @@ export default DS.Store.extend({
       default_branch = data.default_branch;
       if (default_branch) {
         default_branch.default_branch = true;
+        default_branch['@href'] = `/repo/${data.id}/branch/${default_branch.name}`;
       }
       last_build_id = default_branch.last_build_id;
 
@@ -111,11 +131,9 @@ export default DS.Store.extend({
       if (!last_build_id || lastBuild) {
         return this.push(this.normalize('repo', data));
       } else {
-        return this.findRecord('build', last_build_id).then((function (_this) {
-          return function () {
-            return _this.push(_this.normalize('repo', data));
-          };
-        })(this));
+        return this.findRecord('build', last_build_id).then(() => {
+          this.push(this.normalize('repo', data));
+        });
       }
     }
   }

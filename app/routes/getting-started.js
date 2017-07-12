@@ -1,15 +1,27 @@
 import TravisRoute from 'travis/routes/basic';
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default TravisRoute.extend({
-  beforeModel(/* transition*/) {
-    if (!Ember.isEmpty(this.store.peekAll('repo'))) {
+  auth: service(),
+
+  renderTemplate(...args) {
+    this._super(args);
+    return this.render('repos', {
+      outlet: 'left',
+      into: 'getting_started'
+    });
+  },
+
+  beforeModel() {
+    if (!Ember.isEmpty(this.store.peekAll('repo')) || !this.get('auth.signedIn')) {
       this.transitionTo('/');
     }
   },
 
-  setupController(/* controller*/) {
-    // TODO: Simply use controllerFor here.
-    return Ember.getOwner(this).lookup('controller:repos').activate('owned');
+  setupController() {
+    this._super(...arguments);
+    this.controllerFor('repos').activate('owned');
   }
 });

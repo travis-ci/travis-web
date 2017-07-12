@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   attributeBindings: ['label:aria-label', 'label:title'],
 
   label: Ember.computed('status', function () {
-    return 'Job ' + this.get('status');
+    return `Job ${this.get('status')}`;
   }),
 
   hasPassed: Ember.computed('status', function () {
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
   isRunning: Ember.computed('status', function () {
     let status = this.get('status');
     let runningStates = ['started', 'queued', 'booting', 'received', 'created'];
-    return runningStates.contains(status);
+    return runningStates.includes(status);
   }),
 
   isEmpty: Ember.computed('status', function () {

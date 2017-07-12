@@ -2,20 +2,26 @@ import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default TravisRoute.extend({
+  tabStates: service(),
+
   model(/* params*/) {
     var allTheBranches, apiEndpoint, options, repoId;
     apiEndpoint = config.apiEndpoint;
     repoId = this.modelFor('repo').get('id');
     allTheBranches = Ember.ArrayProxy.create();
-    options = {};
+    options = {
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    };
     if (this.get('auth.signedIn')) {
-      options.headers = {
-        Authorization: 'token ' + (this.auth.token())
-      };
+      options.headers.Authorization = 'token ' + (this.auth.token());
     }
 
-    let path = `${apiEndpoint}/v3/repo/${repoId}/branches`;
+    let path = `${apiEndpoint}/repo/${repoId}/branches`;
     let includes = 'build.commit&limit=100';
     let url = `${path}?include=${includes}`;
 
@@ -26,11 +32,6 @@ export default TravisRoute.extend({
   },
 
   activate() {
-    Ember.$('.tab.tabs--main li').removeClass('active');
-    Ember.$('#tab_branches').addClass('active');
-  },
-
-  deactivate() {
-    Ember.$('#tab_branches').removeClass('active');
+    this.controllerFor('repo').activate('branches');
   }
 });

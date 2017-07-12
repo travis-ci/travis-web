@@ -1,27 +1,27 @@
-/* global Travis, _cio */
+/* global Travis, HS */
 import Ember from 'ember';
 import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
-/* globals HS */
 import initHsBeacon from 'travis/utils/init-hs-beacon';
 
-Ember.MODEL_FACTORY_INJECTIONS = true;
+// This can be set per environment in config/environment.js
+const debuggingEnabled = config.featureFlags['debug-logging'];
+const proVersion = config.featureFlags['pro-version'];
 
-Ember.LinkComponent.reopen({
-  attributeBindings: ['alt']
-});
-
-var App = Ember.Application.extend(Ember.Evented, {
+const App = Ember.Application.extend(Ember.Evented, {
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
-  Resolver: Resolver,
+  Resolver,
+
+  // Configure global logging based on debug feature flag
+  LOG_TRANSITIONS: debuggingEnabled,
+  LOG_TRANSITIONS_INTERNAL: debuggingEnabled,
+  LOG_ACTIVE_GENERATION: debuggingEnabled,
+  LOG_MODULE_RESOLVER: debuggingEnabled,
+  LOG_VIEW_LOOKUPS: debuggingEnabled,
 
   ready() {
-    if (location.hash.slice(0, 2) === '#!') {
-      location.href = location.href.replace('#!/', '');
-    }
-
     this.on('user:signed_in', function (user) {
       return Travis.onUserUpdate(user);
     });
@@ -31,11 +31,6 @@ var App = Ember.Application.extend(Ember.Evented, {
     this.on('user:synced', function (user) {
       return Travis.onUserUpdate(user);
     });
-    return this.on('user:signed_out', function () {
-      if (config.beacon) {
-        return Travis.destroyBeacon();
-      }
-    });
   },
 
   currentDate() {
@@ -43,20 +38,11 @@ var App = Ember.Application.extend(Ember.Evented, {
   },
 
   onUserUpdate(user) {
-    if (config.pro) {
-      this.identifyCustomer(user);
-    }
-    if (config.pro && config.beacon) {
+    if (proVersion && config.beacon) {
       this.setupBeacon();
       this.identifyHSBeacon(user);
     }
     return this.subscribePusher(user);
-  },
-
-  destroyBeacon() {
-    HS.beacon.ready(function () {
-      return HS.beacon.destroy();
-    });
   },
 
   setupBeacon() {
@@ -66,12 +52,12 @@ var App = Ember.Application.extend(Ember.Evented, {
   },
 
   subscribePusher(user) {
-    var channels;
+    let channels;
     if (!user.channels) {
       return;
     }
     channels = user.channels;
-    if (config.pro) {
+    if (proVersion) {
       channels = channels.map(function (channel) {
         if (channel.match(/^private-/)) {
           return channel;
@@ -92,18 +78,6 @@ var App = Ember.Application.extend(Ember.Evented, {
           login: user.login,
           last_synced_at: user.synced_at
         });
-      });
-    }
-  },
-
-  identifyCustomer(user) {
-    if (_cio && _cio.identify) {
-      return _cio.identify({
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        created_at: (Date.parse(user.created_at) / 1000) || null,
-        login: user.login
       });
     }
   }

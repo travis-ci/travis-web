@@ -1,15 +1,10 @@
-import V2FallbackSerializer from 'travis/serializers/v2_fallback';
+import RepoV2FallbackSerializer from 'travis/serializers/repo_v2_fallback';
 import EmbeddedRecordsMixin from 'ember-data/serializers/embedded-records-mixin';
 
-var Serializer = V2FallbackSerializer.extend(EmbeddedRecordsMixin, {
-  isNewSerializerAPI: true,
-
-  // attrs: {
-  //   current_build: {
-  //     serialize: 'records',
-  //     deserialize: false
-  //   }
-  // },
+var Serializer = RepoV2FallbackSerializer.extend(EmbeddedRecordsMixin, {
+  attrs: {
+    permissions: { key: '@permissions' }
+  },
 
   normalizeResponse(store, primaryModelClass, payload, id, requestType) {
     if (!id && requestType === 'findRecord') {

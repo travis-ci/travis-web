@@ -1,11 +1,14 @@
 ---
 language: node_js
-node_js: 5
+node_js: 6
 
 env:
-  - EMBER_VERSION=default
-  - EMBER_VERSION=beta
-  - EMBER_VERSION=canary
+  global:
+    - PERCY_ENABLE=0
+  matrix:
+    - EMBER_VERSION=default
+    - EMBER_VERSION=beta
+    - EMBER_VERSION=canary
 
 matrix:
   allow_failures:
@@ -14,11 +17,15 @@ matrix:
 
   fast_finish: true
 
-# TODO restore Sauce Connect when it’s actually being used
-# addons:
-#   sauce_connect: true
-
 sudo: false
+dist: trusty
+
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
 
 cache:
   directories:
@@ -26,20 +33,22 @@ cache:
     - bower_components
 
 before_install:
-  - mkdir travis-phantomjs
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs:$PATH
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
+  - npm config set spin false
+  - npm install -g npm@5
+  - npm install -g bower
+  - bower --version
+  - npm --version
 
 install:
-  - npm install -g bower
   - npm install
   - bower install
 
+before_script:
+  - if [ "$EMBER_VERSION" = 'default' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; fi
+  - echo $PERCY_ENABLE
+
 script:
-  - ember try:one $EMBER_VERSION --- ember test --reporter dot
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --reporter dot --random
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
@@ -48,17 +57,29 @@ before_deploy:
   - cp dist/maintenance.html dist/index.html
 
 deploy:
-  provider: s3
-  access_key_id: $MAINTENANCE_S3_ACCESS_KEY_ID
-  secret_access_key: $MAINTENANCE_S3_SECRET_ACCESS_KEY
-  bucket: travis-error-pages
-  skip_cleanup: true
-  acl: public_read
-  local_dir: dist
-  region: us-east-1
-  on:
-    branch: master
-    condition: "$EMBER_VERSION = default"
+  - provider: s3
+    access_key_id: $MAINTENANCE_S3_ACCESS_KEY_ID
+    secret_access_key: $MAINTENANCE_S3_SECRET_ACCESS_KEY
+    bucket: travis-error-pages
+    skip_cleanup: true
+    acl: public_read
+    local_dir: dist
+    region: us-east-1
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = default"
+  - provider: script
+    skip_cleanup: true
+    script: ./config/deployment/deploy-test-master.sh
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = beta"
+  - provider: script
+    skip_cleanup: true
+    script: ./config/deployment/deploy-test-master.sh
+    on:
+      branch: master
+      condition: "$EMBER_VERSION = canary"
 
 after_success:
   - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"

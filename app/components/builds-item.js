@@ -1,12 +1,17 @@
 import Ember from 'ember';
-import { githubCommit as githubCommitUrl } from 'travis/utils/urls';
+import computed from 'ember-computed-decorators';
+
+const { service } = Ember.inject;
 
 export default Ember.Component.extend({
+  externalLinks: service(),
+
   tagName: 'li',
   classNameBindings: ['build.state'],
   classNames: ['row-li', 'pr-row'],
 
-  urlGithubCommit: Ember.computed('build.commit.sha', function () {
-    return githubCommitUrl(this.get('build.repo.slug'), this.get('build.commit.sha'));
-  })
+  @computed('build.repo.slug', 'build.commit.sha')
+  urlGithubCommit(slug, sha) {
+    return this.get('externalLinks').githubCommit(slug, sha);
+  }
 });

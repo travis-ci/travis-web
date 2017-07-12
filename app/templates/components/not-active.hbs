@@ -63,12 +63,14 @@
   <h2 class="page-title">This is not an active repository</h2>
 
   {{#if canActivate}}
-    <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner}}your profile{{/link-to}},<br/>
+    <p class="page-notice">You can activate the repository on {{#link-to "account" repo.owner.login}}your profile{{/link-to}},<br/>
     or by clicking the button below</p>
 
-    <button {{action (perform activate)}} class="button button--green">Activate repository</button>
+    <button {{action (perform activate)}} class="button button--blue">Activate repository</button>
     {{#if activate.isRunning}}
       {{loading-indicator}}
     {{/if}}
+  {{else}}
+    <p class="page-notice">You don't have sufficient rights to enable this repo on Travis. <br>Please contact the admin to enable it or to receive admin rights yourself.</p>
   {{/if}}
 </div>

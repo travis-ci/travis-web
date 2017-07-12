@@ -1,14 +1,12 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
-const { service, controller } = Ember.inject;
+const { service } = Ember.inject;
 import { task } from 'ember-concurrency';
 
 export default Ember.Controller.extend({
   ajax: service(),
-  repoController: controller('repo'),
-  repo: Ember.computed.alias('repoController.repo'),
-  isDeleting: false,
+  repo: Ember.computed.alias('model.repo'),
 
   cachesExist: Ember.computed('model.pushes.length', 'model.pullRequests.length', function () {
     return this.get('model.pushes.length') || this.get('model.pullRequests.length');
@@ -22,5 +20,5 @@ export default Ember.Controller.extend({
 
       this.set('model', Ember.Object.create());
     }
-  })
+  }).drop()
 });

@@ -1,19 +1,26 @@
 import Ember from 'ember';
+import computed, { alias, sort, filterBy } from 'ember-computed-decorators';
 
 export default Ember.Controller.extend({
-  envVars: Ember.computed.filterBy('model.envVars', 'isNew', false),
+  envVarSorting: ['name'],
+  envVars: Ember.computed.sort('unsortedEnvVars', 'envVarSorting'),
 
-  branchesWithoutCron: Ember.computed('model.cronJobs.jobs.@each', function () {
-    var cronJobs = this.get('model.cronJobs.jobs');
-    var branches = this.get('model.branches').filter(function (branch) {
-      return branch.get('exists_on_github');
-    });
-    return branches.filter(function (branch) {
-      return ! cronJobs.any(cron => branch.get('name') === cron.get('branch.name'));
-    });
-  }),
+  @filterBy('model.envVars', 'isNew', false)
+  unsortedEnvVars: null,
 
-  sortedBranchesWithoutCron: Ember.computed.sort('branchesWithoutCron', function (a, b) {
+  @alias('model.cronJobs.jobs.[]')
+  cronJobs: null,
+
+  @computed('cronJobs', 'model.branches.@each.exists_on_github')
+  branchesWithoutCron(cronJobs, branches) {
+    return branches
+             .filter(branch => branch.get('exists_on_github'))
+             .filter(branch => {
+               return ! cronJobs.any(cron => branch.get('name') === cron.get('branch.name'));
+             });
+  },
+
+  @sort('branchesWithoutCron', (a, b) => {
     if (a.get('defaultBranch')) {
       return -1;
     } else if (b.get('defaultBranch')) {
@@ -21,7 +28,14 @@ export default Ember.Controller.extend({
     } else {
       return a.get('name') > b.get('name');
     }
-  }),
+  })
+  sortedBranchesWithoutCron: null,
+
+  @computed('model.settings')
+  showAutoCancellationSwitches(settings) {
+    return settings.hasOwnProperty('auto_cancel_pushes')
+           || settings.hasOwnProperty('auto_cancel_pull_requests');
+  },
 
   actions: {
     sshKeyAdded(sshKey) {

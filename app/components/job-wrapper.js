@@ -1,8 +1,11 @@
 import Ember from 'ember';
-import { colorForState } from 'travis/utils/helpers';
-import { githubCommit } from 'travis/utils/urls';
+import colorForState from 'travis/utils/color-for-state';
+
+const { service } = Ember.inject;
 
 export default Ember.Component.extend({
+  externalLinks: service(),
+
   pollModels: 'job.build',
 
   color: Ember.computed('job.state', function () {
@@ -10,6 +13,8 @@ export default Ember.Component.extend({
   }),
 
   urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
-    return githubCommit(this.get('repo.slug'), this.get('commit.sha'));
+    const slug = this.get('repo.slug');
+    const sha = this.get('commit.sha');
+    return this.get('externalLinks').githubCommit(slug, sha);
   })
 });

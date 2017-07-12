@@ -1,10 +1,13 @@
 import Ember from 'ember';
 import Model from 'ember-data/model';
-import { gravatarImage } from 'travis/utils/urls';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
+const { service } = Ember.inject;
+
 export default Model.extend({
+  externalLinks: service(),
+
   sha: attr(),
   branch: attr(),
   message: attr(),
@@ -20,13 +23,14 @@ export default Model.extend({
   build: belongsTo('build'),
 
   subject: Ember.computed('message', function () {
-    return this.get('message').split('\n', 1)[0];
+    if (this.get('message')) {
+      return this.get('message').split('\n', 1)[0];
+    }
   }),
 
   body: Ember.computed('message', function () {
-    var message;
-    message = this.get('message');
-    if (message.indexOf('\n') > 0) {
+    let message = this.get('message');
+    if (message && message.indexOf('\n') > 0) {
       return message.substr(message.indexOf('\n') + 1).trim();
     } else {
       return '';
@@ -43,25 +47,6 @@ export default Model.extend({
       let emailsMatch = this.get('authorEmail') === this.get('committerEmail');
       return namesMatch && emailsMatch;
     }
-  ),
+  )
 
-  authorAvatarUrlOrGravatar: Ember.computed('authorEmail', 'authorAvatarUrl', function () {
-    var url = this.get('authorAvatarUrl');
-
-    if (!url) {
-      url = gravatarImage(this.get('authorEmail'), 40);
-    }
-
-    return url;
-  }),
-
-  committerAvatarUrlOrGravatar: Ember.computed('committerEmail', 'committerAvatarUrl', function () {
-    var url = this.get('committerAvatarUrl');
-
-    if (!url) {
-      url = gravatarImage(this.get('committerEmail'), 40);
-    }
-
-    return url;
-  })
 });

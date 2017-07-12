@@ -27,7 +27,7 @@ export default Ember.ArrayProxy.extend({
     return array.then((function (_this) {
       return function () {
         array.forEach(function (record) {
-          if (!_this.contains(record)) {
+          if (!_this.includes(record)) {
             return _this.pushObject(record);
           }
         });
@@ -64,7 +64,7 @@ export default Ember.ArrayProxy.extend({
       // TODO: I'm not sure why deleted objects get here, but I'll just filter them
       // for now
       if (!object.get('isDeleted')) {
-        if (!this.contains(object)) {
+        if (!this.includes(object)) {
           results.push(this.pushObject(object));
         } else {
           results.push(void 0);
@@ -79,7 +79,7 @@ export default Ember.ArrayProxy.extend({
   pushObject(record) {
     let content = this.get('content');
     if (content) {
-      if (!content.contains(record)) {
+      if (!content.includes(record)) {
         return content.pushObject(record);
       }
     }

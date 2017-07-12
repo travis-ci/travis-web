@@ -1,21 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="poland" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 30 20" style="enable-background:new 0 0 30 20;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#FFFFFF;}
-	.st1{fill:#DB1E3E;}
-	.st2{fill:#CDCCCC;}
-</style>
-<g>
-	<g>
-		<g>
-			<rect x="2.3" y="2" class="st0" width="25.5" height="8"/>
-			<rect x="2.3" y="10" class="st1" width="25.5" height="8"/>
-		</g>
-	</g>
-	<g>
-		<path class="st2" d="M27.7,2H2.2v8c0,0,0.2,0,0.4,0V2.5h24.6V10c0.3,0,0.4,0,0.4,0V2z"/>
-	</g>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="1280" height="800" id="Flag of Poland (normative)" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="400" fill="#e9e8e7" />
+  <rect width="1280" height="400" fill="#d4213d" y="400" />
 </svg>

@@ -9,7 +9,6 @@
     border-bottom: none
   .small-title
     margin-top: 0
-
   .switch
     div
       display: inline-block
@@ -111,37 +110,49 @@
     word-break: normal
     white-space: nowrap
 
-.env-var-value, .cron-job-text
+$env-var-value-background: lighten($cement-grey, 20)
+
+.env-var-value
   @extend %settings-value-section
+  background-color: $env-var-value-background
+  border-radius: 2px
   white-space: nowrap
   width: 76%
+  padding: 0.3em 0.7em
   input
     display: inline-block
     width: 100%
-    padding: 0.6em 0.5em 0.7em 2.5em
-    border-radius: 2px
     border: none
-    background-color: lighten($cement-grey, 20)
+    background: transparent
     color: $asphalt-grey
-    @extend %icon-line-lock
-    background:
-      size: 16px
-      repeat: no-repeat
-      position: 0.5em 0.5em
-  .is-public &
-    input
-      background-image: none
-      padding: 0.3em 0 0.4em 0.9em
-      font-size: 14px
+    font-size: inherit
 
 .env-var-value
   @media #{$medium-up}
     width: grid-calc(3, 12)
 
-.cron-job-text
-  @media #{$medium-up}
-    width: grid-calc(3, 12)
-    padding-right: 5px
+.newly-created
+  animation: haze-fade 2s 3s both
+
+  .env-var-name::after
+    display: none
+
+  .env-var-value
+    animation: canary-fade 2s 3s both
+
+@keyframes canary-fade
+  0%
+    background: $canary-yellow
+
+  100%
+    background: $env-var-value-background
+
+@keyframes haze-fade
+  0%
+    background: $haze-yellow
+
+  100%
+    background: $pebble-grey
 
 %settings-action-section
   display: inline-block
@@ -150,22 +161,19 @@
   width: 24%
   vertical-align: middle
   text-align: center
-  &:hover
-    .icon-delete
-      @extend .icon-delete-hover
   @media #{$medium-up}
     width: grid-calc(4, 24)
   @media #{$xlarge-up}
     width: grid-calc(4, 36)
+  button
+    &:hover,
+    &:active
+      +colorSVG($brick-red)
 
-.env-var-action, .cron-job-action
+.env-var-action
   @extend %settings-action-section
   a
     padding: 1em
-
-.cron-job-action
-  @media #{$medium-up}
-    width: grid-calc(4, 36)
 
 .ssh-key-action
   @extend %settings-action-section
@@ -175,7 +183,31 @@
   .icon-delete
     margin: .2em auto 0
   .icon-delete-disabled
-    @extend .icon
-    @extend .icon-delete-disabled
     display: block
     margin: .2em auto 0
+
+.settings-cron
+  display: flex
+  flex-flow: column nowrap
+  justify-content: space-between
+  @media #{$medium}
+    flex-flow: row nowrap
+
+.cron-job-text
+  white-space: nowrap
+  @media #{$medium}
+    flex: 0 1 14em
+    position: relative
+    overflow: hidden
+    &:after
+      +fadeOut(right, -90deg, $pebble-grey)
+
+.cron-job-action
+  position: relative
+  text-align: center
+  @media #{$medium}
+    flex-basis: 7em
+  button
+    &:hover,
+    &:active
+      +colorSVG($brick-red)

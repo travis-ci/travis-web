@@ -24,13 +24,15 @@ export default SimpleLayoutRoute.extend({
           member: this.get('controller.user.login')
         }).then(function (repos) {
           if (repos.get('length')) {
-            return self.transitionTo('main');
+            return self.transitionTo('index');
           } else {
             return self.transitionTo('profile');
           }
         }).then(null, function (e) {
-          // eslint-disable-next-line
-          return console.log('There was a problem while redirecting from first sync', e);
+          if (self.get('features.debugLogging')) {
+            // eslint-disable-next-line
+            return console.log('There was a problem while redirecting from first sync', e);
+          }
         });
       }, this.get('config').syncingPageRedirectionTime);
     }

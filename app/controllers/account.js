@@ -10,11 +10,10 @@ export default Ember.Controller.extend({
   user: alias('auth.currentUser'),
 
   init() {
-    var self;
     this._super(...arguments);
-    self = this;
-    return Travis.on('user:synced', (function () {
-      return self.reloadHooks();
+
+    return Travis.on('user:synced', (() => {
+      return this.reloadHooks();
     }));
   },
 
@@ -33,10 +32,14 @@ export default Ember.Controller.extend({
     if (login) {
       let hooks = this.store.query('hook', {
         all: true,
-        owner_name: login
+        owner_name: login,
+        order: 'none'
       });
+      this.set('loadingError', false);
       hooks.then(function () {
         return hooks.set('isLoaded', true);
+      }).catch(() => {
+        this.set('loadingError', true);
       });
       return this.set('allHooks', hooks);
     }
@@ -53,7 +56,7 @@ export default Ember.Controller.extend({
     }
     return this.get('allHooks').filter(function (hook) {
       return hook.get('admin');
-    });
+    }).sortBy('name');
   }),
 
   hooksWithoutAdmin: Ember.computed('allHooks.length', 'allHooks', function () {
@@ -63,7 +66,7 @@ export default Ember.Controller.extend({
     }
     return this.get('allHooks').filter(function (hook) {
       return !hook.get('admin');
-    });
+    }).sortBy('name');
   }),
 
   showPrivateReposHint: Ember.computed(function () {

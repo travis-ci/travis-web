@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   classNames: ['settings-sshkey'],
 
-  delete: task(function * () {
+  delete: task(function* () {
     try {
       const key = this.get('key');
       key.deleteRecord();
@@ -12,5 +12,5 @@ export default Ember.Component.extend({
     } catch (e) {}
 
     this.sendAction('sshKeyDeleted');
-  })
+  }).drop()
 });

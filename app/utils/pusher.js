@@ -11,11 +11,32 @@ var TravisPusher = function (config, ajaxService) {
 TravisPusher.prototype.active_channels = [];
 
 TravisPusher.prototype.init = function (config, ajaxService) {
+  if (!config.key) {
+    // Set up a mock Pusher that ignores the expected methods.
+    return this.pusher = {
+      subscribe() {
+        return {
+          bind_all() {}
+        };
+      },
+      channel() {}
+    };
+  }
+
   this.ajaxService = ajaxService;
   Pusher.warn = this.warn.bind(this);
   if (config.host) {
     Pusher.host = config.host;
   }
+
+  if (config.debug) {
+    Pusher.log = function (message) {
+      if (window.console && window.console.log) {
+        window.console.log(message);
+      }
+    };
+  }
+
   return this.pusher = new Pusher(config.key, {
     encrypted: config.encrypted,
     disableStats: true
@@ -23,14 +44,27 @@ TravisPusher.prototype.init = function (config, ajaxService) {
 };
 
 TravisPusher.prototype.subscribeAll = function (channels) {
-  var channel, i, len, results;
-  results = [];
-  for (i = 0, len = channels.length; i < len; i++) {
-    channel = channels[i];
-    results.push(this.subscribe(channel));
-  }
+  const results = [];
+  subscribeToChannelChunk(channels, 0, 1000, results, this);
+
   return results;
 };
+
+function subscribeToChannelChunk(channels, chunk, chunkSize, results, target) {
+  const index = chunk * chunkSize;
+  const channelChunk = results.slice(index, index + chunkSize);
+
+  for (let i = 0; i < channelChunk; i++) {
+    const channel = channelChunk[i];
+    results.push(target.subscribe(channel));
+  }
+
+  if (chunk < channels.length / chunkSize) {
+    Ember.run.later(function () {
+      subscribeToChannelChunk(channels, chunk + 1, chunkSize, results, target);
+    }, 1000);
+  }
+}
 
 TravisPusher.prototype.unsubscribeAll = function (channels) {
   var channel, i, len, results;
@@ -71,8 +105,7 @@ TravisPusher.prototype.unsubscribe = function (channel) {
 };
 
 TravisPusher.prototype.prefix = function (channel) {
-  var prefix;
-  prefix = ENV.pusher.channelPrefix || '';
+  let prefix = ENV.pusher.channelPrefix || '';
   if (channel.indexOf(prefix) !== 0) {
     return '' + prefix + channel;
   } else {
@@ -166,11 +199,12 @@ Pusher.SockJSTransport.isSupported = function () {
   }
 };
 
-if (ENV.pro) {
+if (ENV.featureFlags['pro-version'] || ENV.featureFlags['enterprise-version']) {
   Pusher.channel_auth_transport = 'bulk_ajax';
   Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
     var channels, name, names;
     channels = Travis.pusher.pusher.channels;
+    Travis.pusher.pusherSocketId = socketId;
     channels.callbacks = channels.callbacks || [];
     name = this.channel.name;
     names = Object.keys(channels.channels);

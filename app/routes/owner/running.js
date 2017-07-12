@@ -13,6 +13,11 @@ export default TravisRoute.extend({
     let includes =
       '?include=user.repositories,organization.repositories,build.commit,repository.active';
     let { owner } = transition.params.owner;
-    return Ember.$.get(`${config.apiEndpoint}/v3/owner/${owner}${includes}`);
+    return Ember.$.ajax({
+      url: `${config.apiEndpoint}/owner/${owner}${includes}`,
+      headers: {
+        'Travis-API-Version': '3'
+      }
+    });
   }
 });

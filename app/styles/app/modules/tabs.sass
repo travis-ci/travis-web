@@ -1,64 +1,70 @@
-.tabnav
-  color: $asphalt-grey
-  font-size: $font-size-sm
+$border-size: 2px
+
+=tabLinkHighlight
+  &:after
+    content: ""
+    position: absolute
+    bottom: - $border-size
+    display: block
+    width: 100%
+    height: 2px
+    background-color: $oxide-blue
+
+%travistab-nav-base
   ul
-    @include resetul
-    margin-top: 2em
-    display: flex
-    flex-flow: row wrap
-    justify-content: space-between
-    width: 100%
-    @media #{$medium-up}
-      margin-top: 0
-      margin-bottom: 4px
-      display: block
+    padding: 0
+    margin: 0
+    list-style: none
   li
-    flex: 0 0 8em
-    text-align: center
-    margin: .5em 0
-    @media #{$medium-up}
-      display: inline-block
-      text-align: left
-      margin: 0 1.5em 0 0
-
-  a
-    width: 100%
-    color: $asphalt-grey
-    padding: 3px 0 5px
-
-  .active a,
-  a:hover
-    position: relative
-    color: $oxide-blue
-    &:after
-      content: ""
-      position: absolute
-      left: 0
-      bottom: -2px
-      width: 100%
-      height: 2px
-      background-color: $oxide-blue
-  .active a
-    font-weight: $font-weight-bold
-
-.tabbody
-  position: relative
-  .tabnav-sub
-    @include resetul
-    overflow: visible
-    a
-      color: $asphalt-grey
-      padding: .5em 0
-    .active
+    display: inline-block
+    vertical-align: bottom
+    &.active a
       color: $oxide-blue
+      +tabLinkHighlight
+  a
+    position: relative
+    display: block
+    padding: .5em 0
+    &:hover,
+    &:active,
+    &.active
+      color: $oxide-blue
+      +tabLinkHighlight
 
-    @media #{$medium-up}
-      border-bottom: solid $cement-grey 2px
-      li
-        float: left
-        margin-right: 1em
+.travistab
+  margin-top: 2em
 
-.tabs--main
+.travistab-nav
+  @extend %travistab-nav-base
+  
+  li:not(:last-of-type)
+    margin-right: 1.5em
+  a
+    &:hover,
+    &:active,
+    &.active
+      &:after
+        background-color: $oxide-blue
+
+  &.travistab-nav--underline
+    border-bottom: $border-size solid $pebble-grey
+
+.travistab-nav--secondary
+  @extend %travistab-nav-base
+  margin-bottom: 1.2rem
+  li
+    width: 25%
+    text-align: center
+    padding-right: 1em
+  a
+    border-bottom: $border-size solid $pebble-grey
+    &:hover,
+    &:active,
+    &.active
+      &:after
+        background-color: $agate-blue
+
+.travistab-nav
   #tab_build,
   #tab_job,
   #tab_request,
@@ -75,13 +81,9 @@
     left: .5em
 
   .tab-arrow
-    @extend %icon-line-arrowtabs
     display: inline-block
     position: absolute
-    top: 1px
+    top: 8px
     left: -22px
-    width: 1em
-    height:  1.3em
-    background:
-      size: auto 100%
-      repeat: no-repeat
+    width: 1.2em
+    height: 1.4em

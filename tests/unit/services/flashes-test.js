@@ -1,8 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:flashes', 'Unit | Service | flashes', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: ['service:auth']
 });
 
 test('it allows to show an error', function (assert) {
@@ -34,4 +33,3 @@ test('it allows to show a success', function (assert) {
 
   assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was a success!', type: 'success' }, 'there should be a notice message in flashes');
 });
-

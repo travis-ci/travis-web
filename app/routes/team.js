@@ -13,13 +13,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'sven'
       }, {
-        name: 'Josh Kalderimis',
-        title: 'Chief Post-It Officer',
-        handle: 'j2h',
-        nationality: 'newzealand',
-        country: 'germany',
-        image: 'josh'
-      }, {
         name: 'Fritz Thielemann',
         title: 'Admin Adventures',
         handle: 'fritzek',
@@ -55,16 +48,9 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'anika'
       }, {
-        name: 'Henrik Hodne',
-        title: 'Timezone Experimentalist',
-        handle: 'henrikhodne',
-        nationality: 'norway',
-        country: 'norway',
-        image: 'henrik'
-      }, {
         name: 'Justine Arreche',
         title: 'Lead Clipart Strategist',
-        handle: 'saltinejustine',
+        handle: 'ctrlaltjustine',
         nationality: 'usa',
         country: 'usa',
         image: 'justine'
@@ -102,13 +88,6 @@ export default TravisRoute.extend({
         nationality: 'germany',
         country: 'germany',
         image: 'anja'
-      }, {
-        name: 'Aly Fulton',
-        title: 'Resident Linguist',
-        handle: 'sinthetix',
-        nationality: 'usa',
-        country: 'usa',
-        image: 'aly'
       }, {
         name: 'Amanda Quaranto',
         title: 'Crafting Extremist',
@@ -159,8 +138,8 @@ export default TravisRoute.extend({
         country: 'canada',
         image: 'dominic'
       }, {
-        name: 'Liza Brisker',
-        title: 'Brainy Trainee',
+        name: 'Liz Brisker',
+        title: 'Mermaid On Board',
         nationality: 'russia',
         country: 'germany',
         image: 'liz'
@@ -247,6 +226,61 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'usa',
         image: 'anna'
+      }, {
+        name: 'Lena Reinhard',
+        title: 'Somehow I manage',
+        handle: 'lrnrd',
+        nationality: 'germany',
+        country: 'germany',
+        image: 'lena'
+      }, {
+        name: 'Joep van Delft',
+        title: 'Lead Second-Guess Engineer',
+        nationality: 'europe',
+        country: 'europe',
+        image: 'joep'
+      }, {
+        name: 'Sam Wright',
+        title: 'Documentarian',
+        handle: 'plaindocs',
+        nationality: 'uk',
+        country: 'germany',
+        image: 'sam'
+      }, {
+        name: 'Lili Kui',
+        title: 'Hammer Jammer',
+        nationality: 'kenya',
+        country: 'germany',
+        image: 'lili'
+      },
+      {
+        name: 'Carla Iriberri',
+        title: 'Cacaolat Connoisseur',
+        handle: 'iriberri1',
+        nationality: 'spain',
+        country: 'spain',
+        image: 'iriberri'
+      }, {
+        name: 'Jan Schulte',
+        title: 'Consulting Detective',
+        handle: 'ganzefolge',
+        nationality: 'germany',
+        country: 'germany',
+        image: 'jan'
+      }, {
+        name: 'Natalia Saavedra',
+        title: 'Design Wizard',
+        nationality: 'colombia',
+        country: 'occupiedcanada',
+        countryAlias: 'canada',
+        image: 'natalia'
+      },
+      {
+        name: 'Olamide Ojo',
+        title: 'Mr Bean Counter',
+        nationality: 'nigeria',
+        country: 'germany',
+        image: 'ola'
       }
     ];
   }

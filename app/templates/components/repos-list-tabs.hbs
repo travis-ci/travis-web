@@ -1,19 +1,17 @@
-<div class="tabnav tabnav--sidebar" role="tablist">
-  <ul class="tab tabs--sidebar">
-    <li id="tab_owned" class={{classOwned}}>
-      <a href="#" {{action showMyRepositories}}>My Repositories</a>
-    </li>
+<ul>
+  <li id="tab_owned" class={{classOwned}}>
+    <a href="#" {{action showMyRepositories}}>My Repositories</a>
+  </li>
 
-    {{#if config.pro}}
-      <li id="tab_running" class={{classRunning}}>
-        <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
-      </li>
-    {{/if}}
-
-    <li id="tab_new" class={{classNew}}>
-      {{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}
-        <span class="icon icon--plus"></span>
-      {{/link-to}}
+  {{#if features.proVersion}}
+    <li id="tab_running" class={{classRunning}}>
+      <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
     </li>
-  </ul>
-</div>
+  {{/if}}
+
+  <li id="tab_new" class={{classNew}}>
+    {{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}
+    <span class="icon icon--plus"></span>
+    {{/link-to}}
+  </li>
+</ul>

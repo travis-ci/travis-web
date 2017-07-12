@@ -1,0 +1,40 @@
+{{#if auth.signedIn}}
+  <div class="main">
+    <div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
+      {{top-bar
+        signIn=(route-action 'signIn')
+        signOut=(route-action 'signOut')}}
+      {{flash-display}}
+
+      <div class="wrapper-main">
+        <div id="main" role="main">
+          {{#if isEmpty}}
+            {{repos-empty}}
+          {{else}}
+            {{#if repo.isLoaded}}
+              {{repository-layout repo=repo build=build job=job tab=tab}}
+            {{else}}
+              {{loading-indicator}}
+            {{/if}}
+          {{/if}}
+
+          {{status-images repo=repo}}
+        </div>
+      </div>
+
+      <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
+        {{outlet "left"}}
+      </aside>
+
+      {{#if auth.signedOut}}
+        {{page-footer}}
+      {{else if features.dashboard}}
+        {{page-footer}}
+      {{/if}}
+    </div>
+  </div>
+{{else}}
+  {{component landingPage
+    signIn=(route-action 'signIn')
+    signOut=(route-action 'signOut')}}
+{{/if}}
