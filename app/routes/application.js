@@ -11,6 +11,7 @@ let { service } = Ember.inject;
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
   auth: service(),
+  featureFlags: service(),
 
   needsAuth: false,
 
@@ -23,7 +24,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   model() {
     if (this.get('auth.signedIn')) {
-      return this.get('fetchFeatures.fetchTask').perform();
+      return this.get('featureFlags.fetchTask').perform();
     }
   },
 
@@ -122,6 +123,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     this.controllerFor('repos').reset();
     this.controllerFor('repo').reset();
     this.setDefault();
+    this.get('featureFlags').reset();
     if (this.get('config.enterprise')) {
       return this.transitionTo('auth');
     }

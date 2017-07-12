@@ -7,6 +7,8 @@ export default Ember.Service.extend({
   store: service(),
   features: service(),
 
+  serverFlags: [],
+
   /* The fetchTask is called multiple times as we traverse the route heirarchy.
    * This is because we're leveraging the beforeModel hook to avoid blocking
    * rendering.
@@ -16,6 +18,7 @@ export default Ember.Service.extend({
 
   fetchTask: task(function* () {
     yield this.get('store').findAll('beta-feature').then((featureSet) => {
+      this.set('serverFlags', featureSet);
       let featuresService = this.get('features');
       featureSet.map((feature) => {
         // this means that non-single-word feature names will turn
@@ -31,4 +34,10 @@ export default Ember.Service.extend({
       });
     });
   }).drop(),
+
+  reset() {
+    this.get('serverFlags').map(flag => {
+      this.get('features').disable(flag.get('name').dasherize());
+    });
+  },
 });
