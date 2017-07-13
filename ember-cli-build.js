@@ -12,7 +12,7 @@ module.exports = function () {
   } else {
     fingerprint = {
       // FIXME this is probably not desired
-      exclude: ['images/emoji', 'images/pro-landing/flag*', 'images/team'],
+      exclude: ['images/emoji', 'images/logos', 'images/pro-landing/flag*', 'images/team'],
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg']
     };
 
