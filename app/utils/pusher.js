@@ -44,14 +44,34 @@ TravisPusher.prototype.init = function (config, ajaxService) {
 };
 
 TravisPusher.prototype.subscribeAll = function (channels) {
-  var channel, i, len, results;
-  results = [];
-  for (i = 0, len = channels.length; i < len; i++) {
-    channel = channels[i];
-    results.push(this.subscribe(channel));
-  }
+  const results = [];
+  this.unsubscribedChannelChunks = [];
+  subscribeToChannelChunk(channels, 0, 10, results, this);
+
   return results;
 };
+
+function subscribeToChannelChunk(channels, chunk, chunkSize, results, target) {
+  const index = chunk * chunkSize;
+  const channelChunk = channels.slice(index, index + chunkSize);
+  const unsubscribedChannelChunk = {
+    channelNames: []
+  };
+
+  target.unsubscribedChannelChunks.push(unsubscribedChannelChunk);
+
+  for (let i = 0; i < channelChunk.length; i++) {
+    const channel = channelChunk[i];
+    unsubscribedChannelChunk.channelNames.push(channel);
+    results.push(target.subscribe(channel));
+  }
+
+  if (chunk < channels.length / chunkSize) {
+    Ember.run.later(function () {
+      subscribeToChannelChunk(channels, chunk + 1, chunkSize, results, target);
+    }, 1000);
+  }
+}
 
 TravisPusher.prototype.unsubscribeAll = function (channels) {
   var channel, i, len, results;
@@ -189,26 +209,33 @@ Pusher.SockJSTransport.isSupported = function () {
 if (ENV.featureFlags['pro-version'] || ENV.featureFlags['enterprise-version']) {
   Pusher.channel_auth_transport = 'bulk_ajax';
   Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
-    var channels, name, names;
-    channels = Travis.pusher.pusher.channels;
+    var unsubscribedChannelChunk, name, names;
+    if (Travis.pusher.unsubscribedChannelChunks.length === 0) {
+      return;
+    }
+    unsubscribedChannelChunk = Travis.pusher.unsubscribedChannelChunks.pop() || {
+      channelNames: []
+    };
     Travis.pusher.pusherSocketId = socketId;
-    channels.callbacks = channels.callbacks || [];
+    unsubscribedChannelChunk.callbacks = unsubscribedChannelChunk.callbacks || [];
     name = this.channel.name;
-    names = Object.keys(channels.channels);
-    channels.callbacks.push(function (auths) {
+    names = unsubscribedChannelChunk.channelNames;
+    unsubscribedChannelChunk.callbacks.push(function (auths) {
+      console.log('for these channel names', names);
+      console.log('these auths came back:', auths);
       return _callback(false, {
         auth: auths[name]
       });
     });
-    if (!channels.fetching) {
-      channels.fetching = true;
+    if (!unsubscribedChannelChunk.fetching) {
+      unsubscribedChannelChunk.fetching = true;
       return TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
         socket_id: socketId,
         channels: names
       }, function (data) {
         var callback, i, len, ref, results;
-        channels.fetching = false;
-        ref = channels.callbacks;
+        unsubscribedChannelChunk.fetching = false;
+        ref = unsubscribedChannelChunk.callbacks;
         results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           callback = ref[i];
