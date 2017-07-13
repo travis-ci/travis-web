@@ -46,7 +46,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
 TravisPusher.prototype.subscribeAll = function (channels) {
   const results = [];
   this.unsubscribedChannelChunks = [];
-  subscribeToChannelChunk(channels, 0, 10, results, this);
+  subscribeToChannelChunk(channels, 0, 1000, results, this);
 
   return results;
 };
