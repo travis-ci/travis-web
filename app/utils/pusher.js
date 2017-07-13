@@ -221,7 +221,9 @@ if (ENV.featureFlags['pro-version'] || ENV.featureFlags['enterprise-version']) {
     name = this.channel.name;
     names = unsubscribedChannelChunk.channelNames;
     unsubscribedChannelChunk.callbacks.push(function (auths) {
+      //eslint-disable-next-line
       console.log('for these channel names', names);
+      //eslint-disable-next-line
       console.log('these auths came back:', auths);
       return _callback(false, {
         auth: auths[name]
