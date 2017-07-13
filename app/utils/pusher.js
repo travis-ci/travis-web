@@ -54,7 +54,7 @@ function subscribeToChannelChunk(channels, chunk, chunkSize, results, target) {
   const index = chunk * chunkSize;
   const channelChunk = channels.slice(index, index + chunkSize);
 
-  for (let i = 0; i < channelChunk; i++) {
+  for (let i = 0; i < channelChunk.length; i++) {
     const channel = channelChunk[i];
     results.push(target.subscribe(channel));
   }
