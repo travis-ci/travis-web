@@ -41,7 +41,7 @@ export default Ember.Controller.extend({
   }).group('starring'),
 
   filteredRepos: Ember.computed(
-    'model.repos', 'model.repos.@each.currentBuild.finishedAt', 'account', function () {
+    'model.repos', 'model.repos.@each.currentBuild', 'account', function () {
       let accounts = this.get('model.accounts');
       let accountParam = this.get('account');
       let account = accounts.filter(function (x) {
