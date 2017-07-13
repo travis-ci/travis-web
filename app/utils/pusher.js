@@ -52,7 +52,7 @@ TravisPusher.prototype.subscribeAll = function (channels) {
 
 function subscribeToChannelChunk(channels, chunk, chunkSize, results, target) {
   const index = chunk * chunkSize;
-  const channelChunk = results.slice(index, index + chunkSize);
+  const channelChunk = channels.slice(index, index + chunkSize);
 
   for (let i = 0; i < channelChunk; i++) {
     const channel = channelChunk[i];
