@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-import computed from 'ember-computed-decorators';
+import { computed } from 'ember-decorators/object';
 
 const { service } = Ember.inject;
 
