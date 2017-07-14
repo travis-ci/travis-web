@@ -8,7 +8,7 @@ import DurationCalculations from 'travis/mixins/duration-calculations';
 import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-import computed from 'ember-computed-decorators';
+import { computed } from 'ember-decorators/object';
 
 const { service } = Ember.inject;
 
