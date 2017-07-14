@@ -1,13 +1,15 @@
 /* global Travis */
 import Ember from 'ember';
-
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { computed, action } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
-  auth: service(),
+  @service auth: null,
+
   allHooks: [],
-  user: alias('auth.currentUser'),
+
+  @alias('auth.currentUser') user: null,
 
   init() {
     this._super(...arguments);
@@ -17,14 +19,15 @@ export default Ember.Controller.extend({
     }));
   },
 
-  actions: {
-    sync() {
-      return this.get('user').sync();
-    },
 
-    toggle(hook) {
-      return hook.toggle();
-    }
+  @action
+  sync() {
+    return this.get('user').sync();
+  },
+
+  @action
+  toggle(hook) {
+    return hook.toggle();
   },
 
   reloadHooks() {
@@ -45,49 +48,39 @@ export default Ember.Controller.extend({
     }
   },
 
-  accountName: Ember.computed('model.name', 'model.login', function () {
-    return this.get('model.name') || this.get('model.login');
-  }),
+  @computed('model.{name,login}')
+  accountName(name, login) {
+    return name || login;
+  },
 
-  hooks: Ember.computed('allHooks.length', 'allHooks', function () {
-    let hooks = this.get('allHooks');
+  @computed('allHooks.[]')
+  hooks(hooks) {
     if (!hooks) {
       this.reloadHooks();
     }
-    return this.get('allHooks').filter(function (hook) {
-      return hook.get('admin');
-    }).sortBy('name');
-  }),
+    return hooks.filter(hook => hook.get('admin')).sortBy('name');
+  },
 
-  hooksWithoutAdmin: Ember.computed('allHooks.length', 'allHooks', function () {
-    let hooks = this.get('allHooks');
+  @computed('allHooks.[]')
+  hooksWithoutAdmin(hooks) {
     if (!hooks) {
       this.reloadHooks();
     }
-    return this.get('allHooks').filter(function (hook) {
-      return !hook.get('admin');
-    }).sortBy('name');
-  }),
+    return hooks.filter(hook => !hook.get('admin')).sortBy('name');
+  },
 
-  showPrivateReposHint: Ember.computed(function () {
-    return this.config.show_repos_hint === 'private';
-  }),
-
-  showPublicReposHint: Ember.computed(function () {
-    return this.config.show_repos_hint === 'public';
-  }),
-
-  billingUrl: Ember.computed('model.name', 'model.login', function () {
-    var id;
-    id = this.get('model.type') === 'user' ? 'user' : this.get('model.login');
+  @computed('model.{type,login}')
+  billingUrl(type, name, login) {
+    const id = type === 'user' ? 'user' : login;
     return this.config.billingEndpoint + '/subscriptions/' + id;
-  }),
+  },
 
-  subscribeButtonInfo: Ember.computed('model.login', 'model.type', function () {
+  @computed('billingUrl', 'model.{subscribed,education}')
+  subscribeButtonInfo(billingUrl, subscribed, education) {
     return {
-      billingUrl: this.get('billingUrl'),
-      subscribed: this.get('model.subscribed'),
-      education: this.get('model.education')
+      billingUrl,
+      subscribed,
+      education,
     };
-  })
+  },
 });
