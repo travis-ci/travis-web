@@ -4,19 +4,21 @@ import GithubUrlProperties from 'travis/mixins/github-url-properties';
 import Visibility from 'npm:visibilityjs';
 import config from 'travis/config/environment';
 
-const { service, controller } = Ember.inject;
-const { alias } = Ember.computed;
+import { controller } from 'ember-decorators/controller';
+import { service } from 'ember-decorators/service';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend(GithubUrlProperties, Polling, {
-  auth: service(),
-  repoController: controller('repo'),
+  @service auth: null,
+  @service('updateTimes') updateTimesService: null,
 
-  repo: alias('repoController.repo'),
-  currentUser: alias('auth.currentUser'),
-  tab: alias('repoController.tab'),
+  @controller('repo') repoController: null,
+
+  @alias('repoController.repo') repo: null,
+  @alias('auth.currentUser') currentUser: null,
+  @alias('repoController.tab') tab: null,
+
   sendFaviconStateChanges: true,
-
-  updateTimesService: service('updateTimes'),
 
   updateTimes() {
     this.get('updateTimesService').push(this.get('build.stages'));
