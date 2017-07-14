@@ -12,7 +12,9 @@ export default Ember.Controller.extend({
 
   @computed('model.pushes.[]', 'model.pullRequests.[]')
   cachesExist(pushes, pullRequests) {
-    return pushes.length || pullRequests.length;
+    if (pushes || pullRequests) {
+      return pushes.length || pullRequests.length;
+    }
   },
 
   deleteRepoCache: task(function * () {
