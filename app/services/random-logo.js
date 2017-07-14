@@ -12,6 +12,7 @@ export default Ember.Service.extend({
     'TravisCI-Mascot-2',
     'TravisCI-Mascot-3',
     'TravisCI-Mascot-4',
+    'TravisCI-Mascot-pride-4',
     'TravisCI-Mascot-pride',
   ],
 
