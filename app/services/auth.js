@@ -1,7 +1,8 @@
 /* global Travis */
 import config from 'travis/config/environment';
 import Ember from 'ember';
-import computed, { alias } from 'ember-computed-decorators';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 const { service } = Ember.inject;
 
