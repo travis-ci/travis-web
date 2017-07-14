@@ -1,22 +1,23 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Controller.extend({
   isLoading: false,
 
-  githubProfile: Ember.computed('model', function () {
-    return this.get('config').sourceEndpoint + '/' + (this.get('model.login'));
-  }),
+  @computed('config.sourceEndpoint', 'model.login')
+  githubProfile(endpoint, login) {
+    return `${endpoint}/${login}`;
+  },
 
-  owner: Ember.computed('model', function () {
-    var data;
-    data = this.get('model');
+  @computed('model')
+  owner(model) {
     return {
-      login: data.login,
-      name: data.name,
-      avatar: data.avatar_url,
-      isSyncing: data.is_syncing,
-      avatarUrl: data.avatar_url,
-      syncedAt: data.synced_at
+      login: model.login,
+      name: model.name,
+      avatar: model.avatar_url,
+      isSyncing: model.is_syncing,
+      avatarUrl: model.avatar_url,
+      syncedAt: model.synced_at
     };
-  })
+  },
 });
