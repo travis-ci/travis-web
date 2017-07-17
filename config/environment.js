@@ -1,8 +1,10 @@
 /* eslint-env node */
+'use strict';
+
 module.exports = function (environment) {
-  var ENV = {
+  let ENV = {
     modulePrefix: 'travis',
-    environment: environment,
+    environment,
     rootURL: '/',
     locationType: 'auto',
     defaultTitle: 'Travis CI',
