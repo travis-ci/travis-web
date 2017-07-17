@@ -191,6 +191,7 @@ test('view branches', function (assert) {
 
     assert.equal(branchesPage.activeBranches(0).name, 'created', 'expected created branch to be sorted first');
     assert.ok(branchesPage.activeBranches(0).created, 'expected created branch to be running');
+    assert.equal(branchesPage.activeBranches(0).buildCount, '1 build');
 
     assert.equal(branchesPage.activeBranches(1).name, 'edits', 'expected newer completed branch to be sorted next');
     assert.ok(branchesPage.activeBranches(1).failed, 'expected edits branch to have failed');
