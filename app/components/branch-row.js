@@ -67,6 +67,16 @@ export default Ember.Component.extend({
     return lastBuilds;
   }),
 
+  buildCountString: Ember.computed('getLast5Builds.count', function () {
+    const count = this.get('getLast5Builds.count');
+
+    if (count === 1) {
+      return '1 build';
+    } else {
+      return `${count} builds`;
+    }
+  }),
+
   actions: {
     viewAllBuilds() {
       return this.get('router').transitionTo('builds');
