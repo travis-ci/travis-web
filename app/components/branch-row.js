@@ -71,7 +71,7 @@ export default Ember.Component.extend({
     const count = this.get('getLast5Builds.count');
 
     if (count === 1) {
-      return `1 build`;
+      return '1 build';
     } else {
       return `${count} builds`;
     }
