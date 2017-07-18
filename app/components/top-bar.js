@@ -1,11 +1,10 @@
 /* global HS */
 import Ember from 'ember';
 import computed, { alias } from 'ember-computed-decorators';
-import InViewportMixin from 'ember-in-viewport';
 
 const { service } = Ember.inject;
 
-export default Ember.Component.extend(InViewportMixin, {
+export default Ember.Component.extend({
   tagName: 'header',
   classNames: ['top'],
   auth: service(),
@@ -93,21 +92,6 @@ export default Ember.Component.extend(InViewportMixin, {
     classes.push(authState || 'signed-out');
 
     return classes.join(' ');
-  },
-
-  didScroll() {
-    console.log('scrolled');
-    this.get('flashes').set('topBarVisible', true);
-  },
-
-  didEnterViewport() {
-    console.log('entered');
-    this.get('flashes').set('topBarVisible', true);
-  },
-
-  didExitViewport() {
-    console.log('exited');
-    this.get('flashes').set('topBarVisible', false);
   },
 
   didInsertElement() {

@@ -56,7 +56,6 @@
     "ember-exam": "0.7.0",
     "ember-export-application-global": "2.0.0",
     "ember-feature-flags": "3.0.0",
-    "ember-in-viewport": "DockYard/ember-in-viewport#fix-item-larger-than-viewport",
     "ember-inflector": "^2.0.0",
     "ember-inline-svg": "0.1.11",
     "ember-keyboard-shortcuts": "0.3.0",
