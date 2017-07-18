@@ -31,7 +31,7 @@ export default PageObject.create({
   restartBuild: clickable('.action-button--restart'),
   cancelBuild: clickable('.action-button--cancel'),
   debugBuild: clickable('.action-button--debug'),
-  notification: text('p.flash-message'),
+  notification: text('p.flash-message .message'),
   singleJobLogText: text('.log-body pre'),
 
   branchName: text('.build-header .commit-branch'),

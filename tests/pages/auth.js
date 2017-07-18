@@ -5,5 +5,5 @@ let {
 } = PageObject;
 
 export default PageObject.create({
-  automaticSignOutNotification: text('p.flash-message')
+  automaticSignOutNotification: text('p.flash-message .message')
 });

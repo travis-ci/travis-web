@@ -73,5 +73,5 @@ export default PageObject.create({
   cancelJob: clickable('.action-button--cancel'),
   debugJob: clickable('.action-button--debug'),
 
-  notification: text('p.flash-message')
+  notification: text('p.flash-message .message')
 });

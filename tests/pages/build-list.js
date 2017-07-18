@@ -16,7 +16,7 @@ export default PageObject.create({
 
   showsNoBuildsMessaging: text('.missing-notice h2.page-title'),
 
-  notification: text('p.flash-message'),
+  notification: text('p.flash-message .message'),
 
   builds: collection({
     itemScope: '.build-list .pr-row',
