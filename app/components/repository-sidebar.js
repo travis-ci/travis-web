@@ -7,6 +7,7 @@ const { service } = Ember.inject;
 
 export default Ember.Component.extend({
   tabStates: service(),
+  jobState: service(),
   ajax: service(),
   updateTimesService: service('updateTimes'),
   repositories: service(),
@@ -15,7 +16,8 @@ export default Ember.Component.extend({
   router: service(),
 
   didReceiveAttrs() {
-    return this.get('fetchRepositoryData').perform();
+    this.get('fetchRepositoryData').perform();
+    this.get('jobState.fetchRunningJobs').perform();
   },
 
   fetchRepositoryData: task(function* () {
@@ -60,19 +62,10 @@ export default Ember.Component.extend({
     return runningAmount + queuedAmount;
   },
 
-  @computed('features.proVersion')
+  @computed('features.proVersion', 'jobState.runningJobs')
   runningJobs(proVersion) {
     if (!proVersion) { return []; }
-    const runningStates = ['queued', 'started', 'received'];
-    const result = this.get('store').filter(
-      'job',
-      {},
-      job => runningStates.includes(job.get('state'))
-    );
-
-    result.then(() => result.set('isLoaded', true));
-
-    return result;
+    return this.get('jobState.runningJobs');
   },
 
   @computed('features.proVersion')
