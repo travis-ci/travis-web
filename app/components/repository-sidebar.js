@@ -15,9 +15,15 @@ export default Ember.Component.extend({
   auth: service(),
   router: service(),
 
-  didReceiveAttrs() {
-    this.get('fetchRepositoryData').perform();
-    this.get('jobState.fetchRunningJobs').perform();
+  init(...args) {
+    this._super(args);
+    // this starts the fetch after the sidebar is rendered, which is not ideal.
+    // But I'm otherwise unable to reference that state within two separate
+    // templates...
+    Ember.run.schedule('afterRender', () => {
+      this.get('fetchRepositoryData').perform();
+      this.get('jobState.fetchRunningJobs').perform();
+    });
   },
 
   fetchRepositoryData: task(function* () {
@@ -93,12 +99,12 @@ export default Ember.Component.extend({
 
   @alias('tabStates.sidebarTab') tab: null,
 
-  @computed('tab')
-  repositoryResults(tab) {
+  @computed('tab', 'repositories.{searchResults.[],accessible.[]}')
+  repositoryResults(tab, searchResults, accessible) {
     if (tab === 'search') {
-      return this.get('repositories.searchResults');
+      return searchResults;
     }
-    return this.get('repositories.accessible');
+    return accessible;
   },
 
   @computed('tab')
