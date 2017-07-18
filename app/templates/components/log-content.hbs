@@ -8,26 +8,26 @@
 
   <div class="log-container {{if job.notStarted 'hidden'}}">
       <button type="button" class="toggle-log-button {{if logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
-      {{inline-svg 'icon-seemore' class="icon"}}
+      {{svg-jar 'icon-seemore' class="icon"}}
       <span class="label-align">View log</span></button>
 
     <div class="log-main {{if logIsVisible 'is-visible'}} {{if job.notStarted 'hidden'}}">
       <div class="log-header">
           <button type="button" class="toggle-log-button--dark {{unless logIsVisible 'hidden'}}" title="Display the log" {{action "toggleLog"}}>
-              {{inline-svg 'icon-seemore' class="icon"}}<span class="label-align">Hide log</span></button>
+              {{svg-jar 'icon-seemore' class="icon"}}<span class="label-align">Hide log</span></button>
         {{#if canRemoveLog}}
           <a class="remove-log-button open-popup" {{action "removeLogPopup"}} title="Remove the log">
-            {{inline-svg 'icon-deletelogs' class="icon"}} Remove log</a>
+            {{svg-jar 'icon-deletelogs' class="icon"}} Remove log</a>
         {{/if}}
         <a class="download-log-button" href={{plainTextLogUrl}} title="Display the log in plaintext">
-          {{inline-svg 'icon-downloadlogs' class="icon"}} Raw log</a>
+          {{svg-jar 'icon-downloadlogs' class="icon"}} Raw log</a>
       </div>
       <div class="log-body">
         {{#if showTailing}}
           <a href="#" id="tail" class="log-tail" {{action "toggleTailing"}}>
             <span class="tail-status"></span>
             <span class="tail-label">
-              {{inline-svg 'icon-arrowdown' class="icon-arrow"}}
+              {{svg-jar 'icon-arrowdown' class="icon-arrow"}}
               {{#if job.isFinished}}
                 Scroll to End of Log
               {{else}}

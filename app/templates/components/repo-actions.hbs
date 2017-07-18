@@ -4,7 +4,7 @@
   {{else}}
     <div class='tooltip action-button-container' data-tooltip='Cancel {{type}}'>
       <button {{action (perform cancel)}} class="action-button--cancel" type="button" aria-label="Cancel {{type}}">
-        {{inline-svg 'icon-failed' class="icon"}}
+        {{svg-jar 'icon-failed' class="icon"}}
         <span class="label-align">Cancel {{type}}</span>
       </button>
     </div>
@@ -17,7 +17,7 @@
   {{else}}
     <div class='tooltip action-button-container' data-tooltip='Restart {{type}}'>
       <button {{action (perform restart)}} class="action-button--restart" aria-label="Restart {{type}}" type="button">
-        {{inline-svg 'icon-restart' class="icon"}}
+        {{svg-jar 'icon-restart' class="icon"}}
         <span class="label-align">Restart {{type}}</span>
       </button>
     </div>
@@ -26,7 +26,7 @@
         {{#if canDebug}}
           <div class='action-button-container'>
             <button {{action (perform debug)}} class="action-button--debug tooltip" aria-label="Restart as debug {{type}}" data-tooltip='Restart as debug {{type}}' type="button">
-              {{inline-svg 'icon-debug' class="icon"}}
+              {{svg-jar 'icon-debug' class="icon"}}
               <span class="label-align">Debug {{type}}</span>
             </button>
           </div>

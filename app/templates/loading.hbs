@@ -4,7 +4,7 @@
       <h1 id="logo" class="logo">{{#link-to "index"}}Travis CI{{/link-to}}</h1>
       <div class="navigation-toggle">
         <button type="button" class="tofuburger no-button" {{action 'toggleBurgerMenu'}}>
-          {{inline-svg 'icon-tofuburger'}}
+          {{svg-jar 'icon-tofuburger'}}
         </button>
       </div>
 
@@ -20,7 +20,7 @@
                   <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
                   <span class='message'>{{{broadcast.message}}}</span>
                   <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
-                    {{inline-svg 'icon-failed' class="icon"}}
+                    {{svg-jar 'icon-failed' class="icon"}}
                   </button>
                 </p>
               </li>
@@ -101,7 +101,7 @@
     <div class="inner">
       <div class="footer-elem">
         <div class="travis-footer">
-          {{inline-svg 'travisci-logo' class="travis-logo"}}</div>
+          {{svg-jar 'travisci-logo' class="travis-logo"}}</div>
       </div>
 
       {{#unless features.enterpriseVersion}}
