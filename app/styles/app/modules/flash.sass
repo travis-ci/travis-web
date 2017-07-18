@@ -22,7 +22,6 @@
     cursor: pointer
 
   .success,
-  .notice
     color: $turf-green
     background-color: $seed-green
     +colorSVGFill($turf-green)
@@ -34,6 +33,10 @@
     +colorSVGFill($brick-red)
     .close
       +colorSVG($brick-red)
+  .notice
+    color: $dozer-yellow
+    background-color: $haze-yellow
+    +colorSVG($dozer-yellow)
 
 .flash-message
   padding: .9em 0
