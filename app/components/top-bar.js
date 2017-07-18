@@ -1,4 +1,4 @@
-/* global HS */
+/* global HS, Waypoint */
 import Ember from 'ember';
 import computed, { alias } from 'ember-computed-decorators';
 
