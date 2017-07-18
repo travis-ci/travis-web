@@ -1,27 +1,38 @@
 import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'npm:visibilityjs';
-
-const { service, controller } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { controller } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
-  updateTimesService: service('updateTimes'),
-  repositories: service(),
-  popup: service(),
-  tabStates: service(),
+  @service repositories: null,
+  @service tabStates: null,
+  @service('updateTimes') updateTimesService: null,
+  @service popup: null,
 
-  jobController: controller('job'),
-  buildController: controller('build'),
-  buildsController: controller('builds'),
-  repos: alias('repositories.accessible'),
-  currentUser: alias('auth.currentUser'),
+  @controller('job') jobController: null,
+  @controller('build') buildController: null,
+  @controller('builds') buildsController: null,
+  @controller('repos') reposController: null,
+
+  @alias('reposController.repos') repos: null,
+  @alias('auth.currentUser') currentUser: null,
+  @alias('buildController.build') build: null,
+  @alias('buildsController.content') builds: null,
+  @alias('jobController.job') job: null,
 
   classNames: ['repo'],
 
-  build: Ember.computed.alias('buildController.build'),
-  builds: Ember.computed.alias('buildsController.content'),
-  job: Ember.computed.alias('jobController.job'),
+  reset() {
+    this.set('repo', null);
+  },
+
+  @computed('repos.isLoaded', 'repos.[]')
+  isEmpty(loaded, repos) {
+    return loaded && Ember.isEmpty(repos);
+  },
 
   init() {
     this._super(...arguments);
