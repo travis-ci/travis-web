@@ -1,0 +1,13 @@
+<div class="missing-notice">
+  <figure class="page-graphic">
+    {{inline-svg 'icon-cones'}}
+  </figure>
+
+  {{#if title}}
+    <h2 class="page-title">{{title}}</h2>
+  {{/if}}
+
+  {{#if hasBlock}}
+    {{yield}}
+  {{/if}}
+</div>

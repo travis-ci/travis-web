@@ -1,13 +1,4 @@
-<div class="missing-notice">
-  <figure class="page-graphic">
-    {{inline-svg 'icon-cones'}}
-  </figure>
-
-  {{#if title}}
-    <h2 class="page-title">{{title}}</h2>
-  {{else}}
-    <h2 class="page-title">No builds for this repository</h2>
-    <p class="page-notice">Want to start testing this project on Travis CI?</p>
-    <a href="http://docs.travis-ci.com/user/getting-started/" class="button" title="Travis documentation on getting set up">Read the Docs on Getting Started</a>
-  {{/if}}
-</div>
+{{#missing-notice title="No builds for this repository"}}
+  <p class="page-notice">Want to start testing this project on Travis CI?</p>
+  <a href="http://docs.travis-ci.com/user/getting-started/" class="button" title="Travis documentation on getting set up">Read the Docs on Getting Started</a>
+{{/missing-notice}}
