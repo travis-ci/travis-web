@@ -1,5 +1,5 @@
 {{#each repos as |repo|}}
   {{repos-list-item repo=repo}}
 {{else}}
-  <p class="empty">{{noReposMessage}}</p>
+  <div class="loading-container">{{noReposMessage}}</div>
 {{/each}}

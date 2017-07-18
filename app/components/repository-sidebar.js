@@ -94,15 +94,6 @@ export default Ember.Component.extend({
   @alias('tabStates.sidebarTab') tab: null,
 
   @computed('tab')
-  noReposMessage(tab) {
-    if (tab === 'owned') {
-      return 'You don\'t have any repos set up on Travis CI';
-    } else {
-      return 'Could not find any repos';
-    }
-  },
-
-  @computed('tab')
   repositoryResults(tab) {
     if (tab === 'search') {
       return this.get('repositories.searchResults');

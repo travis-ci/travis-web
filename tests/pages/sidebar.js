@@ -32,6 +32,7 @@ export default create({
       name: text('.tile h2.tile-title span.label-align')
     }
   }),
+  missingReposMessage: text('.loading-container'),
   viewRunningJob: clickable('p.tile-title a'),
   enterSearchQuery: fillable('#travis-search'),
   pressEnter: triggerable('keyup', '#travis-search', { eventProperties: { keyCode: 13 } }),

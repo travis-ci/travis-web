@@ -1,8 +1,20 @@
 import Ember from 'ember';
+import computed from 'ember-computed-decorators';
 
-let ReposListComponent = Ember.Component.extend({
+const { service } = Ember.inject;
+
+export default Ember.Component.extend({
+  tabStates: service(),
+
   tagName: 'ul',
-  classNames: ['repos-list']
-});
+  classNames: ['repos-list'],
 
-export default ReposListComponent;
+  @computed('tabStates.sidebarTab')
+  noReposMessage(tab) {
+    if (tab === 'owned') {
+      return 'You don\'t have any repos set up on Travis CI';
+    } else {
+      return 'No repositories found';
+    }
+  },
+});
