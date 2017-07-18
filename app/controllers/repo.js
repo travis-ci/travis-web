@@ -2,7 +2,7 @@ import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'npm:visibilityjs';
 import { service } from 'ember-decorators/service';
-import { controller } from 'ember-decorators/service';
+import { controller } from 'ember-decorators/controller';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
