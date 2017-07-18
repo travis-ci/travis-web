@@ -6,7 +6,7 @@
   <button onclick={{action 'triggerFlash' 'success'}}>S</button>
   <div class="navigation-toggle">
     <button type="button" class="tofuburger no-button" {{action 'toggleBurgerMenu'}}>
-      {{inline-svg 'icon-tofuburger'}}
+      {{svg-jar 'icon-tofuburger'}}
     </button>
   </div>
 
@@ -22,7 +22,7 @@
           <span class="broadcast-status {{broadcast.category}}" title="Transmitted on {{broadcast.updated_at}}"></span>
           <span class='message'>{{{broadcast.message}}}</span>
           <button {{action 'markBroadcastAsSeen' broadcast}} title="hide this broadcast" class="broadcast-close no-button" type="button">
-            {{inline-svg 'icon-failed' class="icon"}}
+            {{svg-jar 'icon-failed' class="icon"}}
           </button>
         </p>
       </li>
@@ -85,7 +85,7 @@
         {{#if auth.signedOut}}
             <button class="auth-button signed-out" type="button" {{action 'signIn'}}>
                 <span class="label-align">Sign in with GitHub</span>
-                {{inline-svg 'icon-github-white' class="icon white"}}
+                {{svg-jar 'icon-github-white' class="icon white"}}
             </button>
         {{/if}}
         {{#if auth.signedIn}}

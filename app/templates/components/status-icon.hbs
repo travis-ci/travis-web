@@ -1,20 +1,20 @@
 {{#if isEmpty}}
-  {{inline-svg 'icon-nobuilds'}}
+  {{svg-jar 'icon-nobuilds'}}
 {{else}}
   {{#if hasPassed}}
-    {{inline-svg 'icon-passed'}}
+    {{svg-jar 'icon-passed'}}
   {{/if}}
 
   {{#if hasFailed}}
-    {{inline-svg 'icon-failed'}}
+    {{svg-jar 'icon-failed'}}
   {{/if}}
 
   {{#if wasCanceled}}
-    {{inline-svg 'icon-canceled'}}
+    {{svg-jar 'icon-canceled'}}
   {{/if}}
 
   {{#if hasErrored}}
-    {{inline-svg 'icon-errored'}}
+    {{svg-jar 'icon-errored'}}
   {{/if}}
 
   {{#if isRunning}}

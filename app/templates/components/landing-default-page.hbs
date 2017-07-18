@@ -16,7 +16,7 @@
 
         {{#if auth.signedOut}}
           <button {{action 'signIn'}} class="hero-button org">
-            {{inline-svg 'sign-in-mascot' class=""}} <span class="label-align">Sign Up</span></button>
+            {{svg-jar 'sign-in-mascot' class=""}} <span class="label-align">Sign Up</span></button>
         {{/if}}
         {{#if auth.signingIn}}
           <button class="hero-button org">
@@ -38,7 +38,7 @@
       <div class="large-12 columns">
         <h2>The home of<br class="mobile-break"> open source testing</h2>
         <p>Over 300k open source projects<br class="mobile-break"> and 235k users are testing on Travis CI.</p>
-        {{inline-svg 'customer-numbers' class="os-numbers"}}
+        {{svg-jar 'customer-numbers' class="os-numbers"}}
       </div>
     </section>
   </div>
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="medium-6 columns desktop-envelope">
-        {{inline-svg 'envelope'}}
+        {{svg-jar 'envelope'}}
       </div>
     </section>
   </div>
