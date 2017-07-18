@@ -100,6 +100,11 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     const self = this; // lol
+
+    if (Ember.testing) {
+      return;
+    }
+
     const waypoint = new Waypoint.Inview({
       element: this.element,
       exited() {
