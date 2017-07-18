@@ -4,6 +4,12 @@ import LimitedArray from 'travis/utils/limited-array';
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
 
+const messageTypeToIcon = {
+  notice: 'icon-flag',
+  success: 'features-check',
+  error: 'dismiss'
+};
+
 export default Ember.Service.extend({
   auth: service(),
   store: service(),
@@ -48,7 +54,8 @@ export default Ember.Service.extend({
       type = Object.keys(msg)[0];
       msg = {
         type,
-        message: msg[type]
+        message: msg[type],
+        icon: messageTypeToIcon[type]
       };
       this.get('flashes').unshiftObject(msg);
       this.removeFlash(msg);

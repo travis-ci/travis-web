@@ -1,3 +1,6 @@
-<p class="flash-message">{{{flash.message}}}</p>
+<p class="flash-message">
+  {{#if flash.icon}}{{svg-jar flash.icon}}{{/if}}
+ {{{flash.message}}}
+</p>
 <button type="button" class="no-button close" {{action "close"}}>
     {{svg-jar 'icon-failed' class="icon"}}</button>
