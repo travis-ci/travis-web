@@ -1,23 +1,24 @@
 import Ember from 'ember';
 import LoadMoreBuildsMixin from 'travis/mixins/builds/load-more';
-
-const { service, controller } = Ember.inject;
-const { alias } = Ember.computed;
+import { controller } from 'ember-decorators/controller';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 const mixins = [LoadMoreBuildsMixin];
 
 export default Ember.Controller.extend(...mixins, {
-  tabStates: service(),
+  @controller('repo') repoController: null,
 
   buildsSorting: ['number:desc'],
   builds: Ember.computed.sort('model', 'buildsSorting'),
-  repoController: controller('repo'),
-  repo: alias('repoController.repo'),
-  tab: alias('tabStates.mainTab'),
-  isLoaded: alias('model.isLoaded'),
-  isLoading: alias('model.isLoading'),
 
-  displayShowMoreButton: Ember.computed('tab', 'builds.lastObject.number', function () {
-    return this.get('tab') !== 'branches' && parseInt(this.get('builds.lastObject.number')) > 1;
-  }),
+  @alias('repoController.repo') repo: null,
+  @alias('repoController.tab') tab: null,
+  @alias('model.isLoaded') isLoaded: null,
+  @alias('model.isLoading') isLoading: null,
+
+  @computed('tab', 'builds.lastObject.number')
+  displayShowMoreButton(tab, lastBuildNumber) {
+    return tab !== 'branches' && parseInt(lastBuildNumber) > 1;
+  },
 });
