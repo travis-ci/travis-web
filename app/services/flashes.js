@@ -10,6 +10,12 @@ const messageTypeToIcon = {
   error: 'dismiss'
 };
 
+const messageTypeToPreamble = {
+  notice: 'Heads up!',
+  success: 'Hooray!',
+  error: 'Oh no!'
+};
+
 export default Ember.Service.extend({
   auth: service(),
   store: service(),
@@ -55,7 +61,8 @@ export default Ember.Service.extend({
       msg = {
         type,
         message: msg[type],
-        icon: messageTypeToIcon[type]
+        icon: messageTypeToIcon[type],
+        preamble: messageTypeToPreamble[type]
       };
       this.get('flashes').unshiftObject(msg);
       this.removeFlash(msg);
@@ -90,14 +97,14 @@ export default Ember.Service.extend({
   },
 
   success(message) {
-    this.display('success', `Hooray! ${message}`);
+    this.display('success', message);
   },
 
   error(message) {
-    this.display('error', `Oh no! ${message}`);
+    this.display('error', message);
   },
 
   notice(message) {
-    this.display('notice', `Heads up! ${message}`);
+    this.display('notice', message);
   }
 });
