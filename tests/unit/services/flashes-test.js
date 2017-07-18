@@ -4,6 +4,15 @@ moduleFor('service:flashes', 'Unit | Service | flashes', {
   needs: ['service:auth']
 });
 
+// FIXME is this ridiculous…? 🤔
+
+function subsetFlashObject(o) {
+  return {
+    message: o.message,
+    type: o.type
+  };
+}
+
 test('it allows to show an error', function (assert) {
   let service = this.subject();
 
@@ -11,7 +20,7 @@ test('it allows to show an error', function (assert) {
 
   service.error('There was an error!');
 
-  assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was an error!', type: 'error' }, 'there should be an error message in flashes');
+  assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was an error!', type: 'error' }, 'there should be an error message in flashes');
 });
 
 test('it allows to show a notice', function (assert) {
@@ -21,7 +30,7 @@ test('it allows to show a notice', function (assert) {
 
   service.notice('There was a notice!');
 
-  assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was a notice!', type: 'notice' }, 'there should be a notice message in flashes');
+  assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was a notice!', type: 'notice' }, 'there should be a notice message in flashes');
 });
 
 test('it allows to show a success', function (assert) {
@@ -31,5 +40,5 @@ test('it allows to show a success', function (assert) {
 
   service.success('There was a success!');
 
-  assert.deepEqual(service.get('flashes.firstObject'), { message: 'There was a success!', type: 'success' }, 'there should be a notice message in flashes');
+  assert.deepEqual(subsetFlashObject(service.get('flashes.firstObject')), { message: 'There was a success!', type: 'success' }, 'there should be a notice message in flashes');
 });
