@@ -25,11 +25,15 @@
   .notice
     color: $turf-green
     background-color: $seed-green
-    +colorSVG($turf-green)
+    +colorSVGFill($turf-green)
+    .close
+      +colorSVG($turf-green)
   .error
     color: $brick-red
     background-color: $quartz-red
-    +colorSVG($brick-red)
+    +colorSVGFill($brick-red)
+    .close
+      +colorSVG($brick-red)
 
 .flash-message
   padding: .9em 0
