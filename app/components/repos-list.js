@@ -6,10 +6,7 @@ const { service } = Ember.inject;
 export default Ember.Component.extend({
   tabStates: service(),
 
-  tagName: 'ul',
-  classNames: ['repos-list'],
-
-  @computed('tabStates.sidebarTab')
+  @computed('viewingOwned')
   noReposMessage(tab) {
     if (tab === 'owned') {
       return 'You don\'t have any repos set up on Travis CI';
