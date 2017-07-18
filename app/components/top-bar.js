@@ -108,5 +108,29 @@ export default Ember.Component.extend(InViewportMixin, {
   didExitViewport() {
     console.log('exited');
     this.get('flashes').set('topBarVisible', false);
+  },
+
+  didInsertElement() {
+    const self = this; // lol
+    const waypoint = new Waypoint.Inview({
+      element: this.element,
+      exited() {
+        console.log('me exit!!!');
+
+        Ember.run(() => {
+          self.get('flashes').set('topBarVisible', false);
+        });
+      },
+
+      enter() {
+        console.log('me enter?');
+
+        Ember.run(() => {
+          self.get('flashes').set('topBarVisible', true);
+        });
+      }
+    });
+
+    this.set('waypoint', waypoint);
   }
 });
