@@ -67,7 +67,7 @@
     "ember-resolver": "4.1.0",
     "ember-route-action-helper": "^2.0.3",
     "ember-router-service-polyfill": "^1.0.1",
-    "ember-source": "2.13.4",
+    "ember-source": "2.14.1",
     "emberx-select": "~3.0.0",
     "glob": "^7.1.2",
     "loader.js": "^4.2.3",
