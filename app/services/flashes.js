@@ -6,8 +6,8 @@ const { alias } = Ember.computed;
 
 const messageTypeToIcon = {
   notice: 'icon-flag',
-  success: 'features-check',
-  error: 'dismiss'
+  success: 'flash-success',
+  error: 'flash-error'
 };
 
 const messageTypeToPreamble = {
