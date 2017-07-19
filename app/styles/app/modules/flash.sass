@@ -4,6 +4,11 @@
   height: 0
   li
     position: relative
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+
     width: 100%
   li.notice, li.success, li.error
     opacity: 1
@@ -17,29 +22,50 @@
 
   .close
     position: absolute
-    top: .7em
-    right: 1em
     cursor: pointer
+    right: 0.1rem
+    top: 0
+    height: 100%
+    .icon
+      margin-right: 0
+      height: 24px
+      width: 22px
 
-  .success,
+  .success
     color: $turf-green
     background-color: $seed-green
     +colorSVGFill($turf-green)
-    .close
-      +colorSVG($turf-green)
+
+    .flash-message svg
+      height: 33px
+      width: 28px
+      margin-top: -4px
+
   .error
     color: $brick-red
     background-color: $quartz-red
     +colorSVGFill($brick-red)
-    .close
-      +colorSVG($brick-red)
+
+    .flash-message svg
+      height: 30px
+      width: 26px
+
   .notice
     color: $dozer-yellow
     background-color: $haze-yellow
-    +colorSVG($dozer-yellow)
+    +colorSVGFill($dozer-yellow)
+
+    .flash-message svg
+      height: 17px
+      width: 12px
+      margin-right: 6px
+      +colorSVG($dozer-yellow)
+
 
 .flash-message
-  padding: .9em 0
+  display: flex
+  align-items: center
+  padding: 0
   margin: 0
   line-height: 1
   font-size: 1rem
@@ -47,9 +73,6 @@
   .preamble
     font-weight: bold
     padding-right: 0.5rem
-
-  svg
-    height: 1rem
 
 @keyframes fadeFlashInOut
   2%
