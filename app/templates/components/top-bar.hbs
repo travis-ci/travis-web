@@ -1,9 +1,11 @@
 <div class="topbar {{if is-open 'has-autoheight'}} {{if showBroadcasts 'has-autoheight'}}">
   <h1 id="logo" class="logo">{{#link-to "index"}}Travis CI{{/link-to}}</h1>
+  <div style='position: fixed; z-index: 9999; bottom: 0; left: 0; background: white'>
   {{! FIXME remove these obvsy }}
-  <button onclick={{action 'triggerFlash' 'error'}}>E</button>
-  <button onclick={{action 'triggerFlash' 'notice'}}>N</button>
-  <button onclick={{action 'triggerFlash' 'success'}}>S</button>
+  <button onclick={{action 'triggerFlash' 'error'}}>Error</button>
+  <button onclick={{action 'triggerFlash' 'notice'}}>Notice</button>
+  <button onclick={{action 'triggerFlash' 'success'}}>Success</button>
+  </div>
   <div class="navigation-toggle">
     <button type="button" class="tofuburger no-button" {{action 'toggleBurgerMenu'}}>
       {{svg-jar 'icon-tofuburger'}}
