@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import jobPage from 'travis/tests/pages/job';
+import topPage from 'travis/tests/pages/top';
 
 moduleForAcceptance('Acceptance | jobs/cancel', {
   beforeEach() {
@@ -28,6 +29,6 @@ test('restarting job', function (assert) {
     .cancelJob();
 
   andThen(function () {
-    assert.equal(jobPage.notification, 'Job has been successfully cancelled.', 'cancelled job notification should be displayed');
+    assert.equal(topPage.flashMessage, 'Job has been successfully cancelled.', 'cancelled job notification should be displayed');
   });
 });
