@@ -57,6 +57,7 @@ export default Ember.Service.extend({
         const repositories = yield Repo.accessibleBy(this.get('store'), permissions.pull);
         this.set('_repos', repositories);
         this.set('ownedRepos', repositories);
+        return repositories;
       }
     }
   }).drop(),
