@@ -6,48 +6,6 @@ import computed from 'ember-computed-decorators';
 
 const { service } = Ember.inject;
 
-const sortCallback = function (repo1, repo2) {
-  // this function could be made simpler, but I think it's clearer this way
-  // what're we really trying to achieve
-
-  let buildId1 = repo1.get('currentBuild.id');
-  let buildId2 = repo2.get('currentBuild.id');
-  let finishedAt1 = repo1.get('currentBuild.finishedAt');
-  let finishedAt2 = repo2.get('currentBuild.finishedAt');
-
-  if (!buildId1 && !buildId2) {
-    // if both repos lack builds, put newer repo first
-    return repo1.get('id') > repo2.get('id') ? -1 : 1;
-  } else if (buildId1 && !buildId2) {
-    // if only repo1 has a build, it goes first
-    return -1;
-  } else if (buildId2 && !buildId1) {
-    // if only repo2 has a build, it goes first
-    return 1;
-  }
-
-  if (finishedAt1) {
-    finishedAt1 = new Date(finishedAt1);
-  }
-  if (finishedAt2) {
-    finishedAt2 = new Date(finishedAt2);
-  }
-
-  if (finishedAt1 && finishedAt2) {
-    // if both builds finished, put newer first
-    return finishedAt1.getTime() > finishedAt2.getTime() ? -1 : 1;
-  } else if (finishedAt1 && !finishedAt2) {
-    // if repo1 finished, but repo2 didn't, put repo2 first
-    return 1;
-  } else if (finishedAt2 && !finishedAt1) {
-    // if repo2 finisher, but repo1 didn't, put repo1 first
-    return -1;
-  } else {
-    // none of the builds finished, put newer build first
-    return buildId1 > buildId2 ? -1 : 1;
-  }
-};
-
 export default Ember.Service.extend({
   auth: service(),
   store: service(),
@@ -105,29 +63,58 @@ export default Ember.Service.extend({
 
   @computed('_repos.[]', '_repos.@each.{currentBuildFinishedAt,currentBuildId}')
   accessible(repos) {
-    if (repos && repos.toArray) {
-      repos = repos.toArray();
-    }
-
-    if (repos && repos.sort) {
-      return repos.sort(sortCallback);
-    } else {
-      if (Ember.isArray(repos)) {
-        return repos;
-      } else {
-        return [];
-      }
-    }
+    return this.sortData(repos);
   },
 
   @computed('_searchResults.[]', '_searchResults.@each.{currentBuildFinishedAt,currentBuildId}')
   searchResults(repos) {
+    return this.sortData(repos);
+  },
+
+  sortData(repos) {
     if (repos && repos.toArray) {
       repos = repos.toArray();
     }
 
     if (repos && repos.sort) {
-      return repos.sort(sortCallback);
+      return repos.sort((repo1, repo2) => {
+        let buildId1 = repo1.get('currentBuild.id');
+        let buildId2 = repo2.get('currentBuild.id');
+        let finishedAt1 = repo1.get('currentBuild.finishedAt');
+        let finishedAt2 = repo2.get('currentBuild.finishedAt');
+
+        if (!buildId1 && !buildId2) {
+          // if both repos lack builds, put newer repo first
+          return repo1.get('id') > repo2.get('id') ? -1 : 1;
+        } else if (buildId1 && !buildId2) {
+          // if only repo1 has a build, it goes first
+          return -1;
+        } else if (buildId2 && !buildId1) {
+          // if only repo2 has a build, it goes first
+          return 1;
+        }
+
+        if (finishedAt1) {
+          finishedAt1 = new Date(finishedAt1);
+        }
+        if (finishedAt2) {
+          finishedAt2 = new Date(finishedAt2);
+        }
+
+        if (finishedAt1 && finishedAt2) {
+          // if both builds finished, put newer first
+          return finishedAt1.getTime() > finishedAt2.getTime() ? -1 : 1;
+        } else if (finishedAt1 && !finishedAt2) {
+          // if repo1 finished, but repo2 didn't, put repo2 first
+          return 1;
+        } else if (finishedAt2 && !finishedAt1) {
+          // if repo2 finisher, but repo1 didn't, put repo1 first
+          return -1;
+        } else {
+          // none of the builds finished, put newer build first
+          return buildId1 > buildId2 ? -1 : 1;
+        }
+      });
     } else {
       if (Ember.isArray(repos)) {
         return repos;
