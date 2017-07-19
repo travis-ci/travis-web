@@ -81,7 +81,7 @@ export default Ember.Service.extend({
   showSearchResults: task(function* () {
     let query = this.get('searchQuery');
 
-    yield timeout(config.repositorySearchDebounceRate);
+    yield timeout(config.intervals.repositorySearchDebounceRate);
 
     yield this.get('performSearchRequest').perform(query);
 
