@@ -21,6 +21,9 @@ export default Ember.Service.extend({
   store: service(),
   currentUser: alias('auth.currentUser'),
 
+  // This changes when scrolling to adjust flash messages to fixed
+  topBarVisible: true,
+
   init() {
     this._super(...arguments);
 
