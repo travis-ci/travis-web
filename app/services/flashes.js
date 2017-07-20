@@ -110,7 +110,7 @@ export default Ember.Service.extend({
   },
 
   success(message) {
-    this.display('success', message, { close: false });
+    this.display('success', message);
   },
 
   error(message) {
