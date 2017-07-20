@@ -12,7 +12,6 @@
     width: 100%
   li.notice, li.success, li.error
     opacity: 1
-    // animation: fadeFlashInOut 9999s 1 ease
     z-index: 90
     height: $top-height
 
@@ -35,6 +34,8 @@
     color: $turf-green
     background-color: $seed-green
     +colorSVGFill($turf-green)
+
+    animation: fadeFlashOut 7s 1 ease forwards
 
     .flash-message svg
       height: 33px
@@ -75,15 +76,10 @@
     font-weight: bold
     padding-right: 0.5rem
 
-@keyframes fadeFlashInOut
-  2%
+@keyframes fadeFlashOut
+  0%
     opacity: 1
-    transfrom: translateY(-50%)
-  5%
-    transform: translateY(0)
   98%
-    transform: translateY(0)
     opacity: 1
   100%
-    transform: translateY(-50%)
     opacity: 0

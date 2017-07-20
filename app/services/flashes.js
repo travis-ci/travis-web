@@ -75,7 +75,10 @@ export default Ember.Service.extend({
         closeButton: messageTypeToCloseButton[type]
       };
       this.get('flashes').unshiftObject(msg);
-      this.removeFlash(msg);
+
+      if (!messageTypeToCloseButton[type]) {
+        this.removeFlash(msg);
+      }
     }
     return results;
   },
@@ -87,7 +90,7 @@ export default Ember.Service.extend({
           return this.get('flashes.content').removeObject(msg);
         }
       });
-    }, 15000000);
+    }, 15000);
   },
 
   close(msg) {
