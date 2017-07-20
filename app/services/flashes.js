@@ -16,6 +16,12 @@ const messageTypeToPreamble = {
   error: 'Oh no!'
 };
 
+const messageTypeToCloseButton = {
+  notice: true,
+  success: false,
+  error: true
+};
+
 export default Ember.Service.extend({
   auth: service(),
   store: service(),
@@ -65,7 +71,8 @@ export default Ember.Service.extend({
         type,
         message: msg[type],
         icon: messageTypeToIcon[type],
-        preamble: messageTypeToPreamble[type]
+        preamble: messageTypeToPreamble[type],
+        closeButton: messageTypeToCloseButton[type]
       };
       this.get('flashes').unshiftObject(msg);
       this.removeFlash(msg);
@@ -100,7 +107,7 @@ export default Ember.Service.extend({
   },
 
   success(message) {
-    this.display('success', message);
+    this.display('success', message, { close: false });
   },
 
   error(message) {
