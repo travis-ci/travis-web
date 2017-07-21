@@ -64,10 +64,10 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts().count, 2, 'expected two accounts');
 
     assert.equal(profilePage.accounts(0).name, 'Sara Ahmed');
-    assert.equal(profilePage.accounts(0).repositoryCount, 3);
+    assert.equal(profilePage.accounts(0).repositoryCount, '3 repositories');
 
     assert.equal(profilePage.accounts(1).name, 'Feminist Killjoys');
-    assert.equal(profilePage.accounts(1).repositoryCount, 30);
+    assert.equal(profilePage.accounts(1).repositoryCount, '30 repositories');
 
     assert.equal(profilePage.administerableHooks().count, 2, 'expected two administerable hooks');
 
