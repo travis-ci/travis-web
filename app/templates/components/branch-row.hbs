@@ -11,7 +11,7 @@
       {{#if getLast5Builds.isLoading}}
         {{loading-indicator inline=true}}
       {{else}}
-        {{buildCountString}}
+        {{pluralize getLast5Builds.count 'build'}}
       {{/if}}
     {{else}}
       0 builds
