@@ -24,7 +24,7 @@ export default Ember.Component.extend({
 
   @computed('job.startedAt', 'queue', 'job.config')
   isTrustyStable(startedAt, queue, config) {
-    if (queue === 'builds.gce' && config.dist === 'trusty' && config.group === 'stable') {
+    if (config.dist === 'trusty' && config.group === 'stable') {
       const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
         return true;
