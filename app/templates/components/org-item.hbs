@@ -4,7 +4,7 @@
 <div class="media-body">
   {{#link-to "account" account.login}}
     <h2>{{name}}</h2>
-    {{#if account.reposCount}}<p>Repositories <strong>{{account.reposCount}}</strong></p>{{else}}No repositories{{/if}}
+    {{#if account.reposCount}}<p class='repository-count'>{{pluralize account.reposCount 'repository'}}</p>{{else}}No repositories{{/if}}
   {{/link-to}}
 
   {{#if isUser}}
