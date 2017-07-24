@@ -17,7 +17,9 @@ export default TravisRoute.extend(ScrollResetMixin, {
       if (this.get('features.proVersion') && this.get('tabStates.sidebarTab') === 'running') {
         return;
       }
-      this.get('tabStates').set('sidebarTab', 'owned');
+      if (!this.get('tabStates.sidebarTab', 'search')) {
+        this.get('tabStates').set('sidebarTab', 'owned');
+      }
       this.set('tabStates.mainTab', null);
     }
   },
