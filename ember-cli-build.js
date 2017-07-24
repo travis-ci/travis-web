@@ -39,7 +39,8 @@ module.exports = function () {
     // need to use babel6 key here until
     // we can upgrade to ember-cli@2.13
     babel6: {
-      plugins: ['transform-decorators-legacy']
+      plugins: ['transform-decorators-legacy'],
+      blacklist: ['regenerator'],
     },
     fingerprint: fingerprint,
     sourcemaps: {

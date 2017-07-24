@@ -49,5 +49,4 @@ export default TravisRoute.extend({
     this.controllerFor('job').set('job', null);
     return this._super(...arguments);
   }
-
 });

@@ -22,9 +22,9 @@ export default Ember.Component.extend({
 
   isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
 
-  @computed('job.startedAt', 'queue', 'job.config')
-  isTrustyStable(startedAt, queue, config) {
-    if (queue === 'builds.gce' && config.dist === 'trusty' && config.group === 'stable') {
+  @computed('job.startedAt', 'job.config')
+  isTrustyStable(startedAt, config = {}) {
+    if (config.dist === 'trusty' && config.group === 'stable') {
       const jobRanAfterReleaseDate = Date.parse(startedAt) > Date.parse(LATEST_TRUSTY_RELEASE);
       if (jobRanAfterReleaseDate) {
         return true;

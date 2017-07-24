@@ -5,15 +5,7 @@ const { service } = Ember.inject;
 export default Ember.Route.extend({
   tabStates: service(),
   auth: service(),
-
-  renderTemplate() {
-    this._super(...arguments);
-
-    this.render('repos', {
-      into: 'search',
-      outlet: 'left',
-    });
-  },
+  repositories: service(),
 
   redirect() {
     if (!this.get('auth.signedIn')) {
@@ -28,7 +20,7 @@ export default Ember.Route.extend({
 
   setupController(controller, searchPhrase) {
     this._super(...arguments);
-    this.controllerFor('repos').activate('search', searchPhrase);
+    this.set('repositories.searchQuery', searchPhrase);
   },
 
   model(params) {
@@ -37,6 +29,6 @@ export default Ember.Route.extend({
 
   deactivate() {
     this._super(...arguments);
-    return this.controllerFor('repos').set('search', void 0);
+    this.set('repositories.searchQuery', undefined);
   },
 });

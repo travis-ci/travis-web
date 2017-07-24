@@ -35,7 +35,7 @@ module.exports = function (environment) {
     endpoints: {},
     intervals: {
       updateTimes: 1000,
-      searchDebounceRate: 500,
+      repositorySearchDebounceRate: 500,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,

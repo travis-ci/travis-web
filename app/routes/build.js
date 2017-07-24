@@ -1,6 +1,11 @@
+import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
+const { service } = Ember.inject;
+
 export default TravisRoute.extend({
+  tabStates: service(),
+
   titleToken(model) {
     return 'Build #' + (model.get('number'));
   },
@@ -21,6 +26,10 @@ export default TravisRoute.extend({
     const repo = this.controllerFor('repo');
     controller.set('build', model);
     return repo.activate('build');
+  },
+
+  activate() {
+    this.set('tabStates.mainTab', 'build');
   },
 
   model(params) {

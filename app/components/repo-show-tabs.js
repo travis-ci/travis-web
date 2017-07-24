@@ -1,11 +1,17 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
+  tabStates: service(),
+
   tagName: 'nav',
   classNames: ['travistab-nav'],
 
   config,
+
+  tab: Ember.computed.alias('tabStates.mainTab'),
 
   classCurrent: Ember.computed('tab', function () {
     if (this.get('tab') === 'current') {

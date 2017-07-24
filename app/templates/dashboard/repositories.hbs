@@ -9,7 +9,7 @@
       <h2 class="small-title">Starred repositories</h2>
       <ul class="repo-list">
       {{#each model.starredRepos as |repo|}}
-        {{dashboard-row repo=repo unstar=unstar}}
+        {{dashboard-row repo=repo star=star unstar=unstar}}
       {{else}}
         <div class="starred-empty">
           {{svg-jar 'icon-star' class="icon--big"}} You can keep track of your favorite repositories here once you start starring!

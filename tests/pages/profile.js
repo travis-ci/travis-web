@@ -43,7 +43,7 @@ export default PageObject.create({
 
     item: {
       name: text('h2'),
-      repositoryCount: text('p strong')
+      repositoryCount: text('.repository-count')
     }
   })
 });
