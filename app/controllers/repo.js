@@ -16,8 +16,6 @@ export default Ember.Controller.extend({
   repos: alias('reposController.repos'),
   currentUser: alias('auth.currentUser'),
 
-  classNames: ['repo'],
-
   build: Ember.computed.alias('buildController.build'),
   builds: Ember.computed.alias('buildsController.content'),
   job: Ember.computed.alias('jobController.job'),
@@ -127,7 +125,6 @@ export default Ember.Controller.extend({
   },
 
   connectTab(tab) {
-    tab === 'current' ? 'build' : tab;
     return this.set('tab', tab);
   },
 });
