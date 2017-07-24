@@ -177,6 +177,16 @@ test('change general settings', function (assert) {
   andThen(() => {
     assert.notOk(settingsPage.limitConcurrentBuilds.isActive, 'expected unlimited concurrent builds');
     assert.deepEqual(settingToRequestBody.maximum_number_of_builds, { 'setting.value': 0 });
+
+    // This will trigger a client-side error
+    server.patch(`/repo/${this.repository.id}/setting/:setting`, {}, 403);
+  });
+
+  settingsPage.buildPullRequests.toggle();
+
+  andThen(() => {
+    assert.equal(topPage.flashMessage, 'There was an error while saving your settings. Please try again.');
+    assert.notOk(settingsPage.buildPullRequests.isActive, 'expected build pull requests switch to have toggled back after failing to save');
   });
 });
 
