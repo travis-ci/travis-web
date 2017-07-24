@@ -83,7 +83,7 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
   });
 });
 
-skip('starring a repo', function (assert) {
+test('starring and unstarring a repo', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   dashboardPage.visit();
 
@@ -94,6 +94,12 @@ skip('starring a repo', function (assert) {
 
     andThen(() => {
       assert.equal(dashboardPage.starredRepos().count, 2, 'there are two starred repos');
+
+      dashboardPage.starredRepos(0).clickUnStarButton();
+
+      andThen(() => {
+        assert.equal(dashboardPage.starredRepos().count, 1, 'there are two starred repos');
+      });
     });
   });
 });
