@@ -7,7 +7,6 @@
     "raven-js": "3.10.0",
     "mousetrap": "~1.5.2",
     "js-emoji": "~3.0.2",
-    "emoji-data": "~2.4.4",
-    "waypoints": "4.0.1"
+    "emoji-data": "~2.4.4"
   }
 }

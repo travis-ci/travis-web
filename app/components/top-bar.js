@@ -1,6 +1,7 @@
-/* global HS, Waypoint */
+/* global HS */
 import Ember from 'ember';
 import computed, { alias } from 'ember-computed-decorators';
+import Waypoint from 'npm:waypoints';
 
 const { service } = Ember.inject;
 
@@ -104,6 +105,7 @@ export default Ember.Component.extend({
     if (Ember.testing) {
       return;
     }
+    window.topbar = this;
 
     const waypoint = new Waypoint.Inview({
       element: this.element,

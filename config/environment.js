@@ -41,7 +41,14 @@ module.exports = function (environment) {
     ajaxPolling: false,
     logLimit: 10000,
     emojiPrepend: '',
-    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json'
+    statusPageStatusUrl: 'https://pnpcptp8xh9k.statuspage.io/api/v2/status.json',
+
+    browserify: {
+      transform: [
+        ['browserify-shim', { global: true }],
+        ['waypoints', { global: true }]
+      ]
+    }
   };
 
   ENV.featureFlags = {
@@ -184,7 +191,7 @@ module.exports = function (environment) {
   ENV.contentSecurityPolicyMeta = false;
 
   ENV.cspSectionsWithApiHost.forEach((section) => {
-    ENV.contentSecurityPolicy[section] += " " + ENV.apiEndpoint;
+    ENV.contentSecurityPolicy[section] += ' ' + ENV.apiEndpoint;
   });
 
   return ENV;

@@ -22,6 +22,7 @@
     "broccoli-asset-rev": "^2.4.5",
     "broccoli-funnel": "^1.0.7",
     "broccoli-merge-trees": "^2.0.0",
+    "browserify-shim": "^3.8.14",
     "ember-ajax": "3.0.0",
     "ember-browserify": "^1.1.13",
     "ember-cli": "2.14.0",
@@ -73,10 +74,18 @@
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
     "morgan": "1.8.2",
-    "visibilityjs": "^1.2.4"
+    "visibilityjs": "^1.2.4",
+    "waypoints": "^4.0.1"
   },
   "engines": {
     "node": "6.9.5"
+  },
+  "browser": {
+    "waypoints": "./node_modules/waypoints/lib/noframework.waypoints.js",
+    "inview": "./node_modules/waypoints/lib/shortcuts/inview.js"
+  },
+  "browserify-shim": {
+    "waypoints": "global:Waypoint"
   },
   "private": true
 }
