@@ -40,7 +40,7 @@ test('it renders "Allowed Failures" version without a `required` property', func
   assert.equal(this.$().find('.jobs-list li').length, 1, 'there should be 1 job item');
 });
 
-const [job0, job1, job2, job3, job4, job5] = [{
+const [job0, job1, job2, job3, job4, job5, jobNotAllowedFailure] = [{
   allowFailure: true,
   state: 'failed',
   isFinished: true,
@@ -75,6 +75,12 @@ const [job0, job1, job2, job3, job4, job5] = [{
   state: 'errored',
   isFinished: true,
   number: '19.24',
+  stage: { id: '1' }
+}, {
+  allowFailure: false,
+  state: 'errored',
+  isFinished: true,
+  number: '19.25',
   stage: { id: '1' }
 }];
 
@@ -115,4 +121,9 @@ test('it renders allowed failures with nothing about continuation for the final 
     stage: { id: '2' }
   }], 1);
   assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of job 19.99.');
+});
+
+test('it renders allowed failures but nothing about continuation when having a not-allowed failure', function (assert) {
+  render(this, [job0, jobNotAllowedFailure]);
+  assert.equal(this.$().find('aside').text().trim(), 'Your build matrix was set to allow the failure of job 19.19.');
 });

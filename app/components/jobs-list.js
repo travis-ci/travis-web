@@ -55,6 +55,9 @@ export default Ember.Component.extend({
         const jobsAllowedToFail = this.get('filteredJobs').filterBy('allowFailure');
         const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
 
+        const failedJobsNotAllowedToFail = this.get('filteredJobs').rejectBy('allowFailure')
+          .filterBy('isFinished').rejectBy('state', 'passed');
+
         if (relevantJobs.length > 0) {
           let jobList;
 
@@ -73,7 +76,7 @@ export default Ember.Component.extend({
 
           let continuationText = '';
 
-          if (!this.get('stageIsLast')) {
+          if (!this.get('stageIsLast') && failedJobsNotAllowedToFail.length === 0) {
             continuationText = ' so we continued this build to the next stage';
           }
 
