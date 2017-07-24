@@ -44,5 +44,7 @@ export default PageObject.create({
 
       dismiss: clickable('.broadcast-close')
     }
-  })
+  }),
+
+  flashMessage: text('p.flash-message .message', { resetScope: true })
 });

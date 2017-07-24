@@ -19,9 +19,9 @@ export default Ember.Component.extend({
         this.get('flashes').success('Log has been successfully removed.');
       }, (xhr) => {
         if (xhr.status === 409) {
-          return this.get('flashes').error('Log can\'t be removed');
+          return this.get('flashes').error('Log can’t be removed');
         } else if (xhr.status === 401) {
-          return this.get('flashes').error('You don\'t have sufficient access to remove the log');
+          return this.get('flashes').error('You don’t have sufficient access to remove the log');
         } else {
           return this.get('flashes').error('An error occurred when removing the log');
         }

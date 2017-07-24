@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import buildPage from 'travis/tests/pages/build';
+import topPage from 'travis/tests/pages/top';
 
 moduleForAcceptance('Acceptance | builds/restart', {
   beforeEach() {
@@ -23,7 +24,7 @@ test('restarting build', function (assert) {
     .restartBuild();
 
   andThen(function () {
-    assert.equal(buildPage.notification, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
+    assert.equal(topPage.flashMessage, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
     assert.equal(buildPage.singleJobLogText, 'Hello log', 'shows log text of single build job');
   });
 });

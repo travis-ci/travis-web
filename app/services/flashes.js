@@ -4,10 +4,31 @@ import LimitedArray from 'travis/utils/limited-array';
 const { service } = Ember.inject;
 const { alias } = Ember.computed;
 
+const messageTypeToIcon = {
+  notice: 'icon-flag',
+  success: 'flash-success',
+  error: 'flash-error'
+};
+
+const messageTypeToPreamble = {
+  notice: 'Heads up!',
+  success: 'Hooray!',
+  error: 'Oh no!'
+};
+
+const messageTypeToCloseButton = {
+  notice: true,
+  success: false,
+  error: true
+};
+
 export default Ember.Service.extend({
   auth: service(),
   store: service(),
   currentUser: alias('auth.currentUser'),
+
+  // This changes when scrolling to adjust flash messages to fixed
+  topBarVisible: true,
 
   init() {
     this._super(...arguments);
@@ -48,10 +69,16 @@ export default Ember.Service.extend({
       type = Object.keys(msg)[0];
       msg = {
         type,
-        message: msg[type]
+        message: msg[type],
+        icon: messageTypeToIcon[type],
+        preamble: messageTypeToPreamble[type],
+        closeButton: messageTypeToCloseButton[type]
       };
       this.get('flashes').unshiftObject(msg);
-      this.removeFlash(msg);
+
+      if (!messageTypeToCloseButton[type]) {
+        this.removeFlash(msg);
+      }
     }
     return results;
   },

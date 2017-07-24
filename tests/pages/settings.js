@@ -14,8 +14,6 @@ let {
 export default PageObject.create({
   visit: visitable(':organization/:repo/settings'),
 
-  notification: text('p.flash-message'),
-
   autoCancellationSection: {
     scope: 'section.auto-cancellation',
     exists: isVisible()

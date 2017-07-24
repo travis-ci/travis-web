@@ -67,6 +67,9 @@ module.exports = function () {
   app.import('bower_components/js-emoji/demo/emoji.css');
   app.import('bower_components/js-emoji/lib/emoji.js');
 
+  app.import('bower_components/waypoints/lib/jquery.waypoints.js');
+  app.import('bower_components/waypoints/lib/shortcuts/inview.js');
+
   const emojiAssets = new Funnel('bower_components/emoji-data/img-apple-64', {
     destDir: '/images/emoji'
   });
