@@ -6,9 +6,9 @@ const { service } = Ember.inject;
 export default TravisRoute.extend({
   auth: service(),
 
-  beforeModel() {
-    if (!Ember.isEmpty(this.store.peekAll('repo')) || !this.get('auth.signedIn')) {
-      this.transitionTo('/');
-    }
-  },
+  // beforeModel() {
+  //   if (!Ember.isEmpty(this.store.peekAll('repo')) || !this.get('auth.signedIn')) {
+  //     this.transitionTo('/');
+  //   }
+  // },
 });

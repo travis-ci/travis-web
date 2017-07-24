@@ -91,8 +91,9 @@ export default Ember.Component.extend({
 
   viewOwned: task(function* () {
     const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
+    const onIndexPage = this.get('router.currentRouteName') === 'index';
 
-    if (this.get('auth.signedIn') && Ember.isEmpty(ownedRepositories)) {
+    if (this.get('auth.signedIn') && Ember.isEmpty(ownedRepositories) && onIndexPage) {
       this.get('router').transitionTo('getting_started');
     }
   }),
