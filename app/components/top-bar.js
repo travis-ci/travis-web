@@ -73,10 +73,6 @@ export default Ember.Component.extend({
     helpscoutTrigger() {
       HS.beacon.open();
       return false;
-    },
-
-    triggerFlash(type) {
-      this.get('flashes')[type](`A flash of type ${type}`);
     }
   },
 
