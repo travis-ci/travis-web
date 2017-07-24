@@ -4,8 +4,7 @@ moduleFor('service:flashes', 'Unit | Service | flashes', {
   needs: ['service:auth']
 });
 
-// FIXME is this ridiculous…? 🤔
-
+// This strips the extra flash information (icon, close button presence, etc) and compares what matters.
 function subsetFlashObject(o) {
   return {
     message: o.message,
