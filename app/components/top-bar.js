@@ -99,7 +99,7 @@ export default Ember.Component.extend({
   },
 
   didInsertElement() {
-    const self = this; // lol
+    const component = this; // Not pleasant, but I can’t find a better way.
 
     if (Ember.testing) {
       return;
@@ -109,13 +109,13 @@ export default Ember.Component.extend({
       element: this.element,
       exited() {
         Ember.run(() => {
-          self.get('flashes').set('topBarVisible', false);
+          component.get('flashes').set('topBarVisible', false);
         });
       },
 
       enter() {
         Ember.run(() => {
-          self.get('flashes').set('topBarVisible', true);
+          component.get('flashes').set('topBarVisible', true);
         });
       }
     });
