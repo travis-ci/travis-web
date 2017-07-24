@@ -68,6 +68,7 @@ test('the home page shows running tab in pro version', (assert) => {
     .clickSidebarRunningTab();
 
   andThen(() => {
+    assert.equal(sidebarPage.sidebarRunningTabText, 'Running (1/1)', 'running tab correctly shows number of started/queued jobs');
     assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running repositories');
   });
   percySnapshot(assert);

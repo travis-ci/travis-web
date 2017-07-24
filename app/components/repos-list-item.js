@@ -9,11 +9,6 @@ export default Ember.Component.extend(Polling, {
   tagName: 'li',
   pollModels: 'repo',
   classNames: ['repo'],
-  classNameBindings: ['selected'],
-
-  selected: Ember.computed('selectedRepo', function () {
-    return this.get('repo') === this.get('selectedRepo');
-  }),
 
   color: Ember.computed('repo.currentBuild.state', function () {
     return colorForState(this.get('repo.currentBuild.state'));

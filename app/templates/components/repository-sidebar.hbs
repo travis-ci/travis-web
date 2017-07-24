@@ -1,7 +1,12 @@
 <div class="search search--sidebar">
   <div class="search-inner">
-      {{input id="travis-search" value=search placeholder="Search all repositories" key-up=(perform showSearchResults)}}
-      <label for="travis-search">{{svg-jar 'icon-search' class="icon"}}</label>
+    {{input
+      id="travis-search"
+      value=(readonly repositories.searchQuery)
+      placeholder="Search all repositories"
+      key-up="onQueryChange"
+    }}
+    <label for="travis-search">{{svg-jar 'icon-search' class="icon"}}</label>
   </div>
 </div>
 
@@ -23,10 +28,10 @@
   </div>
 {{else}}
   <div class="travistab-body sidebar-list">
-    {{#if isLoaded}}
-      {{repos-list repos=repos selectedRepo=selectedRepo}}
-    {{else}}
+    {{#if repositories.loadingData}}
       {{loading-indicator center=true}}
+    {{else}}
+      {{repos-list repos=repositoryResults}}
     {{/if}}
   </div>
 {{/if}}

@@ -1,6 +1,12 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Mixin.create({
+  tabStates: service(),
+
+  tab: Ember.computed.alias('tabStates.mainTab'),
+
   showMore() {
     const id = this.get('repo.id'),
       buildsLength = this.get('builds.length');

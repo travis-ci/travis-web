@@ -45,6 +45,7 @@ test('view and cancel pull requests', function (assert) {
     committer_name: this.currentUser.name,
     committer_email: this.currentUser.email,
   });
+
   pullRequestBuild.save();
 
   server.create('job', {

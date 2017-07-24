@@ -7,13 +7,14 @@ const { alias } = Ember.computed;
 
 export default Ember.Controller.extend({
   updateTimesService: service('updateTimes'),
+  repositories: service(),
   popup: service(),
+  tabStates: service(),
 
   jobController: controller('job'),
   buildController: controller('build'),
   buildsController: controller('builds'),
-  reposController: controller('repos'),
-  repos: alias('reposController.repos'),
+  repos: alias('repositories.accessible'),
   currentUser: alias('auth.currentUser'),
 
   classNames: ['repo'],
@@ -21,14 +22,6 @@ export default Ember.Controller.extend({
   build: Ember.computed.alias('buildController.build'),
   builds: Ember.computed.alias('buildsController.content'),
   job: Ember.computed.alias('jobController.job'),
-
-  reset() {
-    this.set('repo', null);
-  },
-
-  isEmpty: Ember.computed('repos.isLoaded', 'repos.length', function () {
-    return this.get('repos.isLoaded') && this.get('repos.length') === 0;
-  }),
 
   init() {
     this._super(...arguments);
@@ -51,53 +44,15 @@ export default Ember.Controller.extend({
 
   activate(action) {
     this.stopObservingLastBuild();
-    return this[('view_' + action).camelize()]();
-  },
 
-  viewIndex() {
-    this.observeLastBuild();
-    return this.connectTab('current');
-  },
+    const observesLastBuild = ['index', 'current'];
 
-  viewCurrent() {
-    this.observeLastBuild();
-    return this.connectTab('current');
-  },
-
-  viewBuilds() {
-    return this.connectTab('builds');
-  },
-
-  viewPullRequests() {
-    return this.connectTab('pull_requests');
-  },
-
-  viewBranches() {
-    return this.connectTab('branches');
-  },
-
-  viewBuild() {
-    return this.connectTab('build');
-  },
-
-  viewJob() {
-    return this.connectTab('job');
-  },
-
-  viewRequests() {
-    return this.connectTab('requests');
-  },
-
-  viewCaches() {
-    return this.connectTab('caches');
-  },
-
-  viewRequest() {
-    return this.connectTab('request');
-  },
-
-  viewSettings() {
-    return this.connectTab('settings');
+    if (observesLastBuild.includes(action)) {
+      this.observeLastBuild();
+      this.set('tabStates.mainTab', 'current');
+    } else {
+      this.set('tabStates.mainTab', action);
+    }
   },
 
   currentBuildDidChange() {
@@ -124,10 +79,5 @@ export default Ember.Controller.extend({
   observeLastBuild() {
     this.currentBuildDidChange();
     return this.addObserver('repo.currentBuild', this, 'currentBuildDidChange');
-  },
-
-  connectTab(tab) {
-    tab === 'current' ? 'build' : tab;
-    return this.set('tab', tab);
   },
 });
