@@ -19,30 +19,37 @@
   {{/if}}
     <ul class="list-icon">
       <li>
-        <a class="commit-commit" title="See the commit on GitHub" href={{urlGithubCommit}}>
-          {{svg-jar 'icon-github' class="icon"}}
-          <span class="label-align inner-underline">Commit {{format-sha commit.sha}}</span></a>
+        {{#external-link-to title="See the commit on GitHub" href=urlGithubCommit}}
+          {{svg-jar 'icon-commit' class="icon"}}
+          <span class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
+          {{svg-jar 'icon-external-link' class="icon"}}
+        {{/external-link-to}}
       </li>
       {{#if displayCompare}}
         <li>
           {{#if item.isPullRequest}}
-            <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
-              {{svg-jar 'icon-github' class="icon"}}
-              <span class="label-align inner-underline">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
+            {{#external-link-to title="See the commit on GitHub" href=item.commit.compareUrl}}
+              {{svg-jar 'icon-compare' class="icon"}}
+              <span class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
+              {{svg-jar 'icon-external-link' class="icon"}}
+            {{/external-link-to}}
           {{else}}
             {{#if item.commit.compareUrl}}
-            <a class="commit-compare" title="See the diff on GitHub" href={{item.commit.compareUrl}}>
-              {{svg-jar 'icon-github' class="icon"}}
-              <span class="label-align inner-underline">Compare {{short-compare-shas item.commit.compareUrl}}</span></a>
+              {{#external-link-to title="See the diff on GitHub" href=item.commit.compareUrl}}
+                {{svg-jar 'icon-compare' class="icon"}}
+                <span class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
+                {{svg-jar 'icon-external-link' class="icon"}}
+              {{/external-link-to}}
             {{/if}}
           {{/if}}
         </li>
       {{/if}}
       <li>
-        <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
-          {{svg-jar 'icon-github' class="icon"}}
+        {{#external-link-to href=urlGitHubBranch class="commit-branch-url" title="Look at the branch on GitHub"}}
+          {{svg-jar 'icon-branch' class="icon"}}
           <span class="label-align inner-underline">Branch {{build.branchName}}</span>
-        </a>
+          {{svg-jar 'icon-external-link' class="icon"}}
+        {{/external-link-to}}
       </li>
     </ul>
 
