@@ -50,6 +50,10 @@
           <span data-tooltip="View branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
         {{/external-link-to}}
+
+        {{#if item.isTag}}
+          it's a tag
+        {{/if}}
       </li>
     </ul>
 

@@ -24,6 +24,7 @@ export default Model.extend(DurationCalculations, {
   finishedAt: attr('string'),
   pullRequestNumber: attr('number'),
   pullRequestTitle: attr('string'),
+  tag: attr(),
   eventType: attr('string'),
   _config: attr(),
 
@@ -56,6 +57,11 @@ export default Model.extend(DurationCalculations, {
   @computed('jobs.[]')
   isMatrix(jobs) {
     return jobs.get('length') > 1;
+  },
+
+  @computed('tag')
+  isTag(tag) {
+    return Ember.isEmpty(tag);
   },
 
   @computed('state')

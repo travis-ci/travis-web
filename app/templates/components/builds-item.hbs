@@ -7,9 +7,13 @@
           <small>PR #{{build.pullRequestNumber}}</small>
         {{/link-to}}
       {{else}}
-        {{#link-to "build" build.repo build title=build.branchName}}
-          {{build.branchName}}
-        {{/link-to}}
+        {{#if build.isTag}}
+          {{build.tag}}
+        {{else}}
+          {{#link-to "build" build.repo build title=build.branchName}}
+            {{build.branchName}}
+          {{/link-to}}
+        {{/if}}
       {{/if}}
     </h2>
     {{#if build.isPullRequest}}

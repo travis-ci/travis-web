@@ -65,6 +65,11 @@ export default Ember.Component.extend({
     return this.get('externalLinks').githubBranch(slug, branchName);
   },
 
+  @computed('item.repo.slug', 'build.tag')
+  urlGitHubBranch(slug, tag) {
+    return this.get('externalLinks').githubTag(slug, tag);
+  },
+
   @computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix')
   buildState(jobState, buildState, isMatrix) {
     if (isMatrix) {
