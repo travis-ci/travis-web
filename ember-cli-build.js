@@ -57,6 +57,9 @@ module.exports = function () {
         'public/images/stroke-icons',
         'public/images/svg'
       ]
+    },
+    sassOptions: {
+      extensions: 'sass'
     }
   });
 
