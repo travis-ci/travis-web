@@ -140,6 +140,13 @@ export default {
 
       ]
     },
+    "source_unknown": {
+      "status": 400,
+      "default_message": "source unknown",
+      "additional_attributes": [
+
+      ]
+    },
     "unprocessable_entity": {
       "status": 422,
       "default_message": "request unable to be processed due to semantic errors",
@@ -163,42 +170,6 @@ export default {
     }
   },
   "resources": {
-    "account": {
-      "@type": "resource",
-      "actions": {
-      },
-      "attributes": ["id","subscribed","educational","owner"],
-      "representations": {
-        "minimal": [
-          "id"
-        ],
-        "standard": [
-          "id",
-          "subscribed",
-          "educational",
-          "owner"
-        ]
-      },
-      "permissions": [
-        "read"
-      ]
-    },
-    "accounts": {
-      "@type": "resource",
-      "actions": {
-        "for_current_user": [
-          {
-            "@type": "template",
-            "request_method": "GET",
-            "uri_template": "/v3/accounts{?include}"
-          }
-        ]
-      },
-      "attributes": ["accounts"],
-      "representations": {
-        "standard": ["accounts"]
-      }
-    },
     "active": {
       "@type": "resource",
       "actions": {
@@ -252,7 +223,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","name","description","enabled","feedback_url","standard","staff_only"],
+      "attributes": ["id","name","description","enabled","feedback_url"],
       "representations": {
         "standard": [
           "id",
@@ -260,10 +231,6 @@ export default {
           "description",
           "enabled",
           "feedback_url"
-        ],
-        "staff_only": [
-          "standard",
-          "staff_only"
         ]
       }
     },
@@ -299,7 +266,7 @@ export default {
           }
         ]
       },
-      "attributes": ["name","repository","default_branch","exists_on_github","last_build"],
+      "attributes": ["name","repository","default_branch","exists_on_github","last_build","recent_builds"],
       "representations": {
         "minimal": [
           "name"
@@ -310,6 +277,9 @@ export default {
           "default_branch",
           "exists_on_github",
           "last_build"
+        ],
+        "additional": [
+          "recent_builds"
         ]
       }
     },
@@ -412,7 +382,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs"],
+      "attributes": ["id","number","state","duration","event_type","previous_state","pull_request_title","pull_request_number","started_at","finished_at","repository","branch","commit","jobs","stages","created_by"],
       "representations": {
         "minimal": [
           "id",
@@ -440,23 +410,9 @@ export default {
           "repository",
           "branch",
           "commit",
-          "jobs"
-        ],
-        "active": [
-          "id",
-          "number",
-          "state",
-          "duration",
-          "event_type",
-          "previous_state",
-          "pull_request_title",
-          "pull_request_number",
-          "started_at",
-          "finished_at",
-          "repository",
-          "branch",
-          "commit",
-          "jobs"
+          "jobs",
+          "stages",
+          "created_by"
         ]
       },
       "permissions": [
@@ -468,16 +424,23 @@ export default {
     "builds": {
       "@type": "resource",
       "actions": {
+        "for_current_user": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/builds{?include,limit,offset,sort_by}"
+          }
+        ],
         "find": [
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/repo/{repository.id}/builds{?branch.name,build.event_type,build.previous_state,build.state,event_type,include,limit,offset,previous_state,sort_by,state}"
+            "uri_template": "/v3/repo/{repository.id}/builds{?branch.name,build.created_by,build.event_type,build.previous_state,build.state,created_by,event_type,include,limit,offset,previous_state,sort_by,state}"
           },
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/repo/{repository.slug}/builds{?branch.name,build.event_type,build.previous_state,build.state,event_type,include,limit,offset,previous_state,sort_by,state}"
+            "uri_template": "/v3/repo/{repository.slug}/builds{?branch.name,build.created_by,build.event_type,build.previous_state,build.state,created_by,event_type,include,limit,offset,previous_state,sort_by,state}"
           }
         ]
       },
@@ -498,12 +461,12 @@ export default {
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/repo/{repository.id}/caches{?branch,caches.branch,caches.name,include,name}"
+            "uri_template": "/v3/repo/{repository.id}/caches{?branch,caches.branch,caches.match,include,match}"
           },
           {
             "@type": "template",
             "request_method": "GET",
-            "uri_template": "/v3/repo/{repository.slug}/caches{?branch,caches.branch,caches.name,include,name}"
+            "uri_template": "/v3/repo/{repository.slug}/caches{?branch,caches.branch,caches.match,include,match}"
           }
         ],
         "delete": [
@@ -521,12 +484,12 @@ export default {
       },
       "attributes": [
         "branch",
-        "name"
+        "match"
       ],
       "representations": {
         "standard": [
           "branch",
-          "name"
+          "match"
         ]
       }
     },
@@ -779,11 +742,13 @@ export default {
     "home": {
       "@type": "resource",
       "actions": {
-        "find": {
-          "@type": "template",
-          "request_method": "GET",
-          "uri_template": "/v3/"
-        }
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/"
+          }
+        ]
       },
       "attributes": [
         "config",
@@ -832,7 +797,7 @@ export default {
           }
         ]
       },
-      "attributes": ["id","number","state","started_at","finished_at","build","queue","repository","commit","owner"],
+      "attributes": ["id","number","state","started_at","finished_at","build","queue","repository","commit","owner","stage"],
       "representations": {
         "minimal": [
           "id"
@@ -847,19 +812,8 @@ export default {
           "queue",
           "repository",
           "commit",
-          "owner"
-        ],
-        "active": [
-          "id",
-          "number",
-          "state",
-          "started_at",
-          "finished_at",
-          "build",
-          "queue",
-          "repository",
-          "commit",
-          "owner"
+          "owner",
+          "stage"
         ]
       },
       "permissions": [
@@ -1060,7 +1014,25 @@ export default {
             "uri_template": "/v3/job/{job.id}/log"
           }
         ]
-      }
+      },
+      "attributes": ["id","content","log_parts"],
+      "representations": {
+        "minimal": [
+          "id"
+        ],
+        "standard": [
+          "id",
+          "content",
+          "log_parts"
+        ]
+      },
+      "permissions": [
+        "read",
+        "debug",
+        "cancel",
+        "restart",
+        "delete_log"
+      ]
     },
     "organization": {
       "@type": "resource",
@@ -1325,27 +1297,45 @@ export default {
         "create_cron",
         "create_env_var",
         "create_key_pair",
+        "delete_key_pair",
         "create_request"
       ]
     },
     "request": {
       "@type": "resource",
       "actions": {
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/repo/{repository.id}/request/{request.id}{?include}"
+          },
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/repo/{repository.slug}/request/{request.id}{?include}"
+          }
+        ]
       },
-      "attributes": ["id","repository","branch_name","commit","owner","created_at","result","message","event_type"],
+      "attributes": ["id","state","result","message","repository","branch_name","commit","builds","owner","created_at","event_type"],
       "representations": {
         "minimal": [
-          "id"
+          "id",
+          "state",
+          "result",
+          "message"
         ],
         "standard": [
           "id",
+          "state",
+          "result",
+          "message",
           "repository",
           "branch_name",
           "commit",
+          "builds",
           "owner",
           "created_at",
-          "result",
-          "message",
           "event_type"
         ]
       }
@@ -1406,25 +1396,112 @@ export default {
         "access_rights"
       ]
     },
+    "setting": {
+      "@type": "resource",
+      "actions": {
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/repo/{repository.id}/setting/{setting.name}{?include}"
+          },
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/repo/{repository.slug}/setting/{setting.name}{?include}"
+          }
+        ],
+        "update": [
+          {
+            "@type": "template",
+            "request_method": "PATCH",
+            "uri_template": "/v3/repo/{repository.id}/setting/{setting.name}",
+            "accepted_params": [
+              "setting.value"
+            ]
+          },
+          {
+            "@type": "template",
+            "request_method": "PATCH",
+            "uri_template": "/v3/repo/{repository.slug}/setting/{setting.name}",
+            "accepted_params": [
+              "setting.value"
+            ]
+          }
+        ]
+      },
+      "attributes": ["name","value"],
+      "representations": {
+        "standard": [
+          "name",
+          "value"
+        ],
+        "minimal": [
+          "name",
+          "value"
+        ]
+      }
+    },
+    "settings": {
+      "@type": "resource",
+      "actions": {
+        "for_repository": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/repo/{repository.id}/settings{?include}"
+          },
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/repo/{repository.slug}/settings{?include}"
+          }
+        ]
+      },
+      "attributes": ["settings"],
+      "representations": {
+        "standard": ["settings"]
+      }
+    },
     "stage": {
       "@type": "resource",
       "actions": {
       },
-      "attributes": [
-        "id",
-        "name",
-        "number",
-        "state",
-        "started_at",
-        "finished_at"
-      ],
+      "attributes": ["id","number","name","state","started_at","finished_at","jobs"],
       "representations": {
         "minimal": [
-          "id", "name", "number", "state", "started_at", "finished_at"
+          "id",
+          "number",
+          "name",
+          "state",
+          "started_at",
+          "finished_at"
         ],
         "standard": [
-          "id", "name", "number", "state", "started_at", "finished_at"
+          "id",
+          "number",
+          "name",
+          "state",
+          "started_at",
+          "finished_at",
+          "jobs"
         ]
+      }
+    },
+    "stages": {
+      "@type": "resource",
+      "actions": {
+        "find": [
+          {
+            "@type": "template",
+            "request_method": "GET",
+            "uri_template": "/v3/build/{build.id}/stages{?include}"
+          }
+        ]
+      },
+      "attributes": ["stages"],
+      "representations": {
+        "standard": ["stages"]
       }
     },
     "template": {
@@ -1487,77 +1564,6 @@ export default {
         "read",
         "sync"
       ]
-    },
-    "user_setting": {
-      "@type": "resource",
-      "actions": {
-        "find": [
-          {
-            "@type": "template",
-            "request_method": "GET",
-            "uri_template": "/v3/repo/{repository.id}/setting/{user_setting.name}{?include}"
-          },
-          {
-            "@type": "template",
-            "request_method": "GET",
-            "uri_template": "/v3/repo/{repository.slug}/setting/{user_setting.name}{?include}"
-          }
-        ],
-        "update": [
-          {
-            "@type": "template",
-            "request_method": "PATCH",
-            "uri_template": "/v3/repo/{repository.id}/setting/{user_setting.name}",
-            "accepted_params": [
-              "user_setting.value"
-            ]
-          },
-          {
-            "@type": "template",
-            "request_method": "PATCH",
-            "uri_template": "/v3/repo/{repository.slug}/setting/{user_setting.name}",
-            "accepted_params": [
-              "user_setting.value"
-            ]
-          }
-        ]
-      },
-      "attributes": ["name","value"],
-      "representations": {
-        "standard": [
-          "name",
-          "value"
-        ],
-        "minimal": [
-          "name",
-          "value"
-        ]
-      },
-      "permissions": [
-        "read",
-        "write"
-      ]
-    },
-    "user_settings": {
-      "@type": "resource",
-      "actions": {
-        "for_repository": [
-          {
-            "@type": "template",
-            "request_method": "GET",
-            "uri_template": "/v3/repo/{repository.id}/settings{?include}"
-          },
-          {
-            "@type": "template",
-            "request_method": "GET",
-            "uri_template": "/v3/repo/{repository.slug}/settings{?include}"
-          }
-        ]
-      },
-      "attributes": ["user_settings"],
-      "representations": {
-        "standard": ["user_settings"]
-      }
     }
   }
 }

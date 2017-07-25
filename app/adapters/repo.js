@@ -4,5 +4,5 @@ export default V3Adapter.extend({
   defaultSerializer: '-repo',
 
   includes: 'build.branch,repository.default_branch'
-    + ',repository.current_build,build.commit,build.stages'
+    + ',repository.current_build,build.commit'
 });
