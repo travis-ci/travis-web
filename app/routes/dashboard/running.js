@@ -3,6 +3,7 @@ let { service } = Ember.inject;
 
 export default Ember.Route.extend({
   starredRepos: service(),
+  auth: service(),
 
   redirect() {
     if (!this.get('features.dashboard')) {
@@ -13,7 +14,10 @@ export default Ember.Route.extend({
   model(params) {
     return Ember.RSVP.hash({
       starredRepos: this.get('starredRepos').fetch(),
-      runningJobs: ['foo', 'bar', 'baz']
+      runningJobs: this.store.query('job', {
+        runningOnly: true,
+        owner: this.auth.get('currentUser.login')
+      })
     });
   }
 });

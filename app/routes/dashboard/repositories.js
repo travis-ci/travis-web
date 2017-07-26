@@ -28,9 +28,6 @@ export default TravisRoute.extend({
         active: true,
         sort_by: 'current_build:desc',
         offset: params.offset
-      }),
-      accounts: this.store.query('account', {
-        all: true
       })
     });
   }
