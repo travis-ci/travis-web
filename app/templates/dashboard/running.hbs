@@ -13,15 +13,13 @@
   </section>
 
   <section class="dashboard-section dashboard-active">
-    <h2 class="small-title">All active repositories</h2>
+    <h2 class="small-title">Currently running jobs</h2>
     <ul class="repo-list">
-      {{#each filteredRepos as |repo|}}
-        {{dashboard-row repo=repo star=star unstar=unstar}}
+      {{#each model.runningJobs as |job|}}
+        {{job}}
       {{else}}
         {{no-repos}}
       {{/each}}
     </ul>
-
-    {{pagination-navigation collection=model.repos route="dashboard.repositories"}}
   </section>
 </div>

@@ -103,24 +103,5 @@ export default Ember.Controller.extend({
         }
       });
       return repos;
-    }),
-
-  selectedOrg: Ember.computed('account', function () {
-    let accounts = this.get('model.accounts');
-    let filter =  this.get('account');
-
-    let filteredAccount = accounts.filter(function (item) {
-      if (item.get('login') === filter) {
-        return item;
-      }
-    });
-    return filteredAccount[0];
-  }),
-
-  actions: {
-    selectOrg(org) {
-      let login = Ember.isBlank(org) ? undefined : org.get('login');
-      return this.set('account', login);
-    }
-  }
+    })
 });

@@ -17,6 +17,7 @@ const Router = Ember.Router.extend({
 Router.map(function () {
   this.route('dashboard', { resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
+    this.route('running');
   });
   this.route('features', { resetNamespace: true });
 
