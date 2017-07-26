@@ -18,17 +18,24 @@
   @extend %icon
   width: 18px
   height: 19px
-  
+
 .icon-stopwatch
   +colorSVG($cement-grey)
   @extend .icon--big
   vertical-align: middle
   margin-right: 1px
-  
+
 .icon svg,
 svg.icon,
 svg.icon--l
   +colorSVG($cement-grey)
+
+svg.icon.canceled
+  +colorSVG($cement-grey)
+svg.icon.passed
+  +colorSVG($turf-green)
+svg.icon.failed
+  +colorSVG($brick-red)
 
 .icon-hover
   &:hover,
@@ -48,7 +55,7 @@ svg.icon--l
   height: 19px
   vertical-align: middle
   margin-right: 1px
-  
+
 .icon-help
   +colorSVG($cement-grey)
   display: inline-block
