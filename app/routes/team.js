@@ -281,6 +281,13 @@ export default TravisRoute.extend({
         nationality: 'nigeria',
         country: 'germany',
         image: 'ola'
+      },
+      {
+        name: 'Rajesh Guleria',
+        title: "The People's Man",
+        nationality: 'india',
+        country: 'germany',
+        image: 'rajesh'
       }
     ];
   }
