@@ -32,16 +32,21 @@
   <h3 class="row-item {{build.state}}">
     {{#if build.id}}
       {{#link-to "build" build.repo build class="inner-underline"}}
-        {{request-icon event=build.eventType state=build.state}}
-        <span class="label-align inner-underline">#{{build.number}} {{build.state}}</span>
+        {{#if isCronJob}}
+          {{svg-jar 'icon-cronjobs' class=(concat build.state ' icon')}}
+        {{else}}
+          {{svg-jar 'icon-hash' class=(concat build.state ' icon')}}
+        {{/if}}
+        <span class="label-align inner-underline">{{build.number}} {{build.state}}</span>
       {{/link-to}}
     {{/if}}
   </h3>
   <div class="row-item row-commit">
-    <a href="{{urlGithubCommit}}" title="See the commit on GitHub">
-      {{svg-jar 'icon-github' class="icon"}}
+    {{#external-link-to href=urlGithubCommit title="See the commit on GitHub"}}
+      {{svg-jar 'icon-commit' class="icon"}}
       <span class="label-align">{{format-sha build.commit.sha}}</span>
-    </a>
+      {{svg-jar 'icon-external-link' class="icon"}}
+    {{/external-link-to}}
   </div>
 </div>
 
