@@ -17,6 +17,7 @@
       <ul>
         <li class="small-title">{{#link-to 'dashboard.repositories'}}Active repositories{{/link-to}}</li>
         <li class="small-title">{{#link-to 'dashboard.running'}}Currently running jobs{{/link-to}}</li>
+        <!-- ><li class="small-title">{{#link-to 'profile' title="Activate new repos on Travis CI"}}+{{/link-to}}</li> -->
       </ul>
     </nav>
 
@@ -29,7 +30,7 @@
           {{job.repo.slug}}
         </li>
       {{else}}
-        {{no-repos}}
+        <li>No active repos found</li>
       {{/each}}
     </ul>
   </section>
