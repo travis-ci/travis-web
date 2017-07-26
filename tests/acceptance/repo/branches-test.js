@@ -169,7 +169,7 @@ test('view branches', function (assert) {
     assert.equal(branchesPage.defaultBranch.name, 'primary');
     assert.ok(branchesPage.defaultBranch.passed, 'expected default branch last build to have passed');
     assert.equal(branchesPage.defaultBranch.buildCount, '3 builds');
-    assert.equal(branchesPage.defaultBranch.request, '#1919 passed');
+    assert.equal(branchesPage.defaultBranch.request, '1919 passed');
     assert.equal(branchesPage.defaultBranch.commitSha, '1234567');
     assert.equal(branchesPage.defaultBranch.committer, 'Sara Ahmed');
     assert.equal(branchesPage.defaultBranch.commitDate, 'about a year ago');
