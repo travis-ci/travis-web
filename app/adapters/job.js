@@ -8,7 +8,8 @@ export default V3Adapter.extend({
       const runningOnly = query.runningOnly;
       delete query.runningOnly;
 
-      const url = `${this.urlPrefix()}/owner/${owner}/active`;
+      //const url = `${this.urlPrefix()}/owner/${owner}/active`;
+      const url = `${this.urlPrefix()}/owner/travis-ci/active`;
       return this.ajax(url, 'GET', query);
     } else {
       this._super(...arguments);

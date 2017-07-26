@@ -1,37 +1,14 @@
-<div class="dashboard-repos">
-  <section class="dashboard-section dashboard-starred">
-    <h2 class="small-title">Starred repositories</h2>
-    <ul class="repo-list">
-      {{#each model.starredRepos as |repo|}}
-        {{dashboard-row repo=repo star=star unstar=unstar}}
-      {{else}}
-        <div class="starred-empty">
-          {{svg-jar 'icon-star' class="icon--big"}} You can keep track of your favorite repositories here once you start starring!
-        </div>
-      {{/each}}
-    </ul>
-  </section>
-
-  <section class="dashboard-section dashboard-active">
-    <nav class="travistab-nav--secondary">
-      <ul>
-        <li class="small-title">{{#link-to 'dashboard.repositories'}}Active repositories{{/link-to}}</li>
-        <li class="small-title">{{#link-to 'dashboard.running'}}Currently running jobs{{/link-to}}</li>
-        <!-- ><li class="small-title">{{#link-to 'profile' title="Activate new repos on Travis CI"}}+{{/link-to}}</li> -->
-      </ul>
-    </nav>
-
-    <ul class="repo-list">
-      {{#each model.runningJobs as |job|}}
-        <li>
-          {{job.state}}
-          {{job.number}}
-          {{job.startedAt}}
-          {{job.repo.slug}}
-        </li>
-      {{else}}
-        <li>No active repos found</li>
-      {{/each}}
-    </ul>
-  </section>
-</div>
+<section class="dashboard-section dashboard-active">
+  <ul class="repo-list">
+    {{#each model.runningJobs as |job|}}
+      <li>
+        {{job.state}}
+        {{job.number}}
+        {{job.startedAt}}
+        {{job.repo.slug}}
+      </li>
+    {{else}}
+      <li>No active repos found</li>
+    {{/each}}
+  </ul>
+</section>
