@@ -72,13 +72,21 @@
   <h3 class="build-status {{item.state}}">
     {{#if isJob}}
       {{#link-to "job" repo item}}
-        {{request-icon event=item.build.eventType state=item.state}}
-        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
+        {{#if isCron}}
+          {{svg-jar 'icon-cronjobs' class=(concat buildState ' icon')}}
+        {{else}}
+          {{svg-jar 'icon-hash' class=(concat buildState ' icon')}}
+        {{/if}}
+        <span class='inner-underline'>{{item.number}} {{humanize-state item.state}}</span>
       {{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
-        {{request-icon event=item.eventType state=buildState}}
-        <span class='inner-underline'>#{{item.number}} {{humanize-state buildState}}</span>
+        {{#if isCron}}
+          {{svg-jar 'icon-cronjobs' class=(concat buildState ' icon')}}
+        {{else}}
+          {{svg-jar 'icon-hash' class=(concat buildState ' icon')}}
+        {{/if}}
+        <span class='inner-underline'>{{item.number}} {{humanize-state buildState}}</span>
       {{/link-to}}
     {{/if}}
   </h3>
