@@ -13,7 +13,13 @@
   </section>
 
   <section class="dashboard-section dashboard-active">
-    <h2 class="small-title">Currently running jobs</h2>
+    <nav class="travistab-nav--secondary">
+      <ul>
+        <li class="small-title">{{#link-to 'dashboard.repositories'}}Active repositories{{/link-to}}</li>
+        <li class="small-title">{{#link-to 'dashboard.running'}}Currently running jobs{{/link-to}}</li>
+      </ul>
+    </nav>
+
     <ul class="repo-list">
       {{#each model.runningJobs as |job|}}
         <li>
