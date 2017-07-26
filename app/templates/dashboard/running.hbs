@@ -16,7 +16,12 @@
     <h2 class="small-title">Currently running jobs</h2>
     <ul class="repo-list">
       {{#each model.runningJobs as |job|}}
-        {{job}}
+        <li>
+          {{job.state}}
+          {{job.number}}
+          {{job.startedAt}}
+          {{job.repo.slug}}
+        </li>
       {{else}}
         {{no-repos}}
       {{/each}}
