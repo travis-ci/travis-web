@@ -1,13 +1,12 @@
 import Ember from 'ember';
-
-const { controller } = Ember.inject;
+import { controller } from 'ember-decorators/controller';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Controller.extend({
-  repoController: controller('repo'),
+  @controller('repo') repoController: null,
 
-  lintUrl: Ember.computed('repoController.repo.slug', function () {
-    var slug;
-    slug = this.get('repoController.repo.slug');
-    return 'https://lint.travis-ci.org/' + slug;
-  })
+  @computed('repoController.repo.slug')
+  lintUrl(slug) {
+    return `https://lint.travis-ci.org/${slug}`;
+  },
 });

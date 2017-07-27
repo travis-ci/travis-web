@@ -1,20 +1,24 @@
 import Ember from 'ember';
 import { task, taskGroup } from 'ember-concurrency';
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Controller.extend({
   queryParams: ['account', 'offset'],
   offset: 0,
-  flashes: service(),
-  ajax: service(),
+
+  @service flashes: null,
+  @service ajax: null,
 
   starring: taskGroup().drop(),
-  tasks: Ember.computed(function () {
+
+  @computed()
+  tasks() {
     return [
       this.get('star'),
       this.get('unstar')
     ];
-  }),
+  },
 
   star: task(function * (repo) {
     repo.set('starred', true);
@@ -105,17 +109,15 @@ export default Ember.Controller.extend({
       return repos;
     }),
 
-  selectedOrg: Ember.computed('account', function () {
-    let accounts = this.get('model.accounts');
-    let filter =  this.get('account');
-
+  @computed('model.accounts', 'account')
+  selectedOrg(accounts, account) {
     let filteredAccount = accounts.filter(function (item) {
-      if (item.get('login') === filter) {
+      if (item.get('login') === account) {
         return item;
       }
     });
     return filteredAccount[0];
-  }),
+  },
 
   actions: {
     selectOrg(org) {
