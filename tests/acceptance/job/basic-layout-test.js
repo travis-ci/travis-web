@@ -30,7 +30,7 @@ test('visiting job-view', function (assert) {
 
     assert.equal(jobPage.branch, 'acceptance-tests');
     assert.equal(jobPage.message, 'acceptance-tests This is a message');
-    assert.equal(jobPage.state, '#1234.1 passed');
+    assert.equal(jobPage.state, '1234.1 passed');
     assert.equal(jobPage.author, 'Mr T authored and committed');
 
     assert.equal(jobPage.log, 'Hello log');
