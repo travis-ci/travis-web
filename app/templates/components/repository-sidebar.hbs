@@ -16,7 +16,7 @@
   showMyRepositories=(action "showMyRepositories")
   showRunningJobs=(action "showRunningJobs")}}
 
-{{#if showRunningJobs}}
+{{#if shouldShowRunningJobs}}
   <div class="travistab-body sidebar-list">
     <div>
       {{running-jobs jobs=runningJobs}}
