@@ -1,21 +1,19 @@
 /* global jQuery */
 import Ember from 'ember';
 import config from 'travis/config/environment';
-let defaultOptions;
+import { service } from 'ember-decorators/service';
 
 jQuery.support.cors = true;
 
-defaultOptions = {
+let defaultOptions = {
   accepts: {
     json: 'application/json; version=2'
   }
 };
 
-const { service } = Ember.inject;
-
 export default Ember.Service.extend({
-  auth: service(),
-  features: service(),
+  @service auth: null,
+  @service features: null,
 
   get(url, callback, errorCallback) {
     return this.ajax(url, 'get', {

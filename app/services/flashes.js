@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import LimitedArray from 'travis/utils/limited-array';
-
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/computed';
+import { service } from 'ember-decorators/service';
 
 const messageTypeToIcon = {
   notice: 'icon-flag',
@@ -23,9 +23,10 @@ const messageTypeToCloseButton = {
 };
 
 export default Ember.Service.extend({
-  auth: service(),
-  store: service(),
-  currentUser: alias('auth.currentUser'),
+  @service auth: null,
+  @service store: null,
+
+  @alias('auth.currentUser') currentUser: null,
 
   // This changes when scrolling to adjust flash messages to fixed
   topBarVisible: true,
@@ -43,16 +44,14 @@ export default Ember.Service.extend({
     }));
   },
 
-  messages: Ember.computed('flashes.[]', 'flashes.length', function () {
-    let flashes, model;
-
-    flashes = this.get('flashes');
-    model = [];
-    if (flashes) {
+  @computed('flashes.[]')
+  messages(flashes) {
+    let model = [];
+    if (flashes.length) {
       model.pushObjects(flashes.toArray().reverse());
     }
     return model.uniq();
-  }),
+  },
 
   // TODO: when we rewrite all of the place where we use `loadFlashes` we could
   // rewrite this class and make the implementation better, because right now

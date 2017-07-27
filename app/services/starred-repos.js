@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import computed from 'ember-computed-decorators';
-
-let { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
 
 let StarredReposWrapper = Ember.ArrayProxy.extend({
   init() {
@@ -16,7 +15,7 @@ let StarredReposWrapper = Ember.ArrayProxy.extend({
 });
 
 export default Ember.Service.extend({
-  store: service(),
+  @service store: null,
 
   fetch() {
     let starredRepos = this.get('starredRepos');

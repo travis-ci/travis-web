@@ -3,16 +3,16 @@ import config from 'travis/config/environment';
 import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Service.extend({
-  router: service(),
-  flashes: service(),
-  store: service(),
-  storage: service(),
-  sessionStorage: service(),
-  ajax: service(),
+  @service router: null,
+  @service flashes: null,
+  @service store: null,
+  @service storage: null,
+  @service sessionStorage: null,
+  @service ajax: null,
+
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
 

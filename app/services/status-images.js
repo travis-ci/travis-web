@@ -1,11 +1,10 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Service.extend({
-  auth: service(),
-  features: service(),
+  @service auth: null,
+  @service features: null,
 
   imageUrl(slug, branch) {
     let prefix = `${location.protocol}//${location.host}`;

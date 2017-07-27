@@ -2,11 +2,11 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default DS.Store.extend({
-  auth: service(),
+  @service auth: null,
+
   defaultAdapter: 'application',
   adapter: 'application',
 
