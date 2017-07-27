@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import LimitedArray from 'travis/utils/limited-array';
 import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/computed';
+import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
 const messageTypeToIcon = {
