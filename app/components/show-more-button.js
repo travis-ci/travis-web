@@ -1,23 +1,24 @@
 import Ember from 'ember';
-
-const { alias } = Ember.computed;
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
   tagName: 'button',
   classNames: ['showmore-button', 'button'],
   classNameBindings: ['isLoading'],
   attributeBindings: ['disabled'],
-  disabled: alias('isLoading'),
 
-  buttonLabel: Ember.computed('isLoading', function () {
-    if (this.get('isLoading')) {
+  @alias('isLoading') disabled: null,
+
+  @computed('isLoading')
+  buttonLabel(loading) {
+    if (loading) {
       return 'Loading';
-    } else {
-      return 'Show more';
     }
-  }),
+    return 'Show more';
+  },
 
   click() {
     return this.attrs.showMore();
-  }
+  },
 });
