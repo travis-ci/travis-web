@@ -1,10 +1,10 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
-  flashes: service(),
+  @service flashes: null,
+
   tagName: 'a',
   classNames: ['switch'],
   classNameBindings: ['active', 'key'],

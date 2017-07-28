@@ -1,45 +1,50 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
-  tabStates: service(),
+  @service tabStates: null,
 
   tagName: 'nav',
   classNames: ['travistab-nav'],
 
   config,
 
-  tab: Ember.computed.alias('tabStates.mainTab'),
+  @alias('tabStates.mainTab') tab: null,
 
-  classCurrent: Ember.computed('tab', function () {
-    if (this.get('tab') === 'current') {
+  @computed('tab')
+  classCurrent(tab) {
+    if (tab === 'current') {
       return 'active';
     }
-  }),
+  },
 
-  classBuilds: Ember.computed('tab', function () {
-    if (this.get('tab') === 'builds') {
+  @computed('tab')
+  classBuilds(tab) {
+    if (tab === 'builds') {
       return 'active';
     }
-  }),
+  },
 
-  classPullRequests: Ember.computed('tab', function () {
-    if (this.get('tab') === 'pull_requests') {
+  @computed('tab')
+  classPullRequests(tab) {
+    if (tab === 'pull_requests') {
       return 'active';
     }
-  }),
+  },
 
-  classBranches: Ember.computed('tab', function () {
-    if (this.get('tab') === 'branches') {
+  @computed('tab')
+  classBranches(tab) {
+    if (tab === 'branches') {
       return 'active';
     }
-  }),
+  },
 
-  classBuild: Ember.computed('tab', function () {
-    let classes, tab;
-    tab = this.get('tab');
+  @computed('tab')
+  classBuild(tab) {
+    let classes;
     classes = [];
     if (tab === 'build') {
       classes.push('active');
@@ -48,35 +53,40 @@ export default Ember.Component.extend({
       classes.push('display-inline');
     }
     return classes.join(' ');
-  }),
+  },
 
-  classJob: Ember.computed('tab', function () {
-    if (this.get('tab') === 'job') {
+  @computed('tab')
+  classJob(tab) {
+    if (tab === 'job') {
       return 'active';
     }
-  }),
+  },
 
-  classRequests: Ember.computed('tab', function () {
-    if (this.get('tab') === 'requests') {
+  @computed('tab')
+  classRequests(tab) {
+    if (tab === 'requests') {
       return 'active';
     }
-  }),
+  },
 
-  classCaches: Ember.computed('tab', function () {
-    if (this.get('tab') === 'caches') {
+  @computed('tab')
+  classCaches(tab) {
+    if (tab === 'caches') {
       return 'active';
     }
-  }),
+  },
 
-  classSettings: Ember.computed('tab', function () {
-    if (this.get('tab') === 'settings') {
+  @computed('tab')
+  classSettings(tab) {
+    if (tab === 'settings') {
       return 'active';
     }
-  }),
+  },
 
-  classRequest: Ember.computed('tab', function () {
-    if (this.get('tab') === 'request') {
+  @computed('tab')
+  classRequest(tab) {
+    if (tab === 'request') {
       return 'active';
     }
-  })
+  },
 });

@@ -1,18 +1,17 @@
 import Ember from 'ember';
 import Polling from 'travis/mixins/polling';
 import colorForState from 'travis/utils/color-for-state';
-
-const { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend(Polling, {
-  router: service(),
   tagName: 'li',
   pollModels: 'repo',
   classNames: ['repo'],
 
-  color: Ember.computed('repo.currentBuild.state', function () {
-    return colorForState(this.get('repo.currentBuild.state'));
-  }),
+  @computed('repo.currentBuild.state')
+  color(buildState) {
+    return colorForState(buildState);
+  },
 
   scrollTop() {
     if (window.scrollY > 0) {
