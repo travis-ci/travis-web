@@ -1,32 +1,32 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
   tagName: 'section',
   classNames: ['jobs'],
   classNameBindings: ['stage:stage'],
 
-  jobTableId: Ember.computed(function () {
-    if (this.get('required')) {
+  @computed('required')
+  jobTableId(required) {
+    if (required) {
       return 'jobs';
-    } else {
-      return 'allowed_failure_jobs';
     }
-  }),
+    return 'allowed_failure_jobs';
+  },
 
-  filteredJobs: Ember.computed('build.jobs', 'jobs', function () {
-    const stage = this.get('stage');
-
+  @computed('jobs.[]', 'build.jobs.[]', 'stage')
+  filteredJobs(jobs, buildJobs, stage) {
     if (stage) {
-      return this.get('build.jobs').filterBy('stage.id', stage.get('id'));
-    } else {
-      return this.get('jobs');
+      return buildJobs.filterBy('stage.id', stage.get('id'));
     }
-  }),
+    return jobs;
+  },
 
-  stageState: Ember.computed.alias('stage.state'),
-  stageStateIcon: Ember.computed('stageState', function () {
-    const stageState = this.get('stageState');
+  @alias('stage.state') stageState: null,
 
+  @computed('stageState')
+  stageStateIcon(stageState) {
     const icon = {
       'passed': 'passed',
       'failed': 'failed',
@@ -39,49 +39,45 @@ export default Ember.Component.extend({
     } else {
       return undefined;
     }
-  }),
+  },
 
-  stageStateTitle: Ember.computed('stageState', function () {
-    const stageState = this.get('stageState');
+  @computed('stageState')
+  stageStateTitle(stageState) {
     return `Stage ${stageState}`;
-  }),
+  },
 
-  stageAllowFailuresText: Ember.computed(
-    'stage', 'filteredJobs.@each.state', 'filteredJobs.@each.allowFailure', 'stageIsLast',
-    function () {
-      if (this.get('stageIsLast') || !this.get('stage')) {
-        return false;
+  @computed('stage', 'stageIsLast', 'filteredJobs.@each.{state,allowFailure}')
+  stageAllowFailuresText(stage, stageIsLast, filteredJobs) {
+    if (stageIsLast || !stage) {
+      return false;
+    }
+
+    const jobsAllowedToFail = filteredJobs.filterBy('allowFailure');
+    const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
+
+    if (relevantJobs.length > 0) {
+      let jobList;
+
+      if (relevantJobs.length == 1) {
+        jobList = `job ${relevantJobs.mapBy('number')[0]}`;
+      } else if (relevantJobs.length == 2) {
+        jobList = `jobs ${relevantJobs.mapBy('number').join(' and ')}`;
+      } else if (relevantJobs.length > 5) {
+        jobList = 'multiple jobs';
       } else {
-        const jobsAllowedToFail = this.get('filteredJobs').filterBy('allowFailure');
-        const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
-
-        if (relevantJobs.length > 0) {
-          let jobList;
-
-          if (relevantJobs.length == 1) {
-            jobList = `job ${relevantJobs.mapBy('number')[0]}`;
-          } else if (relevantJobs.length == 2) {
-            jobList = `jobs ${relevantJobs.mapBy('number').join(' and ')}`;
-          } else if (relevantJobs.length > 5) {
-            jobList = 'multiple jobs';
-          } else {
-            const firstJobs = relevantJobs.slice(0, relevantJobs.length - 1);
-            const lastJob = relevantJobs[relevantJobs.length - 1];
-            jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, ` +
-              `and ${Ember.get(lastJob, ('number'))}`;
-          }
-          return 'Your build matrix was set to allow the failure of ' +
-                 `${jobList} so we continued this build to the next stage.`;
-        } else {
-          return false;
-        }
+        const firstJobs = relevantJobs.slice(0, relevantJobs.length - 1);
+        const lastJob = relevantJobs[relevantJobs.length - 1];
+        jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, ` +
+          `and ${Ember.get(lastJob, ('number'))}`;
       }
-    }),
+      return 'Your build matrix was set to allow the failure of ' +
+              `${jobList} so we continued this build to the next stage.`;
+    }
+    return false;
+  },
 
-  stageIsLast: Ember.computed('stages', 'stage', function () {
-    const stages = this.get('stages');
-    const stage = this.get('stage');
-
+  @computed('stages', 'stage')
+  stageIsLast(stages, stage) {
     return stage && stages && stages.indexOf(stage) == stages.length - 1;
-  })
+  },
 });

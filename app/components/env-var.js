@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
@@ -10,15 +12,15 @@ export default Ember.Component.extend({
   classNameBindings: ['envVar.public:is-public', 'envVar.newlyCreated:newly-created'],
   validates: { name: ['presence'] },
   actionType: 'Save',
-  showValueField: Ember.computed.alias('public'),
+  @alias('public') showValueField: null,
 
-  value: Ember.computed('envVar.value', 'envVar.public', function () {
-    if (this.get('envVar.public')) {
-      return this.get('envVar.value');
-    } else {
-      return '••••••••••••••••';
+  @computed('envVar.{value,public}')
+  value(value, isPublic) {
+    if (isPublic) {
+      return value;
     }
-  }),
+    return '••••••••••••••••';
+  },
 
   delete: task(function* () {
     yield this.get('envVar').destroyRecord().catch(({ errors }) => {
