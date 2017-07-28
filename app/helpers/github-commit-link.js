@@ -1,10 +1,9 @@
 import formatCommit from 'travis/utils/format-commit';
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Helper.extend({
-  externalLinks: service(),
+  @service externalLinks: null,
 
   compute([slug, commitSha]) {
     if (!commitSha) {
