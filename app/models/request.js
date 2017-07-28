@@ -1,7 +1,7 @@
-import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
+import { computed } from 'ember-decorators/object';
 
 export default Model.extend({
   created_at: attr(),
@@ -19,14 +19,16 @@ export default Model.extend({
   commit: belongsTo('commit', { async: true }),
   build: belongsTo('build', { async: true }),
 
-  isAccepted: Ember.computed('result', function () {
+  @computed('result', 'build.id')
+  isAccepted(result, buildId) {
     // For some reason some of the requests have a null result beside the fact that
     // the build was created. We need to look into it, but for now we can just assume
     // that if build was created, the request was accepted
-    return this.get('result') === 'accepted' || this.get('build.id');
-  }),
+    return result === 'accepted' || buildId;
+  },
 
-  isPullRequest: Ember.computed('event_type', function () {
-    return this.get('event_type') === 'pull_request';
-  })
+  @computed('event_type')
+  isPullRequest(eventType) {
+    return eventType === 'pull_request';
+  },
 });
