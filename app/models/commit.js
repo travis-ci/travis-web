@@ -2,11 +2,10 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Model.extend({
-  externalLinks: service(),
+  @service externalLinks: null,
 
   sha: attr(),
   branch: attr(),

@@ -9,11 +9,11 @@ import DurationAttributes from 'travis/mixins/duration-attributes';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
-  ajax: service(),
+  @service ajax: null,
+
   logId: attr(),
   queue: attr(),
   state: attr(),

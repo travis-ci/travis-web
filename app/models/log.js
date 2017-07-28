@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import { service } from 'ember-decorators/service';
 
 var Request = Ember.Object.extend({
   HEADERS: {
@@ -51,10 +52,8 @@ var Request = Ember.Object.extend({
   }
 });
 
-const { service } = Ember.inject;
-
 var LogModel = Ember.Object.extend({
-  features: service(),
+  @service features: null,
 
   version: 0,
   isLoaded: false,

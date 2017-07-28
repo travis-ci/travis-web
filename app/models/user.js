@@ -3,14 +3,12 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Model.extend({
-  ajax: service(),
-
+  @service ajax: null,
   // TODO: this totally not should be needed here
-  sessionStorage: service(),
+  @service sessionStorage: null,
 
   name: attr(),
   email: attr(),

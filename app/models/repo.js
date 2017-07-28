@@ -3,12 +3,12 @@ import Model from 'ember-data/model';
 import Ember from 'ember';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 const Repo = Model.extend({
+  @service ajax: null,
+
   permissions: attr(),
-  ajax: service(),
   slug: attr(),
   description: attr(),
   'private': attr('boolean'),
