@@ -1,17 +1,15 @@
 import Ember from 'ember';
+import { or } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
   tagName: 'a',
   classNames: ['travis-switch', 'switch'],
   classNameBindings: ['_active:active'],
 
-  _active: Ember.computed('target.active', 'active', function () {
-    return this.get('target.active') || this.get('active');
-  }),
+  @or('target.active', 'active') _active: null,
 
   click() {
-    let target;
-    target = this.get('target');
+    let target = this.get('target');
     if (this.get('toggleAutomatically') !== 'false') {
       if (target) {
         this.set('target.active', !this.get('target.active'));
