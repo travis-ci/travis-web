@@ -1,9 +1,8 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Mixin.create({
-  polling: service(),
+  @service polling: null,
 
   init() {
     this.set('currentPollModels', {});

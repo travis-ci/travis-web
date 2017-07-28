@@ -1,11 +1,10 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Route.extend({
-  auth: service(),
-  tabStates: service(),
-  repositories: service(),
+  @service auth: null,
+  @service tabStates: null,
+  @service repositories: null,
 
   redirect() {
     if (this.get('auth.signedIn')) {
