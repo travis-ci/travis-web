@@ -1,10 +1,9 @@
-import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
-  ajax: service(),
+  @service ajax: service(),
+
   needsAuth: true,
 
   setupController(/* controller*/) {
