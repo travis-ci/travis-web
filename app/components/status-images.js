@@ -1,26 +1,24 @@
 import Ember from 'ember';
 import Config from 'travis/config/environment';
-
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
-  popup: service(),
-  auth: service(),
-  externalLinks: service(),
-  statusImages: service(),
+  @service popup: null,
+  @service auth: null,
+  @service externalLinks: null,
+  @service statusImages: null,
 
-  popupName: alias('popup.popupName'),
+  @alias('popup.popupName') popupName: null,
 
   id: 'status-images',
   attributeBindings: ['id'],
   classNames: ['popup', 'status-images'],
   formats: ['Image URL', 'Markdown', 'Textile', 'Rdoc', 'AsciiDoc', 'RST', 'Pod', 'CCTray'],
 
-  branches: Ember.computed('popupName', 'repo', function () {
-    let repoId = this.get('repo.id'),
-      popupName = this.get('popupName');
-
+  @computed('popupName', 'repo.id')
+  branches(popupName, repoId) {
     if (popupName === 'status-images') {
       let array = Ember.ArrayProxy.create({ content: [] }),
         apiEndpoint = Config.apiEndpoint,
@@ -53,7 +51,7 @@ export default Ember.Component.extend({
       // if status images popup is not open, don't fetch any branches
       return [];
     }
-  }),
+  },
 
   actions: {
     close() {
@@ -61,12 +59,13 @@ export default Ember.Component.extend({
     }
   },
 
-  statusString: Ember.computed('format', 'repo.slug', 'branch', function () {
-    const format = this.get('format') || this.get('formats.firstObject');
-    const branch = this.get('branch') || 'master';
+  @computed('format', 'repo.slug', 'branch')
+  statusString(format, slug, branch) {
+    const imageFormat = format || this.get('formats.firstObject');
+    const gitBranch = branch || 'master';
 
-    return this.formatStatusImage(format, this.get('repo.slug'), branch);
-  }),
+    return this.formatStatusImage(imageFormat, slug, gitBranch);
+  },
 
   formatStatusImage(format, slug, branch) {
     switch (format) {
@@ -87,5 +86,5 @@ export default Ember.Component.extend({
       case 'CCTray':
         return this.get('statusImages').ccXml(slug, branch);
     }
-  }
+  },
 });

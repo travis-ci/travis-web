@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  statusImages: service(),
-  externalLinks: service(),
-  popup: service(),
+  @service statusImages: null,
+  @service externalLinks: null,
+  @service popup: null,
 
   @computed('repo.slug', 'repo.defaultBranch.name')
   statusImageUrl(slug, branchName) {
