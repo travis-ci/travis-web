@@ -1,14 +1,14 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
+  @service store: null,
+  @service raven: null,
+  @service flashes: null,
+
   classNames: ['form--envvar'],
   classNameBindings: ['nameIsBlank:form-error'],
-  store: service(),
-  raven: service(),
-  flashes: service(),
 
   isValid() {
     if (Ember.isBlank(this.get('name'))) {

@@ -1,15 +1,14 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
+  @service features: null,
+  @service flashes: null,
+
   tagName: 'a',
   classNames: ['switch'],
   classNameBindings: ['feature.enabled:active', 'disabled:disabled', 'disabled:inline-block'],
-
-  features: service(),
-  flashes: service(),
 
   click() {
     this.get('toggleFeatureTask').perform(this.get('feature'));
@@ -22,13 +21,12 @@ export default Ember.Component.extend({
         this.applyFeatureState(feature);
       });
     } catch (e) {
-      // eslint-disable-next-line
-      this.get('flashes').error('There was an error while switching the feature. Please try again.');
+      const errMsg = 'There was an error while switching the feature. Please try again.';
+      this.get('flashes').error(errMsg);
     }
   }),
 
   applyFeatureState(feature) {
-    // let { dasherizedName, enabled } = feature.getProperties('name', 'enabled');
     let { name, enabled } = feature.getProperties('name', 'enabled');
     if (enabled) {
       this.get('features').enable(name);

@@ -1,11 +1,10 @@
 import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import durationFrom from 'travis/utils/duration-from';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  externalLinks: service(),
+  @service externalLinks: null,
 
   tagName: 'section',
   classNames: ['build-header'],

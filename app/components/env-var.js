@@ -1,16 +1,16 @@
 import Ember from 'ember';
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
+  @service flashes: null,
+
   tagName: 'li',
   classNames: ['settings-envvar'],
   classNameBindings: ['envVar.public:is-public', 'envVar.newlyCreated:newly-created'],
   validates: { name: ['presence'] },
   actionType: 'Save',
   showValueField: Ember.computed.alias('public'),
-
-  flashes: service(),
 
   value: Ember.computed('envVar.value', 'envVar.public', function () {
     if (this.get('envVar.public')) {

@@ -1,20 +1,20 @@
 import Ember from 'ember';
 import colorForState from 'travis/utils/color-for-state';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
-  externalLinks: service(),
+  @service externalLinks: null,
 
   pollModels: 'job.build',
 
-  color: Ember.computed('job.state', function () {
-    return colorForState(this.get('job.state'));
-  }),
+  @computed('job.state')
+  color(jobState) {
+    return colorForState(jobState);
+  },
 
-  urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
-    const slug = this.get('repo.slug');
-    const sha = this.get('commit.sha');
+  @computed('repo.slug', 'commit.sha')
+  urlGithubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);
-  })
+  },
 });

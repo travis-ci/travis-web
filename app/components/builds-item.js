@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  externalLinks: service(),
+  @service externalLinks: null,
 
   tagName: 'li',
   classNameBindings: ['build.state'],

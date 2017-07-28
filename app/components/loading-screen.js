@@ -1,7 +1,6 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  randomLogo: service(),
+  @service randomLogo: null,
 });

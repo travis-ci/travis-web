@@ -1,11 +1,11 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
+  @service store: null,
+
   classNames: ['form--cron'],
-  store: service(),
 
   reset() {
     this.setProperties({

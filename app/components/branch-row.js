@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  router: service(),
-  permissions: service(),
-  externalLinks: service(),
+  @service router: null,
+  @service permissions: null,
+  @service externalLinks: null,
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],

@@ -1,10 +1,8 @@
-import Ember from 'ember';
 import V3Adapter from 'travis/adapters/v3';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default V3Adapter.extend({
-  auth: service(),
+  @service auth: null,
 
   buildURL(modelName, id, snapshot, requestType) {
     let url = this._super(...arguments);
