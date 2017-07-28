@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
@@ -6,16 +7,21 @@ export default Ember.Component.extend({
   classNames: ['pagination-navigation'],
   @alias('collection.pagination') pagination: null,
 
-  outerWindow: Ember.computed('outer', function () {
-    return this.get('outer') || 1;
-  }),
-  innerWindow: Ember.computed('inner', function () {
-    return this.get('inner') || 2;
-  }),
+  @computed('outer')
+  outerWindow(outer) {
+    return outer || 1;
+  },
 
-  pages: Ember.computed('pagination.numberOfPages', function () {
-    let numberOfPages = this.get('pagination.numberOfPages');
-    let thresholdDisplayAll = ((this.get('outerWindow') + 1) * 2) + (this.get('innerWindow') + 1);
+  @computed('inner')
+  innerWindow(inner) {
+    return inner || 2;
+  },
+
+  @computed('pagination.{numberOfPages,perPage,currentPage,offset}',
+            'innerWindow',
+            'outerWindow')
+  pages(numberOfPages, perPage, currentPage, offset, innerWindow, outerWindow) {
+    let thresholdDisplayAll = ((outerWindow + 1) * 2) + (innerWindow + 1);
     let pageArray = [];
 
     // display all pages if there is only a few
@@ -23,15 +29,11 @@ export default Ember.Component.extend({
       for (let i = 0; i < numberOfPages; i++) {
         pageArray.push({
           num: i + 1,
-          offset: this.get('pagination.perPage') * i
+          offset: perPage * i
         });
       }
     // else stack together pagination
     } else {
-      let currentPage = this.get('pagination.currentPage');
-      let currentOffset = this.get('pagination.offset');
-      let innerWindow = this.get('innerWindow');
-      let outerWindow = this.get('outerWindow');
       let innerHalf = Math.ceil(innerWindow / 2);
       let lowerInnerBoundary = currentPage - innerHalf;
       if (lowerInnerBoundary < 0) {
@@ -50,7 +52,7 @@ export default Ember.Component.extend({
         if (i !== currentPage) {
           pageArray.push({
             num: 1 + i,
-            offset: this.get('pagination.perPage') * i
+            offset: perPage * i
           });
         }
       }
@@ -65,7 +67,7 @@ export default Ember.Component.extend({
         if (i > lowerOuterBoundary) {
           pageArray.push({
             num: i,
-            offset: (this.get('pagination.perPage') * (i - 1))
+            offset: perPage * (i - 1)
           });
         }
       }
@@ -75,7 +77,7 @@ export default Ember.Component.extend({
         // current page
         pageArray.push({
           num: currentPage,
-          offset: currentOffset
+          offset,
         });
       }
 
@@ -84,7 +86,7 @@ export default Ember.Component.extend({
         if (i < upperOuterBoundary) {
           pageArray.push({
             num: i,
-            offset: (this.get('pagination.perPage') * (i - 1))
+            offset: perPage * (i - 1)
           });
         }
       }
@@ -99,7 +101,7 @@ export default Ember.Component.extend({
         if (!(i < currentPage)) {
           pageArray.push({
             num: i,
-            offset: (this.get('pagination.perPage') * (i - 1))
+            offset: perPage * (i - 1)
           });
         }
       }
@@ -110,5 +112,5 @@ export default Ember.Component.extend({
       });
     }
     return pageArray;
-  })
+  },
 });

@@ -1,17 +1,18 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['limit-concurrent-builds'],
 
-  description: Ember.computed('enabled', function () {
-    let description;
-    description = 'Limit concurrent jobs';
-    if (this.get('enabled')) {
+  @computed('enabled')
+  description(enabled) {
+    let description = 'Limit concurrent jobs';
+    if (enabled) {
       description += '  ';
     }
     return description;
-  }),
+  },
 
   limitChanged(value) {
     let limit, repo, savingFinished;
