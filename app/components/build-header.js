@@ -23,13 +23,13 @@ export default Ember.Component.extend({
     }
   },
 
-  isJob: Ember.computed('item', function () {
-    if (this.get('item.build')) {
+  @computed('item.build')
+  isJob(build) {
+    if (build) {
       return true;
-    } else {
-      return false;
     }
-  }),
+    return false;
+  },
 
   @computed('isJob')
   build(isJob) {
@@ -40,20 +40,15 @@ export default Ember.Component.extend({
     }
   },
 
-  displayCompare: Ember.computed('item.eventType', function () {
-    let eventType = this.get('item.eventType');
-    if (eventType === 'api' || eventType === 'cron') {
-      return false;
-    } else {
-      return true;
-    }
-  }),
+  @computed('item.eventType')
+  displayCompare(eventType) {
+    return !['api', 'cron'].includes(eventType);
+  },
 
-  urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
-    const slug = this.get('repo.slug');
-    const sha = this.get('commit.sha');
+  @computed('repo.slug', 'commit.sha')
+  urlGithubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);
-  }),
+  },
 
   @computed('item.startedAt', 'item.finishedAt')
   elapsedTime(startedAt, finishedAt) {
