@@ -4,6 +4,8 @@ import Ember from 'ember';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { oneWay } from 'ember-decorators/object/computed';
 
 const Repo = Model.extend({
   @service ajax: null,
@@ -15,36 +17,39 @@ const Repo = Model.extend({
   githubLanguage: attr(),
   active: attr(),
   owner: attr(),
-  ownerType: Ember.computed.oneWay('owner.@type'),
   name: attr(),
   starred: attr('boolean'),
+
+  @oneWay('owner.@type') ownerType: null,
+
+  @oneWay('currentBuild.finishedAt') currentBuildFinishedAt: null,
+  @oneWay('currentBuild.id') currentBuildId: null,
+
+
   defaultBranch: belongsTo('branch', {
     async: false
   }),
   currentBuild: belongsTo('build', {
     async: true, inverse: 'repoCurrentBuild'
   }),
-  currentBuildFinishedAt: Ember.computed.oneWay('currentBuild.finishedAt'),
-  currentBuildId: Ember.computed.oneWay('currentBuild.id'),
 
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
     return this.store.recordForId('ssh_key', this.get('id'));
   },
 
-  envVars: Ember.computed(function () {
-    var id;
-    id = this.get('id');
+  @computed('id')
+  envVars(id) {
     return this.store.filter('env_var', {
       repository_id: id
     }, function (v) {
       return v.get('repo.id') === id;
     });
-  }),
+  },
 
-  builds: Ember.computed(function () {
-    var array, builds, id;
-    id = this.get('id');
+  @computed('id')
+  builds(id) {
+    var array, builds;
     builds = this.store.filter('build', {
       event_type: ['push', 'api', 'cron'],
       repository_id: id
@@ -59,18 +64,17 @@ const Repo = Model.extend({
     array.load(builds);
     array.observe(builds);
     return array;
-  }),
+  },
 
-  pullRequests: Ember.computed(function () {
-    var array, builds, id;
-    id = this.get('id');
-    builds = this.store.filter('build', {
+  @computed('id')
+  pullRequests(id) {
+    const builds = this.store.filter('build', {
       event_type: 'pull_request',
       repository_id: id
     }, function (b) {
       return b.get('repo.id') + '' === id + '' && b.get('eventType') === 'pull_request';
     });
-    array = ExpandableRecordArray.create({
+    const array = ExpandableRecordArray.create({
       type: 'build',
       content: Ember.A([])
     });
@@ -78,18 +82,17 @@ const Repo = Model.extend({
     id = this.get('id');
     array.observe(builds);
     return array;
-  }),
+  },
 
-  crons: Ember.computed(function () {
-    var array, builds, id;
-    id = this.get('id');
-    builds = this.store.filter('build', {
+  @computed('id')
+  crons(id) {
+    const builds = this.store.filter('build', {
       event_type: 'cron',
       repository_id: id
     }, function (b) {
       return b.get('repo.id') + '' === id + '' && b.get('eventType') === 'cron';
     });
-    array = ExpandableRecordArray.create({
+    const array = ExpandableRecordArray.create({
       type: 'build',
       content: Ember.A([])
     });
@@ -97,34 +100,36 @@ const Repo = Model.extend({
     id = this.get('id');
     array.observe(builds);
     return array;
-  }),
+  },
 
-  branches: Ember.computed(function () {
-    var id = this.get('id');
+  @computed('id')
+  branches(id) {
     return this.store.filter('branch', {
       repository_id: id
     }, function (b) {
       return b.get('repoId') === id;
     });
-  }),
+  },
 
-  cronJobs: Ember.computed(function () {
-    var id = this.get('id');
+  @computed('id')
+  cronJobs(id) {
     return this.store.filter('cron', {
       repository_id: id
     }, function (cron) {
       return cron.get('branch.repoId') === id;
     });
-  }),
+  },
 
-  stats: Ember.computed('slug', function () {
-    if (this.get('slug')) {
-      return this.get('_stats') || Ember.$.get('https://api.github.com/repos/' + this.get('slug'), (data) => {
+  // TODO: Stop performing a `set` as part of the cp!
+  @computed('slug', '_stats')
+  stats(slug, stats) {
+    if (slug) {
+      return stats || Ember.$.get(`https://api.github.com/repos/${slug}`, (data) => {
         this.set('_stats', data);
         return this.notifyPropertyChange('stats');
       }) && {};
     }
-  }),
+  },
 
   updateTimes() {
     let currentBuild = this.get('currentBuild');
