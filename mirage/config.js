@@ -243,6 +243,10 @@ export default function () {
 
   this.get('/jobs');
 
+  this.get('/build/:id/stages', (schema, request) => {
+    return schema.stages.where({ buildId: request.params.id });
+  });
+
   this.get('/build/:id');
 
   this.post('/build/:id/restart', (schema, request) => {
