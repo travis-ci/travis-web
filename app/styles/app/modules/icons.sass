@@ -8,12 +8,6 @@
   height: 16px
   margin-right: 4px
 
-.icon--l
-  @extend %icon
-  width: 30px
-  height: 30px
-  margin-right: 7px
-
 .icon--big
   @extend %icon
   width: 18px
@@ -26,8 +20,7 @@
   margin-right: 1px
 
 .icon svg,
-svg.icon,
-svg.icon--l
+svg.icon
   +colorSVG($cement-grey)
 
 svg.icon.canceled
@@ -84,3 +77,6 @@ svg.icon.received,
     content: "+"
     font-size: 16px
     color: $asphalt-grey
+
+.icon-octocat
+  +colorSVGFill(rgba(black, .2))

@@ -1,8 +1,8 @@
 <article class="repo-header">
   <header>
     <h1 class="repo-title">{{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
-      <a href="{{urlGithub}}" title="{{repo.name}} on GitHub" class="repo-gh">
-        {{svg-jar 'icon-repooctocat'}}</a>
+      <a href="{{urlGithub}}" title="{{repo.name}} on GitHub" class="repo-link-gh">
+        {{svg-jar 'icon-repooctocat' class="icon-octocat"}}</a>
       <div class="repo-badge">
         <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "statusImages"}}>
           <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
