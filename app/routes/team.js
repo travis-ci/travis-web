@@ -288,6 +288,14 @@ export default TravisRoute.extend({
         nationality: 'india',
         country: 'germany',
         image: 'rajesh'
+      },
+      {
+        name: 'Katherine Daniels',
+        title: "Ops Witch",
+        handle: 'beerops',
+        nationality: 'usa',
+        country: 'usa',
+        image: 'katherine'
       }
     ];
   }
