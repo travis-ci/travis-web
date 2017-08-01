@@ -4,6 +4,7 @@ import Ember from 'ember';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
+import FilteredArrayManager from 'travis/utils/filtered-array-manager';
 
 export default DS.Store.extend({
   @service auth: null,
@@ -13,7 +14,17 @@ export default DS.Store.extend({
 
   init() {
     this._super(...arguments);
+    this.filteredArraysManager = FilteredArrayManager.create({ store: this });
     return this.set('pusherEventHandlerGuards', {});
+  },
+
+  filter(modelName, queryParams, filterFunction, dependencies) {
+    if (!dependencies) {
+      // just do what filter would normally do
+      return this._super(...arguments);
+    } else {
+      return this.filteredArraysManager.fetchArray(...arguments);
+    }
   },
 
   paginated() {
