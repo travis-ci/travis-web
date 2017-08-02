@@ -29,7 +29,12 @@ export default TravisRoute.extend({
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',
-        offset: params.offset
+        offset: params.offset,
+        limit: 10
+      }, {
+        filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
+        sort: 'currentBuildId:desc',
+        dependencies: ['active', 'isCurrentUserACollaborator']
       }),
       accounts: this.store.query('account', {
         all: true

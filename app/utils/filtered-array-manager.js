@@ -77,7 +77,8 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     let promise = new Ember.RSVP.Promise((resolve, reject) => {
       // TODO: think about error handling, at the moment it will just pass the
       // reject from store.query
-      this.get('store').query(this.get('modelName'), queryParams).then(() => {
+      this.get('store').query(this.get('modelName'), queryParams).then((queryResult) => {
+        array.set('queryResult', queryResult);
         resolve(array);
       }, reject)
     });
