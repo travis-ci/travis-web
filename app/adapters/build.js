@@ -7,5 +7,15 @@ export default V3Adapter.extend({
     if (type === 'query' && query.repository_id) {
       return `repo/${query.repository_id}`;
     }
+  },
+
+  query(store, type, query) {
+    if (query.active && query.active === true) {
+      const owner = query.owner;
+      delete query.owner;
+      delete query.active;
+      const url = `${this.urlPrefix()}/owner/${owner}/active`;
+      return this.ajax(url, 'GET', query);
+    }
   }
 });

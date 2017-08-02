@@ -1,4 +1,9 @@
-Running!
-
-{{outlet}}
-q
+<ul>
+{{#each model as |build|}}
+  {{#each build.jobs as |job|}}
+    {{running-job job=job}}
+  {{/each}}
+{{else}}
+There are no running builds right now
+{{/each}}
+</ul>

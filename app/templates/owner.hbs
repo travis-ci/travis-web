@@ -4,11 +4,11 @@
       {{user-avatar url=owner.avatar name=owner.name size=126}}
     </div>
     <div class="owner-info">
-      <h1 class="owner-title">{{owner.name}}</h1>
+      <h1 class="owner-title">{{model.name}}</h1>
       <p class="owner-handle">
         {{svg-jar 'icon-repooctocat' class="icon--l"}}
-        <a href={{githubProfile}} title="{{owner.name}} on GitHub">
-          <span class="label-align">{{owner.login}}</span></a></p>
+        <a href={{githubProfile}} title="{{model.name}} on GitHub">
+          <span class="label-align">{{model.login}}</span></a></p>
       {{!-- {{owner-sync-button owner=owner}} --}}
     </div>
   </header>
@@ -16,9 +16,10 @@
   <div class="travistab">
     <nav class="travistab-nav--underline">
       <ul>
-        <li>{{#link-to "owner.repositories" owner.login}}Repositories{{/link-to}}</li>
-        <li>{{#link-to "owner.running" owner.login }}Job Queue{{/link-to}}</li>
+        <li>{{#link-to "owner.repositories"}}Repositories <span class="message-label badge">{{model.repositories.length}}</span>{{/link-to}}</li>
+        <li>{{#link-to "owner.running"}}Job Queue{{/link-to}}</li>
       </ul>
+
     </nav>
     <div class="travistab-body">
       {{outlet}}

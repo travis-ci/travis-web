@@ -49,6 +49,14 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     return this.get('repositorySlug');
   }),
 
+  repoOwner: Ember.computed('repositorySlug', function () {
+    return this.get('repositorySlug').split('/')[0];
+  }),
+
+  repoName: Ember.computed('repositorySlug', function () {
+    return this.get('repositorySlug').split('/')[1];
+  }),
+
   config: Ember.computed('_config', function () {
     let config = this.get('_config');
     if (config) {

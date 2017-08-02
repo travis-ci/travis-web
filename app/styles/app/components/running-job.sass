@@ -1,0 +1,54 @@
+// https://github.com/travis-ci/styleguide/blob/master/source/css/sass/components/dashboard/running-job.sass
+// https://github.com/travis-ci/styleguide/blob/master/source/css/sass/components/lists.sass
+
+
+.list-item
+  position: relative
+  padding: 1rem 1rem 1rem 1.7rem
+  border: solid 1px $pebble-grey
+  svg
+    margin-right: .3em
+
+  @media (min-width: 50em)
+    padding: 0.5rem 1rem 0.1rem 1.7rem
+    display: flex
+    flex-flow: row nowrap
+    justify-content: flex-start
+    align-items: baseline
+
+.list-element
+  margin: 0 0 .3em
+  font-size: 1rem
+  font-weight: 300
+  @media (min-width: 50em)
+    white-space: nowrap
+
+
+.dashboard-running-job
+
+  @media (min-width: 50em)
+    .list-element:nth-child(1)
+      flex: 1 1 33%
+
+    .list-element:nth-child(2)
+      flex: 1 0 8em
+
+    .list-element:nth-child(3)
+      flex: 1 0 20%
+
+    .list-element:last-child
+      flex: 0 0 16em
+
+  &.list-item
+    &:before
+      content: ""
+      position: absolute
+      top: 0
+      left: 0
+      display: block
+      width: 10px
+      height: 100%
+      background-color: $canary-yellow
+
+  .color
+    color: $dozer-yellow

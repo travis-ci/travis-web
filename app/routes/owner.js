@@ -8,6 +8,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
+    // return this.store.queryRecord('owner', { login: params.owner });
     var options = {
       headers: {
         'Travis-API-Version': '3'
@@ -21,11 +22,6 @@ export default TravisRoute.extend({
     let includes = '?include=organization.repositories,repository.default_branch,build.commit';
     let url = `${apiEndpoint}/owner/${owner}${includes}`;
     return Ember.$.ajax(url, options);
-  },
-
-  renderTemplate() {
-    Ember.$('body').attr('id', 'owner');
-    this._super(...arguments);
   },
 
   actions: {

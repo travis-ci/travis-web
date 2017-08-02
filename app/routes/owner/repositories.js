@@ -11,6 +11,7 @@ export default TravisRoute.extend({
   },
 
   model(params, transition) {
+    // return this.store.query('repo', { owner: params.owner });
     var options = {
       headers: {
         'Travis-API-Version': '3'

@@ -1,0 +1,25 @@
+<h2 class="list-element fadeout">
+  {{status-icon status=job.state}}
+  {{#link-to "owner" job.repo.owner}}{{job.repoOwner}}{{/link-to}} /
+  {{#link-to "repo" job.repo}}{{job.repoName}}{{/link-to}}
+</h2>
+<p class="list-element">
+  <a href="#" title="" class="color">
+    {{svg-jar 'icon-hash' class="icon"}}
+    <span class="link-underline label-align">{{job.number}}</span>
+  </a>
+</p>
+<p class="list-element fadeout">
+  {{svg-jar 'icon-stopwatch' class="icon"}}
+  <span class="label-align">Running for 2 min</span>
+</p>
+<div class="list-element">
+  <a href="#" title="" class="button">
+    {{svg-jar 'icon-build' class="icon"}}
+    <span class="label-align">View build</span>
+  </a>
+  <button type="button" class="button button--cancel">
+    {{svg-jar 'icon-failed' class="icon"}}
+    <span class="label-align">Cancel job</span>
+  </button>
+</div>
