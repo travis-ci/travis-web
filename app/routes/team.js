@@ -284,10 +284,18 @@ export default TravisRoute.extend({
       },
       {
         name: 'Rajesh Guleria',
-        title: "The People's Man",
+        title: 'The People\'s Man',
         nationality: 'india',
         country: 'germany',
         image: 'rajesh'
+      },
+      {
+        name: 'Katherine Daniels',
+        title: 'Ops Witch',
+        handle: 'beerops',
+        nationality: 'usa',
+        country: 'usa',
+        image: 'katherine'
       }
     ];
   }
