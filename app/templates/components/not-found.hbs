@@ -1,0 +1,14 @@
+<div class="missing-notice">
+  <figure class="page-graphic">
+    {{svg-jar 'barricade'}}
+  </figure>
+
+  <h2 class="page-title">We couldn't find the repository<br><span class="h2--red">{{slug}}</span></h2>
+  {{#if features.proVersion}}
+    <p class="">This repository may not exist
+      {{#unless auth.signedIn}}
+        or you may need to {{#link-to "auth" class="auth-button--white m-l-s"}}Sign in with GitHub{{/link-to}}
+      {{/unless}}
+    </p>
+  {{/if}}
+</div>
