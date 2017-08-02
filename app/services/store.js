@@ -5,6 +5,7 @@ import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promis
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import FilteredArrayManager from 'travis/utils/filtered-array-manager';
+import LivePaginatedCollectionsManager from 'travis/utils/live-paginated-collections-manager';
 
 export default DS.Store.extend({
   @service auth: null,
@@ -15,6 +16,7 @@ export default DS.Store.extend({
   init() {
     this._super(...arguments);
     this.filteredArraysManager = FilteredArrayManager.create({ store: this });
+    this.livePaginatedCollectionsManager = LivePaginatedCollectionsManager.create({ store: this });
     return this.set('pusherEventHandlerGuards', {});
   },
 
@@ -27,10 +29,15 @@ export default DS.Store.extend({
     }
   },
 
-  paginated() {
-    return PaginatedCollectionPromise.create({
-      content: this.query(...arguments)
-    });
+  paginated(modelName, queryParams, options) {
+    if (!queryParams.offset) {
+      // we're on the first page, live updates can be enabled
+      return  this.livePaginatedCollectionsManager.fetchCollection(...arguments);
+    } else {
+      return PaginatedCollectionPromise.create({
+        content: this.query(...arguments)
+      });
+    }
   },
 
   addPusherEventHandlerGuard(name, callback) {
