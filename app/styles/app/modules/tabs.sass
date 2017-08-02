@@ -36,7 +36,7 @@ $border-size: 2px
 
 .travistab-nav
   @extend %travistab-nav-base
-  
+
   li:not(:last-of-type)
     margin-right: 1.5em
   a
@@ -46,8 +46,9 @@ $border-size: 2px
       &:after
         background-color: $oxide-blue
 
-  &.travistab-nav--underline
-    border-bottom: $border-size solid $pebble-grey
+.travistab-nav--underline
+  @extend .travistab-nav
+  border-bottom: $border-size solid $pebble-grey
 
 .travistab-nav--secondary
   @extend %travistab-nav-base

@@ -1,23 +1,27 @@
 {{#travis-layout layoutName="layouts/center" class="owner"}}
-<header class="owner-header row">
-  <div class="owner-avatar">
-    {{user-avatar url=owner.avatar name=owner.name size=126}}
-  </div>
-  <div class="owner-info">
-    <h1 class="owner-title">{{owner.name}}</h1>
-    <p class="owner-handle">
-      {{svg-jar 'icon-repooctocat' class="icon--l"}}
-      <a href={{githubProfile}} title="{{owner.name}} on GitHub">
-        <span class="label-align">{{owner.login}}</span></a></p>
-    {{!-- {{owner-sync-button owner=owner}} --}}
-  </div>
-</header>
+  <header class="owner-header row">
+    <div class="owner-avatar">
+      {{user-avatar url=owner.avatar name=owner.name size=126}}
+    </div>
+    <div class="owner-info">
+      <h1 class="owner-title">{{owner.name}}</h1>
+      <p class="owner-handle">
+        {{svg-jar 'icon-repooctocat' class="icon--l"}}
+        <a href={{githubProfile}} title="{{owner.name}} on GitHub">
+          <span class="label-align">{{owner.login}}</span></a></p>
+      {{!-- {{owner-sync-button owner=owner}} --}}
+    </div>
+  </header>
 
-<div class="tabs--owner">
-  <div class="tabbody">
-    <section role="tabpanel">
+  <div class="travistab">
+    <nav class="travistab-nav--underline">
+      <ul>
+        <li>{{#link-to "owner.repositories" owner.login}}Repositories{{/link-to}}</li>
+        <li>{{#link-to "owner.running" owner.login }}Job Queue{{/link-to}}</li>
+      </ul>
+    </nav>
+    <div class="travistab-body">
       {{outlet}}
-    </section>
+    </div>
   </div>
-</div>
 {{/travis-layout}}

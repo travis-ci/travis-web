@@ -57,6 +57,7 @@ Router.map(function () {
   });
   this.route('owner', { path: '/:owner', resetNamespace: true }, function () {
     this.route('repositories', { path: '/' });
+    this.route('running', { path: '/running' });
   });
   this.route('error404', { path: '/404' });
   this.route('page-not-found', { path: '/*wildcard' });
