@@ -11,6 +11,6 @@ test('it renders', function (assert) {
 
   this.render(hbs`{{not-found slug=slug}}`);
 
-  assert.ok(this.$().find('svg').hasClass('barricade'), 'renders the barricade svg');
+  assert.equal(this.$().find('.barricade').length, 1, 'renders the barricade svg');
   assert.equal(this.$().find('.page-title').text().trim(), 'We couldn\'t find the repository some-org/some-repo', 'displays the name of the not found repo');
 });
