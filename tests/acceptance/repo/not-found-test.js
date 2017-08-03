@@ -33,7 +33,7 @@ test('visiting /non-existent/repository shows error message when authenticated',
     assert.equal(currentURL(), '/non-existent/repository');
     assert.ok(nonExistentRepoPage.showsBarricadeIllustration, 'Shows image for aesthetics');
     assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t find the repository non-existent/repository', 'Shows message that repository was not found');
-    assert.notOk(nonExistentRepoPage.errorMessageProUnauthenticated, 'does not show .com authenticated message');
+    assert.ok(nonExistentRepoPage.errorMessageProisHidden, 'does not show .com authenticated message');
   });
 });
 
