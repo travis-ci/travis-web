@@ -5,21 +5,12 @@ moduleForComponent('not-found', 'Integration | Component | not found', {
   integration: true
 });
 
-test('it renders', function(assert) {
+test('it renders', function (assert) {
+  let slug = 'some-org/some-repo';
+  this.set('slug', slug);
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  this.render(hbs`{{not-found slug=slug}}`);
 
-  this.render(hbs`{{not-found}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#not-found}}
-      template block text
-    {{/not-found}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$().find('svg').hasClass('barricade'), 'renders the barricade svg');
+  assert.equal(this.$().find('.page-title').text().trim(), 'We couldn\'t find the repository some-org/some-repo', 'displays the name of the not found repo');
 });

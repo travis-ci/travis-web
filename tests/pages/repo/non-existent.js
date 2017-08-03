@@ -7,6 +7,7 @@ import {
 
 export default create({
   visit: visitable('/non-existent/repository'),
-  showsTravisImage: contains('img', { scope: '.main .content-page' }),
-  errorMessage: text('.not-found'),
+  showsBarricadeIllustration: contains('svg', { scope: '.page-graphic' }),
+  errorMessage: text('.missing-notice .page-title'),
+  errorMessageProUnauthenticated: contains('.missing-notice p')
 });
