@@ -56,6 +56,18 @@
   &:active
     background-color: darken($turf-green, 10)
 
+.auth-button--white
+  @extend %button
+  vertical-align: baseline
+  border: 1px solid #f1f1f1 !important
+  padding: 0.7em 0.8em !important
+  border-radius: 2px
+  &:active,
+  &:hover,
+  &:focus
+    color: $oxide-blue !important
+    border-color: $oxide-blue !important
+
 .button--blue
   @extend %button
   border: none

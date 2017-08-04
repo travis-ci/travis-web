@@ -6,12 +6,7 @@
   {{flash-display}}
 
   <div class="main">
-    <div class="content-page">
-      <img src="/images/logos/TravisCI-Mascot-1.svg"  alt="Travis CI mascot" width="200" height="200">
-      <div class="not-found" style="margin-top:20px;">
-        The repository at {{model.slug}} was not found.
-      </div>
-    </div>
+    {{not-found slug=model.slug signIn=(route-action 'signIn')}}
   </div>
 
   <footer class="footer">
