@@ -296,6 +296,14 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'usa',
         image: 'katherine'
+      },
+      {
+        name: 'Bogdana Vereha',
+        title: 'Mad Scientist',
+        handle: 'bogdanavereha',
+        nationality: 'romania',
+        country: 'netherlands',
+        image: 'bogdana'
       }
     ];
   }
