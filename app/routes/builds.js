@@ -1,11 +1,8 @@
-import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
-  repositories: service(),
-  tabStates: service(),
+  @service tabStates: null,
 
   activate(...args) {
     this._super(args);

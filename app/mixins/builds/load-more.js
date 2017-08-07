@@ -1,11 +1,8 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Mixin.create({
-  tabStates: service(),
-
-  tab: Ember.computed.alias('tabStates.mainTab'),
+  @service tabStates: null,
 
   showMore() {
     const id = this.get('repo.id'),
@@ -30,9 +27,9 @@ export default Ember.Mixin.create({
       }
     }
 
-    const tabName = this.get('tab');
+    const tabName = this.get('tabStates.mainTab');
     const singularTab = tabName.substr(0, tabName.length - 1);
-    const type = this.get('tab') === 'builds' ? 'push' : singularTab;
+    const type = tabName === 'builds' ? 'push' : singularTab;
     this.loadMoreBuilds(id, buildsLength, type);
   },
 

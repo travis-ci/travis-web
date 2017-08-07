@@ -1,12 +1,11 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
-  repositories: service(),
-  tabStates: service(),
+  @service repositories: null,
+  @service tabStates: null,
 
   model(/* params*/) {
     var allTheBranches, apiEndpoint, options, repoId;

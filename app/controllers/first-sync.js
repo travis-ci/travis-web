@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
-  user: Ember.computed.alias('auth.currentUser'),
-  isSyncing: Ember.computed.alias('user.isSyncing')
+  @alias('auth.currentUser') user: null,
+  @alias('user.isSyncing') isSyncing: null,
 });

@@ -1,10 +1,12 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Controller.extend({
   isLoading: false,
-  repos: Ember.computed('model', function () {
-    var data, repos;
-    data = this.get('model');
+
+  @computed('model')
+  repos(data) {
+    var repos;
     repos = [];
     if (data.repositories) {
       repos = data.repositories.filter(function (item) {
@@ -14,5 +16,5 @@ export default Ember.Controller.extend({
       }).sortBy('default_branch.last_build.finished_at').reverse();
     }
     return repos;
-  })
+  },
 });

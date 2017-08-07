@@ -1,21 +1,18 @@
 import Ember from 'ember';
-import computed from 'ember-computed-decorators';
-
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias, and } from 'ember-decorators/object/computed';
 import eventually from 'travis/utils/eventually';
-
 import { task, taskGroup } from 'ember-concurrency';
 
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
-
 export default Ember.Component.extend({
+  @service flashes: null,
+  @service auth: null,
+
   classNames: ['repo-main-tools'],
   classNameBindings: ['labelless'],
 
-  flashes: service(),
-  auth: service(),
-
-  user: alias('auth.currentUser'),
+  @alias('auth.currentUser') user: null,
 
   @computed('type', 'job', 'build')
   item(type, job, build) {
@@ -56,9 +53,9 @@ export default Ember.Component.extend({
     }
   },
 
-  canCancel: Ember.computed.and('userHasPullPermissionForRepo', 'item.canCancel'),
-  canRestart: Ember.computed.and('userHasPullPermissionForRepo', 'item.canRestart'),
-  canDebug: Ember.computed.and('userHasPushPermissionForRepo', 'item.canDebug'),
+  @and('userHasPullPermissionForRepo', 'item.canCancel') canCancel: null,
+  @and('userHasPullPermissionForRepo', 'item.canRestart') canRestart: null,
+  @and('userHasPushPermissionForRepo', 'item.canDebug') canDebug: null,
 
   cancel: task(function* () {
     let type = this.get('type');

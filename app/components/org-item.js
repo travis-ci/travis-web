@@ -1,30 +1,35 @@
 import Ember from 'ember';
-
-const { alias } = Ember.computed;
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
   classNames: ['media', 'account'],
   tagName: 'li',
   classNameBindings: ['type', 'selected'],
-  type: alias('account.type'),
-  selected: alias('account.selected'),
+
   tokenIsVisible: false,
 
-  name: Ember.computed('account', function () {
-    return this.get('account.name') || this.get('account.login');
-  }),
+  @alias('account.type') type: null,
+  @alias('account.selected') selected: null,
 
-  avatarUrl: Ember.computed('account', function () {
-    return this.get('account.avatarUrl') || false;
-  }),
+  @computed('account.{name,login}')
+  name(name, login) {
+    return name || login;
+  },
 
-  isUser: Ember.computed('account', function () {
-    return this.get('account.type') === 'user';
-  }),
+  @computed('account.avatarUrl')
+  avatarUrl(url) {
+    return url || false;
+  },
+
+  @computed('account.type')
+  isUser(type) {
+    return type === 'user';
+  },
 
   actions: {
     tokenVisibility() {
       this.toggleProperty('tokenIsVisible');
     }
-  }
+  },
 });

@@ -2,16 +2,15 @@ import Ember from 'ember';
 import config from 'travis/config/environment';
 import Repo from 'travis/models/repo';
 import { task, timeout } from 'ember-concurrency';
-import computed from 'ember-computed-decorators';
-
-const { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
 
 export default Ember.Service.extend({
-  auth: service(),
-  store: service(),
-  tabStates: service(),
-  ajax: service(),
-  router: service(),
+  @service auth: null,
+  @service store: null,
+  @service tabStates: null,
+  @service ajax: null,
+  @service router: null,
 
   @computed('requestOwnedRepositories', 'performSearchRequest', 'showSearchResults')
   tasks(accessible, performSearch, showSearch) {

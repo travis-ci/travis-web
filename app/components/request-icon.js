@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 
 const eventToIcon = {
   push: 'push',
@@ -22,15 +23,14 @@ export default Ember.Component.extend({
   classNameBindings: ['event', 'state', 'title'],
   attributeBindings: ['title'],
 
-  icon: Ember.computed('event', function () {
-    const event = this.get('event');
+  @computed('event')
+  icon(event) {
     const iconName = eventToIcon[event] || eventToIcon.default;
-
     return `icon-${iconName}`;
-  }),
+  },
 
-  title: Ember.computed('event', function () {
-    const event = this.get('event');
+  @computed('event')
+  title(event) {
     return eventToTitle[event] || eventToTitle.default;
-  })
+  },
 });

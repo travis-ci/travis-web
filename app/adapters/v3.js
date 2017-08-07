@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default RESTAdapter.extend({
-  auth: service(),
+  @service auth: null,
+
   host: config.apiEndpoint,
 
   sortQueryParams: false,

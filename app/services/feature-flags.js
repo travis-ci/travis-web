@@ -1,11 +1,10 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Service.extend({
-  store: service(),
-  features: service(),
+  @service store: null,
+  @service features: null,
 
   serverFlags: [],
 

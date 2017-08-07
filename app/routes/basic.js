@@ -1,10 +1,10 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Route.extend({
-  auth: service(),
-  featureFlags: service(),
+  @service auth: null,
+  @service featureFlags: null,
 
   activate() {
     if (this.routeName !== 'error') {
@@ -44,5 +44,5 @@ export default Ember.Route.extend({
   },
 
   // on pro, we need to auth on every route
-  needsAuth: Ember.computed.alias('features.proVersion'),
+  @alias('features.proVersion') needsAuth: null,
 });

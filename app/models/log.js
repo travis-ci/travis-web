@@ -1,5 +1,8 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { gt } from 'ember-decorators/object/computed';
 
 var Request = Ember.Object.extend({
   HEADERS: {
@@ -51,15 +54,13 @@ var Request = Ember.Object.extend({
   }
 });
 
-const { service } = Ember.inject;
-
 var LogModel = Ember.Object.extend({
-  features: service(),
+  @service features: null,
 
   version: 0,
   isLoaded: false,
   length: 0,
-  hasContent: Ember.computed.gt('parts.length', 0),
+  @gt('parts.length', 0) hasContent: null,
 
   fetchMissingParts(partNumbers, after) {
     var data;
@@ -98,11 +99,12 @@ var LogModel = Ember.Object.extend({
     });
   },
 
-  parts: Ember.computed(function () {
+  @computed()
+  parts() {
     return Ember.ArrayProxy.create({
       content: []
     });
-  }),
+  },
 
   clearParts() {
     var parts;

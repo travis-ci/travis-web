@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Controller.extend({
-  flashes: service(),
+  @service flashes: null,
 
   loadFlashes() {
     return this.get('flashes').loadFlashes(...arguments);

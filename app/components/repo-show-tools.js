@@ -1,20 +1,20 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
-  auth: service(),
-  popup: service(),
-  permissions: service(),
+  @service auth: null,
+  @service popup: null,
+  @service permissions: null,
 
   tagName: 'nav',
   classNames: ['option-button'],
   classNameBindings: ['isOpen:is-open'],
   isOpen: false,
 
-  currentUser: alias('auth.currentUser'),
+  @alias('auth.currentUser') currentUser: null,
 
   click() {
     return this.toggleProperty('isOpen');
@@ -24,15 +24,18 @@ export default Ember.Component.extend({
     this.set('isOpen', false);
   },
 
-  displaySettingsLink: Ember.computed('permissions.all', 'repo', function () {
-    return this.get('permissions').hasPushPermission(this.get('repo'));
-  }),
+  @computed('permissions.all', 'repo')
+  displaySettingsLink(permissions, repo) {
+    return this.get('permissions').hasPushPermission(repo);
+  },
 
-  displayCachesLink: Ember.computed('permissions.all', 'repo', function () {
-    return this.get('permissions').hasPushPermission(this.get('repo')) && config.endpoints.caches;
-  }),
+  @computed('permissions.all', 'repo')
+  displayCachesLink(permissions, repo) {
+    return this.get('permissions').hasPushPermission(repo) && config.endpoints.caches;
+  },
 
-  displayStatusImages: Ember.computed('permissions.all', 'repo', function () {
-    return this.get('permissions').hasPermission(this.get('repo'));
-  })
+  @computed('permissions.all', 'repo')
+  displayStatusImages(permissions, repo) {
+    return this.get('permissions').hasPermission(repo);
+  },
 });

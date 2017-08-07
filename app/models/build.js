@@ -7,14 +7,15 @@ import Model from 'ember-data/model';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Model.extend(DurationCalculations, {
-  ajax: service(),
+  @service ajax: null,
 
-  branch: belongsTo('branch', { async: false, inverse: 'builds' }),
-  branchName: Ember.computed.alias('branch.name'),
+  @alias('branch.name') branchName: null,
+
   state: attr(),
   number: attr('number'),
   message: attr('string'),
@@ -24,89 +25,92 @@ export default Model.extend(DurationCalculations, {
   pullRequestNumber: attr('number'),
   pullRequestTitle: attr('string'),
   eventType: attr('string'),
-  repo: belongsTo('repo', { async: true }),
-  repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
-  commit: belongsTo('commit', { async: false }),
-  jobs: hasMany('job', { async: true }),
-  stages: hasMany('stage', { async: true }),
   _config: attr(),
 
-  config: Ember.computed('_config', function () {
-    let config = this.get('_config');
+  repo: belongsTo('repo', { async: true }),
+  branch: belongsTo('branch', { async: false, inverse: 'builds' }),
+  repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
+  commit: belongsTo('commit', { async: false }),
+
+  jobs: hasMany('job', { async: true }),
+  stages: hasMany('stage', { async: true }),
+
+  @computed('_config', 'currentState.stateName')
+  config(config, stateName) {
     if (config) {
       return pickBy(config);
-    } else if (this.get('currentState.stateName') !== 'root.loading') {
+    } else if (stateName !== 'root.loading') {
       if (this.get('isFetchingConfig')) {
         return;
       }
       this.set('isFetchingConfig', true);
       return this.reload();
     }
-  }),
+  },
 
-  isPullRequest: Ember.computed('eventType', function () {
-    return this.get('eventType') === 'pull_request';
-  }),
+  @computed('eventType')
+  isPullRequest(eventType) {
+    return eventType === 'pull_request';
+  },
 
-  isMatrix: Ember.computed('jobs.length', function () {
-    return this.get('jobs.length') > 1;
-  }),
+  @computed('jobs.[]')
+  isMatrix(jobs) {
+    return jobs.get('length') > 1;
+  },
 
-  isFinished: Ember.computed('state', function () {
-    let state = this.get('state');
+  @computed('state')
+  isFinished(state) {
     let finishedStates = ['passed', 'failed', 'errored', 'canceled'];
     return finishedStates.includes(state);
-  }),
+  },
 
-  notStarted: Ember.computed('state', function () {
-    let state = this.get('state');
+  @computed('state')
+  notStarted(state) {
     let waitingStates = ['queued', 'created', 'received'];
     return waitingStates.includes(state);
-  }),
+  },
 
-  requiredJobs: Ember.computed('jobs.@each.allowFailure', function () {
-    return this.get('jobs').filter(function (data) {
-      return !data.get('allowFailure');
-    });
-  }),
+  @computed('jobs.@each.allowFailure')
+  requiredJobs(jobs) {
+    return jobs.filter(job => !job.get('allowFailure'));
+  },
 
-  allowedFailureJobs: Ember.computed('jobs.@each.allowFailure', function () {
-    return this.get('jobs').filter(function (data) {
-      return data.get('allowFailure');
-    });
-  }),
+  @computed('jobs.@each.allowFailure')
+  allowedFailureJobs(jobs) {
+    return jobs.filter(job => job.get('allowFailure'));
+  },
 
-  rawConfigKeys: Ember.computed('config', 'jobs.@each.config', function () {
-    var keys;
-    keys = [];
-    this.get('jobs').forEach(function (job) {
-      return safelistedConfigKeys(job.get('config')).forEach(function (key) {
+  @computed('jobs.@each.config')
+  rawConfigKeys(jobs) {
+    let keys = [];
+    jobs.forEach((job) => {
+      return safelistedConfigKeys(job.get('config')).forEach((key) => {
         if (!keys.includes(key)) {
           return keys.pushObject(key);
         }
       });
     });
     return keys;
-  }),
+  },
 
-  configKeys: Ember.computed('rawConfigKeys.length', function () {
-    var headers, keys;
-    keys = this.get('rawConfigKeys');
-    headers = ['Job', 'Duration', 'Finished'];
-    return headers.concat(keys).map(function (key) {
+  @computed('rawConfigKeys.[]')
+  configKeys(keys) {
+    const headers = ['Job', 'Duration', 'Finished'];
+    return headers.concat(keys).map((key) => {
       if (configKeysMap.hasOwnProperty(key)) {
         return configKeysMap[key];
       } else {
         return key;
       }
     });
-  }),
+  },
 
-  canCancel: Ember.computed('jobs.@each.canCancel', 'jobs.[]', function () {
-    return this.get('jobs').filterBy('canCancel', true).length;
-  }),
+  @computed('jobs.@each.canCancel')
+  canCancel(jobs) {
+    return !Ember.isEmpty(jobs.filterBy('canCancel'));
+  },
 
-  canRestart: Ember.computed.alias('isFinished'),
+  @alias('isFinished') canRestart: null,
 
   cancel() {
     return this.get('ajax').postV3('/build/' + (this.get('id')) + '/cancel');
@@ -116,19 +120,20 @@ export default Model.extend(DurationCalculations, {
     return this.get('ajax').postV3(`/build/${this.get('id')}/restart`);
   },
 
-  canDebug: Ember.computed('jobs.length', function () {
-    return this.get('jobs.length') === 1;
-  }),
+  @computed('jobs.[]')
+  canDebug(jobs) {
+    return jobs.get('length') === 1;
+  },
 
   debug() {
     return Ember.RSVP.all(this.get('jobs').map(job => job.debug()));
   },
 
-  formattedFinishedAt: Ember.computed('finishedAt', function () {
-    let finishedAt = this.get('finishedAt');
+  @computed('finishedAt')
+  formattedFinishedAt(finishedAt) {
     if (finishedAt) {
       var m = moment(finishedAt);
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
-  })
+  },
 });

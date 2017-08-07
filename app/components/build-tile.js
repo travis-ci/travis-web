@@ -1,18 +1,17 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
   tagName: 'li',
   classNameBindings: ['build.state'],
   attributeBindings: ['title'],
 
-  title: Ember.computed('build', function () {
-    let num, state;
-    num = this.get('build.number');
-    state = this.get('build.state');
-    if (num) {
-      return `Build #${num} ${state}`;
+  @computed('build.{number,state}')
+  title(number, state) {
+    if (number) {
+      return `Build #${number} ${state}`;
     } else {
       return '';
     }
-  })
+  },
 });

@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
+import { equal, empty } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
   tagName: 'span',
@@ -6,41 +8,30 @@ export default Ember.Component.extend({
   classNameBindings: ['status'],
   attributeBindings: ['label:aria-label', 'label:title'],
 
-  label: Ember.computed('status', function () {
-    return `Job ${this.get('status')}`;
-  }),
+  @computed('status')
+  label(status) {
+    return `Job ${status}`;
+  },
 
-  hasPassed: Ember.computed('status', function () {
-    return this.get('status') === 'passed' || this.get('status') === 'accepted';
-  }),
+  @computed('status')
+  hasPassed(status) {
+    return ['passed', 'accepted'].includes(status);
+  },
 
-  hasFailed: Ember.computed('status', function () {
-    return this.get('status') === 'failed' || this.get('status') === 'rejected';
-  }),
+  @computed('status')
+  hasFailed(status) {
+    return ['failed', 'rejected'].includes(status);
+  },
 
-  hasErrored: Ember.computed('status', function () {
-    return this.get('status') === 'errored';
-  }),
+  @equal('status', 'errored') hasErrored: null,
 
-  wasCanceled: Ember.computed('status', function () {
-    return this.get('status') === 'canceled';
-  }),
+  @equal('status', 'canceled') wasCanceled: null,
 
-  isRunning: Ember.computed('status', function () {
-    let status = this.get('status');
+  @computed('status')
+  isRunning(status) {
     let runningStates = ['started', 'queued', 'booting', 'received', 'created'];
     return runningStates.includes(status);
-  }),
+  },
 
-  isEmpty: Ember.computed('status', function () {
-    if (!this.get('status')) {
-      return true;
-    } else {
-      if (this.get('status') === '') {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  })
+  @empty('status') isEmpty: null,
 });

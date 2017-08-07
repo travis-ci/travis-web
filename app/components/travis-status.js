@@ -1,10 +1,14 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
   status: null,
 
-  statusPageStatusUrl: Ember.computed(() => config.statusPageStatusUrl),
+  @computed()
+  statusPageStatusUrl() {
+    return config.statusPageStatusUrl;
+  },
 
   didInsertElement() {
     let url = this.get('statusPageStatusUrl');

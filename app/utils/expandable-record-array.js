@@ -1,10 +1,12 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.ArrayProxy.extend({
   isLoaded: false,
   isLoading: false,
 
-  promise: Ember.computed(function () {
+  @computed()
+  promise() {
     var self;
     self = this;
     return new Ember.RSVP.Promise(function (resolve) {
@@ -20,7 +22,7 @@ export default Ember.ArrayProxy.extend({
         return self.addObserver('isLoaded', observer);
       }
     });
-  }),
+  },
 
   load(array) {
     this.set('isLoading', true);

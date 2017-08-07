@@ -2,13 +2,12 @@ import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend(ScrollResetMixin, {
-  store: service(),
-  tabStates: service(),
-  repositories: service(),
+  @service store: null,
+  @service tabStates: null,
+  @service repositories: null,
 
   activate(...args) {
     this._super(args);

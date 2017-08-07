@@ -1,26 +1,23 @@
 /* global moment */
 import Ember from 'ember';
-import computed from 'ember-computed-decorators';
+import { computed } from 'ember-decorators/object';
+import { alias, equal } from 'ember-decorators/object/computed';
 
 const NOVEMBER_2016_RETIREMENT = '2016-11-28T12:00:00-08:00';
 const JANUARY_2017_RETIREMENT = '2017-01-20T12:00:00-08:00';
 const LATEST_TRUSTY_RELEASE = '2017-07-12T18:00:00-00:00';
 
 export default Ember.Component.extend({
-  queue: Ember.computed.alias('job.queue'),
-  jobConfig: Ember.computed.alias('job.config'),
+  @alias('job.queue') queue: null,
+  @alias('job.config') jobConfig: null,
 
-  conjugatedRun: Ember.computed('job.isFinished', function () {
-    if (this.get('job.isFinished')) {
-      return 'ran';
-    } else {
-      return 'is running';
-    }
-  }),
+  @computed('job.isFinished')
+  conjugatedRun(isFinished) {
+    return isFinished ? 'ran' : 'is running';
+  },
 
-  isLegacyInfrastructure: Ember.computed.equal('queue', 'builds.linux'),
-
-  isTrustySudoFalse: Ember.computed.equal('queue', 'builds.ec2'),
+  @equal('queue', 'builds.linux') isLegacyInfrastructure: null,
+  @equal('queue', 'builds.ec2') isTrustySudoFalse: null,
 
   @computed('job.startedAt', 'job.config')
   isTrustyStable(startedAt, config = {}) {
@@ -34,7 +31,7 @@ export default Ember.Component.extend({
     return false;
   },
 
-  isMacStadium6: Ember.computed.equal('queue', 'builds.macstadium6'),
+  @equal('queue', 'builds.macstadium6') isMacStadium6: null,
 
   @computed('queue', 'job.config')
   isPreciseEOL(queue, config) {
@@ -45,7 +42,7 @@ export default Ember.Component.extend({
     }
   },
 
-  macOSImage: Ember.computed.alias('jobConfig.osx_image'),
+  @alias('jobConfig.osx_image') macOSImage: null,
 
   deprecatedXcodeImages:
     ['beta-xcode6.1', 'beta-xcode6.2', 'beta-xcode6.3', 'xcode7', 'xcode7.1', 'xcode7.2'],

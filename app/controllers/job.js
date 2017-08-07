@@ -1,24 +1,25 @@
 import Ember from 'ember';
-
-const { service, controller } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { controller } from 'ember-decorators/controller';
+import { computed, observes } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
-  auth: service(),
-  externalLinks: service(),
+  @service auth: null,
+  @service externalLinks: null,
 
-  repoController: controller('repo'),
-  repo: alias('repoController.repo'),
-  currentUser: alias('auth.currentUser'),
-  tab: alias('repoController.tab'),
+  @controller('repo') repoController: null,
+  @alias('repoController.repo') repo: null,
+  @alias('auth.currentUser') currentUser: null,
+  @alias('repoController.tab') tab: null,
 
-  urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
-    const slug = this.get('repo.slug');
-    const sha = this.get('commit.sha');
+  @computed('repo.slug', 'commit.sha')
+  urlGithubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);
-  }),
+  },
 
-  jobStateDidChange: Ember.observer('job.state', function () {
-    return this.send('faviconStateDidChange', this.get('job.state'));
-  })
+  @observes('job.state')
+  jobStateDidChange(state) {
+    return this.send('faviconStateDidChange', state);
+  },
 });

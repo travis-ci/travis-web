@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import computed, { alias, sort, filterBy } from 'ember-computed-decorators';
+import { computed } from 'ember-decorators/object';
+import { alias, sort, filterBy } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
   envVarSorting: ['name'],

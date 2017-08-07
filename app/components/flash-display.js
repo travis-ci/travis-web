@@ -1,13 +1,14 @@
 import Ember from 'ember';
-
-const { alias } = Ember.computed;
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
-  flashes: service(),
+  @service flashes: null,
+
   classNames: ['flash'],
   tagName: 'ul',
-  messages: alias('flashes.messages'),
+
+  @alias('flashes.messages') messages: null,
 
   actions: {
     closeMessage(msg) {

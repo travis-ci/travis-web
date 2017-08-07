@@ -1,8 +1,8 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
-  featureFlags: service(),
-  featuresLoading: Ember.computed.alias('featureFlags.fetchTask.isRunning')
+  @service featureFlags: null,
+  @alias('featureFlags.fetchTask.isRunning') featuresLoading: null,
 });

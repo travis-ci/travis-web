@@ -1,26 +1,24 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
-
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
-  auth: service(),
-  flashes: service(),
-  permissions: service(),
+  @service auth: null,
+  @service flashes: null,
+  @service permissions: null,
 
-  user: alias('auth.currentUser'),
+  @alias('auth.currentUser') user: null,
 
-  canActivate: Ember.computed('repo.permissions.admin', function () {
-    let repo = this.get('repo');
+  @computed('repo', 'repo.permissions.admin')
+  canActivate(repo, adminPermissions) {
     if (repo) {
-      return repo.get('permissions.admin');
-    } else {
-      return false;
+      return adminPermissions;
     }
-  }),
+    return false;
+  },
 
   activate: task(function* () {
     const apiEndpoint = config.apiEndpoint;

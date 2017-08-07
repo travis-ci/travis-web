@@ -1,51 +1,38 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
   classNames: ['request-item'],
   classNameBindings: ['requestClass'],
   tagName: 'li',
 
-  isGHPages: Ember.computed('request.message', function () {
-    let message = this.get('request.message');
-    if (message === 'github pages branch') {
-      return true;
-    } else {
-      return false;
-    }
-  }),
+  @computed('request.message')
+  isGHPages(message) {
+    return message === 'github pages branch';
+  },
 
-  requestClass: Ember.computed('content.isAccepted', function () {
-    if (this.get('request.isAccepted')) {
-      return 'accepted';
-    } else {
-      return 'rejected';
-    }
-  }),
+  @computed('request.isAccepted')
+  requestClass(isAccepted) {
+    return isAccepted ? 'accepted' : 'rejected';
+  },
 
-  type: Ember.computed('request.isPullRequest', function () {
-    if (this.get('request.isPullRequest')) {
-      return 'pull_request';
-    } else {
-      return 'push';
-    }
-  }),
+  @computed('request.isPullRequest')
+  type(isPullRequest) {
+    return isPullRequest ? 'pull_request' : 'push';
+  },
 
-  status: Ember.computed('request.isAccepted', function () {
-    if (this.get('request.isAccepted')) {
-      return 'Accepted';
-    } else {
-      return 'Rejected';
-    }
-  }),
+  @computed('request.isAccepted')
+  status(isAccepted) {
+    return isAccepted ? 'Accepted' : 'Rejected';
+  },
 
-  message: Ember.computed('features.proVersion', 'request.message', function () {
-    let message = this.get('request.message');
-    if (this.get('features.proVersion') && message === 'private repository') {
+  @computed('features.proVersion', 'request.message')
+  message(proVersion, message) {
+    if (proVersion && message === 'private repository') {
       return '';
     } else if (!message) {
       return 'Build created successfully ';
-    } else {
-      return message;
     }
-  })
+    return message;
+  },
 });

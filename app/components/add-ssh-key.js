@@ -1,12 +1,12 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
+  @service store: null,
+
   classNames: ['form--sshkey'],
   classNameBindings: ['valueError:form-error'],
-  store: service(),
   isSaving: false,
 
   didInsertElement() {

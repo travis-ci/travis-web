@@ -1,19 +1,19 @@
 import Ember from 'ember';
 import Visibility from 'npm:visibilityjs';
 import { task } from 'ember-concurrency';
-import computed, { alias } from 'ember-computed-decorators';
-
-const { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  tabStates: service(),
-  jobState: service(),
-  ajax: service(),
-  updateTimesService: service('updateTimes'),
-  repositories: service(),
-  store: service(),
-  auth: service(),
-  router: service(),
+  @service tabStates: null,
+  @service jobState: null,
+  @service ajax: null,
+  @service('updateTimes') updateTimesService: null,
+  @service repositories: null,
+  @service store: null,
+  @service auth: null,
+  @service router: null,
 
   init(...args) {
     this._super(args);
@@ -68,10 +68,10 @@ export default Ember.Component.extend({
     return runningAmount + queuedAmount;
   },
 
-  @computed('features.proVersion', 'jobState.runningJobs')
-  runningJobs(proVersion) {
+  @computed('features.proVersion', 'jobState.runningJobs.[]')
+  runningJobs(proVersion, runningJobs) {
     if (!proVersion) { return []; }
-    return this.get('jobState.runningJobs');
+    return runningJobs;
   },
 
   @computed('features.proVersion')

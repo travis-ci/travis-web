@@ -1,19 +1,19 @@
 /* global HS, Waypoint */
 import Ember from 'ember';
-import computed, { alias } from 'ember-computed-decorators';
-
-const { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
+  @service auth: null,
+  @service store: null,
+  @service externalLinks: null,
+  @service features: null,
+  @service flashes: null,
+  @service('broadcasts') broadcastsService: null,
+
   tagName: 'header',
   classNames: ['top'],
-  auth: service(),
-  store: service(),
-  externalLinks: service(),
-  features: service(),
-  flashes: service(),
-  broadcastsService: service('broadcasts'),
-
   landingPage: false,
 
   @alias('auth.currentUser') user: null,

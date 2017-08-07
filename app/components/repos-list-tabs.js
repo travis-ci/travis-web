@@ -1,37 +1,40 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
-  auth: service(),
+  @service auth: null,
+  @service tabStates: null,
+
   tagName: 'nav',
   classNames: ['travistab-nav', 'travistab-nav--underline', 'travistab-nav--sidebar'],
-  tabStates: service(),
 
-  tab: alias('tabStates.sidebarTab'),
+  @alias('tabStates.sidebarTab') tab: null,
 
-  currentUser: alias('auth.currentUser'),
+  @alias('auth.currentUser') currentUser: null,
 
-  classRunning: Ember.computed('tab', function () {
-    return this.get('tab') === 'running' ? 'active' : '';
-  }),
+  @computed('tab')
+  classRunning(tab) {
+    return tab === 'running' ? 'active' : '';
+  },
 
-  classOwned: Ember.computed('tab', 'currentUser', function () {
-    let classes;
-    classes = [];
-    if (this.get('tab') === 'owned') {
+  @computed('tab', 'currentUser')
+  classOwned(tab, currentUser) {
+    let classes = [];
+    if (tab === 'owned') {
       classes.push('active');
     }
-    if (this.get('currentUser')) {
+    if (currentUser) {
       classes.push('display-inline');
     }
     return classes.join(' ');
-  }),
+  },
 
-  classNew: Ember.computed('currentUser', function () {
-    if (this.get('currentUser')) {
+  @computed('currentUser')
+  classNew(currentUser) {
+    if (currentUser) {
       return 'display-inline';
     }
-  })
+  },
 });
