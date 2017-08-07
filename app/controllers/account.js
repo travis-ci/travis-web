@@ -1,5 +1,6 @@
 /* global Travis */
 import Ember from 'ember';
+import { config } from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
@@ -14,9 +15,7 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
 
-    return Travis.on('user:synced', (() => {
-      return this.reloadHooks();
-    }));
+    return Travis.on('user:synced', () => { this.reloadHooks(); });
   },
 
 
@@ -39,8 +38,8 @@ export default Ember.Controller.extend({
         order: 'none'
       });
       this.set('loadingError', false);
-      hooks.then(function () {
-        return hooks.set('isLoaded', true);
+      hooks.then(() => {
+        hooks.set('isLoaded', true);
       }).catch(() => {
         this.set('loadingError', true);
       });
@@ -72,7 +71,7 @@ export default Ember.Controller.extend({
   @computed('model.{type,login}')
   billingUrl(type, name, login) {
     const id = type === 'user' ? 'user' : login;
-    return this.config.billingEndpoint + '/subscriptions/' + id;
+    return `${config.billingEndpoint}/subscriptions/${id}`;
   },
 
   @computed('billingUrl', 'model.{subscribed,education}')

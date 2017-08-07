@@ -6,14 +6,13 @@ export default Ember.Controller.extend({
 
   @computed('model')
   repos(data) {
-    var repos;
+    let repos;
     repos = [];
     if (data.repositories) {
-      repos = data.repositories.filter(function (item) {
-        if (item.active) {
-          return item;
-        }
-      }).sortBy('default_branch.last_build.finished_at').reverse();
+      repos = data.repositories
+        .filterBy('active')
+        .sortBy('default_branch.last_build.finished_at')
+        .reverse();
     }
     return repos;
   },

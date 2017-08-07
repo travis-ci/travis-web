@@ -7,7 +7,8 @@ export default Ember.Controller.extend({
   @action
   gaCta(location) {
     if (config.gaCode) {
-      _gaq.push(['_trackPageview', '/virtual/signup?' + location]);
+      const page = `/virtual/signup?${location}`;
+      _gaq.push(['_trackPageview', page]);
     }
     this.auth.signIn();
   },
