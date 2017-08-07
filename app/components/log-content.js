@@ -200,7 +200,7 @@ export default Ember.Component.extend({
     });
   },
 
-  @computed('log.job.{id,token}', 'features.proVersion')
+  @computed('log.job.id', 'job.log.token', 'features.proVersion')
   plainTextLogUrl(id, token, proVersion) {
     if (id) {
       let url = this.get('externalLinks').plainTextLog(id);
