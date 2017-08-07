@@ -47,8 +47,9 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  config: Ember.computed('_config', function () {
-    let config = this.get('_config');
+  // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
+  @computed('_config')
+  config(config) {
     if (config) {
       return pickBy(config);
     } else {
@@ -66,7 +67,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
       fetchConfig();
     }
-  }),
+  },
 
   getCurrentState() {
     return this.get('currentState.stateName');

@@ -1,28 +1,21 @@
 import Ember from 'ember';
 import durationFrom from 'travis/utils/duration-from';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Mixin.create({
-  duration: Ember.computed(
-    '_duration',
-    'finishedAt',
-    'startedAt',
-    'notStarted',
-    '_finishedAt',
-    '_startedAt',
-    function () {
-      let duration = this.get('_duration');
-      if (this.get('notStarted')) {
-        return null;
-      } else if (duration) {
-        return duration;
-      } else {
-        return durationFrom(this.get('startedAt'), this.get('finishedAt'));
-      }
+  @computed('_duration', 'finishedAt', 'startedAt', 'notStarted')
+  duration(duration, finishedAt, startedAt, notStarted) {
+    if (notStarted) {
+      return null;
+    } else if (duration) {
+      return duration;
+    } else {
+      return durationFrom(startedAt, finishedAt);
     }
-  ),
+  },
 
   updateTimes() {
     this.notifyPropertyChange('duration');
     return this.notifyPropertyChange('finishedAt');
-  }
+  },
 });

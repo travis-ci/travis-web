@@ -4,6 +4,7 @@ import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
 import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
 
 export default Model.extend({
   @service ajax: null,
@@ -20,9 +21,10 @@ export default Model.extend({
   repoCount: attr('number'),
   avatarUrl: attr(),
 
-  fullName: Ember.computed('name', 'login', function () {
-    return this.get('name') || this.get('login');
-  }),
+  @computed('name', 'login')
+  fullName(name, login) {
+    return name || login;
+  },
 
   isSyncingDidChange: Ember.observer('isSyncing', function () {
     return Ember.run.next(this, function () {
@@ -32,63 +34,66 @@ export default Model.extend({
     });
   }),
 
-  urlGithub: Ember.computed(function () {
-    return config.sourceEndpoint + '/' + (this.get('login'));
-  }),
+  @computed('login')
+  urlGithub(login) {
+    return `${config.sourceEndpoint}/${login}`;
+  },
 
-  _rawPermissions: Ember.computed(function () {
+  @computed()
+  _rawPermissions() {
     return this.get('ajax').get('/users/permissions');
-  }),
+  },
 
-  permissions: Ember.computed(function () {
-    var permissions;
-    permissions = Ember.ArrayProxy.create({
+  @computed('_rawPermissions')
+  permissions(_rawPermissions) {
+    let permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((data) => {
+    _rawPermissions.then((data) => {
       return permissions.set('content', data.permissions);
     });
     return permissions;
-  }),
+  },
 
-  adminPermissions: Ember.computed(function () {
-    var permissions;
-    permissions = Ember.ArrayProxy.create({
+  @computed('_rawPermissions')
+  adminPermissions(_rawPermissions) {
+    let permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((data) => {
+    _rawPermissions.then((data) => {
       return permissions.set('content', data.admin);
     });
     return permissions;
-  }),
+  },
 
-  pullPermissions: Ember.computed(function () {
-    var permissions;
-    permissions = Ember.ArrayProxy.create({
+  @computed('_rawPermissions')
+  pullPermissions(_rawPermissions) {
+    const permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((data) => {
+    _rawPermissions.then((data) => {
       return permissions.set('content', data.pull);
     });
     return permissions;
-  }),
+  },
 
-  pushPermissions: Ember.computed(function () {
-    var permissions;
-    permissions = Ember.ArrayProxy.create({
+  @computed('_rawPermissions')
+  pushPermissions(_rawPermissions) {
+    const permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((data) => {
+    _rawPermissions.then((data) => {
       return permissions.set('content', data.push);
     });
     return permissions;
-  }),
+  },
 
-  pushPermissionsPromise: Ember.computed(function () {
-    return this.get('_rawPermissions').then((data) => {
+  @computed('_rawPermissions')
+  pushPermissionsPromise(_rawPermissions) {
+    return _rawPermissions.then((data) => {
       return data.pull;
     });
-  }),
+  },
 
   hasAccessToRepo(repo) {
     let id = repo.get ? repo.get('id') : repo;
@@ -114,9 +119,7 @@ export default Model.extend({
     }
   },
 
-  type: Ember.computed(function () {
-    return 'user';
-  }),
+  type: 'user',
 
   sync() {
     var self;
