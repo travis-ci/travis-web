@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
     ];
   },
 
-  star: task(function * (repo) {
+  star: task(function* (repo) {
     repo.set('starred', true);
     try {
       yield this.get('ajax').postV3(`/repo/${repo.get('id')}/star`);
@@ -33,7 +33,7 @@ export default Ember.Controller.extend({
     }
   }).group('starring'),
 
-  unstar: task(function * (repo) {
+  unstar: task(function* (repo) {
     repo.set('starred', false);
     try {
       yield this.get('ajax').postV3(`/repo/${repo.get('id')}/unstar`);

@@ -15,9 +15,7 @@ export default Ember.Controller.extend({
 
   @notEmpty('model') branchesExist: null,
 
-  @filter('model', function (branch, index, array) {
-    return !branch.default_branch;
-  })  nonDefaultBranches: null,
+  @filter('model', (branch) => !branch.default_branch)  nonDefaultBranches: null,
 
   @computed('nonDefaultBranches')
   activeBranches(nonDefaultBranches) {
@@ -33,10 +31,14 @@ export default Ember.Controller.extend({
 
   _sortBranchesByFinished(branches) {
     const unfinished = branches.filter(branch => {
-      return Ember.isNone(Ember.get(branch, 'last_build.finished_at'));
+      const finishedAt = Ember.get(branch, 'last_build.finished_at');
+      return Ember.isNone(finishedAt);
     });
-    const sortedFinished = branches.filterBy('last_build.finished_at')
-      .sortBy('last_build.finished_at').reverse();
+
+    const sortedFinished = branches
+      .filterBy('last_build.finished_at')
+      .sortBy('last_build.finished_at')
+      .reverse();
 
     return unfinished.concat(sortedFinished);
   }

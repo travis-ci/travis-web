@@ -17,7 +17,8 @@ export default Ember.Controller.extend({
     return branches
              .filter(branch => branch.get('exists_on_github'))
              .filter(branch => {
-               return ! cronJobs.any(cron => branch.get('name') === cron.get('branch.name'));
+               const branchName = branch.get('name');
+               return ! cronJobs.any(cron => branchName === cron.get('branch.name'));
              });
   },
 
