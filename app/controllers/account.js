@@ -1,6 +1,6 @@
 /* global Travis */
 import Ember from 'ember';
-import { config } from 'travis/config/environment';
+import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
