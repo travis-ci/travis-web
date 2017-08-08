@@ -54,6 +54,7 @@ export default PageObject.create({
     preamble: text('p.flash-message .preamble'),
 
     isSuccess: hasClass('success'),
-    isNotice: hasClass('notice')
+    isNotice: hasClass('notice'),
+    isError: hasClass('error')
   }
 });

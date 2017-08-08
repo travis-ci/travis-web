@@ -24,3 +24,21 @@ test('the flashes service permits overriding the preamble', function (assert) {
     assert.ok(topPage.flashMessage.isNotice, 'expected the flash message to have class `notice`');
   });
 });
+
+test('the flashes service has a loadFlashes interface', function (assert) {
+  // See here for an example of where this is used:
+  // https://github.com/travis-ci/travis-api/blob/c4ae7cd2d7e403d4bf1649c3c7d1d5a68d871095/lib/travis/api/app/endpoint/jobs.rb#L33-L35
+
+  visit('/');
+  this.application.__container__.lookup('service:flashes').loadFlashes([{
+    error: {
+      message: 'An error message.'
+    }
+  }]);
+
+  andThen(() => {
+    assert.equal(topPage.flashMessage.text, 'An error message.');
+    assert.equal(topPage.flashMessage.preamble, 'Oh no!');
+    assert.ok(topPage.flashMessage.isError, 'expected the flash message to have class `error`');
+  });
+});

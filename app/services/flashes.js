@@ -69,18 +69,14 @@ export default Ember.Service.extend({
 
       let messageText, preamble;
 
-      if (msg[type].message) {
-        messageText = msg[type].message;
-        preamble = msg[type].preamble;
-      } else {
-        messageText = msg;
-        preamble = messageTypeToPreamble[type];
-      }
+      messageText = msg[type].message;
+      preamble = msg[type].preamble || messageTypeToPreamble[type];
+
       msg = {
         type,
         message: messageText,
         icon: messageTypeToIcon[type],
-        preamble: preamble,
+        preamble,
         closeButton: messageTypeToCloseButton[type]
       };
       this.get('flashes').unshiftObject(msg);
