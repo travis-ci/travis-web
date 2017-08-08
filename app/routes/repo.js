@@ -46,7 +46,8 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   model(params) {
-    const slug = params.owner + '/' + params.name;
+    const { name, owner } = params;
+    const slug = `${owner}/${name}`;
     return Repo.fetchBySlug(this.get('store'), slug);
   },
 });

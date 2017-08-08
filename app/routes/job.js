@@ -2,7 +2,7 @@ import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   titleToken(model) {
-    return 'Job #' + (model.get('number'));
+    return `Job #${model.get('number')}`;
   },
 
   serialize(model/* , params*/) {
@@ -13,7 +13,7 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    var buildController, repo;
+    let buildController, repo;
     if (model && !model.get) {
       model = this.store.recordForId('job', model);
       this.store.find('job', model);
@@ -42,7 +42,7 @@ export default TravisRoute.extend({
   },
 
   deactivate() {
-    var buildController;
+    let buildController;
     buildController = this.controllerFor('build');
     buildController.set('sendFaviconStateChanges', true);
     this.controllerFor('build').set('build', null);

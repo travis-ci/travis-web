@@ -8,7 +8,7 @@ export default TravisRoute.extend({
   @service tabStates: null,
 
   model(/* params*/) {
-    var allTheBranches, apiEndpoint, options, repoId;
+    let allTheBranches, apiEndpoint, options, repoId;
     apiEndpoint = config.apiEndpoint;
     repoId = this.modelFor('repo').get('id');
     allTheBranches = Ember.ArrayProxy.create();
@@ -18,14 +18,14 @@ export default TravisRoute.extend({
       }
     };
     if (this.get('auth.signedIn')) {
-      options.headers.Authorization = 'token ' + (this.auth.token());
+      options.headers.Authorization = `token ${this.auth.token()}`;
     }
 
     let path = `${apiEndpoint}/repo/${repoId}/branches`;
     let includes = 'build.commit&limit=100';
     let url = `${path}?include=${includes}`;
 
-    return Ember.$.ajax(url, options).then(function (response) {
+    return Ember.$.ajax(url, options).then((response) => {
       allTheBranches = response.branches;
       return allTheBranches;
     });
