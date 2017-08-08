@@ -10,5 +10,6 @@ test('the flashes service displays flash messages', function (assert) {
 
   andThen(() => {
     assert.equal(topPage.flashMessage.text, 'TOTAL SUCCESS');
+    assert.ok(topPage.flashMessage.isSuccess, 'expected the flash message to have class `success`');
   });
 });
