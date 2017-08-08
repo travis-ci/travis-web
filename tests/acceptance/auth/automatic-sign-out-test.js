@@ -17,7 +17,7 @@ skip('when token is invalid user should be signed out', function (assert) {
   visit('/');
 
   andThen(function () {
-    assert.equal(topPage.flashMessage, "You've been signed out, because your access token has expired.");
+    assert.equal(topPage.flashMessage.text, "You've been signed out, because your access token has expired.");
   });
   percySnapshot(assert);
 });

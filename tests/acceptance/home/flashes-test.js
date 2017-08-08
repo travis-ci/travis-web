@@ -9,6 +9,6 @@ test('the flashes service displays flash messages', function (assert) {
   this.application.__container__.lookup('service:flashes').success('TOTAL SUCCESS');
 
   andThen(() => {
-    assert.equal(topPage.flashMessage, 'TOTAL SUCCESS');
+    assert.equal(topPage.flashMessage.text, 'TOTAL SUCCESS');
   });
 });

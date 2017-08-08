@@ -39,7 +39,7 @@ test('debugging job', function (assert) {
 
   andThen(function () {
     assert.deepEqual(requestBodies.pop(), { quiet: true });
-    assert.equal(topPage.flashMessage, 'The job was successfully restarted in debug mode but make sure to watch the log for a host to connect to.');
+    assert.equal(topPage.flashMessage.text, 'The job was successfully restarted in debug mode but make sure to watch the log for a host to connect to.');
   });
   percySnapshot(assert);
 });
