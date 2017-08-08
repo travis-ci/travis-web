@@ -69,7 +69,7 @@ export default Ember.Controller.extend({
   },
 
   @computed('model.{type,login}')
-  billingUrl(type, name, login) {
+  billingUrl(type, login) {
     const id = type === 'user' ? 'user' : login;
     return `${config.billingEndpoint}/subscriptions/${id}`;
   },
