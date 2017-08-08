@@ -2,6 +2,7 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
+import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 
 export default DS.Store.extend({
@@ -82,7 +83,7 @@ export default DS.Store.extend({
 
       Ember.run.later(() => {
         this.findRecord('branch', `/repo/${data.repository_id}/branch/${branchName}`);
-      }, 2000);
+      }, config.intervals.branchCreatedSyncDelay);
 
       delete data.branch;
     }
