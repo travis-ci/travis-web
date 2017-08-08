@@ -50,3 +50,13 @@ test('githubBranch', function (assert) {
   let service = this.subject();
   assert.equal(service.githubBranch(this.slug, this.branch), 'https://github.com/travis-ci/travis-web/tree/new-pr');
 });
+
+test('billingUrl as organization', function (assert) {
+  let service = this.subject();
+  assert.equal(service.billingUrl('organization', 'travis-ci'), 'https://billing.travis-ci.com/subscriptions/travis-ci');
+});
+
+test('billingUrl as organization', function (assert) {
+  let service = this.subject();
+  assert.equal(service.billingUrl('user', 'travis-ci'), 'https://billing.travis-ci.com/subscriptions/user');
+});
