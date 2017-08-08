@@ -13,3 +13,14 @@ test('the flashes service displays flash messages', function (assert) {
     assert.ok(topPage.flashMessage.isSuccess, 'expected the flash message to have class `success`');
   });
 });
+
+test('the flashes service permits overriding the preamble', function (assert) {
+  visit('/');
+  this.application.__container__.lookup('service:flashes').notice('A notice!', 'Custom preamble');
+
+  andThen(() => {
+    assert.equal(topPage.flashMessage.text, 'A notice!');
+    assert.equal(topPage.flashMessage.preamble, 'Custom preamble');
+    assert.ok(topPage.flashMessage.isNotice, 'expected the flash message to have class `notice`');
+  });
+});

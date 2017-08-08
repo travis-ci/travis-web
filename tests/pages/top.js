@@ -49,7 +49,11 @@ export default PageObject.create({
   flashMessage: {
     scope: 'ul.flash li:eq(0)',
     resetScope: true,
+
     text: text('p.flash-message .message'),
-    isSuccess: hasClass('success')
+    preamble: text('p.flash-message .preamble'),
+
+    isSuccess: hasClass('success'),
+    isNotice: hasClass('notice')
   }
 });

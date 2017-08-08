@@ -66,11 +66,21 @@ export default Ember.Service.extend({
     for (i = 0, len = msgs.length; i < len; i++) {
       msg = msgs[i];
       type = Object.keys(msg)[0];
+
+      let messageText, preamble;
+
+      if (msg[type].message) {
+        messageText = msg[type].message;
+        preamble = msg[type].preamble;
+      } else {
+        messageText = msg;
+        preamble = messageTypeToPreamble[type];
+      }
       msg = {
         type,
-        message: msg[type],
+        message: messageText,
         icon: messageTypeToIcon[type],
-        preamble: messageTypeToPreamble[type],
+        preamble: preamble,
         closeButton: messageTypeToCloseButton[type]
       };
       this.get('flashes').unshiftObject(msg);
@@ -100,23 +110,23 @@ export default Ember.Service.extend({
     this.setup();
   },
 
-  display(type, message) {
+  display(type, message, preamble) {
     if (!['error', 'notice', 'success'].includes(type)) {
       // eslint-disable-next-line
       console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
-    this.loadFlashes([{ [type]: message }]);
+    this.loadFlashes([{ [type]: { message, preamble } }]);
   },
 
-  success(message) {
-    this.display('success', message);
+  success(message, preamble = messageTypeToPreamble['success']) {
+    this.display('success', message, preamble);
   },
 
-  error(message) {
-    this.display('error', message);
+  error(message, preamble = messageTypeToPreamble['error']) {
+    this.display('error', message, preamble);
   },
 
-  notice(message) {
-    this.display('notice', message);
+  notice(message, preamble = messageTypeToPreamble['notice']) {
+    this.display('notice', message, preamble);
   }
 });
