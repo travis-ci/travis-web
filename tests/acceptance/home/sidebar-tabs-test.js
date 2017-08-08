@@ -21,7 +21,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       slug: 'killjoys/willful-subjects'
     });
 
-    server.create('repository', {
+    let otherRepo = server.create('repository', {
       slug: 'other/other',
       skipPermissions: true
     });
@@ -51,6 +51,31 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       state: 'queued',
       commit,
       build
+    });
+
+    let otherCommit = server.create('commit');
+    let otherBuild = server.create('build', {
+      repository: otherRepo,
+      commit: otherCommit,
+      state: 'queued'
+    });
+    server.create('job', {
+      repository: otherRepo,
+      commit: otherCommit,
+      build: otherBuild,
+      state: 'started'
+    });
+
+    let otherCreatedBuild = server.create('build', {
+      repository: otherRepo,
+      commit: otherCommit,
+      state: 'created'
+    });
+    server.create('job', {
+      repository: otherRepo,
+      commit: otherCommit,
+      build: otherCreatedBuild,
+      state: 'created'
     });
 
     commit.job = job;

@@ -15,6 +15,8 @@ export default Ember.Component.extend({
   @service auth: null,
   @service router: null,
 
+  @alias('auth.currentUser') currentUser: null,
+
   init(...args) {
     this._super(args);
     // this starts the fetch after the sidebar is rendered, which is not ideal.
@@ -73,12 +75,12 @@ export default Ember.Component.extend({
     return runningJobs;
   },
 
-  @computed()
-  queuedJobs() {
+  @computed('currentUser')
+  queuedJobs(user) {
     const queuedStates = ['created'];
     const result = this.get('store').filter(
       'job',
-      job => queuedStates.includes(job.get('state'))
+      job => queuedStates.includes(job.get('state') && user.hasAccessToRepo(job.get('repo')))
     );
     result.set('isLoaded', false);
     result.then(() => result.set('isLoaded', true));
