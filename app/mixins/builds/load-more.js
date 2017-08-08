@@ -34,8 +34,7 @@ export default Ember.Mixin.create({
   },
 
   loadMoreBuilds(id, buildsLength, type) {
-    var options;
-    options = {
+    let options = {
       repository_id: id,
       offset: buildsLength
     };
