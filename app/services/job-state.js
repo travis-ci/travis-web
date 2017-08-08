@@ -23,7 +23,8 @@ export default Ember.Service.extend({
     const result = yield this.get('store').filter(
       'job',
       {},
-      job => runningStates.includes(job.get('state')) && user.hasAccessToRepo(job.get('repo'))
+      job =>
+        runningStates.includes(job.get('state')) && user && user.hasAccessToRepo(job.get('repo'))
     );
 
     result.set('isLoaded', true);
