@@ -60,9 +60,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
   }
 });
 
-test('the home page shows running tab in pro version', (assert) => {
-  withFeature('pro-version');
-
+test('the home page shows running tab', (assert) => {
   sidebarPage
     .visit()
     .clickSidebarRunningTab();
@@ -74,9 +72,7 @@ test('the home page shows running tab in pro version', (assert) => {
   percySnapshot(assert);
 });
 
-test('maintains sidebar tab state when viewing running job in pro version', (assert) => {
-  withFeature('pro-version');
-
+test('maintains sidebar tab state when viewing running job', (assert) => {
   sidebarPage
     .visit()
     .clickSidebarRunningTab()

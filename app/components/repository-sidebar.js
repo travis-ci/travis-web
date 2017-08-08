@@ -68,16 +68,13 @@ export default Ember.Component.extend({
     return runningAmount + queuedAmount;
   },
 
-  @computed('features.proVersion', 'jobState.runningJobs.[]')
-  runningJobs(proVersion, runningJobs) {
-    if (!proVersion) { return []; }
+  @computed('jobState.runningJobs.[]')
+  runningJobs(runningJobs) {
     return runningJobs;
   },
 
-  @computed('features.proVersion')
-  queuedJobs(proVersion) {
-    if (!proVersion) { return []; }
-
+  @computed()
+  queuedJobs() {
     const queuedStates = ['created'];
     const result = this.get('store').filter(
       'job',
