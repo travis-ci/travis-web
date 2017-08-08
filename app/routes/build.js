@@ -5,12 +5,11 @@ export default TravisRoute.extend({
   @service tabStates: null,
 
   titleToken(model) {
-    return 'Build #' + (model.get('number'));
+    return `Build #${model.get('number')}`;
   },
 
-  serialize(model/* , params*/) {
-    var id;
-    id = model.get ? model.get('id') : model;
+  serialize(model) {
+    const id = model.get ? model.get('id') : model;
     return {
       build_id: id
     };

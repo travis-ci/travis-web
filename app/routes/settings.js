@@ -45,11 +45,11 @@ export default TravisRoute.extend({
   fetchCustomSshKey() {
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
-      return this.store.find('ssh_key', repo.get('id')).then((function (result) {
+      return this.store.find('ssh_key', repo.get('id')).then(((result) => {
         if (!result.get('isNew')) {
           return result;
         }
-      }), function (xhr) {
+      }), (xhr) => {
         if (xhr.status === 404) {
           return false;
         }
@@ -60,34 +60,32 @@ export default TravisRoute.extend({
   fetchSshKey() {
     if (config.endpoints.sshKey) {
       const repo = this.modelFor('repo');
-      return this.get('ajax').get('/repos/' + (repo.get('id')) + '/key', (data) => {
-        return Ember.Object.create({
+      const url = `/repos/${repo.get('id')}/key`;
+      return this.get('ajax').get(url, (data) => {
+        const fingerprint = Ember.Object.create({
           fingerprint: data.fingerprint
         });
+        return fingerprint;
       });
     }
   },
 
   fetchRepositoryActiveFlag() {
     const repoId = this.modelFor('repo').get('id');
-    const apiEndpoint = config.apiEndpoint;
-
-    return Ember.$.ajax(apiEndpoint + '/repo/' + repoId, {
+    const url = `${config.apiEndpoint}/repo/${repoId}`;
+    return Ember.$.ajax(url, {
       headers: {
-        Authorization: 'token ' + this.auth.token(),
+        Authorization: `token ${this.auth.token()}`,
         'Travis-API-Version': '3'
       }
-    }).then(function (response) {
-      return response.active;
-    });
+    }).then(response => response.active);
   },
 
   hasPushAccess() {
     const repoId = parseInt(this.modelFor('repo').get('id'));
-    return this.auth.get('currentUser').get('pushPermissionsPromise').then(function (permissions) {
-      return permissions.filter(function (item) {
-        return item === repoId;
-      });
+    return this.auth.get('currentUser').get('pushPermissionsPromise').then((permissions) => {
+      const hasPushAccess = permissions.filter(p => p === repoId);
+      return hasPushAccess;
     });
   },
 
