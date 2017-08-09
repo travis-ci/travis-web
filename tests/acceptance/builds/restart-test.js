@@ -24,7 +24,7 @@ test('restarting build', function (assert) {
     .restartBuild();
 
   andThen(function () {
-    assert.equal(topPage.flashMessage, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
+    assert.equal(topPage.flashMessage.text, 'The build was successfully restarted.', 'restarted notification should display proper build restarted text');
     assert.equal(buildPage.singleJobLogText, 'Hello log', 'shows log text of single build job');
   });
 });

@@ -29,6 +29,6 @@ test('restarting job', function (assert) {
     .cancelJob();
 
   andThen(function () {
-    assert.equal(topPage.flashMessage, 'Job has been successfully cancelled.', 'cancelled job notification should be displayed');
+    assert.equal(topPage.flashMessage.text, 'Job has been successfully cancelled.', 'cancelled job notification should be displayed');
   });
 });
