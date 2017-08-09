@@ -141,6 +141,8 @@ module.exports = function (environment) {
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;
+
+    ENV.billingEndpoint = 'https://billing.travis-ci.com';
   }
 
   if (environment === 'production') {
