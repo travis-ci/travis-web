@@ -56,7 +56,7 @@ test('billingUrl as organization', function (assert) {
   assert.equal(service.billingUrl('organization', 'travis-ci'), 'https://billing.travis-ci.com/subscriptions/travis-ci');
 });
 
-test('billingUrl as organization', function (assert) {
+test('billingUrl as user', function (assert) {
   let service = this.subject();
   assert.equal(service.billingUrl('user', 'travis-ci'), 'https://billing.travis-ci.com/subscriptions/user');
 });
