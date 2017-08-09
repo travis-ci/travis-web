@@ -1,12 +1,25 @@
 import Ember from 'ember';
 import { task } from 'ember-concurrency';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
   tagName: 'button',
   classNames: ['switch'],
   classNameBindings: ['hook.active:active', 'disabled:disabled', 'disabled:inline-block'],
+
+  attributeBindings: ['aria-checked'],
+
   click() {
     this.get('toggleHook').perform();
+  },
+
+  @computed('hook.active')
+  'aria-checked'(active) {
+    if (active) {
+      return 'true';
+    } else {
+      return 'false';
+    }
   },
 
   toggleHook: task(function* () {

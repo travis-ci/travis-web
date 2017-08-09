@@ -1,6 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  attribute,
   clickable,
   collection,
   hasClass,
@@ -16,7 +17,8 @@ function hooksCollection(scope) {
     item: {
       name: text('a.profile-repo'),
       isActive: hasClass('active', '.switch'),
-      toggle: clickable('.switch')
+      toggle: clickable('.switch'),
+      ariaChecked: attribute('aria-checked', '.switch')
     }
   });
 }
