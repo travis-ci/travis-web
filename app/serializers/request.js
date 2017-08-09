@@ -1,6 +1,6 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
-var Serializer = V2FallbackSerializer.extend({
+let Serializer = V2FallbackSerializer.extend({
 
   keyForV2Relationship: function (key/* , typeClass, method*/) {
     if (key === 'repo') {
@@ -12,7 +12,7 @@ var Serializer = V2FallbackSerializer.extend({
 
   normalizeArrayResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commits) {
-      payload.requests.forEach(function (request) {
+      payload.requests.forEach((request) => {
         let commit = commit = payload.commits.findBy('id', request.commit_id);
         if (commit) {
           request.commit = commit;
