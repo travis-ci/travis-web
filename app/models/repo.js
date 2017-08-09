@@ -139,7 +139,7 @@ const Repo = Model.extend({
   },
 
   regenerateKey(options) {
-    const url = `/repo/${this.get('id')}/key`;
+    const url = `/repos/${this.get('id')}/key`;
     return this.get('ajax').ajax(url, 'post', options);
   },
 
