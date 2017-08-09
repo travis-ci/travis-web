@@ -7,19 +7,16 @@ export default Ember.ArrayProxy.extend({
 
   @computed()
   promise() {
-    var self;
-    self = this;
-    return new Ember.RSVP.Promise(function (resolve) {
-      var observer;
-      observer = function () {
-        if (self.get('isLoaded')) {
+    return new Ember.RSVP.Promise((resolve) => {
+      let observer = function () {
+        if (this.get('isLoaded')) {
           resolve(self);
-          self.removeObserver('isLoaded', observer);
+          this.removeObserver('isLoaded', observer);
           return true;
         }
       };
       if (!observer()) {
-        return self.addObserver('isLoaded', observer);
+        return this.addObserver('isLoaded', observer);
       }
     });
   },
@@ -28,7 +25,7 @@ export default Ember.ArrayProxy.extend({
     this.set('isLoading', true);
     return array.then((function (_this) {
       return function () {
-        array.forEach(function (record) {
+        array.forEach((record) => {
           if (!_this.includes(record)) {
             return _this.pushObject(record);
           }
@@ -47,7 +44,7 @@ export default Ember.ArrayProxy.extend({
   },
 
   observedArrayWillChange(array, index, removedCount) {
-    var i, len, object, removedObjects, results;
+    let i, len, object, removedObjects, results;
     removedObjects = array.slice(index, index + removedCount);
     results = [];
     for (i = 0, len = removedObjects.length; i < len; i++) {
@@ -58,7 +55,7 @@ export default Ember.ArrayProxy.extend({
   },
 
   observedArraydidChange(array, index, removedCount, addedCount) {
-    var addedObjects, i, len, object, results;
+    let addedObjects, i, len, object, results;
     addedObjects = array.slice(index, index + addedCount);
     results = [];
     for (i = 0, len = addedObjects.length; i < len; i++) {

@@ -13,7 +13,7 @@ export default (function () {
     this.containerSelector = containerSelector;
     this.position = this.window.scrollTop();
     this.window.scroll(() => {
-      return Ember.run.throttle(this, this.onScroll, [], 200, false);
+      Ember.run.throttle(this, this.onScroll, [], 200, false);
     });
     return this;
   }
@@ -31,7 +31,7 @@ export default (function () {
   };
 
   ToTop.prototype.positionElement = function () {
-    var container, containerHeight, element, max, offset, windowHeight;
+    let container, containerHeight, element, max, offset, windowHeight;
     element = this.element();
     container = this.container();
     if (element.length === 0) {

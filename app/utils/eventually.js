@@ -1,6 +1,6 @@
 export default function (anObjectOrAPromise, callback) {
   if (anObjectOrAPromise.then) {
-    anObjectOrAPromise.then(function (result) {
+    anObjectOrAPromise.then((result) => {
       callback(result);
     });
   } else {
