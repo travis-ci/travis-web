@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { task } from 'ember-concurrency';
 
 export default Ember.Component.extend({
-  tagName: 'a',
+  tagName: 'button',
   classNames: ['switch'],
   classNameBindings: ['hook.active:active', 'disabled:disabled', 'disabled:inline-block'],
   click() {

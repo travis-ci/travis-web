@@ -5,7 +5,7 @@ import { task } from 'ember-concurrency';
 export default Ember.Component.extend({
   @service flashes: null,
 
-  tagName: 'a',
+  tagName: 'button',
   classNames: ['switch'],
   classNameBindings: ['active', 'key'],
 
