@@ -18,7 +18,8 @@ function hooksCollection(scope) {
       name: text('a.profile-repo'),
       isActive: hasClass('active', '.switch'),
       toggle: clickable('.switch'),
-      ariaChecked: attribute('aria-checked', '.switch')
+      ariaChecked: attribute('aria-checked', '.switch'),
+      role: attribute('role', '.switch')
     }
   });
 }

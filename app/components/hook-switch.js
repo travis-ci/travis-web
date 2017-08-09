@@ -7,7 +7,9 @@ export default Ember.Component.extend({
   classNames: ['switch'],
   classNameBindings: ['hook.active:active', 'disabled:disabled', 'disabled:inline-block'],
 
-  attributeBindings: ['aria-checked'],
+  attributeBindings: ['aria-checked', 'role'],
+
+  role: 'switch',
 
   click() {
     this.get('toggleHook').perform();

@@ -58,6 +58,7 @@ test('updating hooks', function (assert) {
 
   andThen(() => {
     assert.equal(profilePage.administerableHooks(0).ariaChecked, 'true', 'expected the active hook to have aria-checked=true');
+    assert.equal(profilePage.administerableHooks(0).role, 'switch', 'expected the hook to be marked as a switch');
     assert.equal(profilePage.administerableHooks(1).ariaChecked, 'false', 'expected the inactive hook to have aria-checked=false');
   });
 
