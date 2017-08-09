@@ -121,13 +121,13 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   @alias('isFinished') canDebug: null,
 
   cancel() {
-    return this.get('ajax').postV3('/job/' + (this.get('id')) + '/cancel');
+    const url = `/job/${this.get('id')}/cancel`;
+    return this.get('ajax').postV3(url);
   },
 
   removeLog() {
-    return this.get('ajax').patch('/jobs/' + (this.get('id')) + '/log').then(() => {
-      return this.reloadLog();
-    });
+    const url = `/jobs/${this.get('id')}/log`;
+    return this.get('ajax').patch(url).then(() => this.reloadLog());
   },
 
   reloadLog() {
@@ -136,13 +136,13 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   restart() {
-    return this.get('ajax').postV3('/job/' + (this.get('id')) + '/restart');
+    const url = `/job/${this.get('id')}/restart`;
+    return this.get('ajax').postV3(url);
   },
 
   debug() {
-    return this.get('ajax').postV3(`/job/${this.get('id')}/debug`, {
-      quiet: true
-    });
+    const url = `/job/${this.get('id')}/debug`;
+    return this.get('ajax').postV3(url, { quiet: true });
   },
 
   appendLog(part) {
@@ -160,10 +160,8 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
       if (Travis.pusher && Travis.pusher.ajaxService) {
         return Travis.pusher.ajaxService.post(Pusher.channel_auth_endpoint, {
           socket_id: Travis.pusher.pusherSocketId,
-          channels: ['private-job-' + this.get('id')]
-        }).then(() => {
-          return Travis.pusher.subscribe(this.get('channelName'));
-        });
+          channels: [`private-job-${this.get('id')}`]
+        }).then(() => Travis.pusher.subscribe(this.get('channelName')));
       }
     } else {
       return Travis.pusher.subscribe(this.get('channelName'));
@@ -182,7 +180,8 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
     this.set('subscribed', false);
     if (Travis.pusher) {
-      return Travis.pusher.unsubscribe('job-' + (this.get('id')));
+      const channel = `job-${this.get('id')}`;
+      return Travis.pusher.unsubscribe(channel);
     }
   },
 
@@ -195,7 +194,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   @computed('finishedAt')
   formattedFinishedAt(finishedAt) {
     if (finishedAt) {
-      var m = moment(finishedAt);
+      let m = moment(finishedAt);
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   },
