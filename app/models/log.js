@@ -15,9 +15,7 @@ let Request = Ember.Object.extend({
       dataType: 'text',
       headers: this.HEADERS,
       success: (body, status, xhr) => {
-        Ember.run(this, function () {
-          return this.handle(body, status, xhr);
-        });
+        Ember.run(this, () => this.handle(body, status, xhr));
       }
     });
   },
