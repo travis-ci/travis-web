@@ -217,8 +217,7 @@ Log.extend(Log.Part, {
 Log.Part.prototype = Log.extend(new Log.Node, {
   remove: function () {},
   process: function (slice, num) {
-    let node, span, spans, string, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4,
-      _this = this;
+    let node, span, spans, string, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4;
     _ref = this.slices[slice] || [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       string = _ref[_i];
@@ -238,7 +237,7 @@ Log.Part.prototype = Log.extend(new Log.Node, {
       }
     }
     if (!(slice >= this.slices.length - 1)) {
-      return setTimeout(() => _this.process(slice + 1, num), Log.TIMEOUT);
+      return setTimeout(() => this.process(slice + 1, num), Log.TIMEOUT);
     }
   }
 });
