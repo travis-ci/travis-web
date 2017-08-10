@@ -8,9 +8,9 @@ export default Ember.ArrayProxy.extend({
   @computed()
   promise() {
     return new Ember.RSVP.Promise((resolve) => {
-      let observer = function () {
+      let observer = () => {
         if (this.get('isLoaded')) {
-          resolve(self);
+          resolve(this);
           this.removeObserver('isLoaded', observer);
           return true;
         }
@@ -23,17 +23,15 @@ export default Ember.ArrayProxy.extend({
 
   load(array) {
     this.set('isLoading', true);
-    return array.then((function (_this) {
-      return function () {
-        array.forEach((record) => {
-          if (!_this.includes(record)) {
-            return _this.pushObject(record);
-          }
-        });
-        _this.set('isLoading', false);
-        return _this.set('isLoaded', true);
-      };
-    })(this));
+    return array.then(() => {
+      array.forEach((record) => {
+        if (!this.includes(record)) {
+          return this.pushObject(record);
+        }
+      });
+      this.set('isLoading', false);
+      return this.set('isLoaded', true);
+    });
   },
 
   observe(collection) {
