@@ -45,25 +45,31 @@ const Repo = Model.extend({
     }, (v) => v.get('repo.id') === id);
   },
 
-  @computed('id')
-  builds(id) {
-    let array, builds;
-    builds = this.store.filter('build', {
-      event_type: ['push', 'api', 'cron'],
-      repository_id: id
-    }, (b) => {
-      let eventTypes = ['push', 'api', 'cron'];
-      // TODO: I don't understand why we need to compare string id's here
-      const buildRepoMatches = `${b.get('repo.id')}` === `${id}`;
-      return buildRepoMatches && eventTypes.includes(b.get('eventType'));
-    });
-    array = ExpandableRecordArray.create({
+  _buildRepoMatches(build, id) {
+    // TODO: I don't understand why we need to compare string id's here
+    return `${build.get('repo.id')}` === `${id}`;
+  },
+
+  _buildObservableArray(builds) {
+    const array = ExpandableRecordArray.create({
       type: 'build',
       content: Ember.A([])
     });
     array.load(builds);
     array.observe(builds);
     return array;
+  },
+
+  @computed('id')
+  builds(id) {
+    const builds = this.store.filter('build', {
+      event_type: ['push', 'api', 'cron'],
+      repository_id: id
+    }, (b) => {
+      let eventTypes = ['push', 'api', 'cron'];
+      return this._buildRepoMatches(b, id) && eventTypes.includes(b.get('eventType'));
+    });
+    return this._buildObservableArray(builds);
   },
 
   @computed('id')
@@ -72,18 +78,10 @@ const Repo = Model.extend({
       event_type: 'pull_request',
       repository_id: id
     }, (b) => {
-      // TODO: I don't understand why we need to compare string id's here
-      const buildRepoMatches = `${b.get('repo.id')}` === `${id}`;
-      return buildRepoMatches && b.get('eventType') === 'pull_request';
+      const isPullRequest = b.get('eventType') === 'pull_request';
+      return this._buildRepoMatches(b, id) && isPullRequest;
     });
-    const array = ExpandableRecordArray.create({
-      type: 'build',
-      content: Ember.A([])
-    });
-    array.load(builds);
-    id = this.get('id');
-    array.observe(builds);
-    return array;
+    return this._buildObservableArray(builds);
   },
 
   @computed('id')
@@ -92,18 +90,10 @@ const Repo = Model.extend({
       event_type: 'cron',
       repository_id: id
     }, (b) => {
-      // TODO: I don't understand why we need to compare string id's here
-      const buildRepoMatches = `${b.get('repo.id')}` === `${id}`;
-      return buildRepoMatches && b.get('eventType') === 'cron';
+      const isCron = b.get('eventType') === 'cron';
+      return this._buildRepoMatches(b, id) && isCron;
     });
-    const array = ExpandableRecordArray.create({
-      type: 'build',
-      content: Ember.A([])
-    });
-    array.load(builds);
-    id = this.get('id');
-    array.observe(builds);
-    return array;
+    return this._buildObservableArray(builds);
   },
 
   @computed('id')
@@ -121,6 +111,7 @@ const Repo = Model.extend({
   },
 
   // TODO: Stop performing a `set` as part of the cp!
+  // TODO: Is this even used?
   @computed('slug', '_stats')
   stats(slug, stats) {
     if (slug) {
