@@ -18,11 +18,13 @@ export default Ember.ArrayProxy.extend({
       next: paginationData.next,
       first: paginationData.first,
       last: paginationData.last,
-      currentPage: Ember.computed(function () {
-        return (paginationData.offset / paginationData.limit + 1);
+      currentPage: Ember.computed(() => {
+        const { offset, limit } = paginationData;
+        return (offset / limit + 1);
       }),
-      numberOfPages: Ember.computed(function () {
-        return Math.ceil(paginationData.count / paginationData.limit);
+      numberOfPages: Ember.computed(() => {
+        const { count, limit } = paginationData;
+        return Math.ceil(count / limit);
       })
     };
   }
