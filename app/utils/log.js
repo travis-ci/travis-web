@@ -2,7 +2,7 @@
 
 import ansiparse from 'npm:ansiparse';
 
-let Log = function () {
+var Log = function () {
   this.autoCloseFold = true;
   this.listeners = [];
   this.renderer = new Log.Renderer;
@@ -16,7 +16,7 @@ let Log = function () {
 export default Log;
 
 Log.extend = function (one, other) {
-  let name;
+  var name;
   for (name in other) {
     one[name] = other[name];
   }
@@ -30,7 +30,7 @@ Log.extend(Log, {
   FOLD: /fold:(start|end):([\w_\-\.]+)/,
   TIME: /time:(start|end):([\w_\-\.]+):?([\w_\-\.\=\,]*)/,
   create: function (options) {
-    let listener, log, _i, _len, _ref;
+    var listener, log, _i, _len, _ref;
     options || (options = {});
     log = new Log();
     if (options.limit) {
@@ -45,7 +45,7 @@ Log.extend(Log, {
   }
 });
 
-let newLineAtTheEndRegexp, newLineRegexp, rRegexp, removeCarriageReturns;
+var newLineAtTheEndRegexp, newLineRegexp, rRegexp, removeCarriageReturns;
 
 Log.Node = function (id, num) {
   this.id = id;
@@ -58,9 +58,9 @@ Log.Node = function (id, num) {
 Log.extend(Log.Node, {
   key: function (id) {
     if (id) {
-      return id.split('-')
-        .map((i) => '000000'.concat(i).slice(-6))
-        .join('');
+      return id.split('-').map(function (i) {
+        return '000000'.concat(i).slice(-6);
+      }).join('');
     }
   }
 });
@@ -77,7 +77,7 @@ Log.extend(Log.Node.prototype, {
 
 Object.defineProperty(Log.Node.prototype, 'log', {
   get: function () {
-    let _ref;
+    var _ref;
     return this._log || (this._log = ((_ref = this.parent) != null ? _ref.log : void 0) || this.parent);
   }
 });
@@ -105,7 +105,7 @@ Log.Nodes = function (parent) {
 
 Log.extend(Log.Nodes.prototype, {
   add: function (item) {
-    let ix, next, prev, _ref, _ref1;
+    var ix, next, prev, _ref, _ref1;
     ix = this.position(item) || 0;
     this.items.splice(ix, 0, item);
     if (this.parent) {
@@ -146,7 +146,7 @@ Log.extend(Log.Nodes.prototype, {
     }
   },
   position: function (item) {
-    let ix, _i;
+    var ix, _i;
     for (ix = _i = this.items.length - 1; _i >= 0; ix = _i += -1) {
       if (this.items[ix].key < item.key) {
         return ix + 1;
@@ -197,7 +197,7 @@ Log.Part = function (id, num, string) {
   this.string = this.string.replace(/\r+\n/gm, '\n');
   this.strings = this.string.split(/^/gm) || [];
   this.slices = ((function () {
-    let _results;
+    var _results;
     _results = [];
     while (this.strings.length > 0) {
       _results.push(this.strings.splice(0, Log.SLICE));
@@ -209,7 +209,7 @@ Log.Part = function (id, num, string) {
 
 Log.extend(Log.Part, {
   create: function (log, num, string) {
-    let part;
+    var part;
     part = new Log.Part(num.toString(), num, string);
     log.addChild(part);
     return part.process(0, -1);
@@ -219,7 +219,7 @@ Log.extend(Log.Part, {
 Log.Part.prototype = Log.extend(new Log.Node, {
   remove: function () {},
   process: function (slice, num) {
-    let node, span, spans, string, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4,
+    var node, span, spans, string, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4,
       _this = this;
     _ref = this.slices[slice] || [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -231,7 +231,7 @@ Log.Part.prototype = Log.extend(new Log.Node, {
       _ref2 = Log.Deansi.apply(string);
       for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
         node = _ref2[_j];
-        span = Log.Span.create(this, `${this.id}-${num += 1}`, num, node.text, node['class']);
+        span = Log.Span.create(this, '' + this.id + '-' + (num += 1), num, node.text, node['class']);
         span.render();
         spans.push(span);
       }
@@ -240,7 +240,9 @@ Log.Part.prototype = Log.extend(new Log.Node, {
       }
     }
     if (!(slice >= this.slices.length - 1)) {
-      return setTimeout((() => { _this.process(slice + 1, num); }, Log.TIMEOUT));
+      return setTimeout((function () {
+        return _this.process(slice + 1, num);
+      }), Log.TIMEOUT);
     }
   }
 });
@@ -252,7 +254,7 @@ newLineRegexp = new RegExp('\n');
 rRegexp = new RegExp('\r');
 
 removeCarriageReturns = function (string) {
-  let index;
+  var index;
   index = string.lastIndexOf('\r');
   if (index === -1) {
     return string;
@@ -263,10 +265,10 @@ removeCarriageReturns = function (string) {
   // return string.replace('\r', '');
 };
 
-let foldNameCount = {};
+var foldNameCount = {};
 
 Log.Span = function (id, num, text, classes) {
-  let fold, time, _ref;
+  var fold, time, _ref;
   Log.Node.apply(this, arguments);
 
   fold = text.match(Log.FOLD);
@@ -276,15 +278,15 @@ Log.Span = function (id, num, text, classes) {
     this.fold = true;
     this.event = fold[1];
 
-    let foldName = fold[2];
+    var foldName = fold[2];
     this.text = foldName;
 
     if (!foldNameCount[foldName]) {
       foldNameCount[foldName] = 0;
     }
 
-    let foldCount = foldNameCount[foldName];
-    this.name = `${foldName}-${foldCount}`;
+    var foldCount = foldNameCount[foldName];
+    this.name = foldName + '-' + foldCount;
     this.visibleName = this.text;
 
     if (this.event === 'end') {
@@ -308,13 +310,13 @@ Log.Span = function (id, num, text, classes) {
 
 Log.extend(Log.Span, {
   create: function (parent, id, num, text, classes) {
-    let span;
+    var span;
     span = new Log.Span(id, num, text, classes);
     parent.addChild(span);
     return span;
   },
   render: function (parent, id, num, text, classes) {
-    let span;
+    var span;
     span = this.create(parent, id, num, text, classes);
     return span.render();
   }
@@ -322,11 +324,10 @@ Log.extend(Log.Span, {
 
 Log.Span.prototype = Log.extend(new Log.Node, {
   render: function () {
-    let tail;
+    var tail;
     if (this.time && this.event === 'end' && this.prev) {
       if (Log.DEBUG) {
-        const msg = `S.0 insert ${this.id} after prev ${this.prev.id}`;
-        console.log(msg);
+        console.log('S.0 insert ' + this.id + ' after prev ' + this.prev.id);
       }
       this.nl = this.prev.nl;
       this.log.insert(this.data, {
@@ -335,8 +336,7 @@ Log.Span.prototype = Log.extend(new Log.Node, {
       this.line = this.prev.line;
     } else if (!this.fold && this.prev && !this.prev.fold && !this.prev.nl) {
       if (Log.DEBUG) {
-        const msg = `S.1 insert ${this.id} after prev ${this.prev.id}`;
-        console.log(msg);
+        console.log('S.1 insert ' + this.id + ' after prev ' + this.prev.id);
       }
       this.log.insert(this.data, {
         after: this.prev.element
@@ -344,8 +344,7 @@ Log.Span.prototype = Log.extend(new Log.Node, {
       this.line = this.prev.line;
     } else if (!this.fold && this.next && !this.next.fold && !this.next.time) {
       if (Log.DEBUG) {
-        const msg = `S.2 insert ${this.id} before next ${this.next.id}`;
-        console.log(msg);
+        console.log('S.2 insert ' + this.id + ' before next ' + this.next.id);
       }
       this.log.insert(this.data, {
         before: this.next.element
@@ -369,9 +368,11 @@ Log.Span.prototype = Log.extend(new Log.Node, {
     }
   },
   split: function (spans) {
-    let line, span, _i, _len;
+    var line, span, _i, _len;
     if (Log.DEBUG) {
-      console.log(`S.4 split [${spans.map(span => span.id).join(', ')}]`);
+      console.log('S.4 split [' + (spans.map(function (span) {
+        return span.id;
+      }).join(', ')) + ']');
     }
     for (_i = 0, _len = spans.length; _i < _len; _i++) {
       span = spans[_i];
@@ -393,11 +394,11 @@ Log.Span.prototype = Log.extend(new Log.Node, {
     return this.parent.num - other.parent.num === this.log.children.indexOf(this.parent) - this.log.children.indexOf(other.parent);
   },
   isSibling: function (other) {
-    let _ref, _ref1;
+    var _ref, _ref1;
     return ((_ref = this.element) != null ? _ref.parentNode : void 0) === ((_ref1 = other.element) != null ? _ref1.parentNode : void 0);
   },
   siblings: function (type) {
-    let siblings, span;
+    var siblings, span;
     siblings = [];
     while ((span = (span || this)[type]) && this.isSibling(span)) {
       siblings.push(span);
@@ -459,7 +460,7 @@ Log.Line = function (log) {
 
 Log.extend(Log.Line, {
   create: function (log, spans) {
-    let line, span, _i, _len;
+    var line, span, _i, _len;
     if ((span = spans[0]) && span.fold) {
       line = new Log.Fold(log, span.event, span.name, span.visibleName);
     } else {
@@ -475,7 +476,7 @@ Log.extend(Log.Line, {
 
 Log.extend(Log.Line.prototype, {
   add: function (span) {
-    let ix;
+    var ix;
     if (span.cr) {
       this.cr = true;
     }
@@ -490,26 +491,24 @@ Log.extend(Log.Line.prototype, {
     }
   },
   remove: function (span) {
-    let ix;
+    var ix;
     if ((ix = this.spans.indexOf(span)) > -1) {
       return this.spans.splice(ix, 1);
     }
   },
   render: function () {
-    let fold;
+    var fold;
     if ((fold = this.prev) && fold.event === 'start' && fold.active) {
       if (this.next && !this.next.fold) {
         if (Log.DEBUG) {
-          const msg = `L.0 insert ${this.id} before next ${this.next.id}`;
-          console.log(msg);
+          console.log('L.0 insert ' + this.id + ' before next ' + this.next.id);
         }
         return this.element = this.log.insert(this.data, {
           before: this.next.element
         });
       } else {
         if (Log.DEBUG) {
-          const msg = `L.0 insert ${this.id} into fold ${fold.id}`;
-          console.log(msg);
+          console.log('L.0 insert ' + this.id + ' into fold ' + fold.id);
         }
         fold = this.log.folds.folds[fold.name].fold;
         return this.element = this.log.insert(this.data, {
@@ -518,30 +517,27 @@ Log.extend(Log.Line.prototype, {
       }
     } else if (this.prev) {
       if (Log.DEBUG) {
-        const msg = `L.1 insert ${this.spans[0].id} after prev ${this.prev.id}`;
-        console.log(msg);
+        console.log('L.1 insert ' + this.spans[0].id + ' after prev ' + this.prev.id);
       }
       return this.element = this.log.insert(this.data, {
         after: this.prev.element
       });
     } else if (this.next) {
       if (Log.DEBUG) {
-        const msg = `L.2 insert ${this.spans[0].id} before next ${this.next.id}`;
-        console.log(msg);
+        console.log('L.2 insert ' + this.spans[0].id + ' before next ' + this.next.id);
       }
       return this.element = this.log.insert(this.data, {
         before: this.next.element
       });
     } else {
       if (Log.DEBUG) {
-        const msg = `L.3 insert ${this.spans[0].id} into #log`;
-        console.log(msg);
+        console.log('L.3 insert ' + this.spans[0].id + ' into #log');
       }
       return this.element = this.log.insert(this.data);
     }
   },
   clear: function () {
-    let cr, _i, _len, _ref, _results;
+    var cr, _i, _len, _ref, _results;
     _ref = this.crs;
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -554,7 +550,7 @@ Log.extend(Log.Line.prototype, {
 
 Object.defineProperty(Log.Line.prototype, 'id', {
   get: function () {
-    let _ref;
+    var _ref;
     return (_ref = this.spans[0]) != null ? _ref.id : void 0;
   }
 });
@@ -570,27 +566,31 @@ Object.defineProperty(Log.Line.prototype, 'data', {
 
 Object.defineProperty(Log.Line.prototype, 'nodes', {
   get: function () {
-    return this.spans.map(span => span.data);
+    return this.spans.map(function (span) {
+      return span.data;
+    });
   }
 });
 
 Object.defineProperty(Log.Line.prototype, 'prev', {
   get: function () {
-    let _ref;
+    var _ref;
     return (_ref = this.spans[0].prev) != null ? _ref.line : void 0;
   }
 });
 
 Object.defineProperty(Log.Line.prototype, 'next', {
   get: function () {
-    let _ref;
+    var _ref;
     return (_ref = this.spans[this.spans.length - 1].next) != null ? _ref.line : void 0;
   }
 });
 
 Object.defineProperty(Log.Line.prototype, 'crs', {
   get: function () {
-    return this.spans.filter(span => span.cr);
+    return this.spans.filter(function (span) {
+      return span.cr;
+    });
   }
 });
 
@@ -605,11 +605,10 @@ Log.Fold = function (log, event, name, visibleName) {
 
 Log.Fold.prototype = Log.extend(new Log.Line, {
   render: function () {
-    let element, _ref;
+    var element, _ref;
     if (this.prev && this.prev.element) {
       if (Log.DEBUG) {
-        const msg = `F.1 insert ${this.id} after prev ${this.prev.id}`;
-        console.log(msg);
+        console.log('F.1 insert ' + this.id + ' after prev ' + this.prev.id);
       }
       element = this.prev.element;
       this.element = this.log.insert(this.data, {
@@ -617,8 +616,7 @@ Log.Fold.prototype = Log.extend(new Log.Line, {
       });
     } else if (this.next) {
       if (Log.DEBUG) {
-        const msg = `F.2 insert ${this.id} before next ${this.next.id}`;
-        console.log(msg);
+        console.log('F.2 insert ' + this.id + ' before next ' + this.next.id);
       }
       element = this.next.element || this.next.element.parentNode;
       this.element = this.log.insert(this.data, {
@@ -626,8 +624,7 @@ Log.Fold.prototype = Log.extend(new Log.Line, {
       });
     } else {
       if (Log.DEBUG) {
-        const msg = `F.3 insert ${this.id}`;
-        console.log(msg);
+        console.log('F.3 insert ' + this.id);
       }
       this.element = this.log.insert(this.data);
     }
@@ -640,7 +637,7 @@ Log.Fold.prototype = Log.extend(new Log.Line, {
 
 Object.defineProperty(Log.Fold.prototype, 'id', {
   get: function () {
-    return `fold-${this.event}-${this.name}`;
+    return 'fold-' + this.event + '-' + this.name;
   }
 });
 
@@ -665,7 +662,7 @@ Object.defineProperty(Log.Fold.prototype, 'data', {
 Log.prototype = Log.extend(new Log.Node, {
   set: function (num, string) {
     if (this.parts[num]) {
-      return console.log(`part ${num} exists`);
+      return console.log('part ' + num + ' exists');
     } else {
       this.parts[num] = true;
       return Log.Part.create(this, num, string);
@@ -684,7 +681,7 @@ Log.prototype = Log.extend(new Log.Node, {
     return this.renderer.hide(node);
   },
   trigger: function () {
-    let args, ix, listener, _i, _len, _ref, _results;
+    var args, ix, listener, _i, _len, _ref, _results;
     args = [this].concat(Array.prototype.slice.apply(arguments));
     _ref = this.listeners;
     _results = [];
@@ -714,7 +711,7 @@ Log.Folds = function (log) {
 
 Log.extend(Log.Folds.prototype, {
   add: function (data) {
-    let fold, _base, _name;
+    var fold, _base, _name;
     fold = (_base = this.folds)[_name = data.name] || (_base[_name] = new Log.Folds.Fold);
     fold.receive(data, {
       autoCloseFold: this.log.autoCloseFold
@@ -735,11 +732,10 @@ Log.extend(Log.Folds.Fold.prototype, {
     }
   },
   activate: function (options) {
-    let fragment, nextSibling, node, parentNode, toRemove, _i, _len, _ref;
+    var fragment, nextSibling, node, parentNode, toRemove, _i, _len, _ref;
     options || (options = {});
     if (Log.DEBUG) {
-      const msg = `F.n - activate ${this.start}`;
-      console.log(msg);
+      console.log('F.n - activate ' + this.start);
     }
     if (!this.fold) { return; }
     toRemove = this.fold.parentNode;
@@ -758,7 +754,7 @@ Log.extend(Log.Folds.Fold.prototype, {
     return this.active = true;
   },
   classes: function (autoCloseFold) {
-    let classes;
+    var classes;
     classes = this.fold.getAttribute('class').split(' ');
     classes.push('fold');
     if (!autoCloseFold) {
@@ -779,7 +775,7 @@ Object.defineProperty(Log.Folds.Fold.prototype, 'fold', {
 
 Object.defineProperty(Log.Folds.Fold.prototype, 'nodes', {
   get: function () {
-    let node, nodes;
+    var node, nodes;
     node = this.fold;
     nodes = [];
     while ((node = node.nextSibling) && node.id !== this.end) {
@@ -797,7 +793,7 @@ Log.Times = function (log) {
 
 Log.extend(Log.Times.prototype, {
   add: function (node) {
-    let time, _base, _name;
+    var time, _base, _name;
     time = (_base = this.times)[_name = node.name] || (_base[_name] = new Log.Times.Time);
     return time.receive(node);
   },
@@ -816,18 +812,16 @@ Log.extend(Log.Times.Time.prototype, {
   receive: function (node) {
     this[node.event] = node;
     if (Log.DEBUG) {
-      const msg = `T.0 - ${node.event} ${node.name}`;
-      console.log(msg);
+      console.log('T.0 - ' + node.event + ' ' + node.name);
     }
     if (this.start && this.end) {
       return this.finish();
     }
   },
   finish: function () {
-    let element;
+    var element;
     if (Log.DEBUG) {
-      const msg = `T.1 - finish ${this.start.name}`;
-      console.log(msg);
+      console.log('T.1 - finish ' + this.start.name);
     }
     element = document.getElementById(this.start.id);
     if (element) {
@@ -836,14 +830,14 @@ Log.extend(Log.Times.Time.prototype, {
   },
   update: function (element) {
     element.setAttribute('class', 'duration');
-    element.setAttribute('title', `This command finished after ${this.duration} seconds.`);
-    return element.lastChild.nodeValue = `${this.duration}s`;
+    element.setAttribute('title', 'This command finished after ' + this.duration + ' seconds.');
+    return element.lastChild.nodeValue = '' + this.duration + 's';
   }
 });
 
 Object.defineProperty(Log.Times.Time.prototype, 'duration', {
   get: function () {
-    let duration;
+    var duration;
     duration = this.stats.duration / 1000 / 1000 / 1000;
     return duration.toFixed(2);
   }
@@ -851,7 +845,7 @@ Object.defineProperty(Log.Times.Time.prototype, 'duration', {
 
 Object.defineProperty(Log.Times.Time.prototype, 'stats', {
   get: function () {
-    let stat, stats, _i, _len, _ref;
+    var stat, stats, _i, _len, _ref;
     if (!(this.end && this.end.stats)) {
       return {};
     }
@@ -869,15 +863,19 @@ Object.defineProperty(Log.Times.Time.prototype, 'stats', {
 Log.Deansi = {
   CLEAR_ANSI: /(?:\033)(?:\[0?c|\[[0356]n|\[7[lh]|\[\?25[lh]|\(B|H|\[(?:\d+(;\d+){,2})?G|\[(?:[12])?[JK]|[DM]|\[0K)/gm,
   apply: function (string) {
-    const _this = this;
+    var nodes,
+      _this = this;
     if (!string) {
       return [];
     }
     string = string.replace(this.CLEAR_ANSI, '');
-    return ansiparse(string).map(part => _this.node(part));
+    nodes = ansiparse(string).map(function (part) {
+      return _this.node(part);
+    });
+    return nodes;
   },
   node: function (part) {
-    let classes, node;
+    var classes, node;
     node = {
       type: 'span',
       text: part.text
@@ -891,7 +889,7 @@ Log.Deansi = {
     return node;
   },
   classes: function (part) {
-    let result;
+    var result;
     result = [];
     result = result.concat(this.colors(part));
     if (result.length > 0) {
@@ -899,13 +897,13 @@ Log.Deansi = {
     }
   },
   colors: function (part) {
-    let colors;
+    var colors;
     colors = [];
     if (part.foreground) {
       colors.push(part.foreground);
     }
     if (part.background) {
-      colors.push(`bg-${part.background}`);
+      colors.push('bg-' + part.background);
     }
     if (part.bold) {
       colors.push('bold');
@@ -957,7 +955,7 @@ Log.Renderer = function () {
 
 Log.extend(Log.Renderer.prototype, {
   insert: function (data, pos) {
-    let after, before, into, node;
+    var after, before, into, node;
     node = this.render(data);
     // eslint-disable-next-line
     if (into = pos != null ? pos.into : void 0) {
@@ -997,7 +995,7 @@ Log.extend(Log.Renderer.prototype, {
     return node;
   },
   render: function (data) {
-    let frag, node, type, _i, _len;
+    var frag, node, type, _i, _len;
     if (data instanceof Array) {
       frag = this.frag.cloneNode(true);
       for (_i = 0, _len = data.length; _i < _len; _i++) {
@@ -1011,11 +1009,11 @@ Log.extend(Log.Renderer.prototype, {
     } else {
       data.type || (data.type = 'paragraph');
       type = data.type[0].toUpperCase() + data.type.slice(1);
-      return this[`render${type}`](data);
+      return this['render' + type](data);
     }
   },
   renderParagraph: function (data) {
-    let node, para, type, _i, _len, _ref;
+    var node, para, type, _i, _len, _ref;
     para = this.para.cloneNode(true);
     if (data.id) {
       para.setAttribute('id', data.id);
@@ -1027,16 +1025,16 @@ Log.extend(Log.Renderer.prototype, {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       node = _ref[_i];
       type = node.type[0].toUpperCase() + node.type.slice(1);
-      node = this[`render${type}`](node);
+      node = this['render' + type](node);
       para.appendChild(node);
     }
     return para;
   },
   renderFold: function (data) {
-    let fold;
+    var fold;
     fold = this.fold.cloneNode(true);
-    fold.setAttribute('id', data.id || (`fold-${data.event}-${data.name}`));
-    fold.setAttribute('class', `fold-${data.event}`);
+    fold.setAttribute('id', data.id || ('fold-' + data.event + '-' + data.name));
+    fold.setAttribute('class', 'fold-' + data.event);
     if (data.event === 'start') {
       fold.lastChild.lastChild.nodeValue = data.visibleName;
     } else {
@@ -1045,7 +1043,7 @@ Log.extend(Log.Renderer.prototype, {
     return fold;
   },
   renderSpan: function (data) {
-    let span;
+    var span;
     span = this.span.cloneNode(true);
     if (data.id) {
       span.setAttribute('id', data.id);
@@ -1057,32 +1055,32 @@ Log.extend(Log.Renderer.prototype, {
     return span;
   },
   renderText: function (data) {
-    let text;
+    var text;
     text = this.text.cloneNode(true);
     text.nodeValue = data.text;
     return text;
   },
   createParagraph: function () {
-    let para;
+    var para;
     para = document.createElement('p');
     para.appendChild(document.createElement('a'));
     return para;
   },
   createFold: function () {
-    let fold;
+    var fold;
     fold = document.createElement('div');
     fold.appendChild(this.createSpan());
     fold.lastChild.setAttribute('class', 'fold-name');
     return fold;
   },
   createSpan: function () {
-    let span;
+    var span;
     span = document.createElement('span');
     span.appendChild(document.createTextNode(' '));
     return span;
   },
   insertBefore: function (node, other) {
-    let log;
+    var log;
     if (other) {
       return other.parentNode.insertBefore(node, other);
     } else {
@@ -1116,7 +1114,7 @@ Log.extend(Log.Renderer.prototype, {
       return;
     }
     if (classes) {
-      return `${classes} ${string}`;
+      return '' + classes + ' ' + string;
     } else {
       return string;
     }
