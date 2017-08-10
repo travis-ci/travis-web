@@ -91,6 +91,8 @@ test('view settings', function (assert) {
   andThen(function () {
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
     assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
+    assert.equal(settingsPage.buildPushes.ariaChecked, 'true', 'expected the build pushes switch to have aria-checked=true');
+    assert.equal(settingsPage.buildPushes.role, 'switch', 'expected the build pushes switch to be marked as such');
 
     assert.ok(settingsPage.limitConcurrentBuilds.isActive, 'expected concurrent builds to be limited');
     assert.equal(settingsPage.limitConcurrentBuilds.value, '1919');
@@ -148,6 +150,7 @@ test('change general settings', function (assert) {
 
   andThen(() => {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
+    assert.equal(settingsPage.buildPushes.ariaChecked, 'false', 'expected the build pushes switch to have aria-checked=false');
     assert.deepEqual(settingToRequestBody.build_pushes, { 'setting.value': false });
   });
 

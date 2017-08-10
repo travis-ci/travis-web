@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
   @service flashes: null,
@@ -8,6 +9,19 @@ export default Ember.Component.extend({
   tagName: 'button',
   classNames: ['switch'],
   classNameBindings: ['active', 'key'],
+
+  attributeBindings: ['aria-checked', 'role'],
+
+  role: 'switch',
+
+  @computed('active')
+  'aria-checked'(active) {
+    if (active) {
+      return 'true';
+    } else {
+      return 'false';
+    }
+  },
 
   save: task(function* () {
     this.toggleProperty('active');
