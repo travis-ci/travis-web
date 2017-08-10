@@ -29,6 +29,6 @@ test('restarting job', function (assert) {
     .restartJob();
 
   andThen(function () {
-    assert.equal(topPage.flashMessage, 'The job was successfully restarted.', 'restarted notification should display proper job restarted text');
+    assert.equal(topPage.flashMessage.text, 'The job was successfully restarted.', 'restarted notification should display proper job restarted text');
   });
 });

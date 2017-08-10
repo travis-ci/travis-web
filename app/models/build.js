@@ -84,7 +84,8 @@ export default Model.extend(DurationCalculations, {
   rawConfigKeys(jobs) {
     let keys = [];
     jobs.forEach((job) => {
-      return safelistedConfigKeys(job.get('config')).forEach((key) => {
+      const configKeys = safelistedConfigKeys(job.get('config'));
+      return configKeys.forEach((key) => {
         if (!keys.includes(key)) {
           return keys.pushObject(key);
         }
@@ -113,11 +114,13 @@ export default Model.extend(DurationCalculations, {
   @alias('isFinished') canRestart: null,
 
   cancel() {
-    return this.get('ajax').postV3('/build/' + (this.get('id')) + '/cancel');
+    const url = `/build/${this.get('id')}/cancel`;
+    return this.get('ajax').postV3(url);
   },
 
   restart() {
-    return this.get('ajax').postV3(`/build/${this.get('id')}/restart`);
+    const url = `/build/${this.get('id')}/restart`;
+    return this.get('ajax').postV3(url);
   },
 
   @computed('jobs.[]')
@@ -132,7 +135,7 @@ export default Model.extend(DurationCalculations, {
   @computed('finishedAt')
   formattedFinishedAt(finishedAt) {
     if (finishedAt) {
-      var m = moment(finishedAt);
+      let m = moment(finishedAt);
       return m.isValid() ? m.format('lll') : 'not finished yet';
     }
   },

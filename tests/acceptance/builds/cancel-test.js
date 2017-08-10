@@ -27,6 +27,6 @@ test('cancelling build', function (assert) {
     .cancelBuild();
 
   andThen(function () {
-    assert.equal(topPage.flashMessage, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
+    assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
   });
 });

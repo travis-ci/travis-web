@@ -239,7 +239,7 @@ test('delete and create environment variables', function (assert) {
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(topPage.flashMessage, 'There was an error saving this environment variable.');
+    assert.equal(topPage.flashMessage.text, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
     server.delete('/settings/env_vars/:id', () => {}, 500);
@@ -249,7 +249,7 @@ test('delete and create environment variables', function (assert) {
 
   andThen(() => {
     assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
-    assert.equal(topPage.flashMessage, 'There was an error deleting this environment variable.');
+    assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
     server.delete('/settings/env_vars/:id', () => {}, 404);
   });
@@ -258,7 +258,7 @@ test('delete and create environment variables', function (assert) {
 
   andThen(() => {
     assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
-    assert.equal(topPage.flashMessage, 'This environment variable has already been deleted. Try refreshing.');
+    assert.equal(topPage.flashMessage.text, 'This environment variable has already been deleted. Try refreshing.');
   });
 });
 

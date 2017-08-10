@@ -7,7 +7,7 @@ export default (function () {
     this.logSelector = logSelector;
     this.position = this.window.scrollTop();
     this.window.scroll(() => {
-      return Ember.run.throttle(this, this.onScroll, [], 200, false);
+      Ember.run.throttle(this, this.onScroll, [], 200, false);
     });
     return this;
   }
@@ -58,7 +58,7 @@ export default (function () {
   };
 
   Tailing.prototype.autoScroll = function () {
-    var logBottom, winBottom;
+    let logBottom, winBottom;
     if (!this.active()) {
       return false;
     }
@@ -73,7 +73,7 @@ export default (function () {
   };
 
   Tailing.prototype.onScroll = function () {
-    var position;
+    let position;
     this.positionButton();
     position = this.window.scrollTop();
     if (position < this.position) {
@@ -83,7 +83,7 @@ export default (function () {
   };
 
   Tailing.prototype.positionButton = function () {
-    var max, offset, tail;
+    let max, offset, tail;
     tail = Ember.$('#tail');
     if (tail.length === 0) {
       return;

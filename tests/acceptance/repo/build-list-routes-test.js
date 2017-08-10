@@ -270,7 +270,7 @@ test('view and cancel pull requests', function (assert) {
   page.builds(0).cancelButton.click();
 
   andThen(() => {
-    assert.equal(topPage.flashMessage, 'Build has been successfully cancelled.');
+    assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
   });
 });
 

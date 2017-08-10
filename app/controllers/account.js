@@ -1,12 +1,12 @@
 /* global Travis */
 import Ember from 'ember';
-import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
   @service auth: null,
+  @service externalLinks: null,
 
   allHooks: [],
 
@@ -70,8 +70,7 @@ export default Ember.Controller.extend({
 
   @computed('model.{type,login}')
   billingUrl(type, login) {
-    const id = type === 'user' ? 'user' : login;
-    return `${config.billingEndpoint}/subscriptions/${id}`;
+    return this.get('externalLinks').billingUrl(type, login);
   },
 
   @computed('billingUrl', 'model.{subscribed,education}')

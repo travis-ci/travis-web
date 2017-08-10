@@ -1,4 +1,4 @@
-var manager = function (headTag) {
+let manager = function (headTag) {
   if (headTag) {
     this.headTag = headTag;
   }
@@ -10,21 +10,19 @@ manager.prototype.getHeadTag = function () {
 };
 
 manager.prototype.setFavicon = function (href) {
-  var head, link, oldLink;
+  let head, link, oldLink;
   head = this.getHeadTag();
   oldLink = this.getLinkTag();
   link = this.createLinkTag();
   head.appendChild(link);
-  setTimeout(function () {
-    return link.setAttribute('href', href);
-  }, 10);
+  setTimeout(() => { link.setAttribute('href', href); }, 10);
   if (oldLink) {
     return head.removeChild(oldLink);
   }
 };
 
 manager.prototype.getLinkTag = function () {
-  var i, len, link, links;
+  let i, len, link, links;
   links = this.getHeadTag().getElementsByTagName('link');
   if (links.length) {
     for (i = 0, len = links.length; i < len; i++) {
@@ -37,7 +35,7 @@ manager.prototype.getLinkTag = function () {
 };
 
 manager.prototype.createLinkTag = function () {
-  var link;
+  let link;
   link = document.createElement('link');
   link.setAttribute('rel', 'icon');
   link.setAttribute('type', 'image/png');
