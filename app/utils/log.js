@@ -58,9 +58,7 @@ Log.Node = function (id, num) {
 Log.extend(Log.Node, {
   key: function (id) {
     if (id) {
-      return id.split('-')
-        .map((i) => '000000'.concat(i).slice(-6))
-        .join('');
+      return id.split('-').map(i => '000000'.concat(i).slice(-6)).join('');
     }
   }
 });
@@ -219,8 +217,7 @@ Log.extend(Log.Part, {
 Log.Part.prototype = Log.extend(new Log.Node, {
   remove: function () {},
   process: function (slice, num) {
-    let node, span, spans, string, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4,
-      _this = this;
+    let node, span, spans, string, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4;
     _ref = this.slices[slice] || [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       string = _ref[_i];
@@ -231,7 +228,7 @@ Log.Part.prototype = Log.extend(new Log.Node, {
       _ref2 = Log.Deansi.apply(string);
       for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
         node = _ref2[_j];
-        span = Log.Span.create(this, `${this.id}-${num += 1}`, num, node.text, node['class']);
+        span = Log.Span.create(this, `${this.id}-${(num += 1)}`, num, node.text, node['class']);
         span.render();
         spans.push(span);
       }
@@ -240,7 +237,7 @@ Log.Part.prototype = Log.extend(new Log.Node, {
       }
     }
     if (!(slice >= this.slices.length - 1)) {
-      return setTimeout((() => { _this.process(slice + 1, num); }, Log.TIMEOUT));
+      return setTimeout(() => this.process(slice + 1, num), Log.TIMEOUT);
     }
   }
 });
@@ -869,12 +866,11 @@ Object.defineProperty(Log.Times.Time.prototype, 'stats', {
 Log.Deansi = {
   CLEAR_ANSI: /(?:\033)(?:\[0?c|\[[0356]n|\[7[lh]|\[\?25[lh]|\(B|H|\[(?:\d+(;\d+){,2})?G|\[(?:[12])?[JK]|[DM]|\[0K)/gm,
   apply: function (string) {
-    const _this = this;
     if (!string) {
       return [];
     }
     string = string.replace(this.CLEAR_ANSI, '');
-    return ansiparse(string).map(part => _this.node(part));
+    return ansiparse(string).map(part => this.node(part));
   },
   node: function (part) {
     let classes, node;
