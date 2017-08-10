@@ -2,7 +2,7 @@
 
 import ansiparse from 'npm:ansiparse';
 
-var Log = function () {
+let Log = function () {
   this.autoCloseFold = true;
   this.listeners = [];
   this.renderer = new Log.Renderer;
@@ -16,7 +16,7 @@ var Log = function () {
 export default Log;
 
 Log.extend = function (one, other) {
-  var name;
+  let name;
   for (name in other) {
     one[name] = other[name];
   }
@@ -30,7 +30,7 @@ Log.extend(Log, {
   FOLD: /fold:(start|end):([\w_\-\.]+)/,
   TIME: /time:(start|end):([\w_\-\.]+):?([\w_\-\.\=\,]*)/,
   create: function (options) {
-    var listener, log, _i, _len, _ref;
+    let listener, log, _i, _len, _ref;
     options || (options = {});
     log = new Log();
     if (options.limit) {
@@ -45,7 +45,7 @@ Log.extend(Log, {
   }
 });
 
-var newLineAtTheEndRegexp, newLineRegexp, rRegexp, removeCarriageReturns;
+let newLineAtTheEndRegexp, newLineRegexp, rRegexp, removeCarriageReturns;
 
 Log.Node = function (id, num) {
   this.id = id;
@@ -77,7 +77,7 @@ Log.extend(Log.Node.prototype, {
 
 Object.defineProperty(Log.Node.prototype, 'log', {
   get: function () {
-    var _ref;
+    let _ref;
     return this._log || (this._log = ((_ref = this.parent) != null ? _ref.log : void 0) || this.parent);
   }
 });
@@ -105,7 +105,7 @@ Log.Nodes = function (parent) {
 
 Log.extend(Log.Nodes.prototype, {
   add: function (item) {
-    var ix, next, prev, _ref, _ref1;
+    let ix, next, prev, _ref, _ref1;
     ix = this.position(item) || 0;
     this.items.splice(ix, 0, item);
     if (this.parent) {
@@ -146,7 +146,7 @@ Log.extend(Log.Nodes.prototype, {
     }
   },
   position: function (item) {
-    var ix, _i;
+    let ix, _i;
     for (ix = _i = this.items.length - 1; _i >= 0; ix = _i += -1) {
       if (this.items[ix].key < item.key) {
         return ix + 1;
@@ -197,7 +197,7 @@ Log.Part = function (id, num, string) {
   this.string = this.string.replace(/\r+\n/gm, '\n');
   this.strings = this.string.split(/^/gm) || [];
   this.slices = ((function () {
-    var _results;
+    let _results;
     _results = [];
     while (this.strings.length > 0) {
       _results.push(this.strings.splice(0, Log.SLICE));
@@ -209,7 +209,7 @@ Log.Part = function (id, num, string) {
 
 Log.extend(Log.Part, {
   create: function (log, num, string) {
-    var part;
+    let part;
     part = new Log.Part(num.toString(), num, string);
     log.addChild(part);
     return part.process(0, -1);
@@ -219,7 +219,7 @@ Log.extend(Log.Part, {
 Log.Part.prototype = Log.extend(new Log.Node, {
   remove: function () {},
   process: function (slice, num) {
-    var node, span, spans, string, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4,
+    let node, span, spans, string, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4,
       _this = this;
     _ref = this.slices[slice] || [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -254,7 +254,7 @@ newLineRegexp = new RegExp('\n');
 rRegexp = new RegExp('\r');
 
 removeCarriageReturns = function (string) {
-  var index;
+  let index;
   index = string.lastIndexOf('\r');
   if (index === -1) {
     return string;
@@ -265,10 +265,10 @@ removeCarriageReturns = function (string) {
   // return string.replace('\r', '');
 };
 
-var foldNameCount = {};
+let foldNameCount = {};
 
 Log.Span = function (id, num, text, classes) {
-  var fold, time, _ref;
+  let fold, time, _ref;
   Log.Node.apply(this, arguments);
 
   fold = text.match(Log.FOLD);
@@ -278,14 +278,14 @@ Log.Span = function (id, num, text, classes) {
     this.fold = true;
     this.event = fold[1];
 
-    var foldName = fold[2];
+    let foldName = fold[2];
     this.text = foldName;
 
     if (!foldNameCount[foldName]) {
       foldNameCount[foldName] = 0;
     }
 
-    var foldCount = foldNameCount[foldName];
+    let foldCount = foldNameCount[foldName];
     this.name = foldName + '-' + foldCount;
     this.visibleName = this.text;
 
@@ -310,13 +310,13 @@ Log.Span = function (id, num, text, classes) {
 
 Log.extend(Log.Span, {
   create: function (parent, id, num, text, classes) {
-    var span;
+    let span;
     span = new Log.Span(id, num, text, classes);
     parent.addChild(span);
     return span;
   },
   render: function (parent, id, num, text, classes) {
-    var span;
+    let span;
     span = this.create(parent, id, num, text, classes);
     return span.render();
   }
@@ -324,7 +324,7 @@ Log.extend(Log.Span, {
 
 Log.Span.prototype = Log.extend(new Log.Node, {
   render: function () {
-    var tail;
+    let tail;
     if (this.time && this.event === 'end' && this.prev) {
       if (Log.DEBUG) {
         console.log('S.0 insert ' + this.id + ' after prev ' + this.prev.id);
@@ -368,7 +368,7 @@ Log.Span.prototype = Log.extend(new Log.Node, {
     }
   },
   split: function (spans) {
-    var line, span, _i, _len;
+    let line, span, _i, _len;
     if (Log.DEBUG) {
       console.log('S.4 split [' + (spans.map(function (span) {
         return span.id;
@@ -394,11 +394,11 @@ Log.Span.prototype = Log.extend(new Log.Node, {
     return this.parent.num - other.parent.num === this.log.children.indexOf(this.parent) - this.log.children.indexOf(other.parent);
   },
   isSibling: function (other) {
-    var _ref, _ref1;
+    let _ref, _ref1;
     return ((_ref = this.element) != null ? _ref.parentNode : void 0) === ((_ref1 = other.element) != null ? _ref1.parentNode : void 0);
   },
   siblings: function (type) {
-    var siblings, span;
+    let siblings, span;
     siblings = [];
     while ((span = (span || this)[type]) && this.isSibling(span)) {
       siblings.push(span);
@@ -460,7 +460,7 @@ Log.Line = function (log) {
 
 Log.extend(Log.Line, {
   create: function (log, spans) {
-    var line, span, _i, _len;
+    let line, span, _i, _len;
     if ((span = spans[0]) && span.fold) {
       line = new Log.Fold(log, span.event, span.name, span.visibleName);
     } else {
@@ -476,7 +476,7 @@ Log.extend(Log.Line, {
 
 Log.extend(Log.Line.prototype, {
   add: function (span) {
-    var ix;
+    let ix;
     if (span.cr) {
       this.cr = true;
     }
@@ -491,13 +491,13 @@ Log.extend(Log.Line.prototype, {
     }
   },
   remove: function (span) {
-    var ix;
+    let ix;
     if ((ix = this.spans.indexOf(span)) > -1) {
       return this.spans.splice(ix, 1);
     }
   },
   render: function () {
-    var fold;
+    let fold;
     if ((fold = this.prev) && fold.event === 'start' && fold.active) {
       if (this.next && !this.next.fold) {
         if (Log.DEBUG) {
@@ -537,7 +537,7 @@ Log.extend(Log.Line.prototype, {
     }
   },
   clear: function () {
-    var cr, _i, _len, _ref, _results;
+    let cr, _i, _len, _ref, _results;
     _ref = this.crs;
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -550,7 +550,7 @@ Log.extend(Log.Line.prototype, {
 
 Object.defineProperty(Log.Line.prototype, 'id', {
   get: function () {
-    var _ref;
+    let _ref;
     return (_ref = this.spans[0]) != null ? _ref.id : void 0;
   }
 });
@@ -574,14 +574,14 @@ Object.defineProperty(Log.Line.prototype, 'nodes', {
 
 Object.defineProperty(Log.Line.prototype, 'prev', {
   get: function () {
-    var _ref;
+    let _ref;
     return (_ref = this.spans[0].prev) != null ? _ref.line : void 0;
   }
 });
 
 Object.defineProperty(Log.Line.prototype, 'next', {
   get: function () {
-    var _ref;
+    let _ref;
     return (_ref = this.spans[this.spans.length - 1].next) != null ? _ref.line : void 0;
   }
 });
@@ -605,7 +605,7 @@ Log.Fold = function (log, event, name, visibleName) {
 
 Log.Fold.prototype = Log.extend(new Log.Line, {
   render: function () {
-    var element, _ref;
+    let element, _ref;
     if (this.prev && this.prev.element) {
       if (Log.DEBUG) {
         console.log('F.1 insert ' + this.id + ' after prev ' + this.prev.id);
@@ -681,7 +681,7 @@ Log.prototype = Log.extend(new Log.Node, {
     return this.renderer.hide(node);
   },
   trigger: function () {
-    var args, ix, listener, _i, _len, _ref, _results;
+    let args, ix, listener, _i, _len, _ref, _results;
     args = [this].concat(Array.prototype.slice.apply(arguments));
     _ref = this.listeners;
     _results = [];
@@ -711,7 +711,7 @@ Log.Folds = function (log) {
 
 Log.extend(Log.Folds.prototype, {
   add: function (data) {
-    var fold, _base, _name;
+    let fold, _base, _name;
     fold = (_base = this.folds)[_name = data.name] || (_base[_name] = new Log.Folds.Fold);
     fold.receive(data, {
       autoCloseFold: this.log.autoCloseFold
@@ -732,7 +732,7 @@ Log.extend(Log.Folds.Fold.prototype, {
     }
   },
   activate: function (options) {
-    var fragment, nextSibling, node, parentNode, toRemove, _i, _len, _ref;
+    let fragment, nextSibling, node, parentNode, toRemove, _i, _len, _ref;
     options || (options = {});
     if (Log.DEBUG) {
       console.log('F.n - activate ' + this.start);
@@ -754,7 +754,7 @@ Log.extend(Log.Folds.Fold.prototype, {
     return this.active = true;
   },
   classes: function (autoCloseFold) {
-    var classes;
+    let classes;
     classes = this.fold.getAttribute('class').split(' ');
     classes.push('fold');
     if (!autoCloseFold) {
@@ -775,7 +775,7 @@ Object.defineProperty(Log.Folds.Fold.prototype, 'fold', {
 
 Object.defineProperty(Log.Folds.Fold.prototype, 'nodes', {
   get: function () {
-    var node, nodes;
+    let node, nodes;
     node = this.fold;
     nodes = [];
     while ((node = node.nextSibling) && node.id !== this.end) {
@@ -793,7 +793,7 @@ Log.Times = function (log) {
 
 Log.extend(Log.Times.prototype, {
   add: function (node) {
-    var time, _base, _name;
+    let time, _base, _name;
     time = (_base = this.times)[_name = node.name] || (_base[_name] = new Log.Times.Time);
     return time.receive(node);
   },
@@ -819,7 +819,7 @@ Log.extend(Log.Times.Time.prototype, {
     }
   },
   finish: function () {
-    var element;
+    let element;
     if (Log.DEBUG) {
       console.log('T.1 - finish ' + this.start.name);
     }
@@ -837,7 +837,7 @@ Log.extend(Log.Times.Time.prototype, {
 
 Object.defineProperty(Log.Times.Time.prototype, 'duration', {
   get: function () {
-    var duration;
+    let duration;
     duration = this.stats.duration / 1000 / 1000 / 1000;
     return duration.toFixed(2);
   }
@@ -845,7 +845,7 @@ Object.defineProperty(Log.Times.Time.prototype, 'duration', {
 
 Object.defineProperty(Log.Times.Time.prototype, 'stats', {
   get: function () {
-    var stat, stats, _i, _len, _ref;
+    let stat, stats, _i, _len, _ref;
     if (!(this.end && this.end.stats)) {
       return {};
     }
@@ -863,7 +863,7 @@ Object.defineProperty(Log.Times.Time.prototype, 'stats', {
 Log.Deansi = {
   CLEAR_ANSI: /(?:\033)(?:\[0?c|\[[0356]n|\[7[lh]|\[\?25[lh]|\(B|H|\[(?:\d+(;\d+){,2})?G|\[(?:[12])?[JK]|[DM]|\[0K)/gm,
   apply: function (string) {
-    var nodes,
+    let nodes,
       _this = this;
     if (!string) {
       return [];
@@ -875,7 +875,7 @@ Log.Deansi = {
     return nodes;
   },
   node: function (part) {
-    var classes, node;
+    let classes, node;
     node = {
       type: 'span',
       text: part.text
@@ -889,7 +889,7 @@ Log.Deansi = {
     return node;
   },
   classes: function (part) {
-    var result;
+    let result;
     result = [];
     result = result.concat(this.colors(part));
     if (result.length > 0) {
@@ -897,7 +897,7 @@ Log.Deansi = {
     }
   },
   colors: function (part) {
-    var colors;
+    let colors;
     colors = [];
     if (part.foreground) {
       colors.push(part.foreground);
@@ -955,7 +955,7 @@ Log.Renderer = function () {
 
 Log.extend(Log.Renderer.prototype, {
   insert: function (data, pos) {
-    var after, before, into, node;
+    let after, before, into, node;
     node = this.render(data);
     // eslint-disable-next-line
     if (into = pos != null ? pos.into : void 0) {
@@ -995,7 +995,7 @@ Log.extend(Log.Renderer.prototype, {
     return node;
   },
   render: function (data) {
-    var frag, node, type, _i, _len;
+    let frag, node, type, _i, _len;
     if (data instanceof Array) {
       frag = this.frag.cloneNode(true);
       for (_i = 0, _len = data.length; _i < _len; _i++) {
@@ -1013,7 +1013,7 @@ Log.extend(Log.Renderer.prototype, {
     }
   },
   renderParagraph: function (data) {
-    var node, para, type, _i, _len, _ref;
+    let node, para, type, _i, _len, _ref;
     para = this.para.cloneNode(true);
     if (data.id) {
       para.setAttribute('id', data.id);
@@ -1031,7 +1031,7 @@ Log.extend(Log.Renderer.prototype, {
     return para;
   },
   renderFold: function (data) {
-    var fold;
+    let fold;
     fold = this.fold.cloneNode(true);
     fold.setAttribute('id', data.id || ('fold-' + data.event + '-' + data.name));
     fold.setAttribute('class', 'fold-' + data.event);
@@ -1043,7 +1043,7 @@ Log.extend(Log.Renderer.prototype, {
     return fold;
   },
   renderSpan: function (data) {
-    var span;
+    let span;
     span = this.span.cloneNode(true);
     if (data.id) {
       span.setAttribute('id', data.id);
@@ -1055,32 +1055,32 @@ Log.extend(Log.Renderer.prototype, {
     return span;
   },
   renderText: function (data) {
-    var text;
+    let text;
     text = this.text.cloneNode(true);
     text.nodeValue = data.text;
     return text;
   },
   createParagraph: function () {
-    var para;
+    let para;
     para = document.createElement('p');
     para.appendChild(document.createElement('a'));
     return para;
   },
   createFold: function () {
-    var fold;
+    let fold;
     fold = document.createElement('div');
     fold.appendChild(this.createSpan());
     fold.lastChild.setAttribute('class', 'fold-name');
     return fold;
   },
   createSpan: function () {
-    var span;
+    let span;
     span = document.createElement('span');
     span.appendChild(document.createTextNode(' '));
     return span;
   },
   insertBefore: function (node, other) {
-    var log;
+    let log;
     if (other) {
       return other.parentNode.insertBefore(node, other);
     } else {
