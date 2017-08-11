@@ -60,7 +60,7 @@
     "ember-inflector": "^2.0.0",
     "ember-keyboard-shortcuts": "0.3.0",
     "ember-load-initializers": "1.0.0",
-    "ember-percy": "1.2.12",
+    "ember-percy": "1.2.13",
     "ember-prism": "0.1.0",
     "ember-qunit-nice-errors": "1.1.2",
     "ember-resolver": "4.1.0",
