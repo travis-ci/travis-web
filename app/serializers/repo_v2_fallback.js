@@ -1,6 +1,6 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
-var Serializer = V2FallbackSerializer.extend({
+let Serializer = V2FallbackSerializer.extend({
   normalize: function (modelClass, resourceHash) {
     if (!resourceHash['@type']) {
       let slug = resourceHash.slug;
