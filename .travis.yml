@@ -46,7 +46,7 @@ install:
 before_script:
   - if [ "$EMBER_VERSION" = 'default' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; fi
   - echo $PERCY_ENABLE
-  - if [ "$PERCY_ENABLE" ]; then export $RANDOMISE=--random; fi
+  - if [ "$PERCY_ENABLE" ]; then export RANDOMISE=--random; fi
   - echo $RANDOMISE
 
 script:
