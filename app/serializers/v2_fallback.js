@@ -25,9 +25,8 @@ export default V3Serializer.extend({
           if (relationshipMeta.kind === 'belongsTo') {
             data = this.extractRelationship(relationshipMeta.type, relationshipHash);
           } else if (relationshipMeta.kind === 'hasMany') {
-            data = relationshipHash.map((item) => {
-              return this.extractRelationship(relationshipMeta.type, item);
-            });
+            const { type } = relationshipMeta;
+            data = relationshipHash.map(item => this.extractRelationship(type, item));
           }
           relationship = data;
         }
@@ -45,10 +44,10 @@ export default V3Serializer.extend({
     if (resourceHash['@type']) {
       return this._super(...arguments);
     } else {
-      var modelKey = modelClass.modelName;
-      var attributes = resourceHash[modelKey];
+      let modelKey = modelClass.modelName;
+      let attributes = resourceHash[modelKey];
       if (attributes) {
-        for (var key in attributes) {
+        for (let key in attributes) {
           resourceHash[key] = attributes[key];
         }
 
@@ -74,15 +73,14 @@ export default V3Serializer.extend({
             }
 
             included.push(relationshipHash.data);
-            relationshipIncluded.forEach(function (item) {
-              included.push(item);
-            });
+            relationshipIncluded.forEach(item => included.push(item));
           });
 
           if (Ember.isArray(relationship)) {
             data.relationships[key] = {
               data: relationship.map(({ data }) => {
-                return { id: data.id, type: data.type };
+                const { id, type } = data;
+                return { id, type };
               })
             };
           } else {
@@ -102,8 +100,7 @@ export default V3Serializer.extend({
   keyForV2Relationship(key/* , typeClass, method*/) {
     if (key === 'repo') {
       return 'repository';
-    } else {
-      return key.underscore() + '_id';
     }
+    return `${key.underscore()}_id`;
   }
 });

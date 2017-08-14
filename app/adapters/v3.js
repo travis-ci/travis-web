@@ -53,7 +53,7 @@ export default RESTAdapter.extend({
     return hash;
   },
 
-  buildURL: function (modelName, id, snapshot, type, query) {
+  buildURL: function (modelName, id) {
     let url = [];
     const host = Ember.get(this, 'host');
     const prefix = this.urlPrefix();

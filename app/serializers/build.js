@@ -1,6 +1,6 @@
 import BuildV2FallbackSerializer from 'travis/serializers/build_v2_fallback';
 
-var Serializer = BuildV2FallbackSerializer.extend({
+export default BuildV2FallbackSerializer.extend({
   attrs: {
     _config: { key: 'config' },
     _duration: { key: 'duration' }
@@ -25,5 +25,3 @@ var Serializer = BuildV2FallbackSerializer.extend({
     return this._super(modelClass, resourceHash);
   }
 });
-
-export default Serializer;
