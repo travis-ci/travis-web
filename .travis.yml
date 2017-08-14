@@ -53,7 +53,9 @@ before_script:
 
 script:
   - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --reporter dot $RANDOMISE
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose
+
+after_script:
+  - if [ $COVERAGE = 'true']; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose; fi
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
