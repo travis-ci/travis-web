@@ -48,9 +48,12 @@ before_script:
   - echo $PERCY_ENABLE
   - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
   - echo $RANDOMISE
+  - if [ "$PERCY_ENABLE" -ne 1 ]; then export COVERAGE=true; fi
+  - echo $COVERAGE
 
 script:
   - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --reporter dot $RANDOMISE
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
