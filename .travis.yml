@@ -48,7 +48,7 @@ before_script:
   - echo $PERCY_ENABLE
   - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
   - echo $RANDOMISE
-  - if [ "$PERCY_ENABLE" -ne 1 ]; then export COVERAGE=true; fi
+  - if [ "$PERCY_ENABLE" -eq 1 ]; then export COVERAGE=true; fi
   - echo $COVERAGE
 
 script:
