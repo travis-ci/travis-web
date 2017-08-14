@@ -143,6 +143,8 @@ module.exports = function (environment) {
     ENV.featureFlags['pro-version'] = false;
 
     ENV.billingEndpoint = 'https://billing.travis-ci.com';
+
+    ENV.statusPageStatusUrl = undefined;
   }
 
   if (environment === 'production') {
@@ -188,7 +190,7 @@ module.exports = function (environment) {
   ENV.contentSecurityPolicyMeta = false;
 
   ENV.cspSectionsWithApiHost.forEach((section) => {
-    ENV.contentSecurityPolicy[section] += " " + ENV.apiEndpoint;
+    ENV.contentSecurityPolicy[section] += ' ' + ENV.apiEndpoint;
   });
 
   return ENV;
