@@ -85,18 +85,6 @@ const Repo = Model.extend({
   },
 
   @computed('id')
-  crons(id) {
-    const builds = this.store.filter('build', {
-      event_type: 'cron',
-      repository_id: id
-    }, (b) => {
-      const isCron = b.get('eventType') === 'cron';
-      return this._buildRepoMatches(b, id) && isCron;
-    });
-    return this._buildObservableArray(builds);
-  },
-
-  @computed('id')
   branches(id) {
     return this.store.filter('branch', {
       repository_id: id
