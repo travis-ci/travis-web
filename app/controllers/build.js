@@ -9,7 +9,6 @@ import { service } from 'ember-decorators/service';
 import { alias } from 'ember-decorators/object/computed';
 import { observes } from 'ember-decorators/object';
 
-
 export default Ember.Controller.extend(GithubUrlProperties, Polling, {
   @service auth: null,
   @service('updateTimes') updateTimesService: null,
