@@ -2,12 +2,15 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import jobPage from 'travis/tests/pages/job';
 
+import Ember from 'ember';
+import getFaviconUri from 'travis/utils/favicon-data-uris';
+
 import config from 'travis/config/environment';
 
 moduleForAcceptance('Acceptance | job/basic layout');
 
 test('visiting job-view', function (assert) {
-  assert.expect(7);
+  assert.expect(8);
 
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
@@ -27,6 +30,8 @@ test('visiting job-view', function (assert) {
 
   andThen(() => {
     assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
+
+    assert.equal(Ember.$('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
 
     assert.equal(jobPage.branch, 'acceptance-tests');
     assert.equal(jobPage.message, 'acceptance-tests This is a message');
