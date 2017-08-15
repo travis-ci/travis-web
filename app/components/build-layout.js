@@ -19,12 +19,6 @@ export default Ember.Component.extend({
     }
   },
 
-  buildStateDidChange: Ember.observer('build.state', function () {
-    if (this.get('sendFaviconStateChanges')) {
-      return this.send('faviconStateDidChange', this.get('build.state'));
-    }
-  }),
-
   buildStagesSort: ['number'],
   sortedBuildStages: Ember.computed.sort('build.stages', 'buildStagesSort')
 });

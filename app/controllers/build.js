@@ -7,6 +7,7 @@ import config from 'travis/config/environment';
 import { controller } from 'ember-decorators/controller';
 import { service } from 'ember-decorators/service';
 import { alias } from 'ember-decorators/object/computed';
+import { observes } from 'ember-decorators/object';
 
 export default Ember.Controller.extend(GithubUrlProperties, Polling, {
   @service auth: null,
@@ -30,4 +31,11 @@ export default Ember.Controller.extend(GithubUrlProperties, Polling, {
       return Visibility.every(config.intervals.updateTimes, this.updateTimes.bind(this));
     }
   },
+
+  @observes('build.state')
+  buildStateDidChange() {
+    if (this.get('sendFaviconStateChanges')) {
+      this.send('faviconStateDidChange', this.get('build.state'));
+    }
+  }
 });

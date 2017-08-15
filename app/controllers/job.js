@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
   },
 
   @observes('job.state')
-  jobStateDidChange(state) {
-    return this.send('faviconStateDidChange', state);
+  jobStateDidChange() {
+    return this.send('faviconStateDidChange', this.get('job.state'));
   },
 });
