@@ -40,9 +40,10 @@
   a:hover
     text-decoration: underline
 
-#tab_new
+#button_new
+  float: right
   a:hover
-    .icon--plus:after
+    .icon--plus:before
       color: $oxide-blue
 
 #tab_running
@@ -70,4 +71,26 @@
     border-bottom: solid 2px $pebble-grey
 
 .travistab-nav--sidebar
+  display: flex
+  justify-content: space-between
   padding: 0 1em
+
+  [data-tooltip]::after
+    width: 8em
+    margin-left: -3.5em
+    text-align: center
+
+  .icon--plus
+    margin-right: 0
+    text-align: center
+
+    border: 1px solid $dry-cement
+    border-radius: 1em
+
+    width: 1.1em
+    height: 1.1em
+
+    padding: 3px
+
+    &::before
+      padding-bottom: 15px
