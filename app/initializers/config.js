@@ -1,20 +1,15 @@
 import config from 'travis/config/environment';
-var ConfigInitializer, initialize;
 
-initialize = function (application) {
-  application.register('config:main', config, {
+export function initialize(app) {
+  app.register('config:main', config, {
     instantiate: false
   });
-  application.inject('controller', 'config', 'config:main');
-  application.inject('component', 'config', 'config:main');
-  return application.inject('route', 'config', 'config:main');
-};
+  app.inject('controller', 'config', 'config:main');
+  app.inject('component', 'config', 'config:main');
+  app.inject('route', 'config', 'config:main');
+}
 
-ConfigInitializer = {
+export default {
   name: 'config',
-  initialize: initialize
+  initialize,
 };
-
-export { initialize };
-
-export default ConfigInitializer;

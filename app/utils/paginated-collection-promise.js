@@ -5,10 +5,10 @@ import { computed } from 'ember-decorators/object';
 export default PaginatedCollection.extend(Ember.PromiseProxyMixin, {
   @computed('content')
   promise(content) {
-    let promise = new Ember.RSVP.Promise(function (resolve, reject) {
-      content.then(function (value) {
+    let promise = new Ember.RSVP.Promise((resolve, reject) => {
+      content.then((value) => {
         resolve(PaginatedCollection.create({ content: value }));
-      }, function (error) {
+      }, (error) => {
         reject(error);
       });
     });

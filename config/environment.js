@@ -35,6 +35,7 @@ module.exports = function (environment) {
     endpoints: {},
     intervals: {
       updateTimes: 1000,
+      branchCreatedSyncDelay: 2000,
       repositorySearchDebounceRate: 500,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
@@ -109,6 +110,7 @@ module.exports = function (environment) {
     ENV.locationType = 'none';
 
     ENV.intervals.searchDebounceRate = 0;
+    ENV.intervals.branchCreatedSyncDelay = 0;
 
     ENV.APP.rootElement = '#ember-testing';
 
@@ -139,6 +141,10 @@ module.exports = function (environment) {
     ENV.featureFlags['debug-logging'] = false;
     ENV.featureFlags['dashboard'] = false;
     ENV.featureFlags['pro-version'] = false;
+
+    ENV.billingEndpoint = 'https://billing.travis-ci.com';
+
+    ENV.statusPageStatusUrl = undefined;
   }
 
   if (environment === 'production') {
@@ -184,7 +190,7 @@ module.exports = function (environment) {
   ENV.contentSecurityPolicyMeta = false;
 
   ENV.cspSectionsWithApiHost.forEach((section) => {
-    ENV.contentSecurityPolicy[section] += " " + ENV.apiEndpoint;
+    ENV.contentSecurityPolicy[section] += ' ' + ENV.apiEndpoint;
   });
 
   return ENV;

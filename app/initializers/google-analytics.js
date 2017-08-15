@@ -1,9 +1,8 @@
 /* global _gaq */
 import config from 'travis/config/environment';
-var GAInitializer, initialize;
 
-initialize = function (/* application*/) {
-  var ga, s;
+export function initialize() {
+  let ga, s;
   if (config.gaCode) {
     window._gaq = [];
     _gaq.push(['_setAccount', config.gaCode]);
@@ -14,13 +13,9 @@ initialize = function (/* application*/) {
     s = document.getElementsByTagName('script')[0];
     return s.parentNode.insertBefore(ga, s);
   }
-};
+}
 
-GAInitializer = {
+export default {
   name: 'google-analytics',
-  initialize: initialize
+  initialize,
 };
-
-export { initialize };
-
-export default GAInitializer;

@@ -19,7 +19,7 @@ export default (function () {
   }
 
   LogFolder.prototype.fold = function (line) {
-    var folder;
+    let folder;
     folder = this.getFolderFromLine(line);
     if (folder.hasClass('open')) {
       return this.toggle(folder);
@@ -27,7 +27,7 @@ export default (function () {
   };
 
   LogFolder.prototype.unfold = function (line) {
-    var folder;
+    let folder;
     folder = this.getFolderFromLine(line);
     if (!folder.hasClass('open')) {
       return this.toggle(folder);

@@ -2,7 +2,7 @@
 import ENV from 'travis/config/environment';
 import Ember from 'ember';
 
-var TravisPusher = function (config, ajaxService) {
+let TravisPusher = function (config, ajaxService) {
   this.init(config, ajaxService);
   TravisPusher.ajaxService = ajaxService;
   return this;
@@ -44,7 +44,7 @@ TravisPusher.prototype.init = function (config, ajaxService) {
 };
 
 TravisPusher.prototype.subscribeAll = function (channels) {
-  var channel, i, len, results;
+  let channel, i, len, results;
   results = [];
   for (i = 0, len = channels.length; i < len; i++) {
     channel = channels[i];
@@ -54,7 +54,7 @@ TravisPusher.prototype.subscribeAll = function (channels) {
 };
 
 TravisPusher.prototype.unsubscribeAll = function (channels) {
-  var channel, i, len, results;
+  let channel, i, len, results;
   results = [];
   for (i = 0, len = channels.length; i < len; i++) {
     channel = channels[i];
@@ -64,7 +64,7 @@ TravisPusher.prototype.unsubscribeAll = function (channels) {
 };
 
 TravisPusher.prototype.subscribe = function (channel) {
-  var ref;
+  let ref;
   if (!channel) {
     return;
   }
@@ -79,7 +79,7 @@ TravisPusher.prototype.subscribe = function (channel) {
 };
 
 TravisPusher.prototype.unsubscribe = function (channel) {
-  var ref;
+  let ref;
   if (!channel) {
     return;
   }
@@ -94,7 +94,7 @@ TravisPusher.prototype.unsubscribe = function (channel) {
 TravisPusher.prototype.prefix = function (channel) {
   let prefix = ENV.pusher.channelPrefix || '';
   if (channel.indexOf(prefix) !== 0) {
-    return '' + prefix + channel;
+    return `${prefix}${channel}`;
   } else {
     return channel;
   }
@@ -164,7 +164,7 @@ TravisPusher.prototype.warn = function (type, object) {
 };
 
 TravisPusher.prototype.ignoreWarning = function (type, error) {
-  var code, message, ref, ref1;
+  let code, message, ref, ref1;
   code = (error != null ? (ref = error.data) != null ? ref.code : void 0 : void 0) || 0;
   message = (error != null ? (ref1 = error.data) != null ? ref1.message : void 0 : void 0) || '';
   return this.ignoreCode(code) || this.ignoreMessage(message);
@@ -189,24 +189,20 @@ Pusher.SockJSTransport.isSupported = function () {
 if (ENV.featureFlags['pro-version'] || ENV.featureFlags['enterprise-version']) {
   Pusher.channel_auth_transport = 'bulk_ajax';
   Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
-    var channels, name, names;
+    let channels, name, names;
     channels = Travis.pusher.pusher.channels;
     Travis.pusher.pusherSocketId = socketId;
     channels.callbacks = channels.callbacks || [];
     name = this.channel.name;
     names = Object.keys(channels.channels);
-    channels.callbacks.push(function (auths) {
-      return _callback(false, {
-        auth: auths[name]
-      });
-    });
+    channels.callbacks.push((auths) => _callback(false, { auth: auths[name] }));
     if (!channels.fetching) {
       channels.fetching = true;
       return TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
         socket_id: socketId,
         channels: names
-      }, function (data) {
-        var callback, i, len, ref, results;
+      }, (data) => {
+        let callback, i, len, ref, results;
         channels.fetching = false;
         ref = channels.callbacks;
         results = [];

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var configKeys, configKeysMap, languageConfigKeys;
+let configKeys, configKeysMap, languageConfigKeys;
 
 languageConfigKeys = {
   go: 'Go',

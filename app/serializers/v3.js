@@ -94,15 +94,15 @@ import traverse from 'travis/utils/traverse-payload';
 export default JSONSerializer.extend({
 
   extractRelationships(modelClass, resourceHash) {
-    var relationships = {};
+    let relationships = {};
 
     modelClass.eachRelationship((key, relationshipMeta) => {
-      var relationship = null;
-      var relationshipKey = this.keyForRelationship(key, relationshipMeta.kind, 'deserialize');
-      var relationshipHash = resourceHash[relationshipKey];
+      let relationship = null;
+      let relationshipKey = this.keyForRelationship(key, relationshipMeta.kind, 'deserialize');
+      let relationshipHash = resourceHash[relationshipKey];
 
       if (relationshipHash) {
-        var data = null;
+        let data = null;
         if (relationshipMeta.kind === 'belongsTo') {
           if (relationshipMeta.options.polymorphic) {
             // extracting a polymorphic belongsTo may need more information
@@ -123,8 +123,8 @@ export default JSONSerializer.extend({
         } else if (relationshipMeta.kind === 'hasMany') {
           if (!Ember.isNone(relationshipHash)) {
             data = new Array(relationshipHash.length);
-            for (var i = 0, l = relationshipHash.length; i < l; i++) {
-              var item = relationshipHash[i];
+            for (let i = 0, l = relationshipHash.length; i < l; i++) {
+              let item = relationshipHash[i];
               data[i] = this.extractRelationship(relationshipMeta.type, item);
             }
           }
@@ -208,7 +208,8 @@ export default JSONSerializer.extend({
     if (type) {
       items = payload[type];
     } else {
-      items = payload[primaryModelClass.modelName.underscore() + 's'];
+      const plural = `${primaryModelClass.modelName.underscore()}s`;
+      items = payload[plural];
     }
 
     documentHash.data = items.map((item) => {
@@ -253,15 +254,14 @@ export default JSONSerializer.extend({
             included.push(relationshipHash.data);
           }
 
-          relationshipIncluded.forEach(function (item) {
-            included.push(item);
-          });
+          relationshipIncluded.forEach(item => included.push(item));
         });
 
         if (Ember.isArray(relationship)) {
           data.relationships[key] = {
             data: relationship.map(({ data }) => {
-              return { id: data.id, type: data.type };
+              const { id, type } = data;
+              return { id, type };
             })
           };
         } else {

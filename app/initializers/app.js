@@ -1,16 +1,10 @@
-var Initializer, initialize;
-
-initialize = function (app) {
+export function initialize(app) {
   if (typeof window !== 'undefined') {
     return window.Travis = app;
   }
-};
+}
 
-Initializer = {
+export default {
   name: 'app',
-  initialize: initialize
+  initialize,
 };
-
-export { initialize };
-
-export default Initializer;

@@ -23,6 +23,5 @@ test('logo page renders correct header/footer', function (assert) {
 
     assert.equal(footer.sections(1).title, '©Travis CI, GmbH', 'Shows company info section');
     assert.equal(footer.sections(2).title, 'Help', 'Shows help info section');
-    assert.equal(footer.sections(3).title, 'Travis CI Status', 'Shows status info section');
   });
 });

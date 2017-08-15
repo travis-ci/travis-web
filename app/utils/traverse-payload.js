@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-var traverse = function (object, callback) {
+let traverse = function (object, callback) {
   if (!object) {
     return;
   }
