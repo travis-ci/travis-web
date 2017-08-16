@@ -41,10 +41,34 @@
     text-decoration: underline
 
 #button_new
-  float: right
-  a:hover
-    .icon--plus:before
-      color: $oxide-blue
+  a:hover, a.active, a:active
+    &::after
+      background-color: transparent
+
+  [data-tooltip]::after
+    width: 8em
+    margin-left: -3.5em
+    text-align: center
+
+  .icon--plus
+    margin-right: 0
+    text-align: center
+
+    border: 1px solid transparentize($dry-cement, 0.5)
+    border-radius: 1em
+
+    width: 1.1em
+    height: 1.1em
+
+    padding: 9px
+
+    &:hover
+      border-color: $cement-grey
+
+    &::before
+      display: block
+      margin-left: -4px
+      margin-top: -11px
 
 #tab_running
   .badge
@@ -75,23 +99,3 @@
   justify-content: space-between
   align-items: flex-end
   padding: 0 1em
-
-  [data-tooltip]::after
-    width: 8em
-    margin-left: -3.5em
-    text-align: center
-
-  .icon--plus
-    margin-right: 0
-    text-align: center
-
-    border: 1px solid $dry-cement
-    border-radius: 1em
-
-    width: 1.1em
-    height: 1.1em
-
-    padding: 3px
-
-    &::before
-      padding-bottom: 15px
