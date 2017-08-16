@@ -5,12 +5,14 @@
   $switch-inner-width: 36px
   $switch-inner-heigth: 26px
 
+  padding: 0
+
   .switch-inner
     display: inline-block
     width: $switch-width
     height: $switch-height
     margin-right: 1em
-    padding: 3px 3px 3px 4px
+    padding: 3px
     vertical-align: middle
     overflow: visible
     background-color: darken($pebble-grey, 10)
@@ -43,7 +45,9 @@
 
   .on
     display: none
-    margin-left: 0
+    margin-left: -49%
+    .icon-on
+      margin-left: 1px
   .off
     margin-left: 36px
 
