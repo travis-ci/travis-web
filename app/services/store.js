@@ -20,7 +20,7 @@ export default DS.Store.extend({
     return this.set('pusherEventHandlerGuards', {});
   },
 
-  filter(modelName, queryParams, filterFunction, dependencies) {
+  filter(modelName, queryParams, filterFunction, dependencies, forceReload) {
     if (!dependencies) {
       // just do what filter would normally do
       return this._super(...arguments);
