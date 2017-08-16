@@ -4,7 +4,7 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 moduleForAcceptance('Acceptance | plans');
 
 test('visiting /plans', function (assert) {
-  widthFeature('proVersion');
+  withFeature('proVersion');
   visit('/plans');
 
   andThen(function () {
