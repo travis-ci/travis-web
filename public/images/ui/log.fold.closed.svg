@@ -1,4 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" height="10" width="10">
+<svg xmlns="http://www.w3.org/2000/svg" height="10" width="10" viewBox="0 0 10 10">
 <path d="m8.5,0.5-7,4.5,7,4.5z" stroke="#777" stroke-width="0.5" fill="#999"/>
 </svg>
-
