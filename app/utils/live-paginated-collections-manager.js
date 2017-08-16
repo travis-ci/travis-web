@@ -79,8 +79,6 @@ LivePaginatedCollection.reopenClass({
           }
         }
 
-
-        console.log(sortKey, aValue, bValue);
         if (order === 'desc') {
           result = -result;
         }
@@ -111,7 +109,7 @@ let LivePaginatedCollectionsManager = Ember.Object.extend({
     let store = this.get('store'),
       dependencies = options.dependencies || [],
       filter = filter || (() => true),
-      filtered = store.filter(modelName, queryParams, filter, dependencies);
+      filtered = store.filter(modelName, queryParams, filter, dependencies, options.forceReload);
 
     return filtered.then((filteredArray) => {
       let sort = options.sort;

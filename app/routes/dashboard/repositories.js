@@ -34,7 +34,8 @@ export default TravisRoute.extend({
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: 'currentBuildId:desc',
-        dependencies: ['active', 'isCurrentUserACollaborator']
+        dependencies: ['active', 'isCurrentUserACollaborator'],
+        forceReload: true
       }),
       accounts: this.store.query('account', {
         all: true

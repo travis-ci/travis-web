@@ -44,13 +44,18 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     this.dependencies = [];
   },
 
-  fetchArray(queryParams, filterFunction, dependencies) {
+  fetchArray(queryParams, filterFunction, dependencies, forceReload) {
     let id = this.calculateId(...arguments);
     let array = this.arrays[id];
 
     if (!array) {
       array = this.arrays[id] = this.createArray(id, ...arguments);
+    } else if (forceReload) {
+      // if forceReload is true and array already exist, just run the query
+      // to get new results
+      this.fetchQuery(queryParams);
     }
+
     return array;
   },
 
@@ -77,7 +82,7 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     let promise = new Ember.RSVP.Promise((resolve, reject) => {
       // TODO: think about error handling, at the moment it will just pass the
       // reject from store.query
-      this.get('store').query(this.get('modelName'), queryParams).then((queryResult) => {
+      this.fetchQuery(queryParams).then((queryResult) => {
         array.set('queryResult', queryResult);
         resolve(array);
       }, reject)
@@ -86,6 +91,10 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     array._promise = promise;
 
     return array;
+  },
+
+  fetchQuery(queryParams) {
+    return this.get('store').query(this.get('modelName'), queryParams);
   },
 
   addObserver(record, property) {
@@ -154,7 +163,7 @@ let FilteredArrayManager = Ember.Object.extend({
     this.filteredArrayManagersByType = {};
   },
 
-  fetchArray(modelName, queryParams, filterFunction, dependencies) {
+  fetchArray(modelName, queryParams, filterFunction, dependencies, forceReload) {
     let [_, ...rest] = arguments;
     return this.filteredArrayManagerForType(modelName).fetchArray(...rest)._promise;
   },
