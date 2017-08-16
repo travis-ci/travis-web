@@ -6,6 +6,8 @@ import config from 'travis/config/environment';
 const { apiEndpoint } = config;
 
 export default function () {
+  this.passthrough('/write-coverage');
+
   this.get('https://pnpcptp8xh9k.statuspage.io/api/v2/status.json', function () {
     return {
       'page': {
