@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { or } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
-  tagName: 'a',
+  tagName: 'button',
   classNames: ['travis-switch', 'switch'],
   classNameBindings: ['_active:active'],
 

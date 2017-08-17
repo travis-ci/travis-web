@@ -23,7 +23,8 @@ export default create({
       defaultBranch: text('.dash-default .row-content a'),
       lastBuild: text('.dash-last a .label-align'),
       triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
-      clickStarButton: clickable('.dash-head .dash-star')
+      clickStarButton: clickable('.dash-head .dash-star'),
+      hasTofuButton: isVisible('.dash-menu .dropup')
     }
   }),
   starredRepos: collection({
@@ -35,7 +36,8 @@ export default create({
       defaultBranch: text('.dash-default .row-content a'),
       lastBuild: text('.dash-last a .label-align'),
       triggerBuild: clickable('.dash-menu .dropup-list li:first-of-type a'),
-      clickUnStarButton: clickable('.dash-head .dash-star')
+      clickUnStarButton: clickable('.dash-head .dash-star'),
+      hasTofuButton: isVisible('.dash-menu .dropup')
     }
   }),
   paginationIsVisible: isVisible('.pagination-navigation'),

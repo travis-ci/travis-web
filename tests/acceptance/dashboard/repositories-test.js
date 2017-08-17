@@ -34,7 +34,7 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
       },
       name: 'travis-web',
       currentBuild: build,
-      defaultBranch: branch
+      defaultBranch: branch,
     });
     server.create('repository', {
       owner: {
@@ -60,7 +60,10 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
       name: 'travis-lol',
       starred: true,
       currentBuild: build,
-      defaultBranch: branch
+      defaultBranch: branch,
+      permissions: {
+        create_request: true
+      }
     });
   }
 });
@@ -89,6 +92,7 @@ test('starring and unstarring a repo', function (assert) {
 
   andThen(() => {
     assert.equal(dashboardPage.starredRepos().count, 1, 'there is one starred repo');
+    assert.ok(dashboardPage.starredRepos(0).hasTofuButton, 'shows tofubutton if user has proper permissions');
 
     dashboardPage.activeRepos(3).clickStarButton();
 

@@ -1,6 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  attribute,
   clickable,
   collection,
   fillable,
@@ -46,7 +47,9 @@ export default PageObject.create({
     scope: 'section.settings-section .build_pushes.switch',
 
     isActive: hasClass('active'),
-    toggle: clickable()
+    toggle: clickable(),
+    ariaChecked: attribute('aria-checked'),
+    role: attribute('role')
   },
 
   limitConcurrentBuilds: {

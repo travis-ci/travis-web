@@ -23,10 +23,7 @@ export default Ember.Component.extend({
     return this.get('externalLinks').githubCommit(slug, sha);
   },
 
-  @computed('permissions.all', 'repo')
-  displayMenuTofu(permissions, repo) {
-    return this.get('permissionsService').hasPushPermission(repo);
-  },
+  @alias('repo.permissions.create_request') displayMenuTofu: null,
 
   openDropup() {
     this.toggleProperty('dropupIsOpen');
