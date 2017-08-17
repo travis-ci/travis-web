@@ -3,8 +3,14 @@ import { alias } from 'ember-decorators/object/computed';
 import { computed } from 'ember-decorators/object';
 import limit from 'travis/utils/computed-limit';
 
+// LivePaginatedCollection is an interface for a first page of paginated set of
+// results.
 let LivePaginatedCollection = Ember.ArrayProxy.extend({
-  // TODO: this is copied from PaginatedCollection
+  // TODO: this is copied from PaginatedCollection, ideally we should change the
+  // pagination data when new records come in, but for the time being I think
+  // it's fine to just leave this static
+  // TODO: we should be updating pagination data on each store.query run if the
+  // forceReload option is passed
   @computed('paginationData')
   pagination(paginationData) {
     return {
@@ -104,18 +110,4 @@ LivePaginatedCollection.reopenClass({
   }
 });
 
-let LivePaginatedCollectionsManager = Ember.Object.extend({
-  fetchCollection(modelName, queryParams, options) {
-    let store = this.get('store'),
-      dependencies = options.dependencies || [],
-      filter = filter || (() => true),
-      filtered = store.filter(modelName, queryParams, filter, dependencies, options.forceReload);
-
-    return filtered.then((filteredArray) => {
-      let sort = options.sort;
-      return LivePaginatedCollection.create({ modelName, store, sort, dependencies, content: filteredArray });
-    });
-  },
-});
-
-export default LivePaginatedCollectionsManager;
+export default LivePaginatedCollection;
