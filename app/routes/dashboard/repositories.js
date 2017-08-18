@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
-let { service } = Ember.inject;
-
 export default TravisRoute.extend({
   queryParams: {
     filter: {

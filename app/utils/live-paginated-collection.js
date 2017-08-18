@@ -23,15 +23,11 @@ let LivePaginatedCollection = Ember.ArrayProxy.extend({
       next: paginationData.next,
       first: paginationData.first,
       last: paginationData.last,
-      currentPage: Ember.computed(function () {
-        return (paginationData.offset / paginationData.limit + 1);
-      }),
-      numberOfPages: Ember.computed(function () {
-        return Math.ceil(paginationData.count / paginationData.limit);
-      })
+      currentPage: Ember.computed(() => paginationData.offset / paginationData.limit + 1),
+      numberOfPages: Ember.computed(() => Math.ceil(paginationData.count / paginationData.limit))
     };
   },
-  arrangedContent: Ember.computed.alias('limited')
+  @alias('limited') arrangedContent: null
 });
 
 LivePaginatedCollection.reopenClass({
@@ -41,7 +37,7 @@ LivePaginatedCollection.reopenClass({
     properties.paginationData = paginationData;
     properties.perPage = paginationData.limit;
 
-    let instance = this._super(...arguments)
+    let instance = this._super(...arguments);
 
     this.defineSortByFunction(instance, properties.store, properties.modelName, properties.sort, properties.dependencies);
 
@@ -67,9 +63,9 @@ LivePaginatedCollection.reopenClass({
         sortKey = `${sortKey}.id`;
       }
 
-      sortByFunction = function(a, b) {
+      sortByFunction = function (a, b) {
         let aValue = a.get(sortKey),
-          bValue = b. get(sortKey);
+          bValue = b.get(sortKey);
 
         let result;
         // TODO: this should check types, not only if it's id or not
@@ -99,10 +95,10 @@ LivePaginatedCollection.reopenClass({
       sortDependencies.push(sortKey);
     }
 
-    sortDependencies = sortDependencies.map( (dep) => `content.@each.${dep}` );
+    sortDependencies = sortDependencies.map((dep) => `content.@each.${dep}`);
     sortDependencies.push('content.[]');
 
-    Ember.defineProperty(instance, 'sorted', Ember.computed(...sortDependencies, function() {
+    Ember.defineProperty(instance, 'sorted', Ember.computed(...sortDependencies, function () {
       return this.get('content').toArray().sort(sortByFunction);
     }));
 

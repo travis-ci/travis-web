@@ -430,7 +430,10 @@ module.exports = {
 
     // enforce spacing around the * in yield* expressions
     // http://eslint.org/docs/rules/yield-star-spacing
-    'yield-star-spacing': [2, 'after']
+    'yield-star-spacing': [2, 'after'],
+
+    // Don't allow unused vars, but allow unused arguments
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false, "varsIgnorePattern": "^_$" }],
   },
   globals: {
   }
