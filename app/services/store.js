@@ -96,7 +96,7 @@ export default DS.Store.extend({
   //                             ':desc' suffixes, for example 'id:desc'. If it's a
   //                             function it will be called with 2 records to compare
   //                             as an argument
-  //               dependencies - a set of dependencies that will be watched to 
+  //               dependencies - a set of dependencies that will be watched to
   //                              re-evaluate if a record should be a part of a
   //                              collection
   //               forceReload  - if set to true, store.query will be run on
