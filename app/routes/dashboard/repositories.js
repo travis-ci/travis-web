@@ -23,21 +23,20 @@ export default TravisRoute.extend({
         active: true,
         sort_by: 'current_build:desc',
         starred: true
-      }, (repo) => repo.get('starred'), ['starred']),
+      }, (repo) => repo.get('starred'), ['starred'], true),
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',
-        offset: params.offset,
-        limit: 10
+        offset: params.offset
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: 'currentBuildId:desc',
         dependencies: ['active', 'isCurrentUserACollaborator'],
         forceReload: true
       }),
-      accounts: this.store.query('account', {
+      accounts: this.store.filter('account', {
         all: true
-      })
+      }, () => true, [], true)
     });
   }
 });
