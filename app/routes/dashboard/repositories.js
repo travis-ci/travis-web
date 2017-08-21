@@ -1,11 +1,7 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
-let { service } = Ember.inject;
-
 export default TravisRoute.extend({
-  starredRepos: service(),
-
   queryParams: {
     filter: {
       replace: true
@@ -23,15 +19,24 @@ export default TravisRoute.extend({
 
   model(params) {
     return Ember.RSVP.hash({
-      starredRepos: this.get('starredRepos').fetch(),
+      starredRepos: this.store.filter('repo', {
+        active: true,
+        sort_by: 'current_build:desc',
+        starred: true
+      }, (repo) => repo.get('starred'), ['starred'], true),
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',
         offset: params.offset
+      }, {
+        filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
+        sort: 'currentBuildId:desc',
+        dependencies: ['active', 'isCurrentUserACollaborator'],
+        forceReload: true
       }),
-      accounts: this.store.query('account', {
+      accounts: this.store.filter('account', {
         all: true
-      })
+      }, () => true, [], true)
     });
   }
 });
