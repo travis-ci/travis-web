@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
+import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default TravisRoute.extend({
   queryParams: {
@@ -30,7 +31,7 @@ export default TravisRoute.extend({
         offset: params.offset
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
-        sort: 'currentBuildId:desc',
+        sort: dashboardRepositoriesSort,
         dependencies: ['active', 'isCurrentUserACollaborator'],
         forceReload: true
       }),
