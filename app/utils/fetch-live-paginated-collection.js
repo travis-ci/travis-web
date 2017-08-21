@@ -12,7 +12,19 @@ let fetchLivePaginatedCollection = function (store, modelName, queryParams, opti
 
   return filtered.then((filteredArray) => {
     let sort = options.sort;
-    return LivePaginatedCollection.create({ modelName, store, sort, dependencies, content: filteredArray });
+    let liveCollection =
+      LivePaginatedCollection.create({ modelName, store, sort, dependencies, content: filteredArray });
+
+    if (options.forceReload) {
+      // if forceReload was used, another query was fetched and we can update
+      // pagination data based on the result
+      filteredArray._lastPromise.then((array) =>
+        liveCollection.setPaginationData(array.get('queryResult'))
+      );
+      liveCollection._lastPromise = filteredArray._lastPromise;
+    }
+
+    return liveCollection;
   });
 };
 

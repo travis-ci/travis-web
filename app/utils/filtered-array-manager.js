@@ -99,7 +99,14 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     } else if (forceReload) {
       // if forceReload is true and array already exist, just run the query
       // to get new results
-      this.fetchQuery(queryParams);
+      let promise = new Ember.RSVP.Promise((resolve, reject) => {
+        this.fetchQuery(queryParams).then((queryResult) => {
+          array.set('queryResult', queryResult);
+          resolve(array);
+        }, reject);
+      });
+
+      array._lastPromise = promise;
     }
 
     return array;
@@ -145,6 +152,7 @@ let FilteredArrayManagerForType = Ember.Object.extend({
     });
 
     array._promise = promise;
+    array._lastPromise = promise;
 
     return array;
   },

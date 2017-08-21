@@ -9,10 +9,10 @@ let LivePaginatedCollection = Ember.ArrayProxy.extend({
   // TODO: this is copied from PaginatedCollection, ideally we should change the
   // pagination data when new records come in, but for the time being I think
   // it's fine to just leave this static
-  // TODO: we should be updating pagination data on each store.query run if the
-  // forceReload option is passed
   @computed('paginationData')
   pagination(paginationData) {
+    if (!paginationData) return;
+
     return {
       total: paginationData.count,
       perPage: paginationData.limit,
@@ -23,29 +23,25 @@ let LivePaginatedCollection = Ember.ArrayProxy.extend({
       next: paginationData.next,
       first: paginationData.first,
       last: paginationData.last,
-      currentPage: Ember.computed(() => paginationData.offset / paginationData.limit + 1),
-      numberOfPages: Ember.computed(() => Math.ceil(paginationData.count / paginationData.limit))
+      currentPage: paginationData.offset / paginationData.limit + 1,
+      numberOfPages: Math.ceil(paginationData.count / paginationData.limit)
     };
   },
-  @alias('limited') arrangedContent: null
+  @alias('limited') arrangedContent: null,
+
+  setPaginationData(queryResult) {
+    this.set('paginationData', queryResult.get('meta.pagination'));
+  }
 });
 
 LivePaginatedCollection.reopenClass({
   create(properties) {
-    let paginationData = this.getPaginationData(properties.content.get('queryResult'));
-
-    properties.paginationData = paginationData;
-    properties.perPage = paginationData.limit;
-
     let instance = this._super(...arguments);
+    instance.setPaginationData(properties.content.get('queryResult'));
 
     this.defineSortByFunction(instance, properties.store, properties.modelName, properties.sort, properties.dependencies);
 
     return instance;
-  },
-
-  getPaginationData(queryResult) {
-    return queryResult.get('meta.pagination');
   },
 
   defineSortByFunction(instance, store, modelName, sort = 'id:desc', dependencies) {

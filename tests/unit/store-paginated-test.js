@@ -136,3 +136,48 @@ test('it sorts results and live updates the first page', function (assert) {
     assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['2']);
   });
 });
+
+test('it updates pagination data when forceReload is set to true', function (assert) {
+  assert.expect(4);
+  let store = this.store();
+
+  Ember.run(() => {
+    store.push({
+      data: {
+        id: 1,
+        type: 'repo',
+        attributes: { }
+      }
+    });
+  });
+
+  let total = 0;
+  store.query = function () {
+    assert.ok('store.query was called');
+
+    total += 1;
+
+    let queryResult = Ember.ArrayProxy.create({ content: [] });
+    queryResult.set('meta', {});
+    queryResult.set('meta.pagination', { count: total, limit: 1, offset: 0 });
+
+    return Ember.RSVP.resolve(queryResult);
+  };
+
+  let done = assert.async();
+
+  store.paginated('repo', {}, { filter: () => true, forceReload: true }).then((paginatedCollection) => {
+    assert.equal(paginatedCollection.get('pagination.total'), 1);
+
+    let result = store.paginated('repo', {}, { filter: () => true, forceReload: true });
+
+    result.then((paginatedCollection) => {
+      paginatedCollection._lastPromise.then(() => {
+        done();
+
+        assert.equal(paginatedCollection.get('pagination.total'), 2);
+      });
+    });
+  });
+});
+
