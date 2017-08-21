@@ -42,9 +42,9 @@
     {{/if}}
   </h3>
   <div class="row-item row-commit">
-    {{#external-link-to href=urlGithubCommit title="See the commit on GitHub"}}
+    {{#external-link-to href=urlGithubCommit}}
       {{svg-jar 'icon-commit' class="icon"}}
-      <span class="label-align">{{format-sha build.commit.sha}}</span>
+      <span data-tooltip="View on GitHub" class="label-align">{{format-sha build.commit.sha}}</span>
       {{svg-jar 'icon-external-link' class="icon"}}
     {{/external-link-to}}
   </div>
