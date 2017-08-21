@@ -32,7 +32,7 @@ export default PageObject.create({
       commitSha: text('.row-commit .label-align'),
       committer: text('.row-committer .label-align'),
       commitDate: text('.row-calendar .label-align'),
-      requestIconTitle: attribute('title', '.row-commit a'),
+      requestIconTitle: attribute('data-tooltip', '.row-commit a span'),
       duration: text('.row-duration .label-align'),
       message: text('.row-message'),
 
