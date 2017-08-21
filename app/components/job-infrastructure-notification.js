@@ -57,9 +57,9 @@ export default Ember.Component.extend({
   },
 
   imageToNewImage: {
-    'beta-xcode6.1': 'xcode6.4',
-    'beta-xcode6.2': 'xcode6.4',
-    'beta-xcode6.3': 'xcode6.4',
+    'beta-xcode6.1': 'xcode7.3',
+    'beta-xcode6.2': 'xcode7.3',
+    'beta-xcode6.3': 'xcode7.3',
     'xcode7': 'xcode7.3',
     'xcode7.1': 'xcode7.3',
     'xcode7.2': 'xcode7.3'
