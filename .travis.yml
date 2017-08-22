@@ -36,4 +36,4 @@ install:
   - bower install
 
 script:
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --random --reporter dot
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --reporter dot --random
