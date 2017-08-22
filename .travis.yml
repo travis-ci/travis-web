@@ -8,7 +8,8 @@ dist: trusty
 env:
   global:
     - PERCY_ENABLE=0
-    - EMBER_SOURCE_TAG=master
+    - EMBER_VERSION=beta
+    - EMBER_VERSION=canary
 
 addons:
   apt:
@@ -24,10 +25,6 @@ cache:
 
 before_install:
   - git clone --depth=50 --branch=master https://github.com/travis-ci/travis-web.git travis-ci/travis-web
-  - git clone https://gist.github.com/clekstro/52fc4080904af9dbe944f521b9425ba9.git custom_scripts
-  - chmod a+x custom_scripts/replace-ember-version.sh
-  - ./custom_scripts/replace-ember-version.sh
-  - cat package.json
   - npm config set spin false
   - npm install -g npm@5
   - npm install -g bower
@@ -39,4 +36,4 @@ install:
   - bower install
 
 script:
-  - ember exam --reporter dot --random
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --random --reporter dot
