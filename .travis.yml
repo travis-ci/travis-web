@@ -39,7 +39,7 @@ before_script:
   - echo $RANDOMISE
 
 script:
-  - ember exam iterate 100 --reporter dot
+  - ember exam:iterate 100 --reporter dot
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
