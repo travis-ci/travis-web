@@ -6,7 +6,6 @@ env:
   global:
     - PERCY_ENABLE=0
   matrix:
-    - EMBER_VERSION=default
     - EMBER_VERSION=beta
     - EMBER_VERSION=canary
 
