@@ -42,11 +42,5 @@ install:
   - npm install
   - bower install
 
-before_script:
-  - if [ "$EMBER_VERSION" = 'default' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; fi
-  - echo $PERCY_ENABLE
-  - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
-  - echo $RANDOMISE
-
 script:
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --reporter dot $RANDOMISE
+  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --random --reporter dot
