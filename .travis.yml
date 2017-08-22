@@ -58,18 +58,6 @@ deploy:
     region: us-east-1
     on:
       branch: master
-  - provider: script
-    skip_cleanup: true
-    script: ./config/deployment/deploy-test-master.sh
-    on:
-      branch: master
-      condition: "$EMBER_VERSION = beta"
-  - provider: script
-    skip_cleanup: true
-    script: ./config/deployment/deploy-test-master.sh
-    on:
-      branch: master
-      condition: "$EMBER_VERSION = canary"
 
 after_success:
   - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
