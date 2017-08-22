@@ -8,7 +8,7 @@ dist: trusty
 env:
   global:
     - PERCY_ENABLE=0
-    - EMBER_SOURCE_TAG=beta
+    - EMBER_SOURCE_TAG=master
 
 addons:
   apt:
@@ -23,8 +23,10 @@ cache:
     - bower_components
 
 before_install:
-  - cd && git clone --depth=50 --branch=master https://github.com/travis-ci/travis-web.git travis-ci/travis-web && cd travis-ci/travis-web
-  - sed -i "/ember-source/c \"ember-source\": \"emberjs/ember.js#$EMBER_SOURCE_TAG\"" package.json
+  - cd
+  - git clone --depth=50 --branch=master https://github.com/travis-ci/travis-web.git travis-ci/travis-web
+  - cd travis-ci/travis-web
+  - sed -i "/ember-source/c \"ember-source\": \"emberjs/ember.js#$EMBER_SOURCE_TAG\"" travis-ci/travis-web/package.json
   - npm config set spin false
   - npm install -g npm@5
   - npm install -g bower
