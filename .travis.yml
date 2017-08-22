@@ -9,13 +9,6 @@ env:
     - EMBER_VERSION=beta
     - EMBER_VERSION=canary
 
-matrix:
-  allow_failures:
-    - env: EMBER_VERSION=beta
-    - env: EMBER_VERSION=canary
-
-  fast_finish: true
-
 sudo: false
 dist: trusty
 
