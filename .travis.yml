@@ -28,6 +28,7 @@ before_install:
   - npm config set spin false
   - npm install -g npm@5
   - npm install -g bower
+  - cd && git clone --depth=50 --branch=master https://github.com/travis-ci/travis-web.git travis-ci/travis-web && cd travis-ci/travis-web
   - bower --version
   - npm --version
 
