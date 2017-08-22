@@ -38,3 +38,17 @@ install:
 
 script:
   - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --reporter dot --random
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: ./config/deployment/deploy-test-master.sh
+    on:
+      branch: daily-cron
+      condition: "$EMBER_VERSION = beta"
+  - provider: script
+    skip_cleanup: true
+    script: ./config/deployment/deploy-test-master.sh
+    on:
+      branch: daily-cron
+      condition: "$EMBER_VERSION = canary"
