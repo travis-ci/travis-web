@@ -23,6 +23,7 @@ const Repo = Model.extend({
   @oneWay('owner.@type') ownerType: null,
 
   @oneWay('currentBuild.finishedAt') currentBuildFinishedAt: null,
+  @oneWay('currentBuild.state') currentBuildState: null,
   @oneWay('currentBuild.id') currentBuildId: null,
 
 
