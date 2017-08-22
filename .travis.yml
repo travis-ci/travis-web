@@ -5,8 +5,6 @@ node_js: 6
 env:
   global:
     - PERCY_ENABLE=0
-  matrix:
-    - EMBER_VERSION=default
 
 sudo: false
 dist: trusty
@@ -35,13 +33,13 @@ install:
   - bower install
 
 before_script:
-  - if [ "$EMBER_VERSION" = 'default' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; fi
+  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; fi
   - echo $PERCY_ENABLE
   - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
   - echo $RANDOMISE
 
 script:
-  - ember try:one $EMBER_VERSION --skip-cleanup=true --- ember exam --reporter dot $RANDOMISE
+  - ember exam --reporter dot $RANDOMISE
 
 before_deploy:
   - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
@@ -60,7 +58,6 @@ deploy:
     region: us-east-1
     on:
       branch: master
-      condition: "$EMBER_VERSION = default"
   - provider: script
     skip_cleanup: true
     script: ./config/deployment/deploy-test-master.sh
@@ -75,4 +72,4 @@ deploy:
       condition: "$EMBER_VERSION = canary"
 
 after_success:
-  - "test $EMBER_VERSION == 'default' && test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
+  - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
