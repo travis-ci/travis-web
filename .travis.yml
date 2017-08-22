@@ -27,6 +27,7 @@ before_install:
   - git clone https://gist.github.com/clekstro/52fc4080904af9dbe944f521b9425ba9.git custom_scripts
   - chmod a+x custom_scripts/replace-ember-version.sh
   - ./custom_scripts/replace-ember-version.sh
+  - cat package.json
   - npm config set spin false
   - npm install -g npm@5
   - npm install -g bower
