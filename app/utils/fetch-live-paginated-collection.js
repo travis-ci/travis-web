@@ -7,7 +7,7 @@ import LivePaginatedCollection from 'travis/utils/live-paginated-collection';
 // collection.
 let fetchLivePaginatedCollection = function (store, modelName, queryParams, options) {
   let dependencies = options.dependencies || [],
-    filter = filter || (() => true),
+    filter = options.filter || (() => true),
     filtered = store.filter(modelName, queryParams, filter, dependencies, options.forceReload);
 
   return filtered.then((filteredArray) => {

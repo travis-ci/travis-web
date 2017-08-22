@@ -46,6 +46,47 @@ test('it adds records already in the store to paginated collection', function (a
   });
 });
 
+test('it uses filter function to filter records', function (assert) {
+  assert.expect(3);
+
+  let store = this.store(),
+    repos = [];
+
+  Ember.run(() => {
+    let repo = store.push({
+      data: {
+        id: 1,
+        type: 'repo',
+        attributes: { starred: false }
+      }
+    });
+
+    repos.push(repo);
+  });
+
+  store.query = function () {
+    assert.ok('store.query was called');
+
+    let queryResult = Ember.ArrayProxy.create({ content: repos });
+    queryResult.set('meta', {});
+    queryResult.set('meta.pagination', { count: 1, limit: 1, offset: 0 });
+
+    return Ember.RSVP.resolve(queryResult);
+  };
+
+  let result = store.paginated('repo', { starred: true },
+                               { filter: (repo) => repo.get('starred'), sort: 'id:desc', dependencies: ['starred'] });
+
+  let done = assert.async();
+
+  result.then((collection) => {
+    done();
+
+    assert.equal(collection.get('pagination.perPage'), 1);
+    assert.equal(collection.toArray().length, 0);
+  });
+});
+
 test('it sets limit based on the response, not the query params', function (assert) {
   let store = this.store();
 
