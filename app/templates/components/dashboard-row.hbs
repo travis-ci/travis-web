@@ -42,12 +42,13 @@
     <section class="dash-commit">
       <h3 class="label">Commit</h3>
       <p class="row-content">
-        {{svg-jar 'icon-github' class="icon"}}
-        <a href="{{urlGithubCommit}}" title="See the last commit on Github">
-          <span class="label-align">
+        {{#external-link-to href=urlGitHubCommit}}
+          {{svg-jar 'icon-commit' class="icon"}}
+          <span data-tooltip="View commit on GitHub" class="label-align">
             {{format-sha repo.currentBuild.commit.sha}}
           </span>
-        </a>
+          {{svg-jar 'icon-external-link' class="icon"}}
+        {{/external-link-to}}
       </p>
     </section>
     <section class="fade-out dash-finished">
