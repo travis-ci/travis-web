@@ -17,31 +17,35 @@ export default Ember.Component.extend({
     this.set('branch', this.get('repo.defaultBranch.name'));
   },
 
-  @computed('format', 'repo.slug', 'branch', 'repo.defaultBranch')
-  statusString(format, slug, branch, defaultBranch) {
-    const imageFormat = format || this.get('formats.firstObject');
-    const gitBranch = branch || defaultBranch.name;
-    return this.formatStatusImage(imageFormat, slug, gitBranch);
+  @computed('format', 'repo.slug', 'branch', 'repo.defaultBranch.name')
+  statusString(format, slug, branch, defaultBranchName) {
+    const repo = this.get('repo');
+    if (repo) {
+      const imageFormat = format || this.get('formats.firstObject');
+      const gitBranch = branch || defaultBranchName;
+
+      return this.formatStatusImage(imageFormat, repo, gitBranch);
+    }
   },
 
-  formatStatusImage(format, slug, branch) {
+  formatStatusImage(format, repo, branch) {
     switch (format) {
       case 'Image URL':
-        return this.get('statusImages').imageUrl(slug, branch);
+        return this.get('statusImages').imageUrl(repo, branch);
       case 'Markdown':
-        return this.get('statusImages').markdownImageString(slug, branch);
+        return this.get('statusImages').markdownImageString(repo, branch);
       case 'Textile':
-        return this.get('statusImages').textileImageString(slug, branch);
+        return this.get('statusImages').textileImageString(repo, branch);
       case 'Rdoc':
-        return this.get('statusImages').rdocImageString(slug, branch);
+        return this.get('statusImages').rdocImageString(repo, branch);
       case 'AsciiDoc':
-        return this.get('statusImages').asciidocImageString(slug, branch);
+        return this.get('statusImages').asciidocImageString(repo, branch);
       case 'RST':
-        return this.get('statusImages').rstImageString(slug, branch);
+        return this.get('statusImages').rstImageString(repo, branch);
       case 'Pod':
-        return this.get('statusImages').podImageString(slug, branch);
+        return this.get('statusImages').podImageString(repo, branch);
       case 'CCTray':
-        return this.get('statusImages').ccXml(slug, branch);
+        return this.get('statusImages').ccXml(repo, branch);
     }
   },
 

@@ -1,0 +1,14 @@
+<div class="missing-notice">
+  <figure class="page-graphic">
+    {{svg-jar 'barricade'}}
+  </figure>
+
+  <h2 class="page-title">We couldn't find the owner <br><span class="h2--red">{{ownerLogin}}</span></h2>
+  {{#if features.enterpriseVersion}}
+  {{! we only need this text on enterprise, where public mode may be disabled.
+      on pro every owner is visible }}
+    {{#unless auth.signedIn}}
+      <p class="page-notice">This owner may not exist or you may need to {{#link-to "auth" class="auth-button--white m-l-s" action="singI"}}Sign in with GitHub{{/link-to}}</p>
+    {{/unless}}
+  {{/if}}
+</div>

@@ -203,7 +203,12 @@ export default function () {
   });
 
   this.get('/owner/:login', function (schema, request) {
-    return this.serialize(schema.users.where({ login: request.params.login }).models[0], 'owner');
+    let owner = schema.users.where({ login: request.params.login }).models[0];
+    if (owner) {
+      return this.serialize(owner, 'owner');
+    } else {
+      return new Mirage.Response(404, {}, {});
+    }
   });
 
   this.delete('/settings/ssh_key/:repo_id', function (schema, request) {
