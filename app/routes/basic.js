@@ -41,8 +41,5 @@ export default Ember.Route.extend({
        params.owner.owner === 'profile') {
       this.transitionTo('account', this.get('auth.currentUser.login'));
     }
-  },
-
-  // on pro, we need to auth on every route
-  @alias('features.proVersion') needsAuth: null,
+  }
 });
