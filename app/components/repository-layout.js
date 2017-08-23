@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
-import config from 'travis/config/environment';
-
 
 export default Ember.Component.extend({
   @service statusImages: null,
