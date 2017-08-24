@@ -23,7 +23,7 @@ export default Ember.Component.extend({
   },
 
   sendTriggerRequest: task(function* () {
-    let requestConfig = YAML.parse(this.get('triggerBuildRequestConfig'));
+    let requestConfig = YAML.parse(this.get('triggerBuildConfig'));
     this.set('isTriggering', true);
     let runInterval = config.intervals.triggerBuildRequestDelay;
 
