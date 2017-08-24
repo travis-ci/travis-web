@@ -16,4 +16,9 @@
       {{#link-to "caches" repo}}Caches{{/link-to}}
     </li>
   {{/if}}
+  {{#if repo.permissions.create_request}}
+    <li>
+      <button type="button" class="trigger-build-anchor" {{action "triggerBuildModal"}}>Trigger build</button>
+    </li>
+  {{/if}}
 </ul>

@@ -74,8 +74,17 @@
   border: none
   color: white
   background-color: $oxide-blue
-  &:hover
+  &:hover,
+  &:active
     background-color: darken($oxide-blue, 10)
+
+.inactive
+  cursor: default
+  background: $dry-cement !important
+  color: white
+  &:hover,
+  &:active
+    background: $dry-cement !important
 
 #auth #navigation .auth-button
   display: none
@@ -141,6 +150,7 @@
   line-height: 1.8
   font-size: 14px
   font-weight: 300
+  background-color: inherit
   cursor: pointer
   [class^="icon"]
     margin-right: .3em

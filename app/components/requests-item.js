@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
   classNames: ['request-item'],
-  classNameBindings: ['requestClass'],
+  classNameBindings: ['requestClass', 'highlightedClass'],
   tagName: 'li',
 
   @computed('request.message')
@@ -11,19 +12,21 @@ export default Ember.Component.extend({
     return message === 'github pages branch';
   },
 
-  @computed('request.isAccepted')
-  requestClass(isAccepted) {
-    return isAccepted ? 'accepted' : 'rejected';
-  },
+  @alias('request.result') requestClass: null,
 
   @computed('request.isPullRequest')
   type(isPullRequest) {
     return isPullRequest ? 'pull_request' : 'push';
   },
 
-  @computed('request.isAccepted')
-  status(isAccepted) {
-    return isAccepted ? 'Accepted' : 'Rejected';
+  @computed('highlightedRequestId', 'request.id')
+  highlightedClass(paramId, currentId) {
+    return (paramId === currentId) ? 'highlighted' : '';
+  },
+
+  @computed('request.result')
+  status(result) {
+    return result.capitalize();
   },
 
   @computed('features.proVersion', 'request.message')

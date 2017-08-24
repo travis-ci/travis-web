@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { task, taskGroup } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
-import { alias } from 'ember-decorators/object/computed';
+import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default Ember.Controller.extend({
   queryParams: ['account', 'offset'],
@@ -45,13 +45,20 @@ export default Ember.Controller.extend({
     }
   }).group('starring'),
 
-  @alias('model.repos.@each.currentBuild') repositoriesCurrentBuilds: null,
+  @computed('model.starredRepos.[]',
+            'model.starredRepos.@each.currentBuildState',
+            'model.starredRepos.@each.currentBuildFinishedAt')
+  starredRepos(repositories) {
+    return repositories.toArray().sort(dashboardRepositoriesSort);
+  },
 
   @computed('model.repos.[]',
-            'repositoriesCurrentBuilds.@each.finishedAt',
             'account',
-            'model.accounts')
-  filteredRepos(repositories, currentBuilds, accountParam, accounts) {
+            'model.accounts',
+            'model.repos.@each.currentBuildState',
+            'model.repos.@each.currentBuildFinishedAt'
+           )
+  filteredRepos(repositories, accountParam, accounts) {
     let account = accounts.filter((x) => {
       if (accountParam) {
         if (x.id === accountParam) {
@@ -80,35 +87,7 @@ export default Ember.Controller.extend({
       } else {
         return item;
       }
-    }).sort((a, b) => {
-      if (Ember.isBlank(a.get('currentBuild.state'))) {
-        return 1;
-      }
-      if (Ember.isBlank(b.get('currentBuild.state'))) {
-        return -1;
-      }
-      if (Ember.isBlank(a.get('currentBuild.finishedAt'))) {
-        return -1;
-      }
-      if (Ember.isBlank(b.get('currentBuild.finishedAt'))) {
-        return 1;
-      }
-      if (a.get('currentBuild.finishedAt') < b.get('currentBuild.finishedAt')) {
-        return 1;
-      }
-      if (a.get('currentBuild.finishedAt') > b.get('currentBuild.finishedAt')) {
-        return -1;
-      }
-      if (a.get('currentBuild.finishedAt') === b.get('currentBuild.finishedAt')) {
-        return 0;
-      }
-      if (Ember.isBlank(a.get('defaultBranch.lastBuild.state'))) {
-        return 1;
-      }
-      if (Ember.isBlank(b.get('defaultBranch.lastBuild.state'))) {
-        return -1;
-      }
-    });
+    }).sort(dashboardRepositoriesSort);
     return repos;
   },
 

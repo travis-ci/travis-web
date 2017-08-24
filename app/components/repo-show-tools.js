@@ -6,7 +6,6 @@ import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
   @service auth: null,
-  @service popup: null,
   @service permissions: null,
 
   tagName: 'nav',
@@ -38,4 +37,10 @@ export default Ember.Component.extend({
   displayStatusImages(permissions, repo) {
     return this.get('permissions').hasPermission(repo);
   },
+
+  actions: {
+    triggerBuildModal() {
+      this.get('onTriggerBuild')();
+    }
+  }
 });

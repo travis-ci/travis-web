@@ -5,14 +5,10 @@ export default Ember.Component.extend({
   @service flashes: null,
 
   actions: {
-    close() {
-      Ember.$('.popup').removeClass('display');
-      return false;
-    },
-
     removeLog() {
       let job = this.get('job');
-      Ember.$('.popup').removeClass('display');
+
+      this.get('onRemoveCloseModal')();
 
       return job.removeLog().then(() => {
         this.get('flashes').success('Log has been successfully removed.');
@@ -25,6 +21,9 @@ export default Ember.Component.extend({
           return this.get('flashes').error('An error occurred when removing the log');
         }
       });
+    },
+    toggleRemoveLogModal() {
+      this.get('onCloseModal')();
     }
   }
 });

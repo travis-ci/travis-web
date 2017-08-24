@@ -9,7 +9,7 @@ import { oneWay } from 'ember-decorators/object/computed';
 
 const Repo = Model.extend({
   @service ajax: null,
-
+  @service auth: null,
   permissions: attr(),
   slug: attr(),
   description: attr(),
@@ -23,6 +23,7 @@ const Repo = Model.extend({
   @oneWay('owner.@type') ownerType: null,
 
   @oneWay('currentBuild.finishedAt') currentBuildFinishedAt: null,
+  @oneWay('currentBuild.state') currentBuildState: null,
   @oneWay('currentBuild.id') currentBuildId: null,
 
 
@@ -32,6 +33,15 @@ const Repo = Model.extend({
   currentBuild: belongsTo('build', {
     async: true, inverse: 'repoCurrentBuild'
   }),
+
+  // TODO: this is a hack, we should remove it once @is_collaborator property is
+  // added to a response with the repo
+  @computed('auth.currentUser.permissions.[]')
+  isCurrentUserACollaborator(permissions) {
+    let id = parseInt(this.get('id'));
+
+    return permissions.includes(id);
+  },
 
   sshKey: function () {
     this.store.find('ssh_key', this.get('id'));
