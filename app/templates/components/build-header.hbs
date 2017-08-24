@@ -21,7 +21,7 @@
       <li>
         {{#external-link-to href=urlGithubCommit}}
           {{svg-jar 'icon-commit' class="icon"}}
-          <span data-tooltip="See the commit on GitHub" class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
+          <span data-tooltip="View commit on GitHub" class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
         {{/external-link-to}}
       </li>
@@ -30,14 +30,14 @@
           {{#if item.isPullRequest}}
             {{#external-link-to href=item.commit.compareUrl}}
               {{svg-jar 'icon-compare' class="icon"}}
-              <span data-tooltip="See the Pull Request on GitHub" class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
+              <span data-tooltip="View Pull Request on GitHub" class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
               {{svg-jar 'icon-external-link' class="icon"}}
             {{/external-link-to}}
           {{else}}
             {{#if item.commit.compareUrl}}
               {{#external-link-to href=item.commit.compareUrl }}
                 {{svg-jar 'icon-compare' class="icon"}}
-                <span data-tooltip="See diff on GitHub" class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
+                <span data-tooltip="View diff on GitHub" class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
                 {{svg-jar 'icon-external-link' class="icon"}}
               {{/external-link-to}}
             {{/if}}
@@ -47,7 +47,7 @@
       <li>
         {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
           {{svg-jar 'icon-branch' class="icon"}}
-          <span data-tooltip="Look at the branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
+          <span data-tooltip="View branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
         {{/external-link-to}}
       </li>
