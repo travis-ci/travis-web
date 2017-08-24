@@ -30,7 +30,17 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    return this.store.find('build', params.build_id);
+    const [owner, repoName] = this.get('router.currentURL').split('/').slice(1);
+    const urlSlug = `${owner}/${repoName}`;
+
+    const build = this.store.find('build', params.build_id);
+    const buildRepoSlug = build.get('repo.slug');
+
+    if (buildRepoSlug !== urlSlug) {
+      throw (new Error('invalidBuildId'));
+    }
+
+    return build;
   },
 
   deactivate() {

@@ -1,6 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service router: null,
+
   titleToken(model) {
     return `Job #${model.get('number')}`;
   },
@@ -38,7 +41,20 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    return this.store.find('job', params.job_id);
+    const job = this.store.find('job', params.job_id);
+
+    // if a job's repo's slug does not match the slug in the url, we'd be showing
+    // a job log as if it belonged to the wrong owner/repository
+    // See https://github.com/travis-pro/team-teal/issues/2044 for more details.
+    const jobRepositorySlug = job.get('repo.slug');
+    const [owner, repoName] = this.get('router.currentURL').split('/').slice(1);
+    const urlSlug = `${owner}/${repoName}`;
+
+    if (urlSlug !== jobRepositorySlug) {
+      throw (new Error('invalidJob'));
+    }
+
+    return job;
   },
 
   deactivate() {
