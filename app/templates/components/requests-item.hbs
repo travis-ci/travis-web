@@ -29,9 +29,9 @@
 
 <div class="row-item">
   {{#if request.build}}
-    {{#link-to "build" request.build}}
-      {{svg-jar 'icon-hash' class="icon"}}
-      <span class="label-align">{{request.build.number}}</span>{{/link-to}}
+    {{svg-jar 'icon-hash' class="icon"}}
+    {{#link-to "build" request.build title="Go to the build this request triggered"}}
+      <span class="label-align inner-underline">{{request.build.number}}</span>{{/link-to}}
   {{else}}
     -
   {{/if}}

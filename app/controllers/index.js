@@ -10,7 +10,6 @@ export default Ember.Controller.extend({
   @service tabStates: null,
   @service('updateTimes') updateTimesService: null,
   @service statusImages: null,
-  @service popup: null,
   @service repositories: null,
 
   init() {

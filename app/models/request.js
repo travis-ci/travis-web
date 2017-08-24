@@ -24,7 +24,7 @@ export default Model.extend({
     // For some reason some of the requests have a null result beside the fact that
     // the build was created. We need to look into it, but for now we can just assume
     // that if build was created, the request was accepted
-    return result === 'accepted' || buildId;
+    return result === 'approved' || buildId;
   },
 
   @computed('event_type')

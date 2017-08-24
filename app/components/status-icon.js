@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 
   @computed('status')
   hasPassed(status) {
-    return ['passed', 'accepted'].includes(status);
+    return ['passed', 'approved'].includes(status);
   },
 
   @computed('status')
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
 
   @computed('status')
   isRunning(status) {
-    let runningStates = ['started', 'queued', 'booting', 'received', 'created'];
+    let runningStates = ['started', 'queued', 'booting', 'received', 'created', 'pending'];
     return runningStates.includes(status);
   },
 

@@ -66,7 +66,6 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
 
 export default Ember.Component.extend({
   @service auth: null,
-  @service popup: null,
   @service permissions: null,
   @service externalLinks: null,
 
@@ -74,6 +73,8 @@ export default Ember.Component.extend({
   logIsVisible: false,
 
   @alias('auth.currentUser') currentUser: null,
+
+  isShowingRemoveLogModal: false,
 
   didInsertElement() {
     if (this.get('features.debugLogging')) {
@@ -242,16 +243,13 @@ export default Ember.Component.extend({
       return false;
     },
 
-    removeLogPopup() {
-      if (this.get('canRemoveLog')) {
-        this.get('popup').open('remove-log-popup');
-        return false;
-      }
-    },
-
     toggleLog() {
       this.toggleProperty('logIsVisible');
     },
+
+    toggleRemoveLogModal() {
+      this.toggleProperty('isShowingRemoveLogModal');
+    }
   },
 
   // don't remove this, it's needed as an empty willChange callback

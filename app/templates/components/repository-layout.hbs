@@ -4,14 +4,14 @@
       <a href="{{urlGithub}}" title="{{repo.name}} on GitHub" class="repo-gh">
         {{svg-jar 'icon-repooctocat'}}</a>
       <div class="repo-badge">
-        <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "statusImages"}}>
+        <a href="#" id="status-image-popup" title="Latest push build on default branch: {{repo.defaultBranch.lastBuild.state}}" name="status-images" class="open-popup" {{action "toggleStatusBadgeModal"}}>
           <img src={{statusImageUrl}} alt="build:{{repo.defaultBranch.lastBuild.state}}"/>
         </a>
       </div>
   </header>
   <main class="repo-main">
   <div class="repo-navigation">
-    {{repo-show-tools repo=repo build=build job=job tab=tab}}
+    {{repo-show-tools repo=repo build=build job=job tab=tab onTriggerBuild=(action "toggleTriggerBuildModal")}}
     {{repo-show-tabs repo=repo build=build job=job}}
   </div>
   <div class="travistab-body repo-body">
@@ -23,3 +23,21 @@
   </div>
   </main>
 </article>
+
+{{#if isShowingStatusBadgeModal}}
+  {{#modal-dialog
+     onClose="toggleStatusBadgeModal"
+     targetAttachment="center"
+     translucentOverlay=true}}
+    {{status-images repo=repo onClose=(action 'toggleStatusBadgeModal')}}
+  {{/modal-dialog}}
+{{/if}}
+
+{{#if isShowingTriggerBuildModal}}
+  {{#modal-dialog
+     onClose="toggleTriggerBuildModal"
+     targetAttachment="center"
+     translucentOverlay=true}}
+    {{trigger-custom-build repo=repo onClose=(action 'toggleTriggerBuildModal')}}
+  {{/modal-dialog}}
+{{/if}}

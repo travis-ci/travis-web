@@ -1,10 +1,7 @@
-<div id="remove-log-popup" class="popup">
-    <button class="close no-button" type="button" {{action "close"}} title="Close popup">
-        {{svg-jar 'icon-failed'}}</button>
-  <h3 class="popup-title h2--red">This action will remove the log permanently!</h3>
-  <p class="popup-text text-big">Do you want to continue?</p>
-  <div class="buttons">
-    <button type="button" class="button-delete plans-button--red" {{action "removeLog"}} title="Permanently remove this log">Yes, remove log</button>
-    <button type="button" class="button-cancel plans-button--grey" {{action "close"}} title="Close this popup">Oops, cancel</button>
-  </div>
+<h3 class="h3--red">This action will remove the log permanently!</h3>
+<p class="text-big">Do you want to continue?</p>
+<div class="buttons">
+  <button type="button" class="button-delete plans-button--red" {{action "removeLog"}} title="Permanently remove this log">Yes, remove log</button>
 </div>
+
+<button trype="button" title="Close modal" class="modal-close pointer" {{action 'toggleRemoveLogModal'}}>{{svg-jar 'icon-failed' class="icon"}}</button>

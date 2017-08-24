@@ -10,7 +10,6 @@ export default Ember.Controller.extend({
   @service repositories: null,
   @service tabStates: null,
   @service('updateTimes') updateTimesService: null,
-  @service popup: null,
 
   @controller('job') jobController: null,
   @controller('build') buildController: null,
@@ -89,5 +88,5 @@ export default Ember.Controller.extend({
   observeLastBuild() {
     this.currentBuildDidChange();
     return this.addObserver('repo.currentBuild', this, 'currentBuildDidChange');
-  },
+  }
 });
