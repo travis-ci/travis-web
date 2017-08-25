@@ -41,7 +41,7 @@ export default Ember.Component.extend({
       let { triggerBuildRequestDelay } = config.intervals;
       yield timeout(triggerBuildRequestDelay);
 
-      this.get('showRequestStatus').perform(this.get('repo.id'), requestId);
+      yield this.get('showRequestStatus').perform(this.get('repo.id'), requestId);
     }
   }),
 
