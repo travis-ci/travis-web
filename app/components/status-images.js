@@ -1,6 +1,4 @@
 import Ember from 'ember';
-import Config from 'travis/config/environment';
-
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 
