@@ -1,11 +1,11 @@
 <ul>
   <li id="tab_owned" class={{classOwned}}>
-    <a href="#" {{action showMyRepositories}}>My Repositories</a>
+    <a data-test-my-repositories-link href="#" {{action showMyRepositories}}>My Repositories</a>
   </li>
 
   {{#if features.proVersion}}
     <li id="tab_running" class={{classRunning}}>
-      <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
+      <a data-test-running-repositories-link href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
     </li>
   {{/if}}
 

@@ -1,6 +1,7 @@
 <div class="search search--sidebar">
   <div class="search-inner">
     {{input
+      data-test-sidebar-search-input
       id="travis-search"
       value=(readonly repositories.searchQuery)
       placeholder="Search all repositories"
@@ -17,7 +18,7 @@
   showRunningJobs=(action "showRunningJobs")}}
 
 {{#if showRunningJobs}}
-  <div class="travistab-body sidebar-list">
+  <div data-test-sidebar-running-jobs class="travistab-body sidebar-list">
     <div>
       {{running-jobs jobs=runningJobs}}
     </div>

@@ -1,9 +1,9 @@
 {{#if repos}}
-  <ul class="repos-list">
+  <ul data-test-sidebar-repositories class="repos-list">
     {{#each repos as |repo|}}
-      {{repos-list-item repo=repo}}
+      {{repos-list-item data-test-sidebar-repositor yrepo=repo}}
     {{/each}}
   </ul>
   {{else}}
-    <div class="loading-container">{{noReposMessage}}</div>
+    <div data-test-no-repositories-message class="loading-container">{{noReposMessage}}</div>
 {{/if}}

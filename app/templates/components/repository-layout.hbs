@@ -1,6 +1,6 @@
 <article class="repo-header">
   <header>
-    <h1 class="repo-title">{{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
+    <h1 data-test-repository-header-title class="repo-title">{{#link-to "owner" repo.owner.login}}{{repo.owner.login}}{{/link-to}} / {{#link-to "repo" repo}}{{repo.name}}{{/link-to}}</h1>
       <a href="{{urlGithub}}" title="{{repo.name}} on GitHub" class="repo-gh">
         {{svg-jar 'icon-repooctocat'}}</a>
       <div class="repo-badge">

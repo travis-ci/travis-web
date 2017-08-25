@@ -13,7 +13,7 @@
       <p class="tile-title float-right {{repo.currentBuild.state}}">
         {{svg-jar 'icon-hash' class="icon"}}
         {{#link-to "build" repo repo.currentBuild.id}}
-          <span class="label-align">{{repo.currentBuild.number}}</span>
+          <span data-test-sidebar-repository-title class="label-align">{{repo.currentBuild.number}}</span>
         {{/link-to}}
       </p>
     {{/if}}

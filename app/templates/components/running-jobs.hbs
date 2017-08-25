@@ -1,18 +1,18 @@
 {{#if jobs.isLoaded}}
   {{#if jobs.length}}
     {{#each jobs as |job| }}
-      <div class="tile tile--sidebar {{job.state}}">
+      <div data-test-sidebar-running-job class="tile tile--sidebar {{job.state}}">
         {{#if job.repo.slug}}
           {{status-icon status=job.state}}
-          {{#link-to "job" job.repo job}}
-            <span class="label-align">{{job.repo.slug}}</span>
+          {{#link-to "job" job.repo job data-test-sidebar-running-job-title-link}}
+            <span data-test-sidebar-running-job-title-link class="label-align">{{job.repo.slug}}</span>
           {{/link-to}}
         {{/if}}
 
-        <p class="tile-title float-right">
+        <p data-test-running-job class="tile-title float-right">
           {{svg-jar 'icon-hash' class="icon"}}
           {{#if job.repo.slug}}
-            {{#link-to "job" job.repo job}}<span class="label-align">{{job.number}}</span>{{/link-to}}
+            {{#link-to "job" job.repo job data-test-sidebar-running-job-number-link}}<span class="label-align">{{job.number}}</span>{{/link-to}}
           {{/if}}
         </p>
         <p>

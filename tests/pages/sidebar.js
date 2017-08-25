@@ -8,32 +8,33 @@ import {
   triggerable,
   hasClass
 } from 'ember-cli-page-object';
+import ts from 'ember-test-selectors';
 
 export default create({
   visit: visitable('/'),
-  repoTitle: text('.repo-header h1.repo-title'),
-  clickSidebarMyReposTab: clickable('#tab_owned a'),
-  clickSidebarRunningTab: clickable('#tab_running a'),
-  runningTabIsActive: hasClass('active', '#tab_running'),
-  myReposTabIsActive: hasClass('active', '#tab_owned'),
-  navigateToProfilePage: clickable('#profile-page-link'),
+  repoTitle: text(ts('repository-header-title')),
+  clickSidebarMyReposTab: clickable(ts('my-repositories-link')),
+  clickSidebarRunningTab: clickable(ts('running-repositories-link')),
+  runningTabIsActive: hasClass('active', ts('running-repositories-link')),
+  myReposTabIsActive: hasClass('active', ts('my-repositories-link')),
+  navigateToProfilePage: clickable(ts('getting-started-profile-page-link')),
   sidebarRepositories: collection({
-    scope: 'ul.repos-list',
-    itemScope: 'li.repo',
+    scope: ts('sidebar-repositories'),
+    itemScope: ts('sidebar-repository'),
     item: {
-      name: text('.tile h2.tile-title span.label-align')
+      name: text(ts('sidebar-repository-title'))
     }
   }),
-  sidebarRunningTabText: text('#tab_running a'),
+  sidebarRunningTabText: text(ts('running-repositories-link')),
   sidebarRunningRepositories: collection({
-    scope: '.sidebar-list',
-    itemScope: '.tile--sidebar',
+    scope: ts('sidebar-running-jobs'),
+    itemScope: ts('sidebar-running-job'),
     item: {
       name: text('.tile h2.tile-title span.label-align')
     }
   }),
-  missingReposMessage: text('.loading-container'),
-  viewRunningJob: clickable('p.tile-title a'),
-  enterSearchQuery: fillable('#travis-search'),
-  pressEnter: triggerable('keyup', '#travis-search', { eventProperties: { keyCode: 13 } }),
+  missingReposMessage: text(ts('no-repositories-message')),
+  viewRunningJob: clickable(ts('running-job-number-link')),
+  enterSearchQuery: fillable(ts('sidebar-search-input')),
+  pressEnter: triggerable('keyup', ts('sidebar-search-input'), { eventProperties: { keyCode: 13 } }),
 });
