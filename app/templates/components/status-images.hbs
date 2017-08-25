@@ -1,15 +1,11 @@
 <h3 class="h3--teal">Status Image</h3>
 <div class="form-pair">
   <label class="form-label">Branch</label>
-  {{#if branches.isLoaded}}
-    {{#x-select value=branch on-change=(action (mut branch)) as |xs|}}
-      {{#each branches as |branch|}}
-        {{#xs.option value=branch}}{{branch}}{{/xs.option}}
-      {{/each}}
-    {{/x-select}}
-  {{else}}
-    {{loading-indicator}}
-  {{/if}}
+  {{#x-select value=branch.name on-change=(action (mut branch)) as |xs|}}
+    {{#each repo.branches as |branch|}}
+      {{#xs.option value=branch.name}}{{branch.name}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
 </div>
 
 <div class="form-pair">
