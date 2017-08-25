@@ -50,8 +50,8 @@
     @media #{$medium-up}
       display: flex
       flex-flow: row nowrap
-      flex-grow: 1
-      justify-content: space-between
+      flex: 1 0 90%
+      justify-content: flex-start
       align-items: center
       height: 34px
 
@@ -60,9 +60,9 @@
       margin-left: -2px // related to the width given in color jobs
 
   .repo-main-tools
-    flex-shrink: 1
+    flex: 0 0 3rem
+    justify-content: flex-end
     align-items: center
-    width: 27px
 
 .section-title
   font-size: 16px
@@ -96,7 +96,7 @@
 
   .stage-duration
     @extend .section-title
-    width: 11.7em
+    width: 13.7rem
     padding-left: 0.3rem
 
     svg
@@ -150,7 +150,7 @@
 .job-lang
   overflow: hidden
   @media #{$medium-up}
-    flex: 1 0 12em
+    flex: 1 0 24%
     position: relative
     white-space: nowrap
     &:after
@@ -159,7 +159,7 @@
 
 .job-env
   @media #{$medium-up}
-    flex: 1 0 22em
+    flex: 1 1 38%
     position: relative
     white-space: nowrap
     overflow: hidden
@@ -177,5 +177,5 @@
       max-width: 70em
 
 .job-duration
-  flex: 0 0 10em
-  padding-right: 1em
+  flex: 0 0 10rem
+  white-space: nowrap
