@@ -15,7 +15,7 @@
     </header>
 
   {{#if repo.active}}
-    <section class="dash-default {{repo.defaultBranch.lastBuild.state}} ">
+    <section class="dash-default {{repo.defaultBranch.lastBuild.state}} fade-out">
       <h3 class="label">Default branch</h3>
       <p class="row-content color">
         {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
