@@ -60,7 +60,7 @@ export default Ember.Component.extend({
   showRequestStatus: task(function* (repoId, requestId) {
     const data = yield this.get('fetchBuildStatus').perform(repoId, requestId);
     let { result } = data;
-    let build = data.builds.firstObject;
+    let [build] = data.builds;
 
     if (build && result === 'approved') {
       return this.showBuild(build);
