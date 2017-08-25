@@ -304,6 +304,14 @@ export default TravisRoute.extend({
         nationality: 'romania',
         country: 'netherlands',
         image: 'bogdana'
+      },
+      {
+        name: 'AJ Bowen',
+        title: 'Cyber Squirrel',
+        handle: 's0ulshake',
+        nationality: 'usa',
+        country: 'germany',
+        image: 'aj'
       }
     ];
   }
