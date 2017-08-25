@@ -2,7 +2,7 @@ import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   titleToken(model) {
-    if (model) {
+    if (model && model.id) {
       return model.get('name') || model.get('login');
     } else {
       return 'Account';
@@ -16,8 +16,13 @@ export default TravisRoute.extend({
 
   model(params) {
     const { login } = params;
-    return this.modelFor('accounts')
-      .find(acct => acct.get('login') === login);
+    let account = this.modelFor('accounts')
+          .find(acct => acct.get('login') === login);
+    if (account) {
+      return account;
+    } else {
+      return { login, error: true };
+    }
   },
 
   serialize(account) {

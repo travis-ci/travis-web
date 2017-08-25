@@ -28,6 +28,8 @@ export default PageObject.create({
   visit: visitable('profile/:username'),
   name: text('.profile-header h1'),
 
+  notFoundOrgName: text('.page-title .h2--red'),
+
   administerableHooks: hooksCollection('#administerable-hooks'),
   unadministerableHooks: hooksCollection('#unadministerable-hooks'),
 
