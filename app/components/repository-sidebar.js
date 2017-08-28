@@ -75,13 +75,13 @@ export default Ember.Component.extend({
     return runningJobs;
   },
 
-  @computed('currentUser')
-  queuedJobs(user) {
+  @computed()
+  queuedJobs() {
     const queuedStates = ['created'];
     const result = this.get('store').filter(
       'job',
       job =>
-        queuedStates.includes(job.get('state') && user && user.hasAccessToRepo(job.get('repo')))
+        queuedStates.includes(job.get('state')) && job.get('repo.isCurrentUserACollaborator')
     );
     result.set('isLoaded', false);
     result.then(() => result.set('isLoaded', true));
