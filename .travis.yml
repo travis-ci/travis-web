@@ -3,5 +3,8 @@ language: bash
 sudo: required
 dist: trusty
 
-before_script: cd && git clone --depth=50 --branch=master https://github.com/travis-ci/travis-web.git travis-ci/travis-web && cd travis-ci/travis-web
+# This checks out our current master branch and grabs a private gist containing the necessary Docker scripts/configuration files.
+before_script:
+  - cd && git clone --depth=50 --branch=master https://github.com/travis-ci/travis-web.git travis-ci/travis-web && cd travis-ci/travis-web
+  - chmod a+x ./script/docker-build-and-push
 script: ./script/docker-build-and-push
