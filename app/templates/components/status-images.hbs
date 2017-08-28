@@ -1,21 +1,24 @@
 <h3 class="h3--teal">Status Image</h3>
 <div class="form-pair">
   <label class="form-label">Branch</label>
-  {{#x-select value=branch.name on-change=(action (mut branch)) as |xs|}}
-    {{#each repo.branches as |branch|}}
-      {{#xs.option value=branch.name}}{{branch.name}}{{/xs.option}}
-    {{/each}}
-  {{/x-select}}
+  {{#if repo.branches}}
+    {{#x-select value=branch.name on-change=(action (mut branch)) as |xs|}}
+      {{#each repo.branches as |branch|}}
+        {{#xs.option value=branch.name}}{{branch.name}}{{/xs.option}}
+      {{/each}}
+    {{/x-select}}
+  {{else}}
+    {{loading-indicator}}
+  {{/if}}
 </div>
 
 <div class="form-pair">
   <label class="form-label">
-  {{#x-select value=format on-change=(action (mut format)) as |xs|}}
-    {{#each formats as |format|}}
-      {{#xs.option value=format}}{{format}}{{/xs.option}}
-    {{/each}}
-  {{/x-select}}
-
+    {{#x-select value=format on-change=(action (mut format)) as |xs|}}
+      {{#each formats as |format|}}
+        {{#xs.option value=format}}{{format}}{{/xs.option}}
+      {{/each}}
+    {{/x-select}}
   </label>
   {{status-image-input value=statusString class="url" rows=3}}
 </div>
