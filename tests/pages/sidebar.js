@@ -29,14 +29,14 @@ export default create({
     scope: '.sidebar-list .running',
     itemScope: '.tile--sidebar',
     item: {
-      name: text('.tile h2.tile-title span.label-align')
+      number: text('.tile-title .label-align')
     }
   }),
   queuedJobs: collection({
     scope: '.sidebar-list .queued',
     itemScope: '.tile--sidebar',
     item: {
-      name: text('.tile h2.tile-title span.label-align')
+      number: text('.tile-title .label-align')
     }
   }),
   missingReposMessage: text('.loading-container'),

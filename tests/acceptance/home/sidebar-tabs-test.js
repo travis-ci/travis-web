@@ -101,7 +101,9 @@ test('the home page shows running tab', (assert) => {
   andThen(() => {
     assert.equal(sidebarPage.sidebarRunningTabText, 'Running Jobs1 / 2', 'running tab correctly shows number of started/queued jobs');
     assert.equal(sidebarPage.runningJobs().count, 1, 'expected one running job');
+    assert.equal(sidebarPage.runningJobs(0).number, '1234.1', 'expected the running job to be the one with queued state');
     assert.equal(sidebarPage.queuedJobs().count, 1, 'expected one queued job');
+    assert.equal(sidebarPage.queuedJobs(0).number, '1234.2', 'expected the queued job to be the one with created state');
   });
   percySnapshot(assert);
 });
