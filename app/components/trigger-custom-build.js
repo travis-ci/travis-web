@@ -1,8 +1,9 @@
 import Ember from 'ember';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import YAML from 'npm:yamljs';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
+import { filterBy, notEmpty } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
   @service ajax: null,
@@ -13,79 +14,109 @@ export default Ember.Component.extend({
   triggerBuildBranch: '',
   triggerBuildMessage: '',
   triggerBuildConfig: '',
-  isTriggering: false,
 
-  branches: Ember.computed.filterBy('repo.branches', 'exists_on_github', true),
+  @filterBy('repo.branches', 'exists_on_github', true) branches: null,
+  @notEmpty('triggerBuildMessage') triggerBuildMessagePresent: null,
 
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('triggerBuildBranch', this.get('repo.defaultBranch.name'));
   },
 
-  sendTriggerRequest: task(function* () {
-    let requestConfig = YAML.parse(this.get('triggerBuildConfig'));
-    this.set('isTriggering', true);
-    let runInterval = config.intervals.triggerBuildRequestDelay;
+  createBuild: task(function* () {
+    try {
+      const body = this.buildTriggerRequestBody();
+      return yield this.get('ajax').postV3(`/repo/${this.get('repo.id')}/requests`, body);
+    } catch (e) {
+      this.displayError(e);
+    }
+  }),
 
+  triggerBuild: task(function* () {
+    const data = yield this.get('createBuild').perform();
+
+    if (data) {
+      let requestId = data.request.id;
+
+      let { triggerBuildRequestDelay } = config.intervals;
+      yield timeout(triggerBuildRequestDelay);
+
+      yield this.get('showRequestStatus').perform(this.get('repo.id'), requestId);
+    }
+  }),
+
+  fetchBuildStatus: task(function* (repoId, requestId) {
+    try {
+      const url = `/repo/${repoId}/request/${requestId}`;
+      const headers = {
+        'Travis-API-Version': '3'
+      };
+      return yield this.get('ajax').ajax(url, 'GET', { headers });
+    } catch (e) {
+      this.displayError(e);
+    }
+  }),
+
+  showRequestStatus: task(function* (repoId, requestId) {
+    const data = yield this.get('fetchBuildStatus').perform(repoId, requestId);
+    let { result } = data;
+    let [build] = data.builds;
+
+    if (build && result === 'approved') {
+      return this.showBuild(build);
+    } else if (result === 'rejected') {
+      return this.showFailedRequest(requestId);
+    }
+    return this.showProcessingRequest(requestId);
+  }),
+
+  buildTriggerRequestBody() {
+    let requestConfig = YAML.parse(this.get('triggerBuildConfig'));
     let body = {
       request: {
         branch: this.get('triggerBuildBranch'),
-        requestConfig: requestConfig
+        requestConfig,
       }
     };
 
-    if (! Ember.isEmpty(this.get('triggerBuildMessage'))) {
+    if (this.get('triggerBuildMessagePresent')) {
       body.request.message = this.get('triggerBuildMessage');
     }
 
-    try {
-      yield this.get('ajax').postV3(`/repo/${this.get('repo.id')}/requests`, body)
-        .then((data) => {
-          let reqId = data.request.id;
+    return body;
+  },
 
-          Ember.run.later(this, function () {
-            return this.get('getRequestState').perform(this.get('repo.id'), reqId);
-          }, runInterval);
-        });
-    } catch (e) {
-      this.get('flashes').error('Oops, something went wrong, please try again.');
-      this.get('onClose')();
-    }
-  }),
+  showProcessingRequest(requestId) {
+    const preamble = 'Hold tight!';
+    const notice = `You successfully triggered a build
+        for ${this.get('repo.slug')}. It might take a moment to show up though.`;
+    this.get('flashes').notice(notice, preamble);
+    this.get('onClose')();
+    return this.showRequest(requestId);
+  },
 
-  getRequestState: task(function* (repoId, requestId) {
-    try {
-      yield this.get('ajax')
-        .ajax(`/repo/${repoId}/request/${requestId}`, 'GET',
-              { headers: { 'Travis-API-Version': '3' } })
-        .then((data) => {
-          let reqResult = data.result;
-          let triggeredBuild = data.builds ? data.builds[0] : null;
+  showFailedRequest(requestId) {
+    const errorMsg = `You tried to trigger a build
+      for ${this.get('repo.slug')} but the request was rejected.`;
+    this.get('flashes').error(errorMsg);
+    this.get('onClose')();
+    return this.showRequest(requestId);
+  },
 
-          this.set('isTriggering', false);
+  showRequest(requestId) {
+    const queryParams = { requestId };
+    return this.get('router').transitionTo('requests', this.get('repo'), { queryParams });
+  },
 
-          if (reqResult === 'approved' && triggeredBuild) {
-            this.get('onClose')();
-            return this.get('router').transitionTo('build', this.get('repo'), triggeredBuild.id);
-          } else if (reqResult === 'rejected') {
-            this.get('flashes').error(`You tried to trigger a build
-for ${this.get('repo.slug')} but the request was rejected.`);
-            this.get('onClose')();
-            return this.get('router').transitionTo('requests', this.get('repo'),
-                                                   { queryParams: { requestId: requestId } });
-          } else {
-            this.get('flashes').notice(`You successfully triggered a build
-for ${this.get('repo.slug')}. It might take a moment to show up though.`, 'Hold tight!');
-            this.get('onClose')();
-            return this.get('router').transitionTo('requests', this.get('repo'),
-                                                   { queryParams: { requestId: requestId } });
-          }
-        });
-    } catch (e) {
-      this.get('flashes').error('Oops, something went wrong, please try again.');
-      this.get('onClose')();
-    }
-  }),
+  showBuild(build) {
+    this.get('onClose')();
+    return this.get('router').transitionTo('build', this.get('repo'), build.id);
+  },
+
+  displayError(e) {
+    this.get('flashes').error('Oops, something went wrong, please try again.');
+    return this.get('onClose')();
+  },
 
   actions: {
     toggleTriggerBuildModal() {

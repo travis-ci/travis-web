@@ -1,5 +1,5 @@
 <h2 class="h3--teal">Trigger a custom build
-<a href="https://github.com/travis-ci/beta-features/issues/12" title="Give your feedback on custom build trigger"  target="_blank" class="badge">Beta Feature</a></h2>
+<a href="https://github.com/travis-ci/beta-features/issues/27" title="Give your feedback on custom build trigger"  target="_blank" class="badge">Beta Feature</a></h2>
 <p>Custom builds exist only on Travis CI and will not appear in your Git history.</p>
 
 <div class="form-elem">
@@ -22,11 +22,11 @@
 </div>
 
 <div class="form-elem">
-  {{#if isTriggering}}
+  {{#if triggerBuild.isRunning}}
     {{loading-indicator}}
   {{else}}
-    <button onclick={{perform sendTriggerRequest}} type="button" class="trigger-build-submit {{if jsonError 'button inactive' 'button--blue'}}" title="Trigger custom build with your settings">Trigger custom build</button>
+    <button onclick={{perform triggerBuild}} type="button" class="trigger-build-submit {{if jsonError 'button inactive' 'button--blue'}}" title="Trigger custom build with your settings">Trigger custom build</button>
   {{/if}}
 </div>
 
-<button trype="button" title="Close modal" class="modal-close pointer" {{action 'toggleTriggerBuildModal'}}>{{svg-jar 'icon-failed' class="icon"}}</button>
+<button type="button" title="Close modal" class="modal-close pointer" {{action 'toggleTriggerBuildModal'}}>{{svg-jar 'icon-failed' class="icon"}}</button>
