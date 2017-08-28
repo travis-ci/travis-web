@@ -13,7 +13,6 @@ export default Ember.Service.extend({
 
   fetchRunningJobs: task(function* () {
     const runningJobs = this.get('runningJobs');
-    const user = this.get('currentUser');
 
     if (!Ember.isEmpty(runningJobs)) {
       return runningJobs;
@@ -24,7 +23,7 @@ export default Ember.Service.extend({
       'job',
       {},
       job =>
-        runningStates.includes(job.get('state')) && user && user.hasAccessToRepo(job.get('repo'))
+        runningStates.includes(job.get('state')) && job.get('repo.isCurrentUserACollaborator')
     );
 
     result.set('isLoaded', true);
