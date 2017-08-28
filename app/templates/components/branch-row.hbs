@@ -25,7 +25,7 @@
       {{#if branch.last_build}}
         {{#link-to "build" branch.last_build.id}}
           {{svg-jar 'icon-hash' class=(concat branch.last_build.state ' icon')}}
-          <span class="label-align">{{branch.last_build.number}} {{branch.last_build.state}}</span>
+          <span class="label-align inner-underline">{{branch.last_build.number}} {{branch.last_build.state}}</span>
         {{/link-to}}
       {{else}}
         {{request-icon event=branch.last_build.eventType state=branch.last_build.state}} -
@@ -46,10 +46,10 @@
 </div>
 <div class="two-line">
   <div class="row-commit">
-    <div class="row-item">
+    <div class="row-item"  data-tooltip="View commit on GitHub">
       {{#external-link-to href=urlGithubCommit}}
         {{svg-jar 'icon-commit' class="icon"}}
-        <span data-tooltip="View commit on GitHub" class="label-align">
+        <span class="inner-underline">
           {{#if branch.last_build}}
             {{format-sha branch.last_build.commit.sha}}
           {{else}}
