@@ -5,4 +5,4 @@ dist: trusty
 
 before_script:
   - cd && git clone --depth=50 --branch=master https://github.com/travis-ci/travis-web.git travis-ci/travis-web && cd travis-ci/travis-web
-script: ./script/docker-build-and-push
+script: ./scripts/docker-build-and-push
