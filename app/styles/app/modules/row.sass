@@ -55,10 +55,15 @@
 // old! remove this
 .row-li
   position: relative
-  border: 1px solid $cream-dark
   font-size: 16px
+  border: 1px solid $pebble-grey
   margin-bottom: .3rem
   background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
+
+  @media #{$medium-up}
+    display: flex
+    justify-content: flex-start
+    align-items: center
 
   h2, h3, small
     margin: 0
@@ -72,20 +77,15 @@
 
   .row-item
     margin: .2em
-    font-size: 16px
     font-weight: $font-weight-normal
     white-space: nowrap
-    overflow: hidden
     padding-left: 1em
-    a
-      text-decoration: none
-      &:hover
+    a:hover,
+    a:active,
+    a:focus
+      test-decoration: none
+      .inner-underline
         text-decoration: underline
-      &.inner-underline
-        &:hover
-          text-decoration: none
-          .inner-underline
-            text-decoration: underline
 
     @media #{$medium-up}
       display: inline-block
