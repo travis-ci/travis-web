@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/joshk/jemalloc-rb
+  revision: 9ffefeb626efb892884faa3ecc01d12e15482680
+  ref: 9ffefeb
+  specs:
+    jemalloc (1.0.1)
+
 PATH
   remote: waiter
   specs:
@@ -6,23 +13,21 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    backports (3.6.8)
-    diff-lcs (1.2.5)
-    foreman (0.82.0)
+    backports (3.7.0)
+    diff-lcs (1.3)
+    foreman (0.84.0)
       thor (~> 0.19.1)
-    hashr (2.0.0)
+    hashr (2.0.1)
     multi_json (1.12.1)
-    puma (3.4.0)
-    rack (1.6.4)
-    rack-mobile-detect (0.4.0)
-      rack
+    puma (3.8.2)
+    rack (1.6.5)
     rack-protection (1.5.3)
       rack
     rack-ssl (1.4.1)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rake (11.1.2)
+    rake (12.0.0)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
@@ -31,7 +36,7 @@ GEM
     rspec-expectations (2.99.2)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.99.4)
-    sinatra (1.4.7)
+    sinatra (1.4.8)
       rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
@@ -42,8 +47,8 @@ GEM
       rack-test
       sinatra (~> 1.4.0)
       tilt (>= 1.3, < 3)
-    thor (0.19.1)
-    tilt (2.0.5)
+    thor (0.19.4)
+    tilt (2.0.7)
 
 PLATFORMS
   ruby
@@ -51,8 +56,8 @@ PLATFORMS
 DEPENDENCIES
   foreman
   hashr
+  jemalloc!
   puma
-  rack-mobile-detect
   rack-protection (~> 1.3)
   rack-ssl (~> 1.3)
   rake
