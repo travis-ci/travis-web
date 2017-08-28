@@ -19,5 +19,3 @@ docker push $quay_image:${TRAVIS_COMMIT:0:7};
 
 docker tag $local_image $quay_image:latest;
 docker push $quay_image:$TRAVIS_BRANCH;
-
-exit 0;
