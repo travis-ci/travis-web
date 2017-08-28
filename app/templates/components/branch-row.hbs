@@ -49,7 +49,7 @@
     <div class="row-item">
       {{#external-link-to href=urlGithubCommit}}
         {{svg-jar 'icon-commit' class="icon"}}
-        <span data-tooltip="See the commit on GitHub" class="label-align">
+        <span data-tooltip="View commit on GitHub" class="label-align">
           {{#if branch.last_build}}
             {{format-sha branch.last_build.commit.sha}}
           {{else}}
