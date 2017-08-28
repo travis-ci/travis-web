@@ -53,6 +53,14 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       build
     });
 
+    server.create('job', {
+      number: '1234.2',
+      repository: testRepo,
+      state: 'created',
+      commit,
+      build
+    });
+
     let otherCommit = server.create('commit');
     let otherBuild = server.create('build', {
       repository: otherRepo,
@@ -91,8 +99,9 @@ test('the home page shows running tab', (assert) => {
     .clickSidebarRunningTab();
 
   andThen(() => {
-    assert.equal(sidebarPage.sidebarRunningTabText, 'Running Jobs1 / 1', 'running tab correctly shows number of started/queued jobs');
-    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running repositories');
+    assert.equal(sidebarPage.sidebarRunningTabText, 'Running Jobs1 / 2', 'running tab correctly shows number of started/queued jobs');
+    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running job');
+    assert.equal(sidebarPage.queuedRepositories().count, 1, 'expected one queued job');
   });
   percySnapshot(assert);
 });

@@ -26,7 +26,14 @@ export default create({
   }),
   sidebarRunningTabText: text('#tab_running a'),
   sidebarRunningRepositories: collection({
-    scope: '.sidebar-list',
+    scope: '.sidebar-list .running',
+    itemScope: '.tile--sidebar',
+    item: {
+      name: text('.tile h2.tile-title span.label-align')
+    }
+  }),
+  queuedRepositories: collection({
+    scope: '.sidebar-list .queued',
     itemScope: '.tile--sidebar',
     item: {
       name: text('.tile h2.tile-title span.label-align')
