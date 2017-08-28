@@ -68,7 +68,6 @@ TravisPusher.prototype.subscribe = function (channel) {
   if (!channel) {
     return;
   }
-  channel = this.prefix(channel);
   if (!((ref = this.pusher) != null ? ref.channel(channel) : void 0)) {
     return this.pusher.subscribe(channel).bind_all((function (_this) {
       return function (event, data) {
@@ -83,20 +82,10 @@ TravisPusher.prototype.unsubscribe = function (channel) {
   if (!channel) {
     return;
   }
-  channel = this.prefix(channel);
   //eslint-disable-next-line
   console.log("unsubscribing from " + channel);
   if ((ref = this.pusher) != null ? ref.channel(channel) : void 0) {
     return this.pusher.unsubscribe(channel);
-  }
-};
-
-TravisPusher.prototype.prefix = function (channel) {
-  let prefix = ENV.pusher.channelPrefix || '';
-  if (channel.indexOf(prefix) !== 0) {
-    return `${prefix}${channel}`;
-  } else {
-    return channel;
   }
 };
 
