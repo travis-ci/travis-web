@@ -2,83 +2,8 @@ language: node_js
 
 node_js: 6
 
-env:
-  global:
-    - PERCY_ENABLE=0
-  matrix:
-    - EMBER_VERSION=default
-    - EMBER_VERSION=beta
-    - EMBER_VERSION=canary
-
-jobs:
-  allow_failures:
-    - env: EMBER_VERSION=beta
-    - env: EMBER_VERSION=canary
-  include:
-    - stage: ":ship: it to Quay.io"
-      sudo: required
-      dist: trusty
-      addons:
-      env:
-      before_install: skip
-      install: skip
-      before_script: skip
-      script: ./script/docker-build-and-push
-      after_success: skip
-      dpl:
-
-sudo: false
+sudo: required
 dist: trusty
 
-addons:
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
-
-cache:
-  directories:
-    - node_modules
-    - bower_components
-
-before_install:
-  - npm config set spin false
-  - npm install -g npm@5
-  - npm install -g bower
-  - bower --version
-  - npm --version
-
-install:
-  - npm install
-  - bower install
-
-before_script:
-  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then echo "Enabling Percy on push with default Ember" && export PERCY_ENABLE=1; fi
-  - echo $PERCY_ENABLE
-  - if [ "$PERCY_ENABLE" -ne 1 ]; then export RANDOMISE=--random; fi
-  - echo $RANDOMISE
-
-script:
-  - ember exam --reporter dot $RANDOMISE
-
-before_deploy:
-  - ASSETS_HOST=https://s3.amazonaws.com/travis-error-pages ember build --env production
-  # delete some of the stuff that's useless for maintenance page
-  - rm -fr dist/assets/*.js dist/images/emoji dist/index.html dist/images/sponsors
-  - cp dist/maintenance.html dist/index.html
-
-deploy:
-  - provider: s3
-    access_key_id: $MAINTENANCE_S3_ACCESS_KEY_ID
-    secret_access_key: $MAINTENANCE_S3_SECRET_ACCESS_KEY
-    bucket: travis-error-pages
-    skip_cleanup: true
-    acl: public_read
-    local_dir: dist
-    region: us-east-1
-    on:
-      branch: master
-
-after_success:
-  - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
+before_script: cd && git clone --depth=50 --branch=master https://github.com/travis-ci/travis-web.git travis-ci/travis-web && cd travis-ci/travis-web
+script: ./script/docker-build-and-push
