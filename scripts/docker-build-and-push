@@ -10,12 +10,13 @@ docker images;
 
 local_image=travisweb_web;
 quay_image=quay.io/travisci/travis-web;
+branch=${1:-${TRAVIS_BRANCH}}
 
-docker tag $local_image $quay_image:$TRAVIS_BRANCH;
-docker push $quay_image:$TRAVIS_BRANCH;
+docker tag $local_image $quay_image:$branch;
+docker push $quay_image:$branch;
 
 docker tag $local_image $quay_image:${TRAVIS_COMMIT:0:7};
 docker push $quay_image:${TRAVIS_COMMIT:0:7};
 
 docker tag $local_image $quay_image:latest;
-docker push $quay_image:$TRAVIS_BRANCH;
+docker push $quay_image:$branch;
