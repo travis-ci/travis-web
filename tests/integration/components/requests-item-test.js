@@ -34,7 +34,7 @@ test('it renders', function (assert) {
   assert.ok(this.$().find('.status-icon').hasClass('approved'), 'icon should have approved class');
   assert.equal(this.$().find('.row-item:nth-child(4)').text().trim(), 'Bam!');
   assert.equal(this.$().find('.row-item:nth-child(4) .emoji').length, 1, 'there should be an emoji icon in commit message');
-  return assert.equal(this.$().find('.row-item:nth-child(5)').text().trim(), '10', 'build number should be displayed');
+  return assert.equal(this.$().find('.row-item:nth-child(5) .label-align').text().trim(), '10', 'build number should be displayed');
 });
 
 test('it renders PR number if a request is a PR', function (assert) {

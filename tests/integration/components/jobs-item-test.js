@@ -22,7 +22,7 @@ test('it renders', function (assert) {
   this.render(hbs`{{jobs-item job=job}}`);
 
   assert.ok(this.$().find('.jobs-item').hasClass('passed'), 'component should have a state class (passed)');
-  assert.equal(this.$().find('.job-number').text().trim(), '2', 'job number should be displayed');
+  assert.equal(this.$().find('.job-number .label-align').text().trim(), '2', 'job number should be displayed');
   assert.equal(this.$().find('.job-lang').text().trim(), 'JDK: openjdk6 Ruby: 2.1.2', 'langauges list should be displayed');
   assert.equal(this.$().find('.job-env').text().trim(), 'TESTS=unit', 'env should be displayed');
   assert.ok(this.$().find('.job-os').hasClass('linux'), 'OS class should be added for OS icon');

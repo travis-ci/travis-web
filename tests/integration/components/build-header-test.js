@@ -52,6 +52,7 @@ test('render push build', function (assert) {
   this.set('build', build);
   this.render(hbs`{{build-header item=build}}`);
 
+  assert.equal(this.$().find('.build-status svg title').text(), 'Hash');
   assert.equal(this.$().find('.commit-compare').length, 1, 'does display compare link element');
   assert.equal(this.$().find('.commit-compare').text().trim(), 'Compare 3d86ee9..a82f6ba', 'does display compare link for push builds');
 });
@@ -70,6 +71,7 @@ test('render cron build', function (assert) {
   this.set('build', build);
   this.render(hbs`{{build-header item=build commit=build.commit}}`);
 
+  assert.equal(this.$().find('.build-status svg title').text(), 'Cron job event');
   assert.ok(this.$().find('.build-title').text().match(/cron Just complete and utter joy/), 'displays cron before commit message');
 });
 
