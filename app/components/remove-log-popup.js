@@ -8,7 +8,7 @@ export default Ember.Component.extend({
     removeLog() {
       let job = this.get('job');
 
-      this.get('onRemoveCloseModal')();
+      this.get('onCloseModal')();
 
       return job.removeLog().then(() => {
         this.get('flashes').success('Log has been successfully removed.');
