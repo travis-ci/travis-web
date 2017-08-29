@@ -37,7 +37,7 @@ export default PageObject.create({
   branchName: text('.build-header .commit-branch'),
   commitSha: text('.build-header .commit-commit'),
   compare: text('.build-header .commit-compare'),
-  commitBranch: text('.build-header .commit-branch-url'),
+  commitBranch: text('.build-header .commit-branch-url span'),
   buildTabLinkIsActive: hasClass('active', '#tab_build'),
   buildTabLinkText: text('#tab_build'),
 

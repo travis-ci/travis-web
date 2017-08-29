@@ -4,9 +4,14 @@
   list-style: none
 
 .pr-row
+
+  @media #{$small-only}
+    .row-item.actions ~ .row-item
+      display: none
+
   @media #{$medium-up}
     display: flex
-    justify-content: space-between
+    justify-content: flex-start
     flex-flow: row nowrap
     align-items: center
 
@@ -14,7 +19,6 @@
       padding: 0
       margin: .4em 0
       white-space: nowrap
-      overflow: hidden
       .row-item:not(.build-info)
         display: block
 
@@ -53,9 +57,12 @@
       padding-left: .5em
       border-right: 1px solid $cream-dark
     .two-line:nth-of-type(2)
-      flex: 0 0 20%
-    .two-line:nth-last-of-type(2)
-      flex: 0 0 20%
+      flex: 0 0 22%
+      margin-left: 1em
+    .two-line:nth-of-type(3)
+      flex: 0 0 22%
+    .two-line:last-of-type
+      flex: 0 0 2em
 
     .row-item.actions
       overflow: visible

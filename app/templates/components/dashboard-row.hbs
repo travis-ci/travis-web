@@ -41,13 +41,14 @@
     </section>
     <section class="dash-commit">
       <h3 class="label">Commit</h3>
-      <p class="row-content">
-        {{svg-jar 'icon-github' class="icon"}}
-        <a href="{{urlGithubCommit}}" title="See the last commit on Github">
+      <p class="row-content row-item commit-sha" data-tooltip="View commit on GitHub">
+        {{svg-jar 'icon-commit' class="icon"}}
+        {{#external-link-to href=urlGitHubCommit}}
           <span class="label-align">
             {{format-sha repo.currentBuild.commit.sha}}
           </span>
-        </a>
+        {{/external-link-to}}
+        {{svg-jar 'icon-external-link' class="icon"}}
       </p>
     </section>
     <section class="fade-out dash-finished">
