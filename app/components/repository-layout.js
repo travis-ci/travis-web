@@ -12,12 +12,14 @@ export default Ember.Component.extend({
 
   @computed('repo.slug', 'repo.defaultBranch.name')
   statusImageUrl(slug, branchName) {
-    return this.get('statusImages').imageUrl(slug, branchName);
+    const repo = this.get('repo');
+    return this.get('statusImages').imageUrl(repo, branchName);
   },
 
   @computed('repo.slug')
   urlGithub(slug) {
-    return this.get('externalLinks').githubRepo(slug);
+    const repo = this.get('repo');
+    return this.get('externalLinks').githubRepo(repo);
   },
 
   actions: {

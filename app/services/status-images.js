@@ -6,7 +6,7 @@ export default Ember.Service.extend({
   @service auth: null,
   @service features: null,
 
-  imageUrl(slug, branch) {
+  imageUrl(repo, branch) {
     let prefix = `${location.protocol}//${location.host}`;
 
     // the ruby app (waiter) does an indirect, internal redirect to api on build status images
@@ -16,7 +16,9 @@ export default Ember.Service.extend({
       prefix = config.apiEndpoint;
     }
 
-    if (this.get('features.proVersion')) {
+    let slug = repo.get('slug');
+
+    if (repo.get('private')) {
       const token = this.get('auth').assetToken();
       return `${prefix}/${slug}.svg?token=${token}${branch ? `&branch=${branch}` : ''}`;
     } else {
@@ -28,48 +30,48 @@ export default Ember.Service.extend({
     return `https://${location.host}/${slug}`;
   },
 
-  markdownImageString(slug, branch) {
-    const url = this.repositoryUrl(slug);
-    const imageUrl = this.imageUrl(slug, branch);
+  markdownImageString(repo, branch) {
+    const url = this.repositoryUrl(repo);
+    const imageUrl = this.imageUrl(repo, branch);
     return `[![Build Status](${imageUrl})](${url})`;
   },
 
-  textileImageString(slug, branch) {
-    const url = this.repositoryUrl(slug);
-    const imageUrl = this.imageUrl(slug, branch);
+  textileImageString(repo, branch) {
+    const url = this.repositoryUrl(repo);
+    const imageUrl = this.imageUrl(repo, branch);
     return `!${imageUrl}!:${url}`;
   },
 
-  rdocImageString(slug, branch) {
-    const url = this.repositoryUrl(slug);
-    const imageUrl = this.imageUrl(slug, branch);
+  rdocImageString(repo, branch) {
+    const url = this.repositoryUrl(repo);
+    const imageUrl = this.imageUrl(repo, branch);
     return `{<img src="${imageUrl}" alt="Build Status" />}[${url}]`;
   },
 
-  asciidocImageString(slug, branch) {
-    const url = this.repositoryUrl(slug);
-    const imageUrl = this.imageUrl(slug, branch);
+  asciidocImageString(repo, branch) {
+    const url = this.repositoryUrl(repo);
+    const imageUrl = this.imageUrl(repo, branch);
     return `image:${imageUrl}["Build Status", link="${url}"]`;
   },
 
-  rstImageString(slug, branch) {
-    const url = this.repositoryUrl(slug);
-    const imageUrl = this.imageUrl(slug, branch);
+  rstImageString(repo, branch) {
+    const url = this.repositoryUrl(repo);
+    const imageUrl = this.imageUrl(repo, branch);
     return `.. image:: ${imageUrl}\n    :target: ${url}`;
   },
 
-  podImageString(slug, branch) {
-    const url = this.repositoryUrl(slug);
-    const imageUrl = this.imageUrl(slug, branch);
+  podImageString(repo, branch) {
+    const url = this.repositoryUrl(repo);
+    const imageUrl = this.imageUrl(repo, branch);
     return `=for html <a href="${url}"><img src="${imageUrl}"></a>`;
   },
 
-  ccXml(slug, branch) {
+  ccXml(repo, branch) {
     let url = `#${config.apiEndpoint}/repos/${slug}/cc.xml`;
     if (branch) {
       url = `${url}?branch=${branch}`;
     }
-    if (this.get('features.proVersion')) {
+    if (repo.get('private')) {
       const token = this.get('auth').assetToken();
       const delimiter = url.indexOf('?') === -1 ? '?' : '&';
       url = `${url}${delimiter}token=${token}`;
