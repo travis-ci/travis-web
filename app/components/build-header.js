@@ -45,6 +45,7 @@ export default Ember.Component.extend({
     return !['api', 'cron'].includes(eventType);
   },
 
+  @computed('item.eventType')
   isCron(event) {
     return event === 'cron';
   },
