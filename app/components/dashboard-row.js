@@ -19,7 +19,7 @@ export default Ember.Component.extend({
   @alias('repo.currentBuild') currentBuild: null,
 
   @computed('repo.slug', 'currentBuild.commit.sha')
-  urlGithubCommit(slug, sha) {
+  urlGitHubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);
   },
 
