@@ -30,8 +30,8 @@ export default PageObject.create({
 
   notFoundOrgName: text('.page-title .h2--red'),
 
-  administerableHooks: hooksCollection('#administerable-hooks'),
-  unadministerableHooks: hooksCollection('#unadministerable-hooks'),
+  administerableRepositories: existingRepositoriesCollection('#administerable-hooks'),
+  unadministerableRepositories: existingRepositoriesCollection('#unadministerable-hooks'),
 
   token: {
     scope: '.profile-user-last',
