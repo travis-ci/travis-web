@@ -51,7 +51,14 @@ export default TravisRoute.extend({
   },
 
   ensureJobOwnership(job, urlSlug) {
-    if (job.get('repositorySlug') !== urlSlug) {
+    let jobSlug;
+    // v3
+    jobSlug = job.get('repositorySlug');
+    if (!jobSlug) {
+      // v2
+      jobSlug = job.get('repo.slug');
+    }
+    if (jobSlug !== urlSlug) {
       throw (new Error('invalidJobId'));
     }
   },
