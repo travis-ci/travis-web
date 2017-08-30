@@ -1,10 +1,9 @@
 .status-icon *,
 .request-icon *
-  fill: none
-  stroke: $cement-grey
   stroke-linecap: round
   stroke-linejoin: round
   stroke-miterlimit: 10
+  +colorSVG($cement-grey)
 
 .status-icon
   @extend %icon
@@ -15,39 +14,22 @@
   *
     stroke-width: 2px
 
+  &.started,
+  &.received,
+  &.created,
+  &.queued
+    height: 7px
+
+  &.started,
+  &.received
+    transform-origin: center center
+    animation: rotation 3s infinite ease
+
 .request-icon
   @extend %icon
   width: 18px
   height: 19px
   margin-right: .1rem
-
-.status-icon
-  .is-rotating
-    width: 14px
-    height: 14px
-    line-height: .9
-    text-align: center
-    transform-origin: center center
-    will-change: transform
-    .circle
-      display: inline-block
-      vertical-align: middle
-      width: 5px
-      height: 5px
-      border: solid 1px $dozer-yellow
-      border-radius: 50%
-      transform-origin: center center
-
-  &.started,
-  &.received
-    animation: rotation 3s infinite ease
-
-  &.started,
-  &.received,
-  &.created,
-  &.queued
-    height: 18px
-    width: 14px
 
 @keyframes rotation
   0%

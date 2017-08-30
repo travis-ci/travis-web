@@ -2,7 +2,12 @@
   position: relative
   height: 7.2em
   .search-inner
-    @extend %absolute-center
+    position: absolute
+    top: 0
+    right: 0
+    left: 0
+    bottom: 0
+    margin: auto
     width: 90%
     height: 33px
     border: solid 1px lighten($cement-grey, 20)
@@ -15,4 +20,3 @@
       vertical-align: middle
       border: none
       background: white
-      

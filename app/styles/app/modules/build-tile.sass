@@ -1,17 +1,3 @@
-@mixin buildTileColors($color, $bg, $status, $extra-hover: $color)
-  > .#{$status}
-    background-color: $bg
-    .status-icon
-      +colorSVG($color)
-    &:hover
-      background-color: $extra-hover
-      .status-icon
-        +colorSVG(white)
-      .status-icon .circle
-        border-color: white
-        border-width: 2px
-
-        
 .build-tiles
   height: 4.7em
   margin: 0
@@ -38,18 +24,14 @@
       margin: auto !important
       background-color: transparent
       transition: top 200ms ease
-      .is-rotating
-        position: absolute
-        top: 0
-        bottom: 0
-        right: 0
-        left: 0
-        margin: auto
-        width: 1.3em
-        height: 1.1em
-      .circle
-        width: 8px
-        height: 8px
+      &.started,
+      &.received,
+      &.booting,
+      &.queued,
+      &.created
+        height: 10px
+        svg *
+          stroke-width: 1px
     .build-tile-number
       margin: auto
       height: 1em
@@ -60,7 +42,10 @@
       opacity: 0
       color: white
       transition: transform 200ms ease,  opacity 200ms ease
-      top: 0; right: 0; bottom: -1.5em; left: 0
+      top: 0
+      right: 0
+      bottom: -1.5em
+      left: 0
     &:hover
       .status-icon
         top: -1.4em
@@ -72,12 +57,14 @@
     height: 100%
     text-align: center
 
-  @include buildTileColors($turf-green, $seed-green, 'passed')
-  @include buildTileColors($brick-red, $quartz-red, 'failed')
-  @include buildTileColors($brick-red, $quartz-red, 'errored')
-  @include buildTileColors($cement-grey, $pebble-grey, 'canceled')
-  @include buildTileColors($dozer-yellow, $haze-yellow, 'started')
-  @include buildTileColors($dozer-yellow, $haze-yellow, 'queued')
-  @include buildTileColors($dozer-yellow, $haze-yellow, 'booting')
-  @include buildTileColors($dozer-yellow, $haze-yellow, 'received')
-  @include buildTileColors($dozer-yellow, $haze-yellow, 'created')
+  @each $state, $colorMap in $stateMap
+    > .#{$state}
+      background-color: map-get($colorMap, color-bg)
+      .status-icon
+        +colorSVG(map-get($colorMap, color))
+      &:hover
+        background-color: map-get($colorMap, color)
+        .status-icon
+          +colorSVG(white)
+          *
+            stroke-width: 2px

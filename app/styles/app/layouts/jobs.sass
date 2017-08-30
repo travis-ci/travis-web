@@ -1,19 +1,3 @@
-=colorFadeOut($status, $color)
-  @media #{$medium-up}
-    &.#{$status}:hover
-      .job-lang,
-      .job-env
-        &:after
-          @include fadeOut(right, -90deg, $color)
-      .job-lang:hover,
-      .job-env:hover
-        overflow: visible
-        z-index: 80
-        .label-align
-          background-color: $color
-        &:after
-          content: none !important
-
 .jobs-list
   margin: 0
   padding: 0
@@ -24,25 +8,9 @@
   border: 1px solid $cream-dark
   margin-bottom: 5px
   display: flex
-  @include colorJobs($turf-green, 'passed', 3px, $seed-green)
-  @include colorJobs($brick-red, 'failed', 3px, $quartz-red)
-  @include colorJobs($brick-red, 'errored', 3px, $quartz-red)
-  @include colorJobs($cement-grey, 'canceled', 3px, $pebble-grey)
-  @include colorJobs($canary-yellow, 'started', 3px, $haze-yellow, true)
-  @include colorJobs($canary-yellow, 'queued', 3px, $haze-yellow, true)
-  @include colorJobs($canary-yellow, 'booting', 3px, $haze-yellow, true)
-  @include colorJobs($canary-yellow, 'received', 3px, $haze-yellow, true)
-  @include colorJobs($canary-yellow, 'created', 3px, $haze-yellow, true)
-
-  @include colorFadeOut('passed', $seed-green)
-  @include colorFadeOut('failed', $quartz-red)
-  @include colorFadeOut('errored', $quartz-red)
-  @include colorFadeOut('canceled', $pebble-grey)
-  @include colorFadeOut('started', $haze-yellow)
-  @include colorFadeOut('queued', $haze-yellow)
-  @include colorFadeOut('booting', $haze-yellow)
-  @include colorFadeOut('received', $haze-yellow)
-  @include colorFadeOut('created', $haze-yellow)
+  @each $state, $colorMap in $stateMap
+    +colorJobs(map-get($colorMap, color), $state, 3px, map-get($colorMap, color-bg))
+    +colorFadeOut($state, map-get($colorMap, color-bg))
 
   a
     display: block

@@ -1,38 +1,47 @@
 $stateMap: (
   passed: (
     color: $turf-green,
+    gradient: $turf-green,
     color-bg: $seed-green
   ),
   failed: (
     color: $brick-red,
+    gradient: $brick-red,
     color-bg: $quartz-red
   ),
   errored: (
     color: $brick-red,
+    gradient: $brick-red,
     color-bg: $quartz-red
   ),
   canceled: (
     color: $cement-grey,
+    gradient: $cement-grey,
     color-bg: $pebble-grey
   ),
   created: (
-    color: $canary-yellow,
-    color-bg: $dozer-yellow
+    color: $dozer-yellow,
+    gradient: $canary-yellow,
+    color-bg: $haze-yellow
   ),
   started: (
-    color: $canary-yellow,
-    color-bg: $dozer-yellow
+    color: $dozer-yellow,
+    gradient: $canary-yellow,
+    color-bg: $haze-yellow
   ),
   booting: (
-    color: $canary-yellow,
-    color-bg: $dozer-yellow
+    color: $dozer-yellow,
+    gradient: $canary-yellow,
+    color-bg: $haze-yellow
   ),
   queued: (
-    color: $canary-yellow,
-    color-bg: $dozer-yellow
+    color: $dozer-yellow,
+    gradient: $canary-yellow,
+    color-bg: $haze-yellow
   ),
   received: (
-    color: $canary-yellow,
-    color-bg: $dozer-yellow
+    color: $dozer-yellow,
+    gradient: $canary-yellow,
+    color-bg: $haze-yellow
   )
 );
