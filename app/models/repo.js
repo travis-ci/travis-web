@@ -273,7 +273,7 @@ Repo.reopenClass({
       included.forEach(rec => store.push({ data: rec }));
     });
 
-    return promise['catch'](function () {
+    return promise['catch'](() => {
       throw new Error('Repositories not found for owner');
     });
   },
