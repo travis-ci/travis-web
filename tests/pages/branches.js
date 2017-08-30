@@ -20,7 +20,7 @@ const branchRowComponent = {
   created: hasClass('created'),
 
   request: text('.row-request .label-align'),
-  commitSha: text('.row-commit .label-align'),
+  commitSha: text('.row-commit span.inner-underline'),
   committer: text('.row-commiter .label-align'),
   commitDate: text('.row-calendar .label-align'),
 

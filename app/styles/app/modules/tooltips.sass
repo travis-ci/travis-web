@@ -92,6 +92,7 @@ $tooltip-arrow-width: .8em
   position: relative
   display: inline-block
   vertical-align: middle
+  text-align: center
   &:after
     content: attr(data-tooltip)
     padding: 0.2em 0.3em
@@ -176,3 +177,12 @@ $tooltip-arrow-width: .8em
 .tooltip-beta-features[data-tooltip]
   text-align: center
   vertical-align: baseline
+
+.build-header
+  [data-tooltip]
+    &:after
+      margin: 0
+      width: 14em
+    &:before
+      margin: 0
+      left: 2em

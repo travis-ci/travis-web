@@ -45,6 +45,10 @@ export default Ember.Component.extend({
     return !['api', 'cron'].includes(eventType);
   },
 
+  isCron(event) {
+    return event === 'cron';
+  },
+
   @computed('repo.slug', 'commit.sha')
   urlGithubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);

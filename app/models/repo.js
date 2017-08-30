@@ -38,9 +38,11 @@ const Repo = Model.extend({
   // added to a response with the repo
   @computed('auth.currentUser.permissions.[]')
   isCurrentUserACollaborator(permissions) {
-    let id = parseInt(this.get('id'));
+    if (permissions) {
+      let id = parseInt(this.get('id'));
 
-    return permissions.includes(id);
+      return permissions.includes(id);
+    }
   },
 
   sshKey: function () {

@@ -31,9 +31,9 @@ test('render api build', function (assert) {
   this.render(hbs`{{build-header item=build repo=repo commit=commit}}`);
 
   assert.equal(this.$().find('.commit-compare').length, 0, 'does not display compare link element for api builds');
-  assert.equal(this.$().find('.build-status span.icon').text().trim(), 'API event', 'displays right icon');
+  assert.equal(this.$().find('.build-status span').text().trim(), '1234', 'displays build number');
   assert.equal(this.$().find('.commit-branch-url').attr('href'), 'https://github.com/travis-ci/travis-web/tree/feature-branch', 'displays branch url');
-  assert.equal(this.$().find('.commit-branch-url').text().trim(), 'Branch feature-branch', 'displays link to branch');
+  assert.equal(this.$().find('.commit-branch-url span').text().trim(), 'Branch feature-branch', 'displays link to branch');
   assert.ok(this.$().find('.build-title').text().match(/Endless joy/), 'displays commit message');
 });
 
