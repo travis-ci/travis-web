@@ -44,20 +44,14 @@ export default TravisRoute.extend({
     return this.store.find('job', params.job_id);
   },
 
-  afterModel(job, transition) {
-    const slug = transition.resolvedModels.repo.get('slug');
+  afterModel(job) {
+    const slug = this.modelFor('repo').get('slug');
     this.ensureJobOwnership(job, slug);
     return this._super(...arguments);
   },
 
   ensureJobOwnership(job, urlSlug) {
-    let jobSlug;
-    // v3
-    jobSlug = job.get('repositorySlug');
-    if (!jobSlug) {
-      // v2
-      jobSlug = job.get('repo.slug');
-    }
+    const jobSlug = job.get('repositorySlug') || job.get('repo.slug');
     if (jobSlug !== urlSlug) {
       throw (new Error('invalidJobId'));
     }

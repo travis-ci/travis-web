@@ -33,8 +33,8 @@ export default TravisRoute.extend({
     return this.store.find('build', params.build_id);
   },
 
-  afterModel(model, transition) {
-    const slug = transition.resolvedModels.repo.get('slug');
+  afterModel(model) {
+    const slug = this.modelFor('repo').get('slug');
     this.ensureBuildOwnership(model, slug);
     return this._super(...arguments);
   },
