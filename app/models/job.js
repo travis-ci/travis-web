@@ -25,7 +25,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   repositorySlug: attr(),
   _config: attr(),
 
-  repo: belongsTo('repo', { async: true }),
+  repo: belongsTo('repo'),
   build: belongsTo('build', { async: true }),
   commit: belongsTo('commit', { async: true }),
   stage: belongsTo('stage', { async: false }),
