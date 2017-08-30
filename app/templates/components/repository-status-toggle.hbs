@@ -9,7 +9,7 @@
       {{loading-indicator inline=true}}
     {{else}}
       {{#link-to "settings" repository.owner.login repository.name class="profile-settings" title="Go to Travis CI repository settings"}}
-        {{ember-svg-jar 'icon-settings' class="icon icon-hover"}}
+        {{svg-jar 'icon-settings' class="icon icon-hover"}}
       {{/link-to}}
     {{/if}}
   {{else}}
@@ -34,7 +34,7 @@
         </a> your authorized Orgs.
       {{/if}}
       <button type="button" class="no-button close" {{action "close" target=view}}>
-        {{ember-svg-jar 'icon-failed' class="icon red"}}
+        {{svg-jar 'icon-failed' class="icon red"}}
       </button>
     </p>
   </div>
