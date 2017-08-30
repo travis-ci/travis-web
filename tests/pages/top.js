@@ -55,6 +55,10 @@ export default PageObject.create({
 
     isSuccess: hasClass('success'),
     isNotice: hasClass('notice'),
-    isError: hasClass('error')
-  }
+    isError: hasClass('error'),
+
+    isNotShown: isHidden(),
+  },
+
+  clickSigOutLink: clickable('ul.navigation-nested li:last a'),
 });
