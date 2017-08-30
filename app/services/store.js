@@ -23,7 +23,9 @@ export default DS.Store.extend({
   //
   // modelName      - a type of the model passed as a string, for example 'repo'
   // queryParams    - params that will be passed to the store.query function when
-  //                  fetching records on the initial call
+  //                  fetching records on the initial call. Passing null or
+  //                  undefined here will stop any requests from happening,
+  //                  filtering will be based only on existing records
   // filterFunction - a function that will be called to determine wheather a
   //                  record should be included in the filtered collection. A
   //                  passed function will be called with a record as an
