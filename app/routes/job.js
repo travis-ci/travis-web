@@ -41,20 +41,19 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    const job = this.store.find('job', params.job_id);
+    return this.store.find('job', params.job_id);
+  },
 
-    // if a job's repo's slug does not match the slug in the url, we'd be showing
-    // a job log as if it belonged to the wrong owner/repository
-    // See https://github.com/travis-pro/team-teal/issues/2044 for more details.
-    const jobRepositorySlug = job.get('repo.slug');
-    const [owner, repoName] = this.get('router.currentURL').split('/').slice(1);
-    const urlSlug = `${owner}/${repoName}`;
+  afterModel(job, transition) {
+    const slug = transition.resolvedModels.repo.get('slug');
+    this.ensureJobOwnership(job, slug);
+    return this._super(...arguments);
+  },
 
-    if (urlSlug !== jobRepositorySlug) {
-      throw (new Error('invalidJob'));
+  ensureJobOwnership(job, urlSlug) {
+    if (job.get('repositorySlug') !== urlSlug) {
+      throw (new Error('invalidJobId'));
     }
-
-    return job;
   },
 
   deactivate() {
