@@ -7,7 +7,7 @@ export default V3Adapter.extend({
   defaultSerializer: '-repo',
 
   includes: 'build.branch,repository.default_branch'
-    + ',repository.current_build,build.commit'
+    + ',repository.current_build,build.commit',
 
   byOwner(owner) {
     const url = `${apiEndpoint}/owner/${owner}/repos`;

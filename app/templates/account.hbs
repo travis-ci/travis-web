@@ -18,7 +18,7 @@
             {{/if}}
           {{/if}}
         {{/if}}
-      {{/unless}}
+      {{/if}}
 
       <header class="profile-header">
         <h1 class="h2--grey">{{accountName}}</h1>
@@ -36,19 +36,19 @@
       <ol class="profile-getstarted">
         <li>
           <figure>
-            {{inline-svg 'hooks-step-1-01'}}
+            {{ember-svg-jar 'hooks-step-1-01'}}
             <figcaption>Flick the repository switch on</figcaption>
           </figure>
         </li>
         <li>
           <figure>
-            {{inline-svg 'hooks-step-2-01.svg'}}
+            {{ember-svg-jar 'hooks-step-2-01.svg'}}
             <figcaption>Add .travis.yml file to your repository</figcaption>
           </figure>
         </li>
         <li>
           <figure>
-            {{inline-svg 'hooks-step-3-01'}}
+            {{ember-svg-jar 'hooks-step-3-01'}}
             <figcaption>Trigger your first build with a git push</figcaption>
           </figure>
         </li>
@@ -65,7 +65,7 @@
               {{else}}
                 Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
               {{/if}}
-            {{/unless}}
+            </li>
 
             {{#if unadministerableRepositories.length}}
               <div id="unadministerable-repositories">
@@ -83,5 +83,5 @@
     {{else}}
       {{no-account name=model.login}}
     {{/unless}}
-  {{/unless}}
+  {{/if}}
 {{/if}}
