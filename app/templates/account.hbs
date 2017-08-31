@@ -1,15 +1,13 @@
-{{#if loadingError}}
-  There was a problem while loading the repositories list, please try again. In case
-  the problem persists, please contact support.
-{{else}}
-  {{#if ownedRepositories.isLoaded}}
-    {{#unless config.enterprise}}
-      {{#if config.billingEndpoint}}
-        {{#if subscribeButtonInfo.subscribed}}
-          {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
-        {{else}}
-          {{#if subscribeButtonInfo.education}}
-            {{subscription-status-banner color="green" message="This account's subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
+{{#unless model.error}}
+  {{#if loadingError}}
+    There was a problem while loading the repositories list, please try again. In case
+    the problem persists, please contact support.
+  {{else}}
+    {{#if ownedRepositories.isLoaded}}
+      {{#unless config.enterprise}}
+        {{#if config.billingEndpoint}}
+          {{#if subscribeButtonInfo.subscribed}}
+            {{subscription-status-banner color="green" message="This account has an active subscription." billingLinkText="Manage your subscription!" billingUrl=billingUrl}}
           {{else}}
             {{#if subscribeButtonInfo.education}}
               {{subscription-status-banner color="green" message="This account's subscription is flagged as educational." billingLinkText="Take a look!" billingUrl=billingUrl}}
@@ -18,7 +16,7 @@
             {{/if}}
           {{/if}}
         {{/if}}
-      {{/if}}
+      {{/unless}}
 
       <header class="profile-header">
         <h1 class="h2--grey">{{accountName}}</h1>
@@ -42,7 +40,7 @@
         </li>
         <li>
           <figure>
-            {{svg-jar 'hooks-step-2-01.svg'}}
+            {{svg-jar 'hooks-step-2-01'}}
             <figcaption>Add .travis.yml file to your repository</figcaption>
           </figure>
         </li>
@@ -66,22 +64,15 @@
                 Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
               {{/if}}
             </li>
-
-            {{#if unadministerableRepositories.length}}
-              <div id="unadministerable-repositories">
-                <p class="text-medium">You require admin rights to enable these repositories</p>
-                <ul class="profile-repositorylist">
-                  {{#each unadministerableRepositories as |repository| }}
-                    {{repository-status-toggle repository=repository}}
-                  {{/each}}
-                </ul>
-              </div>
-            {{/if}}
           {{/each}}
         </ul>
       </div>
-    {{else}}
-      {{no-account name=model.login}}
-    {{/unless}}
+      {{pagination-navigation collection=model.repos route="dashboard.repositories"}}
+  {{else}}
+      {{loading-indicator}}
+    {{/if}}
   {{/if}}
-{{/if}}
+
+{{else}}
+  {{no-account name=model.login}}
+{{/unless}}
