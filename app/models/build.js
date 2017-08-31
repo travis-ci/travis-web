@@ -27,7 +27,7 @@ export default Model.extend(DurationCalculations, {
   eventType: attr('string'),
   _config: attr(),
 
-  repo: belongsTo('repo', { async: true }),
+  repo: belongsTo('repo'),
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
   repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
   commit: belongsTo('commit', { async: false }),

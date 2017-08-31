@@ -76,4 +76,6 @@ export default PageObject.create({
   deleteLog: clickable('button.remove-log-button'),
   deleteModalAppears: isVisible('.ember-modal-dialog'),
   confirmDeleteLog: clickable('button.button-delete'),
+
+  jobNotFoundMessage: text('h2.page-title'),
 });

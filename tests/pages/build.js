@@ -78,5 +78,7 @@ export default PageObject.create({
         item: jobComponent
       })
     }
-  })
+  }),
+
+  buildNotFoundMessage: text('h2.page-title'),
 });
