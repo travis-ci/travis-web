@@ -5,8 +5,13 @@
       <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
       {{item.pullRequestTitle}}
     {{else}}
-      <small class="commit-branch"
-        title={{build.branchName}}>{{build.branchName}}</small>
+      {{#if item.isTag}}
+        <small class="commit-branch"
+               title={{item.tag.name}}>{{item.tag.name}}</small>
+      {{else}}
+        <small class="commit-branch"
+               title={{item.branchName}}>{{item.branchName}}</small>
+      {{/if}}
       {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
   </h2>
@@ -85,7 +90,7 @@
         {{else}}
           {{request-icon event=item.eventType state=item.state}}
         {{/if}}
-        <span class='inner-underline'># {{item.number}} {{humanize-state item.state}}</span>
+        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
       {{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
