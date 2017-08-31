@@ -66,7 +66,7 @@ export default Ember.Component.extend({
   },
 
   @computed('item.repo.slug', 'build.tag')
-  urlGitHubBranch(slug, tag) {
+  urlGitHubTag(slug, tag) {
     return this.get('externalLinks').githubTag(slug, tag);
   },
 

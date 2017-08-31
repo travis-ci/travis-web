@@ -61,7 +61,7 @@ export default Model.extend(DurationCalculations, {
 
   @computed('tag')
   isTag(tag) {
-    return Ember.isEmpty(tag);
+    return tag !== null;
   },
 
   @computed('state')
