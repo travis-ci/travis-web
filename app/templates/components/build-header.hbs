@@ -20,8 +20,9 @@
     <ul class="list-icon">
       <li>
         {{#external-link-to href=urlGithubCommit}}
+          {{tooltip-on-element text='View commit on GitHub'}}
           {{svg-jar 'icon-commit' class="icon"}}
-          <span data-tooltip="View commit on GitHub" class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
+          <span class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
         {{/external-link-to}}
       </li>
@@ -29,15 +30,17 @@
         <li>
           {{#if item.isPullRequest}}
             {{#external-link-to href=item.commit.compareUrl}}
+              {{tooltip-on-element text='View diff on GitHub'}}
               {{svg-jar 'icon-compare' class="icon"}}
-              <span data-tooltip="View Pull Request on GitHub" class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
+              <span class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
               {{svg-jar 'icon-external-link' class="icon"}}
             {{/external-link-to}}
           {{else}}
             {{#if item.commit.compareUrl}}
-              {{#external-link-to href=item.commit.compareUrl }}
+              {{#external-link-to href=item.commit.compareUrl}}
+                {{tooltip-on-element text='View diff on GitHub'}}
                 {{svg-jar 'icon-compare' class="icon"}}
-                <span data-tooltip="View diff on GitHub" class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
+                <span class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
                 {{svg-jar 'icon-external-link' class="icon"}}
               {{/external-link-to}}
             {{/if}}
@@ -46,8 +49,9 @@
       {{/if}}
       <li>
         {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
+          {{tooltip-on-element text='View branch on GitHub'}}
           {{svg-jar 'icon-branch' class="icon"}}
-          <span data-tooltip="View branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
+          <span class="label-align inner-underline">Branch {{build.branchName}}</span>
           {{svg-jar 'icon-external-link' class="icon"}}
         {{/external-link-to}}
       </li>
