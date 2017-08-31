@@ -38,7 +38,11 @@
   <h3 class="row-item {{build.state}}">
     {{#if build.id}}
       {{#link-to "build" build.repo build class="inner-underline"}}
-        {{request-icon event=build.eventType state=build.state}}
+        {{#if build.isTag}}
+          {{svg-jar 'icon-tag' class=(concat build.state ' icon')}}
+        {{else}}
+          {{request-icon event=build.eventType state=build.state}}
+        {{/if}}
         <span class="label-align inner-underline">#{{build.number}} {{build.state}}</span>
       {{/link-to}}
     {{/if}}
