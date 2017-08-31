@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
   },
 
   reloadOwnerRepositories() {
-    const login = this.get('model.login');
+    const login = this.get('model.account.login');
     if (login) {
       this.set('ownedRepositories', []);
       this.set('loadingError', false);
@@ -46,7 +46,7 @@ export default Ember.Controller.extend({
     }
   },
 
-  @computed('model.{name,login}')
+  @computed('model.account.{name,login}')
   accountName(name, login) {
     return name || login;
   },
@@ -81,13 +81,13 @@ export default Ember.Controller.extend({
     return this.config.show_repos_hint === 'public';
   },
 
-  @computed('model.{type,login}')
+  @computed('model.account.{type,login}')
   billingUrl(type, login) {
     const id = type === 'user' ? 'user' : login;
     return `${this.config.billingEndpoint}/subscriptions/${id}`;
   },
 
-  @computed('model.{subscribed,education}', 'billingUrl')
+  @computed('model.account.{subscribed,education}', 'billingUrl')
   subscribeButtonInfo(subscribed, education, billingUrl) {
     return {
       billingUrl,

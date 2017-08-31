@@ -1,4 +1,4 @@
-{{#unless model.error}}
+{{#unless model.account.error}}
   {{#if loadingError}}
     There was a problem while loading the repositories list, please try again. In case
     the problem persists, please contact support.
@@ -67,12 +67,12 @@
           {{/each}}
         </ul>
       </div>
-      {{pagination-navigation collection=model.repos route="dashboard.repositories"}}
+      {{pagination-navigation collection=model.repos route="account"}}
   {{else}}
       {{loading-indicator}}
     {{/if}}
   {{/if}}
 
 {{else}}
-  {{no-account name=model.login}}
+  {{no-account name=model.account.login}}
 {{/unless}}

@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
@@ -19,9 +20,16 @@ export default TravisRoute.extend({
     let account = this.modelFor('accounts')
       .find(acct => acct.get('login') === login);
     if (account) {
-      return account;
+      return Ember.RSVP.hash({
+        account,
+      });
     } else {
-      return { login, error: true };
+      return {
+        account: {
+          login,
+          error: true
+        }
+      };
     }
   },
 
