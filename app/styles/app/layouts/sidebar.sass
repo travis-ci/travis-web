@@ -1,4 +1,5 @@
 .tile
+  +travisColorRows(8px)
   height: auto
   padding: 0.8em 0.5em 0.8em 1.5em
   margin-bottom: .46rem
@@ -6,16 +7,6 @@
   border-radius: 0
   li:last-child &
     margin-bottom: 0
-
-  @include colorRows($turf-green, 'passed', 8px)
-  @include colorRows($brick-red, 'failed', 8px)
-  @include colorRows($brick-red, 'errored', 8px)
-  @include colorRows($cement-grey, 'canceled', 8px)
-  @include colorRows($canary-yellow, 'started', 8px, true)
-  @include colorRows($canary-yellow, 'queued', 8px, true)
-  @include colorRows($canary-yellow, 'booting', 8px, true)
-  @include colorRows($canary-yellow, 'received', 8px, true)
-  @include colorRows($canary-yellow, 'created', 8px, true)
 
   h2, p
     margin: 0

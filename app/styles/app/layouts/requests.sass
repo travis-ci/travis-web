@@ -19,12 +19,11 @@
   list-style: none
 
 .request-item
-  @include colorJobs($turf-green, 'approved', 3px, rgba($turf-green, .1))
-  @include colorJobs($brick-red, 'rejected', 3px, rgba($brick-red, .1))
-  @include colorJobs($dozer-yellow, 'pending', 3px, rgba($haze-yellow, .5))
-  @include requestFadeOut('approved',#ECF6EF)
-  @include requestFadeOut('rejected', #FBECEB)
-  @include requestFadeOut('pending', #fcfaed)
+  @each $state, $key in $requestStatusMap
+    $colorMap: map-get($stateMap, $key)
+    +colorJobs(map-get($colorMap, color), $state, 3px, map-get($colorMap, color-bg))
+    +requestFadeOut($state, map-get($colorMap, color-bg))
+
   position: relative
   margin-bottom: 5px
   padding-left: 1em

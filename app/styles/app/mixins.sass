@@ -1,4 +1,26 @@
-@mixin fadeOut($position, $angle, $color, $width: 0%)
+=resetul
+  margin: 0
+  padding: 0
+  list-style: none
+
+=linkStyle($color: $cement-grey)
+  a
+    color: inherit
+    text-decoration: none
+    border-bottom: 1px solid $color
+    padding-bottom: 0.1rem
+    transition: color 200ms ease, border 200ms ease
+    &:hover,
+    &:active
+      color: $color
+      text-decoration: none
+      border-color: transparent
+
+=travisBorder
+  border-radius: 2px
+  border: 1px solid $dry-cement
+
+=fadeOut($position, $angle, $color, $width: 0%)
   content: ""
   display: block
   position: absolute
@@ -15,6 +37,22 @@
 
   background: linear-gradient($angle, rgba($color, 1) $width, rgba($color, 0) 100%)
 
+=colorFadeOut($status, $color)
+  @media #{$medium-up}
+    &.#{$status}:hover
+      .job-lang,
+      .job-env
+        &:after
+          +fadeOut(right, -90deg, $color)
+      .job-lang:hover,
+      .job-env:hover
+        overflow: visible
+        z-index: 80
+        .label-align
+          background-color: $color
+        &:after
+          content: none !important
+
 =colorSVG($color)
   path, polyline, circle, line, polygon, rect, ellipse
     fill: none
@@ -30,49 +68,10 @@
     fill: $fill
     stroke: $stroke
 
-@mixin resetul
-  margin: 0
-  padding: 0
-  list-style: none
-
-%absolute-center
-  position: absolute
-  top: 0
-  right: 0
-  left: 0
-  bottom: 0
-  margin: auto
-
-=linkStyle($color: $cement-grey)
-  a
-    color: inherit
-    text-decoration: none
-    border-bottom: 1px solid $color
-    padding-bottom: 0.1rem
-    transition: color 200ms ease, border 200ms ease
-    &:hover,
-    &:active
-      color: $color
-      text-decoration: none
-      border-color: transparent
-
-%helptext
-  font-size: $font-size-m
-  color: $cement-grey
-  +linkStyle
-
-.helptext
-  @extend %helptext
-
-// @todo simplyfiy coloring mixins
 =colorStatusIcons($color, $status)
   .status-icon.#{$status},
   .request-icon.#{$status}
     +colorSVG($color)
-
-=rowBorder
-  border: 1px solid lighten($cement-grey, 20)
-  border-radius: 2px
 
 =rowColor($status, $color, $color-bg: $color)
   &.#{$status}
@@ -94,54 +93,27 @@
   &.#{$status}
     background: linear-gradient(to right, $color 0%, $color $width, white $width, white 100%) no-repeat
 
-=statusColors($color, $status, $width, $color2: $color, $building:false)
-  &.#{$status}
-    background: linear-gradient(to right, $color2 0%, $color2 $width, white $width, white 100%) no-repeat
-    .row-name,
-    .row-request a,
-    .row-color a
-      color: $color
-      &:hover
-        border-color: $color
-    .status-icon,
-    .request-icon
-      +colorSVG($color)
-
-    .build a,
-    .repo-title a
-      color: $color
-      &:hover
-        border-color: $color
-    .build-status
-      color: $color
-    @include colorStatusIcons($color, $status)
-    @include colorLinks($color, $status, $building)
-
 =colorBg($color, $status, $width, $color2: white)
   &.#{$status}
     background: linear-gradient(to right, $color 0%, $color $width, $color2 $width, $color2 100%) no-repeat
 
-=colorLinks($color, $status, $building: false)
-  @if $building
-    .#{$status},
-    .#{$status} a,
-      color: $dozer-yellow
-  @else
-    .#{$status},
-    .#{$status} a,
-      color: $color
+=colorLinks($color, $status)
+  .#{$status},
+  .#{$status} a,
+    color: $color
 
-=colorRows($color, $status, $width, $is-building: false, $color-icon: $color)
-  @include colorBg($color, $status, $width)
-  @include colorLinks($color, $status, $is-building)
-  @include colorStatusIcons($color-icon, $status)
-
-=colorJobs($color, $status, $width, $hover, $is-building: false, $bg-start: $color)
+=colorJobs($color, $status, $width, $hover, $bg-start: $color)
   &.#{$status}
-    @include colorLinks($color, $status, $is-building)
-    @include colorStatusIcons($color, $status)
-    @include rowColor($status, $color)
+    +colorLinks($color, $status)
+    +colorStatusIcons($color, $status)
+    +rowColor($status, $color)
     &:hover,
     &:active
       background-color: $hover
       border-left: $width solid $color
+
+=travisColorRows($gradient-width: 10px)
+  @each $state, $colorMap in $stateMap
+    +colorBg(map-get($colorMap, gradient), $state, $gradient-width)
+    +colorLinks(map-get($colorMap, color), $state)
+    +colorStatusIcons(map-get($colorMap, color), $state)

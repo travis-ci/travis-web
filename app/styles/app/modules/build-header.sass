@@ -1,17 +1,8 @@
 .build-header
+  +travisBorder
+  +travisColorRows
   font-size: 16px
-  border: 1px solid $dry-cement
   clear: both
-
-  @include colorRows($turf-green, 'passed', 10px)
-  @include colorRows($brick-red, 'failed', 10px)
-  @include colorRows($brick-red, 'errored', 10px)
-  @include colorRows($cement-grey, 'canceled', 10px)
-  @include colorRows($canary-yellow, 'started', 10px, true, $dozer-yellow)
-  @include colorRows($canary-yellow, 'queued', 10px, true, $dozer-yellow)
-  @include colorRows($canary-yellow, 'booting', 10px, true, $dozer-yellow)
-  @include colorRows($canary-yellow, 'received', 10px, true, $dozer-yellow)
-  @include colorRows($canary-yellow, 'created', 10px, true, $dozer-yellow)
 
   @media #{$medium-up}
     display: flex
@@ -47,7 +38,7 @@
 
   .action-button-container + .action-button-container
     margin-top: .7rem
-    
+
 
 .build-info
   font-size: 15px

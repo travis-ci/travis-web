@@ -4,13 +4,13 @@
 
 <div class="row-item fade-out {{requestClass}}">
   {{request-icon event=request.event_type state=requestClass}}
-  {{#if request.isPullRequest}}
-    <strong class="label-align">#{{request.pullRequestNumber}}</strong>
-  {{/if}}
-  {{#if request.branchName}}
+  <span class="label-align m-l-s">
+    {{#if request.isPullRequest}}
+      <strong class="label-align">#{{request.pullRequestNumber}}</strong>
+    {{/if}}
+    {{#if request.branchName}}
       <strong class="label-align">{{request.branchName}}</strong>
-  {{/if}}
-  <span class="label-align">
+    {{/if}}
     {{#if request.commit}}
       {{github-commit-link request.repo.slug request.commit.sha}}
     {{else}}
@@ -33,7 +33,7 @@
     {{#link-to "build" request.build title="Go to the build this request triggered"}}
       <span class="label-align inner-underline">{{request.build.number}}</span>{{/link-to}}
   {{else}}
-    -
+      -
   {{/if}}
 </div>
 

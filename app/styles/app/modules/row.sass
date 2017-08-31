@@ -12,14 +12,12 @@
   line-height: 1.5
 
 .rows
-  +rowBorder
+  @each $state, $colorMap in $stateMap
+    +rowColor($state, map-get($colorMap, color), map-get($colorMap, gradient))
+  +travisBorder
   display: flex
   flex-flow: column wrap
   margin-bottom: 1rem
-  &.is-active
-    @each $key, $value in $stateMap
-      +rowColor(#{$key}, map-get($value, color))
-
   @media #{$medium-up}
     position: relative
     flex-flow: row nowrap
@@ -54,11 +52,12 @@
 
 // old! remove this
 .row-li
+  background: linear-gradient(to right, $pebble-grey 0%, $pebble-grey 10px, white 10px, white 100%) no-repeat
+  +travisColorRows
+  +travisBorder
   position: relative
   font-size: 16px
-  border: 1px solid $pebble-grey
   margin-bottom: .3rem
-  background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
 
   @media #{$medium-up}
     display: flex
@@ -116,13 +115,3 @@
       text-align: center
       @media #{$medium-up}
         display: block
-
-  @include statusColors($turf-green, 'passed', 10px)
-  @include statusColors($brick-red, 'failed', 10px)
-  @include statusColors($brick-red, 'errored', 10px)
-  @include statusColors($cement-grey, 'canceled', 10px)
-  @include statusColors($dozer-yellow, 'started', 10px, $canary-yellow, true)
-  @include statusColors($dozer-yellow, 'queued', 10px, $canary-yellow, true)
-  @include statusColors($dozer-yellow, 'booting', 10px, $canary-yellow, true)
-  @include statusColors($dozer-yellow, 'received', 10px, $canary-yellow, true)
-  @include statusColors($dozer-yellow, 'created', 10px, $canary-yellow, true)
