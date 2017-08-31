@@ -70,6 +70,8 @@
     "ember-source": "2.14.1",
     "ember-svg-jar": "^0.10.3",
     "ember-test-assets": "^1.1.0",
+    "ember-tether": "^1.0.0-beta.0",
+    "ember-tooltips": "^2.9.0",
     "emberx-select": "~3.0.0",
     "glob": "^7.1.2",
     "loader.js": "^4.2.3",
