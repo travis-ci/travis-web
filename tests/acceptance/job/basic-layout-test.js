@@ -35,7 +35,7 @@ test('visiting job-view', function (assert) {
 
     assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');
-    assert.equal(jobPage.state, '#1234.1 passed', 'diusplays build number');
+    assert.equal(jobPage.state, '#1234.1 passed', 'displays build number');
     assert.equal(jobPage.author, 'Mr T authored and committed');
 
     assert.equal(jobPage.log, 'Hello log');
