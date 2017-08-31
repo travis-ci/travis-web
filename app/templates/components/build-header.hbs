@@ -45,14 +45,18 @@
         </li>
       {{/if}}
       <li>
-        {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
-          {{svg-jar 'icon-branch' class="icon"}}
-          <span data-tooltip="View branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
-          {{svg-jar 'icon-external-link' class="icon"}}
-        {{/external-link-to}}
-
-        {{#if item.isTag}}
-          it's a tag
+        {{#if build.isTag}}
+          {{#external-link-to href=urlGitHubTag class="commit-branch-url"}}
+            {{svg-jar 'icon-branch' class="icon"}}
+            <span data-tooltip="View tag on GitHub" class="label-align inner-underline">Tag {{build.tag.name}}</span>
+            {{svg-jar 'icon-external-link' class="icon"}}
+          {{/external-link-to}}
+        {{else}}
+          {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
+            {{svg-jar 'icon-branch' class="icon"}}
+            <span data-tooltip="View branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
+            {{svg-jar 'icon-external-link' class="icon"}}
+          {{/external-link-to}}
         {{/if}}
       </li>
     </ul>
