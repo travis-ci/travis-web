@@ -79,12 +79,12 @@ test('render cron build', function (assert) {
 test('render tag build', function (assert) {
   let commit = {
     subject: 'Just complete and utter joy',
-    branch: { name: 'v1.0.0'}
+    branch: { name: 'v1.0.0' }
   };
   let build = {
     eventType: 'push',
     commit,
-    branch: { name: 'v1.0.0'},
+    branch: { name: 'v1.0.0' },
     tag: { name: 'v1.0.0' },
     isTag: true
   };
@@ -95,7 +95,7 @@ test('render tag build', function (assert) {
   assert.equal(this.$().find('.build-status svg title').text(), 'Tag');
   assert.equal(this.$().find('.build-title .commit-branch').text().trim(), 'v1.0.0', 'displays tag name in title');
   assert.ok(this.$().find('.commit-branch-url').text().match(/Tag v1.0.0/), 'displays link to tag on GH');
-  assert.ok(this.$().find('.commit-branch-url').attr('href').match(/releases\/tag\/v1.0.0/), 'url is correct') ;
+  assert.ok(this.$().find('.commit-branch-url').attr('href').match(/releases\/tag\/v1.0.0/), 'url is correct');
 });
 
 test('if a build is shown, only show elapsed time while running', function (assert) {

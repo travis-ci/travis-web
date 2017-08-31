@@ -61,7 +61,7 @@ export default Model.extend(DurationCalculations, {
 
   @computed('tag')
   isTag(tag) {
-    return tag !== null;
+    return (tag && tag.name);
   },
 
   @computed('state')

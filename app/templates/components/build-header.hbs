@@ -10,7 +10,7 @@
                title={{item.tag.name}}>{{item.tag.name}}</small>
       {{else}}
         <small class="commit-branch"
-               title={{item.branchName}}>{{item.branchName}}</small>
+               title={{item.branch.name}}>{{item.branch.name}}</small>
       {{/if}}
       {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
@@ -50,7 +50,7 @@
         </li>
       {{/if}}
       <li>
-        {{#if build.isTag}}
+        {{#if item.isTag}}
           {{#external-link-to href=urlGitHubTag class="commit-branch-url"}}
             {{svg-jar 'icon-tag' class="icon"}}
             <span data-tooltip="View tag on GitHub" class="label-align inner-underline">Tag {{build.tag.name}}</span>
