@@ -17,7 +17,8 @@
   {{/if}}
 </div>
 
-{{#link-to "repo" repository.owner.login repository.name class="profile-repo"}}
+{{#link-to "repo" repository.owner.login repository.name class="profile-repo"
+  classNameBindings="admin:admin:disabled"}}
   {{repository.slug}}
   <span>{{repository.description}}</span>
 {{/link-to}}
