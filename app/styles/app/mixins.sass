@@ -140,6 +140,7 @@
   &.#{$status}
     @include colorLinks($color, $status, $is-building)
     @include colorStatusIcons($color, $status)
+    @include rowColor($status, $color)
     &:hover,
     &:active
       background-color: $hover

@@ -82,7 +82,7 @@
     {{else}}
       {{#link-to "build" repo item}}
         {{#if isCron}}
-          {{svg-jar 'icon-cronjobs' class=(concat buildState ' icon')}}
+          {{svg-jar 'icon-cronjobs' class=(concat buildState ' icon--m')}}
         {{else}}
           {{svg-jar 'icon-hash' class=(concat buildState ' icon')}}
         {{/if}}
@@ -94,7 +94,7 @@
   <ul class="list-icon">
     {{#if isJob}}
       <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
-        {{svg-jar 'icon-stopwatch' class="icon-stopwatch"}}
+        {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
           {{#if item.toBeQueued}}
             Waiting to be queued
@@ -107,7 +107,7 @@
       </li>
     {{else}}
       <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
-        {{svg-jar 'icon-stopwatch' class="icon-stopwatch"}}
+        {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
           {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
         </span>
