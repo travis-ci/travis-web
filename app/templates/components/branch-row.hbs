@@ -46,8 +46,9 @@
 </div>
 <div class="two-line">
   <div class="row-commit">
-    <div class="row-item"  data-tooltip="View commit on GitHub">
+    <div class="row-item">
       {{#external-link-to href=urlGithubCommit}}
+        {{tooltip-on-element text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
         <span class="inner-underline">
           {{#if branch.last_build}}
