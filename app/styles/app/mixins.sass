@@ -43,7 +43,7 @@
       .job-lang,
       .job-env
         &:after
-          @include fadeOut(right, -90deg, $color)
+          +fadeOut(right, -90deg, $color)
       .job-lang:hover,
       .job-env:hover
         overflow: visible
@@ -104,9 +104,9 @@
 
 =colorJobs($color, $status, $width, $hover, $bg-start: $color)
   &.#{$status}
-    @include colorLinks($color, $status)
-    @include colorStatusIcons($color, $status)
-    @include rowColor($status, $color)
+    +colorLinks($color, $status)
+    +colorStatusIcons($color, $status)
+    +rowColor($status, $color)
     &:hover,
     &:active
       background-color: $hover

@@ -45,3 +45,9 @@ $stateMap: (
     color-bg: $haze-yellow
   )
 );
+
+$requestStatusMap: (
+  approved: passed,
+  rejected: failed,
+  pending: created
+)
