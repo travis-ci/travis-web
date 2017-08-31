@@ -1,9 +1,10 @@
-.status-icon *,
-.request-icon *
-  stroke-linecap: round
-  stroke-linejoin: round
-  stroke-miterlimit: 10
+.status-icon,
+.request-icon
   +colorSVG($cement-grey)
+  & *
+    stroke-linecap: round
+    stroke-linejoin: round
+    stroke-miterlimit: 10
 
 .status-icon
   @extend %icon
