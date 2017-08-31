@@ -33,7 +33,7 @@
     {{#if build.id}}
       {{#link-to "build" build.repo build class="inner-underline"}}
         {{#if isCronJob}}
-          {{svg-jar 'icon-cronjobs' class=(concat build.state ' icon')}}
+          {{svg-jar 'icon-cronjobs' class=(concat build.state ' icon--m')}}
         {{else}}
           {{svg-jar 'icon-hash' class=(concat build.state ' icon')}}
         {{/if}}
