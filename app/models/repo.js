@@ -260,7 +260,7 @@ Repo.reopenClass({
     }
   },
 
-  fetchByOwner(store, owner) {
+  fetchByOwner(store, owner, pagination = false) {
     const adapter = store.adapterFor('repo');
     const promise = adapter.byOwner(owner).then((payload) => {
       const serializer = store.serializerFor('repo');
@@ -272,6 +272,10 @@ Repo.reopenClass({
       const { included } = serialized;
       included.forEach(rec => store.push({ data: rec }));
     });
+
+    if (pagination) {
+      debugger;
+    }
 
     return promise['catch'](() => {
       throw new Error('Repositories not found for owner');

@@ -19,7 +19,6 @@ export default Ember.Controller.extend({
     return Travis.on('user:synced', () => { this.reloadHooks(); });
   },
 
-
   @action
   sync() {
     return this.get('user').sync();
@@ -30,45 +29,9 @@ export default Ember.Controller.extend({
     return hook.toggle();
   },
 
-  reloadOwnerRepositories() {
-    const login = this.get('model.account.login');
-    if (login) {
-      this.set('ownedRepositories', []);
-      this.set('loadingError', false);
-      const repositories = Repository.fetchByOwner(this.store, login);
-      return repositories.then(() => {
-        const ownedRepositories = this.store.peekAll('repo').filterBy('owner.login', login);
-        this.set('ownedRepositories', ownedRepositories);
-        this.set('ownedRepositories.isLoaded', true);
-      }).catch(() => {
-        this.set('loadingError', true);
-      });
-    }
-  },
-
   @computed('model.account.{name,login}')
   accountName(name, login) {
     return name || login;
-  },
-
-  @computed('ownedRepositories.[]')
-  administerableRepositories(repositories) {
-    if (!repositories) {
-      this.reloadOwnerRepositories();
-    }
-    return repositories
-      .filter(repo => repo.get('permissions.admin'))
-      .sortBy('name');
-  },
-
-  @computed('ownedRepositories.[]')
-  unadministerableRepositories(repositories) {
-    if (!repositories) {
-      this.reloadOwnerRepositories();
-    }
-    return repositories
-      .filter(repo => !repo.get('permissions.admin'))
-      .sortBy('name');
   },
 
   @computed()

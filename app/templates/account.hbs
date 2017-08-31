@@ -3,7 +3,7 @@
     There was a problem while loading the repositories list, please try again. In case
     the problem persists, please contact support.
   {{else}}
-    {{#if ownedRepositories.isLoaded}}
+    {{#if model.repos}}
       {{#unless config.enterprise}}
         {{#if config.billingEndpoint}}
           {{#if subscribeButtonInfo.subscribed}}
@@ -54,16 +54,8 @@
 
       <div id="administerable-repositories">
         <ul class="profile-repositorylist">
-          {{#each administerableRepositories as |repository|}}
+          {{#each model.repos as |repository|}}
             {{repository-status-toggle repository=repository admin=true}}
-          {{else}}
-            <li>
-              {{#if unadministerableRepositories.length}}
-                Sorry, but we can't find any repositories you have admin access to.
-              {{else}}
-                Sorry, it seems like we couldn't find any repositories you have access to on GitHub.
-              {{/if}}
-            </li>
           {{/each}}
         </ul>
       </div>

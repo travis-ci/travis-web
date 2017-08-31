@@ -2,17 +2,18 @@ import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
+  queryParams: {
+    offset: {
+      refreshModel: true
+    }
+  },
+
   titleToken(model) {
     if (model && model.id) {
       return model.get('name') || model.get('login');
     } else {
       return 'Account';
     }
-  },
-
-  setupController(controller) {
-    this._super(...arguments);
-    controller.reloadOwnerRepositories();
   },
 
   model(params) {
@@ -22,6 +23,22 @@ export default TravisRoute.extend({
     if (account) {
       return Ember.RSVP.hash({
         account,
+        repos: this.store.paginated(
+          'repo',
+          {
+            offset: params.offset,
+            sort_by: 'name',
+            limit: 25,
+            custom: {
+              owner: login,
+              type: 'byOwner',
+            },
+          },
+          {
+            filter: (repo) => repo.get('owner') === login,
+            sort: 'name',
+          }
+        ),
       });
     } else {
       return {
