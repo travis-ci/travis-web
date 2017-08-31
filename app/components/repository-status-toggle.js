@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
   tagName: 'li',
@@ -22,6 +23,10 @@ export default Ember.Component.extend({
     }
   },
 
+  @computed('repository.permissions')
+  admin(permissions) {
+    return permissions.admin;
+  },
 
   toggleRepositoryTask: task(function* () {
     if (!this.get('disabled')) {
