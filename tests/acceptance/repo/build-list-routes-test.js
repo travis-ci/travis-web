@@ -124,7 +124,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 });
 
 test('build history shows, more can be loaded, and a created build gets added and can be cancelled', function (assert) {
-  assert.expect(22);
+  assert.expect(20);
 
   page.visitBuildHistory({ organization: 'killjoys', repo: 'living-a-feminist-life' });
 
