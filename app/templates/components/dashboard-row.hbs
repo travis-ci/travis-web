@@ -41,7 +41,8 @@
     </section>
     <section class="dash-commit">
       <h3 class="label">Commit</h3>
-      <p class="row-content row-item commit-sha" data-tooltip="View commit on GitHub">
+      <p class="row-content row-item commit-sha">
+        {{tooltip-on-element text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
         {{#external-link-to href=urlGitHubCommit}}
           <span class="label-align">
