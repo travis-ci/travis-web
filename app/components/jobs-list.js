@@ -48,12 +48,15 @@ export default Ember.Component.extend({
 
   @computed('stage', 'stageIsLast', 'filteredJobs.@each.{state,allowFailure}')
   stageAllowFailuresText(stage, stageIsLast, filteredJobs) {
-    if (stageIsLast || !stage) {
+    if (!stage) {
       return false;
     }
 
     const jobsAllowedToFail = filteredJobs.filterBy('allowFailure');
     const relevantJobs = jobsAllowedToFail.filterBy('isFinished').rejectBy('state', 'passed');
+
+    const failedJobsNotAllowedToFail = this.get('filteredJobs').rejectBy('allowFailure')
+      .filterBy('isFinished').rejectBy('state', 'passed');
 
     if (relevantJobs.length > 0) {
       let jobList;
@@ -70,8 +73,15 @@ export default Ember.Component.extend({
         jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, ` +
           `and ${Ember.get(lastJob, ('number'))}`;
       }
+
+      let continuationText = '';
+
+      if (!stageIsLast && failedJobsNotAllowedToFail.length === 0) {
+        continuationText = ' so we continued this build to the next stage';
+      }
+
       return 'Your build matrix was set to allow the failure of ' +
-              `${jobList} so we continued this build to the next stage.`;
+              `${jobList}${continuationText}.`;
     }
     return false;
   },
