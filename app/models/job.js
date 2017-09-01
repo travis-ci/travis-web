@@ -37,6 +37,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   @alias('build.branchName') branchName: null,
   @alias('build.isTag') isTag: null,
   @alias('build.tag') tag: null,
+  @alias('build.eventType') eventType: null,
 
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
   @computed()
