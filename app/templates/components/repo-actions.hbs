@@ -2,7 +2,8 @@
   {{#if cancel.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <div class='tooltip action-button-container' data-tooltip='Cancel {{type}}'>
+    <div class='tooltip action-button-container'>
+      {{#if labelless}}{{#tooltip-on-element}}Cancel {{type}}{{/tooltip-on-element}}{{/if}}
       <button {{action (perform cancel)}} class="action-button--cancel" type="button" aria-label="Cancel {{type}}">
         {{svg-jar 'icon-failed' class="icon"}}
         <span class="label-align">Cancel {{type}}</span>
@@ -15,7 +16,8 @@
   {{#if restarters.isRunning}}
     {{loading-indicator height=true}}
   {{else}}
-    <div class='tooltip action-button-container' data-tooltip='Restart {{type}}'>
+    <div class='tooltip action-button-container'>
+      {{#if labelless}}{{#tooltip-on-element}}Restart {{type}}{{/tooltip-on-element}}{{/if}}
       <button {{action (perform restart)}} class="action-button--restart" aria-label="Restart {{type}}" type="button">
         {{svg-jar 'icon-restart' class="icon"}}
         <span class="label-align">Restart {{type}}</span>
@@ -25,7 +27,8 @@
       {{#if features.proVersion}}
         {{#if canDebug}}
           <div class='action-button-container'>
-            <button {{action (perform debug)}} class="action-button--debug tooltip" aria-label="Restart as debug {{type}}" data-tooltip='Restart as debug {{type}}' type="button">
+            <button {{action (perform debug)}} class="action-button--debug tooltip" aria-label="Restart as debug {{type}}" type="button">
+              {{#if labelless}}{{#tooltip-on-element}}Restart as debug {{type}}{{/tooltip-on-element}}{{/if}}
               {{svg-jar 'icon-debug' class="icon"}}
               <span class="label-align">Debug {{type}}</span>
             </button>
