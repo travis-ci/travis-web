@@ -41,7 +41,7 @@ test('renders most recent repository and most recent build when builds present, 
     assert.equal(document.title, 'travis-ci/travis-web - Travis CI');
     assert.ok(currentRepoTab.currentTabActive, 'Current tab is active by default when loading dashboard');
 
-    assert.equal(jobPage.state, '5 booting', 'expected a single-job build’s state to be the job’s state');
+    assert.equal(jobPage.state, '#5 booting', 'expected a single-job build’s state to be the job’s state');
   });
 
   andThen(() => {

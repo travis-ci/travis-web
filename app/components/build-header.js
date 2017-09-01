@@ -45,11 +45,6 @@ export default Ember.Component.extend({
     return !['api', 'cron'].includes(eventType);
   },
 
-  @computed('item.eventType')
-  isCron(event) {
-    return event === 'cron';
-  },
-
   @computed('repo.slug', 'commit.sha')
   urlGithubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);
@@ -63,6 +58,11 @@ export default Ember.Component.extend({
   @computed('item.repo.slug', 'build.branchName')
   urlGitHubBranch(slug, branchName) {
     return this.get('externalLinks').githubBranch(slug, branchName);
+  },
+
+  @computed('item.repo.slug', 'build.tag.name')
+  urlGitHubTag(slug, tag) {
+    return this.get('externalLinks').githubTag(slug, tag);
   },
 
   @computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix')

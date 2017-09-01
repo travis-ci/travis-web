@@ -5,8 +5,13 @@
       <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
       {{item.pullRequestTitle}}
     {{else}}
-      <small class="commit-branch"
-        title={{build.branchName}}>{{build.branchName}}</small>
+      {{#if item.isTag}}
+        <small class="commit-branch"
+               title={{item.tag.name}}>{{item.tag.name}}</small>
+      {{else}}
+        <small class="commit-branch"
+               title={{item.branch.name}}>{{item.branch.name}}</small>
+      {{/if}}
       {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
   </h2>
@@ -45,11 +50,19 @@
         </li>
       {{/if}}
       <li>
-        {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
-          {{svg-jar 'icon-branch' class="icon"}}
-          <span data-tooltip="View branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
-          {{svg-jar 'icon-external-link' class="icon"}}
-        {{/external-link-to}}
+        {{#if item.isTag}}
+          {{#external-link-to href=urlGitHubTag class="commit-branch-url"}}
+            {{svg-jar 'icon-tag' class="icon"}}
+            <span data-tooltip="View tag on GitHub" class="label-align inner-underline">Tag {{build.tag.name}}</span>
+            {{svg-jar 'icon-external-link' class="icon"}}
+          {{/external-link-to}}
+        {{else}}
+          {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
+            {{svg-jar 'icon-branch' class="icon"}}
+            <span data-tooltip="View branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
+            {{svg-jar 'icon-external-link' class="icon"}}
+          {{/external-link-to}}
+        {{/if}}
       </li>
     </ul>
 
@@ -72,21 +85,21 @@
   <h3 class="build-status {{item.state}}">
     {{#if isJob}}
       {{#link-to "job" repo item}}
-        {{#if isCron}}
-          {{svg-jar 'icon-cronjobs' class=(concat buildState ' icon')}}
+        {{#if item.isTag}}
+          {{svg-jar 'icon-tag' class=(concat item.state ' icon')}}
         {{else}}
-          {{svg-jar 'icon-hash' class=(concat buildState ' icon')}}
+          {{request-icon event=item.eventType state=item.state}}
         {{/if}}
-        <span class='inner-underline'>{{item.number}} {{humanize-state item.state}}</span>
+        <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
       {{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
-        {{#if isCron}}
-          {{svg-jar 'icon-cronjobs' class=(concat buildState ' icon--m')}}
+        {{#if item.isTag}}
+          {{svg-jar 'icon-tag' class=(concat item.state ' icon')}}
         {{else}}
-          {{svg-jar 'icon-hash' class=(concat buildState ' icon')}}
+          {{request-icon event=item.eventType state=item.state}}
         {{/if}}
-        <span class='inner-underline'>{{item.number}} {{humanize-state buildState}}</span>
+        <span class='inner-underline'>#{{item.number}} {{humanize-state buildState}}</span>
       {{/link-to}}
     {{/if}}
   </h3>
