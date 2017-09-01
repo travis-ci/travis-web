@@ -1,22 +1,27 @@
 import Ember from 'ember';
 import { task, taskGroup } from 'ember-concurrency';
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default Ember.Controller.extend({
   queryParams: ['account', 'offset'],
   offset: 0,
-  flashes: service(),
-  ajax: service(),
+
+  @service flashes: null,
+  @service ajax: null,
 
   starring: taskGroup().drop(),
-  tasks: Ember.computed(function () {
+
+  @computed()
+  tasks() {
     return [
       this.get('star'),
       this.get('unstar')
     ];
-  }),
+  },
 
-  star: task(function * (repo) {
+  star: task(function* (repo) {
     repo.set('starred', true);
     try {
       yield this.get('ajax').postV3(`/repo/${repo.get('id')}/star`);
@@ -28,7 +33,7 @@ export default Ember.Controller.extend({
     }
   }).group('starring'),
 
-  unstar: task(function * (repo) {
+  unstar: task(function* (repo) {
     repo.set('starred', false);
     try {
       yield this.get('ajax').postV3(`/repo/${repo.get('id')}/unstar`);
@@ -40,82 +45,61 @@ export default Ember.Controller.extend({
     }
   }).group('starring'),
 
-  filteredRepos: Ember.computed(
-    'model.repos', 'model.repos.@each.currentBuild.finishedAt', 'account', function () {
-      let accounts = this.get('model.accounts');
-      let accountParam = this.get('account');
-      let account = accounts.filter(function (x) {
-        if (accountParam) {
-          if (x.id === accountParam) {
-            return x;
-          }
-        } else {
-          return null;
+  @computed('model.starredRepos.[]',
+            'model.starredRepos.@each.currentBuildState',
+            'model.starredRepos.@each.currentBuildFinishedAt')
+  starredRepos(repositories) {
+    return repositories.toArray().sort(dashboardRepositoriesSort);
+  },
+
+  @computed('model.repos.[]',
+            'account',
+            'model.accounts',
+            'model.repos.@each.currentBuildState',
+            'model.repos.@each.currentBuildFinishedAt'
+           )
+  filteredRepos(repositories, accountParam, accounts) {
+    let account = accounts.filter((x) => {
+      if (accountParam) {
+        if (x.id === accountParam) {
+          return x;
         }
-      });
-      let type = null;
-      if (account && account[0]) {
-        type = account[0].get('type');
+      } else {
+        return null;
       }
-      let repos = this.get('model.repos');
+    });
+    let type = null;
+    if (account && account[0]) {
+      type = account[0].get('type');
+    }
 
-      repos = repos.filter(function (item) {
-        if (!Ember.isBlank(account)) {
-          if (Ember.isEqual(type, 'user')) {
-            if (Ember.isEqual(item.get('owner.@type'), 'user')) {
-              return item;
-            }
-          } else {
-            if (Ember.isEqual(item.get('owner.login'), accountParam)) {
-              return item;
-            }
+    const repos = repositories.filter((item) => {
+      if (!Ember.isBlank(account)) {
+        if (Ember.isEqual(type, 'user')) {
+          if (Ember.isEqual(item.get('owner.@type'), 'user')) {
+            return item;
           }
         } else {
-          return item;
+          if (Ember.isEqual(item.get('owner.login'), accountParam)) {
+            return item;
+          }
         }
-      }).sort(function (a, b) {
-        if (Ember.isBlank(a.get('currentBuild.state'))) {
-          return 1;
-        }
-        if (Ember.isBlank(b.get('currentBuild.state'))) {
-          return -1;
-        }
-        if (Ember.isBlank(a.get('currentBuild.finishedAt'))) {
-          return -1;
-        }
-        if (Ember.isBlank(b.get('currentBuild.finishedAt'))) {
-          return 1;
-        }
-        if (a.get('currentBuild.finishedAt') < b.get('currentBuild.finishedAt')) {
-          return 1;
-        }
-        if (a.get('currentBuild.finishedAt') > b.get('currentBuild.finishedAt')) {
-          return -1;
-        }
-        if (a.get('currentBuild.finishedAt') === b.get('currentBuild.finishedAt')) {
-          return 0;
-        }
-        if (Ember.isBlank(a.get('defaultBranch.lastBuild.state'))) {
-          return 1;
-        }
-        if (Ember.isBlank(b.get('defaultBranch.lastBuild.state'))) {
-          return -1;
-        }
-      });
-      return repos;
-    }),
+      } else {
+        return item;
+      }
+    }).sort(dashboardRepositoriesSort);
+    return repos;
+  },
 
-  selectedOrg: Ember.computed('account', function () {
-    let accounts = this.get('model.accounts');
-    let filter =  this.get('account');
-
-    let filteredAccount = accounts.filter(function (item) {
-      if (item.get('login') === filter) {
+  @computed('model.accounts', 'account')
+  selectedOrg(accounts, account) {
+    let filteredAccount = accounts.filter((item) => {
+      if (item.get('login') === account) {
         return item;
       }
     });
     return filteredAccount[0];
-  }),
+  },
 
   actions: {
     selectOrg(org) {

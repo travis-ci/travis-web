@@ -31,13 +31,13 @@ export default PageObject.create({
   restartBuild: clickable('.action-button--restart'),
   cancelBuild: clickable('.action-button--cancel'),
   debugBuild: clickable('.action-button--debug'),
-  notification: text('p.flash-message'),
+
   singleJobLogText: text('.log-body pre'),
 
   branchName: text('.build-header .commit-branch'),
   commitSha: text('.build-header .commit-commit'),
   compare: text('.build-header .commit-compare'),
-  commitBranch: text('.build-header .commit-branch-url'),
+  commitBranch: text('.build-header .commit-branch-url span'),
   buildTabLinkIsActive: hasClass('active', '#tab_build'),
   buildTabLinkText: text('#tab_build'),
 
@@ -78,5 +78,7 @@ export default PageObject.create({
         item: jobComponent
       })
     }
-  })
+  }),
+
+  buildNotFoundMessage: text('h2.page-title'),
 });

@@ -1,18 +1,19 @@
-/* global HS */
+/* global HS, Waypoint */
 import Ember from 'ember';
-import computed, { alias } from 'ember-computed-decorators';
-
-const { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
+  @service auth: null,
+  @service store: null,
+  @service externalLinks: null,
+  @service features: null,
+  @service flashes: null,
+  @service('broadcasts') broadcastsService: null,
+
   tagName: 'header',
   classNames: ['top'],
-  auth: service(),
-  store: service(),
-  externalLinks: service(),
-  features: service(),
-  broadcastsService: service('broadcasts'),
-
   landingPage: false,
 
   @alias('auth.currentUser') user: null,
@@ -91,5 +92,30 @@ export default Ember.Component.extend({
     classes.push(authState || 'signed-out');
 
     return classes.join(' ');
+  },
+
+  didInsertElement() {
+    const component = this; // Not pleasant, but I can’t find a better way.
+
+    if (Ember.testing) {
+      return;
+    }
+
+    const waypoint = new Waypoint.Inview({
+      element: this.element,
+      exited() {
+        Ember.run(() => {
+          component.get('flashes').set('topBarVisible', false);
+        });
+      },
+
+      enter() {
+        Ember.run(() => {
+          component.get('flashes').set('topBarVisible', true);
+        });
+      }
+    });
+
+    this.set('waypoint', waypoint);
   }
 });

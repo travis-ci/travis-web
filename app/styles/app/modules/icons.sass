@@ -8,27 +8,30 @@
   height: 16px
   margin-right: 4px
 
+.icon--m
+  @extend %icon
+  width: 18px
+  height: 19px
+  margin-right: 1px
+
 .icon--l
   @extend %icon
   width: 30px
   height: 30px
   margin-right: 7px
 
-.icon--big
-  @extend %icon
-  width: 18px
-  height: 19px
-  
-.icon-stopwatch
-  +colorSVG($cement-grey)
-  @extend .icon--big
-  vertical-align: middle
-  margin-right: 1px
-  
 .icon svg,
 svg.icon,
-svg.icon--l
+svg.icon--l,
+svg.icon--m
   +colorSVG($cement-grey)
+
+@each $state, $colorMap in $stateMap
+  svg.icon,
+  svg.icon--m,
+  svg.icon--l
+    &.#{$state}
+      +colorSVG(map-get($colorMap, color))
 
 .icon-hover
   &:hover,
@@ -42,13 +45,6 @@ svg.icon--l
 .icon.red
   +colorSVG($brick-red)
 
-.icon-stopwatch
-  +colorSVG($cement-grey)
-  width: 18px
-  height: 19px
-  vertical-align: middle
-  margin-right: 1px
-  
 .icon-help
   +colorSVG($cement-grey)
   display: inline-block

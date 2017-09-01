@@ -1,10 +1,10 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Route.extend({
-  auth: service(),
-  tabStates: service(),
+  @service auth: null,
+  @service tabStates: null,
+  @service repositories: null,
 
   redirect() {
     if (this.get('auth.signedIn')) {
@@ -19,16 +19,8 @@ export default Ember.Route.extend({
   renderTemplate(...args) {
     if (this.get('auth.signedIn')) {
       Ember.$('body').attr('id', 'home');
-
-      this._super(args);
-
-      this.render('repos', {
-        outlet: 'left',
-        into: 'index'
-      });
-    } else {
-      return this._super(args);
     }
+    return this._super(args);
   },
 
   activate(...args) {
@@ -36,7 +28,6 @@ export default Ember.Route.extend({
     if (this.get('auth.signedIn')) {
       this.get('tabStates').set('sidebarTab', 'owned');
       this.set('tabStates.mainTab', 'current');
-      this.controllerFor('repos').activate('owned');
     }
   },
 

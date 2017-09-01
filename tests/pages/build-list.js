@@ -16,8 +16,6 @@ export default PageObject.create({
 
   showsNoBuildsMessaging: text('.missing-notice h2.page-title'),
 
-  notification: text('p.flash-message'),
-
   builds: collection({
     itemScope: '.build-list .pr-row',
 
@@ -34,7 +32,7 @@ export default PageObject.create({
       commitSha: text('.row-commit .label-align'),
       committer: text('.row-committer .label-align'),
       commitDate: text('.row-calendar .label-align'),
-      requestIconTitle: attribute('title', '.request-icon'),
+      requestIconTitle: attribute('data-tooltip', '.row-commit a > span'),
       duration: text('.row-duration .label-align'),
       message: text('.row-message'),
 

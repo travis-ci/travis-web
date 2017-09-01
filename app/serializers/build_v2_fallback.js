@@ -1,6 +1,6 @@
 import V2FallbackSerializer from 'travis/serializers/v2_fallback';
 
-var Serializer = V2FallbackSerializer.extend({
+export default V2FallbackSerializer.extend({
   normalizeSingleResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
     if (!payload['@type'] && payload.commit) {
       payload.build.commit = payload.commit;
@@ -11,7 +11,7 @@ var Serializer = V2FallbackSerializer.extend({
 
   normalizeArrayResponse: function (store, primaryModelClass, payload/* , id, requestType*/) {
     if (payload.commits) {
-      payload.builds.forEach(function (build) {
+      payload.builds.forEach((build) => {
         let commit = payload.commits.findBy('id', build.commit_id);
         if (commit) {
           build.commit = commit;
@@ -68,5 +68,3 @@ var Serializer = V2FallbackSerializer.extend({
     return this._super(modelClass, resourceHash);
   }
 });
-
-export default Serializer;

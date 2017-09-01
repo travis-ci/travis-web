@@ -2,6 +2,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
+import topPage from 'travis/tests/pages/top';
 
 moduleForAcceptance('Acceptance | repo settings', {
   beforeEach() {
@@ -90,6 +91,8 @@ test('view settings', function (assert) {
   andThen(function () {
     assert.ok(settingsPage.buildOnlyWithTravisYml.isActive, 'expected builds only with .travis.yml');
     assert.ok(settingsPage.buildPushes.isActive, 'expected builds for pushes');
+    assert.equal(settingsPage.buildPushes.ariaChecked, 'true', 'expected the build pushes switch to have aria-checked=true');
+    assert.equal(settingsPage.buildPushes.role, 'switch', 'expected the build pushes switch to be marked as such');
 
     assert.ok(settingsPage.limitConcurrentBuilds.isActive, 'expected concurrent builds to be limited');
     assert.equal(settingsPage.limitConcurrentBuilds.value, '1919');
@@ -147,6 +150,7 @@ test('change general settings', function (assert) {
 
   andThen(() => {
     assert.notOk(settingsPage.buildPushes.isActive, 'expected no builds for pushes');
+    assert.equal(settingsPage.buildPushes.ariaChecked, 'false', 'expected the build pushes switch to have aria-checked=false');
     assert.deepEqual(settingToRequestBody.build_pushes, { 'setting.value': false });
   });
 
@@ -235,7 +239,7 @@ test('delete and create environment variables', function (assert) {
   settingsPage.environmentVariableForm.add();
 
   andThen(() => {
-    assert.equal(settingsPage.notification, 'There was an error saving this environment variable.');
+    assert.equal(topPage.flashMessage.text, 'There was an error saving this environment variable.');
 
     // This will cause deletions to fail
     server.delete('/settings/env_vars/:id', () => {}, 500);
@@ -245,7 +249,7 @@ test('delete and create environment variables', function (assert) {
 
   andThen(() => {
     assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
-    assert.equal(settingsPage.notification, 'There was an error deleting this environment variable.');
+    assert.equal(topPage.flashMessage.text, 'There was an error deleting this environment variable.');
 
     server.delete('/settings/env_vars/:id', () => {}, 404);
   });
@@ -254,7 +258,7 @@ test('delete and create environment variables', function (assert) {
 
   andThen(() => {
     assert.equal(settingsPage.environmentVariables().count, 2, 'expected the environment variable to remain');
-    assert.equal(settingsPage.notification, 'There was an error deleting this environment variable because it had already been deleted. Try refreshing?');
+    assert.equal(topPage.flashMessage.text, 'This environment variable has already been deleted. Try refreshing.');
   });
 });
 

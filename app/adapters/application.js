@@ -1,11 +1,10 @@
 import config from 'travis/config/environment';
-import Ember from 'ember';
 import ActiveModelAdapter from 'active-model-adapter';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default ActiveModelAdapter.extend({
-  auth: service(),
+  @service auth: null,
+
   host: config.apiEndpoint,
   coalesceFindRequests: true,
 

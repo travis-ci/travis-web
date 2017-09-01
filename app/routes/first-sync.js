@@ -3,32 +3,31 @@ import Ember from 'ember';
 
 export default SimpleLayoutRoute.extend({
   activate() {
-    var controller;
+    let controller;
     controller = this.controllerFor('firstSync');
     return controller.addObserver('isSyncing', this, this.isSyncingDidChange);
   },
 
   deactivate() {
-    var controller;
+    let controller;
     controller = this.controllerFor('firstSync');
     return controller.removeObserver('controller.isSyncing', this, this.isSyncingDidChange);
   },
 
   isSyncingDidChange() {
-    var controller, self;
+    let controller, self;
     controller = this.controllerFor('firstSync');
     if (!controller.get('isSyncing')) {
-      self = this;
       return Ember.run.later(this, function () {
         return this.store.query('repo', {
           member: this.get('controller.user.login')
-        }).then(function (repos) {
+        }).then((repos) => {
           if (repos.get('length')) {
-            return self.transitionTo('index');
+            return this.transitionTo('index');
           } else {
-            return self.transitionTo('profile');
+            return this.transitionTo('profile');
           }
-        }).then(null, function (e) {
+        }).then((e) => {
           if (self.get('features.debugLogging')) {
             // eslint-disable-next-line
             return console.log('There was a problem while redirecting from first sync', e);

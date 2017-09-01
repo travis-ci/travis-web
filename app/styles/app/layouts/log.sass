@@ -47,12 +47,17 @@
       border-radius: 50%
       &:after
         content: ""
+        position: absolute
+        top: 0
+        right: 0
+        left: 0
+        bottom: 0
+        margin: auto
         display: block
         height: 10px
         width: 10px
         background: #f1f1f1
         border-radius: 50%
-        @extend %absolute-center
 
     &.active .tail-status
       background-color: #6b0

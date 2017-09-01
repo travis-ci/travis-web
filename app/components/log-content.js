@@ -6,8 +6,9 @@ import LogFolder from 'travis/utils/log-folder';
 
 import config from 'travis/config/environment';
 
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 Log.LIMIT = config.logLimit;
 
@@ -64,15 +65,16 @@ Object.defineProperty(Log.Limit.prototype, 'limited', {
 });
 
 export default Ember.Component.extend({
-  auth: service(),
-  popup: service(),
-  permissions: service(),
-  externalLinks: service(),
+  @service auth: null,
+  @service permissions: null,
+  @service externalLinks: null,
 
   classNameBindings: ['logIsVisible:is-open'],
   logIsVisible: false,
 
-  currentUser: alias('auth.currentUser'),
+  @alias('auth.currentUser') currentUser: null,
+
+  isShowingRemoveLogModal: false,
 
   didInsertElement() {
     if (this.get('features.debugLogging')) {
@@ -199,33 +201,35 @@ export default Ember.Component.extend({
     });
   },
 
-  plainTextLogUrl: Ember.computed('job.log.id', 'job.log.token', function () {
-    let id = this.get('log.job.id');
+  @computed('log.job.id', 'job.log.token', 'features.proVersion')
+  plainTextLogUrl(id, token, proVersion) {
     if (id) {
       let url = this.get('externalLinks').plainTextLog(id);
-      if (this.get('features.proVersion')) {
-        url += `&access_token=${this.get('job.log.token')}`;
+      if (proVersion) {
+        url += `&access_token=${token}`;
       }
       return url;
     }
-  }),
+  },
 
-  hasPermission: Ember.computed('permissions.all', 'job.repo', function () {
-    return this.get('permissions').hasPermission(this.get('job.repo'));
-  }),
+  @computed('permissions.all', 'job.repo')
+  hasPermission(permissions, repo) {
+    return this.get('permissions').hasPermission(repo);
+  },
 
-  canRemoveLog: Ember.computed('job.canRemoveLog', 'hasPermission', function () {
-    let job = this.get('job');
+  @computed('job', 'job.canRemoveLog', 'hasPermission')
+  canRemoveLog(job, canRemoveLog, hasPermission) {
     if (job) {
-      return job.get('canRemoveLog') && this.get('hasPermission');
+      return canRemoveLog && hasPermission;
     }
-  }),
+  },
 
-  showToTop: Ember.computed('log.hasContent', 'job.canRemoveLog', function () {
-    return this.get('log.hasContent') && this.get('job.canRemoveLog');
-  }),
+  @computed('log.hasContent', 'job.canRemoveLog')
+  showToTop(hasContent, canRemoveLog) {
+    return hasContent && canRemoveLog;
+  },
 
-  showTailing: Ember.computed.alias('showToTop'),
+  @alias('showToTop') showTailing: null,
 
   actions: {
     toTop() {
@@ -239,15 +243,12 @@ export default Ember.Component.extend({
       return false;
     },
 
-    removeLogPopup() {
-      if (this.get('canRemoveLog')) {
-        this.get('popup').open('remove-log-popup');
-        return false;
-      }
-    },
-
     toggleLog() {
       this.toggleProperty('logIsVisible');
+    },
+
+    toggleRemoveLogModal() {
+      this.toggleProperty('isShowingRemoveLogModal');
     }
   },
 

@@ -1,23 +1,20 @@
 import Model from 'ember-data/model';
-import Ember from 'ember';
-
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-
+import { computed } from 'ember-decorators/object';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import DurationAttributes from 'travis/mixins/duration-attributes';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
-  build: belongsTo({ async: true }),
-
   number: attr(),
   name: attr(),
-
   state: attr(),
 
-  notStarted: Ember.computed('state', function () {
-    let state = this.get('state');
+  build: belongsTo({ async: true }),
+
+  @computed('state')
+  notStarted(state) {
     let waitingStates = ['queued', 'created', 'received'];
     return waitingStates.includes(state);
-  })
+  },
 });

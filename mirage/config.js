@@ -243,6 +243,10 @@ export default function () {
 
   this.get('/jobs');
 
+  this.get('/build/:id/stages', (schema, request) => {
+    return schema.stages.where({ buildId: request.params.id });
+  });
+
   this.get('/build/:id');
 
   this.post('/build/:id/restart', (schema, request) => {
@@ -319,6 +323,33 @@ export default function () {
      * The modelName causes Mirage to know how to serialise it.
      */
     return this.serialize(builds, 'build');
+  });
+
+  this.post('/repo/:repo_id/requests', function (schema, request) {
+    const requestBody = JSON.parse(request.requestBody);
+    const fakeRequestId = 5678;
+    let repository = schema.find('repository', request.params.repo_id);
+    server.create('build', { number: '2', id: 9999,  repository, state: 'started' });
+
+    return new Mirage.Response(200, {}, {
+      request: {
+        id: fakeRequestId,
+        message: requestBody.request.message,
+        branch: requestBody.request.branch,
+        config: requestBody.request.config
+      },
+      resource_type: 'request'
+    });
+  });
+
+  this.get('/repo/:repo_id/request/:request_id', function (schema, request) {
+    let build = schema.builds.find(9999);
+
+    return new Mirage.Response(200, {}, {
+      id: request.params.request_id,
+      result: 'approved',
+      builds: [build]
+    });
   });
 
   this.get('/jobs/:id/log', function (schema, request) {

@@ -8,7 +8,7 @@ export default TravisRoute.extend({
   },
 
   setupController(controller, model) {
-    var orgs, user;
+    let orgs, user;
     user = model.filterBy('type', 'user')[0];
     orgs = model.filterBy('type', 'organization');
     controller.set('user', user);

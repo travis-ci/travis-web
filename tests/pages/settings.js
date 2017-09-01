@@ -1,6 +1,7 @@
 import PageObject from 'travis/tests/page-object';
 
 let {
+  attribute,
   clickable,
   collection,
   fillable,
@@ -13,8 +14,6 @@ let {
 
 export default PageObject.create({
   visit: visitable(':organization/:repo/settings'),
-
-  notification: text('p.flash-message'),
 
   autoCancellationSection: {
     scope: 'section.auto-cancellation',
@@ -48,7 +47,9 @@ export default PageObject.create({
     scope: 'section.settings-section .build_pushes.switch',
 
     isActive: hasClass('active'),
-    toggle: clickable()
+    toggle: clickable(),
+    ariaChecked: attribute('aria-checked'),
+    role: attribute('role')
   },
 
   limitConcurrentBuilds: {

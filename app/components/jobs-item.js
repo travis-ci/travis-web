@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 
 export default Ember.Component.extend({
@@ -6,17 +7,17 @@ export default Ember.Component.extend({
   classNameBindings: ['job.state'],
   classNames: ['jobs-item'],
 
-  languages: Ember.computed('job.config', function () {
-    return jobConfigLanguage(this.get('job.config'));
-  }),
+  @computed('job.config')
+  languages(config) {
+    return jobConfigLanguage(config);
+  },
 
-  environment: Ember.computed('job.config.env', 'job.config.gemfile', function () {
-    let env = this.get('job.config.env');
-    let gemfile = this.get('job.config.gemfile');
+  @computed('job.config.{env,gemfile}')
+  environment(env, gemfile) {
     if (env) {
       return env;
     } else if (gemfile) {
       return `Gemfile: ${gemfile}`;
     }
-  })
+  },
 });

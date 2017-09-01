@@ -34,7 +34,7 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
       },
       name: 'travis-web',
       currentBuild: build,
-      defaultBranch: branch
+      defaultBranch: branch,
     });
     server.create('repository', {
       owner: {
@@ -60,7 +60,10 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
       name: 'travis-lol',
       starred: true,
       currentBuild: build,
-      defaultBranch: branch
+      defaultBranch: branch,
+      permissions: {
+        create_request: true
+      }
     });
   }
 });
@@ -83,17 +86,24 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
   });
 });
 
-skip('starring a repo', function (assert) {
+test('starring and unstarring a repo', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   dashboardPage.visit();
 
   andThen(() => {
     assert.equal(dashboardPage.starredRepos().count, 1, 'there is one starred repo');
+    assert.ok(dashboardPage.starredRepos(0).hasTofuButton, 'shows tofubutton if user has proper permissions');
 
     dashboardPage.activeRepos(3).clickStarButton();
 
     andThen(() => {
       assert.equal(dashboardPage.starredRepos().count, 2, 'there are two starred repos');
+
+      dashboardPage.starredRepos(0).clickUnStarButton();
+
+      andThen(() => {
+        assert.equal(dashboardPage.starredRepos().count, 1, 'there are two starred repos');
+      });
     });
   });
 });

@@ -1,20 +1,22 @@
 {{!-- {{#if repo.private }}
-  <div class="tile-lock"><span class="icon icon-lock"></span></div>
-{{/if}} --}}
+         <div class="tile-lock"><span class="icon icon-lock"></span></div>
+         {{/if}} --}}
 <div class="row-item fade-out">
   <div class="one-line">
     <h2 class="repo-title">
-    {{status-icon status=repo.default_branch.last_build.state}}
-    {{#link-to "repo" ownerName repoName class="label-align"}}{{repoName}}{{/link-to}}
+      {{#link-to "repo" ownerName repoName class="label-align"}}
+        {{status-icon status=repo.default_branch.last_build.state}}
+        <span class="inner-underline">{{repoName}}</span>
+      {{/link-to}}
     </h2>
   </div>
 </div>
 {{#if repo.default_branch.last_build}}
   <div class="row-item row-color build-number">
     <div class="one-line">
-      {{svg-jar 'icon-hash' class="icon"}}
-      {{#link-to "build" ownerName repoName repo.default_branch.last_build.id}}  
-        <span class="label-align">{{repo.default_branch.last_build.number}}</span>
+      {{#link-to "build" ownerName repoName repo.default_branch.last_build.id}}
+        {{svg-jar 'icon-hash' class="icon"}}
+        <span class="label-align inner-underline">{{repo.default_branch.last_build.number}}</span>
       {{/link-to}}
     </div>
   </div>
@@ -26,13 +28,14 @@
     </div>
   </div>
 
-  <div class="row-item commit-sha">
-    <div class="one-line">
-      {{svg-jar 'icon-github' class="icon"}}
-      <a href="{{repo.default_branch.last_build.commit.compare_url}}">  
-        <span class="label-align">{{format-sha repo.default_branch.last_build.commit.sha}}</span>
-      </a>
-    </div>
+  <div class="row-item commit-sha" data-tooltip="View diff on GitHub">
+    {{#external-link-to href=repo.default_branch.last_build.commit.compare_url}}
+      {{svg-jar 'icon-compare' class="icon"}}
+      <span class="label-align inner-underline commit-compare">
+        {{format-sha repo.default_branch.last_build.commit.sha}}
+      </span>
+      {{svg-jar 'icon-external-link' class="icon"}}
+    {{/external-link-to}}
   </div>
 
   <div class="row-item fade-out commit-date">

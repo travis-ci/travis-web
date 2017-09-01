@@ -31,9 +31,9 @@ test('render api build', function (assert) {
   this.render(hbs`{{build-header item=build repo=repo commit=commit}}`);
 
   assert.equal(this.$().find('.commit-compare').length, 0, 'does not display compare link element for api builds');
-  assert.equal(this.$().find('.build-status span.icon').text().trim(), 'API event', 'displays right icon');
+  assert.equal(this.$().find('.build-status .inner-underline').text().trim(), '#1234', 'displays build number');
   assert.equal(this.$().find('.commit-branch-url').attr('href'), 'https://github.com/travis-ci/travis-web/tree/feature-branch', 'displays branch url');
-  assert.equal(this.$().find('.commit-branch-url').text().trim(), 'Branch feature-branch', 'displays link to branch');
+  assert.equal(this.$().find('.commit-branch-url span').text().trim(), 'Branch feature-branch', 'displays link to branch');
   assert.ok(this.$().find('.build-title').text().match(/Endless joy/), 'displays commit message');
 });
 
@@ -52,6 +52,7 @@ test('render push build', function (assert) {
   this.set('build', build);
   this.render(hbs`{{build-header item=build}}`);
 
+  assert.equal(this.$().find('.build-status svg title').text(), 'Push event', 'displays push icon');
   assert.equal(this.$().find('.commit-compare').length, 1, 'does display compare link element');
   assert.equal(this.$().find('.commit-compare').text().trim(), 'Compare 3d86ee9..a82f6ba', 'does display compare link for push builds');
 });
@@ -70,7 +71,31 @@ test('render cron build', function (assert) {
   this.set('build', build);
   this.render(hbs`{{build-header item=build commit=build.commit}}`);
 
+  assert.equal(this.$().find('.build-status svg title').text(), 'Cron job event');
   assert.ok(this.$().find('.build-title').text().match(/cron Just complete and utter joy/), 'displays cron before commit message');
+});
+
+
+test('render tag build', function (assert) {
+  let commit = {
+    subject: 'Just complete and utter joy',
+    branch: { name: 'v1.0.0' }
+  };
+  let build = {
+    eventType: 'push',
+    commit,
+    branch: { name: 'v1.0.0' },
+    tag: { name: 'v1.0.0' },
+    isTag: true
+  };
+
+  this.set('build', build);
+  this.render(hbs`{{build-header item=build commit=build.commit}}`);
+
+  assert.equal(this.$().find('.build-status svg title').text(), 'Tag');
+  assert.equal(this.$().find('.build-title .commit-branch').text().trim(), 'v1.0.0', 'displays tag name in title');
+  assert.ok(this.$().find('.commit-branch-url').text().match(/Tag v1.0.0/), 'displays link to tag on GH');
+  assert.ok(this.$().find('.commit-branch-url').attr('href').match(/releases\/tag\/v1.0.0/), 'url is correct');
 });
 
 test('if a build is shown, only show elapsed time while running', function (assert) {

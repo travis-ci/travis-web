@@ -1,19 +1,21 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { gt } from 'ember-decorators/object/computed';
 
-var Request = Ember.Object.extend({
+let Request = Ember.Object.extend({
   HEADERS: {
     accept: 'application/json; chunked=true; version=2, text/plain; version=2'
   },
 
   run() {
-    return this.get('ajax').ajax('/jobs/' + this.id + '/log?cors_hax=true', 'GET', {
+    const url = `/jobs/${this.id}/log?cors_hax=true`;
+    return this.get('ajax').ajax(url, 'GET', {
       dataType: 'text',
       headers: this.HEADERS,
       success: (body, status, xhr) => {
-        return Ember.run(this, function () {
-          return this.handle(body, status, xhr);
-        });
+        Ember.run(this, () => this.handle(body, status, xhr));
       }
     });
   },
@@ -46,23 +48,21 @@ var Request = Ember.Object.extend({
   isJson(xhr) {
     // Firefox can't see the Content-Type header on the xhr response due to the wrong
     // status code 204. Should be some redirect code but that doesn't work with CORS.
-    var type = xhr.getResponseHeader('Content-Type') || '';
+    let type = xhr.getResponseHeader('Content-Type') || '';
     return type.indexOf('json') > -1;
   }
 });
 
-const { service } = Ember.inject;
-
-var LogModel = Ember.Object.extend({
-  features: service(),
+export default Ember.Object.extend({
+  @service features: null,
 
   version: 0,
   isLoaded: false,
   length: 0,
-  hasContent: Ember.computed.gt('parts.length', 0),
+  @gt('parts.length', 0) hasContent: null,
 
   fetchMissingParts(partNumbers, after) {
-    var data;
+    let data;
     if (this.get('notStarted')) {
       return;
     }
@@ -73,7 +73,8 @@ var LogModel = Ember.Object.extend({
     if (after) {
       data['after'] = after;
     }
-    return this.get('ajax').ajax('/jobs/' + (this.get('job.id')) + '/log', 'GET', {
+    const logUrl = `/jobs/${this.get('job.id')}/log`;
+    return this.get('ajax').ajax(logUrl, 'GET', {
       dataType: 'json',
       headers: {
         accept: 'application/json; chunked=true; version=2'
@@ -82,7 +83,7 @@ var LogModel = Ember.Object.extend({
       success: (function (_this) {
         return function (body) {
           return Ember.run(_this, function () {
-            var i, len, part, results;
+            let i, len, part, results;
             let { parts } = body.log;
             if (parts) {
               results = [];
@@ -98,20 +99,21 @@ var LogModel = Ember.Object.extend({
     });
   },
 
-  parts: Ember.computed(function () {
+  @computed()
+  parts() {
     return Ember.ArrayProxy.create({
       content: []
     });
-  }),
+  },
 
   clearParts() {
-    var parts;
+    let parts;
     parts = this.get('parts');
     return parts.set('content', []);
   },
 
   fetch() {
-    var handlers;
+    let handlers;
     this.debug('log model: fetching log');
     this.clearParts();
     handlers = {
@@ -164,7 +166,7 @@ var LogModel = Ember.Object.extend({
   },
 
   loadParts(parts) {
-    var i, len, part;
+    let i, len, part;
     this.debug('log model: load parts');
     for (i = 0, len = parts.length; i < len; i++) {
       part = parts[i];
@@ -190,5 +192,3 @@ var LogModel = Ember.Object.extend({
     }
   }
 });
-
-export default LogModel;

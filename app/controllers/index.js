@@ -1,18 +1,16 @@
 import Ember from 'ember';
-import computed, { alias } from 'ember-computed-decorators';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 import Visibility from 'npm:visibilityjs';
 import config from 'travis/config/environment';
-
-const { service, controller } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Controller.extend({
-  auth: service(),
-  tabStates: service(),
-  updateTimesService: service('updateTimes'),
-  statusImages: service(),
-  popup: service(),
-
-  repos: controller(),
+  @service auth: null,
+  @service tabStates: null,
+  @service('updateTimes') updateTimesService: null,
+  @service statusImages: null,
+  @service repositories: null,
 
   init() {
     this._super(...arguments);
@@ -33,7 +31,7 @@ export default Ember.Controller.extend({
     return `landing-${version}-page`;
   },
 
-  @alias('repos.repos.firstObject') repo: null,
+  @alias('repositories.accessible.firstObject') repo: null,
 
   @alias('tabStates.mainTab') tab: null,
 

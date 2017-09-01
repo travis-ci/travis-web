@@ -1,7 +1,7 @@
 import { languageConfigKeys } from 'travis/utils/keys-map';
 
 export default function jobConfigLanguage(config) {
-  var gemfile, key, languageName, output;
+  let gemfile, key, languageName, output;
   output = [];
 
   const completedLanguageNames = [];
@@ -14,13 +14,13 @@ export default function jobConfigLanguage(config) {
         if (typeof version === 'object' && version.test) {
           version = version.test;
         }
-        output.push(languageName + ': ' + version);
+        output.push(`${languageName}: ${version}`);
         completedLanguageNames.push(languageName);
       }
     }
     gemfile = config.gemfile;
     if (gemfile && config.env) {
-      output.push('Gemfile: ' + gemfile);
+      output.push(`Gemfile: ${gemfile}`);
     }
 
     if (config.language) {

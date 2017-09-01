@@ -1,7 +1,7 @@
 /* global signInUser */
 import { skip } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import authPage from 'travis/tests/pages/auth';
+import topPage from 'travis/tests/pages/top';
 
 moduleForAcceptance('Acceptance | automatic sign out', {
   beforeEach() {
@@ -17,7 +17,7 @@ skip('when token is invalid user should be signed out', function (assert) {
   visit('/');
 
   andThen(function () {
-    assert.equal(authPage.automaticSignOutNotification, "You've been signed out, because your access token has expired.");
+    assert.equal(topPage.flashMessage.text, "You've been signed out, because your access token has expired.");
   });
   percySnapshot(assert);
 });

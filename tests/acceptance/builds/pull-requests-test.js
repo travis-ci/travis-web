@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
+import topPage from 'travis/tests/pages/top';
 
 moduleForAcceptance('Acceptance | builds/pull requests', {
   beforeEach() {
@@ -45,6 +46,7 @@ test('view and cancel pull requests', function (assert) {
     committer_name: this.currentUser.name,
     committer_email: this.currentUser.email,
   });
+
   pullRequestBuild.save();
 
   server.create('job', {
@@ -84,6 +86,6 @@ test('view and cancel pull requests', function (assert) {
   page.builds(0).cancelButton.click();
 
   andThen(() => {
-    assert.equal(page.notification, 'Build has been successfully cancelled.');
+    assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
   });
 });

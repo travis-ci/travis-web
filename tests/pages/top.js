@@ -44,5 +44,21 @@ export default PageObject.create({
 
       dismiss: clickable('.broadcast-close')
     }
-  })
+  }),
+
+  flashMessage: {
+    scope: 'ul.flash li:eq(0)',
+    resetScope: true,
+
+    text: text('p.flash-message .message'),
+    preamble: text('p.flash-message .preamble'),
+
+    isSuccess: hasClass('success'),
+    isNotice: hasClass('notice'),
+    isError: hasClass('error'),
+
+    isNotShown: isHidden(),
+  },
+
+  clickSigOutLink: clickable('ul.navigation-nested li:last a'),
 });

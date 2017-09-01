@@ -36,34 +36,32 @@ const userRegexp = new RegExp('\\B@([\\w-]+)', 'g');
 const commitRegexp = new RegExp('([\\w-]+)?\\/([\\w-]+)?@([0-9A-Fa-f]+)', 'g');
 
 function githubify(text, owner, repo) {
-  text = text.replace(refRegexp, function (ref, matchedOwner, matchedRepo, matchedNumber) {
-    return _githubReferenceLink(ref, {
-      owner: owner,
-      repo: repo
-    }, {
+  text = text.replace(refRegexp, (ref, matchedOwner, matchedRepo, matchedNumber) => {
+    const current = { owner, repo };
+    const matched = {
       owner: matchedOwner,
       repo: matchedRepo,
-      number: matchedNumber
-    });
+      number: matchedNumber,
+    };
+    return _githubReferenceLink(ref, current, matched);
   });
-  text = text.replace(userRegexp, function (reference, username) {
-    return _githubUserLink(reference, username);
-  });
-  text = text.replace(commitRegexp, function (reference, matchedOwner, matchedRepo, matchedSHA) {
-    return _githubCommitReferenceLink(reference, {
-      owner: owner,
-      repo: repo
-    }, {
+
+  text = text.replace(userRegexp, (reference, username) => _githubUserLink(reference, username));
+
+  text = text.replace(commitRegexp, (reference, matchedOwner, matchedRepo, matchedSHA) => {
+    const current = { owner, repo };
+    const matched = {
       owner: matchedOwner,
       repo: matchedRepo,
       sha: matchedSHA
-    });
+    };
+    return _githubCommitReferenceLink(reference, current, matched);
   });
   return text;
 }
 
 function _githubReferenceLink(reference, current, matched) {
-  var owner, repo;
+  let owner, repo;
   owner = matched.owner || current.owner;
   repo = matched.repo || current.repo;
 
@@ -72,18 +70,18 @@ function _githubReferenceLink(reference, current, matched) {
 }
 
 function _githubUserLink(reference, username) {
-  return '<a href="' + config.sourceEndpoint + '/' + username + '">' + reference + '</a>';
+  return `<a href="${config.sourceEndpoint}/${username}">${reference}</a>`;
 }
 
 function _githubCommitReferenceLink(reference, current, matched) {
-  var owner, repo, url;
+  let owner, repo, url;
   owner = matched.owner || current.owner;
   repo = matched.repo || current.repo;
   let slug = `${owner}/${repo}`;
   // TODO: this duplicated the implementation of the githubCommit method
   // in the urls service, but I didn't want to try and rewrite this entire file
   url = `${config.sourceEndpoint}/${slug}/commit/${matched.sha}`;
-  return '<a href="' + url + '">' + reference + '</a>';
+  return `<a href="${url}">${reference}</a>`;
 }
 
 function _escape(text) {
@@ -91,6 +89,8 @@ function _escape(text) {
 }
 
 
-export default Ember.Helper.helper(function (params, hash) {
-  return new Ember.String.htmlSafe(formatMessage(params[0], hash));
+export default Ember.Helper.helper((params, hash) => {
+  const [message] = params;
+  const formatted = formatMessage(message, hash);
+  return new Ember.String.htmlSafe(formatted);
 });

@@ -28,5 +28,14 @@ export default Ember.Service.extend({
 
   githubBranch(slug, branch) {
     return `${config.sourceEndpoint}/${slug}/tree/${branch}`;
+  },
+
+  billingUrl(accountType, login) {
+    const id = accountType === 'user' ? 'user' : login;
+    return `${config.billingEndpoint}/subscriptions/${id}`;
+  },
+
+  githubTag(slug, tag) {
+    return `${config.sourceEndpoint}/${slug}/releases/tag/${tag}`;
   }
 });

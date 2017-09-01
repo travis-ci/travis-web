@@ -1,13 +1,13 @@
 import Ember from 'ember';
-
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
-  permissions: service(),
-  externalLinks: service(),
-  ajax: service(),
-  flashes: service(),
+  @service('permissions') permissionsService: null,
+  @service externalLinks: null,
+  @service ajax: null,
+  @service flashes: null,
 
   tagName: 'li',
   classNameBindings: ['repo.active:is-active'],
@@ -16,17 +16,14 @@ export default Ember.Component.extend({
   isTriggering: false,
   dropupIsOpen: false,
 
-  currentBuild: alias('repo.currentBuild'),
+  @alias('repo.currentBuild') currentBuild: null,
 
-  urlGithubCommit: Ember.computed('repo.slug', 'currentBuild.commit.sha', function () {
-    const slug = this.get('repo.slug');
-    const sha = this.get('currentBuild.commit.sha');
+  @computed('repo.slug', 'currentBuild.commit.sha')
+  urlGitHubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);
-  }),
+  },
 
-  displayMenuTofu: Ember.computed('permissions.all', 'repo', function () {
-    return this.get('permissions').hasPushPermission(this.get('repo'));
-  }),
+  @alias('repo.permissions.create_request') displayMenuTofu: null,
 
   openDropup() {
     this.toggleProperty('dropupIsOpen');
@@ -46,8 +43,8 @@ export default Ember.Component.extend({
       .then(() => {
         self.set('isTriggering', false);
         self.get('flashes')
-          .success(`You successfully triggered a build for ${self.get('repo.slug')}.
-                   It might take a moment to show up though.`);
+          .success(`You’ve successfully triggered a build for ${self.get('repo.slug')}.
+                   Hold tight, it might take a moment to show up.`);
       });
     this.set('dropupIsOpen', false);
     this.set('isTriggering', true);
@@ -57,9 +54,11 @@ export default Ember.Component.extend({
     openDropup() {
       this.openDropup();
     },
+
     triggerBuild() {
       this.triggerBuild();
     },
+
     starRepo() {
       if (this.get('repo.starred')) {
         this.get('unstar').perform(this.get('repo'));

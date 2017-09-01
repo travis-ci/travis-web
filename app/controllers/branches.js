@@ -1,37 +1,44 @@
 import Ember from 'ember';
-
-const { controller } = Ember.inject;
+import { controller } from 'ember-decorators/controller';
+import { computed } from 'ember-decorators/object';
+import { alias, notEmpty, filter } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
-  repoController: controller('repo'),
+  @controller('repo') repoController: null,
 
-  tab: Ember.computed.alias('repoController.tab'),
+  @alias('repoController.tab') tab: null,
 
-  defaultBranch: Ember.computed('model', function () {
-    return this.get('model').filterBy('default_branch')[0];
-  }),
+  @computed('model')
+  defaultBranch(model) {
+    return model.filterBy('default_branch')[0];
+  },
 
-  branchesExist: Ember.computed.notEmpty('model'),
-  nonDefaultBranches: Ember.computed.filter('model', function (branch) {
-    return !branch.default_branch;
-  }),
+  @notEmpty('model') branchesExist: null,
 
-  activeBranches: Ember.computed('model', function () {
-    const activeBranches = this.get('nonDefaultBranches').filterBy('exists_on_github');
+  @filter('model', (branch) => !branch.default_branch)  nonDefaultBranches: null,
+
+  @computed('nonDefaultBranches')
+  activeBranches(nonDefaultBranches) {
+    const activeBranches = nonDefaultBranches.filterBy('exists_on_github');
     return this._sortBranchesByFinished(activeBranches);
-  }),
+  },
 
-  inactiveBranches: Ember.computed('model', function () {
-    const inactiveBranches = this.get('nonDefaultBranches').filterBy('exists_on_github', false);
+  @computed('nonDefaultBranches')
+  inactiveBranches(nonDefaultBranches) {
+    const inactiveBranches = nonDefaultBranches.filterBy('exists_on_github', false);
     return this._sortBranchesByFinished(inactiveBranches);
-  }),
+  },
 
   _sortBranchesByFinished(branches) {
     const unfinished = branches.filter(branch => {
-      return Ember.isNone(Ember.get(branch, 'last_build.finished_at'));
+      const finishedAt = Ember.get(branch, 'last_build.finished_at');
+      return Ember.isNone(finishedAt);
     });
-    const sortedFinished = branches.filterBy('last_build.finished_at')
-      .sortBy('last_build.finished_at').reverse();
+
+    const sortedFinished = branches
+      .filterBy('last_build.finished_at')
+      .sortBy('last_build.finished_at')
+      .reverse();
 
     return unfinished.concat(sortedFinished);
   }

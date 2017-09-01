@@ -3,14 +3,13 @@ import Ember from 'ember';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
 import attr from 'ember-data/attr';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
 
 export default Model.extend({
-  ajax: service(),
-
+  @service ajax: null,
   // TODO: this totally not should be needed here
-  sessionStorage: service(),
+  @service sessionStorage: null,
 
   name: attr(),
   email: attr(),
@@ -22,9 +21,10 @@ export default Model.extend({
   repoCount: attr('number'),
   avatarUrl: attr(),
 
-  fullName: Ember.computed('name', 'login', function () {
-    return this.get('name') || this.get('login');
-  }),
+  @computed('name', 'login')
+  fullName(name, login) {
+    return name || login;
+  },
 
   isSyncingDidChange: Ember.observer('isSyncing', function () {
     return Ember.run.next(this, function () {
@@ -34,63 +34,56 @@ export default Model.extend({
     });
   }),
 
-  urlGithub: Ember.computed(function () {
-    return config.sourceEndpoint + '/' + (this.get('login'));
-  }),
+  @computed('login')
+  urlGithub(login) {
+    return `${config.sourceEndpoint}/${login}`;
+  },
 
-  _rawPermissions: Ember.computed(function () {
+  @computed()
+  _rawPermissions() {
     return this.get('ajax').get('/users/permissions');
-  }),
+  },
 
-  permissions: Ember.computed(function () {
-    var permissions;
-    permissions = Ember.ArrayProxy.create({
+  @computed('_rawPermissions')
+  permissions(_rawPermissions) {
+    let permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((data) => {
-      return permissions.set('content', data.permissions);
-    });
+    _rawPermissions.then(data => permissions.set('content', data.permissions));
     return permissions;
-  }),
+  },
 
-  adminPermissions: Ember.computed(function () {
-    var permissions;
-    permissions = Ember.ArrayProxy.create({
+  @computed('_rawPermissions')
+  adminPermissions(_rawPermissions) {
+    let permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((data) => {
-      return permissions.set('content', data.admin);
-    });
+    _rawPermissions.then(data => permissions.set('content', data.admin));
     return permissions;
-  }),
+  },
 
-  pullPermissions: Ember.computed(function () {
-    var permissions;
-    permissions = Ember.ArrayProxy.create({
+  @computed('_rawPermissions')
+  pullPermissions(_rawPermissions) {
+    const permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((data) => {
-      return permissions.set('content', data.pull);
-    });
+    _rawPermissions.then(data => permissions.set('content', data.pull));
     return permissions;
-  }),
+  },
 
-  pushPermissions: Ember.computed(function () {
-    var permissions;
-    permissions = Ember.ArrayProxy.create({
+  @computed('_rawPermissions')
+  pushPermissions(_rawPermissions) {
+    const permissions = Ember.ArrayProxy.create({
       content: []
     });
-    this.get('_rawPermissions').then((data) => {
-      return permissions.set('content', data.push);
-    });
+    _rawPermissions.then(data => permissions.set('content', data.push));
     return permissions;
-  }),
+  },
 
-  pushPermissionsPromise: Ember.computed(function () {
-    return this.get('_rawPermissions').then((data) => {
-      return data.pull;
-    });
-  }),
+  @computed('_rawPermissions')
+  pushPermissionsPromise(_rawPermissions) {
+    return _rawPermissions.then(data => data.pull);
+  },
 
   hasAccessToRepo(repo) {
     let id = repo.get ? repo.get('id') : repo;
@@ -116,26 +109,17 @@ export default Model.extend({
     }
   },
 
-  type: Ember.computed(function () {
-    return 'user';
-  }),
+  type: 'user',
 
   sync() {
-    var self;
-    self = this;
-    return this.get('ajax').post('/users/sync', {}, function () {
-      return self.setWithSession('isSyncing', true);
-    });
+    const callback = () => { this.setWithSession('isSyncing', true); };
+    return this.get('ajax').post('/users/sync', {}, callback);
   },
 
   poll() {
     return this.get('ajax').get('/users', (data) => {
-      var self;
       if (data.user.is_syncing) {
-        self = this;
-        return setTimeout(function () {
-          return self.poll();
-        }, 3000);
+        return setTimeout(() => { this.poll(); }, 3000);
       } else {
         this.set('isSyncing', false);
         this.setWithSession('syncedAt', data.user.synced_at);
@@ -146,7 +130,7 @@ export default Model.extend({
   },
 
   setWithSession(name, value) {
-    var user;
+    let user;
     this.set(name, value);
     user = JSON.parse(this.get('sessionStorage').getItem('travis.user'));
     user[name.underscore()] = this.get(name);

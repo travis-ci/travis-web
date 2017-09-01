@@ -6,8 +6,8 @@ export default (function () {
       return window.location.hash;
     },
     setHash: function (hash) {
-      var path;
-      path = '' + window.location.pathname + hash;
+      let path;
+      path = `${window.location.pathname}${hash}`;
       return window.history.pushState({
         path: path
       }, null, path);
@@ -30,13 +30,13 @@ export default (function () {
     this.folder = folder;
     this.location = location || this.Location;
     Ember.run.scheduleOnce('afterRender', this, function () {
-      var ref;
+      let ref;
       this.last_selected_line = (ref = this.getSelectedLines()) != null ? ref.first : void 0;
       return this.highlightLines();
     });
     this.element.on('click', 'a', (function (_this) {
       return function (event) {
-        var element;
+        let element;
         element = Ember.$(event.target).parent('p');
         _this.loadLineNumbers(element, event.shiftKey);
         event.preventDefault();
@@ -76,7 +76,7 @@ export default (function () {
   };
 
   LinesSelector.prototype.unfoldLines = function () {
-    var index, l, line, results;
+    let index, l, line, results;
     let lines = this.getSelectedLines();
     if (lines) {
       results = [];
@@ -90,15 +90,13 @@ export default (function () {
   };
 
   LinesSelector.prototype.setHashValueWithLine = function (line, multiple) {
-    var hash, lineNumber, lines;
+    let hash, lineNumber, lines;
     lineNumber = this.getLineNumberFromElement(line);
     if (multiple && (this.last_selected_line != null)) {
-      lines = [lineNumber, this.last_selected_line].sort(function (a, b) {
-        return a - b;
-      });
-      hash = '#L' + lines[0] + '-L' + lines[1];
+      lines = [lineNumber, this.last_selected_line].sort((a, b) => a - b);
+      hash = `#L${lines[0]}-L${lines[1]}`;
     } else {
-      hash = '#L' + lineNumber;
+      hash = `#L${lineNumber}`;
     }
     this.last_selected_line = lineNumber;
     return this.location.setHash(hash);

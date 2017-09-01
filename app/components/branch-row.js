@@ -1,12 +1,12 @@
 import Ember from 'ember';
 import config from 'travis/config/environment';
-
-const { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  router: service(),
-  permissions: service(),
-  externalLinks: service(),
+  @service router: null,
+  @service permissions: null,
+  @service externalLinks: null,
 
   tagName: 'li',
   classNameBindings: ['branch.last_build.state'],
@@ -15,13 +15,13 @@ export default Ember.Component.extend({
   isTriggering: false,
   hasTriggered: false,
 
-  urlGithubCommit: Ember.computed('branch.last_build', function () {
-    let slug = this.get('branch.repository.slug');
-    let commitSha = this.get('branch.last_build.commit.sha');
-    return this.get('externalLinks').githubCommit(slug, commitSha);
-  }),
+  @computed('branch.repository.slug', 'branch.last_build.commit.sha')
+  urlGithubCommit(slug, sha) {
+    return this.get('externalLinks').githubCommit(slug, sha);
+  },
 
-  getLast5Builds: Ember.computed(function () {
+  @computed()
+  getLast5Builds() {
     let apiEndpoint, branchName, lastBuilds, options, repoId;
     lastBuilds = Ember.ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
@@ -65,7 +65,7 @@ export default Ember.Component.extend({
       });
     }
     return lastBuilds;
-  }),
+  },
 
   actions: {
     viewAllBuilds() {

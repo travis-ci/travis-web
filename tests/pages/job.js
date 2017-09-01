@@ -73,5 +73,9 @@ export default PageObject.create({
   cancelJob: clickable('.action-button--cancel'),
   debugJob: clickable('.action-button--debug'),
 
-  notification: text('p.flash-message')
+  deleteLog: clickable('button.remove-log-button'),
+  deleteModalAppears: isVisible('.ember-modal-dialog'),
+  confirmDeleteLog: clickable('button.button-delete'),
+
+  jobNotFoundMessage: text('h2.page-title'),
 });

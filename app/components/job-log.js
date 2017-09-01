@@ -1,7 +1,9 @@
 import Ember from 'ember';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
-  log: Ember.computed.alias('job.log'),
+  @alias('job.log') log: null,
+
   classNames: ['job-log'],
 
   didReceiveAttrs() {

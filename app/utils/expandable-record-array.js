@@ -1,40 +1,37 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
 
 export default Ember.ArrayProxy.extend({
   isLoaded: false,
   isLoading: false,
 
-  promise: Ember.computed(function () {
-    var self;
-    self = this;
-    return new Ember.RSVP.Promise(function (resolve) {
-      var observer;
-      observer = function () {
-        if (self.get('isLoaded')) {
-          resolve(self);
-          self.removeObserver('isLoaded', observer);
+  @computed()
+  promise() {
+    return new Ember.RSVP.Promise((resolve) => {
+      let observer = () => {
+        if (this.get('isLoaded')) {
+          resolve(this);
+          this.removeObserver('isLoaded', observer);
           return true;
         }
       };
       if (!observer()) {
-        return self.addObserver('isLoaded', observer);
+        return this.addObserver('isLoaded', observer);
       }
     });
-  }),
+  },
 
   load(array) {
     this.set('isLoading', true);
-    return array.then((function (_this) {
-      return function () {
-        array.forEach(function (record) {
-          if (!_this.includes(record)) {
-            return _this.pushObject(record);
-          }
-        });
-        _this.set('isLoading', false);
-        return _this.set('isLoaded', true);
-      };
-    })(this));
+    return array.then(() => {
+      array.forEach((record) => {
+        if (!this.includes(record)) {
+          return this.pushObject(record);
+        }
+      });
+      this.set('isLoading', false);
+      return this.set('isLoaded', true);
+    });
   },
 
   observe(collection) {
@@ -45,7 +42,7 @@ export default Ember.ArrayProxy.extend({
   },
 
   observedArrayWillChange(array, index, removedCount) {
-    var i, len, object, removedObjects, results;
+    let i, len, object, removedObjects, results;
     removedObjects = array.slice(index, index + removedCount);
     results = [];
     for (i = 0, len = removedObjects.length; i < len; i++) {
@@ -56,7 +53,7 @@ export default Ember.ArrayProxy.extend({
   },
 
   observedArraydidChange(array, index, removedCount, addedCount) {
-    var addedObjects, i, len, object, results;
+    let addedObjects, i, len, object, results;
     addedObjects = array.slice(index, index + addedCount);
     results = [];
     for (i = 0, len = addedObjects.length; i < len; i++) {

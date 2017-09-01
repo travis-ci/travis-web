@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import { computed } from 'ember-decorators/object';
+import { or } from 'ember-decorators/object/computed';
 
 const countrySentenceOverrides = {
   newzealand: 'New Zealand',
@@ -22,13 +24,15 @@ export default Ember.Component.extend({
   tagName: 'li',
   classNames: ['team-member'],
 
-  countrySentence: Ember.computed('member.country', function () {
-    return countryToSentence(this.get('member.country'));
-  }),
+  @computed('member.country')
+  countrySentence(country) {
+    return countryToSentence(country);
+  },
 
-  nationalitySentence: Ember.computed('member.nationality', function () {
-    return countryToSentence(this.get('member.nationality'));
-  }),
+  @computed('member.nationality')
+  nationalitySentence(nationality) {
+    return countryToSentence(nationality);
+  },
 
-  countryOrAlias: Ember.computed.or('member.countryAlias', 'member.country')
+  @or('member.countryAlias', 'member.country') countryOrAlias: null,
 });

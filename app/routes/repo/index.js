@@ -1,6 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service tabStates: null,
+
   setupController(controller, model) {
     this._super(...arguments);
     this.controllerFor('repo').activate('current');
@@ -16,6 +19,7 @@ export default TravisRoute.extend({
 
   activate() {
     this.observeRepoStatus();
+    this.set('tabStates.mainTab', 'current');
     return this._super(...arguments);
   },
 

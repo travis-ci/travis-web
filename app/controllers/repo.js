@@ -1,34 +1,36 @@
 import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'npm:visibilityjs';
-
-const { service, controller } = Ember.inject;
-const { alias } = Ember.computed;
+import { service } from 'ember-decorators/service';
+import { controller } from 'ember-decorators/controller';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
-  updateTimesService: service('updateTimes'),
-  popup: service(),
+  @service repositories: null,
+  @service tabStates: null,
+  @service('updateTimes') updateTimesService: null,
 
-  jobController: controller('job'),
-  buildController: controller('build'),
-  buildsController: controller('builds'),
-  reposController: controller('repos'),
-  repos: alias('reposController.repos'),
-  currentUser: alias('auth.currentUser'),
+  @controller('job') jobController: null,
+  @controller('build') buildController: null,
+  @controller('builds') buildsController: null,
+
+  @alias('repositories.accessible') repos: null,
+  @alias('auth.currentUser') currentUser: null,
+  @alias('buildController.build') build: null,
+  @alias('buildsController.content') builds: null,
+  @alias('jobController.job') job: null,
 
   classNames: ['repo'],
-
-  build: Ember.computed.alias('buildController.build'),
-  builds: Ember.computed.alias('buildsController.content'),
-  job: Ember.computed.alias('jobController.job'),
 
   reset() {
     this.set('repo', null);
   },
 
-  isEmpty: Ember.computed('repos.isLoaded', 'repos.length', function () {
-    return this.get('repos.isLoaded') && this.get('repos.length') === 0;
-  }),
+  @computed('repos.isLoaded', 'repos.[]')
+  isEmpty(loaded, repos) {
+    return loaded && Ember.isEmpty(repos);
+  },
 
   init() {
     this._super(...arguments);
@@ -51,53 +53,15 @@ export default Ember.Controller.extend({
 
   activate(action) {
     this.stopObservingLastBuild();
-    return this[('view_' + action).camelize()]();
-  },
 
-  viewIndex() {
-    this.observeLastBuild();
-    return this.connectTab('current');
-  },
+    const observesLastBuild = ['index', 'current'];
 
-  viewCurrent() {
-    this.observeLastBuild();
-    return this.connectTab('current');
-  },
-
-  viewBuilds() {
-    return this.connectTab('builds');
-  },
-
-  viewPullRequests() {
-    return this.connectTab('pull_requests');
-  },
-
-  viewBranches() {
-    return this.connectTab('branches');
-  },
-
-  viewBuild() {
-    return this.connectTab('build');
-  },
-
-  viewJob() {
-    return this.connectTab('job');
-  },
-
-  viewRequests() {
-    return this.connectTab('requests');
-  },
-
-  viewCaches() {
-    return this.connectTab('caches');
-  },
-
-  viewRequest() {
-    return this.connectTab('request');
-  },
-
-  viewSettings() {
-    return this.connectTab('settings');
+    if (observesLastBuild.includes(action)) {
+      this.observeLastBuild();
+      this.set('tabStates.mainTab', 'current');
+    } else {
+      this.set('tabStates.mainTab', action);
+    }
   },
 
   currentBuildDidChange() {
@@ -124,10 +88,5 @@ export default Ember.Controller.extend({
   observeLastBuild() {
     this.currentBuildDidChange();
     return this.addObserver('repo.currentBuild', this, 'currentBuildDidChange');
-  },
-
-  connectTab(tab) {
-    tab === 'current' ? 'build' : tab;
-    return this.set('tab', tab);
-  },
+  }
 });

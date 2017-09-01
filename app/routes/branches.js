@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
-  tabStates: service(),
+  @service repositories: null,
+  @service tabStates: null,
 
   model(/* params*/) {
-    var allTheBranches, apiEndpoint, options, repoId;
+    let allTheBranches, apiEndpoint, options, repoId;
     apiEndpoint = config.apiEndpoint;
     repoId = this.modelFor('repo').get('id');
     allTheBranches = Ember.ArrayProxy.create();
@@ -18,20 +18,23 @@ export default TravisRoute.extend({
       }
     };
     if (this.get('auth.signedIn')) {
-      options.headers.Authorization = 'token ' + (this.auth.token());
+      options.headers.Authorization = `token ${this.auth.token()}`;
     }
 
     let path = `${apiEndpoint}/repo/${repoId}/branches`;
     let includes = 'build.commit&limit=100';
     let url = `${path}?include=${includes}`;
 
-    return Ember.$.ajax(url, options).then(function (response) {
+    return Ember.$.ajax(url, options).then((response) => {
       allTheBranches = response.branches;
       return allTheBranches;
     });
   },
 
   activate() {
-    this.controllerFor('repo').activate('branches');
+    if (this.get('auth.signedIn')) {
+      this.set('tabStates.sidebarTab', 'owned');
+      this.set('tabStates.mainTab', 'branches');
+    }
   }
 });

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Model from 'ember-data/model';
 import config from 'travis/config/environment';
+import { computed } from 'ember-decorators/object';
 import attr from 'ember-data/attr';
 
 export default Model.extend({
@@ -11,21 +12,25 @@ export default Model.extend({
   admin: attr('boolean'),
   'private': attr('boolean'),
 
-  account: Ember.computed('slug', function () {
-    return this.get('slug').split('/')[0];
-  }),
+  @computed('slug')
+  account(slug) {
+    return slug.split('/')[0];
+  },
 
-  slug: Ember.computed('ownerName', 'name', function () {
-    return (this.get('ownerName')) + '/' + (this.get('name'));
-  }),
+  @computed('ownerName', 'name')
+  slug(ownerName, name) {
+    return `${ownerName}/${name}`;
+  },
 
-  urlGithub: Ember.computed(function () {
-    return config.sourceEndpoint + '/' + (this.get('slug'));
-  }),
+  @computed('slug')
+  urlGithub(slug) {
+    return `${config.sourceEndpoint}/${slug}`;
+  },
 
-  urlGithubAdmin: Ember.computed(function () {
-    return config.sourceEndpoint + '/' + (this.get('slug')) + '/settings/hooks#travis_minibucket';
-  }),
+  @computed('slug')
+  urlGithubAdmin(slug) {
+    return `${config.sourceEndpoint}/${slug}/settings/hooks#travis_minibucket`;
+  },
 
   toggle() {
     if (this.get('isSaving')) {
@@ -58,5 +63,5 @@ export default Model.extend({
         }
       }
     });
-  }
+  },
 });

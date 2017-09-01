@@ -56,13 +56,35 @@
   &:active
     background-color: darken($turf-green, 10)
 
+.auth-button--white
+  @extend %button
+  vertical-align: baseline
+  border: 1px solid #f1f1f1 !important
+  padding: 0.7em 0.8em !important
+  border-radius: 2px
+  font-size: inherit
+  &:active,
+  &:hover,
+  &:focus
+    color: $oxide-blue !important
+    border-color: $oxide-blue !important
+
 .button--blue
   @extend %button
   border: none
   color: white
   background-color: $oxide-blue
-  &:hover
+  &:hover,
+  &:active
     background-color: darken($oxide-blue, 10)
+
+.inactive
+  cursor: default
+  background: $dry-cement !important
+  color: white
+  &:hover,
+  &:active
+    background: $dry-cement !important
 
 #auth #navigation .auth-button
   display: none
@@ -128,6 +150,7 @@
   line-height: 1.8
   font-size: 14px
   font-weight: 300
+  background-color: inherit
   cursor: pointer
   [class^="icon"]
     margin-right: .3em

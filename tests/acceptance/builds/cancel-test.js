@@ -1,6 +1,10 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import buildPage from 'travis/tests/pages/build';
+import topPage from 'travis/tests/pages/top';
+
+import Ember from 'ember';
+import getFaviconUri from 'travis/utils/favicon-data-uris';
 
 moduleForAcceptance('Acceptance | builds/cancel', {
   beforeEach() {
@@ -26,6 +30,7 @@ test('cancelling build', function (assert) {
     .cancelBuild();
 
   andThen(function () {
-    assert.equal(buildPage.notification, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
+    assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.', 'cancelled build notification should be displayed');
+    assert.equal(Ember.$('head link[rel=icon]').attr('href'), getFaviconUri('yellow'), 'expected the favicon data URI to match the one for running');
   });
 });

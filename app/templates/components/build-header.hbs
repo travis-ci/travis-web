@@ -5,8 +5,13 @@
       <small class="commit-branch" title={{item.pullRequestTitle}}>Pull Request #{{item.pullRequestNumber}}</small>
       {{item.pullRequestTitle}}
     {{else}}
-      <small class="commit-branch"
-        title={{build.branchName}}>{{build.branchName}}</small>
+      {{#if item.isTag}}
+        <small class="commit-branch"
+               title={{item.tag.name}}>{{item.tag.name}}</small>
+      {{else}}
+        <small class="commit-branch"
+               title={{item.branch.name}}>{{item.branch.name}}</small>
+      {{/if}}
       {{format-message commit.subject repo=item.repo eventType=build.eventType}}
     {{/if}}
   </h2>
@@ -19,30 +24,45 @@
   {{/if}}
     <ul class="list-icon">
       <li>
-        <a class="commit-commit" title="See the commit on GitHub" href={{urlGithubCommit}}>
-          {{svg-jar 'icon-github' class="icon"}}
-          <span class="label-align inner-underline">Commit {{format-sha commit.sha}}</span></a>
+        {{#external-link-to href=urlGithubCommit}}
+          {{svg-jar 'icon-commit' class="icon"}}
+          <span data-tooltip="View commit on GitHub" class="label-align inner-underline commit-commit">Commit {{format-sha commit.sha}}</span>
+          {{svg-jar 'icon-external-link' class="icon"}}
+        {{/external-link-to}}
       </li>
       {{#if displayCompare}}
         <li>
           {{#if item.isPullRequest}}
-            <a class="commit-compare" title="See the commit on GitHub" href={{item.commit.compareUrl}}>
-              {{svg-jar 'icon-github' class="icon"}}
-              <span class="label-align inner-underline">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span></a>
+            {{#external-link-to href=item.commit.compareUrl}}
+              {{svg-jar 'icon-compare' class="icon"}}
+              <span data-tooltip="View Pull Request on GitHub" class="label-align inner-underline commit-compare">#{{item.pullRequestNumber}}: {{item.pullRequestTitle}}</span>
+              {{svg-jar 'icon-external-link' class="icon"}}
+            {{/external-link-to}}
           {{else}}
             {{#if item.commit.compareUrl}}
-            <a class="commit-compare" title="See the diff on GitHub" href={{item.commit.compareUrl}}>
-              {{svg-jar 'icon-github' class="icon"}}
-              <span class="label-align inner-underline">Compare {{short-compare-shas item.commit.compareUrl}}</span></a>
+              {{#external-link-to href=item.commit.compareUrl }}
+                {{svg-jar 'icon-compare' class="icon"}}
+                <span data-tooltip="View diff on GitHub" class="label-align inner-underline commit-compare">Compare {{short-compare-shas item.commit.compareUrl}}</span>
+                {{svg-jar 'icon-external-link' class="icon"}}
+              {{/external-link-to}}
             {{/if}}
           {{/if}}
         </li>
       {{/if}}
       <li>
-        <a class="commit-branch-url" href="{{urlGitHubBranch}}" title="Look at the branch on GitHub">
-          {{svg-jar 'icon-github' class="icon"}}
-          <span class="label-align inner-underline">Branch {{build.branchName}}</span>
-        </a>
+        {{#if item.isTag}}
+          {{#external-link-to href=urlGitHubTag class="commit-branch-url"}}
+            {{svg-jar 'icon-tag' class="icon"}}
+            <span data-tooltip="View tag on GitHub" class="label-align inner-underline">Tag {{build.tag.name}}</span>
+            {{svg-jar 'icon-external-link' class="icon"}}
+          {{/external-link-to}}
+        {{else}}
+          {{#external-link-to href=urlGitHubBranch class="commit-branch-url"}}
+            {{svg-jar 'icon-branch' class="icon"}}
+            <span data-tooltip="View branch on GitHub" class="label-align inner-underline">Branch {{build.branchName}}</span>
+            {{svg-jar 'icon-external-link' class="icon"}}
+          {{/external-link-to}}
+        {{/if}}
       </li>
     </ul>
 
@@ -65,12 +85,20 @@
   <h3 class="build-status {{item.state}}">
     {{#if isJob}}
       {{#link-to "job" repo item}}
-        {{request-icon event=item.build.eventType state=item.state}}
+        {{#if item.isTag}}
+          {{svg-jar 'icon-tag' class=(concat item.state ' icon')}}
+        {{else}}
+          {{request-icon event=item.eventType state=item.state}}
+        {{/if}}
         <span class='inner-underline'>#{{item.number}} {{humanize-state item.state}}</span>
       {{/link-to}}
     {{else}}
       {{#link-to "build" repo item}}
-        {{request-icon event=item.eventType state=buildState}}
+        {{#if item.isTag}}
+          {{svg-jar 'icon-tag' class=(concat item.state ' icon')}}
+        {{else}}
+          {{request-icon event=item.eventType state=item.state}}
+        {{/if}}
         <span class='inner-underline'>#{{item.number}} {{humanize-state buildState}}</span>
       {{/link-to}}
     {{/if}}
@@ -79,7 +107,7 @@
   <ul class="list-icon">
     {{#if isJob}}
       <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
-        {{svg-jar 'icon-stopwatch' class="icon-stopwatch"}}
+        {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
           {{#if item.toBeQueued}}
             Waiting to be queued
@@ -92,7 +120,7 @@
       </li>
     {{else}}
       <li title="PT{{elapsedTime}}S" class="commit-stopwatch">
-        {{svg-jar 'icon-stopwatch' class="icon-stopwatch"}}
+        {{svg-jar 'icon-stopwatch' class="icon--m"}}
         <span class="label-align">
           {{if item.isFinished 'Ran for' 'Running for'}} <time datetime="PT{{elapsedTime}}S">{{format-duration elapsedTime}}</time>
         </span>

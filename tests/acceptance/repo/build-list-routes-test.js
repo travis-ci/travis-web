@@ -2,6 +2,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
+import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
 import Ember from 'ember';
 
@@ -136,7 +137,7 @@ test('build history shows, more can be loaded, and a created build gets added an
       assert.equal(build.committer, 'Sara Ahmed');
       assert.equal(build.commitSha, '1234567');
       assert.equal(build.commitDate, 'about a year ago');
-      assert.equal(build.requestIconTitle, 'Triggered by a cron job');
+      assert.equal(build.requestIconTitle, 'View commit on GitHub');
       assert.equal(build.duration, '5 min');
       assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
     });
@@ -218,7 +219,7 @@ test('build history shows, more can be loaded, and a created build gets added an
       assert.ok(newBuild.created, 'expected the new build to show as created');
       assert.equal(newBuild.name, 'no-dapl');
       assert.equal(newBuild.message, 'Standing with Standing Rock');
-      assert.equal(newBuild.requestIconTitle, 'Triggered by a push');
+      assert.equal(newBuild.requestIconTitle, 'View commit on GitHub');
     });
 
     const startedData = {
@@ -269,7 +270,7 @@ test('view and cancel pull requests', function (assert) {
   page.builds(0).cancelButton.click();
 
   andThen(() => {
-    assert.equal(page.notification, 'Build has been successfully cancelled.');
+    assert.equal(topPage.flashMessage.text, 'Build has been successfully cancelled.');
   });
 });
 

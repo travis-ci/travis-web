@@ -1,7 +1,7 @@
 <div class="two-line fade-out">
   <div class="row-name">
     <h2 class="row-item">{{status-icon status=branch.last_build.state}}
-    <span class="label-align">{{branch.name}}</span></h2>
+    <span class="label-align {{branch.last_build.state}}">{{branch.name}}</span></h2>
   </div>
   <div class="row-builds">
     <div class="row-item">
@@ -23,9 +23,9 @@
   <div class="row-request">
     <div class="row-item">
       {{#if branch.last_build}}
-        {{request-icon event=branch.last_build.event_type state=branch.last_build.state}}
         {{#link-to "build" branch.last_build.id}}
-          <span class="label-align">#{{branch.last_build.number}} {{branch.last_build.state}}</span>
+          {{svg-jar 'icon-hash' class=(concat branch.last_build.state ' icon')}}
+          <span class="label-align inner-underline {{branch.last_build.state}}">{{branch.last_build.number}} {{branch.last_build.state}}</span>
         {{/link-to}}
       {{else}}
         {{request-icon event=branch.last_build.eventType state=branch.last_build.state}} -
@@ -46,16 +46,19 @@
 </div>
 <div class="two-line">
   <div class="row-commit">
-    <div class="row-item">
-      {{svg-jar 'icon-github' class="icon"}}
-      <a href="{{urlGithubCommit}}" title="commit on GitHub">
-      <span class="label-align">
-      {{#if branch.last_build}}
-        {{format-sha branch.last_build.commit.sha}}
-      {{else}}
-        -
-      {{/if}}</span>
-      </a></div>
+    <div class="row-item"  data-tooltip="View commit on GitHub">
+      {{#external-link-to href=urlGithubCommit}}
+        {{svg-jar 'icon-commit' class="icon"}}
+        <span class="inner-underline">
+          {{#if branch.last_build}}
+            {{format-sha branch.last_build.commit.sha}}
+          {{else}}
+            -
+          {{/if}}
+        </span>
+        {{svg-jar 'icon-external-link' class="icon"}}
+    {{/external-link-to}}
+  </div>
   </div>
   <div class="row-commiter">
     <div class="row-item">

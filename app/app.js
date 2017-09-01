@@ -22,15 +22,9 @@ const App = Ember.Application.extend(Ember.Evented, {
   LOG_VIEW_LOOKUPS: debuggingEnabled,
 
   ready() {
-    this.on('user:signed_in', function (user) {
-      return Travis.onUserUpdate(user);
-    });
-    this.on('user:refreshed', function (user) {
-      return Travis.onUserUpdate(user);
-    });
-    this.on('user:synced', function (user) {
-      return Travis.onUserUpdate(user);
-    });
+    this.on('user:signed_in', (user) => Travis.onUserUpdate(user));
+    this.on('user:refreshed', (user) => Travis.onUserUpdate(user));
+    this.on('user:synced', (user) => Travis.onUserUpdate(user));
   },
 
   currentDate() {
@@ -52,32 +46,23 @@ const App = Ember.Application.extend(Ember.Evented, {
   },
 
   subscribePusher(user) {
-    let channels;
     if (!user.channels) {
       return;
     }
-    channels = user.channels;
-    if (proVersion) {
-      channels = channels.map(function (channel) {
-        if (channel.match(/^private-/)) {
-          return channel;
-        } else {
-          return 'private-' + channel;
-        }
-      });
-    }
-    return Travis.pusher.subscribeAll(channels);
+    Travis.pusher.subscribeAll(user.channels);
   },
 
   identifyHSBeacon(user) {
     if (HS && HS.beacon) {
-      HS.beacon.ready(function () {
-        return HS.beacon.identify({
-          name: user.name,
-          email: user.email,
-          login: user.login,
-          last_synced_at: user.synced_at
-        });
+      HS.beacon.ready(() => {
+        const { name, email, login, synced_at } = user;
+        const userParams = {
+          name,
+          email,
+          login,
+          last_synced_at: synced_at,
+        };
+        return HS.beacon.identify(userParams);
       });
     }
   }

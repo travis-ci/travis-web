@@ -281,6 +281,37 @@ export default TravisRoute.extend({
         nationality: 'nigeria',
         country: 'germany',
         image: 'ola'
+      },
+      {
+        name: 'Rajesh Guleria',
+        title: 'The People\'s Man',
+        nationality: 'india',
+        country: 'germany',
+        image: 'rajesh'
+      },
+      {
+        name: 'Katherine Daniels',
+        title: 'Ops Witch',
+        handle: 'beerops',
+        nationality: 'usa',
+        country: 'usa',
+        image: 'katherine'
+      },
+      {
+        name: 'Bogdana Vereha',
+        title: 'Mad Scientist',
+        handle: 'bogdanavereha',
+        nationality: 'romania',
+        country: 'netherlands',
+        image: 'bogdana'
+      },
+      {
+        name: 'AJ Bowen',
+        title: 'Cyber Squirrel',
+        handle: 's0ulshake',
+        nationality: 'usa',
+        country: 'germany',
+        image: 'aj'
       }
     ];
   }

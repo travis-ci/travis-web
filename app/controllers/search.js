@@ -1,16 +1,14 @@
 import Ember from 'ember';
-import { alias } from 'ember-computed-decorators';
-
-const { service, controller } = Ember.inject;
+import { alias } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 
 export default Ember.Controller.extend({
-  auth: service(),
-  tabStates: service(),
-  statusImages: service(),
+  @service auth: null,
+  @service tabStates: null,
+  @service statusImages: null,
+  @service repositories: null,
 
-  repos: controller(),
-
-  @alias('repos.repos.firstObject') repo: null,
+  @alias('repositories.searchResults.firstObject') repo: null,
 
   @alias('tabStates.mainTab') tab: null,
 

@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import attr from 'ember-data/attr';
-
-const { computed } = Ember;
+import { computed } from 'ember-decorators/object';
 
 export default DS.Model.extend({
   name: attr('string'),
@@ -10,13 +9,16 @@ export default DS.Model.extend({
   enabled: attr('boolean'),
   feedbackUrl: attr('string'),
 
-  dasherizedName: computed('name', function () {
-    return Ember.String.dasherize(this.get('name'));
-  }),
+  @computed('name')
+  dasherizedName(name) {
+    return Ember.String.dasherize(name);
+  },
 
-  displayName: computed('dasherizedName', function () {
-    return this.get('name').split('-')
-          .map(function (x) { return x.capitalize(); })
-          .join(' ');
-  })
+  @computed('dasherizedName')
+  displayName(name) {
+    return name
+      .split('-')
+      .map(x => x.capitalize())
+      .join(' ');
+  },
 });

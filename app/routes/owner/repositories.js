@@ -6,19 +6,19 @@ export default TravisRoute.extend({
   needsAuth: false,
 
   titleToken(model) {
-    var name = model.name || model.login;
+    let name = model.name || model.login;
     return name;
   },
 
   model(params, transition) {
-    var options = {
+    let options = {
       headers: {
         'Travis-API-Version': '3'
       }
     };
 
     if (this.get('auth.signedIn')) {
-      options.headers.Authorization = 'token ' + (this.auth.token());
+      options.headers.Authorization = `token ${this.auth.token()}`;
     }
 
     // eslint-disable-next-line

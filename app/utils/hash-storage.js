@@ -5,13 +5,14 @@ export default Ember.Object.extend({
     return this.set('storage', {});
   },
   key: function (key) {
-    return '__' + (key.replace('.', '__'));
+    const k = key.replace('.', '__');
+    return `__${k}`;
   },
   getItem: function (k) {
-    return this.get('storage.' + (this.key(k)));
+    return this.get(`storage.${this.key(k)}`);
   },
   setItem: function (k, v) {
-    return this.set('storage.' + (this.key(k)), v);
+    return this.set(`storage.${this.key(k)}`, v);
   },
   removeItem: function (k) {
     return this.setItem(k, null);

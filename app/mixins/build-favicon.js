@@ -20,8 +20,7 @@ export default Ember.Mixin.create({
   },
 
   setFaviconForState(state) {
-    var color;
-    color = colorForState(state);
+    let color = colorForState(state);
     return this.setFavicon(getFaviconUri(color));
   },
 

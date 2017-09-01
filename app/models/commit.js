@@ -1,12 +1,11 @@
-import Ember from 'ember';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
+import { computed } from 'ember-decorators/object';
 
 export default Model.extend({
-  externalLinks: service(),
+  @service externalLinks: null,
 
   sha: attr(),
   branch: attr(),
@@ -22,31 +21,24 @@ export default Model.extend({
 
   build: belongsTo('build'),
 
-  subject: Ember.computed('message', function () {
-    if (this.get('message')) {
-      return this.get('message').split('\n', 1)[0];
+  @computed('message')
+  subject(message) {
+    if (message) {
+      return message.split('\n', 1)[0];
     }
-  }),
+  },
 
-  body: Ember.computed('message', function () {
-    let message = this.get('message');
+  @computed('message')
+  body(message) {
     if (message && message.indexOf('\n') > 0) {
       return message.substr(message.indexOf('\n') + 1).trim();
     } else {
       return '';
     }
-  }),
+  },
 
-  authorIsCommitter: Ember.computed(
-    'authorName',
-    'authorEmail',
-    'committerName',
-    'committerEmail',
-    function () {
-      let namesMatch = this.get('authorName') === this.get('committerName');
-      let emailsMatch = this.get('authorEmail') === this.get('committerEmail');
-      return namesMatch && emailsMatch;
-    }
-  )
-
+  @computed('authorName', 'authorEmail', 'committerName', 'committerEmail')
+  authorIsCommitter(authorName, authorEmail, committerName, committerEmail) {
+    return authorName === committerName && authorEmail === committerEmail;
+  },
 });

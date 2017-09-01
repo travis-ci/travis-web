@@ -15,7 +15,7 @@ test('visiting build with stages', function (assert) {
   server.create('branch', {});
 
   let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
-  let build = server.create('build', { repository_id: repo.id, state: 'passed', commit_id: commit.id, commit });
+  let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit });
 
   let secondStage = build.createStage({ number: 2, name: 'second', state: 'failed', started_at: jobTime, finished_at: futureTime(11) });
   let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });

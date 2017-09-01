@@ -12,6 +12,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
   auth: service(),
   featureFlags: service(),
+  repositories: service(),
 
   needsAuth: false,
 
@@ -29,12 +30,10 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   activate() {
-    var repos;
+    let repos;
     if (!this.get('features.proVersion')) {
       repos = this.get('store').peekAll('repo');
-      repos.forEach((repo) => {
-        return this.subscribeToRepo(repo);
-      });
+      repos.forEach(repo => this.subscribeToRepo(repo));
       return repos.addArrayObserver(this, {
         willChange: 'reposWillChange',
         didChange: 'reposDidChange'
@@ -45,16 +44,15 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   reposWillChange() {},
 
   reposDidChange(array, start, removedCount, addedCount) {
-    var addedRepos;
+    let addedRepos;
     addedRepos = array.slice(start, start + addedCount);
-    return addedRepos.forEach((repo) => {
-      return this.subscribeToRepo(repo);
-    });
+    return addedRepos.forEach(repo => this.subscribeToRepo(repo));
   },
 
   subscribeToRepo: function (repo) {
     if (this.pusher) {
-      return this.pusher.subscribe('repo-' + (repo.get('id')));
+      const channel = `repo-${repo.get('id')}`;
+      return this.pusher.subscribe(channel);
     }
   },
 
@@ -106,6 +104,14 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
         return true;
       }
     },
+
+    showRepositories() {
+      this.transitionTo('index');
+    },
+
+    viewSearchResults(query) {
+      this.transitionTo('search', query);
+    },
   },
 
   afterSignIn() {
@@ -120,8 +126,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   afterSignOut() {
-    this.controllerFor('repos').reset();
-    this.controllerFor('repo').reset();
+    this.set('repositories.accessible', []);
     this.setDefault();
     this.get('featureFlags').reset();
     if (this.get('config.enterprise')) {

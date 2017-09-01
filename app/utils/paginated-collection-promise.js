@@ -1,16 +1,17 @@
 import Ember from 'ember';
 import PaginatedCollection from 'travis/utils/paginated-collection';
+import { computed } from 'ember-decorators/object';
 
 export default PaginatedCollection.extend(Ember.PromiseProxyMixin, {
-  promise: Ember.computed('content', function () {
-    let content = this.get('content');
-    let promise = new Ember.RSVP.Promise(function (resolve, reject) {
-      content.then(function (value) {
+  @computed('content')
+  promise(content) {
+    let promise = new Ember.RSVP.Promise((resolve, reject) => {
+      content.then((value) => {
         resolve(PaginatedCollection.create({ content: value }));
-      }, function (error) {
+      }, (error) => {
         reject(error);
       });
     });
     return promise;
-  })
+  },
 });

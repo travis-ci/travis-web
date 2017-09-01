@@ -1,11 +1,10 @@
 import Ember from 'ember';
-import computed from 'ember-computed-decorators';
+import { computed } from 'ember-decorators/object';
 import durationFrom from 'travis/utils/duration-from';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  externalLinks: service(),
+  @service externalLinks: null,
 
   tagName: 'section',
   classNames: ['build-header'],
@@ -24,13 +23,13 @@ export default Ember.Component.extend({
     }
   },
 
-  isJob: Ember.computed('item', function () {
-    if (this.get('item.build')) {
+  @computed('item.build')
+  isJob(build) {
+    if (build) {
       return true;
-    } else {
-      return false;
     }
-  }),
+    return false;
+  },
 
   @computed('isJob')
   build(isJob) {
@@ -41,20 +40,15 @@ export default Ember.Component.extend({
     }
   },
 
-  displayCompare: Ember.computed('item.eventType', function () {
-    let eventType = this.get('item.eventType');
-    if (eventType === 'api' || eventType === 'cron') {
-      return false;
-    } else {
-      return true;
-    }
-  }),
+  @computed('item.eventType')
+  displayCompare(eventType) {
+    return !['api', 'cron'].includes(eventType);
+  },
 
-  urlGithubCommit: Ember.computed('repo.slug', 'commit.sha', function () {
-    const slug = this.get('repo.slug');
-    const sha = this.get('commit.sha');
+  @computed('repo.slug', 'commit.sha')
+  urlGithubCommit(slug, sha) {
     return this.get('externalLinks').githubCommit(slug, sha);
-  }),
+  },
 
   @computed('item.startedAt', 'item.finishedAt')
   elapsedTime(startedAt, finishedAt) {
@@ -64,6 +58,11 @@ export default Ember.Component.extend({
   @computed('item.repo.slug', 'build.branchName')
   urlGitHubBranch(slug, branchName) {
     return this.get('externalLinks').githubBranch(slug, branchName);
+  },
+
+  @computed('item.repo.slug', 'build.tag.name')
+  urlGitHubTag(slug, tag) {
+    return this.get('externalLinks').githubTag(slug, tag);
   },
 
   @computed('item.jobs.firstObject.state', 'item.state', 'item.isMatrix')

@@ -32,8 +32,6 @@ button
   font-family: $font-family-sans-serif
   font-size: inherit
   color: $asphalt-grey
-  &:focus
-    outline: none
 
 textarea
   height: auto
@@ -64,6 +62,14 @@ a
 .hidden
   display: none
 
+.pointer
+  cursor: pointer
+
+.helptext
+  font-size: $font-size-m
+  color: $cement-grey
+  +linkStyle
+
 span.emoji
   width: 20px
   height: 20px
@@ -91,3 +97,8 @@ span.emoji-sizer
 
 .float-right
   float: right
+
+.m-l-s
+  margin-left: .6rem
+.margin-left-s
+  margin-left: 10px

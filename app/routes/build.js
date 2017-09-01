@@ -1,13 +1,15 @@
 import TravisRoute from 'travis/routes/basic';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service tabStates: null,
+
   titleToken(model) {
-    return 'Build #' + (model.get('number'));
+    return `Build #${model.get('number')}`;
   },
 
-  serialize(model/* , params*/) {
-    var id;
-    id = model.get ? model.get('id') : model;
+  serialize(model) {
+    const id = model.get ? model.get('id') : model;
     return {
       build_id: id
     };
@@ -23,8 +25,26 @@ export default TravisRoute.extend({
     return repo.activate('build');
   },
 
+  activate() {
+    this.set('tabStates.mainTab', 'build');
+  },
+
   model(params) {
     return this.store.find('build', params.build_id);
+  },
+
+  afterModel(model) {
+    const slug = this.modelFor('repo').get('slug');
+    this.ensureBuildOwnership(model, slug);
+    return this._super(...arguments);
+  },
+
+  ensureBuildOwnership(build, urlSlug) {
+    const buildRepoSlug = build.get('repo.slug');
+
+    if (buildRepoSlug !== urlSlug) {
+      throw (new Error('invalidBuildId'));
+    }
   },
 
   deactivate() {

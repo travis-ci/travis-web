@@ -1,19 +1,21 @@
 /* global Travis */
 import config from 'travis/config/environment';
 import Ember from 'ember';
-import computed, { alias } from 'ember-computed-decorators';
-
-const { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 
 export default Ember.Service.extend({
-  router: service(),
-  flashes: service(),
-  store: service(),
-  storage: service(),
-  sessionStorage: service(),
-  ajax: service(),
+  @service router: null,
+  @service flashes: null,
+  @service store: null,
+  @service storage: null,
+  @service sessionStorage: null,
+  @service ajax: null,
+
   state: 'signed-out',
   receivingEnd: `${location.protocol}//${location.host}`,
+  tokenExpiredMsg: 'You\'ve been signed out, because your access token has expired.',
 
   token() {
     return this.get('sessionStorage').getItem('travis.token');
@@ -32,6 +34,7 @@ export default Ember.Service.extend({
     this.set('user', null);
     this.get('store').unloadAll();
     this.set('currentUser', null);
+    this.clearNonAuthFlashes();
   },
 
   signIn(data) {
@@ -57,8 +60,7 @@ export default Ember.Service.extend({
         // so log the user out. Also log the user out if the response is 401
         // or 403
         if (!xhr || (xhr.status === 401 || xhr.status === 403)) {
-          let errorText = "You've been signed out, because your access token has expired.";
-          this.get('flashes').error(errorText);
+          this.get('flashes').error(this.get('tokenExpiredMsg'));
           this.signOut();
         }
       });
@@ -192,6 +194,18 @@ export default Ember.Service.extend({
         return matches[0];
       }
     }
+  },
+
+  clearNonAuthFlashes() {
+    const flashMessages = this.get('flashes.flashes.content') || [];
+    const errorMessages = flashMessages.filterBy('type', 'error');
+    if (!Ember.isEmpty(errorMessages)) {
+      const errMsg = errorMessages.get('firstObject.message');
+      if (errMsg !== this.get('tokenExpiredMsg')) {
+        return this.get('flashes').clear();
+      }
+    }
+    return this.get('flashes').clear();
   },
 
   sync() {

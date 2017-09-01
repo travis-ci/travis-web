@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import attr from 'ember-data/attr';
 import Model from 'ember-data/model';
-
-const { alias } = Ember.computed;
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
 
 export default Model.extend({
   name: attr(),
@@ -11,12 +11,14 @@ export default Model.extend({
   reposCount: attr('number'),
   subscribed: attr('boolean'),
   education: attr('boolean'),
-  login: alias('id'),
-  displayName: Ember.computed('login', 'name', function () {
-    if (Ember.isBlank(this.get('name'))) {
-      return this.get('login');
-    } else {
-      return this.get('name');
+
+  @alias('id') login: null,
+
+  @computed('login', 'name')
+  displayName(login, name) {
+    if (Ember.isBlank(name)) {
+      return login;
     }
-  })
+    return name;
+  },
 });

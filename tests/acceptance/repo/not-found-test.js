@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import nonExistentRepoPage from 'travis/tests/pages/repo/non-existent';
+import { percySnapshot } from 'ember-percy';
 
 let adapterException;
 let loggerError;
@@ -30,17 +31,21 @@ test('visiting /non-existent/repository shows error message when authenticated',
 
   andThen(function () {
     assert.equal(currentURL(), '/non-existent/repository');
-    assert.ok(nonExistentRepoPage.showsTravisImage, 'Shows image for aesthetics');
-    assert.equal(nonExistentRepoPage.errorMessage, 'The repository at non-existent/repository was not found.', 'Shows message that repository was not found');
+    assert.ok(nonExistentRepoPage.showsBarricadeIllustration, 'Shows image for aesthetics');
+    assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t find the repository non-existent/repository', 'Shows message that repository was not found');
+    assert.ok(nonExistentRepoPage.errorMessageProisHidden, 'does not show .com authenticated message');
   });
 });
 
 test('visiting /non-existent/repository shows error message when unauthenticated', function (assert) {
+  withFeature('proVersion');
   nonExistentRepoPage.visit();
 
   andThen(function () {
+    percySnapshot(assert);
     assert.equal(currentURL(), '/non-existent/repository');
-    assert.ok(nonExistentRepoPage.showsTravisImage, 'Shows image for aesthetics');
-    assert.equal(nonExistentRepoPage.errorMessage, 'The repository at non-existent/repository was not found.', 'Shows message that repository was not found');
+    assert.ok(nonExistentRepoPage.showsBarricadeIllustration, 'Shows image for aesthetics');
+    assert.equal(nonExistentRepoPage.errorMessage, 'We couldn\'t find the repository non-existent/repository', 'Shows message that repository was not found');
+    assert.ok(nonExistentRepoPage.errorMessageProUnauthenticated, 'shows .com authenticated message');
   });
 });

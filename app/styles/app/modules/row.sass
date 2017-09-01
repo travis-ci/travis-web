@@ -12,14 +12,12 @@
   line-height: 1.5
 
 .rows
-  +rowBorder
+  @each $state, $colorMap in $stateMap
+    +rowColor($state, map-get($colorMap, color), map-get($colorMap, gradient))
+  +travisBorder
   display: flex
   flex-flow: column wrap
   margin-bottom: 1rem
-  &.is-active
-    @each $key, $value in $stateMap
-      +rowColor(#{$key}, map-get($value, color))
-
   @media #{$medium-up}
     position: relative
     flex-flow: row nowrap
@@ -54,11 +52,17 @@
 
 // old! remove this
 .row-li
+  background: linear-gradient(to right, $pebble-grey 0%, $pebble-grey 10px, white 10px, white 100%) no-repeat
+  +travisColorRows
+  +travisBorder
   position: relative
-  border: 1px solid $cream-dark
   font-size: 16px
   margin-bottom: .3rem
-  background: linear-gradient(to right, #CACECE 0%, #CACECE 9px, white 10px, white 100%) no-repeat
+
+  @media #{$medium-up}
+    display: flex
+    justify-content: flex-start
+    align-items: center
 
   h2, h3, small
     margin: 0
@@ -72,20 +76,15 @@
 
   .row-item
     margin: .2em
-    font-size: 16px
     font-weight: $font-weight-normal
     white-space: nowrap
-    overflow: hidden
     padding-left: 1em
-    a
-      text-decoration: none
-      &:hover
+    a:hover,
+    a:active,
+    a:focus
+      test-decoration: none
+      .inner-underline
         text-decoration: underline
-      &.inner-underline
-        &:hover
-          text-decoration: none
-          .inner-underline
-            text-decoration: underline
 
     @media #{$medium-up}
       display: inline-block
@@ -116,13 +115,3 @@
       text-align: center
       @media #{$medium-up}
         display: block
-
-  @include statusColors($turf-green, 'passed', 10px)
-  @include statusColors($brick-red, 'failed', 10px)
-  @include statusColors($brick-red, 'errored', 10px)
-  @include statusColors($cement-grey, 'canceled', 10px)
-  @include statusColors($dozer-yellow, 'started', 10px, $canary-yellow, true)
-  @include statusColors($dozer-yellow, 'queued', 10px, $canary-yellow, true)
-  @include statusColors($dozer-yellow, 'booting', 10px, $canary-yellow, true)
-  @include statusColors($dozer-yellow, 'received', 10px, $canary-yellow, true)
-  @include statusColors($dozer-yellow, 'created', 10px, $canary-yellow, true)

@@ -1,12 +1,14 @@
 import Ember from 'ember';
-import computed from 'ember-computed-decorators';
-
-const { service } = Ember.inject;
+import { computed } from 'ember-decorators/object';
+import { service } from 'ember-decorators/service';
 
 export default Ember.Component.extend({
-  statusImages: service(),
-  externalLinks: service(),
-  popup: service(),
+  @service statusImages: null,
+  @service externalLinks: null,
+  @service ajax: null,
+
+  isShowingTriggerBuildModal: false,
+  isShowingStatusBadgeModal: false,
 
   @computed('repo.slug', 'repo.defaultBranch.name')
   statusImageUrl(slug, branchName) {
@@ -19,9 +21,11 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    statusImages() {
-      this.get('popup').open('status-images');
-      return false;
+    toggleStatusBadgeModal() {
+      this.toggleProperty('isShowingStatusBadgeModal');
+    },
+    toggleTriggerBuildModal() {
+      this.toggleProperty('isShowingTriggerBuildModal');
     }
-  },
+  }
 });

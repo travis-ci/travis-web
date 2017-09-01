@@ -55,7 +55,9 @@
     </div>
 
     <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
-      {{outlet "left"}}
+      {{repository-sidebar
+        showRepositories=(route-action 'showRepositories')
+        viewSearchResults=(route-action 'viewSearchResults')}}
     </aside>
 
   </div>

@@ -1,13 +1,35 @@
 import Ember from 'ember';
 import LimitedArray from 'travis/utils/limited-array';
+import { computed } from 'ember-decorators/object';
+import { alias } from 'ember-decorators/object/computed';
+import { service } from 'ember-decorators/service';
 
-const { service } = Ember.inject;
-const { alias } = Ember.computed;
+const messageTypeToIcon = {
+  notice: 'icon-flag',
+  success: 'flash-success',
+  error: 'flash-error'
+};
+
+const messageTypeToPreamble = {
+  notice: 'Heads up!',
+  success: 'Hooray!',
+  error: 'Oh no!'
+};
+
+const messageTypeToCloseButton = {
+  notice: true,
+  success: false,
+  error: true
+};
 
 export default Ember.Service.extend({
-  auth: service(),
-  store: service(),
-  currentUser: alias('auth.currentUser'),
+  @service auth: null,
+  @service store: null,
+
+  @alias('auth.currentUser') currentUser: null,
+
+  // This changes when scrolling to adjust flash messages to fixed
+  topBarVisible: true,
 
   init() {
     this._super(...arguments);
@@ -22,16 +44,14 @@ export default Ember.Service.extend({
     }));
   },
 
-  messages: Ember.computed('flashes.[]', 'flashes.length', function () {
-    let flashes, model;
-
-    flashes = this.get('flashes');
-    model = [];
-    if (flashes) {
+  @computed('flashes.[]')
+  messages(flashes) {
+    let model = [];
+    if (flashes.length) {
       model.pushObjects(flashes.toArray().reverse());
     }
     return model.uniq();
-  }),
+  },
 
   // TODO: when we rewrite all of the place where we use `loadFlashes` we could
   // rewrite this class and make the implementation better, because right now
@@ -46,12 +66,24 @@ export default Ember.Service.extend({
     for (i = 0, len = msgs.length; i < len; i++) {
       msg = msgs[i];
       type = Object.keys(msg)[0];
+
+      let messageText, preamble;
+
+      messageText = msg[type].message;
+      preamble = msg[type].preamble || messageTypeToPreamble[type];
+
       msg = {
         type,
-        message: msg[type]
+        message: messageText,
+        icon: messageTypeToIcon[type],
+        preamble,
+        closeButton: messageTypeToCloseButton[type]
       };
       this.get('flashes').unshiftObject(msg);
-      this.removeFlash(msg);
+
+      if (!messageTypeToCloseButton[type]) {
+        this.removeFlash(msg);
+      }
     }
     return results;
   },
@@ -74,23 +106,23 @@ export default Ember.Service.extend({
     this.setup();
   },
 
-  display(type, message) {
+  display(type, message, preamble) {
     if (!['error', 'notice', 'success'].includes(type)) {
       // eslint-disable-next-line
       console.warn("WARNING: <service:flashes> display(type, message) function can only handle 'error', 'notice' and 'success' types");
     }
-    this.loadFlashes([{ [type]: message }]);
+    this.loadFlashes([{ [type]: { message, preamble } }]);
   },
 
-  success(message) {
-    this.display('success', message);
+  success(message, preamble = messageTypeToPreamble['success']) {
+    this.display('success', message, preamble);
   },
 
-  error(message) {
-    this.display('error', message);
+  error(message, preamble = messageTypeToPreamble['error']) {
+    this.display('error', message, preamble);
   },
 
-  notice(message) {
-    this.display('notice', message);
+  notice(message, preamble = messageTypeToPreamble['notice']) {
+    this.display('notice', message, preamble);
   }
 });

@@ -2,27 +2,32 @@ import TravisRoute from 'travis/routes/basic';
 import Repo from 'travis/models/repo';
 import ScrollResetMixin from 'travis/mixins/scroll-reset';
 import Ember from 'ember';
-
-const { service } = Ember.inject;
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend(ScrollResetMixin, {
-  store: service(),
-  tabStates: service(),
+  @service store: null,
+  @service tabStates: null,
+  @service repositories: null,
+
+  activate(...args) {
+    this._super(args);
+
+    if (this.get('auth.signedIn')) {
+      if (this.get('features.proVersion') && this.get('tabStates.sidebarTab') === 'running') {
+        return;
+      }
+      if (!this.get('tabStates.sidebarTab', 'search')) {
+        this.get('tabStates').set('sidebarTab', 'owned');
+      }
+      this.set('tabStates.mainTab', null);
+    }
+  },
 
   titleToken(model) {
     return model.get('slug');
   },
 
-  renderTemplate(...args) {
-    this._super(args);
-    return this.render('repos', {
-      outlet: 'left',
-      into: 'repo'
-    });
-  },
-
   setupController(controller, model) {
-    this.controllerFor('repos').activate(this.get('tabStates.sidebarTab'));
     if (model && !model.get) {
       model = this.get('store').find('repo', model.id);
     }
@@ -30,12 +35,9 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   serialize(repo) {
-    var name, owner, ref, slug;
     // slugs are sometimes unknown ???
-    slug = Ember.getWithDefault(repo, 'slug', 'unknown/unknown');
-    ref = slug.split('/');
-    owner = ref[0];
-    name = ref[1];
+    const slug = Ember.getWithDefault(repo, 'slug', 'unknown/unknown');
+    const [owner, name] = slug.split('/');
 
     return {
       owner: owner,
@@ -44,12 +46,8 @@ export default TravisRoute.extend(ScrollResetMixin, {
   },
 
   model(params) {
-    var slug;
-    slug = params.owner + '/' + params.name;
+    const { name, owner } = params;
+    const slug = `${owner}/${name}`;
     return Repo.fetchBySlug(this.get('store'), slug);
-  },
-
-  resetController() {
-    return this.controllerFor('repo').deactivate();
   },
 });

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600" viewBox="0 0 900 600">
 <defs>
 <path id="spearshape" d="M-1,55.4256258422h2V-38C3,-40 3,-43 3,-46C3,-48 3,-56 0,-64.6632301492C-3,-56 -3,-48 -3,-46C-3,-43 -3,-40 -1,-38z" stroke-miterlimit="10" transform="rotate(30)"/>
 <!-- 32*sqrt(3), -112/sqrt(3)-->

@@ -4,44 +4,84 @@
   height: 0
   li
     position: relative
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+
     width: 100%
   li.notice, li.success, li.error
-    opacity: 0
-    animation: fadeFlashInOut 7s 1 ease
-    z-index: 90
-    height: 2.8rem
+    opacity: 1
+    z-index: 80
+    height: $top-height
+    top: -1px // avoids a pesky gap after topbar
+
+    &.fixed
+      position: fixed
+      top: 0
 
   .close
     position: absolute
-    top: .7em
-    right: 1em
     cursor: pointer
+    right: 0.6rem
+    top: 0
+    height: 100%
+    .icon
+      margin-right: 0
+      height: 24px
+      width: 22px
 
-  .success,
-  .notice
+  .success
     color: $turf-green
     background-color: $seed-green
-    +colorSVG($turf-green)
+    +colorSVGFill($turf-green)
+
+    animation: fadeFlashOut 7s 1 ease forwards
+
+    .flash-message svg
+      height: 38px
+      width: 32px
+      margin-top: -5px
+
   .error
     color: $brick-red
     background-color: $quartz-red
-    +colorSVG($brick-red)
+    +colorSVGFill($brick-red)
+
+    .flash-message svg
+      height: 34px
+      width: 30px
+      margin-top: -1px
+
+  .notice
+    color: $dozer-yellow
+    background-color: $haze-yellow
+    +colorSVGFill($dozer-yellow)
+
+    .flash-message svg
+      height: 19px
+      width: 14px
+      margin-right: 6px
+      +colorSVG($dozer-yellow)
+      stroke-width: 1.5px
+
 
 .flash-message
-  padding: .9em 0
+  display: flex
+  align-items: center
+  padding: 0
   margin: 0
   line-height: 1
-  font-size: 1rem
+  font-size: 1.14rem
 
-@keyframes fadeFlashInOut
-  2%
+  .preamble
+    font-weight: bold
+    padding-right: 0.5rem
+
+@keyframes fadeFlashOut
+  0%
     opacity: 1
-    transfrom: translateY(-50%)
-  5%
-    transform: translateY(0)
   98%
-    transform: translateY(0)
     opacity: 1
   100%
-    transform: translateY(-50%)
     opacity: 0
