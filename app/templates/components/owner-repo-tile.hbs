@@ -28,7 +28,8 @@
     </div>
   </div>
 
-  <div class="row-item commit-sha" data-tooltip="View diff on GitHub">
+  <div class="row-item commit-sha">
+    {{tooltip-on-element text='View diff on GitHub'}}
     {{#external-link-to href=repo.default_branch.last_build.commit.compare_url}}
       {{svg-jar 'icon-compare' class="icon"}}
       <span class="label-align inner-underline commit-compare">
