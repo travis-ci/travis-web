@@ -71,11 +71,11 @@ export default Ember.Component.extend({
   }),
 
   buildTriggerRequestBody() {
-    let requestConfig = YAML.parse(this.get('triggerBuildConfig'));
+    let config = YAML.parse(this.get('triggerBuildConfig'));
     let body = {
       request: {
         branch: this.get('triggerBuildBranch'),
-        requestConfig,
+        config,
       }
     };
 
