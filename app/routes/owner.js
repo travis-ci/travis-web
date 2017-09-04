@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service auth: null,
   deactivate() {
     return this.controllerFor('loading').set('layoutName', null);
   },
@@ -31,11 +33,16 @@ export default TravisRoute.extend({
   actions: {
     error(error, /* transition, originRoute*/) {
       let is404 = error.status === 404;
-      let errorText = 'There was an error while loading data, please try again.';
-      let message = is404 ? this.transitionTo('error404') : errorText;
-      this.controllerFor('error').set('layoutName', 'simple');
-      this.controllerFor('error').set('message', message);
-      return true;
+
+      if (!is404) {
+        let message = 'There was an error while loading data, please try again.';
+        this.controllerFor('error').set('layoutName', 'simple');
+        this.controllerFor('error').set('message', message);
+        return true;
+      } else {
+        error.ownerName = this.paramsFor('owner').owner;
+        return true;
+      }
     }
   }
 });

@@ -10,9 +10,9 @@ export default Ember.Component.extend({
   isShowingTriggerBuildModal: false,
   isShowingStatusBadgeModal: false,
 
-  @computed('repo.slug', 'repo.defaultBranch.name')
-  statusImageUrl(slug, branchName) {
-    return this.get('statusImages').imageUrl(slug, branchName);
+  @computed('repo.slug', 'repo.private', 'repo.defaultBranch.name')
+  statusImageUrl(slug, repoPrivate, branchName) {
+    return this.get('statusImages').imageUrl(this.get('repo'), branchName);
   },
 
   @computed('repo.slug')

@@ -201,11 +201,11 @@ export default Ember.Component.extend({
     });
   },
 
-  @computed('log.job.id', 'job.log.token', 'features.proVersion')
-  plainTextLogUrl(id, token, proVersion) {
+  @computed('log.job.id', 'job.log.token', 'job.repo')
+  plainTextLogUrl(id, token, repo) {
     if (id) {
       let url = this.get('externalLinks').plainTextLog(id);
-      if (proVersion) {
+      if (repo.get('private')) {
         url += `&access_token=${token}`;
       }
       return url;
