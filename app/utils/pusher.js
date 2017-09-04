@@ -164,70 +164,68 @@ Pusher.SockJSTransport.isSupported = function () {
   }
 };
 
-if (ENV.featureFlags['pro-version'] || ENV.featureFlags['enterprise-version']) {
-  Pusher.channel_auth_transport = 'bulk_ajax';
-  Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
-    let channels, name, names;
-    channels = Travis.pusher.pusher.channels;
-    Travis.pusher.pusherSocketId = socketId;
-    channels.callbacks = channels.callbacks || [];
-    name = this.channel.name;
-    names = Object.keys(channels.channels);
-    channels.callbacks.push((auths) => _callback(false, { auth: auths[name] }));
-    if (!channels.fetching) {
-      channels.fetching = true;
-      return TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
-        socket_id: socketId,
-        channels: names
-      }, (data) => {
-        let callback, i, len, ref, results;
-        channels.fetching = false;
-        ref = channels.callbacks;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          callback = ref[i];
-          results.push(callback(data.channels));
-        }
-        return results;
-      });
-    }
-  };
+Pusher.channel_auth_transport = 'bulk_ajax';
+Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
+  let channels, name, names;
+  channels = Travis.pusher.pusher.channels;
+  Travis.pusher.pusherSocketId = socketId;
+  channels.callbacks = channels.callbacks || [];
+  name = this.channel.name;
+  names = Object.keys(channels.channels);
+  channels.callbacks.push((auths) => _callback(false, { auth: auths[name] }));
+  if (!channels.fetching) {
+    channels.fetching = true;
+    return TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
+      socket_id: socketId,
+      channels: names
+    }, (data) => {
+      let callback, i, len, ref, results;
+      channels.fetching = false;
+      ref = channels.callbacks;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        callback = ref[i];
+        results.push(callback(data.channels));
+      }
+      return results;
+    });
+  }
+};
 
-  Pusher.getDefaultStrategy = function (config) {
-    let pusherPath = ENV.pusher.path || '';
-    if (pusherPath) {
-      pusherPath = `/${pusherPath}`;
-    }
-    return [
-      [
-        ':def', 'ws_options', {
-          hostUnencrypted: `${config.wsHost}:${config.wsPort}${pusherPath}`,
-          hostEncrypted: `${config.wsHost}:${config.wssPort}${pusherPath}`,
-          path: config.path
+Pusher.getDefaultStrategy = function (config) {
+  let pusherPath = ENV.pusher.path || '';
+  if (pusherPath) {
+    pusherPath = `/${pusherPath}`;
+  }
+  return [
+    [
+      ':def', 'ws_options', {
+        hostUnencrypted: `${config.wsHost}:${config.wsPort}${pusherPath}`,
+        hostEncrypted: `${config.wsHost}:${config.wssPort}${pusherPath}`,
+        path: config.path
+      }
+    ], [
+      ':def', 'sockjs_options', {
+        hostUnencrypted: `${config.httpHost}:${config.httpPort}`,
+        hostEncrypted: `${config.httpHost}:${config.httpsPort}`
+      }
+    ], [
+      ':def', 'timeouts', {
+        loop: true,
+        timeout: 15000,
+        timeoutLimit: 60000
+      }
+    ], [
+      ':def', 'ws_manager', [
+        ':transport_manager', {
+          lives: 2,
+          minPingDelay: 10000,
+          maxPingDelay: config.activity_timeout
         }
-      ], [
-        ':def', 'sockjs_options', {
-          hostUnencrypted: `${config.httpHost}:${config.httpPort}`,
-          hostEncrypted: `${config.httpHost}:${config.httpsPort}`
-        }
-      ], [
-        ':def', 'timeouts', {
-          loop: true,
-          timeout: 15000,
-          timeoutLimit: 60000
-        }
-      ], [
-        ':def', 'ws_manager', [
-          ':transport_manager', {
-            lives: 2,
-            minPingDelay: 10000,
-            maxPingDelay: config.activity_timeout
-          }
-        ]
-      // eslint-disable-next-line
-      ], [':def_transport', 'ws', 'ws', 3, ':ws_options', ':ws_manager'], [':def_transport', 'flash', 'flash', 2, ':ws_options', ':ws_manager'], [':def_transport', 'sockjs', 'sockjs', 1, ':sockjs_options'], [':def', 'ws_loop', [':sequential', ':timeouts', ':ws']], [':def', 'flash_loop', [':sequential', ':timeouts', ':flash']], [':def', 'sockjs_loop', [':sequential', ':timeouts', ':sockjs']], [':def', 'strategy', [':cached', 1800000, [':first_connected', [':if', [':is_supported', ':ws'], [':best_connected_ever', ':ws_loop', [':delayed', 2000, [':sockjs_loop']]], [':if', [':is_supported', ':flash'], [':best_connected_ever', ':flash_loop', [':delayed', 2000, [':sockjs_loop']]], [':sockjs_loop']]]]]]
-    ];
-  };
-}
+      ]
+    // eslint-disable-next-line
+    ], [':def_transport', 'ws', 'ws', 3, ':ws_options', ':ws_manager'], [':def_transport', 'flash', 'flash', 2, ':ws_options', ':ws_manager'], [':def_transport', 'sockjs', 'sockjs', 1, ':sockjs_options'], [':def', 'ws_loop', [':sequential', ':timeouts', ':ws']], [':def', 'flash_loop', [':sequential', ':timeouts', ':flash']], [':def', 'sockjs_loop', [':sequential', ':timeouts', ':sockjs']], [':def', 'strategy', [':cached', 1800000, [':first_connected', [':if', [':is_supported', ':ws'], [':best_connected_ever', ':ws_loop', [':delayed', 2000, [':sockjs_loop']]], [':if', [':is_supported', ':flash'], [':best_connected_ever', ':flash_loop', [':delayed', 2000, [':sockjs_loop']]], [':sockjs_loop']]]]]]
+  ];
+};
 
 export default TravisPusher;
