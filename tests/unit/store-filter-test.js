@@ -5,12 +5,43 @@ moduleForModel('repo', 'Unit | store.filter', {
   needs: ['model:repo', 'service:ajax', 'service:auth', 'service:store']
 });
 
+test('it does not run query if query params are not passed', function (assert) {
+  assert.expect(1);
+  let store = this.store();
+
+  store.query = function () {
+    assert.ok(false, 'store.query was called, but it should not');
+
+    return Ember.RSVP.resolve();
+  };
+
+  Ember.run(() => {
+    store.push({
+      data: {
+        id: 1,
+        type: 'repo',
+        attributes: { starred: true }
+      }
+    });
+  });
+
+  let result = store.filter('repo', null, () => true, ['starred']);
+
+  let done = assert.async();
+
+  result.then((collection) => {
+    done();
+
+    assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
+  });
+});
+
 test('it adds records already in the store to filtered collection', function (assert) {
   assert.expect(3);
   let store = this.store();
 
   store.query = function () {
-    assert.ok('store.query was called');
+    assert.ok(true, 'store.query was called');
 
     return Ember.RSVP.resolve();
   };
@@ -55,7 +86,7 @@ test('it modifies filtered collection when dependencies change', function (asser
   let store = this.store();
 
   store.query = function () {
-    assert.ok('store.query was called');
+    assert.ok(true, 'store.query was called');
 
     return Ember.RSVP.resolve();
   };
@@ -140,7 +171,7 @@ test('it adds new records in the store to the filtered collection', function (as
   let store = this.store();
 
   store.query = function () {
-    assert.ok('store.query was called');
+    assert.ok(true, 'store.query was called');
 
     return Ember.RSVP.resolve();
   };

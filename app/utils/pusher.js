@@ -3,12 +3,11 @@ import ENV from 'travis/config/environment';
 import Ember from 'ember';
 
 let TravisPusher = function (config, ajaxService) {
+  this.active_channels = [];
   this.init(config, ajaxService);
   TravisPusher.ajaxService = ajaxService;
   return this;
 };
-
-TravisPusher.prototype.active_channels = [];
 
 TravisPusher.prototype.init = function (config, ajaxService) {
   if (!config.key) {
@@ -63,29 +62,19 @@ TravisPusher.prototype.unsubscribeAll = function (channels) {
   return results;
 };
 
-TravisPusher.prototype.subscribe = function (channel) {
-  let ref;
-  if (!channel) {
-    return;
-  }
-  if (!((ref = this.pusher) != null ? ref.channel(channel) : void 0)) {
-    return this.pusher.subscribe(channel).bind_all((function (_this) {
-      return function (event, data) {
-        return _this.receive(event, data);
-      };
-    })(this));
+TravisPusher.prototype.subscribe = function (channelName) {
+  if (channelName && this.pusher && !this.pusher.channel(channelName)) {
+    this.active_channels.push(channelName);
+    return this.pusher.subscribe(channelName).bind_all((event, data) => {
+      this.receive(event, data);
+    });
   }
 };
 
-TravisPusher.prototype.unsubscribe = function (channel) {
-  let ref;
-  if (!channel) {
-    return;
-  }
-  //eslint-disable-next-line
-  console.log("unsubscribing from " + channel);
-  if ((ref = this.pusher) != null ? ref.channel(channel) : void 0) {
-    return this.pusher.unsubscribe(channel);
+TravisPusher.prototype.unsubscribe = function (channelName) {
+  if (channelName && this.pusher) {
+    this.active_channels.removeObject(channelName);
+    return this.pusher.unsubscribe(channelName);
   }
 };
 
