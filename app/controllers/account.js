@@ -3,7 +3,6 @@ import Ember from 'ember';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
-import Repository from 'travis/models/repo';
 
 export default Ember.Controller.extend({
   @service auth: null,
