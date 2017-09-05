@@ -1,21 +1,17 @@
 import Ember from 'ember';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import startApp from '../../helpers/start-app';
-import destroyApp from '../../helpers/destroy-app';
 import jobPage from 'travis/tests/pages/job';
 
 let adapterException;
 moduleForAcceptance('Acceptance | job/invalid log', {
   beforeEach() {
-    this.application = startApp();
     adapterException = Ember.Test.adapter.exception;
     Ember.Test.adapter.exception = () => {};
   },
 
   afterEach() {
     Ember.Test.adapter.exception = adapterException;
-    destroyApp(this.application);
   }
 });
 
