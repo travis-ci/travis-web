@@ -21,6 +21,7 @@ export default V3Adapter.extend({
   },
 
   byOwner(owner, params) {
+    params.offset = params.offset || 0;
     const url = `${apiEndpoint}/owner/${owner}/repos`;
     return this.ajax(url, 'GET', { data: params });
   },

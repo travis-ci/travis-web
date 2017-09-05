@@ -70,6 +70,7 @@ export default function () {
   });
 
   this.get('/repos', function (schema, request) {
+    console.log('requested repos');
     // search apparently still uses v2, so different response necessary
     const query = request.queryParams.search;
     if (query) {

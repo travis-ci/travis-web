@@ -8,9 +8,9 @@ export default TravisRoute.extend({
     }
   },
 
-  titleToken(model) {
-    if (model && model.id) {
-      return model.get('name') || model.get('login');
+  titleToken({ account }) {
+    if (account && account.id) {
+      return account.get('name') || account.get('login');
     } else {
       return 'Account';
     }
@@ -35,7 +35,7 @@ export default TravisRoute.extend({
             },
           },
           {
-            filter: (repo) => repo.get('owner') === login,
+            // filter: (repo) => repo.get('owner') === login,
             sort: 'name',
           }
         ),
@@ -48,6 +48,11 @@ export default TravisRoute.extend({
         }
       };
     }
+  },
+
+  afterModel(model) {
+    console.log({model});
+    return this._super(model);
   },
 
   serialize(account) {
