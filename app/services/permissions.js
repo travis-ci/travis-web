@@ -17,8 +17,8 @@ export default Ember.Service.extend({
   // use permissions service to add dependencies easier. So instead of depending
   // on each of these things separately, we can depend on all
   @computed('currentUser.permissions.[]',
-            'currentUser.pushPermissions.[]',
-            'currentUser.adminPermissions.[]')
+    'currentUser.pushPermissions.[]',
+    'currentUser.adminPermissions.[]')
   all() {
     return null;
   },

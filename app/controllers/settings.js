@@ -15,11 +15,11 @@ export default Ember.Controller.extend({
   @computed('cronJobs', 'model.branches.@each.exists_on_github')
   branchesWithoutCron(cronJobs, branches) {
     return branches
-             .filter(branch => branch.get('exists_on_github'))
-             .filter(branch => {
-               const branchName = branch.get('name');
-               return ! cronJobs.any(cron => branchName === cron.get('branch.name'));
-             });
+      .filter(branch => branch.get('exists_on_github'))
+      .filter(branch => {
+        const branchName = branch.get('name');
+        return ! cronJobs.any(cron => branchName === cron.get('branch.name'));
+      });
   },
 
   @sort('branchesWithoutCron', (a, b) => {
@@ -36,7 +36,7 @@ export default Ember.Controller.extend({
   @computed('model.settings')
   showAutoCancellationSwitches(settings) {
     return settings.hasOwnProperty('auto_cancel_pushes')
-           || settings.hasOwnProperty('auto_cancel_pull_requests');
+      || settings.hasOwnProperty('auto_cancel_pull_requests');
   },
 
   actions: {

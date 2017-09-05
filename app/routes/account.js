@@ -17,7 +17,7 @@ export default TravisRoute.extend({
   model(params) {
     const { login } = params;
     let account = this.modelFor('accounts')
-          .find(acct => acct.get('login') === login);
+      .find(acct => acct.get('login') === login);
     if (account) {
       return account;
     } else {

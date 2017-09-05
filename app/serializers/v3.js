@@ -115,8 +115,8 @@ export default JSONSerializer.extend({
               relationshipMeta: relationshipMeta
             };
             data = this.extractPolymorphicRelationship(relationshipMeta.type,
-                                                       relationshipHash,
-                                                       options);
+              relationshipHash,
+              options);
           } else {
             data = this.extractRelationship(relationshipMeta.type, relationshipHash);
           }
