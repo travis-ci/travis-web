@@ -320,6 +320,14 @@ export default TravisRoute.extend({
         nationality: 'mexico',
         country: 'usa',
         image: 'mariana'
+      },
+      {
+        name: 'Joshua Wehner',
+        title: 'Barrier Removal',
+        handle: 'jaw6',
+        nationality: 'usa',
+        country: 'usa',
+        image: 'joshua'
       }
     ];
   }
