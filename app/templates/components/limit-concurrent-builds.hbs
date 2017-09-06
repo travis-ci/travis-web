@@ -1,10 +1,8 @@
 {{travis-switch active=enabled description=description action=(perform toggle)}}
-<div class="tooltip-settings">
-  <a href="http://docs.travis-ci.com/user/customizing-the-build/#Limiting-Concurrent-Builds" title="about the concurrency setting">
-    <p class="tooltip-bubble">Read more about<br>concurrent builds</p>
-    {{svg-jar 'icon-help' class="icon-help"}}
-  </a>
-</div>
+<a href="http://docs.travis-ci.com/user/customizing-the-build/#Limiting-Concurrent-Builds" title="about the concurrency setting">
+  {{tooltip-on-element text='Read more about concurrent builds'}}
+  {{svg-jar 'icon-help' class="icon-help"}}
+</a>
 {{#if enabled}}
   <input value={{value}} onchange={{action limitChanged value="target.value"}} pattern="/^[0-9]+$/">
 {{/if}}
