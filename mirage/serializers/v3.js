@@ -22,30 +22,52 @@ export default JSONAPISerializer.extend({
 
   serializeCollection(data, request, options) {
     let type = pluralize(data.modelName),
-      count = data.models.length,
-      offset = request.queryParams.offset || 0,
-      limit = request.queryParams.limit || 10,
-      isFirst = false,
-      isLast = false;
+      pagination;
 
-    if (offset == 0) {
-      isFirst = true;
-    }
+    if (!request.noPagination) {
+      let count = data.models.length,
+        offset = request.queryParams.offset || 0,
+        limit = request.queryParams.limit || 10,
+        isFirst = false,
+        isLast = offset + limit >= count,
+        next, prev;
 
-    const pagination = {
-      count: count,
-      offset: offset,
-      limit: limit,
-      is_first: isFirst,
-      is_last: isLast
-    };
+      if (offset == 0) {
+        isFirst = true;
+      }
 
-    if (offset) {
-      data = data.slice(offset);
-    }
+      if (!isLast) {
+        next = {
+          offset: offset + limit,
+          limit: limit
+        };
+      }
 
-    if (limit) {
-      data = data.slice(0, limit);
+      if (!isFirst) {
+        let prevOffset = offset - limit;
+        prev = {
+          offset: prevOffset < 0 ? 0 : prevOffset,
+          limit: limit
+        };
+      }
+
+      pagination = {
+        count: count,
+        offset: offset,
+        limit: limit,
+        is_first: isFirst,
+        is_last: isLast,
+        next,
+        prev
+      };
+
+      if (offset) {
+        data = data.slice(offset);
+      }
+
+      if (limit) {
+        data = data.slice(0, limit);
+      }
     }
 
     return {

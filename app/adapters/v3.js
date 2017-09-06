@@ -1,3 +1,4 @@
+import { merge } from '@ember/polyfills';
 import { underscore } from '@ember/string';
 import { get } from '@ember/object';
 import Ember from 'ember';
@@ -21,6 +22,8 @@ export default RESTAdapter.extend({
   ajaxOptions: function (url, type, options) {
     options = options || {};
     options.data = options.data || {};
+    options.data = merge({}, options.data); // clone
+    type = type || 'GET';
 
     for (let key in options.data) {
       let value = options.data[key];
