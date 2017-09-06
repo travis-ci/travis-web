@@ -37,6 +37,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   @alias('build.branchName') branchName: null,
   @alias('build.isTag') isTag: null,
   @alias('build.tag') tag: null,
+  @alias('build.eventType') eventType: null,
 
   // TODO: DO NOT SET OTHER PROPERTIES WITHIN A COMPUTED PROPERTY!
   @computed()
@@ -158,7 +159,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
     this.set('subscribed', true);
 
-    if (this.get('features.proVersion')) {
+    if (this.get('repo.private')) {
       if (Travis.pusher && Travis.pusher.ajaxService) {
         return Travis.pusher.ajaxService.post(Pusher.channel_auth_endpoint, {
           socket_id: Travis.pusher.pusherSocketId,
@@ -170,9 +171,9 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     }
   },
 
-  @computed('features.proVersion', 'id')
-  channelName(proVersion, id) {
-    const prefix = proVersion ? 'private-job' : 'job';
+  @computed('repo.private', 'id')
+  channelName(isRepoPrivate, id) {
+    const prefix = isRepoPrivate ? 'private-job' : 'job';
     return `${prefix}-${id}`;
   },
 

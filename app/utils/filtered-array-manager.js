@@ -160,7 +160,11 @@ let FilteredArrayManagerForType = Ember.Object.extend({
   // Runs a store.query() function for a type that the array is handling with
   // queryParams passed as an argument.
   fetchQuery(queryParams) {
-    return this.get('store').query(this.get('modelName'), queryParams);
+    if (queryParams) {
+      return this.get('store').query(this.get('modelName'), queryParams);
+    } else {
+      return Ember.RSVP.resolve([]);
+    }
   },
 
   addObserver(record, property) {
@@ -180,8 +184,9 @@ let FilteredArrayManagerForType = Ember.Object.extend({
   },
 
   calculateId(queryParams, filterFunction, dependencies) {
+    const params = queryParams || {};
     let id = stringHash([
-      Object.entries(queryParams).map(([key, value]) => `${key}:${value}`).sort(),
+      Object.entries(params).map(([key, value]) => `${key}:${value}`).sort(),
       (dependencies || []).sort(),
       // not sure if this is a good idea, but I want to get the unique id for
       // each set of arguments to filter

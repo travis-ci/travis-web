@@ -30,29 +30,47 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   },
 
   activate() {
-    let repos;
-    if (!this.get('features.proVersion')) {
-      repos = this.get('store').peekAll('repo');
+    this.setupRepoSubscriptions();
+  },
+
+  // We send pusher updates through user channels now and this means that if a
+  // user is not a collaborator of a repo or a user is not signed in, we need to
+  // use repo channels for updates for each repo. This method ensures that a
+  // visitor is subscribed to all of the public repos in the store as long as
+  // they're not a collaborator. It also sets up an observer to subscribe to any
+  // new repo that enters the store.
+  setupRepoSubscriptions() {
+    this.get('store').filter('repo', null,
+      (repo) => !repo.get('private') && !repo.get('isCurrentUserACollaborator'),
+      ['private', 'isCurrentUserACollaborator']
+    ).then((repos) => {
       repos.forEach(repo => this.subscribeToRepo(repo));
-      return repos.addArrayObserver(this, {
+      repos.addArrayObserver(this, {
         willChange: 'reposWillChange',
         didChange: 'reposDidChange'
       });
-    }
+    });
   },
 
-  reposWillChange() {},
+  reposWillChange(array, start, removedCount, addedCount) {
+    let removedRepos = array.slice(start, start + removedCount);
+    return removedRepos.forEach(repo => this.unsubscribeFromRepo(repo));
+  },
 
   reposDidChange(array, start, removedCount, addedCount) {
-    let addedRepos;
-    addedRepos = array.slice(start, start + addedCount);
+    let addedRepos = array.slice(start, start + addedCount);
     return addedRepos.forEach(repo => this.subscribeToRepo(repo));
+  },
+
+  unsubscribeFromRepo: function (repo) {
+    if (this.pusher) {
+      this.pusher.unsubscribe(`repo-${repo.get('id')}`);
+    }
   },
 
   subscribeToRepo: function (repo) {
     if (this.pusher) {
-      const channel = `repo-${repo.get('id')}`;
-      return this.pusher.subscribe(channel);
+      this.pusher.subscribe(`repo-${repo.get('id')}`);
     }
   },
 

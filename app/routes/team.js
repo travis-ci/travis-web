@@ -312,6 +312,22 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'germany',
         image: 'aj'
+      },
+      {
+        name: 'Mariana Guzman Ruiz',
+        title: 'Impromptu City Cyclist',
+        handle: 'GuzmanMariana13',
+        nationality: 'mexico',
+        country: 'usa',
+        image: 'mariana'
+      },
+      {
+        name: 'Joshua Wehner',
+        title: 'Barrier Removal',
+        handle: 'jaw6',
+        nationality: 'usa',
+        country: 'usa',
+        image: 'joshua'
       }
     ];
   }
