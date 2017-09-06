@@ -137,8 +137,7 @@ test('build history shows, more can be loaded, and a created build gets added an
       assert.equal(build.committer, 'Sara Ahmed');
       assert.equal(build.commitSha, '1234567');
       assert.equal(build.commitDate, 'about a year ago');
-      // FIXME is it okay to remove this? It’s not the title, it’s the tooltip.
-      // assert.equal(build.requestIconTitle, 'View commit on GitHub');
+      assert.equal(build.requestIconTitle, 'Triggered by a cron job');
       assert.equal(build.duration, '5 min');
       assert.equal(build.message, 'cron A generic cron commit message', 'expected a prefixed cron marker');
     });
@@ -220,8 +219,7 @@ test('build history shows, more can be loaded, and a created build gets added an
       assert.ok(newBuild.created, 'expected the new build to show as created');
       assert.equal(newBuild.name, 'no-dapl');
       assert.equal(newBuild.message, 'Standing with Standing Rock');
-      // FIXME also
-      // assert.equal(newBuild.requestIconTitle, 'View commit on GitHub');
+      assert.equal(newBuild.requestIconTitle, 'Triggered by a push');
     });
 
     const startedData = {
