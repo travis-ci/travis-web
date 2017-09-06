@@ -7,12 +7,12 @@ export default Ember.Component.extend({
   classNameBindings: ['job.state'],
   classNames: ['jobs-item'],
 
-  @computed('job.config')
+  @computed('job.config.content')
   languages(config) {
     return jobConfigLanguage(config);
   },
 
-  @computed('job.config.{env,gemfile}')
+  @computed('job.config.content.{env,gemfile}')
   environment(env, gemfile) {
     if (env) {
       return env;

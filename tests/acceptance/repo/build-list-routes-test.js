@@ -47,7 +47,6 @@ moduleForAcceptance('Acceptance | repo build list routes', {
 
     const commitAttributes = {
       sha: '1234567890',
-      author_name: currentUser.name,
       author: gitUser,
       committer: gitUser
     };
@@ -161,9 +160,11 @@ test('build history shows, more can be loaded, and a created build gets added an
       state: 'passed'
     });
 
+    let us = server.create('git-user', { name: 'us' });
+
     olderBuild.createCommit({
       sha: 'acab',
-      author_name: 'us'
+      author: us
     });
     olderBuild.save();
   });

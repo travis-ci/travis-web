@@ -26,11 +26,10 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       skipPermissions: true
     });
 
+    let  gitUser = server.create('git-user', { name: 'Mr T' });
     let commit = server.create('commit', {
-      author_email: 'mrt@travis-ci.org',
-      author_name: 'Mr T',
-      committer_email: 'mrt@travis-ci.org',
-      committer_name: 'Mr T',
+      author: gitUser,
+      committer: gitUser,
       branch: 'acceptance-tests',
       message: 'This is a message',
       branch_is_default: true

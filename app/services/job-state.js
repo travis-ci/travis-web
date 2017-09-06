@@ -17,7 +17,7 @@ export default Ember.Service.extend({
     const runningStates = ['queued', 'started', 'received'];
     const result = yield this.get('store').filter(
       'job',
-      {},
+      { active: true },
       job => runningStates.includes(job.get('state'))
     );
 

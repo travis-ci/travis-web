@@ -12,11 +12,10 @@ export default Ember.Component.extend({
 
   @alias('build.isLoading') loading: null,
 
-  @computed('build.jobs.@each.config')
+  @computed('build.jobs.@each.configLoaded', 'build.jobs.@each.isLoaded')
   jobsLoaded(jobs) {
-    if (jobs) {
-      return jobs.isEvery('config');
-    }
+    jobs.forEach((j) => j.get('config'));
+    return jobs.isEvery('configLoaded') && jobs.isEvery('isLoaded');
   },
 
   buildStagesSort: ['number'],

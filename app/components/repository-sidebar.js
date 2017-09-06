@@ -81,6 +81,7 @@ export default Ember.Component.extend({
     const queuedStates = ['created'];
     const result = this.get('store').filter(
       'job',
+      { active: true },
       job => queuedStates.includes(job.get('state'))
     );
     result.set('isLoaded', false);
