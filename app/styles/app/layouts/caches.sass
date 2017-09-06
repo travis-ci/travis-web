@@ -45,7 +45,10 @@
       flex: 1 0 30%
     .row-item:last-of-type
       flex: 0 0 50px
-      padding-right: 1em
+      margin-right: 1em
+      a
+        display: flex
+        justify-content: center
 
 .delete-cache-button
   .icon-trash
@@ -58,10 +61,3 @@
 .delete-cache-icon
   position: relative
   display: block
-  .tooltip
-    width: 4em
-    text-align: center
-    pointer-events: none
-  @media #{$medium-up}
-    .tooltip
-      pointer-events: inherit

@@ -35,7 +35,7 @@
 </div>
 
 <div class="two-line">
-  <h3 class="row-item {{build.state}}">
+  <h3 class="row-item request {{build.state}}">
     {{#if build.id}}
       {{#link-to "build" build.repo build class="inner-underline"}}
         {{#if build.isTag}}
@@ -49,11 +49,10 @@
   </h3>
   <div class="row-item row-commit">
     {{#external-link-to href=urlGithubCommit}}
-      <span data-tooltip="View commit on GitHub">
+      {{tooltip-on-element text='View commit on GitHub'}}
       {{svg-jar 'icon-commit' class="icon"}}
       <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
       {{svg-jar 'icon-external-link' class="icon"}}
-      </span>
     {{/external-link-to}}
   </div>
 </div>
