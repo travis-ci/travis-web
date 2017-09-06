@@ -12,7 +12,7 @@
       {{#if tokenIsVisible}}
         <strong>{{auth.currentUser.token}}</strong>
       {{/if}}
-      <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle tooltip--profile {{if tokenIsVisible 'is-visible'}} dropdown">
+      <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle {{if tokenIsVisible 'is-visible'}} dropdown">
         {{#tooltip-on-element}}{{#if tokenIsVisible}}hide token{{else}}show token{{/if}}{{/tooltip-on-element}}
         {{svg-jar 'icon-seemore' class="icon icon-seemore"}}
       </a>

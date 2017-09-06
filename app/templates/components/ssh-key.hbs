@@ -13,12 +13,10 @@
       {{loading-indicator}}
     {{else}}
       {{#if pushAccess}}
-        <div class="tooltip">
-          <button {{action (perform delete)}} type="button" class="no-button ssh-delete">
-            {{svg-jar 'icon-trash' class="icon"}}
-          </button>
-          {{tooltip-on-element title='Delete'}}
-        </div>
+        <button {{action (perform delete)}} type="button" class="no-button ssh-delete">
+          {{svg-jar 'icon-trash' class="icon"}}
+        </button>
+        {{tooltip-on-element title='Delete'}}
       {{else}}
         {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
         {{tooltip-on-element title='You can’t delete keys'}}
