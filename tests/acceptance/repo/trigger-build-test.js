@@ -14,45 +14,51 @@ test('trigger link is not visible to not logged in users', function (assert) {
   assert.ok(triggerBuildPage.popupTriggerLinkIsHidden, 'cannot see trigger build link');
 });
 
+moduleForAcceptance('Acceptance | repo/trigger build', {
+  beforeEach() {
+    this.currentUser = server.create('user', {
+      name: 'Ada Lovelace',
+      login: 'adal',
+      repos_count: 1
+    });
+
+    const repo = server.create('repository', {
+      name: 'difference-engine',
+      slug: 'adal/difference-engine',
+      permissions: {
+        create_request: true
+      }
+    });
+
+    this.repo = repo;
+
+    const repoId = parseInt(repo.id);
+
+    const defaultBranch = server.create('branch', {
+      name: 'master',
+      id: `/v3/repo/${repoId}/branch/master`,
+      default_branch: true,
+      exists_on_github: true,
+      repository: repo
+    });
+
+    const latestBuild = defaultBranch.createBuild({
+      state: 'passed',
+      number: '1234',
+      repository: repo
+    });
+
+    latestBuild.createCommit({
+      sha: 'c0ffee'
+    });
+
+    repo.currentBuild = latestBuild;
+    repo.save();
+  }
+});
+
 test('triggering a custom build via the dropdown', function (assert) {
-  this.currentUser = server.create('user', {
-    name: 'Ada Lovelace',
-    login: 'adal',
-    repos_count: 1
-  });
-
-  const repo = server.create('repository', {
-    name: 'difference-engine',
-    slug: 'adal/difference-engine',
-    permissions: {
-      create_request: true
-    }
-  });
-
-  const repoId = parseInt(repo.id);
-
-  const defaultBranch = server.create('branch', {
-    name: 'master',
-    id: `/v3/repo/${repoId}/branch/master`,
-    default_branch: true,
-    exists_on_github: true,
-    repository: repo
-  });
-
-  const latestBuild = defaultBranch.createBuild({
-    state: 'passed',
-    number: '1234',
-    repository: repo
-  });
-
-  latestBuild.createCommit({
-    sha: 'c0ffee'
-  });
-
-  repo.currentBuild = latestBuild;
-  repo.save();
-
-  triggerBuildPage.visit({ slug: repo.slug });
+  triggerBuildPage.visit({ slug: this.repo.slug });
 
   andThen(() => {
     assert.equal(currentURL(), 'adal/difference-engine', 'we are on the repo page');
