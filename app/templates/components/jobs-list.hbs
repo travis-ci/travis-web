@@ -18,9 +18,8 @@
       </header>
     {{else}}
       <h2 class="section-title"><span class="label-align">Allowed Failures</span>
-        <span class="tooltip-jobs" data-tooltip="These are jobs you can allow to fail without failing your entire build">
-          <span class="tooltip-trigger">{{svg-jar 'icon-help' class='icon-help'}}</span>
-        </span>
+        {{tooltip-on-element text='These are jobs you can allow to fail without failing your entire build'}}
+        {{svg-jar 'icon-help' class='icon-help'}}
       </h2>
     {{/if}}
   {{/if}}

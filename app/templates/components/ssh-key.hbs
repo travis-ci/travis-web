@@ -13,25 +13,19 @@
       {{loading-indicator}}
     {{else}}
       {{#if pushAccess}}
-        <div class="tooltip">
-          <button {{action (perform delete)}} type="button" class="no-button ssh-delete">
-            {{svg-jar 'icon-trash' class="icon"}}
-          </button>
-          <div class="tooltip-bubble">Delete</div>
-        </div>
+        <button {{action (perform delete)}} type="button" class="no-button ssh-delete">
+          {{svg-jar 'icon-trash' class="icon"}}
+        </button>
+        {{tooltip-on-element title='Delete'}}
       {{else}}
-        <div class="tooltip--height">
-          {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
-          <div class="tooltip-bubble">You can't<br>delete keys</div>
-        </div>
+        {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
+        {{tooltip-on-element title='You can’t delete keys'}}
       {{/if}}
     {{/if}}
   </div>
 {{else}}
   <div class="ssh-key-action">
-    <div class="tooltip--height">
-      {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
-      <div class="tooltip-bubble">Default key <br>cannot be deleted</div>
-    </div>
+    {{svg-jar 'icon-trash-disabled' class="icon ssh-no-delete"}}
+    {{tooltip-on-element title='Default key cannot be deleted'}}
   </div>
 {{/if}}

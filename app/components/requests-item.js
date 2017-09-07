@@ -7,11 +7,6 @@ export default Ember.Component.extend({
   classNameBindings: ['requestClass', 'highlightedClass'],
   tagName: 'li',
 
-  @computed('request.message')
-  isGHPages(message) {
-    return message === 'github pages branch';
-  },
-
   @alias('request.result') requestClass: null,
 
   @computed('request.isPullRequest')

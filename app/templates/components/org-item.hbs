@@ -9,14 +9,12 @@
 
   {{#if isUser}}
     <p class="profile-user-last">Token:
-    {{#if tokenIsVisible}}
-      <strong>{{auth.currentUser.token}}</strong>
-    {{/if}}
-    <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle tooltip--profile {{if tokenIsVisible 'is-visible'}} dropdown">
-      <span class="tooltip-bubble">
-        {{#if tokenIsVisible}}hide token{{else}}show token{{/if}}
-      </span>
-      {{svg-jar 'icon-seemore' class="icon icon-seemore"}}
+      {{#if tokenIsVisible}}
+        <strong>{{auth.currentUser.token}}</strong>
+      {{/if}}
+      <a {{action 'tokenVisibility' prevenDefault=true}} class="profile-token-toggle {{if tokenIsVisible 'is-visible'}} dropdown">
+        {{#tooltip-on-element}}{{#if tokenIsVisible}}hide token{{else}}show token{{/if}}{{/tooltip-on-element}}
+        {{svg-jar 'icon-seemore' class="icon icon-seemore"}}
       </a>
     </p>
   {{/if}}
