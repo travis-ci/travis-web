@@ -46,18 +46,18 @@ export default Ember.Controller.extend({
   }).group('starring'),
 
   @computed('model.starredRepos.[]',
-            'model.starredRepos.@each.currentBuildState',
-            'model.starredRepos.@each.currentBuildFinishedAt')
+    'model.starredRepos.@each.currentBuildState',
+    'model.starredRepos.@each.currentBuildFinishedAt')
   starredRepos(repositories) {
     return repositories.toArray().sort(dashboardRepositoriesSort);
   },
 
   @computed('model.repos.[]',
-            'account',
-            'model.accounts',
-            'model.repos.@each.currentBuildState',
-            'model.repos.@each.currentBuildFinishedAt'
-           )
+    'account',
+    'model.accounts',
+    'model.repos.@each.currentBuildState',
+    'model.repos.@each.currentBuildFinishedAt'
+  )
   filteredRepos(repositories, accountParam, accounts) {
     let account = accounts.filter((x) => {
       if (accountParam) {
