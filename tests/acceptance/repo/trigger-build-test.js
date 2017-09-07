@@ -1,6 +1,8 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import triggerBuildPage from 'travis/tests/pages/trigger-build';
+import topPage from 'travis/tests/pages/top';
+import Mirage from 'ember-cli-mirage';
 
 moduleForAcceptance('Acceptance | repo/trigger build');
 
@@ -82,5 +84,20 @@ test('triggering a custom build via the dropdown', function (assert) {
   andThen(() => {
     assert.ok(triggerBuildPage.popupIsHidden, 'modal is hidden again');
     assert.equal(currentURL(), '/adal/difference-engine/builds/9999', 'we transitioned after the build was triggered');
+  });
+});
+
+test('an error triggering a build is displayed', function (assert) {
+  server.post('/repo/:repo_id/requests', function (schema, request) {
+    return new Mirage.Response(500, {}, {});
+  });
+
+  triggerBuildPage.visit({ slug: this.repo.slug });
+  triggerBuildPage.openPopup();
+  triggerBuildPage.selectBranch('master');
+  triggerBuildPage.clickSubmit();
+
+  andThen(() => {
+    assert.equal(topPage.flashMessage.text, 'Oops, something went wrong, please try again.');
   });
 });
