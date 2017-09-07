@@ -101,3 +101,18 @@ test('an error triggering a build is displayed', function (assert) {
     assert.equal(topPage.flashMessage.text, 'Oops, something went wrong, please try again.');
   });
 });
+
+test('a 429 shows a specific error message', function (assert) {
+  server.post('/repo/:repo_id/requests', function (schema, request) {
+    return new Mirage.Response(429, {}, {});
+  });
+
+  triggerBuildPage.visit({ slug: this.repo.slug });
+  triggerBuildPage.openPopup();
+  triggerBuildPage.selectBranch('master');
+  triggerBuildPage.clickSubmit();
+
+  andThen(() => {
+    assert.equal(topPage.flashMessage.text, 'You’ve exceeded the limit for triggering builds, please wait a while before trying again.');
+  });
+});
