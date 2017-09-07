@@ -18,8 +18,8 @@ export default Ember.Component.extend({
   },
 
   @computed('pagination.{numberOfPages,perPage,currentPage,offset}',
-            'innerWindow',
-            'outerWindow')
+    'innerWindow',
+    'outerWindow')
   pages(numberOfPages, perPage, currentPage, offset, innerWindow, outerWindow) {
     let thresholdDisplayAll = ((outerWindow + 1) * 2) + (innerWindow + 1);
     let pageArray = [];
@@ -32,7 +32,7 @@ export default Ember.Component.extend({
           offset: perPage * i
         });
       }
-    // else stack together pagination
+      // else stack together pagination
     } else {
       let innerHalf = Math.ceil(innerWindow / 2);
       let lowerInnerBoundary = currentPage - innerHalf;
@@ -73,7 +73,7 @@ export default Ember.Component.extend({
       }
 
       if (currentPage > lowerOuterBoundary &&
-         currentPage < upperOuterBoundary) {
+        currentPage < upperOuterBoundary) {
         // current page
         pageArray.push({
           num: currentPage,

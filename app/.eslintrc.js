@@ -434,6 +434,10 @@ module.exports = {
 
     // Don't allow unused vars, but allow unused arguments
     "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false, "varsIgnorePattern": "^_$" }],
+
+    // Don't allow "useless" escape characters. Disabling due to regex false
+    // positives
+    'no-useless-escape': 0,
   },
   globals: {
   }

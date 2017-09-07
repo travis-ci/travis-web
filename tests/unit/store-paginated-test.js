@@ -34,7 +34,7 @@ test('it adds records already in the store to paginated collection', function (a
   };
 
   let result = store.paginated('repo', { starred: true },
-                               { filter: (repo) => repo.get('starred'), sort: 'id:desc', dependencies: ['starred'] });
+    { filter: (repo) => repo.get('starred'), sort: 'id:desc', dependencies: ['starred'] });
 
   let done = assert.async();
 
@@ -75,7 +75,7 @@ test('it uses filter function to filter records', function (assert) {
   };
 
   let result = store.paginated('repo', { starred: true },
-                               { filter: (repo) => repo.get('starred'), sort: 'id:desc', dependencies: ['starred'] });
+    { filter: (repo) => repo.get('starred'), sort: 'id:desc', dependencies: ['starred'] });
 
   let done = assert.async();
 
@@ -119,7 +119,7 @@ test('it sets limit based on the response, not the query params', function (asse
   };
 
   let result = store.paginated('repo', { limit: 1000 },
-                               { filter: () => true, sort: 'id:desc' });
+    { filter: () => true, sort: 'id:desc' });
 
   let done = assert.async();
 
@@ -155,7 +155,7 @@ test('it sorts results and live updates the first page', function (assert) {
   };
 
   let result = store.paginated('repo', {},
-                               { filter: () => true, sort: 'id:desc' });
+    { filter: () => true, sort: 'id:desc' });
 
   let done = assert.async();
 
