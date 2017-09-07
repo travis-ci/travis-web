@@ -31,8 +31,12 @@ export default Ember.Service.extend({
     const ajax = this.get('ajax');
     const query = this.get('searchQuery');
 
-    const searchResults = yield Repo.search(store, ajax, query);
-    this.set('_searchResults', searchResults);
+    const urlQuery = this.get('router._router.currentURL').split('/')[2];
+
+    if (!this.get('_searchResults.length') || urlQuery !== query) {
+      const searchResults = yield Repo.search(store, ajax, query);
+      this.set('_searchResults', searchResults);
+    }
   }).drop(),
 
   showSearchResults: task(function* () {
