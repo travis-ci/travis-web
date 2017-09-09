@@ -28,7 +28,7 @@
   .hero, .oss-testing, .customers, .recent-builds, .free-for-oss, .private-repos, .landing-features-list, .build-flows, .user-testimonials
     padding: 70px 0 70px 0
 
-  .hero, .oss-testing, .customers, .recent-builds-text, .free-for-oss, .private-repos, .landing-features-list, .build-flows, .user-testimonials
+  .hero, .s-testing, .customers, .recent-builds-text, .free-for-oss, .private-repos, .landing-features-list, .build-flows, .user-testimonials, .oss-testing,
 
     h1, h2
       margin-top: 0
@@ -103,6 +103,23 @@
     width: 80%
     @media #{$medium-up}
       width: 60%
+
+  .oss-flip-numbers
+    width: 90%
+    display: inline-block
+    margin: 0 auto
+    @media #{$medium-up}
+      width: 80%
+      white-space: nowrap
+
+  .flip-num
+    display: inline-block
+    padding-right: 10px
+
+  .flip-num img
+    max-width: 55px
+    @media #{$medium-up}
+      max-width: 93px
 
   .customers
     text-align: center
