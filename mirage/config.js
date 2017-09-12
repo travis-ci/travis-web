@@ -226,7 +226,11 @@ export default function () {
 
   this.get('/owner/:login/repos', function (schema, request) {
     const { login } = request.params;
-    const repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
+    let repositories = schema.repositories.all().filter(repo => repo.owner.login === login);
+    const { queryParams } = request;
+    if (queryParams && queryParams.sort_by) {
+      repositories.models = repositories.models.sortBy(queryParams.sort_by);
+    }
     return this.serialize(repositories);
   });
 
