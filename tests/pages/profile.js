@@ -17,7 +17,7 @@ function existingRepositoriesCollection(scope) {
     item: {
       name: text('a.profile-repo'),
       isActive: hasClass('active', '.switch'),
-      isDisabled: hasClass('disabled', 'a.profile-repo'),
+      isDisabled: hasClass('non-admin', 'a.profile-repo'),
       toggle: clickable('.switch'),
       ariaChecked: attribute('aria-checked', '.switch'),
       role: attribute('role', '.switch')
