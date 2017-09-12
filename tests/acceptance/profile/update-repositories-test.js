@@ -73,13 +73,15 @@ moduleForAcceptance('Acceptance | profile/update-repositories', {
 test('updating repository', function (assert) {
   profilePage.visit({ username: 'feministkilljoy' });
 
-  profilePage.administerableRepositories(0).toggle();
-  profilePage.administerableRepositories(1).toggle();
-  profilePage.unadministerableRepositories(0).toggle();
+  andThen(() => {
+    profilePage.administerableRepositories(0).toggle();
+    profilePage.administerableRepositories(1).toggle();
+    profilePage.administerableRepositories(2).toggle();
+  });
 
   andThen(() => {
-    assert.notOk(server.db.repositories[0].active, 'expected formerly active repository to be inactive');
-    assert.ok(server.db.repositories[1].active, 'expected formerly inactive repository to be active');
-    assert.ok(server.db.repositories[2].active, 'expected unadministerable repository to be unchanged');
+    assert.ok(profilePage.administerableRepositories(0).isActive, 'expected unadministerable repository to be unchanged');
+    assert.notOk(profilePage.administerableRepositories(1).isActive, 'expected previously enabled repository to be disabled');
+    assert.ok(profilePage.administerableRepositories(2).isActive, 'expected previously disabled job to be enabled');
   });
 });
