@@ -4,14 +4,19 @@ import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import jobPage from 'travis/tests/pages/job';
 
 let adapterException;
+let loggerError;
+
 moduleForAcceptance('Acceptance | job/invalid log', {
   beforeEach() {
     adapterException = Ember.Test.adapter.exception;
+    loggerError = Ember.Logger.error;
     Ember.Test.adapter.exception = () => {};
+    Ember.Logger.error = () => null;
   },
 
   afterEach() {
     Ember.Test.adapter.exception = adapterException;
+    Ember.Logger.error = loggerError;
   }
 });
 
