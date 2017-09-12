@@ -14,11 +14,12 @@
     {{/if}}
   {{else}}
     {{repository-switch repository=repository disabled=true}}
+    <a class="profile-settings">{{svg-jar 'icon-settings' class="icon icon-disabled"}}</a>
   {{/if}}
 </div>
 
 {{#link-to "repo" repository.owner.login repository.name class="profile-repo"
-  classNameBindings="admin:admin:disabled"}}
+  classNameBindings="admin:admin:non-admin"}}
   {{repository.slug}}
   <span>{{repository.description}}</span>
 {{/link-to}}

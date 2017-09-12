@@ -105,6 +105,9 @@ p.profile-user-last
 .profile-repositorylist .sync-spinner
   display: inline !important
 
+.profile-settings .icon-disabled
+  +colorSVG(rgba(black, 0.2))
+
 .profile-settings span
   display: inline-block !important
 
@@ -124,16 +127,29 @@ p.profile-user-last
     line-height: 1
   .sync-spinner
     vertical-align: top
-  &:hover
-    background-color: $pebble-grey
-    &:after
-      content: ""
-      @include fadeOut(right, -90deg, $pebble-grey)
-  .active &:hover
-    background-color: $agate-blue
-    &:after
-      content: ""
-      @include fadeOut(right, -90deg, $agate-blue)
+  &.admin
+    &:hover
+      background-color: $pebble-grey
+      &:after
+        content: ""
+        @include fadeOut(right, -90deg, $pebble-grey)
+    .active &:hover
+      background-color: $agate-blue
+      &:after
+        content: ""
+        @include fadeOut(right, -90deg, $agate-blue)
+  &.non-admin
+    color: rgba(black, 0.45)
+    &:hover
+      background-color: transparentize($pebble-grey, 0.5)
+      &:after
+        content: ""
+        @include fadeOut(right, -90deg, $pebble-grey)
+    .active &:hover
+      background-color: transparentize($agate-blue, 0.5)
+      &:after
+        content: ""
+        @include fadeOut(right, -90deg, $agate-blue)
   @media #{$medium-up}
     width: grid-calc(18, 24)
     height: 30px
