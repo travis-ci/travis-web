@@ -54,7 +54,7 @@
 
       <div id="administerable-repositories">
         <ul class="profile-repositorylist">
-          {{#each model.repos as |repository|}}
+          {{#each sortedRepositories as |repository|}}
             {{repository-status-toggle repository=repository}}
           {{/each}}
         </ul>

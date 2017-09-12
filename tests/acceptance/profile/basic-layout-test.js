@@ -83,14 +83,13 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts(1).name, 'Feminist Killjoys');
     assert.equal(profilePage.accounts(1).repositoryCount, '30 repositories');
 
-    assert.equal(profilePage.administerableRepositories().count, 2, 'expected two administerable repositories');
+    assert.equal(profilePage.administerableRepositories().count, 3, 'expected three repositories');
 
-    assert.equal(profilePage.administerableRepositories(0).name, 'feministkilljoy/living-a-feminist-life');
-    assert.ok(profilePage.administerableRepositories(0).isActive, 'expected active repository to appear active');
-
-    assert.equal(profilePage.administerableRepositories(1).name, 'feministkilljoy/willful-subjects');
-    assert.notOk(profilePage.administerableRepositories(1).isActive, 'expected inactive repository to appear inactive');
-
-    assert.equal(profilePage.unadministerableRepositories().count, 1, 'expected one unadministerable repository');
+    assert.equal(profilePage.administerableRepositories(0).name, 'feministkilljoy/affect-theory-reader');
+    assert.ok(profilePage.administerableRepositories(0).isDisabled, 'expected disabled repository to be disabled in UI');
+    assert.equal(profilePage.administerableRepositories(1).name, 'feministkilljoy/living-a-feminist-life');
+    assert.ok(profilePage.administerableRepositories(1).isActive, 'expected active repository to appear active');
+    assert.equal(profilePage.administerableRepositories(2).name, 'feministkilljoy/willful-subjects');
+    assert.notOk(profilePage.administerableRepositories(2).isActive, 'expected inactive repository to appear inactive');
   });
 });

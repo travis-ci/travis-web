@@ -34,10 +34,7 @@ export default TravisRoute.extend({
               type: 'byOwner',
             },
           },
-          {
-            // filter: (repo) => repo.get('owner') === login,
-            sort: 'name',
-          }
+          {}
         ),
       });
     } else {
@@ -48,11 +45,6 @@ export default TravisRoute.extend({
         }
       };
     }
-  },
-
-  afterModel(model) {
-    console.log({model});
-    return this._super(model);
   },
 
   serialize(account) {

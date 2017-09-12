@@ -17,6 +17,7 @@ function existingRepositoriesCollection(scope) {
     item: {
       name: text('a.profile-repo'),
       isActive: hasClass('active', '.switch'),
+      isDisabled: hasClass('disabled', 'a.profile-repo'),
       toggle: clickable('.switch'),
       ariaChecked: attribute('aria-checked', '.switch'),
       role: attribute('role', '.switch')
@@ -31,7 +32,6 @@ export default PageObject.create({
   notFoundOrgName: text('.page-title .h2--red'),
 
   administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
-  unadministerableRepositories: existingRepositoriesCollection('#unadministerable-repositories'),
 
   token: {
     scope: '.profile-user-last',

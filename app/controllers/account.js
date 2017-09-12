@@ -8,8 +8,6 @@ export default Ember.Controller.extend({
   @service auth: null,
   @service externalLinks: null,
 
-  ownedRepositories: [],
-
   @alias('auth.currentUser') user: null,
 
   init() {
@@ -41,6 +39,11 @@ export default Ember.Controller.extend({
   @computed()
   showPublicReposHint() {
     return this.config.show_repos_hint === 'public';
+  },
+
+  @computed('model.repos')
+  sortedRepositories(repos) {
+    return repos.sortBy('name');
   },
 
   @computed('model.account.{type,login}')
