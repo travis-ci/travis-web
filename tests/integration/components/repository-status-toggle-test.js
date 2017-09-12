@@ -15,7 +15,10 @@ test('it switches state when clicked', function (assert) {
     description: 'A foo repo',
     active: true,
     urlGithub: 'https://github.com/foo/foobar',
-    slug: 'foo/foo-bar'
+    slug: 'foo/foo-bar',
+    permissions: {
+      admin: false,
+    },
   });
 
   this.render(hbs`{{repository-status-toggle repository=repository}}`);
