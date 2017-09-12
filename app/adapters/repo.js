@@ -9,21 +9,15 @@ export default V3Adapter.extend({
   includes: 'build.branch,repository.default_branch'
     + ',repository.current_build,build.commit',
 
-  query(store, type, query) {
-    if (query.custom) {
-      const { custom } = query;
-      delete query.custom;
-      if (custom.type === 'byOwner') {
-        return this.byOwner(custom.owner, query);
+  buildURL(modelName, id, snapshot, requestType, query) {
+    if (query) {
+      const custom = query.custom;
+      if (custom && custom.type === 'byOwner') {
+        const { owner } = custom;
+        return `${apiEndpoint}/owner/${owner}/repos`;
       }
     }
     return this._super(...arguments);
-  },
-
-  byOwner(owner, params) {
-    params.offset = params.offset || 0;
-    const url = `${apiEndpoint}/owner/${owner}/repos`;
-    return this.ajax(url, 'GET', { data: params });
   },
 
   activate(id) {
