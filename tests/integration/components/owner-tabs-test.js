@@ -16,14 +16,16 @@ moduleForComponent('owner-tabs', 'Integration | Component | owner tabs', {
 });
 
 test('it renders all tabs', function (assert) {
-  this.render(hbs`{{owner-tabs}}`);
+  this.set('login', 'travis-ci');
+  this.render(hbs`{{owner-tabs login=login}}`);
 
   assert.ok(this.$().find('#tab_repositories').length, 'renders repositories tab');
   assert.ok(this.$().find('#tab_job_queue').length, 'renders job queue tab');
 });
 
 test('it marks tab as active based on tabStates service state', function (assert) {
-  this.render(hbs`{{owner-tabs}}`);
+  this.set('login', 'travis-ci');
+  this.render(hbs`{{owner-tabs login=login}}`);
 
   assert.ok(this.$().find('#tab_repositories').hasClass('active'), 'marks repositories tab as active');
   assert.notOk(this.$().find('#tab_job_queue').hasClass('active'), 'does not mark job queue tab as active');
