@@ -1,0 +1,14 @@
+<div class="owner-navigation">
+  <ul>
+    <li id="tab_repositories" class={{repositoriesTabClass}}>
+      {{#link-to "owner.repositories" auth.currentUser.login}}
+        Repositories
+      {{/link-to}}
+    </li>
+    <li id="tab_job_queue" class={{jobQueueTabClass}}>
+      {{#link-to "owner.jobs" auth.currentUser.login}}
+        Job Queue
+      {{/link-to}}
+    </li>
+  </ul>
+</div>
