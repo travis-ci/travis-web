@@ -55,6 +55,7 @@ test('the owner page shows their repositories', (assert) => {
   andThen(() => {
     assert.equal(document.title, 'Sara Ahmed - Travis CI');
 
+    assert.ok(find('[data-test-owner-tabs]').length, 'Displays owner tabs component');
     assert.equal(ownerPage.repos().count, 2);
 
     ownerPage.repos(0).as(repo => {

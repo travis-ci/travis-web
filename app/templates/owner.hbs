@@ -9,15 +9,9 @@
       {{svg-jar 'icon-repooctocat' class="icon--l"}}
       <a href={{githubProfile}} title="{{owner.name}} on GitHub">
         <span class="label-align">{{owner.login}}</span></a></p>
-    {{!-- {{owner-sync-button owner=owner}} --}}
   </div>
 </header>
 
-<div class="tabs--owner">
-  <div class="tabbody">
-    <section role="tabpanel">
-      {{outlet}}
-    </section>
-  </div>
-</div>
+{{owner-tabs data-test-owner-tabs}}
+{{outlet}}
 {{/travis-layout}}
