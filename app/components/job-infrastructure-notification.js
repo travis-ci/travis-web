@@ -34,7 +34,7 @@ export default Ember.Component.extend({
   @equal('queue', 'builds.macstadium6') isMacStadium6: null,
 
   @computed('queue', 'job.config')
-  isPreciseEOL(queue, config) {
+  isPreciseEOL(queue, config = {}) {
     if (queue === 'builds.gce' && config.dist === 'precise') {
       if (config.language !== 'android') {
         return true;

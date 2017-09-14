@@ -1,4 +1,4 @@
-/* global Travis, Pusher */
+/* global Pusher */
 import ENV from 'travis/config/environment';
 import Ember from 'ember';
 
@@ -164,32 +164,15 @@ Pusher.SockJSTransport.isSupported = function () {
   }
 };
 
-Pusher.channel_auth_transport = 'bulk_ajax';
-Pusher.authorizers.bulk_ajax = function (socketId, _callback) {
-  let channels, name, names;
-  channels = Travis.pusher.pusher.channels;
-  Travis.pusher.pusherSocketId = socketId;
-  channels.callbacks = channels.callbacks || [];
-  name = this.channel.name;
-  names = Object.keys(channels.channels);
-  channels.callbacks.push((auths) => _callback(false, { auth: auths[name] }));
-  if (!channels.fetching) {
-    channels.fetching = true;
-    return TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
-      socket_id: socketId,
-      channels: names
-    }, (data) => {
-      let callback, i, len, ref, results;
-      channels.fetching = false;
-      ref = channels.callbacks;
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        callback = ref[i];
-        results.push(callback(data.channels));
-      }
-      return results;
-    });
-  }
+Pusher.channel_auth_transport = 'travis_ajax';
+Pusher.authorizers.travis_ajax = function (socketId, callback) {
+  let channelName = this.channel.name;
+  TravisPusher.ajaxService.post(Pusher.channel_auth_endpoint, {
+    socket_id: socketId,
+    channels: [channelName]
+  }).then((data) => {
+    callback(false, { auth: data['channels'][channelName] });
+  });
 };
 
 Pusher.getDefaultStrategy = function (config) {
