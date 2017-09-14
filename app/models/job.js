@@ -1,4 +1,4 @@
-/* global moment, Travis, Pusher */
+/* global moment, Travis */
 
 import pickBy from 'npm:lodash.pickby';
 import Ember from 'ember';
@@ -152,23 +152,39 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     return this.get('log').append(part);
   },
 
-  subscribe() {
-    if (this.get('subscribed')) {
-      return;
-    }
-
-    this.set('subscribed', true);
-
-    if (this.get('repo.private')) {
-      if (Travis.pusher && Travis.pusher.ajaxService) {
-        return Travis.pusher.ajaxService.post(Pusher.channel_auth_endpoint, {
-          socket_id: Travis.pusher.pusherSocketId,
-          channels: [`private-job-${this.get('id')}`]
-        }).then(() => Travis.pusher.subscribe(this.get('channelName')));
+  whenLoaded(callback) {
+    new Ember.RSVP.Promise((resolve, reject) => {
+      this.whenLoadedCallbacks = this.whenLoadedCallbacks || [];
+      if (this.get('isLoaded')) {
+        resolve();
+      } else {
+        this.whenLoadedCallbacks.push(resolve);
       }
-    } else {
-      return Travis.pusher.subscribe(this.get('channelName'));
-    }
+    }).then(() => callback(this));
+  },
+
+  didLoad: function () {
+    (this.whenLoadedCallbacks || []).forEach((callback) => {
+      callback(this);
+    });
+  }.on('didLoad'),
+
+  subscribe() {
+    // TODO: this is needed only because we may reach this place with a job that
+    //       is not fully loaded yet. A better solution would be to ensure that
+    //       we call subscribe only when the job is loaded, but I think that
+    //       would require a bigger refactoring.
+    this.whenLoaded(() => {
+      if (this.get('subscribed')) {
+        return;
+      }
+
+      this.set('subscribed', true);
+
+      this.get('repo').then((repo) =>
+        Travis.pusher.subscribe(this.get('channelName'))
+      );
+    });
   },
 
   @computed('repo.private', 'id')
@@ -178,14 +194,16 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   unsubscribe() {
-    if (!this.get('subscribed')) {
-      return;
-    }
-    this.set('subscribed', false);
-    if (Travis.pusher) {
-      const channel = `job-${this.get('id')}`;
-      return Travis.pusher.unsubscribe(channel);
-    }
+    this.whenLoaded(() => {
+      if (!this.get('subscribed')) {
+        return;
+      }
+      this.set('subscribed', false);
+      if (Travis.pusher) {
+        const channel = `job-${this.get('id')}`;
+        return Travis.pusher.unsubscribe(channel);
+      }
+    });
   },
 
   onStateChange: Ember.observer('state', function () {
