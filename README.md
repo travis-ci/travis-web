@@ -12,7 +12,7 @@ In order to run the app you need to install dependencies with:
 
 Now you can run the server:
 
-    ember serve
+    ./node_modules/.bin/ember serve
 
 And open http://localhost:4200 in the browser.
 
