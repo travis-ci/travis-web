@@ -35,10 +35,12 @@ export default Ember.Route.extend({
     let { targetName } = transition;
     let { params } = transition;
     if (targetName === 'owner.repositories' &&
-       params.owner &&
-       params.owner.owner &&
-       params.owner.owner === 'profile') {
-      this.transitionTo('account', this.get('auth.currentUser.login'));
+      params.owner &&
+      params.owner.owner &&
+      params.owner.owner === 'profile') {
+      this.transitionTo('account', this.get('auth.currentUser.login'), {
+        queryParams: { offset: 0 }
+      });
     }
   }
 });
