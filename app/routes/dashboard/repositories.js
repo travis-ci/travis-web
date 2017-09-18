@@ -28,7 +28,9 @@ export default TravisRoute.extend({
       repos: this.store.paginated('repo', {
         active: true,
         sort_by: 'current_build:desc',
-        offset: params.offset
+        offset: params.offset,
+        limit: 100,
+        include: 'repository.current_build'
       }, {
         filter: (repo) => repo.get('active') && repo.get('isCurrentUserACollaborator'),
         sort: dashboardRepositoriesSort,

@@ -161,7 +161,21 @@ let FilteredArrayManagerForType = Ember.Object.extend({
   // queryParams passed as an argument.
   fetchQuery(queryParams) {
     if (queryParams) {
-      return this.get('store').query(this.get('modelName'), queryParams);
+      let promise = new Ember.RSVP.Promise((resolve, reject) => {
+        let paramsWithCache = Ember.merge({ useCache: true }, queryParams);
+        this.get('store').query(this.get('modelName'), paramsWithCache).then(
+          (result) => {
+          debugger
+            resolve(result);
+            this.get('store').query(this.get('modelName'), queryParams);
+          },
+          (error) => {
+            this.get('store').query(this.get('modelName'), queryParams).then(resolve, reject);
+          }
+        );
+      });
+
+      return promise;
     } else {
       return Ember.RSVP.resolve([]);
     }
