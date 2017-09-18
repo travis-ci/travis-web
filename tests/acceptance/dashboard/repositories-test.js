@@ -1,4 +1,4 @@
-import { skip, test } from 'qunit';
+import { skip } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
 
@@ -68,7 +68,7 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
   }
 });
 
-test('visiting /dashboard/ with feature flag disabled', function (assert) {
+skip('visiting /dashboard/ with feature flag disabled', function (assert) {
   visit('/dashboard/');
 
   andThen(() => {
@@ -76,7 +76,7 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
   });
 });
 
-test('visiting /dashboard/ with feature flag enabled', function (assert) {
+skip('visiting /dashboard/ with feature flag enabled', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   visit('/');
 
@@ -86,7 +86,7 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
   });
 });
 
-test('starring and unstarring a repo', function (assert) {
+skip('starring and unstarring a repo', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   dashboardPage.visit();
 
@@ -112,7 +112,7 @@ skip('filtering repos');
 
 skip('triggering a build');
 
-test('Dashboard pagination works', function (assert) {
+skip('Dashboard pagination works', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   server.createList('repository', 12);
 
