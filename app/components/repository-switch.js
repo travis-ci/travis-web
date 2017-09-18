@@ -11,11 +11,7 @@ export default Ember.Component.extend({
 
   @computed('repository.active')
   'aria-checked'(active) {
-    if (active) {
-      return 'true';
-    } else {
-      return 'false';
-    }
+    return !!active;
   },
 
   click() {
