@@ -114,7 +114,16 @@ export default Ember.Component.extend({
   },
 
   displayError(e) {
-    this.get('flashes').error('Oops, something went wrong, please try again.');
+    let message;
+
+    if (e.status === 429) {
+      message =
+        'You’ve exceeded the limit for triggering builds, please wait a while before trying again.';
+    } else {
+      message = 'Oops, something went wrong, please try again.';
+    }
+
+    this.get('flashes').error(message);
     return this.get('onClose')();
   },
 
