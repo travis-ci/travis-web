@@ -19,8 +19,7 @@ const eventToTitle = {
 
 export default Ember.Component.extend({
   tagName: 'span',
-  classNames: ['request-icon', 'icon'],
-  classNameBindings: ['event', 'state', 'title'],
+  classNameBindings: ['event', 'state'],
   attributeBindings: ['title'],
 
   @computed('event')
@@ -32,5 +31,5 @@ export default Ember.Component.extend({
   @computed('event')
   title(event) {
     return eventToTitle[event] || eventToTitle.default;
-  },
+  }
 });

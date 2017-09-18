@@ -46,21 +46,10 @@ const App = Ember.Application.extend(Ember.Evented, {
   },
 
   subscribePusher(user) {
-    let channels;
     if (!user.channels) {
       return;
     }
-    channels = user.channels;
-    if (proVersion) {
-      channels = channels.map((channel) => {
-        if (channel.match(/^private-/)) {
-          return channel;
-        } else {
-          return `private-${channel}`;
-        }
-      });
-    }
-    return Travis.pusher.subscribeAll(channels);
+    Travis.pusher.subscribeAll(user.channels);
   },
 
   identifyHSBeacon(user) {

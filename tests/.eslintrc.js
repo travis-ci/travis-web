@@ -12,6 +12,7 @@ module.exports = {
     waitForElement: true
   },
   rules: {
-    'max-len': 0
+    'max-len': 0,
+    'no-useless-escape': 0,
   }
 };

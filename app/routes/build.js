@@ -33,6 +33,20 @@ export default TravisRoute.extend({
     return this.store.find('build', params.build_id);
   },
 
+  afterModel(model) {
+    const slug = this.modelFor('repo').get('slug');
+    this.ensureBuildOwnership(model, slug);
+    return this._super(...arguments);
+  },
+
+  ensureBuildOwnership(build, urlSlug) {
+    const buildRepoSlug = build.get('repo.slug');
+
+    if (buildRepoSlug !== urlSlug) {
+      throw (new Error('invalidBuildId'));
+    }
+  },
+
   deactivate() {
     this._super(...arguments);
     this.controllerFor('job').set('job', null);

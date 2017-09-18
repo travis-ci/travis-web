@@ -71,5 +71,11 @@ export default PageObject.create({
 
   restartJob: clickable('.action-button--restart'),
   cancelJob: clickable('.action-button--cancel'),
-  debugJob: clickable('.action-button--debug')
+  debugJob: clickable('.action-button--debug'),
+
+  deleteLog: clickable('button.remove-log-button'),
+  deleteModalAppears: isVisible('.ember-modal-dialog'),
+  confirmDeleteLog: clickable('button.button-delete'),
+
+  jobNotFoundMessage: text('h2.page-title'),
 });

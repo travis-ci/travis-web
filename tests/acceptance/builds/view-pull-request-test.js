@@ -22,7 +22,8 @@ test('renders a pull request', function (assert) {
     event_type: 'pull_request',
     repository,
     branch,
-    commit
+    commit,
+    isTag: false
   });
   let job = server.create('job', { number: '5.1', state: 'passed', build, commit, repository, config: { language: 'Hello' } });
 
@@ -36,11 +37,10 @@ test('renders a pull request', function (assert) {
 
     assert.ok(page.buildTabLinkIsActive, 'build tab link is active');
     assert.equal(page.buildTabLinkText, 'Build #5');
-
     assert.equal(page.branchName, 'Pull Request #10');
     assert.equal(page.commitSha, 'Commit abc123');
     assert.equal(page.compare, '#10: Resist');
-    assert.equal(page.commitBranch, 'Branch acceptance-tests');
+    assert.equal(page.commitBranch, 'Branch acceptance-tests', 'shows the PR branch');
   });
 
   percySnapshot(assert);

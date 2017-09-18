@@ -1,13 +1,8 @@
-<svg version="1.1" id="icon-hash" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-<g id="hash">
-	<g>
-		<line class="st0" x1="10.379" y1="0.756" x2="9.363" y2="14.078"/>
-		<line class="st0" x1="5.637" y1="0.5" x2="4.621" y2="13.823"/>
-	</g>
-	<g>
-		<line class="st0" x1="14.5" y1="5.046" x2="1.177" y2="5.129"/>
-		<line class="st0" x1="13.823" y1="9.449" x2="0.5" y2="9.532"/>
-	</g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
+    <title>Hash</title>
+    <line x1="10.379" y1="0.756" x2="9.363" y2="14.078"/>
+    <line x1="5.637" y1="0.5" x2="4.621" y2="13.823"/>
+    <line x1="14.5" y1="5.046" x2="1.177" y2="5.129"/>
+    <line x1="13.823" y1="9.449" x2="0.5" y2="9.532"/>
 </svg>

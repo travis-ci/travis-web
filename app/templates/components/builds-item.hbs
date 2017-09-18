@@ -7,9 +7,15 @@
           <small>PR #{{build.pullRequestNumber}}</small>
         {{/link-to}}
       {{else}}
-        {{#link-to "build" build.repo build title=build.branchName}}
-          {{build.branchName}}
-        {{/link-to}}
+        {{#if build.isTag}}
+          {{#link-to "build" build.repo build title=build.tag.name}}
+            {{build.tag.name}}
+          {{/link-to}}
+        {{else}}
+          {{#link-to "build" build.repo build title=build.branchName}}
+            {{build.branchName}}
+          {{/link-to}}
+        {{/if}}
       {{/if}}
     </h2>
     {{#if build.isPullRequest}}
@@ -29,19 +35,25 @@
 </div>
 
 <div class="two-line">
-  <h3 class="row-item {{build.state}}">
+  <h3 class="row-item request {{build.state}}">
     {{#if build.id}}
       {{#link-to "build" build.repo build class="inner-underline"}}
-        {{request-icon event=build.eventType state=build.state}}
+        {{#if build.isTag}}
+          {{svg-jar 'icon-tag' class=(concat build.state ' icon')}}
+        {{else}}
+          {{request-icon event=build.eventType state=build.state}}
+        {{/if}}
         <span class="label-align inner-underline">#{{build.number}} {{build.state}}</span>
       {{/link-to}}
     {{/if}}
   </h3>
   <div class="row-item row-commit">
-    <a href="{{urlGithubCommit}}" title="See the commit on GitHub">
-      {{svg-jar 'icon-github' class="icon"}}
-      <span class="label-align">{{format-sha build.commit.sha}}</span>
-    </a>
+    {{#external-link-to href=urlGithubCommit}}
+      {{tooltip-on-element text='View commit on GitHub'}}
+      {{svg-jar 'icon-commit' class="icon"}}
+      <span class="label-align inner-underline">{{format-sha build.commit.sha}}</span>
+      {{svg-jar 'icon-external-link' class="icon"}}
+    {{/external-link-to}}
   </div>
 </div>
 

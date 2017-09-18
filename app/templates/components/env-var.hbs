@@ -6,14 +6,12 @@
   <input type="pw" value="{{value}}" readonly="readonly">
 </div>
 <div class="env-var-action">
-  <div class="tooltip">
-    {{#if delete.isRunning}}
-      {{loading-indicator}}
-    {{else}}
-      <button {{action (perform delete) on="click"}} type="button" class="no-button env-var-delete">
-        {{svg-jar 'icon-trash' class="icon"}}
-      </button>
-      <div class="tooltip-bubble">Delete</div>
-    {{/if}}
-  </div>
+  {{#if delete.isRunning}}
+    {{loading-indicator}}
+  {{else}}
+    <button {{action (perform delete) on="click"}} type="button" class="no-button env-var-delete">
+      {{tooltip-on-element text='Delete'}}
+      {{svg-jar 'icon-trash' class="icon"}}
+    </button>
+  {{/if}}
 </div>

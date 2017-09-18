@@ -16,6 +16,9 @@
               <span class="label-align">
                 <strong>Beta Feature</strong> Thank you for trying Build Stages!
               </span>
+              {{external-link-to
+                href="https://github.com/travis-ci/beta-features/issues/28"
+                content="We'd love your feedback"}}
             </p>
             {{#each sortedBuildStages as |stage|}}
               {{jobs-list stage=stage build=build repo=repo stages=sortedBuildStages}}

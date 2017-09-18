@@ -24,10 +24,11 @@ export default Model.extend(DurationCalculations, {
   finishedAt: attr('string'),
   pullRequestNumber: attr('number'),
   pullRequestTitle: attr('string'),
+  tag: attr(),
   eventType: attr('string'),
   _config: attr(),
 
-  repo: belongsTo('repo', { async: true }),
+  repo: belongsTo('repo'),
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
   repoCurrentBuild: belongsTo('repo', { async: true, inverse: 'currentBuild' }),
   commit: belongsTo('commit', { async: false }),
@@ -56,6 +57,11 @@ export default Model.extend(DurationCalculations, {
   @computed('jobs.[]')
   isMatrix(jobs) {
     return jobs.get('length') > 1;
+  },
+
+  @computed('tag')
+  isTag(tag) {
+    return (tag && tag.name);
   },
 
   @computed('state')

@@ -1,6 +1,9 @@
 import TravisRoute from 'travis/routes/basic';
+import { service } from 'ember-decorators/service';
 
 export default TravisRoute.extend({
+  @service router: null,
+
   titleToken(model) {
     return `Job #${model.get('number')}`;
   },
@@ -39,6 +42,19 @@ export default TravisRoute.extend({
 
   model(params) {
     return this.store.find('job', params.job_id);
+  },
+
+  afterModel(job) {
+    const slug = this.modelFor('repo').get('slug');
+    this.ensureJobOwnership(job, slug);
+    return this._super(...arguments);
+  },
+
+  ensureJobOwnership(job, urlSlug) {
+    const jobSlug = job.get('repositorySlug') || job.get('repo.slug');
+    if (jobSlug !== urlSlug) {
+      throw (new Error('invalidJobId'));
+    }
   },
 
   deactivate() {

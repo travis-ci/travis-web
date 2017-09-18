@@ -14,14 +14,12 @@
     {{svg-jar 'icon-settings' class="icon"}}
     <span class="label-align">{{dontRunIfRecentBuildExists}}</span></div>
 <div class="cron-job-action">
-  <div class="tooltip">
-    {{#if delete.isRunning}}
-      {{loading-indicator}}
-    {{else}}
-      <button {{action (perform delete) on="click"}} type="button" class="cron-job-delete no-button">
-        {{svg-jar 'icon-trash' class="icon"}}
-      </button>
-      <div class="tooltip-bubble">Delete</div>
-    {{/if}}
-  </div>
+  {{#if delete.isRunning}}
+    {{loading-indicator}}
+  {{else}}
+    <button {{action (perform delete) on="click"}} type="button" class="cron-job-delete no-button">
+      {{tooltip-on-element text='Delete'}}
+      {{svg-jar 'icon-trash' class="icon"}}
+    </button>
+  {{/if}}
 </div>

@@ -1,6 +1,6 @@
 <div class="dash-head">
   <button {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
-    {{svg-jar 'icon-star' class="icon--big"}}
+    {{svg-jar 'icon-star' class="icon--m"}}
   </button>
   {{#if repo.private}}
     <span class="dash-private" title="private repository">
@@ -41,13 +41,15 @@
     </section>
     <section class="dash-commit">
       <h3 class="label">Commit</h3>
-      <p class="row-content">
-        {{svg-jar 'icon-github' class="icon"}}
-        <a href="{{urlGithubCommit}}" title="See the last commit on Github">
+      <p class="row-content row-item commit-sha">
+        {{tooltip-on-element text='View commit on GitHub'}}
+        {{svg-jar 'icon-commit' class="icon"}}
+        {{#external-link-to href=urlGitHubCommit}}
           <span class="label-align">
             {{format-sha repo.currentBuild.commit.sha}}
           </span>
-        </a>
+        {{/external-link-to}}
+        {{svg-jar 'icon-external-link' class="icon"}}
       </p>
     </section>
     <section class="fade-out dash-finished">
@@ -100,7 +102,7 @@
         {{#if displayActivateLink}}
         <button type="button" class="activate-repo-button is-active" {{action 'activateRepo'}}>Activate repository</button>
         {{else}}
-        <p class="activate-repo-button" data-tooltip="You need admin rights to activate a repository">Actiavte repository</p>
+        <p class="activate-repo-button">Actiavte repository</p>
         {{/if}}
     </div>-->
   {{/if}}
