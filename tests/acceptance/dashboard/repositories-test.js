@@ -1,4 +1,4 @@
-import { skip } from 'qunit';
+import { skip, test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
 
@@ -68,7 +68,7 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
   }
 });
 
-skip('visiting /dashboard/ with feature flag disabled', function (assert) {
+test('visiting /dashboard/ with feature flag disabled', function (assert) {
   visit('/dashboard/');
 
   andThen(() => {
