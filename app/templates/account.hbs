@@ -60,7 +60,9 @@
         {{/each}}
       </ul>
     </div>
-    {{pagination-navigation collection=model.repos route="account"}}
+    {{#if sortedRepositories.length}}
+      {{pagination-navigation collection=model.repos route="account"}}
+    {{/if}}
   {{/if}}
 {{else}}
   {{no-account name=model.account.login}}
