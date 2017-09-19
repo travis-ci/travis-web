@@ -76,7 +76,7 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
   });
 });
 
-skip('visiting /dashboard/ with feature flag enabled', function (assert) {
+test('visiting /dashboard/ with feature flag enabled', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   visit('/');
 
@@ -112,7 +112,7 @@ skip('filtering repos');
 
 skip('triggering a build');
 
-skip('Dashboard pagination works', function (assert) {
+test('Dashboard pagination works', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   server.createList('repository', 12);
 

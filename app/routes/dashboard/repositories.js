@@ -39,5 +39,15 @@ export default TravisRoute.extend({
         all: true
       }, () => true, [], true)
     });
+  },
+
+  afterModel(model) {
+    const repos = model.repos;
+
+    // This preloads related models to prevent a backtracking rerender error.
+    return Ember.RSVP.hash({
+      currentBuilds: repos.map(repo => repo.get('currentBuild')),
+      defaultBranches: repos.map(repo => repo.get('defaultBranch'))
+    });
   }
 });
