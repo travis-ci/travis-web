@@ -1,4 +1,4 @@
-import { test, todo } from 'qunit';
+import { skip, test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
 
@@ -123,13 +123,9 @@ test('starring and unstarring a repo', function (assert) {
   });
 });
 
-todo('filtering repos', function (assert) {
-  assert.ok(false);
-});
+skip('filtering repos');
 
-todo('triggering a build', function (assert) {
-  assert.ok(false);
-});
+skip('triggering a build');
 
 test('Dashboard pagination works', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
