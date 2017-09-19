@@ -25,11 +25,18 @@ export default create({
     }
   }),
   sidebarRunningTabText: text('#tab_running a'),
-  sidebarRunningRepositories: collection({
-    scope: '.sidebar-list',
+  runningJobs: collection({
+    scope: '.sidebar-list .running',
     itemScope: '.tile--sidebar',
     item: {
-      name: text('.tile h2.tile-title span.label-align')
+      number: text('.tile-title .label-align')
+    }
+  }),
+  queuedJobs: collection({
+    scope: '.sidebar-list .queued',
+    itemScope: '.tile--sidebar',
+    item: {
+      number: text('.tile-title .label-align')
     }
   }),
   missingReposMessage: text('.loading-container'),

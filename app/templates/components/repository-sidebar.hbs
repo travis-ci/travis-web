@@ -18,11 +18,11 @@
 
 {{#if showRunningJobs}}
   <div class="travistab-body sidebar-list">
-    <div>
+    <div class='running'>
       {{running-jobs jobs=runningJobs}}
     </div>
-    <hr class="sidebar-seperator">
-    <div>
+    <div class='queued'>
+      <header class='jobs'>Queued Jobs</header>
       {{queued-jobs jobs=queuedJobs}}
     </div>
   </div>

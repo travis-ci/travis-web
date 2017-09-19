@@ -31,10 +31,48 @@
   a:hover
     text-decoration: underline
 
-#tab_new
-  a:hover
-    .icon--plus:after
-      color: $oxide-blue
+#button_new
+  a:hover, a.active, a:active
+    &::after
+      background-color: transparent
+
+  [data-tooltip]::after
+    width: 8em
+    margin-left: -3.5em
+    text-align: center
+
+  .icon--plus
+    margin-right: 0
+    text-align: center
+
+    border: 1px solid transparentize($dry-cement, 0.5)
+    border-radius: 1em
+
+    width: 1.1em
+    height: 1.1em
+
+    padding: 9px
+
+    &:hover
+      border-color: $cement-grey
+
+    &::before
+      display: block
+      margin-left: -4px
+      margin-top: -11px
+
+#tab_running
+  .badge
+    color: #4db0b5
+    background-color: #e2f2f3
+    border: 0
+    font-size: 70%
+    font-weight: bold
+
+    margin-top: -5px
+    margin-right: 0
+    transform: translateY(-2px)
+    padding: 0 0.6em
 
 .sidebar-list
   margin-top: 1.4rem
@@ -43,11 +81,13 @@
     border-bottom: .46rem solid $pebble-grey
     background-color: $pebble-grey
 
-.travistab-nav--sidebar
-  padding: 0 1em
+  header.jobs
+    margin: 1em
+    padding-bottom: 0.5em
+    border-bottom: solid 2px $pebble-grey
 
-.sidebar-seperator
-  width: 90%
-  margin: 1rem auto
-  border: none
-  border-bottom: solid 2px $pebble-grey
+.travistab-nav--sidebar
+  display: flex
+  justify-content: space-between
+  align-items: flex-end
+  padding: 0 1em

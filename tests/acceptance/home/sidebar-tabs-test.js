@@ -21,7 +21,7 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       slug: 'killjoys/willful-subjects'
     });
 
-    server.create('repository', {
+    let otherRepo = server.create('repository', {
       slug: 'other/other',
       skipPermissions: true
     });
@@ -53,6 +53,39 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
       build
     });
 
+    server.create('job', {
+      number: '1234.2',
+      repository: testRepo,
+      state: 'created',
+      commit,
+      build
+    });
+
+    let otherCommit = server.create('commit');
+    let otherBuild = server.create('build', {
+      repository: otherRepo,
+      commit: otherCommit,
+      state: 'queued'
+    });
+    server.create('job', {
+      repository: otherRepo,
+      commit: otherCommit,
+      build: otherBuild,
+      state: 'started'
+    });
+
+    let otherCreatedBuild = server.create('build', {
+      repository: otherRepo,
+      commit: otherCommit,
+      state: 'created'
+    });
+    server.create('job', {
+      repository: otherRepo,
+      commit: otherCommit,
+      build: otherCreatedBuild,
+      state: 'created'
+    });
+
     commit.job = job;
 
     job.save();
@@ -60,23 +93,22 @@ moduleForAcceptance('Acceptance | home/sidebar tabs', {
   }
 });
 
-test('the home page shows running tab in pro version', (assert) => {
-  withFeature('pro-version');
-
+test('the home page shows running tab', (assert) => {
   sidebarPage
     .visit()
     .clickSidebarRunningTab();
 
   andThen(() => {
-    assert.equal(sidebarPage.sidebarRunningTabText, 'Running (1/1)', 'running tab correctly shows number of started/queued jobs');
-    assert.equal(sidebarPage.sidebarRunningRepositories().count, 1, 'expected one running repositories');
+    assert.equal(sidebarPage.sidebarRunningTabText, 'Running Jobs1 / 2', 'running tab correctly shows number of started/queued jobs');
+    assert.equal(sidebarPage.runningJobs().count, 1, 'expected one running job');
+    assert.equal(sidebarPage.runningJobs(0).number, '1234.1', 'expected the running job to be the one with queued state');
+    assert.equal(sidebarPage.queuedJobs().count, 1, 'expected one queued job');
+    assert.equal(sidebarPage.queuedJobs(0).number, '1234.2', 'expected the queued job to be the one with created state');
   });
   percySnapshot(assert);
 });
 
-test('maintains sidebar tab state when viewing running job in pro version', (assert) => {
-  withFeature('pro-version');
-
+test('maintains sidebar tab state when viewing running job', (assert) => {
   sidebarPage
     .visit()
     .clickSidebarRunningTab()

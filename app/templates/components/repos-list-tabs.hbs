@@ -3,15 +3,15 @@
     <a href="#" {{action showMyRepositories}}>My Repositories</a>
   </li>
 
-  {{#if features.proVersion}}
-    <li id="tab_running" class={{classRunning}}>
-      <a href="#" {{action showRunningJobs}}>Running ({{startedJobsCount}}/{{allJobsCount}})</a>
-    </li>
-  {{/if}}
-
-  <li id="tab_new" class={{classNew}}>
-    {{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}
-    <span class="icon icon--plus"></span>
-    {{/link-to}}
+  <li id="tab_running" class={{classRunning}}>
+    <a href="#" {{action showRunningJobs}}>Running Jobs<span class='badge'>{{startedJobsCount}} / {{allJobsCount}}</span></a>
   </li>
 </ul>
+
+<div id="button_new" class={{classNew}}>
+  {{#link-to "profile" trackEvent="add-repository-from-list" title="Add New Repository"}}
+  <span class='tooltip' data-tooltip='Add a repository'>
+    <span class="icon icon--plus"></span>
+  </span>
+  {{/link-to}}
+</div>
