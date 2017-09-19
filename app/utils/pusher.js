@@ -136,7 +136,7 @@ TravisPusher.prototype.normalize = function (event, data) {
 
 TravisPusher.prototype.warn = function (type, object) {
   if (!this.ignoreWarning(type, object.error)) {
-    //eslint-disable-next-line
+    // eslint-disable-next-line
     return console.warn(type, object.error);
   }
 };

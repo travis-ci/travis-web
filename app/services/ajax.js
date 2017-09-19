@@ -80,7 +80,7 @@ export default Ember.Service.extend({
     error = options.error || (() => {});
     options.error = (data, status, xhr) => {
       if (Ember.get(this, 'features').get('debugLogging')) {
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
       }
       return error.call(this, data, status, xhr);
