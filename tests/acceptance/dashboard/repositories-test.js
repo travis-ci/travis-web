@@ -1,4 +1,4 @@
-import { skip, test, todo } from 'qunit';
+import { test, todo } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
 
@@ -25,6 +25,21 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
         number: 1,
         eventType: 'api',
         state: 'passed',
+      })
+    });
+    let permissionBuild = server.create('build', {
+      branch: server.create('branch', { name: 'another-branch' }),
+      eventType: 'push',
+      number: 44,
+      state: 'passed',
+      finishedAt: '2017-09-19T12:14:00Z'
+    });
+    let permissionBranch = server.create('branch', {
+      name: 'primary',
+      lastBuild: server.create('build', {
+        number: 55,
+        eventType: 'push',
+        state: 'passed'
       })
     });
     server.create('repository', {
@@ -59,8 +74,8 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
       },
       name: 'travis-lol',
       starred: true,
-      currentBuild: build,
-      defaultBranch: branch,
+      currentBuild: permissionBuild,
+      defaultBranch: permissionBranch,
       permissions: {
         create_request: true
       }
@@ -86,7 +101,7 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
   });
 });
 
-skip('starring and unstarring a repo', function (assert) {
+test('starring and unstarring a repo', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   dashboardPage.visit();
 
