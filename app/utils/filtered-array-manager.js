@@ -172,7 +172,9 @@ let FilteredArrayManagerForType = Ember.Object.extend({
   },
 
   removeObserver(record, property) {
-    record.removeObserver(property, this, 'propertyDidChange');
+    if (record) {
+      record.removeObserver(property, this, 'propertyDidChange');
+    }
   },
 
   propertyDidChange(record, key, value, rev) {

@@ -27,6 +27,21 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
         state: 'passed',
       })
     });
+    let permissionBuild = server.create('build', {
+      branch: server.create('branch', { name: 'another-branch' }),
+      eventType: 'push',
+      number: 44,
+      state: 'passed',
+      finishedAt: '2017-09-19T12:14:00Z'
+    });
+    let permissionBranch = server.create('branch', {
+      name: 'primary',
+      lastBuild: server.create('build', {
+        number: 55,
+        eventType: 'push',
+        state: 'passed'
+      })
+    });
     server.create('repository', {
       owner: {
         login: 'travis-ci',
@@ -59,8 +74,8 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
       },
       name: 'travis-lol',
       starred: true,
-      currentBuild: build,
-      defaultBranch: branch,
+      currentBuild: permissionBuild,
+      defaultBranch: permissionBranch,
       permissions: {
         create_request: true
       }
