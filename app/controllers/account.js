@@ -8,8 +8,6 @@ export default Ember.Controller.extend({
   @service auth: null,
   @service externalLinks: null,
 
-  allHooks: [],
-
   @alias('auth.currentUser') user: null,
 
   init() {
@@ -17,7 +15,6 @@ export default Ember.Controller.extend({
 
     return Travis.on('user:synced', () => { this.reloadHooks(); });
   },
-
 
   @action
   sync() {
@@ -29,52 +26,34 @@ export default Ember.Controller.extend({
     return hook.toggle();
   },
 
-  reloadHooks() {
-    let login = this.get('model.login');
-    if (login) {
-      let hooks = this.store.query('hook', {
-        all: true,
-        owner_name: login,
-        order: 'none'
-      });
-      this.set('loadingError', false);
-      hooks.then(() => {
-        hooks.set('isLoaded', true);
-      }).catch(() => {
-        this.set('loadingError', true);
-      });
-      return this.set('allHooks', hooks);
-    }
-  },
-
-  @computed('model.{name,login}')
+  @computed('model.account.{name,login}')
   accountName(name, login) {
     return name || login;
   },
 
-  @computed('allHooks.[]')
-  hooks(hooks) {
-    if (!hooks) {
-      this.reloadHooks();
-    }
-    return hooks.filter(hook => hook.get('admin')).sortBy('name');
+  @computed()
+  showPrivateReposHint() {
+    return this.config.show_repos_hint === 'private';
   },
 
-  @computed('allHooks.[]')
-  hooksWithoutAdmin(hooks) {
-    if (!hooks) {
-      this.reloadHooks();
-    }
-    return hooks.filter(hook => !hook.get('admin')).sortBy('name');
+  @computed()
+  showPublicReposHint() {
+    return this.config.show_repos_hint === 'public';
   },
 
-  @computed('model.{type,login}')
+  @computed('model.repos')
+  sortedRepositories(repos) {
+    return repos.sortBy('name');
+  },
+
+  @computed('model.account.{type,login}')
   billingUrl(type, login) {
-    return this.get('externalLinks').billingUrl(type, login);
+    const id = type === 'user' ? 'user' : login;
+    return `${this.config.billingEndpoint}/subscriptions/${id}`;
   },
 
-  @computed('billingUrl', 'model.{subscribed,education}')
-  subscribeButtonInfo(billingUrl, subscribed, education) {
+  @computed('model.account.{subscribed,education}', 'billingUrl')
+  subscribeButtonInfo(subscribed, education, billingUrl) {
     return {
       billingUrl,
       subscribed,

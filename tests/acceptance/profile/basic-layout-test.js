@@ -20,34 +20,48 @@ moduleForAcceptance('Acceptance | profile/basic layout', {
       repos_count: 30
     });
 
-    // create active hook
-    server.create('hook', {
+    // create active repository
+    server.create('repository', {
       name: 'living-a-feminist-life',
-      owner_name: 'feministkilljoy',
+      owner: {
+        login: 'feministkilljoy',
+      },
       active: true,
-      admin: true
+      permissions: {
+        admin: true
+      },
     });
 
-    // create inactive hook
-    server.create('hook', {
+    // create inactive repository
+    server.create('repository', {
       name: 'willful-subjects',
-      owner_name: 'feministkilljoy',
+      owner: {
+        login: 'feministkilljoy',
+      },
       active: false,
-      admin: true
+      permissions: {
+        admin: true
+      },
     });
 
-    // create hook without admin permissions
-    server.create('hook', {
+    // create repository without admin permissions
+    server.create('repository', {
       name: 'affect-theory-reader',
-      owner_name: 'feministkilljoy',
+      owner: {
+        login: 'feministkilljoy',
+      },
       active: true,
-      admin: false
+      permissions: {
+        admin: false
+      },
     });
 
-    // create other random hook to ensure correct filtering
-    server.create('hook', {
+    // create other random repository to ensure correct filtering
+    server.create('repository', {
       name: 'feminism-is-for-everybody',
-      owner_name: 'bellhooks',
+      owner: {
+        login: 'bellhooks',
+      },
       active: false
     });
   }
@@ -69,14 +83,13 @@ test('view profile', function (assert) {
     assert.equal(profilePage.accounts(1).name, 'Feminist Killjoys');
     assert.equal(profilePage.accounts(1).repositoryCount, '30 repositories');
 
-    assert.equal(profilePage.administerableHooks().count, 2, 'expected two administerable hooks');
+    assert.equal(profilePage.administerableRepositories().count, 3, 'expected three repositories');
 
-    assert.equal(profilePage.administerableHooks(0).name, 'feministkilljoy/living-a-feminist-life');
-    assert.ok(profilePage.administerableHooks(0).isActive, 'expected active hook to appear active');
-
-    assert.equal(profilePage.administerableHooks(1).name, 'feministkilljoy/willful-subjects');
-    assert.notOk(profilePage.administerableHooks(1).isActive, 'expected inactive hook to appear inactive');
-
-    assert.equal(profilePage.unadministerableHooks().count, 1, 'expected one unadministerable hook');
+    assert.equal(profilePage.administerableRepositories(0).name, 'feministkilljoy/affect-theory-reader');
+    assert.ok(profilePage.administerableRepositories(0).isDisabled, 'expected disabled repository to be disabled in UI');
+    assert.equal(profilePage.administerableRepositories(1).name, 'feministkilljoy/living-a-feminist-life');
+    assert.ok(profilePage.administerableRepositories(1).isActive, 'expected active repository to appear active');
+    assert.equal(profilePage.administerableRepositories(2).name, 'feministkilljoy/willful-subjects');
+    assert.notOk(profilePage.administerableRepositories(2).isActive, 'expected inactive repository to appear inactive');
   });
 });

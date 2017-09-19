@@ -1,17 +1,19 @@
+import Ember from 'ember';
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
-  titleToken(model) {
-    if (model && model.id) {
-      return model.get('name') || model.get('login');
-    } else {
-      return 'Account';
+  queryParams: {
+    offset: {
+      refreshModel: true
     }
   },
 
-  setupController(controller) {
-    this._super(...arguments);
-    controller.reloadHooks();
+  titleToken({ account }) {
+    if (account && account.id) {
+      return account.get('name') || account.get('login');
+    } else {
+      return 'Account';
+    }
   },
 
   model(params) {
@@ -19,9 +21,29 @@ export default TravisRoute.extend({
     let account = this.modelFor('accounts')
       .find(acct => acct.get('login') === login);
     if (account) {
-      return account;
+      return Ember.RSVP.hash({
+        account,
+        repos: this.store.paginated(
+          'repo',
+          {
+            offset: params.offset,
+            sort_by: 'name',
+            limit: 25,
+            custom: {
+              owner: login,
+              type: 'byOwner',
+            },
+          },
+          {}
+        ),
+      });
     } else {
-      return { login, error: true };
+      return {
+        account: {
+          login,
+          error: true
+        }
+      };
     }
   },
 

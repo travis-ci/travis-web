@@ -1,4 +1,4 @@
-/* global Travis */
+/* global Travis, HS */
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
@@ -130,6 +130,11 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     viewSearchResults(query) {
       this.transitionTo('search', query);
     },
+
+    helpscoutTrigger() {
+      HS.beacon.open();
+      return false;
+    }
   },
 
   afterSignIn() {

@@ -2689,28 +2689,28 @@ pre#log .duration {
   margin-top: -3px;
 }
 /* line 4, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#profile #unadministerable-hooks {
+#profile #unadministerable-repositories {
   margin-top: 15px;
 }
 /* line 6, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#profile #unadministerable-hooks h3 {
+#profile #unadministerable-repositories h3 {
   font-size: 15px;
 }
 /* line 8, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#profile #unadministerable-hooks .tip {
+#profile #unadministerable-repositories .tip {
   margin-top: 5px;
 }
 
 /* line 11, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks, #unadministerable-hooks {
+#hooks, #unadministerable-repositories {
   margin-top: 10px;
 }
 /* line 12, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks .travis-switch, #unadministerable-hooks .travis-switch {
+#hooks .travis-switch, #unadministerable-repositories .travis-switch {
   font-size: 10px;
 }
 /* line 17, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li, #unadministerable-hooks li {
+#hooks li, #unadministerable-repositories li {
   position: relative;
   height: 19px;
   padding: 10px;
@@ -2719,33 +2719,33 @@ pre#log .duration {
   border-bottom: 1px solid #ddd;
 }
 /* line 25, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li:nth-child(3), #unadministerable-hooks li:nth-child(3) {
+#hooks li:nth-child(3), #unadministerable-repositories li:nth-child(3) {
   border-top: 1px solid #ddd;
 }
 /* line 28, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li:nth-child(odd), #unadministerable-hooks li:nth-child(odd) {
+#hooks li:nth-child(odd), #unadministerable-repositories li:nth-child(odd) {
   background-color: #fafbfc;
 }
 /* line 30, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li:nth-child(odd) .controls, #unadministerable-hooks li:nth-child(odd) .controls {
+#hooks li:nth-child(odd) .controls, #unadministerable-repositories li:nth-child(odd) .controls {
   background: #fafbfc;
 }
 /* line 33, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li:nth-child(even), #unadministerable-hooks li:nth-child(even) {
+#hooks li:nth-child(even), #unadministerable-repositories li:nth-child(even) {
   background-color: #fff;
 }
 /* line 35, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li:nth-child(even) .controls, #unadministerable-hooks li:nth-child(even) .controls {
+#hooks li:nth-child(even) .controls, #unadministerable-repositories li:nth-child(even) .controls {
   background: #fff;
 }
 /* line 38, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li > a, #unadministerable-hooks li > a {
+#hooks li > a, #unadministerable-repositories li > a {
   float: left;
   font-size: 15px;
   text-decoration: none;
 }
 /* line 43, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li .description, #unadministerable-hooks li .description {
+#hooks li .description, #unadministerable-repositories li .description {
   display: none;
   margin-left: 10px;
   line-height: 22px;
@@ -2756,19 +2756,19 @@ pre#log .duration {
   color: #999;
 }
 /* line 53, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li .controls, #unadministerable-hooks li .controls {
+#hooks li .controls, #unadministerable-repositories li .controls {
   position: absolute;
   top: 10px;
   right: 0;
   white-space: nowrap;
 }
 /* line 58, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li .controls a, #unadministerable-hooks li .controls a {
+#hooks li .controls a, #unadministerable-repositories li .controls a {
   float: left;
   display: block;
 }
 /* line 62, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li .repo-settings-icon, #unadministerable-hooks li .repo-settings-icon {
+#hooks li .repo-settings-icon, #unadministerable-repositories li .repo-settings-icon {
   position: relative;
   height: 20px;
   width: 20px;
@@ -2776,11 +2776,11 @@ pre#log .duration {
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAMFBMVEWmpqa3t7e0tLS5ubna2trS0tLc3Nzg4ODHx8e/v7/m5ubq6urOzs7///+oqKjW1tZ40BHiAAAADnRSTlP/////////////////AEXA3MgAAABYSURBVBjTfc/LDoAwCETR2wKltqL//7fu+jBRlidkGIjX8AMqvoFi+0aiR/gCmdosTzAAygADkujIOIBznL0lAz56KMDls1i2VklLU4/oG0SEoRu4lO9vH7gQCqDeY1zrAAAAAElFTkSuQmCC') no-repeat 3px 4px;
 }
 /* line 72, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li:hover > a, #unadministerable-hooks li:hover > a {
+#hooks li:hover > a, #unadministerable-repositories li:hover > a {
   color: #c7371a;
 }
 /* line 75, /Users/justine/Projects/travis-web/assets/styles/app/profile/hooks.sass */
-#hooks li:hover .description, #unadministerable-hooks li:hover .description {
+#hooks li:hover .description, #unadministerable-repositories li:hover .description {
   display: inline;
 }
 /* line 4, /Users/justine/Projects/travis-web/assets/styles/app/requests.sass */

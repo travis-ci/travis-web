@@ -1,0 +1,14 @@
+<div class="missing-notice">
+  <figure class="page-graphic">
+    {{svg-jar 'barricade'}}
+  </figure>
+
+  <h2 class="page-title">No repositories found for organization<br><span
+      class="h2--red">{{account}}</span></h2>
+  <p class="page-notice">The organization may not exist or you may not have
+    sufficient permissions to view its repositories.</p>
+  <p class="page-notice">If you believe you've received this message in error, please <a
+      href="mailto:support@travis-ci.com" title="Email the Travis support team"
+      {{action (route-action 'helpscoutTrigger')}}>contact support.</a>
+  </p>
+</div>
