@@ -61,7 +61,7 @@ test('visiting a job with a truncated log', function (assert) {
   jobPage.visit();
 
   // An unfortunate workaround for log displaying being outside Ember facilities.
-  //eslint-disable-next-line
+  // eslint-disable-next-line
   waitForElement('.log-container p.warning');
 
   andThen(function () {
@@ -111,7 +111,7 @@ But it must be addressed repeatedly!\r${ESCAPE}[0m\nAgain.
   jobPage.visit();
 
   // An unfortunate workaround for log displaying being outside Ember facilities.
-  //eslint-disable-next-line
+  // eslint-disable-next-line
   waitForElement('.log-container .yellow');
 
   jobPage.toggleLog();
