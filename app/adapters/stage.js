@@ -29,7 +29,7 @@ export default V3Adapter.extend({
     // TODO: I'd rather implement /stage/:id endpoint in API, but for now this
     // is a simpler way to fetch a single stage
     return this.ajax(`${this.buildURL()}/build/${buildId}/stages`).then((data) =>
-      data.stages.filterBy('id', id)[0]
+      data.stages.filterBy('id', parseInt(id))[0]
     );
   }
 });
