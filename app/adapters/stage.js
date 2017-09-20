@@ -22,5 +22,14 @@ export default V3Adapter.extend({
   findMany(store, modelClass, ids, snapshots) {
     let buildId = snapshots[0].belongsTo('build').id;
     return this.ajax(`${this.buildURL()}/build/${buildId}/stages`);
+  },
+
+  findRecord(store, type, id, snapshot) {
+    let buildId = snapshot.belongsTo('build').id;
+    // TODO: I'd rather implement /stage/:id endpoint in API, but for now this
+    // is a simpler way to fetch a single stage
+    return this.ajax(`${this.buildURL()}/build/${buildId}/stages`).then((data) =>
+      data.stages.filterBy('id', id)[0]
+    );
   }
 });
