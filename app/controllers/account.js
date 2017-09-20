@@ -1,4 +1,3 @@
-/* global Travis */
 import Ember from 'ember';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
@@ -9,12 +8,6 @@ export default Ember.Controller.extend({
   @service externalLinks: null,
 
   @alias('auth.currentUser') user: null,
-
-  init() {
-    this._super(...arguments);
-
-    return Travis.on('user:synced', () => { this.reloadHooks(); });
-  },
 
   @action
   sync() {
