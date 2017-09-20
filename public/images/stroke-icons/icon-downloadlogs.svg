@@ -1,8 +1,1 @@
-<svg x="0px" y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-  <line class="st0" x1="4.996" y1="1.5" x2="4.996" y2="11.763"/>
-  <polyline class="st0" points="9.492,8.347 4.996,12.843 0.5,8.347"/>
-  <line class="st0" x1="7.923" y1="2.295" x2="14.5" y2="2.295"/>
-  <line class="st0" x1="7.923" y1="5.547" x2="14.5" y2="5.547"/>
-  <line class="st0" x1="12.043" y1="8.8" x2="14.5" y2="8.8"/>
-  <line class="st0" x1="9.224" y1="12.052" x2="14.5" y2="12.052"/>
-</svg>
+<svg viewBox="0 0 15 15"><path class="st0" d="M4.996 1.5v10.263M9.492 8.347l-4.496 4.496L.5 8.347M7.923 2.295H14.5M7.923 5.547H14.5M12.043 8.8H14.5M9.224 12.052H14.5"/></svg>
