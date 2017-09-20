@@ -1,7 +1,1 @@
-<svg version="1.1" id="icon-seemore" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	 y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-<g id="seemore">
-	<path class="st0" d="M14.5,7.419c0,0-3.134,3.919-7,3.919s-7-3.919-7-3.919S3.634,3.5,7.5,3.5S14.5,7.419,14.5,7.419z"/>
-	<ellipse class="st0" cx="7.5" cy="7.419" rx="2.022" ry="2.335"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path class="st0" d="M14.5 7.419s-3.134 3.919-7 3.919-7-3.919-7-3.919S3.634 3.5 7.5 3.5s7 3.919 7 3.919z"/><ellipse class="st0" cx="7.5" cy="7.419" rx="2.022" ry="2.335"/></svg>

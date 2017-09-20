@@ -1,4 +1,1 @@
-<svg x="0px" y="0px" viewBox="0 0 15 15" style="enable-background:new 0 0 15 15;" xml:space="preserve">
-  <line class="st0" x1="7.549" y1="0.5" x2="7.549" y2="13.424"/>
-  <polyline class="st0" points="13.098,8.951 7.549,14.5 2,8.951 	"/>
-</svg>
+<svg viewBox="0 0 15 15"><path class="st0" d="M7.549.5v12.924M13.098 8.951L7.549 14.5 2 8.951"/></svg>
