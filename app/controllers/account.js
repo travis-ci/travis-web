@@ -1,4 +1,3 @@
-/* global Travis */
 import Ember from 'ember';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
