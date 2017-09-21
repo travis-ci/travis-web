@@ -2,8 +2,9 @@ $z-index: (
   under: -10,
   above: 10,
   above-above: 20,
-  overlay: 30,
-  dialog: 40
+  flashes: 30,
+  overlay: 40,
+  dialog: 50
 );
 
 @function z-index($key) {
