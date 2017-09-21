@@ -12,7 +12,7 @@
     width: 100%
   li.notice, li.success, li.error
     opacity: 1
-    z-index: 80
+    @include z-index(above-above)
     height: $top-height
     top: -1px // avoids a pesky gap after topbar
 

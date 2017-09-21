@@ -5,7 +5,7 @@
   position: relative
   .button
     position: relative
-    z-index: 2
+    @include z-index(above)
     height: 2.6rem
     padding: 0.6em 0.8em
     background-color: $oxide-blue
@@ -18,7 +18,7 @@
     right: 9em
     top: 0
     width: 170%
-    z-index: -1
+    @include z-index(under)
     transition: transform 150ms ease, opacity 250ms ease
     transform: translateX(80%)
     opacity: 0
@@ -26,7 +26,6 @@
   .button:hover ~ .sync-last
     transform: translateX(0)
     opacity: 1
-    z-index: 1
 
   .is-syncing
     background-color: $oxide-blue

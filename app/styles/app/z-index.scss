@@ -1,0 +1,15 @@
+$z-index: (
+  under: -10,
+  above: 10,
+  above-above: 20,
+  overlay: 30,
+  dialog: 40
+);
+
+@function z-index($key) {
+  @return map-get($z-index, $key);
+}
+
+@mixin z-index($key) {
+  z-index: z-index($key);
+}

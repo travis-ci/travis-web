@@ -1,6 +1,6 @@
 
 $light-blue: #FCFDFD
-  
+
 =planBtn($color)
   display: inline-block
   padding: .5em 1em
@@ -33,7 +33,7 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: 
   margin: 0
   padding: 0
   list-style: none
-  
+
   .plan,
   .plan--important
     flex: 0 0 25%
@@ -45,10 +45,10 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: 
       width: 1px
       color: $agate-blue
       style: solid
-    
+
   .plan--important
     padding: .5em 2em 3em
-    z-index: 1
+    @include z-index(above)
     box-shadow: $oxide-blue 0px 0px 9px 0px
 
     .plans-price,
@@ -63,7 +63,7 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: 
       border-right: none
     .plan:nth-of-type(3)
       border-left: none
-      
+
   @media screen and (max-width: 50em)
     justify-content: space-around
     .plan--important
@@ -73,7 +73,7 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: 
     .plan,
     .plan--important
       flex: 0 1 240px
-      
+
   .list
     padding: 0
     list-style: none
@@ -94,7 +94,7 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: 
     width: 13px
     height: 14px
     margin-right: 8px
-  
+
 .plans-label
   margin-top: 0
   font-size: 13px
@@ -160,7 +160,7 @@ $plan-buttons: (green: $turf-green, blue: $oxide-blue, grey: $cement-grey, red: 
 
 .inner.section--faq
   margin-bottom: 6em
-  
+
 .landing-pro
   .list--faq
     display: flex

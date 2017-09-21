@@ -2,7 +2,7 @@
   position: relative
 
   .log-tail
-    z-index: 80
+    @include z-index(above-above)
     position: absolute
     display: block
     top: 0
@@ -63,7 +63,7 @@
       background-color: #6b0
 
   .to-top
-    z-index: 80
+    @include z-index(above-above)
     position: absolute
     display: block
     bottom: 2px
@@ -197,7 +197,7 @@
 
     .fold-name
       position: absolute
-      z-index: 1
+      @include z-index(above)
       display: block
       top: 2px
       right: 85px
