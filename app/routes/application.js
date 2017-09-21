@@ -102,6 +102,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
     },
 
     signOut() {
+      this.get('featureFlags').reset();
       this.get('auth').signOut();
       this.afterSignOut();
     },
@@ -151,7 +152,6 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   afterSignOut() {
     this.set('repositories.accessible', []);
     this.setDefault();
-    this.get('featureFlags').reset();
     if (this.get('config.enterprise')) {
       return this.transitionTo('auth');
     }
