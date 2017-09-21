@@ -78,7 +78,7 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     if (this.get('features.debugLogging')) {
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       console.log('log view: did insert');
     }
     this._super(...arguments);
@@ -87,7 +87,7 @@ export default Ember.Component.extend({
 
   willDestroyElement() {
     if (this.get('features.debugLogging')) {
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       console.log('log view: will destroy');
     }
     Ember.run.scheduleOnce('afterRender', this, 'teardownLog');
@@ -180,7 +180,7 @@ export default Ember.Component.extend({
     Ember.run.schedule('afterRender', this, function () {
       let i, j, len, part, ref, ref1, ref2, results;
       if (this.get('features.debugLogging')) {
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         console.log('log view: parts did change');
       }
       if (this.get('_state') !== 'inDOM') {

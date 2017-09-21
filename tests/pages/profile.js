@@ -9,14 +9,15 @@ let {
   visitable
 } = PageObject;
 
-function hooksCollection(scope) {
+function existingRepositoriesCollection(scope) {
   return collection({
     scope: scope,
-    itemScope: '.profile-hooklist .row',
+    itemScope: '.profile-repositorylist .row',
 
     item: {
       name: text('a.profile-repo'),
       isActive: hasClass('active', '.switch'),
+      isDisabled: hasClass('non-admin', 'a.profile-repo'),
       toggle: clickable('.switch'),
       ariaChecked: attribute('aria-checked', '.switch'),
       role: attribute('role', '.switch')
@@ -30,8 +31,7 @@ export default PageObject.create({
 
   notFoundOrgName: text('.page-title .h2--red'),
 
-  administerableHooks: hooksCollection('#administerable-hooks'),
-  unadministerableHooks: hooksCollection('#unadministerable-hooks'),
+  administerableRepositories: existingRepositoriesCollection('#administerable-repositories'),
 
   token: {
     scope: '.profile-user-last',

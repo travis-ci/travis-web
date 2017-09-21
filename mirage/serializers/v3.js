@@ -177,7 +177,7 @@ export default JSONAPISerializer.extend({
   },
 
   normalizeId(_model, id) {
-    return id;
+    return parseInt(id);
   },
 
   representation(model, request, options) {

@@ -16,21 +16,20 @@ export default Ember.Service.extend({
    * transition, this is a decent interim solution. */
 
   fetchTask: task(function* () {
-    yield this.get('store').findAll('beta-feature').then((featureSet) => {
-      this.set('serverFlags', featureSet);
-      let featuresService = this.get('features');
-      featureSet.map((feature) => {
-        // this means that non-single-word feature names will turn
-        // 'comic sans' into 'comic-sans'. This may/may not work as expected.
-        // TODO: Confirm that this won't break if we add a feature name with
-        // spaces.
-        let featureName = feature.get('dasherizedName');
-        if (feature.get('enabled')) {
-          featuresService.enable(featureName);
-        } else {
-          featuresService.disable(featureName);
-        }
-      });
+    const featureSet = yield this.get('store').findAll('beta-feature');
+    this.set('serverFlags', featureSet);
+    let featuresService = this.get('features');
+    featureSet.map((feature) => {
+      // this means that non-single-word feature names will turn
+      // 'comic sans' into 'comic-sans'. This may/may not work as expected.
+      // TODO: Confirm that this won't break if we add a feature name with
+      // spaces.
+      let featureName = feature.get('dasherizedName');
+      if (feature.get('enabled')) {
+        featuresService.enable(featureName);
+      } else {
+        featuresService.disable(featureName);
+      }
     });
   }).drop(),
 

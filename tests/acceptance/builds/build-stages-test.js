@@ -10,6 +10,36 @@ function futureTime(secondsAhead) {
   return new Date(jobTime.getTime() + secondsAhead * 1000);
 }
 
+test('visiting build with one stage', function (assert) {
+  let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
+  server.create('branch', {});
+
+  let commit = server.create('commit', { author_email: 'mrt@travis-ci.org', author_name: 'Mr T', committer_email: 'mrt@travis-ci.org', committer_name: 'Mr T', branch: 'acceptance-tests', message: 'This is a message', branch_is_default: true });
+  let build = server.create('build', { repository: repo, state: 'passed', commit_id: commit.id, commit });
+
+  let firstStage = build.createStage({ number: 1, name: 'first :two_men_holding_hands:', state: 'passed', started_at: jobTime, finished_at: futureTime(71), allow_failure: true });
+
+  let firstJob = server.create('job', { number: '1234.1', repository: repo, state: 'passed', config: { env: 'JORTS', os: 'linux', language: 'node_js', node_js: 5 }, commit, build, stage: firstStage, startedAt: jobTime, finishedAt: futureTime(30) });
+  commit.job = firstJob;
+
+  firstJob.save();
+  commit.save();
+
+  server.create('job', { number: '1234.2', repository: repo, state: 'failed', allow_failure: true, config: { env: 'JANTS', os: 'osx', language: 'ruby', rvm: 2.2 }, commit, build, stage: firstStage, startedAt: jobTime, finishedAt: futureTime(40) });
+
+  visit(`/travis-ci/travis-web/builds/${build.id}`);
+
+  andThen(function () {
+    assert.equal(buildPage.stages().count, 1, 'expected one build stage');
+
+    buildPage.stages(0).as(stage => {
+      assert.ok(stage.isPassed);
+    });
+  });
+
+  percySnapshot(assert);
+});
+
 test('visiting build with stages', function (assert) {
   let repo =  server.create('repository', { slug: 'travis-ci/travis-web' });
   server.create('branch', {});

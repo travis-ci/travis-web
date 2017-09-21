@@ -1,8 +1,1 @@
-<svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" aria-labelledby="title">
-  <title id="title">Push event</title>
-  <g>
-    <circle cx="7.505" cy="7.354" r="2.854"/>
-    <line x1="14.5" y1="7.354" x2="10.349" y2="7.354"/>
-    <line x1="4.651" y1="7.354" x2="0.5" y2="7.354"/>
-  </g>
-</svg>
+<svg viewBox="0 0 15 15"><title>Push event</title><circle cx="7.505" cy="7.354" r="2.854"/><path d="M14.5 7.354h-4.151M4.651 7.354H.5"/></svg>

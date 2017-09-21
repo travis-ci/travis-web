@@ -1,9 +1,14 @@
 import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
-  slug: 'travis-ci/travis-web',
+  name: 'travis-web',
   githubLanguage: 'ruby',
   active: true,
+
+  owner: {
+    login: 'travis-ci',
+  },
+
   permissions: {
     read: false,
     activate: false,
@@ -13,6 +18,7 @@ export default Mirage.Factory.extend({
     create_request: false,
     create_cron: false,
     change_settings: false,
+    admin: false,
   },
 
   customSshKey: {
@@ -25,6 +31,10 @@ export default Mirage.Factory.extend({
     type: 'default',
     fingerprint: 'aa:bb:cc:dd',
     description: 'Default',
+  },
+
+  slug: function () {
+    return `${this.owner.login}/${this.name}`;
   },
 
   afterCreate(repository, server) {
