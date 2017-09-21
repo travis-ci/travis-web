@@ -1,4 +1,6 @@
 ## Travis CI ember web client
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/travis-ci/travis-web.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
 ### Running the app
 
