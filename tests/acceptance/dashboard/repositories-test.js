@@ -5,6 +5,8 @@ import topPage from 'travis/tests/pages/top';
 
 moduleForAcceptance('Acceptance | dashboard/repositories', {
   beforeEach() {
+    server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
+
     const currentUser = server.create('user', {
       name: 'Sara Ahmed',
       login: 'feministkilljoy',
@@ -85,6 +87,7 @@ moduleForAcceptance('Acceptance | dashboard/repositories', {
 });
 
 test('visiting /dashboard/ with feature flag disabled', function (assert) {
+  server.db.features.remove();
   visit('/dashboard/');
 
   andThen(() => {
@@ -93,7 +96,6 @@ test('visiting /dashboard/ with feature flag disabled', function (assert) {
 });
 
 test('visiting /dashboard/ with feature flag enabled', function (assert) {
-  server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   visit('/');
 
   andThen(() => {
@@ -103,7 +105,6 @@ test('visiting /dashboard/ with feature flag enabled', function (assert) {
 });
 
 test('starring and unstarring a repo', function (assert) {
-  server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   dashboardPage.visit();
 
   andThen(() => {
@@ -129,7 +130,6 @@ skip('filtering repos');
 skip('triggering a build');
 
 test('Dashboard pagination works', function (assert) {
-  server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
   server.createList('repository', 12);
 
   dashboardPage.visit();
@@ -153,8 +153,6 @@ test('Dashboard pagination works', function (assert) {
 });
 
 test('logging out leaves the dashboard', function (assert) {
-  server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
-
   dashboardPage.visit();
 
   andThen(() => {});
