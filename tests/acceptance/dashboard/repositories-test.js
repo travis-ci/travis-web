@@ -154,7 +154,6 @@ test('Dashboard pagination works', function (assert) {
 
 test('logging out leaves the dashboard', function (assert) {
   server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
-  server.create('feature', { name: 'what', description: 'eh', enabled: true });
 
   dashboardPage.visit();
 
