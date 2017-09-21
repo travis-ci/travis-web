@@ -1,6 +1,7 @@
 import { skip, test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import dashboardPage from 'travis/tests/pages/dashboard';
+import topPage from 'travis/tests/pages/top';
 
 moduleForAcceptance('Acceptance | dashboard/repositories', {
   beforeEach() {
@@ -148,5 +149,19 @@ test('Dashboard pagination works', function (assert) {
       assert.equal(dashboardPage.starredRepos().count, 1, 'still lists starred repos on top');
       assert.equal(dashboardPage.activeRepos().count, 6, 'lists other repos on the 2nd page');
     });
+  });
+});
+
+test('logging out leaves the dashboard', function (assert) {
+  server.create('feature', { name: 'dashboard', description: 'hello', enabled: true });
+  server.create('feature', { name: 'what', description: 'eh', enabled: true });
+
+  dashboardPage.visit();
+
+  andThen(() => {});
+  topPage.clickSigOutLink();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/');
   });
 });
