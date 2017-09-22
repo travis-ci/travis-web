@@ -21,7 +21,8 @@ export default function () {
     };
   });
 
-  this.namespace = apiEndpoint;
+  this.urlPrefix = apiEndpoint;
+  this.namespace = '';
 
   this.get('/users/:id');
   this.get('/accounts', (schema/* , request*/) => {
