@@ -40,7 +40,7 @@
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-inline-images": "^0.0.4",
-    "ember-cli-mirage": "0.2.8",
+    "ember-cli-mirage": "0.2.9",
     "ember-cli-page-object": "1.10.0",
     "ember-cli-qunit": "4.0.0",
     "ember-cli-sass": "7.0.0",
