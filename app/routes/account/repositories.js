@@ -9,18 +9,21 @@ export default TravisRoute.extend({
 
   model(params) {
     const account = this.modelFor('account');
-    return this.store.paginated(
-      'repo',
-      {
-        offset: params.offset,
-        sort_by: 'name',
-        limit: 25,
-        custom: {
-          owner: account.get('login'),
-          type: 'byOwner',
+    // account is an Ember-Data model
+    if (account.get) {
+      return this.store.paginated(
+        'repo',
+        {
+          offset: params.offset,
+          sort_by: 'name',
+          limit: 25,
+          custom: {
+            owner: account.get('login'),
+            type: 'byOwner',
+          },
         },
-      },
-      {}
-    );
+        {}
+      );
+    }
   },
 });
