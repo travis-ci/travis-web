@@ -201,15 +201,9 @@ export default Ember.Component.extend({
     });
   },
 
-  @computed('log.job.id', 'job.log.token', 'job.repo')
-  plainTextLogUrl(id, token, repo) {
-    if (id) {
-      let url = this.get('externalLinks').plainTextLog(id);
-      if (repo.get('private')) {
-        url += `&access_token=${token}`;
-      }
-      return url;
-    }
+  @computed('log.plainTextUrl')
+  plainTextLogUrl(url) {
+    return `${config.apiEndpoint}${url}`;
   },
 
   @computed('permissions.all', 'job.repo')
