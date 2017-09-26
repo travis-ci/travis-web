@@ -40,13 +40,13 @@ export default Ember.Object.extend({
       headers: new Headers({
         'Travis-API-Version': '3'
       })
-    }).then( (response) => {
+    }).then((response) => {
       if (response.ok) {
         return response.json();
       } else {
         throw 'error';
       }
-    }).then( (json) => {
+    }).then((json) => {
       this.loadParts(json['log_parts']);
       this.set('plainTextUrl', json['@raw_url']);
     });

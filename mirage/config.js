@@ -419,10 +419,16 @@ export default function () {
     });
   });
 
-  this.get('/jobs/:id/log', function (schema, request) {
+  this.get('/job/:id/log', function (schema, request) {
     let log = schema.logs.find(request.params.id);
     if (log) {
-      return { log: { parts: [{ id: log.attrs.id, number: 1, content: log.attrs.content }] } };
+      return {
+        id: log.attrs.id,
+        content: log.attrs.content,
+        log_parts: [
+          { number: 1, content: log.attrs.content },
+        ]
+      };
     } else {
       return new Mirage.Response(404, {}, {});
     }
