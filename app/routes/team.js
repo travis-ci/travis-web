@@ -328,6 +328,14 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'usa',
         image: 'joshua'
+      },
+      {
+        name: 'Nick Stenning',
+        title: 'Nopealope Herder',
+        handle: 'nickstenning',
+        nationality: 'europe',
+        country: 'germany',
+        image: 'nick'
       }
     ];
   }
