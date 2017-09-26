@@ -422,11 +422,12 @@ export default function () {
   this.get('/job/:id/log', function (schema, request) {
     let log = schema.logs.find(request.params.id);
     if (log) {
+      const { id, content } = log.attrs;
       return {
-        id: log.attrs.id,
-        content: log.attrs.content,
+        id,
+        content,
         log_parts: [
-          { number: 1, content: log.attrs.content },
+          { number: 1, content },
         ]
       };
     } else {
