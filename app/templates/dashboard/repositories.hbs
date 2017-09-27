@@ -5,7 +5,7 @@
   </div> -->
 
   <div class="dashboard-repos">
-    <section class="dashboard-section dashboard-starred">
+    <section class="dashboard-section dashboard-starred" aria-label="Starred repositories">
       <h2 class="small-title">Starred repositories</h2>
       <ul class="repo-list">
       {{#each starredRepos as |repo|}}
@@ -18,7 +18,7 @@
       </ul>
     </section>
 
-    <section class="dashboard-section dashboard-active" id="all-repositories-list">
+    <section class="dashboard-section dashboard-active" id="all-repositories-list" aria-label="All repositories">
       <h2 class="small-title">All active repositories</h2>
       <ul class="repo-list">
         {{#each filteredRepos as |repo|}}
