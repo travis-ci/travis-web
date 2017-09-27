@@ -4,6 +4,8 @@ import { computed, action } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Controller.extend({
+  filtering: false,
+
   @service auth: null,
   @service externalLinks: null,
 

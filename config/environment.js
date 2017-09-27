@@ -37,7 +37,8 @@ module.exports = function (environment) {
       updateTimes: 1000,
       branchCreatedSyncDelay: 2000,
       repositorySearchDebounceRate: 500,
-      triggerBuildRequestDelay: 3000
+      triggerBuildRequestDelay: 3000,
+      repositoryFilteringDebounceRate: 200,
     },
     githubOrgsOauthAccessSettingsUrl: 'https://github.com/settings/connections/applications/f244293c729d5066cf27',
     ajaxPolling: false,

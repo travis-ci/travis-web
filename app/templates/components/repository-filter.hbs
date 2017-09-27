@@ -1,0 +1,8 @@
+{{#if features.repositoryFiltering}}
+  <form>
+    <label for="search-input" class="hide">Search</label>
+    {{one-way-search query login=login update=(perform search) id="search-input" placeholder="Search"}}
+  </form>
+{{/if}}
+
+{{yield repositoriesResult isFiltering search.isRunning}}
