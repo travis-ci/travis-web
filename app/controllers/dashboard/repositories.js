@@ -1,8 +1,9 @@
 import Ember from 'ember';
-import { task, taskGroup } from 'ember-concurrency';
+import { task, taskGroup, timeout } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
+import { fetch, Headers } from 'fetch';
 
 export default Ember.Controller.extend({
   queryParams: ['account', 'offset'],
@@ -10,6 +11,7 @@ export default Ember.Controller.extend({
 
   @service flashes: null,
   @service ajax: null,
+  @service auth: null,
 
   starring: taskGroup().drop(),
 
@@ -20,6 +22,41 @@ export default Ember.Controller.extend({
       this.get('unstar')
     ];
   },
+
+  search: task(function * (term) {
+    if (Ember.isBlank(term)) { return []; }
+
+    yield timeout(200);
+
+    let url = `https://api-staging.travis-ci.org/repos/filter?query=${term}`;
+
+    let result = yield this.get('fetchFilteredRepos').perform(url);
+    return result.repositories;
+  }).restartable(),
+
+  fetchFilteredRepos: task(function * (url) {
+    let fetchResult;
+
+    try {
+      fetchResult = fetch(url, {
+        headers: new Headers({
+          'Travis-API-Version': '3',
+          'Authorization': `token ${this.get('auth').token()}`
+        })
+      }).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw 'error';
+        }
+      });
+
+    } finally {
+      //fetchResult.terminate();
+    }
+
+    return fetchResult;
+  }),
 
   star: task(function* (repo) {
     repo.set('starred', true);

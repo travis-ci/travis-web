@@ -1,3 +1,19 @@
+<form {{action "search" query on="submit"}}>
+  <label for="search-input" class="hide">Search</label>
+  {{one-way-search query update=(perform search) id="search-input" placeholder="Search"}}
+  <button>Search</button>
+</form>
+
+{{#if search.isRunning}}
+  Loading
+{{/if}}
+
+<ul>
+  {{#each search.lastSuccessful.value as |repo|}}
+    <li>{{repo.slug}}</li>
+  {{/each}}
+</ul>
+
 <div class="inner">
 <!--  <div class="dashboard-header">
     {{orgs-filter orgs=model.accounts selected=selectedOrg action="selectOrg"}}
