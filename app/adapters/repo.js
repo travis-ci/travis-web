@@ -12,6 +12,7 @@ export default V3Adapter.extend({
   buildURL(modelName, id, snapshot, requestType, query) {
     if (query) {
       const custom = query.custom;
+      delete query.custom;
       if (custom && custom.type === 'byOwner') {
         const { owner } = custom;
         return `${apiEndpoint}/owner/${owner}/repos`;
