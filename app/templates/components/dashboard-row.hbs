@@ -10,13 +10,13 @@
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
-      <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}</h2>
-      <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
+      <span class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}</span>
+      <span class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</span>
     </header>
 
   {{#if repo.active}}
     <section class="dash-default {{repo.defaultBranch.lastBuild.state}} fade-out">
-      <h3 class="label">Default branch</h3>
+      <span class="label">Default branch</span>
       <p class="row-content color">
         {{request-icon event=repo.defaultBranch.lastBuild.eventType state=repo.defaultBranch.lastBuild.state}}
         {{#if repo.defaultBranch.lastBuild.id}}
@@ -31,7 +31,7 @@
 
     {{#if repo.currentBuild}}
     <section class="dash-last {{repo.currentBuild.state}}">
-      <h3 class="label">Last build</h3>
+      <span class="label">Last build</span>
       <p class="row-content color">
         {{status-icon status=repo.currentBuild.state}}
         {{#link-to "build" repo.owner.login repo.name repo.currentBuild.id title="Last build on the repo"}}
@@ -40,7 +40,7 @@
       </p>
     </section>
     <section class="dash-commit">
-      <h3 class="label">Commit</h3>
+      <span class="label">Commit</span>
       <p class="row-content row-item commit-sha">
         {{tooltip-on-element text='View commit on GitHub'}}
         {{svg-jar 'icon-commit' class="icon"}}
@@ -53,7 +53,7 @@
       </p>
     </section>
     <section class="fade-out dash-finished">
-      <h3 class="label">Finished</h3>
+      <span class="label">Finished</span>
       <p class="row-content" title="{{repo.currentBuild.finishedAt}}">
         {{svg-jar 'icon-calendar' class="icon"}}
         <span class="label-align">
