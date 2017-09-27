@@ -10,6 +10,10 @@
       {{#if licenseExpirationIsImminent}}
         Your license expires {{expirationTimeFromNow}}, please contact enterprise@travis-ci.com
       {{/if}}
+
+      {{#if exceedingSeats}}
+        You’re approaching the maximum seats that your license permits, please contact enterprise@travis-ci.com if you need more seats.
+      {{/if}}
     {{/if}}
   </div>
 {{/if}}

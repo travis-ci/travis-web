@@ -1,6 +1,5 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import config from 'travis/config/environment';
 
 import topPage from 'travis/tests/pages/top';
 
@@ -55,7 +54,7 @@ test('when the trial expires tomorrow', function (assert) {
 
 test('when it’s not a trial as indicated by the license_type attribute', function (assert) {
   withFeature('enterpriseVersion');
-  server.get(`${config.replicatedApiEndpoint}/license/v1/license`, (schema, request) => {
+  server.get('/enterprise_license', (schema, request) => {
     return {
       'license_type': 'something',
       'expiration_time': this.expirationTime
@@ -72,7 +71,7 @@ test('when it’s not a trial as indicated by the license_type attribute', funct
 
 test('when it’s not a trial as indicated by presence of a billing_frequency attribute', function (assert) {
   withFeature('enterpriseVersion');
-  server.get(`${config.replicatedApiEndpoint}/license/v1/license`, (schema, request) => {
+  server.get('/enterprise_license', (schema, request) => {
     return {
       'billing_frequency': 'something',
       'expiration_time': this.expirationTime
@@ -107,6 +106,16 @@ test('when it’s not a trial but the expiration date is less than 21 days away'
   andThen(function () {
     assert.ok(topPage.enterpriseTrialBanner.isVisible);
     assert.equal(topPage.enterpriseTrialBanner.text, 'Your license expires 19 days from now, please contact enterprise@travis-ci.com');
+  });
+});
+
+test('when used seats are exeeding the amount listed in license', function (assert) {
+  withFeature('enterpriseVersion');
+  // hard coded current seats is 27
+  visit('/');
+  andThen(function () {
+    assert.ok(topPage.enterpriseTrialBanner.isVisible);
+    assert.equal(topPage.enterpriseTrialBanner.text, 'You’re approaching the maximum seats that your license permits, please contact enterprise@travis-ci.com if you need more seats.');
   });
 });
 
