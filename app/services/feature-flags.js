@@ -31,6 +31,8 @@ export default Ember.Service.extend({
         featuresService.disable(featureName);
       }
     });
+    // TODO: Clean this up
+    featuresService.enable('repository-filtering');
   }).drop(),
 
   reset() {
