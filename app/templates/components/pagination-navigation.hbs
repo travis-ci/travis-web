@@ -1,4 +1,4 @@
-<ul role="navigation">
+<ul>
   {{#unless pagination.isFirst}}
     <li>{{#link-to route (query-params offset=pagination.prev.offset) rel="prev" class="pagination-button" title="Go to previous page"}}prev{{/link-to}}</li>
   {{/unless}}

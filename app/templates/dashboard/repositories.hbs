@@ -18,7 +18,7 @@
       </ul>
     </section>
 
-    <section class="dashboard-section dashboard-active">
+    <section class="dashboard-section dashboard-active" id="all-repositories-list">
       <h2 class="small-title">All active repositories</h2>
       <ul class="repo-list">
         {{#each filteredRepos as |repo|}}
@@ -28,7 +28,11 @@
         {{/each}}
       </ul>
 
-      {{pagination-navigation collection=model.repos route="dashboard.repositories"}}
+      {{pagination-navigation
+          collection=model.repos
+          route="dashboard.repositories"
+          label="Repositories list pagination"
+          aria-controls="all-repositories-list"}}
     </section>
 
     <!-- <section class="dashboard-section dashboard-inactive">

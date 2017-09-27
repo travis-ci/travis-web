@@ -3,9 +3,20 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
 export default Ember.Component.extend({
+  // TODO for some reason voice over doesn't treat this as landmark
+  //      even though it has role=navigation and aria-label, find out
+  //      what's wrong about that
   tagName: 'nav',
   classNames: ['pagination-navigation'],
   @alias('collection.pagination') pagination: null,
+
+  attributeBindings: ['role', 'aria-label'],
+  role: 'navigation',
+
+  @computed('label')
+  'aria-label': function (label) {
+    return label;
+  },
 
   @computed('outer')
   outerWindow(outer) {
