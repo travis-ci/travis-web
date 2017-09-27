@@ -9,8 +9,6 @@ export default Ember.Controller.extend({
 
   @alias('auth.currentUser') user: null,
 
-  offset: 0,
-
   @action
   sync() {
     return this.get('user').sync();
