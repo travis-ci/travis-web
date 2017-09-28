@@ -37,16 +37,7 @@ export default Ember.Component.extend({
 
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
 
-    const repositories = yield this.get('store')
-      .query('repo', {
-        slug_matches: query,
-        sort_by: 'slug_match:desc',
-        limit: 10,
-        custom: {
-          owner: this.get('login'),
-          type: 'byOwner',
-        },
-      });
+    const repositories = yield this.get('queryFunction')(query);
 
     this.set('filteredRepositories', repositories);
   }).restartable(),
