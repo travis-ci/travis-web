@@ -13,9 +13,9 @@ export default Ember.Component.extend({
     return filteredRepositories || repositories;
   },
 
-  @computed('search.isRunning', 'filteredRepositories')
-  isFiltering(isRunning, filteredRepositories) {
-    return isRunning || filteredRepositories;
+  @computed('search.isRunning', 'lastQuery')
+  isFiltering(isRunning, lastQuery) {
+    return isRunning || !Ember.isEmpty(lastQuery);
   },
 
   @action
@@ -24,16 +24,16 @@ export default Ember.Component.extend({
   },
 
   search: task(function* (query) {
-    if (Ember.isBlank(query)) {
-      this.set('filteredRepositories', null);
-      return;
-    }
-
     if (this.get('lastQuery') === query) {
       return;
     }
 
     this.set('lastQuery', query);
+
+    if (Ember.isBlank(query)) {
+      this.set('filteredRepositories', null);
+      return;
+    }
 
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
 
