@@ -1,0 +1,5 @@
+{{#if jobMinutesJSON.isPending}}
+  {{loading-indicator}}
+{{else}}
+  {{ember-chart type='horizontalBar' data=jobMinutesData.data options=jobMinutesData.options width=800 height=600}}
+{{/if}}
