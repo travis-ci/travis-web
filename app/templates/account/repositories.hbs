@@ -28,7 +28,10 @@
     {{else}}
       <ul class="profile-repositorylist">
         {{#each filter.repositories as |repository|}}
-          {{repository-status-toggle repository=repository}}
+          {{repository-status-toggle
+          repository=repository
+          isFiltering=filter.isFiltering
+          query=filter.query}}
         {{else}}
           {{#if filter.isFiltering}}
             <li>Sorry, no results found.</li>
