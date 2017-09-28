@@ -5,6 +5,7 @@ import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
+  tagName: '',
   @service store: null,
 
   @computed('repositories', 'filteredRepositories')
