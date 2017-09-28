@@ -20,7 +20,11 @@
 
 {{#link-to "repo" repository.owner.login repository.name class="profile-repo"
   classNameBindings="admin:admin:non-admin"}}
-  {{repository.slug}}
+  {{#if isFiltering}}
+    {{fuzzy-highlight repository.slug query}}
+  {{else}}
+    {{repository.slug}}
+  {{/if}}
   <span>{{repository.description}}</span>
 {{/link-to}}
 
