@@ -86,5 +86,8 @@
     "node": "8.5.0",
     "npm": "5.4.2"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "fuzzysort": "^1.0.1"
+  }
 }
