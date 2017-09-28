@@ -53,6 +53,14 @@
 
     {{#repository-filter repositories=sortedRepositories
         login=model.account.login as |filter| }}
+      {{#component filter.form as |form|}}
+        {{#if features.repositoryFiltering}}
+          <div class="repository-filter">
+            <label>Filter repositories:</label>
+            {{component form.searchField}}
+          </div>
+        {{/if}}
+      {{/component}}
       <div id="administerable-repositories">
         {{#if filter.isLoading}}
           {{loading-indicator}}

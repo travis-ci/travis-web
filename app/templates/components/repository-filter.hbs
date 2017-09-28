@@ -1,13 +1,7 @@
-{{#if features.repositoryFiltering}}
-  <div class="repository-filter">
-    <label>Filter repositories:</label>
-    {{one-way-search query login=login update=(perform search) class="search"}}
-  </div>
-{{/if}}
-
 {{yield (hash
     repositories=repositoriesResult
     isFiltering=isFiltering
     isLoading=search.isRunning
+    form=(component 'repository-filter-form' onSearch=(action 'onSearch'))
   )
 }}
