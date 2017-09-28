@@ -52,7 +52,7 @@
     </ol>
 
     {{#repository-filter repositories=sortedRepositories
-    login=model.account.login as |filter| }}
+        login=model.account.login as |filter| }}
       <div id="administerable-repositories">
         {{#if filter.isLoading}}
           {{loading-indicator}}
