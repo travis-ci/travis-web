@@ -11,22 +11,22 @@
   {{pagination-navigation collection=model route="account.repositories" inner=6 outer=2}}
 {{/if}}
 
-    {{#repository-filter repositories=sortedRepositories
-    login=model.account.login as |repositories isFiltering isLoading| }}
-      <div id="administerable-repositories">
-        {{#if isLoading}}
-          {{loading-indicator}}
+{{#repository-filter repositories=sortedRepositories
+  login=model.account.login as |filter| }}
+  <div id="administerable-repositories">
+    {{#if filter.isLoading}}
+      {{loading-indicator}}
+    {{else}}
+      <ul class="profile-repositorylist">
+        {{#each filter.repositories as |repository|}}
+          {{repository-status-toggle repository=repository}}
         {{else}}
-          <ul class="profile-repositorylist">
-            {{#each repositories as |repository|}}
-              {{repository-status-toggle repository=repository}}
-            {{else}}
-              <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
-            {{/each}}
-          </ul>
-        {{/if}}
-      </div>
-      {{#unless isFiltering}}
-        {{pagination-navigation collection=model.repos route="account" inner=6 outer=2}}
-      {{/unless}}
-    {{/repository-filter}}
+          <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+  {{#unless filter.isFiltering}}
+    {{pagination-navigation collection=model.repos route="account" inner=6 outer=2}}
+  {{/unless}}
+{{/repository-filter}}
