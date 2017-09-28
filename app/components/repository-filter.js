@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { computed, action } from 'ember-decorators/object';
 
 export default Ember.Component.extend({
   tagName: '',
@@ -16,6 +16,11 @@ export default Ember.Component.extend({
   @computed('search.isRunning', 'filteredRepositories')
   isFiltering(isRunning, filteredRepositories) {
     return isRunning || filteredRepositories;
+  },
+
+  @action
+  onSearch(query) {
+    this.get('search').perform(query);
   },
 
   search: task(function* (query) {
