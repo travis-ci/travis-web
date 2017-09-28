@@ -23,6 +23,12 @@ export default Ember.Component.extend({
       return;
     }
 
+    if (this.get('lastQuery') === query) {
+      return;
+    }
+
+    this.set('lastQuery', query);
+
     yield timeout(config.intervals.repositoryFilteringDebounceRate);
 
     const repositories = yield this.get('store')
