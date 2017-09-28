@@ -2,4 +2,9 @@
   {{one-way-search query login=login update=(perform search) id="search-input" placeholder="Search"}}
 {{/if}}
 
-{{yield repositoriesResult isFiltering search.isRunning}}
+{{yield (hash
+    repositories=repositoriesResult
+    isFiltering=isFiltering
+    isLoading=search.isRunning
+  )
+}}
