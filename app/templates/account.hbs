@@ -70,7 +70,11 @@
              {{#each filter.repositories as |repository|}}
                {{repository-status-toggle repository=repository}}
              {{else}}
-               <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
+               {{#if filter.isFiltering}}
+                 <li>Sorry, no results found.</li>
+               {{else}}
+                <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
+               {{/if}}
              {{/each}}
            </ul>
          {{/if}}
