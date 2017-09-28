@@ -1,5 +1,8 @@
 {{#if features.repositoryFiltering}}
-  {{one-way-search query login=login update=(perform search) id="search-input" placeholder="Search"}}
+  <div class="repository-filter">
+    <label>Filter repositories:</label>
+    {{one-way-search query login=login update=(perform search) class="search"}}
+  </div>
 {{/if}}
 
 {{yield (hash
