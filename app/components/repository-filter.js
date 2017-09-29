@@ -3,6 +3,7 @@ import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
+import fuzzyMatch from 'travis/utils/fuzzy-match';
 
 export default Ember.Component.extend({
   tagName: '',
@@ -41,4 +42,12 @@ export default Ember.Component.extend({
 
     this.set('filteredRepositories', repositories);
   }).restartable(),
+
+  computeSlug(slug, isFiltering, query) {
+    if (isFiltering) {
+      return Ember.String.htmlSafe(fuzzyMatch(slug, query));
+    } else {
+      return slug;
+    }
+  },
 });
