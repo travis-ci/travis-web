@@ -57,3 +57,8 @@ deploy:
 
 after_success:
   - "test $TRAVIS_PULL_REQUEST && test $TRAVIS_PULL_REQUEST != 'false' && $TRAVIS_SECURE_ENV_VARS == 'true' && ./config/deployment/deploy-pull-request.sh"
+  - mv tests/acceptance/failing-test-off.js tests/acceptance/failing-test.js
+  - ember test --reporter tap --filter fail > test.tap
+  - echo TAP BEGIN
+  - cat test.tap
+  - echo TAP END
