@@ -30,8 +30,8 @@
         {{#each filter.repositories as |repository|}}
           {{repository-status-toggle
           repository=repository
-          isFiltering=filter.isFiltering
-          query=filter.query}}
+          slug=(compute filter.computeSlug repository.slug filter.isFiltering filter.query)
+          }}
         {{else}}
           {{#if filter.isFiltering}}
             <li>Sorry, no results found.</li>
