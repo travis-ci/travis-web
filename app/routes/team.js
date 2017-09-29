@@ -1,4 +1,13 @@
 import TravisRoute from 'travis/routes/basic';
+import config from 'travis/config/environment';
+
+function maybeShuffleArray(array) {
+  if (config.randomiseTeam) {
+    return shuffleArray(array);
+  } else {
+    return array;
+  }
+}
 
 // Adapted from https://stackoverflow.com/a/12646864
 function shuffleArray(array) {
@@ -13,7 +22,7 @@ export default TravisRoute.extend({
   needsAuth: false,
 
   model() {
-    return shuffleArray([
+    return maybeShuffleArray([
       {
         name: 'Sven Fuchs',
         title: 'The Original Builder',
