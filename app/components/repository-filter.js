@@ -45,7 +45,6 @@ export default Ember.Component.extend({
 
   computeSlug(slug, isFiltering, query) {
     if (isFiltering) {
-      // TODO: we can't call html safe here on the entire string
       return Ember.String.htmlSafe(fuzzyMatch(slug, query));
     } else {
       return slug;
