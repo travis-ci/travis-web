@@ -34,7 +34,8 @@ test('header layout when authenticated', function (assert) {
     assert.ok(proLayout.headerWrapperWhenAuthenticated, 'Header is wrapped within proper DOM');
     assert.ok(proHeader.logoPresent, 'Pro header has logo');
     assert.ok(proHeader.broadcastsPresent, 'Pro header shows broadcasts tower');
-    assert.equal(proHeader.navigationLinks(0).title, 'Status', 'Shows link to Status');
+    assert.equal(proHeader.navigationLinks(0).title, 'About Us', 'Shows link to About Us');
+    assert.equal(proHeader.navigationLinks(1).title, 'Status', 'Shows link to Status');
 
     assert.equal(proHeader.navDropdowns(0).title, 'Help', 'Shows Help dropdown');
     assert.equal(proHeader.navDropdowns(0).childLinks(0).title, 'Email Support', 'Shows support link in Help dropdown');
