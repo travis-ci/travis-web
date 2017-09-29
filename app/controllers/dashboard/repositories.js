@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { task, taskGroup } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
-import { computed } from 'ember-decorators/object';
+import { computed, action } from 'ember-decorators/object';
 import dashboardRepositoriesSort from 'travis/utils/dashboard-repositories-sort';
 
 export default Ember.Controller.extend({
@@ -99,6 +99,17 @@ export default Ember.Controller.extend({
       }
     });
     return filteredAccount[0];
+  },
+
+  @action
+  filterQuery(query) {
+    return this.get('store')
+      .query('repo', {
+        slug_matches: query,
+        sort_by: 'slug_match:desc',
+        limit: 10,
+        active: true
+      });
   },
 
   actions: {

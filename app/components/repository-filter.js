@@ -3,6 +3,7 @@ import { task, timeout } from 'ember-concurrency';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed, action } from 'ember-decorators/object';
+import fuzzyMatch from 'travis/utils/fuzzy-match';
 
 export default Ember.Component.extend({
   tagName: '',
@@ -41,4 +42,51 @@ export default Ember.Component.extend({
 
     this.set('filteredRepositories', repositories);
   }).restartable(),
+
+  computeSlug(slug, isFiltering, query) {
+    if (isFiltering) {
+      // TODO: we can't call html safe here on the entire string
+      return Ember.String.htmlSafe(fuzzyMatch(slug, query));
+    } else {
+      return slug;
+    }
+  },
+
+  computeOwnerLogin(slug, isFiltering, query) {
+    if (isFiltering) {
+      let result = fuzzyMatch(slug, query, '{{', '}}');
+      // we need to match the entire slug and then split it into 2, but we also
+      // need to take into account that the highlight might include the slash,
+      // for example travis-{{ci/foo}} if a user searches for ci/foo
+      let [owner, name] = result.split('/');
+      let match = owner.match(new RegExp('\{\{|\}\}', 'g'));
+      if (match && match.length % 2 === 1) {
+        // the number of parens is odd, we need to close
+        owner = `${owner}}}`
+      }
+      owner = owner.replace(new RegExp('{{', 'g'), '<b>').replace(new RegExp('}}', 'g'), '</b>')
+      return Ember.String.htmlSafe(owner);
+    } else {
+      return slug.split('/')[0];
+    }
+  },
+
+  computeRepoName(slug, isFiltering, query) {
+    if (isFiltering) {
+      let result = fuzzyMatch(slug, query, '{{', '}}');
+      // we need to match the entire slug and then split it into 2, but we also
+      // need to take into account that the highlight might include the slash,
+      // for example travis-{{ci/foo}} if a user searches for ci/foo
+      let [owner, name] = result.split('/');
+      let match = name.match(new RegExp('\{\{|\}\}', 'g'));
+      if (match && match.length % 2 === 1) {
+        // the number of parens is odd, we need to open
+        name = `{{${name}`
+      }
+      name = name.replace(new RegExp('{{', 'g'), '<b>').replace(new RegExp('}}', 'g'), '</b>')
+      return Ember.String.htmlSafe(name);
+    } else {
+      return slug.split('/')[1];
+    }
+  },
 });

@@ -9,7 +9,7 @@
       <h2 class="small-title">Starred repositories</h2>
       <ul class="repo-list">
       {{#each starredRepos as |repo|}}
-        {{dashboard-row repo=repo star=star unstar=unstar}}
+        {{dashboard-row ownerLogin=repo.owner.login repoName=repo.name repo=repo star=star unstar=unstar}}
       {{else}}
         <div class="starred-empty">
           {{svg-jar 'icon-star' class="icon--m"}} You can keep track of your favorite repositories here once you start starring!
@@ -18,19 +18,45 @@
       </ul>
     </section>
 
-    <section class="dashboard-section dashboard-active">
-      <h2 class="small-title">All active repositories</h2>
-      <ul class="repo-list">
-        {{#each filteredRepos as |repo|}}
-          {{dashboard-row repo=repo star=star unstar=unstar}}
-        {{else}}
-          {{no-repos}}
-        {{/each}}
-      </ul>
+    {{#repository-filter
+       repositories=filteredRepos
+       queryFunction=(action 'filterQuery') as |filter| }}
+      <section class="dashboard-section dashboard-active">
+        <h2 class="small-title">All active repositories</h2>
 
-      {{pagination-navigation collection=model.repos route="dashboard.repositories"}}
-    </section>
+        {{#component filter.form as |form|}}
+          {{#if features.repositoryFiltering}}
+            <div class="repository-filter">
+              <label>Filter repositories:</label>
+              {{component form.searchField}}
+            </div>
+          {{/if}}
+        {{/component}}
 
+       {{#if filter.isLoading}}
+         {{loading-indicator}}
+       {{else}}
+         <ul class="repo-list">
+           {{#each filter.repositories as |repo|}}
+           {{dashboard-row
+               ownerLogin=(compute filter.computeOwnerLogin repo.slug filter.isFiltering filter.query)
+               repoName=(compute filter.computeRepoName repo.slug filter.isFiltering filter.query)
+               repo=repo star=star unstar=unstar}}
+           {{else}}
+             {{#if filter.isFiltering}}
+               <li>Sorry, no results found.</li>
+             {{else}}
+               {{no-repos}}
+             {{/if}}
+           {{/each}}
+         </ul>
+       {{/if}}
+
+        {{#unless filter.isFiltering}}
+          {{pagination-navigation collection=model.repos route="dashboard.repositories"}}
+        {{/unless}}
+      </section>
+    {{/repository-filter}}
     <!-- <section class="dashboard-section dashboard-inactive">
       <h2 class="small-title">Inactive repositories</h2>
       <ul class="repo-list">

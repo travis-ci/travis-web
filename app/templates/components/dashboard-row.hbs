@@ -1,3 +1,4 @@
+{{slug}}
 <div class="dash-head">
   <button {{action "starRepo"}} class="dash-star {{if repo.starred 'is-starred'}}" title="{{if repo.starred 'un'}}star this repo">
     {{svg-jar 'icon-star' class="icon--m"}}
@@ -10,8 +11,8 @@
 <div class="dash-body">
   <div class="dash-main">
     <header class="fade-out dash-header">
-      <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{repo.owner.login}}{{/link-to}}</h2>
-      <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repo.name}}{{/link-to}}</h1>
+      <h2 class="row-label">{{#link-to "owner" repo.owner.login title=repo.owner.login}}{{ownerLogin}}{{/link-to}}</h2>
+      <h1 class="row-content">{{#link-to "repo" repo.owner.login repo.name title=repo.name}}{{repoName}}{{/link-to}}</h1>
     </header>
 
   {{#if repo.active}}
