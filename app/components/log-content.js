@@ -76,6 +76,32 @@ export default Ember.Component.extend({
 
   isShowingRemoveLogModal: false,
 
+  logHasTap: Ember.computed('job.log.tttext', function () {
+    const text = this.get('job.log.tttext');
+
+    return text.includes('TAP BEGIN');
+  }),
+
+  tapSection: Ember.computed('logHasTap', 'job.log.tttext', function () {
+    const text = this.get('job.log.tttext');
+
+    const beginString = 'TAP BEGIN';
+    const endString = 'TAP END';
+
+    const beginStringStart = text.indexOf(beginString);
+    const endStringStart = text.indexOf(endString);
+
+    const textWithNoise = text.substring(beginStringStart + beginString.length, endStringStart);
+
+    const notOkString = 'not ok';
+    const travisTimeString = 'travis_time:end';
+
+    const notOkStringStart = textWithNoise.indexOf(notOkString);
+    const travisTimeStringStart = textWithNoise.indexOf(travisTimeString, notOkStringStart);
+
+    return textWithNoise.substring(notOkStringStart, travisTimeStringStart);
+  }),
+
   didInsertElement() {
     if (this.get('features.debugLogging')) {
       // eslint-disable-next-line
