@@ -1,5 +1,24 @@
 {{#if logHasTap}}
-  <pre>{{tapSection}}</pre>
+{{#if tapSection}}
+  {{#if results}}
+  <table style='width: 100%; border: 1px; padding-bottom: 1em' border=1>
+    <thead>
+      <th>test</th>
+      <th>actual</th>
+      <th>expected</th>
+    </thead>
+    <tbody>
+  {{#each results.failures as |failure|}}
+    <tr>
+      <td>{{failure.name}}</td>
+      <td>{{failure.diag.actual}}</td>
+      <td>{{failure.diag.expected}}</td>
+    </tr>
+  {{/each}}
+</tbody>
+</table>
+{{/if}}
+{{/if}}
 {{/if}}
 
 <section id="log-container" class="log">

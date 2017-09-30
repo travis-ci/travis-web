@@ -10,6 +10,9 @@ import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
+import TapParser from 'npm:tap-parser';
+import stringToStream from 'npm:string-to-stream';
+
 Log.LIMIT = config.logLimit;
 
 Log.Scroll = function (options = {}) {
@@ -99,7 +102,18 @@ export default Ember.Component.extend({
     const notOkStringStart = textWithNoise.indexOf(notOkString);
     const travisTimeStringStart = textWithNoise.indexOf(travisTimeString, notOkStringStart);
 
-    return textWithNoise.substring(notOkStringStart, travisTimeStringStart);
+    const tapSection = textWithNoise.substring(notOkStringStart, travisTimeStringStart);
+
+    window.ttss = tapSection;
+    window.ttpp = TapParser;
+    console.log('tap section?', tapSection);
+
+    const parser = new TapParser(results => {
+      console.log(results);
+      this.set('results', results);
+    });
+    stringToStream(tapSection).pipe(parser);
+    return tapSection;
   }),
 
   didInsertElement() {
