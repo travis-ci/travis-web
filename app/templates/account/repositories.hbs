@@ -30,6 +30,6 @@
     {{/if}}
   </div>
   {{#unless filter.isFiltering}}
-    {{pagination-navigation collection=model.repos route="account" inner=6 outer=2}}
+    {{pagination-navigation collection=model.repos route="account.repositories" inner=6 outer=2}}
   {{/unless}}
 {{/repository-filter}}
