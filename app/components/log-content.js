@@ -106,10 +106,8 @@ export default Ember.Component.extend({
 
     window.ttss = tapSection;
     window.ttpp = TapParser;
-    console.log('tap section?', tapSection);
 
     const parser = new TapParser(results => {
-      console.log(results);
       this.set('results', results);
     });
     stringToStream(tapSection).pipe(parser);
