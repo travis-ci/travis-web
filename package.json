@@ -62,7 +62,7 @@
     "ember-load-initializers": "1.0.0",
     "ember-modal-dialog": "^2.2.0",
     "ember-percy": "1.2.13",
-    "ember-prism": "0.1.0",
+    "ember-prism": "0.1.1",
     "ember-qunit-nice-errors": "1.1.2",
     "ember-resolver": "4.1.0",
     "ember-route-action-helper": "^2.0.3",
