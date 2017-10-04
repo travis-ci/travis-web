@@ -21,19 +21,6 @@ export default Ember.Controller.extend({
     return hook.toggle();
   },
 
-  @action
-  filterQuery(query) {
-    return this.get('store')
-      .query('repo', {
-        slug_matches: query,
-        sort_by: 'slug_match:desc',
-        limit: 10,
-        custom: {
-          owner: this.get('model.account.login'),
-          type: 'byOwner',
-        },
-      });
-  },
   @computed('model.{name,login}')
   accountName(name, login) {
     return name || login;
