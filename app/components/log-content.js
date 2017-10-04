@@ -80,7 +80,7 @@ export default Ember.Component.extend({
   isShowingRemoveLogModal: false,
 
   logHasTap: Ember.computed('job.log.tttext', function () {
-    const text = this.get('job.log.tttext');
+    const text = this.get('job.log.tttext') || '';
 
     return text.includes('TAP BEGIN');
   }),
