@@ -8,6 +8,9 @@
   border: 1px solid $cream-dark
   margin-bottom: 5px
   display: flex
+  flex-flow: column nowrap
+  @media #{$medium-up}
+    flex-flow: row nowrap
   @each $state, $colorMap in $stateMap
     +colorJobs(map-get($colorMap, color), $state, 3px, map-get($colorMap, color-bg))
     +colorFadeOut($state, map-get($colorMap, color-bg))
@@ -88,7 +91,7 @@
 .job-number
   display: inline-block
   @media #{$medium-up}
-    flex: 0 0 7em
+    flex: 0 0 6em
     padding-right: 1em
     border-right: 1px solid $cream-dark
 
@@ -99,7 +102,7 @@
     width: 18px
     height: 20px
   @media #{$medium-up}
-    flex: 0 0 4em
+    flex: 0 0 3.6em
     text-align: center
     pointer-events: initial
     .icon
@@ -114,35 +117,44 @@
     .icon.linux
       display: none
 
-
 .job-lang
   overflow: hidden
   @media #{$medium-up}
-    flex: 1 0 24%
+    flex: 1 0 20%
     position: relative
     white-space: nowrap
+    text-overflow: ellipsis
     &:after
       content: ""
       @include fadeOut(right, -90deg, white)
 
 .job-env
   @media #{$medium-up}
-    flex: 1 1 38%
+    flex: 1 0 30%
     position: relative
+    max-width: 23em
+    margin-left: -1em
+    padding: 0.3em 0.5em 0.5em 0.7em
+    align-self: flex-start
     white-space: nowrap
     overflow: hidden
-    max-width: 40em
+    text-overflow: ellipsis
     &:after
       @include fadeOut(right, -90deg, white)
+  @media #{$xlarge-up}
+    flex: 2 0 20em
+    max-width: 39em
+  @media #{$xxlarge-up}
+    max-width: 55em
   &.is-empty
     opacity: .5
 
-.wrapper:not(.centered)
-  .job-env
-    @media #{$xlarge-up}
-      max-width: 50em
-    @media #{$xxlarge-up}
-      max-width: 70em
+.centered
+  @media #{$xlarge-up}
+    .job-env
+      flex: 0 0 21em
+    .job-lang
+      flex: 0 0 21em
 
 .job-duration
   flex: 0 0 10rem
