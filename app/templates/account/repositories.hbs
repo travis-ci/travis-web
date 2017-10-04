@@ -1,0 +1,12 @@
+<div id="administerable-repositories">
+  <ul class="profile-repositorylist">
+    {{#each sortedRepositories as |repository|}}
+      {{repository-status-toggle repository=repository}}
+    {{else}}
+      <li>Sorry, it seems like we couldn't find any repositories you have access to on GitHub.</li>
+    {{/each}}
+  </ul>
+</div>
+{{#if sortedRepositories.length}}
+  {{pagination-navigation collection=model route="account.repositories" inner=6 outer=2}}
+{{/if}}

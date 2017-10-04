@@ -15,12 +15,4 @@ export default TravisRoute.extend({
     controller.set('organizations', orgs);
     return controller.set('model', model);
   },
-
-  renderTemplate() {
-    this._super(...arguments);
-    return this.render('profile_accounts', {
-      outlet: 'left',
-      into: 'profile'
-    });
-  }
 });
