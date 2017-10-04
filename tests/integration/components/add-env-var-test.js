@@ -70,6 +70,16 @@ test('it shows an error if no name is present', function (assert) {
   assert.ok(!this.$('.form-error-message').length, 'the error message should be removed after value is changed');
 });
 
+test('it does not show an error when changing the public switch', function (assert) {
+  assert.expect(1);
+
+  this.render(hbs`{{add-env-var repo=repo}}`);
+
+  this.$('.switch-inner').click();
+
+  assert.notOk(this.$('.form-error-message').length, 'there should be no error message');
+});
+
 test('it adds a public env var on submit', function (assert) {
   assert.expect(6);
 
