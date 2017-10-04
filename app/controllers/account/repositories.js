@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
         sort_by: 'slug_match:desc',
         limit: 10,
         custom: {
-          owner: this.get('model.account.login'),
+          owner: this.get('login'),
           type: 'byOwner',
         },
       });

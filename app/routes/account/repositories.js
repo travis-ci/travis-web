@@ -26,4 +26,10 @@ export default TravisRoute.extend({
       );
     }
   },
+
+  setupController(controller, model) {
+    const account = this.modelFor('account');
+    controller.set('login', account.get('login'));
+    return this._super(...arguments);
+  },
 });
