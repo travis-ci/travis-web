@@ -348,6 +348,14 @@ export default TravisRoute.extend({
         image: 'joshua'
       },
       {
+        name: 'Nick Stenning',
+        title: 'Nopealope Herder',
+        handle: 'nickstenning',
+        nationality: 'europe',
+        country: 'germany',
+        image: 'nick'
+      },
+      {
         name: 'Bianca Wilk',
         title: 'Marketing Builder',
         handle: 'biancatwilk',
