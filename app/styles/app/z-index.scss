@@ -3,8 +3,9 @@ $z-index: (
   above: 10,
   above-above: 20,
   flashes: 30,
-  overlay: 40,
-  dialog: 50
+  above-flashes: 40,
+  overlay: 50,
+  dialog: 60
 );
 
 @function z-index($key) {
