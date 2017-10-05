@@ -49,7 +49,7 @@
       +colorSVG(white)
       background: $oxide-blue
       color: white
-      
+
   @media #{$medium-up}
     position: absolute
     right: 0
@@ -59,7 +59,7 @@
     border: 1px solid $oxide-blue
     border-radius: 2px
     display: none
-    z-index: 2
+    @include z-index(above)
     text-align: left
     li
       display: block
@@ -75,4 +75,4 @@
           position: absolute
           bottom: -0.7em
           right: 1.7em
-          z-index: -1
+          @include z-index(under)
