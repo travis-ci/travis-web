@@ -35,6 +35,7 @@ export default Ember.Service.extend({
     this.get('store').unloadAll();
     this.set('currentUser', null);
     this.clearNonAuthFlashes();
+    this.get('router').transitionTo('index');
   },
 
   signIn(data) {
@@ -61,7 +62,7 @@ export default Ember.Service.extend({
         // or 403
         if (!xhr || (xhr.status === 401 || xhr.status === 403)) {
           this.get('flashes').error(this.get('tokenExpiredMsg'));
-          this.signOut();
+          return this.signOut();
         }
       });
     }
