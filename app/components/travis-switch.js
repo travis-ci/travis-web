@@ -6,6 +6,9 @@ export default Ember.Component.extend({
   classNames: ['travis-switch', 'switch'],
   classNameBindings: ['_active:active'],
 
+  attributeBindings: ['type'],
+  type: 'button',
+
   @or('target.active', 'active') _active: null,
 
   click() {

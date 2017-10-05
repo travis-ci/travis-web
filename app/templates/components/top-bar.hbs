@@ -31,6 +31,7 @@
 
 <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
+      <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
     {{#unless features.enterpriseVersion}}
       {{#unless features.proVersion}}
         <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
@@ -46,7 +47,6 @@
 
       {{#if features.proVersion}}
         {{#unless auth.signedIn}}
-          <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
           <li><a href="/plans" title="Plans and Prices for Travis CI" class="navigation-anchor">Plans & Pricing</a></li>
           <li><a href="https://enterprise.travis-ci.com" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
         {{else}}

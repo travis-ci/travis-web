@@ -204,8 +204,9 @@ export default Ember.Service.extend({
       if (errMsg !== this.get('tokenExpiredMsg')) {
         return this.get('flashes').clear();
       }
+    } else {
+      return this.get('flashes').clear();
     }
-    return this.get('flashes').clear();
   },
 
   sync() {

@@ -1,10 +1,28 @@
 import TravisRoute from 'travis/routes/basic';
+import config from 'travis/config/environment';
+
+function maybeShuffleArray(array) {
+  if (config.randomiseTeam) {
+    return shuffleArray(array);
+  } else {
+    return array;
+  }
+}
+
+// Adapted from https://stackoverflow.com/a/12646864
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 export default TravisRoute.extend({
   needsAuth: false,
 
   model() {
-    return [
+    return maybeShuffleArray([
       {
         name: 'Sven Fuchs',
         title: 'The Original Builder',
@@ -328,7 +346,23 @@ export default TravisRoute.extend({
         nationality: 'usa',
         country: 'usa',
         image: 'joshua'
+      },
+      {
+        name: 'Nick Stenning',
+        title: 'Nopealope Herder',
+        handle: 'nickstenning',
+        nationality: 'europe',
+        country: 'germany',
+        image: 'nick'
+      },
+      {
+        name: 'Bianca Wilk',
+        title: 'Marketing Builder',
+        handle: 'biancatwilk',
+        nationality: 'polandchile',
+        country: 'germanycolombia',
+        image: 'bianca'
       }
-    ];
+    ]);
   }
 });
