@@ -15,7 +15,7 @@ echo deployment url: $FULL_URL
 if [[ $DEPLOYMENT_EXIT_CODE ]]
 then
   curl -X POST \
-       --data "{\"state\": \"error\", \"description\": \"There was a failure with the PR deployment 😢\", \"context\": \"deployments/$FULL_ENVIRONMENT\"}" \
+       --data "{\"state\": \"error\", \"description\": \"There was a failure with the PR deployment :cry:\", \"context\": \"deployments/$FULL_ENVIRONMENT\"}" \
        -H "Authorization: token $GITHUB_TOKEN" \
        https://api.github.com/repos/travis-ci/travis-web/statuses/$TRAVIS_PULL_REQUEST_SHA
 else
