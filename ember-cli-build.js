@@ -36,9 +36,7 @@ module.exports = function () {
     'ember-cli-babel': {
       includePolyfill: true,
     },
-    // need to use babel6 key here until
-    // we can upgrade to ember-cli@2.13
-    babel6: {
+    babel: {
       blacklist: ['regenerator'],
       plugins: [
         'transform-decorators-legacy',
