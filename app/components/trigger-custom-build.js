@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 import YAML from 'npm:yamljs';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { filterBy, notEmpty } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service ajax: null,
   @service flashes: null,
   @service router: null,

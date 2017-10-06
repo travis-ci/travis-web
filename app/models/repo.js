@@ -1,6 +1,12 @@
+import ArrayProxy from '@ember/array/proxy';
+import {
+  Promise as EmberPromise,
+  allSettled
+} from 'rsvp';
+import $ from 'jquery';
+import { A } from '@ember/array';
 import ExpandableRecordArray from 'travis/utils/expandable-record-array';
 import Model from 'ember-data/model';
-import Ember from 'ember';
 import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
@@ -65,7 +71,7 @@ const Repo = Model.extend({
   _buildObservableArray(builds) {
     const array = ExpandableRecordArray.create({
       type: 'build',
-      content: Ember.A([])
+      content: A([])
     });
     array.load(builds);
     array.observe(builds);
@@ -115,7 +121,7 @@ const Repo = Model.extend({
   @computed('slug', '_stats')
   stats(slug, stats) {
     if (slug) {
-      return stats || Ember.$.get(`https://api.github.com/repos/${slug}`, (data) => {
+      return stats || $.get(`https://api.github.com/repos/${slug}`, (data) => {
         this.set('_stats', data);
         return this.notifyPropertyChange('stats');
       }) && {};
@@ -189,7 +195,7 @@ Repo.reopenClass({
       let repoId = parseInt(repo.get('id'));
       return reposIds.includes(repoId);
     });
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new EmberPromise((resolve, reject) => {
       const params = {
         'repository.active': 'true',
         sort_by: 'current_build:desc',
@@ -202,14 +208,14 @@ Repo.reopenClass({
 
   search(store, ajax, query) {
     let promise, queryString, result;
-    queryString = Ember.$.param({
+    queryString = $.param({
       search: query,
       orderBy: 'name',
       limit: 5
     });
     const url = `/repos?${queryString}`;
     promise = ajax.ajax(url, 'get');
-    result = Ember.ArrayProxy.create({
+    result = ArrayProxy.create({
       content: []
     });
     return promise.then((data) => {
@@ -221,7 +227,7 @@ Repo.reopenClass({
           return record;
         });
       });
-      return Ember.RSVP.allSettled(promises).then(() => result);
+      return allSettled(promises).then(() => result);
     });
   },
 

@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import { controller } from 'ember-decorators/controller';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   @controller('repo') repoController: null,
 
   queryParams: ['requestId'],

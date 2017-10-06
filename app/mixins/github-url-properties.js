@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   @service externalLinks: null,
 
   @computed('repo.slug', 'commit.sha')

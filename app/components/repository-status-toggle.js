@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { task } from 'ember-concurrency';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'li',
   classNames: ['row'],
   classNameBindings: ['repository.active:active'],

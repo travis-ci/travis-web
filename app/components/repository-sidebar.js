@@ -1,3 +1,6 @@
+import { isEmpty } from '@ember/utils';
+import { schedule } from '@ember/runloop';
+import Component from '@ember/component';
 import Ember from 'ember';
 import Visibility from 'npm:visibilityjs';
 import { task } from 'ember-concurrency';
@@ -5,7 +8,7 @@ import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service tabStates: null,
   @service jobState: null,
   @service ajax: null,
@@ -20,7 +23,7 @@ export default Ember.Component.extend({
     // this starts the fetch after the sidebar is rendered, which is not ideal.
     // But I'm otherwise unable to reference that state within two separate
     // templates...
-    Ember.run.schedule('afterRender', () => {
+    schedule('afterRender', () => {
       this.get('fetchRepositoryData').perform();
       this.get('jobState.fetchRunningJobs').perform();
     });
@@ -93,7 +96,7 @@ export default Ember.Component.extend({
     const ownedRepositories = yield this.get('repositories.requestOwnedRepositories').perform();
     const onIndexPage = this.get('router.currentRouteName') === 'index';
 
-    if (this.get('auth.signedIn') && Ember.isEmpty(ownedRepositories) && onIndexPage) {
+    if (this.get('auth.signedIn') && isEmpty(ownedRepositories) && onIndexPage) {
       this.get('router').transitionTo('getting_started');
     }
   }),

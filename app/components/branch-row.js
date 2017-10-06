@@ -1,9 +1,13 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import EmberObject from '@ember/object';
+import $ from 'jquery';
+import ArrayProxy from '@ember/array/proxy';
+import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service router: null,
   @service permissions: null,
   @service externalLinks: null,
@@ -23,7 +27,7 @@ export default Ember.Component.extend({
   @computed()
   getLast5Builds() {
     let apiEndpoint, branchName, lastBuilds, options, repoId;
-    lastBuilds = Ember.ArrayProxy.create({
+    lastBuilds = ArrayProxy.create({
       content: [{}, {}, {}, {}, {}],
       isLoading: true,
       count: 0
@@ -46,9 +50,9 @@ export default Ember.Component.extend({
       let params = `?branch.name=${branchName}&limit=5&build.event_type=push,api,cron`;
       let url = `${path}${params}`;
 
-      Ember.$.ajax(url, options).then(response => {
+      $.ajax(url, options).then(response => {
         let array, i, ref;
-        array = response.builds.map(build => Ember.Object.create(build));
+        array = response.builds.map(build => EmberObject.create(build));
         // TODO: Clean this up, all we want to do is have 5 elements no matter
         // what. This code doesn't express that very well.
         if (array.length < 5) {
@@ -57,7 +61,7 @@ export default Ember.Component.extend({
           }
         }
 
-        Ember.run(() => {
+        run(() => {
           lastBuilds.set('count', response['@pagination'].count);
           lastBuilds.set('content', array);
           lastBuilds.set('isLoading', false);

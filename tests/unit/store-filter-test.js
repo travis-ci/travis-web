@@ -1,5 +1,6 @@
+import { run } from '@ember/runloop';
+import { resolve, all } from 'rsvp';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleForModel('repo', 'Unit | store.filter', {
   needs: ['model:repo', 'service:ajax', 'service:auth', 'service:store']
@@ -12,10 +13,10 @@ test('it does not run query if query params are not passed', function (assert) {
   store.query = function () {
     assert.ok(false, 'store.query was called, but it should not');
 
-    return Ember.RSVP.resolve();
+    return resolve();
   };
 
-  Ember.run(() => {
+  run(() => {
     store.push({
       data: {
         id: 1,
@@ -43,10 +44,10 @@ test('it adds records already in the store to filtered collection', function (as
   store.query = function () {
     assert.ok(true, 'store.query was called');
 
-    return Ember.RSVP.resolve();
+    return resolve();
   };
 
-  Ember.run(() => {
+  run(() => {
     store.push({
       data: {
         id: 1,
@@ -88,10 +89,10 @@ test('it modifies filtered collection when dependencies change', function (asser
   store.query = function () {
     assert.ok(true, 'store.query was called');
 
-    return Ember.RSVP.resolve();
+    return resolve();
   };
 
-  Ember.run(() => {
+  run(() => {
     store.push({
       data: {
         id: 1,
@@ -127,13 +128,13 @@ test('it modifies filtered collection when dependencies change', function (asser
     let repo1 = store.peekRecord('repo', 1);
     let repo2 = store.peekRecord('repo', 2);
 
-    Ember.run(() => {
+    run(() => {
       repo1.set('starred', false);
     });
 
     assert.deepEqual(collection.toArray().map((r) => r.get('id')), []);
 
-    Ember.run(() => {
+    run(() => {
       repo2.set('starred', true);
     });
 
@@ -149,7 +150,7 @@ test('it runs store.query in the background with forceReload', function (assert)
   store.query = function () {
     queryCount += 1;
 
-    return Ember.RSVP.resolve();
+    return resolve();
   };
 
   let promises = [];
@@ -159,7 +160,7 @@ test('it runs store.query in the background with forceReload', function (assert)
 
   let done = assert.async();
 
-  Ember.RSVP.all(promises).then((results) => {
+  all(promises).then((results) => {
     done();
 
     assert.equal(queryCount, 3);
@@ -173,7 +174,7 @@ test('it adds new records in the store to the filtered collection', function (as
   store.query = function () {
     assert.ok(true, 'store.query was called');
 
-    return Ember.RSVP.resolve();
+    return resolve();
   };
 
   let result = store.filter('repo', {}, (repo) => repo.get('starred'), ['starred']);
@@ -185,7 +186,7 @@ test('it adds new records in the store to the filtered collection', function (as
 
     assert.equal(collection.toArray().length, 0);
 
-    Ember.run(() => {
+    run(() => {
       store.push({
         data: {
           id: 1,

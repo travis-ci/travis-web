@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
@@ -22,11 +22,11 @@ export default TravisRoute.extend({
     let { apiEndpoint } = config;
     let includes = '?include=organization.repositories,repository.default_branch,build.commit';
     let url = `${apiEndpoint}/owner/${owner}${includes}`;
-    return Ember.$.ajax(url, options);
+    return $.ajax(url, options);
   },
 
   renderTemplate() {
-    Ember.$('body').attr('id', 'owner');
+    $('body').attr('id', 'owner');
     this._super(...arguments);
   },
 

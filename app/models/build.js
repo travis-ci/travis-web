@@ -1,8 +1,10 @@
 /* global moment */
+import { all } from 'rsvp';
+
+import { isEmpty } from '@ember/utils';
 import safelistedConfigKeys from 'travis/utils/safelisted-config-keys';
 import pickBy from 'npm:lodash.pickby';
 import configKeysMap from 'travis/utils/keys-map';
-import Ember from 'ember';
 import Model from 'ember-data/model';
 import DurationCalculations from 'travis/mixins/duration-calculations';
 import attr from 'ember-data/attr';
@@ -114,7 +116,7 @@ export default Model.extend(DurationCalculations, {
 
   @computed('jobs.@each.canCancel')
   canCancel(jobs) {
-    return !Ember.isEmpty(jobs.filterBy('canCancel'));
+    return !isEmpty(jobs.filterBy('canCancel'));
   },
 
   @alias('isFinished') canRestart: null,
@@ -135,7 +137,7 @@ export default Model.extend(DurationCalculations, {
   },
 
   debug() {
-    return Ember.RSVP.all(this.get('jobs').map(job => job.debug()));
+    return all(this.get('jobs').map(job => job.debug()));
   },
 
   @computed('finishedAt')

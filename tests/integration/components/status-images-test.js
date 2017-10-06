@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { percySnapshot } from 'ember-percy';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
@@ -9,7 +9,7 @@ moduleForComponent('status-images', 'Integration | Component | status images', {
 });
 
 test('shows default branch as option and updates output', function (assert) {
-  const repo = Ember.Object.create({
+  const repo = EmberObject.create({
     slug: 'travis-ci/travis-web',
     defaultBranch: {
       name: 'not-actually-master'

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -7,7 +7,7 @@ moduleForComponent('branch-row', 'Integration | Component | branch row', {
 });
 
 test('it renders data correctly', function (assert) {
-  const branch = Ember.Object.create({
+  const branch = EmberObject.create({
     name: 'master',
     repository: {
       id: 15038,

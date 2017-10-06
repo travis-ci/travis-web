@@ -1,6 +1,9 @@
 /* global EmojiConvertor */
+import { helper } from '@ember/component/helper';
+
+import { htmlSafe } from '@ember/string';
+import { get } from '@ember/object';
 import config from 'travis/config/environment';
-import Ember from 'ember';
 
 const emojiConvertor = new EmojiConvertor();
 
@@ -16,17 +19,17 @@ function formatMessage(message, options) {
 
   // TODO: Figure out more permanent fix for teal #1885
   if (options.repo) {
-    let owner = Ember.get(options.repo, 'owner');
+    let owner = get(options.repo, 'owner');
     if (typeof owner === 'object') {
       owner = owner.login;
     }
-    message = githubify(message, owner, Ember.get(options.repo, 'name'));
+    message = githubify(message, owner, get(options.repo, 'name'));
   }
   if (options.pre) {
     message = message.replace(/\n/g, '<br/>');
   }
   if (options.eventType && options.eventType == 'cron') {
-    message = Ember.String.htmlSafe(`<span class='message-label badge'>cron</span> ${message}`);
+    message = htmlSafe(`<span class='message-label badge'>cron</span> ${message}`);
   }
   return message;
 }
@@ -89,8 +92,8 @@ function _escape(text) {
 }
 
 
-export default Ember.Helper.helper((params, hash) => {
+export default helper((params, hash) => {
   const [message] = params;
   const formatted = formatMessage(message, hash);
-  return new Ember.String.htmlSafe(formatted);
+  return new htmlSafe(formatted);
 });

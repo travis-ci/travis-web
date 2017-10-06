@@ -1,5 +1,7 @@
+import { resolve } from 'rsvp';
+import ArrayProxy from '@ember/array/proxy';
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleForModel('repo', 'Unit | store.paginated', {
   needs: ['model:repo', 'service:ajax', 'service:auth', 'service:store']
@@ -11,7 +13,7 @@ test('it adds records already in the store to paginated collection', function (a
   let store = this.store(),
     repos = [];
 
-  Ember.run(() => {
+  run(() => {
     let repo = store.push({
       data: {
         id: 1,
@@ -26,11 +28,11 @@ test('it adds records already in the store to paginated collection', function (a
   store.query = function () {
     assert.ok('store.query was called');
 
-    let queryResult = Ember.ArrayProxy.create({ content: repos });
+    let queryResult = ArrayProxy.create({ content: repos });
     queryResult.set('meta', {});
     queryResult.set('meta.pagination', { count: 1, limit: 1, offset: 0 });
 
-    return Ember.RSVP.resolve(queryResult);
+    return resolve(queryResult);
   };
 
   let result = store.paginated('repo', { starred: true },
@@ -52,7 +54,7 @@ test('it uses filter function to filter records', function (assert) {
   let store = this.store(),
     repos = [];
 
-  Ember.run(() => {
+  run(() => {
     let repo = store.push({
       data: {
         id: 1,
@@ -67,11 +69,11 @@ test('it uses filter function to filter records', function (assert) {
   store.query = function () {
     assert.ok('store.query was called');
 
-    let queryResult = Ember.ArrayProxy.create({ content: repos });
+    let queryResult = ArrayProxy.create({ content: repos });
     queryResult.set('meta', {});
     queryResult.set('meta.pagination', { count: 1, limit: 1, offset: 0 });
 
-    return Ember.RSVP.resolve(queryResult);
+    return resolve(queryResult);
   };
 
   let result = store.paginated('repo', { starred: true },
@@ -90,7 +92,7 @@ test('it uses filter function to filter records', function (assert) {
 test('it sets limit based on the response, not the query params', function (assert) {
   let store = this.store();
 
-  Ember.run(() => {
+  run(() => {
     store.push({
       data: {
         id: 1,
@@ -111,11 +113,11 @@ test('it sets limit based on the response, not the query params', function (asse
   store.query = function () {
     assert.ok('store.query was called');
 
-    let queryResult = Ember.ArrayProxy.create({ content: [] });
+    let queryResult = ArrayProxy.create({ content: [] });
     queryResult.set('meta', {});
     queryResult.set('meta.pagination', { count: 1, limit: 1, offset: 0 });
 
-    return Ember.RSVP.resolve(queryResult);
+    return resolve(queryResult);
   };
 
   let result = store.paginated('repo', { limit: 1000 },
@@ -134,7 +136,7 @@ test('it sets limit based on the response, not the query params', function (asse
 test('it sorts results and live updates the first page', function (assert) {
   let store = this.store();
 
-  Ember.run(() => {
+  run(() => {
     store.push({
       data: {
         id: 1,
@@ -147,11 +149,11 @@ test('it sorts results and live updates the first page', function (assert) {
   store.query = function () {
     assert.ok('store.query was called');
 
-    let queryResult = Ember.ArrayProxy.create({ content: [] });
+    let queryResult = ArrayProxy.create({ content: [] });
     queryResult.set('meta', {});
     queryResult.set('meta.pagination', { count: 1, limit: 1, offset: 0 });
 
-    return Ember.RSVP.resolve(queryResult);
+    return resolve(queryResult);
   };
 
   let result = store.paginated('repo', {},
@@ -164,7 +166,7 @@ test('it sorts results and live updates the first page', function (assert) {
 
     assert.deepEqual(collection.toArray().map((r) => r.get('id')), ['1']);
 
-    Ember.run(() => {
+    run(() => {
       store.push({
         data: {
           id: 2,
@@ -182,7 +184,7 @@ test('it updates pagination data when forceReload is set to true', function (ass
   assert.expect(4);
   let store = this.store();
 
-  Ember.run(() => {
+  run(() => {
     store.push({
       data: {
         id: 1,
@@ -198,11 +200,11 @@ test('it updates pagination data when forceReload is set to true', function (ass
 
     total += 1;
 
-    let queryResult = Ember.ArrayProxy.create({ content: [] });
+    let queryResult = ArrayProxy.create({ content: [] });
     queryResult.set('meta', {});
     queryResult.set('meta.pagination', { count: total, limit: 1, offset: 0 });
 
-    return Ember.RSVP.resolve(queryResult);
+    return resolve(queryResult);
   };
 
   let done = assert.async();

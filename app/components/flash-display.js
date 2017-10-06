@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service flashes: null,
 
   classNames: ['flash'],

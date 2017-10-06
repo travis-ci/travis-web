@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import colorForState from 'travis/utils/color-for-state';
 import FaviconManager from 'travis/utils/favicon-manager';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     faviconStateDidChange(state) {
       if (state) {

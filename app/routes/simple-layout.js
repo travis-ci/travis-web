@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
   setupController: function () {
-    Ember.$('body').attr('id', 'simple');
+    $('body').attr('id', 'simple');
     return this._super(...arguments);
   }
 });

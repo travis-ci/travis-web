@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { underscore } from '@ember/string';
+import { isArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { isNone, typeOf } from '@ember/utils';
 import JSONSerializer from 'ember-data/serializers/json';
 import wrapWithArray from 'travis/utils/wrap-with-array';
 import traverse from 'travis/utils/traverse-payload';
@@ -121,7 +124,7 @@ export default JSONSerializer.extend({
             data = this.extractRelationship(relationshipMeta.type, relationshipHash);
           }
         } else if (relationshipMeta.kind === 'hasMany') {
-          if (!Ember.isNone(relationshipHash)) {
+          if (!isNone(relationshipHash)) {
             data = new Array(relationshipHash.length);
             for (let i = 0, l = relationshipHash.length; i < l; i++) {
               let item = relationshipHash[i];
@@ -196,11 +199,11 @@ export default JSONSerializer.extend({
       meta.pagination = pagination;
     }
 
-    let metaType = Ember.typeOf(meta);
+    let metaType = typeOf(meta);
     let metaIsObject = metaType == 'object';
     let errorMessage =
       `The 'meta' returned from 'extractMeta' has to be an object, not ${metaType}.`;
-    Ember.assert(errorMessage, metaIsObject);
+    assert(errorMessage, metaIsObject);
     documentHash.meta = meta;
 
     let items;
@@ -257,7 +260,7 @@ export default JSONSerializer.extend({
           relationshipIncluded.forEach(item => included.push(item));
         });
 
-        if (Ember.isArray(relationship)) {
+        if (isArray(relationship)) {
           data.relationships[key] = {
             data: relationship.map(({ data }) => {
               const { id, type } = data;
@@ -278,7 +281,7 @@ export default JSONSerializer.extend({
   },
 
   keyForAttribute(key) {
-    return Ember.String.underscore(key);
+    return underscore(key);
   },
 
   getType(type) {

@@ -1,8 +1,8 @@
+import $ from 'jquery';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
-import jobPage from 'travis/tests/pages/job';
 
-import Ember from 'ember';
+import jobPage from 'travis/tests/pages/job';
 import getFaviconUri from 'travis/utils/favicon-data-uris';
 
 import config from 'travis/config/environment';
@@ -31,7 +31,7 @@ test('visiting job-view', function (assert) {
   andThen(() => {
     assert.equal(document.title, 'Job #1234.1 - travis-ci/travis-web - Travis CI');
 
-    assert.equal(Ember.$('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
+    assert.equal($('head link[rel=icon]').attr('href'), getFaviconUri('green'), 'expected the favicon data URI to match the one for passing');
 
     assert.equal(jobPage.branch, 'acceptance-tests', 'displays the branch');
     assert.equal(jobPage.message, 'acceptance-tests This is a message', 'displays message');

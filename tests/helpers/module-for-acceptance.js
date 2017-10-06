@@ -1,10 +1,8 @@
+import { resolve } from 'rsvp';
 import { module } from 'qunit';
-import Ember from 'ember';
 import startApp from '../helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
 import '../helpers/percy/register-helpers';
-
-const { RSVP: { resolve } } = Ember;
 
 export default function (name, options = {}) {
   module(name, {

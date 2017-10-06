@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import { observer } from '@ember/object';
+import { isBlank } from '@ember/utils';
+import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service store: null,
 
   classNames: ['form--sshkey'],
@@ -19,7 +21,7 @@ export default Ember.Component.extend({
   },
 
   isValid() {
-    if (Ember.isBlank(this.get('value'))) {
+    if (isBlank(this.get('value'))) {
       this.set('valueError', 'Value can\'t be blank.');
       return false;
     } else {
@@ -34,7 +36,7 @@ export default Ember.Component.extend({
     });
   },
 
-  valueChanged: Ember.observer('value', function () {
+  valueChanged: observer('value', function () {
     return this.set('valueError', false);
   }),
 

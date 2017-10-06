@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { or } from 'ember-decorators/object/computed';
 
@@ -22,7 +22,7 @@ function countryToSentence(country) {
   }
 }
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'li',
   classNames: ['team-member'],
 

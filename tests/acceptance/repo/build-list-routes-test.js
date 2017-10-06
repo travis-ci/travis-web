@@ -1,10 +1,10 @@
 /* global signInUser */
+import { assign } from '@ember/polyfills';
 import { test } from 'qunit';
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import page from 'travis/tests/pages/build-list';
 import topPage from 'travis/tests/pages/top';
 import generatePusherPayload from 'travis/tests/helpers/generate-pusher-payload';
-import Ember from 'ember';
 
 moduleForAcceptance('Acceptance | repo build list routes', {
   beforeEach() {
@@ -53,7 +53,7 @@ moduleForAcceptance('Acceptance | repo build list routes', {
     };
     this.commitAttributes = commitAttributes;
 
-    lastBuild.createCommit(Ember.assign({
+    lastBuild.createCommit(assign({
       message: 'A generic cron commit message'
     }, commitAttributes));
     lastBuild.save();

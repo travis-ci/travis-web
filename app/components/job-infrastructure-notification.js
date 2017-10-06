@@ -1,5 +1,5 @@
 /* global moment */
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias, equal } from 'ember-decorators/object/computed';
 
@@ -7,7 +7,7 @@ const NOVEMBER_2016_RETIREMENT = '2016-11-28T12:00:00-08:00';
 const JANUARY_2017_RETIREMENT = '2017-01-20T12:00:00-08:00';
 const LATEST_TRUSTY_RELEASE = '2017-07-12T18:00:00-00:00';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @alias('job.queue') queue: null,
   @alias('job.config') jobConfig: null,
 

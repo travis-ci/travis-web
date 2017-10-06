@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
 
-export default Ember.Service.extend({
+export default Service.extend({
   plainTextLog(id) {
     return `${config.apiEndpoint}/jobs/${id}/log.txt?deansi=true`;
   },

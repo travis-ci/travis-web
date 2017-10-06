@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import limit from 'travis/utils/computed-limit';
 
 const { test, module } = QUnit;
@@ -6,7 +6,7 @@ const { test, module } = QUnit;
 module('computed-limit');
 
 test('the limit computed property slices an array', function (assert) {
-  const LimitContainingObject = Ember.Object.extend({
+  const LimitContainingObject = EmberObject.extend({
     limit: 3,
     limitedList: limit('list', 'limit')
   });

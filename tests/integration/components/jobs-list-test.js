@@ -1,6 +1,7 @@
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 
 moduleForComponent('jobs-list', 'Integration | Component | jobs list', {
   integration: true
@@ -85,9 +86,9 @@ const [job0, job1, job2, job3, job4, job5, jobNotAllowedFailure] = [{
 }];
 
 const render = function (context, jobs, stage = 0) {
-  context.stages = [Ember.Object.create({ id: '1', number: '1' }), Ember.Object.create({ id: '2', number: '2' })];
+  context.stages = [EmberObject.create({ id: '1', number: '1' }), EmberObject.create({ id: '2', number: '2' })];
   context.stage = context.stages[stage];
-  context.jobs = Ember.A(jobs);
+  context.jobs = A(jobs);
   context.build = { jobs: context.jobs };
   context.render(hbs`{{jobs-list build=build jobs=jobs stages=stages stage=stage}})`);
 };

@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { isBlank } from '@ember/utils';
+import { run } from '@ember/runloop';
+import { getOwner } from '@ember/application';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillIn from '../../helpers/fill-in';
@@ -20,11 +22,11 @@ moduleForComponent('add-env-var', 'Integration | Component | add env-var', {
 test('it adds an env var on submit', function (assert) {
   assert.expect(6);
 
-  var store = Ember.getOwner(this).lookup('service:store');
+  var store = getOwner(this).lookup('service:store');
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
   var repo;
-  Ember.run(function () {
+  run(function () {
     repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 
@@ -56,7 +58,7 @@ test('it shows an error if no name is present', function (assert) {
   this.render(hbs`{{add-env-var repo=repo}}`);
 
   this.$('.env-name').val();
-  assert.ok(Ember.isBlank(this.$('.env-name').val()), 'precond: name input should be empty');
+  assert.ok(isBlank(this.$('.env-name').val()), 'precond: name input should be empty');
 
   this.$('.form-submit').click();
 
@@ -84,11 +86,11 @@ test('it adds a public env var on submit', function (assert) {
   assert.expect(6);
 
   this.registry.register('transform:boolean', DS.BooleanTransform);
-  var store = Ember.getOwner(this).lookup('service:store');
+  var store = getOwner(this).lookup('service:store');
   assert.equal(store.peekAll('envVar').get('length'), 0, 'precond: store should be empty');
 
   var repo;
-  Ember.run(function () {
+  run(function () {
     repo  = store.push({ data: { id: 1, type: 'repo', attributes: { slug: 'travis-ci/travis-web' } } });
   });
 

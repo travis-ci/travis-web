@@ -1,10 +1,13 @@
-import Ember from 'ember';
+import ArrayProxy from '@ember/array/proxy';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import EmberObject from '@ember/object';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { gt } from 'ember-decorators/object/computed';
 
-let Request = Ember.Object.extend({
+let Request = EmberObject.extend({
   HEADERS: {
     accept: 'application/json; chunked=true; version=2, text/plain; version=2'
   },
@@ -15,7 +18,7 @@ let Request = Ember.Object.extend({
       dataType: 'text',
       headers: this.HEADERS,
       success: (body, status, xhr) => {
-        Ember.run(this, () => this.handle(body, status, xhr));
+        run(this, () => this.handle(body, status, xhr));
       }
     });
   },
@@ -25,17 +28,17 @@ let Request = Ember.Object.extend({
       this.log.set('token', xhr.getResponseHeader('X-Log-Access-Token'));
     }
     if (xhr.status === 204) {
-      return Ember.$.ajax({
+      return $.ajax({
         url: this.redirectTo(xhr),
         type: 'GET',
         success: (body) => {
-          Ember.run(this, function () { this.handlers.text(body); });
+          run(this, function () { this.handlers.text(body); });
         }
       });
     } else if (this.isJson(xhr)) {
-      return Ember.run(this, function () { this.handlers.json(body); });
+      return run(this, function () { this.handlers.json(body); });
     } else {
-      return Ember.run(this, function () { this.handlers.text(body); });
+      return run(this, function () { this.handlers.text(body); });
     }
   },
 
@@ -53,7 +56,7 @@ let Request = Ember.Object.extend({
   }
 });
 
-export default Ember.Object.extend({
+export default EmberObject.extend({
   @service features: null,
 
   version: 0,
@@ -82,7 +85,7 @@ export default Ember.Object.extend({
       data: data,
       success: (function (_this) {
         return function (body) {
-          return Ember.run(_this, function () {
+          return run(_this, function () {
             let i, len, part, results;
             let { parts } = body.log;
             if (parts) {
@@ -101,7 +104,7 @@ export default Ember.Object.extend({
 
   @computed()
   parts() {
-    return Ember.ArrayProxy.create({
+    return ArrayProxy.create({
       content: []
     });
   },

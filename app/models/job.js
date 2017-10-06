@@ -1,7 +1,13 @@
 /* global moment, Travis */
 
+import { observer } from '@ember/object';
+
+import { Promise as EmberPromise } from 'rsvp';
+import { isEqual } from '@ember/utils';
+import { later } from '@ember/runloop';
+import { getOwner } from '@ember/application';
+
 import pickBy from 'npm:lodash.pickby';
-import Ember from 'ember';
 import Model from 'ember-data/model';
 import Log from 'travis/models/log';
 import DurationCalculations from 'travis/mixins/duration-calculations';
@@ -46,7 +52,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     return Log.create({
       job: this,
       ajax: this.get('ajax'),
-      container: Ember.getOwner(this)
+      container: getOwner(this)
     });
   },
 
@@ -64,7 +70,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
           this.set('isFetchingConfig', true);
           this.reload();
         } else {
-          Ember.run.later(fetchConfig, 20);
+          later(fetchConfig, 20);
         }
       };
 
@@ -85,7 +91,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   @computed('state')
   toBeQueued(state) {
     let queuedState = 'created';
-    return Ember.isEqual(state, queuedState);
+    return isEqual(state, queuedState);
   },
 
   @computed('state')
@@ -153,7 +159,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   },
 
   whenLoaded(callback) {
-    new Ember.RSVP.Promise((resolve, reject) => {
+    new EmberPromise((resolve, reject) => {
       this.whenLoadedCallbacks = this.whenLoadedCallbacks || [];
       if (this.get('isLoaded')) {
         resolve();
@@ -206,7 +212,7 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
     });
   },
 
-  onStateChange: Ember.observer('state', function () {
+  onStateChange: observer('state', function () {
     if (this.get('state') === 'finished' && Travis.pusher) {
       return this.unsubscribe();
     }

@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
 
   tagName: 'div',
   classNames: ['travistab'],
 
   didInsertElement() {
-    if (Ember.isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {
+    if (isEmpty(this.$('.travistab-nav--secondary').find('.active'))) {
       this.$('#tab_log').addClass('active');
     }
   }

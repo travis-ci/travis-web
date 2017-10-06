@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
 
-const timeago = Ember.$.timeago;
+const timeago = $.timeago;
 timeago.settings.allowFuture = true;
 
 export default function timeAgoInWords(date) {

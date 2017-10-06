@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { debounce } from '@ember/runloop';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { task } from 'ember-concurrency';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['limit-concurrent-builds'],
 
   @computed('enabled')
@@ -45,7 +46,7 @@ export default Ember.Component.extend({
 
   actions: {
     limitChanged() {
-      return Ember.run.debounce(this, 'limitChanged', 1000);
+      return debounce(this, 'limitChanged', 1000);
     }
   }
 });

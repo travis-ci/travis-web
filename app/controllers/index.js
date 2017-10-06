@@ -1,3 +1,4 @@
+import Controller from '@ember/controller';
 import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
@@ -5,7 +6,7 @@ import Visibility from 'npm:visibilityjs';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   @service auth: null,
   @service tabStates: null,
   @service('updateTimes') updateTimesService: null,

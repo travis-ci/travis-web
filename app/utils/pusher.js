@@ -1,6 +1,6 @@
 /* global Pusher */
+import { next } from '@ember/runloop';
 import ENV from 'travis/config/environment';
-import Ember from 'ember';
 
 let TravisPusher = function (config, ajaxService) {
   this.active_channels = [];
@@ -94,7 +94,7 @@ TravisPusher.prototype.receive = function (event, data) {
       job.clearLog();
     }
   }
-  return Ember.run.next((function (_this) {
+  return next((function (_this) {
     return function () {
       return _this.store.receivePusherEvent(event, data);
     };

@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   @service tabStates: null,
 
   showMore() {

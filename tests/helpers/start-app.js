@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { merge } from '@ember/polyfills';
 import Application from '../../app';
 import config from '../../config/environment';
 
@@ -8,8 +9,8 @@ import './wait-for-element';
 export default function startApp(attrs) {
   let application;
 
-  let attributes = Ember.merge({}, config.APP);
-  attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
+  let attributes = merge({}, config.APP);
+  attributes = merge(attributes, attrs); // use defaults, but you can override;
 
   let clearStorage = (storage) => {
     storage.removeItem('travis.token');
@@ -19,7 +20,7 @@ export default function startApp(attrs) {
   clearStorage(localStorage);
   clearStorage(sessionStorage);
 
-  return Ember.run(() => {
+  return run(() => {
     application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();

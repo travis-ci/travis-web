@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias, and } from 'ember-decorators/object/computed';
 import eventually from 'travis/utils/eventually';
 import { task, taskGroup } from 'ember-concurrency';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service flashes: null,
   @service auth: null,
 

@@ -1,5 +1,5 @@
+import { Promise as EmberPromise } from 'rsvp';
 import { test, moduleForComponent } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleForComponent('travis-status', 'TravisStatusComponent', {
   unit: true
@@ -10,7 +10,7 @@ test('adds incident class to .status-circle', function (assert) {
   const component = this.subject();
   component.statusPageStatusUrl = 'https://status-url.example.com';
   component.getStatus = function () {
-    return new Ember.RSVP.Promise(function (resolve/* , reject*/) {
+    return new EmberPromise(function (resolve/* , reject*/) {
       return resolve({
         status: {
           indicator: 'major'
