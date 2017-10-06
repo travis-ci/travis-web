@@ -105,6 +105,12 @@
     border-color: $oxide-blue
     color: $oxide-blue
     text-decoration: none !important
+.action-button--cancel
+  &:hover,
+  &:active
+    +colorSVG($brick-red)
+    border-color: $brick-red
+    color: $brick-red
 
 .repo-main-tools.labelless
   display: inline-flex
@@ -125,9 +131,14 @@
       display: none
   .action-button--restart .icon
     transform: scale(0.75) translate(4px, -2px)
-  .action-button--cancel .icon
-    transform: scale(0.65) translate(1px, -2px)
-    margin-right: 1px // pixel weirdness for better Safari rendering
+  .action-button--cancel
+    .icon
+      transform: scale(0.65) translate(1px, -2px)
+      margin-right: 1px // pixel weirdness for better Safari rendering
+    &:hover, &:active
+      +colorSVG($brick-red)
+      border-color: $brick-red
+      color: $brick-red
   .action-button--debug
     display: none
 
