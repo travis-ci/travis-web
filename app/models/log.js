@@ -10,6 +10,7 @@ import { gt } from 'ember-decorators/object/computed';
 
 export default Ember.Object.extend({
   @service features: null,
+  @service auth: null,
 
   version: 0,
   isLoaded: false,
@@ -35,11 +36,19 @@ export default Ember.Object.extend({
 
     let id = this.get('job.id');
     const url = `${config.apiEndpoint}/job/${id}/log`;
+    const token = this.get('auth').token();
+    let headers = {
+      'Travis-API-Version': '3'
+    };
 
+    if (token) {
+      headers['Authorization'] = `token ${token}`;
+    }
+
+    // TODO: I'd like to clean API access to use fetch everywhere once we fully
+    //       switch to API V3
     return fetch(url, {
-      headers: new Headers({
-        'Travis-API-Version': '3'
-      })
+      headers: new Headers(headers)
     }).then((response) => {
       if (response.ok) {
         return response.json();
