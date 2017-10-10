@@ -420,7 +420,8 @@ export default function () {
   });
 
   this.get('/job/:id/log', function (schema, request) {
-    let log = schema.logs.find(request.params.id);
+    let jobId = request.params.id;
+    let log = schema.logs.find(jobId);
     if (log) {
       const { id, content } = log.attrs;
       return {
@@ -428,7 +429,8 @@ export default function () {
         content,
         log_parts: [
           { number: 1, content },
-        ]
+        ],
+        '@raw_log_href': `/v3/job/${jobId}/log.txt`
       };
     } else {
       return new Mirage.Response(404, {}, {});

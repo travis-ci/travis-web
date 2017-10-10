@@ -1,6 +1,4 @@
 import ArrayProxy from '@ember/array/proxy';
-import $ from 'jquery';
-import { run } from '@ember/runloop';
 import EmberObject from '@ember/object';
 import { fetch, Headers } from 'fetch';
 import config from 'travis/config/environment';
@@ -8,7 +6,7 @@ import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { gt } from 'ember-decorators/object/computed';
 
-export default Ember.Object.extend({
+export default EmberObject.extend({
   @service features: null,
   @service auth: null,
 
@@ -57,7 +55,7 @@ export default Ember.Object.extend({
       }
     }).then((json) => {
       this.loadParts(json['log_parts']);
-      this.set('plainTextUrl', json['@raw_url']);
+      this.set('plainTextUrl', json['@raw_log_href']);
     });
   },
 

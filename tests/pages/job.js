@@ -6,7 +6,8 @@ let {
   collection,
   hasClass,
   isVisible,
-  text
+  text,
+  attribute
 } = PageObject;
 
 export default PageObject.create({
@@ -18,6 +19,7 @@ export default PageObject.create({
   author: text('.commit-author'),
   log: text('#log'),
   logError: text('.job-log .notice-banner--red'),
+  rawLogUrl: attribute('href', '.download-log-button'),
 
   hasTruncatedLog: isVisible('.log-container p.warning'),
 

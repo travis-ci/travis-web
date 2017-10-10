@@ -10,7 +10,7 @@ import config from 'travis/config/environment';
 moduleForAcceptance('Acceptance | job/basic layout');
 
 test('visiting job-view', function (assert) {
-  assert.expect(8);
+  assert.expect(9);
 
   let repo = server.create('repository', { slug: 'travis-ci/travis-web' }),
     branch = server.create('branch', { name: 'acceptance-tests' });
@@ -41,6 +41,7 @@ test('visiting job-view', function (assert) {
 
     assert.equal(jobPage.log, 'Hello log');
     assert.notOk(jobPage.hasTruncatedLog);
+    assert.equal(jobPage.rawLogUrl, `https://api.travis-ci.org/v3/job/${job.id}/log.txt`);
   });
 });
 
