@@ -13,7 +13,7 @@ else
     echo "Skipping com- and org-staging PR deployments: no 'staging' in branch name."
 fi
 
-ember deploy org-pxroduction-pull-request --activate
+ember deploy org-production-pull-request --activate
 DEPLOYMENT_EXIT_CODE=$? TLD=org ENVIRONMENT=production ./config/deployment/update-github-status.sh
 
 TRAVIS_PRO=true ember deploy com-production-pull-request --activate
