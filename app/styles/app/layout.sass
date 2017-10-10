@@ -1,8 +1,11 @@
+$max-width: 1024px
+$padding-top: 24px
+
 .main
   position: relative
   width: 100%
   min-height: calc(100vh - 174px - 55px)
-  margin-top: 24px
+  margin-top: $padding-top
   background-color: white
 
 .loading-page
@@ -72,22 +75,23 @@
   #left
     display: none
   .row
-    max-width: 1024px
+    max-width: $max-width
   .topbar,
   .inner
-    max-width: 1024px
+    max-width: $max-width
     margin: auto
     padding-left: $column-gutter/2
     padding-right: $column-gutter/2
   .main
-    max-width: 1024px
-    margin: auto
+    max-width: $max-width
+    margin: $padding-top auto
   .footer
     display: block
 
   .wrapper-main
-    margin: auto
-    max-width: 1024px
+    margin-left: auto
+    margin-right: auto
+    max-width: $max-width
     float: none
   #main
     padding-bottom: 0
