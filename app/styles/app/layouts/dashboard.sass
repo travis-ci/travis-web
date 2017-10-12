@@ -15,11 +15,11 @@
     flex-direction: row
     align-items: baseline
 
-.dashboard-repos
-  padding-bottom: 5rem
-
 .dashboard-section
-  margin-bottom: 4rem
+  &:not(:last-of-type)
+    margin-bottom: 4rem
+  &:first-of-type
+    margin-top: 4rem
 
 .starred-empty
   border: dotted 1px $cement-grey
