@@ -1,11 +1,11 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('trial-expired-notice', 'Integration | Component | trial expired notice', {
   integration: true
 });
 
-test('it renders', function (assert) {
+skip('it renders', function (assert) {
   const config = {
     billingEndpoint: 'https://somewhere.billing',
     supportEmail: 'support@email.com'
