@@ -1,0 +1,23 @@
+.trial-expired-notice
+  font-size: 16px
+
+.trial-warning
+  color: $brick-red
+
+.trial-cta
+  a:not(.button--blue)
+    color: $oxide-blue
+    text-decoration: none
+    border-bottom: 1px solid $oxide-blue
+    padding-bottom: 0.1rem
+    transition: color 200ms ease, border 200ms ease
+    cursor: pointer
+    &:hover,
+    &:active
+      color: $agate-blue
+      text-decoration: none
+      border-color: transparent
+
+  @media #{small-only}
+    span
+      display: block

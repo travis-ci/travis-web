@@ -18,9 +18,15 @@
     {{/unless}}
 
     <header class="profile-header">
-      <h1 class="h2--grey">{{accountName}}</h1>
+      <h1 class="h2--grey">{{accountName}}
+        {{trial-expired-badge}}
+      </h1>
       {{sync-button}}
     </header>
+
+    {{#if features.proVersion}}
+      {{trial-expired-notice org=accountName}}
+    {{/if}}
 
     {{#unless config.enterprise}}
       {{#if features.proVersion}}

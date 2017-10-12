@@ -74,6 +74,7 @@ module.exports = function (environment) {
       ENV.pusher.channelPrefix = 'private-';
       ENV.pagesEndpoint = 'https://billing.travis-ci.com';
       ENV.billingEndpoint = 'https://billing.travis-ci.com';
+      ENV.supportEmail = 'support@travis-ci.com';
       ENV.endpoints = {
         sshKey: true,
         caches: true

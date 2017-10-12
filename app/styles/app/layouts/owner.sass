@@ -1,8 +1,17 @@
+.owner-header-wrapper
+  @media #{$medium-up}
+    display: flex
+    align-items: center
+
+  .trial-expired-notice
+    flex: 1 0 30%
+
 .owner-header
   display: flex
   flex-flow: row wrap
   justify-content: flex-start
   align-items: center
+  flex: 2 0 50%
   margin-bottom: 3rem
   .owner-title
     margin: .3em 0 .2em
@@ -23,17 +32,17 @@
     background-color: $pebble-grey
 
 .owner-avatar
-  flex: 0 0 20%
+  flex: 0 0 25%
   @media #{$medium-up}
-    flex: 0 0 17%
+    flex: 0 0 25%
   .avatar
     width: 125px
     height: 125px
 
 .owner-info
-  flex: 1 0 75%
+  flex: 1 0 70%
   @media #{$medium-up}
-    flex: 1 0 80%
+    flex: 1 0 70%
   position: relative
   overflow: hidden
   &:after
