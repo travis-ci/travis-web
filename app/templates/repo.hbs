@@ -1,31 +1,29 @@
-<div class="main">
-  <div class="wrapper {{if auth.signedIn 'non-centered' 'centered'}}">
-    {{top-bar
-      signIn=(route-action 'signIn')
-      signOut=(route-action 'signOut')}}
+<div class="wrapper {{if auth.signedOut 'centered'}} {{if features.dashboard 'centered'}}">
+  {{top-bar
+    signIn=(route-action 'signIn')
+    signOut=(route-action 'signOut')}}
 
-    {{flash-display}}
+  {{flash-display}}
 
-    <div class="wrapper-main">
-      <div id="main" role="main">
-        {{#if repo.isLoaded}}
-          {{#repository-layout repo=repo build=build job=job tab=tab}}
-            {{outlet}}
-          {{/repository-layout}}
-        {{/if}}
-      </div>
+  <div class="wrapper-main">
+    <div id="main" class="main" role="main">
+      {{#if repo.isLoaded}}
+        {{#repository-layout repo=repo build=build job=job tab=tab}}
+          {{outlet}}
+        {{/repository-layout}}
+      {{/if}}
     </div>
-
-    <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
-      {{repository-sidebar
-        showRepositories=(route-action 'showRepositories')
-        viewSearchResults=(route-action 'viewSearchResults')}}
-    </aside>
-
-    {{#if auth.signedOut}}
-      {{page-footer}}
-    {{else if features.dashboard}}
-      {{page-footer}}
-    {{/if}}
   </div>
+
+  <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
+    {{repository-sidebar
+      showRepositories=(route-action 'showRepositories')
+      viewSearchResults=(route-action 'viewSearchResults')}}
+  </aside>
+
+  {{#if auth.signedOut}}
+    {{page-footer}}
+  {{else if features.dashboard}}
+    {{page-footer}}
+  {{/if}}
 </div>

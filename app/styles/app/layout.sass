@@ -1,28 +1,12 @@
-.centered
-  .row
-    max-width: 1024px
-
-  .main
-    margin: auto
-    max-width: 1024px
-    padding-left: $column-gutter/2
-    padding-right: $column-gutter/2
-    padding-top: 30px
-  @media #{$medium-up}
-    padding-left: 0
-    padding-right: 0
-    .topbar
-      max-width: 1024px
-      margin: auto
+$max-width: 1024px
+$padding-top: 24px
 
 .main
   position: relative
   width: 100%
   min-height: calc(100vh - 174px - 55px)
+  margin-top: $padding-top
   background-color: white
-.inner
-  max-width: 1024px
-  margin: auto
 
 .loading-page
   background-color: white
@@ -31,10 +15,8 @@
     padding-bottom: 5rem
     margin-bottom: -5rem
 
-.wrapper-main // full-width
-  padding: 1.8em $column-gutter/2 5em
-
 #left
+  position: relative
   padding: 0 0 110px 0
   background-color: white
   border-right: 2px solid #f2f2f2
@@ -42,80 +24,73 @@
 .wrapper
   overflow: hidden
   background-color: white
-
-.wrapper.non-centered
   #main,
   #left
-    margin-bottom: -99999px
+    margin-bottom: -99989px
     padding-bottom: 100034px
-
   .footer
     display: none
 
-  .centered
-    #main
-      padding-bottom: 5rem
-      margin-bottom: -5rem
+.wrapper-main
+  padding: 0 $column-gutter/2
 
 @media #{$large-up}
-
-  #left, .wrapper-main
+  #left,
+  .wrapper-main
     min-height: 100vh
-
   #left
     width: grid-calc(6, 24)
     float: left
     margin-left: -100%
     max-width: 325px
-
-  .non-centered .wrapper-main
+  .wrapper-main
     width: grid-calc(18, 24)
     float: left
     margin-left: grid-calc(6, 24)
     overflow: visible
 
-  .centered .wrapper-main
-    max-width: 1024px
-    margin-left: auto
-    margin-right: auto
-
 @media #{$xlarge-up}
   #left
     width: grid-calc(7, 36)
-  .non-centered .wrapper-main
+  .wrapper-main
     width: grid-calc(29, 36)
     margin-left: grid-calc(7, 36)
 
 @media #{$xxlarge-up}
   #left
     width: grid-calc(6, 36)
-  .non-centered .wrapper-main
+  .wrapper-main
     width: grid-calc(30, 36)
     margin-left: grid-calc(6, 36)
 
 @media screen and (min-width: 2200px)
   #left
     width: grid-calc(5, 36)
-  .non-centered .wrapper-main
+  .wrapper-main
     width: grid-calc(31, 36)
     margin-left: grid-calc(5, 36)
 
-.feature-wrapper.dashboard
+.feature-wrapper.dashboard,
+.centered,
+.centered.wrapper
   #left
     display: none
-  .wrapper-main
+  #main
+    padding-bottom: 0
+    margin-bottom: 0
+  .row
+    max-width: $max-width
+  .topbar,
+  .inner
+    max-width: $max-width
     margin: auto
-    max-width: 1024px
     padding-left: $column-gutter/2
     padding-right: $column-gutter/2
-    padding-top: 30px
+  .main,
+  .wrapper-main
+    max-width: $max-width
+    margin-left: auto
+    margin-right: auto
     float: none
   .footer
     display: block
-
-  @media #{$medium-up}
-    padding-left: 0
-    padding-right: 0
-    .topbar
-      max-width: 1024px
-      margin: auto
