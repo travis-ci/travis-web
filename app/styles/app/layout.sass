@@ -32,7 +32,7 @@ $padding-top: 24px
     display: none
 
 .wrapper-main
-  padding: $padding-top $column-gutter/2
+  padding: 0 $column-gutter/2
 
 @media #{$large-up}
   #left,
@@ -75,6 +75,9 @@ $padding-top: 24px
 .centered.wrapper
   #left
     display: none
+  #main
+    padding-bottom: 0
+    margin-bottom: 0
   .row
     max-width: $max-width
   .topbar,
@@ -83,17 +86,11 @@ $padding-top: 24px
     margin: auto
     padding-left: $column-gutter/2
     padding-right: $column-gutter/2
-  .main
-    max-width: $max-width
-    margin: $padding-top auto
-  .footer
-    display: block
-
+  .main,
   .wrapper-main
+    max-width: $max-width
     margin-left: auto
     margin-right: auto
-    max-width: $max-width
     float: none
-  #main
-    padding-bottom: 0
-    margin-bottom: 0
+  .footer
+    display: block
