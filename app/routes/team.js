@@ -121,13 +121,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'jen'
       }, {
-        name: 'Brandon Burton',
-        title: 'Infrastructure Conductor',
-        handle: 'solarce',
-        nationality: 'usa',
-        country: 'usa',
-        image: 'brandon'
-      }, {
         name: 'Emma Trimble',
         title: 'Lead Pungineer',
         handle: 'emdantrim',
