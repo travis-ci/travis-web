@@ -1,4 +1,7 @@
-import { defineProperty, computed as emberComputed } from '@ember/object';
+import {
+  defineProperty,
+  computed as emberComputed
+} from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import { alias } from 'ember-decorators/object/computed';
 import { computed } from 'ember-decorators/object';
