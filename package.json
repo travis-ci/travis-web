@@ -78,6 +78,8 @@
     "lodash.intersection": "4.4.0",
     "lodash.pickby": "4.6.0",
     "morgan": "1.8.2",
+    "string-to-stream": "^1.1.0",
+    "tap-parser": "^6.0.1",
     "visibilityjs": "^1.2.4",
     "yamljs": "^0.3.0"
   },

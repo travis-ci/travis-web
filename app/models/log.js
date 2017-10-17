@@ -185,6 +185,7 @@ export default EmberObject.extend({
       content: text,
       final: true
     });
+    this.set('tttext', text);
     return this.set('isLoaded', true);
   },
 
