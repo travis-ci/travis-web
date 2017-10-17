@@ -17,6 +17,11 @@ cache:
     - node_modules
     - bower_components
 
+env:
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+
 before_install:
   - npm config set spin false
   - npm install -g npm@5
