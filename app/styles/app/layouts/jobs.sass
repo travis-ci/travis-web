@@ -128,8 +128,8 @@
     overflow: hidden
     text-overflow: ellipsis
     &:after
-      content: ""
       @include fadeOut(right, -90deg, white)
+      top: -1px
 
 .job-env
   @media #{$medium-up}
