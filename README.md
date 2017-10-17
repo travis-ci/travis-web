@@ -16,7 +16,7 @@ And then install ember-cli globally in order to have access to the `ember` comma
 
 Now you can run the server:
 
-    ember serve
+    ./node_modules/.bin/ember serve
 
 And open http://localhost:4200 in the browser.
 
