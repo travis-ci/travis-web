@@ -1,8 +1,8 @@
 /* global _gaq */
-import Ember from 'ember';
+import Component from '@ember/component';
 import config from 'travis/config/environment';
 
-export default Ember.Component.extend({
+export default Component.extend({
   actions: {
     gaCta(location) {
       if (config.gaCode) {

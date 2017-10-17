@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { sort } from '@ember/object/computed';
+import Controller from '@ember/controller';
 import LoadMoreBuildsMixin from 'travis/mixins/builds/load-more';
 import { controller } from 'ember-decorators/controller';
 import { computed } from 'ember-decorators/object';
@@ -6,11 +7,11 @@ import { alias } from 'ember-decorators/object/computed';
 
 const mixins = [LoadMoreBuildsMixin];
 
-export default Ember.Controller.extend(...mixins, {
+export default Controller.extend(...mixins, {
   @controller('repo') repoController: null,
 
   buildsSorting: ['number:desc'],
-  builds: Ember.computed.sort('model', 'buildsSorting'),
+  builds: sort('model', 'buildsSorting'),
 
   @alias('repoController.repo') repo: null,
   @alias('repoController.tab') tab: null,

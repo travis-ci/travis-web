@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import colorForState from 'travis/utils/color-for-state';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service externalLinks: null,
 
   pollModels: 'job.build',

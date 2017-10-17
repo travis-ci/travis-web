@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Service from '@ember/service';
 import { task } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service store: null,
   @service features: null,
 

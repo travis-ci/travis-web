@@ -1,9 +1,13 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import EmberObject from '@ember/object';
+import $ from 'jquery';
+import ArrayProxy from '@ember/array/proxy';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { computed } from 'ember-decorators/object';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service auth: null,
   @service storage: null,
 
@@ -11,7 +15,7 @@ export default Ember.Service.extend({
   broadcasts(signedIn) {
     let apiEndpoint, broadcasts, options, seenBroadcasts;
     if (signedIn) {
-      broadcasts = Ember.ArrayProxy.create({
+      broadcasts = ArrayProxy.create({
         content: [],
         lastBroadcastStatus: '',
         isLoading: true
@@ -30,15 +34,15 @@ export default Ember.Service.extend({
       } else {
         seenBroadcasts = [];
       }
-      Ember.$.ajax(`${apiEndpoint}/broadcasts`, options).then((response) => {
+      $.ajax(`${apiEndpoint}/broadcasts`, options).then((response) => {
         const receivedBroadcasts = response.broadcasts.reduce((processed, broadcast) => {
           if (!broadcast.expired && seenBroadcasts.indexOf(broadcast.id.toString()) === -1) {
-            processed.unshift(Ember.Object.create(broadcast));
+            processed.unshift(EmberObject.create(broadcast));
           }
 
           return processed;
         }, []);
-        Ember.run(() => {
+        run(() => {
           broadcasts.set('lastBroadcastStatus', this.getStatus(receivedBroadcasts));
           broadcasts.set('content', receivedBroadcasts);
           broadcasts.set('isLoading', false);

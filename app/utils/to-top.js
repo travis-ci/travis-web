@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { throttle } from '@ember/runloop';
 
 export default (function () {
   // NOTE: I could have probably extract fixed positioning from
@@ -13,17 +14,17 @@ export default (function () {
     this.containerSelector = containerSelector;
     this.position = this.window.scrollTop();
     this.window.scroll(() => {
-      Ember.run.throttle(this, this.onScroll, [], 200, false);
+      throttle(this, this.onScroll, [], 200, false);
     });
     return this;
   }
 
   ToTop.prototype.element = function () {
-    return Ember.$(this.elementSelector);
+    return $(this.elementSelector);
   };
 
   ToTop.prototype.container = function () {
-    return Ember.$(this.containerSelector);
+    return $(this.containerSelector);
   };
 
   ToTop.prototype.onScroll = function () {

@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'li',
   classNames: ['owner-tile', 'row-li'],
   classNameBindings: ['repo.default_branch.last_build.state'],

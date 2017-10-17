@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import $ from 'jquery';
 
 export default function (elem, text, event = 'keyup') {
-  var e = Ember.$.Event(event);
+  var e = $.Event(event);
   e.which = 50;
   elem.val(text);
   elem.trigger(e);

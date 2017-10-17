@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import jobConfigLanguage from 'travis/utils/job-config-language';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'li',
   classNameBindings: ['job.state'],
   classNames: ['jobs-item'],

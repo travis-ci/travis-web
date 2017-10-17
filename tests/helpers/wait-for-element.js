@@ -1,3 +1,6 @@
+import { run } from '@ember/runloop';
+import $ from 'jquery';
+import { registerAsyncHelper } from '@ember/test';
 import Ember from 'ember';
 
 /**
@@ -5,14 +8,14 @@ import Ember from 'ember';
   * Avoid use except on events outside Ember that aren’t handled by the built-in test helpers
   * as this slows down the tests.
   */
-export default Ember.Test.registerAsyncHelper('waitForElement', function (app, element) {
+export default registerAsyncHelper('waitForElement', function (app, element) {
   return Ember.Test.promise(function (resolve) {
     Ember.Test.adapter.asyncStart();
     var interval = setInterval(function () {
-      if (Ember.$(element).length > 0) {
+      if ($(element).length > 0) {
         clearInterval(interval);
         Ember.Test.adapter.asyncEnd();
-        Ember.run(null, resolve, true);
+        run(null, resolve, true);
       }
     }, 10);
   });

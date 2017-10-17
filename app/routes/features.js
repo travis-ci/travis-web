@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
-import Ember from 'ember';
 
 export default TravisRoute.extend({
   titleToken: 'Beta Features',
@@ -9,7 +9,7 @@ export default TravisRoute.extend({
   },
 
   renderTemplate() {
-    Ember.$('body').attr('class', 'features');
+    $('body').attr('class', 'features');
     this._super(...arguments);
   },
 

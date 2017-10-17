@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
 import { moduleFor, test } from 'ember-qunit';
 import config from 'travis/config/environment';
 
-const authServiceStub = Ember.Service.extend({
+const authServiceStub = Service.extend({
   assetToken() {
     return 'token-abc-123';
   }
@@ -14,7 +15,7 @@ moduleFor('service:status-images', 'Unit | Service | status images', {
     this.register('service:auth', authServiceStub);
     this.inject.service('auth');
 
-    this.repo = Ember.Object.create({ slug: 'travis-ci/travis-web' });
+    this.repo = EmberObject.create({ slug: 'travis-ci/travis-web' });
   }
 });
 

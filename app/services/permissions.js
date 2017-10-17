@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Service from '@ember/service';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service auth: null,
 
   init() {

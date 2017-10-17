@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { sort } from '@ember/object/computed';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @alias('build.jobs.firstObject') job: null,
 
   @computed('build.jobs.[]')
@@ -20,5 +21,5 @@ export default Ember.Component.extend({
   },
 
   buildStagesSort: ['number'],
-  sortedBuildStages: Ember.computed.sort('build.stages', 'buildStagesSort')
+  sortedBuildStages: sort('build.stages', 'buildStagesSort')
 });

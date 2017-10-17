@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
 
 let configKeys, configKeysMap, languageConfigKeys;
 
@@ -46,7 +46,7 @@ configKeys = {
   os: 'OS'
 };
 
-configKeysMap = Ember.merge(configKeys, languageConfigKeys);
+configKeysMap = merge(configKeys, languageConfigKeys);
 
 export default configKeysMap;
 

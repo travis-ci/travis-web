@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { scheduleOnce, later } from '@ember/runloop';
 
 export default (function () {
   LinesSelector.prototype.Location = {
@@ -29,7 +30,7 @@ export default (function () {
     this.scroll = scroll;
     this.folder = folder;
     this.location = location || this.Location;
-    Ember.run.scheduleOnce('afterRender', this, function () {
+    scheduleOnce('afterRender', this, function () {
       let ref;
       this.last_selected_line = (ref = this.getSelectedLines()) != null ? ref.first : void 0;
       return this.highlightLines();
@@ -37,7 +38,7 @@ export default (function () {
     this.element.on('click', 'a', (function (_this) {
       return function (event) {
         let element;
-        element = Ember.$(event.target).parent('p');
+        element = $(event.target).parent('p');
         _this.loadLineNumbers(element, event.shiftKey);
         event.preventDefault();
         return false;
@@ -63,7 +64,7 @@ export default (function () {
       if (elements.length) {
         elements.addClass('highlight');
       } else if (tries < 4) {
-        Ember.run.later(this, (function () {
+        later(this, (function () {
           if (!this.destroyed) {
             return this.highlightLines(tries + 1);
           }

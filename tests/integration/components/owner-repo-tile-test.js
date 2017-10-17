@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -7,7 +7,7 @@ moduleForComponent('owner-repo-tile', 'OwnerRepoTileComponent', {
 });
 
 test('it renders', function (assert) {
-  const repo = Ember.Object.create({
+  const repo = EmberObject.create({
     slug: 'travis-ci/travis-chat',
     active: false,
     'private': false,

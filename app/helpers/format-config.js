@@ -1,23 +1,24 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
+import { copy } from '@ember/object/internals';
 
 export function safeFormatConfig(config) {
   const rejectKeys = ['.result', 'notifications', 'branches', 'linux_shared'];
   const rejectIfEmptyKeys = ['addons'];
 
   // create deep copy of config
-  let copy = Ember.copy(config[0] || {}, true);
+  let deepCopy = copy(config[0] || {}, true);
 
   rejectKeys.forEach((keyToReject) => {
-    delete copy[keyToReject];
+    delete deepCopy[keyToReject];
   });
 
   rejectIfEmptyKeys.forEach((key) => {
-    if (copy[key] && Object.keys(copy[key]).length < 1) {
-      delete copy[key];
+    if (deepCopy[key] && Object.keys(deepCopy[key]).length < 1) {
+      delete deepCopy[key];
     }
   });
 
-  return JSON.stringify(copy, null, 2);
+  return JSON.stringify(deepCopy, null, 2);
 }
 
-export default Ember.Helper.helper(safeFormatConfig);
+export default helper(safeFormatConfig);

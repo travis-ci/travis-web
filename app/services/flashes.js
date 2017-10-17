@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import Service from '@ember/service';
 import LimitedArray from 'travis/utils/limited-array';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
@@ -22,7 +23,7 @@ const messageTypeToCloseButton = {
   error: true
 };
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service auth: null,
   @service store: null,
 
@@ -90,7 +91,7 @@ export default Ember.Service.extend({
 
   removeFlash(msg) {
     setTimeout(() => {
-      Ember.run(this, () => {
+      run(this, () => {
         if (this.get('flashes.content')) {
           return this.get('flashes.content').removeObject(msg);
         }

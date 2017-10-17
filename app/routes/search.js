@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Route.extend({
+export default Route.extend({
   @service tabStates: null,
   @service auth: null,
   @service repositories: null,

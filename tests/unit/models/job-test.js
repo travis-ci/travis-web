@@ -1,5 +1,5 @@
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleForModel('job', 'Unit | Model | job', {
   needs: ['model:repo', 'model:build', 'model:commit', 'model:stage', 'service:ajax']
@@ -10,7 +10,7 @@ test('config is fetched if it\'s not available', function (assert) {
   let done = assert.async();
 
   const model = this.subject();
-  Ember.run(function () {
+  run(function () {
     return model.setProperties({
       _config: null
     });
@@ -38,7 +38,7 @@ test('config is fetched if it\'s not available', function (assert) {
 
 test('created state', function (assert) {
   const model = this.subject();
-  Ember.run(function () {
+  run(function () {
     return model.setProperties({
       state: 'created'
     });
@@ -51,7 +51,7 @@ test('created state', function (assert) {
 
 test('queued state', function (assert) {
   const model = this.subject();
-  Ember.run(function () {
+  run(function () {
     return model.setProperties({
       state: 'queued'
     });

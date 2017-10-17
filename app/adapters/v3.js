@@ -1,3 +1,5 @@
+import { underscore } from '@ember/string';
+import { get } from '@ember/object';
 import Ember from 'ember';
 import config from 'travis/config/environment';
 import RESTAdapter from 'ember-data/adapters/rest';
@@ -55,7 +57,7 @@ export default RESTAdapter.extend({
 
   buildURL: function (modelName, id) {
     let url = [];
-    const host = Ember.get(this, 'host');
+    const host = get(this, 'host');
     const prefix = this.urlPrefix();
     const pathPrefix = this.pathPrefix(...arguments);
 
@@ -82,7 +84,7 @@ export default RESTAdapter.extend({
   pathPrefix() {},
 
   pathForType: function (modelName, id) {
-    const underscored = Ember.String.underscore(modelName);
+    const underscored = underscore(modelName);
     return id ? underscored :  Ember.String.pluralize(underscored);
   },
 

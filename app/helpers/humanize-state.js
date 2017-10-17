@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
-export default Ember.Helper.helper((params) => {
+export default helper((params) => {
   let [state] = params;
   if (state === 'received') {
     return 'booting';

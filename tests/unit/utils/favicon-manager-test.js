@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import FaviconManager from 'travis/utils/favicon-manager';
 
 var fakeHead, manager;
@@ -7,7 +7,7 @@ const { module, test } = QUnit;
 
 module('Favicon manager', {
   beforeEach() {
-    fakeHead = Ember.$('<div id="fake-head"></div>').appendTo(Ember.$('#qunit-fixture'));
+    fakeHead = $('<div id="fake-head"></div>').appendTo($('#qunit-fixture'));
     return manager = new FaviconManager(fakeHead[0]);
   },
   afterEach() {
@@ -18,7 +18,7 @@ module('Favicon manager', {
 
 test('use <head> tag by default', function (assert) {
   manager = new FaviconManager();
-  assert.equal(manager.getHeadTag(), Ember.$('head')[0]);
+  assert.equal(manager.getHeadTag(), $('head')[0]);
 });
 
 test('set favicon if there is no link tag in head', function (assert) {
@@ -37,7 +37,7 @@ test('set favicon if there is no link tag in head', function (assert) {
 
 test('replace existing link tag', function (assert) {
   let done = assert.async();
-  fakeHead.append(Ember.$('<link id="foo" rel="icon"></link>'));
+  fakeHead.append($('<link id="foo" rel="icon"></link>'));
   assert.ok('foo', fakeHead.find('link').attr('id'), 'initially link should exist');
   manager.setFavicon('foobar');
   const links = fakeHead.find('link');
@@ -53,6 +53,6 @@ test('replace existing link tag', function (assert) {
 });
 
 test('find link with rel=icon only', function (assert) {
-  fakeHead.append(Ember.$('<link id="foo" rel="foo"></link>'));
+  fakeHead.append($('<link id="foo" rel="foo"></link>'));
   assert.notOk(manager.getLinkTag());
 });

@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import { computed, get } from '@ember/object';
 
 let limit = function (dependentKey, limitKey) {
-  return Ember.computed(dependentKey, `${dependentKey}.[]`, function () {
-    let limit = Ember.get(this, limitKey),
+  return computed(dependentKey, `${dependentKey}.[]`, function () {
+    let limit = get(this, limitKey),
       array = this.get(dependentKey);
 
     return array ? array.toArray().slice(0, limit) : [];

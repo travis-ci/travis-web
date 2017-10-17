@@ -1,12 +1,12 @@
 /* global Travis, HS */
+import $ from 'jquery';
+
+import { inject as service } from '@ember/service';
 import TravisRoute from 'travis/routes/basic';
 import config from 'travis/config/environment';
 import BuildFaviconMixin from 'travis/mixins/build-favicon';
-import Ember from 'ember';
 
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/route';
-
-let { service } = Ember.inject;
 
 export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
   flashes: service(),
@@ -18,7 +18,7 @@ export default TravisRoute.extend(BuildFaviconMixin, KeyboardShortcuts, {
 
   renderTemplate: function () {
     if (this.get('config').pro) {
-      Ember.$('body').addClass('pro');
+      $('body').addClass('pro');
     }
     return this._super(...arguments);
   },

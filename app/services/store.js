@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
+import { later } from '@ember/runloop';
 import DS from 'ember-data';
-import Ember from 'ember';
 import PaginatedCollectionPromise from 'travis/utils/paginated-collection-promise';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
@@ -186,7 +186,7 @@ export default DS.Store.extend({
       // delay to resolve race between github-sync and live
       const branchName = data.branch;
 
-      Ember.run.later(() => {
+      later(() => {
         this.findRecord('branch', `/repo/${data.repository_id}/branch/${branchName}`);
       }, config.intervals.branchCreatedSyncDelay);
 

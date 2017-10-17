@@ -1,3 +1,6 @@
+import { scheduleOnce } from '@ember/runloop';
+import { isEmpty } from '@ember/utils';
+import Controller from '@ember/controller';
 import Ember from 'ember';
 import eventually from 'travis/utils/eventually';
 import Visibility from 'npm:visibilityjs';
@@ -6,7 +9,7 @@ import { controller } from 'ember-decorators/controller';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   @service repositories: null,
   @service tabStates: null,
   @service('updateTimes') updateTimesService: null,
@@ -29,7 +32,7 @@ export default Ember.Controller.extend({
 
   @computed('repos.isLoaded', 'repos.[]')
   isEmpty(loaded, repos) {
-    return loaded && Ember.isEmpty(repos);
+    return loaded && isEmpty(repos);
   },
 
   init() {
@@ -65,7 +68,7 @@ export default Ember.Controller.extend({
   },
 
   currentBuildDidChange() {
-    return Ember.run.scheduleOnce('actions', this, this._currentBuildDidChange);
+    return scheduleOnce('actions', this, this._currentBuildDidChange);
   },
 
   _currentBuildDidChange() {

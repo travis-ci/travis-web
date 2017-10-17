@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service tabStates: null,
 
   tagName: 'nav',

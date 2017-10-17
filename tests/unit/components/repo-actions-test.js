@@ -1,12 +1,13 @@
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
 import { test, moduleForComponent } from 'ember-qunit';
-import Ember from 'ember';
 
 // stub auth service
-const authStub = Ember.Service.extend({
-  currentUser: Ember.Object.create()
+const authStub = Service.extend({
+  currentUser: EmberObject.create()
 });
 
-const job = Ember.Object.create();
+const job = EmberObject.create();
 
 moduleForComponent('repo-actions', 'RepoActionsComponent', {
   unit: true,
@@ -28,7 +29,7 @@ test('it shows cancel button if canCancel is true', function (assert) {
 test('the cancel button is for a build if a build is passed in', function (assert) {
   const component = this.subject({
     canCancel: true,
-    build: Ember.Object.create()
+    build: EmberObject.create()
   });
   this.render();
   assert.ok(component.$('button[aria-label="Cancel build"]').length, 'cancel build button should be visible');
@@ -44,7 +45,7 @@ test('it shows restart button if canRestart is true', function (assert) {
 });
 
 test('user can cancel if she has pull permissions to a repo and job is cancelable', function (assert) {
-  const job = Ember.Object.create({
+  const job = EmberObject.create({
     canCancel: false,
     userHasPullPermissionForRepo: true
   });
@@ -60,7 +61,7 @@ test('user can cancel if she has pull permissions to a repo and job is cancelabl
 });
 
 test('user can restart if she has pull permissions to a repo and job is restartable', function (assert) {
-  const job = Ember.Object.create({
+  const job = EmberObject.create({
     canRestart: false,
     userHasPullPermissionForRepo: true
   });
@@ -79,7 +80,7 @@ test('it properly checks for user permissions for a repo', function (assert) {
   this.assert = assert;
   assert.expect(3);
 
-  const repo = Ember.Object.create({
+  const repo = EmberObject.create({
     id: 44
   });
 

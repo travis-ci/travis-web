@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Component from '@ember/component';
 import Polling from 'travis/mixins/polling';
 import colorForState from 'travis/utils/color-for-state';
 import { computed } from 'ember-decorators/object';
 
-export default Ember.Component.extend(Polling, {
+export default Component.extend(Polling, {
   tagName: 'li',
   pollModels: 'repo',
   classNames: ['repo'],
@@ -15,7 +16,7 @@ export default Ember.Component.extend(Polling, {
 
   scrollTop() {
     if (window.scrollY > 0) {
-      return Ember.$('html, body').animate({
+      return $('html, body').animate({
         scrollTop: 0
       }, 200);
     }

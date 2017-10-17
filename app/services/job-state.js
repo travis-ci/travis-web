@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import Service from '@ember/service';
 import { task } from 'ember-concurrency';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service store: null,
 
   runningJobs: [],
@@ -10,7 +11,7 @@ export default Ember.Service.extend({
   fetchRunningJobs: task(function* () {
     const runningJobs = this.get('runningJobs');
 
-    if (!Ember.isEmpty(runningJobs)) {
+    if (!isEmpty(runningJobs)) {
       return runningJobs;
     }
 

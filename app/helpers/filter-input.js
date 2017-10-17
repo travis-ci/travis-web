@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import { assert } from '@ember/debug';
+import TextField from '@ember/component/text-field';
 
-let TextField = Ember.TextField.extend({
+TextField.extend({
   keyUp(event) {
     return this.sendAction('action', this.get('_value'), event);
   },
@@ -12,7 +13,7 @@ let TextField = Ember.TextField.extend({
 
 export default function (params, hash, options, env) {
   let onEvent;
-  Ember.assert('You can only pass attributes to the `input` helper, not arguments', params.length);
+  assert('You can only pass attributes to the `input` helper, not arguments', params.length);
   onEvent = hash.on;
   delete hash.on;
   hash.onEvent = onEvent || 'enter';

@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'section',
   classNames: ['jobs'],
   classNameBindings: ['stage:stage'],
@@ -71,7 +72,7 @@ export default Ember.Component.extend({
         const firstJobs = relevantJobs.slice(0, relevantJobs.length - 1);
         const lastJob = relevantJobs[relevantJobs.length - 1];
         jobList = `jobs ${firstJobs.mapBy('number').join(', ')}, ` +
-          `and ${Ember.get(lastJob, ('number'))}`;
+          `and ${get(lastJob, ('number'))}`;
       }
 
       let continuationText = '';

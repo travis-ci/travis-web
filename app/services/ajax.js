@@ -1,5 +1,10 @@
 /* global jQuery */
-import Ember from 'ember';
+import { isNone } from '@ember/utils';
+
+import { Promise as EmberPromise } from 'rsvp';
+import $ from 'jquery';
+import { get } from '@ember/object';
+import Service from '@ember/service';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 
@@ -11,7 +16,7 @@ let defaultOptions = {
   }
 };
 
-export default Ember.Service.extend({
+export default Service.extend({
   @service auth: null,
   @service features: null,
 
@@ -56,7 +61,7 @@ export default Ember.Service.extend({
     method = (method || 'GET').toUpperCase();
     endpoint = config.apiEndpoint || '';
     options = options || {};
-    token = Ember.get(this, 'auth').token();
+    token = get(this, 'auth').token();
     if (token && (this.needsAuth(method, url) || options.forceAuth)) {
       options.headers = options.headers || {};
       if (!options.headers['Authorization']) {
@@ -79,14 +84,14 @@ export default Ember.Service.extend({
     };
     error = options.error || (() => {});
     options.error = (data, status, xhr) => {
-      if (Ember.get(this, 'features').get('debugLogging')) {
+      if (get(this, 'features').get('debugLogging')) {
         // eslint-disable-next-line
         console.log(`[ERROR] API responded with an error (${status}): ${JSON.stringify(data)}`);
       }
       return error.call(this, data, status, xhr);
     };
 
-    options = Ember.$.extend(options, defaultOptions);
+    options = $.extend(options, defaultOptions);
 
     if (options.data && (method === 'GET' || method === 'HEAD')) {
       params = jQuery.param(options.data);
@@ -116,7 +121,7 @@ export default Ember.Service.extend({
     }
     resolve = null;
     reject = null;
-    promise = new Ember.RSVP.Promise((_resolve, _reject) => {
+    promise = new EmberPromise((_resolve, _reject) => {
       resolve = _resolve;
       return reject = _reject;
     });
@@ -129,7 +134,7 @@ export default Ember.Service.extend({
             try {
               return jQuery.parseJSON(xhr.responseText);
             } catch (error1) {
-              if (Ember.get(this, 'features').get('debugLogging')) {
+              if (get(this, 'features').get('debugLogging')) {
                 // eslint-disable-next-line
                 console.log('error while parsing a response', method, options.url, xhr.responseText);
               }
@@ -149,7 +154,7 @@ export default Ember.Service.extend({
     };
     data = options.data;
     let contentType = options.contentType;
-    let isJSON = Ember.isNone(contentType) || contentType.match(/application\/json/);
+    let isJSON = isNone(contentType) || contentType.match(/application\/json/);
     if (typeof options.data === 'object' && isJSON) {
       data = JSON.stringify(data);
     }

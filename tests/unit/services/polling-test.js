@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import { run } from '@ember/runloop';
 import Polling from 'travis/services/polling';
 import config from 'travis/config/environment';
 
@@ -13,7 +14,7 @@ module('PollingService', {
   afterEach() {
     config.ajaxPolling = false;
     if (!service.get('isDestroyed')) {
-      return Ember.run(function () {
+      return run(function () {
         return service.destroy();
       });
     }
@@ -43,7 +44,7 @@ test('polls for each of the models', function (assert) {
   service.startPolling(model2);
   return setTimeout(function () {
     assert.deepEqual(history, ['model1', 'model2']);
-    Ember.run(function () {
+    run(function () {
       return service.destroy();
     });
     done();
@@ -63,7 +64,7 @@ test('it will stop running any reloads after it is destroyed', function (assert)
   };
   service.startPolling(model);
   setTimeout(function () {
-    return Ember.run(function () {
+    return run(function () {
       return service.destroy();
     });
   }, 30);
@@ -96,7 +97,7 @@ test('it stops reloading models after they were removed from polling', function 
   return setTimeout(function () {
     service.stopPolling(model2);
     return setTimeout(function () {
-      Ember.run(function () {
+      run(function () {
         return service.destroy();
       });
       assert.deepEqual(history, ['model1', 'model2', 'model1']);
@@ -120,7 +121,7 @@ test('it runs a hook on each interval', function (assert) {
   return setTimeout(function () {
     service.stopPollingHook(source);
     return setTimeout(function () {
-      Ember.run(function () {
+      run(function () {
         return service.destroy();
       });
       done();
@@ -134,18 +135,18 @@ test('it will not run pollHook if the source is destroyed', function (assert) {
   service = Polling.create({
     pollingInterval: 20
   });
-  const source = Ember.Object.extend({
+  const source = EmberObject.extend({
     pollHook: function () {
       return assert.ok(true);
     }
   }).create();
   service.startPollingHook(source);
   return setTimeout(function () {
-    Ember.run(function () {
+    run(function () {
       return source.destroy();
     });
     return setTimeout(function () {
-      Ember.run(function () {
+      run(function () {
         return service.destroy();
       });
       done();

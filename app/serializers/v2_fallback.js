@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { isArray } from '@ember/array';
 import V3Serializer from 'travis/serializers/v3';
 import wrapWithArray from 'travis/utils/wrap-with-array';
 
@@ -76,7 +76,7 @@ export default V3Serializer.extend({
             relationshipIncluded.forEach(item => included.push(item));
           });
 
-          if (Ember.isArray(relationship)) {
+          if (isArray(relationship)) {
             data.relationships[key] = {
               data: relationship.map(({ data }) => {
                 const { id, type } = data;

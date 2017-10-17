@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import { registerAsyncHelper } from '@ember/test';
 
-export default Ember.Test.registerAsyncHelper('signInUser', function (app, user) {
+export default registerAsyncHelper('signInUser', function (app, user) {
   const token = 'testUserToken';
   user.attrs.token = token;
   user.save();

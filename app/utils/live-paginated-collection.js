@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { defineProperty, computed as emberComputed } from '@ember/object';
+import ArrayProxy from '@ember/array/proxy';
 import { alias } from 'ember-decorators/object/computed';
 import { computed } from 'ember-decorators/object';
 import limit from 'travis/utils/computed-limit';
 
 // LivePaginatedCollection is an interface for a first page of paginated set of
 // results.
-let LivePaginatedCollection = Ember.ArrayProxy.extend({
+let LivePaginatedCollection = ArrayProxy.extend({
   // TODO: this is copied from PaginatedCollection, ideally we should change the
   // pagination data when new records come in, but for the time being I think
   // it's fine to just leave this static
@@ -94,11 +95,11 @@ LivePaginatedCollection.reopenClass({
     sortDependencies = sortDependencies.map((dep) => `content.@each.${dep}`);
     sortDependencies.push('content.[]');
 
-    Ember.defineProperty(instance, 'sorted', Ember.computed(...sortDependencies, function () {
+    defineProperty(instance, 'sorted', emberComputed(...sortDependencies, function () {
       return this.get('content').toArray().sort(sortByFunction);
     }));
 
-    Ember.defineProperty(instance, 'limited', limit('sorted', 'pagination.perPage'));
+    defineProperty(instance, 'limited', limit('sorted', 'pagination.perPage'));
   }
 });
 

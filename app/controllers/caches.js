@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import Controller from '@ember/controller';
 import config from 'travis/config/environment';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { task } from 'ember-concurrency';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   @service ajax: null,
 
   @alias('model.repo') repo: null,
@@ -23,7 +24,7 @@ export default Ember.Controller.extend({
         yield this.get('ajax').ajax(`/repos/${this.get('repo.id')}/caches`, 'DELETE');
       } catch (e) {}
 
-      this.set('model', Ember.Object.create());
+      this.set('model', EmberObject.create());
     }
   }).drop()
 });

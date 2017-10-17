@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import TravisRoute from 'travis/routes/basic';
 
 export default TravisRoute.extend({
@@ -6,7 +6,7 @@ export default TravisRoute.extend({
   needsAuth: true,
 
   renderTemplate() {
-    Ember.$('body').attr('id', 'profile');
+    $('body').attr('id', 'profile');
     return this._super(...arguments);
   }
 });

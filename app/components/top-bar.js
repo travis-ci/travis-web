@@ -1,10 +1,14 @@
 /* global HS, Waypoint */
+import { run } from '@ember/runloop';
+
+import { htmlSafe } from '@ember/string';
+import Component from '@ember/component';
 import Ember from 'ember';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service auth: null,
   @service store: null,
   @service externalLinks: null,
@@ -37,7 +41,7 @@ export default Ember.Component.extend({
         const branchURL = this.get('externalLinks').travisWebBranch(branchName);
         const branchLink = `<a href='${branchURL}'><code>${branchName}</code></a>`;
 
-        return Ember.String.htmlSafe(`Test deployment ${branchLink}`);
+        return htmlSafe(`Test deployment ${branchLink}`);
       } else {
         return false;
       }
@@ -104,13 +108,13 @@ export default Ember.Component.extend({
     const waypoint = new Waypoint.Inview({
       element: this.element,
       exited() {
-        Ember.run(() => {
+        run(() => {
           component.get('flashes').set('topBarVisible', false);
         });
       },
 
       enter() {
-        Ember.run(() => {
+        run(() => {
           component.get('flashes').set('topBarVisible', true);
         });
       }

@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { isBlank } from '@ember/utils';
+import Component from '@ember/component';
 import { service } from 'ember-decorators/service';
 import { task } from 'ember-concurrency';
 
-export default Ember.Component.extend({
+export default Component.extend({
   @service store: null,
   @service raven: null,
   @service flashes: null,
@@ -11,7 +12,7 @@ export default Ember.Component.extend({
   classNameBindings: ['nameIsBlank:form-error'],
 
   isValid() {
-    if (Ember.isBlank(this.get('name'))) {
+    if (isBlank(this.get('name'))) {
       this.set('nameIsBlank', true);
       return false;
     } else {
