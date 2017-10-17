@@ -1,4 +1,4 @@
-/* global moment, Travis */
+/* global Travis */
 
 import { observer } from '@ember/object';
 
@@ -17,6 +17,8 @@ import { belongsTo } from 'ember-data/relationships';
 import { computed } from 'ember-decorators/object';
 import { alias, not } from 'ember-decorators/object/computed';
 import { service } from 'ember-decorators/service';
+
+import moment from 'moment';
 
 export default Model.extend(DurationCalculations, DurationAttributes, {
   @service ajax: null,

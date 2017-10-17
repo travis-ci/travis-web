@@ -1,4 +1,3 @@
-/* global moment */
 import { all } from 'rsvp';
 
 import { isEmpty } from '@ember/utils';
@@ -12,6 +11,8 @@ import { hasMany, belongsTo } from 'ember-data/relationships';
 import { service } from 'ember-decorators/service';
 import { computed } from 'ember-decorators/object';
 import { alias } from 'ember-decorators/object/computed';
+
+import moment from 'moment';
 
 export default Model.extend(DurationCalculations, {
   @service ajax: null,

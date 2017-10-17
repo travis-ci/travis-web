@@ -1,10 +1,11 @@
-/* global moment */
 import { test } from 'qunit';
 import Mirage from 'ember-cli-mirage';
 
 import moduleForAcceptance from 'travis/tests/helpers/module-for-acceptance';
 import settingsPage from 'travis/tests/pages/settings';
 import topPage from 'travis/tests/pages/top';
+
+import moment from 'moment';
 
 moduleForAcceptance('Acceptance | repo settings', {
   beforeEach() {

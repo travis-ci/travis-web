@@ -1,7 +1,8 @@
-/* global moment */
 import { htmlSafe } from '@ember/string';
 
 import { helper } from '@ember/component/helper';
+
+import moment from 'moment';
 
 export default helper((params) => {
   let date = new Date(params[0]);

@@ -1,7 +1,8 @@
-/* global moment */
 import Component from '@ember/component';
 import { computed } from 'ember-decorators/object';
 import { alias, equal } from 'ember-decorators/object/computed';
+
+import moment from 'moment';
 
 const NOVEMBER_2016_RETIREMENT = '2016-11-28T12:00:00-08:00';
 const JANUARY_2017_RETIREMENT = '2017-01-20T12:00:00-08:00';
