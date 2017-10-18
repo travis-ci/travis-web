@@ -19,11 +19,15 @@
     </div>
   </div>
 
-  <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
-    {{repository-sidebar
-      showRepositories=(route-action 'showRepositories')
-      viewSearchResults=(route-action 'viewSearchResults')}}
-  </aside>
+  {{#if auth.signedIn}}
+  {{#unless features.dashboard}}
+    <aside id="left" class="{{unless auth.signedIn 'hidden'}}">
+      {{repository-sidebar
+        showRepositories=(route-action 'showRepositories')
+        viewSearchResults=(route-action 'viewSearchResults')}}
+    </aside>
+  {{/unless}}
+  {{/if}}
 
   {{#if auth.signedOut}}
     {{page-footer}}

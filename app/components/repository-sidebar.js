@@ -17,16 +17,19 @@ export default Component.extend({
   @service store: null,
   @service auth: null,
   @service router: null,
+  classNames: ['dupa'],
 
-  init(...args) {
+  didInsertElement(...args) {
     this._super(args);
     // this starts the fetch after the sidebar is rendered, which is not ideal.
     // But I'm otherwise unable to reference that state within two separate
     // templates...
     schedule('afterRender', () => {
       this.get('fetchRepositoryData').perform();
-      this.get('jobState.fetchRunningJobs').perform();
-      this.get('jobState.fetchQueuedJobs').perform();
+      if (this.get('features.proVersion')) {
+        this.get('jobState.fetchRunningJobs').perform();
+        this.get('jobState.fetchQueuedJobs').perform();
+      }
     });
   },
 

@@ -19,11 +19,10 @@ export default RESTAdapter.extend({
     'Content-Type': 'application/json'
   },
 
-  ajaxOptions: function (url, type, options) {
+  ajaxOptions: function (url, type = 'GET', options) {
     options = options || {};
     options.data = options.data || {};
     options.data = merge({}, options.data); // clone
-    type = type || 'GET';
 
     for (let key in options.data) {
       let value = options.data[key];

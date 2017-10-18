@@ -1,11 +1,6 @@
 /* global Travis */
 
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-
-import ObjectProxy from '@ember/object/proxy';
-
 import { observer } from '@ember/object';
-
 import { Promise as EmberPromise } from 'rsvp';
 import { isEqual } from '@ember/utils';
 import { getOwner } from '@ember/application';
@@ -64,12 +59,8 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
 
   @computed()
   config() {
-    let promise = this.get('jobConfigFetcher').fetch(this.get('id'));
-    let PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
-    return PromiseObject.create({ promise });
+    return this.get('jobConfigFetcher').fetch(this.get('id'));
   },
-
-  @alias('repositorySlug') repoSlug: null,
 
   getCurrentState() {
     return this.get('currentState.stateName');

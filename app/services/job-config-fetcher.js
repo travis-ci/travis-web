@@ -2,6 +2,8 @@ import { once } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
 import Service from '@ember/service';
 import { service } from 'ember-decorators/service';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+import ObjectProxy from '@ember/object/proxy';
 
 export default Service.extend({
   @service ajax: null,
@@ -21,7 +23,9 @@ export default Service.extend({
       });
       this.promisesByJobId[jobId] = promise;
       once(this, 'flush');
-      return promise;
+
+      let PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
+      return PromiseObject.create({ promise });
     }
   },
 
