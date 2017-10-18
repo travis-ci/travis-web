@@ -40,9 +40,11 @@ export default Controller.extend({
   },
 
   _sortBranchesByFinished(branches) {
-    const unfinished = branches.filter(branch => {
+    branches.filter(branch => {
       const finishedAt = get(branch, 'last_build.finished_at');
       return isNone(finishedAt);
+    });
+  },
 
   @computed('model.activeBranches.[]')
   activeBranches(activeBranches) {

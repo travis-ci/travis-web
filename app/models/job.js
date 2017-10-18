@@ -42,7 +42,6 @@ export default Model.extend(DurationCalculations, DurationAttributes, {
   @alias('build.isPullRequest') isPullRequest: null,
   @alias('build.pullRequestNumber') pullRequestNumber: null,
   @alias('build.pullRequestTitle') pullRequestTitle: null,
-  @alias('build.branch') branch: null,
   @alias('build.branch.name') branchName: null,
   @alias('build.isTag') isTag: null,
   @alias('build.tag') tag: null,

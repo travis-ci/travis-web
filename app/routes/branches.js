@@ -1,5 +1,4 @@
-import $ from 'jquery';
-import ArrayProxy from '@ember/array/proxy';
+import RSVP from 'rsvp';
 import TravisRoute from 'travis/routes/basic';
 import { service } from 'ember-decorators/service';
 
@@ -9,7 +8,7 @@ export default TravisRoute.extend({
 
   model() {
     let repoId = this.modelFor('repo').get('id');
-    return Ember.RSVP.hash({
+    return RSVP.hash({
       activeBranches: this.store.paginated('branch', {
         repoId: repoId,
         existsOnGithub: true,
