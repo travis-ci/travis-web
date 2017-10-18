@@ -1,3 +1,16 @@
+.is-fullscreen
+  .log
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    width: 100%
+    height: 100vh
+    overflow: scroll
+    background-color: $color-bg-log-fold
+    +z-index(dialog)
+
 .log
   position: relative
 
@@ -81,17 +94,11 @@
   padding: .7em .8em .6em
   text-align: right
   background-color: $log-header-bg
-
   @media #{$small-only}
     display: flex
-  a
-    margin-left: .4em
-    @media #{$small-only}
-      flex-grow: 1
 
 .log-main
   display: none
-  margin-bottom: 5em
   &.is-visible
     display: block
   @media #{$medium-up}
@@ -120,7 +127,7 @@
     border-color: $oxide-blue
     color: $oxide-blue
     +colorSVG($oxide-blue)
-.toggle-log-button--dark
+.toggle-log-button--dark,
   @extend %log-button
   width: 50%
   background-color: transparent
@@ -143,7 +150,7 @@
     word-wrap: break-word
     background-color: $color-bg-log-fold
     counter-reset: line-numbering
-    margin-top: 0
+    margin: 0
 
   .cut
     padding: 20px 15px 0 55px
