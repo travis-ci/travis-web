@@ -21,7 +21,7 @@ export default Controller.extend({
   @alias('repositories.accessible') repos: null,
   @alias('auth.currentUser') currentUser: null,
   @alias('buildController.build') build: null,
-  @alias('buildsController.content') builds: null,
+  @alias('buildsController.model') builds: null,
   @alias('jobController.job') job: null,
 
   classNames: ['repo'],
