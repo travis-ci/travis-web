@@ -1,10 +1,9 @@
-import $ from 'jquery';
+import timeago from 'npm:timeago.js';
 
-const timeago = $.timeago;
-timeago.settings.allowFuture = true;
+const timeagoInstance = timeago();
 
 export default function timeAgoInWords(date) {
   if (date) {
-    return timeago(date);
+    return timeagoInstance.format(date);
   }
 }
