@@ -1,5 +1,3 @@
-import { isNone } from '@ember/utils';
-import { get } from '@ember/object';
 import Controller from '@ember/controller';
 import { controller } from 'ember-decorators/controller';
 import { computed } from 'ember-decorators/object';
@@ -39,33 +37,10 @@ export default Controller.extend({
     return deletedBranches;
   },
 
-  _sortBranchesByFinished(branches) {
-    branches.filter(branch => {
-      const finishedAt = get(branch, 'last_build.finished_at');
-      return isNone(finishedAt);
-    });
-  },
-
   @computed('model.activeBranches.[]')
   activeBranches(activeBranches) {
     return activeBranches.filter((branch) => !branch.get('defaultBranch'));
   },
-
-  fetchDeletedTask: task(function* (offset) {
-    let repoId = this.get('defaultBranch.firstObject.repoId');
-    let alreadyDeleted = this.get('deletedBranches') || [];
-
-    yield this.get('store').paginated('branch', {
-      repoId: repoId,
-      existsOnGithub: false,
-      includeCommit: true,
-      includeRecent: true,
-      offset: offset
-    }).then((branches) => {
-      let newBranches = branches.toArray();
-      this.set('deletedBranches', alreadyDeleted.pushObjects(newBranches).uniq());
-    });
-  }),
 
   fetchActiveTask: task(function* (offset) {
     let repoId = this.get('defaultBranch.firstObject.repoId');
@@ -83,6 +58,26 @@ export default Controller.extend({
       });
     } catch (e) {
       this.get('flashes').error('There was an error fetching active branches.');
+    }
+  }),
+
+  fetchDeletedTask: task(function* (offset) {
+    let repoId = this.get('defaultBranch.firstObject.repoId');
+    let alreadyDeleted = this.get('deletedBranches') || [];
+
+    try {
+      yield this.get('store').paginated('branch', {
+        repoId: repoId,
+        existsOnGithub: false,
+        includeCommit: true,
+        includeRecent: true,
+        offset: offset
+      }).then((branches) => {
+        let newBranches = branches.toArray();
+        return this.set('deletedBranches', alreadyDeleted.pushObjects(newBranches));
+      });
+    } catch (e) {
+      this.get('flashes').error('There was an error fetching deleted branches.');
     }
   }),
 
