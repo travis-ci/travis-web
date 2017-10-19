@@ -1,13 +1,14 @@
 .enterprise-trial-banner
+  padding: 0.1em 0
   font-size: 16px
   color: $dozer-yellow
   text-align: center
   background-color: $haze-yellow
-  border-top: 1px solid $dozer-yellow
-  border-bottom: 1px solid $dozer-yellow
+  .icon
+    +colorSVG($dozer-yellow)
   strong
     font-weight: 700
   &.expired
-    border-color: $brick-red
     color: $brick-red
     background-color: $quartz-red
+    +colorSVG($brick-red)
