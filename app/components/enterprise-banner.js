@@ -73,5 +73,6 @@ export default Ember.Component.extend({
     return daysFromNowThatLicenseExpires < DAYS_FROM_NOW_THAT_EXPIRATION_TIME_IS_IMMINENT;
   },
 
-  showBanner: Ember.computed.or('isTrial', 'licenseExpirationIsImminent')
+  //showBanner: Ember.computed.or('isTrial', 'licenseExpirationIsImminent')
+  showBanner: true
 });
