@@ -9,8 +9,7 @@ describe Travis::Web::App do
     before  { get('/foo/bar') }
     example { last_response.should be_ok }
     example { headers['Content-Location'].should be == '/' }
-    example { headers['Cache-Control'].should include('must-revalidate') }
-    example { headers['Cache-Control'].should include('public') }
+    example { headers['Cache-Control'].should be == 'public, must-revalidate, max-age=0' }
     example { headers['Vary'].should include('Accept') }
   end
 
@@ -18,8 +17,7 @@ describe Travis::Web::App do
     before  { get('/favicon.ico') }
     example { last_response.should be_ok }
     example { headers['Content-Location'].should be == '/favicon.ico' }
-    example { headers['Cache-Control'].should_not include('must-revalidate') }
-    example { headers['Cache-Control'].should include('public') }
+    example { headers['Cache-Control'].should be == 'public, max-age=31536000, immutable' }
     example { headers['Vary'].split(',').should_not include('Accept') }
   end
 end
