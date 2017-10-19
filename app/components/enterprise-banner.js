@@ -16,12 +16,12 @@ export default Ember.Component.extend({
   licenseExpirationTime: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 30),
   currentSeats: 27,
 
-  /*
+
   init() {
     this._super(...arguments);
 
     // would we still need to check for enterprise then?
-    const url = '/enterprise_license';
+    const url = '/v3/enterprise_license';
     this.get('ajax').get(url).then(response => {
     // if we don't check for enterprise before
     // should we check for 404 here?
@@ -34,7 +34,7 @@ export default Ember.Component.extend({
      this.set('maxSeats', response.seats);
 
      this.set('licenseExpirationTime', new Date(Date.parse(response.expiration_time)));
-     );
+     });
     });
   },
    */
