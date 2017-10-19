@@ -11,7 +11,6 @@ moduleForAcceptance('Acceptance | enterprise/trial-banner', {
     server.get('/enterprise_license', (schema, request) => {
       return {
         'seats': '30',
-        'billing_frequency': 'annual',
         'license_type': this.licenseType || 'trial',
         'expiration_time': this.expirationTime
       };
@@ -111,7 +110,6 @@ test('when it’s not a trial but the expiration date is less than 21 days away'
 
 test('when used seats are exeeding the amount listed in license', function (assert) {
   withFeature('enterpriseVersion');
-  // hard coded current seats is 27
   visit('/');
   andThen(function () {
     assert.ok(topPage.enterpriseTrialBanner.isVisible);

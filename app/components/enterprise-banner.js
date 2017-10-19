@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   licenseType: 'regular', // todo
   maxSeats: 30, // todo
   licenseExpirationTime: null,
-  currentSeats: 27, //todo
+  currentSeats: 27, // todo
 
   init() {
     this._super(...arguments);
@@ -23,7 +23,8 @@ export default Ember.Component.extend({
       Ember.run(() => {
         this.set('licenseExpirationTime', new Date(Date.parse(response.expiration_time)));
         this.set('licenseType', response.license_type);
-        this.set('maxSeats', response.seats)
+        this.set('maxSeats', response.seats);
+        this.set('currentSeats', response.current_seats);
       });
     });
   },
@@ -61,6 +62,6 @@ export default Ember.Component.extend({
     return daysFromNowThatLicenseExpires < DAYS_FROM_NOW_THAT_EXPIRATION_TIME_IS_IMMINENT;
   },
 
-  //showBanner: Ember.computed.or('isTrial', 'licenseExpirationIsImminent')
+  // showBanner: Ember.computed.or('isTrial', 'licenseExpirationIsImminent')
   showBanner: true
 });
