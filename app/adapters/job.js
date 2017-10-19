@@ -1,7 +1,6 @@
 import V3Adapter from 'travis/adapters/v3';
 
 export default V3Adapter.extend({
-  includes: 'job.build,job.commit',
   coalesceFindRequests: true,
 
   groupRecordsForFindMany(store, snapshots) {
