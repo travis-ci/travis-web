@@ -301,12 +301,12 @@ export default TravisRoute.extend({
         image: 'rajesh'
       },
       {
-        name: 'Katherine Daniels',
+        name: 'Ryn Daniels',
         title: 'Ops Witch',
         handle: 'beerops',
         nationality: 'usa',
         country: 'usa',
-        image: 'katherine'
+        image: 'ryn'
       },
       {
         name: 'Bogdana Vereha',
