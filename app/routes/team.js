@@ -352,9 +352,17 @@ export default TravisRoute.extend({
         name: 'Bianca Wilk',
         title: 'Marketing Builder',
         handle: 'biancatwilk',
-        nationality: 'polandchile',
+        nationality: 'polandcfhile',
         country: 'germanycolombia',
         image: 'bianca'
+      },
+      {
+        name: 'Kris Svardstal',
+        title: 'Customer Avocado',
+        handle: 'DrTorte',
+        nationality: 'sweden',
+        country: 'canada',
+        image: 'kris'
       }
     ]);
   }
