@@ -16,7 +16,6 @@ export default DS.Store.extend({
   init() {
     this._super(...arguments);
     this.filteredArraysManager = FilteredArrayManager.create({ store: this });
-    return this.set('pusherEventHandlerGuards', {});
   },
 
   // Fetch a filtered collection.
@@ -127,37 +126,11 @@ export default DS.Store.extend({
     }
   },
 
-  addPusherEventHandlerGuard(name, callback) {
-    return this.get('pusherEventHandlerGuards')[name] = callback;
-  },
-
-  removePusherEventHandlerGuard(name) {
-    return delete this.get('pusherEventHandlerGuards')[name];
-  },
-
-  canHandleEvent(event, data) {
-    let callback, name, ref, ref1;
-    ref = event.split(':');
-    name = ref[0];
-    ref1 = this.get('pusherEventHandlerGuards');
-    for (name in ref1) {
-      callback = ref1[name];
-      if (!callback(event, data)) {
-        return false;
-      }
-    }
-    return true;
-  },
-
   receivePusherEvent(event, data) {
     let build, commit, job, name, ref, ref1, ref2, type;
     ref = event.split(':');
     name = ref[0];
     type = ref[1];
-
-    if (!this.canHandleEvent(event, data)) {
-      return;
-    }
 
     if (name === 'job' && ((ref1 = data.job) != null ? ref1.commit : void 0)) {
       this.push(this.normalize('commit', data.job.commit));
