@@ -355,6 +355,14 @@ export default TravisRoute.extend({
         nationality: 'polandchile',
         country: 'germanycolombia',
         image: 'bianca'
+      },
+      {
+        name: 'Kris Svardstal',
+        title: 'Customer Avocado',
+        handle: 'DrTorte',
+        nationality: 'sweden',
+        country: 'canada',
+        image: 'kris'
       }
     ]);
   }
