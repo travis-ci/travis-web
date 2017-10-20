@@ -30,9 +30,7 @@ export default Service.extend({
     const runningStates = ['started', 'received'];
     const result = yield this.get('store').filter(
       'job',
-      null,
-      job => runningStates.includes(job.get('state')),
-      ['state']
+      job => runningStates.includes(job.get('state'))
     );
 
     // we don't run a query in filter above, because we want to get *all*
@@ -56,9 +54,7 @@ export default Service.extend({
     const queuedStates = ['created', 'queued'];
     const result = yield this.get('store').filter(
       'job',
-      null,
-      job => queuedStates.includes(job.get('state')),
-      ['state']
+      job => queuedStates.includes(job.get('state'))
     );
 
     // we don't run a query in filter above, because we want to get *all*
