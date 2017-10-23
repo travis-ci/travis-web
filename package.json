@@ -70,6 +70,7 @@
     "ember-qunit-nice-errors": "1.1.2",
     "ember-resolver": "4.1.0",
     "ember-route-action-helper": "^2.0.3",
+    "ember-sinon": "^1.0.1",
     "ember-source": "~2.16.0",
     "ember-svg-jar": "^0.10.3",
     "ember-test-assets": "^1.1.0",

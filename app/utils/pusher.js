@@ -94,11 +94,8 @@ TravisPusher.prototype.receive = function (event, data) {
       job.clearLog();
     }
   }
-  return next((function (_this) {
-    return function () {
-      return _this.store.receivePusherEvent(event, data);
-    };
-  })(this));
+
+  next(() => this.pusherService.receive(event, data));
 };
 
 TravisPusher.prototype.normalize = function (event, data) {
@@ -118,7 +115,8 @@ TravisPusher.prototype.normalize = function (event, data) {
         data.queue = data.queue.replace('builds.', '');
       }
       return {
-        job: data
+        job: data,
+        _no_full_payload: data._no_full_payload
       };
     case 'worker:added':
     case 'worker:updated':
