@@ -3,15 +3,24 @@ import V2Serializer from './v2';
 
 export default V2Serializer.extend({
   serialize(job/* , request */) {
-    const response = {
-      job: this.normalizeAttrs(job.attrs)
-    };
+    if (job.models) {
+      const response = {
+        jobs: job.models.map((j) => this.normalizeAttrs(j.attrs)),
+        commits: job.models.map((j) => this.normalizeAttrs(j.commit.attrs))
+      };
 
-    if (job.commit) {
-      response.commit = this.normalizeAttrs(job.commit.attrs);
+      return response;
+    } else {
+      const response = {
+        job: this.normalizeAttrs(job.attrs)
+      };
+
+      if (job.commit) {
+        response.commit = this.normalizeAttrs(job.commit.attrs);
+      }
+
+      return response;
     }
-
-    return response;
   },
 
   normalizeAttrs(attrs) {

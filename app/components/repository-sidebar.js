@@ -17,15 +17,19 @@ export default Component.extend({
   @service store: null,
   @service auth: null,
   @service router: null,
+  classNames: ['dupa'],
 
-  init(...args) {
+  didInsertElement(...args) {
     this._super(args);
     // this starts the fetch after the sidebar is rendered, which is not ideal.
     // But I'm otherwise unable to reference that state within two separate
     // templates...
     schedule('afterRender', () => {
       this.get('fetchRepositoryData').perform();
-      this.get('jobState.fetchRunningJobs').perform();
+      if (this.get('features.proVersion')) {
+        this.get('jobState.fetchRunningJobs').perform();
+        this.get('jobState.fetchQueuedJobs').perform();
+      }
     });
   },
 
@@ -77,19 +81,10 @@ export default Component.extend({
     return runningJobs;
   },
 
-  @computed('features.proVersion')
-  queuedJobs(proVersion) {
+  @computed('features.proVersion', 'jobState.queuedJobs.[]')
+  queuedJobs(proVersion, queuedJobs) {
     if (!proVersion) { return []; }
-
-    const queuedStates = ['created'];
-    const result = this.get('store').filter(
-      'job',
-      job => queuedStates.includes(job.get('state'))
-    );
-    result.set('isLoaded', false);
-    result.then(() => result.set('isLoaded', true));
-
-    return result;
+    return queuedJobs;
   },
 
   viewOwned: task(function* () {

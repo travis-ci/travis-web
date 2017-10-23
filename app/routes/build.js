@@ -30,7 +30,7 @@ export default TravisRoute.extend({
   },
 
   model(params) {
-    return this.store.find('build', params.build_id);
+    return this.store.findRecord('build', params.build_id);
   },
 
   afterModel(model) {
