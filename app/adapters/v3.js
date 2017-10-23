@@ -57,7 +57,7 @@ export default RESTAdapter.extend({
     return hash;
   },
 
-  buildURL: function (modelName, id) {
+  buildURL: function (modelName, id, snapshot, requestType, query) {
     let url = [];
     const host = get(this, 'host');
     const prefix = this.urlPrefix();
