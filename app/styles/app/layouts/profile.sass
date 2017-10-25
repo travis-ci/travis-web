@@ -119,12 +119,6 @@ p.profile-user-last
   overflow: hidden
   vertical-align: middle
   border-radius: 2px
-  span:not(.loading-indicator)
-    display: none
-    margin-left: 1rem
-    font-size: $font-size-sm
-    color: $cement-grey
-    line-height: 1
   .sync-spinner
     vertical-align: top
   &.admin
@@ -153,10 +147,6 @@ p.profile-user-last
   @media #{$medium-up}
     width: grid-calc(18, 24)
     height: 30px
-    &:hover
-      span
-        display: inline-block
-        color: $cement-grey
   @media #{$large-up}
     width: grid-calc(19, 24)
 
