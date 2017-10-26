@@ -3,8 +3,8 @@
     {{loading-indicator height=true}}
   {{else}}
     <div class='action-button-container'>
-      {{#if labelless}}{{#tooltip-on-element}}Cancel {{type}}{{/tooltip-on-element}}{{/if}}
       <button {{action (perform cancel)}} class="action-button--cancel" type="button" aria-label="Cancel {{type}}">
+        {{#if labelless}}{{#tooltip-on-element}}Cancel {{type}}{{/tooltip-on-element}}{{/if}}
         {{svg-jar 'icon-failed' class="icon"}}
         <span class="label-align">Cancel {{type}}</span>
       </button>
@@ -17,8 +17,8 @@
     {{loading-indicator height=true}}
   {{else}}
     <div class='action-button-container'>
-      {{#if labelless}}{{#tooltip-on-element}}Restart {{type}}{{/tooltip-on-element}}{{/if}}
       <button {{action (perform restart)}} class="action-button--restart" aria-label="Restart {{type}}" type="button">
+        {{#if labelless}}{{#tooltip-on-element}}Restart {{type}}{{/tooltip-on-element}}{{/if}}
         {{svg-jar 'icon-restart' class="icon"}}
         <span class="label-align">Restart {{type}}</span>
       </button>
