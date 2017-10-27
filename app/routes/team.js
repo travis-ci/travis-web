@@ -363,6 +363,14 @@ export default TravisRoute.extend({
         nationality: 'sweden',
         country: 'canada',
         image: 'kris'
+      },
+      {
+        name: 'Raphaela Wrede',
+        title: 'Design & Platform Engineering Team Lead',
+        handle: 'raphaelawrede',
+        nationality: 'germany',
+        country: 'germany',
+        image: 'raphaela'
       }
     ]);
   }
