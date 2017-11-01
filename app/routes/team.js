@@ -96,7 +96,7 @@ export default TravisRoute.extend({
         name: 'Carla Drago',
         title: 'inchworm',
         handle: 'carlad',
-        nationality: 'italy',
+        nationality: 'europe',
         country: 'germany',
         image: 'carla'
       }, {
