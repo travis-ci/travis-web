@@ -31,16 +31,16 @@
 
 <nav id="navigation" class="navigation {{if is-open 'is-open'}}">
     <ul>
-      <li><a href="/about" title="Travis CI team" class="navigation-anchor">About Us</a></li>
+      <li><a href="{{ config.urls.about }}" title="Travis CI team" class="navigation-anchor">About Us</a></li>
     {{#unless features.enterpriseVersion}}
       {{#unless features.proVersion}}
-        <li><a href="https://blog.travis-ci.com" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
-        <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+        <li><a href="{{ config.urls.blog }}" title="Travis CI Blog" class="navigation-anchor">Blog</a></li>
+        <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
         <li>
           <span class="navigation-anchor">Help</span>
           <ul class="navigation-nested">
-            <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
-            <li><a href="https://docs.travis-ci.com/imprint.html" title="Go to the imprint">Imprint</a></li>
+            <li><a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a></li>
+            <li><a href="{{ config.urls.imprint }}" title="Go to the imprint">Imprint</a></li>
           </ul>
         </li>
       {{/unless}}
@@ -48,15 +48,15 @@
       {{#if features.proVersion}}
         {{#unless auth.signedIn}}
           <li><a href="/plans" title="Plans and Prices for Travis CI" class="navigation-anchor">Plans & Pricing</a></li>
-          <li><a href="https://enterprise.travis-ci.com" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
+          <li><a href="{{ config.urls.enterprise }}" title="Travis CI for Enterprise" class="navigation-anchor">Enterprise</a></li>
         {{else}}
-          <li><a href="https://www.traviscistatus.com/" title="Travis CI Status" class="navigation-anchor">Status</a></li>
+          <li><a href="{{ config.urls.status }}" title="Travis CI Status" class="navigation-anchor">Status</a></li>
           <li>
             <span class="navigation-anchor">Help</span>
             <ul class="navigation-nested">
-              <li><a href="mailto:support@travis-ci.com" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
-              <li><a href="https://docs.travis-ci.com" title="Browse our documentation">Read Our Docs</a></li>
-              <li><a href="https://twitter.com/travisci" title="Travis in the Twitter-sphere">Twitter</a></li>
+              <li><a href="{{ config.urls.support }}" title="Email the Travis support team" {{action 'helpscoutTrigger'}}>Email Support</a></li>
+              <li><a href="{{ config.urls.docs }}" title="Browse our documentation">Read Our Docs</a></li>
+              <li><a href="{{ config.urls.twitter }}" title="Travis in the Twitter-sphere">Twitter</a></li>
             </ul>
           </li>
           <li>
@@ -73,7 +73,7 @@
       {{#if deploymentVersion}}<li><span class='deployment-version'>{{deploymentVersion}}</span></li>{{/if}}
     {{else}}
       {{#if auth.signedIn}}
-        <li><a class="navigation-anchor" title="Documentation" href="https://docs.travis-ci.com">Docs</a></li>
+        <li><a class="navigation-anchor" title="Documentation" href="{{ config.urls.docs }}">Docs</a></li>
       {{/if}}
     {{/unless}}
 
