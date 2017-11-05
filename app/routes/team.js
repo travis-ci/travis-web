@@ -107,13 +107,6 @@ export default TravisRoute.extend({
         country: 'germany',
         image: 'anja'
       }, {
-        name: 'Amanda Quaranto',
-        title: 'Crafting Extremist',
-        handle: 'aquaranto',
-        nationality: 'usa',
-        country: 'usa',
-        image: 'amanda'
-      }, {
         name: 'Jen Duke',
         title: 'Gastrognome',
         handle: 'dukeofberlin',
