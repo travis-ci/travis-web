@@ -139,7 +139,7 @@ class Travis::Web::App
     def cache_control(file)
       case path_for(file)
       when '/'        then "public, must-revalidate, max-age=0"
-      else "public, max-age=#{age}"
+      else "public, max-age=#{age}, immutable"
       end
     end
 
