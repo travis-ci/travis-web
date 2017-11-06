@@ -46,7 +46,14 @@ export default Service.extend({
       this.autoSignIn(data);
     } else {
       this.set('state', 'signing-in');
-      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${location}`;
+
+      let url = new URL(window.location.href);
+
+      if (url.pathname === '/plans') {
+        url.pathname = '/';
+      }
+
+      window.location = `${this.get('endpoint')}/auth/handshake?redirect_uri=${url}`;
     }
   },
 
