@@ -49,7 +49,7 @@ export default Service.extend({
 
       let url = new URL(window.location.href);
 
-      if (url.pathname === '/plans') {
+      if (url.pathname === '/plans' || url.pathname === '/signin') {
         url.pathname = '/';
       }
 
