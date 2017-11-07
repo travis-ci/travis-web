@@ -32,6 +32,17 @@ module.exports = function (environment) {
       host: 'ws.pusherapp.com',
       debug: false
     },
+    urls: {
+      about: 'https://about.travis-ci.com',
+      blog: 'https://blog.travis-ci.com',
+      docs: 'https://docs.travis-ci.com',
+      status: 'https://www.traviscistatus.com/',
+      imprint: 'https://docs.travis-ci.com/imprint.html',
+      enterprise: 'https://enterprise.travis-ci.com',
+      twitter: 'https://twitter.com/travisci',
+      jobs:'https://travisci.workable.com/',
+      support: 'mailto:support@travis-ci.com'
+    },
     endpoints: {},
     intervals: {
       updateTimes: 1000,
@@ -81,12 +92,10 @@ module.exports = function (environment) {
       };
       ENV.userlike = true;
       ENV.beacon = true;
-      ENV.urls = {
-        legal: ENV.billingEndpoint + '/pages/legal',
-        imprint: ENV.billingEndpoint + '/pages/imprint',
-        security: ENV.billingEndpoint + '/pages/security',
-        terms: ENV.billingEndpoint + '/pages/terms'
-      };
+      ENV.urls.legal = ENV.billingEndpoint + '/pages/legal';
+      ENV.urls.imprint = ENV.billingEndpoint + '/pages/imprint';
+      ENV.urls.security = ENV.billingEndpoint + '/pages/security';
+      ENV.urls.terms = ENV.billingEndpoint + '/pages/terms';
     }
 
     if (process.env.API_ENDPOINT) {
