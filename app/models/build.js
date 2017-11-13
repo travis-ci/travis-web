@@ -30,6 +30,7 @@ export default Model.extend(DurationCalculations, {
   tag: attr(),
   eventType: attr('string'),
   _config: attr(),
+  updatedAt: attr('date'),
 
   repo: belongsTo('repo'),
   branch: belongsTo('branch', { async: false, inverse: 'builds' }),
